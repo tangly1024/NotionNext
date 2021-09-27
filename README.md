@@ -14,8 +14,6 @@
   </a>
 </p>
 
-[中文说明 / [English](README.md)]
-
 演示地址：[https://www.tangly1024.com/](https://www.tangly1024.com/)
 
 <details><summary>截图</summary>

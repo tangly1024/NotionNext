@@ -1,0 +1,39 @@
+import React, { useEffect, useState } from 'react'
+import throttle from 'lodash.throttle'
+import { useLocale } from '@/lib/locale'
+
+/**
+ * 跳转到网页顶部；当屏幕下滑500像素后会出现该控件
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const TopJumper = () => {
+  const locale = useLocale()
+
+  const [show, switchShow] = useState(false)
+  useEffect(() => {
+    const scrollListener = throttle(() => {
+      // 处理是否显示回到顶部按钮
+      const shouldShow = window.scrollY > 100
+      if (shouldShow !== show) {
+        switchShow(shouldShow)
+      }
+    }, 500)
+    document.addEventListener('scroll', scrollListener)
+    return () => document.removeEventListener('scroll', scrollListener)
+  }, [show])
+
+  return (
+    <div
+      className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' animate__animated animate__faster'}>
+      <div
+        className='border dark:bg-black bg-white cursor-pointer hover:bg-blue-500 transform duration-200 hover:text-white hover:shadow-2xl hover:scale-125'
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <a className='dark:text-gray-200 fa fa-arrow-up p-4' title={locale.POST.TOP}/>
+      </div>
+    </div>
+
+  )
+}
+
+export default TopJumper
