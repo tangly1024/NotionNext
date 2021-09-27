@@ -50,7 +50,7 @@
 
 - 给这个项目点个小星星 😉
 - 将 [这个 Notion 模板](https://www.notion.so/68be9021bca34b8e89f0246f27e608df) 制作副本，并分享这个页面给所有人
-- [Fork](https://github.com/tlyong1992/NotionNext/fork) 这个项目
+- [Fork](https://github.com/tangly1024/NotionNext/fork) 这个项目
 - 在 `blog.config.js` 配置相关选项
 - _(可选)_ 用自己的图片替换 `/public` 文件夹里的 `avatar.svg`、`favicon.svg` 和 `favicon.ico`
 - 在 [Vercel](https://vercel.com) 上部署这个项目, 设定一下环境变量：
