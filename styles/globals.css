@@ -111,6 +111,10 @@ nav {
 
 @media (max-width: 1300px){
   .sidebar{
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
     @apply border-r border-gray-200 h-screen overflow-y-scroll fixed left-0
   }
+  .sidebar::-webkit-scrollbar { width: 0 !important }
 }
+

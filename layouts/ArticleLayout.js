@@ -45,7 +45,7 @@ const ArticleLayout = ({
 
       <Progress targetRef={targetRef} />
 
-      <TopNav tags={tags} />
+      {/* <TopNav tags={tags} /> */}
 
       <div className='flex justify-between'>
 

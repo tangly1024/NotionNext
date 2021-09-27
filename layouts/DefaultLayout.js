@@ -5,8 +5,9 @@ import BLOG from '@/blog.config'
 import CommonHead from '@/components/CommonHead'
 import { useRouter } from 'next/router'
 import { useTheme } from '@/lib/theme'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import SideBar from '@/components/SideBar'
+import throttle from 'lodash.throttle'
 
 const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const meta = {
@@ -49,7 +50,24 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
     if (ref) {
       ref.remove()
     }
-  })
+    window.addEventListener('resize', resizeWindowHideToc)
+    resizeWindowHideToc()
+    return () => {
+      window.removeEventListener('resize', resizeWindowHideToc)
+    }
+  }, [])
+
+  const resizeWindowHideToc = throttle(() => {
+    if (window.innerWidth > 1300) {
+      changeColumn(3)
+    } else if (window.innerWidth < 768) {
+      changeColumn(1)
+    } else {
+      changeColumn(2)
+    }
+  }, 500)
+
+  const [column, changeColumn] = useState(1)
 
   const { theme } = useTheme()
 
@@ -59,7 +77,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
       {/* <TopNav tags={tags} currentTag={currentTag} /> */}
       {/* <Header navBarTitle={meta.title} fullWidth={true}/> */}
 
-      <div className={`${BLOG.font} flex bg-gray-100 dark:bg-black`}>
+      <div className={`${BLOG.font} flex bg-gray-200 dark:bg-black`}>
         <SideBar tags={tags} currentTag={currentTag} />
 
         <main className='md:pb-10 md:px-24 p-5 flex-grow'>
@@ -91,12 +109,13 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
           {/* 文章列表 */}
           <div className='mx-auto animate__animated animate__fadeIn'>
-            <div className='grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6'>
+            {/* <div className='col-4 grid md:grid-cols-2 grid-cols-1 gap-6'> */}
+            <div style={{ columnCount: column, columnGap: '2rem' }}>
               {!postsToShow.length && (
                 <p className='text-gray-500 dark:text-gray-300 textc'>No posts found.</p>
               )}
               {postsToShow.map(post => (
-                <BlogPost key={post.id} post={post} tags={tags} />
+                  <BlogPost key={post.id} post={post} tags={tags} />
               ))}
             </div>
           </div>
