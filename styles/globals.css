@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  --scrollbarBG: #ffffff00;
+  --thumbBG: #b8b8b8;
+}
+body::-webkit-scrollbar {
+  width: 5px;
+}
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+body::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+}
+
+::selection {
+  background: rgba(45, 170, 219, 0.3);
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.sticky-nav {
+  position: sticky;
+  z-index: 10;
+  top: -1px;
+  backdrop-filter: blur(5px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0, 1);
+  border-bottom-color: transparent;
+}
+
+.sticky-nav-full {
+  @apply border-b border-opacity-50 border-gray-200 dark:border-gray-600 dark:border-opacity-50;
+}
+
+.header-name {
+  display: none;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.sticky-nav-full .nav {
+  @apply text-gray-600 dark:text-gray-300;
+}
+
+nav {
+  flex-wrap: wrap;
+  line-height: 1.5em;
+}
+
+.article-tags::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.tag-container ul::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.tag-container ul {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .sticky-nav-full {
+    @apply max-w-full border-b border-opacity-50 border-gray-200 dark:border-gray-600 dark:border-opacity-50;
+  }
+  .header-name {
+    display: block;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0, 1);
+  }
+  .sticky-nav-full .header-name {
+    opacity: 1;
+    @apply dark:text-gray-300 text-gray-600;
+  }
+}
+
+@supports not (backdrop-filter: none) {
+  .sticky-nav {
+    backdrop-filter: none;
+    @apply bg-day dark:bg-gray-800;
+  }
+}
+
+.shadow-card{
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+
+.gt-meta{
+  @apply dark:text-gray-300
+}
+
+#waifu{
+    @apply left-auto right-0 hidden lg:block !important
+}
