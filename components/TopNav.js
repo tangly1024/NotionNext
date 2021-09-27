@@ -1,11 +1,8 @@
 import Link from 'next/link'
 import BLOG from '@/blog.config'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useLocale } from '@/lib/locale'
 import Router, { useRouter } from 'next/router'
-import Tags from '@/components/Tags'
-import localStorage from 'localStorage'
-import { useTheme } from '@/lib/theme'
 import DarkModeButton from '@/components/DarkModeButton'
 import SocialButton from '@/components/SocialButton'
 
@@ -25,21 +22,16 @@ const TopNav = ({ tags, currentTag }) => {
   }
 
   return (
-    <div className='bg-white dark:bg-gray-600 block xl:hidden'>
+    <div className='bg-white dark:bg-gray-600 block xl:hidden '>
       {/* 隐藏的顶部菜单 */}
-      <div
-        className={(hiddenMenu ? 'h-0 ' : 'h-full ') + ' overflow-hidden bg-gray-800 text-xl text-gray-200 w-full transform ease-in-out duration-500'}>
+      <nav
+        className={(hiddenMenu ? '-mt-10' : ' ') + ' py-1 overflow-hidden bg-gray-800 text-xl text-gray-200 w-full ease-in-out duration-500'}>
         <ul className='mx-5 duration-300'>
-          <li>
-            <div>
-              <Tags tags={tags} currentTag={currentTag} />
-            </div>
-          </li>
           <li>
             <SocialButton/>
           </li>
         </ul>
-      </div>
+      </nav>
 
       {/* 导航栏 */}
       <div

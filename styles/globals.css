@@ -47,8 +47,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 .header-name {
-  display: none;
-  opacity: 0;
   overflow: hidden;
 }
 
@@ -85,11 +83,9 @@ nav {
   }
   .header-name {
     display: block;
-    opacity: 0;
     transition: all 0.5s cubic-bezier(0.4, 0, 0, 1);
   }
   .sticky-nav-full .header-name {
-    opacity: 1;
     @apply dark:text-gray-300 text-gray-600;
   }
 }
@@ -109,6 +105,12 @@ nav {
   @apply dark:text-gray-300
 }
 
-#waifu{
-    @apply left-auto right-0 hidden lg:block !important
+#waifu {
+  @apply left-auto right-0 hidden lg:block !important
+}
+
+@media (max-width: 1300px){
+  .sidebar{
+    @apply border-r border-gray-200 h-screen overflow-y-scroll fixed left-0
+  }
 }

@@ -7,8 +7,8 @@ const Footer = ({ fullWidth = true }) => {
   const y = d.getFullYear()
   const from = +BLOG.since
   return (
-    <div
-      className='py-4 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400 bottom-0'
+    <footer
+      className='p-5 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400 bottom-0'
     >
       <SocialButton/>
       <div className='text-sm'>
@@ -16,7 +16,7 @@ const Footer = ({ fullWidth = true }) => {
         <br/>
         <span className='fa fa-copyright leading-6'> {from === y || !from ? y : `${from} - ${y}`} {BLOG.author} </span>
       </div>
-    </div>
+    </footer>
   )
 }
 

@@ -14,7 +14,7 @@ import RightAside from '@/components/RightAside'
 import RewardButton from '@/components/RewardButton'
 import RightWidget from '@/components/RightWidget'
 import { useTheme } from '@/lib/theme'
-import LeftAside from '@/components/LeftAside'
+import SideBar from '@/components/SideBar'
 import BlogPostMini from '@/components/BlogPostMini'
 
 const mapPageUrl = id => {
@@ -49,7 +49,7 @@ const ArticleLayout = ({
 
       <div className='flex justify-between'>
 
-        <LeftAside tags={tags} />
+        <SideBar tags={tags} />
 
         {/* 主体区块 */}
         <main className='bg-gray-100 dark:bg-black w-full'>

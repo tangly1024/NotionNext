@@ -4,12 +4,9 @@ import Pagination from '@/components/Pagination'
 import BLOG from '@/blog.config'
 import CommonHead from '@/components/CommonHead'
 import { useRouter } from 'next/router'
-import TopNav from '@/components/TopNav'
-import Footer from '@/components/Footer'
-import localStorage from 'localStorage'
 import { useTheme } from '@/lib/theme'
 import { useEffect } from 'react'
-import LeftAside from '@/components/LeftAside'
+import SideBar from '@/components/SideBar'
 
 const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const meta = {
@@ -57,16 +54,17 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const { theme } = useTheme()
 
   return (
-    <div className={theme}>
+    <div id='wrapper' className={theme}>
       <CommonHead meta={meta} />
-      <TopNav tags={tags} currentTag={currentTag} />
-      <div className={`${BLOG.font} flex justify-between`}>
+      {/* <TopNav tags={tags} currentTag={currentTag} /> */}
+      {/* <Header navBarTitle={meta.title} fullWidth={true}/> */}
 
-        <LeftAside tags={tags} currentTag={currentTag} />
+      <div className={`${BLOG.font} flex bg-gray-50`}>
+        <SideBar tags={tags} currentTag={currentTag} />
 
-        <main className='md:pb-10 md:px-24 p-5 bg-gray-100 dark:bg-gray-900 w-full'>
+        <main className='md:pb-10 md:px-24 p-5 flex-grow'>
           {(!page || page === 1) && (
-            <div className='py-5'></div>
+            <div className='py-5' />
           )
           }
           {/* 标签 */}

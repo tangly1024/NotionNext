@@ -32,7 +32,9 @@ const BLOG = {
     },
     gaConfig: {
       measurementId: 'G-5EV4HZD0XX' // e.g: G-XXXXXXXXXX
-    }
+    },
+    baidyAnalytics: 'f683ef76f06bb187cbed5546f6f28f28', // e.g only need xxxxx -> https://hm.baidu.com/hm.js?xxxxx
+    busuanzi: true // see http://busuanzi.ibruce.info/
   },
   comment: {
     // support provider: gitalk, utterances, cusdis
@@ -54,7 +56,8 @@ const BLOG = {
       repo: 'tangly1024/NotionNext'
     }
   },
-  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+  isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+  googleAdsense: true
 }
 // export default BLOG
 module.exports = BLOG

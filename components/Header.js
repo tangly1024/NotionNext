@@ -49,6 +49,27 @@ const Header = ({ navBarTitle, fullWidth }) => {
   }, [sentinelRef])
   return (
     <>
+      { BLOG.autoCollapsedNavBar === true && (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+                      var windowTop=0;
+                      function scrollTrigger(){
+                          let scrollS = window.scrollY;
+                          let nav = document.querySelector('.sticky-nav');
+                          if(scrollS >= windowTop){
+                              nav.style.opacity = 0;
+                              windowTop = scrollS;
+                          }else{
+                              nav.style.opacity = 1;
+                              windowTop = scrollS;
+                          }
+                      };
+                      window.addEventListener('scroll',scrollTrigger);
+                      `
+          }}
+        />
+      )}
       <div className='observer-element h-0.5' ref={sentinelRef}/>
       <div
         className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 py-8 bg-opacity-60 ${
@@ -73,12 +94,12 @@ const Header = ({ navBarTitle, fullWidth }) => {
           </Link>
           {navBarTitle
             ? (
-              <p className='ml-2 font-medium text-day dark:text-night header-name'>
+              <p className='ml-2 font-medium text-gray-500 dark:text-night header-name'>
                 {navBarTitle}
               </p>
               )
             : (
-              <p className='ml-2 font-medium text-day dark:text-night header-name'>
+              <p className='ml-2 font-medium text-500 dark:text-night header-name'>
                 {BLOG.title} {' '}
                 {BLOG.title},{' '}
                 <span className='font-normal'>{BLOG.description}</span>
