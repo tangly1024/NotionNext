@@ -21,13 +21,13 @@ const SideBar = ({ tags, currentTag }) => {
   const [collapse, changeCollapse] = useState(false)
 
   return <aside
-    className={(collapse ? '' : '') + ' z-50 bg-gray-100 dark:bg-gray-800 dark:border-black duration-500 ease-in-out'}
+    className={(collapse ? '' : '') + ' z-10 bg-white dark:bg-gray-800 dark:border-black duration-500 ease-in-out'}
   >
 
-    <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' sidebar bg-gray-100 h-full w-60 md:w-80 duration-500 ease-in-out'}>
+    <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' sidebar h-full w-60 md:w-80 duration-500 ease-in-out'}>
 
       {/* 搜索框 */}
-      <div className='flex justify-center items-center py-5 pr-5 pl-2 bg-gray-200'>
+      <div className='flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'>
         <input
           type='text'
           placeholder={

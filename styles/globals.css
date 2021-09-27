@@ -106,7 +106,7 @@ nav {
 }
 
 #waifu {
-  @apply left-auto right-0 hidden lg:block !important
+  @apply right-auto left-0 hidden lg:block z-10 !important
 }
 
 @media (max-width: 1300px){
