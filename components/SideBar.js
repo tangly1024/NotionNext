@@ -46,7 +46,7 @@ const SideBar = ({ tags, currentTag }) => {
       <section className='mx-5 pt-5 pb-2'>
         <Link href='/'>
           <a
-            className='text-3xl hover:shadow-2xl bg-gray-500 text-white dark:bg-gray-900 dark:text-gray-300 font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
+            className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
         </Link>
       </section>
 
@@ -56,7 +56,7 @@ const SideBar = ({ tags, currentTag }) => {
       </section>
 
       {/* 搜索框 */}
-      <div className='flex justify-center items-center py-5 pr-5 pl-2 bg-gray-200 dark:bg-black'>
+      <div className='flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'>
         <input
           type='text'
           placeholder={
