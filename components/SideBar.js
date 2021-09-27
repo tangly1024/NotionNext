@@ -2,7 +2,7 @@ import Tags from '@/components/Tags'
 import { useLocale } from '@/lib/locale'
 import Link from 'next/link'
 import BLOG from '@/blog.config'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import DarkModeButton from '@/components/DarkModeButton'
 import Footer from '@/components/Footer'
@@ -43,10 +43,10 @@ const SideBar = ({ tags, currentTag }) => {
 
     <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-60 md:w-80 duration-500 ease-in-out'}>
 
-      <section className='mx-5 pt-5'>
+      <section className='mx-5 pt-5 pb-2'>
         <Link href='/'>
           <a
-            className='text-3xl hover:shadow-xl bg-white dark:bg-gray-800 dark:text-gray-300 font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
+            className='text-3xl hover:shadow-2xl bg-gray-500 text-white dark:bg-gray-900 dark:text-gray-300 font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
         </Link>
       </section>
 
@@ -73,7 +73,7 @@ const SideBar = ({ tags, currentTag }) => {
       {/* <hr className='my-5' /> */}
 
       <div className='p-5'>
-        <span className='dark:text-gray-200'>标签</span>
+        <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>标签</span>
         <Tags tags={tags} currentTag={currentTag} />
       </div>
 

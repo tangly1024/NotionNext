@@ -77,7 +77,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
       {/* <TopNav tags={tags} currentTag={currentTag} /> */}
       {/* <Header navBarTitle={meta.title} fullWidth={true}/> */}
 
-      <div className={`${BLOG.font} flex bg-gray-200 dark:bg-black`}>
+      <div className={`${BLOG.font} flex bg-gray-200 dark:bg-black min-h-screen`}>
         <SideBar tags={tags} currentTag={currentTag} />
 
         <main className='md:pb-10 md:px-24 p-5 flex-grow'>
