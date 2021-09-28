@@ -22,17 +22,15 @@ const RightAside = ({ toc, post }) => {
       changeHideAside(true)
     }
   }, 500)
-  const [hideAside, changeHideAside] = useState(false)
+  const [hideAside, changeHideAside] = useState(true)
 
   return <aside className='bg-white dark:bg-gray-800 py-5'>
-    <div className={(hideAside ? 'w-0' : 'w-52') + ' duration-500'} />
-
     {/* 上方菜单组 */}
     <div
-      className={(hideAside ? 'right-0' : 'right-52') + ' space-x-2 fixed md:fixed flex top-0 px-4 py-1 duration-500'}>
+      className={(hideAside ? 'right-0' : 'right-48') + ' z-20 space-x-2 fixed flex top-0 px-3 py-1 duration-500'}>
       {/* 目录按钮 */}
       <div
-        className='border dark:border-gray-500 my-3 bg-white dark:bg-gray-600 bg-opacity-70 dark:hover:bg-gray-100 text-xl cursor-pointer dark:text-gray-300 dark:hover:text-black p-1'>
+        className='border dark:border-gray-500 my-2 bg-white dark:bg-gray-600 bg-opacity-70 dark:hover:bg-gray-100 text-xl cursor-pointer dark:text-gray-300 dark:hover:text-black p-1'>
         <i className='fa fa-book p-2.5 hover:scale-125 transform duration-200'
            onClick={() => changeHideAside(!hideAside)} />
       </div>
@@ -40,7 +38,7 @@ const RightAside = ({ toc, post }) => {
 
     {/* 下方菜单组 */}
     <div
-      className={(hideAside ? 'right-0' : 'right-52') + ' space-x-2 fixed flex bottom-10 px-4 py-1 duration-500'}>
+      className={(hideAside ? 'right-0' : 'right-48') + ' space-x-2 fixed flex bottom-10 px-4 py-1 duration-500'}>
       <div className='flex-wrap'>
         {/* 分享按钮 */}
         <ShareButton post={post} />
@@ -51,7 +49,7 @@ const RightAside = ({ toc, post }) => {
 
     {/* 目录 */}
     <div
-      className={(hideAside ? '-mr-52' : 'mr-0 shadow-xl xl:shadow-none') + ' h-full hover:shadow-2xl bg-white w-52 right-0 dark:bg-gray-800 duration-500 fixed top-0 pt-8'}>
+      className={(hideAside ? '-mr-48' : 'mr-0 shadow-xl xl:shadow-none') + ' fixed h-full hover:shadow-2xl bg-white w-48 right-0 dark:bg-gray-800 duration-500 top-0 pt-8'}>
       <TocBar toc={toc} />
     </div>
 

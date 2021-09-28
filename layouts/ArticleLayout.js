@@ -57,7 +57,7 @@ const ArticleLayout = ({
           {/* 中央区域 wrapper */}
           <div>
 
-            <header className='border-l border-t border-r mx-auto max-w-5xl mt-20 md:flex-shrink-0 overflow-y-hidden animate__fadeIn animate__animated'>
+            <header className='mx-auto max-w-5xl mt-20 md:flex-shrink-0 overflow-y-hidden animate__fadeIn animate__animated'>
               {/* 封面图 */}
               {frontMatter.page_cover && frontMatter.page_cover.length > 1 && (
                 <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }}

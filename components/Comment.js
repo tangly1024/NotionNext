@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { useTheme } from '@/lib/theme'
+import { useEffect, useState } from 'react'
 
 const GitalkComponent = dynamic(
   () => {
@@ -23,6 +25,7 @@ const CusdisComponent = dynamic(
 
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
+  const { theme } = useTheme()
 
   return <div className='comment text-gray-800 dark:text-gray-300'>
     <div className='font-bold pt-2 pb-4 '>留下评论</div>
@@ -55,7 +58,7 @@ const Comment = ({ frontMatter }) => {
             pageId: frontMatter.id,
             pageTitle: frontMatter.title,
             pageUrl: BLOG.link + router.asPath,
-            theme: BLOG.appearance
+            theme: theme
           }}
           lang={BLOG.lang.toLowerCase()}
         />

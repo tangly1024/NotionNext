@@ -41,6 +41,7 @@ const SideBar = ({ tags, currentTag }) => {
 
     <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' hover:shadow-2xl dark:bg-gray-800 bg-white sidebar h-full w-60 duration-500 ease-in-out'}>
 
+      {/* Logo  */}
       <section className='mx-5 pt-6 pb-2 border-b'>
         <Link href='/'>
           <a
@@ -48,6 +49,7 @@ const SideBar = ({ tags, currentTag }) => {
         </Link>
       </section>
 
+      {/* 地理标志 */}
       <section className='text-gray-500 text-sm px-7 pt-3 pb-5 dark:text-gray-300'>
         <i className='fa fa-map-marker mr-1' />
         Fuzhou, China
@@ -69,6 +71,7 @@ const SideBar = ({ tags, currentTag }) => {
         <i className='fa fa-search text-gray-400 -ml-8' />
       </div>
 
+      {/* 标签云  */}
       <div className='p-6'>
         <div className='mb-3'>
           <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>标签</span>
@@ -76,6 +79,7 @@ const SideBar = ({ tags, currentTag }) => {
         <Tags tags={tags} currentTag={currentTag} />
       </div>
 
+      {/* 菜单 */}
       <div className='p-6'>
         <div className='mb-3'>
           <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>菜单</span>
@@ -88,15 +92,16 @@ const SideBar = ({ tags, currentTag }) => {
         </ul>
       </div>
 
+      {/* 站点信息 */}
       <Footer />
     </div>
 
     {/* 顶部菜单按钮 */}
     <div
-      className={(collapse ? 'left-0' : 'left-60') + ' fixed flex-wrap top-0 px-4 py-1 duration-500 ease-in-out'}>
+      className={(collapse ? 'left-0' : 'left-60') + ' fixed flex flex-nowrap md:flex-col  top-0 pl-4 py-1 duration-500 ease-in-out'}>
       {/* 菜单折叠 */}
-      <div className='p-1 border dark:border-gray-500 my-3 bg-white dark:bg-gray-600 dark:bg-opacity-70 bg-opacity-70
-      dark:hover:bg-gray-100 text-xl cursor-pointer dark:text-gray-300 dark:hover:text-black'>
+      <div className='z-30 p-1 border dark:border-gray-500 h-12 bg-white dark:bg-gray-600 dark:bg-opacity-70 bg-opacity-70
+      dark:hover:bg-gray-100 text-xl cursor-pointer mr-2 my-2 dark:text-gray-300 dark:hover:text-black'>
         <i className='fa fa-bars p-2.5 hover:scale-125 transform duration-200' onClick={() => changeCollapse(!collapse)} />
       </div>
       {/* 夜间模式 */}
