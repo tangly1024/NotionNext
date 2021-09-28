@@ -67,7 +67,7 @@ const ArticleLayout = ({
 
             <article
               ref={targetRef}
-              className='overflow-x-auto px-10 py-10 max-w-3xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
+              className='overflow-x-auto px-10 py-10 max-w-4xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
               {/* 文章标题 */}
               <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
                 {frontMatter.title}

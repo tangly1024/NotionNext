@@ -41,22 +41,23 @@ const SideBar = ({ tags, currentTag }) => {
     className={(collapse ? '' : '') + ' z-10 duration-500 ease-in-out'}
   >
 
-    <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-60 md:w-80 duration-500 ease-in-out'}>
+    <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + '  hover:shadow-2xl dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
 
-      <section className='mx-5 pt-5 pb-2'>
+      <section className='mx-5 pt-6 pb-2'>
         <Link href='/'>
           <a
             className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
         </Link>
       </section>
 
-      <section className='text-gray-500 text-sm px-6 pt-3 pb-5 dark:text-gray-300'>
+      <section className='text-gray-500 text-sm px-7 pt-3 pb-5 dark:text-gray-300'>
         <i className='fa fa-map-marker mr-1' />
         Fuzhou, China
       </section>
 
       {/* 搜索框 */}
       <div className='flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'>
+        <div className='hover:block hidden fixed left-0 top-0 w-screen h-screen bg-black z-20 opacity-40'/>
         <input
           type='text'
           placeholder={
@@ -72,7 +73,7 @@ const SideBar = ({ tags, currentTag }) => {
 
       {/* <hr className='my-5' /> */}
 
-      <div className='p-5'>
+      <div className='p-6'>
         <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>标签</span>
         <Tags tags={tags} currentTag={currentTag} />
       </div>
@@ -80,12 +81,15 @@ const SideBar = ({ tags, currentTag }) => {
       <Footer />
     </div>
 
-    <div className={(collapse ? 'left-0' : 'md:left-80 left-60') + ' space-x-2 fixed md:absolute flex top-0 px-4 py-1 duration-500 ease-in-out'}>
-      <div className='my-5 text-xl rounded cursor-pointer text-center hover:scale-125 transform duration-200 bg-gray-100 bg-opacity-50 md:bg-opacity-0
-      dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-100 dark:hover:text-black'>
-        <i className='fa fa-bars px-1' onClick={() => changeCollapse(!collapse)} />
+    <div className={(collapse ? 'left-0' : 'left-72') + ' space-x-2 fixed md:fixed flex top-0 px-4 py-1 duration-500 ease-in-out'}>
+
+      <div className='my-4 bg-gray-100 dark:bg-gray-800 bg-opacity-50 p-1 rounded'>
+        <div className=' justify-center align-middle font-bold text-xl cursor-pointer hover:scale-125 transform duration-200
+               dark:text-gray-300 dark:hover:bg-gray-100 dark:hover:text-black'>
+          <i className='fa fa-bars px-1' onClick={() => changeCollapse(!collapse)}/>
+        </div>
       </div>
-      <div className='my-4 bg-gray-100 bg-opacity-50 p-1 rounded md:bg-opacity-0'>
+      <div className='my-4 bg-gray-100 dark:bg-gray-800 bg-opacity-50 p-1 rounded'>
         <DarkModeButton />
       </div>
      </div>

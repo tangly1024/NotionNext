@@ -4,7 +4,7 @@ import TagItem from '@/components/TagItem'
 const BlogPost = ({ post }) => {
   return (
     <article key={post.id}
-             className='inline-block border dark:border-gray-600 my-2 md:mx-2 w-full md:max-w-md duration-200 transform hover:scale-105 rounded-3xl bg-white dark:bg-gray-700 dark:hover:bg-gray-600 overflow-hidden'>
+             className='inline-block border dark:border-gray-600 my-2 md:mx-2 w-full md:max-w-md duration-200 hover:shadow-2xl rounded-3xl bg-white dark:bg-gray-700 dark:hover:bg-gray-600 overflow-hidden'>
         {/*  封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
           <a href={`${BLOG.path}/article/${post.slug}`} className='md:flex-shrink-0 md:w-52 md:h-52 rounded-lg'>

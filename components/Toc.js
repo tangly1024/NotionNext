@@ -49,10 +49,10 @@ const Toc = ({ toc }) => {
 
   return (
     <>
-      <div className='text-center font-bold text-white'>
+      <div className='text-center font-bold text-black dark:text-white'>
         文章目录
       </div>
-      <nav className='notion-table-of-contents text-gray-400 underline'>
+      <nav className='notion-table-of-contents text-gray-500 dark:text-gray-400 underline'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
           return (
@@ -63,7 +63,7 @@ const Toc = ({ toc }) => {
                 'notion-table-of-contents-item',
                 `notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`,
                 activeSection === id &&
-                ' font-bold text-white'
+                ' font-bold text-black dark:text-white'
               )}
             >
                       <span

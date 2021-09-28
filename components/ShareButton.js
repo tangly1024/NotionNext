@@ -31,7 +31,7 @@ const ShareButton = ({ post }) => {
         </div>
         <div
           ref={btnRef}
-          className='border dark:bg-black bg-white px-4 py-3 cursor-pointer text-md hover:bg-blue-500 transform duration-200 hover:text-white hover:shadow'>
+          className='border dark:border-gray-600 dark:bg-black bg-white px-4 py-3 cursor-pointer text-md hover:bg-blue-500 transform duration-200 hover:text-white hover:shadow'>
           <div className='dark:text-gray-200 fa fa-share-alt' title='share' />
         </div>
       </div>

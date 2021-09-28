@@ -8,7 +8,7 @@ const Footer = ({ fullWidth = true }) => {
   const from = +BLOG.since
   return (
     <footer
-      className='p-5 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400'
+      className='p-6 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400'
     >
       <div className='py-2'>
         <span className='text-xl border-b-2'>菜单</span>
