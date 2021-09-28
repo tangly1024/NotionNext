@@ -6,7 +6,7 @@ import { cs } from 'react-notion-x'
 /**
  * 目录组件
  */
-const Toc = ({ toc }) => {
+const TocBar = ({ toc }) => {
   // 无目录就直接返回空
   if (toc.length < 1) return <></>
 
@@ -47,25 +47,24 @@ const Toc = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs)
 
-  return (
-    <>
-      <div className='text-center font-bold text-black dark:text-white'>
-        文章目录
-      </div>
-      <nav className='notion-table-of-contents text-gray-500 dark:text-gray-400 underline'>
-        {toc.map((tocItem) => {
-          const id = uuidToId(tocItem.id)
-          return (
-            <a
-              key={id}
-              href={`#${id}`}
-              className={cs(
-                'notion-table-of-contents-item',
-                `notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`,
-                activeSection === id &&
-                ' font-bold text-black dark:text-white'
-              )}
-            >
+  return <>
+    <div className='text-center font-bold text-black dark:text-white border-b pb-2 mb-2 mx-4'>
+      文章目录
+    </div>
+    <nav className='notion-table-of-contents text-gray-500 dark:text-gray-400 underline overflow-x-auto'>
+      {toc.map((tocItem) => {
+        const id = uuidToId(tocItem.id)
+        return (
+          <a
+            key={id}
+            href={`#${id}`}
+            className={cs(
+              'notion-table-of-contents-item px-5',
+              `notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`,
+              activeSection === id &&
+              ' font-bold text-black dark:text-white bg-gray-100 dark:bg-gray-500'
+            )}
+          >
                       <span
                         className='notion-table-of-contents-item-body'
                         style={{
@@ -75,12 +74,11 @@ const Toc = ({ toc }) => {
                       >
                         {tocItem.text}
                       </span>
-            </a>
-          )
-        })}
-      </nav>
-    </>
-  )
+          </a>
+        )
+      })}
+    </nav>
+  </>
 }
 
-export default Toc
+export default TocBar

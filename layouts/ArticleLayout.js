@@ -47,17 +47,17 @@ const ArticleLayout = ({
 
       {/* <TopNav tags={tags} /> */}
 
+      {/* Wrapper */}
       <div className='flex justify-between'>
 
         <SideBar tags={tags} />
 
         {/* 主体区块 */}
         <main className='bg-gray-100 dark:bg-black w-full'>
-          {/* 卡牌水平边距wrapper */}
-          {/* 文章卡牌 */}
-          <div className='bg-white dark:border-gray-700 dark:bg-gray-700 duration-200'>
+          {/* 中央区域 wrapper */}
+          <div>
 
-            <header className='md:flex-shrink-0 overflow-y-hidden shadow-sm animate__fadeIn animate__animated'>
+            <header className='border-l border-t border-r mx-auto max-w-5xl mt-20 md:flex-shrink-0 overflow-y-hidden animate__fadeIn animate__animated'>
               {/* 封面图 */}
               {frontMatter.page_cover && frontMatter.page_cover.length > 1 && (
                 <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }}
@@ -67,7 +67,7 @@ const ArticleLayout = ({
 
             <article
               ref={targetRef}
-              className='overflow-x-auto px-10 py-10 max-w-4xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
+              className='border-l border-b border-r mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-600'>
               {/* 文章标题 */}
               <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
                 {frontMatter.title}
@@ -140,7 +140,7 @@ const ArticleLayout = ({
 
               <div className='text-gray-800 my-5 dark:text-gray-300'>
                 <div className='mt-4 my-2 font-bold'>继续阅读</div>
-                <div className='flex flex-wrap justify-between py-2'>
+                <div className='flex flex-wrap lg:flex-nowrap lg:space-x-2 justify-between py-2'>
                   {/* <Link href={prev.slug}> */}
                   {/* <div>上一篇:<a className='py-1 underline cursor-pointer ml-1'>{prev.title}</a></div> */}
                   {/* </Link> */}
@@ -161,16 +161,12 @@ const ArticleLayout = ({
             </article>
 
           </div>
-
-          <RightWidget post={frontMatter} />
+          {/* <RightWidget post={frontMatter} /> */}
           {/* <ShareButton post={frontMatter}/> */}
           {/* <TopJumper /> */}
-
         </main>
-
         {/* 右侧内容 */}
-        <RightAside toc={frontMatter.toc} />
-
+        <RightAside toc={frontMatter.toc} post={frontMatter} />
       </div>
 
     </div>

@@ -21,14 +21,14 @@ const SideBar = ({ tags, currentTag }) => {
 
   // 监听resize事件
   useEffect(() => {
-    window.addEventListener('resize', resizeWindowHideToc)
-    resizeWindowHideToc()
+    window.addEventListener('resize', collapseSideBar)
+    collapseSideBar()
     return () => {
-      window.removeEventListener('resize', resizeWindowHideToc)
+      window.removeEventListener('resize', collapseSideBar)
     }
   }, [])
 
-  const resizeWindowHideToc = throttle(() => {
+  const collapseSideBar = throttle(() => {
     if (window.innerWidth > 1300) {
       changeCollapse(false)
     } else {
@@ -37,16 +37,14 @@ const SideBar = ({ tags, currentTag }) => {
   }, 500)
   const [collapse, changeCollapse] = useState(true)
 
-  return <aside
-    className={(collapse ? '' : '') + ' z-10 duration-500 ease-in-out'}
-  >
+  return <aside className='z-10' >
 
-    <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + '  hover:shadow-2xl dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
+    <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' hover:shadow-2xl dark:bg-gray-800 bg-white sidebar h-full w-60 duration-500 ease-in-out'}>
 
-      <section className='mx-5 pt-6 pb-2'>
+      <section className='mx-5 pt-6 pb-2 border-b'>
         <Link href='/'>
           <a
-            className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
+            className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
         </Link>
       </section>
 
@@ -57,13 +55,13 @@ const SideBar = ({ tags, currentTag }) => {
 
       {/* 搜索框 */}
       <div className='flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'>
-        <div className='hover:block hidden fixed left-0 top-0 w-screen h-screen bg-black z-20 opacity-40'/>
+        <div className='hover:block hidden fixed left-0 top-0 w-screen h-screen bg-black z-20 opacity-40' />
         <input
           type='text'
           placeholder={
             currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`
           }
-          className='hover:shadow-xl duration-200 pl-2 rounded w-full py-2 border dark:border-gray-600 bg-white text-black dark:bg-gray-700 dark:text-white'
+          className='hover:shadow-inner duration-200 pl-2 rounded w-full py-2 border dark:border-gray-600 bg-white text-black dark:bg-gray-700 dark:text-white'
           onKeyUp={handleKeyUp}
           onChange={e => setSearchValue(e.target.value)}
           defaultValue={router.query.s ?? ''}
@@ -71,28 +69,39 @@ const SideBar = ({ tags, currentTag }) => {
         <i className='fa fa-search text-gray-400 -ml-8' />
       </div>
 
-      {/* <hr className='my-5' /> */}
+      <div className='p-6'>
+        <div className='mb-3'>
+          <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>标签</span>
+        </div>
+        <Tags tags={tags} currentTag={currentTag} />
+      </div>
 
       <div className='p-6'>
-        <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>标签</span>
-        <Tags tags={tags} currentTag={currentTag} />
+        <div className='mb-3'>
+          <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>菜单</span>
+        </div>
+        <ul className='leading-8 dark:text-gray-400'>
+          <li><a className='fa fa-info hover:underline' href='/article/about' id='about'><span
+            className='ml-2'>关于本站</span></a></li>
+          <li><a className='fa fa-rss hover:underline' href='/feed' target='_blank' id='feed'><span
+            className='ml-2'>RSS订阅</span></a></li>
+        </ul>
       </div>
 
       <Footer />
     </div>
 
-    <div className={(collapse ? 'left-0' : 'left-72') + ' space-x-2 fixed md:fixed flex top-0 px-4 py-1 duration-500 ease-in-out'}>
-
-      <div className='my-4 bg-gray-100 dark:bg-gray-800 bg-opacity-50 p-1 rounded'>
-        <div className=' justify-center align-middle font-bold text-xl cursor-pointer hover:scale-125 transform duration-200
-               dark:text-gray-300 dark:hover:bg-gray-100 dark:hover:text-black'>
-          <i className='fa fa-bars px-1' onClick={() => changeCollapse(!collapse)}/>
-        </div>
+    {/* 顶部菜单按钮 */}
+    <div
+      className={(collapse ? 'left-0' : 'left-60') + ' fixed flex-wrap top-0 px-4 py-1 duration-500 ease-in-out'}>
+      {/* 菜单折叠 */}
+      <div className='p-1 border dark:border-gray-500 my-3 bg-white dark:bg-gray-600 dark:bg-opacity-70 bg-opacity-70
+      dark:hover:bg-gray-100 text-xl cursor-pointer dark:text-gray-300 dark:hover:text-black'>
+        <i className='fa fa-bars p-2.5 hover:scale-125 transform duration-200' onClick={() => changeCollapse(!collapse)} />
       </div>
-      <div className='my-4 bg-gray-100 dark:bg-gray-800 bg-opacity-50 p-1 rounded'>
-        <DarkModeButton />
-      </div>
-     </div>
+      {/* 夜间模式 */}
+      <DarkModeButton />
+    </div>
   </aside>
 }
 export default SideBar

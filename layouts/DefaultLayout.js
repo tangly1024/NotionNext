@@ -44,12 +44,12 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
     showNext = page * BLOG.postsPerPage < totalPosts
   }
 
-  // 首页隐藏看板娘
   useEffect(() => {
-    const ref = document.getElementById('waifu')
-    if (ref) {
-      ref.remove()
-    }
+    // 首页隐藏看板娘
+    // const ref = document.getElementById('waifu')
+    // if (ref) {
+    //   ref.remove()
+    // }
     window.addEventListener('resize', resizeWindowHideToc)
     resizeWindowHideToc()
     return () => {
@@ -58,7 +58,11 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   }, [])
 
   const resizeWindowHideToc = throttle(() => {
-    if (window.innerWidth > 1300) {
+    if (window.innerWidth > 2500) {
+      changeColumn(5)
+    } else if (window.innerWidth > 1800) {
+      changeColumn(4)
+    } else if (window.innerWidth > 1300) {
       changeColumn(3)
     } else if (window.innerWidth < 768) {
       changeColumn(1)
@@ -80,7 +84,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
       <div className={`${BLOG.font} flex bg-gray-100 dark:bg-black min-h-screen`}>
         <SideBar tags={tags} currentTag={currentTag} />
 
-        <main className='md:pb-10 md:px-24 p-5 flex-grow'>
+        <main className='md:px-24 p-5 flex-grow'>
           {(!page || page === 1) && (
             <div className='py-5' />
           )
@@ -110,7 +114,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
           {/* 文章列表 */}
           <div className='mx-auto animate__animated animate__fadeIn'>
             {/* <div className='col-4 grid md:grid-cols-2 grid-cols-1 gap-6'> */}
-            <div style={{ columnCount: column, columnGap: '2rem' }}>
+            <div style={{ columnCount: column }} className=''>
               {!postsToShow.length && (
                 <p className='text-gray-500 dark:text-gray-300 textc'>No posts found.</p>
               )}

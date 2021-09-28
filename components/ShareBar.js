@@ -30,25 +30,27 @@ const ShareBar = ({ post }) => {
   }
 
   return <>
-    <div className='text-gray-500 flex-col text-center space-y-2 w-12 border my-1 bg-white dark:bg-gray-800 dark:text-white overflow-hidden'>
-      <div>
-        分享
-      </div>
-      <div>
-        <a className='fa fa-facebook-square cursor-pointer text-3xl'
+    <div
+      className='dark:border-gray-500 py-2 text-gray-500 flex-col text-center space-y-2 w-12 border my-1 bg-white dark:bg-gray-800 dark:text-white overflow-hidden'>
+      <div className='text-3xl cursor-pointer'>
+        <a className='fa fa-facebook-square'
            href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} />
       </div>
-      <div>
-        <a className='fa fa-twitter-square text-3xl' target='_blank' rel='noreferrer'
+      <div className='text-3xl cursor-pointer'>
+        <a className='fa fa-twitter-square' target='_blank' rel='noreferrer'
            href={`https://twitter.com/intent/tweet?title=${post.title}&url${shareUrl}`} />
       </div>
-      <div>
-        <a className='fa fa-telegram text-3xl' href={`https://telegram.me/share/url?url=${shareUrl}&text=${post.title}`} />
+      <div className='text-3xl cursor-pointer'>
+        <a className='fa fa-telegram' href={`https://telegram.me/share/url?url=${shareUrl}&text=${post.title}`} />
       </div>
-      <div>
-        <a className='fa fa-wechat cursor-pointer text-3xl' ref={btnRef}
-           onMouseEnter={() => { openPopover() }}
-           onMouseLeave={() => { closePopover() }}>
+      <div className='cursor-pointer text-2xl'>
+        <a className='fa fa-wechat' ref={btnRef}
+           onMouseEnter={() => {
+             openPopover()
+           }}
+           onMouseLeave={() => {
+             closePopover()
+           }}>
           <div ref={popoverRef}
                className={(qrCodeShow ? 'animate__animated animate__fadeIn ' : 'hidden') + ' text-center py-2 bg-white'}>
             <div className='p-2 bg-white border-0 duration-200 transform block z-50 font-normal shadow-xl'>
@@ -63,20 +65,20 @@ const ShareBar = ({ post }) => {
           </div>
         </a>
       </div>
-      <div>
-        <a className='fa fa-weibo text-3xl' target='_blank' rel='noreferrer'
+      <div className='cursor-pointer text-2xl'>
+        <a className='fa fa-weibo' target='_blank' rel='noreferrer'
            href={`https://service.weibo.com/share/share.php?url=${shareUrl}&title=${post.title}`} />
       </div>
-      <div>
-        <a className='fa fa-qq text-3xl' target='_blank' rel='noreferrer'
+      <div className='cursor-pointer text-2xl'>
+        <a className='fa fa-qq' target='_blank' rel='noreferrer'
            href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${post.title}&desc=${post.summary}`} />
       </div>
-      <div>
-        <a className='fa fa-star text-3xl' target='_blank' rel='noreferrer'
+      <div className='cursor-pointer text-2xl'>
+        <a className='fa fa-star' target='_blank' rel='noreferrer'
            href={`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${shareUrl}&sharesource=qzone&title=${post.title}&summary=${post.summary}`} />
       </div>
-      <div>
-        <a className='fa fa-link cursor-pointer text-3xl' onClick={() => { copyUrl() }} />
+      <div className='cursor-pointer text-2xl'>
+        <a className='fa fa-link' onClick={copyUrl} />
       </div>
     </div>
   </>

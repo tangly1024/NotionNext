@@ -1,14 +1,60 @@
-import React from 'react'
-import Toc from '@/components/Toc'
+import React, { useState } from 'react'
+import TocBar from '@/components/TocBar'
+import throttle from 'lodash.throttle'
+import ShareButton from '@/components/ShareButton'
+import TopJumper from '@/components/TopJumper'
 
-const RightAside = ({ toc }) => {
+const RightAside = ({ toc, post }) => {
   // 无目录就直接返回空
   if (toc.length < 1) return <></>
+  // 监听滚动事件
+  React.useEffect(() => {
+    window.addEventListener('resize', resizeWindowHideToc)
+    return () => {
+      window.removeEventListener('resize', resizeWindowHideToc)
+    }
+  }, [])
 
-  return <aside className='bg-gray-100 dark:bg-gray-800 px-5 hidden lg:block py-5 hover:shadow-2xl duration-200'>
-      <div className='sticky top-8 w-52 overflow-x-auto'>
-      <Toc toc={toc}/>
+  const resizeWindowHideToc = throttle(() => {
+    if (window.innerWidth > 1300) {
+      changeHideAside(false)
+    } else {
+      changeHideAside(true)
+    }
+  }, 500)
+  const [hideAside, changeHideAside] = useState(false)
+
+  return <aside className='bg-white dark:bg-gray-800 py-5'>
+    <div className={(hideAside ? 'w-0' : 'w-52') + ' duration-500'} />
+
+    {/* 上方菜单组 */}
+    <div
+      className={(hideAside ? 'right-0' : 'right-52') + ' space-x-2 fixed md:fixed flex top-0 px-4 py-1 duration-500'}>
+      {/* 目录按钮 */}
+      <div
+        className='border dark:border-gray-500 my-3 bg-white dark:bg-gray-600 bg-opacity-70 dark:hover:bg-gray-100 text-xl cursor-pointer dark:text-gray-300 dark:hover:text-black p-1'>
+        <i className='fa fa-book p-2.5 hover:scale-125 transform duration-200'
+           onClick={() => changeHideAside(!hideAside)} />
       </div>
-    </aside>
+    </div>
+
+    {/* 下方菜单组 */}
+    <div
+      className={(hideAside ? 'right-0' : 'right-52') + ' space-x-2 fixed flex bottom-10 px-4 py-1 duration-500'}>
+      <div className='flex-wrap'>
+        {/* 分享按钮 */}
+        <ShareButton post={post} />
+        {/* 跳回顶部 */}
+        <TopJumper />
+      </div>
+    </div>
+
+    {/* 目录 */}
+    <div
+      className={(hideAside ? '-mr-52' : 'mr-0 shadow-xl xl:shadow-none') + ' h-full hover:shadow-2xl bg-white w-52 right-0 dark:bg-gray-800 duration-500 fixed top-0 pt-8'}>
+      <TocBar toc={toc} />
+    </div>
+
+  </aside>
 }
 export default RightAside

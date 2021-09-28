@@ -4,11 +4,11 @@ import TagItem from '@/components/TagItem'
 const BlogPost = ({ post }) => {
   return (
     <article key={post.id}
-             className='inline-block border dark:border-gray-600 my-2 md:mx-2 w-full md:max-w-md duration-200 hover:shadow-2xl rounded-3xl bg-white dark:bg-gray-700 dark:hover:bg-gray-600 overflow-hidden'>
+             className='inline-block border dark:border-gray-600 my-2 shadow-card w-full md:max-w-md bg-white dark:bg-gray-700 dark:hover:bg-gray-600 overflow-hidden'>
         {/*  封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
           <a href={`${BLOG.path}/article/${post.slug}`} className='md:flex-shrink-0 md:w-52 md:h-52 rounded-lg'>
-            <img className='w-full max-h-60 object-cover cursor-pointer' src={post.page_cover} alt={post.title} />
+            <img className='w-full max-h-60 object-cover cursor-pointer transform hover:scale-110 duration-500' src={post.page_cover} alt={post.title} />
           </a>
         )}
 

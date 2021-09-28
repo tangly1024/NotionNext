@@ -11,16 +11,6 @@ const Footer = ({ fullWidth = true }) => {
       className='p-6 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400'
     >
       <div className='py-2'>
-        <span className='text-xl border-b-2'>菜单</span>
-        <ul className='py-5 leading-8'>
-          <li><a className='fa fa-info hover:underline' href='/article/about' id='about'><span
-            className='ml-2'>关于本站</span></a></li>
-          <li><a className='fa fa-rss hover:underline' href='/feed' target='_blank' id='feed'><span
-            className='ml-2'>RSS订阅</span></a></li>
-        </ul>
-      </div>
-
-      <div className='py-2'>
         <span className='text-xl border-b-2'>联系我</span>
         <div className='py-4'>
           <SocialButton />

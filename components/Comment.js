@@ -24,8 +24,8 @@ const CusdisComponent = dynamic(
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
 
-  return <div className='comment'>
-    <div className='font-bold text-gray-800 pt-2 pb-4 dark:text-gray-300'>留下评论</div>
+  return <div className='comment text-gray-800 dark:text-gray-300'>
+    <div className='font-bold pt-2 pb-4 '>留下评论</div>
 
     {/* 评论插件 */}
     {BLOG.comment.provider === 'gitalk' && (

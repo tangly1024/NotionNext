@@ -3,7 +3,7 @@ import BLOG from '@/blog.config'
 const BlogPostMini = ({ post }) => {
   return (
     <a key={post.id} href={`${BLOG.path}/article/${post.slug}`}
-             className='md:flex w-full border my-2 duration-200 transform hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 dark:hover:bg-gray-600'>
+             className='md:flex w-full border dark:border-gray-500 my-2 duration-200 transform hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 dark:hover:bg-gray-600'>
         {/*  封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
             <img className='md:w-40 w-full max-h-32 object-cover cursor-pointer' src={post.page_cover} alt={post.title} />
