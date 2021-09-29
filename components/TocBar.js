@@ -51,7 +51,7 @@ const TocBar = ({ toc }) => {
     <div className='text-center text-2xl font-bold text-black dark:text-white py-6 '>
       文章目录
     </div>
-    <nav className='text-gray-500 dark:text-gray-400 underline overflow-x-auto'>
+    <nav className='text-gray-500 dark:text-gray-400 underline overflow-y-auto overflow-x-hidden'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (
@@ -62,7 +62,7 @@ const TocBar = ({ toc }) => {
               'notion-table-of-contents-item px-5',
               `notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`,
               activeSection === id &&
-              ' font-bold text-black dark:text-white'
+              ' font-bold text-black dark:text-white animate__animated animate__pulse'
             )}
           >
                       <span
