@@ -50,14 +50,14 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
     // if (ref) {
     //   ref.remove()
     // }
-    window.addEventListener('resize', resizeWindowHideToc)
-    resizeWindowHideToc()
+    window.addEventListener('resize', changeColumnCount)
+    changeColumnCount()
     return () => {
-      window.removeEventListener('resize', resizeWindowHideToc)
+      window.removeEventListener('resize', changeColumnCount)
     }
   }, [])
 
-  const resizeWindowHideToc = throttle(() => {
+  const changeColumnCount = throttle(() => {
     if (window.innerWidth > 2500) {
       changeColumn(5)
     } else if (window.innerWidth > 1800) {

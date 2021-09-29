@@ -8,6 +8,7 @@ import DarkModeButton from '@/components/DarkModeButton'
 import Footer from '@/components/Footer'
 import throttle from 'lodash.throttle'
 import TocBar from '@/components/TocBar'
+import SocialButton from '@/components/SocialButton'
 
 const SideBar = ({ tags, currentTag, toc }) => {
   const locale = useLocale()
@@ -36,7 +37,7 @@ const SideBar = ({ tags, currentTag, toc }) => {
       changeCollapse(true)
     }
   }, 500)
-  const [collapse, changeCollapse] = useState(true)
+  const [collapse, changeCollapse] = useState(false)
 
   return <aside className='z-10'>
 
@@ -77,10 +78,10 @@ const SideBar = ({ tags, currentTag, toc }) => {
 
         {/* 菜单 */}
         <nav className='py-4'>
-          <div className='mb-3'>
-            <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>菜单</span>
+          <div>
+            <strong className='text-xl text-gray-600 dark:text-gray-400'>菜单</strong>
           </div>
-          <ul className='leading-8 dark:text-gray-400'>
+          <ul className='leading-8 text-gray-500 dark:text-gray-400'>
             <li><a className='fa fa-info hover:underline' href='/article/about' id='about'><span
               className='ml-2'>关于本站</span></a></li>
             <li><a className='fa fa-rss hover:underline' href='/feed' target='_blank' id='feed'><span
@@ -90,10 +91,19 @@ const SideBar = ({ tags, currentTag, toc }) => {
 
         {/* 标签云  */}
         <section className=''>
-          <div className='mb-3'>
-            <span className='text-xl border-b-2 text-gray-500 dark:text-gray-400'>标签</span>
+          <div>
+            <strong className='text-xl text-gray-600 dark:text-gray-400'>标签</strong>
           </div>
           <Tags tags={tags} currentTag={currentTag} />
+        </section>
+
+        <section>
+          <div className='mt-4'>
+            <strong className='text-xl text-gray-600 dark:text-gray-400'>联系我</strong>
+            <div className='py-2'>
+              <SocialButton />
+            </div>
+          </div>
         </section>
 
         <section className='pt-2'>
