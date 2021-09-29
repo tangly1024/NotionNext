@@ -10,7 +10,7 @@ import throttle from 'lodash.throttle'
 import TocBar from '@/components/TocBar'
 import SocialButton from '@/components/SocialButton'
 
-const SideBar = ({ tags, currentTag, toc }) => {
+const SideBar = ({ tags, currentTag, post }) => {
   const locale = useLocale()
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
@@ -42,10 +42,20 @@ const SideBar = ({ tags, currentTag, toc }) => {
   return <aside className='z-10'>
 
     <div
-      className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
+      className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none ') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
+
+      {/* Logo  */}
+      <section className='px-5 pt-8 pb-2 flex-col pb-2 sticky top-0 bg-white dark:bg-gray-800 z-10'>
+        <Link href='/'>
+          <a
+            className='text-3xl hover:scale-125 dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 bg-gray-700 text-white p-2 duration-200 transform'>{BLOG.title}</a>
+        </Link>
+
+        <i className='fa fa-map-marker pl-2 dark:text-gray-300 mt-3' >&nbsp;Fuzhou, China</i>
+      </section>
 
       {/* 搜索框 */}
-      <section className='sticky top-0 flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'>
+      <section className={ (post ? ' ' : ' sticky top-0 ') + 'flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'}>
         <input
           type='text'
           placeholder={
@@ -59,58 +69,50 @@ const SideBar = ({ tags, currentTag, toc }) => {
         <i className='fa fa-search text-gray-400 -ml-8' />
       </section>
 
-      {/* Logo  */}
-      <section className='mx-5 pt-6 pb-2'>
-        <Link href='/'>
-          <a
-            className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
-        </Link>
-      </section>
-
-      {/* 地理标志 */}
-      <section className='text-gray-500 text-sm px-7 pt-3 dark:text-gray-300'>
-        <i className='fa fa-map-marker mr-1' />
-        Fuzhou, China
-      </section>
-
       {/* wrapper */}
-      <div className='p-6'>
+      <div className={ (post ? ' ' : ' sticky top-0 ') + 'px-6'}>
 
         {/* 菜单 */}
-        <nav>
-          <strong className='text-xl text-gray-600 dark:text-gray-400'>菜单</strong>
+        <nav className='mt-4'>
+          <strong className='text-2xl text-gray-600 dark:text-gray-400'>菜单</strong>
           <ul className='leading-8 text-gray-500 dark:text-gray-400'>
             <li><a className='fa fa-info hover:underline' href='/article/about' id='about'><span
               className='ml-2'>关于本站</span></a></li>
             <li><a className='fa fa-rss hover:underline' href='/feed' target='_blank' id='feed'><span
               className='ml-2'>RSS订阅</span></a></li>
+            <li></li>
           </ul>
         </nav>
 
         {/* 标签云  */}
         <section className='mt-4'>
-          <strong className='text-xl text-gray-600 dark:text-gray-400'>标签</strong>
+          <strong className='text-2xl text-gray-600 dark:text-gray-400'>标签</strong>
           <Tags tags={tags} currentTag={currentTag} />
         </section>
 
+        {/* 联系 */}
         <section>
           <div className='mt-4'>
-            <strong className='text-xl text-gray-600 dark:text-gray-400'>联系我</strong>
+            <strong className='text-2xl text-gray-600 dark:text-gray-400'>联系我</strong>
             <div className='py-2'>
               <SocialButton />
             </div>
           </div>
         </section>
 
-        <section className='pt-2'>
           {/* 站点信息 */}
+        <section className='py-2'>
           <Footer />
         </section>
 
       </div>
-      <div className='sticky top-20'>
-        <TocBar toc={toc} />
-      </div>
+
+      {post && (
+        <div className='sticky top-28'>
+          <TocBar toc={post.toc} />
+        </div>
+      )}
+
     </div>
 
     {/* 顶部菜单按钮 */}

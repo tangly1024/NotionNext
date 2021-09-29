@@ -50,7 +50,7 @@ const ArticleLayout = ({
       {/* Wrapper */}
       <div className='flex justify-between bg-gray-100 dark:bg-black'>
 
-        <SideBar tags={tags} toc={frontMatter.toc} />
+        <SideBar tags={tags} post={frontMatter} />
 
         {/* 主体区块 */}
         <main className='bg-gray-100 dark:bg-black w-full'>

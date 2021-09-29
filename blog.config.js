@@ -1,6 +1,6 @@
 const BLOG = {
   title: '塘里博客',
-  author: 'tangly',
+  author: 'tangly1024',
   email: 'tlyong1992@hotmail.com',
   link: 'https://tangly1024.com',
   description: '唐风集里，收卷波澜',

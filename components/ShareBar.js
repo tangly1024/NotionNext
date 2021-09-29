@@ -52,14 +52,14 @@ const ShareBar = ({ post }) => {
              closePopover()
            }}>
           <div ref={popoverRef}
-               className={(qrCodeShow ? 'animate__animated animate__fadeIn ' : 'hidden') + ' text-center py-2 bg-white'}>
-            <div className='p-2 bg-white border-0 duration-200 transform block z-50 font-normal shadow-xl'>
+               className={(qrCodeShow ? 'animate__animated animate__fadeIn ' : 'hidden') + ' text-center py-2'}>
+            <div className='p-2 bg-white border-0 duration-200 transform block z-50 font-normal shadow-xl mr-10'>
               <QRCode
                 value={shareUrl}// 生成二维码的内容
                 fgColor='#000000' // 二维码的颜色
               />
             </div>
-            <span className='bg-white text-black font-semibold p-1 mb-0 rounded-t-lg text-sm mx-auto'>
+            <span className='bg-white text-black font-semibold p-1 mb-0 rounded-t-lg text-sm mx-auto mr-10'>
             扫一扫分享
           </span>
           </div>

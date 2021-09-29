@@ -27,9 +27,9 @@ const TopJumper = () => {
     <div
       className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' animate__animated animate__faster'}>
       <div
-        className='border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer transform duration-200 hover:shadow-2xl hover:scale-125'
+        className='border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer hover:shadow-2xl'
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-        <a className='dark:text-gray-200 fa fa-arrow-up p-4' title={locale.POST.TOP}/>
+        <a className='dark:text-gray-200 fa fa-arrow-up p-4 transform hover:scale-150 duration-200' title={locale.POST.TOP}/>
       </div>
     </div>
 
