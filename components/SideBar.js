@@ -41,7 +41,8 @@ const SideBar = ({ tags, currentTag, toc }) => {
 
   return <aside className='z-10'>
 
-    <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
+    <div
+      className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
 
       {/* 搜索框 */}
       <section className='sticky top-0 flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'>
@@ -61,12 +62,13 @@ const SideBar = ({ tags, currentTag, toc }) => {
       {/* Logo  */}
       <section className='mx-5 pt-6 pb-2'>
         <Link href='/'>
-          <a className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
+          <a
+            className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
         </Link>
       </section>
 
       {/* 地理标志 */}
-      <section className='text-gray-500 text-sm px-7 pt-3 pb-5 dark:text-gray-300'>
+      <section className='text-gray-500 text-sm px-7 pt-3 dark:text-gray-300'>
         <i className='fa fa-map-marker mr-1' />
         Fuzhou, China
       </section>
@@ -76,9 +78,7 @@ const SideBar = ({ tags, currentTag, toc }) => {
 
         {/* 菜单 */}
         <nav>
-          <div>
-            <strong className='text-xl text-gray-600 dark:text-gray-400'>菜单</strong>
-          </div>
+          <strong className='text-xl text-gray-600 dark:text-gray-400'>菜单</strong>
           <ul className='leading-8 text-gray-500 dark:text-gray-400'>
             <li><a className='fa fa-info hover:underline' href='/article/about' id='about'><span
               className='ml-2'>关于本站</span></a></li>
@@ -88,8 +88,8 @@ const SideBar = ({ tags, currentTag, toc }) => {
         </nav>
 
         {/* 标签云  */}
-        <section>
-            <strong className='text-xl text-gray-600 dark:text-gray-400'>标签</strong>
+        <section className='mt-4'>
+          <strong className='text-xl text-gray-600 dark:text-gray-400'>标签</strong>
           <Tags tags={tags} currentTag={currentTag} />
         </section>
 
