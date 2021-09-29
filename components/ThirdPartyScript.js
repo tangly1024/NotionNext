@@ -4,13 +4,13 @@ const ThirdPartyScript = () => {
   return (<>
     {BLOG.DaoVoiceId && (<>
       {/* DaoVoice 反馈 */}
-      <script dangerouslySetInnerHTML={{
+      <script defer dangerouslySetInnerHTML={{
         __html: `
                   (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/daf1a94b.js","daovoice")
                   `
       }}
       />
-      <script async dangerouslySetInnerHTML={{
+      <script defer dangerouslySetInnerHTML={{
         __html: `
                  daovoice('init', {
                     app_id: "${BLOG.DaoVoiceId}"
@@ -21,23 +21,23 @@ const ThirdPartyScript = () => {
       />
     </>)}
     {/* 代码统计 */}
-    {BLOG.isProd && (<>
+    {true && (<>
         {/* GoogleAdsense */}
         {BLOG.googleAdsenseId && (
-          <script data-ad-client={BLOG.googleAdsenseId} async
+          <script data-ad-client={BLOG.googleAdsenseId} defer
                   src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' />
         )}
 
         {/* ackee统计脚本 */}
         {BLOG.analytics.provider === 'ackee' && (
-          <script async src={BLOG.analytics.ackeeConfig.tracker}
+          <script defer src={BLOG.analytics.ackeeConfig.tracker}
                   data-ackee-server={BLOG.analytics.ackeeConfig.dataAckeeServer}
                   data-ackee-domain-id={BLOG.analytics.ackeeConfig.domainId}
           />
         )}
         {/* 百度统计 */}
         {BLOG.analytics.baidyAnalytics && (
-          <script async
+          <script defer
                   dangerouslySetInnerHTML={{
                     __html: `
                   var _hmt = _hmt || [];
@@ -53,14 +53,14 @@ const ThirdPartyScript = () => {
         )}
         {/* 不蒜子 */}
         {BLOG.analytics.busuanzi && (
-          <script async
+          <script defer
                   src={'//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'}
           />
         )}
 
         {/* 站长统计 */}
         {BLOG.isProd && (
-          <script async
+          <script defer
                   dangerouslySetInnerHTML={{
                     __html: `
                   document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1279970751'%3E%3C/span%3E%3Cscript src='https://s9.cnzz.com/z_stat.php%3Fid%3D1279970751' type='text/javascript'%3E%3C/script%3E"));
@@ -71,10 +71,10 @@ const ThirdPartyScript = () => {
 
         {/* 谷歌统计 */}
         {BLOG.analytics.provider === 'ga' && (<>
-            <script async
+            <script defer
                     src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.analytics.gaConfig.measurementId}`}
             />
-            <script async
+            <script defer
                     dangerouslySetInnerHTML={{
                       __html: `
                         window.dataLayer = window.dataLayer || [];
