@@ -60,7 +60,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
       changeColumn(3)
     } else if (window.innerWidth > 900) {
       changeColumn(2)
-    } else if (window.innerWidth < 900) {
+    } else if (window.innerWidth <= 900) {
       changeColumn(1)
     }
   }, 500)
