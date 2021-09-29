@@ -8,7 +8,7 @@ import { cs } from 'react-notion-x'
  */
 const TocBar = ({ toc }) => {
   // 无目录就直接返回空
-  if (toc.length < 1) return <></>
+  if (!toc || toc.length < 1) return <></>
 
   // 监听滚动事件
   React.useEffect(() => {
@@ -47,11 +47,11 @@ const TocBar = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs)
 
-  return <>
-    <div className='text-center font-bold text-black dark:text-white border-b pb-2 mb-2 mx-4'>
+  return <div className='bg-white dark:bg-gray-800'>
+    <div className='text-center text-2xl font-bold text-black dark:text-white py-6 '>
       文章目录
     </div>
-    <nav className='notion-table-of-contents text-gray-500 dark:text-gray-400 underline overflow-x-auto'>
+    <nav className='text-gray-500 dark:text-gray-400 underline overflow-x-auto'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (
@@ -62,7 +62,7 @@ const TocBar = ({ toc }) => {
               'notion-table-of-contents-item px-5',
               `notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`,
               activeSection === id &&
-              ' font-bold text-black dark:text-white bg-gray-100 dark:bg-gray-500'
+              ' font-bold text-black dark:text-white'
             )}
           >
                       <span
@@ -78,7 +78,7 @@ const TocBar = ({ toc }) => {
         )
       })}
     </nav>
-  </>
+  </div>
 }
 
 export default TocBar

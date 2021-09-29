@@ -8,17 +8,16 @@ const Footer = ({ fullWidth = true }) => {
   const from = +BLOG.since
   return (
     <footer
-      className='p-6 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400'
+      className='flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400'
     >
       <div className='py-2'>
         <span className='text-xl border-b-2'>联系我</span>
-        <div className='py-4'>
+        <div className='py-2'>
           <SocialButton />
         </div>
       </div>
 
-      <hr />
-      <div className='text-sm py-10 text-gray-400'>
+      <div className='text-sm py-4 text-gray-400'>
         <span className='fa fa-shield leading-6'><a href='https://beian.miit.gov.cn/'
                                                     className='ml-1'>闽ICP备20010331号</a></span>
         <br />

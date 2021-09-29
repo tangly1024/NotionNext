@@ -17,7 +17,7 @@ class MyDocument extends Document {
           <ThirdPartyScript />
         </Head>
 
-        <body className='bg-gray-200 dark:bg-black'>
+        <body>
           <Main />
           <NextScript />
         </body>

@@ -12,7 +12,7 @@ const Progress = ({ targetRef }) => {
     const scrollListener = throttle(() => {
       if (targetRef.current) {
         const fullHeight = targetRef.current.clientHeight
-        const per = parseFloat(((window.scrollY / (fullHeight) * 100)).toFixed(0))
+        const per = parseFloat(((window.scrollY / (fullHeight - 100) * 100)).toFixed(0))
         changePercent(per)
       }
       // console.log('滚动信息', window.scrollY, fullHeight, per)

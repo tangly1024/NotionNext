@@ -24,7 +24,7 @@ const RightAside = ({ toc, post }) => {
   }, 500)
   const [hideAside, changeHideAside] = useState(true)
 
-  return <aside className='bg-white dark:bg-gray-800 py-5'>
+  return <aside className='dark:bg-gray-800'>
     {/* 上方菜单组 */}
     <div
       className={(hideAside ? 'right-0' : 'right-48') + ' z-20 space-x-2 fixed flex top-0 px-3 py-1 duration-500'}>
@@ -38,7 +38,7 @@ const RightAside = ({ toc, post }) => {
 
     {/* 下方菜单组 */}
     <div
-      className={(hideAside ? 'right-0' : 'right-48') + ' space-x-2 fixed flex bottom-10 px-4 py-1 duration-500'}>
+      className={(hideAside ? 'right-0' : 'right-48') + ' space-x-2 fixed flex bottom-20 px-4 py-1 duration-500'}>
       <div className='flex-wrap'>
         {/* 分享按钮 */}
         <ShareButton post={post} />
@@ -48,10 +48,13 @@ const RightAside = ({ toc, post }) => {
     </div>
 
     {/* 目录 */}
-    <div
-      className={(hideAside ? '-mr-48' : 'mr-0 shadow-xl xl:shadow-none') + ' fixed h-full hover:shadow-2xl bg-white w-48 right-0 dark:bg-gray-800 duration-500 top-0 pt-8'}>
+    <section
+      className={(hideAside ? '-mr-48' : 'mr-0 shadow-xl xl:shadow-none') + ' md:static top-0 fixed h-full w-48 right-0 dark:bg-gray-800 duration-500 top-0'}>
+      <div className='sticky top-0'>
       <TocBar toc={toc} />
-    </div>
+      </div>
+
+    </section>
 
   </aside>
 }

@@ -20,21 +20,13 @@ const ShareButton = ({ post }) => {
     <div className='my-2'
          onMouseEnter={() => { openPopover() }}
          onMouseLeave={() => { closePopover() }}>
-      <div className='overflow-hidden'>
-        <div
-          className={
-            (popoverShow ? ' h-96 ' : ' h-0 ') +
-            ' duration-200 ease-in-out transform z-50 font-normal'
-          }
-        >
+        <div className={(popoverShow ? 'opacity-100' : 'opacity-0') + ' duration-200 ease-in-out transform font-normal'}>
           <ShareBar post={post}/>
         </div>
-        <div
-          ref={btnRef}
+        <div ref={btnRef}
           className='border dark:border-gray-500 dark:bg-gray-600 bg-white px-4 py-3 cursor-pointer text-md transform duration-200'>
           <div className='dark:text-gray-200 fa fa-share-alt' title='share' />
         </div>
-      </div>
     </div>
   )
 }

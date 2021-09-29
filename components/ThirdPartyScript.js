@@ -2,6 +2,24 @@ import BLOG from '@/blog.config'
 
 const ThirdPartyScript = () => {
   return <>
+    {/* DaoVoice http://dashboard.daovoice.io/get-started */}
+
+    <script dangerouslySetInnerHTML={{
+      __html: `
+                  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/daf1a94b.js","daovoice")
+                  `
+    }}
+    />
+    <script async dangerouslySetInnerHTML={{
+      __html: `
+                 daovoice('init', {
+                    app_id: "daf1a94b"
+                  });
+                  daovoice('update');
+                  `
+    }}
+    />
+
     {/* GoogleAdsense */}
     { BLOG.isProd && (
       <>

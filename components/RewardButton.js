@@ -31,7 +31,7 @@ const RewardButton = () => {
       <div className='animate__jello animate__animated animate__faster'>
         <div
           ref={btnRef}
-          className='bg-blue-500 text-white hover:bg-white hover:text-black hover:shadow-2xl border duration-200 transform hover:scale-110 px-3 py-2 rounded cursor-pointer'>
+          className='bg-red-500 text-white hover:bg-green-400 hover:shadow-2xl duration-200 transform hover:scale-110 px-3 py-2 rounded cursor-pointer'>
           <div>
             <span className='fa fa-qrcode mr-2' />
             <span>打赏</span>

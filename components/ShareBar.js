@@ -31,7 +31,7 @@ const ShareBar = ({ post }) => {
 
   return <>
     <div
-      className='dark:border-gray-500 py-2 text-gray-500 flex-col text-center space-y-2 w-12 border my-1 bg-white dark:bg-gray-800 dark:text-white overflow-hidden'>
+      className='dark:border-gray-500 py-2 text-gray-500 flex-col text-center space-y-2 w-12 border my-1 bg-white dark:bg-gray-800 dark:text-white overflow-visible'>
       <div className='text-3xl cursor-pointer'>
         <a className='fa fa-facebook-square'
            href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} />
