@@ -32,10 +32,8 @@ const RewardButton = () => {
         <div
           ref={btnRef}
           className='bg-red-500 text-white hover:bg-green-400 hover:shadow-2xl duration-200 transform hover:scale-110 px-3 py-2 rounded cursor-pointer'>
-          <div>
             <span className='fa fa-qrcode mr-2' />
             <span>打赏</span>
-          </div>
         </div>
       </div>
 
@@ -46,15 +44,13 @@ const RewardButton = () => {
         }
         ref={popoverRef}
       >
-        <div>
-          <div
-            className='border animate__animated animate__fadeIn hover:shadow-2xl duration-200 my-5 px-5 py-6 w-96 grid justify-center bg-white dark:bg-black dark:text-gray-200'>
+        <div
+          className='border animate__animated animate__fadeIn hover:shadow-2xl duration-200 my-5 px-5 py-6 w-96 grid justify-center bg-white dark:bg-black dark:text-gray-200'>
          <span>
             <img className='md:w-72 m-auto' src='/reward_code.jpg' />
           </span>
-            <br />
-            <span className='text-center text-gray-500'>微信赞赏码或支付宝tlyong@126.com赞助</span>
-          </div>
+          <br />
+          <span className='text-center text-gray-500'>微信赞赏码或支付宝tlyong@126.com赞助</span>
         </div>
       </div>
     </div>

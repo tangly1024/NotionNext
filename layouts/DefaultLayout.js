@@ -78,12 +78,9 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   return (
     <div id='wrapper' className={theme}>
       <CommonHead meta={meta}/>
-      {/* <TopNav tags={tags} currentTag={currentTag} /> */}
-      {/* <Header navBarTitle={meta.title} fullWidth={true}/> */}
-
       <div className={`${BLOG.font} flex bg-gray-100 dark:bg-black min-h-screen`}>
+        {/* 侧边菜单 */}
         <SideBar tags={tags} currentTag={currentTag} />
-
         <main className='md:px-24 p-5 flex-grow'>
           {(!page || page === 1) && (
             <div className='py-5' />
@@ -128,7 +125,6 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
         </main>
       </div>
-      {/* <Footer /> */}
     </div>
   )
 }

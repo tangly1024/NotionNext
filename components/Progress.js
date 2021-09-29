@@ -21,15 +21,9 @@ const Progress = ({ targetRef }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [percent])
 
-  return (
-    <>
-      {/*  顶部进度条 */}
-      <div className='h-1.5 fixed top-0 w-full shadow-2xl z-40'>
+  return (<div className='h-1.5 fixed top-0 w-full shadow-2xl z-40'>
         <div className='h-1 bg-blue-500 fixed top-0 w-1 duration-200' style={{ width: `${percent}%` }}/>
-        {/* <div className='debug'>{percent}</div> */}
-      </div>
-    </>
-  )
+      </div>)
 }
 
 export default Progress

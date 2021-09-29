@@ -47,7 +47,7 @@ const TocBar = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs)
 
-  return <div className='bg-white dark:bg-gray-800'>
+  return <div className='bg-white dark:bg-gray-800 pb-10'>
     <div className='text-center text-2xl font-bold text-black dark:text-white py-6 '>
       文章目录
     </div>

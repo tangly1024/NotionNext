@@ -7,6 +7,7 @@ const CommonHead = ({ meta }) => {
   return <Head>
     <title>{meta.title}</title>
     <meta content={BLOG.darkBackground} name='theme-color' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name='robots' content='follow, index' />
     <meta charSet='UTF-8' />
     {BLOG.seo.googleSiteVerification && (

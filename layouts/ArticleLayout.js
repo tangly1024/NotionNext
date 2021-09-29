@@ -88,8 +88,9 @@ const ArticleLayout = ({
                   )}
 
                   {frontMatter.slug !== 'about' && (<>
-                    <a className='flex-nowrap flex hover:bg-blue-500 hover:text-white duration-200 px-1 mx-1'
-                       href='/article/about'>
+                    <a
+                      className='flex-nowrap flex hidden md:block hover:bg-blue-500 hover:text-white duration-200 px-1 mx-1'
+                      href='/article/about'>
                       <Image href='https://www.baidu.com' alt={BLOG.author} width={20} height={20} src='/avatar.svg'
                              className='rounded-full' />
                       <div className='mx-2 leading-6 my-1 md:block'>{BLOG.author}</div>
@@ -98,12 +99,10 @@ const ArticleLayout = ({
 
                   {frontMatter.type[0] !== 'Page' && (
                     <div className='flex items-start text-gray-500 dark:text-gray-400 text-sm leading-8 pr-3'>
-                      <div>
-                        {formatDate(
-                          frontMatter?.date?.start_date || frontMatter.createdTime,
-                          BLOG.lang
-                        )}
-                      </div>
+                      {formatDate(
+                        frontMatter?.date?.start_date || frontMatter.createdTime,
+                        BLOG.lang
+                      )}
                     </div>
                   )}
                 </div>
@@ -117,22 +116,16 @@ const ArticleLayout = ({
                 </div>
               </div>
 
-              <div>{children}</div>
-
               {/* Notion文章主体 */}
               {blockMap && (
-                <div>
-                  <NotionRenderer
-                    recordMap={blockMap}
-                    components={{
-                      equation: Equation,
-                      code: Code,
-                      collectionRow: CollectionRow,
-                      collection: Collection
-                    }}
-                    mapPageUrl={mapPageUrl}
-                  />
-                </div>
+                <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
+                                components={{
+                                  equation: Equation,
+                                  code: Code,
+                                  collectionRow: CollectionRow,
+                                  collection: Collection
+                                }}
+                />
               )}
 
               <div className='flex justify-center pt-5'>
@@ -143,7 +136,8 @@ const ArticleLayout = ({
               </p>
 
               {/* 版权声明 */}
-              <section className='dark:bg-gray-700 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
+              <section
+                className='dark:bg-gray-700 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
                 <ul>
                   <li><strong>本文作者：</strong>{BLOG.author}</li>
                   <li><strong>本文链接：</strong> <a href={url}>{url}</a> 《{frontMatter.title}》</li>
@@ -154,14 +148,8 @@ const ArticleLayout = ({
               <div className='text-gray-800 my-5 dark:text-gray-300'>
                 <div className='mt-4 my-2 font-bold'>继续阅读</div>
                 <div className='flex flex-wrap lg:flex-nowrap lg:space-x-3 justify-between py-2'>
-                  {/* <Link href={prev.slug}> */}
-                  {/* <div>上一篇:<a className='py-1 underline cursor-pointer ml-1'>{prev.title}</a></div> */}
-                  {/* </Link> */}
                   <BlogPostMini post={prev} />
                   <BlogPostMini post={next} />
-                  {/* <Link href={next.slug}> */}
-                  {/* <div>下一篇:<a className='py-1 underline cursor-pointer ml-1'>{next.title}</a></div> */}
-                  {/* </Link> */}
                 </div>
               </div>
               {/* 评论互动 */}
@@ -171,18 +159,15 @@ const ArticleLayout = ({
 
         </main>
 
-        <div>
-          {/* 下方菜单组 */}
-          <div
-            className='right-0 space-x-2 fixed flex bottom-20 px-5 py-1 duration-500'>
-            <div className='flex-wrap'>
-              {/* 分享按钮 */}
-              <ShareButton post={frontMatter} />
-              {/* 跳回顶部 */}
-              <TopJumper />
-            </div>
+        {/* 下方菜单组 */}
+        <div
+          className='right-0 space-x-2 fixed flex bottom-20 px-5 py-1 duration-500'>
+          <div className='flex-wrap'>
+            {/* 分享按钮 */}
+            <ShareButton post={frontMatter} />
+            {/* 跳回顶部 */}
+            <TopJumper />
           </div>
-
         </div>
       </div>
 
