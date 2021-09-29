@@ -75,10 +75,17 @@ const ArticleLayout = ({
               </h1>
 
               {/* 文章信息 */}
-              <div className='justify-between flex flex-wrap bg-gray-50 p-2
-                  dark:bg-gray-700 dark:text-white'>
+              <div className='justify-between flex flex-wrap bg-gray-50 p-2 dark:bg-gray-700 dark:text-white'>
                 <div className='flex-nowrap flex'>
 
+                  {frontMatter.slug !== 'about' && (<>
+                    <a
+                      className='hidden md:block duration-200 px-1' href='/article/about'
+                    >
+                        <Image alt={BLOG.author} width={33} height={33} src='/avatar.svg'
+                                  className='rounded-full cursor-pointer transform hover:scale-125 duration-200' />
+                    </a>
+                  </>)}
                   {frontMatter.tags && (
                     <div className='flex flex-nowrap leading-8 p-1'>
                       {frontMatter.tags.map(tag => (
@@ -87,18 +94,8 @@ const ArticleLayout = ({
                     </div>
                   )}
 
-                  {frontMatter.slug !== 'about' && (<>
-                    <a
-                      className='flex-nowrap flex hidden md:block hover:bg-blue-500 hover:text-white duration-200 px-1 mx-1'
-                      href='/article/about'>
-                      <Image href='https://www.baidu.com' alt={BLOG.author} width={20} height={20} src='/avatar.svg'
-                             className='rounded-full' />
-                      <div className='mx-2 leading-6 my-1 md:block'>{BLOG.author}</div>
-                    </a>
-                  </>)}
-
                   {frontMatter.type[0] !== 'Page' && (
-                    <div className='flex items-start text-gray-500 dark:text-gray-400 text-sm leading-8 pr-3'>
+                    <div className='flex items-start text-gray-500 dark:text-gray-400 leading-10'>
                       {formatDate(
                         frontMatter?.date?.start_date || frontMatter.createdTime,
                         BLOG.lang
