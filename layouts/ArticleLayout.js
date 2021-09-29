@@ -14,7 +14,7 @@ import BlogPostMini from '@/components/BlogPostMini'
 import { useRouter } from 'next/router'
 import ShareButton from '@/components/ShareButton'
 import TopJumper from '@/components/TopJumper'
-import { Head } from 'next/document'
+import CommonHead from '@/components/CommonHead'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -40,26 +40,7 @@ const ArticleLayout = ({
 
   return (
     <div className={`${BLOG.font} ${theme}`}>
-      <Head>
-        <title>{meta.title}</title>
-        <meta name='description' content={meta.description} />
-        <meta property='og:title' content={meta.title} />
-        <meta property='og:description' content={meta.description} />
-        <meta
-          property='og:url'
-          content={meta.slug ? `${url}/${meta.slug}` : url}
-        />
-        <meta property='og:type' content={meta.type} />
-        {meta.type === 'article' && (
-          <>
-            <meta
-              property='article:published_time'
-              content={meta.date || meta.createdTime}
-            />
-            <meta property='article:author' content={BLOG.author} />
-          </>
-        )}
-      </Head>
+      <CommonHead meta={meta} />
 
       {/* live2d 看板娘 */}
       <script async src='https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js' />

@@ -7,8 +7,14 @@ import { useTheme } from '@/lib/theme'
 import { useEffect, useState } from 'react'
 import SideBar from '@/components/SideBar'
 import throttle from 'lodash.throttle'
+import CommonHead from '@/components/CommonHead'
 
 const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
+  const meta = {
+    title: BLOG.title,
+    type: 'website',
+    ...customMeta
+  }
   page = page ?? 1
   let postsToShow = []
   let filteredBlogPosts = posts ?? []
@@ -71,6 +77,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
   return (
     <div id='wrapper' className={theme}>
+      <CommonHead meta={meta}/>
       {/* <TopNav tags={tags} currentTag={currentTag} /> */}
       {/* <Header navBarTitle={meta.title} fullWidth={true}/> */}
 
