@@ -41,7 +41,7 @@ const SideBar = ({ tags, currentTag, toc }) => {
   return <aside className='z-10'>
 
     <div
-      className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-60 duration-500 ease-in-out'}>
+      className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
 
       {/* Logo  */}
       <section className='mx-5 pt-6 pb-2'>
@@ -109,7 +109,7 @@ const SideBar = ({ tags, currentTag, toc }) => {
 
     {/* 顶部菜单按钮 */}
     <div
-      className={(collapse ? 'left-0' : 'left-60') + ' fixed flex flex-nowrap md:flex-col  top-0 pl-4 py-1 duration-500 ease-in-out'}>
+      className={(collapse ? 'left-0' : 'left-72') + ' fixed flex flex-nowrap md:flex-col  top-0 pl-4 py-1 duration-500 ease-in-out'}>
       {/* 菜单折叠 */}
       <div className='z-30 p-1 border hover:shadow-xl duration-200 dark:border-gray-500 h-12 bg-white dark:bg-gray-600 dark:bg-opacity-70 bg-opacity-70
       dark:hover:bg-gray-100 text-xl cursor-pointer mr-2 my-2 dark:text-gray-300 dark:hover:text-black'>
