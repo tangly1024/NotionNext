@@ -38,7 +38,7 @@ const RightAside = ({ toc, post }) => {
 
     {/* 下方菜单组 */}
     <div
-      className={(hideAside ? 'right-0' : 'right-48') + ' space-x-2 fixed flex bottom-20 px-4 py-1 duration-500'}>
+      className={(hideAside ? 'right-0' : 'right-48') + ' space-x-2 fixed flex bottom-24 px-4 py-1 duration-500'}>
       <div className='flex-wrap'>
         {/* 分享按钮 */}
         <ShareButton post={post} />

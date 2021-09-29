@@ -37,25 +37,11 @@ const SideBar = ({ tags, currentTag, toc }) => {
       changeCollapse(true)
     }
   }, 500)
-  const [collapse, changeCollapse] = useState(false)
+  const [collapse, changeCollapse] = useState(true)
 
   return <aside className='z-10'>
 
     <div className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
-
-      {/* Logo  */}
-      <section className='mx-5 pt-6 pb-2'>
-        <Link href='/'>
-          <a
-            className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
-        </Link>
-      </section>
-
-      {/* 地理标志 */}
-      <section className='text-gray-500 text-sm px-7 pt-3 pb-5 dark:text-gray-300'>
-        <i className='fa fa-map-marker mr-1' />
-        Fuzhou, China
-      </section>
 
       {/* 搜索框 */}
       <section className='sticky top-0 flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'>
@@ -72,11 +58,24 @@ const SideBar = ({ tags, currentTag, toc }) => {
         <i className='fa fa-search text-gray-400 -ml-8' />
       </section>
 
+      {/* Logo  */}
+      <section className='mx-5 pt-6 pb-2'>
+        <Link href='/'>
+          <a className='text-3xl hover:shadow-2xl text-black dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 hover:bg-gray-800 hover:text-white p-2 duration-200'>{BLOG.title}</a>
+        </Link>
+      </section>
+
+      {/* 地理标志 */}
+      <section className='text-gray-500 text-sm px-7 pt-3 pb-5 dark:text-gray-300'>
+        <i className='fa fa-map-marker mr-1' />
+        Fuzhou, China
+      </section>
+
       {/* wrapper */}
       <div className='p-6'>
 
         {/* 菜单 */}
-        <nav className='py-4'>
+        <nav>
           <div>
             <strong className='text-xl text-gray-600 dark:text-gray-400'>菜单</strong>
           </div>
@@ -109,7 +108,7 @@ const SideBar = ({ tags, currentTag, toc }) => {
         </section>
 
       </div>
-      <div className='sticky top-0'>
+      <div className='sticky top-20'>
         <TocBar toc={toc} />
       </div>
     </div>

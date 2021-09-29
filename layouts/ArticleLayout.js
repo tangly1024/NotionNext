@@ -161,7 +161,7 @@ const ArticleLayout = ({
 
         {/* 下方菜单组 */}
         <div
-          className='right-0 space-x-2 fixed flex bottom-20 px-5 py-1 duration-500'>
+          className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
           <div className='flex-wrap'>
             {/* 分享按钮 */}
             <ShareButton post={frontMatter} />
