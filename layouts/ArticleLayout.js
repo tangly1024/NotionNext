@@ -1,25 +1,20 @@
 import TagItem from '@/components/TagItem'
-import { NotionRenderer, Equation, Code, CollectionRow, Collection } from 'react-notion-x'
+import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import BLOG from '@/blog.config'
 import formatDate from '@/lib/formatDate'
 import 'gitalk/dist/gitalk.css'
 import Comment from '@/components/Comment'
 import CommonHead from '@/components/CommonHead'
-import TopNav from '@/components/TopNav'
 import Progress from '@/components/Progress'
 import { useRef } from 'react'
 import Image from 'next/image'
-import Footer from '@/components/Footer'
-import RightAside from '@/components/RightAside'
 import RewardButton from '@/components/RewardButton'
-import RightWidget from '@/components/RightWidget'
 import { useTheme } from '@/lib/theme'
 import SideBar from '@/components/SideBar'
 import BlogPostMini from '@/components/BlogPostMini'
 import { useRouter } from 'next/router'
 import ShareButton from '@/components/ShareButton'
 import TopJumper from '@/components/TopJumper'
-import TocBar from '@/components/TocBar'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -56,7 +51,7 @@ const ArticleLayout = ({
         <SideBar tags={tags} toc={frontMatter.toc} />
 
         {/* 主体区块 */}
-        <main className='bg-gray-100 dark:bg-black flex'>
+        <main className='bg-gray-100 dark:bg-black w-full'>
           {/* 中央区域 wrapper */}
           <div>
 
@@ -156,7 +151,7 @@ const ArticleLayout = ({
 
               <div className='text-gray-800 my-5 dark:text-gray-300'>
                 <div className='mt-4 my-2 font-bold'>继续阅读</div>
-                <div className='flex flex-wrap lg:flex-nowrap lg:space-x-2 justify-between py-2'>
+                <div className='flex flex-wrap lg:flex-nowrap lg:space-x-3 justify-between py-2'>
                   {/* <Link href={prev.slug}> */}
                   {/* <div>上一篇:<a className='py-1 underline cursor-pointer ml-1'>{prev.title}</a></div> */}
                   {/* </Link> */}
