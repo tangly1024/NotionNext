@@ -4,7 +4,6 @@ import BLOG from '@/blog.config'
 import formatDate from '@/lib/formatDate'
 import 'gitalk/dist/gitalk.css'
 import Comment from '@/components/Comment'
-import CommonHead from '@/components/CommonHead'
 import Progress from '@/components/Progress'
 import { useRef } from 'react'
 import Image from 'next/image'
@@ -15,6 +14,7 @@ import BlogPostMini from '@/components/BlogPostMini'
 import { useRouter } from 'next/router'
 import ShareButton from '@/components/ShareButton'
 import TopJumper from '@/components/TopJumper'
+import { Head } from 'next/document'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -37,9 +37,30 @@ const ArticleLayout = ({
   const targetRef = useRef(null)
   const { theme } = useTheme()
   const url = BLOG.link + useRouter().asPath
+
   return (
     <div className={`${BLOG.font} ${theme}`}>
-      <CommonHead meta={meta} />
+      <Head>
+        <title>{meta.title}</title>
+        <meta name='description' content={meta.description} />
+        <meta property='og:title' content={meta.title} />
+        <meta property='og:description' content={meta.description} />
+        <meta
+          property='og:url'
+          content={meta.slug ? `${url}/${meta.slug}` : url}
+        />
+        <meta property='og:type' content={meta.type} />
+        {meta.type === 'article' && (
+          <>
+            <meta
+              property='article:published_time'
+              content={meta.date || meta.createdTime}
+            />
+            <meta property='article:author' content={BLOG.author} />
+          </>
+        )}
+      </Head>
+
       {/* live2d 看板娘 */}
       <script async src='https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js' />
 

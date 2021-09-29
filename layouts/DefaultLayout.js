@@ -2,7 +2,6 @@ import BlogPost from '@/components/BlogPost'
 import PropTypes from 'prop-types'
 import Pagination from '@/components/Pagination'
 import BLOG from '@/blog.config'
-import CommonHead from '@/components/CommonHead'
 import { useRouter } from 'next/router'
 import { useTheme } from '@/lib/theme'
 import { useEffect, useState } from 'react'
@@ -10,11 +9,6 @@ import SideBar from '@/components/SideBar'
 import throttle from 'lodash.throttle'
 
 const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
-  const meta = {
-    title: BLOG.title,
-    type: 'website',
-    ...customMeta
-  }
   page = page ?? 1
   let postsToShow = []
   let filteredBlogPosts = posts ?? []
@@ -64,20 +58,19 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
       changeColumn(4)
     } else if (window.innerWidth > 1300) {
       changeColumn(3)
-    } else if (window.innerWidth < 768) {
-      changeColumn(1)
-    } else {
+    } else if (window.innerWidth > 900) {
       changeColumn(2)
+    } else if (window.innerWidth < 900) {
+      changeColumn(1)
     }
   }, 500)
 
-  const [column, changeColumn] = useState(1)
+  const [column, changeColumn] = useState(3)
 
   const { theme } = useTheme()
 
   return (
     <div id='wrapper' className={theme}>
-      <CommonHead meta={meta} />
       {/* <TopNav tags={tags} currentTag={currentTag} /> */}
       {/* <Header navBarTitle={meta.title} fullWidth={true}/> */}
 
@@ -112,11 +105,11 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
           )}
 
           {/* 文章列表 */}
-          <div className='mx-auto animate__animated animate__fadeIn'>
+          <div className='mx-auto'>
             {/* <div className='col-4 grid md:grid-cols-2 grid-cols-1 gap-6'> */}
-            <div style={{ columnCount: column }} className=''>
+            <div style={{ columnCount: column }}>
               {!postsToShow.length && (
-                <p className='text-gray-500 dark:text-gray-300 textc'>No posts found.</p>
+                <p className='text-gray-500 dark:text-gray-300'>No posts found.</p>
               )}
               {postsToShow.map(post => (
                   <BlogPost key={post.id} post={post} tags={tags} />
