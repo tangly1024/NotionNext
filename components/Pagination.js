@@ -8,7 +8,7 @@ const Pagination = ({ page, showNext }) => {
   const router = useRouter()
   const currentPage = +page
   return (
-    <div className=' my-10 flex justify-between font-medium text-black dark:text-gray-100 mx-5'>
+    <div className=' my-10 flex justify-between font-medium text-black dark:text-gray-100'>
       <Link
         href={
           {

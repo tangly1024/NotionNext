@@ -77,15 +77,13 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
   return (
     <div id='wrapper' className={theme}>
-      <CommonHead meta={meta}/>
+      <CommonHead meta={meta} />
       <div className={`${BLOG.font} flex bg-gray-100 dark:bg-black min-h-screen`}>
         {/* 侧边菜单 */}
         <SideBar tags={tags} currentTag={currentTag} />
         <main className='md:px-24 p-5 flex-grow'>
-          {(!page || page === 1) && (
-            <div className='py-5' />
-          )
-          }
+          {(!page || page === 1) && (<div className='py-5' />)}
+
           {/* 标签 */}
           {currentTag && (
             <div className='pb-5 dark:text-gray-200'>
@@ -93,35 +91,31 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
               <hr />
             </div>
           )}
+
           {/* 当前搜索 */}
           {(currentSearch || (page && page !== 1)) && (
             <div className='pb-5'>
               <div className='dark:text-gray-200 flex justify-between py-1'>
-                {currentSearch && (
-                  <span>搜索关键词: {currentSearch}</span>
-                )}
-                {page && page !== 1 && (
-                  <span>页 {page} / {totalPages}</span>
-                )}
+                {currentSearch && (<span>搜索关键词: {currentSearch}</span>)}
+                {page && page !== 1 && (<span>页 {page} / {totalPages}</span>)}
               </div>
               <hr />
             </div>
           )}
 
-          {/* 文章列表 */}
           <div className='mx-auto'>
-            {/* <div className='col-4 grid md:grid-cols-2 grid-cols-1 gap-6'> */}
+            {/* 文章列表 */}
             <div style={{ columnCount: column }}>
               {!postsToShow.length && (
                 <p className='text-gray-500 dark:text-gray-300'>No posts found.</p>
               )}
               {postsToShow.map(post => (
-                  <BlogPost key={post.id} post={post} tags={tags} />
+                <BlogPost key={post.id} post={post} tags={tags} />
               ))}
             </div>
-          </div>
 
-          <Pagination page={page} showNext={showNext} />
+            <Pagination page={page} showNext={showNext} />
+          </div>
 
         </main>
       </div>
