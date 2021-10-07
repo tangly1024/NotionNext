@@ -58,7 +58,7 @@ const ArticleLayout = ({
           <div>
 
             <header
-              className='mx-auto max-w-5xl mt-20 md:flex-shrink-0 overflow-y-hidden animate__fadeIn animate__animated'>
+              className='hover:scale-105 hover:shadow-2xl duration-200 transform mx-auto max-w-5xl mt-20 md:flex-shrink-0 overflow-y-hidden animate__fadeIn animate__animated'>
               {/* 封面图 */}
               {frontMatter.page_cover && frontMatter.page_cover.length > 1 && (
                 <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }}
@@ -68,7 +68,7 @@ const ArticleLayout = ({
 
             <article
               ref={targetRef}
-              className='mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-600'>
+              className='hover:shadow-2xl mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-600'>
               {/* 文章标题 */}
               <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
                 {frontMatter.title}

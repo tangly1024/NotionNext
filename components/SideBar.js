@@ -45,17 +45,17 @@ const SideBar = ({ tags, currentTag, post }) => {
       className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none ') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
 
       {/* Logo  */}
-      <section className='px-5 pt-8 pb-2 flex-col pb-2 sticky top-0 bg-white dark:bg-gray-800 z-10'>
+      <section className='flex border-b px-5 pt-8 pb-5 flex-col sticky top-0 bg-white dark:bg-gray-800 z-10'>
         <Link href='/'>
-          <a
-            className='text-3xl hover:scale-125 dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 bg-gray-700 text-white p-2 duration-200 transform'>{BLOG.title}</a>
+          <div
+            className='mx-auto text-center cursor-pointer text-3xl dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 bg-gray-700 text-white p-2 hover:scale-105 hover:shadow-2xl duration-200 transform'>{BLOG.title}</div>
         </Link>
 
-        <i className='fa fa-map-marker pl-2 dark:text-gray-300 mt-3' >&nbsp;Fuzhou, China</i>
+        <i className='mx-auto fa fa-map-marker pl-1 dark:text-gray-300 mt-5' >&nbsp;Fuzhou, China</i>
       </section>
 
       {/* 搜索框 */}
-      <section className={ (post ? ' ' : ' sticky top-0 ') + 'flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'}>
+      <section className={ (post ? ' ' : ' sticky top-0 ') + ' border-t border-b flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'}>
         <input
           type='text'
           placeholder={
@@ -73,9 +73,9 @@ const SideBar = ({ tags, currentTag, post }) => {
       <div className={ (post ? ' ' : ' sticky top-0 ') + 'px-6'}>
 
         {/* 菜单 */}
-        <nav className='mt-4'>
+        <nav className='mt-6'>
           <strong className='text-2xl text-gray-600 dark:text-gray-400'>菜单</strong>
-          <ul className='leading-8 text-gray-500 dark:text-gray-400'>
+          <ul className='mt-4 leading-8 text-gray-500 dark:text-gray-400'>
             <li><a className='fa fa-info hover:underline' href='/article/about' id='about'><span
               className='ml-2'>关于本站</span></a></li>
             <li><a className='fa fa-rss hover:underline' href='/feed' target='_blank' id='feed'><span
@@ -85,30 +85,32 @@ const SideBar = ({ tags, currentTag, post }) => {
         </nav>
 
         {/* 标签云  */}
-        <section className='mt-4'>
+        <section className='mt-6'>
           <strong className='text-2xl text-gray-600 dark:text-gray-400'>标签</strong>
-          <Tags tags={tags} currentTag={currentTag} />
+          <div className='mt-4'>
+            <Tags tags={tags} currentTag={currentTag} />
+          </div>
         </section>
 
         {/* 联系 */}
         <section>
-          <div className='mt-4'>
+          <div className='mt-6'>
             <strong className='text-2xl text-gray-600 dark:text-gray-400'>联系我</strong>
-            <div className='py-2'>
+            <div className='mt-2 py-2'>
               <SocialButton />
             </div>
           </div>
         </section>
 
           {/* 站点信息 */}
-        <section className='py-2'>
+        <section className='my-3'>
           <Footer />
         </section>
 
       </div>
 
       {post && (
-        <div className='sticky top-28'>
+        <div className='sticky top-32'>
           <TocBar toc={post.toc} />
         </div>
       )}
