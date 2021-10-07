@@ -129,12 +129,12 @@ const ArticleLayout = ({
                 <RewardButton />
               </div>
               <p className='flex justify-center py-5'>
-                ------------- 💖 🌞 本 文 结 束 😚 感 谢 您 的 阅 读 🌞 💖 -------------
+                 - 💖 本 文 结 束 😚 感 谢 您 的 阅 读  💖 -
               </p>
 
               {/* 版权声明 */}
               <section
-                className='dark:bg-gray-700 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
+                className='overflow-auto dark:bg-gray-700 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
                 <ul>
                   <li><strong>本文作者：</strong>{BLOG.author}</li>
                   <li><strong>本文链接：</strong> <a href={url}>{url}</a> 《{frontMatter.title}》</li>
@@ -144,7 +144,7 @@ const ArticleLayout = ({
 
               <div className='text-gray-800 my-5 dark:text-gray-300'>
                 <div className='mt-4 my-2 font-bold'>继续阅读</div>
-                <div className='flex flex-wrap lg:flex-nowrap lg:space-x-3 justify-between py-2'>
+                <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
                   <BlogPostMini post={prev} />
                   <BlogPostMini post={next} />
                 </div>
