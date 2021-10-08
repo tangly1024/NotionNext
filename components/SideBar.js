@@ -45,7 +45,7 @@ const SideBar = ({ tags, currentTag, post }) => {
       className={(collapse ? '-ml-80 ' : 'shadow-2xl xl:shadow-none ') + ' dark:bg-gray-800 bg-white sidebar h-full w-72 duration-500 ease-in-out'}>
 
       {/* Logo  */}
-      <section className='flex border-b px-5 pt-8 pb-5 flex-col sticky top-0 bg-white dark:bg-gray-800 z-10'>
+      <section className='flex border-b px-5 pt-8 pb-6 flex-col sticky top-0 bg-white dark:bg-gray-800 z-10'>
         <Link href='/'>
           <div
             className='mx-auto text-center cursor-pointer text-3xl dark:bg-gray-900 dark:text-gray-300 font-semibold dark:hover:bg-gray-600 bg-gray-700 text-white p-2 hover:scale-105 hover:shadow-2xl duration-200 transform'>{BLOG.title}</div>
@@ -55,7 +55,7 @@ const SideBar = ({ tags, currentTag, post }) => {
       </section>
 
       {/* 搜索框 */}
-      <section className={ (post ? ' ' : ' sticky top-0 ') + ' border-t border-b flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'}>
+      <section className={ (post ? ' ' : ' sticky top-36 ') + ' z-20 border-t border-b flex justify-center items-center py-5 pr-5 pl-2 bg-gray-100 dark:bg-black'}>
         <input
           type='text'
           placeholder={
@@ -70,7 +70,7 @@ const SideBar = ({ tags, currentTag, post }) => {
       </section>
 
       {/* wrapper */}
-      <div className={ (post ? ' ' : ' sticky top-0 ') + 'px-6'}>
+      <div className={ (post ? ' ' : ' ') + 'px-6'}>
 
         {/* 菜单 */}
         <nav className='mt-6'>
@@ -110,7 +110,7 @@ const SideBar = ({ tags, currentTag, post }) => {
       </div>
 
       {post && (
-        <div className='sticky top-32'>
+        <div className='sticky top-36'>
           <TocBar toc={post.toc} />
         </div>
       )}
