@@ -68,6 +68,9 @@
 - **评论**: Gitalk,Cusdis,Utterances
 - **图标**：[fontawesome](https://fontawesome.com/v5.15/icons?d=gallery)
 
+## 页面样式主题
+- 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa)
+
 ## License
 
 The MIT License.
