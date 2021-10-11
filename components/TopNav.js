@@ -22,7 +22,7 @@ const TopNav = ({ tags, currentTag }) => {
   }
 
   return (
-    <div className='bg-white dark:bg-gray-600 block xl:hidden '>
+    <div className='bg-white dark:bg-gray-600'>
       {/* 隐藏的顶部菜单 */}
       <nav
         className={(hiddenMenu ? '-mt-10' : ' ') + ' py-1 overflow-hidden bg-gray-800 text-xl text-gray-200 w-full ease-in-out duration-500'}>
@@ -36,7 +36,7 @@ const TopNav = ({ tags, currentTag }) => {
       {/* 导航栏 */}
       <div
         id='sticky-nav'
-        className='text-sm ticky-nav m-auto w-full flex flex-row justify-between items-center px-5 pt-3 pb-2'
+        className='text-sm ticky-nav m-auto w-full flex flex-row justify-between items-center px-5 '
       >
         <div>
           <Link href='/'>
@@ -63,12 +63,8 @@ const TopNav = ({ tags, currentTag }) => {
         </div>
 
         <div className='flex flex-nowrap space-x-1'>
-          <div onClick={handleMenuClick}
-               className='p-2.5 cursor-pointer text-gray-600 bg-white hover:bg-gray-800 hover:text-white duration-200
-                dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-100 dark:hover:text-black'>
-            <div className={'fa' + (hiddenMenu ? ' fa-bars ' : ' fa-times')} />
-            <span
-              className='px-0.5'>{hiddenMenu ? '' : ''}</span>
+          <div className='z-10 p-1 border hover:shadow-xl duration-200 dark:border-gray-500 mr-2 h-12 my-2 bg-white dark:bg-gray-600 dark:bg-opacity-70 bg-opacity-70 dark:hover:bg-gray-100 text-xl cursor-pointer dark:text-gray-300 dark:hover:text-black'>
+            <i className={'fa p-2.5 hover:scale-125 transform duration-200 ' + (hiddenMenu ? ' fa-bars ' : ' fa-times') } onClick={handleMenuClick} />
           </div>
           <DarkModeButton/>
         </div>
