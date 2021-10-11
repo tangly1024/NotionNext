@@ -2,8 +2,15 @@ import React, { useState } from 'react'
 import TocBar from '@/components/TocBar'
 import throttle from 'lodash.throttle'
 import ShareButton from '@/components/ShareButton'
-import TopJumper from '@/components/TopJumper'
+import JumpToTop from '@/components/JumpToTop'
 
+/**
+ * 右侧边栏
+ * @param toc
+ * @param post
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const RightAside = ({ toc, post }) => {
   // 无目录就直接返回空
   if (toc.length < 1) return <></>
@@ -43,7 +50,7 @@ const RightAside = ({ toc, post }) => {
         {/* 分享按钮 */}
         <ShareButton post={post} />
         {/* 跳回顶部 */}
-        <TopJumper />
+        <JumpToTop />
       </div>
     </div>
 

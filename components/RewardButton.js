@@ -2,7 +2,7 @@ import React from 'react'
 import { createPopper } from '@popperjs/core'
 
 /**
- * 赞赏模块
+ * 赞赏按钮
  * @returns {JSX.Element}
  * @constructor
  */

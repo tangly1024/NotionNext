@@ -4,15 +4,13 @@ import React from 'react'
 const Footer = ({ fullWidth = true }) => {
   const d = new Date()
   const y = d.getFullYear()
-  const from = +BLOG.since
   return (
     <footer
-      className='flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400 text-sm text-gray-400'
+      className='flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400 text-xs text-gray-400 p-6'
     >
-        <hr className='py-2'/>
         <span className='fa fa-shield leading-6'> <a href='https://beian.miit.gov.cn/' className='ml-1'>闽ICP备20010331号</a></span>
         <br />
-        <span className='fa fa-copyright leading-6'> {from === y || !from ? y : `${from} - ${y}`} {BLOG.author} </span>
+        <span className='fa fa-copyright leading-6'> {` ${y}`} {BLOG.author} </span>
         <br />
         <span id='busuanzi_container_site_pv' className='hidden'>
         <a id='busuanzi_container_site_pv' href='https://www.cnzz.com/stat/website.php?web_id=1279970751' target='_blank'

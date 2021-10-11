@@ -3,6 +3,13 @@ import { useLocale } from '@/lib/locale'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+/**
+ * 翻页插件
+ * @param page 当前页码
+ * @param showNext 是否有下一页
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Pagination = ({ page, showNext }) => {
   const locale = useLocale()
   const router = useRouter()

@@ -26,7 +26,7 @@ const NavBar = () => {
   )
 }
 
-const Header = ({ navBarTitle, fullWidth }) => {
+const Header = ({ navBarTitle, fullWidth = true }) => {
   const navRef = useRef(null)
   const sentinelRef = useRef([])
   // 当Header移出屏幕时改变的样式
@@ -49,7 +49,7 @@ const Header = ({ navBarTitle, fullWidth }) => {
   }, [sentinelRef])
   return (
     <>
-      { BLOG.autoCollapsedNavBar === true && (
+      {BLOG.autoCollapsedNavBar === true && (
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -70,38 +70,41 @@ const Header = ({ navBarTitle, fullWidth }) => {
           }}
         />
       )}
-      <div className='observer-element h-0.5' ref={sentinelRef}/>
+       <div className='observer-element h-0.5 ' ref={sentinelRef} />
+
       <div
-        className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 py-8 bg-opacity-60 ${
-          !fullWidth ? 'max-w-5xl px-4' : 'px-4 md:px-24'
-        }`}
+        className='z-30 px-4 sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center py-6 bg-white bg-opacity-80 '
         id='sticky-nav'
         ref={navRef}
       >
         <div className='flex items-center'>
-          <Link href='/'>
-            <a>
-              <div className='h-6'>
-                <Image
-                  alt={BLOG.author}
-                  width={24}
-                  height={24}
-                  src='/favicon.svg'
-                  className='rounded-full'
-                />
-              </div>
-            </a>
-          </Link>
+
+          <div className='flex cursor-pointer'>
+            <div className='px-2 text-xl'>
+              <i className='fa fa-bars hover:scale-125 transform duration-200' />
+            </div>
+            <Image
+              alt={BLOG.author}
+              width={28}
+              height={28}
+              src='/avatar.svg'
+              className='rounded-full'
+            />
+            <div
+              className='mx-1 text-center cursor-pointer text-xl p-1
+              dark:bg-gray-900 dark:text-gray-300 font-semibold
+              dark:hover:bg-gray-600 text-black hover:scale-105
+              hover:shadow-2xl duration-200 transform'>{BLOG.title}</div>
+
+          </div>
           {navBarTitle
             ? (
-              <p className='ml-2 font-medium text-gray-500 dark:text-night header-name'>
+              <p className='ml-1 font-medium text-gray-500 dark:text-night header-name'>
                 {navBarTitle}
               </p>
               )
             : (
-              <p className='ml-2 font-medium text-500 dark:text-night header-name'>
-                {BLOG.title} {' '}
-                {BLOG.title},{' '}
+              <p className='ml-1 font-medium dark:text-night header-name'>
                 <span className='font-normal'>{BLOG.description}</span>
               </p>
               )}

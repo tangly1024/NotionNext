@@ -4,7 +4,10 @@ import { uuidToId } from 'notion-utils'
 import { cs } from 'react-notion-x'
 
 /**
- * 目录组件
+ * 目录导航组件
+ * @param toc
+ * @returns {JSX.Element}
+ * @constructor
  */
 const TocBar = ({ toc }) => {
   // 无目录就直接返回空
@@ -47,8 +50,8 @@ const TocBar = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs)
 
-  return <div className='bg-white dark:bg-gray-800 pb-10'>
-    <div className='border-t border-b text-2xl bg-gray-100 font-bold text-black dark:bg-black dark:text-white py-6 px-6'>
+  return <div className='bg-white dark:bg-gray-800 pb-10 w-52 hidden md:block min-h-screen'>
+    <div className='border-t dark:border-gray-600 border-b text-2xl bg-gray-100 font-bold text-black dark:bg-black dark:text-white py-6 px-6'>
       文章目录
     </div>
     <nav className='text-gray-500 dark:text-gray-400 underline overflow-y-auto overflow-x-hidden'>

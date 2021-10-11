@@ -9,12 +9,13 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import RewardButton from '@/components/RewardButton'
 import { useTheme } from '@/lib/theme'
-import SideBar from '@/components/SideBar'
 import BlogPostMini from '@/components/BlogPostMini'
 import { useRouter } from 'next/router'
 import ShareButton from '@/components/ShareButton'
-import TopJumper from '@/components/TopJumper'
+import JumpToTop from '@/components/JumpToTop'
 import CommonHead from '@/components/CommonHead'
+import TopNav from '@/components/TopNav'
+import SideBarResponsive from '@/components/SideBarResponsive'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -47,10 +48,14 @@ const ArticleLayout = ({
 
       <Progress targetRef={targetRef} />
 
+      <div className=' fixed w-full top-0 z-20'>
+        <TopNav post={frontMatter}/>
+      </div>
+
       {/* Wrapper */}
       <div className='flex justify-between bg-gray-100 dark:bg-black'>
 
-        <SideBar tags={tags} post={frontMatter} />
+        <SideBarResponsive tags={tags} post={frontMatter} />
 
         {/* 主体区块 */}
         <main className='bg-gray-100 dark:bg-black w-full'>
@@ -163,7 +168,7 @@ const ArticleLayout = ({
             {/* 分享按钮 */}
             <ShareButton post={frontMatter} />
             {/* 跳回顶部 */}
-            <TopJumper />
+            <JumpToTop />
           </div>
         </div>
       </div>

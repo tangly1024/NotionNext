@@ -109,12 +109,9 @@ nav {
   @apply right-auto left-0 hidden lg:block z-10 !important
 }
 
-@media (max-width: 1300px){
-  .sidebar{
-    -ms-overflow-style: none;
-    overflow: -moz-scrollbars-none;
-    @apply border-r border-gray-200 h-screen overflow-y-scroll fixed left-0
-  }
-  .sidebar::-webkit-scrollbar { width: 0 !important }
+.scroll-hidden{
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
 }
 
+.scroll-hidden::-webkit-scrollbar { width: 0 !important }

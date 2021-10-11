@@ -1,8 +1,13 @@
 import React from 'react'
 
+/**
+ * 社交联系方式按钮组
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const SocialButton = () => {
-  return <>
-    <div className='space-x-3 text-2xl text-gray-500 dark:text-gray-400'>
+  return <div className='w-52'>
+    <div className='space-x-3 text-2xl text-black dark:text-gray-400 px-6'>
       <a target='_blank' rel='noreferrer' title={'github'}
           href={'https://github.com/tangly1024'} >
         <div className='fa fa-github transform hover:scale-125 duration-150'/>
@@ -18,7 +23,8 @@ const SocialButton = () => {
          href={'https://weibo.com/tangly1024'} >
         <div className='fa fa-weibo transform hover:scale-125 duration-150'/>
       </a>
+
     </div>
-  </>
+  </div>
 }
 export default SocialButton

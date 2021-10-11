@@ -3,11 +3,12 @@ import throttle from 'lodash.throttle'
 import { useLocale } from '@/lib/locale'
 
 /**
- * 跳转到网页顶部；当屏幕下滑500像素后会出现该控件
+ * 跳转到网页顶部
+ * 当屏幕下滑500像素后会出现该控件
  * @returns {JSX.Element}
  * @constructor
  */
-const TopJumper = () => {
+const JumpToTop = () => {
   const locale = useLocale()
 
   const [show, switchShow] = useState(false)
@@ -36,4 +37,4 @@ const TopJumper = () => {
   )
 }
 
-export default TopJumper
+export default JumpToTop

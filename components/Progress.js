@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import throttle from 'lodash.throttle'
 
 /**
- * 跳转到网页顶部；当屏幕下滑500像素后会出现该控件
+ * 顶部页面阅读进度条
  * @returns {JSX.Element}
  * @constructor
  */

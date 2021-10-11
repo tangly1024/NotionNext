@@ -1,72 +1,105 @@
 import Link from 'next/link'
 import BLOG from '@/blog.config'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useLocale } from '@/lib/locale'
 import Router, { useRouter } from 'next/router'
 import DarkModeButton from '@/components/DarkModeButton'
-import SocialButton from '@/components/SocialButton'
+import Image from 'next/image'
+import SideBarEmbed from '@/components/SideBarEmbed'
 
-const TopNav = ({ tags, currentTag }) => {
+const TopNav = ({ tags, currentTag, post }) => {
   const locale = useLocale()
-  const [hiddenMenu, switchHiddenMenu] = useState(!currentTag)
-  // 点击按钮更改菜单状态
+  const [showDrawer, switchShowDrawer] = useState(false)
+  // 点击按钮更改侧边抽屉状态
   const handleMenuClick = () => {
-    switchHiddenMenu(!hiddenMenu)
+    switchShowDrawer(!showDrawer)
   }
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
+  const handleSearch = () => {
+    if (searchValue && searchValue !== '') {
+      Router.push({ pathname: '/', query: { s: searchValue } }).then(r => {
+        console.log(r)
+      })
+    }
+  }
   const handleKeyUp = (e) => {
     if (e.keyCode === 13) {
-      Router.push({ pathname: '/', query: { s: searchValue } })
+      handleSearch()
     }
   }
 
   return (
-    <div className='bg-white dark:bg-gray-600'>
-      {/* 隐藏的顶部菜单 */}
-      <nav
-        className={(hiddenMenu ? '-mt-10' : ' ') + ' py-1 overflow-hidden bg-gray-800 text-xl text-gray-200 w-full ease-in-out duration-500'}>
-        <ul className='mx-5 duration-300'>
-          <li>
-            <SocialButton/>
-          </li>
-        </ul>
-      </nav>
+    <div className='bg-white dark:bg-gray-600 border-b dark:border-gray-700'>
+
+      <div className='fixed top-0 left-0 z-30 h-full'>
+        <div className={(showDrawer ? 'shadow-2xl' : '-ml-52') + ' duration-200 w-52 h-full bg-white dark:bg-gray-800 border-r dark:border-gray-600'}>
+          <div className='flex space-x-4 px-5 dark:bg-gray-600'>
+            <div
+              className='z-10 p-1 duration-200 mr-2 bg-white dark:bg-gray-600 text-gray-600 text-xl cursor-pointer dark:text-gray-300'>
+              <i className='fa hover:scale-125 transform duration-200 fa-bars ' onClick={handleMenuClick}/>
+            </div>
+            <Link href='/'>
+              <a
+                className='flex justify-center font-bold font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200
+               dark:text-gray-300
+              '>{BLOG.title}</a>
+            </Link>
+          </div>
+          <SideBarEmbed post={post}/>
+        </div>
+      </div>
+      <div className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-20 w-full h-full bg-black bg-opacity-40' } onClick={handleMenuClick}/>
 
       {/* 导航栏 */}
       <div
         id='sticky-nav'
-        className='text-sm ticky-nav m-auto w-full flex flex-row justify-between items-center px-5 '
+        className='text-sm m-auto w-full flex flex-row justify-between items-center px-5'
       >
-        <div>
+        <div className='flex space-x-4'>
+          <div
+            className='z-10 p-1 duration-200 mr-2 bg-white dark:bg-gray-600 text-gray-600 text-xl cursor-pointer dark:text-gray-300'>
+            <i className='fa hover:scale-125 transform duration-200 fa-bars '
+               onClick={handleMenuClick} />
+          </div>
           <Link href='/'>
             <a
-              className='flex justify-center border-black border-2 bg-whitefont-semibold hover:bg-gray-800 hover:text-white p-2 duration-200
-              dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-100 dark:hover:text-black
+              className='flex justify-center font-bold font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200
+               dark:text-gray-300
               '>{BLOG.title}</a>
           </Link>
         </div>
 
         <div>
           {/* 搜索框 */}
-          <div className='px-4 flex w-20'>
-            <i className='py-3 fa fa-search text-gray-400 absolute cursor-pointer px-2' />
+          <div className='flex border dark:border-gray-600'>
             <input
               type='text'
               placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-              className={'transition duration-200 leading-10 pl-8 block border-gray-300 dark:border-gray-600 bg-white text-black dark:bg-gray-800 dark:text-white'}
+              className={'md:w-80 transition border-r dark:border-gray-700 duration-200 leading-10 pl-2 block border-gray-300 bg-white text-black dark:bg-gray-800 dark:text-white'}
               onKeyUp={handleKeyUp}
               onChange={e => setSearchValue(e.target.value)}
               defaultValue={router.query.s ?? ''}
             />
+            <div className='py-3 px-5 bg-gray-50 flex dark:bg-gray-500 justify-center align-middle cursor-pointer'
+                 onClick={handleSearch}>
+              <i className='fa fa-search text-black absolute cursor-pointer' />
+            </div>
           </div>
         </div>
 
         <div className='flex flex-nowrap space-x-1'>
-          <div className='z-10 p-1 border hover:shadow-xl duration-200 dark:border-gray-500 mr-2 h-12 my-2 bg-white dark:bg-gray-600 dark:bg-opacity-70 bg-opacity-70 dark:hover:bg-gray-100 text-xl cursor-pointer dark:text-gray-300 dark:hover:text-black'>
-            <i className={'fa p-2.5 hover:scale-125 transform duration-200 ' + (hiddenMenu ? ' fa-bars ' : ' fa-times') } onClick={handleMenuClick} />
-          </div>
-          <DarkModeButton/>
+
+          <DarkModeButton />
+          <a className='flex align-middle cursor-pointer' href='/article/about'>
+            <Image
+              alt={BLOG.author}
+              width={28}
+              height={28}
+              src='/avatar.svg'
+              className='rounded-full border-black'
+            />
+          </a>
         </div>
       </div>
     </div>
