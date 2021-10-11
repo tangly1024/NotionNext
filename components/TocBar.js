@@ -50,11 +50,11 @@ const TocBar = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs)
 
-  return <div className='bg-white dark:bg-gray-800 pb-10 w-52 hidden md:block min-h-screen'>
+  return <div className='bg-white dark:bg-gray-800 pb-10 hidden md:block min-h-screen'>
     <div className='border-t dark:border-gray-600 border-b text-2xl bg-gray-100 font-bold text-black dark:bg-black dark:text-white py-6 px-6'>
       文章目录
     </div>
-    <nav className='text-gray-500 dark:text-gray-400 underline overflow-y-auto overflow-x-hidden'>
+    <nav className='text-gray-500 dark:text-gray-400 underline overflow-y-auto overflow-x-auto'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (

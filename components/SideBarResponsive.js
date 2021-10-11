@@ -4,7 +4,7 @@ import TocBar from '@/components/TocBar'
 import SocialButton from '@/components/SocialButton'
 
 const SideBarResponsive = ({ tags, currentTag, post }) => {
-  return <aside className='z-10 bg-white dark:border-gray-500 border-gray-200 mt-12 hidden md:block'>
+  return <aside className='z-10 bg-white dark:border-gray-500 border-gray-200 mt-12 hidden lg:block'>
 
     <div
       className='dark:bg-gray-800 border-r dark:border-gray-700 h-full scroll-hidden left-0 duration-500 ease-in-out min-h-screen'>

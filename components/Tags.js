@@ -10,7 +10,8 @@ import Link from 'next/link'
 const Tags = ({ tags, currentTag }) => {
   if (!tags) return <></>
   return (<div className='bg-white dark:bg-gray-800 flex overflow-x-auto'>
-      <ul id='tag-container' className='px-20 flex py-1 space-x-3'>
+      <ul id='tag-container' className='px-10 flex py-1 space-x-3'>
+        <li className='w-10 py-2'>标签:</li>
         {Object.keys(tags).map(key => {
           const selected = key === currentTag
           return (

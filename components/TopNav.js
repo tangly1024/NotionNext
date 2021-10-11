@@ -30,11 +30,11 @@ const TopNav = ({ tags, currentTag, post }) => {
   }
 
   return (
-    <div className='bg-white dark:bg-gray-600 border-b dark:border-gray-700'>
+    <div className='bg-white dark:bg-gray-600 border-b dark:border-gray-700 shadow'>
 
       <div className='fixed top-0 left-0 z-30 h-full'>
-        <div className={(showDrawer ? 'shadow-2xl' : '-ml-52') + ' duration-200 w-52 h-full bg-white dark:bg-gray-800 border-r dark:border-gray-600'}>
-          <div className='flex space-x-4 px-5 dark:bg-gray-600'>
+        <div className={(showDrawer ? 'shadow-2xl' : '-ml-72') + ' duration-200 w-72 h-full bg-white dark:bg-gray-800 border-r dark:border-gray-600'}>
+          <div className='flex space-x-4 px-5 py-1 dark:border-gray-500 border-b dark:bg-gray-600'>
             <div
               className='z-10 p-1 duration-200 mr-2 bg-white dark:bg-gray-600 text-gray-600 text-xl cursor-pointer dark:text-gray-300'>
               <i className='fa hover:scale-125 transform duration-200 fa-bars ' onClick={handleMenuClick}/>
@@ -64,7 +64,7 @@ const TopNav = ({ tags, currentTag, post }) => {
           </div>
           <Link href='/'>
             <a
-              className='flex justify-center font-bold font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200
+              className='hidden md:block  flex justify-center font-bold font-semibold hover:bg-gray-800 hover:text-white p-2 duration-200
                dark:text-gray-300
               '>{BLOG.title}</a>
           </Link>
@@ -76,12 +76,12 @@ const TopNav = ({ tags, currentTag, post }) => {
             <input
               type='text'
               placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-              className={'md:w-80 transition border-r dark:border-gray-700 duration-200 leading-10 pl-2 block border-gray-300 bg-white text-black dark:bg-gray-800 dark:text-white'}
+              className={'md:w-80 w-32 transition duration-200 leading-10 pl-2 block border-gray-300 bg-white text-black dark:bg-gray-800 dark:text-white'}
               onKeyUp={handleKeyUp}
               onChange={e => setSearchValue(e.target.value)}
               defaultValue={router.query.s ?? ''}
             />
-            <div className='py-3 px-5 bg-gray-50 flex dark:bg-gray-500 justify-center align-middle cursor-pointer'
+            <div className='py-3 px-5 bg-gray-50 flex border-l dark:border-gray-700 dark:bg-gray-500 justify-center align-middle cursor-pointer'
                  onClick={handleSearch}>
               <i className='fa fa-search text-black absolute cursor-pointer' />
             </div>
