@@ -49,7 +49,6 @@ const SideBarEmbed = ({ tags, currentTag, post }) => {
           {/* 站点信息 */}
         <section className='my-3 xl:block'>
           <hr className='dark:border-gray-600'/>
-          <Footer />
         </section>
 
       </div>

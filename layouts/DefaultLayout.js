@@ -8,6 +8,7 @@ import CommonHead from '@/components/CommonHead'
 import TopNav from '@/components/TopNav'
 import Tags from '@/components/Tags'
 import SideBarResponsive from '@/components/SideBarResponsive'
+import Footer from '@/components/Footer'
 
 const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const meta = {
@@ -76,7 +77,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
             <div className=''>
               {/* 文章列表 */}
-              <div className='grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-3'>
+              <div className='grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
                 {!postsToShow.length && (
                   <p className='text-gray-500 dark:text-gray-300'>No posts found.</p>
                 )}
@@ -86,6 +87,9 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
               </div>
 
               <Pagination page={page} showNext={showNext} />
+            </div>
+            <div className='w-full border-t '>
+              <Footer/>
             </div>
           </main>
 
