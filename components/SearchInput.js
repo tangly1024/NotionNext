@@ -27,7 +27,7 @@ const SearchInput = ({ currentTag }) => {
     <input
       type='text'
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-      className={'pl-2 w-full transition duration-200 leading-10 border-gray-300 bg-white text-black dark:bg-gray-800 dark:text-white'}
+      className={'pl-2 w-full transition duration-200 leading-10 border-gray-300 bg-white text-black dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
       onChange={e => setSearchValue(e.target.value)}
       defaultValue={router.query.s ?? ''}

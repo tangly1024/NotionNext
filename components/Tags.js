@@ -10,7 +10,11 @@ import Link from 'next/link'
 const Tags = ({ tags, currentTag }) => {
   if (!tags) return <></>
   return (<div className='bg-white dark:bg-gray-800 flex overflow-x-auto'>
-      <ul id='tag-container' className='px-10 flex py-1 space-x-3'>
+      <div className='z-30 sticky left-0 flex'>
+        <div className='px-2 bg-white dark:bg-gray-800'/>
+        <div className='px-5 -line-x-opacity bg-black'/>
+      </div>
+      <ul id='tag-container' className='flex py-1 space-x-3'>
         <li className='w-10 py-2 dark:text-gray-200'>标签:</li>
         {Object.keys(tags).map(key => {
           const selected = key === currentTag
@@ -29,6 +33,10 @@ const Tags = ({ tags, currentTag }) => {
           )
         })}
       </ul>
+      <div className='z-30 sticky right-0 flex'>
+        <div className='px-5 line-x-opacity'/>
+        <div className='px-2 bg-white dark:bg-gray-800'/>
+      </div>
     </div>
   )
 }

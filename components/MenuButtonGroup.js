@@ -16,7 +16,7 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
     { id: 8, icon: 'fa-twitter', name: 'Twitter', to: 'https://twitter.com/troy1024_1', show: true },
     { id: 9, icon: 'fa-telegram', name: 'Telegram', to: 'https://t.me/tangly_1024', show: true }
   ]
-  return <nav className='max-w-sm'>
+  return <nav id='nav'>
     <ul className='leading-8 text-gray-700 dark:text-gray-400'>
       {links.map(
         link =>

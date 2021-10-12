@@ -53,15 +53,15 @@ const ArticleLayout = ({
       </div>
 
       {/* Wrapper */}
-      <div className='flex justify-between bg-gray-100 dark:bg-black'>
+      <div className='flex justify-between bg-gray-100'>
 
          <SideBar tags={tags} post={frontMatter} />
 
         {/* 主体区块 */}
-        <main className='bg-gray-100 dark:bg-black w-full'>
+        <main className='bg-gray-100 w-full dark:bg-gray-800'>
           {/* 中央区域 wrapper */}
             <header
-              className='hover:scale-105 hover:shadow-2xl duration-200 transform mx-auto max-w-5xl mt-10 lg:mt-20 md:flex-shrink-0 overflow-y-hidden animate__fadeIn animate__animated'>
+              className='hover:scale-105 hover:shadow-2xl duration-200 transform mx-auto max-w-5xl mt-16 lg:mt-20 md:flex-shrink-0 overflow-y-auto animate__fadeIn animate__animated'>
               {/* 封面图 */}
               {frontMatter.page_cover && frontMatter.page_cover.length > 1 && (
                 <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }}
@@ -71,7 +71,7 @@ const ArticleLayout = ({
 
             <article
               ref={targetRef}
-              className='mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-600'>
+              className='mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
               {/* 文章标题 */}
               <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
                 {frontMatter.title}
@@ -131,7 +131,7 @@ const ArticleLayout = ({
               <div className='flex justify-center pt-5'>
                 <RewardButton />
               </div>
-              <p className='flex justify-center py-5'>
+              <p className='flex justify-center py-5 dark:text-gray-200'>
                  - 💖 本 文 结 束 😚 感 谢 您 的 阅 读  💖 -
               </p>
 

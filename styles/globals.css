@@ -109,9 +109,42 @@ nav {
   @apply right-auto left-0 hidden lg:block z-10 !important
 }
 
+/* 隐藏滚动条 */
 .scroll-hidden{
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
 }
 
 .scroll-hidden::-webkit-scrollbar { width: 0 !important }
+
+.notion-collection{
+  @apply max-w-0
+}
+
+/* 渐变透明度 */
+.line-x-opacity{
+  background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgb(255, 255, 255)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, rgba(255, 255, 255,0), rgb(255, 255, 255)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* 标准的语法（必须放在最后） */
+}
+
+.-line-x-opacity{
+  background: -webkit-linear-gradient(right, rgba(255,255,255,0), rgb(255, 255, 255)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(left, rgba(255, 255, 255,0), rgb(255, 255, 255)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(left, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to left, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* 标准的语法（必须放在最后） */
+}
+.dark .line-x-opacity{
+  background: -webkit-linear-gradient(left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, rgba(31, 41, 55,0), rgba(31, 41, 55)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, rgba(31, 41, 55,0), rgba(31, 41, 55)); /* 标准的语法（必须放在最后） */
+}
+
+.dark .-line-x-opacity{
+  background: -webkit-linear-gradient(right, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* 标准的语法（必须放在最后） */
+}

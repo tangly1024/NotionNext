@@ -59,7 +59,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
         <SideBar />
 
         <div className='flex-grow'>
-          <div className='fixed top-12 z-10 w-full border-b dark:border-gray-600'>
+          <div className='fixed top-16 z-10 w-full border-b dark:border-gray-600'>
             <Tags tags={tags} currentTag={currentTag} />
           </div>
 
