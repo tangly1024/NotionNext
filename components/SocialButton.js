@@ -23,7 +23,6 @@ const SocialButton = () => {
          href={'https://weibo.com/tangly1024'} >
         <div className='fa fa-weibo transform hover:scale-125 duration-150'/>
       </a>
-
     </div>
   </div>
 }

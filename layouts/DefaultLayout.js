@@ -7,7 +7,7 @@ import { useTheme } from '@/lib/theme'
 import CommonHead from '@/components/CommonHead'
 import TopNav from '@/components/TopNav'
 import Tags from '@/components/Tags'
-import SideBarResponsive from '@/components/SideBarResponsive'
+import SideBar from '@/components/SideBar'
 import Footer from '@/components/Footer'
 
 const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
@@ -56,7 +56,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
       <div className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
         {/* 侧边菜单 */}
-        <SideBarResponsive />
+        <SideBar />
 
         <div className='flex-grow'>
           <div className='fixed top-12 z-10 w-full border-b dark:border-gray-600'>

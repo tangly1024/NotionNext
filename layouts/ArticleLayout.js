@@ -15,7 +15,7 @@ import ShareButton from '@/components/ShareButton'
 import JumpToTop from '@/components/JumpToTop'
 import CommonHead from '@/components/CommonHead'
 import TopNav from '@/components/TopNav'
-import SideBarResponsive from '@/components/SideBarResponsive'
+import SideBar from '@/components/SideBar'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -55,7 +55,7 @@ const ArticleLayout = ({
       {/* Wrapper */}
       <div className='flex justify-between bg-gray-100 dark:bg-black'>
 
-         <SideBarResponsive tags={tags} post={frontMatter} />
+         <SideBar tags={tags} post={frontMatter} />
 
         {/* 主体区块 */}
         <main className='bg-gray-100 dark:bg-black w-full'>
