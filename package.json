@@ -29,7 +29,7 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "next": "10.2.0",
-    "notion-client": "4.8.6",
+    "notion-client": "4.9.3",
     "notion-utils": "4.8.6",
     "preact": "^10.5.13",
     "qrcode.react": "^1.0.1",
