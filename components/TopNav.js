@@ -30,7 +30,7 @@ const TopNav = ({ tags, currentTag, post }) => {
   }
 
   return (
-    <div className='bg-white dark:bg-gray-600 border-b dark:border-gray-700 shadow'>
+    <div className='bg-white dark:bg-gray-600 border-b dark:border-gray-700 '>
 
       <div className='fixed top-0 left-0 z-30 h-full'>
         <div className={(showDrawer ? 'shadow-2xl' : '-ml-72') + ' duration-200 w-72 h-full bg-white dark:bg-gray-800 border-r dark:border-gray-600'}>
@@ -89,9 +89,8 @@ const TopNav = ({ tags, currentTag, post }) => {
         </div>
 
         <div className='flex flex-nowrap space-x-1'>
-
           <DarkModeButton />
-          <a className='flex align-middle cursor-pointer' href='/article/about'>
+          <div className='flex align-middle cursor-pointer' >
             <Image
               alt={BLOG.author}
               width={28}
@@ -99,7 +98,7 @@ const TopNav = ({ tags, currentTag, post }) => {
               src='/avatar.svg'
               className='rounded-full border-black'
             />
-          </a>
+          </div>
         </div>
       </div>
     </div>

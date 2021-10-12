@@ -63,7 +63,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
             <Tags tags={tags} currentTag={currentTag} />
           </div>
 
-          <main id='post-list-wrapper' className='py-24 px-2 md:px-20'>
+          <main id='post-list-wrapper' className='pt-16 md:pt-28 px-2 md:px-20'>
             {(!page || page === 1) && (<div className='py-5' />)}
 
             {/* 当前搜索 */}

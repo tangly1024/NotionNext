@@ -44,24 +44,22 @@ const ArticleLayout = ({
       <CommonHead meta={meta} />
 
       {/* live2d 看板娘 */}
-      <script async src='https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js' />
+       <script async src='https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js' />
 
       <Progress targetRef={targetRef} />
 
       <div className='fixed w-full top-0 z-20'>
-        <TopNav post={frontMatter}/>
+         <TopNav post={frontMatter}/>
       </div>
 
       {/* Wrapper */}
       <div className='flex justify-between bg-gray-100 dark:bg-black'>
 
-        <SideBarResponsive tags={tags} post={frontMatter} />
+         <SideBarResponsive tags={tags} post={frontMatter} />
 
         {/* 主体区块 */}
         <main className='bg-gray-100 dark:bg-black w-full'>
           {/* 中央区域 wrapper */}
-          <div>
-
             <header
               className='hover:scale-105 hover:shadow-2xl duration-200 transform mx-auto max-w-5xl mt-10 lg:mt-20 md:flex-shrink-0 overflow-y-hidden animate__fadeIn animate__animated'>
               {/* 封面图 */}
@@ -73,7 +71,7 @@ const ArticleLayout = ({
 
             <article
               ref={targetRef}
-              className='hover:shadow-2xl mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-600'>
+              className='mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-600'>
               {/* 文章标题 */}
               <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
                 {frontMatter.title}
@@ -157,8 +155,6 @@ const ArticleLayout = ({
               {/* 评论互动 */}
               <Comment frontMatter={frontMatter} />
             </article>
-          </div>
-
         </main>
 
         {/* 下方菜单组 */}

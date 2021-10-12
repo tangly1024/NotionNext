@@ -7,7 +7,7 @@ import React from 'react'
  */
 const SocialButton = () => {
   return <div className='w-52'>
-    <div className='space-x-3 text-2xl text-black dark:text-gray-400 px-6'>
+    <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 px-6'>
       <a target='_blank' rel='noreferrer' title={'github'}
           href={'https://github.com/tangly1024'} >
         <div className='fa fa-github transform hover:scale-125 duration-150'/>

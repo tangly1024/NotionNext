@@ -26,7 +26,7 @@ const Pagination = ({ page, showNext }) => {
       >
         <button
           rel='prev'
-          className={`${currentPage === 1 ? 'invisible' : 'block'} duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+          className={`${currentPage === 1 ? 'invisible' : 'block'} w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
         >
           ← {locale.PAGINATION.PREV}
         </button>
@@ -39,7 +39,7 @@ const Pagination = ({ page, showNext }) => {
       }>
         <button
           rel='next'
-          className={`${+showNext ? 'block' : 'invisible'} duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+          className={`${+showNext ? 'block' : 'invisible'} w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
         >
           {locale.PAGINATION.NEXT} →
         </button>

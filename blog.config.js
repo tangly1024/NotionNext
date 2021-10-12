@@ -5,13 +5,15 @@ const BLOG = {
   link: 'https://tangly1024.com',
   description: '唐风集里，收卷波澜',
   lang: 'zh-CN', // ['zh-CN','en-US']
+  notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
+  notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   appearance: 'auto', // ['light', 'dark', 'auto'],
   font: 'font-sans', // ['font-sans', 'font-serif', 'font-mono']
   lightBackground: '#ffffff', // use hex value, don't forget '#' e.g #fffefc
   darkBackground: '#111827', // use hex value, don't forget '#'
   path: '', // leave this empty unless you want to deploy in a folder
   since: 2020, // if leave this empty, current year will be used.
-  postsPerPage: 9,
+  postsPerPage: 6, // post counts per page
   sortByDate: false,
   showAbout: true, // WIP
   showArchive: true, // WIP
@@ -21,8 +23,6 @@ const BLOG = {
     keywords: ['Blog', 'Website', 'Notion'],
     googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
   },
-  notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // DO NOT CHANGE THIS！！！
-  notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   analytics: {
     provider: 'ga', // Currently we support Google Analytics and Ackee, please fill with 'ga' or 'ackee', leave it empty to disable it.
     ackeeConfig: {

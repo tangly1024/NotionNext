@@ -38,8 +38,8 @@ const SideBarResponsive = ({ tags, currentTag, post }) => {
         {/* 联系 */}
         <section className='mt-6 mb-6 hidden xl:inline-block'>
             <strong className='text-gray-600 dark:text-gray-400 px-6'>联系我</strong>
-            <div>
-              <i className='fa fa-map-marker text-sm dark:text-gray-300 px-6 mt-3' >&nbsp;Fuzhou, China</i>
+            <div className='text-sm text-gray-600'>
+              <i className='fa fa-map-marker dark:text-gray-300 px-6 my-2' >&nbsp;Fuzhou, China</i>
             </div>
             <div>
               <SocialButton />
