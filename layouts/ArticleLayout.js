@@ -16,6 +16,7 @@ import JumpToTop from '@/components/JumpToTop'
 import CommonHead from '@/components/CommonHead'
 import TopNav from '@/components/TopNav'
 import SideBar from '@/components/SideBar'
+import Footer from '@/components/Footer'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -71,7 +72,7 @@ const ArticleLayout = ({
 
             <article
               ref={targetRef}
-              className='mb-20 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
+              className='mb-10 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
               {/* 文章标题 */}
               <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
                 {frontMatter.title}
@@ -155,6 +156,11 @@ const ArticleLayout = ({
               {/* 评论互动 */}
               <Comment frontMatter={frontMatter} />
             </article>
+
+            <div className='w-full border-t px-10 max-w-5xl mx-auto'>
+              <Footer/>
+            </div>
+
         </main>
 
         {/* 下方菜单组 */}
