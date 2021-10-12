@@ -49,6 +49,15 @@ const SideBarResponsive = ({ tags, currentTag, post }) => {
           {/* 站点信息 */}
         <section className='my-3 hidden xl:block'>
           <hr className='dark:border-gray-600'/>
+          <div className='mx-6 dark:text-gray-400 text-gray-500 mt-2'>
+            <span id='busuanzi_container_site_pv' className='hidden'>
+            <a id='busuanzi_container_site_pv' href='https://www.cnzz.com/stat/website.php?web_id=1279970751' target='_blank'
+               className='fa fa-user' rel='noreferrer'> pv <span id='busuanzi_value_site_pv'></span></a>
+            </span>
+            <span id='busuanzi_container_site_uv' className='hidden'><span className='s'> | </span>
+            <a href='http://tongji.baidu.com/web/10000363165/overview/index?siteId=16809429' target='_blank' className='fa fa-eye' rel='noreferrer'> uv <span id='busuanzi_value_site_uv'></span></a>
+            </span>
+          </div>
           <Footer />
         </section>
 
