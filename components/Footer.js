@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import React from 'react'
 
 const Footer = ({ fullWidth = true }) => {

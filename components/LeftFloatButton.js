@@ -25,7 +25,6 @@ const LeftFloatButton = () => {
     }
   }, 500)
   const [collapse, changeCollapse] = useState(true)
-  console.log(collapse)
   return <div
     className={(collapse ? 'left-0' : 'left-72') + ' z-30 fixed flex flex-nowrap md:flex-col  top-0 pl-4 py-1 duration-500 ease-in-out'}>
     {/* 菜单折叠 */}

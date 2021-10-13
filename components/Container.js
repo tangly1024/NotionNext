@@ -11,7 +11,6 @@ const Container = ({ children, layout, fullWidth, tags, meta, ...customMeta }) =
       const scrollS = window.scrollY
       const nav = document.querySelector('#sticky-nav')
       const tagsBar = document.querySelector('#tags-bar')
-      console.log(windowTop, scrollS)
       if (scrollS >= windowTop) {
         nav && nav.classList.add('-mt-16')
         tagsBar && tagsBar.classList.add('-mt-32')
