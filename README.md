@@ -19,8 +19,11 @@
 
 演示地址：[https://www.tangly1024.com/](https://www.tangly1024.com/)
 
-<details><summary>截图</summary>
+<details><summary>截图1 - Fukasawa主题</summary>
 <img src='https://github.com/tangly1024/NotionNext/blob/main/screenshot.png?raw=true'/>
+</details>
+<details><summary>截图2 - 仿Youtube主题</summary>
+<img src='https://github.com/tangly1024/NotionNext/blob/main/screenshot2.png?raw=true'/>
 </details>
 
 ## 亮点 ✨
