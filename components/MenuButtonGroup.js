@@ -17,25 +17,24 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
     { id: 9, icon: 'fa-telegram', name: 'Telegram', to: 'https://t.me/tangly_1024', show: true }
   ]
   return <nav id='nav'>
-    <ul className='leading-8 text-gray-700 dark:text-gray-400'>
+    <div className='leading-8 text-gray-700 dark:text-gray-400'>
       {links.map(
         link =>
           link.show && (
-            <Link href={link.to}>
-              <li
-                key={link.id + link.icon}
-                title={link.to}
-                className='py-3 px-5 hover:bg-gray-100 cursor-pointer dark:hover:bg-black duration-100 flex flex-nowrap align-middle'
-              >
+            <a
+              key={link.id + link.icon}
+              title={link.to}
+              href={link.to}
+              className='py-3 px-5 hover:bg-gray-100 cursor-pointer dark:hover:bg-black duration-100 flex flex-nowrap align-middle'
+            >
                 <div className='my-auto w-5 text-2xl justify-center flex'>
                   <i className={'fa ' + link.icon} />
                 </div>
                 <div className={(allowCollapse ? 'hidden xl:block' : '') + ' ml-4 w-32'}>{link.name}</div>
-              </li>
-            </Link>
+            </a>
           )
       )}
-    </ul>
+    </div>
   </nav>
 }
 export default MenuButtonGroup

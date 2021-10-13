@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import TocBar from '@/components/TocBar'
 import throttle from 'lodash.throttle'
 import ShareButton from '@/components/ShareButton'
@@ -30,8 +30,8 @@ const RightAside = ({ toc, post }) => {
     }
   }, 500)
   const [hideAside, changeHideAside] = useState(true)
-
-  return <aside className='dark:bg-gray-800'>
+  const targetRef = useRef()
+  return <aside className='dark:bg-gray-800' ref={targetRef}>
     {/* 上方菜单组 */}
     <div
       className={(hideAside ? 'right-0' : 'right-48') + ' z-20 space-x-2 fixed flex top-0 px-3 py-1 duration-500'}>
@@ -50,7 +50,7 @@ const RightAside = ({ toc, post }) => {
         {/* 分享按钮 */}
         <ShareButton post={post} />
         {/* 跳回顶部 */}
-        <JumpToTop />
+        <JumpToTop targetRef={targetRef} />
       </div>
     </div>
 

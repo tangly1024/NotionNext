@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import throttle from 'lodash.throttle'
 
 /**
@@ -8,15 +8,17 @@ import throttle from 'lodash.throttle'
  */
 const Progress = ({ targetRef }) => {
   const [percent, changePercent] = useState(0)
+  const scrollListener = useCallback(throttle(() => {
+    if (targetRef.current) {
+      const scrollY = window.pageYOffset
+      const fullHeight = targetRef.current.clientHeight - window.outerHeight
+      let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
+      if (per > 100) per = 100
+      changePercent(per)
+    }
+  }, 100))
+
   useEffect(() => {
-    const scrollListener = throttle(() => {
-      if (targetRef.current) {
-        const fullHeight = targetRef.current.clientHeight
-        const per = parseFloat(((window.scrollY / (fullHeight - 100) * 100)).toFixed(0))
-        changePercent(per)
-      }
-      // console.log('滚动信息', window.scrollY, fullHeight, per)
-    }, 1)
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [percent])

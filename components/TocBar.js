@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import { cs } from 'react-notion-x'
@@ -25,7 +25,7 @@ const TocBar = ({ toc }) => {
   // 同步选中目录事件
   const [activeSection, setActiveSection] = React.useState(null)
   const throttleMs = 100
-  const actionSectionScrollSpy = throttle(() => {
+  const actionSectionScrollSpy = useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
@@ -48,7 +48,7 @@ const TocBar = ({ toc }) => {
       break
     }
     setActiveSection(currentSectionId)
-  }, throttleMs)
+  }, throttleMs))
 
   return <div className='bg-white dark:bg-gray-800 pb-10 min-h-screen'>
     <div className='w-52 border-t dark:border-gray-600 border-b text-2xl bg-gray-100 font-bold text-black dark:bg-black dark:text-white py-6 px-6'>
