@@ -3,6 +3,8 @@ import React, { useCallback, useEffect } from 'react'
 import CommonHead from '@/components/CommonHead'
 import TopNav from '@/components/TopNav'
 import throttle from 'lodash.throttle'
+import BLOG from '@/blog.config'
+import { useTheme } from '@/lib/theme'
 
 const Container = ({ children, layout, fullWidth, tags, meta, ...customMeta }) => {
   let windowTop = 0
@@ -28,12 +30,13 @@ const Container = ({ children, layout, fullWidth, tags, meta, ...customMeta }) =
       window.removeEventListener('scroll', scrollTrigger)
     }
   })
+  const { theme } = useTheme()
   return (
-    <>
+    <div className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
       <TopNav tags={tags}/>
       {children}
-    </>
+    </div>
   )
 }
 

@@ -4,8 +4,6 @@ import Pagination from '@/components/Pagination'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { useTheme } from '@/lib/theme'
-import CommonHead from '@/components/CommonHead'
-import TopNav from '@/components/TopNav'
 import Tags from '@/components/Tags'
 import SideBar from '@/components/SideBar'
 import Footer from '@/components/Footer'
@@ -47,10 +45,8 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
     showNext = page * BLOG.postsPerPage < totalPosts
   }
 
-  const { theme } = useTheme()
-
   return (
-    <Container id='wrapper' className={theme} meta={meta} tags={tags}>
+    <Container id='wrapper' meta={meta} tags={tags}>
 
       <div className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
         {/* 侧边菜单 */}

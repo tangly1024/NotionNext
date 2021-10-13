@@ -35,7 +35,7 @@ const JumpToTop = ({ targetRef }) => {
       <div
         className='border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer hover:shadow-2xl'
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-        <div className='absolute bg-white z-20 hover:opacity-0 w-11 py-2.5 text-center'>
+        <div className='absolute bg-white dark:text-gray-200 dark:bg-gray-600 z-20 hover:opacity-0 w-11 py-2.5 text-center'>
             {percent}%
         </div>
         <a className='dark:text-gray-200 fa fa-arrow-up p-4 transform hover:scale-150 duration-200'

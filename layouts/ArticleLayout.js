@@ -8,13 +8,10 @@ import Progress from '@/components/Progress'
 import { useRef } from 'react'
 import Image from 'next/image'
 import RewardButton from '@/components/RewardButton'
-import { useTheme } from '@/lib/theme'
 import BlogPostMini from '@/components/BlogPostMini'
 import { useRouter } from 'next/router'
 import ShareButton from '@/components/ShareButton'
 import JumpToTop from '@/components/JumpToTop'
-import CommonHead from '@/components/CommonHead'
-import TopNav from '@/components/TopNav'
 import SideBar from '@/components/SideBar'
 import Footer from '@/components/Footer'
 import Container from '@/components/Container'
@@ -38,11 +35,10 @@ const ArticleLayout = ({
     type: 'article'
   }
   const targetRef = useRef(null)
-  const { theme } = useTheme()
   const url = BLOG.link + useRouter().asPath
 
   return (
-    <Container className={`${BLOG.font} ${theme}`} meta={meta} tags={tags}>
+    <Container meta={meta} tags={tags}>
 
       {/* live2d 看板娘 */}
        <script async src='https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js' />
