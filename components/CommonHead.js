@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import Head from 'next/head'
+import ThirdPartyScript from '@/components/ThirdPartyScript'
 
 const CommonHead = ({ meta }) => {
   const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link

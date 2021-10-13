@@ -9,6 +9,8 @@ import TopNav from '@/components/TopNav'
 import Tags from '@/components/Tags'
 import SideBar from '@/components/SideBar'
 import Footer from '@/components/Footer'
+import React from 'react'
+import Container from '@/components/Container'
 
 const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const meta = {
@@ -48,18 +50,15 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const { theme } = useTheme()
 
   return (
-    <div id='wrapper' className={theme}>
-      <CommonHead meta={meta} />
-      <div className=' fixed w-full top-0 z-20'>
-        <TopNav />
-      </div>
+    <Container id='wrapper' className={theme} meta={meta} tags={tags}>
 
       <div className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
         {/* 侧边菜单 */}
         <SideBar />
 
         <div className='flex-grow'>
-          <div className='fixed top-16 z-10 w-full border-b dark:border-gray-600'>
+
+          <div id='tags-bar' className='fixed xl:mt-0 top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
             <Tags tags={tags} currentTag={currentTag} />
           </div>
 
@@ -96,7 +95,7 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
         </div>
 
       </div>
-    </div>
+    </Container>
   )
 }
 DefaultLayout.propTypes = {

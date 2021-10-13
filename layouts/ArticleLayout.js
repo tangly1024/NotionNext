@@ -17,6 +17,7 @@ import CommonHead from '@/components/CommonHead'
 import TopNav from '@/components/TopNav'
 import SideBar from '@/components/SideBar'
 import Footer from '@/components/Footer'
+import Container from '@/components/Container'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -41,22 +42,17 @@ const ArticleLayout = ({
   const url = BLOG.link + useRouter().asPath
 
   return (
-    <div className={`${BLOG.font} ${theme}`}>
-      <CommonHead meta={meta} />
+    <Container className={`${BLOG.font} ${theme}`} meta={meta} tags={tags}>
 
       {/* live2d 看板娘 */}
        <script async src='https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js' />
 
       <Progress targetRef={targetRef} />
 
-      <div className='fixed w-full top-0 z-20'>
-         <TopNav post={frontMatter}/>
-      </div>
-
       {/* Wrapper */}
       <div className='flex justify-between bg-gray-100'>
 
-         <SideBar tags={tags} post={frontMatter} />
+        <SideBar tags={tags} post={frontMatter} />
 
         {/* 主体区块 */}
         <main className='bg-gray-100 w-full dark:bg-gray-800'>
@@ -72,7 +68,7 @@ const ArticleLayout = ({
 
             <article
               ref={targetRef}
-              className='mb-10 overflow-x-auto px-10 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
+              className='mb-10 overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
               {/* 文章标题 */}
               <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
                 {frontMatter.title}
@@ -175,7 +171,7 @@ const ArticleLayout = ({
         </div>
       </div>
 
-    </div>
+    </Container>
   )
 }
 

@@ -23,14 +23,14 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
           link.show && (
             <Link href={link.to}>
               <li
-                key={link.id}
+                key={link.id + link.icon}
                 title={link.to}
                 className='py-3 px-5 hover:bg-gray-100 cursor-pointer dark:hover:bg-black duration-100 flex flex-nowrap align-middle'
               >
                 <div className='my-auto w-5 text-2xl justify-center flex'>
                   <i className={'fa ' + link.icon} />
                 </div>
-                <div className={(allowCollapse ? 'hidden xl:block' : '') + ' ml-4 w-32'}>{link.name}</div>
+                <div className={(allowCollapse ? 'hidden 2xl:block' : '') + ' ml-4 w-32'}>{link.name}</div>
               </li>
             </Link>
           )
