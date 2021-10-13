@@ -15,12 +15,12 @@ const Footer = ({ fullWidth = true }) => {
       <span id='busuanzi_container_site_pv' className='hidden'>
             <a id='busuanzi_container_site_pv' target='_blank' className='fa  fa-eye' rel='noreferrer'
                href='https://www.cnzz.com/stat/website.php?web_id=1279970751'><span
-              id='busuanzi_value_site_pv' className='px-1'>99999</span>pv</a>
+              id='busuanzi_value_site_pv' className='px-1'> </span>pv</a>
       </span>
       <span id='busuanzi_container_site_uv' className='pl-2 hidden'>
         <a className='fa fa-user' rel='noreferrer' target='_blank'
             href='http://tongji.baidu.com/web/10000363165/overview/index?siteId=16809429'>
-          <span id='busuanzi_value_site_uv' className='px-1'>99999</span>uv</a>
+          <span id='busuanzi_value_site_uv' className='px-1'> </span>uv</a>
       </span>
       <br/>
 
