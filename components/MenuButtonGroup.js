@@ -30,7 +30,7 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
                 <div className='my-auto w-5 text-2xl justify-center flex'>
                   <i className={'fa ' + link.icon} />
                 </div>
-                <div className={(allowCollapse ? 'hidden 2xl:block' : '') + ' ml-4 w-32'}>{link.name}</div>
+                <div className={(allowCollapse ? 'hidden xl:block' : '') + ' ml-4 w-32'}>{link.name}</div>
               </li>
             </Link>
           )
