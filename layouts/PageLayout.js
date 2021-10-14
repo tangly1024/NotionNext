@@ -9,6 +9,7 @@ import React, { useRef } from 'react'
 import Container from '@/components/Container'
 import JumpToTop from '@/components/JumpToTop'
 import SideBar from '@/components/SideBar'
+import TopNav from '@/components/TopNav'
 
 const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const meta = {
@@ -48,10 +49,11 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
   return (
     <Container id='wrapper' meta={meta} tags={tags}>
+      <TopNav tags={tags} />
 
       <div ref={targetRef} className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
         {/* 侧边菜单 */}
-         <SideBar />
+        <SideBar />
         <div className='flex-grow'>
 
           <TagsBar tags={tags} currentTag={currentTag} />

@@ -40,7 +40,7 @@ const DrawerRight = ({ post, cRef }) => {
       <div
         className={(showDrawer ? 'shadow-2xl ' : ' -mr-72 ') + ' w-72 duration-200 h-full fixed right-0 top-16 overflow-y-auto'}>
         <div className='z-20'>
-          <TocBar toc={post.toc}/>
+          {post && <TocBar toc={post.toc}/>}
         </div>
       </div>
     </div>
