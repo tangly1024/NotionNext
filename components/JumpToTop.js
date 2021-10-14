@@ -33,16 +33,17 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
 
   return (
     <div
-      className={(show ? 'animate__fade InUp' : 'animate__fadeOutUp') + ' animate__animated animate__faster shadow-lg'}>
+      className={(show ? 'animate__fade InUp' : 'animate__fadeOutUp') + '  rounded-full animate__animated animate__faster shadow-xl'}>
       <div
-        className='border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer hover:shadow-2xl'
+        style={{ backgroundColor: 'rgb(56, 144, 255)' }}
+        className='rounded-full dark:bg-gray-600 bg-white cursor-pointer'
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         {showPercent && (
-          <div className='absolute bg-white dark:text-gray-200 dark:bg-gray-600 z-20 hover:opacity-0 w-11 py-3 text-center'>
-            {percent}%
-          </div>
+        <div style={{ backgroundColor: 'rgb(56, 144, 255)' }} className='text-gray-100 absolute rounded-full dark:text-gray-200 dark:bg-gray-600 z-20 hover:opacity-0 w-11 py-3 text-center'>
+          {percent}%
+        </div>
         )}
-        <a className='dark:text-gray-200 fa fa-arrow-up p-4 transform hover:scale-150 duration-200'
+        <a className='text-gray-100 fa fa-arrow-up p-4 transform hover:scale-150 duration-200'
            title={locale.POST.TOP} />
       </div>
     </div>

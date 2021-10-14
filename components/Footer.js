@@ -5,9 +5,9 @@ const Footer = ({ fullWidth = true }) => {
   const y = d.getFullYear()
   return (
     <footer
-      className='flex-shrink-0 justify-center text-center m-auto w-full mx-auto text-gray-500 dark:text-gray-400 text-sm text-gray-400 p-6'
+      className='bg-gray-800 dark:bg-black dark:border-gray-900 border-t flex-shrink-0 justify-center text-center m-auto w-full text-gray-400 text-sm p-6'
     >
-      <span className='fa fa-copyright leading-6'> {` ${y}`} <span> <a href='https://www.tangly1024.com/article/about' className='underline font-bold'>tangly1024.com</a>. Powered by <a href='https://notion.so' className='underline font-bold'>Notion</a> & <a href='https://vercel.com' className='underline font-bold'>Vercel</a>.</span> </span>
+      <span className='fa fa-copyright leading-6'> {` ${y}`} <span> <a href='https://www.tangly1024.com/article/about' className='underline font-bold text-gray-100'>tangly1024.com</a>. Powered by <a href='https://notion.so' className='underline font-bold text-gray-100'>Notion</a> & <a href='https://vercel.com' className='underline font-bold text-gray-100'>Vercel</a>.</span> </span>
       <br />
       <span className='fa fa-shield leading-6 mr-2'> <a href='https://beian.miit.gov.cn/' className='ml-1 font-bold'>闽ICP备20010331号</a></span>
 

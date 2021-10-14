@@ -20,7 +20,6 @@ const DrawerRight = ({ post, cRef }) => {
     switchShowDrawer(!showDrawer)
   }
 
-  console.log(post)
   return <div>
     <div className='fixed top-0 right-0 z-30 h-full'>
       <div

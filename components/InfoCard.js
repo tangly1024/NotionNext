@@ -6,7 +6,7 @@ import Router from 'next/router'
 const InfoCard = () => {
   return <>
     <div className='flex justify-center text-center'>
-      <div className='mx-auto py-4 leading-8'>
+      <div className='pb-6 mx-auto leading-8'>
         <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer' onClick={ () => { Router.push('/') }}>
           <Image
           alt={BLOG.author}
@@ -18,7 +18,6 @@ const InfoCard = () => {
         </div>
         <h1 className='text-2xl dark:text-white py-2'>{BLOG.author}</h1>
         <h2 className='text-sm text-gray-500 dark:text-gray-400'>{BLOG.description}</h2>
-        <h2 className='text-sm fa fa-map-marker text-gray-500 dark:text-gray-400'>&nbsp;Fuzhou,China</h2>
       </div>
     </div>
   </>

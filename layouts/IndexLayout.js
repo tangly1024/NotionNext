@@ -82,9 +82,6 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
               <Pagination page={page} showNext={showNext} />
             </div>
-            <div className='w-full border-t '>
-              <Footer/>
-            </div>
           </main>
         </div>
       </div>
@@ -92,9 +89,11 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
       {/* 下方菜单组 */}
       <div className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
         <div className='flex-wrap'>
-          <JumpToTop targetRef={targetRef} showPercent={false}/>
+          <JumpToTop targetRef={targetRef} showPercent={false} />
         </div>
       </div>
+
+      <Footer />
     </Container>
   )
 }

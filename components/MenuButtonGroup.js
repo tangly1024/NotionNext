@@ -4,7 +4,7 @@ import { useLocale } from '@/lib/locale'
 const MenuButtonGroup = ({ allowCollapse = false }) => {
   const locale = useLocale()
   const links = [
-    // { id: 0, icon: 'fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
+    { id: 0, icon: 'fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { id: 1, icon: 'fa-info-circle', name: locale.NAV.ABOUT, to: '/article/about', show: true },
     { id: 7, icon: 'fa-github', name: 'Github', to: 'https://github.com/tangly1024', show: true },
     { id: 5, icon: 'fa-weibo', name: '微博', to: 'https://weibo.com/tangly1024', show: true },

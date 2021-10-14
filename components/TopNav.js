@@ -16,7 +16,7 @@ const TopNav = ({ tags, currentTag, post }) => {
     <DrawerRight post={post} cRef={drawerRight}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='xl:mt-0 transform 2xl:mt-0 duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
+    <div id='sticky-nav' className='transform duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
       <div className='text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-md'>
         {/* 左侧LOGO */}
         <div className='flex ml-12'>
@@ -41,9 +41,9 @@ const TopNav = ({ tags, currentTag, post }) => {
         {/* 右侧功能 */}
         <div className='flex flex-nowrap space-x-1'>
           <DarkModeButton />
-          <div className='z-10 p-1 duration-200 mr-2 h-12 text-xl cursor-pointer dark:text-gray-300 '>
+          {post && <div className='block xl:hidden z-10 p-1 duration-200 mr-2 h-12 text-xl cursor-pointer dark:text-gray-300 '>
             <i className='fa p-2.5 hover:scale-125 transform duration-200 fa-bookmark' onClick={() => { drawerRight.current.handleMenuClick() }}/>
-          </div>
+          </div>}
         </div>
       </div>
     </div>

@@ -83,9 +83,6 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
               <Pagination page={page} showNext={showNext} />
             </div>
-            <div className='w-full border-t '>
-              <Footer />
-            </div>
           </main>
 
         </div>
@@ -98,6 +95,8 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
           <JumpToTop targetRef={targetRef} showPercent={false} />
         </div>
       </div>
+
+      <Footer />
     </Container>
   )
 }

@@ -40,12 +40,12 @@ const RewardButton = () => {
       <div
         className={
           (popoverShow ? 'animate__animated animate__fadeIn ' : 'hidden ') +
-          ' animate__faster border-0 transform block z-50 font-normal'
+          ' animate__faster transform block z-50 font-normal'
         }
         ref={popoverRef}
       >
         <div
-          className='border animate__animated animate__fadeIn hover:shadow-2xl duration-200 my-5 px-5 py-6 w-96 grid justify-center bg-white dark:bg-black dark:text-gray-200'>
+          className='animate__animated animate__fadeIn hover:shadow-2xl duration-200 my-5 px-5 py-6 w-96 grid justify-center bg-white dark:bg-black dark:text-gray-200'>
          <span>
             <img className='md:w-72 m-auto' src='/reward_code.jpg' />
           </span>

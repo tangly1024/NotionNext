@@ -24,7 +24,6 @@ const Drawer = ({ post, currentTag, cRef, tags }) => {
   const handleMenuClick = () => {
     switchShowDrawer(!showDrawer)
   }
-  console.log(post)
   return <div>
     <div className='fixed top-0 left-0 z-30 h-full'>
       <div

@@ -16,7 +16,7 @@ const ShareBar = ({ post }) => {
 
   const openPopover = () => {
     createPopper(btnRef.current, popoverRef.current, {
-      placement: 'left'
+      placement: 'top'
     })
     setQrCodeShow(true)
   }
@@ -31,20 +31,20 @@ const ShareBar = ({ post }) => {
 
   return <>
     <div
-      className='dark:border-gray-500 py-2 text-gray-500 flex-col text-center space-y-2 w-12 border my-1 bg-white dark:bg-gray-800 dark:text-white overflow-visible'>
+      className='py-2 text-gray-500 text-center space-x-2 flex inline-block my-1 dark:text-gray-200 overflow-visible'>
       <div className='text-3xl cursor-pointer'>
-        <a className='fa fa-facebook-square'
+        <a className='fa fa-facebook-square hover:text-red-600'
            href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} />
       </div>
       <div className='text-3xl cursor-pointer'>
-        <a className='fa fa-twitter-square' target='_blank' rel='noreferrer'
+        <a className='fa fa-twitter-square hover:text-red-600' target='_blank' rel='noreferrer'
            href={`https://twitter.com/intent/tweet?title=${post.title}&url${shareUrl}`} />
       </div>
       <div className='text-3xl cursor-pointer'>
-        <a className='fa fa-telegram' href={`https://telegram.me/share/url?url=${shareUrl}&text=${post.title}`} />
+        <a className='fa fa-telegram hover:text-red-600' href={`https://telegram.me/share/url?url=${shareUrl}&text=${post.title}`} />
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='fa fa-wechat' ref={btnRef}
+        <a className='fa fa-wechat hover:text-red-600' ref={btnRef}
            onMouseEnter={() => {
              openPopover()
            }}
@@ -66,19 +66,19 @@ const ShareBar = ({ post }) => {
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='fa fa-weibo' target='_blank' rel='noreferrer'
+        <a className='fa fa-weibo hover:text-red-600' target='_blank' rel='noreferrer'
            href={`https://service.weibo.com/share/share.php?url=${shareUrl}&title=${post.title}`} />
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='fa fa-qq' target='_blank' rel='noreferrer'
+        <a className='fa fa-qq hover:text-red-600' target='_blank' rel='noreferrer'
            href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${post.title}&desc=${post.summary}`} />
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='fa fa-star' target='_blank' rel='noreferrer'
+        <a className='fa fa-star hover:text-red-600' target='_blank' rel='noreferrer'
            href={`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${shareUrl}&sharesource=qzone&title=${post.title}&summary=${post.summary}`} />
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='fa fa-link' onClick={copyUrl} />
+        <a className='fa fa-link hover:text-red-600' onClick={copyUrl} />
       </div>
     </div>
   </>

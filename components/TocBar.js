@@ -50,7 +50,7 @@ const TocBar = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs))
 
-  return <div className='bg-white dark:bg-gray-800 pb-10 min-h-screen'>
+  return <div>
     <nav className='text-gray-500 dark:text-gray-400 underline overflow-auto scroll-hidden py-2'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)

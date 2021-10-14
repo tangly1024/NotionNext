@@ -6,20 +6,26 @@ import TagList from '@/components/TagList'
 const SideBar = ({ tags, currentTag, post }) => {
   return <aside className='z-10 dark:border-gray-500 border-gray-200 bg-white hidden md:block'>
     <div className='dark:bg-gray-800 border-r dark:border-gray-700 h-full scroll-hidden left-0 duration-500 ease-in-out min-h-screen'>
-      <div className='hidden md:block sticky top-16'>
-
+      <div id='sidebar' className='hidden md:block sticky top-20 duration-500'>
         <InfoCard/>
+        <hr className='dark:border-gray-700'/>
         <div className={post ? 'hidden xl:block' : 'block'}>
           <MenuButtonGroup allowCollapse={true}/>
         </div>
 
         {tags && (
-          <div className='p-4'>
+          <div>
             {/* 标签云  */}
-            <section>
-              <strong className='text-xl text-gray-600 dark:text-gray-400'>标签</strong>
-              <TagList tags={tags} currentTag={currentTag} />
+            <hr className='dark:border-gray-700'/>
+            <section className='py-3 px-5 text-gray-600 dark:text-gray-400 dark:hover:bg-black duration-100 flex flex-nowrap align-middle'>
+              <div className='my-auto w-5 text-xl justify-center flex'>
+                <i className='fa fa-tags' />
+              </div>
+              <div className='ml-4 w-32'>标签</div>
             </section>
+            <div className='px-5'>
+              <TagList tags={tags} currentTag={currentTag} />
+            </div>
           </div>
         )}
 
