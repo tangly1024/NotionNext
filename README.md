@@ -69,7 +69,7 @@
 - **页面渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
 - **样式**: Tailwind CSS 和 `@tailwindcss/jit` compiler
 - **评论**: Gitalk,Cusdis,Utterances
-- **图标**：[fontawesome](https://fontawesome.com/v5.15/icons?d=gallery)
+- **图标**：[fontawesome](https://fontawesome.com/v4.7/icons/?d=gallery)
 
 ## 页面样式主题
 - 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa)

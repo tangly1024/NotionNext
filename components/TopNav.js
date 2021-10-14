@@ -2,23 +2,22 @@ import Link from 'next/link'
 import BLOG from '@/blog.config'
 import React, { useRef } from 'react'
 import DarkModeButton from '@/components/DarkModeButton'
-import Image from 'next/image'
 import SearchInput from '@/components/SearchInput'
 import Drawer from '@/components/Drawer'
+import DrawerRight from '@/components/DrawerRight'
 
 const TopNav = ({ tags, currentTag, post }) => {
   const drawer = useRef()
+  const drawerRight = useRef()
 
   return (<div className='fixed w-full top-0 z-20'>
     {/* 侧面抽屉 */}
-    <Drawer post={post} currentTag={currentTag} cRef={drawer} />
+    <Drawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} />
+    <DrawerRight post={post} cRef={drawerRight}/>
 
-    <div id='sticky-nav'
-         className='transform 2xl:mt-0 duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
-      {/* 导航栏 */}
-      <div
-        className=' text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-md '
-      >
+    {/* 导航栏 */}
+    <div id='sticky-nav' className='xl:mt-0 transform 2xl:mt-0 duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
+      <div className='text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-md'>
         {/* 左侧LOGO */}
         <div className='flex ml-12'>
           <div onClick={() => { drawer.current.handleMenuClick() }}
@@ -42,16 +41,8 @@ const TopNav = ({ tags, currentTag, post }) => {
         {/* 右侧功能 */}
         <div className='flex flex-nowrap space-x-1'>
           <DarkModeButton />
-          <div className='flex align-middle cursor-pointer'>
-            <Link href='/article/about'>
-              <Image
-                alt={BLOG.author}
-                width={28}
-                height={28}
-                src='/avatar.svg'
-                className='rounded-full border-black'
-              />
-            </Link>
+          <div className='z-10 p-1 duration-200 mr-2 h-12 text-xl cursor-pointer dark:text-gray-300 '>
+            <i className='fa p-2.5 hover:scale-125 transform duration-200 fa-bookmark' onClick={() => { drawerRight.current.handleMenuClick() }}/>
           </div>
         </div>
       </div>

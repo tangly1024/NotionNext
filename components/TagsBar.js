@@ -7,9 +7,11 @@ import Link from 'next/link'
  * @returns {JSX.Element}
  * @constructor
  */
-const Tags = ({ tags, currentTag }) => {
+const TagsBar = ({ tags, currentTag }) => {
   if (!tags) return <></>
-  return (<div className='bg-white dark:bg-gray-800 flex overflow-x-auto'>
+  return (
+    <div id='tags-bar' className='fixed xl:mt-0 top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
+      <div className='bg-white dark:bg-gray-800 flex overflow-x-auto'>
       <div className='z-30 sticky left-0 flex'>
         <div className='px-2 bg-white dark:bg-gray-800'/>
         <div className='px-5 -line-x-opacity bg-black'/>
@@ -38,7 +40,8 @@ const Tags = ({ tags, currentTag }) => {
         <div className='px-2 bg-white dark:bg-gray-800'/>
       </div>
     </div>
+    </div>
   )
 }
 
-export default Tags
+export default TagsBar

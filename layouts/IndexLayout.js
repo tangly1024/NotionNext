@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Pagination from '@/components/Pagination'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
-import Tags from '@/components/Tags'
+import TagsBar from '@/components/TagsBar'
 import Footer from '@/components/Footer'
 import React, { useRef } from 'react'
 import Container from '@/components/Container'
@@ -54,11 +54,7 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
         {/* 侧边菜单 */}
         <SideBar />
         <div className='flex-grow'>
-
-          <div id='tags-bar' className='fixed 2xl:mt-0 top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
-            <Tags tags={tags} currentTag={currentTag} />
-          </div>
-
+          <TagsBar tags={tags} currentTag={currentTag} />
           <main id='post-list-wrapper' className='pt-16 md:pt-28 px-2 md:px-20'>
             {(!page || page === 1) && (<div className='py-5' />)}
 
@@ -88,13 +84,11 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
               <Footer/>
             </div>
           </main>
-
         </div>
       </div>
 
       {/* 下方菜单组 */}
-      <div
-        className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
+      <div className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
         <div className='flex-wrap'>
           <JumpToTop targetRef={targetRef} showPercent={false}/>
         </div>

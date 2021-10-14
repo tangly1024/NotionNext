@@ -12,7 +12,7 @@ const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
   return (
     <ArticleLayout
       blockMap={blockMap}
-      frontMatter={post}
+      post={post}
       emailHash={emailHash}
       tags={tags}
       prev={prev}

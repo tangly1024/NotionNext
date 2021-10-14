@@ -24,7 +24,7 @@ const ShareButton = ({ post }) => {
           <ShareBar post={post}/>
         </div>
         <div ref={btnRef}
-          className='z-20 border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer text-md hover:shadow-2xl'>
+          className='z-20 border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer text-md hover:shadow-2xl shadow-lg'>
           <i className='transform duration-200 hover:scale-150 dark:text-gray-200 p-4 fa fa-share-alt' title='share' />
         </div>
     </div>

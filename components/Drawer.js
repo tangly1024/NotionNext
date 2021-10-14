@@ -3,14 +3,16 @@ import BLOG from '@/blog.config'
 import SearchInput from '@/components/SearchInput'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import TocBar from '@/components/TocBar'
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import React, { useImperativeHandle, useState } from 'react'
+import InfoCard from '@/components/InfoCard'
+import TagList from '@/components/TagList'
 
 /**
  * 抽屉面板，可以从侧面拉出
  * @returns {JSX.Element}
  * @constructor
  */
-const Drawer = ({ post, currentTag, cRef }) => {
+const Drawer = ({ post, currentTag, cRef, tags }) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
@@ -22,6 +24,7 @@ const Drawer = ({ post, currentTag, cRef }) => {
   const handleMenuClick = () => {
     switchShowDrawer(!showDrawer)
   }
+  console.log(post)
   return <div>
     <div className='fixed top-0 left-0 z-30 h-full'>
       <div
@@ -49,11 +52,16 @@ const Drawer = ({ post, currentTag, cRef }) => {
           <div className='px-5 my-3 block md:hidden'>
             <SearchInput currentTag={currentTag} />
           </div>
+          <InfoCard/>
           {/* 菜单 */}
           <MenuButtonGroup allowCollapse={false} />
-          {post && (
-            <div className='sticky top-24'>
-              <TocBar toc={post.toc} />
+          {tags && (
+            <div className='p-4'>
+              {/* 标签云  */}
+              <section>
+                <strong className='text-xl text-gray-600 dark:text-gray-400'>标签</strong>
+                <TagList tags={tags} currentTag={currentTag} />
+              </section>
             </div>
           )}
         </div>

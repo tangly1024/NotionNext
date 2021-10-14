@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import Pagination from '@/components/Pagination'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
-import Tags from '@/components/Tags'
+import TagsBar from '@/components/TagsBar'
 import Footer from '@/components/Footer'
 import React, { useRef } from 'react'
 import Container from '@/components/Container'
 import JumpToTop from '@/components/JumpToTop'
+import SideBar from '@/components/SideBar'
 
 const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const meta = {
@@ -50,12 +51,10 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
       <div ref={targetRef} className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
         {/* 侧边菜单 */}
-        {/* <SideBar /> */}
+         <SideBar />
         <div className='flex-grow'>
 
-          <div id='tags-bar' className='fixed top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
-            <Tags tags={tags} currentTag={currentTag} />
-          </div>
+          <TagsBar tags={tags} currentTag={currentTag} />
 
           <main id='post-list-wrapper' className='pt-16 md:pt-28 px-2 md:px-20'>
             {(!page || page === 1) && (<div className='py-5' />)}
@@ -83,7 +82,7 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
               <Pagination page={page} showNext={showNext} />
             </div>
             <div className='w-full border-t '>
-              <Footer/>
+              <Footer />
             </div>
           </main>
 
@@ -94,7 +93,7 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
       <div
         className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
         <div className='flex-wrap'>
-          <JumpToTop targetRef={targetRef} showPercent={false}/>
+          <JumpToTop targetRef={targetRef} showPercent={false} />
         </div>
       </div>
     </Container>

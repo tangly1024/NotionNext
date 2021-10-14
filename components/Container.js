@@ -34,7 +34,6 @@ const Container = ({ children, layout, fullWidth, tags, meta, ...customMeta }) =
   return (
     <div className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
-      <TopNav tags={tags}/>
       {children}
     </div>
   )

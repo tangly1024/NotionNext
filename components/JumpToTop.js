@@ -33,7 +33,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
 
   return (
     <div
-      className={(show ? 'animate__fade InUp' : 'animate__fadeOutUp') + ' animate__animated animate__faster'}>
+      className={(show ? 'animate__fade InUp' : 'animate__fadeOutUp') + ' animate__animated animate__faster shadow-lg'}>
       <div
         className='border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer hover:shadow-2xl'
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
