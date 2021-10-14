@@ -10,8 +10,9 @@ const Progress = ({ targetRef }) => {
   const [percent, changePercent] = useState(0)
   const scrollListener = useCallback(throttle(() => {
     if (targetRef.current) {
+      const clientHeight = targetRef ? (targetRef.current.clientHeight) : 0
       const scrollY = window.pageYOffset
-      const fullHeight = targetRef.current.clientHeight - window.outerHeight
+      const fullHeight = clientHeight - window.outerHeight
       let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
       if (per > 100) per = 100
       changePercent(per)
