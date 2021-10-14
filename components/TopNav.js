@@ -14,7 +14,7 @@ const TopNav = ({ tags, currentTag, post }) => {
     <Drawer post={post} currentTag={currentTag} cRef={drawer} />
 
     <div id='sticky-nav'
-         className='transform xl:mt-0 duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
+         className='transform 2xl:mt-0 duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
       {/* 导航栏 */}
       <div
         className=' text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-md '

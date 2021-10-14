@@ -1,9 +1,9 @@
 import { getAllPosts, getAllTags } from '@/lib/notion'
-import DefaultLayout from '@/layouts/DefaultLayout'
+import IndexLayout from '@/layouts/IndexLayout'
 import BLOG from '@/blog.config'
 
 export default function Tag ({ tags, posts, currentTag }) {
-  return <DefaultLayout tags={tags} posts={posts} currentTag={currentTag} />
+  return <IndexLayout tags={tags} posts={posts} currentTag={currentTag} />
 }
 
 export async function getStaticProps ({ params }) {

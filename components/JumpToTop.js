@@ -5,10 +5,12 @@ import { useLocale } from '@/lib/locale'
 /**
  * 跳转到网页顶部
  * 当屏幕下滑500像素后会出现该控件
+ * @param targetRef 关联高度的目标html标签
+ * @param showPercent 是否显示百分比
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToTop = ({ targetRef }) => {
+const JumpToTop = ({ targetRef, showPercent = true }) => {
   const locale = useLocale()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
@@ -35,9 +37,11 @@ const JumpToTop = ({ targetRef }) => {
       <div
         className='border dark:border-gray-500 dark:bg-gray-600 bg-white cursor-pointer hover:shadow-2xl'
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-        <div className='absolute bg-white dark:text-gray-200 dark:bg-gray-600 z-20 hover:opacity-0 w-11 py-3 text-center'>
+        {showPercent && (
+          <div className='absolute bg-white dark:text-gray-200 dark:bg-gray-600 z-20 hover:opacity-0 w-11 py-3 text-center'>
             {percent}%
-        </div>
+          </div>
+        )}
         <a className='dark:text-gray-200 fa fa-arrow-up p-4 transform hover:scale-150 duration-200'
            title={locale.POST.TOP} />
       </div>

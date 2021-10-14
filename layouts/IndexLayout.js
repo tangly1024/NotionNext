@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 import Pagination from '@/components/Pagination'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
-import { useTheme } from '@/lib/theme'
 import Tags from '@/components/Tags'
-import SideBar from '@/components/SideBar'
 import Footer from '@/components/Footer'
-import React from 'react'
+import React, { useRef } from 'react'
 import Container from '@/components/Container'
+import JumpToTop from '@/components/JumpToTop'
+import SideBar from '@/components/SideBar'
 
-const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
+const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
   const meta = {
-    title: BLOG.title,
+    title: `${BLOG.title} | 首页`,
     type: 'website',
     ...customMeta
   }
@@ -45,16 +45,17 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
     showNext = page * BLOG.postsPerPage < totalPosts
   }
 
+  const targetRef = useRef(null)
+
   return (
     <Container id='wrapper' meta={meta} tags={tags}>
 
-      <div className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
+      <div ref={targetRef} className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
         {/* 侧边菜单 */}
         <SideBar />
-
         <div className='flex-grow'>
 
-          <div id='tags-bar' className='fixed xl:mt-0 top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
+          <div id='tags-bar' className='fixed 2xl:mt-0 top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
             <Tags tags={tags} currentTag={currentTag} />
           </div>
 
@@ -89,14 +90,21 @@ const DefaultLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
           </main>
 
         </div>
+      </div>
 
+      {/* 下方菜单组 */}
+      <div
+        className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
+        <div className='flex-wrap'>
+          <JumpToTop targetRef={targetRef} showPercent={false}/>
+        </div>
       </div>
     </Container>
   )
 }
-DefaultLayout.propTypes = {
+IndexLayout.propTypes = {
   posts: PropTypes.array.isRequired,
   tags: PropTypes.object.isRequired,
   currentTag: PropTypes.string
 }
-export default DefaultLayout
+export default IndexLayout

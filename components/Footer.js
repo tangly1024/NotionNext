@@ -7,9 +7,9 @@ const Footer = ({ fullWidth = true }) => {
     <footer
       className='flex-shrink-0 justify-center text-center m-auto w-full mx-auto text-gray-500 dark:text-gray-400 text-sm text-gray-400 p-6'
     >
-      <span className='fa fa-copyright leading-6'> {` ${y}`} <span>Made with ♥︎ by  <a href='https://www.tangly1024.com/article/about' className='underline'>@tangly1024</a>. Powered by <a href='https://notion.so' className='underline'>Notion</a> & <a href='https://vercel.com' className='underline'>Vercel</a>.</span> </span>
+      <span className='fa fa-copyright leading-6'> {` ${y}`} <span> <a href='https://www.tangly1024.com/article/about' className='underline font-bold'>tangly1024.com</a>. Powered by <a href='https://notion.so' className='underline font-bold'>Notion</a> & <a href='https://vercel.com' className='underline font-bold'>Vercel</a>.</span> </span>
       <br />
-      <span className='fa fa-shield leading-6 mr-2'> <a href='https://beian.miit.gov.cn/' className='ml-1'>闽ICP备20010331号</a></span>
+      <span className='fa fa-shield leading-6 mr-2'> <a href='https://beian.miit.gov.cn/' className='ml-1 font-bold'>闽ICP备20010331号</a></span>
 
       <span id='busuanzi_container_site_pv' className='hidden'>
             <a id='busuanzi_container_site_pv' target='_blank' className='fa  fa-eye' rel='noreferrer'

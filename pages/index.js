@@ -1,5 +1,5 @@
 import { getAllPosts, getAllTags } from '@/lib/notion'
-import DefaultLayout from '@/layouts/DefaultLayout'
+import IndexLayout from '@/layouts/IndexLayout'
 
 export async function getStaticProps () {
   let posts = await getAllPosts()
@@ -18,10 +18,10 @@ export async function getStaticProps () {
   }
 }
 
-const blog = ({ posts, page, tags }) => {
+const index = ({ posts, page, tags }) => {
   return (
-    <DefaultLayout tags={tags} posts={posts} page={page} />
+    <IndexLayout tags={tags} posts={posts} page={page} />
   )
 }
 
-export default blog
+export default index

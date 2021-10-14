@@ -1,7 +1,7 @@
 import { getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import DefaultLayout from '@/layouts/DefaultLayout'
 import { useRouter } from 'next/router'
+import PageLayout from '@/layouts/PageLayout'
 
 const Page = ({ posts, tags, page }) => {
   let filteredBlogPosts = posts
@@ -16,7 +16,7 @@ const Page = ({ posts, tags, page }) => {
     }
   }
 
-  return <DefaultLayout tags={tags} posts={filteredBlogPosts} page={page} />
+  return <PageLayout tags={tags} posts={filteredBlogPosts} page={page} />
 }
 
 export async function getStaticProps (context) {
