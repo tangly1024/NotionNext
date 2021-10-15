@@ -14,7 +14,7 @@ const TagList = ({ tags, currentTag }) => {
         {Object.keys(tags).map(tag => {
           const selected = tag === currentTag
           return (
-            <TagItemMini tag={tag} selected={selected} count={tags[tag]}/>
+            <TagItemMini key={tag} tag={tag} selected={selected} count={tags[tag]}/>
           )
         })}
     </div>

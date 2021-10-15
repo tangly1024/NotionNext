@@ -34,7 +34,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
 
   return (
     <div
-      className={(show ? 'animate__fade InUp' : 'animate__fadeOutUp') + '  rounded-full animate__animated animate__faster shadow-xl'}>
+      className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + '  rounded-full animate__animated animate__faster shadow-xl'}>
       <div
         style={{ backgroundColor: 'rgb(56, 144, 255)' }}
         className='rounded-full dark:bg-gray-600 bg-white cursor-pointer '
