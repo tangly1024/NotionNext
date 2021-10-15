@@ -71,7 +71,7 @@ const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
 
             <div className=''>
               {/* 文章列表 */}
-              <div className='grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
+              <div className='grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
                 {!postsToShow.length && (
                   <p className='text-gray-500 dark:text-gray-300'>No posts found.</p>
                 )}

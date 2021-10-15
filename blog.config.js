@@ -13,7 +13,7 @@ const BLOG = {
   darkBackground: '#111827', // use hex value, don't forget '#'
   path: '', // leave this empty unless you want to deploy in a folder
   since: 2020, // if leave this empty, current year will be used.
-  postsPerPage: 6, // post counts per page
+  postsPerPage: 8, // post counts per page
   sortByDate: false,
   showAbout: true, // WIP
   showArchive: true, // WIP
