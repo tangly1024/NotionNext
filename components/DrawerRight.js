@@ -21,7 +21,7 @@ const DrawerRight = ({ post, cRef }) => {
   }
 
   return <div>
-    <div className='fixed top-0 right-0 z-30 h-full'>
+    <div className='fixed top-0 right-0 z-40 h-full'>
       <div
         className={(showDrawer ? 'shadow-2xl' : '-mr-72') + ' overflow-y-auto duration-200 w-72 h-full bg-white dark:bg-gray-700 border-r dark:border-gray-600'}>
         {/* LOGO */}
@@ -44,7 +44,7 @@ const DrawerRight = ({ post, cRef }) => {
       </div>
     </div>
     {/* 背景蒙版 */}
-    <div className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-20 w-full h-full bg-black bg-opacity-50'}
+    <div className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-50'}
          onClick={handleMenuClick} />
   </div>
 }
