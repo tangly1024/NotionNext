@@ -16,7 +16,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
   const [percent, changePercent] = useState(0)
   const scrollListener = useCallback(throttle(() => {
     // 处理是否显示回到顶部按钮
-    const clientHeight = targetRef ? (targetRef.current.clientHeight) : 0
+    const clientHeight = targetRef ? (targetRef.current ? targetRef.current.clientHeight : 0) : 0
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
     const shouldShow = scrollY > 100
