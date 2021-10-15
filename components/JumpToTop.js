@@ -37,15 +37,17 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
       className={(show ? 'animate__fade InUp' : 'animate__fadeOutUp') + '  rounded-full animate__animated animate__faster shadow-xl'}>
       <div
         style={{ backgroundColor: 'rgb(56, 144, 255)' }}
-        className='rounded-full dark:bg-gray-600 bg-white cursor-pointer'
+        className='rounded-full dark:bg-gray-600 bg-white cursor-pointer '
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         {showPercent && (
         <div style={{ backgroundColor: 'rgb(56, 144, 255)' }} className='text-gray-100 absolute rounded-full dark:text-gray-200 dark:bg-gray-600 z-20 hover:opacity-0 w-11 py-3 text-center'>
-          {percent}%
+          <span>{percent}%</span>
         </div>
         )}
-        <a className='text-gray-100 fa fa-arrow-up p-4 transform hover:scale-150 duration-200'
-           title={locale.POST.TOP} />
+        <div className='text-2xl'>
+          <a className='text-gray-100 fa fa-arrow-up p-3 transform hover:scale-125 duration-200 '
+             title={locale.POST.TOP} />
+        </div>
       </div>
     </div>
 

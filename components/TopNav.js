@@ -10,13 +10,13 @@ const TopNav = ({ tags, currentTag, post }) => {
   const drawer = useRef()
   const drawerRight = useRef()
 
-  return (<div className='fixed w-full top-0 z-20'>
+  return (<>
     {/* 侧面抽屉 */}
     <Drawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} />
     <DrawerRight post={post} cRef={drawerRight}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='transform duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
+    <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
       <div className='text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-md'>
         {/* 左侧LOGO */}
         <div className='flex ml-12'>
@@ -48,7 +48,7 @@ const TopNav = ({ tags, currentTag, post }) => {
       </div>
     </div>
 
-  </div>)
+  </>)
 }
 
 export default TopNav
