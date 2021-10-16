@@ -9,45 +9,31 @@ import SideBar from '@/components/SideBar'
 import TopNav from '@/components/TopNav'
 import BlogPostList from '@/components/BlogPostList'
 
-const IndexLayout = ({ tags, posts, page, currentTag, ...customMeta }) => {
-  const meta = {
-    title: BLOG.title,
-    type: 'website',
-    ...customMeta
-  }
+const PageLayout = ({ tags, posts, page, currentTag, meta, ...customMeta }) => {
   const targetRef = useRef(null)
 
   return (
     <Container id='wrapper' meta={meta} tags={tags}>
       <TopNav tags={tags} />
 
+      {/* middle */}
       <div ref={targetRef} className={`${BLOG.font} flex justify-between bg-gray-100 dark:bg-black min-h-screen`}>
-        {/* 侧边菜单 */}
         <SideBar />
-        <div className='flex-grow'>
 
+        <main className='flex-grow'>
           <TagsBar tags={tags} currentTag={currentTag} />
-
-          <BlogPostList posts={posts} tags={tags} page={page}/>
-
-        </div>
-
-      </div>
-      {/* 下方菜单组 */}
-      <div
-        className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
-        <div className='flex-wrap'>
-          <JumpToTop targetRef={targetRef} showPercent={false} />
-        </div>
+          <BlogPostList posts={posts} tags={tags} page={page} />
+        </main>
+        <JumpToTop targetRef={targetRef} showPercent={false} />
       </div>
 
       <Footer />
     </Container>
   )
 }
-IndexLayout.propTypes = {
+PageLayout.propTypes = {
   posts: PropTypes.array.isRequired,
   tags: PropTypes.object.isRequired,
   currentTag: PropTypes.string
 }
-export default IndexLayout
+export default PageLayout

@@ -15,25 +15,12 @@ const Page = ({ posts, tags, page }) => {
       })
     }
   }
-
-  return <PageLayout tags={tags} posts={filteredBlogPosts} page={page} />
-}
-
-export async function getStaticProps (context) {
-  const { page } = context.params // Get Current Page No.
-  let posts = await getAllPosts()
-  posts = posts.filter(
-    post => post.status[0] === 'Published' && post.type[0] === 'Post'
-  )
-  const tags = await getAllTags(posts)
-  return {
-    props: {
-      tags,
-      posts,
-      page
-    },
-    revalidate: 1
+  const meta = {
+    title: `${BLOG.title} | 博客列表`,
+    description: BLOG.description,
+    type: 'website'
   }
+  return <PageLayout tags={tags} posts={filteredBlogPosts} page={page} meta={meta} />
 }
 
 export async function getStaticPaths () {
@@ -57,6 +44,23 @@ export async function getStaticPaths () {
       paths: [],
       fallback: true
     }
+  }
+}
+
+export async function getStaticProps (context) {
+  const { page } = context.params // Get Current Page No.
+  let posts = await getAllPosts()
+  posts = posts.filter(
+    post => post.status[0] === 'Published' && post.type[0] === 'Post'
+  )
+  const tags = await getAllTags(posts)
+  return {
+    props: {
+      tags,
+      posts,
+      page
+    },
+    revalidate: 1
   }
 }
 

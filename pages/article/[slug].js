@@ -7,7 +7,7 @@ import Custom404 from '@/pages/404'
 
 const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
   if (!post) {
-    return <Custom404/>
+    return <Custom404 />
   }
   return (
     <ArticleLayout
@@ -22,11 +22,18 @@ const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
 }
 
 export async function getStaticPaths () {
-  let posts = await getAllPosts()
-  posts = posts.filter(post => post.status[0] === 'Published')
-  return {
-    paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
-    fallback: true
+  if (BLOg.isProd) {
+    let posts = await getAllPosts()
+    posts = posts.filter(post => post.status[0] === 'Published')
+    return {
+      paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
+      fallback: true
+    }
+  } else {
+    return {
+      paths: [],
+      fallback: true
+    }
   }
 }
 
@@ -36,7 +43,7 @@ export async function getStaticProps ({ params: { slug } }) {
   const post = posts.find(t => t.slug === slug)
   if (!post) {
     return {
-      props: { },
+      props: {},
       revalidate: 1
     }
   }

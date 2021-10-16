@@ -34,6 +34,7 @@ const ArticleLayout = ({
 }) => {
   const meta = {
     title: post.title,
+    description: post.summary,
     type: 'article'
   }
   const targetRef = useRef(null)
