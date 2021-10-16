@@ -22,7 +22,7 @@ const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
 }
 
 export async function getStaticPaths () {
-  if (BLOg.isProd) {
+  if (BLOG.isProd) {
     let posts = await getAllPosts()
     posts = posts.filter(post => post.status[0] === 'Published')
     return {
