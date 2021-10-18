@@ -41,9 +41,11 @@ const TopNav = ({ tags, currentTag, post }) => {
         {/* 右侧功能 */}
         <div className='flex flex-nowrap space-x-1'>
           <DarkModeButton />
-          {post && <div className='block xl:hidden z-10 p-1 duration-200 mr-2 h-12 text-xl cursor-pointer dark:text-gray-300 '>
-            <i className='fa p-2.5 hover:scale-125 transform duration-200 fa-bookmark' onClick={() => { drawerRight.current.handleMenuClick() }}/>
-          </div>}
+          {post && (
+            <div className='block xl:hidden z-10 p-1 duration-200 mr-2 h-12 text-xl cursor-pointer dark:text-gray-300 '>
+              <i className='fa p-2.5 hover:scale-125 transform duration-200 fa-bookmark-o' onClick={() => { drawerRight.current.handleMenuClick() }}/>
+            </div>
+          )}
         </div>
       </div>
     </div>

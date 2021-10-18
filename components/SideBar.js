@@ -4,11 +4,11 @@ import InfoCard from '@/components/InfoCard'
 import TagList from '@/components/TagList'
 
 const SideBar = ({ tags, currentTag, post }) => {
-  return <aside className='z-10 dark:border-gray-500 border-gray-200 bg-white hidden md:block'>
+  return <aside className='z-10 dark:border-gray-500 border-gray-200 bg-white hidden lg:block'>
     <div
       className='dark:bg-gray-800 border-r dark:border-gray-700 h-full scroll-hidden left-0 duration-500 ease-in-out min-h-screen'>
       <div id='sidebar' className='hidden md:block sticky top-20 duration-500'>
-        <div className={post ? 'block' : 'hidden xl:block'}>
+        <div >
           <InfoCard />
           <hr className='dark:border-gray-700' />
           <MenuButtonGroup allowCollapse={true} />

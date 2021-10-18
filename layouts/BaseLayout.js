@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import CommonHead from '@/components/CommonHead'
 import throttle from 'lodash.throttle'
 import BLOG from '@/blog.config'
 import { useTheme } from '@/lib/theme'
+import TopNav from '@/components/TopNav'
+import Footer from '@/components/Footer'
+import SideBar from '@/components/SideBar'
+import JumpToTop from '@/components/JumpToTop'
 
-const Container = ({ children, layout, fullWidth, tags, meta, ...customMeta }) => {
+const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMeta }) => {
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
@@ -36,16 +40,30 @@ const Container = ({ children, layout, fullWidth, tags, meta, ...customMeta }) =
     }
   })
   const { theme } = useTheme()
+  const targetRef = useRef(null)
+
   return (
-    <div className={[BLOG.font, theme].join(' ')}>
+    <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
-      {children}
+
+      <TopNav tags={tags} post={post} />
+      {/* Middle Wrapper */}
+      <main className='flex bg-gray-100'>
+        <SideBar tags={tags} post={post} />
+        <div className='flex flex-grow' ref={targetRef} >
+           {children}
+        </div>
+        <JumpToTop targetRef={targetRef} showPercent={false} />
+      </main>
+
+      <Footer />
+
     </div>
   )
 }
 
-Container.propTypes = {
+BaseLayout.propTypes = {
   children: PropTypes.node
 }
 
-export default Container
+export default BaseLayout

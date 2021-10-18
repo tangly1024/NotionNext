@@ -1,6 +1,8 @@
 import { getAllPosts, getAllTags } from '@/lib/notion'
-import IndexLayout from '@/layouts/IndexLayout'
 import BLOG from '@/blog.config'
+import BaseLayout from '@/layouts/BaseLayout'
+import TagsBar from '@/components/TagsBar'
+import BlogPostListScroll from '@/components/BlogPostListScroll'
 
 export async function getStaticProps () {
   let posts = await getAllPosts()
@@ -15,7 +17,6 @@ export async function getStaticProps () {
   }
   return {
     props: {
-      page: 1, // current page is 1
       posts,
       tags,
       meta
@@ -24,9 +25,14 @@ export async function getStaticProps () {
   }
 }
 
-const index = ({ posts, page, tags, meta }) => {
+const index = ({ posts, tags, meta }) => {
   return (
-    <IndexLayout tags={tags} posts={posts} page={page} meta={meta} />
+    <BaseLayout meta={meta} tags={tags}>
+      <div className='flex-grow'>
+        <TagsBar tags={tags} />
+        <BlogPostListScroll posts={posts} tags={tags} />
+      </div>
+    </BaseLayout>
   )
 }
 

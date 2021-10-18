@@ -1,6 +1,8 @@
 import { getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import PageLayout from '@/layouts/PageLayout'
+import TagsBar from '@/components/TagsBar'
+import BlogPostList from '@/components/BlogPostList'
+import BaseLayout from '@/layouts/BaseLayout'
 
 export default function Tag ({ tags, posts, currentTag }) {
   const meta = {
@@ -8,7 +10,12 @@ export default function Tag ({ tags, posts, currentTag }) {
     description: BLOG.description,
     type: 'website'
   }
-  return <PageLayout tags={tags} posts={posts} currentTag={currentTag} meta={meta} />
+  return <BaseLayout meta={meta} tags={tags} currentTag={currentTag}>
+    <div className='flex-grow'>
+      <TagsBar tags={tags} currentTag={currentTag}/>
+      <BlogPostList posts={posts} tags={tags}/>
+    </div>
+  </BaseLayout>
 }
 
 export async function getStaticProps ({ params }) {
@@ -33,7 +40,6 @@ export async function getStaticProps ({ params }) {
 
 export async function getStaticPaths () {
   if (BLOG.isProd) {
-    // 预渲染
     const tags = await getAllTags()
     return {
       paths: Object.keys(tags).map(tag => ({ params: { tag } })),

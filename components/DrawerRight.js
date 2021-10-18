@@ -26,11 +26,11 @@ const DrawerRight = ({ post, cRef }) => {
         className={(showDrawer ? 'shadow-2xl' : '-mr-72') + ' overflow-y-auto duration-200 w-72 h-full bg-white dark:bg-gray-700 border-r dark:border-gray-600'}>
         {/* LOGO */}
         <div className='sticky top-0 z-20 bg-white w-72 flex space-x-4 px-5 py-3.5 dark:border-gray-500 border-b dark:bg-gray-900 '>
-          <div className='flex text-lg justify-center font-bold font-semibold px-2 py-1 duration-200 dark:text-gray-300'>文章目录
+          <div className='text-lg font-bold font-semibold px-2 py-1 duration-200 dark:text-gray-300'>文章目录
           </div>
           <div
             className='z-10 p-1 duration-200 mr-2 absolute right-6 text-gray-600 text-xl cursor-pointer dark:text-gray-300'>
-            <i className='fa hover:scale-125 transform duration-200 fa-bookmark-o ' onClick={handleMenuClick} />
+            <i className='fa hover:scale-125 transform duration-200 fa-bookmark ' onClick={handleMenuClick} />
           </div>
         </div>
       </div>

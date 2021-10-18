@@ -7,18 +7,11 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 export default function Custom404 () {
-  const route = useRouter()
-  if (route.asPath.indexOf('/article') < 0 && route.asPath.indexOf('/404') < 0) {
-    // article 重定向，处理旧文章链接迁移。
-    const redirectUrl = '/article' + route.asPath
-    route.push(redirectUrl)
-  } else {
-    useEffect(() => {
-      setTimeout(() => {
-        window.location.href = '/'
-      }, 3000)
-    })
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      window.location.href = '/'
+    }, 3000)
+  })
 
   return <div
     className='text-black bg-white h-screen text-center justify-center content-center items-center flex flex-col'>

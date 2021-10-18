@@ -73,6 +73,7 @@
 
 ## 页面样式主题
 - 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa)
+- 仿照 [youtube](https://youtube.com)
 
 ## License
 
