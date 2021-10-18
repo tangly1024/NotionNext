@@ -19,7 +19,7 @@ import { useRef } from 'react'
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
-const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
+const BlogPost = ({ post, blockMap, tags, prev, next }) => {
   if (!post) {
     return <BaseLayout meta={{ title: `${BLOG.title} | 加载中` }}>
       <div className='w-full h-full flex justify-center mx-auto dark:bg-gray-800'>
@@ -40,7 +40,8 @@ const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
   return <BaseLayout meta={meta} tags={tags} post={post}>
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
-    <div id='article-wrapper' className='flex-grow bg-gray-100 dark:bg-gray-800'>
+
+    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-100 dark:bg-gray-800'>
       {/* 中央区域 wrapper */}
       <header
         className='hover:scale-105 hover:shadow-2xl duration-200 transform mx-auto max-w-5xl mt-16 lg:mt-20 md:flex-shrink-0 animate__fadeIn animate__animated'>
@@ -52,7 +53,7 @@ const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
       </header>
 
       <article
-        className='w-screen overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
+        className='w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
@@ -163,19 +164,19 @@ const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
 }
 
 export async function getStaticPaths () {
-  if (BLOG.isProd) {
-    let posts = await getAllPosts()
-    posts = posts.filter(post => post.status[0] === 'Published')
-    return {
-      paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
-      fallback: true
-    }
-  } else {
-    return {
-      paths: [],
-      fallback: true
-    }
+  // if (BLOG.isProd) {
+  let posts = await getAllPosts()
+  posts = posts.filter(post => post.status[0] === 'Published')
+  return {
+    paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
+    fallback: true
   }
+  // } else {
+  //   return {
+  //     paths: [],
+  //     fallback: true
+  //   }
+  // }
 }
 
 export async function getStaticProps ({ params: { slug } }) {
@@ -190,7 +191,6 @@ export async function getStaticProps ({ params: { slug } }) {
   }
 
   const blockMap = await getPostBlocks(post.id)
-  const emailHash = createHash('md5').update(BLOG.email).digest('hex')
   post.toc = getPageTableOfContents(post, blockMap)
   posts = posts.filter(post => post.type[0] === 'Post')
   const tags = await getAllTags(posts)
@@ -200,7 +200,7 @@ export async function getStaticProps ({ params: { slug } }) {
   const next = posts.slice(index + 1, index + 2)[0] ?? posts[0]
 
   return {
-    props: { post, blockMap, emailHash, tags, prev, next },
+    props: { post, blockMap, tags, prev, next },
     revalidate: 1
   }
 }

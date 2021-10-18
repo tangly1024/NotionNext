@@ -52,7 +52,7 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
         <SideBar tags={tags} post={post} />
         <div className='flex flex-grow' ref={targetRef}>
           {children}
-          <JumpToTop targetRef={targetRef} showPercent={false} />
+          <JumpToTop targetRef={targetRef} showPercent={true} />
         </div>
       </main>
 

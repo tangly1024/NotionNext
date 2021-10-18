@@ -34,23 +34,14 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
 
   return (
     <div className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
-      <div className='flex-wrap'>
+      <div className='flex-wrap transform hover:scale-125 duration-200 '>
         <div
-          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + '  rounded-full animate__animated animate__faster shadow-xl'}>
-          <div
-            style={{ backgroundColor: 'rgb(56, 144, 255)' }}
-            className='rounded-full dark:bg-gray-600 bg-white cursor-pointer '
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            {showPercent && (
-              <div style={{ backgroundColor: 'rgb(56, 144, 255)' }}
-                   className='text-gray-100 absolute rounded-full dark:text-gray-200 dark:bg-gray-600 z-20 hover:opacity-0 w-11 py-3 text-center'>
-                <span>{percent}%</span>
-              </div>
-            )}
-            <div className='text-2xl'>
-              <a className='text-gray-100 fa fa-arrow-up p-3 transform hover:scale-125 duration-200 '
-                 title={locale.POST.TOP} />
-            </div>
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          style={{ backgroundColor: 'rgb(56, 144, 255)' }}
+          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' p-1 cursor-pointer rounded-full animate__animated animate__faster shadow-xl'}>
+          <div className='text-center'>
+            <div className='w-10 text-xl text-gray-100' title={locale.POST.TOP} ><i className='fa fa-arrow-up'/> </div>
+            {showPercent && (<div className='w-10 text-xs text-gray-100 dark:text-gray-200 text-center'>{percent}%</div>)}
           </div>
         </div>
       </div>
