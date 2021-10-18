@@ -164,23 +164,16 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
 }
 
 export async function getStaticPaths () {
-  // if (BLOG.isProd) {
-  let posts = await getAllPosts()
+  let posts = await getAllPosts({ from: 'slug - paths' })
   posts = posts.filter(post => post.status[0] === 'Published')
   return {
     paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
     fallback: true
   }
-  // } else {
-  //   return {
-  //     paths: [],
-  //     fallback: true
-  //   }
-  // }
 }
 
 export async function getStaticProps ({ params: { slug } }) {
-  let posts = await getAllPosts()
+  let posts = await getAllPosts({ from: 'slug-props' })
   posts = posts.filter(post => post.status[0] === 'Published')
   const post = posts.find(t => t.slug === slug)
   if (!post) {
@@ -190,8 +183,12 @@ export async function getStaticProps ({ params: { slug } }) {
     }
   }
 
-  const blockMap = await getPostBlocks(post.id)
-  post.toc = getPageTableOfContents(post, blockMap)
+  const blockMap = await getPostBlocks(post.id, 'slug')
+  if (blockMap) {
+    post.toc = getPageTableOfContents(post, blockMap)
+  } else {
+    post.toc = []
+  }
   posts = posts.filter(post => post.type[0] === 'Post')
   const tags = await getAllTags(posts)
   // 获取推荐文章

@@ -19,7 +19,7 @@ const Page = ({ posts, tags, page }) => {
 }
 
 export async function getStaticPaths () {
-  let posts = await getAllPosts()
+  let posts = await getAllPosts({ from: 'page-path' })
   posts = posts.filter(
     post => post.status[0] === 'Published' && post.type[0] === 'Post'
   )
@@ -35,7 +35,7 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const { page } = context.params // Get Current Page No.
-  let posts = await getAllPosts()
+  let posts = await getAllPosts({ from: 'page-props' })
   posts = posts.filter(
     post => post.status[0] === 'Published' && post.type[0] === 'Post'
   )

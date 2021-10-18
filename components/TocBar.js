@@ -62,7 +62,7 @@ const TocBar = ({ toc }) => {
               'notion-table-of-contents-item px-5',
               `notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`,
               activeSection === id &&
-              ' font-bold text-black dark:text-white animate__animated animate__pulse'
+              ' font-bold text-black dark:text-white animate-pulse'
             )}
           >
                       <span

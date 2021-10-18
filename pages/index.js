@@ -5,7 +5,7 @@ import TagsBar from '@/components/TagsBar'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
 
 export async function getStaticProps () {
-  let posts = await getAllPosts()
+  let posts = await getAllPosts({ from: 'index' })
   posts = posts.filter(
     post => post.status[0] === 'Published' && post.type[0] === 'Post'
   )

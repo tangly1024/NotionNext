@@ -20,7 +20,7 @@ export default function Tag ({ tags, posts, currentTag }) {
 
 export async function getStaticProps ({ params }) {
   const currentTag = params.tag
-  let posts = await getAllPosts()
+  let posts = await getAllPosts({ from: 'tag-props' })
   posts = posts.filter(
     post => post.status[0] === 'Published' && post.type[0] === 'Post'
   )
