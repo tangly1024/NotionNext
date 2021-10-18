@@ -13,7 +13,6 @@ import ShareBar from '@/components/ShareBar'
 import BlogPostMini from '@/components/BlogPostMini'
 import Comment from '@/components/Comment'
 import TocBar from '@/components/TocBar'
-import JumpToTop from '@/components/JumpToTop'
 import BaseLayout from '@/layouts/BaseLayout'
 import { useRef } from 'react'
 
@@ -22,7 +21,13 @@ const mapPageUrl = id => {
 }
 const BlogPost = ({ post, blockMap, emailHash, tags, prev, next }) => {
   if (!post) {
-    return <>空白页</>
+    return <BaseLayout meta={{ title: `${BLOG.title} | 加载中` }}>
+      <div className='w-full h-full flex justify-center mx-auto dark:bg-gray-800'>
+        <div className='dark:text-gray-300 text-black align-middle text-center my-auto animate-pulse'>
+          <div>Loading...</div>
+        </div>
+      </div>
+    </BaseLayout>
   }
   const meta = {
     title: post.title,

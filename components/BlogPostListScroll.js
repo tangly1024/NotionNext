@@ -66,7 +66,7 @@ const BlogPostListScroll = ({ posts = [], tags }) => {
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty />
   } else {
-    return <div id='post-list-wrapper' className='pt-28 md:pt-32 px-2 md:px-20' ref={targetRef}>
+    return <div id='post-list-wrapper' className='pt-28 md:pt-32 px-2 md:px-20 dark:bg-gray-900' ref={targetRef}>
       <div>
         {/* 文章列表 */}
         <div className='grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
@@ -76,13 +76,8 @@ const BlogPostListScroll = ({ posts = [], tags }) => {
         </div>
 
         <div className='flex'>
-          {hasMore
-            ? (<div className='w-full my-4 py-4 bg-gray-200 text-center cursor-pointer'
-                    onClick={handleGetMore}> 加载更多 </div>)
-            : (
-              <div className='w-full my-4 py-4 bg-gray-200 text-center'> 加载完了😰 </div>
-              )}
-
+          <div className='w-full my-4 py-4 bg-gray-200 text-center cursor-pointer dark:bg-gray-700 dark:text-gray-200'
+               onClick={handleGetMore}> {hasMore ? '继续加载' : '加载完了😰'} </div>
         </div>
       </div>
     </div>

@@ -50,10 +50,10 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
       {/* Middle Wrapper */}
       <main className='flex bg-gray-100'>
         <SideBar tags={tags} post={post} />
-        <div className='flex flex-grow' ref={targetRef} >
-           {children}
+        <div className='flex flex-grow' ref={targetRef}>
+          {children}
+          <JumpToTop targetRef={targetRef} showPercent={false} />
         </div>
-        <JumpToTop targetRef={targetRef} showPercent={false} />
       </main>
 
       <Footer />
