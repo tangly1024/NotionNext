@@ -8,7 +8,7 @@ const SearchInput = ({ currentTag }) => {
   const [searchValue, setSearchValue] = useState('')
   const handleSearch = () => {
     if (searchValue && searchValue !== '') {
-      Router.push({ pathname: '/', query: { s: searchValue } }).then(r => {
+      Router.push({ pathname: '/page/1', query: { s: searchValue } }).then(r => {
         console.log(r)
       })
     } else {
