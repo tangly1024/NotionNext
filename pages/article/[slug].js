@@ -15,19 +15,14 @@ import Comment from '@/components/Comment'
 import TocBar from '@/components/TocBar'
 import BaseLayout from '@/layouts/BaseLayout'
 import { useRef } from 'react'
+import Custom404 from '@/pages/404'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
 const BlogPost = ({ post, blockMap, tags, prev, next }) => {
   if (!post) {
-    return <BaseLayout meta={{ title: `${BLOG.title} | 加载中` }}>
-      <div className='w-full h-full flex justify-center mx-auto dark:bg-gray-800'>
-        <div className='dark:text-gray-300 text-black align-middle text-center my-auto animate-pulse'>
-          <div>Loading...</div>
-        </div>
-      </div>
-    </BaseLayout>
+    return <Custom404/>
   }
   const meta = {
     title: post.title,

@@ -5,7 +5,7 @@ import Link from 'next/link'
 const BlogPost = ({ post }) => {
   return (
     <article key={post.id}
-             className='animate__animated animate__fadeIn inline-block border dark:border-gray-600 my-2 w-full md:max-w-md bg-white dark:bg-gray-700 dark:hover:bg-gray-600 overflow-hidden'>
+             className='animate__animated animate__slideInUp animate__faster inline-block border dark:border-gray-600 my-2 w-full md:max-w-md bg-white dark:bg-gray-700 dark:hover:bg-gray-600 overflow-hidden'>
         {/*  封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
           <Link href={`${BLOG.path}/article/${post.slug}`} className='md:flex-shrink-0 md:w-52 md:h-52 rounded-lg'>
