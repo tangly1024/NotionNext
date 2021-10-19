@@ -91,7 +91,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
 
           {/* 不蒜子 */}
           <div id='busuanzi_container_page_pv' className='hidden'>
-            <a href='https://analytics.google.com/analytics/web/#/p273013569/reports/reportinghub'
+            <a href='/#'
                className='fa fa-eye text-gray-500 text-sm leading-none py-1 px-2'>
               &nbsp;<span id='busuanzi_value_page_pv' className='leading-6'></span>
             </a>

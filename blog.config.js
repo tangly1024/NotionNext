@@ -33,8 +33,9 @@ const BLOG = {
     gaConfig: {
       measurementId: 'G-5EV4HZD0XX' // e.g: G-XXXXXXXXXX
     },
-    baidyAnalytics: 'f683ef76f06bb187cbed5546f6f28f28', // e.g only need xxxxx -> https://hm.baidu.com/hm.js?xxxxx
-    busuanzi: true // see http://busuanzi.ibruce.info/
+    baiduAnalytics: 'f683ef76f06bb187cbed5546f6f28f28', // e.g only need xxxxx -> https://hm.baidu.com/hm.js?[xxxxx]
+    busuanzi: true, // see http://busuanzi.ibruce.info/
+    cnzzAnalytics: '' // 站长统计id only need xxxxxxxx -> https://s9.cnzz.com/z_stat.php?id=[xxxxxxxx]&web_id=[xxxxxxx]
   },
   comment: {
     // support provider: gitalk, utterances, cusdis
@@ -58,7 +59,7 @@ const BLOG = {
   },
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   googleAdsenseId: 'ca-pub-2708419466378217',
-  DaoVoiceId: 'daf1a94b' // DaoVoice http://dashboard.daovoice.io/get-started
+  DaoVoiceId: '' // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
 }
 // export default BLOG
 module.exports = BLOG

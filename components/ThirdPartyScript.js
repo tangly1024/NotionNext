@@ -1,5 +1,10 @@
 import BLOG from '@/blog.config'
 
+/**
+ * 第三方代码 统计脚本
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ThirdPartyScript = () => {
   return (<>
     {BLOG.DaoVoiceId && (<>
@@ -36,14 +41,14 @@ const ThirdPartyScript = () => {
           />
         )}
         {/* 百度统计 */}
-        {BLOG.analytics.baidyAnalytics && (
+        {BLOG.analytics.baiduAnalytics && (
           <script async
                   dangerouslySetInnerHTML={{
                     __html: `
                   var _hmt = _hmt || [];
                   (function() {
                     var hm = document.createElement("script");
-                    hm.src = "https://hm.baidu.com/hm.js?${BLOG.analytics.baidyAnalytics}";
+                    hm.src = "https://hm.baidu.com/hm.js?${BLOG.analytics.baiduAnalytics}";
                     var s = document.getElementsByTagName("script")[0]; 
                     s.parentNode.insertBefore(hm, s);
                   })();
@@ -59,11 +64,11 @@ const ThirdPartyScript = () => {
         )}
 
         {/* 站长统计 */}
-        {BLOG.isProd && (
+        {BLOG.analytics.cnzzAnalytics && (
           <script async
                   dangerouslySetInnerHTML={{
                     __html: `
-                  document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1279970751'%3E%3C/span%3E%3Cscript src='https://s9.cnzz.com/z_stat.php%3Fid%3D1279970751' type='text/javascript'%3E%3C/script%3E"));
+                  document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_${BLOG.analytics.cnzzAnalytics}'%3E%3C/span%3E%3Cscript src='https://s9.cnzz.com/z_stat.php%3Fid%3D${BLOG.analytics.cnzzAnalytics}' type='text/javascript'%3E%3C/script%3E"));
                   `
                   }}
           />
