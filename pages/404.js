@@ -13,7 +13,7 @@ export default function Custom404 () {
   useEffect(() => {
     setTimeout(() => {
       router.push('/')
-    }, 3000000)
+    }, 3000)
   })
 
   return <BaseLayout meta={{ title: `${BLOG.title} | 页面找不到啦` }}>
