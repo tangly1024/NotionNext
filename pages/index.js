@@ -11,7 +11,7 @@ export async function getStaticProps () {
   )
   const tags = await getAllTags(posts)
   const meta = {
-    title: `${BLOG.title} | 首页`,
+    title: `${BLOG.title} | ${BLOG.description} `,
     description: BLOG.description,
     type: 'website'
   }
