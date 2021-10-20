@@ -1,9 +1,9 @@
 const BLOG = {
-  title: '塘里博客',
+  title: '汤里博客',
   author: 'tangly1024',
   email: 'tlyong1992@hotmail.com',
   link: 'https://tangly1024.com',
-  description: '唐风集里，收卷波澜',
+  description: '打造网络事业，从自媒体开始',
   lang: 'zh-CN', // ['zh-CN','en-US']
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
@@ -20,7 +20,7 @@ const BLOG = {
   autoCollapsedNavBar: false, // the automatically collapsed navigation bar
   socialLink: 'https://weibo.com/u/2245301913',
   seo: {
-    keywords: ['Blog', 'Website', 'Notion'],
+    keywords: ['建站', '自媒体', 'Notion', '赚钱', '写作', '副业'],
     googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
   },
   analytics: {
