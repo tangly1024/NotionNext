@@ -13,21 +13,11 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
-    const nav = document.querySelector('#sticky-nav')
-    const sidebar = document.querySelector('#sidebar')
-    const tagsBar = document.querySelector('#tags-bar')
-    const rightToc = document.querySelector('#right-toc')
     if (scrollS >= windowTop && scrollS > 10) {
-      nav && nav.classList.replace('top-0', '-top-16')
-      tagsBar && tagsBar.classList.replace('top-16', 'top-0')
-      sidebar && sidebar.classList.replace('top-20', 'top-2')
-      rightToc && rightToc.classList.replace('top-16', 'top-0')
+      hiddenNav()
       windowTop = scrollS
     } else {
-      nav && nav.classList.replace('-top-16', 'top-0')
-      tagsBar && tagsBar.classList.replace('top-0', 'top-16')
-      sidebar && sidebar.classList.replace('top-2', 'top-20')
-      rightToc && rightToc.classList.replace('top-0', 'top-16')
+      showNav()
       windowTop = scrollS
     }
   }, 200))
@@ -35,6 +25,7 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
   // 监听滚动
   useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
+    scrollTrigger()
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
@@ -60,6 +51,38 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
 
     </div>
   )
+}
+
+/**
+ * 隐藏导航
+ */
+const hiddenNav = () => {
+  if (document) {
+    const nav = document.querySelector('#sticky-nav')
+    const sidebar = document.querySelector('#sidebar')
+    const tagsBar = document.querySelector('#tags-bar')
+    const rightToc = document.querySelector('#right-toc')
+    nav && nav.classList.replace('top-0', '-top-16')
+    tagsBar && tagsBar.classList.replace('top-16', 'top-0')
+    sidebar && sidebar.classList.replace('top-20', 'top-2')
+    rightToc && rightToc.classList.replace('top-16', 'top-0')
+  }
+}
+
+/**
+ * 显示导航
+ */
+const showNav = () => {
+  if (document) {
+    const nav = document.querySelector('#sticky-nav')
+    const sidebar = document.querySelector('#sidebar')
+    const tagsBar = document.querySelector('#tags-bar')
+    const rightToc = document.querySelector('#right-toc')
+    nav && nav.classList.replace('-top-16', 'top-0')
+    tagsBar && tagsBar.classList.replace('top-0', 'top-16')
+    sidebar && sidebar.classList.replace('top-2', 'top-20')
+    rightToc && rightToc.classList.replace('top-0', 'top-16')
+  }
 }
 
 BaseLayout.propTypes = {

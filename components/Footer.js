@@ -10,6 +10,7 @@ const Footer = ({ fullWidth = true }) => {
       <span className='fa fa-copyright leading-6'> {` ${y}`} <span> <a href='https://www.tangly1024.com/article/about' className='underline font-bold text-gray-100'>tangly1024.com</a>. Powered by <a href='https://notion.so' className='underline font-bold text-gray-100'>Notion</a> & <a href='https://vercel.com' className='underline font-bold text-gray-100'>Vercel</a>.</span> </span>
       <br />
       <span className='fa fa-shield leading-6 mr-2'> <a href='https://beian.miit.gov.cn/' className='ml-1 font-bold'>闽ICP备20010331号</a></span>
+      <span > <a href='/article/privacy-policy' className='ml-1 font-bold underline'>隐私政策</a></span>
 
       <span id='busuanzi_container_site_pv' className='hidden'>
             <a id='busuanzi_container_site_pv' target='_blank' className='fa  fa-eye' rel='noreferrer'

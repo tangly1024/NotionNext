@@ -141,7 +141,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
     </div>
 
     {/* 右侧目录 */}
-    <aside className='dark:bg-gray-800 bg-white'>
+    <aside className='dark:bg-gray-800 bg-white z-10'>
       <section
         className='h-full xl:static xl:block hidden top-0 right-0 fixed h-full w-52 dark:bg-gray-800 duration-500'>
         <div id='right-toc' className='sticky top-16 duration-500'>
