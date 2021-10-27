@@ -20,6 +20,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
     const shouldShow = scrollY > 100
+    console.log(clientHeight, scrollY, fullHeight, shouldShow)
     if (shouldShow !== show) {
       switchShow(shouldShow)
     }
@@ -33,7 +34,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
   }, [show])
 
   return (
-    <div className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500'>
+    <div id='jump-to-top' className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500 z-20'>
       <div className='flex-wrap transform hover:scale-125 duration-200 '>
         <div
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
