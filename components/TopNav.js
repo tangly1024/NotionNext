@@ -5,6 +5,7 @@ import DarkModeButton from '@/components/DarkModeButton'
 import SearchInput from '@/components/SearchInput'
 import Drawer from '@/components/Drawer'
 import DrawerRight from '@/components/DrawerRight'
+import Logo from '@/components/Logo'
 
 const TopNav = ({ tags, currentTag, post }) => {
   const drawer = useRef()
@@ -25,12 +26,7 @@ const TopNav = ({ tags, currentTag, post }) => {
             <i className='fa hover:scale-125 transform duration-200 fa-bars '
             />
           </div>
-          <Link href='/'>
-            <a
-              className='flex text-xl py-1 px-3 justify-center align-middle my-auto font-bold font-semibold hover:bg-gray-800 hover:text-white duration-200
-               dark:text-gray-300
-              '>{BLOG.title}</a>
-          </Link>
+          <Logo/>
         </div>
 
         {/* 中间搜索框 */}

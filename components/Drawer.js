@@ -6,6 +6,7 @@ import TocBar from '@/components/TocBar'
 import React, { useImperativeHandle, useState } from 'react'
 import InfoCard from '@/components/InfoCard'
 import TagList from '@/components/TagList'
+import Logo from '@/components/Logo'
 
 /**
  * 抽屉面板，可以从侧面拉出
@@ -30,17 +31,12 @@ const Drawer = ({ post, currentTag, cRef, tags }) => {
         className={(showDrawer ? 'shadow-2xl' : '-ml-72') + ' overflow-y-auto duration-200 w-72 h-full bg-white dark:bg-gray-800 border-r dark:border-gray-600'}>
         {/* LOGO */}
         <div
-          className='sticky top-0 z-20 bg-white w-72  flex space-x-4 px-5 py-3.5 dark:border-gray-500 border-b dark:bg-gray-600 '>
+          className='sticky top-0 z-20 bg-white w-72 flex space-x-4 px-5 py-1 dark:border-gray-500 border-b dark:bg-gray-600 '>
           <div
-            className='z-10 p-1 duration-200 mr-2 bg-white dark:bg-gray-600 text-gray-600 text-xl cursor-pointer dark:text-gray-300'>
+            className='z-10 py-2 duration-200 mr-2 bg-white dark:bg-gray-600 text-gray-600 text-xl cursor-pointer dark:text-gray-300'>
             <i className='fa hover:scale-125 transform duration-200 fa-bars ' onClick={handleMenuClick} />
           </div>
-          <Link href='/'>
-            <a
-              className='flex text-lg justify-center font-bold font-semibold hover:bg-gray-800 hover:text-white px-2 py-1 duration-200
-               dark:text-gray-300
-              '>{BLOG.title}</a>
-          </Link>
+         <Logo/>
         </div>
       </div>
 

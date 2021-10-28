@@ -1,6 +1,5 @@
 import { getAllPosts, getAllTags, getPostBlocks } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import { createHash } from 'crypto'
 import { getPageTableOfContents } from 'notion-utils'
 import { useRouter } from 'next/router'
 import Progress from '@/components/Progress'

@@ -1,9 +1,9 @@
 const BLOG = {
-  title: '汤里博客',
+  title: '1024技术分享',
   author: 'tangly1024',
   email: 'tlyong1992@hotmail.com',
   link: 'https://tangly1024.com',
-  description: '思考、学习、成长',
+  description: '分享有趣的技术',
   lang: 'zh-CN', // ['zh-CN','en-US']
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
