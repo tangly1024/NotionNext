@@ -33,15 +33,15 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
   }, [show])
 
   return (
-    <div id='jump-to-top' className='right-0 space-x-2 fixed flex bottom-24 px-5 py-1 duration-500 z-20'>
-      <div className='flex-wrap transform hover:scale-125 duration-200 '>
+    <div id='jump-to-top' className='right-0 fixed flex bottom-24 mr-2.5 py-1 duration-500 z-20'>
+      <div className='transform hover:scale-105 duration-200 '>
         <div
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          style={{ 'box-shadow': 'rgba(41, 50, 60, 0.5) 0px 2px 16px' }}
-          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' bg-gray-800 p-2 cursor-pointer rounded-full animate__animated animate__faster shadow-2xl'}>
+          style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}
+          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' bg-gray-700 px-2.5 py-2 cursor-pointer animate__animated animate__faster shadow-2xl'}>
           <div className='text-center'>
             <div className='w-10 text-xl text-gray-100' title={locale.POST.TOP} ><i className='fa fa-arrow-up'/> </div>
-            {showPercent && (<div className='w-10 text-xs text-gray-100 dark:text-gray-200 text-center'>{percent}%</div>)}
+            {showPercent && (<div className='w-10 text-xs text-gray-100 dark:text-gray-200 text-center'>&nbsp;{percent}%</div>)}
           </div>
         </div>
       </div>
