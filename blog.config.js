@@ -1,9 +1,9 @@
 const BLOG = {
-  title: '1024技术分享',
-  author: 'tangly1024',
+  title: '唐里1024',
+  author: '唐哼哼',
   email: 'tlyong1992@hotmail.com',
   link: 'https://tangly1024.com',
-  description: '分享有趣的技术',
+  description: '分享有趣的技术与思考',
   lang: 'zh-CN', // ['zh-CN','en-US']
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
@@ -59,7 +59,8 @@ const BLOG = {
   },
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   googleAdsenseId: 'ca-pub-2708419466378217',
-  DaoVoiceId: '' // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
+  DaoVoiceId: '', // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
+  TidioId: '8lgekxyr9hr9m7archbs0a4a2gu9ckbg' // 在线聊天 https://www.tidio.com/
 }
 // export default BLOG
 module.exports = BLOG

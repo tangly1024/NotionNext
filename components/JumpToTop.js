@@ -20,7 +20,6 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
     const shouldShow = scrollY > 100
-    console.log(clientHeight, scrollY, fullHeight, shouldShow)
     if (shouldShow !== show) {
       switchShow(shouldShow)
     }
@@ -38,8 +37,8 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
       <div className='flex-wrap transform hover:scale-125 duration-200 '>
         <div
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          style={{ backgroundColor: 'rgb(56, 144, 255)' }}
-          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' p-1 cursor-pointer rounded-full animate__animated animate__faster shadow-xl'}>
+          style={{ 'box-shadow': 'rgba(41, 50, 60, 0.5) 0px 2px 16px' }}
+          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' bg-gray-800 p-2 cursor-pointer rounded-full animate__animated animate__faster shadow-2xl'}>
           <div className='text-center'>
             <div className='w-10 text-xl text-gray-100' title={locale.POST.TOP} ><i className='fa fa-arrow-up'/> </div>
             {showPercent && (<div className='w-10 text-xs text-gray-100 dark:text-gray-200 text-center'>{percent}%</div>)}

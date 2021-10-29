@@ -8,6 +8,7 @@ import TopNav from '@/components/TopNav'
 import Footer from '@/components/Footer'
 import SideBar from '@/components/SideBar'
 import JumpToTop from '@/components/JumpToTop'
+import ReactCanvasNest from 'react-canvas-nest'
 
 const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMeta }) => {
   let windowTop = 0
@@ -36,15 +37,16 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
   return (
     <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
+       <ReactCanvasNest style = {{ zIndex: 0, position: 'fixed' }} />
 
       <TopNav tags={tags} post={post} />
       {/* Middle Wrapper */}
       <main className='flex bg-gray-100'>
         <SideBar tags={tags} post={post} />
         <div className='flex flex-grow' ref={targetRef}>
-          {children}
-          <JumpToTop targetRef={targetRef} showPercent={true} />
+            {children}
         </div>
+        <JumpToTop targetRef={targetRef} showPercent={true} />
       </main>
 
       <Footer />

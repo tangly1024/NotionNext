@@ -63,7 +63,7 @@ const Drawer = ({ post, currentTag, cRef, tags }) => {
       </div>
     </div>
     {/* 背景蒙版 */}
-    <div className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-50'}
+    <div id='drawer-background' className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-50'}
          onClick={handleMenuClick} />
   </>
 }

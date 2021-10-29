@@ -25,6 +25,14 @@ const ThirdPartyScript = () => {
       }}
       />
     </>)}
+
+    {BLOG.TidioId && (<>
+      {/* Tidio在线反馈 */}
+      <script async
+              src={`//code.tidio.co/${BLOG.TidioId}.js`}
+      />
+    </>)}
+
     {/* 代码统计 */}
     {BLOG.isProd && (<>
         {/* GoogleAdsense */}

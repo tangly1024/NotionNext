@@ -44,7 +44,7 @@ const DrawerRight = ({ post, cRef }) => {
       </div>
     </div>
     {/* 背景蒙版 */}
-    <div className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-50'}
+    <div id='right-drawer-background' className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-50'}
          onClick={handleMenuClick} />
   </div>
 }
