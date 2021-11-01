@@ -35,7 +35,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
-    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-100 dark:bg-gray-800'>
+    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-white bg-opacity-90'>
       {/* 中央区域 wrapper */}
       <header
         className='hover:shadow-2xl duration-200 mx-auto max-w-5xl mt-16 lg:mt-20 md:flex-shrink-0 animate__fadeIn animate__animated'>
@@ -47,7 +47,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
       </header>
 
       <article
-        className='w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto bg-white dark:border-gray-700 dark:bg-gray-700'>
+        className='w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 dark:bg-gray-700'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
@@ -92,17 +92,19 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
           </div>
         </div>
 
-        {/* Notion文章主体 */}
-        {blockMap && (
-          <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
-                          components={{
-                            equation: Equation,
-                            code: Code,
-                            collectionRow: CollectionRow,
-                            collection: Collection
-                          }}
-          />
-        )}
+        <div>
+          {/* Notion文章主体 */}
+          {blockMap && (
+            <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
+                            components={{
+                              equation: Equation,
+                              code: Code,
+                              collectionRow: CollectionRow,
+                              collection: Collection
+                            }}
+            />
+          )}
+        </div>
 
         <div className='flex justify-center pt-5'>
           <RewardButton />
@@ -142,7 +144,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
     {/* 右侧目录 */}
     <aside className='dark:bg-gray-800 bg-white z-10'>
       <section
-        className='h-full xl:static xl:block hidden top-0 right-0 fixed h-full w-52 dark:bg-gray-800 duration-500'>
+        className='h-full xl:static xl:block hidden top-0 right-0 fixed h-full w-52  duration-500'>
         <div id='right-toc' className='sticky top-16 duration-500'>
           <div
             className='border-t dark:border-gray-600 border-b text-2xl bg-white font-bold text-black dark:bg-gray-900 dark:text-white py-6 px-6'>

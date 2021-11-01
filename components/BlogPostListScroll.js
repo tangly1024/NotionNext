@@ -66,7 +66,7 @@ const BlogPostListScroll = ({ posts = [], tags }) => {
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty />
   } else {
-    return <div id='post-list-wrapper' className='pt-28 md:pt-32 px-2 md:px-20 dark:bg-gray-900' ref={targetRef}>
+    return <div id='post-list-wrapper' className='mt-28 md:mt-32 mx-2 md:mx-20' ref={targetRef}>
       <div>
         {/* 文章列表 */}
         <div className='grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
