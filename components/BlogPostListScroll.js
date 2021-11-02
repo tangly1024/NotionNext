@@ -69,7 +69,7 @@ const BlogPostListScroll = ({ posts = [], tags }) => {
     return <div id='post-list-wrapper' className='mt-28 md:mt-32 mx-2 md:mx-20' ref={targetRef}>
       <div>
         {/* 文章列表 */}
-        <div className='grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3'>
+        <div className='grid 3xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
           {postsToShow.map(post => (
             <BlogPost key={post.id} post={post} tags={tags} />
           ))}

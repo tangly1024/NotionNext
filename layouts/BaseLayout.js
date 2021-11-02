@@ -39,7 +39,7 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
 
       <TopNav tags={tags} post={post} />
       {/* Middle Wrapper */}
-      <main className='flex dark:bg-gray-900'>
+      <main className='flex dark:bg-black'>
         <SideBar tags={tags} post={post} />
         <div className='flex flex-grow' ref={targetRef}>
             {children}
