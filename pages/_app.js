@@ -17,7 +17,7 @@ import { ThemeProvider } from '@/lib/theme'
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 
-function MyApp ({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   return (
     <LocaleProvider>
       <ThemeProvider>

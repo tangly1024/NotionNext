@@ -25,7 +25,7 @@ export async function getStaticProps () {
   }
 }
 
-const index = ({ posts, tags, meta }) => {
+const Index = ({ posts, tags, meta }) => {
   return (
     <BaseLayout meta={meta} tags={tags}>
       <div className='flex-grow'>
@@ -36,4 +36,4 @@ const index = ({ posts, tags, meta }) => {
   )
 }
 
-export default index
+export default Index
