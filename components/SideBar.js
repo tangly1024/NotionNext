@@ -2,8 +2,7 @@ import React from 'react'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import InfoCard from '@/components/InfoCard'
 import TagList from '@/components/TagList'
-import BLOG from '@/blog.config'
-import Link from 'next/link'
+import LastedPosts from '@/components/LastedPosts'
 
 const SideBar = ({ tags, currentTag, post, posts }) => {
   // 按时间排序
@@ -18,35 +17,19 @@ const SideBar = ({ tags, currentTag, post, posts }) => {
   return <aside className='z-10 dark:border-gray-500 border-gray-200 bg-white hidden xl:block'>
     <div
       className='w-72 dark:bg-gray-800 h-full scroll-hidden left-0 duration-500 ease-in-out min-h-screen'>
-      <div id='sidebar' className='hidden md:block sticky top-20 duration-500'>
+      <div id='sidebar' className='hidden md:block sticky top-20 pb-56 duration-500'>
         <>
           <InfoCard />
           <hr className='dark:border-gray-700' />
           <MenuButtonGroup allowCollapse={true} />
         </>
 
+        <hr className='dark:border-gray-700 my-2' />
+
         {/* 最新文章 */}
         {posts && (
           <div className='mt-2'>
-            <hr className='dark:border-gray-700' />
-            <section
-              className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 dark:hover:bg-black duration-100 flex flex-nowrap align-middle'>
-              <div className='w-32'>最近更新</div>
-            </section>
-            <div>
-                 {posts.map(post => {
-                   return (
-                      <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} >
-                       <div className='text-sm py-1.5 px-5 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 flex'>
-                       <div className='w-12 overflow-hidden'>
-                         <img className='w-12 w-12 object-cover cursor-pointer transform hover:scale-110 duration-500' src={post.page_cover} alt={post.title} />
-                       </div>
-                       <div className='w-60 ml-2 overflow-hidden whitespace-nowrap dark:text-gray-300'>{post.title}</div>
-                       </div>
-                      </Link>
-                   )
-                 })}
-            </div>
+            <LastedPosts posts={posts}/>
           </div>
         )}
 

@@ -35,10 +35,10 @@ const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
-    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-white bg-opacity-90 dark:bg-black'>
+    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black'>
       {/* 中央区域 wrapper */}
       <header
-        className='hover:shadow-2xl duration-200 mx-auto max-w-5xl mt-16 lg:mt-20 md:flex-shrink-0 animate__fadeIn animate__animated'>
+        className='hover:shadow-2xl duration-200 mx-auto max-w-5xl mt-16 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
         {/* 封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
           <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }}
@@ -47,7 +47,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
       </header>
 
       <article
-        className='w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 dark:bg-gray-700'>
+        className='w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}

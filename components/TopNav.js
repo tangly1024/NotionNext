@@ -7,13 +7,13 @@ import Drawer from '@/components/Drawer'
 import DrawerRight from '@/components/DrawerRight'
 import Logo from '@/components/Logo'
 
-const TopNav = ({ tags, currentTag, post }) => {
+const TopNav = ({ tags, currentTag, post, posts }) => {
   const drawer = useRef()
   const drawerRight = useRef()
 
   return (<>
     {/* 侧面抽屉 */}
-    <Drawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} />
+    <Drawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts}/>
     <DrawerRight post={post} cRef={drawerRight}/>
 
     {/* 导航栏 */}

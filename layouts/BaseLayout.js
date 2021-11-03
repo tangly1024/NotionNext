@@ -37,7 +37,7 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, posts, ...c
     <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
 
-      <TopNav tags={tags} post={post} />
+      <TopNav tags={tags} post={post} posts={posts} />
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
         <SideBar tags={tags} post={post} posts={posts} />
