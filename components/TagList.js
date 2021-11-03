@@ -10,7 +10,7 @@ import TagItemMini from '@/components/TagItemMini'
 const TagList = ({ tags, currentTag }) => {
   if (!tags) return <></>
   return (
-    <div id='tags-list' className='duration-500 dark:border-gray-600 dark:bg-gray-800 w-52 pt-2'>
+    <div id='tags-list' className='duration-500 dark:border-gray-600 dark:bg-gray-800 w-52'>
         {Object.keys(tags).map(tag => {
           const selected = tag === currentTag
           return (

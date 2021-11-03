@@ -19,7 +19,7 @@ import Custom404 from '@/pages/404'
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
-const BlogPost = ({ post, blockMap, tags, prev, next }) => {
+const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
   if (!post) {
     return <Custom404/>
   }
@@ -31,7 +31,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next }) => {
   const targetRef = useRef(null)
   const url = BLOG.link + useRouter().asPath
 
-  return <BaseLayout meta={meta} tags={tags} post={post}>
+  return <BaseLayout meta={meta} tags={tags} post={post} posts={posts}>
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
@@ -192,7 +192,7 @@ export async function getStaticProps ({ params: { slug } }) {
   const next = posts.slice(index + 1, index + 2)[0] ?? posts[0]
 
   return {
-    props: { post, blockMap, tags, prev, next },
+    props: { post, blockMap, tags, prev, next, posts },
     revalidate: 1
   }
 }

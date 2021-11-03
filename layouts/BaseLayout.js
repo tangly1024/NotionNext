@@ -9,7 +9,7 @@ import Footer from '@/components/Footer'
 import SideBar from '@/components/SideBar'
 import JumpToTop from '@/components/JumpToTop'
 
-const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMeta }) => {
+const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, posts, ...customMeta }) => {
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
@@ -40,7 +40,7 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, ...customMe
       <TopNav tags={tags} post={post} />
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
-        <SideBar tags={tags} post={post} />
+        <SideBar tags={tags} post={post} posts={posts} />
         <div className='flex flex-grow' ref={targetRef}>
             {children}
         </div>
