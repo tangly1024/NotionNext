@@ -689,12 +689,12 @@ svg.notion-page-icon {
   width: 100%;
   padding: 30px 16px 30px 20px;
   margin: 4px 0;
-  border-radius: 3px;
+  border-radius: 10px;
   tab-size: 2;
   display: block;
   box-sizing: border-box;
   overflow: auto;
-  background: var(--bg-color-1);
+  background: #272822;
   font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
 }

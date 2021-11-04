@@ -16,6 +16,14 @@ import BaseLayout from '@/layouts/BaseLayout'
 import { useRef } from 'react'
 import Custom404 from '@/pages/404'
 
+import 'prismjs/themes/prism-okaidia.css'
+import 'prismjs'
+import 'prismjs/components/prism-bash'
+import 'prismjs/components/prism-markup'
+import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-javascript'
+import 'prismjs/components/prism-typescript'
+
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }

@@ -21,7 +21,7 @@ const LastedPosts = ({ posts }) => {
 
   return <>
     <section
-      className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 dark:hover:bg-black duration-100 flex flex-nowrap align-middle'>
+      className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap align-middle'>
       <div className='w-32'>最近更新</div>
     </section>
     <div>
