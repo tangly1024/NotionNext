@@ -20,16 +20,16 @@ const Drawer = ({ post, currentTag, cRef, tags, posts }) => {
       handleMenuClick: () => handleMenuClick()
     }
   })
-  const [showDrawer, switchShowDrawer] = useState(false)
+  const [isHidden, changeHiddenStatus] = useState(true)
   // 点击按钮更改侧边抽屉状态
   const handleMenuClick = () => {
-    switchShowDrawer(!showDrawer)
+    changeHiddenStatus(!isHidden)
   }
   return <>
     <div className='fixed top-0 left-0 z-50 h-screen shadow-2xl bg-white dark:bg-gray-800'>
       {/* LOGO */}
       <div
-        className={(showDrawer ? '' : '-ml-72') + ' duration-200 w-72  border-r dark:border-gray-600'}>
+        className={(isHidden ? '-ml-72' : '') + ' duration-200 w-72  border-r dark:border-gray-600'}>
         <div className='w-72 flex space-x-4 px-5 py-1 dark:border-gray-500 '>
           <div
             className='z-10 py-2 duration-200 mr-2 text-gray-600 text-xl cursor-pointer dark:text-gray-300'>
@@ -41,7 +41,7 @@ const Drawer = ({ post, currentTag, cRef, tags, posts }) => {
 
       {/* 侧边菜单 */}
       <div
-        className={(showDrawer ? 'shadow-2xl' : '-ml-72') + ' overflow-y-scroll h-screen w-72 duration-200 overflow-y-auto'}>
+        className={(isHidden ? '-ml-72' : 'shadow-2xl') + ' overflow-y-scroll h-screen w-72 duration-200 overflow-y-auto'}>
         <div className='pb-56'>
           {/* 搜索框 */}
           <div className='px-5 my-3 block md:hidden'>
@@ -79,7 +79,7 @@ const Drawer = ({ post, currentTag, cRef, tags, posts }) => {
       </div>
     </div>
     {/* 背景蒙版 */}
-    <div id='drawer-background' className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-30'}
+    <div id='drawer-background' className={(isHidden ? 'hidden' : 'block') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-30'}
          onClick={handleMenuClick} />
   </>
 }

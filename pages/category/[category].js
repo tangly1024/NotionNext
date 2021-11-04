@@ -4,36 +4,36 @@ import TagsBar from '@/components/TagsBar'
 import BaseLayout from '@/layouts/BaseLayout'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
 
-export default function Tag ({ tags, posts, currentTag, categories }) {
+export default function Category ({ tags, posts, category, categories }) {
   const meta = {
-    title: `${BLOG.title} | #${currentTag}`,
+    title: `${BLOG.title} | ${category}`,
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} tags={tags} currentTag={currentTag} categories={categories} totalPosts={posts}>
+  return <BaseLayout meta={meta} tags={tags} currentCategory={category} totalPosts={posts} categories={categories}>
     <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
-      <TagsBar tags={tags} currentTag={currentTag}/>
-      <BlogPostListScroll posts={posts} tags={tags} currentTag={currentTag}/>
+      <TagsBar tags={tags} />
+      <BlogPostListScroll posts={posts} tags={tags} currentCategory={category}/>
     </div>
   </BaseLayout>
 }
 
 export async function getStaticProps ({ params }) {
-  const currentTag = params.tag
-  let posts = await getAllPosts({ from: 'tag-props' })
+  const category = params.category
+  let posts = await getAllPosts({ from: 'category-props' })
   posts = posts.filter(
     post => post.status[0] === 'Published' && post.type[0] === 'Post'
   )
   const tags = await getAllTags(posts)
   const categories = await getAllCategories(posts)
   const filteredPosts = posts.filter(
-    post => post && post.tags && post.tags.includes(currentTag)
+    post => post && post.category && post.category.includes(category)
   )
   return {
     props: {
       tags,
       posts: filteredPosts,
-      currentTag,
+      category,
       categories
     },
     revalidate: 1

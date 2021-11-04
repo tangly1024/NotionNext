@@ -3,8 +3,9 @@ import MenuButtonGroup from '@/components/MenuButtonGroup'
 import InfoCard from '@/components/InfoCard'
 import TagList from '@/components/TagList'
 import LatestPosts from '@/components/LatestPosts'
+import PostsCategories from '@/components/PostsCategories'
 
-const SideBar = ({ tags, currentTag, post, posts }) => {
+const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
   // 按时间排序
   if (posts) {
     posts = posts.sort((a, b) => {
@@ -25,6 +26,13 @@ const SideBar = ({ tags, currentTag, post, posts }) => {
         </>
 
         <hr className='dark:border-gray-700 my-2' />
+
+        {/* 分类  */}
+        {categories && (
+          <div className='mt-2'>
+            <PostsCategories currentCategory={currentCategory} categories={categories}/>
+          </div>
+        )}
 
         {/* 最新文章 */}
         {posts && (

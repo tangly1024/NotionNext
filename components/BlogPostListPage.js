@@ -1,4 +1,4 @@
-import BlogPost from '@/components/BlogPost'
+import BlogPostCard from '@/components/BlogPostCard'
 import Pagination from '@/components/Pagination'
 import BLOG from '@/blog.config'
 
@@ -58,7 +58,7 @@ const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
         {/* 文章列表 */}
         <div className='grid 3xl:grid-cols-4 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
           {postsToShow.map(post => (
-            <BlogPost key={post.id} post={post} tags={tags} />
+            <BlogPostCard key={post.id} post={post} tags={tags} />
           ))}
         </div>
 

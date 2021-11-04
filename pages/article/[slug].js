@@ -1,4 +1,4 @@
-import { getAllPosts, getAllTags, getPostBlocks } from '@/lib/notion'
+import { getAllCategories, getAllPosts, getAllTags, getPostBlocks } from '@/lib/notion'
 import BLOG from '@/blog.config'
 import { getPageTableOfContents } from 'notion-utils'
 import { useRouter } from 'next/router'
@@ -9,11 +9,11 @@ import formatDate from '@/lib/formatDate'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import RewardButton from '@/components/RewardButton'
 import ShareBar from '@/components/ShareBar'
-import BlogPostMini from '@/components/BlogPostMini'
+import BlogPostCardMini from '@/components/BlogPostCardMini'
 import Comment from '@/components/Comment'
 import TocBar from '@/components/TocBar'
 import BaseLayout from '@/layouts/BaseLayout'
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 import Custom404 from '@/pages/404'
 
 import 'prismjs/themes/prism-okaidia.css'
@@ -27,19 +27,19 @@ import 'prismjs/components/prism-typescript'
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
-const ArticleDetail = ({ post, blockMap, tags, prev, next, posts }) => {
+const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) => {
   if (!post) {
     return <Custom404/>
   }
   const meta = {
-    title: post.title,
+    title: `${post.title} | ${BLOG.title}`,
     description: post.summary,
     type: 'article'
   }
   const targetRef = useRef(null)
   const url = BLOG.link + useRouter().asPath
 
-  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} >
+  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories} >
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
@@ -65,25 +65,10 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts }) => {
           {post.summary}
         </h2>
 
-        {/* 文章信息 */}
+        {/* 文章作者等关联信息 */}
         <div className='justify-between flex flex-wrap bg-gray-50 p-2 dark:bg-gray-800 dark:text-white'>
           <div className='flex-nowrap flex'>
-
-            {post.slug !== 'about' && (<>
-              <a
-                className='hidden md:block duration-200 px-1' href='/article/about'
-              >
-                <Image alt={BLOG.author} width={33} height={33} src='/avatar.svg'
-                       className='rounded-full cursor-pointer transform hover:scale-125 duration-200' />
-              </a>
-            </>)}
-            {post.tags && (
-              <div className='flex flex-nowrap leading-8 p-1'>
-                {post.tags.map(tag => (
-                  <TagItem key={tag} tag={tag} />
-                ))}
-              </div>
-            )}
+            <div className='cursor-pointer text-md py-2 mx-2 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{post.category}</div>
 
             {post.type[0] !== 'Page' && (
               <div className='flex items-start text-gray-500 dark:text-gray-400 leading-10'>
@@ -93,6 +78,15 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts }) => {
                 )}
               </div>
             )}
+
+            {post.tags && (
+              <div className='flex flex-nowrap leading-8 p-1'>
+                {post.tags.map(tag => (
+                  <TagItem key={tag} tag={tag} />
+                ))}
+              </div>
+            )}
+
           </div>
 
           {/* 不蒜子 */}
@@ -141,10 +135,10 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts }) => {
         </section>
 
         <div className='text-gray-800 my-5 dark:text-gray-300'>
-          <div className='mt-4 font-bold'>继续阅读</div>
+          <div className='mt-4 font-bold'>其他文章</div>
           <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-            <BlogPostMini post={prev} />
-            <BlogPostMini post={next} />
+            <BlogPostCardMini post={prev} />
+            <BlogPostCardMini post={next} />
           </div>
         </div>
         {/* 评论互动 */}
@@ -198,13 +192,15 @@ export async function getStaticProps ({ params: { slug } }) {
   }
   posts = posts.filter(post => post.type[0] === 'Post')
   const tags = await getAllTags(posts)
+  const categories = await getAllCategories(posts)
+
   // 获取推荐文章
   const index = posts.indexOf(post)
   const prev = posts.slice(index - 1, index)[0] ?? posts.slice(-1)[0]
   const next = posts.slice(index + 1, index + 2)[0] ?? posts[0]
 
   return {
-    props: { post, blockMap, tags, prev, next, posts },
+    props: { post, blockMap, tags, prev, next, posts, categories },
     revalidate: 1
   }
 }

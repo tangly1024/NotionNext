@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 
-const BlogPostMini = ({ post }) => {
+const BlogPostCardMini = ({ post }) => {
   return (
     <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} >
      <div className='sm:flex w-full border dark:border-gray-800 my-2 duration-200 transform hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 dark:hover:bg-gray-700'>
@@ -22,4 +22,4 @@ const BlogPostMini = ({ post }) => {
   )
 }
 
-export default BlogPostMini
+export default BlogPostCardMini

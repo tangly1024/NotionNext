@@ -9,7 +9,7 @@ import SideBar from '@/components/SideBar'
 import JumpToTop from '@/components/JumpToTop'
 import { useGlobal } from '@/lib/global'
 
-const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts, currentSearch, ...customMeta }) => {
+const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts, currentSearch, currentCategory, categories, ...customMeta }) => {
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
@@ -40,7 +40,7 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts,
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} />
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
-        <SideBar tags={tags} post={post} posts={totalPosts} />
+        <SideBar tags={tags} post={post} posts={totalPosts} categories={categories} currentCategory={currentCategory} />
         <div className='flex flex-grow' ref={targetRef}>
             {children}
         </div>

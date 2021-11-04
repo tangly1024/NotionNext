@@ -1,7 +1,7 @@
-import BlogPost from '@/components/BlogPost'
+import BlogPostCard from '@/components/BlogPostCard'
 import BLOG from '@/blog.config'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import throttle from 'lodash.throttle'
 import BlogPostListEmpty from '@/components/BlogPostListEmpty'
 
@@ -13,7 +13,7 @@ import BlogPostListEmpty from '@/components/BlogPostListEmpty'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], tags, currentSearch }) => {
+const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, currentTag }) => {
   const postsPerPage = BLOG.postsPerPage
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, postsPerPage)
@@ -52,10 +52,29 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch }) => {
     return <BlogPostListEmpty />
   } else {
     return <div id='post-list-wrapper' className='mt-28 md:mt-32 mx-2 md:mx-20' ref={targetRef}>
-        {/* 文章列表 */}
+
+      {currentCategory && (
+        <div className='w-full p-1 bg-gray-100 dark:bg-gray-700'>
+          <div className='cursor-pointer py-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{currentCategory}</div>
+        </div>
+      )}
+
+      {currentSearch && (
+        <div className='w-full p-1 bg-gray-100 dark:bg-gray-700'>
+          <div className='cursor-pointer py-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-search mr-1'/>关键字：{currentSearch}</div>
+        </div>
+      )}
+
+      {currentTag && (
+        <div className='w-full p-1 bg-gray-100 dark:bg-gray-700 flex'>
+          <div className='cursor-pointer py-1.5 mr-2 hover:underline bg-gray-200 dark:bg-gray-400 px-2 rounded'># {currentTag}</div>
+        </div>
+      )}
+
+      {/* 文章列表 */}
         <div className='grid 3xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
           {postsToShow.map(post => (
-            <BlogPost key={post.id} post={post} tags={tags} />
+            <BlogPostCard key={post.id} post={post} tags={tags} />
           ))}
         </div>
 
