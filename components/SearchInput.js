@@ -17,8 +17,10 @@ const SearchInput = ({ currentTag, currentSearch }) => {
     }
   }
   const handleKeyUp = (e) => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13) { // 回车
       handleSearch(searchInputRef.current.value)
+    } else if (e.keyCode === 27) { // ESC
+      cleanSearch()
     }
   }
   const cleanSearch = () => {

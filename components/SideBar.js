@@ -2,7 +2,7 @@ import React from 'react'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import InfoCard from '@/components/InfoCard'
 import TagList from '@/components/TagList'
-import LastedPosts from '@/components/LastedPosts'
+import LatestPosts from '@/components/LatestPosts'
 
 const SideBar = ({ tags, currentTag, post, posts }) => {
   // 按时间排序
@@ -29,7 +29,7 @@ const SideBar = ({ tags, currentTag, post, posts }) => {
         {/* 最新文章 */}
         {posts && (
           <div className='mt-2'>
-            <LastedPosts posts={posts}/>
+            <LatestPosts posts={posts}/>
           </div>
         )}
 

@@ -27,7 +27,7 @@ import 'prismjs/components/prism-typescript'
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
-const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
+const ArticleDetail = ({ post, blockMap, tags, prev, next, posts }) => {
   if (!post) {
     return <Custom404/>
   }
@@ -39,7 +39,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
   const targetRef = useRef(null)
   const url = BLOG.link + useRouter().asPath
 
-  return <BaseLayout meta={meta} tags={tags} totalPosts={post} posts={posts}>
+  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} >
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
@@ -209,4 +209,4 @@ export async function getStaticProps ({ params: { slug } }) {
   }
 }
 
-export default BlogPost
+export default ArticleDetail

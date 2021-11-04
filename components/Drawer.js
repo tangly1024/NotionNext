@@ -6,7 +6,7 @@ import React, { useImperativeHandle, useState } from 'react'
 import InfoCard from '@/components/InfoCard'
 import TagList from '@/components/TagList'
 import Logo from '@/components/Logo'
-import LastedPosts from '@/components/LastedPosts'
+import LatestPosts from '@/components/LatestPosts'
 
 /**
  * 抽屉面板，可以从侧面拉出
@@ -58,7 +58,7 @@ const Drawer = ({ post, currentTag, cRef, tags, posts }) => {
           {/* 最新文章 */}
           {posts && (
             <div className='mt-2 sticky top-0'>
-              <LastedPosts posts={posts}/>
+              <LatestPosts posts={posts}/>
             </div>
           )}
 
