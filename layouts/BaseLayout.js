@@ -37,7 +37,7 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts,
     <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
 
-      <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} />
+      <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory}/>
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
         <SideBar tags={tags} post={post} posts={totalPosts} categories={categories} currentCategory={currentCategory} />

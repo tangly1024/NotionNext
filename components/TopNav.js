@@ -5,13 +5,13 @@ import Drawer from '@/components/Drawer'
 import DrawerRight from '@/components/DrawerRight'
 import Logo from '@/components/Logo'
 
-const TopNav = ({ tags, currentTag, post, posts, currentSearch }) => {
+const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, currentCategory }) => {
   const drawer = useRef()
   const drawerRight = useRef()
 
   return (<>
     {/* 侧面抽屉 */}
-    <Drawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts}/>
+    <Drawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
     <DrawerRight post={post} cRef={drawerRight}/>
 
     {/* 导航栏 */}

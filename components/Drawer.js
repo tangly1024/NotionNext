@@ -1,5 +1,3 @@
-import Link from 'next/link'
-import BLOG from '@/blog.config'
 import SearchInput from '@/components/SearchInput'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import React, { useImperativeHandle, useState } from 'react'
@@ -7,13 +5,14 @@ import InfoCard from '@/components/InfoCard'
 import TagList from '@/components/TagList'
 import Logo from '@/components/Logo'
 import LatestPosts from '@/components/LatestPosts'
+import PostsCategories from '@/components/PostsCategories'
 
 /**
  * 抽屉面板，可以从侧面拉出
  * @returns {JSX.Element}
  * @constructor
  */
-const Drawer = ({ post, currentTag, cRef, tags, posts }) => {
+const Drawer = ({ post, currentTag, cRef, tags, posts, categories, currentCategory }) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
@@ -59,6 +58,13 @@ const Drawer = ({ post, currentTag, cRef, tags, posts }) => {
           {posts && (
             <div className='mt-2 sticky top-0'>
               <LatestPosts posts={posts}/>
+            </div>
+          )}
+
+          {/* 分类  */}
+          {categories && (
+            <div className='mt-2'>
+              <PostsCategories currentCategory={currentCategory} categories={categories}/>
             </div>
           )}
 
