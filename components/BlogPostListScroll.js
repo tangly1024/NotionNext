@@ -1,7 +1,6 @@
 import BlogPost from '@/components/BlogPost'
 import BLOG from '@/blog.config'
 
-import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import throttle from 'lodash.throttle'
 import BlogPostListEmpty from '@/components/BlogPostListEmpty'
@@ -14,34 +13,20 @@ import BlogPostListEmpty from '@/components/BlogPostListEmpty'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], tags }) => {
-  let filteredBlogPosts = posts
-
-  // 处理查询过滤 支持标签、关键词过滤
-  let currentSearch = ''
-  const router = useRouter()
-  if (router.query && router.query.s) {
-    currentSearch = router.query.s
-    filteredBlogPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
-      const searchContent = post.title + post.summary + tagContent + post.slug
-      return searchContent.toLowerCase().includes(currentSearch.toLowerCase())
-    })
-  }
-
+const BlogPostListScroll = ({ posts = [], tags, currentSearch }) => {
+  const postsPerPage = BLOG.postsPerPage
   const [page, updatePage] = useState(1)
-  const initPosts = getPostByPage(page, filteredBlogPosts, BLOG.postsPerPage)
-  const [postsToShow, updatePostToShow] = useState(useRef(initPosts).current)
+  const postsToShow = getPostByPage(page, posts, postsPerPage)
 
   let hasMore = false
-  if (filteredBlogPosts) {
-    const totalPosts = filteredBlogPosts.length
-    hasMore = page * BLOG.postsPerPage < totalPosts
+  if (posts) {
+    const totalCount = posts.length
+    hasMore = page * postsPerPage < totalCount
   }
-  const handleGetMore = function () {
+
+  const handleGetMore = () => {
     if (!hasMore) return
     updatePage(page + 1)
-    updatePostToShow(postsToShow.concat(getPostByPage(page + 1, filteredBlogPosts, BLOG.postsPerPage)))
   }
 
   // 监听滚动自动分页加载
@@ -67,7 +52,6 @@ const BlogPostListScroll = ({ posts = [], tags }) => {
     return <BlogPostListEmpty />
   } else {
     return <div id='post-list-wrapper' className='mt-28 md:mt-32 mx-2 md:mx-20' ref={targetRef}>
-      <div>
         {/* 文章列表 */}
         <div className='grid 3xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
           {postsToShow.map(post => (
@@ -76,16 +60,16 @@ const BlogPostListScroll = ({ posts = [], tags }) => {
         </div>
 
         <div className='flex'>
-          <div className='w-full my-4 py-4 bg-gray-200 text-center cursor-pointer dark:bg-gray-700 dark:text-gray-200'
-               onClick={handleGetMore}> {hasMore ? '继续加载' : '加载完了😰'} </div>
+          <div onClick={() => { handleGetMore() }}
+               className='w-full my-4 py-4 bg-gray-300 text-center cursor-pointer dark:bg-gray-700 dark:text-gray-200'
+               > {hasMore ? '继续加载' : '加载完了😰'} </div>
         </div>
-      </div>
     </div>
   }
 }
 
 /**
- * 获取指定页码的文章
+ * 获取从第1页到指定页码的文章
  * @param page 第几页
  * @param totalPosts 所有文章
  * @param postsPerPage 每页文章数量
@@ -93,7 +77,7 @@ const BlogPostListScroll = ({ posts = [], tags }) => {
  */
 const getPostByPage = function (page, totalPosts, postsPerPage) {
   return totalPosts.slice(
-    postsPerPage * (page - 1),
+    0,
     postsPerPage * page
   )
 }

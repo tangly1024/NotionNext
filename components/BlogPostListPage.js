@@ -13,7 +13,7 @@ import BlogPostListEmpty from '@/components/BlogPostListEmpty'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostList = ({ page = 1, posts = [], tags }) => {
+const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
   let filteredBlogPosts = posts
 
   // 处理查询过滤 支持标签、关键词过滤
@@ -68,4 +68,4 @@ const BlogPostList = ({ page = 1, posts = [], tags }) => {
   }
 }
 
-export default BlogPostList
+export default BlogPostListPage

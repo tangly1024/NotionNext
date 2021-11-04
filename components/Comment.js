@@ -1,8 +1,7 @@
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useTheme } from '@/lib/theme'
-import { useEffect, useState } from 'react'
+import { useGlobal } from '@/lib/global'
 
 const GitalkComponent = dynamic(
   () => {
@@ -25,7 +24,7 @@ const CusdisComponent = dynamic(
 
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
-  const { theme } = useTheme()
+  const { theme } = useGlobal()
 
   return <div className='comment text-gray-800 dark:text-gray-300'>
     <div className='font-bold pt-2 pb-4 '>留下评论</div>

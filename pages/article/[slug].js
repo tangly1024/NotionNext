@@ -39,7 +39,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
   const targetRef = useRef(null)
   const url = BLOG.link + useRouter().asPath
 
-  return <BaseLayout meta={meta} tags={tags} post={post} posts={posts}>
+  return <BaseLayout meta={meta} tags={tags} totalPosts={post} posts={posts}>
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
@@ -61,8 +61,12 @@ const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
           {post.title}
         </h1>
 
+        <h2 className='text-gray-500 my-5 dark:text-gray-400 animate__animated animate__fadeIn'>
+          {post.summary}
+        </h2>
+
         {/* 文章信息 */}
-        <div className='justify-between flex flex-wrap bg-gray-50 p-2 dark:bg-gray-700 dark:text-white'>
+        <div className='justify-between flex flex-wrap bg-gray-50 p-2 dark:bg-gray-800 dark:text-white'>
           <div className='flex-nowrap flex'>
 
             {post.slug !== 'about' && (<>

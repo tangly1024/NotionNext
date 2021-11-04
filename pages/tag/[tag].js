@@ -1,7 +1,7 @@
 import { getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
 import TagsBar from '@/components/TagsBar'
-import BlogPostList from '@/components/BlogPostList'
+import BlogPostListPage from '@/components/BlogPostListPage'
 import BaseLayout from '@/layouts/BaseLayout'
 
 export default function Tag ({ tags, posts, currentTag }) {
@@ -13,7 +13,7 @@ export default function Tag ({ tags, posts, currentTag }) {
   return <BaseLayout meta={meta} tags={tags} currentTag={currentTag}>
     <div className='flex-grow'>
       <TagsBar tags={tags} currentTag={currentTag}/>
-      <BlogPostList posts={posts} tags={tags}/>
+      <BlogPostListPage posts={posts} tags={tags}/>
     </div>
   </BaseLayout>
 }

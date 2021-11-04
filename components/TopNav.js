@@ -1,13 +1,11 @@
-import Link from 'next/link'
-import BLOG from '@/blog.config'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import DarkModeButton from '@/components/DarkModeButton'
 import SearchInput from '@/components/SearchInput'
 import Drawer from '@/components/Drawer'
 import DrawerRight from '@/components/DrawerRight'
 import Logo from '@/components/Logo'
 
-const TopNav = ({ tags, currentTag, post, posts }) => {
+const TopNav = ({ tags, currentTag, post, posts, currentSearch }) => {
   const drawer = useRef()
   const drawerRight = useRef()
 
@@ -31,7 +29,7 @@ const TopNav = ({ tags, currentTag, post, posts }) => {
 
         {/* 中间搜索框 */}
         <div className='hidden sm:block w-96'>
-          <SearchInput currentTag={currentTag} />
+          <SearchInput currentTag={currentTag} currentSearch={currentSearch}/>
         </div>
 
         {/* 右侧功能 */}

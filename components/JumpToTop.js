@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import throttle from 'lodash.throttle'
-import { useLocale } from '@/lib/locale'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 跳转到网页顶部
@@ -11,7 +11,7 @@ import { useLocale } from '@/lib/locale'
  * @constructor
  */
 const JumpToTop = ({ targetRef, showPercent = true }) => {
-  const locale = useLocale()
+  const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
   const scrollListener = useCallback(throttle(() => {

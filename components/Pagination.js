@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
-import { useLocale } from '@/lib/locale'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 翻页插件
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
  * @constructor
  */
 const Pagination = ({ page, showNext }) => {
-  const locale = useLocale()
+  const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
   return (

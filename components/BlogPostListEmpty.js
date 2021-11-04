@@ -10,7 +10,9 @@ const BlogPostListEmpty = () => {
   const router = useRouter()
   useEffect(() => {
     setTimeout(() => {
-      router.push('/')
+      router.push('/').then(() => {
+        console.log('空博客列表跳回首页')
+      })
     }, 3000)
   })
   return <div className='w-full h-full flex justify-center mx-auto'>

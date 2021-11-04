@@ -3,13 +3,13 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import CommonHead from '@/components/CommonHead'
 import throttle from 'lodash.throttle'
 import BLOG from '@/blog.config'
-import { useTheme } from '@/lib/theme'
 import TopNav from '@/components/TopNav'
 import Footer from '@/components/Footer'
 import SideBar from '@/components/SideBar'
 import JumpToTop from '@/components/JumpToTop'
+import { useGlobal } from '@/lib/global'
 
-const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, posts, ...customMeta }) => {
+const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts, currentSearch, ...customMeta }) => {
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
@@ -30,17 +30,17 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, posts, ...c
       window.removeEventListener('scroll', scrollTrigger)
     }
   })
-  const { theme } = useTheme()
+  const { theme } = useGlobal()
   const targetRef = useRef(null)
 
   return (
     <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
 
-      <TopNav tags={tags} post={post} posts={posts} />
+      <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} />
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
-        <SideBar tags={tags} post={post} posts={posts} />
+        <SideBar tags={tags} post={post} posts={totalPosts} />
         <div className='flex flex-grow' ref={targetRef}>
             {children}
         </div>

@@ -1,10 +1,10 @@
 import React from 'react'
-import { useLocale } from '@/lib/locale'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useGlobal } from '@/lib/global'
 
 const MenuButtonGroup = ({ allowCollapse = false }) => {
-  const locale = useLocale()
+  const { locale } = useGlobal()
   const router = useRouter()
   const links = [
     { id: 0, icon: 'fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },

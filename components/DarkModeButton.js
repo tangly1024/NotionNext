@@ -1,7 +1,7 @@
-import { loadUserThemeFromCookies, saveTheme, useTheme } from '@/lib/theme'
+import { loadUserThemeFromCookies, saveTheme, useGlobal } from '@/lib/global'
 
 const DarkModeButton = () => {
-  const { changeTheme } = useTheme()
+  const { changeTheme } = useGlobal()
   const userTheme = loadUserThemeFromCookies()
   // 用户手动设置主题
   const handleChangeDarkMode = () => {
