@@ -1,14 +1,15 @@
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const SearchInput = ({ currentTag, currentSearch }) => {
   const { locale } = useGlobal()
   const [searchKey, setSearchKey] = useState(currentSearch)
   const router = useRouter()
-  const handleSearch = () => {
-    if (searchKey && searchKey !== '') {
-      router.push({ pathname: '/search', query: { s: searchKey } }).then(r => {
+  const searchInputRef = useRef()
+  const handleSearch = (key) => {
+    if (key && key !== '') {
+      router.push({ pathname: '/search', query: { s: key } }).then(r => {
       })
     } else {
       router.push({ pathname: '/' }).then(r => {
@@ -17,22 +18,34 @@ const SearchInput = ({ currentTag, currentSearch }) => {
   }
   const handleKeyUp = (e) => {
     if (e.keyCode === 13) {
-      handleSearch()
+      handleSearch(searchInputRef.current.value)
     }
+  }
+  const cleanSearch = () => {
+    searchInputRef.current.value = ''
+    setSearchKey('')
+  }
+
+  const updateSearchKey = (val) => {
+    setSearchKey(val)
   }
 
   return <div className='flex border dark:border-gray-600 w-full'>
     <input
+      id='searchInput'
+      ref={searchInputRef}
       type='text'
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
       className={'pl-2 w-full transition duration-200 leading-10 border-gray-300 bg-white text-black dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
-      onChange={e => setSearchKey(e.target.value)}
+      onChange={e => updateSearchKey(e.target.value)}
       defaultValue={currentSearch}
     />
-    <div className='py-3 px-5 bg-gray-50 flex border-l dark:border-gray-700 dark:bg-gray-500 justify-center align-middle cursor-pointer'
-         onClick={handleSearch}>
-      <i className='fa fa-search text-black absolute cursor-pointer' />
+    { (searchKey && searchKey.length && <i className='fa fa-close text-gray-300 float-right p-3 cursor-pointer' onClick={ cleanSearch } />)}
+
+    <div className='py-3 px-4 bg-gray-50 flex border-l dark:border-gray-700 dark:bg-gray-500 justify-center align-middle cursor-pointer'
+         onClick={() => { handleSearch(searchKey) }}>
+      <i className='fa fa-search text-black cursor-pointer' />
     </div>
   </div>
 }
