@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useLocale } from '@/lib/locale'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 const SearchInput = ({ currentTag }) => {
   const locale = useLocale()
@@ -8,12 +8,12 @@ const SearchInput = ({ currentTag }) => {
   const [searchValue, setSearchValue] = useState('')
   const handleSearch = () => {
     if (searchValue && searchValue !== '') {
-      Router.push({ pathname: '/page/1', query: { s: searchValue } }).then(r => {
-        console.log(r)
+      router.push({ pathname: '/', query: { s: searchValue } }).then(r => {
+        router.reload()
       })
     } else {
-      Router.push({ pathname: '/' }).then(r => {
-        console.log(r)
+      router.push({ pathname: '/' }).then(r => {
+        router.reload()
       })
     }
   }

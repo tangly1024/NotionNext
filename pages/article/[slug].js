@@ -43,7 +43,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
     {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
-    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black'>
+    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
       {/* 中央区域 wrapper */}
       <header
         className='hover:shadow-2xl duration-200 mx-auto max-w-5xl mt-16 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
@@ -55,7 +55,7 @@ const BlogPost = ({ post, blockMap, tags, prev, next, posts }) => {
       </header>
 
       <article
-        className='w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+        className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
