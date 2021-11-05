@@ -6,10 +6,22 @@ import BLOG from '@/blog.config'
 import TopNav from '@/components/TopNav'
 import Footer from '@/components/Footer'
 import SideBar from '@/components/SideBar'
-import JumpToTop from '@/components/JumpToTop'
+import JumpToTopButton from '@/components/JumpToTopButton'
 import { useGlobal } from '@/lib/global'
 
-const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts, currentSearch, currentCategory, categories, ...customMeta }) => {
+const BaseLayout = ({
+  children,
+  layout,
+  fullWidth,
+  tags,
+  meta,
+  post,
+  totalPosts,
+  currentSearch,
+  currentCategory,
+  categories,
+  ...customMeta
+}) => {
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
@@ -37,14 +49,20 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts,
     <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
 
-      <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory}/>
+      <div className='block lg:hidden'>
+        <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories}
+                currentCategory={currentCategory} />
+      </div>
+
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
-        <SideBar tags={tags} post={post} posts={totalPosts} categories={categories} currentCategory={currentCategory} />
+         <div className='hidden lg:block z-10 pt-10'>
+           <SideBar tags={tags} post={post} posts={totalPosts} categories={categories} currentCategory={currentCategory} />
+         </div>
         <div className='flex flex-grow' ref={targetRef}>
-            {children}
+          {children}
         </div>
-        <JumpToTop targetRef={targetRef} showPercent={true} />
+        <JumpToTopButton targetRef={targetRef} showPercent={true} />
       </main>
 
       <Footer />
@@ -58,13 +76,13 @@ const BaseLayout = ({ children, layout, fullWidth, tags, meta, post, totalPosts,
 const hiddenNav = () => {
   if (document) {
     const nav = document.querySelector('#sticky-nav')
-    const sidebar = document.querySelector('#sidebar')
-    const tagsBar = document.querySelector('#tags-bar')
-    const rightToc = document.querySelector('#right-toc')
+    // const sidebar = document.querySelector('#sidebar')
+    // const tagsBar = document.querySelector('#tags-bar')
+    // const rightToc = document.querySelector('#right-toc')
     nav && nav.classList.replace('top-0', '-top-16')
-    tagsBar && tagsBar.classList.replace('top-16', 'top-0')
-    sidebar && sidebar.classList.replace('top-20', 'top-2')
-    rightToc && rightToc.classList.replace('top-16', 'top-0')
+    // tagsBar && tagsBar.classList.replace('top-16', 'top-0')
+    // sidebar && sidebar.classList.replace('top-20', 'top-2')
+    // rightToc && rightToc.classList.replace('top-16', 'top-0')
   }
 }
 
@@ -74,13 +92,13 @@ const hiddenNav = () => {
 const showNav = () => {
   if (document) {
     const nav = document.querySelector('#sticky-nav')
-    const sidebar = document.querySelector('#sidebar')
-    const tagsBar = document.querySelector('#tags-bar')
-    const rightToc = document.querySelector('#right-toc')
+    // const sidebar = document.querySelector('#sidebar')
+    // const tagsBar = document.querySelector('#tags-bar')
+    // const rightToc = document.querySelector('#right-toc')
     nav && nav.classList.replace('-top-16', 'top-0')
-    tagsBar && tagsBar.classList.replace('top-0', 'top-16')
-    sidebar && sidebar.classList.replace('top-2', 'top-20')
-    rightToc && rightToc.classList.replace('top-0', 'top-16')
+    // tagsBar && tagsBar.classList.replace('top-0', 'top-16')
+    // sidebar && sidebar.classList.replace('top-2', 'top-20')
+    // rightToc && rightToc.classList.replace('top-0', 'top-16')
   }
 }
 

@@ -10,7 +10,7 @@ import { useGlobal } from '@/lib/global'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToTop = ({ targetRef, showPercent = true }) => {
+const JumpToTopButton = ({ targetRef, showPercent = true }) => {
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
@@ -33,7 +33,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
   }, [show])
 
   return (
-    <div id='jump-to-top' className='right-0 fixed flex bottom-24 mr-2.5 py-1 duration-500 z-20'>
+    <div id='jump-to-top' className='right-0 fixed flex bottom-24 mr-2.5 py-1 duration-500 z-20 opacity-75'>
       <div className='transform hover:scale-105 duration-200 '>
         <div
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -50,4 +50,4 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
   )
 }
 
-export default JumpToTop
+export default JumpToTopButton

@@ -9,7 +9,7 @@ import { cs } from 'react-notion-x'
  * @returns {JSX.Element}
  * @constructor
  */
-const TocBar = ({ toc }) => {
+const Toc = ({ toc }) => {
   // 无目录就直接返回空
   if (!toc || toc.length < 1) return <></>
 
@@ -50,8 +50,12 @@ const TocBar = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs))
 
-  return <div>
-    <nav className='text-gray-500 dark:text-gray-400 underline overflow-auto scroll-hidden py-2'>
+  return <>
+    <div
+      className=' dark:border-gray-600 border-b text-2xl bg-white font-bold text-black dark:bg-gray-900 dark:text-white py-6 px-6'>
+      文章目录
+    </div>
+    <nav className='text-gray-500 dark:text-gray-400 underline overflow-y-auto scroll-hidden p-2'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (
@@ -78,7 +82,7 @@ const TocBar = ({ toc }) => {
         )
       })}
     </nav>
-  </div>
+  </>
 }
 
-export default TocBar
+export default Toc

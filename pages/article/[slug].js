@@ -9,7 +9,6 @@ import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react
 import RewardButton from '@/components/RewardButton'
 import ShareBar from '@/components/ShareBar'
 import Comment from '@/components/Comment'
-import TocBar from '@/components/TocBar'
 import BaseLayout from '@/layouts/BaseLayout'
 import React, { useRef } from 'react'
 import Custom404 from '@/pages/404'
@@ -23,6 +22,8 @@ import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-typescript'
 import RecommendPosts from '@/components/RecommendPosts'
+import TocDrawer from '@/components/TocDrawer'
+import TocDrawerButton from '@/components/TocDrawerButton'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -37,6 +38,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
     type: 'article'
   }
   const targetRef = useRef(null)
+  const drawerRight = useRef(null)
   const url = BLOG.link + useRouter().asPath
 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories} >
@@ -53,7 +55,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         )}
       </header>
 
-      <article className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+      <article className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-800'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
@@ -163,19 +165,11 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
 
     </div>
 
-    {/* 右侧目录 */}
-    <aside className='dark:bg-gray-800 bg-white z-10'>
-      <section
-        className='h-full 2xl:static 2xl:block hidden top-0 right-0 fixed h-full w-52  duration-500'>
-        <div id='right-toc' className='sticky top-16 duration-500'>
-          <div
-            className='border-t dark:border-gray-600 border-b text-2xl bg-white font-bold text-black dark:bg-gray-900 dark:text-white py-6 px-6'>
-            文章目录
-          </div>
-          <TocBar toc={post.toc} />
-        </div>
-      </section>
-    </aside>
+    <div className='block lg:hidden'>
+      <TocDrawerButton onClick={() => { drawerRight.current.handleSwitchVisible() }} />
+      {/* 目录侧边栏 */}
+      <TocDrawer post={post} cRef={ drawerRight }/>
+    </div>
 
   </BaseLayout>
 }
