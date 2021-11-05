@@ -20,10 +20,9 @@ function shuffleSort (arr) {
 
 const RecommendPosts = ({ currentPost, totalPosts }) => {
   let filteredPosts = totalPosts
-  const currentTag = currentPost.tags[0]
-
   // 筛选同标签
   if (currentPost.tags && currentPost.tags.length) {
+    const currentTag = currentPost.tags[0]
     filteredPosts = totalPosts.filter(
       post => post && post.tags && post.tags.includes(currentTag) && post.slug !== currentPost.slug
     )
