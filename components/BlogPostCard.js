@@ -19,7 +19,7 @@ const BlogPostCard = ({ post }) => {
           </Link>
           <div className='flex flex-nowrap'>
             <Link href={`/category/${post.category}`}>
-              <div className='cursor-pointer text-sm py-1.5 mr-2 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{post.category}</div>
+              <div className='cursor-pointer dark:text-gray-200 font-bold text-sm py-1.5 mr-2 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{post.category}</div>
             </Link>
             {post.tags.map(tag => (<TagItemMini key={tag} tag={tag} />))}
             <span className='mt-2 mx-2 text-gray-500 dark:text-gray-300 text-sm leading-4'>{post.date.start_date}</span>
