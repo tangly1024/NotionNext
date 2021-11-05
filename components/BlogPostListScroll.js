@@ -74,7 +74,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
       {/* 文章列表 */}
         <div className='grid 3xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
           {postsToShow.map(post => (
-            <BlogPostCard key={post.id} post={post} tags={tags} />
+            <BlogPostCard key={post.id} post={post} />
           ))}
         </div>
 

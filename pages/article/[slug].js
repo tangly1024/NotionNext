@@ -22,6 +22,7 @@ import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-typescript'
+import RecommendPosts from '@/components/RecommendPosts'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -105,9 +106,12 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           )}
         </div>
 
-        <hr/>
-        <div className='flex text-2xl justify-center py-5 dark:text-gray-200'>
-          - 💖 本 文 结 束 😚 感 谢 您 的 阅 读 💖 -
+        <RecommendPosts currentPost={post} totalPosts={posts}/>
+
+        <div id='end-slogan' className='flex justify-between text-2xl justify-center my-12 dark:text-gray-200'>
+          <div>———</div>
+          <div>💖 本 文 结 束 😚 感 谢 您 的 阅 读 💖</div>
+          <div>———</div>
         </div>
         <div className='flex opacity-50 justify-center pb-1 dark:text-gray-200'>
           打赏一杯咖啡~
