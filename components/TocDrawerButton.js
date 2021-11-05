@@ -10,7 +10,7 @@ import React from 'react'
  */
 const TocDrawerButton = (props) => {
   return (
-    <div id='jump-to-top' className='right-0 fixed flex bottom-40 mr-4 duration-500 z-30' onClick={props.onClick}>
+    <div id='jump-to-top' className='right-0 fixed flex bottom-52 mr-4 duration-500 z-30' onClick={props.onClick}>
       <div className='transform hover:scale-105 duration-200 '>
         <div style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}
           className={'animate__fadeInUp bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-2xl'}>

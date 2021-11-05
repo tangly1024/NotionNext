@@ -32,7 +32,7 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
   }, [show])
 
   return (
-    <div id='jump-to-top' className='right-0 fixed flex bottom-24 mr-4 duration-500 z-20'>
+    <div id='jump-to-top' className='right-0 fixed flex bottom-36 mr-4 duration-500 z-20'>
       <div >
         <div
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
