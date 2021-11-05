@@ -6,6 +6,7 @@ import LatestPosts from '@/components/LatestPosts'
 import PostsCategories from '@/components/PostsCategories'
 import Toc from '@/components/Toc'
 import SearchInput from '@/components/SearchInput'
+import DarkModeButton from '@/components/DarkModeButton'
 
 /**
  * 侧边栏
@@ -28,7 +29,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory })
     }).slice(0, 5)
   }
 
-  return <aside id='sidebar' className='bg-white dark:bg-gray-800 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
+  return <aside id='sidebar' className='pt-10 bg-white dark:bg-gray-800 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
     <section>
       <InfoCard />
     </section>

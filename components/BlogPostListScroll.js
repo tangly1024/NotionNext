@@ -49,9 +49,9 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
   const targetRef = useRef(null)
 
   if (!postsToShow || postsToShow.length === 0) {
-    return <BlogPostListEmpty />
+    return <BlogPostListEmpty currentSearch={currentSearch}/>
   } else {
-    return <div id='post-list-wrapper' className='mt-28 md:mt-32 mx-2 md:mx-20' ref={targetRef}>
+    return <div id='post-list-wrapper' className='mt-20 mx-2 md:mx-20' ref={targetRef}>
 
       {currentCategory && (
         <div className='w-full p-1 bg-gray-100 dark:bg-gray-700'>

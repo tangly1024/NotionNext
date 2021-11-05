@@ -6,18 +6,10 @@ import { useEffect } from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListEmpty = () => {
-  const router = useRouter()
-  useEffect(() => {
-    setTimeout(() => {
-      router.push('/').then(() => {
-        console.log('空博客列表跳回首页')
-      })
-    }, 3000)
-  })
-  return <div className='w-full h-full min-h-screen flex justify-center mx-auto'>
-      <div className='align-middle text-center my-auto'>
-        <p className='text-gray-500 dark:text-gray-300'>没有文章了，3秒后返回首页</p>
+const BlogPostListEmpty = ({ currentSearch }) => {
+  return <div className='min-h-screen flex justify-center mx-auto'>
+    <div className='align-middle text-center my-auto'>
+        <p className='text-gray-500 dark:text-gray-300'>没有找到文章 {(currentSearch && <div>{currentSearch}</div>)}</p>
       </div>
   </div>
 }

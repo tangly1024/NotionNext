@@ -10,7 +10,7 @@ import Link from 'next/link'
 const TagsBar = ({ tags, currentTag }) => {
   if (!tags) return <></>
   return (
-    <div id='tags-bar' className='fixed block xl:hidden top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
+    <div id='tags-bar' className='fixed block lg:hidden top-16 duration-500 z-10 w-full border-b dark:border-gray-600'>
       <div className='bg-white dark:bg-gray-800 flex overflow-x-auto'>
       <div className='z-30 sticky left-0 flex'>
         <div className='px-2 bg-white dark:bg-gray-800'/>

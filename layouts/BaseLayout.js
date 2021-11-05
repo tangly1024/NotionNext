@@ -8,7 +8,24 @@ import Footer from '@/components/Footer'
 import SideBar from '@/components/SideBar'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import { useGlobal } from '@/lib/global'
+import DarkModeButton from '@/components/DarkModeButton'
 
+/**
+ * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
+ * @param children
+ * @param layout
+ * @param fullWidth
+ * @param tags
+ * @param meta
+ * @param post
+ * @param totalPosts
+ * @param currentSearch
+ * @param currentCategory
+ * @param categories
+ * @param customMeta
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const BaseLayout = ({
   children,
   layout,
@@ -49,6 +66,7 @@ const BaseLayout = ({
     <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
       <CommonHead meta={meta} />
 
+      {/* 顶部导航栏 */}
       <div className='block lg:hidden'>
         <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories}
                 currentCategory={currentCategory} />
@@ -56,13 +74,16 @@ const BaseLayout = ({
 
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
-         <div className='hidden lg:block z-10 pt-10'>
+         <div className='hidden lg:block z-10'>
            <SideBar tags={tags} post={post} posts={totalPosts} categories={categories} currentCategory={currentCategory} />
          </div>
         <div className='flex flex-grow' ref={targetRef}>
           {children}
         </div>
         <JumpToTopButton targetRef={targetRef} showPercent={true} />
+        <div className='fixed right-2 top-2 p-0.5 shadow-2xl bg-white border dark:border-gray-500 dark:bg-gray-700 rounded-full'>
+          <DarkModeButton/>
+        </div>
       </main>
 
       <Footer />
@@ -77,10 +98,10 @@ const hiddenNav = () => {
   if (document) {
     const nav = document.querySelector('#sticky-nav')
     // const sidebar = document.querySelector('#sidebar')
-    // const tagsBar = document.querySelector('#tags-bar')
+    const tagsBar = document.querySelector('#tags-bar')
     // const rightToc = document.querySelector('#right-toc')
     nav && nav.classList.replace('top-0', '-top-16')
-    // tagsBar && tagsBar.classList.replace('top-16', 'top-0')
+    tagsBar && tagsBar.classList.replace('top-16', 'top-0')
     // sidebar && sidebar.classList.replace('top-20', 'top-2')
     // rightToc && rightToc.classList.replace('top-16', 'top-0')
   }
@@ -93,10 +114,10 @@ const showNav = () => {
   if (document) {
     const nav = document.querySelector('#sticky-nav')
     // const sidebar = document.querySelector('#sidebar')
-    // const tagsBar = document.querySelector('#tags-bar')
+    const tagsBar = document.querySelector('#tags-bar')
     // const rightToc = document.querySelector('#right-toc')
     nav && nav.classList.replace('-top-16', 'top-0')
-    // tagsBar && tagsBar.classList.replace('top-0', 'top-16')
+    tagsBar && tagsBar.classList.replace('top-0', 'top-16')
     // sidebar && sidebar.classList.replace('top-2', 'top-20')
     // rightToc && rightToc.classList.replace('top-0', 'top-16')
   }

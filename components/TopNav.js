@@ -28,7 +28,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
         </div>
 
         {/* 右侧功能 */}
-        <div className='flex flex-nowrap space-x-1'>
+        <div className='flex flex-nowrap space-x-1 ml-2'>
           <DarkModeButton />
         </div>
       </div>
