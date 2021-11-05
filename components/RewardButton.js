@@ -39,18 +39,19 @@ const RewardButton = () => {
 
       <div
         className={
-          (popoverShow ? 'animate__animated animate__fadeIn ' : 'hidden ') +
+          (popoverShow ? 'animate__animated animate__fadeIn ' : ' hidden ') +
           ' animate__faster transform block z-50 font-normal'
         }
         ref={popoverRef}
       >
         <div
-          className='animate__animated animate__fadeIn hover:shadow-2xl duration-200 my-5 px-5 py-6 w-96 grid justify-center bg-white dark:bg-black dark:text-gray-200'>
-         <span>
-            <img className='md:w-72 m-auto' src='/reward_code.jpg' />
-          </span>
-          <br />
-          <span className='text-center text-gray-500'>微信赞赏码或支付宝tlyong@126.com赞助</span>
+          className='flex space-x-10 animate__animated animate__fadeIn hover:shadow-2xl duration-200 my-5 px-5 py-6 justify-center bg-white dark:bg-black dark:text-gray-200'>
+         <div>
+            <img className='md:w-72 m-auto' src='/reward_code_alipay.png' />
+          </div>
+          <div>
+            <img className='md:w-72 m-auto' src='/reward_code_wechat.png' />
+          </div>
         </div>
       </div>
     </div>

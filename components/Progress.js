@@ -8,7 +8,7 @@ import throttle from 'lodash.throttle'
  */
 const Progress = ({ targetRef }) => {
   const [percent, changePercent] = useState(0)
-  const scrollListener = useCallback(throttle(() => {
+  const scrollListener = () => {
     if (targetRef.current) {
       const clientHeight = targetRef ? (targetRef.current.clientHeight) : 0
       const scrollY = window.pageYOffset
@@ -17,7 +17,7 @@ const Progress = ({ targetRef }) => {
       if (per > 100) per = 100
       changePercent(per)
     }
-  }, 100))
+  }
 
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)

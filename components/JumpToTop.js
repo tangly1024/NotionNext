@@ -14,7 +14,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
-  const scrollListener = useCallback(throttle(() => {
+  const scrollListener = () => {
     // 处理是否显示回到顶部按钮
     const clientHeight = targetRef ? (targetRef.current ? targetRef.current.clientHeight : 0) : 0
     const scrollY = window.pageYOffset
@@ -26,7 +26,7 @@ const JumpToTop = ({ targetRef, showPercent = true }) => {
     let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
     if (per > 100) per = 100
     changePercent(per)
-  }, 100))
+  }
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)

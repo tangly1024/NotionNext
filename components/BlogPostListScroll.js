@@ -67,7 +67,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
 
       {currentTag && (
         <div className='w-full p-1 bg-gray-100 dark:bg-gray-700 flex'>
-          <div className='cursor-pointer py-1.5 mr-2 hover:underline bg-gray-200 dark:bg-gray-400 px-2 rounded'># {currentTag}</div>
+          <div className='cursor-pointer py-1.5 mr-2 hover:underline bg-gray-200 dark:bg-gray-400 px-2 rounded'><i className='fa fa-tag mr-1 '/> {currentTag}</div>
         </div>
       )}
 

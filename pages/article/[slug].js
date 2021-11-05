@@ -3,18 +3,17 @@ import BLOG from '@/blog.config'
 import { getPageTableOfContents } from 'notion-utils'
 import { useRouter } from 'next/router'
 import Progress from '@/components/Progress'
-import Image from 'next/image'
 import TagItem from '@/components/TagItem'
 import formatDate from '@/lib/formatDate'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import RewardButton from '@/components/RewardButton'
 import ShareBar from '@/components/ShareBar'
-import BlogPostCardMini from '@/components/BlogPostCardMini'
 import Comment from '@/components/Comment'
 import TocBar from '@/components/TocBar'
 import BaseLayout from '@/layouts/BaseLayout'
 import React, { useRef } from 'react'
 import Custom404 from '@/pages/404'
+import Link from 'next/link'
 
 import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs'
@@ -40,10 +39,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
   const url = BLOG.link + useRouter().asPath
 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories} >
-    {/* 阅读进度条 */}
     <Progress targetRef={targetRef} />
 
-    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
+    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black shadow-inner opacity-90'>
       {/* 中央区域 wrapper */}
       <header
         className='hover:shadow-2xl duration-200 mx-auto max-w-5xl mt-16 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
@@ -54,8 +52,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         )}
       </header>
 
-      <article
-        className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+      <article className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
@@ -68,7 +65,12 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         {/* 文章作者等关联信息 */}
         <div className='justify-between flex flex-wrap bg-gray-50 p-2 dark:bg-gray-800 dark:text-white'>
           <div className='flex-nowrap flex'>
-            <div className='cursor-pointer text-md py-2 mx-2 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{post.category}</div>
+            <div className='py-2 opacity-50'>
+              发表于：
+            </div>
+            <Link href={`/category/${post.category}`}>
+              <div className='cursor-pointer text-md py-2 mx-3 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{post.category}</div>
+            </Link>
 
             {post.type[0] !== 'Page' && (
               <div className='flex items-start text-gray-500 dark:text-gray-400 leading-10'>
@@ -78,15 +80,6 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
                 )}
               </div>
             )}
-
-            {post.tags && (
-              <div className='flex flex-nowrap leading-8 p-1'>
-                {post.tags.map(tag => (
-                  <TagItem key={tag} tag={tag} />
-                ))}
-              </div>
-            )}
-
           </div>
 
           {/* 不蒜子 */}
@@ -98,7 +91,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           </div>
         </div>
 
-        <div>
+        <div className='mb-10'>
           {/* Notion文章主体 */}
           {blockMap && (
             <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
@@ -112,12 +105,16 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           )}
         </div>
 
-        <div className='flex justify-center pt-5'>
+        <hr/>
+        <div className='flex text-2xl justify-center py-5 dark:text-gray-200'>
+          - 💖 本 文 结 束 😚 感 谢 您 的 阅 读 💖 -
+        </div>
+        <div className='flex opacity-50 justify-center pb-1 dark:text-gray-200'>
+          打赏一杯咖啡~
+        </div>
+        <div className='flex justify-center pb-5'>
           <RewardButton />
         </div>
-        <p className='flex justify-center py-5 dark:text-gray-200'>
-          - 💖 本 文 结 束 😚 感 谢 您 的 阅 读 💖 -
-        </p>
 
         {/* 版权声明 */}
         <section
@@ -129,21 +126,36 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           </ul>
         </section>
 
-        <section className='flex'>
-          <div className='text-gray-800 my-5 dark:text-gray-300 font-bold my-5 mr-2'>分享本文&nbsp;</div>
-          <ShareBar post={post} />
+        <section className='flex justify-between'>
+
+          {post.tags && (
+            <div className='flex flex-nowrap leading-8 p-1 py-4'>
+              <div className='hidden md:block'>标签：</div>
+              {post.tags.map(tag => (
+                <TagItem key={tag} tag={tag} />
+              ))}
+            </div>
+          )}
+
+          <div>
+            <ShareBar post={post} />
+          </div>
+
         </section>
 
         <div className='text-gray-800 my-5 dark:text-gray-300'>
-          <div className='mt-4 font-bold'>其他文章</div>
+          <hr/>
           <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-            <BlogPostCardMini post={prev} />
-            <BlogPostCardMini post={next} />
+            <Link href={`/article/${prev.slug}`}><div className=' py-3 text-blue-500 text-xl hover:underline cursor-pointer'><i className='fa fa-angle-double-left mr-1'/>{prev.title}</div></Link>
+            <Link href={`/article/${next.slug}`}><div className='flex py-3 text-blue-500 text-xl hover:underline cursor-pointer'>{next.title}<i className='fa fa-angle-double-right ml-1'/></div></Link>
           </div>
         </div>
-        {/* 评论互动 */}
-        <Comment frontMatter={post} />
       </article>
+
+      {/* 评论互动 */}
+      <div className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+        <Comment frontMatter={post} />
+      </div>
 
     </div>
 

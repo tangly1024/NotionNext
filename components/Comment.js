@@ -27,8 +27,6 @@ const Comment = ({ frontMatter }) => {
   const { theme } = useGlobal()
 
   return <div className='comment text-gray-800 dark:text-gray-300'>
-    <div className='font-bold pt-2 pb-4 '>留下评论</div>
-
     {/* 评论插件 */}
     {BLOG.comment.provider === 'gitalk' && (
       <GitalkComponent
