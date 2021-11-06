@@ -18,17 +18,17 @@ const TagsBar = ({ tags, currentTag }) => {
       </div>
       <ul id='tag-container' className='flex py-1 space-x-3'>
         <li className='w-10 py-2 dark:text-gray-200'>标签:</li>
-        {Object.keys(tags).map(key => {
-          const selected = key === currentTag
+        {tags.map(tag => {
+          const selected = tag.name === currentTag
           return (
-            <Link key={key} href={selected ? '/' : `/tag/${encodeURIComponent(key)}`}>
+            <Link key={tag.name} href={selected ? '/' : `/tag/${encodeURIComponent(tag)}`}>
               <li
                 className={`cursor-pointer border hover:bg-gray-300 rounded-xl duration-200 mr-1 my-1 px-2 py-1 font-medium font-light text-sm whitespace-nowrap
                  dark:text-gray-300 dark:hover:bg-gray-800 ${selected ? 'text-white bg-black dark:hover:bg-gray-900 dark:bg-black dark:border-gray-800' : 'bg-gray-100 text-gray-600 dark:bg-gray-600 dark:border-gray-600'
                 }`}
               >
                 <a>
-                  {`${key} (${tags[key]})`}
+                  {`${tag.name} (${tag.count})`}
                 </a>
               </li>
             </Link>

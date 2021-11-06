@@ -111,12 +111,12 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
 
         <RecommendPosts currentPost={post} totalPosts={posts}/>
 
-        <div id='end-slogan' className='flex justify-between text-2xl justify-center my-12 dark:text-gray-200'>
+        <div id='end-slogan' className='flex justify-between justify-center my-12 dark:text-gray-200'>
           <div>———</div>
           <div>💖 本 文 结 束 😚 感 谢 您 的 阅 读 💖</div>
           <div>———</div>
         </div>
-        <div className='flex opacity-50 justify-center pb-1 dark:text-gray-200'>
+        <div className='flex opacity-50 justify-center dark:text-gray-200'>
           打赏一杯咖啡~
         </div>
         <div className='flex justify-center pb-5'>
@@ -133,7 +133,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           </ul>
         </section>
 
-        <section className='flex justify-between'>
+        <section className='md:flex md:justify-between'>
 
           {post.tags && (
             <div className='flex flex-nowrap leading-8 p-1 py-4'>

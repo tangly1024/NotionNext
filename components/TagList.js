@@ -10,13 +10,13 @@ import TagItemMini from '@/components/TagItemMini'
 const TagList = ({ tags, currentTag }) => {
   if (!tags) return <></>
   return (
-    <div id='tags-list' className='duration-500 dark:border-gray-600  dark:bg-gray-800 w-66'>
-        {Object.keys(tags).map(tag => {
-          const selected = tag === currentTag
-          return (
-            <TagItemMini key={tag} tag={tag} selected={selected} count={tags[tag]}/>
-          )
-        })}
+    <div id='tags-list' className='duration-500 dark:border-gray-600 dark:bg-gray-800 w-66'>
+      {
+          tags.map(tag=>{
+            const selected = tag.name === currentTag
+            return  <TagItemMini key={tag.name} tag={tag.name} selected={selected} count={tag.count}/>
+          })
+      }
     </div>
   )
 }
