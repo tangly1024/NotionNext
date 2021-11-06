@@ -137,7 +137,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
 
           {post.tags && (
             <div className='flex flex-nowrap leading-8 p-1 py-4'>
-              <div className='hidden md:block'>标签：</div>
+              <div className='hidden md:block  dark:text-gray-300'>标签：</div>
               {post.tags.map(tag => (
                 <TagItem key={tag} tag={tag} />
               ))}
