@@ -20,7 +20,7 @@ const BLOG = {
   autoCollapsedNavBar: false, // the automatically collapsed navigation bar
   socialLink: 'https://weibo.com/u/2245301913',
   seo: {
-    keywords: ['建站', '自媒体', 'Notion', '赚钱', '写作', '副业'],
+    keywords: ['建站', 'Notion', '赚钱', '写作', '副业'],
     googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
   },
   analytics: {

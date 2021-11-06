@@ -9,9 +9,11 @@ const CommonHead = ({ meta }) => {
   const title = meta?.title || BLOG.title
   const description = meta?.description || BLOG.description
   const type = meta?.type || 'website'
+  const keywords = meta?.tags || BLOG.seo.keywords
+
   return <Head>
     <title>{title}</title>
-    <meta content={BLOG.darkBackground} name='theme-color' />
+    <meta name='theme-color' content={BLOG.darkBackground} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name='robots' content='follow, index' />
     <meta charSet='UTF-8' />
@@ -21,8 +23,8 @@ const CommonHead = ({ meta }) => {
         content={BLOG.seo.googleSiteVerification}
       />
     )}
-    {BLOG.seo.keywords && (
-      <meta name='keywords' content={BLOG.seo.keywords.join(', ')} />
+    {keywords && (
+      <meta name='keywords' content={keywords.join(', ')} />
     )}
     <meta name='description' content={description} />
     <meta property='og:locale' content={BLOG.lang} />

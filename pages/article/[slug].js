@@ -35,7 +35,8 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
   const meta = {
     title: `${post.title} | ${BLOG.title}`,
     description: post.summary,
-    type: 'article'
+    type: 'article',
+    tags: post.tags
   }
   const targetRef = useRef(null)
   const drawerRight = useRef(null)
