@@ -81,7 +81,7 @@ const BaseLayout = ({
           {children}
         </div>
         <JumpToTopButton targetRef={targetRef} showPercent={true} />
-        <div className='fixed right-4 top-4 p-1 bg-gray-700 dark:border-gray-500 dark:bg-gray-700 rounded-full text-white' style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}>
+        <div className='hidden lg:block fixed right-4 top-4 p-1 bg-gray-700 dark:border-gray-500 dark:bg-gray-700 rounded-full text-white' style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}>
           <DarkModeButton/>
         </div>
       </main>

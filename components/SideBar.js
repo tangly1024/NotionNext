@@ -20,14 +20,6 @@ import DarkModeButton from '@/components/DarkModeButton'
  * @constructor
  */
 const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
-  // 按时间排序
-  if (posts) {
-    posts = posts.sort((a, b) => {
-      const dateA = new Date(a?.lastEditedTime || a.createdTime)
-      const dateB = new Date(b?.lastEditedTime || b.createdTime)
-      return dateB - dateA
-    }).slice(0, 5)
-  }
 
   return <aside id='sidebar' className='pt-10 bg-white dark:bg-gray-800 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
     <section>

@@ -50,7 +50,7 @@ const Toc = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs))
 
-  return <>
+  return <div className='dark:bg-gray-600 min-h-screen'>
     <div
       className=' dark:border-gray-600 border-b text-2xl bg-white font-bold text-black dark:bg-gray-900 dark:text-white py-6 px-6'>
       文章目录
@@ -82,7 +82,7 @@ const Toc = ({ toc }) => {
         )
       })}
     </nav>
-  </>
+  </div>
 }
 
 export default Toc

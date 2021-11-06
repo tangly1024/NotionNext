@@ -9,15 +9,21 @@ import { useRouter } from 'next/router'
  * @constructor
  */
 const LatestPosts = ({ posts }) => {
-  // 按时间排序
-  if (posts) {
-    posts = posts.sort((a, b) => {
+  // 深拷贝
+  let postsSortByDate = Object.create(posts)
+
+  // 时间排序
+  postsSortByDate.sort((a, b) => {
       const dateA = new Date(a?.lastEditedTime || a.createdTime)
       const dateB = new Date(b?.lastEditedTime || b.createdTime)
       return dateB - dateA
-    }).slice(0, 5)
-  }
-  const router = useRouter()
+  })
+
+  // 只取前五
+  postsSortByDate = postsSortByDate.slice(0, 5)
+  
+  // 获取当前路径
+  const currentPath = useRouter().asPath
 
   return <>
     <section
@@ -25,10 +31,10 @@ const LatestPosts = ({ posts }) => {
       <div className='w-32'>最近更新</div>
     </section>
     <div>
-      {posts.map(post => {
+      {postsSortByDate.map(post => {
         return (
           <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} >
-            <div className={(router.asPath === `${BLOG.path}/article/${post.slug}` ? 'bg-gray-200 dark:bg-black' : '') + ' text-xs leading-5 py-1.5 px-5 flex'}>
+            <div className={(currentPath === `${BLOG.path}/article/${post.slug}` ? 'bg-gray-200 dark:bg-black' : '') + ' text-xs leading-5 py-1.5 px-5 flex'}>
               <div className='mr-2 text-gray-500'>
                 {formatDateFmt(post.lastEditedTime, 'yyyy/MM/dd')}
               </div>
