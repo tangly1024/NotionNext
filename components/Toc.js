@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import { cs } from 'react-notion-x'
+// import { cs } from 'react-notion-x'
 
 /**
  * 目录导航组件
@@ -62,12 +62,9 @@ const Toc = ({ toc }) => {
           <a
             key={id}
             href={`#${id}`}
-            className={cs(
-              'notion-table-of-contents-item px-5',
-              `notion-table-of-contents-item-indent-level-${tocItem.indentLevel}`,
-              activeSection === id &&
-              ' font-bold text-black dark:text-white animate-pulse'
-            )}
+            className={`notion-table-of-contents-item px-5 
+            notion-table-of-contents-item-indent-level-${tocItem.indentLevel} 
+            ${activeSection === id && ' font-bold text-black dark:text-white animate-pulse'}`}
           >
                       <span
                         className='notion-table-of-contents-item-body'

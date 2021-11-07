@@ -180,14 +180,15 @@
   min-height: 100vh;
 }
 
-/* .notion-viewport {
+.notion-viewport {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: -10;
-} */
+  pointer-events: none;
+}
 
 .medium-zoom-overlay {
   z-index: 300;
