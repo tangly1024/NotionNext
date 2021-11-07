@@ -26,7 +26,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory })
       <InfoCard />
     </section>
 
-    <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-800'}>
+    <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-800 pb-4'}>
 
       {/* 搜索框 */}
       <section className='p-5'>
