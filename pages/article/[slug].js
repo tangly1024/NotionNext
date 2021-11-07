@@ -62,12 +62,12 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           {post.title}
         </h1>
 
-        <h2 className='text-gray-500 my-5 dark:text-gray-400 animate__animated animate__fadeIn'>
+        <h2 className='text-gray-500 text-xs my-5 dark:text-gray-400 animate__animated animate__fadeIn'>
           {post.summary}
         </h2>
 
         {/* 文章作者等关联信息 */}
-        <div className='justify-between flex flex-wrap bg-gray-50 p-2 dark:bg-gray-800 dark:text-white'>
+        <div className='justify-between flex flex-wrap bg-gray-100 p-2 dark:bg-gray-900 dark:text-white'>
           <div className='flex-nowrap flex'>
             <div className='py-2 opacity-50'>
               发表于：
@@ -136,8 +136,8 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         <section className='md:flex md:justify-between'>
 
           {post.tags && (
-            <div className='flex flex-nowrap leading-8 p-1 py-4'>
-              <div className='hidden md:block  dark:text-gray-300'>标签：</div>
+            <div className='flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
+              <div className='hidden md:block dark:text-gray-300'>标签：</div>
               {post.tags.map(tag => (
                 <TagItem key={tag} tag={tag} />
               ))}

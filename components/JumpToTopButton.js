@@ -18,12 +18,14 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     const clientHeight = targetRef ? (targetRef.current ? targetRef.current.clientHeight : 0) : 0
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
-    const shouldShow = scrollY > 100
+    let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
+    if (per > 100) per = 100
+    const shouldShow = scrollY > 100 && per > 0
+
+
     if (shouldShow !== show) {
       switchShow(shouldShow)
     }
-    let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
-    if (per > 100) per = 100
     changePercent(per)
   }
   useEffect(() => {
