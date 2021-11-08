@@ -5,11 +5,11 @@ import React from 'react'
 
 const BlogPostCard = ({ post }) => {
   return (
-    <div key={post.id} className='2xl:flex animate__animated animate__fadeIn animate__faster shadow-2xl border dark:border-gray-600 my-2 w-full 2xl:max-w-2xl bg-white bg-opacity-80 dark:bg-gray-800 dark:hover:bg-gray-700 overflow-hidden'>
+    <div key={post.id} className='animate__animated animate__fadeIn animate__faster shadow-xl border dark:border-gray-600 my-2 w-full 2xl:max-w-3xl bg-white bg-opacity-80 dark:bg-gray-800 dark:hover:bg-gray-700 overflow-hidden'>
         {/*  封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
-          <Link href={`${BLOG.path}/article/${post.slug}`} className='md:flex-shrink-0 md:w-52 md:h-52 rounded-lg'>
-            <img className='w-full 2xl:w-80 2xl:h-full  object-cover cursor-pointer transform hover:scale-110 duration-500' src={post.page_cover} alt={post.title} />
+          <Link href={`${BLOG.path}/article/${post.slug}`}>
+            <img className='w-full 2xl:h-60 object-cover cursor-pointer transform hover:scale-110 duration-500' src={post.page_cover} alt={post.title} />
           </Link>
         )}
 

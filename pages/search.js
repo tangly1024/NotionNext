@@ -44,6 +44,8 @@ const Search = ({ posts, tags, meta, categories }) => {
     <BaseLayout meta={meta} tags={tags} totalPosts={posts} currentSearch={searchKey} categories={categories}>
       <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
         <TagsBar tags={tags} />
+        {/* 标签栏留白 */}
+        <div className='my-6 md:pt-0'/>
         <BlogPostListScroll posts={filteredPosts} tags={tags} currentSearch={searchKey} />
       </div>
     </BaseLayout>
