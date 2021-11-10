@@ -38,7 +38,7 @@ const RecommendPosts = ({ currentPost, totalPosts }) => {
     <h2 className='text-3xl mb-2'>推荐文章</h2>
     <ul className='list-disc px-5'>
       {filteredPosts.map(post => (
-        <li key={post.id} ><Link href={`/article/${post.slug}`}><div className='hover:underline cursor-pointer py-1'>{post.title}</div></Link></li>
+        <li className='py-1' key={post.id} ><Link href={`/article/${post.slug}`}><a className='cursor-pointer hover:underline'>{post.title}</a></Link></li>
       ))}
     </ul>
   </div>
