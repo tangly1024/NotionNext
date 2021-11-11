@@ -22,7 +22,6 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     if (per > 100) per = 100
     const shouldShow = scrollY > 100 && per > 0
 
-
     if (shouldShow !== show) {
       switchShow(shouldShow)
     }
@@ -34,15 +33,15 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
   }, [show])
 
   return (
-    <div id='jump-to-top' className='right-0 fixed flex bottom-36 mr-4 duration-500 z-20'>
+    <div id='jump-to-top' className='right-0 fixed flex bottom-36 mr-4 duration-500 z-20 opacity-75'>
       <div >
         <div
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}
-          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-2xl'}>
+          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' bg-white dark:bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-2xl'}>
           <div className='text-center'>
-            <div className='w-10 text-xl text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} ><i className='fa fa-arrow-up'/> </div>
-            {showPercent && (<div className='w-10 text-xs text-gray-100 dark:text-gray-200'>{percent} </div>)}
+            <div className='w-10 text-xl dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} ><i className='fa fa-arrow-up'/> </div>
+            {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent} </div>)}
           </div>
         </div>
       </div>
