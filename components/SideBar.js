@@ -6,7 +6,7 @@ import LatestPosts from '@/components/LatestPosts'
 import PostsCategories from '@/components/PostsCategories'
 import Toc from '@/components/Toc'
 import SearchInput from '@/components/SearchInput'
-import DarkModeButton from '@/components/DarkModeButton'
+import Link from 'next/link'
 
 /**
  * 侧边栏
@@ -20,7 +20,6 @@ import DarkModeButton from '@/components/DarkModeButton'
  * @constructor
  */
 const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
-
   return <aside id='sidebar' className='pt-10 bg-white dark:bg-gray-800 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
     <section>
       <InfoCard />
@@ -57,8 +56,9 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory })
       {tags && (
         <section className='mt-2'>
           <section
-            className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap align-middle'>
-            <div className='w-32'>标签</div>
+            className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap justify-between'>
+            <div>标签</div>
+            <div><Link href='/tag'><div className='hover:underline cursor-pointer opacity-50'>更多标签</div></Link></div>
           </section>
           <div className='px-5'>
             <TagList tags={tags} currentTag={currentTag} />

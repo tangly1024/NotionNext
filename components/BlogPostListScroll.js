@@ -55,19 +55,19 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
 
       {currentCategory && (
         <div className='w-full p-1 bg-gray-100 dark:bg-gray-700'>
-          <div className='cursor-pointer py-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{currentCategory}</div>
+          <div className='cursor-pointer p-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{currentCategory}</div>
         </div>
       )}
 
       {currentSearch && (
         <div className='w-full p-1 bg-gray-100 dark:bg-gray-700'>
-          <div className='cursor-pointer py-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-search mr-1'/>关键字：{currentSearch}</div>
+          <div className='cursor-pointer p-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-search mr-1'/>关键字：{currentSearch}</div>
         </div>
       )}
 
       {currentTag && (
         <div className='w-full p-1 bg-gray-100 dark:bg-gray-700 flex'>
-          <div className='cursor-pointer py-1.5 mr-2 hover:underline bg-gray-200 dark:bg-gray-400 px-2 rounded'><i className='fa fa-tag mr-1 '/> {currentTag}</div>
+          <div className='cursor-pointer p-1.5 mr-2 hover:underline bg-gray-200 dark:bg-gray-500 dark:text-gray-200 px-2 rounded'><i className='fa fa-tag mr-1 '/> {currentTag}</div>
         </div>
       )}
 

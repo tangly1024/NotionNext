@@ -12,10 +12,10 @@ const TagList = ({ tags, currentTag }) => {
   return (
     <div id='tags-list' className='duration-500 dark:border-gray-600 dark:bg-gray-800 w-66'>
       {
-          tags.map(tag=>{
-            const selected = tag.name === currentTag
-            return  <TagItemMini key={tag.name} tag={tag.name} selected={selected} count={tag.count}/>
-          })
+        tags.map(tag => {
+          const selected = tag.name === currentTag
+          return <TagItemMini key={tag.name} tag={tag.name} selected={selected} count={tag.count} />
+        })
       }
     </div>
   )
