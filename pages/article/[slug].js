@@ -45,10 +45,10 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories} >
     <Progress targetRef={targetRef} />
 
-    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black shadow-inner opacity-90'>
+    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black'>
       {/* 中央区域 wrapper */}
       <header
-        className='hover:shadow-2xl duration-200 mx-auto max-w-5xl mt-16 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
+        className='shadow-card duration-200 mx-auto max-w-5xl mt-16 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
         {/* 封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
           <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }}
@@ -56,7 +56,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         )}
       </header>
 
-      <article className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-800'>
+      <article className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-800'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
@@ -70,7 +70,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         <div className='justify-between flex flex-wrap bg-gray-100 p-2 dark:bg-gray-900 dark:text-white'>
           <div className='flex-nowrap flex'>
             <div className='py-2 opacity-50'>
-              发表于：
+              分类：
             </div>
             <Link href={`/category/${post.category}`}>
               <div className='cursor-pointer text-md py-2 mx-3 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{post.category}</div>
@@ -160,7 +160,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
       </article>
 
       {/* 评论互动 */}
-      <div className='shadow mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+      <div className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
         <Comment frontMatter={post} />
       </div>
 
