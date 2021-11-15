@@ -56,7 +56,7 @@ const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
 
       <div>
         {/* 文章列表 */}
-        <div className='grid 3xl:grid-cols-4 2xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
+        <div className='flex flex-wrap'>
           {postsToShow.map(post => (
             <BlogPostCard key={post.id} post={post} tags={tags} />
           ))}

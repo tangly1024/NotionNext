@@ -49,40 +49,46 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
   const targetRef = useRef(null)
 
   if (!postsToShow || postsToShow.length === 0) {
-    return <BlogPostListEmpty currentSearch={currentSearch}/>
+    return <BlogPostListEmpty currentSearch={currentSearch} />
   } else {
-    return <div id='post-list-wrapper' className='mt-20 mx-2 md:mx-20' ref={targetRef}>
+    return <div id='post-list-wrapper' className='mt-20 mx-2 lg:mx-20' ref={targetRef}>
 
       {currentCategory && (
-        <div className='w-full p-1 bg-gray-100 dark:bg-gray-700'>
-          <div className='cursor-pointer p-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{currentCategory}</div>
+        <div className='w-full p-1 my-2 sticky top-0 z-30 shadow-xl bg-gray-100 dark:bg-gray-700'>
+          <div className='cursor-pointer p-1.5 mr-2 dark:text-gray-300 hover:underline'><i
+            className='fa fa-folder-open-o mr-1' />{currentCategory}</div>
         </div>
       )}
 
       {currentSearch && (
-        <div className='w-full p-1 bg-gray-100 dark:bg-gray-700'>
-          <div className='cursor-pointer p-1.5 mr-2 dark:text-gray-300 hover:underline'><i className='fa fa-search mr-1'/>关键字：{currentSearch}</div>
+        <div className='w-full p-1 my-2 sticky top-0 z-30 shadow-xl bg-gray-100 dark:bg-gray-700'>
+          <div className='cursor-pointer p-1.5 mr-2 dark:text-gray-300 hover:underline'><i
+            className='fa fa-search mr-1' />关键字：{currentSearch}</div>
         </div>
       )}
 
       {currentTag && (
-        <div className='w-full p-1 bg-gray-100 dark:bg-gray-700 flex'>
-          <div className='cursor-pointer p-1.5 mr-2 hover:underline bg-gray-200 dark:bg-gray-500 dark:text-gray-200 px-2 rounded'><i className='fa fa-tag mr-1 '/> {currentTag}</div>
+        <div className='w-full p-1 my-2 sticky top-0 z-30 shadow-xl bg-gray-100 dark:bg-gray-700 flex'>
+          <div
+            className='cursor-pointer p-1.5 mr-2 hover:underline bg-gray-200 dark:bg-gray-500 dark:text-gray-200 px-2 rounded'>
+            <i className='fa fa-tag mr-1 ' /> {currentTag}</div>
         </div>
       )}
 
       {/* 文章列表 */}
-        <div className='grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-5'>
-          {postsToShow.map(post => (
-            <BlogPostCard key={post.id} post={post} />
-          ))}
-        </div>
+      <div className='flex flex-wrap'>
+        {postsToShow.map(post => (
+          <BlogPostCard key={post.id} post={post} />
+        ))}
+      </div>
 
-        <div className='flex'>
-          <div onClick={() => { handleGetMore() }}
-               className='w-full my-4 py-4 bg-gray-300 text-center cursor-pointer dark:bg-gray-700 dark:text-gray-200'
-               > {hasMore ? '继续加载' : '加载完了😰'} </div>
-        </div>
+      <div className='flex'>
+        <div onClick={() => {
+          handleGetMore()
+        }}
+             className='w-full my-4 py-4 bg-gray-300 text-center cursor-pointer dark:bg-gray-700 dark:text-gray-200'
+        > {hasMore ? '继续加载' : '加载完了😰'} </div>
+      </div>
     </div>
   }
 }
