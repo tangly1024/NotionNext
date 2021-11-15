@@ -6,11 +6,11 @@ import React from 'react'
 const BlogPostCard = ({ post }) => {
   return (
     <div key={post.id}
-         className='animate__animated animate__fadeIn animate__faster xl:flex shadow-xl border dark:border-gray-600 mb-6 w-full bg-white bg-opacity-80 dark:bg-gray-800 dark:hover:bg-gray-700 overflow-hidden'>
+         className='animate__animated animate__fadeIn animate__faster xl:flex shadow-card border dark:border-gray-600 mb-6 w-full bg-white bg-opacity-80 dark:bg-gray-800 dark:hover:bg-gray-700 overflow-hidden'>
       {/*  封面图 */}
       {post.page_cover && post.page_cover.length > 1 && (
         <Link href={`${BLOG.path}/article/${post.slug}`}>
-          <img className='w-full max-h-52 xl:w-80 object-cover cursor-pointer transform hover:scale-110 duration-500'
+          <img className='w-full max-h-72 xl:w-80 object-cover cursor-pointer transform hover:scale-110 duration-500'
                src={post.page_cover} alt={post.title} />
         </Link>
       )}
@@ -18,7 +18,7 @@ const BlogPostCard = ({ post }) => {
       <div className='px-8 py-6 w-full'>
         <Link href={`${BLOG.path}/article/${post.slug}`}>
           <div
-            className='cursor-pointer my-3 text-2xl leading-tight font-bold text-black dark:text-gray-100 hover:underline'>{post.title}</div>
+            className='cursor-pointer my-3 text-xl leading-tight font-bold text-black dark:text-gray-100 hover:underline'>{post.title}</div>
         </Link>
         <p className='mt-2 text-gray-500 dark:text-gray-400 text-sm'>{post.summary}</p>
 
