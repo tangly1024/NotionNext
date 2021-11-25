@@ -65,11 +65,11 @@
 - **背景**: 动态几何线条[react-canvas-nest](https://github.com/flyerH/react-canvas-nest)
 
 ## 页面样式主题
-- 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa)
+- 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa) 分支-https://github.com/tangly1024/NotionNext/tree/theme-Fukasawa
   <details><summary>fukasawa截图</summary>
   <img src='https://github.com/tangly1024/NotionNext/blob/main/docs/screenshot-fukasawa.png?raw=true'/>
   </details>
-- 仿照 [youtube](https://youtube.com)
+- 仿照 [youtube] 主题 分支-https://github.com/tangly1024/NotionNext/tree/themw-youtube
   <details><summary>youtube截图</summary>
   <img src='https://github.com/tangly1024/NotionNext/blob/main/docs/screenshot-youtube.png?raw=true'/>
   </details>
