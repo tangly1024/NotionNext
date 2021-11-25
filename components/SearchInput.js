@@ -37,7 +37,6 @@ const SearchInput = ({ currentTag, currentSearch }) => {
 
   return <div className='flex border dark:border-gray-600 w-full'>
     <input
-      id='searchInput'
       ref={searchInputRef}
       type='text'
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
