@@ -34,11 +34,11 @@ const RecommendPosts = ({ currentPost, totalPosts }) => {
     filteredPosts = filteredPosts.slice(0, 5)
   }
 
-  return <div className='dark:text-gray-300'>
-    <h2 className='text-3xl mb-2'>推荐文章</h2>
+  return <div className='dark:text-gray-300 dark:bg-gray-900 bg-gray-100 p-2 mb-2  border-l-4 border-yellow-500'>
+    <h2 className='ml-2 mb-2 font-bold'>相关推荐</h2>
     <ul className='list-disc px-5'>
       {filteredPosts.map(post => (
-        <li className='py-1' key={post.id} ><Link href={`/article/${post.slug}`}><a className='cursor-pointer hover:underline'>{post.title}</a></Link></li>
+        <li className='py-1' key={post.id} ><Link href={`/article/${post.slug}`}><a className='cursor-pointer underline'>{post.title}</a></Link></li>
       ))}
     </ul>
   </div>

@@ -109,19 +109,11 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           )}
         </div>
 
-        <RecommendPosts currentPost={post} totalPosts={posts}/>
-
-        <div id='end-slogan' className='flex justify-between justify-center my-12 dark:text-gray-200'>
-          <div>———</div>
-          <div>💖 本 文 结 束 😚 感 谢 您 的 阅 读 💖</div>
-          <div>———</div>
-        </div>
-        <div className='flex opacity-50 justify-center dark:text-gray-200'>
-          打赏一杯咖啡~
-        </div>
         <div className='flex justify-center pb-5'>
           <RewardButton />
         </div>
+
+        <RecommendPosts currentPost={post} totalPosts={posts}/>
 
         {/* 版权声明 */}
         <section

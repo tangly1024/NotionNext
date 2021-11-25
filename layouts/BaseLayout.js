@@ -63,7 +63,7 @@ const BaseLayout = ({
   const targetRef = useRef(null)
 
   return (
-    <div id='wrapper' className={[BLOG.font, theme].join(' ')}>
+    <div id='wrapper' className={[BLOG.font,'subpixel-antialiased', theme].join(' ')}>
       <CommonHead meta={meta} />
 
       {/* 顶部导航栏 */}
