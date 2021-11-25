@@ -18,15 +18,6 @@
 </p>
 
 演示地址：[https://www.tangly1024.com/](https://www.tangly1024.com/)
-
-
-<details><summary>截图</summary>
-<img src='https://github.com/tangly1024/NotionNext/blob/main/screenshot2.png?raw=true'/>
-</details>
-
-<details><summary>其他曾用主题样式</summary>
-<img src='https://github.com/tangly1024/NotionNext/blob/main/screenshot.png?raw=true'/>
-</details>
 ## 亮点 ✨
 
 **🚀 &nbsp;秒开，设备全适配**
@@ -75,7 +66,13 @@
 
 ## 页面样式主题
 - 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa)
+  <details><summary>fukasawa截图</summary>
+  <img src='https://github.com/tangly1024/NotionNext/blob/main/docs/screenshot-fukasawa.png?raw=true'/>
+  </details>
 - 仿照 [youtube](https://youtube.com)
+  <details><summary>youtube截图</summary>
+  <img src='https://github.com/tangly1024/NotionNext/blob/main/docs/screenshot-youtube.png?raw=true'/>
+  </details>
 
 ## License
 
