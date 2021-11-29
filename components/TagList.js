@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import React from 'react'
 
 /**
  * 横向的标签列表
@@ -8,6 +9,9 @@ import Link from 'next/link'
  * @constructor
  */
 const TagList = ({ tags, currentTag }) => {
+  if (!tags) {
+    return <></>
+  }
   return <ul className='flex py-1 space-x-3'>
     <li className='w-10 py-2 dark:text-gray-200'>标签:</li>
     {tags.map(tag => {

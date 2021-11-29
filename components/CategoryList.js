@@ -2,6 +2,9 @@ import Link from 'next/link'
 import React from 'react'
 
 const CategoryList = ({ currentCategory, categories }) => {
+  if (!categories) {
+    return <></>
+  }
   return <ul className='flex py-1 space-x-3'>
     <li className='w-10 py-2 dark:text-gray-200'>分类:</li>
     {Object.keys(categories).map(category => {
