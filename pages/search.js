@@ -1,7 +1,7 @@
 import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
 import BaseLayout from '@/layouts/BaseLayout'
-import TagsBar from '@/components/TagsBar'
+import StickyBar from '@/components/StickyBar'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
 import { useRouter } from 'next/router'
 
@@ -43,9 +43,9 @@ const Search = ({ posts, tags, meta, categories }) => {
   return (
     <BaseLayout meta={meta} tags={tags} totalPosts={posts} currentSearch={searchKey} categories={categories}>
       <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
-        <TagsBar tags={tags} />
-        {/* 标签栏留白 */}
-        <div className='my-6 md:pt-0'/>
+        <StickyBar>
+          <div className='p-4 dark:text-gray-200'><i className='fa fa-search mr-1'/> 搜索词： {searchKey}</div>
+        </StickyBar>
         <BlogPostListScroll posts={filteredPosts} tags={tags} currentSearch={searchKey} />
       </div>
     </BaseLayout>

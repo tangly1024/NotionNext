@@ -21,6 +21,7 @@ import DarkModeButton from '@/components/DarkModeButton'
  * @param totalPosts
  * @param currentSearch
  * @param currentCategory
+ * @param currentTag
  * @param categories
  * @param customMeta
  * @returns {JSX.Element}
@@ -36,6 +37,7 @@ const BaseLayout = ({
   totalPosts,
   currentSearch,
   currentCategory,
+  currentTag,
   categories,
   ...customMeta
 }) => {
@@ -76,13 +78,13 @@ const BaseLayout = ({
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
          <div className='hidden lg:block z-10'>
-           <SideBar tags={tags} post={post} posts={totalPosts} categories={categories} currentCategory={currentCategory} />
+           <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
          </div>
         <div className='flex flex-grow' ref={targetRef}>
           {children}
         </div>
         <JumpToTopButton targetRef={targetRef} showPercent={true} />
-        <div className='hidden lg:block fixed right-4 top-4 p-1 rounded-full
+        <div className='hidden lg:block fixed right-4 top-20 p-1 rounded-full
          bg-white text-black
          dark:border-gray-500 dark:bg-gray-700 dark:text-white
          ' style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}>
@@ -104,8 +106,8 @@ const handleScrollDown = () => {
     const nav = document.querySelector('#sticky-nav')
     nav && nav.classList.replace('top-0', '-top-16')
 
-    const tagsBar = document.querySelector('#tags-bar')
-    tagsBar && tagsBar.classList.replace('top-16', 'top-0')
+    const stickyBar = document.querySelector('#sticky-bar')
+    stickyBar && stickyBar.classList.replace('top-16', 'top-0')
 
     const tocDrawerButton = document.querySelector('#toc-drawer-button')
     tocDrawerButton && tocDrawerButton.classList.replace('hidden', 'block')
@@ -126,8 +128,8 @@ const handleScrollUp = () => {
     const nav = document.querySelector('#sticky-nav')
     nav && nav.classList.replace('-top-16', 'top-0')
 
-    const tagsBar = document.querySelector('#tags-bar')
-    tagsBar && tagsBar.classList.replace('top-0', 'top-16')
+    const stickyBar = document.querySelector('#sticky-bar')
+    stickyBar && stickyBar.classList.replace('top-0', 'top-16')
 
     // const tocDrawerButton = document.querySelector('#toc-drawer-button')
     // tocDrawerButton && tocDrawerButton.classList.replace('block', 'hidden')

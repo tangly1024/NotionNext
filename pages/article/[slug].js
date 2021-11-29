@@ -48,15 +48,15 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
     <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black'>
       {/* 中央区域 wrapper */}
       <header
-        className='shadow-card duration-200 mx-auto max-w-5xl mt-16 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
+        className='hover:shadow-2xl hover:scale-105 transform duration-200 mx-auto max-w-5xl mt-16 mb-2 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
         {/* 封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
-          <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }}
+          <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }} loading="lazy"
                src={post.page_cover} alt={post.title} />
         )}
       </header>
 
-      <article className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
+      <article className='hover:shadow-2xl duration-200 shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
@@ -109,7 +109,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           )}
         </div>
 
-        <div className='flex justify-center pb-5'>
+        <div className='flex justify-center pb-10'>
           <RewardButton />
         </div>
 
@@ -117,7 +117,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
 
         {/* 版权声明 */}
         <section
-          className='overflow-auto dark:bg-gray-700 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
+          className='overflow-auto dark:bg-gray-800 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
           <ul>
             <li><strong>本文作者：</strong>{BLOG.author}</li>
             <li><strong>本文链接：</strong> <a href={url}>{url}</a> 《{post.title}》</li>
@@ -145,8 +145,8 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         <div className='text-gray-800 my-5 dark:text-gray-300'>
           <hr/>
           <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-            <Link href={`/article/${prev.slug}`}><div className=' py-3 text-blue-500 text-xl hover:underline cursor-pointer'><i className='fa fa-angle-double-left mr-1'/>{prev.title}</div></Link>
-            <Link href={`/article/${next.slug}`}><div className='flex py-3 text-blue-500 text-xl hover:underline cursor-pointer'>{next.title}<i className='fa fa-angle-double-right ml-1'/></div></Link>
+            <Link href={`/article/${prev.slug}`}><div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'><i className='fa fa-angle-double-left mr-1'/>{prev.title}</div></Link>
+            <Link href={`/article/${next.slug}`}><div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}<i className='fa fa-angle-double-right ml-1'/></div></Link>
           </div>
         </div>
       </article>

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-const PostsCategories = ({ currentCategory, categories }) => {
+const CategoryGroup = ({ currentCategory, categories }) => {
   return <>
     <section
       className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap align-middle'>
@@ -19,4 +19,4 @@ const PostsCategories = ({ currentCategory, categories }) => {
   </>
 }
 
-export default PostsCategories
+export default CategoryGroup

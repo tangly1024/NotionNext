@@ -1,8 +1,9 @@
 import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import TagsBar from '@/components/TagsBar'
+import StickyBar from '@/components/StickyBar'
 import BaseLayout from '@/layouts/BaseLayout'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
+import TagList from '@/components/TagList'
 
 export default function Tag ({ tags, posts, currentTag, categories }) {
   const meta = {
@@ -12,7 +13,9 @@ export default function Tag ({ tags, posts, currentTag, categories }) {
   }
   return <BaseLayout meta={meta} tags={tags} currentTag={currentTag} categories={categories} totalPosts={posts}>
     <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
-      <TagsBar tags={tags} currentTag={currentTag}/>
+      <StickyBar>
+        <TagList tags={tags} currentTag={currentTag}/>
+      </StickyBar>
       <BlogPostListScroll posts={posts} tags={tags} currentTag={currentTag}/>
     </div>
   </BaseLayout>

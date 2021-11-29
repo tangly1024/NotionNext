@@ -1,9 +1,9 @@
 import React from 'react'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import InfoCard from '@/components/InfoCard'
-import TagList from '@/components/TagList'
+import TagGroups from '@/components/TagGroups'
 import LatestPosts from '@/components/LatestPosts'
-import PostsCategories from '@/components/PostsCategories'
+import CategoryGroup from '@/components/CategoryGroup'
 import Toc from '@/components/Toc'
 import SearchInput from '@/components/SearchInput'
 import Link from 'next/link'
@@ -16,10 +16,11 @@ import Link from 'next/link'
  * @param posts
  * @param categories
  * @param currentCategory
+ * @param currentSearch
  * @returns {JSX.Element}
  * @constructor
  */
-const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
+const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
   return <aside id='sidebar' className='pt-10 bg-white dark:bg-gray-800 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
     <section>
       <InfoCard />
@@ -29,7 +30,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory })
 
       {/* 搜索框 */}
       <section className='p-5'>
-        <SearchInput currentTag={currentTag} />
+        <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
       </section>
 
       <section>
@@ -41,7 +42,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory })
       {/* 分类  */}
       {categories && (
         <section className='mt-2'>
-          <PostsCategories currentCategory={currentCategory} categories={categories} />
+          <CategoryGroup currentCategory={currentCategory} categories={categories} />
         </section>
       )}
 
@@ -61,7 +62,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory })
             <div><Link href='/tag'><div className='hover:underline cursor-pointer opacity-50'>更多标签</div></Link></div>
           </section>
           <div className='px-5'>
-            <TagList tags={tags} currentTag={currentTag} />
+            <TagGroups tags={tags} currentTag={currentTag} />
           </div>
         </section>
       )}

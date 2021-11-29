@@ -53,18 +53,6 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
   } else {
     return <div id='post-list-wrapper' className='mt-20 mx-2 lg:mx-20' ref={targetRef}>
 
-      <div className='w-full mb-4 xl:sticky xl:top-0 z-30 shadow-card bg-white dark:bg-gray-700 dark:text-gray-200'>
-        {currentCategory && (
-          <div className='p-2 mr-2'><i className='fa fa-folder-open-o mr-1' />{currentCategory}</div>
-        )}
-        {currentSearch && (
-          <div className='p-2 mr-2'><i className='fa fa-search mr-1' />关键字：{currentSearch}</div>
-        )}
-        {currentTag && (
-          <div className='p-2 mr-2'> <i className='fa fa-tag mr-1' /> {currentTag}</div>
-        )}
-      </div>
-
       {/* 文章列表 */}
       <div className='flex flex-wrap'>
         {postsToShow.map(post => (
