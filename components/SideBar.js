@@ -69,6 +69,10 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory })
 
     {post && (
       <section id='left-toc' className='sticky top-0 bg-white dark:bg-gray-800'>
+        <div
+          className='border-b text-2xl bg-white font-bold text-black dark:bg-gray-700 dark:text-white py-6 px-6'>
+          文章目录
+        </div>
         <Toc toc={post.toc} />
       </section>
     )}

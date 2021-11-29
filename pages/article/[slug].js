@@ -56,7 +56,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         )}
       </header>
 
-      <article className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-800'>
+      <article className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}

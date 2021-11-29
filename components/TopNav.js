@@ -11,7 +11,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 bg-white dark:bg-gray-900 border-b dark:border-gray-700'>
+    <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 bg-white dark:bg-gray-700 border-b dark:border-gray-700'>
       <div className='text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-md'>
         {/* 左侧LOGO */}
         <div className='flex ml-12'>

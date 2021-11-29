@@ -49,7 +49,7 @@ const SearchInput = ({ currentTag, currentSearch }) => {
 
     <div className='py-4 px-4 bg-gray-50 flex border-l dark:border-gray-700 dark:bg-gray-500 justify-center align-middle cursor-pointer'
          onClick={() => { handleSearch(searchKey) }}>
-      <i className={`fa ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'} text-black cursor-pointer`}/>
+      <i className={`fa ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}  dark:text-gray-100 text-black cursor-pointer`}/>
     </div>
   </div>
 }

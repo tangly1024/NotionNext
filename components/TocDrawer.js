@@ -20,19 +20,24 @@ const TocDrawer = ({ post, cRef }) => {
     switchShowDrawer(!showDrawer)
   }
 
-  return <div>
-    <div className='fixed top-0 right-0 z-40 '>
+  return <>
+    <div className='fixed top-0 right-0 z-40'>
       {/* 侧边菜单 */}
       <div
-        className={(showDrawer ? 'shadow-2xl ' : ' -mr-72 ') + ' w-72 duration-200 h-full bg-white fixed right-0 top-0 overflow-y-auto'}>
-        <div className='z-20'>
-          {post && <Toc toc={post.toc}/>}
-        </div>
+        className={(showDrawer ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') + ' border dark:border-gray-800 bg-white dark:bg-gray-700 shadow-xl animate__animated animate__faster max-h-96 w-72 duration-200 fixed right-4 top-16 rounded-xl overflow-y-auto'}>
+          {post && <>
+            <div
+              className='border-b text-xl font-bold text-black dark:text-white py-3 px-6'>
+              文章目录
+            </div>
+            <Toc toc={post.toc}/>
+          </>
+          }
       </div>
     </div>
     {/* 背景蒙版 */}
-    <div id='right-drawer-background' className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-50'}
+    <div id='right-drawer-background' className={(showDrawer ? 'block' : 'hidden') + ' fixed top-0 left-0 z-30 w-full h-full'}
          onClick={switchVisible} />
-  </div>
+  </>
 }
 export default TocDrawer

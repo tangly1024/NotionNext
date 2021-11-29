@@ -42,11 +42,12 @@ const BaseLayout = ({
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
+    console.log(scrollS)
     if (scrollS >= windowTop && scrollS > 10) {
-      hiddenNav()
+      handleScrollDown()
       windowTop = scrollS
     } else {
-      showNav()
+      handleScrollUp()
       windowTop = scrollS
     }
   }, 200))
@@ -63,7 +64,7 @@ const BaseLayout = ({
   const targetRef = useRef(null)
 
   return (
-    <div id='wrapper' className={[BLOG.font,'subpixel-antialiased', theme].join(' ')}>
+    <div id='wrapper' className={[BLOG.font, 'subpixel-antialiased', theme].join(' ')}>
       <CommonHead meta={meta} />
 
       {/* 顶部导航栏 */}
@@ -96,32 +97,45 @@ const BaseLayout = ({
 
 /**
  * 隐藏导航
+ * 划到页面下方
  */
-const hiddenNav = () => {
+const handleScrollDown = () => {
   if (document) {
     const nav = document.querySelector('#sticky-nav')
-    // const sidebar = document.querySelector('#sidebar')
-    const tagsBar = document.querySelector('#tags-bar')
-    // const rightToc = document.querySelector('#right-toc')
     nav && nav.classList.replace('top-0', '-top-16')
+
+    const tagsBar = document.querySelector('#tags-bar')
     tagsBar && tagsBar.classList.replace('top-16', 'top-0')
+
+    const tocDrawerButton = document.querySelector('#toc-drawer-button')
+    tocDrawerButton && tocDrawerButton.classList.replace('hidden', 'block')
+
+    // const sidebar = document.querySelector('#sidebar')
     // sidebar && sidebar.classList.replace('top-20', 'top-2')
+    // const rightToc = document.querySelector('#right-toc')
     // rightToc && rightToc.classList.replace('top-16', 'top-0')
   }
 }
 
 /**
  * 显示导航
+ * 划到顶部
  */
-const showNav = () => {
+const handleScrollUp = () => {
   if (document) {
     const nav = document.querySelector('#sticky-nav')
-    // const sidebar = document.querySelector('#sidebar')
-    const tagsBar = document.querySelector('#tags-bar')
-    // const rightToc = document.querySelector('#right-toc')
     nav && nav.classList.replace('-top-16', 'top-0')
+
+    const tagsBar = document.querySelector('#tags-bar')
     tagsBar && tagsBar.classList.replace('top-0', 'top-16')
+
+    // const tocDrawerButton = document.querySelector('#toc-drawer-button')
+    // tocDrawerButton && tocDrawerButton.classList.replace('block', 'hidden')
+
+    // const sidebar = document.querySelector('#sidebar')
     // sidebar && sidebar.classList.replace('top-2', 'top-20')
+
+    // const rightToc = document.querySelector('#right-toc')
     // rightToc && rightToc.classList.replace('top-0', 'top-16')
   }
 }
