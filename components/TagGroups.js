@@ -14,7 +14,7 @@ const TagGroups = ({ tags, currentTag }) => {
       {
         tags.map(tag => {
           const selected = tag.name === currentTag
-          return <TagItemMini key={tag.name} tag={tag.name} selected={selected} count={tag.count} />
+          return <TagItemMini key={tag.name} tag={tag} selected={selected} />
         })
       }
     </div>

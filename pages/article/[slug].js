@@ -30,7 +30,7 @@ const mapPageUrl = id => {
 }
 const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) => {
   if (!post) {
-    return <Custom404/>
+    return <Custom404 />
   }
   const meta = {
     title: `${post.title} | ${BLOG.title}`,
@@ -42,7 +42,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
   const drawerRight = useRef(null)
   const url = BLOG.link + useRouter().asPath
 
-  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories} >
+  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories}>
     <Progress targetRef={targetRef} />
 
     <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black'>
@@ -51,12 +51,13 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         className='hover:shadow-2xl hover:scale-105 transform duration-200 mx-auto max-w-5xl mt-16 mb-2 lg:mt-32 md:flex-shrink-0 animate__fadeIn animate__animated'>
         {/* 封面图 */}
         {post.page_cover && post.page_cover.length > 1 && (
-          <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }} loading="lazy"
+          <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }} loading='lazy'
                src={post.page_cover} alt={post.title} />
         )}
       </header>
 
-      <article className='hover:shadow-2xl duration-200 shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
+      <article
+        className='hover:shadow-2xl duration-200 shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
         {/* 文章标题 */}
         <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'>
           {post.title}
@@ -72,8 +73,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
             <div className='py-2 opacity-50'>
               分类：
             </div>
-            <Link href={`/category/${post.category}`}>
-              <div className='cursor-pointer text-md py-2 mx-3 hover:underline'><i className='fa fa-folder-open-o mr-1'/>{post.category}</div>
+            <Link href={`/category/${post.category}`} passHref>
+              <div className='cursor-pointer text-md py-2 mx-3 hover:underline'><i
+                className='fa fa-folder-open-o mr-1' />{post.category}</div>
             </Link>
 
             {post.type[0] !== 'Page' && (
@@ -88,10 +90,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
 
           {/* 不蒜子 */}
           <div id='busuanzi_container_page_pv' className='hidden'>
-            <a href='/#'
-               className='fa fa-eye text-gray-500 text-sm leading-none py-1 px-2'>
+            <div className='fa fa-eye text-gray-500 text-sm leading-none py-1 px-2'>
               &nbsp;<span id='busuanzi_value_page_pv' className='leading-6'></span>
-            </a>
+            </div>
           </div>
         </div>
 
@@ -113,7 +114,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           <RewardButton />
         </div>
 
-        <RecommendPosts currentPost={post} totalPosts={posts}/>
+        <RecommendPosts currentPost={post} totalPosts={posts} />
 
         {/* 版权声明 */}
         <section
@@ -130,8 +131,8 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
           {post.tags && (
             <div className='flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
               <div className='hidden md:block dark:text-gray-300'>标签：</div>
-              {post.tags.map(tag => (
-                <TagItem key={tag} tag={tag} />
+              {post.tagItems.map(tag => (
+                <TagItem key={tag.name} tag={tag} />
               ))}
             </div>
           )}
@@ -143,33 +144,45 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         </section>
 
         <div className='text-gray-800 my-5 dark:text-gray-300'>
-          <hr/>
+          <hr />
           <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-            <Link href={`/article/${prev.slug}`}><div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'><i className='fa fa-angle-double-left mr-1'/>{prev.title}</div></Link>
-            <Link href={`/article/${next.slug}`}><div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}<i className='fa fa-angle-double-right ml-1'/></div></Link>
+            <Link href={`/article/${prev.slug}`}>
+              <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'><i
+                className='fa fa-angle-double-left mr-1' />{prev.title}</div>
+            </Link>
+            <Link href={`/article/${next.slug}`}>
+              <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}<i
+                className='fa fa-angle-double-right ml-1' /></div>
+            </Link>
           </div>
         </div>
       </article>
 
       {/* 评论互动 */}
-      <div className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+      <div
+        className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
         <Comment frontMatter={post} />
       </div>
 
     </div>
 
     <div className='block lg:hidden'>
-      <TocDrawerButton onClick={() => { drawerRight.current.handleSwitchVisible() }} />
+      <TocDrawerButton onClick={() => {
+        drawerRight.current.handleSwitchVisible()
+      }} />
       {/* 目录侧边栏 */}
-      <TocDrawer post={post} cRef={ drawerRight }/>
+      <TocDrawer post={post} cRef={drawerRight} />
     </div>
 
   </BaseLayout>
 }
 
 export async function getStaticPaths () {
-  let posts = await getAllPosts({ from: 'slug - paths' })
-  posts = posts.filter(post => post.status[0] === 'Published')
+  let posts = []
+  if (BLOG.isProd) {
+    posts = await getAllPosts({ from: 'slug - paths', includePage: true })
+    posts = posts.filter(post => post.status[0] === 'Published')
+  }
   return {
     paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
     fallback: true

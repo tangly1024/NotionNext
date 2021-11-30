@@ -14,6 +14,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev-mac": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "postbuild": "next-sitemap --config next-sitemap.config.js"

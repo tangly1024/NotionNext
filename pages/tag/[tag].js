@@ -4,6 +4,7 @@ import StickyBar from '@/components/StickyBar'
 import BaseLayout from '@/layouts/BaseLayout'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
 import TagList from '@/components/TagList'
+import { getNotionPageData } from '@/lib/notion/getNotionData'
 
 export default function Tag ({ tags, posts, currentTag, categories }) {
   const meta = {
@@ -23,13 +24,13 @@ export default function Tag ({ tags, posts, currentTag, categories }) {
 
 export async function getStaticProps ({ params }) {
   const currentTag = params.tag
-  let posts = await getAllPosts({ from: 'tag-props' })
-  posts = posts.filter(
-    post => post.status[0] === 'Published' && post.type[0] === 'Post'
-  )
-  const tags = await getAllTags(posts)
-  const categories = await getAllCategories(posts)
-  const filteredPosts = posts.filter(
+  const from = 'tag-props'
+  const notionPageData = await getNotionPageData({ from })
+  const allPosts = await getAllPosts({ notionPageData, from })
+  const categories = await getAllCategories(allPosts)
+  const tagOptions = notionPageData.tagOptions
+  const tags = await getAllTags({ allPosts, tagOptions })
+  const filteredPosts = allPosts.filter(
     post => post && post.tags && post.tags.includes(currentTag)
   )
   return {
@@ -44,16 +45,14 @@ export async function getStaticProps ({ params }) {
 }
 
 export async function getStaticPaths () {
+  let posts = []
+  let tags = []
   if (BLOG.isProd) {
-    const tags = await getAllTags()
-    return {
-      paths: Object.keys(tags).map(tag => ({ params: { tag } })),
-      fallback: true
-    }
-  } else {
-    return {
-      paths: [],
-      fallback: true
-    }
+    posts = await getAllPosts({ from: 'tag-props' })
+    tags = await getAllTags(posts)
+  }
+  return {
+    paths: Object.keys(tags).map(tag => ({ params: { tag } })),
+    fallback: true
   }
 }

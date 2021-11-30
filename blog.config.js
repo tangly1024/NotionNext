@@ -7,6 +7,7 @@ const BLOG = {
   lang: 'zh-CN', // ['zh-CN','en-US']
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
+  defaultImgCover: 'https://avatars.githubusercontent.com/u/15920488', // default image cover
   appearance: 'auto', // ['light', 'dark', 'auto'],
   font: 'font-serif', // ['font-sans', 'font-serif', 'font-mono']
   lightBackground: '#ffffff', // use hex value, don't forget '#' e.g #fffefc
@@ -58,7 +59,7 @@ const BLOG = {
     }
   },
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-  googleAdsenseId: 'ca-pub-2708419466378217', //谷歌广告ID
+  googleAdsenseId: 'ca-pub-2708419466378217', // 谷歌广告ID
   DaoVoiceId: '', // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
   TidioId: '8lgekxyr9hr9m7archbs0a4a2gu9ckbg' // 在线聊天 https://www.tidio.com/
 }

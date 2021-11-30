@@ -44,7 +44,6 @@ const BaseLayout = ({
   let windowTop = 0
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
-    console.log(scrollS)
     if (scrollS >= windowTop && scrollS > 10) {
       handleScrollDown()
       windowTop = scrollS

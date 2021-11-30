@@ -2,14 +2,15 @@ import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
 import BaseLayout from '@/layouts/BaseLayout'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
+import { getNotionPageData } from '@/lib/notion/getNotionData'
 
 export async function getStaticProps () {
-  let posts = await getAllPosts({ from: 'index' })
-  posts = posts.filter(
-    post => post.status[0] === 'Published' && post.type[0] === 'Post'
-  )
-  const tags = await getAllTags(posts)
-  const categories = await getAllCategories(posts)
+  const from = 'index'
+  const notionPageData = await getNotionPageData({ from })
+  const allPosts = await getAllPosts({ notionPageData, from })
+  const categories = await getAllCategories(allPosts)
+  const tagOptions = notionPageData.tagOptions
+  const tags = await getAllTags({ allPosts, tagOptions })
   const meta = {
     title: `${BLOG.title} | ${BLOG.description} `,
     description: BLOG.description,
@@ -17,7 +18,7 @@ export async function getStaticProps () {
   }
   return {
     props: {
-      posts,
+      allPosts,
       tags,
       categories,
       meta
@@ -26,11 +27,11 @@ export async function getStaticProps () {
   }
 }
 
-const Index = ({ posts, tags, meta, categories }) => {
+const Index = ({ allPosts, tags, meta, categories }) => {
   return (
-    <BaseLayout meta={meta} tags={tags} totalPosts={posts} categories={categories}>
+    <BaseLayout meta={meta} tags={tags} totalPosts={allPosts} categories={categories}>
       <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
-        <BlogPostListScroll posts={posts} tags={tags} />
+        <BlogPostListScroll posts={allPosts} tags={tags} />
       </div>
     </BaseLayout>
   )
