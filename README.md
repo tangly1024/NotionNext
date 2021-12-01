@@ -32,8 +32,9 @@
 
 **🚙 &nbsp;全功能，完全不操心**
 
-- 评论、宽页面、搜索和标签
-- 订阅、网站统计、Web Vital 分析…… 还有更多功能待你发现
+- 评论、搜索、标签、分类
+- 订阅、网站统计
+- 本地化多语言
 
 **🎨 &nbsp;美观，轻松自定义**
 
@@ -62,7 +63,6 @@
 - **样式**: Tailwind CSS 和 `@tailwindcss/jit` compiler
 - **评论**: Gitalk,Cusdis,Utterances
 - **图标**：[fontawesome](https://fontawesome.com/v4.7/icons/?d=gallery)
-- **背景**: 动态几何线条[react-canvas-nest](https://github.com/flyerH/react-canvas-nest)
 
 ## 页面样式主题
 - 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa) 分支-https://github.com/tangly1024/NotionNext/tree/theme-Fukasawa
