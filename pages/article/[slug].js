@@ -52,7 +52,8 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
       {post.type && !post.type.includes('Page') && (<>
           {/* 封面图 */}
           {post.page_cover && post.page_cover.length > 1 && (
-            <img className='bg-center object-cover w-full hover:shadow-2xl hover:scale-105 transform duration-200 mx-auto max-w-5xl mb-2 md:flex-shrink-0 animate__fadeIn animate__animated' style={{ maxHeight: '40rem' }} loading='lazy'
+            <img className='bg-center object-cover w-full hover:shadow-2xl hover:scale-105 transform duration-200 mx-auto max-w-5xl mb-2 md:flex-shrink-0 animate__fadeIn animate__animated'
+                 style={{ maxHeight: '40rem' }}
                  src={post.page_cover} alt={post.title} />
           )}
       </>)}

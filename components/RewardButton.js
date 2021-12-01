@@ -24,8 +24,8 @@ const RewardButton = () => {
       </div>
 
       <div id='reward-qrcode' className='hidden flex space-x-10 animate__animated animate__fadeIn duration-200 my-5 px-5 mx-auto py-6 justify-center bg-white dark:bg-black dark:text-gray-200'>
-          <img className='md:w-72' src='/reward_code_alipay.png' />
-          <img className='md:w-72' src='/reward_code_wechat.png' />
+           <img className='md:w-72' src='/reward_code_alipay.png' />
+           <img className='md:w-72' src='/reward_code_wechat.png' />
       </div>
     </div>
   )
