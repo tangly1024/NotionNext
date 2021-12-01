@@ -6,18 +6,18 @@ import BlogPostListScroll from '@/components/BlogPostListScroll'
 import TagList from '@/components/TagList'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
 
-export default function Tag ({ tags, posts, currentTag, categories }) {
+export default function Tag ({ tags, allPosts, filteredPosts, currentTag, categories }) {
   const meta = {
     title: `${BLOG.title} | #${currentTag}`,
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} tags={tags} currentTag={currentTag} categories={categories} totalPosts={posts}>
+  return <BaseLayout meta={meta} tags={tags} currentTag={currentTag} categories={categories} totalPosts={allPosts}>
     <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
       <StickyBar>
         <TagList tags={tags} currentTag={currentTag}/>
       </StickyBar>
-      <BlogPostListScroll posts={posts} tags={tags} currentTag={currentTag}/>
+      <BlogPostListScroll posts={filteredPosts} tags={tags} currentTag={currentTag}/>
     </div>
   </BaseLayout>
 }
@@ -36,7 +36,8 @@ export async function getStaticProps ({ params }) {
   return {
     props: {
       tags,
-      posts: filteredPosts,
+      allPosts,
+      filteredPosts,
       currentTag,
       categories
     },

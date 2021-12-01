@@ -7,18 +7,18 @@ import React from 'react'
 import CategoryList from '@/components/CategoryList'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
 
-export default function Category ({ tags, posts, category, categories }) {
+export default function Category ({ tags, allPosts, filteredPosts, category, categories }) {
   const meta = {
     title: `${BLOG.title} | ${category}`,
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} tags={tags} currentCategory={category} totalPosts={posts} categories={categories}>
+  return <BaseLayout meta={meta} tags={tags} currentCategory={category} totalPosts={allPosts} categories={categories}>
     <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
       <StickyBar >
         <CategoryList currentCategory={category} categories={categories} />
       </StickyBar>
-      <BlogPostListScroll posts={posts} tags={tags} currentCategory={category}/>
+      <BlogPostListScroll posts={filteredPosts} tags={tags} currentCategory={category}/>
     </div>
   </BaseLayout>
 }
@@ -37,7 +37,8 @@ export async function getStaticProps ({ params }) {
   return {
     props: {
       tags,
-      posts: filteredPosts,
+      allPosts,
+      filteredPosts,
       category,
       categories
     },
