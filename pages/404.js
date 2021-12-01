@@ -11,8 +11,14 @@ import { useRouter } from 'next/router'
 export default function Custom404 () {
   const router = useRouter()
   useEffect(() => {
+    // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      router.push('/')
+      if (window) {
+        const article = document.getElementById('article-wrapper')
+        if (!article) {
+          router.push('/')
+        }
+      }
     }, 3000)
   })
 

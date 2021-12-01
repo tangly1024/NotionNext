@@ -5,9 +5,8 @@ import React from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const   RewardButton = () => {
+const RewardButton = () => {
   const [popoverShow, setPopoverShow] = React.useState(false)
-  const btnRef = React.createRef()
 
   const openPopover = () => {
     setPopoverShow(true)
@@ -16,7 +15,7 @@ const   RewardButton = () => {
     setPopoverShow(false)
   }
   return (
-    <div onMouseEnter={openPopover} onMouseLeave={closePopover}>
+    <div onMouseEnter={openPopover} onMouseLeave={closePopover} className='justify-center py-10'>
       <div className='bg-red-500 w-36 mx-auto animate__jello text-white hover:bg-green-400 duration-200 transform hover:scale-110 px-3 py-2 rounded cursor-pointer'>
           <span className='fa fa-qrcode mr-2' />
           <span>打赏一杯咖啡</span>
