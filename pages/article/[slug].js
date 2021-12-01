@@ -128,14 +128,14 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
 
         <section className='md:flex md:justify-between'>
 
-          {post.tags && (
+           {post.tagItems && (
             <div className='flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
               <div className='hidden md:block dark:text-gray-300'>标签：</div>
               {post.tagItems.map(tag => (
                 <TagItem key={tag.name} tag={tag} />
               ))}
             </div>
-          )}
+           )}
 
           <div>
             <ShareBar post={post} />

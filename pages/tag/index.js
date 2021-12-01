@@ -16,7 +16,7 @@ export default function Tag ({ tags, posts, categories }) {
       <div id='tags-list' className='duration-200 flex flex-wrap'>
         {
           tags.map(tag => {
-            return <div key={tag.name} className='p-2'><TagItem key={tag.name} tag={tag.name} count={tag.count} /></div>
+            return <div key={tag.name} className='p-2'><TagItem key={tag.name} tag={tag} /></div>
           })
         }
       </div>
