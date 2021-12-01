@@ -7,6 +7,7 @@ import CategoryGroup from '@/components/CategoryGroup'
 import Toc from '@/components/Toc'
 import SearchInput from '@/components/SearchInput'
 import Link from 'next/link'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 侧边栏
@@ -21,6 +22,7 @@ import Link from 'next/link'
  * @constructor
  */
 const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
+  const { locale } = useGlobal()
   return <aside id='sidebar' className='pt-10 bg-white dark:bg-gray-800 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
     <section>
       <InfoCard />
@@ -42,6 +44,10 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {/* 分类  */}
       {categories && (
         <section className='mt-2'>
+          <section
+            className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap align-middle'>
+            <div className='w-32'>{locale.COMMON.CATEGORY}</div>
+          </section>
           <CategoryGroup currentCategory={currentCategory} categories={categories} />
         </section>
       )}
@@ -58,8 +64,8 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
         <section className='mt-2'>
           <section
             className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap justify-between'>
-            <div>标签</div>
-            <div><Link href='/tag'><div className='hover:underline cursor-pointer opacity-50'>更多标签</div></Link></div>
+            <div>{locale.COMMON.TAGS}</div>
+            <div><Link href='/tag'><div className='hover:underline cursor-pointer opacity-50'>{locale.COMMON.MORE}</div></Link></div>
           </section>
           <div className='px-5'>
             <TagGroups tags={tags} currentTag={currentTag} />
@@ -72,7 +78,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       <section id='left-toc' className='sticky top-0 bg-white dark:bg-gray-800'>
         <div
           className='border-b text-2xl bg-white font-bold text-black dark:bg-gray-700 dark:text-white py-6 px-6'>
-          文章目录
+          {locale.COMMON.TABLE_OF_CONTENTS}
         </div>
         <Toc toc={post.toc} />
       </section>

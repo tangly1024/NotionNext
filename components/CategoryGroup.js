@@ -2,12 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
-  return <>
-    <section
-      className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap align-middle'>
-      <div className='w-32'>文章分类</div>
-    </section>
-    <div>
+  return <div>
       <div id='category-list' className='dark:border-gray-600 dark:bg-gray-800 w-66'>
         {Object.keys(categories).map(category => {
           return <Link key={category} href={`/category/${category}`}>
@@ -16,7 +11,6 @@ const CategoryGroup = ({ currentCategory, categories }) => {
         })}
       </div>
     </div>
-  </>
 }
 
 export default CategoryGroup

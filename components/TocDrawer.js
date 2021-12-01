@@ -1,5 +1,6 @@
 import Toc from '@/components/Toc'
 import React, { useImperativeHandle, useState } from 'react'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 目录抽屉栏
@@ -19,7 +20,7 @@ const TocDrawer = ({ post, cRef }) => {
   const switchVisible = () => {
     switchShowDrawer(!showDrawer)
   }
-
+  const { locale } = useGlobal()
   return <>
     <div className='fixed top-0 right-0 z-40'>
       {/* 侧边菜单 */}
@@ -28,7 +29,7 @@ const TocDrawer = ({ post, cRef }) => {
           {post && <>
             <div
               className='border-b text-xl font-bold text-black dark:text-white py-3 px-6'>
-              文章目录
+              {locale.COMMON.TABLE_OF_CONTENTS}
             </div>
             <Toc toc={post.toc}/>
           </>

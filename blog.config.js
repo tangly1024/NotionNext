@@ -4,7 +4,7 @@ const BLOG = {
   email: 'tlyong1992@hotmail.com',
   link: 'https://tangly1024.com',
   description: '分享有趣的技术与思考',
-  lang: 'zh-CN', // ['zh-CN','en-US']
+  lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   defaultImgCover: 'https://avatars.githubusercontent.com/u/15920488', // default image cover

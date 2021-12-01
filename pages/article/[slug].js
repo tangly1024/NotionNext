@@ -24,6 +24,7 @@ import 'prismjs/components/prism-typescript'
 import RecommendPosts from '@/components/RecommendPosts'
 import TocDrawer from '@/components/TocDrawer'
 import TocDrawerButton from '@/components/TocDrawerButton'
+import { useGlobal } from '@/lib/global'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -41,6 +42,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
   const targetRef = useRef(null)
   const drawerRight = useRef(null)
   const url = BLOG.link + useRouter().asPath
+  const { locale } = useGlobal()
 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories}>
     <Progress targetRef={targetRef} />
@@ -71,7 +73,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         <div className='justify-between flex flex-wrap bg-gray-100 p-2 dark:bg-gray-900 dark:text-white'>
           <div className='flex-nowrap flex'>
             <div className='py-2 opacity-50'>
-              分类：
+              {locale.COMMON.CATEGORY}：
             </div>
             <Link href={`/category/${post.category}`} passHref>
               <div className='cursor-pointer text-md py-2 mx-3 hover:underline'><i
@@ -120,9 +122,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         <section
           className='overflow-auto dark:bg-gray-800 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
           <ul>
-            <li><strong>本文作者：</strong>{BLOG.author}</li>
-            <li><strong>本文链接：</strong> <a href={url}>{url}</a> 《{post.title}》</li>
-            <li><strong>版权声明：</strong> 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
+            <li>本文作者: {BLOG.author}</li>
+            <li>本文链接: <a href={url}>{url}</a></li>
+            <li>版权声明: 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
           </ul>
         </section>
 
@@ -130,7 +132,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
 
            {post.tagItems && (
             <div className='flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
-              <div className='hidden md:block dark:text-gray-300'>标签：</div>
+              <div className='hidden md:block dark:text-gray-300'>{locale.COMMON.TAGS}：</div>
               {post.tagItems.map(tag => (
                 <TagItem key={tag.name} tag={tag} />
               ))}

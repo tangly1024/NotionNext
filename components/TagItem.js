@@ -5,7 +5,7 @@ const TagItem = ({ tag, selected }) => {
   return (
   <Link href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}>
     <li
-      className={`notion-${tag.color}_background list-none cursor-pointer hover:bg-gray-300 rounded-xl 
+      className={`notion-${tag.color}_background list-none cursor-pointer hover:bg-gray-300 rounded-md 
       duration-200 mr-1 my-1 px-2 py-1 font-medium font-light text-sm whitespace-nowrap
                   dark:hover:bg-gray-800 dark:hover:text-white hover:text-black
                  ${selected

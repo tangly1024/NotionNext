@@ -4,6 +4,7 @@ import React from 'react'
 import { createPopper } from '@popperjs/core'
 import copy from 'copy-to-clipboard'
 import QRCode from 'qrcode.react'
+import { useGlobal } from '@/lib/global'
 
 const ShareBar = ({ post }) => {
   const router = useRouter()
@@ -13,6 +14,7 @@ const ShareBar = ({ post }) => {
   const [qrCodeShow, setQrCodeShow] = React.useState(false)
   const btnRef = React.createRef()
   const popoverRef = React.createRef()
+  const { locale } = useGlobal()
 
   const openPopover = () => {
     createPopper(btnRef.current, popoverRef.current, {
@@ -26,13 +28,13 @@ const ShareBar = ({ post }) => {
 
   const copyUrl = () => {
     copy(shareUrl)
-    alert('当前链接已复制到剪贴板')
+    alert(locale.COMMON.URL_COPIED)
   }
 
   return <>
     <div
       className='py-2 text-gray-500 text-center space-x-2 flex inline-block my-1 dark:text-gray-200 overflow-visible'>
-      <div className='hidden md:block text-gray-800 dark:text-gray-300 mr-2 my-2'>分享本文:</div>
+      <div className='hidden md:block text-gray-800 dark:text-gray-300 mr-2 my-2'>{locale.COMMON.SHARE}:</div>
       <div className='text-3xl cursor-pointer'>
         <a className='fa fa-facebook-square hover:text-red-600'
            href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} />
@@ -61,7 +63,7 @@ const ShareBar = ({ post }) => {
               />
             </div>
             <span className='bg-white text-black font-semibold p-1 mb-0 rounded-t-lg text-sm mx-auto mr-10'>
-            扫一扫分享
+            {locale.COMMON.SCAN_QR_CODE}
           </span>
           </div>
         </a>

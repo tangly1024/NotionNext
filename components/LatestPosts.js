@@ -2,6 +2,7 @@ import Link from 'next/link'
 import BLOG from '@/blog.config'
 import { formatDateFmt } from '@/lib/formatDate'
 import { useRouter } from 'next/router'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 最新文章列表
@@ -24,11 +25,12 @@ const LatestPosts = ({ posts }) => {
 
   // 获取当前路径
   const currentPath = useRouter().asPath
+  const { locale } = useGlobal()
 
   return <>
     <section
       className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap align-middle'>
-      <div className='w-32'>最近更新</div>
+      <div className='w-32'>{locale.COMMON.LATEST_POSTS}</div>
     </section>
     <div>
       {postsSortByDate.map(post => {
