@@ -6,13 +6,15 @@ import React from 'react'
  * @constructor
  */
 const RewardButton = () => {
-  const [popoverShow, setPopoverShow] = React.useState(false)
-
   const openPopover = () => {
-    setPopoverShow(true)
+    if (window) {
+      document.getElementById('reward-qrcode').classList.remove('hidden')
+    }
   }
   const closePopover = () => {
-    setPopoverShow(false)
+    if (window) {
+      document.getElementById('reward-qrcode').classList.add('hidden')
+    }
   }
   return (
     <div onMouseEnter={openPopover} onMouseLeave={closePopover} className='justify-center py-10'>
@@ -21,16 +23,9 @@ const RewardButton = () => {
           <span>打赏一杯咖啡</span>
       </div>
 
-      <div className={ `${(popoverShow ? ' block ' : ' hidden ')} transform block z-50 font-normal`}>
-        <div
-          className='flex space-x-10 animate__animated animate__fadeIn duration-200 my-5 px-5 py-6 justify-center bg-white dark:bg-black dark:text-gray-200'>
-         <div>
-            <img className='md:w-72 m-auto' src='/reward_code_alipay.png' />
-          </div>
-          <div>
-            <img className='md:w-72 m-auto' src='/reward_code_wechat.png' />
-          </div>
-        </div>
+      <div id='reward-qrcode' className='hidden flex space-x-10 animate__animated animate__fadeIn duration-200 my-5 px-5 mx-auto py-6 justify-center bg-white dark:bg-black dark:text-gray-200'>
+          <img className='md:w-72' src='/reward_code_alipay.png' />
+          <img className='md:w-72' src='/reward_code_wechat.png' />
       </div>
     </div>
   )

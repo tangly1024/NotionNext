@@ -47,20 +47,17 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories}>
     <Progress targetRef={targetRef} />
 
-    <div id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black pt-16'>
+    <article id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black pt-16'>
       {/* 中央区域 wrapper */}
       {post.type && !post.type.includes('Page') && (<>
-        <header
-          className='hover:shadow-2xl hover:scale-105 transform duration-200 mx-auto max-w-5xl mb-2 md:flex-shrink-0 animate__fadeIn animate__animated'>
           {/* 封面图 */}
           {post.page_cover && post.page_cover.length > 1 && (
-            <img className='bg-center object-cover w-full' style={{ maxHeight: '40rem' }} loading='lazy'
+            <img className='bg-center object-cover w-full hover:shadow-2xl hover:scale-105 transform duration-200 mx-auto max-w-5xl mb-2 md:flex-shrink-0 animate__fadeIn animate__animated' style={{ maxHeight: '40rem' }} loading='lazy'
                  src={post.page_cover} alt={post.title} />
           )}
-        </header>
       </>)}
 
-      <article
+      <div
         className='hover:shadow-2xl duration-200 shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
 
         {post.type && !post.type.includes('Page') && (<>
@@ -153,7 +150,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
             </Link>
           </div>
         </div>
-      </article>
+      </div>
 
       {/* 评论互动 */}
       <div
@@ -161,7 +158,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         <Comment frontMatter={post} />
       </div>
 
-    </div>
+    </article>
 
     {/* 悬浮目录按钮 */}
     <div className='block lg:hidden'>
