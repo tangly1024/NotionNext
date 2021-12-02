@@ -15,7 +15,7 @@ export default function Category ({ tags, allPosts, filteredPosts, category, cat
   }
   return <BaseLayout meta={meta} tags={tags} currentCategory={category} totalPosts={allPosts} categories={categories}>
     <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner pt-16'>
-      <StickyBar >
+      <StickyBar>
         <CategoryList currentCategory={category} categories={categories} />
       </StickyBar>
       <BlogPostListScroll posts={filteredPosts} tags={tags} currentCategory={category}/>

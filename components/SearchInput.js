@@ -47,9 +47,9 @@ const SearchInput = ({ currentTag, currentSearch }) => {
     />
     { (searchKey && searchKey.length && <i className='fa fa-close text-gray-300 float-right p-4 cursor-pointer' onClick={ cleanSearch } />)}
 
-    <div className='py-4 px-4 bg-gray-50 flex border-l dark:border-gray-700 dark:bg-gray-500 justify-center align-middle cursor-pointer'
+    <div className='p-3 text-xl bg-gray-50 flex border-l dark:border-gray-700 dark:hover:bg-gray-800 dark:bg-gray-600 justify-center align-middle cursor-pointer'
          onClick={() => { handleSearch(searchKey) }}>
-      <i className={`fa ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}  dark:text-gray-100 text-black cursor-pointer`}/>
+      <i className={`fa ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}  hover:scale-125 hover:text-black transform duration-200 dark:text-gray-300 dark:hover:text-white text-gray-600 cursor-pointer`}/>
     </div>
   </div>
 }

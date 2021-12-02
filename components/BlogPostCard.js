@@ -26,7 +26,7 @@ const BlogPostCard = ({ post, tags }) => {
           <div className='flex whitespace-nowrap'>
             <Link href={`/category/${post.category}`}>
               <div
-                className='cursor-pointer dark:text-gray-200 text-gray-500 text-sm py-1.5 mr-1 underline hover:scale-105 transform duration-200'>
+                className='cursor-pointer dark:text-gray-200 text-gray-500 text-sm py-1.5 mr-1 hover:underline hover:scale-105 transform duration-200'>
                 <i
                   className='fa fa-folder-open-o mr-1' />{post.category}</div>
             </Link>

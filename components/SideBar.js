@@ -2,7 +2,7 @@ import React from 'react'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import InfoCard from '@/components/InfoCard'
 import TagGroups from '@/components/TagGroups'
-import LatestPosts from '@/components/LatestPosts'
+import LatestPostsGroup from '@/components/LatestPostsGroup'
 import CategoryGroup from '@/components/CategoryGroup'
 import Toc from '@/components/Toc'
 import SearchInput from '@/components/SearchInput'
@@ -44,29 +44,32 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {/* 分类  */}
       {categories && (
         <section className='mt-2'>
-          <section
-            className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap align-middle'>
-            <div className='w-32'>{locale.COMMON.CATEGORY}</div>
-          </section>
+          <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
+            <div className='text-black font-bold dark:text-gray-200'>{locale.COMMON.CATEGORY}</div>
+            <div><Link href='/category'><div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>{locale.COMMON.MORE} 》 </div></Link></div>
+          </div>
           <CategoryGroup currentCategory={currentCategory} categories={categories} />
         </section>
       )}
 
       {/* 最新文章 */}
       {posts && (
-        <section className='mt-2'>
-          <LatestPosts posts={posts} />
+        <section className='mt-3'>
+          <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
+            <div className='text-black font-bold dark:text-gray-200'>{locale.COMMON.LATEST_POSTS}</div>
+            <div><Link href='/blogs'><div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>{locale.COMMON.MORE} 》 </div></Link></div>
+          </div>
+          <LatestPostsGroup posts={posts} />
         </section>
       )}
 
       {/* 标签云  */}
       {tags && (
-        <section className='mt-2'>
-          <section
-            className='text-sm font-bold py-3 px-5 text-gray-600 dark:text-gray-400 duration-100 flex flex-nowrap justify-between'>
-            <div>{locale.COMMON.TAGS}</div>
-            <div><Link href='/tag'><div className='hover:underline cursor-pointer opacity-50'>{locale.COMMON.MORE}</div></Link></div>
-          </section>
+        <section className='mt-3'>
+          <div className='text-sm font-bold py-2 px-5 flex flex-nowrap justify-between'>
+            <div className='text-black font-bold dark:text-gray-200'>{locale.COMMON.TAGS}</div>
+            <div><Link href='/tag'><div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>{locale.COMMON.MORE} 》</div></Link></div>
+          </div>
           <div className='px-5'>
             <TagGroups tags={tags} currentTag={currentTag} />
           </div>
