@@ -28,7 +28,8 @@ export default function Custom404 () {
       <div>
         <h1 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='fa fa-spinner mr-2 animate-spin'/>404</h1>
         <div className='inline-block text-left h-32 leading-10 align-middle'>
-          <h2 className='m-0 p-0'>页面找不到了，3秒后返回首页</h2></div>
+          <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+        </div>
       </div>
     </div>
   </BaseLayout>

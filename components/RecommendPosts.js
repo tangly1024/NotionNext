@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 洗牌乱序：从数组的最后位置开始，从前面随机一个位置，对两个数进行交换，直到循环完毕
@@ -34,8 +35,10 @@ const RecommendPosts = ({ currentPost, totalPosts }) => {
     filteredPosts = filteredPosts.slice(0, 5)
   }
 
+  const { locale } = useGlobal()
+
   return <div className='dark:text-gray-300 dark:bg-gray-800 bg-gray-100 p-2 mb-2  border-l-4 border-yellow-500'>
-    <h2 className='ml-2 mb-2 font-bold'>相关推荐</h2>
+    <h2 className='mb-2 font-bold text-xl'>{locale.COMMON.RELATE_POSTS}</h2>
     <ul className='list-disc px-5'>
       {filteredPosts.map(post => (
         <li className='py-1' key={post.id} ><Link href={`/article/${post.slug}`}><a className='cursor-pointer hover:underline'>{post.title}</a></Link></li>

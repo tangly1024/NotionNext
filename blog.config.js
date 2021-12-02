@@ -9,7 +9,7 @@ const BLOG = {
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   defaultImgCover: 'https://avatars.githubusercontent.com/u/15920488', // default image cover
   appearance: 'auto', // ['light', 'dark', 'auto'],
-  font: 'font-serif', // ['font-sans', 'font-serif', 'font-mono']
+  font: 'font-sans', // ['font-sans', 'font-serif', 'font-mono']
   lightBackground: '#ffffff', // use hex value, don't forget '#' e.g #fffefc
   darkBackground: '#111827', // use hex value, don't forget '#'
   path: '', // leave this empty unless you want to deploy in a folder

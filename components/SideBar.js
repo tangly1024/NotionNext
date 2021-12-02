@@ -4,10 +4,10 @@ import InfoCard from '@/components/InfoCard'
 import TagGroups from '@/components/TagGroups'
 import LatestPostsGroup from '@/components/LatestPostsGroup'
 import CategoryGroup from '@/components/CategoryGroup'
-import Toc from '@/components/Toc'
 import SearchInput from '@/components/SearchInput'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
+import Toc from '@/components/Toc'
 
 /**
  * 侧边栏
@@ -41,21 +41,6 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
         <hr className='dark:border-gray-700 my-2' />
       </section>
 
-      {/* 分类  */}
-      {categories && (
-        <section className='mt-2'>
-          <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-th-list mr-4'/>{locale.COMMON.CATEGORY}</div>
-              <Link href='/category'>
-                <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                  {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
-                </div>
-              </Link>
-          </div>
-          <CategoryGroup currentCategory={currentCategory} categories={categories} />
-        </section>
-      )}
-
       {/* 最新文章 */}
       {posts && (
         <section className='mt-3'>
@@ -68,6 +53,21 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
             </Link>
           </div>
           <LatestPostsGroup posts={posts} />
+        </section>
+      )}
+
+      {/* 分类  */}
+      {categories && (
+        <section className='mt-2'>
+          <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
+            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-th-list mr-4'/>{locale.COMMON.CATEGORY}</div>
+              <Link href='/category'>
+                <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                  {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
+                </div>
+              </Link>
+          </div>
+          <CategoryGroup currentCategory={currentCategory} categories={categories} />
         </section>
       )}
 
@@ -92,14 +92,14 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
     {post && (
       <section id='left-toc' className='sticky top-0 bg-white dark:bg-gray-800'>
         <div
-          className='border-b text-2xl bg-white font-bold text-black dark:bg-gray-700 dark:text-white py-6 px-6'>
+          className='border-b text-2xl bg-white font-bold text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>
         <Toc toc={post.toc} />
       </section>
     )}
 
-     <section id='blank' className='bg-white dark:bg-gray-800 py-20'/>
+    <section id='blank' className='bg-white dark:bg-gray-800 py-20'/>
 
   </aside>
 }

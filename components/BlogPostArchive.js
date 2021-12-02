@@ -14,7 +14,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
     return <></>
   } else {
     return <div className='py-2' ref={targetRef}>
-      <div className='py-2 text-xl dark:text-white'>{archiveTitle}</div>
+      <div className='py-2 text-3xl dark:text-white'>{archiveTitle}</div>
       {/* 文章列表 */}
       <ul className='flex flex-wrap space-y-1'>
         {posts.map(post => (
