@@ -13,7 +13,6 @@ const TagItem = ({ tag, selected }) => {
          : ' text-gray-600'}`}
     >
       <a>
-        <i className='fa fa-tag mr-1'/>
         {`${tag.name} `} {tag.count ? `(${tag.count})` : ''}
       </a>
     </li>

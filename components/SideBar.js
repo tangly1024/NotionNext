@@ -45,8 +45,12 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {categories && (
         <section className='mt-2'>
           <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='text-black font-bold dark:text-gray-200'>{locale.COMMON.CATEGORY}</div>
-            <div><Link href='/category'><div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>{locale.COMMON.MORE} 》 </div></Link></div>
+            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-th-list mr-4'/>{locale.COMMON.CATEGORY}</div>
+              <Link href='/category'>
+                <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                  {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
+                </div>
+              </Link>
           </div>
           <CategoryGroup currentCategory={currentCategory} categories={categories} />
         </section>
@@ -56,8 +60,12 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {posts && (
         <section className='mt-3'>
           <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='text-black font-bold dark:text-gray-200'>{locale.COMMON.LATEST_POSTS}</div>
-            <div><Link href='/blogs'><div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>{locale.COMMON.MORE} 》 </div></Link></div>
+            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-newspaper-o mr-4'/>{locale.COMMON.LATEST_POSTS}</div>
+            <Link href='/blogs'>
+              <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
+              </div>
+            </Link>
           </div>
           <LatestPostsGroup posts={posts} />
         </section>
@@ -67,12 +75,16 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {tags && (
         <section className='mt-3'>
           <div className='text-sm font-bold py-2 px-5 flex flex-nowrap justify-between'>
-            <div className='text-black font-bold dark:text-gray-200'>{locale.COMMON.TAGS}</div>
-            <div><Link href='/tag'><div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>{locale.COMMON.MORE} 》</div></Link></div>
+            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-tags mr-4'/>{locale.COMMON.TAGS}</div>
+            <Link href='/tag'>
+              <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
+              </div>
+            </Link>
           </div>
-          <div className='px-5'>
-            <TagGroups tags={tags} currentTag={currentTag} />
-          </div>
+            <div className='px-5'>
+              <TagGroups tags={tags} currentTag={currentTag} />
+            </div>
         </section>
       )}
     </div>

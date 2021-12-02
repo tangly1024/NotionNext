@@ -46,7 +46,7 @@ const Index = ({ allPosts, tags, categories }) => {
     <BaseLayout meta={meta} tags={tags} categories={categories}>
       <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner pt-16'>
         <StickyBar>
-          <div className='py-4 text-lg lg:mx-14'>{locale.COMMON.LATEST_POSTS}</div>
+          <div className='py-4 text-lg lg:mx-14'><i className='fa fa-newspaper-o mr-4'/>{locale.COMMON.LATEST_POSTS}</div>
         </StickyBar>
         <BlogPostListScroll posts={postsSortByDate} tags={tags} />
       </div>

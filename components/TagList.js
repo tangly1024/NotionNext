@@ -14,7 +14,7 @@ const TagList = ({ tags, currentTag }) => {
     return <></>
   }
   return <ul className='flex py-1 space-x-3'>
-    <li className='w-10 py-2 dark:text-gray-200'>标签:</li>
+    <li className='w-16 py-2 dark:text-gray-200'><i className='fa fa-tags mr-2'/>标签:</li>
     {tags.map(tag => {
       const selected = tag.name === currentTag
       return <TagItem key={tag.name} tag={tag} selected={selected}/>
