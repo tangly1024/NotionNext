@@ -61,7 +61,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
         <section className='mt-3'>
           <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
             <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-newspaper-o mr-4'/>{locale.COMMON.LATEST_POSTS}</div>
-            <Link href='/blogs'>
+            <Link href='/archive'>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
               </div>

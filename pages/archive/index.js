@@ -6,6 +6,7 @@ import { getNotionPageData } from '@/lib/notion/getNotionData'
 import StickyBar from '@/components/StickyBar'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
+import BlogPostArchive from '@/components/BlogPostArchive'
 
 export async function getStaticProps () {
   const from = 'index'
@@ -31,24 +32,39 @@ const Index = ({ allPosts, tags, categories }) => {
 
   // 时间排序
   postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.lastEditedTime || a.createdTime)
-    const dateB = new Date(b?.lastEditedTime || b.createdTime)
+    const dateA = new Date(a?.date.start_date || a.createdTime)
+    const dateB = new Date(b?.date.start_date || b.createdTime)
     return dateB - dateA
   })
 
   const meta = {
-    title: `${BLOG.title} | ${locale.COMMON.LATEST_POSTS} `,
+    title: `${BLOG.title} | ${locale.NAV.ARCHIVE} `,
     description: BLOG.description,
     type: 'website'
   }
 
+  const archivePosts = { }
+
+  postsSortByDate.forEach(post => {
+    const date = post.date.start_date.slice(0, 7)
+    if (archivePosts[date]) {
+      archivePosts[date].push(post)
+    } else {
+      archivePosts[date] = [post]
+    }
+  })
+
   return (
     <BaseLayout meta={meta} tags={tags} categories={categories}>
-      <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner pt-16'>
+      <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner pt-16 '>
         <StickyBar>
-          <div className='py-4 text-lg lg:mx-14'><i className='fa fa-newspaper-o mr-4'/>{locale.COMMON.LATEST_POSTS}</div>
+          <div className='py-4 text-lg lg:mx-14 dark:text-gray-200'><i className='fa fa-newspaper-o mr-4'/>{locale.NAV.ARCHIVE}</div>
         </StickyBar>
-        <BlogPostListScroll posts={postsSortByDate} tags={tags} />
+        <div className='mt-20 mx-2 lg:mx-20 bg-white p-12 dark:bg-gray-800'>
+          {Object.keys(archivePosts).map(archiveTitle => (
+             <BlogPostArchive key={archiveTitle} posts={archivePosts[archiveTitle]} archiveTitle={archiveTitle}/>
+          ))}
+        </div>
       </div>
     </BaseLayout>
   )
