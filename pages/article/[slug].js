@@ -25,11 +25,12 @@ import RecommendPosts from '@/components/RecommendPosts'
 import TocDrawer from '@/components/TocDrawer'
 import TocDrawerButton from '@/components/TocDrawerButton'
 import { useGlobal } from '@/lib/global'
+import { getNotionPageData } from '@/lib/notion/getNotionData'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
-const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) => {
+const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories }) => {
   if (!post) {
     return <Custom404 />
   }
@@ -44,7 +45,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
   const url = BLOG.link + useRouter().asPath
   const { locale } = useGlobal()
 
-  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={posts} categories={categories}>
+  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={allPosts} categories={categories}>
     <Progress targetRef={targetRef} />
 
     <article id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black pt-16'>
@@ -110,7 +111,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, posts, categories }) 
         <RewardButton />
 
         {/* 推荐文章 */}
-        <RecommendPosts currentPost={post} totalPosts={posts} />
+        <RecommendPosts currentPost={post} totalPosts={allPosts} />
 
         {/* 版权声明 */}
         <section
@@ -185,32 +186,32 @@ export async function getStaticPaths () {
 }
 
 export async function getStaticProps ({ params: { slug } }) {
-  let posts = await getAllPosts({ from: 'slug-props', includePage: true })
-  const post = posts.find(t => t.slug === slug)
+  const from = 'slug-props'
+  const notionPageData = await getNotionPageData({ from })
+  let allPosts = await getAllPosts({ notionPageData, from, includePage: true })
+  const post = allPosts.find(p => p.slug === slug)
+
   if (!post) {
-    return {
-      props: {},
-      revalidate: 1
-    }
+    return { props: {}, revalidate: 1 }
   }
 
   const blockMap = await getPostBlocks(post.id, 'slug')
+  post.toc = []
   if (blockMap) {
     post.toc = getPageTableOfContents(post, blockMap)
-  } else {
-    post.toc = []
   }
-  posts = posts.filter(post => post.type[0] === 'Post')
-  const tags = await getAllTags(posts)
-  const categories = await getAllCategories(posts)
 
-  // 获取推荐文章
-  const index = posts.indexOf(post)
-  const prev = posts.slice(index - 1, index)[0] ?? posts.slice(-1)[0]
-  const next = posts.slice(index + 1, index + 2)[0] ?? posts[0]
+  allPosts = allPosts.filter(post => post.type[0] === 'Post')
+  const tagOptions = notionPageData.tagOptions
+  const tags = await getAllTags({ allPosts, tagOptions })
+  const categories = await getAllCategories(allPosts)
+  // 上一篇、下一篇文章关联
+  const index = allPosts.indexOf(post)
+  const prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
+  const next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
 
   return {
-    props: { post, blockMap, tags, prev, next, posts, categories },
+    props: { post, blockMap, tags, prev, next, allPosts, categories },
     revalidate: 1
   }
 }
