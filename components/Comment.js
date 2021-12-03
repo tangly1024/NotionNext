@@ -28,7 +28,7 @@ const Comment = ({ frontMatter }) => {
 
   return <div className='comment text-gray-800 dark:text-gray-300'>
     {/* 评论插件 */}
-    {BLOG.comment.provider === 'gitalk' && (
+    {BLOG.comment.provider === 'gitalk' && (<div className='m-10'>
       <GitalkComponent
         options={{
           id: frontMatter.id,
@@ -41,12 +41,13 @@ const Comment = ({ frontMatter }) => {
           distractionFreeMode: BLOG.comment.gitalkConfig.distractionFreeMode
         }}
       />
-    )}
-    {BLOG.comment.provider === 'utterances' && (
+    </div>)}
+    {BLOG.comment.provider === 'utterances' && (<div className='m-10'>
       <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
+    </div>
     )}
     {BLOG.comment.provider === 'cusdis' && (
-      <>
+      <div className='m-10'>
         <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />
         <CusdisComponent
           attrs={{
@@ -59,9 +60,10 @@ const Comment = ({ frontMatter }) => {
           }}
           lang={BLOG.lang.toLowerCase()}
         />
-      </>
+      </div>
 
-    )}</div>
+    )}
+  </div>
 }
 
 export default Comment

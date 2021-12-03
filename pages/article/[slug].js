@@ -51,48 +51,46 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={allPosts} categories={categories}>
     <Progress targetRef={targetRef} />
 
-    <article id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black pt-16'>
+    <article id='article-wrapper' ref={targetRef} className='flex-grow dark:bg-black pt-16 bg-gray-100'>
 
       <div className='w-screen md:w-full pt-10 max-w-5xl mx-auto'>
         {post.type && !post.type.includes('Page') && (<>
-          {/* 封面图 */}
 
-            <div style={{ height: '30rem' }} className='w-full transform duration-200 md:flex-shrink-0 animate__fadeIn animate__animated'>
-              <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='lazy' objectFit='cover' layout='fill' alt={post.title} />
-            </div>
+          <div className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0 animate__fadeIn animate__animated'>
+            <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='lazy' objectFit='cover' layout='fill' alt={post.title} />
+          </div>
 
-          <div className='dark:border-gray-700 bg-white dark:bg-gray-800'>
+          <div className='dark:border-gray-700 bg-gray-50 dark:bg-gray-800 pb-3'>
             {/* 文章信息 */}
             <h1 className='font-bold text-2xl px-5 pt-5 text-black dark:text-white animate__animated animate__fadeIn'> {post.title}</h1>
-            <h2 className='text-gray-500 px-5 pt-3 text-sm dark:text-gray-400 animate__animated animate__fadeIn'>{post.summary}</h2>
-            <div className='justify-between mt-5 flex flex-wrap bg-gray-100 p-2 dark:bg-gray-700 dark:text-white border-b-2 dark:border-gray-500'>
-              <div className='flex-nowrap flex'>
-                <Link href={`/category/${post.category}`} passHref>
-                  <div className='cursor-pointer text-md py-2 mx-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
-                    <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
-                  </div>
-                </Link>
-                {post.type[0] !== 'Page' && (
-                  <div className='flex items-start text-gray-500 dark:text-gray-300 leading-10'>
-                    {formatDate(
-                      post?.date?.start_date || post.createdTime,
-                      BLOG.lang
-                    )}
-                  </div>
-                )}
-              </div>
+            <div className='flex-nowrap flex  mt-1  mx-4 dark:text-white'>
+              <Link href={`/category/${post.category}`} passHref>
+                <div className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
+                  <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
+                </div>
+              </Link>
+              {post.type[0] !== 'Page' && (
+                <div className='pl-1 text-gray-400 dark:text-gray-300 leading-10'>
+                  {formatDate(
+                    post?.date?.start_date || post.createdTime,
+                    BLOG.lang
+                  )}
+                </div>
+              )}
+
               {/* 不蒜子 */}
               <div id='busuanzi_container_page_pv' className='hidden'>
-                <FontAwesomeIcon icon={faEye} className='text-gray-500 leading-none m-2.5' />
+                <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-2'/>
                 &nbsp;<span id='busuanzi_value_page_pv' className='leading-6'></span>
               </div>
             </div>
+            <h2 className='text-gray-600 px-5 pt-1 text-md dark:text-gray-400'>{post.summary}</h2>
           </div>
 
         </>)}
       </div>
 
-      <div className='shadow-card  w-screen md:w-full md:px-10 px-5 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
+      <div className='w-screen md:w-full md:px-10 px-5 py-2 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
 
         {/* Notion文章主体 */}
         {blockMap && (
@@ -106,12 +104,6 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
           />
         )}
 
-        {/* 赞赏按钮 */}
-        <RewardButton />
-
-        {/* 推荐文章 */}
-        <RecommendPosts currentPost={post} totalPosts={allPosts} />
-
         {/* 版权声明 */}
         <section
           className='overflow-auto dark:bg-gray-800 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
@@ -121,6 +113,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             <li>版权声明: 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
           </ul>
         </section>
+
+        {/* 推荐文章 */}
+        <RecommendPosts currentPost={post} totalPosts={allPosts} />
 
         {/* 标签列表 */}
         <section className='md:flex md:justify-between'>
@@ -137,6 +132,8 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
           </div>
         </section>
 
+        <RewardButton />
+
         {/* 上一篇下一篇文章 */}
         <div className='text-gray-800 my-5 dark:text-gray-300'>
           <hr />
@@ -147,7 +144,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             </Link>
             <Link href={`/article/${next.slug}`} passHref>
               <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}
-                <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1' />
+                <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1 my-1' />
               </div>
             </Link>
           </div>
@@ -156,10 +153,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
       {/* 评论互动 */}
       <div
-        className='shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 py-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+        className='my-10 w-screen md:w-full overflow-x-auto max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
         <Comment frontMatter={post} />
       </div>
-
     </article>
 
     {/* 悬浮目录按钮 */}

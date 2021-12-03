@@ -38,14 +38,14 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
         <section className='p-5'>
           <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
         </section>
-        <hr classNaÍme='dark:border-gray-700' />
+        <hr className='dark:border-gray-700' />
       </section>
 
       {/* 最新文章 */}
       {posts && (
         <section className='mt-4'>
-          <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4' />{locale.COMMON.LATEST_POSTS}</div>
+          <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
+            <div className='font-bold text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4' />{locale.COMMON.LATEST_POSTS}</div>
             <Link href='/archive' passHref>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
@@ -59,8 +59,8 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {/* 分类  */}
       {categories && (
         <section className='mt-5'>
-          <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}</div>
+          <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
+            <div className='font-bold text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
@@ -74,7 +74,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {/* 标签云  */}
       {tags && (
         <section className='mt-5'>
-          <div className='text-sm font-bold py-2 px-5 flex flex-nowrap justify-between'>
+          <div className='text-sm py-2 px-5 flex flex-nowrap justify-between'>
             <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-4' />{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>

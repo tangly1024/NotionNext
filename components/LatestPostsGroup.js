@@ -2,7 +2,6 @@ import Link from 'next/link'
 import BLOG from '@/blog.config'
 import { formatDateFmt } from '@/lib/formatDate'
 import { useRouter } from 'next/router'
-import { useGlobal } from '@/lib/global'
 
 /**
  * 最新文章列表
@@ -31,15 +30,15 @@ const LatestPostsGroup = ({ posts, sliceCount = 6 }) => {
       {postsSortByDate.map(post => {
         const selected = currentPath === `${BLOG.path}/article/${post.slug}`
         return (
-          <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`}>
+          <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} passHref>
             <div
               className={(selected ? 'bg-gray-200 dark:bg-black ' : '') + ' text-xs leading-5 py-1.5 px-5 flex'}>
-              <div className='mr-2 text-gray-400'>
+              <div className='mr-2 text-gray-500'>
                 {formatDateFmt(post.lastEditedTime, 'MM/dd')}
               </div>
               <div
                 className={
-                  (selected ? 'dark:text-white text-black ' : 'text-gray-500 ') +
+                  (selected ? 'dark:text-white text-black ' : 'text-gray-500') +
                   ' text-sm flex w-50 overflow-x-hidden whitespace-nowrap  hover:text-black dark:hover:text-white cursor-pointer hover:underline'
                 }>
                 {post.title}
