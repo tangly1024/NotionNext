@@ -61,7 +61,7 @@ const BLOG = {
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   googleAdsenseId: 'ca-pub-2708419466378217', // 谷歌广告ID
   DaoVoiceId: '', // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
-  TidioId: '8lgekxyr9hr9m7archbs0a4a2gu9ckbg' // 在线聊天 https://www.tidio.com/
+  TidioId: '' // 在线聊天 https://www.tidio.com/
 }
 // export default BLOG
 module.exports = BLOG

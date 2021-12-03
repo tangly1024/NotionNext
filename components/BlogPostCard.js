@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import { faFolder } from '@fortawesome/free-solid-svg-icons'
 
 const BlogPostCard = ({ post, tags }) => {
   return (
@@ -18,7 +18,7 @@ const BlogPostCard = ({ post, tags }) => {
         <div>
           <Link href={`/category/${post.category}`} passHref>
             <span className='cursor-pointer dark:text-gray-200 text-gray-400 text-sm py-1.5 mr-1 hover:underline hover:text-blue-500 transform'>
-              <FontAwesomeIcon icon={faFolderOpen} className=' mr-1' />{post.category}
+              <FontAwesomeIcon icon={faFolder} className='mr-1' />{post.category}
             </span>
           </Link>
           <span className='mx-1 dark:text-gray-400'>|</span>

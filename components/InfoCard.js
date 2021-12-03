@@ -12,6 +12,7 @@ const InfoCard = () => {
           alt={BLOG.author}
           width={100}
           height={100}
+          loading='lazy'
           src='/avatar.svg'
           className='rounded-full border-black'
         />

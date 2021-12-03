@@ -10,7 +10,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
           const selected = currentCategory === category
           return <Link key={category} href={`/category/${category}`} passHref>
             <div className={(selected ? 'bg-gray-200 dark:bg-black dark:text-white text-black ' : 'dark:text-gray-400 text-gray-500 ') + ' hover:text-black dark:hover:text-white dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
-              <FontAwesomeIcon icon={selected ? faFolderOpen : faFolder} className='mr-2 text-gray-400'/>{category}({categories[category]})</div>
+              <FontAwesomeIcon icon={selected ? faFolderOpen : faFolder} className={`${selected ? 'text-black dark:text-white' : 'text-gray-400'} mr-2 `}/>{category}({categories[category]})</div>
           </Link>
         })}
       </div>
