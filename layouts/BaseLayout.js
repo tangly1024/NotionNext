@@ -71,23 +71,21 @@ const BaseLayout = ({
       {/* 顶部导航栏 */}
       <div className='block lg:hidden'>
         <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories}
-                currentCategory={currentCategory} />
+          currentCategory={currentCategory} />
       </div>
 
       {/* Middle Wrapper */}
       <main className='flex dark:bg-black'>
-         <div className='hidden lg:block z-10'>
-           <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
-         </div>
+        <div className='hidden lg:block z-10'>
+          <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
+        </div>
         <div className='flex flex-grow' ref={targetRef}>
           {children}
         </div>
         <JumpToTopButton targetRef={targetRef} showPercent={true} />
-        <div className='hidden lg:block fixed right-4 top-20 p-1 rounded-full
-         bg-white text-black
-         dark:border-gray-500 dark:bg-gray-700 dark:text-white
-         ' style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}>
-          <DarkModeButton/>
+        <div className='hidden lg:block fixed right-1 bottom-52 p-1
+         bg-white text-black shadow-card dark:border-gray-500 dark:bg-gray-700 dark:text-white'>
+          <DarkModeButton />
         </div>
       </main>
 

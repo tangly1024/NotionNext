@@ -51,110 +51,106 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={allPosts} categories={categories}>
     <Progress targetRef={targetRef} />
 
-    <article id='article-wrapper' ref={targetRef} className='flex-grow dark:bg-black pt-16 bg-gray-100'>
+    <article id='article-wrapper' ref={targetRef} className='flex-grow dark:bg-black pt-16 bg-gray-200'>
 
-      <div className='w-screen md:w-full pt-10 max-w-5xl mx-auto'>
-        {post.type && !post.type.includes('Page') && (<>
-
-          <div className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0 animate__fadeIn animate__animated'>
+      <div className='max-w-5xl mx-auto'>
+        <div className='w-screen md:w-full pt-10 '>
+          {post.type && !post.type.includes('Page') && (<div className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0'>
             <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='lazy' objectFit='cover' layout='fill' alt={post.title} />
-          </div>
+          </div>)}
+        </div>
 
-          <div className='dark:border-gray-700 bg-gray-50 dark:bg-gray-800 pb-3'>
-            {/* 文章信息 */}
-            <h1 className='font-bold text-2xl px-5 pt-5 text-black dark:text-white animate__animated animate__fadeIn'> {post.title}</h1>
-            <div className='flex-nowrap flex  mt-1  mx-4 dark:text-white'>
-              <Link href={`/category/${post.category}`} passHref>
-                <div className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
-                  <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
-                </div>
-              </Link>
-              {post.type[0] !== 'Page' && (
-                <div className='pl-1 text-gray-400 dark:text-gray-300 leading-10'>
-                  {formatDate(
-                    post?.date?.start_date || post.createdTime,
-                    BLOG.lang
-                  )}
-                </div>
-              )}
+        <div className='animate__fadeIn animate__animated subpixel-antialiased w-screen md:w-full lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
+          {/* 文章Title */}
+          <h1 className='font-bold text-4xl pt-5 text-black dark:text-white italic'> {post.title}</h1>
 
-              {/* 不蒜子 */}
-              <div id='busuanzi_container_page_pv' className='hidden'>
-                <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-2'/>
-                &nbsp;<span id='busuanzi_value_page_pv' className='text-gray-500 dark:text-gray-400 leading-6'></span>
-              </div>
-            </div>
-            <h2 className='text-gray-600 px-5 pt-1 text-md dark:text-gray-400'>{post.summary}</h2>
-          </div>
-
-        </>)}
-      </div>
-
-      <div className='w-screen md:w-full md:px-10 px-5 py-2 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
-
-        {/* Notion文章主体 */}
-        {blockMap && (
-          <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
-            components={{
-              equation: Equation,
-              code: Code,
-              collectionRow: CollectionRow,
-              collection: Collection
-            }}
-          />
-        )}
-
-        {/* 版权声明 */}
-        <section
-          className='overflow-auto dark:bg-gray-800 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
-          <ul>
-            <li>本文作者: {BLOG.author}</li>
-            <li>本文链接: <a href={url}>{url}</a></li>
-            <li>版权声明: 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
-          </ul>
-        </section>
-
-        {/* 推荐文章 */}
-        <RecommendPosts currentPost={post} totalPosts={allPosts} />
-
-        {/* 标签列表 */}
-        <section className='md:flex md:justify-between'>
-          {post.tagItems && (
-            <div className='flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
-              <div className='hidden md:block dark:text-gray-300'>{locale.COMMON.TAGS}：</div>
-              {post.tagItems.map(tag => (
-                <TagItem key={tag.name} tag={tag} />
-              ))}
-            </div>
+          {/* Notion文章主体 */}
+          {blockMap && (
+            <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
+              components={{
+                equation: Equation,
+                code: Code,
+                collectionRow: CollectionRow,
+                collection: Collection
+              }}
+            />
           )}
-          <div>
-            <ShareBar post={post} />
-          </div>
-        </section>
 
-        <RewardButton />
+          {/* 版权声明 */}
+          <section className='text-sm overflow-auto dark:bg-gray-800 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
+            <ul>
+              <li>本文作者: {BLOG.author}</li>
+              <li>本文链接: <a href={url}>{url}</a></li>
+              <li>版权声明: 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
+            </ul>
+          </section>
 
-        {/* 上一篇下一篇文章 */}
-        <div className='text-gray-800 my-5 dark:text-gray-300'>
-          <hr />
-          <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-            <Link href={`/article/${prev.slug}`} passHref>
-              <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'>
-                <FontAwesomeIcon icon={faAngleDoubleLeft} className='mr-1' />{prev.title}</div>
-            </Link>
-            <Link href={`/article/${next.slug}`} passHref>
-              <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}
-                <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1 my-1' />
+          {/* 推荐文章 */}
+          <RecommendPosts currentPost={post} totalPosts={allPosts} />
+
+          {/* 标签列表 */}
+          <section className='md:flex md:justify-between'>
+            {post.tagItems && (
+              <div className='flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
+                <div className='hidden md:block dark:text-gray-300'>{locale.COMMON.TAGS}：</div>
+                {post.tagItems.map(tag => (
+                  <TagItem key={tag.name} tag={tag} />
+                ))}
+              </div>
+            )}
+            <div>
+              <ShareBar post={post} />
+            </div>
+          </section>
+
+          <div className='flex-nowrap flex  mt-1 dark:text-white'>
+            <Link href={`/category/${post.category}`} passHref>
+              <div className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
+                <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
               </div>
             </Link>
+            {post.type[0] !== 'Page' && (
+              <div className='pl-1 text-gray-400 dark:text-gray-300 leading-10'>
+                {formatDate(
+                  post?.date?.start_date || post.createdTime,
+                  BLOG.lang
+                )}
+              </div>
+            )}
+
+            {/* 不蒜子 */}
+            <div id='busuanzi_container_page_pv' className='hidden'>
+              <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-2' />
+              &nbsp;<span id='busuanzi_value_page_pv' className='text-gray-500 dark:text-gray-400 leading-6'></span>
+            </div>
+          </div>
+
+        </div>
+
+        <div className='w-screen md:w-full px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
+          <div className='py-10'>
+            <RewardButton />
           </div>
         </div>
-      </div>
+        <div className='text-gray-800 dark:text-gray-300 dark:bg-gray-900 bg-gray-50 px-5 '>
+            <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
+              <Link href={`/article/${prev.slug}`} passHref>
+                <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'>
+                  <FontAwesomeIcon icon={faAngleDoubleLeft} className='mr-1' />{prev.title}</div>
+              </Link>
+              <Link href={`/article/${next.slug}`} passHref>
+                <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}
+                  <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1 my-1' />
+                </div>
+              </Link>
+            </div>
+          </div>
 
-      {/* 评论互动 */}
-      <div
-        className='my-10 w-screen md:w-full overflow-x-auto max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
-        <Comment frontMatter={post} />
+        {/* 评论互动 */}
+        <div
+          className='my-10 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700'>
+          <Comment frontMatter={post} />
+        </div>
       </div>
     </article>
 

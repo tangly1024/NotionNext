@@ -34,24 +34,17 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (
-    <div id='jump-to-top' className='right-0 fixed flex bottom-36 mr-4 duration-500 z-20 opacity-75'>
-      <div >
-        <div
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}
-          className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' bg-white dark:bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-2xl'}>
-          <div className='text-center'>
-            <div className='w-10 text-xl dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
-              <FontAwesomeIcon icon={faArrowUp} />
-            </div>
-            {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent} </div>)}
+  return (<div id='jump-to-top' className='right-1 fixed flex bottom-36 duration-500 z-20'>
+      <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className={(show ? 'animate__fadeInRight' : 'animate__fadeOutRight') + ' shadow-card bg-white dark:bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-2xl'}>
+        <div className='text-center'>
+          <div className='w-10 text-xl dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
+            <FontAwesomeIcon icon={faArrowUp} />
           </div>
+          {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent} </div>)}
         </div>
       </div>
-    </div>
-
-  )
+    </div>)
 }
 
 export default JumpToTopButton

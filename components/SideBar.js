@@ -25,12 +25,12 @@ import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/fr
  */
 const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
-  return <aside id='sidebar' className='pt-10 bg-white dark:bg-gray-800 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
+  return <aside id='sidebar' className='pt-10 bg-white dark:bg-gray-900 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
     <section>
       <InfoCard />
     </section>
 
-    <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-800 pb-4'}>
+    <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-900 pb-4'}>
 
       <section>
         {/* <hr className='dark:border-gray-700' /> */}
@@ -43,7 +43,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 最新文章 */}
       {posts && (
-        <section className='mt-4'>
+        <section className='mt-12'>
           <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
             <div className='font-bold text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4' />{locale.COMMON.LATEST_POSTS}</div>
             <Link href='/archive' passHref>
@@ -58,7 +58,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 分类  */}
       {categories && (
-        <section className='mt-5'>
+        <section className='mt-12'>
           <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
             <div className='font-bold text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
@@ -73,7 +73,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 标签云  */}
       {tags && (
-        <section className='mt-5'>
+        <section className='mt-12'>
           <div className='text-sm py-2 px-5 flex flex-nowrap justify-between'>
             <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-4' />{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>

@@ -21,7 +21,8 @@ const RewardButton = () => {
   }
   return (
     <div className='justify-center'>
-      <div onMouseEnter={openPopover} onMouseLeave={closePopover} className='bg-red-500 w-36 mx-auto animate__jello text-white hover:bg-green-400 duration-200 transform hover:scale-110 px-3 py-2 rounded cursor-pointer'>
+      <div onMouseEnter={openPopover} onMouseLeave={closePopover}
+      className='bg-pink-500 py-2 w-36 mx-auto animate__jello text-white hover:bg-green-400 duration-200 transform hover:scale-110 px-3 rounded cursor-pointer'>
           <FontAwesomeIcon icon={faQrcode} className='mr-2' />
           <span>打赏一杯咖啡</span>
       </div>

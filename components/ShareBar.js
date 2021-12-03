@@ -46,22 +46,22 @@ const ShareBar = ({ post }) => {
       className='py-2 text-gray-500 text-center space-x-2 flex inline-block my-1 dark:text-gray-200 overflow-visible'>
       <div className='hidden md:block text-gray-800 dark:text-gray-300 mr-2 my-2'>{locale.COMMON.SHARE}:</div>
       <div className='text-3xl cursor-pointer'>
-        <a className='hover:text-blue-700' href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} >
+        <a className='text-blue-700' href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} >
           <FontAwesomeIcon icon={faFacebookSquare}/>
         </a>
       </div>
       <div className='text-3xl cursor-pointer'>
-        <a className='hover:text-blue-400' target='_blank' rel='noreferrer' href={`https://twitter.com/intent/tweet?title=${post.title}&url${shareUrl}`} >
+        <a className='text-blue-400' target='_blank' rel='noreferrer' href={`https://twitter.com/intent/tweet?title=${post.title}&url${shareUrl}`} >
           <FontAwesomeIcon icon={faTwitterSquare}/>
         </a>
       </div>
       <div className='text-3xl cursor-pointer'>
-        <a className='hover:text-blue-500' href={`https://telegram.me/share/url?url=${shareUrl}&text=${post.title}`} >
+        <a className='text-blue-500' href={`https://telegram.me/share/url?url=${shareUrl}&text=${post.title}`} >
         <FontAwesomeIcon icon={faTelegram}/>
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='hover:text-green-600' ref={btnRef} onMouseEnter={openPopover} onMouseLeave={closePopover}>
+        <a className='text-green-600' ref={btnRef} onMouseEnter={openPopover} onMouseLeave={closePopover}>
           <FontAwesomeIcon icon={faWeixin}/>
           <div ref={popoverRef} className={(qrCodeShow ? 'animate__animated animate__fadeIn ' : 'hidden') + ' text-center py-2'}>
             <div className='p-2 bg-white border-0 duration-200 transform block z-50 font-normal shadow-xl mr-10'>
@@ -74,22 +74,22 @@ const ShareBar = ({ post }) => {
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='hover:text-red-600' target='_blank' rel='noreferrer'href={`https://service.weibo.com/share/share.php?url=${shareUrl}&title=${post.title}`} >
+        <a className='text-red-600' target='_blank' rel='noreferrer'href={`https://service.weibo.com/share/share.php?url=${shareUrl}&title=${post.title}`} >
           <FontAwesomeIcon icon={faWeibo}/>
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='hover:text-blue-400' target='_blank' rel='noreferrer'href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${post.title}&desc=${post.summary}`} >
+        <a className='text-blue-400' target='_blank' rel='noreferrer'href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${post.title}&desc=${post.summary}`} >
           <FontAwesomeIcon icon={faQq}/>
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='hover:text-red-600' target='_blank' rel='noreferrer' href={`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${shareUrl}&sharesource=qzone&title=${post.title}&summary=${post.summary}`} >
+        <a className='text-red-600' target='_blank' rel='noreferrer' href={`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${shareUrl}&sharesource=qzone&title=${post.title}&summary=${post.summary}`} >
           <FontAwesomeIcon icon={faStar}/>
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='hover:text-red-600' onClick={copyUrl} >
+        <a className='text-red-600' onClick={copyUrl} >
           <FontAwesomeIcon icon={faLink}/>
         </a>
       </div>

@@ -27,7 +27,6 @@ const Comment = ({ frontMatter }) => {
   const { theme } = useGlobal()
 
   return <div className='comment text-gray-800 dark:text-gray-300'>
-    {/* 评论插件 */}
     {BLOG.comment.provider === 'gitalk' && (<div className='m-10'>
       <GitalkComponent
         options={{
@@ -46,9 +45,9 @@ const Comment = ({ frontMatter }) => {
       <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
     </div>
     )}
-    {BLOG.comment.provider === 'cusdis' && (
+    {BLOG.comment.provider === 'cusdis' && (<>
+      <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />
       <div className='m-10'>
-        <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />
         <CusdisComponent
           attrs={{
             host: BLOG.comment.cusdisConfig.host,
@@ -61,8 +60,7 @@ const Comment = ({ frontMatter }) => {
           lang={BLOG.lang.toLowerCase()}
         />
       </div>
-
-    )}
+    </>)}
   </div>
 }
 

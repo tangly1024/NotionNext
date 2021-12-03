@@ -32,8 +32,8 @@ const LatestPostsGroup = ({ posts, sliceCount = 6 }) => {
         return (
           <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} passHref>
             <div
-              className={(selected ? 'bg-gray-200 dark:bg-black ' : '') + ' text-xs leading-5 py-1.5 px-5 flex'}>
-              <div className='mr-2 text-gray-500'>
+              className={(selected ? 'bg-gray-200 dark:bg-black ' : '') + ' leading-5 py-1.5 px-5 flex'}>
+              <div className='mr-2 text-gray-500 text-xs leading-5'>
                 {formatDateFmt(post.lastEditedTime, 'MM/dd')}
               </div>
               <div
