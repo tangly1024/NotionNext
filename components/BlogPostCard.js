@@ -10,9 +10,11 @@ const BlogPostCard = ({ post, tags }) => {
   return (
     <div key={post.id} className='md:grid md:grid-cols-5 animate__animated animate__fadeIn animate__faster shadow-lg rounded border dark:border-gray-600 mb-6
      w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700'>
-      <div className='w-full h-60 cursor-pointer transform col-span-2 border-r border-dashed'>
-        <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
-      </div>
+      <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
+        <div className='w-full h-60 hover:scale-105 duration-200 cursor-pointer transform col-span-2 border-r border-dashed'>
+          <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
+        </div>
+      </Link>
 
       <div className='px-4 py-4 col-span-3'>
         <div>
