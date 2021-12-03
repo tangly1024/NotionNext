@@ -8,6 +8,8 @@ import SearchInput from '@/components/SearchInput'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import Toc from '@/components/Toc'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * 侧边栏
@@ -30,25 +32,23 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
     <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-800 pb-4'}>
 
-      {/* 搜索框 */}
-      <section className='p-5'>
-        <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
-      </section>
-
       <section>
-        <hr className='dark:border-gray-700' />
+        {/* <hr className='dark:border-gray-700' /> */}
         <MenuButtonGroup allowCollapse={true} />
-        <hr className='dark:border-gray-700 my-2' />
+        <section className='p-5'>
+          <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
+        </section>
+        <hr classNaÍme='dark:border-gray-700' />
       </section>
 
       {/* 最新文章 */}
       {posts && (
-        <section className='mt-3'>
+        <section className='mt-4'>
           <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-newspaper-o mr-4'/>{locale.COMMON.LATEST_POSTS}</div>
-            <Link href='/archive'>
+            <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4' />{locale.COMMON.LATEST_POSTS}</div>
+            <Link href='/archive' passHref>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
+                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
               </div>
             </Link>
           </div>
@@ -58,14 +58,14 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 分类  */}
       {categories && (
-        <section className='mt-2'>
+        <section className='mt-5'>
           <div className='text-sm font-bold py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-th-list mr-4'/>{locale.COMMON.CATEGORY}</div>
-              <Link href='/category'>
-                <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                  {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
-                </div>
-              </Link>
+            <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}</div>
+            <Link href='/category' passHref>
+              <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </div>
+            </Link>
           </div>
           <CategoryGroup currentCategory={currentCategory} categories={categories} />
         </section>
@@ -73,18 +73,18 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 标签云  */}
       {tags && (
-        <section className='mt-3'>
+        <section className='mt-5'>
           <div className='text-sm font-bold py-2 px-5 flex flex-nowrap justify-between'>
-            <div className='text-black font-bold dark:text-gray-200'><i className='fa fa-tags mr-4'/>{locale.COMMON.TAGS}</div>
-            <Link href='/tag'>
+            <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-4' />{locale.COMMON.TAGS}</div>
+            <Link href='/tag' passHref>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <i className='fa fa-angle-double-right'/>
+                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
               </div>
             </Link>
           </div>
-            <div className='px-5'>
-              <TagGroups tags={tags} currentTag={currentTag} />
-            </div>
+          <div className='px-5'>
+            <TagGroups tags={tags} currentTag={currentTag} />
+          </div>
         </section>
       )}
     </div>
@@ -99,7 +99,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       </section>
     )}
 
-    <section id='blank' className='bg-white dark:bg-gray-800 py-20'/>
+    <section id='blank' className='bg-white dark:bg-gray-800 py-20' />
 
   </aside>
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import throttle from 'lodash.throttle'
 import DarkModeButton from '@/components/DarkModeButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * 左上角悬浮菜单栏
@@ -30,7 +32,7 @@ const LeftFloatButton = () => {
     {/* 菜单折叠 */}
     <div className='p-1 border hover:shadow-xl duration-200 dark:border-gray-500 h-12 bg-white dark:bg-gray-600 dark:bg-opacity-70 bg-opacity-70
       dark:hover:bg-gray-100 text-xl cursor-pointer mr-2 my-2 dark:text-gray-300 dark:hover:text-black'>
-      <i className='fa fa-bars p-2.5 hover:scale-125 transform duration-200'
+      <FontAwesomeIcon icon={faBars} className='p-2.5 hover:scale-125 transform duration-200'
          onClick={() => changeCollapse(!collapse)} />
     </div>
     {/* 夜间模式 */}

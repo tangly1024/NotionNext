@@ -4,6 +4,8 @@ import BaseLayout from '@/layouts/BaseLayout'
 import StickyBar from '@/components/StickyBar'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
 import { useRouter } from 'next/router'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export async function getStaticProps () {
   let posts = await getAllPosts({ from: 'index' })
@@ -44,7 +46,7 @@ const Search = ({ posts, tags, meta, categories }) => {
     <BaseLayout meta={meta} tags={tags} totalPosts={posts} currentSearch={searchKey} categories={categories}>
       <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
         <StickyBar>
-          <div className='p-4 dark:text-gray-200'><i className='fa fa-search mr-1'/> 搜索词： {searchKey}</div>
+          <div className='p-4 dark:text-gray-200'><FontAwesomeIcon icon={faSearch} className='mr-1'/> 搜索词： {searchKey}</div>
         </StickyBar>
         <BlogPostListScroll posts={filteredPosts} tags={tags} currentSearch={searchKey} />
       </div>

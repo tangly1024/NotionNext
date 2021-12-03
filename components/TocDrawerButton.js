@@ -1,5 +1,7 @@
 import React from 'react'
 import { useGlobal } from '@/lib/global'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBook } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * 点击召唤目录抽屉
@@ -17,7 +19,7 @@ const TocDrawerButton = (props) => {
         <div style={{ borderRadius: '28px' }}
           className={'animate__fadeInUp bg-white dark:bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-xl'}>
           <div className='text-center dark:text-gray-100'>
-            <div className='w-10 text-xl' title={locale.COMMON.TABLE_OF_CONTENTS} ><i className='fa fa-book'/> </div>
+            <div className='w-10 text-xl' title={locale.COMMON.TABLE_OF_CONTENTS} ><FontAwesomeIcon icon={faBook} /> </div>
             <div className='text-xs'>{locale.COMMON.TABLE_OF_CONTENTS}</div>
           </div>
         </div>

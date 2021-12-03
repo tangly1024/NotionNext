@@ -5,6 +5,8 @@ import TagItem from '@/components/TagItem'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTags } from '@fortawesome/free-solid-svg-icons'
 
 export default function Tag ({ tags, allPosts, categories }) {
   const { locale } = useGlobal()
@@ -16,13 +18,11 @@ export default function Tag ({ tags, allPosts, categories }) {
   return <BaseLayout meta={meta} categories={categories} totalPosts={allPosts}>
     <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner p-2 lg:px-14'>
       <div className='bg-white dark:bg-gray-700 px-10 py-10 mt-20 lg:mt-16'>
-        <div className='dark:text-gray-200 mb-5'><i className='fa fa-tags mr-4'/>{locale.COMMON.TAGS}:</div>
+        <div className='dark:text-gray-200 mb-5'><FontAwesomeIcon icon={faTags} className='mr-4'/>{locale.COMMON.TAGS}:</div>
         <div id='tags-list' className='duration-200 flex flex-wrap'>
-          {
-            tags.map(tag => {
-              return <div key={tag.name} className='p-2'><TagItem key={tag.name} tag={tag} /></div>
-            })
-          }
+          { tags.map(tag => {
+            return <div key={tag.name} className='p-2'><TagItem key={tag.name} tag={tag} /></div>
+          }) }
         </div>
       </div>
     </div>

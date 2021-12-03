@@ -1,4 +1,7 @@
+import { faCopyright, faEye, faShieldAlt, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import Link from 'next/link'
 
 const Footer = ({ fullWidth = true }) => {
   const d = new Date()
@@ -7,23 +10,16 @@ const Footer = ({ fullWidth = true }) => {
     <footer
       className='bg-gray-800 dark:bg-black dark:border-gray-900 border-t flex-shrink-0 justify-center text-center m-auto w-full text-gray-400 text-sm p-6'
     >
-      <span className='fa fa-copyright leading-6'> {` ${y}`} <span> <a href='https://www.tangly1024.com/article/about' className='underline font-bold text-gray-100'>tangly1024.com</a>. Powered by <a href='https://notion.so' className='underline font-bold text-gray-100'>Notion</a> & <a href='https://github.com/tangly1024/NotionNext' className='underline font-bold text-gray-100'>NotionNext</a>.</span> </span>
+      <FontAwesomeIcon icon={faCopyright} /> {` ${y}`} <span> <a href='https://www.tangly1024.com/article/about' className='underline font-bold text-gray-100'>tangly1024.com</a>. Powered by <a href='https://notion.so' className='underline font-bold text-gray-100'>Notion</a> & <a href='https://github.com/tangly1024/NotionNext' className='underline font-bold text-gray-100'>NotionNext</a>.</span>
       <br />
-      <span className='fa fa-shield leading-6 mr-2'> <a href='https://beian.miit.gov.cn/' className='ml-1 font-bold'>闽ICP备20010331号</a></span>
-      <span > <a href='/article/privacy-policy' className='ml-1 font-bold underline'>隐私政策</a></span>
+      <FontAwesomeIcon icon={faShieldAlt} /> <a href='https://beian.miit.gov.cn/' className='ml-1 font-bold'>闽ICP备20010331号</a>
+      <span > <Link href='/article/privacy-policy' ><a className='ml-1 font-bold underline'>隐私政策</a></Link></span>
 
       <span id='busuanzi_container_site_pv' className='hidden'>
-            <a id='busuanzi_container_site_pv' target='_blank' className='fa  fa-eye' rel='noreferrer'
-               href='/#'><span
-              id='busuanzi_value_site_pv' className='px-1'> </span>pv</a>
+            <FontAwesomeIcon icon={faEye}/><span id='busuanzi_value_site_pv' className='px-1'> </span>pv
       </span>
       <span id='busuanzi_container_site_uv' className='pl-2 hidden'>
-        <a className='fa fa-user' rel='noreferrer' target='_blank'
-            href='/#'>
-          <span id='busuanzi_value_site_uv' className='px-1'> </span>uv</a>
-      </span>
-      <br/>
-
+        <FontAwesomeIcon icon={faUser}/> <span id='busuanzi_value_site_uv' className='px-1'> </span>uv   </span>
     </footer>
   )
 }

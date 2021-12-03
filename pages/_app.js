@@ -3,8 +3,6 @@ import 'rc-dropdown/assets/index.css'
 import 'katex/dist/katex.min.css'
 import '@/styles/globals.css'
 import 'animate.css'
-import 'font-awesome/css/font-awesome.min.css'
-
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'

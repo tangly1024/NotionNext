@@ -20,11 +20,14 @@
     "postbuild": "next-sitemap --config next-sitemap.config.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "@popperjs/core": "^2.9.3",
     "animate.css": "^4.1.1",
     "copy-to-clipboard": "^3.3.1",
     "feed": "^4.2.2",
-    "font-awesome": "^4.7.0",
     "gitalk": "^1.7.2",
     "localStorage": "^1.0.4",
     "lodash.throttle": "^4.1.1",

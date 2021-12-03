@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * 跳转到网页顶部
@@ -40,7 +42,9 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
           style={{ boxShadow: 'rgba(41, 50, 60, 0.5) 0px 2px 16px', borderRadius: '28px' }}
           className={(show ? 'animate__fadeInUp' : 'animate__fadeOutUp') + ' bg-white dark:bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-2xl'}>
           <div className='text-center'>
-            <div className='w-10 text-xl dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} ><i className='fa fa-arrow-up'/> </div>
+            <div className='w-10 text-xl dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
+              <FontAwesomeIcon icon={faArrowUp} />
+            </div>
             {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent} </div>)}
           </div>
         </div>

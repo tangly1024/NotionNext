@@ -1,4 +1,6 @@
 import { loadUserThemeFromCookies, saveTheme, useGlobal } from '@/lib/global'
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const DarkModeButton = () => {
   const { changeTheme } = useGlobal()
@@ -10,7 +12,7 @@ const DarkModeButton = () => {
     changeTheme(newTheme)
   }
   return <div className='z-10 duration-200 text-xl cursor-pointer'>
-    <i id='darkModeButton' className={'fa p-2.5 hover:scale-125 transform duration-200 ' + (userTheme === 'dark' ? 'fa-sun-o' : 'fa-moon-o')}
+    <FontAwesomeIcon icon={userTheme === 'dark' ? faSun : faMoon} id='darkModeButton' className='fa mx-2.5 my-2 hover:scale-125 transform duration-200'
        onClick={handleChangeDarkMode} />
   </div>
 }

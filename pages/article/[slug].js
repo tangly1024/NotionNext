@@ -13,6 +13,7 @@ import BaseLayout from '@/layouts/BaseLayout'
 import React, { useRef } from 'react'
 import Custom404 from '@/pages/404'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs'
@@ -26,6 +27,8 @@ import TocDrawer from '@/components/TocDrawer'
 import TocDrawerButton from '@/components/TocDrawerButton'
 import { useGlobal } from '@/lib/global'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDoubleLeft, faAngleDoubleRight, faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -49,35 +52,28 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
     <Progress targetRef={targetRef} />
 
     <article id='article-wrapper' ref={targetRef} className='flex-grow bg-gray-200 dark:bg-black pt-16'>
-      {/* 中央区域 wrapper */}
-      {post.type && !post.type.includes('Page') && (<>
-          {/* 封面图 */}
-          {post.page_cover && post.page_cover.length > 1 && (
-            <img className='bg-center object-cover w-full hover:shadow-2xl hover:scale-105 transform duration-200 mx-auto max-w-5xl mb-2 md:flex-shrink-0 animate__fadeIn animate__animated'
-                 style={{ maxHeight: '40rem' }}
-                 src={post.page_cover} alt={post.title} />
-          )}
-      </>)}
 
-      <div
-        className='hover:shadow-2xl duration-200 shadow-card mb-20 w-screen md:w-full overflow-x-auto md:px-10 px-5 pt-10 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
-
+      <div className='w-screen md:w-full pt-10 max-w-5xl mx-auto'>
         {post.type && !post.type.includes('Page') && (<>
-            {/* 文章信息 */}
-            <h1 className='font-bold text-4xl text-black my-5 dark:text-white animate__animated animate__fadeIn'> {post.title}</h1>
-            <h2 className='text-gray-500 text-xs my-5 dark:text-gray-400 animate__animated animate__fadeIn'>{post.summary}</h2>
-            <div className='justify-between flex flex-wrap bg-gray-100 p-2 dark:bg-gray-900 dark:text-white'>
-              <div className='flex-nowrap flex'>
-                <div className='py-2 opacity-50'>
-                  {locale.COMMON.CATEGORY}：
-                </div>
-                <Link href={`/category/${post.category}`} passHref>
-                  <div className='cursor-pointer text-md py-2 mx-3 hover:underline'><i
-                    className='fa fa-folder-open-o mr-1' />{post.category}</div>
-                </Link>
+          {/* 封面图 */}
 
+            <div style={{ height: '30rem' }} className='w-full transform duration-200 md:flex-shrink-0 animate__fadeIn animate__animated'>
+              <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='lazy' objectFit='cover' layout='fill' alt={post.title} />
+            </div>
+
+          <div className='dark:border-gray-700 bg-white dark:bg-gray-800'>
+            {/* 文章信息 */}
+            <h1 className='font-bold text-2xl px-5 pt-5 text-black dark:text-white animate__animated animate__fadeIn'> {post.title}</h1>
+            <h2 className='text-gray-500 px-5 pt-3 text-sm dark:text-gray-400 animate__animated animate__fadeIn'>{post.summary}</h2>
+            <div className='justify-between mt-5 flex flex-wrap bg-gray-100 p-2 dark:bg-gray-700 dark:text-white border-b-2 dark:border-gray-500'>
+              <div className='flex-nowrap flex'>
+                <Link href={`/category/${post.category}`} passHref>
+                  <div className='cursor-pointer text-md py-2 mx-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
+                    <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
+                  </div>
+                </Link>
                 {post.type[0] !== 'Page' && (
-                  <div className='flex items-start text-gray-500 dark:text-gray-400 leading-10'>
+                  <div className='flex items-start text-gray-500 dark:text-gray-300 leading-10'>
                     {formatDate(
                       post?.date?.start_date || post.createdTime,
                       BLOG.lang
@@ -85,25 +81,28 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
                   </div>
                 )}
               </div>
-
               {/* 不蒜子 */}
               <div id='busuanzi_container_page_pv' className='hidden'>
-                <div className='fa fa-eye text-gray-500 text-sm leading-none py-1 px-2'>
-                  &nbsp;<span id='busuanzi_value_page_pv' className='leading-6'></span>
-                </div>
+                <FontAwesomeIcon icon={faEye} className='text-gray-500 leading-none m-2.5' />
+                &nbsp;<span id='busuanzi_value_page_pv' className='leading-6'></span>
               </div>
             </div>
+          </div>
+
         </>)}
+      </div>
+
+      <div className='shadow-card  w-screen md:w-full md:px-10 px-5 max-w-5xl mx-auto dark:border-gray-700 bg-white dark:bg-gray-900'>
 
         {/* Notion文章主体 */}
         {blockMap && (
           <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
-                          components={{
-                            equation: Equation,
-                            code: Code,
-                            collectionRow: CollectionRow,
-                            collection: Collection
-                          }}
+            components={{
+              equation: Equation,
+              code: Code,
+              collectionRow: CollectionRow,
+              collection: Collection
+            }}
           />
         )}
 
@@ -125,14 +124,14 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
         {/* 标签列表 */}
         <section className='md:flex md:justify-between'>
-           {post.tagItems && (
+          {post.tagItems && (
             <div className='flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
               <div className='hidden md:block dark:text-gray-300'>{locale.COMMON.TAGS}：</div>
               {post.tagItems.map(tag => (
                 <TagItem key={tag.name} tag={tag} />
               ))}
             </div>
-           )}
+          )}
           <div>
             <ShareBar post={post} />
           </div>
@@ -142,13 +141,14 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
         <div className='text-gray-800 my-5 dark:text-gray-300'>
           <hr />
           <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-            <Link href={`/article/${prev.slug}`}>
-              <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'><i
-                className='fa fa-angle-double-left mr-1' />{prev.title}</div>
+            <Link href={`/article/${prev.slug}`} passHref>
+              <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'>
+                <FontAwesomeIcon icon={faAngleDoubleLeft} className='mr-1' />{prev.title}</div>
             </Link>
-            <Link href={`/article/${next.slug}`}>
-              <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}<i
-                className='fa fa-angle-double-right ml-1' /></div>
+            <Link href={`/article/${next.slug}`} passHref>
+              <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}
+                <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1' />
+              </div>
             </Link>
           </div>
         </div>
@@ -164,9 +164,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
     {/* 悬浮目录按钮 */}
     <div className='block lg:hidden'>
-      <TocDrawerButton onClick={() => {
-        drawerRight.current.handleSwitchVisible()
-      }} />
+      <TocDrawerButton onClick={() => { drawerRight.current.handleSwitchVisible() }} />
       {/* 目录侧边栏 */}
       <TocDrawer post={post} cRef={drawerRight} />
     </div>

@@ -2,6 +2,8 @@ import { useRef } from 'react'
 import DarkModeButton from '@/components/DarkModeButton'
 import SearchInput from '@/components/SearchInput'
 import SideBarDrawer from '@/components/SideBarDrawer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, currentCategory }) => {
   const drawer = useRef()
@@ -17,7 +19,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
         <div className='flex ml-12'>
           <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
                className='fixed top-3 left-0 z-30 py-1 px-5 text-gray-600 text-2xl cursor-pointer dark:text-gray-300'>
-            <i className='fa hover:scale-125 transform duration-200 fa-bars '
+            <FontAwesomeIcon icon={faBars} className='hover:scale-125 transform duration-200'
             />
           </div>
         </div>

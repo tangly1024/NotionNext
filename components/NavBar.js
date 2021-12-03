@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import BLOG from '@/blog.config'
 import Image from 'next/image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 const NavBar = () => {
   const links = []
@@ -81,7 +83,7 @@ const Header = ({ navBarTitle, fullWidth = true }) => {
 
           <div className='flex cursor-pointer'>
             <div className='px-2 text-xl'>
-              <i className='fa fa-bars hover:scale-125 transform duration-200' />
+              <FontAwesomeIcon icon={faBars} className='hover:scale-125 transform duration-200' />
             </div>
             <Image
               alt={BLOG.author}
