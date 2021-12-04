@@ -62,7 +62,31 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
         <div className='animate__fadeIn animate__animated subpixel-antialiased w-screen md:w-full lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
           {/* 文章Title */}
-          <h1 className='font-bold text-4xl pt-5 text-black dark:text-white italic'> {post.title}</h1>
+          <h1 className='font-bold text-3xl pt-5 text-black dark:text-white italic'> {post.title}</h1>
+          <hr className='mt-4' />
+          <div className='flex-nowrap flex  mt-1 dark:text-white'>
+            <Link href={`/category/${post.category}`} passHref>
+              <div className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
+                <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
+              </div>
+            </Link>
+            {post.type[0] !== 'Page' && (
+              <Link href='/archive' passHref>
+                <div className='pl-1 cursor-pointer hover:text-gray-700  dark:hover:text-gray-200 text-gray-400 dark:text-gray-400 leading-10'>
+                  {formatDate(
+                    post?.date?.start_date || post.createdTime,
+                    BLOG.lang
+                  )}
+                </div>
+              </Link>
+            )}
+
+            {/* 不蒜子 */}
+            <div id='busuanzi_container_page_pv' className='hidden'>
+              <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-2' />
+              &nbsp;<span id='busuanzi_value_page_pv' className='text-gray-500 dark:text-gray-400 leading-6'></span>
+            </div>
+          </div>
 
           {/* Notion文章主体 */}
           {blockMap && (
@@ -76,17 +100,17 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             />
           )}
 
+          {/* 推荐文章 */}
+          <RecommendPosts currentPost={post} totalPosts={allPosts} />
+
           {/* 版权声明 */}
           <section className='text-sm overflow-auto dark:bg-gray-800 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
             <ul>
-              <li>本文作者: {BLOG.author}</li>
-              <li>本文链接: <a href={url}>{url}</a></li>
+              <li>本文作者: <Link href='/article/about'><a className='hover:underline'>{BLOG.author}</a></Link></li>
+              <li>本文链接: <a className='hover:underline' href={url}>{url}</a></li>
               <li>版权声明: 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
             </ul>
           </section>
-
-          {/* 推荐文章 */}
-          <RecommendPosts currentPost={post} totalPosts={allPosts} />
 
           {/* 标签列表 */}
           <section className='md:flex md:justify-between'>
@@ -102,28 +126,6 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
               <ShareBar post={post} />
             </div>
           </section>
-
-          <div className='flex-nowrap flex  mt-1 dark:text-white'>
-            <Link href={`/category/${post.category}`} passHref>
-              <div className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
-                <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
-              </div>
-            </Link>
-            {post.type[0] !== 'Page' && (
-              <div className='pl-1 text-gray-400 dark:text-gray-300 leading-10'>
-                {formatDate(
-                  post?.date?.start_date || post.createdTime,
-                  BLOG.lang
-                )}
-              </div>
-            )}
-
-            {/* 不蒜子 */}
-            <div id='busuanzi_container_page_pv' className='hidden'>
-              <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-2' />
-              &nbsp;<span id='busuanzi_value_page_pv' className='text-gray-500 dark:text-gray-400 leading-6'></span>
-            </div>
-          </div>
 
         </div>
 

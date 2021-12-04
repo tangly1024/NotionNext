@@ -18,9 +18,9 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
       {/* 文章列表 */}
       <ul className='flex flex-wrap space-y-1'>
         {posts.map(post => (
-          <Link key={post.id} href={`${BLOG.path}/article/${post.slug}`}>
+          <Link key={post.id} href={`${BLOG.path}/article/${post.slug}`} passHref>
             <li className='w-full border-l pl-2 hover:underline cursor-pointer hover:scale-105 transform duration-500'>
-              <span className='text-gray-400'>{post.date.start_date}</span> &nbsp; <span className='dark:text-gray-200 text-blue-600'>{post.title}</span>
+              <span className='text-gray-400'>{post.date.start_date}</span> &nbsp; <span className='dark:text-blue-400 text-blue-600'>{post.title}</span>
             </li>
           </Link>
         ))}

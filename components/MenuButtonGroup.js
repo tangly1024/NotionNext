@@ -3,14 +3,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faArchive, faHome, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 const MenuButtonGroup = ({ allowCollapse = false }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const links = [
     { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { id: 1, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/article/about', show: true }
+    { id: 1, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', show: true },
+    { id: 2, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/article/about', show: true }
     // { id: 7, icon: 'faGithub', name: 'Github', to: 'https://github.com/tangly1024', show: true },
     // { id: 5, icon: 'faWeibo', name: '微博', to: 'https://weibo.com/tangly1024', show: true },
     // { id: 4, icon: 'faEnvelope', name: locale.NAV.MAIL, to: 'mailto:tlyong1992@hotmail.com', show: true }
@@ -26,8 +27,8 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
         if (link.show) {
           const selected = router.asPath === link.to
           return <Link key={link.id + link.icon} title={link.to} href={link.to} >
-            <a className={'py-2 px-5 hover:text-black dark:hover:text-white hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-600 duration-100 flex flex-nowrap align-middle' +
-              (selected ? 'bg-gray-200 dark:bg-black dark:text-white text-black ' : '')} >
+            <a className={'py-2 px-5 hover:text-black dark:hover:text-white hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-600 duration-100 flex flex-nowrap align-middle ' +
+              (selected ? 'font-bold bg-gray-200 dark:bg-black dark:text-white text-black ' : '')} >
               <div className='my-auto w-5 justify-center flex'>
                 <FontAwesomeIcon icon={link.icon} />
               </div>

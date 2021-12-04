@@ -43,14 +43,9 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 最新文章 */}
       {posts && (
-        <section className='mt-12'>
+        <section className='mt-4'>
           <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
             <div className='font-bold text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4' />{locale.COMMON.LATEST_POSTS}</div>
-            <Link href='/archive' passHref>
-              <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </div>
-            </Link>
           </div>
           <LatestPostsGroup posts={posts} />
         </section>
@@ -58,7 +53,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 分类  */}
       {categories && (
-        <section className='mt-12'>
+        <section className='mt-8'>
           <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
             <div className='font-bold text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
@@ -73,7 +68,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
       {/* 标签云  */}
       {tags && (
-        <section className='mt-12'>
+        <section className='mt-8'>
           <div className='text-sm py-2 px-5 flex flex-nowrap justify-between'>
             <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-4' />{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
@@ -96,10 +91,11 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>
         <Toc toc={post.toc} />
+
       </section>
     )}
 
-    <section id='blank' className='bg-white dark:bg-gray-800 py-20' />
+    <section id='blank' className='bg-white dark:bg-gray-900 py-20' />
 
   </aside>
 }

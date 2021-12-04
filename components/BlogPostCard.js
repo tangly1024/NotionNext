@@ -24,7 +24,9 @@ const BlogPostCard = ({ post, tags }) => {
             </span>
           </Link>
           <span className='mx-1 dark:text-gray-400'>|</span>
-          <span className='mt-2 mx-2 text-gray-400 dark:text-gray-300 text-sm leading-4'>{post.date.start_date}</span>
+          <Link href='/archive' passHref>
+            <span className='mt-2 mx-2 text-gray-400 hover:text-blue-400 hover:underline cursor-pointer dark:text-gray-300 text-sm leading-4'>{post.date.start_date}</span>
+          </Link>
         </div>
 
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>

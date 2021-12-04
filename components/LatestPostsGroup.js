@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
  * @param sliceCount 截取展示的数量 默认6
  * @constructor
  */
-const LatestPostsGroup = ({ posts, sliceCount = 6 }) => {
+const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
   // 深拷贝
   let postsSortByDate = Object.create(posts)
 
@@ -31,8 +31,7 @@ const LatestPostsGroup = ({ posts, sliceCount = 6 }) => {
         const selected = currentPath === `${BLOG.path}/article/${post.slug}`
         return (
           <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} passHref>
-            <div
-              className={(selected ? 'bg-gray-200 dark:bg-black ' : '') + ' leading-5 py-1.5 px-5 flex'}>
+            <div className={(selected ? 'bg-gray-200 dark:bg-black ' : '') + ' leading-5 py-1 px-5 flex'}>
               <div className='mr-2 text-gray-500 text-xs leading-5'>
                 {formatDateFmt(post.lastEditedTime, 'MM/dd')}
               </div>
