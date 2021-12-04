@@ -1126,6 +1126,11 @@ svg.notion-page-icon {
 
 .notion-to-do-item .notion-property-checkbox {
   margin-right: 8px;
+  @apply w-4 h-4 border-2
+}
+
+.notion-property-checkbox-checked {
+  @apply bg-white
 }
 
 .notion-google-drive {

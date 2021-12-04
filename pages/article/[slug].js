@@ -133,18 +133,18 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
           </div>
         </div>
         <div className='text-gray-800 dark:text-gray-300 dark:bg-gray-900 bg-gray-50 px-5 '>
-            <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-              <Link href={`/article/${prev.slug}`} passHref>
-                <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'>
-                  <FontAwesomeIcon icon={faAngleDoubleLeft} className='mr-1' />{prev.title}</div>
-              </Link>
-              <Link href={`/article/${next.slug}`} passHref>
-                <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}
-                  <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1 my-1' />
-                </div>
-              </Link>
-            </div>
+          <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
+            <Link href={`/article/${prev.slug}`} passHref>
+              <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'>
+                <FontAwesomeIcon icon={faAngleDoubleLeft} className='mr-1' />{prev.title}</div>
+            </Link>
+            <Link href={`/article/${next.slug}`} passHref>
+              <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}
+                <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1 my-1' />
+              </div>
+            </Link>
           </div>
+        </div>
 
         {/* 评论互动 */}
         <div
@@ -176,7 +176,7 @@ export async function getStaticPaths () {
 }
 
 export async function getStaticProps ({ params: { slug } }) {
-  const from = 'slug-props'
+  const from = `slug-props-${slug}`
   const notionPageData = await getNotionPageData({ from })
   let allPosts = await getAllPosts({ notionPageData, from, includePage: true })
   const post = allPosts.find(p => p.slug === slug)
