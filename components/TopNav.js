@@ -1,14 +1,14 @@
 import { useRef } from 'react'
 import DarkModeButton from '@/components/DarkModeButton'
-import SearchInput from '@/components/SearchInput'
 import SideBarDrawer from '@/components/SideBarDrawer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
+import BLOG from '@/blog.config'
 
 const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, currentCategory }) => {
   const drawer = useRef()
 
-  return (<>
+  return (<div id='top-nav' className='block lg:hidden'>
     {/* 侧面抽屉 */}
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
 
@@ -18,7 +18,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
         {/* 左侧LOGO */}
         <div className='flex ml-12'>
           <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
-               className='fixed top-3 left-0 z-30 py-1 px-5 text-gray-600 text-2xl cursor-pointer dark:text-gray-300'>
+               className='fixed top-3 left-0 z-30 ml-5 text-gray-600 text-2xl cursor-pointer dark:text-gray-300'>
             <FontAwesomeIcon icon={faBars} className='hover:scale-125 transform duration-200'
             />
           </div>
@@ -26,7 +26,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
 
         {/* 中间搜索框 */}
         <div className='w-96'>
-          <SearchInput currentTag={currentTag} currentSearch={currentSearch}/>
+          <span className='text-lg dark:text-gray-200'>{BLOG.title}</span> | <span className='dark:text-gray-300'>{BLOG.description}</span>
         </div>
 
         {/* 右侧功能 */}
@@ -36,7 +36,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
       </div>
     </div>
 
-  </>)
+  </div>)
 }
 
 export default TopNav

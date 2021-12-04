@@ -12,7 +12,7 @@ const DarkModeButton = () => {
     changeTheme(newTheme)
   }
   return <div className='z-10 duration-200 text-xl cursor-pointer'>
-    <FontAwesomeIcon icon={userTheme === 'dark' ? faSun : faMoon} id='darkModeButton' className='fa mx-2.5 my-2 hover:scale-125 transform duration-200'
+    <FontAwesomeIcon icon={userTheme === 'dark' ? faSun : faMoon} id='darkModeButton' className='mx-2 my-2 hover:scale-125 transform duration-200'
        onClick={handleChangeDarkMode} />
   </div>
 }

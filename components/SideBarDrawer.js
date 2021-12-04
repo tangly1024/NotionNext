@@ -18,14 +18,14 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, curren
   const switchSideDrawerVisible = () => {
     changeHiddenStatus(!isHidden)
   }
-  return <div>
+  return <>
     <div className={(isHidden ? '-ml-72' : 'shadow-2xl') + ' flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50'}>
       <SideBar tags={tags} post={post} posts={posts} categories={categories} currentCategory={currentCategory} />
     </div>
     {/* 背景蒙版 */}
-    <div id='drawer-background'
+    <div id='sidebar-drawer-background'
          className={(isHidden ? 'hidden' : 'block') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-30'}
          onClick={switchSideDrawerVisible} />
-  </div>
+  </>
 }
 export default SideBarDrawer

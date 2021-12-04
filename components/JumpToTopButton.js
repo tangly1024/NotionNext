@@ -41,7 +41,7 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
           <div className='w-10 text-xl dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
             <FontAwesomeIcon icon={faArrowUp} />
           </div>
-          {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent} </div>)}
+          {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}
         </div>
       </div>
     </div>)

@@ -51,20 +51,20 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={allPosts} categories={categories}>
     <Progress targetRef={targetRef} />
 
-    <article id='article-wrapper' ref={targetRef} className='flex-grow dark:bg-black pt-16 bg-gray-200'>
+    <div id='article-wrapper' ref={targetRef} className='flex-grow dark:bg-black bg-gray-200'>
 
-      <div className='max-w-5xl mx-auto'>
-        <div className='w-screen md:w-full pt-10 '>
-          {post.type && !post.type.includes('Page') && (<div className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0'>
+      <div className='max-w-5xl mx-auto mt-16 xl:mt-32 w-screen md:w-full '>
+        {post.type && !post.type.includes('Page') && (<>
+          <header className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0'>
             <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='lazy' objectFit='cover' layout='fill' alt={post.title} />
-          </div>)}
-        </div>
+          </header>
+        </>)}
 
-        <div className='animate__fadeIn animate__animated subpixel-antialiased w-screen md:w-full lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
+        <article className='animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
           {/* 文章Title */}
           <h1 className='font-bold text-3xl pt-5 text-black dark:text-white italic'> {post.title}</h1>
           <hr className='mt-4' />
-          <div className='flex-nowrap flex  mt-1 dark:text-white'>
+          <section className='flex-nowrap flex  mt-1 dark:text-white'>
             <Link href={`/category/${post.category}`} passHref>
               <div className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
                 <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
@@ -86,7 +86,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
               <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-2' />
               &nbsp;<span id='busuanzi_value_page_pv' className='text-gray-500 dark:text-gray-400 leading-6'></span>
             </div>
-          </div>
+          </section>
 
           {/* Notion文章主体 */}
           {blockMap && (
@@ -127,7 +127,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             </div>
           </section>
 
-        </div>
+        </article>
 
         <div className='w-screen md:w-full px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
           <div className='py-10'>
@@ -154,7 +154,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
           <Comment frontMatter={post} />
         </div>
       </div>
-    </article>
+    </div>
 
     {/* 悬浮目录按钮 */}
     <div className='block lg:hidden'>
