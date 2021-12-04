@@ -129,11 +129,6 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
         </article>
 
-        <div className='w-screen md:w-full px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
-          <div className='py-10'>
-            <RewardButton />
-          </div>
-        </div>
         <div className='text-gray-800 dark:text-gray-300 dark:bg-gray-900 bg-gray-50 px-5 '>
           <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
             <Link href={`/article/${prev.slug}`} passHref>
