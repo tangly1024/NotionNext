@@ -14,7 +14,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
     return <></>
   } else {
     return <div ref={targetRef}>
-      <div className='pt-14 pb-4 text-3xl dark:text-white' id={archiveTitle}>{archiveTitle}</div>
+      <div className='pt-16 pb-4 text-3xl dark:text-white' id={archiveTitle}>{archiveTitle}</div>
       <ul className='flex flex-wrap space-y-1'>
         {posts.map(post => (
           <Link key={post.id} href={`${BLOG.path}/article/${post.slug}`} passHref>
