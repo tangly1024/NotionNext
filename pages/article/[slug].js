@@ -6,7 +6,6 @@ import Progress from '@/components/Progress'
 import TagItem from '@/components/TagItem'
 import formatDate from '@/lib/formatDate'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
-import RewardButton from '@/components/RewardButton'
 import ShareBar from '@/components/ShareBar'
 import Comment from '@/components/Comment'
 import BaseLayout from '@/layouts/BaseLayout'
@@ -47,6 +46,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
   const drawerRight = useRef(null)
   const url = BLOG.link + useRouter().asPath
   const { locale } = useGlobal()
+  const date = formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)
 
   return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={allPosts} categories={categories}>
     <Progress targetRef={targetRef} />
@@ -56,7 +56,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
       <div className='max-w-5xl mx-auto mt-16 xl:mt-32 w-screen md:w-full '>
         {post.type && !post.type.includes('Page') && (<>
           <header className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0'>
-            <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='lazy' objectFit='cover' layout='fill' alt={post.title} />
+            <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='eager' objectFit='cover' layout='fill' alt={post.title} />
           </header>
         </>)}
 
@@ -71,12 +71,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
               </div>
             </Link>
             {post.type[0] !== 'Page' && (
-              <Link href='/archive' passHref>
+              <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`} passHref>
                 <div className='pl-1 cursor-pointer hover:text-gray-700  dark:hover:text-gray-200 text-gray-400 dark:text-gray-400 leading-10'>
-                  {formatDate(
-                    post?.date?.start_date || post.createdTime,
-                    BLOG.lang
-                  )}
+                {date}
                 </div>
               </Link>
             )}

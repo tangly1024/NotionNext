@@ -13,19 +13,17 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
   if (!posts || posts.length === 0) {
     return <></>
   } else {
-    return <div className='py-2' ref={targetRef}>
-      <div className='py-2 text-3xl dark:text-white'>{archiveTitle}</div>
-      {/* 文章列表 */}
+    return <div ref={targetRef}>
+      <div className='pt-14 pb-4 text-3xl dark:text-white' id={archiveTitle}>{archiveTitle}</div>
       <ul className='flex flex-wrap space-y-1'>
         {posts.map(post => (
           <Link key={post.id} href={`${BLOG.path}/article/${post.slug}`} passHref>
             <li className='w-full border-l pl-2 hover:underline cursor-pointer hover:scale-105 transform duration-500'>
-              <span className='text-gray-400'>{post.date.start_date}</span> &nbsp; <span className='dark:text-blue-400 text-blue-600'>{post.title}</span>
+              <div name={post?.date?.start_date}><span className='text-gray-400'>{post.date.start_date}</span> &nbsp; <span className='dark:text-blue-400 text-blue-600'>{post.title}</span></div>
             </li>
           </Link>
         ))}
       </ul>
-
     </div>
   }
 }
