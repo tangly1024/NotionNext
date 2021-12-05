@@ -6,44 +6,46 @@ import BlogPostListScroll from '@/components/BlogPostListScroll'
 import { useRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { getNotionPageData } from '@/lib/notion/getNotionData'
+import { useGlobal } from '@/lib/global'
 
 export async function getStaticProps () {
-  let posts = await getAllPosts({ from: 'index' })
-  posts = posts.filter(
-    post => post.status[0] === 'Published' && post.type[0] === 'Post'
-  )
-  const tags = await getAllTags(posts)
-  const categories = await getAllCategories(posts)
+  const from = 'search-props'
+  const notionPageData = await getNotionPageData({ from })
+  const allPosts = await getAllPosts({ notionPageData, from })
+  const categories = await getAllCategories(allPosts)
+  const tagOptions = notionPageData.tagOptions
+  const tags = await getAllTags({ allPosts, tagOptions })
 
-  const meta = {
-    title: `${BLOG.title} | ${BLOG.description} `,
-    description: BLOG.description,
-    type: 'website'
-  }
   return {
     props: {
-      posts,
+      allPosts,
       tags,
-      meta,
       categories
     },
     revalidate: 1
   }
 }
 
-const Search = ({ posts, tags, meta, categories }) => {
+const Search = ({ allPosts, tags, categories }) => {
   // 处理查询过滤 支持标签、关键词过滤
   let filteredPosts = []
   const searchKey = getSearchKey()
   if (searchKey) {
-    filteredPosts = posts.filter(post => {
+    filteredPosts = allPosts.filter(post => {
       const tagContent = post.tags ? post.tags.join(' ') : ''
       const searchContent = post.title + post.summary + tagContent
       return searchContent.toLowerCase().includes(searchKey.toLowerCase())
     })
   }
+  const { locale } = useGlobal()
+  const meta = {
+    title: `${BLOG.title} | ${locale.NAV.SEARCH} `,
+    description: BLOG.description,
+    type: 'website'
+  }
   return (
-    <BaseLayout meta={meta} tags={tags} totalPosts={posts} currentSearch={searchKey} categories={categories}>
+    <BaseLayout meta={meta} tags={tags} totalPosts={allPosts} currentSearch={searchKey} categories={categories}>
       <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
         <StickyBar>
           <div className='p-4 dark:text-gray-200'><FontAwesomeIcon icon={faSearch} className='mr-1'/> 搜索词： {searchKey}</div>
