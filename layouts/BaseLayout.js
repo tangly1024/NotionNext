@@ -102,7 +102,7 @@ const handleScrollDown = () => {
     nav && nav.classList.replace('top-0', '-top-16')
 
     const stickyBar = document.querySelector('#sticky-bar')
-    stickyBar && stickyBar.classList.replace('top-16', 'top-0')
+    stickyBar && stickyBar.classList.replace('top-14', 'top-0')
 
     const tocDrawerButton = document.querySelector('#toc-drawer-button')
     tocDrawerButton && tocDrawerButton.classList.replace('hidden', 'block')
@@ -124,7 +124,7 @@ const handleScrollUp = () => {
     nav && nav.classList.replace('-top-16', 'top-0')
 
     const stickyBar = document.querySelector('#sticky-bar')
-    stickyBar && stickyBar.classList.replace('top-0', 'top-16')
+    stickyBar && stickyBar.classList.replace('top-0', 'top-14')
 
     // const tocDrawerButton = document.querySelector('#toc-drawer-button')
     // tocDrawerButton && tocDrawerButton.classList.replace('block', 'hidden')

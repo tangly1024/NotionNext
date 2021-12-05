@@ -37,12 +37,12 @@ const SearchInput = ({ currentTag, currentSearch }) => {
     setSearchKey(val)
   }
 
-  return <div className='flex border dark:border-gray-600 w-full'>
+  return <div className='flex border dark:border-gray-600 w-full bg-gray-100 dark:bg-gray-900'>
     <input
       ref={searchInputRef}
       type='text'
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-      className={'pl-2 transition leading-10 border-gray-300 bg-white text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+      className={'w-full pl-2 transition leading-10 border-gray-300 bg-white text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={currentSearch}
