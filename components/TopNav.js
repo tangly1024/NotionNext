@@ -4,6 +4,7 @@ import SideBarDrawer from '@/components/SideBarDrawer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import BLOG from '@/blog.config'
+import Link from 'next/link'
 
 const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, currentCategory }) => {
   const drawer = useRef()
@@ -26,7 +27,11 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
 
         {/* 中间搜索框 */}
         <div className='w-96'>
-          <span className='text-lg dark:text-gray-200'>{BLOG.title}</span> | <span className='dark:text-gray-300'>{BLOG.description}</span>
+          <Link href='/' passHref>
+            <div className='cursor-pointer'>
+            <span className='text-lg dark:text-gray-200'>{BLOG.title}</span> | <span className='dark:text-gray-300'>{BLOG.description}</span>
+            </div>
+          </Link>
         </div>
 
         {/* 右侧功能 */}
