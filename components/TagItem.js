@@ -2,8 +2,13 @@ import { faTag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
+import { useGlobal } from '@/lib/global'
 
 const TagItem = ({ tag, selected }) => {
+  const { locale } = useGlobal()
+  if (!tag) {
+    <>{locale.COMMON.NOTAG}</>
+  }
   return (
   <Link href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`} passHref>
     <li
