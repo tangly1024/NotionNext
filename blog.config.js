@@ -1,5 +1,5 @@
 const BLOG = {
-  title: '塘里独立博客',
+  title: '塘里博客',
   author: '塘里1024',
   email: 'tlyong1992@hotmail.com',
   link: 'https://tangly1024.com',
