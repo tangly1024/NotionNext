@@ -30,9 +30,9 @@ const BlogPostCard = ({ post, tags }) => {
         </div>
 
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <div className='cursor-pointer my-3 text-lg leading-tight font-bold text-black dark:text-gray-100 hover:underline'>
+          <p className='cursor-pointer my-3 text-lg leading-tight font-bold text-black dark:text-gray-100 hover:underline'>
             {post.title}
-          </div>
+          </p>
         </Link>
 
         <p className='mt-2 text-gray-400 dark:text-gray-400 text-sm'>{post.summary}</p>

@@ -26,6 +26,7 @@
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@popperjs/core": "^2.9.3",
     "animate.css": "^4.1.1",
+    "axios": ">=0.21.1",
     "copy-to-clipboard": "^3.3.1",
     "feed": "^4.2.2",
     "gitalk": "^1.7.2",
@@ -42,6 +43,7 @@
     "react-cusdis": "^2.0.1",
     "react-dom": "17.0.2",
     "react-notion-x": "4.6.5",
+    "styled-components": "^5.3.3",
     "use-ackee": "^3.0.0"
   },
   "devDependencies": {

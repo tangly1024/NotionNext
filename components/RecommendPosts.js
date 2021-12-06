@@ -38,7 +38,7 @@ const RecommendPosts = ({ currentPost, totalPosts }) => {
   const { locale } = useGlobal()
 
   return <div className='dark:text-gray-300 dark:bg-gray-800 bg-gray-100 p-2 my-2  border-l-4 border-yellow-500'>
-    <h2 className='mb-2 font-bold text-xl'>{locale.COMMON.RELATE_POSTS}</h2>
+    <div className='mb-2 font-bold text-xl'>{locale.COMMON.RELATE_POSTS}</div>
     <ul className='list-disc px-5 text-sm '>
       {filteredPosts.map(post => (
         <li className='py-1' key={post.id} ><Link href={`/article/${post.slug}`}><a className='cursor-pointer hover:underline'>{post.title}</a></Link></li>

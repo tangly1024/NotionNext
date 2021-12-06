@@ -86,7 +86,7 @@ const Header = ({ navBarTitle, fullWidth = true }) => {
               <FontAwesomeIcon icon={faBars} className='hover:scale-125 transform duration-200' />
             </div>
             <Image
-              alt={BLOG.author}
+              alt={BLOG.title}
               width={28}
               height={28}
               src='/avatar.svg'

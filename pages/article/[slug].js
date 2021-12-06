@@ -37,7 +37,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
     return <Custom404 />
   }
   const meta = {
-    title: `${post.title} | ${BLOG.title}`,
+    title: `${post.title}`,
     description: post.summary,
     type: 'article',
     tags: post.tags
@@ -60,9 +60,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
           </header>
         </>)}
 
-        <article className='animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
+        <article itemScope itemType="https://schema.org/Movie" className='animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
           {/* 文章Title */}
-          <h1 className='font-bold text-3xl pt-5 text-black dark:text-white italic'> {post.title}</h1>
+          <h2 className='font-bold text-3xl pt-5 text-black dark:text-white italic'> {post.title}</h2>
           <hr className='mt-4' />
           <section className='flex-nowrap flex  mt-1 dark:text-white'>
             <Link href={`/category/${post.category}`} passHref>
