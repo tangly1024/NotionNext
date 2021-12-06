@@ -2,13 +2,16 @@ import Link from 'next/link'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faFolderOpen, faThList } from '@fortawesome/free-solid-svg-icons'
+import { useGlobal } from '@/lib/global'
 
 const CategoryList = ({ currentCategory, categories }) => {
   if (!categories) {
     return <></>
   }
+  const { locale } = useGlobal()
+
   return <ul className='flex py-1 space-x-3'>
-    <li className='w-16 py-2 dark:text-gray-200'><FontAwesomeIcon className='mr-2' icon={faThList} />分类:</li>
+    <li className='w-16 py-2 dark:text-gray-200'><FontAwesomeIcon className='mr-2' icon={faThList} />{locale.COMMON.CATEGORY}</li>
     {Object.keys(categories).map(category => {
       const selected = category === currentCategory
       return (
