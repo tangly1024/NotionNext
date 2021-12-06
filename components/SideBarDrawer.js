@@ -13,19 +13,32 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, curren
       handleSwitchSideDrawerVisible: () => switchSideDrawerVisible()
     }
   })
-  const [isHidden, changeHiddenStatus] = useState(true)
+  const [isShow, changeHiddenStatus] = useState(false)
   // 点击按钮更改侧边抽屉状态
   const switchSideDrawerVisible = () => {
-    changeHiddenStatus(!isHidden)
+    changeHiddenStatus(!isShow)
+    if (window) {
+      const sideBarDrawer = window.document.getElementById('sidebar-drawer')
+      const sideBarDrawerBackground = window.document.getElementById('sidebar-drawer-background')
+
+      if (isShow) {
+        sideBarDrawer.classList.replace('-ml-72', 'ml-0')
+        sideBarDrawerBackground.classList.replace('hidden', 'block')
+      } else {
+        sideBarDrawer.classList.replace('ml-0', '-ml-72')
+        sideBarDrawerBackground.classList.replace('block', 'hidden')
+      }
+    }
   }
   return <>
-    <div className={(isHidden ? '-ml-72' : 'shadow-2xl') + ' flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50'}>
+    <div id='sidebar-drawer' className='-ml-72 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50'>
       <SideBar tags={tags} post={post} posts={posts} categories={categories} currentCategory={currentCategory} />
     </div>
     {/* 背景蒙版 */}
     <div id='sidebar-drawer-background'
-         className={(isHidden ? 'hidden' : 'block') + ' fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-30'}
+          className='hidden fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-30'
          onClick={switchSideDrawerVisible} />
+
   </>
 }
 export default SideBarDrawer
