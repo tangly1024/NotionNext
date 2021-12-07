@@ -5,8 +5,8 @@ import Router from 'next/router'
 
 const InfoCard = () => {
   return <>
-    <div className='flex text-center pb-3 pl-4 cursor-pointer'>
-        <div className='hover:rotate-45 hover:scale-125 transform duration-200' onClick={ () => { Router.push('/') }}>
+    <div className='flex text-center pb-3 pl-4 cursor-pointer' onClick={ () => { Router.push('/') }}>
+        <div className='hover:rotate-45 hover:scale-125 transform duration-200'>
           <Image
           alt={BLOG.title}
           width={60}
