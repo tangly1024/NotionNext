@@ -2,7 +2,7 @@ const BLOG = {
   title: '塘里博客',
   author: '塘里1024',
   email: 'tlyong1992@hotmail.com',
-  link: 'https://tangly1024.com',
+  link: 'https://blog.tangly1024.com',
   description: '欢迎访问塘里1024的博客，这里主要是关于编程技术与投资理财相关的思考。我的本职是一名程序员、写博客是我的业余爱好',
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
