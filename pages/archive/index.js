@@ -57,7 +57,7 @@ const Index = ({ allPosts, tags, categories }) => {
 
   return (
     <BaseLayout meta={meta} tags={tags} categories={categories}>
-      <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner pt-16 '>
+      <div className=' pt-16 '>
         <StickyBar>
           <div className='py-2.5 text-lg lg:mx-14 dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4'/>{locale.NAV.ARCHIVE}</div>
         </StickyBar>

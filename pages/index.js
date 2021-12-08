@@ -30,7 +30,7 @@ export async function getStaticProps () {
 const Index = ({ allPosts, tags, meta, categories }) => {
   return (
     <BaseLayout meta={meta} tags={tags} totalPosts={allPosts} categories={categories}>
-      <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
+      <div className=''>
         <BlogPostListScroll posts={allPosts} tags={tags} />
       </div>
     </BaseLayout>

@@ -29,7 +29,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
         <div className='w-96'>
           <Link href='/' passHref>
             <div className='cursor-pointer'>
-             <h1 className='text-lg dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{BLOG.title }</h1>
+             <h1 className='text-lg font-serif dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{BLOG.title }</h1>
             </div>
           </Link>
         </div>

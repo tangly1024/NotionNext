@@ -13,7 +13,7 @@ export default function Tag ({ tags, allPosts, filteredPosts, currentTag, catego
     type: 'website'
   }
   return <BaseLayout meta={meta} tags={tags} currentTag={currentTag} categories={categories} totalPosts={allPosts}>
-    <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner pt-16'>
+    <div className=' pt-16'>
       <StickyBar>
         <TagList tags={tags} currentTag={currentTag}/>
       </StickyBar>

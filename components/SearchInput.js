@@ -42,12 +42,12 @@ const SearchInput = ({ currentTag, currentSearch }) => {
       ref={searchInputRef}
       type='text'
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-      className={'w-full pl-2 transition leading-10 border-gray-300 bg-white text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+      className={'w-full pl-2 transition leading-10 border-gray-300 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={currentSearch}
     />
-    {(searchKey && searchKey.length && <FontAwesomeIcon icon={faTimes} className='text-gray-300 float-right m-4 cursor-pointer' onClick={cleanSearch} />)}
+    {(searchKey && searchKey.length && <FontAwesomeIcon icon={faTimes} className='text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
 
     <div className='p-3 text-xl bg-gray-50 flex border-l dark:border-gray-700 dark:hover:bg-gray-800 dark:bg-gray-600 justify-center align-middle cursor-pointer'
       onClick={() => { handleSearch(searchKey) }}>

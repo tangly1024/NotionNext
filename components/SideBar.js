@@ -27,21 +27,22 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
   const { locale } = useGlobal()
   return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
     <InfoCard />
+    <hr className='dark:border-gray-700 mt-6 py-1' />
 
     <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-900 pb-4'}>
 
-        {/* <hr className='dark:border-gray-700' /> */}
-        <MenuButtonGroup allowCollapse={true} />
-        <section className='p-5'>
-          <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
-        </section>
-        <hr className='dark:border-gray-700' />
+      {/* <hr className='dark:border-gray-700' /> */}
+      <MenuButtonGroup allowCollapse={true} />
+
+      <section className='p-5'>
+        <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
+      </section>
 
       {/* 最新文章 */}
       {posts && (
         <section className='mt-4'>
-          <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='font-bold text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4 w-5' />{locale.COMMON.LATEST_POSTS}</div>
+          <div className='text-sm pb-4 px-5  flex flex-nowrap justify-between'>
+            <div className='font-light text-gray-600  dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-2 w-5' />{locale.COMMON.LATEST_POSTS}</div>
           </div>
           <LatestPostsGroup posts={posts} />
         </section>
@@ -50,8 +51,8 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {/* 分类  */}
       {categories && (
         <section className='mt-8'>
-          <div className='text-sm py-2 px-5  flex flex-nowrap justify-between'>
-            <div className='font-bold text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-4 w-5' />{locale.COMMON.CATEGORY}</div>
+          <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2 w-5' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
@@ -65,15 +66,15 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {/* 标签云  */}
       {tags && (
         <section className='mt-8'>
-          <div className='text-sm py-2 px-5 flex flex-nowrap justify-between'>
-            <div className='text-gray-600 font-bold dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-4 w-5'/>{locale.COMMON.TAGS}</div>
+          <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-2 w-5'/>{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
-              <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+              <div className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
               </div>
             </Link>
           </div>
-          <div className='px-5'>
+          <div className='px-5 pt-2'>
             <TagGroups tags={tags} currentTag={currentTag} />
           </div>
         </section>
@@ -81,7 +82,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
     </div>
 
     {post && (
-      <section id='left-toc' className='sticky pb-20 top-0 bg-white dark:bg-gray-800'>
+      <section id='left-toc' className='sticky pb-20 top-0 bg-white dark:bg-gray-900'>
         <div className='border-b text-2xl bg-white font-bold text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>

@@ -16,7 +16,7 @@ export default function Category ({ tags, allPosts, categories }) {
     type: 'website'
   }
   return <BaseLayout meta={meta} totalPosts={allPosts} tags={tags}>
-    <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner p-2 lg:px-14'>
+    <div className=' p-2 lg:px-14'>
       <div className='bg-white dark:bg-gray-700 px-10 py-10 mt-20 lg:mt-16'>
         <div className='dark:text-gray-200 mb-5'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}:</div>
         <div id='category-list' className='duration-200 flex flex-wrap'>

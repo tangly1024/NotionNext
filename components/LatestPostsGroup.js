@@ -26,26 +26,25 @@ const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
   // 获取当前路径
   const currentPath = useRouter().asPath
 
-  return <div>
+  return <>
       {postsSortByDate.map(post => {
         const selected = currentPath === `${BLOG.path}/article/${post.slug}`
         return (
           <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} passHref>
-            <div className={(selected ? 'bg-gray-200 dark:bg-black ' : '') + ' leading-5 py-1 px-5 flex'}>
-              <div className='mr-2 text-gray-500 text-xs leading-5'>
-                {formatDateFmt(post.lastEditedTime, 'MM/dd')}
-              </div>
-              <div
-                className={
-                  (selected ? 'dark:text-white text-black ' : 'text-gray-500') +
-                  ' text-sm flex w-50 overflow-x-hidden whitespace-nowrap  hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer hover:underline'
+            <div className={(selected ? 'bg-gray-200 dark:bg-black ' : '') + ' my-1 px-5 flex justify-between'}>
+              <div className={ ' text-xs py-1 flex w-44 overflow-x-hidden whitespace-nowrap overflow-hidden pt-1 ' +
+                'hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer hover:underline' +
+                  (selected ? 'dark:text-white text-black ' : 'text-gray-500 dark:text-gray-300')
                 }>
                 {post.title}
+              </div>
+              <div className='mr-2 text-gray-500 text-xs py-1'>
+                {formatDateFmt(post.lastEditedTime, 'yyyy/MM/dd')}
               </div>
             </div>
           </Link>
         )
       })}
-    </div>
+    </>
 }
 export default LatestPostsGroup

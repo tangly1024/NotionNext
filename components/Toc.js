@@ -50,8 +50,8 @@ const Toc = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs))
 
-  return <div className='dark:bg-gray-900 bg-white'>
-    <nav className='text-gray-500 dark:text-gray-400 overflow-y-auto scroll-hidden p-2'>
+  return <>
+    <nav className=' dark:text-gray-400 dark:bg-gray-900 overflow-y-auto scroll-hidden p-2'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (
@@ -74,7 +74,7 @@ const Toc = ({ toc }) => {
         )
       })}
     </nav>
-  </div>
+  </>
 }
 
 export default Toc

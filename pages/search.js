@@ -46,7 +46,7 @@ const Search = ({ allPosts, tags, categories }) => {
   }
   return (
     <BaseLayout meta={meta} tags={tags} totalPosts={allPosts} currentSearch={searchKey} categories={categories}>
-      <div className='flex-grow bg-gray-200 dark:bg-black shadow-inner'>
+      <div className=''>
         <StickyBar>
           <div className='p-4 dark:text-gray-200'><FontAwesomeIcon icon={faSearch} className='mr-1'/> 搜索词： {searchKey}</div>
         </StickyBar>

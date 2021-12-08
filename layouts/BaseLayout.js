@@ -76,8 +76,10 @@ const BaseLayout = ({
         <div className='hidden lg:block z-10'>
           <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
-        <div className='flex flex-grow' ref={targetRef}>
-          {children}
+        <div className='flex flex-grow min-h-screen' ref={targetRef}>
+          <div className='flex-grow bg-gray-50 dark:bg-black shadow-inner'>
+            {children}
+          </div>
         </div>
       </div>
 
