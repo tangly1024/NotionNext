@@ -100,11 +100,12 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
           <RecommendPosts currentPost={post} totalPosts={allPosts} />
 
           {/* 版权声明 */}
-          <section className='text-sm overflow-auto dark:bg-gray-800 dark:text-gray-300 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
-            <ul>
+          <section className='dark:text-gray-300 mt-6'>
+            <div className='text-2xl mb-2'>版权声明</div>
+            <ul className='text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-4 border-red-500'>
               <li>本文作者: <Link href='/article/about'><a className='hover:underline'>{BLOG.author}</a></Link></li>
               <li>本文链接: <a className='hover:underline' href={url}>{url}</a></li>
-              <li>版权声明: 本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
+              <li>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</li>
             </ul>
           </section>
 

@@ -12,7 +12,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
           <div className={(selected
             ? 'bg-gray-200 dark:bg-black text-black dark:text-white'
             : 'dark:text-gray-400 text-gray-500') +
-            ' duration-300 hover:text-black dark:hover:text-white hover:underline px-5 cursor-pointer py-2'}>
+            ' duration-300 hover:text-blue-500 dark:hover:text-blue-400 hover:underline px-5 cursor-pointer py-2'}>
             <FontAwesomeIcon icon={selected ? faFolderOpen : faFolder} className={`${selected ? 'text-black dark:text-white' : 'text-gray-400'} mr-2 `} />{category}({categories[category]})</div>
         </Link>
       })}

@@ -38,7 +38,7 @@ const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
               <div
                 className={
                   (selected ? 'dark:text-white text-black ' : 'text-gray-500') +
-                  ' text-sm flex w-50 overflow-x-hidden whitespace-nowrap  hover:text-black dark:hover:text-white cursor-pointer hover:underline'
+                  ' text-sm flex w-50 overflow-x-hidden whitespace-nowrap  hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer hover:underline'
                 }>
                 {post.title}
               </div>

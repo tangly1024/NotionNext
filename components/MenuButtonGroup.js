@@ -27,7 +27,7 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
         if (link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={link.id + link.icon} title={link.to} href={link.to} >
-            <a className={'py-2 px-5 hover:text-black dark:hover:text-white hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-600 duration-100 flex flex-nowrap align-middle ' +
+            <a className={'py-2 px-5 hover:text-white hover:bg-blue-500 cursor-pointer duration-100 flex flex-nowrap align-middle ' +
               (selected ? 'font-bold bg-gray-200 dark:bg-black dark:text-white text-black ' : '')} >
               <div className='my-auto w-5 justify-center flex'>
                 <FontAwesomeIcon icon={link.icon} />

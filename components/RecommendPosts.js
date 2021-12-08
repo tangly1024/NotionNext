@@ -25,7 +25,11 @@ const RecommendPosts = ({ currentPost, totalPosts }) => {
   if (currentPost.tags && currentPost.tags.length) {
     const currentTag = currentPost.tags[0]
     filteredPosts = totalPosts.filter(
-      post => post && post.tags && post.tags.includes(currentTag) && post.slug !== currentPost.slug
+      post =>
+        post &&
+        post.tags &&
+        post.tags.includes(currentTag) &&
+        post.slug !== currentPost.slug
     )
   }
   shuffleSort(filteredPosts)
@@ -37,13 +41,21 @@ const RecommendPosts = ({ currentPost, totalPosts }) => {
 
   const { locale } = useGlobal()
 
-  return <div className='dark:text-gray-300 dark:bg-gray-800 bg-gray-100 p-2 my-2  border-l-4 border-yellow-500'>
-    <div className='mb-2 font-bold text-xl'>{locale.COMMON.RELATE_POSTS}</div>
-    <ul className='list-disc px-5 text-sm '>
-      {filteredPosts.map(post => (
-        <li className='py-1' key={post.id} ><Link href={`/article/${post.slug}`}><a className='cursor-pointer hover:underline'>{post.title}</a></Link></li>
-      ))}
-    </ul>
-  </div>
+  return (
+    <div className="dark:text-gray-300">
+      <div className="mb-2 text-2xl">{locale.COMMON.RELATE_POSTS}</div>
+        <ul className="list-disc pl-6 text-sm dark:bg-gray-900 bg-gray-100 p-2 my-2  border-l-4 border-yellow-500">
+          {filteredPosts.map(post => (
+            <li className="py-1" key={post.id}>
+              <Link href={`/article/${post.slug}`}>
+                <a className="cursor-pointer hover:text-blue-500 hover:underline">
+                  {post.title}
+                </a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+    </div>
+  )
 }
 export default RecommendPosts
