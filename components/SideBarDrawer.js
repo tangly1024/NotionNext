@@ -16,12 +16,13 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, curren
   const [isShow, changeHiddenStatus] = useState(false)
   // 点击按钮更改侧边抽屉状态
   const switchSideDrawerVisible = () => {
-    changeHiddenStatus(!isShow)
+    const showStatus = !isShow
+    changeHiddenStatus(showStatus)
     if (window) {
       const sideBarDrawer = window.document.getElementById('sidebar-drawer')
       const sideBarDrawerBackground = window.document.getElementById('sidebar-drawer-background')
 
-      if (isShow) {
+      if (showStatus) {
         sideBarDrawer.classList.replace('-ml-72', 'ml-0')
         sideBarDrawerBackground.classList.replace('hidden', 'block')
       } else {
