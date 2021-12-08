@@ -62,7 +62,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
         <article itemScope itemType="https://schema.org/Movie" className='animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
           {/* 文章Title */}
-          <h2 className='font-bold text-4xl text-black dark:text-white font-serif'> {post.title}</h2>
+          <h2 className='font-bold text-3xl text-black dark:text-white font-serif'> {post.title}</h2>
           <hr className='mt-4' />
           <section className='flex-nowrap flex  mt-1 dark:text-white font-light'>
             <Link href={`/category/${post.category}`} passHref>
@@ -79,7 +79,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             )}
 
             <div id='busuanzi_container_page_pv' className='hidden'>
-              <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-3' />
+              <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-5' />
               &nbsp;<span id='busuanzi_value_page_pv' className='text-gray-500 dark:text-gray-400 leading-6'></span>
             </div>
           </section>
