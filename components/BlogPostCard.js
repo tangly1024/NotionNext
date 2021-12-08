@@ -17,10 +17,10 @@ const BlogPostCard = ({ post, tags }) => {
       </Link>
 
       <div className='px-4 py-4 col-span-3'>
-        <div className='w-52'>
+        <div>
           <Link href={`/category/${post.category}`} passHref>
-            <span className='cursor-pointer dark:text-gray-200 text-gray-400 text-sm py-1.5 mr-1 hover:underline hover:text-blue-500 dark:hover:text-blue-400 transform'>
-              <FontAwesomeIcon icon={faFolder} size='sm' className='mr-1 text-sm' />{post.category}
+            <span className='cursor-pointer dark:text-gray-200 text-gray-400 text-sm hover:underline hover:text-blue-500 dark:hover:text-blue-400 transform'>
+              <FontAwesomeIcon icon={faFolder} size='sm' className='mr-1 w-5 text-sm' />{post.category}
             </span>
           </Link>
           <span className='mx-1 dark:text-gray-400'>|</span>

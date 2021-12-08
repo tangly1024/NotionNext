@@ -17,7 +17,7 @@
     "dev-mac": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "postbuild": "next-sitemap --config next-sitemap.config.js"
+    "post-build": "next-sitemap --config next-sitemap.config.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
