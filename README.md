@@ -17,7 +17,7 @@
   </a>
 </p>
 
-演示地址：[https://blog.tangly1024.com/](https://blog.tangly1024.com/)
+演示地址：[https://tangly1024.com/](https://tangly1024.com/)
 ## 亮点 ✨
 
 **🚀 &nbsp;秒开，设备全适配**
