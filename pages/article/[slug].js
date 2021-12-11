@@ -27,7 +27,8 @@ import TocDrawerButton from '@/components/TocDrawerButton'
 import { useGlobal } from '@/lib/global'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDoubleLeft, faAngleDoubleRight, faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
+import BlogAround from '@/components/BlogAround'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -53,9 +54,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
     <div id='article-wrapper' ref={targetRef} className='flex-grow'>
 
-      <div className='max-w-5xl mx-auto mt-16 xl:mt-32 w-screen md:w-full duration-300'>
+      <div className='max-w-5xl mx-auto mt-16 xl:mt-32 w-screen md:w-full'>
 
-        <article itemScope itemType="https://schema.org/Movie" className='hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
+        <article itemScope itemType="https://schema.org/Movie" className='duration-300 hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
           {post.type && !post.type.includes('Page') && (<>
             <header className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden'>
               <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='eager' objectFit='cover' layout='fill' alt={post.title} />
@@ -82,6 +83,10 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
               <FontAwesomeIcon icon={faEye} className='text-gray-500 dark:text-gray-400 mt-3 ml-5' />
               &nbsp;<span id='busuanzi_value_page_pv' className='text-gray-500 dark:text-gray-400 leading-6'></span>
             </div>
+          </section>
+
+          <section className='px-1 py-2 my-1 text-sm  font-light italic bg-gray-50 text-gray-600 dark:bg-gray-700 dark:text-gray-400'>
+            {post.summary}
           </section>
 
           {/* Notion文章主体 */}
@@ -124,21 +129,9 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             </div>
           </section>
 
-        </article>
+          <BlogAround prev={prev} next={next}/>
 
-        <div className='text-gray-800 dark:text-gray-300 dark:bg-gray-900 bg-gray-100 px-5 '>
-          <div className='flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
-            <Link href={`/article/${prev.slug}`} passHref>
-              <div className='py-3 text-blue-500 text-lg hover:underline cursor-pointer'>
-                <FontAwesomeIcon icon={faAngleDoubleLeft} className='mr-1' />{prev.title}</div>
-            </Link>
-            <Link href={`/article/${next.slug}`} passHref>
-              <div className='flex py-3 text-blue-500 text-lg hover:underline cursor-pointer'>{next.title}
-                <FontAwesomeIcon icon={faAngleDoubleRight} className='ml-1 my-1' />
-              </div>
-            </Link>
-          </div>
-        </div>
+        </article>
 
         {/* 评论互动 */}
         <div
