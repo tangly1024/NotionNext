@@ -85,13 +85,13 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             </div>
           </section>
 
-          <section className='px-1 py-2 my-1 text-sm  font-light italic bg-gray-50 text-gray-600 dark:bg-gray-700 dark:text-gray-400'>
+          <section className='px-1 py-2 my-1 text-sm font-light italic bg-gray-50 text-gray-600 dark:bg-gray-700 dark:text-gray-400'>
             {post.summary}
           </section>
 
           {/* Notion文章主体 */}
           {blockMap && (
-            <NotionRenderer recordMap={blockMap} mapPageUrl={mapPageUrl}
+            <NotionRenderer className={`${BLOG.font}`} recordMap={blockMap} mapPageUrl={mapPageUrl}
               components={{
                 equation: Equation,
                 code: Code,

@@ -9,19 +9,19 @@ const BLOG = {
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   defaultImgCover: 'https://avatars.githubusercontent.com/u/15920488', // default image cover
   appearance: 'auto', // ['light', 'dark', 'auto'],
-  font: 'font-sans', // ['font-sans', 'font-serif', 'font-mono']
+  font: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
   lightBackground: '#ffffff', // use hex value, don't forget '#' e.g #fffefc
   darkBackground: '#111827', // use hex value, don't forget '#'
   path: '', // leave this empty unless you want to deploy in a folder
   since: 2020, // if leave this empty, current year will be used.
   postsPerPage: 6, // post counts per page
   sortByDate: false,
-  showAbout: true, // WIP
-  showArchive: true, // WIP
+  showAbout: true, // WIP 是否显示关于
+  showArchive: true, // WIP 是否显示归档
   autoCollapsedNavBar: false, // the automatically collapsed navigation bar
   socialLink: 'https://weibo.com/u/2245301913',
   seo: {
-    keywords: ['建站', 'Notion', '赚钱', '写作', '副业'],
+    keywords: ['Notion', '写作', '博客'],
     googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
   },
   analytics: {
@@ -58,10 +58,11 @@ const BLOG = {
       repo: 'tangly1024/NotionNext'
     }
   },
-  isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   googleAdsenseId: 'ca-pub-2708419466378217', // 谷歌广告ID
   DaoVoiceId: '', // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
-  TidioId: '' // 在线聊天 https://www.tidio.com/
+  TidioId: '', // 在线聊天 https://www.tidio.com/
+  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+
 }
 // export default BLOG
 module.exports = BLOG

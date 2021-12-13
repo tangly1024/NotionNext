@@ -57,6 +57,20 @@
     - Notion token 的有效期只有 180 天，请确保在 Vercel Dashboard 上手动更新，我们可能会在未来切换到官方 API 来解决这个问题。此外，如果数据库是非公开到，Notion 中的图片可能无法正常显示到网页上。
 - **稍微等等就可以访问了！** 简单吗?
 
+
+## 快速开发
+
+```bash
+yarn # 安装依赖
+
+yarn run dev # 本地开发
+
+yarn run build # 本地打包编译
+
+yarn run start # 本地启动NextJS服务
+
+```
+
 ## 引用技术
 
 - **生成**: Next.js SSG 和 Incremental Static Regeneration

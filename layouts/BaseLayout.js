@@ -66,7 +66,7 @@ const BaseLayout = ({
   const targetRef = useRef(null)
 
   return (
-    <div id='wrapper' className={[BLOG.font, 'subpixel-antialiased', theme].join(' ')}>
+    <div id='wrapper' className={theme}>
       <CommonHead meta={meta} />
 
       {/* 顶部导航栏 */}
@@ -78,7 +78,6 @@ const BaseLayout = ({
           <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
         <div className='flex flex-grow min-h-screen' ref={targetRef}>
-
           {onLoading
             ? <LoadingCover/>
             : <div className='flex-grow bg-gray-50 dark:bg-black shadow-inner animate__animated animate__fadeIn'>

@@ -83,7 +83,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
 
     {post && (
       <section id='left-toc' className='sticky pb-20 top-0 bg-white dark:bg-gray-900'>
-        <div className='border-b text-2xl bg-white font-bold text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
+        <div className='border-b text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>
         <Toc toc={post.toc} />
