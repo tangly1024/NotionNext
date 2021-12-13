@@ -84,12 +84,7 @@ const ShareBar = ({ post }) => {
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='text-red-600' target='_blank' rel='noreferrer' href={`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${shareUrl}&sharesource=qzone&title=${post.title}&summary=${post.summary}`} >
-          <FontAwesomeIcon icon={faStar}/>
-        </a>
-      </div>
-      <div className='cursor-pointer text-2xl'>
-        <a className='text-red-600' onClick={copyUrl} >
+        <a className='text-yellow-600' onClick={copyUrl} >
           <FontAwesomeIcon icon={faLink}/>
         </a>
       </div>
