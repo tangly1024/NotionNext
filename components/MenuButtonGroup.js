@@ -28,12 +28,12 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
         if (link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={link.id + link.icon} title={link.to} href={link.to} >
-            <a className={'py-2 px-5 text-lg hover:bg-blue-400 hover:text-white cursor-pointer duration-100 font-light flex flex-nowrap align-middle ' +
+            <a className={'py-2 px-5 text-lg hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer duration-100 font-light flex flex-nowrap align-middle ' +
               (selected ? 'bg-blue-500 text-white ' : ' ')} >
-              <div className='my-auto w-5 justify-center flex'>
+              <div className='my-auto justify-center flex'>
                 <FontAwesomeIcon icon={link.icon} />
               </div>
-              <div className={'ml-4 w-32'}>{link.name}</div>
+              <div className={'ml-4'}>{link.name}</div>
             </a>
           </Link>
         } else {

@@ -42,7 +42,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {posts && (
         <section className='mt-4'>
           <div className='text-sm pb-4 px-5  flex flex-nowrap justify-between'>
-            <div className='font-light text-gray-600  dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-2 w-5' />{locale.COMMON.LATEST_POSTS}</div>
+            <div className='font-light text-gray-600  dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-2' />{locale.COMMON.LATEST_POSTS}</div>
           </div>
           <LatestPostsGroup posts={posts} />
         </section>
@@ -52,7 +52,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {categories && (
         <section className='mt-8'>
           <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2 w-5' />{locale.COMMON.CATEGORY}</div>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
               <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
@@ -67,7 +67,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
       {tags && (
         <section className='mt-8'>
           <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-2 w-5'/>{locale.COMMON.TAGS}</div>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-2'/>{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
               <div className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />

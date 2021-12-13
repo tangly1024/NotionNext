@@ -20,7 +20,7 @@ const BlogPostCard = ({ post, tags }) => {
         <div>
           <Link href={`/category/${post.category}`} passHref>
             <span className='cursor-pointer dark:text-gray-200  font-light text-gray-500 text-sm hover:underline hover:text-blue-500 dark:hover:text-blue-400 transform'>
-              <FontAwesomeIcon icon={faFolder} size='sm' className='mr-1 w-5 text-sm' />{post.category}
+              <FontAwesomeIcon icon={faFolder} className='mr-1' />{post.category}
             </span>
           </Link>
           <span className='mx-2 dark:text-gray-400 text-gray-500'>|</span>

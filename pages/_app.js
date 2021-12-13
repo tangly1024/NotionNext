@@ -6,6 +6,10 @@ import 'animate.css'
 import BLOG from 'blog.config'
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
+// 解决React-FontAwesome图标问题
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
