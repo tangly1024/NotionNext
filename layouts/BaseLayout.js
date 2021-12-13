@@ -9,6 +9,7 @@ import SideBar from '@/components/SideBar'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import { useGlobal } from '@/lib/global'
 import DarkModeButton from '@/components/DarkModeButton'
+import LoadingCover from '@/components/LoadingCover'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -61,7 +62,7 @@ const BaseLayout = ({
       window.removeEventListener('scroll', scrollTrigger)
     }
   })
-  const { theme } = useGlobal()
+  const { onLoading, theme } = useGlobal()
   const targetRef = useRef(null)
 
   return (
@@ -77,9 +78,13 @@ const BaseLayout = ({
           <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
         <div className='flex flex-grow min-h-screen' ref={targetRef}>
-          <div className='flex-grow bg-gray-50 dark:bg-black shadow-inner'>
-            {children}
-          </div>
+
+          {onLoading
+            ? <LoadingCover/>
+            : <div className='flex-grow bg-gray-50 dark:bg-black shadow-inner animate__animated animate__fadeIn'>
+              {children}
+            </div>
+          }
         </div>
       </div>
 

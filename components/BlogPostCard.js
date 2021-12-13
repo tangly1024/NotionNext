@@ -12,7 +12,7 @@ const BlogPostCard = ({ post, tags }) => {
      w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700'>
       <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
         <div className='w-full h-60 rounded-t-xl md:rounded-t-none md:rounded-l-xl md:h-full duration-200 cursor-pointer transform col-span-2 overflow-hidden'>
-          <Image className='hover:scale-105 transform duration-500' src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
+          <Image className='hover:scale-105 transform duration-500 rounded-t-xl md:rounded-t-none md:rounded-l-xl' src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
         </div>
       </Link>
 
