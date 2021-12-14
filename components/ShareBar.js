@@ -14,7 +14,7 @@ import {
   faWeibo,
   faWeixin
 } from '@fortawesome/free-brands-svg-icons'
-import { faLink, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
 
 const ShareBar = ({ post }) => {
   const router = useRouter()
