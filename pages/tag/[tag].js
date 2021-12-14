@@ -29,7 +29,7 @@ export async function getStaticProps ({ params }) {
   const allPosts = await getAllPosts({ notionPageData, from })
   const categories = await getAllCategories(allPosts)
   const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, tagOptions })
+  const tags = await getAllTags({ allPosts, tagOptions, sliceCount: 0 })
   const filteredPosts = allPosts.filter(
     post => post && post.tags && post.tags.includes(currentTag)
   )

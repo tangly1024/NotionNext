@@ -80,7 +80,7 @@ const BaseLayout = ({
         <div className='flex flex-grow min-h-screen' ref={targetRef}>
           {onLoading
             ? <LoadingCover/>
-            : <div className='flex-grow bg-gray-50 dark:bg-black shadow-inner animate__animated animate__fadeIn'>
+            : <div className='flex-grow bg-gray-50 dark:bg-black shadow-inner'>
               {children}
             </div>
           }
