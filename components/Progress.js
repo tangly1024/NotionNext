@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import throttle from 'lodash.throttle'
+import React, { useEffect, useState } from 'react'
 
 /**
  * 顶部页面阅读进度条
@@ -24,8 +23,8 @@ const Progress = ({ targetRef }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [percent])
 
-  return (<div className='h-1.5 fixed left-0 top-0 w-full shadow-2xl z-40'>
-        <div className='h-1 bg-blue-500 fixed left-0 top-0 duration-200 rounded' style={{ width: `${percent}%` }}/>
+  return (<div className='h-1  fixed left-0 top-0 w-full shadow-2xl z-40 bg-blue-200'>
+        <div className='h-1 bg-blue-600 fixed left-0 top-0 duration-200 rounded' style={{ width: `${percent}%` }}/>
       </div>)
 }
 

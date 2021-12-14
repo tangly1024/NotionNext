@@ -14,7 +14,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 bg-white dark:bg-gray-700 opacity-90'>
+    <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 glassmorphism'>
       <div className='text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-xl '>
         {/* 左侧LOGO */}
         <div className='flex ml-12'>
@@ -31,7 +31,7 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
         </div>
 
         {/* 右侧功能 */}
-        <div className='flex flex-nowrap space-x-1 ml-2 dark:text-gray-200'>
+        <div className='flex flex-nowrap space-x-1 ml-2 pt-1 dark:text-gray-200'>
           <DarkModeButton />
         </div>
       </div>

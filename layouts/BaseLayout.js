@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef } from 'react'
 import CommonHead from '@/components/CommonHead'
 import throttle from 'lodash.throttle'
-import BLOG from '@/blog.config'
 import TopNav from '@/components/TopNav'
 import Footer from '@/components/Footer'
 import SideBar from '@/components/SideBar'
@@ -74,13 +73,13 @@ const BaseLayout = ({
 
       {/* Middle Wrapper */}
       <div className='flex dark:bg-black'>
-        <div className='hidden lg:block z-10'>
+        <div className='hidden shadow lg:block z-10'>
           <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
         <div className='flex flex-grow min-h-screen' ref={targetRef}>
           {onLoading
             ? <LoadingCover/>
-            : <div className='flex-grow bg-gray-50 dark:bg-black shadow-inner'>
+            : <div className='flex-grow bg-gray-100 dark:bg-black shadow-inner'>
               {children}
             </div>
           }
@@ -90,7 +89,7 @@ const BaseLayout = ({
       <Footer />
 
       <JumpToTopButton targetRef={targetRef} showPercent={true} />
-      <div className='hidden lg:block fixed right-1 bottom-52 py-1 px-1.5
+      <div className='hidden lg:block fixed right-5 bottom-52 py-2 px-2.5 rounded-full
          bg-white text-black shadow-card dark:border-gray-500 dark:bg-gray-700 dark:text-white'>
         <DarkModeButton />
       </div>
@@ -112,11 +111,6 @@ const handleScrollDown = () => {
 
     const tocDrawerButton = document.querySelector('#toc-drawer-button')
     tocDrawerButton && tocDrawerButton.classList.replace('hidden', 'block')
-
-    // const sidebar = document.querySelector('#sidebar')
-    // sidebar && sidebar.classList.replace('top-20', 'top-2')
-    // const rightToc = document.querySelector('#right-toc')
-    // rightToc && rightToc.classList.replace('top-16', 'top-0')
   }
 }
 
@@ -131,15 +125,6 @@ const handleScrollUp = () => {
 
     const stickyBar = document.querySelector('#sticky-bar')
     stickyBar && stickyBar.classList.replace('top-0', 'top-14')
-
-    // const tocDrawerButton = document.querySelector('#toc-drawer-button')
-    // tocDrawerButton && tocDrawerButton.classList.replace('block', 'hidden')
-
-    // const sidebar = document.querySelector('#sidebar')
-    // sidebar && sidebar.classList.replace('top-2', 'top-20')
-
-    // const rightToc = document.querySelector('#right-toc')
-    // rightToc && rightToc.classList.replace('top-0', 'top-16')
   }
 }
 

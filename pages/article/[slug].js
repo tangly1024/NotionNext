@@ -56,14 +56,14 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 
       <div className='max-w-5xl mx-auto mt-16 xl:mt-32 w-screen md:w-full'>
 
-        <article itemScope itemType="https://schema.org/Movie" className='duration-300 hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-44 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
+        <article itemScope itemType="https://schema.org/Movie" className='duration-300 hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-52 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800'>
           {post.type && !post.type.includes('Page') && (<>
             <header className='w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden'>
               <Image src={(post.page_cover && post.page_cover.length > 1) ? post.page_cover : BLOG.defaultImgCover} loading='eager' objectFit='cover' layout='fill' alt={post.title} />
             </header>
           </>)}
           {/* 文章Title */}
-          <h2 className='font-bold text-3xl text-black dark:text-white font-serif pt-10'> {post.title}</h2>
+          <h2 className='font-bold text-2xl text-black dark:text-white font-serif pt-10'> {post.title}</h2>
           <hr className='mt-4' />
           <section className='flex-nowrap flex  mt-1 dark:text-white font-light'>
             <Link href={`/category/${post.category}`} passHref>
@@ -85,7 +85,7 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
             </div>
           </section>
 
-          <section className='px-1 py-2 my-1 text-sm font-light italic bg-gray-50 text-gray-600 dark:bg-gray-700 dark:text-gray-400'>
+          <section className='px-1 py-2 my-1 text-sm font-light bg-gray-50 text-gray-600 dark:bg-gray-700 dark:text-gray-400'>
             {post.summary}
           </section>
 

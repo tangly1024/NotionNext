@@ -64,7 +64,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
         <div onClick={() => {
           handleGetMore()
         }}
-             className='w-full my-4 py-4 bg-gray-300 text-center cursor-pointer dark:bg-gray-700 dark:text-gray-200'
+             className='w-full my-4 py-4 bg-gray-200 text-center cursor-pointer dark:bg-gray-700 dark:text-gray-200'
         > {hasMore ? '继续加载' : '加载完了😰'} </div>
       </div>
     </div>

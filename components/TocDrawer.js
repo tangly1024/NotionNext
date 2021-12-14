@@ -10,7 +10,7 @@ import { useGlobal } from '@/lib/global'
  * @constructor
  */
 const TocDrawer = ({ post, cRef }) => {
-// 暴露给父组件 通过cRef.current.handleMenuClick 调用
+  // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
       handleSwitchVisible: () => switchVisible()

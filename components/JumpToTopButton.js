@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+let windowTop = 0
 
 /**
  * 跳转到网页顶部
@@ -22,7 +23,8 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     const fullHeight = clientHeight - window.outerHeight
     let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
     if (per > 100) per = 100
-    const shouldShow = scrollY > 100 && per > 0
+    const shouldShow = scrollY > 100 && per > 0 && scrollY < windowTop
+    windowTop = scrollY
 
     if (shouldShow !== show) {
       switchShow(shouldShow)
@@ -34,11 +36,11 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div id='jump-to-top' className='right-1 fixed flex bottom-36 duration-500 z-20'>
+  return (<div id='jump-to-top' className='right-5 fixed flex bottom-36 duration-500 z-20'>
       <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={(show ? 'animate__fadeInRight' : 'animate__fadeOutRight') + ' shadow-card bg-white dark:bg-gray-700 px-1 py-1 cursor-pointer animate__animated animate__faster shadow-2xl'}>
+        className={(show ? '' : 'hidden') + ' animate__fadeInRight rounded-full glassmorphism p-2 cursor-pointer animate__animated animate__faster shadow-card'}>
         <div className='text-center'>
-          <div className='w-10 text-xl dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
+          <div className='w-10 dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
             <FontAwesomeIcon icon={faArrowUp} />
           </div>
           {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}
