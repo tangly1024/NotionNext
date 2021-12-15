@@ -172,6 +172,7 @@ export async function getStaticProps ({ params: { slug } }) {
   const blockMap = await getPostBlocks(post.id, 'slug')
   post.toc = []
   if (blockMap) {
+    post.content = Object.keys(blockMap.block)
     post.toc = getPageTableOfContents(post, blockMap)
   }
 
