@@ -19,20 +19,20 @@ const BlogPostCard = ({ post, tags }) => {
       <div className='p-8 col-span-3'>
         <div>
           <Link href={`/category/${post.category}`} passHref>
-            <span className='cursor-pointer dark:text-gray-200  font-light text-gray-500 text-sm hover:underline hover:text-blue-500 dark:hover:text-blue-400 transform'>
+            <a className='cursor-pointer dark:text-gray-200  font-light text-gray-500 text-sm hover:underline hover:text-blue-500 dark:hover:text-blue-400 transform'>
               <FontAwesomeIcon icon={faFolder} className='mr-1' />{post.category}
-            </span>
+            </a>
           </Link>
           <span className='mx-2 dark:text-gray-400 text-gray-500'>|</span>
           <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`} passHref>
-            <span className='mt-2  font-light text-gray-500 hover:text-blue-400 hover:underline cursor-pointer dark:text-gray-300 dark:hover:text-blue-400 text-sm leading-4'>{post.date.start_date}</span>
+            <a className='mt-2  font-light text-gray-500 hover:text-blue-400 hover:underline cursor-pointer dark:text-gray-300 dark:hover:text-blue-400 text-sm leading-4'>{post.date.start_date}</a>
           </Link>
         </div>
 
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <p className='cursor-pointer my-3 text-2xl leading-tight text-black dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'>
+          <a className='cursor-pointer my-3 text-2xl leading-tight text-black dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'>
             {post.title}
-          </p>
+          </a>
         </Link>
 
         <p className='mt-2 text-gray-600 dark:text-gray-300 text-sm font-light'>{post.summary}</p>

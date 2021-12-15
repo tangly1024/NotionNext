@@ -67,15 +67,15 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
           <hr className='mt-4' />
           <section className='flex-nowrap flex  mt-1 dark:text-white font-light'>
             <Link href={`/category/${post.category}`} passHref>
-              <div className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
+              <a className='cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white'>
                 <FontAwesomeIcon icon={faFolderOpen} className='mr-1' />{post.category}
-              </div>
+              </a>
             </Link>
             {post.type[0] !== 'Page' && (
               <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`} passHref>
-                <div className='pl-1 cursor-pointer hover:text-gray-700  dark:hover:text-gray-200 text-gray-400 dark:text-gray-400 leading-10'>
+                <a className='pl-1 cursor-pointer hover:text-gray-700  dark:hover:text-gray-200 text-gray-400 dark:text-gray-400 leading-10'>
                 {date}
-                </div>
+                </a>
               </Link>
             )}
 

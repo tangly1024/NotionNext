@@ -54,9 +54,9 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
           <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
             <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
-              <div className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+              <a className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </div>
+              </a>
             </Link>
           </div>
           <CategoryGroup currentCategory={currentCategory} categories={categories} />
@@ -69,9 +69,9 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
           <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
             <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-2'/>{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
-              <div className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+              <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
-              </div>
+              </a>
             </Link>
           </div>
           <div className='px-5 pt-2'>
