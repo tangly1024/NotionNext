@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://tangly1024.com
+
+# Sitemaps
+Sitemap: https://tangly1024.com/sitemap.xml
