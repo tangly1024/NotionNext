@@ -89,7 +89,7 @@ const BaseLayout = ({
       <Footer />
 
       <JumpToTopButton targetRef={targetRef} showPercent={true} />
-      <div className='hidden lg:block fixed right-5 bottom-52 py-2 px-2.5 rounded-full
+      <div className='hidden lg:block fixed right-5 bottom-52 py-1.5 px-2.5 rounded-full
          bg-white text-black shadow-card dark:border-gray-500 dark:bg-gray-700 dark:text-white'>
         <DarkModeButton />
       </div>
