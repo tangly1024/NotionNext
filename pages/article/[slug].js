@@ -14,7 +14,6 @@ import Custom404 from '@/pages/404'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs'
 import 'prismjs/components/prism-bash'
 import 'prismjs/components/prism-markup'
@@ -29,6 +28,10 @@ import { getNotionPageData } from '@/lib/notion/getNotionData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import BlogAround from '@/components/BlogAround'
+
+import '@/styles/notion.css'
+import 'rc-dropdown/assets/index.css'
+import 'prismjs/themes/prism-okaidia.css'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -152,7 +155,10 @@ const ArticleDetail = ({ post, blockMap, tags, prev, next, allPosts, categories 
 }
 
 export async function getStaticPaths () {
-  const posts = await getAllPosts({ from: 'slug - paths', includePage: true })
+  const posts = []
+  // if (BLOG.isProd) {
+  //   posts = await getAllPosts({ from: 'slug - paths', includePage: true })
+  // }
   return {
     paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
     fallback: true

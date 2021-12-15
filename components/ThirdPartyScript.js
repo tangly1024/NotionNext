@@ -35,11 +35,6 @@ const ThirdPartyScript = () => {
 
     {/* 代码统计 */}
     {BLOG.isProd && (<>
-        {/* GoogleAdsense */}
-        {BLOG.googleAdsenseId && (
-          <script data-ad-client={BLOG.googleAdsenseId} async
-                  src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' />
-        )}
 
         {/* ackee统计脚本 */}
         {BLOG.analytics.provider === 'ackee' && (
@@ -100,6 +95,40 @@ const ThirdPartyScript = () => {
                     }}
             />
           </>)}
+
+        {/* GoogleAdsense 广告植入 */}
+        {BLOG.googleAdsenseId && (
+        <>
+          {/* <script data-ad-client={BLOG.googleAdsenseId} async
+                  src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' /> */}
+          <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.googleAdsenseId}`}
+          crossOrigin="anonymous"></script>
+          {/* 信息流 */}
+          <ins className="adsbygoogle"
+              style={{ display: 'block' }}
+              data-ad-format="fluid"
+              data-ad-layout-key="-5j+cz+30-f7+bf"
+              data-ad-client="ca-pub-2708419466378217"
+              data-ad-slot="1510444138"></ins>
+            {/* 展示广告  */}
+          <ins className="adsbygoogle"
+              style={{ display: 'block' }}
+              data-ad-client="ca-pub-2708419466378217"
+              data-ad-slot="8807314373"
+              data-ad-format="auto"
+              data-full-width-responsive="true"></ins>
+          {/* 文章内嵌广告 */}
+          <ins className="adsbygoogle"
+              style={{ display: 'block', textAlign: 'center' }}
+              data-ad-layout="in-article"
+              data-ad-format="fluid"
+              data-ad-client="ca-pub-2708419466378217"
+              data-ad-slot="3806269138"></ins>
+          <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </>
+        )}
       </>)}
   </>)
 }

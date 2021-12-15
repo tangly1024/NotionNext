@@ -32,7 +32,7 @@ const BLOG = {
       domainId: '' // e.g '0e2257a8-54d4-4847-91a1-0311ea48cc7b'
     },
     gaConfig: {
-      measurementId: 'G-5EV4HZD0XX' // e.g: G-XXXXXXXXXX
+      measurementId: 'G-68EK0W049N' // e.g: G-XXXXXXXXXX
     },
     baiduAnalytics: 'f683ef76f06bb187cbed5546f6f28f28', // e.g only need xxxxx -> https://hm.baidu.com/hm.js?[xxxxx]
     busuanzi: true, // see http://busuanzi.ibruce.info/
