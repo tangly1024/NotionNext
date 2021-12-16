@@ -36,13 +36,13 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div id='jump-to-top' className='right-5 fixed flex bottom-36 duration-500 z-20'>
+  return (<div id='jump-to-top' className='right-5 fixed flex bottom-52 duration-500 z-20'>
       <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={(show ? '' : 'hidden') + ' animate__fadeInRight rounded-full glassmorphism p-2 cursor-pointer animate__animated animate__faster shadow-card'}>
+        className={(show ? '' : 'hidden') + ' animate__fadeInRight animate__animated animate__faster shadow-card rounded-full glassmorphism p-2 cursor-pointer '}>
         <div className='text-center'>
-          <div className='w-10 dark:text-gray-100 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
-            <FontAwesomeIcon icon={faArrowUp} />
-          </div>
+        <div className='w-10 dark:text-gray-200 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
+          <FontAwesomeIcon icon={faArrowUp} />
+        </div>
           {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}
         </div>
       </div>

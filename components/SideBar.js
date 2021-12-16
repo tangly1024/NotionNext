@@ -26,13 +26,16 @@ import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/fr
 const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
   return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
-    <InfoCard />
-    <hr className='dark:border-gray-700 mt-6 py-1' />
+    <section className='hidden lg:block'>
+      <InfoCard />
+      <hr className='dark:border-gray-700 mt-6 py-1' />
+    </section>
 
     <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-900 pb-4'}>
 
-      {/* <hr className='dark:border-gray-700' /> */}
-      <MenuButtonGroup allowCollapse={true} />
+      <section className='hidden lg:block'>
+        <MenuButtonGroup allowCollapse={true} />
+      </section>
 
       <section className='p-5'>
         <SearchInput currentTag={currentTag} currentSearch={currentSearch} />

@@ -51,7 +51,7 @@ const Toc = ({ toc }) => {
   }, throttleMs))
 
   return <>
-    <nav className=' dark:text-gray-400 dark:bg-gray-900 overflow-y-auto scroll-hidden p-2'>
+    <nav className=' dark:text-gray-100 glassmorphism overflow-y-auto scroll-hidden p-6'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (

@@ -12,7 +12,7 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
   const links = [
     { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { id: 1, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', show: BLOG.showArchive },
-    { id: 2, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/article/about', show: BLOG.showAbout }
+    { id: 2, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/about', show: BLOG.showAbout }
     // { id: 7, icon: 'faGithub', name: 'Github', to: 'https://github.com/tangly1024', show: true },
     // { id: 5, icon: 'faWeibo', name: '微博', to: 'https://weibo.com/tangly1024', show: true },
     // { id: 4, icon: 'faEnvelope', name: locale.NAV.MAIL, to: 'mailto:tlyong1992@hotmail.com', show: true }
@@ -28,7 +28,7 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
         if (link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={link.id + link.icon} title={link.to} href={link.to} >
-            <a className={'py-2 px-5 text-lg hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer duration-100 font-light flex flex-nowrap align-middle ' +
+            <a className={'py-2 px-5 text-lg hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer duration-100 font-light flex flex-nowrap items-center ' +
               (selected ? 'bg-blue-500 text-white ' : ' ')} >
               <div className='my-auto justify-center flex'>
                 <FontAwesomeIcon icon={link.icon} />

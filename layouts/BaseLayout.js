@@ -9,6 +9,8 @@ import JumpToTopButton from '@/components/JumpToTopButton'
 import { useGlobal } from '@/lib/global'
 import DarkModeButton from '@/components/DarkModeButton'
 import LoadingCover from '@/components/LoadingCover'
+import LeftFloatButton from '@/components/LeftFloatButton'
+import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -89,11 +91,8 @@ const BaseLayout = ({
       <Footer />
 
       <JumpToTopButton targetRef={targetRef} showPercent={true} />
-      <div className='hidden lg:block fixed right-5 bottom-52 py-1.5 px-2.5 rounded-full
-         bg-white text-black shadow-card dark:border-gray-500 dark:bg-gray-700 dark:text-white'>
-        <DarkModeButton />
+      <FloatDarkModeButton/>
       </div>
-    </div>
   )
 }
 

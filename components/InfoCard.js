@@ -5,7 +5,7 @@ import Router from 'next/router'
 
 const InfoCard = () => {
   return <>
-    <div className='flex flex-col align-middle justify-center cursor-pointer' onClick={ () => { Router.push('/') }}>
+    <div className='flex flex-col items-center justify-center cursor-pointer' onClick={ () => { Router.push('/') }}>
         <div className='hover:rotate-45 hover:scale-125 transform duration-200 mx-auto'>
           <Image
           alt={BLOG.title}

@@ -17,7 +17,6 @@ const TocDrawerButton = (props) => {
   const scrollListener = () => {
     const scrollY = window.pageYOffset
     const shouldShow = scrollY > 100 && scrollY < windowTop
-    console.log('目录', shouldShow, scrollY, windowTop)
     windowTop = scrollY
 
     if (shouldShow !== show) {
@@ -30,14 +29,12 @@ const TocDrawerButton = (props) => {
   })
 
   return (
-    <div id='toc-drawer-button' className='right-5 fixed bottom-56 duration-500 z-40' onClick={props.onClick}>
-      <div className='transform hover:scale-105 duration-200'>
+    <div id='toc-drawer-button' className='right-5 fixed bottom-72 duration-500 z-40' onClick={props.onClick}>
         <div className={(show ? 'animate__fadeInRight' : 'hidden') + ' px-2 py-4 animate__animated glassmorphism rounded-full cursor-pointer shadow-card' }>
-          <div className='text-center dark:text-gray-100'>
-            <div className='w-10 text-md' title={locale.COMMON.TABLE_OF_CONTENTS} ><FontAwesomeIcon icon={faListOl} /> </div>
-          </div>
+            <div className='w-10 dark:text-gray-200 text-center transform hover:scale-125 duration-200' title={locale.POST.TOP} >
+              <div className='w-10 text-md' title={locale.COMMON.TABLE_OF_CONTENTS} ><FontAwesomeIcon icon={faListOl} /> </div>
+            </div>
         </div>
-      </div>
     </div>
 
   )

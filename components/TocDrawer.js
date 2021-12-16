@@ -25,11 +25,11 @@ const TocDrawer = ({ post, cRef }) => {
     <div className='fixed top-0 right-0 z-40'>
       {/* 侧边菜单 */}
       <div
-        className={(showDrawer ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') + ' border ' +
-        ' dark:border-gray-800 bg-white dark:bg-gray-700 shadow-xl animate__animated animate__faster max-h-96 ' +
+        className={(showDrawer ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') +
+        '  shadow-xl animate__animated animate__faster max-h-96 ' +
         ' w-60 duration-200 fixed right-4 top-16 rounded overflow-y-auto'}>
           {post && <>
-            <div className='text-xl font-bold text-black bg-gray-50 dark:text-white dark:bg-black py-3 px-6'>
+            <div className='text-xl font-bold text-black dark:text-white glassmorphism py-3 px-6'>
               {locale.COMMON.TABLE_OF_CONTENTS}
             </div>
             <Toc toc={post.toc}/>

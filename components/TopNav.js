@@ -1,13 +1,15 @@
 import { useRef } from 'react'
-import DarkModeButton from '@/components/DarkModeButton'
 import SideBarDrawer from '@/components/SideBarDrawer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import BLOG from '@/blog.config'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useGlobal } from '@/lib/global'
 
 const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, currentCategory }) => {
   const drawer = useRef()
+  const { locale } = useGlobal()
 
   return (<div id='top-nav' className='block lg:hidden'>
     {/* 侧面抽屉 */}
@@ -15,24 +17,39 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
 
     {/* 导航栏 */}
     <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 glassmorphism'>
-      <div className='text-sm m-auto w-full flex flex-row justify-between items-center px-4 py-2 shadow-xl '>
+      <div className='w-full flex justify-between items-center p-4 shadow-xl'>
         {/* 左侧LOGO */}
-        <div className='flex ml-12'>
-          <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
-               className='fixed top-3 left-0 z-30 ml-5 text-gray-600 text-2xl cursor-pointer dark:text-gray-300'>
-            <FontAwesomeIcon icon={faBars} className='hover:scale-125 transform duration-200'
-            />
-          </div>
+        <div className='flex'>
+          <div className='relative w-12' ><Image
+            alt={BLOG.title}
+            layout='fill'
+            loading='lazy'
+            src='/avatar.svg'
+            className='rounded-full border-black'
+          /></div>
           <Link href='/' passHref>
-            <div className='cursor-pointer'>
-             <h1 className='text-xl pb-0.5 hover:scale-105 duration-200 transform font-serif dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{BLOG.title }</h1>
-            </div>
+            <a>
+             <h1 className='cursor-pointer ml-1 leading-7 text-xl hover:scale-105 duration-200 transform font-serif dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{BLOG.title }</h1>
+            </a>
           </Link>
         </div>
 
         {/* 右侧功能 */}
-        <div className='flex flex-nowrap space-x-1 ml-2 pt-1 dark:text-gray-200'>
-          <DarkModeButton />
+        <div className='mr-2 flex justify-end items-center text-sm flex-nowrap space-x-4 font-serif dark:text-gray-200'>
+        <Link href='/'>
+            <a>{locale.NAV.INDEX}</a>
+          </Link>
+          <Link href='/archive'>
+            <a>{locale.NAV.ARCHIVE}</a>
+          </Link>
+          <Link href='/article/about'>
+            <a>{locale.NAV.ABOUT}</a>
+          </Link>
+          <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
+               className='ppb-1z-30 text-gray-600 text-2xl flex items-center cursor-pointer dark:text-gray-300'>
+            <FontAwesomeIcon icon={faBars} className='hover:scale-125 transform duration-200'
+            />
+          </div>
         </div>
       </div>
     </div>
