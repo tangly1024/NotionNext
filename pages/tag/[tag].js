@@ -51,13 +51,10 @@ export async function getStaticPaths () {
   const from = 'tag-static-path'
   const notionPageData = await getNotionPageData({ from })
   const posts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(posts)
-
-  // const tagOptions = notionPageData.tagOptions
-  // tags = await getAllTags({ posts, tagOptions, sliceCount: 0 })
+  const tagOptions = notionPageData.tagOptions
+  const tags = await getAllTags({ posts, tagOptions, sliceCount: 0 })
   return {
-    paths: Object.keys(categories).map(category => ({ params: { category } })),
-    // paths: tags.map(t => ({ params: { tag: t.name } })),
+    paths: tags.map(t => ({ params: { tag: t.name } })),
     fallback: true
   }
 }
