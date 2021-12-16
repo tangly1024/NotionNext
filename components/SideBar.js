@@ -77,7 +77,7 @@ const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, c
               </a>
             </Link>
           </div>
-          <div className='px-5 pt-2'>
+          <div className='px-5 py-2'>
             <TagGroups tags={tags} currentTag={currentTag} />
           </div>
         </section>

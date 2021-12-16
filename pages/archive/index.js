@@ -77,7 +77,7 @@ const Index = ({ allPosts, tags, categories }) => {
         <StickyBar>
           <div className='py-2.5 text-lg lg:mx-14 dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-4'/>{locale.NAV.ARCHIVE}</div>
         </StickyBar>
-        <div className='mt-20 mx-2 lg:mx-20 bg-white p-12 dark:bg-gray-800'>
+        <div className='mt-20 mb-10 pb-20 mx-2 lg:mx-20 bg-white md:p-12 p-3 dark:bg-gray-800 '>
           {Object.keys(archivePosts).map(archiveTitle => (
              <BlogPostArchive key={archiveTitle} posts={archivePosts[archiveTitle]} archiveTitle={archiveTitle}/>
           ))}
