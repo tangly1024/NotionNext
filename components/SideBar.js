@@ -23,9 +23,10 @@ import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/fr
  * @returns {JSX.Element}
  * @constructor
  */
-const SideBar = ({ tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
+const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
   return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
+
     <section className='hidden lg:block'>
       <InfoCard />
       <hr className='dark:border-gray-700 mt-6 py-1' />

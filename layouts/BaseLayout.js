@@ -74,7 +74,7 @@ const BaseLayout = ({
       {/* Middle Wrapper */}
       <div className='flex dark:bg-black'>
         <div className='hidden shadow lg:block z-10'>
-          <SideBar post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
+          <SideBar title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
         <div className='flex flex-grow min-h-screen' ref={targetRef}>
           {onLoading
@@ -86,7 +86,7 @@ const BaseLayout = ({
         </div>
       </div>
 
-      <Footer />
+      <Footer title={meta.title}/>
 
       <JumpToTopButton targetRef={targetRef} showPercent={true} />
       <FloatDarkModeButton/>

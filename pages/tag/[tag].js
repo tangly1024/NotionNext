@@ -6,24 +6,25 @@ import BlogPostListScroll from '@/components/BlogPostListScroll'
 import TagList from '@/components/TagList'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
 
-export default function Tag ({ tags, allPosts, filteredPosts, currentTag, categories }) {
+export default function Tag ({ tags, allPosts, filteredPosts, tag, categories }) {
   const meta = {
-    title: `${BLOG.title} | #${currentTag}`,
+    title: `${BLOG.title} | #${tag}`,
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} tags={tags} currentTag={currentTag} categories={categories} totalPosts={allPosts}>
-    <div className=' pt-16'>
+
+  return <BaseLayout meta={meta} tags={tags} currentTag={tag} categories={categories} totalPosts={allPosts}>
+    <div className='pt-16'>
       <StickyBar>
-        <TagList tags={tags} currentTag={currentTag}/>
+        <TagList tags={tags} currentTag={tag}/>
       </StickyBar>
-      <BlogPostListScroll posts={filteredPosts} tags={tags} currentTag={currentTag}/>
+      <BlogPostListScroll posts={filteredPosts} tags={tags} currentTag={tag}/>
     </div>
   </BaseLayout>
 }
 
 export async function getStaticProps ({ params }) {
-  const currentTag = params.tag
+  const tag = params.tag
   const from = 'tag-props'
   const notionPageData = await getNotionPageData({ from })
   const allPosts = await getAllPosts({ notionPageData, from })
@@ -31,14 +32,14 @@ export async function getStaticProps ({ params }) {
   const tagOptions = notionPageData.tagOptions
   const tags = await getAllTags({ allPosts, tagOptions, sliceCount: 0 })
   const filteredPosts = allPosts.filter(
-    post => post && post.tags && post.tags.includes(currentTag)
+    post => post && post.tags && post.tags.includes(tag)
   )
   return {
     props: {
       tags,
       allPosts,
       filteredPosts,
-      currentTag,
+      tag,
       categories
     },
     revalidate: 1
@@ -46,14 +47,17 @@ export async function getStaticProps ({ params }) {
 }
 
 export async function getStaticPaths () {
-  let posts = []
-  let tags = []
-  if (BLOG.isProd) {
-    posts = await getAllPosts({ from: 'tag-props' })
-    tags = await getAllTags(posts)
-  }
+  // const tags = []
+  const from = 'tag-static-path'
+  const notionPageData = await getNotionPageData({ from })
+  const posts = await getAllPosts({ notionPageData, from })
+  const categories = await getAllCategories(posts)
+
+  // const tagOptions = notionPageData.tagOptions
+  // tags = await getAllTags({ posts, tagOptions, sliceCount: 0 })
   return {
-    paths: Object.keys(tags).map(tag => ({ params: { tag } })),
+    paths: Object.keys(categories).map(category => ({ params: { category } })),
+    // paths: tags.map(t => ({ params: { tag: t.name } })),
     fallback: true
   }
 }

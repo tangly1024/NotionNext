@@ -7,7 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useGlobal } from '@/lib/global'
 
-const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, currentCategory }) => {
+const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
   const drawer = useRef()
   const { locale } = useGlobal()
 
@@ -16,10 +16,10 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 glassmorphism'>
-      <div className='w-full flex justify-between items-center p-4 shadow-lg'>
-        {/* 左侧LOGO */}
-        <div className='flex'>
+    <div id='sticky-nav' className='flex fixed w-full top-0 z-20 transform duration-500 glassmorphism'>
+      <div className='w-full flex justify-between items-center p-4 shadow-lg '>
+        {/* 左侧LOGO 标题 */}
+        <div className='flex flex-none flex-grow-0'>
           <div className='relative w-10' ><Image
             alt={BLOG.title}
             layout='fill'
@@ -29,13 +29,13 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
           /></div>
           <Link href='/' passHref>
             <a>
-             <h1 className='cursor-pointer ml-2 text-xl hover:scale-105 duration-200 transform font-serif dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{BLOG.title }</h1>
+             <h1 className='cursor-pointer ml-2 w-full hover:scale-105 duration-200 transform font-serif dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{ BLOG.title }</h1>
             </a>
           </Link>
         </div>
 
         {/* 右侧功能 */}
-        <div className='mr-1 flex justify-end items-center text-sm flex-nowrap space-x-4 font-serif dark:text-gray-200'>
+        <div className='mr-1 flex flex-nowrap flex-grow justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
         <Link href='/'>
             <a>{locale.NAV.INDEX}</a>
           </Link>

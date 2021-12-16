@@ -49,10 +49,8 @@ export async function getStaticProps ({ params }) {
 export async function getStaticPaths () {
   let posts = []
   let categories = []
-  if (BLOG.isProd) {
-    posts = await getAllPosts({ from: 'category-path' })
-    categories = await getAllCategories(posts)
-  }
+  posts = await getAllPosts({ from: 'category-path' })
+  categories = await getAllCategories(posts)
   return {
     paths: Object.keys(categories).map(category => ({ params: { category } })),
     fallback: true

@@ -18,7 +18,7 @@ const Slug = ({ post, blockMap, tags, prev, next, allPosts, recommendPosts, cate
     return <Custom404 />
   }
   const meta = {
-    title: `${post.title}`,
+    title: `${BLOG.title} | ${post.title}`,
     description: post.summary,
     type: 'article',
     tags: post.tags
@@ -30,7 +30,10 @@ const Slug = ({ post, blockMap, tags, prev, next, allPosts, recommendPosts, cate
 }
 
 export async function getStaticPaths () {
-  const posts = await getAllPosts({ from: 'slug - paths', includePage: true })
+  let posts = []
+  if (BLOG.isProd) {
+    posts = await getAllPosts({ from: 'slug - paths', includePage: true })
+  }
   return {
     paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
     fallback: true
