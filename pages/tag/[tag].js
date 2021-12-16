@@ -46,15 +46,32 @@ export async function getStaticProps ({ params }) {
   }
 }
 
+/**
+ * 获取所有的标签
+ * @param {*}} allPosts
+ * @returns
+ */
+function getTagNames (allPosts) {
+  const tags = allPosts.map(p => p.tags).flat()
+
+  const tagObj = {}
+  tags.forEach(tag => {
+    if (tag in tagObj) {
+      tagObj[tag]++
+    } else {
+      tagObj[tag] = 1
+    }
+  })
+  return tagObj
+}
+
 export async function getStaticPaths () {
-  // const tags = []
   const from = 'tag-static-path'
-  const notionPageData = await getNotionPageData({ from })
-  const posts = await getAllPosts({ notionPageData, from })
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ posts, tagOptions, sliceCount: 0 })
+  const posts = await getAllPosts({ from })
+  const tagNames = getTagNames(posts)
+
   return {
-    paths: tags.map(t => ({ params: { tag: t.name } })),
+    paths: Object.keys(tagNames).map(tag => ({ params: { tag } })),
     fallback: true
   }
 }
