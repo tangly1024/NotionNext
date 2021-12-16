@@ -7,9 +7,7 @@ import Footer from '@/components/Footer'
 import SideBar from '@/components/SideBar'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import { useGlobal } from '@/lib/global'
-import DarkModeButton from '@/components/DarkModeButton'
 import LoadingCover from '@/components/LoadingCover'
-import LeftFloatButton from '@/components/LeftFloatButton'
 import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 
 /**
@@ -81,7 +79,7 @@ const BaseLayout = ({
         <div className='flex flex-grow min-h-screen' ref={targetRef}>
           {onLoading
             ? <LoadingCover/>
-            : <div className='flex-grow bg-gray-100 dark:bg-black shadow-inner'>
+            : <div className='flex-grow bg-gray-100 dark:bg-gray-900 shadow-inner'>
               {children}
             </div>
           }

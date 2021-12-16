@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import smoothscroll from 'smoothscroll-polyfill'
+
 let windowTop = 0
 
 /**
@@ -32,6 +34,7 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     changePercent(per)
   }
   useEffect(() => {
+    smoothscroll.polyfill()
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])

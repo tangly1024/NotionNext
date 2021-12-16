@@ -17,32 +17,32 @@ const TopNav = ({ tags, currentTag, post, posts, currentSearch, categories, curr
 
     {/* 导航栏 */}
     <div id='sticky-nav' className='fixed w-full top-0 z-20 transform duration-500 glassmorphism'>
-      <div className='w-full flex justify-between items-center p-4 shadow-xl'>
+      <div className='w-full flex justify-between items-center p-4 shadow-lg'>
         {/* 左侧LOGO */}
         <div className='flex'>
-          <div className='relative w-12' ><Image
+          <div className='relative w-10' ><Image
             alt={BLOG.title}
             layout='fill'
             loading='lazy'
             src='/avatar.svg'
-            className='rounded-full border-black'
+            className='border-black'
           /></div>
           <Link href='/' passHref>
             <a>
-             <h1 className='cursor-pointer ml-1 leading-7 text-xl hover:scale-105 duration-200 transform font-serif dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{BLOG.title }</h1>
+             <h1 className='cursor-pointer ml-2 text-xl hover:scale-105 duration-200 transform font-serif dark:text-gray-200 whitespace-nowrap overflow-x-hidden'>{BLOG.title }</h1>
             </a>
           </Link>
         </div>
 
         {/* 右侧功能 */}
-        <div className='mr-2 flex justify-end items-center text-sm flex-nowrap space-x-4 font-serif dark:text-gray-200'>
+        <div className='mr-1 flex justify-end items-center text-sm flex-nowrap space-x-4 font-serif dark:text-gray-200'>
         <Link href='/'>
             <a>{locale.NAV.INDEX}</a>
           </Link>
           <Link href='/archive'>
             <a>{locale.NAV.ARCHIVE}</a>
           </Link>
-          <Link href='/article/about'>
+          <Link href='/about'>
             <a>{locale.NAV.ABOUT}</a>
           </Link>
           <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}

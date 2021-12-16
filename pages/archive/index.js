@@ -3,7 +3,7 @@ import BLOG from '@/blog.config'
 import BaseLayout from '@/layouts/BaseLayout'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
 import StickyBar from '@/components/StickyBar'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useGlobal } from '@/lib/global'
 import BlogPostArchive from '@/components/BlogPostArchive'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -54,6 +54,22 @@ const Index = ({ allPosts, tags, categories }) => {
       archivePosts[date] = [post]
     }
   })
+
+  useEffect(
+    () => {
+      if (window) {
+        const anchor = window.location.hash
+        console.log('滚动', anchor)
+        if (anchor) {
+          setTimeout(() => {
+            const anchorElement = document.getElementById(anchor.substring(1))
+            if (anchorElement) { anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' }) }
+          }, 300)
+        }
+      }
+    },
+    []
+  )
 
   return (
     <BaseLayout meta={meta} tags={tags} categories={categories}>

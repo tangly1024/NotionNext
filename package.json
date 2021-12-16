@@ -36,13 +36,14 @@
     "next": "^12.0.5",
     "notion-client": "^4.10.0",
     "notion-utils": "^4.10.0",
-    "react-notion-x": "^4.11.0",
     "preact": "^10.5.15",
+    "qrcode.react": "^1.0.1",
     "react": "17.0.2",
     "react-cookies": "^0.1.1",
     "react-cusdis": "^2.0.1",
     "react-dom": "17.0.2",
-    "qrcode.react": "^1.0.1",
+    "react-notion-x": "^4.11.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "use-ackee": "^3.0.0"
   },
   "devDependencies": {
