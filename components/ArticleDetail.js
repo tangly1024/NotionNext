@@ -40,7 +40,6 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   const url = BLOG.link + useRouter().asPath
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)
-  const cover = post.page_cover && post.page_cover.length > 1 ? post.page_cover : undefined
   return (
     <>
      <Progress targetRef={targetRef} />
@@ -52,11 +51,11 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             itemType="https://schema.org/Movie"
             className="duration-300 hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-52 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800"
           >
-            {post.type && !post.type.includes('Page') && cover && (
+            {post.type && !post.type.includes('Page') && post?.page_cover && (
               <>
                 <header className="w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
                   <Image
-                    src={cover}
+                    src={post?.page_cover}
                     loading="eager"
                     objectFit="cover"
                     layout="fill"

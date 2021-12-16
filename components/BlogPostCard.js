@@ -7,8 +7,6 @@ import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, tags }) => {
-  const cover = (post.page_cover && post.page_cover.length > 1) ? post.page_cover : undefined
-  // const cover = undefined
   return (
     <div key={post.id} className='flex md:flex-row flex-col-reverse justify-between hover:shadow-2xl shadow-md mb-14 duration-300 rounded-xl
       w-full lg:h-60 bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>
@@ -41,10 +39,10 @@ const BlogPostCard = ({ post, tags }) => {
 
       </div>
 
-      {cover && (
+      {post?.page_cover && (
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
         <div className='h-60 w-full md:max-w-sm relative rounded-t-xl md:rounded-t-none md:rounded-r-xl md:h-full duration-200 cursor-pointer transform overflow-hidden'>
-          <Image className='hover:scale-105 transform duration-500 rounded-t-xl md:rounded-t-none md:rounded-r-xl' src={cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
+          <Image className='hover:scale-105 transform duration-500 rounded-t-xl md:rounded-t-none md:rounded-r-xl' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
         </div>
       </Link>
       )}
