@@ -14,12 +14,12 @@ export default function Category ({ tags, allPosts, filteredPosts, category, cat
     type: 'website'
   }
   return <BaseLayout meta={meta} tags={tags} currentCategory={category} totalPosts={allPosts} categories={categories}>
-    <div className=' pt-16'>
       <StickyBar>
         <CategoryList currentCategory={category} categories={categories} />
       </StickyBar>
-      <BlogPostListScroll posts={filteredPosts} tags={tags} currentCategory={category}/>
-    </div>
+      <div className='md:mt-8'>
+         <BlogPostListScroll posts={filteredPosts} tags={tags} currentCategory={category}/>
+      </div>
   </BaseLayout>
 }
 

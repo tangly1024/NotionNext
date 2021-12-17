@@ -23,14 +23,14 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
     // { id: 9, icon: 'faTelegram', name: 'Telegram', to: 'https://t.me/tangly_1024', show: true }
   ]
   return <nav id='nav'>
-    <div className='leading-8 text-gray-500 dark:text-gray-400'>
+    <div className='leading-8 text-gray-500 dark:text-gray-400 '>
       {links.map(link => {
         if (link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={link.id + link.icon} title={link.to} href={link.to} >
-            <a className={'py-2 px-5 text-lg hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer duration-100 font-light flex flex-nowrap items-center ' +
+            <a className={'py-1 px-5 mx-2  hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer duration-100 font-light flex flex-nowrap items-center ' +
               (selected ? 'bg-blue-500 text-white ' : ' ')} >
-              <div className='my-auto justify-center flex'>
+              <div className='my-auto justify-center flex '>
                 <FontAwesomeIcon icon={link.icon} />
               </div>
               <div className={'ml-4'}>{link.name}</div>

@@ -4,7 +4,7 @@ import CommonHead from '@/components/CommonHead'
 import throttle from 'lodash.throttle'
 import TopNav from '@/components/TopNav'
 import Footer from '@/components/Footer'
-import SideBar from '@/components/SideBar'
+import SideArea from '@/components/SideArea'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import { useGlobal } from '@/lib/global'
 import LoadingCover from '@/components/LoadingCover'
@@ -72,14 +72,15 @@ const BaseLayout = ({
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
       {/* Middle Wrapper */}
-      <div className='flex dark:bg-black'>
-        <div className='hidden shadow lg:block z-10'>
-          <SideBar title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
+      <div className='flex bg-gray-100 dark:bg-gray-900 xl:px-32 md:px-16 md:pt-20 pb-12'>
+        <div className='hidden lg:block'>
+          <SideArea title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
+
         <div className='flex flex-grow min-h-screen' ref={targetRef}>
           {onLoading
             ? <LoadingCover/>
-            : <div className='flex-grow bg-gray-100 dark:bg-gray-900 shadow-inner'>
+            : <div className='flex-grow  md:pl-10'>
               {children}
             </div>
           }

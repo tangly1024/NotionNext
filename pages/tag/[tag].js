@@ -14,12 +14,12 @@ export default function Tag ({ tags, allPosts, filteredPosts, tag, categories })
   }
 
   return <BaseLayout meta={meta} tags={tags} currentTag={tag} categories={categories} totalPosts={allPosts}>
-    <div className='pt-16'>
       <StickyBar>
-        <TagList tags={tags} currentTag={tag}/>
+          <TagList tags={tags} currentTag={tag}/>
       </StickyBar>
-      <BlogPostListScroll posts={filteredPosts} tags={tags} currentTag={tag}/>
-    </div>
+      <div className='md:mt-8'>
+        <BlogPostListScroll posts={filteredPosts} tags={tags} currentTag={tag}/>
+      </div>
   </BaseLayout>
 }
 

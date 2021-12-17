@@ -11,7 +11,7 @@ const CategoryList = ({ currentCategory, categories }) => {
   const { locale } = useGlobal()
 
   return <ul className='flex py-1 space-x-3'>
-    <li className='w-16 py-2 dark:text-gray-200'><FontAwesomeIcon className='mr-2' icon={faThList} />{locale.COMMON.CATEGORY}</li>
+    <li className='w-16 py-2 dark:text-gray-200 whitespace-nowrap'><FontAwesomeIcon className='mr-2' icon={faThList} />{locale.COMMON.CATEGORY}</li>
     {Object.keys(categories).map(category => {
       const selected = category === currentCategory
       return (

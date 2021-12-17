@@ -43,8 +43,8 @@ const ShareBar = ({ post }) => {
 
   return <>
     <div
-      className='py-2 text-gray-500 text-center space-x-2 flex inline-block my-1 dark:text-gray-200 overflow-visible'>
-      <div className='hidden md:block text-gray-800 dark:text-gray-300 mr-2 my-2'>{locale.COMMON.SHARE}:</div>
+      className='py-2 text-gray-500 text-center space-x-2 flex my-1 dark:text-gray-200 overflow-visible'>
+      <div className='hidden md:block text-gray-800 dark:text-gray-300 mr-2 my-2 whitespace-nowrap'>{locale.COMMON.SHARE}:</div>
       <div className='text-3xl cursor-pointer'>
         <a className='text-blue-700' href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} >
           <FontAwesomeIcon icon={faFacebookSquare}/>

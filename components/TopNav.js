@@ -17,7 +17,7 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
 
     {/* 导航栏 */}
     <div id='sticky-nav' className='flex fixed w-full top-0 z-20 transform duration-500 glassmorphism'>
-      <div className='w-full flex justify-between items-center p-4 shadow-lg '>
+      <div className='w-full flex justify-between items-center p-4 shadow'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
           <div className='relative w-10' ><Image

@@ -1,6 +1,6 @@
 import 'animate.css'
-import '@/styles/globals.css'
 import '@/styles/notion.css'
+import '@/styles/globals.css'
 import 'rc-dropdown/assets/index.css'
 import 'prismjs/themes/prism-okaidia.css'
 import 'katex/dist/katex.min.css'

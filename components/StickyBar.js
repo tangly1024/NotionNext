@@ -8,20 +8,20 @@
 const StickyBar = ({ children }) => {
   if (!children) return <></>
   return (
-    <div id='sticky-bar' className='fixed lg:top-0 top-14 duration-500 z-10 w-full border-b dark:border-gray-600 shadow-inner'>
-      <div className='bg-white dark:bg-gray-800 flex overflow-x-auto'>
-      <div className='z-30 sticky left-0 flex'>
-        <div className='pr-2 bg-white dark:bg-gray-800'/>
-        <div className='pr-3 -line-x-opacity bg-black'/>
+    <div id='sticky-bar' className='sticky flex justify-center top-0 duration-500 z-10 w-full'>
+      <div className='bg-white dark:bg-gray-800 dark:border-gray-600 w-full px-5 rounded-none md:rounded-xl shadow-xl border overflow-x-auto'>
+        <div className="flex">
+          <div className='z-30 absolute h-12 left-0 flex'>
+            <div className='pr-6 md:ml-5 -line-x-opacity'/>
+          </div>
+          <div id='tag-container' className="max-w-xs md:max-w-lg xl:max-w-2xl 2xl:max-w-5xl 3xl:max-w-6xl">
+              { children }
+          </div>
+          <div className='z-30 absolute h-12 right-0 flex'>
+            <div className='pl-5 md:mr-5 line-x-opacity'/>
+          </div>
+        </div>
       </div>
-      <div id='tag-container'>
-          { children }
-      </div>
-      <div className='z-30 sticky right-0 flex'>
-        <div className='px-5 line-x-opacity'/>
-        <div className='px-2 bg-white dark:bg-gray-800'/>
-      </div>
-    </div>
     </div>
   )
 }

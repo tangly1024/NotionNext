@@ -50,7 +50,9 @@ const Search = ({ allPosts, tags, categories }) => {
         <StickyBar>
           <div className='p-4 dark:text-gray-200'><FontAwesomeIcon icon={faSearch} className='mr-1'/> 搜索词： {searchKey}</div>
         </StickyBar>
-        <BlogPostListScroll posts={filteredPosts} tags={tags} currentSearch={searchKey} />
+        <div className='md:mt-5'>
+         <BlogPostListScroll posts={filteredPosts} tags={tags} currentSearch={searchKey} />
+        </div>
       </div>
     </BaseLayout>
   )

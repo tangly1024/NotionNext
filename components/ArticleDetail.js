@@ -45,11 +45,11 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
      <Progress targetRef={targetRef} />
 
       <div id="article-wrapper" ref={targetRef} className="flex-grow">
-        <div className="max-w-5xl mx-auto mt-16 xl:mt-32 w-screen md:w-full">
+        <div className="max-w-5xl mx-auto w-screen md:w-full ">
           <article
             itemScope
             itemType="https://schema.org/Movie"
-            className="duration-300 hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-52 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-900"
+            className="rounded-xl shadow-md duration-300 hover:shadow-2xl animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 py-10 lg:px-52 px-5  dark:border-gray-700 bg-white dark:bg-gray-900"
           >
             {post.type && !post.type.includes('Page') && post?.page_cover && (
               <>
@@ -150,7 +150,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             <section className="md:flex md:justify-between">
               {post.tagItems && (
                 <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
-                  <div className="hidden md:block dark:text-gray-300">
+                  <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
                     {locale.COMMON.TAGS}：
                   </div>
                   {post.tagItems.map(tag => (
@@ -167,7 +167,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           </article>
 
           {/* 评论互动 */}
-          <div className="my-10 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="mt-5 shadow-lg rounded-xl w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
             <Comment frontMatter={post} />
           </div>
         </div>
