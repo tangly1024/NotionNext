@@ -49,7 +49,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           <article
             itemScope
             itemType="https://schema.org/Movie"
-            className="duration-300 hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-52 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-800"
+            className="duration-300 hover:shadow-2xl pt-10 animate__fadeIn animate__animated subpixel-antialiased lg:pt-32 lg:px-52 px-5 py-2 dark:border-gray-700 bg-white dark:bg-gray-900"
           >
             {post.type && !post.type.includes('Page') && post?.page_cover && (
               <>
