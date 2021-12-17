@@ -56,7 +56,6 @@ const Index = ({ allPosts, tags, categories }) => {
     () => {
       if (window) {
         const anchor = window.location.hash
-        console.log('滚动', anchor)
         if (anchor) {
           setTimeout(() => {
             const anchorElement = document.getElementById(anchor.substring(1))

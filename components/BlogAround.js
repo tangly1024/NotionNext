@@ -11,7 +11,7 @@ export default function BlogAround ({ prev, next }) {
   if (!prev || !next) {
     return <></>
   }
-  return <section className='text-gray-800 mb-8 lg:mb-32 border-t dark:text-gray-300 flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
+  return <section className='text-gray-800 border-t dark:text-gray-300 flex flex-wrap lg:flex-nowrap lg:space-x-10 justify-between py-2'>
     <Link href={`/article/${prev.slug}`} passHref>
       <a className='text-sm py-3 text-blue-500 hover:underline cursor-pointer'>
         <FontAwesomeIcon icon={faAngleDoubleLeft} className='mr-1' />{prev.title}
