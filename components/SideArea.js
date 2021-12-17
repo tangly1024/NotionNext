@@ -27,7 +27,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
   const { locale } = useGlobal()
   return <aside id='sidebar' className='w-72 z-10 scroll-hidden h-full'>
 
-    <section className='hidden lg:block bg-white dark:bg-gray-800 rounded-xl py-8 shadow-lg'>
+    <section className='hidden lg:block bg-white dark:bg-gray-800 rounded-xl hover:shadow-2xl duration-200 py-8 shadow-lg'>
       <InfoCard />
     </section>
 
@@ -35,7 +35,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
 
       {/* <hr className='dark:border-gray-700 mt-5 py-1' /> */}
 
-      <section className='hidden lg:block mt-5 py-4 rounded-xl shadow-lg bg-white dark:bg-gray-800'>
+      <section className='hidden lg:block mt-5 py-4 rounded-xl shadow-lg bg-white dark:bg-gray-800  hover:shadow-2xl duration-200'>
         <MenuButtonGroup allowCollapse={true} />
         <div className='px-5 pt-2'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
@@ -44,7 +44,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
 
       {/* 最新文章 */}
       {posts && (
-        <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800'>
+        <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
           <div className='text-sm pb-2 px-5  flex flex-nowrap justify-between'>
             <div className='font-light text-gray-600  dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-2' />{locale.COMMON.LATEST_POSTS}</div>
           </div>
@@ -54,7 +54,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
 
       {/* 分类  */}
       {categories && (
-        <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800'>
+        <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
           <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
             <div className='pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
@@ -69,7 +69,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
 
       {/* 标签云  */}
       {tags && (
-        <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800'>
+        <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
           <div className='text-sm pb-1 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
             <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-2'/>{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
@@ -86,7 +86,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
     </div>
 
     {post && (
-      <section id='left-toc' className='sticky pb-20 top-6 rounded-xl shadow-lg bg-white dark:bg-gray-800'>
+      <section id='left-toc' className='sticky pb-20 top-6 rounded-xl shadow-lg bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
         <div className='border-b text-2xl bg-white text-black rounded-t-xl dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>

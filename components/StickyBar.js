@@ -14,7 +14,7 @@ const StickyBar = ({ children }) => {
           <div className='z-30 absolute h-12 left-0 flex'>
             <div className='pr-6 md:ml-5 -line-x-opacity'/>
           </div>
-          <div id='tag-container' className="max-w-xs md:max-w-lg xl:max-w-2xl 2xl:max-w-5xl 3xl:max-w-6xl">
+          <div id='tag-container' className="md:pl-3  max-w-xs md:max-w-lg xl:max-w-2xl 2xl:max-w-5xl 3xl:max-w-6xl">
               { children }
           </div>
           <div className='z-30 absolute h-12 right-0 flex'>
