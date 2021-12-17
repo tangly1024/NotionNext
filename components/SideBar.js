@@ -25,7 +25,7 @@ import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/fr
  */
 const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
-  return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-72 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
+  return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-80 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
 
     <section className='hidden lg:block'>
       <InfoCard />
@@ -86,7 +86,7 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
     </div>
 
     {post && (
-      <section id='left-toc' className='sticky pb-20 top-0 bg-white dark:bg-gray-900'>
+      <section id='left-toc' className='sticky pb-20 top-0 bg-white dark:bg-gray-900 hidden md:block'>
         <div className='border-b text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>

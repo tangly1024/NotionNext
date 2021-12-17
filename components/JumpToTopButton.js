@@ -25,7 +25,8 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     const fullHeight = clientHeight - window.outerHeight
     let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
     if (per > 100) per = 100
-    const shouldShow = scrollY > 100 && per > 0 && scrollY < windowTop
+    // const shouldShow = scrollY > 100 && per > 0 && scrollY < windowTop
+    const shouldShow = scrollY > 100 && per > 0
     windowTop = scrollY
 
     if (shouldShow !== show) {
@@ -39,11 +40,11 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div id='jump-to-top' className='right-5 fixed flex bottom-52 duration-500 z-20'>
+  return (<div id='jump-to-top' className='right-5 fixed flex bottom-48 duration-500 z-20'>
       <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={(show ? '' : 'hidden') + ' animate__fadeInRight animate__animated animate__faster shadow-card rounded-full glassmorphism p-2 cursor-pointer '}>
+        className={(show ? '' : 'hidden') + ' animate__fadeInRight animate__animated animate__faster shadow-card rounded-full glassmorphism py-1 cursor-pointer '}>
         <div className='text-center'>
-        <div className='w-10 dark:text-gray-200 transform hover:scale-125 duration-200' title={locale.POST.TOP} >
+        <div className='w-10 dark:text-gray-200 transform hover:scale-125 duration-200 text-xs' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
           {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}

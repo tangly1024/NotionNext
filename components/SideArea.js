@@ -86,8 +86,8 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
     </div>
 
     {post && (
-      <section id='left-toc' className='sticky pb-20 top-0 pt-2 rounded-xl shadow-lg bg-white dark:bg-gray-800'>
-        <div className='border-b text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
+      <section id='left-toc' className='sticky pb-20 top-6 rounded-xl shadow-lg bg-white dark:bg-gray-800'>
+        <div className='border-b text-2xl bg-white text-black rounded-t-xl dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>
         <Toc toc={post.toc} />

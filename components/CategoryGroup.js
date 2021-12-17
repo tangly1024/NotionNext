@@ -5,7 +5,7 @@ import React from 'react'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
   return <>
-    <div id='category-list' className='dark:border-gray-600 dark:bg-gray-800 flex flex-wrap'>
+    <div id='category-list' className='dark:border-gray-600 flex flex-wrap'>
       {Object.keys(categories).map(category => {
         const selected = currentCategory === category
         return <Link key={category} href={`/category/${category}`} passHref>

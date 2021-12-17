@@ -44,7 +44,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
     <>
      <Progress targetRef={targetRef} />
 
-      <div id="article-wrapper" ref={targetRef} className="flex-grow">
+      <div id="article-wrapper" ref={targetRef} className="flex-grow mt-14 md:mt-0">
         <div className="max-w-5xl mx-auto w-screen md:w-full ">
           <article
             itemScope

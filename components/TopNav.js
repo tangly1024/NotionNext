@@ -1,11 +1,11 @@
 import { useRef } from 'react'
 import SideBarDrawer from '@/components/SideBarDrawer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useGlobal } from '@/lib/global'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
   const drawer = useRef()
@@ -46,9 +46,8 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
             <a>{locale.NAV.ABOUT}</a>
           </Link>
           <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
-               className='ppb-1z-30 text-gray-600 text-2xl flex items-center cursor-pointer dark:text-gray-300'>
-            <FontAwesomeIcon icon={faBars} className='hover:scale-125 transform duration-200'
-            />
+               className='cursor-pointer dark:text-gray-300'>
+            {locale.NAV.SEARCH}
           </div>
         </div>
       </div>

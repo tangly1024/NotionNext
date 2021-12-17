@@ -23,16 +23,16 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, curren
       const sideBarDrawerBackground = window.document.getElementById('sidebar-drawer-background')
 
       if (showStatus) {
-        sideBarDrawer.classList.replace('-ml-72', 'ml-0')
+        sideBarDrawer.classList.replace('-ml-80', 'ml-0')
         sideBarDrawerBackground.classList.replace('hidden', 'block')
       } else {
-        sideBarDrawer.classList.replace('ml-0', '-ml-72')
+        sideBarDrawer.classList.replace('ml-0', '-ml-80')
         sideBarDrawerBackground.classList.replace('block', 'hidden')
       }
     }
   }
   return <>
-    <div id='sidebar-drawer' className='-ml-72 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50'>
+    <div id='sidebar-drawer' className='-ml-80 bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50'>
       <SideBar tags={tags} post={post} posts={posts} categories={categories} currentCategory={currentCategory} />
     </div>
     {/* 背景蒙版 */}
