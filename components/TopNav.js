@@ -1,11 +1,9 @@
 import { useRef } from 'react'
 import SideBarDrawer from '@/components/SideBarDrawer'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useGlobal } from '@/lib/global'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
   const drawer = useRef()

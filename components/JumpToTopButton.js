@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import smoothscroll from 'smoothscroll-polyfill'
 
-let windowTop = 0
-
 /**
  * 跳转到网页顶部
  * 当屏幕下滑500像素后会出现该控件
@@ -27,7 +25,6 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
     if (per > 100) per = 100
     // const shouldShow = scrollY > 100 && per > 0 && scrollY < windowTop
     const shouldShow = scrollY > 100 && per > 0
-    windowTop = scrollY
 
     if (shouldShow !== show) {
       switchShow(shouldShow)

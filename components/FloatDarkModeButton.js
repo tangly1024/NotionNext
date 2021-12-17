@@ -3,14 +3,12 @@ import { loadUserThemeFromCookies, saveTheme, useGlobal } from '@/lib/global'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-let windowTop = 0
 export default function FloatDarkModeButton () {
   const [show, switchShow] = useState(false)
   const scrollListener = () => {
     const scrollY = window.pageYOffset
     // const shouldShow = scrollY > 100 && scrollY < windowTop
     const shouldShow = scrollY > 100
-    windowTop = scrollY
     if (shouldShow !== show) {
       switchShow(shouldShow)
     }

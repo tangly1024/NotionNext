@@ -3,7 +3,6 @@ import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faListOl } from '@fortawesome/free-solid-svg-icons'
 
-let windowTop = 0
 /**
  * 点击召唤目录抽屉
  * 当屏幕下滑500像素后会出现该控件
@@ -16,9 +15,7 @@ const TocDrawerButton = (props) => {
   const [show, switchShow] = useState(false)
   const scrollListener = () => {
     const scrollY = window.pageYOffset
-    // const shouldShow = scrollY > 100 && scrollY < windowTop
     const shouldShow = scrollY > 100
-    windowTop = scrollY
 
     if (shouldShow !== show) {
       switchShow(shouldShow)
