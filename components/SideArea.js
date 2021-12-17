@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import InfoCard from '@/components/InfoCard'
 import TagGroups from '@/components/TagGroups'
@@ -10,7 +10,6 @@ import { useGlobal } from '@/lib/global'
 import Toc from '@/components/Toc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
-const adsInit = false
 
 /**
  * 侧边平铺
