@@ -60,7 +60,7 @@ const BaseLayout = ({
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
-  })
+  }, [])
   const { onLoading, theme } = useGlobal()
   const targetRef = useRef(null)
 

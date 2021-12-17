@@ -94,7 +94,16 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
       </section>
     )}
 
-    {/* <section id='blank' className='bg-white dark:bg-gray-900 py-20' /> */}
+    <section className='bg-white dark:bg-gray-900'>
+      {/* 信息流广告 */}
+      <ins className="adsbygoogle"
+      style={{ display: 'block' }}
+      data-adtest="on"
+      data-ad-format="fluid"
+      data-ad-layout-key="-5j+cz+30-f7+bf"
+      data-ad-client="ca-pub-2708419466378217"
+      data-ad-slot="1510444138"></ins>
+    </section>
 
   </aside>
 }

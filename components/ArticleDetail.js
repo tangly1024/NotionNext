@@ -102,6 +102,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                 <section className='flex justify-end py-2 pl-1 dark:text-white items-center font-light italic text-sm'>
                     本文共<strong id='wordCount'>0</strong>字，阅读需要约<strong id='readTime'>0</strong>分钟
                 </section>
+
             </header>
 
             {/* Notion文章主体 */}
@@ -119,6 +120,17 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                   }}
                 />
               )}
+            </section>
+
+            <section className="px-1 py-2 my-1 text-sm font-light  text-gray-600  dark:text-gray-400">
+              {/* 文章内嵌广告 */}
+              <ins className="adsbygoogle"
+                style={{ display: 'block', textAlign: 'center' }}
+                data-adtest="on"
+                data-ad-layout="in-article"
+                data-ad-format="fluid"
+                data-ad-client="ca-pub-2708419466378217"
+                data-ad-slot="3806269138"></ins>
             </section>
 
             {/* 推荐文章 */}
@@ -165,10 +177,11 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             </section>
 
             <BlogAround prev={prev} next={next} />
+
           </article>
 
           {/* 评论互动 */}
-          <div className="mt-5 shadow-lg rounded-xl w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="mt-5 lg:px-40  shadow-lg rounded-xl w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
             <Comment frontMatter={post} />
           </div>
       </div>

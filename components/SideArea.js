@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MenuButtonGroup from '@/components/MenuButtonGroup'
 import InfoCard from '@/components/InfoCard'
 import TagGroups from '@/components/TagGroups'
@@ -10,6 +10,7 @@ import { useGlobal } from '@/lib/global'
 import Toc from '@/components/Toc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
+const adsInit = false
 
 /**
  * 侧边平铺
@@ -25,6 +26,7 @@ import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/fr
  */
 const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
+
   return <aside id='sidebar' className='w-72 z-10 scroll-hidden h-full'>
 
     <section className='hidden lg:block bg-white dark:bg-gray-800 rounded-xl hover:shadow-2xl duration-200 py-8 shadow-lg'>
@@ -33,8 +35,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
 
     <div className={(!post ? 'sticky top-2' : '') + ' pb-4'}>
 
-      {/* <hr className='dark:border-gray-700 mt-5 py-1' /> */}
-
+      {/* 菜单 */}
       <section className='hidden lg:block mt-5 py-4 rounded-xl shadow-lg bg-white dark:bg-gray-800  hover:shadow-2xl duration-200'>
         <MenuButtonGroup allowCollapse={true} />
         <div className='px-5 pt-2'>
@@ -51,6 +52,17 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
           <LatestPostsGroup posts={posts} />
         </section>
       )}
+
+      <section className='rounded-xl shadow-lg py-4 mt-5 px-2 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
+          {/* 展示广告  */}
+          <ins className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-adtest="on"
+            data-ad-client="ca-pub-2708419466378217"
+            data-ad-slot="8807314373"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+      </section>
 
       {/* 分类  */}
       {categories && (
