@@ -31,9 +31,7 @@ const Slug = ({ post, blockMap, tags, prev, next, allPosts, recommendPosts, cate
 
 export async function getStaticPaths () {
   let posts = []
-  // if (BLOG.isProd) {
   posts = await getAllPosts({ from: 'slug - paths', includePage: true })
-  // }
   return {
     paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
     fallback: true
@@ -51,7 +49,6 @@ export async function getStaticProps ({ params: { slug } }) {
   }
 
   const blockMap = await getPostBlocks(post.id, 'slug')
-  post.toc = []
   if (blockMap) {
     post.content = Object.keys(blockMap.block)
     post.toc = getPageTableOfContents(post, blockMap)

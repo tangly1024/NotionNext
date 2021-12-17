@@ -85,7 +85,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
       )}
     </div>
 
-    {post && (
+    {post && post.toc && post.toc.length > 1 && (
       <section id='left-toc' className='sticky pb-20 top-6 rounded-xl shadow-lg bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
         <div className='border-b text-2xl bg-white text-black rounded-t-xl dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
