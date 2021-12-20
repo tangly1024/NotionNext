@@ -44,7 +44,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   return (<>
       <div id="article-wrapper" ref={targetRef} className="flex-grow mt-14 md:mt-0 max-w-5xl mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
-            className="rounded-xl shadow-md duration-300 hover:shadow-2xl animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 lg:px-48 dark:border-gray-700 bg-white dark:bg-gray-900"
+            className="rounded-xl shadow-md duration-300 hover:shadow-2xl animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-48 dark:border-gray-700 bg-white dark:bg-gray-900"
           >
             <header>
                 {post.type && !post.type.includes('Page') && post?.page_cover && (

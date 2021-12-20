@@ -29,7 +29,7 @@ const TocDrawer = ({ post, cRef }) => {
         '  shadow-xl animate__animated animate__faster max-h-96 ' +
         ' w-60 duration-200 fixed right-4 top-16 rounded overflow-y-auto'}>
           {post && <>
-            <div className='text-xl font-bold text-black dark:text-white glassmorphism py-3 px-6'>
+            <div className='text-xl font-bold text-black dark:text-white bg-gray-200 dark:bg-gray-600 py-2 px-6'>
               {locale.COMMON.TABLE_OF_CONTENTS}
             </div>
             <Toc toc={post.toc}/>

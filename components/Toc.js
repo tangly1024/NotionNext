@@ -51,14 +51,14 @@ const Toc = ({ toc }) => {
   }, throttleMs))
 
   return <>
-    <nav className=' dark:text-gray-100 glassmorphism overflow-y-auto scroll-hidden p-6'>
+    <nav className=' dark:text-gray-100 bg-white dark:bg-gray-800 overflow-y-auto scroll-hidden p-6'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (
           <a
             key={id}
             href={`#${id}`}
-            className={`notion-table-of-contents-item px-5 duration-300 transform font-light
+            className={`notion-table-of-contents-item duration-300 transform font-light
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} 
             ${activeSection === id && ' font-bold text-blue-400 dark:text-white'}`}
           >

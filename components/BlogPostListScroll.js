@@ -33,7 +33,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY + window.outerHeight
     const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
-    if (scrollS > clientHeight + 10) {
+    if (scrollS > clientHeight + 100) {
       handleGetMore()
     }
   }, 500))

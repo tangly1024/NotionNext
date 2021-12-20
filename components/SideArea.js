@@ -52,17 +52,6 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
         </section>
       )}
 
-      <section className='rounded-xl shadow-lg py-4 mt-5 px-2 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
-          {/* 展示广告  */}
-          <ins className="adsbygoogle"
-            style={{ display: 'block' }}
-            data-adtest="on"
-            data-ad-client="ca-pub-2708419466378217"
-            data-ad-slot="8807314373"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-      </section>
-
       {/* 分类  */}
       {categories && (
         <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
