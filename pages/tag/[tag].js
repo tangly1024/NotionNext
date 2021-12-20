@@ -13,9 +13,11 @@ export default function Tag ({ tags, allPosts, filteredPosts, tag, categories })
     type: 'website'
   }
 
+  // 将当前选中的标签置顶🔝
+  const newTags = [tags.find(r => r.name === tag)].concat(tags.filter(r => r.name !== tag))
   return <BaseLayout meta={meta} tags={tags} currentTag={tag} categories={categories} totalPosts={allPosts}>
       <StickyBar>
-          <TagList tags={tags} currentTag={tag}/>
+          <TagList tags={newTags} currentTag={tag}/>
       </StickyBar>
       <div className='md:mt-8'>
         <BlogPostListScroll posts={filteredPosts} tags={tags} currentTag={tag}/>
