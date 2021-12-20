@@ -32,7 +32,7 @@ export default function FloatDarkModeButton () {
       onClick={handleChangeDarkMode}
       className={
         (show ? 'animate__fadeInRight ' : 'hidden lg:block') +
-        ' px-3.5 py-3 animate__animated animate__faster shadow-card fixed right-5 bottom-36 z-10 duration-200 text-xs cursor-pointer rounded-xl' +
+        ' px-3.5 py-3 animate__animated animate__faster shadow-card fixed right-3 bottom-36 z-10 duration-200 text-xs cursor-pointer rounded-xl' +
         ' text-black shadow-card dark:border-gray-500 glassmorphism dark:bg-gray-700 dark:text-gray-200'
       }
     >

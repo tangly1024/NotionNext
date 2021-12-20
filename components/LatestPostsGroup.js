@@ -1,6 +1,7 @@
-import Link from 'next/link'
 import BLOG from '@/blog.config'
-import { formatDateFmt } from '@/lib/formatDate'
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 /**
@@ -32,12 +33,10 @@ const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
         return (
           <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} passHref>
             <a className={(selected ? 'text-white  bg-blue-500 dark:bg-black ' : 'text-gray-500 dark:text-gray-300 ') + ' my-1 px-5 flex font-light justify-between'}>
-              <div className={ 'text-xs py-1 flex w-40 overflow-x-hidden whitespace-nowrap overflow-hidden ' +
+              <div className={ 'text-xs py-1.5 flex overflow-x-hidden whitespace-nowrap overflow-hidden ' +
                 'hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer hover:underline ' }>
+                <FontAwesomeIcon icon={faFileAlt} className='mr-2'/>
                 {post.title}
-              </div>
-              <div className='text-xs py-1'>
-                {formatDateFmt(post.lastEditedTime, 'yyyy/MM/dd')}
               </div>
             </a>
           </Link>

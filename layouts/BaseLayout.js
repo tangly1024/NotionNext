@@ -1,15 +1,15 @@
+import CommonHead from '@/components/CommonHead'
+import FloatDarkModeButton from '@/components/FloatDarkModeButton'
+import Footer from '@/components/Footer'
+import JumpToTopButton from '@/components/JumpToTopButton'
+import LoadingCover from '@/components/LoadingCover'
+import SideArea from '@/components/SideArea'
+import SideAreaRight from '@/components/SideAreaRight'
+import TopNav from '@/components/TopNav'
+import { useGlobal } from '@/lib/global'
+import throttle from 'lodash.throttle'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef } from 'react'
-import CommonHead from '@/components/CommonHead'
-import throttle from 'lodash.throttle'
-import TopNav from '@/components/TopNav'
-import Footer from '@/components/Footer'
-import SideArea from '@/components/SideArea'
-import JumpToTopButton from '@/components/JumpToTopButton'
-import { useGlobal } from '@/lib/global'
-import LoadingCover from '@/components/LoadingCover'
-import FloatDarkModeButton from '@/components/FloatDarkModeButton'
-
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
  * @param children
@@ -61,34 +61,37 @@ const BaseLayout = ({
       window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
-  const { onLoading, theme } = useGlobal()
+  const { theme, onLoading } = useGlobal()
   const targetRef = useRef(null)
 
-  return (
-    <div id='wrapper' className={theme}>
+  return (<div id='wrapper' className={`${theme}`}>
+
       <CommonHead meta={meta} />
 
       {/* 顶部导航栏 */}
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      {/* Middle Wrapper */}
-      <div className='flex bg-gray-100 dark:bg-gray-900 xl:px-32 md:px-16 md:pt-20 pb-12'>
-        <div className='hidden lg:block'>
+      <div className='flex max-w-full mx-auto lg:px-16 lg:space-x-10 md:pt-10 pb-12 bg-gray-100 dark:bg-gray-900'>
+        <div id='left' className='hidden lg:block'>
           <SideArea title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
 
-        <div className='flex flex-grow min-h-screen' ref={targetRef}>
+        <div id='center' className='flex flex-grow min-h-screen' ref={targetRef}>
           {onLoading
             ? <LoadingCover/>
-            : <div className='flex-grow  md:pl-10'>
+            : <div className='flex-grow'>
               {children}
             </div>
           }
         </div>
-      </div>
+
+        <div id='right' className='hidden xl:block flex-col w-72'>
+          <SideAreaRight post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+        </div>
+
+        </div>
 
       <Footer title={meta.title}/>
-
       <JumpToTopButton targetRef={targetRef} showPercent={true} />
       <FloatDarkModeButton/>
       </div>

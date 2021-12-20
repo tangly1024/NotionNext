@@ -23,7 +23,8 @@ import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import BlogAround from '@/components/BlogAround'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import WordCount from './WordCount'
 
 /**
  *
@@ -36,10 +37,6 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   const url = BLOG.link + useRouter().asPath
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)
-
-  useEffect(() => {
-    countWords()
-  })
 
   return (<>
       <div id="article-wrapper" ref={targetRef} className="flex-grow mt-14 md:mt-0 max-w-5xl mx-auto w-screen md:w-full ">
@@ -100,7 +97,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                 </section>
 
                 <section className='flex justify-end py-2 pl-1 dark:text-white items-center font-light italic text-sm'>
-                    本文共<strong id='wordCount'>0</strong>字，阅读需要约<strong id='readTime'>0</strong>分钟
+                    <WordCount/>
                 </section>
 
             </header>
@@ -181,7 +178,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           </article>
 
           {/* 评论互动 */}
-          <div className="mt-5 lg:px-40  shadow-lg rounded-xl w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="mt-5 lg:px-40 hover:shadow-2xl duration-200 shadow-lg rounded-xl w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
             <Comment frontMatter={post} />
           </div>
       </div>
@@ -198,43 +195,4 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
-}
-
-/**
- * 更新字数统计和阅读时间
- */
-function countWords () {
-  if (window) {
-    const articleElement = document.getElementById('notion-article')
-    if (articleElement) {
-      const articleText = deleteHtmlTag(articleElement.innerHTML)
-      const wordCount = fnGetCpmisWords(articleText)
-      // 阅读速度 300-500每分钟
-      document.getElementById('wordCount').innerHTML = wordCount
-      document.getElementById('readTime').innerHTML = Math.floor(wordCount / 400)
-    }
-  }
-}
-
-// 去除html标签
-function deleteHtmlTag (str) {
-  str = str.replace(/<[^>]+>|&[^>]+;/g, '').trim()// 去掉所有的html标签和&nbsp;之类的特殊符合
-  return str
-}
-
-// 用word方式计算正文字数
-function fnGetCpmisWords (str) {
-  let sLen = 0
-  try {
-    // eslint-disable-next-line no-irregular-whitespace
-    str = str.replace(/(\r\n+|\s+|　+)/g, '龘')
-    // eslint-disable-next-line no-control-regex
-    str = str.replace(/[\x00-\xff]/g, 'm')
-    str = str.replace(/m+/g, '*')
-    str = str.replace(/龘+/g, '')
-    sLen = str.length
-  } catch (e) {
-
-  }
-  return sLen
 }
