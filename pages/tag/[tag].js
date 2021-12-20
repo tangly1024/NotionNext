@@ -14,7 +14,10 @@ export default function Tag ({ tags, allPosts, filteredPosts, tag, categories })
   }
 
   // 将当前选中的标签置顶🔝
-  const newTags = [tags.find(r => r.name === tag)].concat(tags.filter(r => r.name !== tag))
+  if (!tags) tags = []
+  const currentTag = tags?.find(r => r?.name === tag)
+  const newTags = currentTag ? [currentTag].concat(tags.filter(r => r?.name !== tag)) : tags.filter(r => r?.name !== tag)
+
   return <BaseLayout meta={meta} tags={tags} currentTag={tag} categories={categories} totalPosts={allPosts}>
       <StickyBar>
           <TagList tags={newTags} currentTag={tag}/>

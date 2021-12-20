@@ -28,12 +28,12 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
 
     <div className={(!post ? 'sticky top-5' : '') + ' pb-4'}>
 
-      <section className='hidden lg:block bg-white dark:bg-gray-800 rounded-xl hover:shadow-2xl duration-200 py-8 shadow-lg'>
+      <section className='hidden lg:block bg-white dark:bg-gray-800 rounded-xl hover:shadow-2xl duration-200 py-8 shadow-md'>
         <InfoCard />
       </section>
 
       {/* 菜单 */}
-      <section className='hidden lg:block mt-5 py-5 rounded-xl shadow-lg bg-white dark:bg-gray-800  hover:shadow-2xl duration-200'>
+      <section className='hidden lg:block mt-5 py-5 rounded-xl shadow-md bg-white dark:bg-gray-800  hover:shadow-2xl duration-200'>
         <MenuButtonGroup allowCollapse={true} />
         <div className='px-5 pt-2'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
@@ -42,7 +42,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
 
       {/* 分类  */}
       {!post && categories && (
-        <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
+        <section className='rounded-xl shadow-md py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
           <div className='text-sm px-5 mb-2 flex flex-nowrap justify-between font-light'>
             <div className='pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
@@ -58,7 +58,7 @@ const SideArea = ({ title, tags, currentTag, post, posts, categories, currentCat
     </div>
 
     {post && post.toc && post.toc.length > 1 && (
-      <section id='left-toc' className='sticky top-6 pb-20 rounded-xl shadow-lg bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
+      <section id='left-toc' className='sticky top-6 pb-20 rounded-xl shadow-md bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
         <div className='border-b text-2xl bg-white text-black rounded-t-xl dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>

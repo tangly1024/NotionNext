@@ -38,7 +38,7 @@ const SideAreaRight = ({
 
   return (
     <>
-      <section className="rounded-xl shadow-lg py-4 px-2 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200">
+      <section className="rounded-xl shadow-md py-4 px-2 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200">
         {/* 展示广告  */}
         <ins
           className="adsbygoogle"
@@ -54,7 +54,7 @@ const SideAreaRight = ({
       <div className="sticky top-5">
         {/* 最新文章 */}
         {posts && (
-          <section className="rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200">
+          <section className="rounded-xl shadow-md py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200">
             <div className="text-sm pb-2 px-5  flex flex-nowrap justify-between">
               <div className="font-light text-gray-600  dark:text-gray-200">
                 <FontAwesomeIcon icon={faArchive} className="mr-2" />
@@ -68,7 +68,7 @@ const SideAreaRight = ({
 
         {/* 标签云  */}
         {tags && (
-          <section className="rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200">
+          <section className="rounded-xl shadow-md py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200">
             <div className="text-sm pb-1 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200">
               <div className="text-gray-600 dark:text-gray-200">
                 <FontAwesomeIcon icon={faTags} className="mr-2" />
@@ -89,7 +89,7 @@ const SideAreaRight = ({
 
         {/* 分类  */}
         {post && categories && (
-          <section className='rounded-xl shadow-lg py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
+          <section className='rounded-xl shadow-md py-4 mt-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
             <div className='text-sm px-5 mb-2 flex flex-nowrap justify-between font-light'>
               <div className='pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
               <Link href='/category' passHref>
