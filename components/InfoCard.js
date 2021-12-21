@@ -1,9 +1,7 @@
 import BLOG from '@/blog.config'
 import Image from 'next/image'
-import React from 'react'
 import Router from 'next/router'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faFileAlt, faUsers } from '@fortawesome/free-solid-svg-icons'
+import React from 'react'
 
 const InfoCard = ({ postCount }) => {
   return <>
