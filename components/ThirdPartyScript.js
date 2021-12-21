@@ -37,6 +37,13 @@ const ThirdPartyScript = () => {
       />
     </>)}
 
+    {/* 不蒜子
+    {BLOG.analytics.busuanzi && (
+      <script async
+              src={'//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'}
+      />
+    )} */}
+
     {/* 代码统计 */}
     {BLOG.isProd && (<>
 
@@ -61,12 +68,6 @@ const ThirdPartyScript = () => {
                   })();
                   `
                   }}
-          />
-        )}
-        {/* 不蒜子 */}
-        {BLOG.analytics.busuanzi && (
-          <script async
-                  src={'//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'}
           />
         )}
 
