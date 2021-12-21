@@ -71,7 +71,7 @@ const BaseLayout = ({
       {/* 顶部导航栏 */}
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      <div className='flex max-w-full mx-auto lg:px-16 lg:space-x-10 md:pt-10 pb-12 '>
+      <div className='flex max-w-full mx-auto lg:px-16 lg:space-x-10 md:pt-8 pb-12 '>
 
         <div id='left' className='hidden xl:block flex-col w-72'>
           <SideAreaLeft title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />

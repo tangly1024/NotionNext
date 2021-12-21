@@ -42,7 +42,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   return (<>
       <div id="article-wrapper" ref={targetRef} className="flex-grow mt-14 md:mt-0 max-w-5xl mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
-            className="rounded-xl shadow-md hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white  dark:bg-gray-900"
+            className="rounded-xl shadow-md hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
           >
             <header>
                 {post.type && !post.type.includes('Page') && post?.page_cover && (
@@ -80,13 +80,13 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                     </Link>
                   )}
 
-                  <div className="hidden busuanzi_container_page_pv">
+                  <div className="hidden busuanzi_container_page_pv font-light">
                     <FontAwesomeIcon
                       icon={faEye}
                       className="text-gray-500 dark:text-gray-400 mt-3 ml-5"
                     />
                     &nbsp;
-                    <span className="text-gray-500 dark:text-gray-400 leading-6 busuanzi_container_page_pv"
+                    <span className="text-gray-500 dark:text-gray-400 leading-6 busuanzi_value_page_pv"
                     ></span>
                   </div>
                 </section>

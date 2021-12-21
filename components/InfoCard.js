@@ -19,15 +19,6 @@ const InfoCard = ({ postCount }) => {
         />
         </div>
         <div className='text-3xl font-serif dark:text-white mx-auto py-4 hover:scale-105 transform duration-200'>{BLOG.title}</div>
-        <div className=' dark:text-gray-300 font-light text-xs'>
-          <span className='busuanzi_container_site_pv hidden '>
-                <FontAwesomeIcon icon={faEye}/><span className='px-1 busuanzi_value_site_pv'> </span>
-          </span>
-          <span className='pl-2 busuanzi_container_site_uv hidden'>
-                <FontAwesomeIcon icon={faUsers}/> <span className='px-1 busuanzi_value_site_pv'> </span>   </span>
-          <span className='pl-2'>
-          <FontAwesomeIcon icon={faFileAlt}/> <span className='px-1'> {postCount}</span>   </span>
-        </div>
     </div>
   </>
 }
