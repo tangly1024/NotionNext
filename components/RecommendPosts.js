@@ -6,7 +6,7 @@ import { useGlobal } from '@/lib/global'
  * 展示文章推荐
  */
 const RecommendPosts = ({ recommendPosts }) => {
-  if (!recommendPosts) {
+  if (!recommendPosts || recommendPosts.length < 1) {
     return <></>
   }
   const { locale } = useGlobal()

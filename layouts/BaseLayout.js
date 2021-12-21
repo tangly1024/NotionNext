@@ -71,26 +71,28 @@ const BaseLayout = ({
       {/* 顶部导航栏 */}
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      <div className='flex max-w-full mx-auto lg:px-16 lg:space-x-10 md:pt-8 pb-12 '>
+      <div className='flex justify-center px-5'>
+        <div className='mx-auto flex md:pt-8 pb-12'>
 
-        <div id='left' className='hidden xl:block flex-col w-72'>
-          <SideAreaLeft title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
-        </div>
+          <div id='left' className='hidden lg:block flex-col w-72'>
+            <SideAreaLeft title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
+          </div>
 
-        <div id='center' className='flex flex-grow min-h-screen' ref={targetRef}>
-          {onLoading
-            ? <LoadingCover/>
-            : <div className='flex-grow'>
-              {children}
-            </div>
-          }
-        </div>
+          <div id='center' className='flex max-w-4xl min-h-screen md:mx-10' ref={targetRef}>
+            {onLoading
+              ? <LoadingCover/>
+              : <>
+                {children}
+              </>
+            }
+          </div>
 
-        <div id='right' className='hidden xl:block flex-col w-72'>
-          <SideAreaRight post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-        </div>
+          <div id='right' className='hidden 2xl:block flex-col w-72'>
+            <SideAreaRight post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+          </div>
 
         </div>
+      </div>
 
       <Footer title={meta.title}/>
       <JumpToTopButton targetRef={targetRef} showPercent={true} />
