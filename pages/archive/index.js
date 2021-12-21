@@ -69,7 +69,7 @@ const Index = ({ allPosts, tags, categories }) => {
 
   return (
     <BaseLayout meta={meta} tags={tags} categories={categories}>
-        <div className='mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 rounded-xl shadow-md '>
+        <div className='mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 rounded-xl shadow-md min-h-full'>
           {Object.keys(archivePosts).map(archiveTitle => (
              <BlogPostArchive key={archiveTitle} posts={archivePosts[archiveTitle]} archiveTitle={archiveTitle}/>
           ))}
