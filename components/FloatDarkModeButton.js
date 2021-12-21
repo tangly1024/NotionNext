@@ -7,7 +7,6 @@ export default function FloatDarkModeButton () {
   const [show, switchShow] = useState(false)
   const scrollListener = () => {
     const scrollY = window.pageYOffset
-    // const shouldShow = scrollY > 100 && scrollY < windowTop
     const shouldShow = scrollY > 100
     if (shouldShow !== show) {
       switchShow(shouldShow)
@@ -34,8 +33,8 @@ export default function FloatDarkModeButton () {
     <div
       onClick={handleChangeDarkMode}
       className={
-        (show ? 'animate__fadeInRight ' : 'hidden lg:block') +
-        ' px-3.5 py-3 animate__animated animate__faster shadow-card fixed right-3 bottom-36 z-10 duration-200 text-xs cursor-pointer rounded-xl' +
+        (show ? '' : 'hidden lg:block') +
+        ' animate__fadeInRight  px-3.5 py-3 animate__animated animate__faster shadow-card fixed right-3 bottom-24 z-10 duration-200 text-xs cursor-pointer rounded-xl' +
         ' text-black shadow-card dark:border-gray-500 glassmorphism dark:bg-gray-700 dark:text-gray-200'
       }
     >
