@@ -24,11 +24,12 @@ import React from 'react'
 const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
+  const postCount = posts.length
   return <>
 
     <div className={(!post ? 'sticky top-10 ' : ' ') + ' w-72'}>
       <section className='hidden lg:block mb-5 bg-white dark:bg-gray-800 rounded-xl hover:shadow-2xl duration-200 py-8 shadow-md'>
-        <InfoCard />
+        <InfoCard postCount={postCount} />
       </section>
       {/* 菜单 */}
       <section className='hidden lg:block mb-5 py-5 rounded-xl shadow-md bg-white dark:bg-gray-800  hover:shadow-2xl duration-200'>

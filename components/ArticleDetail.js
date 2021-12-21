@@ -80,15 +80,13 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                     </Link>
                   )}
 
-                  <div id="busuanzi_container_page_pv" className="hidden">
+                  <div className="hidden busuanzi_container_page_pv">
                     <FontAwesomeIcon
                       icon={faEye}
                       className="text-gray-500 dark:text-gray-400 mt-3 ml-5"
                     />
                     &nbsp;
-                    <span
-                      id="busuanzi_value_page_pv"
-                      className="text-gray-500 dark:text-gray-400 leading-6"
+                    <span className="text-gray-500 dark:text-gray-400 leading-6 busuanzi_container_page_pv"
                     ></span>
                   </div>
                 </section>
