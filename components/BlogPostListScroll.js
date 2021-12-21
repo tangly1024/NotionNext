@@ -4,6 +4,7 @@ import BLOG from '@/blog.config'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import throttle from 'lodash.throttle'
 import BlogPostListEmpty from '@/components/BlogPostListEmpty'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 博客列表滚动分页
@@ -47,6 +48,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
   })
 
   const targetRef = useRef(null)
+  const { locale } = useGlobal()
 
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
@@ -65,7 +67,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
           handleGetMore()
         }}
              className='w-full my-4 py-4  text-center cursor-pointer glassmorphism shadow-xl rounded-xl dark:text-gray-200'
-        > {hasMore ? '继续加载' : '加载完了😰'} </div>
+        > {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`} </div>
       </div>
     </div>
   }

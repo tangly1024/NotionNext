@@ -3,7 +3,7 @@ import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 import Footer from '@/components/Footer'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import LoadingCover from '@/components/LoadingCover'
-import SideArea from '@/components/SideArea'
+import SideAreaLeft from '@/components/SideAreaLeft'
 import SideAreaRight from '@/components/SideAreaRight'
 import TopNav from '@/components/TopNav'
 import { useGlobal } from '@/lib/global'
@@ -61,19 +61,20 @@ const BaseLayout = ({
       window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
-  const { theme, onLoading } = useGlobal()
+  const { onLoading } = useGlobal()
   const targetRef = useRef(null)
 
-  return (<div id='wrapper' className={`${theme}`}>
+  return (<div id='wrapper'>
 
       <CommonHead meta={meta} />
 
       {/* 顶部导航栏 */}
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      <div className='flex max-w-full mx-auto lg:px-16 lg:space-x-10 md:pt-10 pb-12 bg-gray-100 dark:bg-gray-900'>
-        <div id='left' className='hidden lg:block'>
-          <SideArea title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
+      <div className='flex max-w-full mx-auto lg:px-16 lg:space-x-10 md:pt-10 pb-12 '>
+
+        <div id='left' className='hidden xl:block flex-col w-72'>
+          <SideAreaLeft title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
         </div>
 
         <div id='center' className='flex flex-grow min-h-screen' ref={targetRef}>

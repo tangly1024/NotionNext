@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const DarkModeButton = () => {
   const { changeTheme } = useGlobal()
   const userTheme = loadUserThemeFromCookies()
+
   // 用户手动设置主题
   const handleChangeDarkMode = () => {
     const newTheme = (userTheme === 'light' ? 'dark' : 'light')

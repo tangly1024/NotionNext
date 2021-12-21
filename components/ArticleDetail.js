@@ -25,6 +25,7 @@ import { faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import BlogAround from '@/components/BlogAround'
 import { useRef } from 'react'
 import WordCount from './WordCount'
+import ArticleCopyright from './ArticleCopyright'
 
 /**
  *
@@ -36,7 +37,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   const drawerRight = useRef(null)
   const url = BLOG.link + useRouter().asPath
   const { locale } = useGlobal()
-  const date = formatDate(post?.date?.start_date || post.createdTime, BLOG.lang)
+  const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
 
   return (<>
       <div id="article-wrapper" ref={targetRef} className="flex-grow mt-14 md:mt-0 max-w-5xl mx-auto w-screen md:w-full ">
@@ -134,27 +135,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
 
             {/* 版权声明 */}
-            <section className="dark:text-gray-300 mt-6">
-              <div className="text-2xl mb-2">版权声明</div>
-              <ul className="text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-4 border-red-500">
-                <li>
-                  本文作者:{' '}
-                  <Link href="/about">
-                    <a className="hover:underline">{BLOG.author}</a>
-                  </Link>
-                </li>
-                <li>
-                  本文链接:{' '}
-                  <a className="hover:underline" href={url}>
-                    {url}
-                  </a>
-                </li>
-                <li>
-                  本博客所有文章除特别声明外，均采用 BY-NC-SA
-                  许可协议。转载请注明出处！
-                </li>
-              </ul>
-            </section>
+            <ArticleCopyright author={BLOG.author} url={url} />
 
             {/* 标签列表 */}
             <section className="md:flex md:justify-between">

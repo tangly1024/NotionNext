@@ -25,6 +25,10 @@ export default function FloatDarkModeButton () {
     const newTheme = userTheme === 'light' ? 'dark' : 'light'
     saveTheme(newTheme)
     changeTheme(newTheme)
+    const htmlElement = document.getElementsByTagName('html')[0]
+    console.log('切换主题', htmlElement)
+    htmlElement.classList.remove(userTheme)
+    htmlElement.classList.add(newTheme)
   }
 
   return (
