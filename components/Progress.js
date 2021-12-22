@@ -23,9 +23,9 @@ const Progress = ({ targetRef }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [percent])
 
-  return (<div className='h-4 w-full shadow-2xl bg-purple-400'>
+  return (<div className='h-4 w-full shadow-2xl bg-blue-400'>
         <div className='text-center w-full absolute text-white text-xs'>{percent}%</div>
-        <div className='h-4 bg-purple-700 duration-200 rounded-r' style={{ width: `${percent}%` }}/>
+        <div className='h-4 bg-blue-600 duration-200 rounded-r' style={{ width: `${percent}%` }}/>
       </div>)
 }
 

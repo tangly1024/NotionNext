@@ -54,7 +54,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                           </div>
                 )}
                 {/* 文章Title */}
-                <h2 className="font-bold text-2xl text-black dark:text-white font-serif pt-10">
+                <h2 className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
                   {' '}
                   {post.title}
                 </h2>
@@ -88,9 +88,9 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                   </div>
                 </section>
 
-                <section className="px-1 py-2 my-1 text-sm font-light  text-gray-600  dark:text-gray-400">
+                <h2 className="px-1 py-2 my-1 text-md font-light  text-gray-600  dark:text-gray-400">
                   {post.summary}
-                </section>
+                </h2>
 
                 <section className='flex justify-end py-2 pl-1 dark:text-white items-center font-light italic text-sm'>
                     <WordCount/>
@@ -99,7 +99,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             </header>
 
             {/* Notion文章主体 */}
-            <section id='notion-article' className='overflow-x-auto'>
+            <section id='notion-article' className='overflow-x-auto px-1'>
               {blockMap && (
                 <NotionRenderer
                   className={`${BLOG.font}`}
@@ -164,11 +164,6 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
         <TocDrawerButton onClick={() => { drawerRight.current.handleSwitchVisible() }} />
         <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
       </div>
-
-      {/* 移动端顶部进度条 */}
-      {/* <div className='fixed left-0 top-0 w-full z-40 block md:hidden'>
-        <Progress targetRef={targetRef} />
-      </div> */}
     </>)
 }
 

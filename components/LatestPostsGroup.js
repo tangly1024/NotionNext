@@ -32,7 +32,7 @@ const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
         const selected = currentPath === `${BLOG.path}/article/${post.slug}`
         return (
           <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} passHref>
-            <a className={(selected ? 'text-white  bg-blue-500 dark:bg-black ' : 'text-gray-500 dark:text-gray-300 ') + ' my-1 px-5 flex font-light justify-between'}>
+            <a className={(selected ? 'text-white  bg-blue-600 ' : 'text-gray-500 dark:text-gray-300 ') + ' my-1 px-5 flex font-light justify-between'}>
               <div className={ 'text-xs py-1.5 flex overflow-x-hidden whitespace-nowrap overflow-hidden ' +
                 'hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer hover:underline ' }>
                 <FontAwesomeIcon icon={faFileAlt} className='mr-2'/>

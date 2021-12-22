@@ -13,12 +13,12 @@ const BlogPostCard = ({ post, tags }) => {
 
       <div className='p-8 flex flex-col justify-between w-full'>
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <a className='cursor-pointer text-lg md:text-xl leading-tight text-black dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'>
+          <a className='cursor-pointer text-xl xl:text-2xl leading-tight text-black dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'>
             {post.title}
           </a>
         </Link>
 
-        <p className='my-4 text-gray-800 dark:text-gray-300 text-sm font-light'>{post.summary}</p>
+        <p className='my-4 text-gray-800 dark:text-gray-300 text-md font-light'>{post.summary}</p>
 
         <div className='flex items-center justify-between flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 '>
           <div>
@@ -41,7 +41,7 @@ const BlogPostCard = ({ post, tags }) => {
 
       {post?.page_cover && (
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-        <div className='h-60 w-full xl:max-w-sm relative rounded-t-xl xl:rounded-t-none xl:rounded-r-xl xl:h-full duration-200 cursor-pointer transform overflow-hidden'>
+        <div className='h-60 w-full xl:max-w-xs relative rounded-t-xl xl:rounded-t-none xl:rounded-r-xl xl:h-full duration-200 cursor-pointer transform overflow-hidden'>
           <Image className='hover:scale-105 transform duration-500 rounded-t-xl xl:rounded-t-none xl:rounded-r-xl' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
         </div>
       </Link>
