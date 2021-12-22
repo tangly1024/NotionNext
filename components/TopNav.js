@@ -9,13 +9,13 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
   const drawer = useRef()
   const { locale } = useGlobal()
 
-  return (<div id='top-nav' className='block lg:hidden'>
+  return (<div id='top-nav'>
     {/* 侧面抽屉 */}
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='flex fixed w-full top-0 z-20 transform duration-500 glassmorphism'>
-      <div className='w-full flex justify-between items-center p-4 shadow'>
+    <div id='sticky-nav' className='dark flex fixed md:relative w-full top-0 z-20 transform duration-500'>
+      <div className='w-full flex justify-between items-center p-4 glassmorphism'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
           <div className='relative w-10' ><Image
@@ -44,7 +44,7 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
             <a>{locale.NAV.ABOUT}</a>
           </Link>
           <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
-               className='cursor-pointer dark:text-gray-300'>
+               className='cursor-pointer dark:text-gray-300 block md:hidden'>
             {locale.NAV.SEARCH}
           </div>
         </div>

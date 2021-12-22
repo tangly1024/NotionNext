@@ -4,10 +4,11 @@ import MenuButtonGroup from '@/components/MenuButtonGroup'
 import SearchInput from '@/components/SearchInput'
 import Toc from '@/components/Toc'
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faChartBar, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleRight, faThList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
+import Analytics from './Analytics'
 
 /**
  * 侧边平铺
@@ -41,17 +42,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
       </section>
 
       {/* 统计 */}
-      <section className='hidden lg:block mb-5 bg-white dark:bg-gray-800 rounded-xl hover:shadow-2xl duration-200 py-4 shadow-md'>
-          <div className='px-5 text-sm font-light pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faChartBar} className='mr-2' />{locale.COMMON.ANALYTICS}</div>
-          <div className='mt-2 text-center dark:text-gray-300 font-light text-xs'>
-              <span className='px-1 '>
-                  <strong className='font-medium'>{postCount}</strong>{locale.COMMON.POSTS}</span>
-              <span className='px-1 busuanzi_container_site_uv hidden'>
-              | <strong className='pl-1 busuanzi_value_site_uv font-medium'></strong>{locale.COMMON.VISITORS}</span>
-              <span className='px-1 busuanzi_container_site_pv hidden'>
-              | <strong className='pl-1 busuanzi_value_site_pv font-medium'></strong>{locale.COMMON.VIEWS}</span>
-            </div>
-      </section>
+      <Analytics postCount={postCount}/>
 
       {/* 分类  */}
       {!post && categories && (

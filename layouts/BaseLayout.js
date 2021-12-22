@@ -1,14 +1,15 @@
 import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 import Footer from '@/components/Footer'
+import Header from '@/components/Header'
 import JumpToBottomButton from '@/components/JumpToBottomButton'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import LoadingCover from '@/components/LoadingCover'
-import SideAreaLeft from '@/components/SideAreaLeft'
 import SideAreaRight from '@/components/SideAreaRight'
 import TopNav from '@/components/TopNav'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef } from 'react'
 /**
@@ -65,18 +66,20 @@ const BaseLayout = ({
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
 
-  return (<div id='wrapper'>
+  return (<div>
 
       <CommonHead meta={meta} />
 
       {/* 顶部导航栏 */}
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      <div className='flex justify-center flex-1 mx-auto md:pt-8 pb-12'>
+      {useRouter().asPath === '/' && <Header/>}
 
-          <div id='left' className='hidden lg:block flex-col w-72'>
+      <div id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-12 pb-12'>
+
+          {/* <div id='left' className='hidden lg:block flex-col w-72'>
             <SideAreaLeft targetRef={targetRef} title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
-          </div>
+          </div> */}
 
           <div id='center' className='flex-grow max-w-4xl min-h-screen md:mx-10' ref={targetRef}>
             {onLoading
@@ -87,7 +90,7 @@ const BaseLayout = ({
             }
           </div>
 
-          <div id='right' className='hidden 2xl:block flex-col w-72'>
+          <div id='right' className='hidden lg:block flex-col w-72 mr-5'>
             <SideAreaRight post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
           </div>
 

@@ -53,7 +53,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
   } else {
-    return <div id='post-list-wrapper' className='mt-20 md:mt-0' ref={targetRef}>
+    return <div id='post-list-wrapper' className='mt-10 md:mt-0' ref={targetRef}>
 
       {/* 文章列表 */}
       <div className='flex flex-wrap'>
