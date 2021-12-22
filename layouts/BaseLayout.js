@@ -1,7 +1,6 @@
 import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 import Footer from '@/components/Footer'
-import Header from '@/components/Header'
 import JumpToBottomButton from '@/components/JumpToBottomButton'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import LoadingCover from '@/components/LoadingCover'
@@ -9,7 +8,6 @@ import SideAreaRight from '@/components/SideAreaRight'
 import TopNav from '@/components/TopNav'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
-import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef } from 'react'
 /**
@@ -73,7 +71,7 @@ const BaseLayout = ({
       {/* 顶部导航栏 */}
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      {useRouter().asPath === '/' && <Header/>}
+      {/* {useRouter().asPath === '/' && <Header/>} */}
 
       <div id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-12 pb-12'>
 
