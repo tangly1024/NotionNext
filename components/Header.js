@@ -1,6 +1,8 @@
+import { useGlobal } from '@/lib/global'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import throttle from 'lodash.throttle'
+import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
 
 /**
@@ -19,6 +21,29 @@ export default function Header () {
   const scrollToCenter = () => {
     document.getElementById('wrapper').scrollIntoView({ behavior: 'smooth' })
   }
+
+  const { theme } = useGlobal()
+  // 监听滚动自动分页加载
+  const scrollTrigger = useCallback(throttle(() => {
+    if (theme !== 'dark') {
+      const stickyNavElement = document.getElementById('sticky-nav')
+      if (window.scrollY < window.innerHeight) {
+        stickyNavElement.classList.add('dark')
+      } else {
+        stickyNavElement.classList.remove('dark')
+      }
+    }
+  }, 500))
+
+  // 监听滚动
+  useEffect(() => {
+    scrollTrigger()
+    window.addEventListener('scroll', scrollTrigger)
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+    }
+  })
+
   return <div className='h-screen w-full'>
       <div className='absolute z-10 flex h-screen items-center justify-center w-full'>
           <div id="typed-strings">
