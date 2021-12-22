@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 const Progress = ({ targetRef }) => {
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
-    if (targetRef.current) {
+    if (targetRef?.current) {
       const clientHeight = targetRef ? (targetRef.current.clientHeight) : 0
       const scrollY = window.pageYOffset
       const fullHeight = clientHeight - window.outerHeight
@@ -23,8 +23,9 @@ const Progress = ({ targetRef }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [percent])
 
-  return (<div className='h-1  fixed left-0 top-0 w-full shadow-2xl z-40 bg-blue-200'>
-        <div className='h-1 bg-blue-600 fixed left-0 top-0 duration-200 rounded' style={{ width: `${percent}%` }}/>
+  return (<div className='h-4 w-full shadow-2xl bg-purple-400'>
+        <div className='text-center w-full absolute text-white text-xs'>{percent}%</div>
+        <div className='h-4 bg-purple-700 duration-200 rounded-r' style={{ width: `${percent}%` }}/>
       </div>)
 }
 

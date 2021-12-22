@@ -75,7 +75,7 @@ const BaseLayout = ({
       <div className='flex justify-center flex-1 mx-auto md:pt-8 pb-12'>
 
           <div id='left' className='hidden lg:block flex-col w-72'>
-            <SideAreaLeft title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
+            <SideAreaLeft targetRef={targetRef} title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
           </div>
 
           <div id='center' className='flex-grow max-w-4xl min-h-screen md:mx-10' ref={targetRef}>
@@ -94,7 +94,7 @@ const BaseLayout = ({
       </div>
 
       <Footer title={meta.title}/>
-      <JumpToTopButton targetRef={targetRef} showPercent={true} />
+      <JumpToTopButton targetRef={targetRef} showPercent={false} />
       <JumpToBottomButton targetRef={targetRef} showPercent={false}/>
       <FloatDarkModeButton/>
       </div>

@@ -9,7 +9,7 @@ import { useGlobal } from '@/lib/global'
  * @returns {JSX.Element}
  * @constructor
  */
-const TocDrawer = ({ post, cRef }) => {
+const TocDrawer = ({ post, cRef, targetRef }) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
@@ -26,13 +26,13 @@ const TocDrawer = ({ post, cRef }) => {
       {/* 侧边菜单 */}
       <div
         className={(showDrawer ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') +
-        '  shadow-xl animate__animated animate__faster max-h-96 ' +
+        '  shadow-card animate__animated animate__faster max-h-96 ' +
         ' w-60 duration-200 fixed right-4 top-16 rounded overflow-y-auto'}>
           {post && <>
-            <div className='text-xl font-bold text-black dark:text-white bg-gray-200 dark:bg-gray-600 py-2 px-6'>
+            <div className='text-xl font-bold text-center text-black dark:text-white bg-white dark:bg-gray-600 py-2 px-6'>
               {locale.COMMON.TABLE_OF_CONTENTS}
             </div>
-            <Toc toc={post.toc}/>
+            <Toc toc={post.toc} targetRef={targetRef}/>
           </>
           }
       </div>

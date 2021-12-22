@@ -165,10 +165,13 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
       {/* 悬浮目录按钮 */}
       <div className="block lg:hidden">
         <TocDrawerButton onClick={() => { drawerRight.current.handleSwitchVisible() }} />
-        <TocDrawer post={post} cRef={drawerRight} />
+        <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
       </div>
 
-      <Progress targetRef={targetRef} />
+      {/* 移动端顶部进度条 */}
+      {/* <div className='fixed left-0 top-0 w-full z-40 block md:hidden'>
+        <Progress targetRef={targetRef} />
+      </div> */}
     </>)
 }
 

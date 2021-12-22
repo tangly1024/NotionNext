@@ -12,7 +12,7 @@ import smoothscroll from 'smoothscroll-polyfill'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToBottomButton = ({ targetRef, showPercent = true }) => {
+const JumpToBottomButton = ({ targetRef, showPercent = false }) => {
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)

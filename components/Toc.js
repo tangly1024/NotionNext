@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
+import Progress from './Progress'
 // import { cs } from 'react-notion-x'
 
 /**
@@ -9,7 +10,7 @@ import { uuidToId } from 'notion-utils'
  * @returns {JSX.Element}
  * @constructor
  */
-const Toc = ({ toc }) => {
+const Toc = ({ toc, targetRef }) => {
   // 无目录就直接返回空
   if (!toc || toc.length < 1) return <></>
 
@@ -51,6 +52,9 @@ const Toc = ({ toc }) => {
   }, throttleMs))
 
   return <>
+    <div className='w-full'>
+      <Progress targetRef={targetRef}/>
+    </div>
     <nav className=' dark:text-gray-100 bg-white dark:bg-gray-800 overflow-y-auto scroll-hidden p-6'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
@@ -58,9 +62,9 @@ const Toc = ({ toc }) => {
           <a
             key={id}
             href={`#${id}`}
-            className={`notion-table-of-contents-item duration-300 transform font-light
+            className={`notion-table-of-contents-item duration-300 transform font-mono
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} 
-            ${activeSection === id && ' font-bold text-blue-400 dark:text-white'}`}
+            ${activeSection === id && ' font-bold text-purple-500 dark:text-purple-400'}`}
           >
                       <span
                         style={{

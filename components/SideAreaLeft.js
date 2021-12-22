@@ -8,6 +8,7 @@ import { faAngleDoubleRight, faChartBar, faThList } from '@fortawesome/free-soli
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
+import Progress from './Progress'
 
 /**
  * 侧边平铺
@@ -21,7 +22,7 @@ import React from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
+const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch, targetRef }) => {
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   const postCount = posts?.length || 0
@@ -71,10 +72,10 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
 
     {showToc && (
       <section className='sticky top-8 pb-20 rounded-xl shadow-md bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
-        <div className='border-b text-2xl bg-white text-black rounded-t-xl dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
+        <div className='border-b text-center text-2xl bg-white text-black rounded-t-xl dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>
-        <Toc toc={post.toc} />
+        <Toc toc={post.toc} targetRef={targetRef} />
       </section>
     )}
  </>

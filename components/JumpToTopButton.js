@@ -12,7 +12,7 @@ import smoothscroll from 'smoothscroll-polyfill'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToTopButton = ({ targetRef, showPercent = true }) => {
+const JumpToTopButton = ({ targetRef, showPercent = false }) => {
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
@@ -39,7 +39,7 @@ const JumpToTopButton = ({ targetRef, showPercent = true }) => {
 
   return (<div id='jump-to-top' className='right-3 fixed flex bottom-48 duration-500 z-20'>
       <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={(show ? '' : 'hidden') + ' animate__fadeInRight animate__animated animate__faster shadow-card rounded-xl glassmorphism py-1 cursor-pointer '}>
+        className={(show ? '' : 'hidden') + ' animate__fadeInRight animate__animated animate__faster shadow-card rounded-xl glassmorphism py-3 cursor-pointer '}>
         <div className='text-center'>
         <div className='w-10 dark:text-gray-200 transform hover:scale-150 duration-200 text-xs' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowUp} />
