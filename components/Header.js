@@ -102,6 +102,6 @@ function updateHeaderHeight () {
   if (window) {
     const headerElement = document.getElementById('header')
     console.log(headerElement, window.innerHeight)
-    headerElement.style.setProperty('height', window.innerHeight + 'px')
+    headerElement?.style?.setProperty('height', window.innerHeight + 'px')
   }
 }

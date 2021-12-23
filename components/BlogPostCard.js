@@ -8,8 +8,8 @@ import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, tags }) => {
   return (
-    <div key={post.id} className='flex xl:flex-row flex-col-reverse justify-between hover:shadow-2xl shadow-md mb-8 duration-300 rounded-xl
-      w-full mx-2 bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>
+    <div key={post.id} className='flex xl:flex-row flex-col-reverse justify-between md:hover:shadow-2xl md:shadow-md duration-300 md:rounded-xl
+       w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>
 
       <div className='p-8 flex flex-col justify-between w-full'>
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
@@ -41,8 +41,8 @@ const BlogPostCard = ({ post, tags }) => {
 
       {post?.page_cover && (
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-        <div className='h-60 w-full xl:max-w-xs relative rounded-t-xl xl:rounded-t-none xl:rounded-r-xl xl:h-full duration-200 cursor-pointer transform overflow-hidden'>
-          <Image className='hover:scale-105 transform duration-500 rounded-t-xl xl:rounded-t-none xl:rounded-r-xl' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
+        <div className='h-60 w-full xl:max-w-xs relative md:rounded-t-xl xl:rounded-t-none xl:rounded-r-xl xl:h-full duration-200 cursor-pointer transform overflow-hidden'>
+          <Image className='hover:scale-105 transform duration-500 md:rounded-t-xl xl:rounded-t-none xl:rounded-r-xl' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
         </div>
       </Link>
       )}
