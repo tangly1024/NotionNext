@@ -67,12 +67,14 @@ const BaseLayout = ({
   const targetRef = useRef(null)
   const router = useRouter()
 
-  return (<div>
+  return (<>
 
       <CommonHead meta={meta} />
 
       {/* 顶部导航栏 */}
-      <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
+      {/* {router.asPath === '/as' && */}
+       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
+      {/* } */}
 
       {/* 首页头图 */}
       {router.asPath === '/' && <Header/>}
@@ -102,7 +104,7 @@ const BaseLayout = ({
       <JumpToTopButton targetRef={targetRef} showPercent={false} />
       <JumpToBottomButton targetRef={targetRef} showPercent={false}/>
       <FloatDarkModeButton/>
-      </div>
+      </>
   )
 }
 
