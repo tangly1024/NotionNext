@@ -4,6 +4,7 @@ import Footer from '@/components/Footer'
 import JumpToBottomButton from '@/components/JumpToBottomButton'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import LoadingCover from '@/components/LoadingCover'
+import SideAreaLeft from '@/components/SideAreaLeft'
 import SideAreaRight from '@/components/SideAreaRight'
 import TopNav from '@/components/TopNav'
 import { useGlobal } from '@/lib/global'
@@ -64,7 +65,6 @@ const BaseLayout = ({
   }, [])
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
-  console.log('header', headerSlot)
 
   return (<>
 
@@ -74,8 +74,11 @@ const BaseLayout = ({
 
       <>{headerSlot}</>
 
-      <main id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-8 pb-12'>
-          <section id='center' className='flex-grow max-w-4xl min-h-screen md:mx-10' ref={targetRef}>
+      <main id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-14 pb-12'>
+          <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
+            <SideAreaLeft targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+          </aside>
+          <section id='center' className='flex-grow max-w-4xl min-h-screen' ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
               : <>
@@ -83,7 +86,7 @@ const BaseLayout = ({
               </>
             }
           </section>
-          <aside id='right' className='hidden lg:block flex-col w-72 mr-5'>
+          <aside id='right' className='hidden 2xl:block flex-col w-60 ml-4'>
             <SideAreaRight targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
           </aside>
       </main>

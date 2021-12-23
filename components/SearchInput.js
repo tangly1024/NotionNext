@@ -42,7 +42,7 @@ const SearchInput = ({ currentTag, currentSearch }) => {
       ref={searchInputRef}
       type='text'
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-      className={'w-full pl-2 transition focus:shadow-lg font-light leading-10 border-gray-300 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+      className={'w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 border-gray-300 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={currentSearch}

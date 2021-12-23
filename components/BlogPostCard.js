@@ -8,7 +8,7 @@ import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, tags }) => {
   return (
-    <div key={post.id} className='flex xl:flex-row flex-col-reverse justify-between md:hover:shadow-2xl md:shadow-md duration-300 md:rounded-xl
+    <div key={post.id} className='flex xl:flex-row flex-col-reverse justify-between md:hover:shadow-xl duration-300
        w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>
 
       <div className='p-8 flex flex-col justify-between w-full'>
@@ -18,7 +18,7 @@ const BlogPostCard = ({ post, tags }) => {
           </a>
         </Link>
 
-        <p className='my-4 text-gray-800 dark:text-gray-300 text-md font-light'>{post.summary}</p>
+        <p className='my-8 text-gray-700 dark:text-gray-300 text-md font-light leading-7 italic'>{post.summary}</p>
 
         <div className='flex items-center justify-between flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 '>
           <div>
@@ -41,8 +41,8 @@ const BlogPostCard = ({ post, tags }) => {
 
       {post?.page_cover && (
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-        <div className='h-60 w-full xl:max-w-xs relative md:rounded-t-xl xl:rounded-t-none xl:rounded-r-xl xl:h-full duration-200 cursor-pointer transform overflow-hidden'>
-          <Image className='hover:scale-105 transform duration-500 md:rounded-t-xl xl:rounded-t-none xl:rounded-r-xl' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
+        <div className='h-60 w-full xl:max-w-xs relative xl:h-full duration-200 cursor-pointer transform overflow-hidden'>
+          <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
         </div>
       </Link>
       )}

@@ -50,7 +50,7 @@
 - 将 [这个 Notion 模板](https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5) 制作副本，并分享这个页面给所有人
 - [Fork](https://github.com/tangly1024/NotionNext/fork) 这个项目
 - 在 `blog.config.js` 配置相关选项
-- _(可选)_ 用自己的图片替换 `/public` 文件夹里的 `avatar.svg`、`favicon.svg` 和 `favicon.ico`
+- _(可选)_ 用自己的图片替换 `/public` 文件夹里的 `avatar.jpg`、`favicon.svg` 和 `favicon.ico`
 - 在 [Vercel](https://vercel.com) 上部署这个项目, 设定一下环境变量：
   - `NOTION_PAGE_ID`: 你刚刚分享出去的 Notion 页面网址中的页面 ID，通常是网址中工作区地址后的 32 位字符串
   - `NOTION_ACCESS_TOKEN`（可选）: 如果你决定不分享你的数据库，你可以使用 token 来让网页从 Notion 数据库中抓取数据。你可以在你的浏览器 cookies 中找到它，名称是 `token_v2'。

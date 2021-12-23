@@ -19,7 +19,7 @@ const CategoryList = ({ currentCategory, categories }) => {
           <li
             className={`cursor-pointer border rounded-xl duration-200 mr-1 my-1 px-2 py-1 font-light text-sm whitespace-nowrap dark:text-gray-300 
                  ${selected
-                ? 'text-white bg-black dark:hover:bg-gray-900 dark:bg-black dark:border-gray-800'
+                ? 'text-white bg-gray-500 dark:hover:bg-gray-900 dark:bg-gray-500 dark:border-gray-800'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700 dark:bg-gray-600 dark:border-gray-600'
               }`}
           >

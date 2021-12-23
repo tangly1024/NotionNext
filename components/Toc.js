@@ -55,16 +55,16 @@ const Toc = ({ toc, targetRef }) => {
     <div className='w-full'>
       <Progress targetRef={targetRef}/>
     </div>
-    <nav className=' dark:text-gray-300 bg-white dark:bg-gray-800 overflow-y-auto scroll-hidden p-6'>
+    <nav className=' dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 overflow-y-auto scroll-hidden p-6'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (
           <a
             key={id}
             href={`#${id}`}
-            className={`notion-table-of-contents-item duration-300 transform font-mono
+            className={`notion-table-of-contents-item duration-300 transform font-light
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} 
-            ${activeSection === id && ' font-bold text-blue-600 dark:text-blue-400'}`}
+            ${activeSection === id && ' font-bold text-gray-600 dark:text-gray-300'}`}
           >
                       <span
                         style={{
