@@ -89,7 +89,7 @@ export default function Header () {
   return (
     <header
       id="header"
-      className="duration-500 w-full bg-cover bg-center md:-mt-14"
+      className="duration-500 w-full bg-cover bg-center md:-mt-14 bg-black"
       style={{
         height: 'calc(100vh + 1px)',
         backgroundImage:
@@ -97,7 +97,7 @@ export default function Header () {
       }}
     >
       <div className="absolute z-10 flex h-full items-center -mt-14 justify-center w-full text-4xl md:text-7xl text-white">
-        <div id="typed" className="flex text-center font-serif"></div>
+        <div id='typed' className='flex text-center font-serif'/>
       </div>
       <div
         onClick={() => {

@@ -39,7 +39,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   return (<>
       <div id="article-wrapper" ref={targetRef} className="flex-grow mt-14 md:mt-0 max-w-5xl mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
-            className="rounded-xl shadow-md hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
+            className="shadow-md hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
           >
             <header>
                 {post.type && !post.type.includes('Page') && post?.page_cover && (
@@ -154,7 +154,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           </article>
 
           {/* 评论互动 */}
-          <div className="mt-5 lg:px-40 hover:shadow-2xl duration-200 shadow-lg rounded-xl w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="mt-5 lg:px-40 hover:shadow-2xl duration-200 shadow-lg w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
             <Comment frontMatter={post} />
           </div>
       </div>

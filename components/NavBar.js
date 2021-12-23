@@ -89,7 +89,7 @@ const Header = ({ navBarTitle, fullWidth = true }) => {
               alt={BLOG.title}
               width={28}
               height={28}
-              src='/avatar.svg'
+              src='/avatar.jpg'
               className='rounded-full'
             />
             <div

@@ -1,9 +1,11 @@
-import { useRef } from 'react'
-import SideBarDrawer from '@/components/SideBarDrawer'
 import BLOG from '@/blog.config'
-import Link from 'next/link'
-import Image from 'next/image'
+import SideBarDrawer from '@/components/SideBarDrawer'
 import { useGlobal } from '@/lib/global'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
+import { useRef } from 'react'
+import Image from 'next/image'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
   const drawer = useRef()
@@ -14,11 +16,15 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='flex fixed md:relative w-full top-0 z-20 transform duration-500'>
+    <div id='sticky-nav' className='flex fixed lg:relative w-full top-0 z-20 transform duration-500'>
       <div className='w-full flex justify-between items-center p-4 glassmorphism'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
-          <div className='relative w-10' ><Image
+          <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
+               className='w-8 cursor-pointer dark:text-gray-300 block lg:hidden'>
+            <FontAwesomeIcon icon={faBars} size={'lg'}/>
+          </div>
+          <div className='relative w-10 hidden lg:block' ><Image
             alt={BLOG.title}
             layout='fill'
             loading='lazy'
@@ -43,10 +49,6 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
           <Link href='/about'>
             <a>{locale.NAV.ABOUT}</a>
           </Link>
-          <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
-               className='cursor-pointer dark:text-gray-300 block md:hidden'>
-            {locale.NAV.SEARCH}
-          </div>
         </div>
       </div>
     </div>
