@@ -62,7 +62,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
         ))}
       </div>
 
-      <div className='flex'>
+      <div>
         <div onClick={() => {
           handleGetMore()
         }}
