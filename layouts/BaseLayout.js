@@ -1,7 +1,6 @@
 import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 import Footer from '@/components/Footer'
-import Header from '@/components/Header'
 import JumpToBottomButton from '@/components/JumpToBottomButton'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import LoadingCover from '@/components/LoadingCover'
@@ -9,7 +8,6 @@ import SideAreaRight from '@/components/SideAreaRight'
 import TopNav from '@/components/TopNav'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
-import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef } from 'react'
 /**
@@ -33,6 +31,7 @@ const BaseLayout = ({
   children,
   layout,
   fullWidth,
+  headerSlot,
   tags,
   meta,
   post,
@@ -65,40 +64,29 @@ const BaseLayout = ({
   }, [])
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
-  const router = useRouter()
+  console.log('header', headerSlot)
 
   return (<>
 
       <CommonHead meta={meta} />
 
-      {/* 顶部导航栏 */}
-      {/* {router.asPath === '/as' && */}
-       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
-      {/* } */}
+      <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      {/* 首页头图 */}
-      {router.asPath === '/' && <Header/>}
+      <>{headerSlot}</>
 
-      <div id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-8 pb-12'>
-
-          {/* <div id='left' className='hidden lg:block flex-col w-72'>
-            <SideAreaLeft targetRef={targetRef} title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
-          </div> */}
-
-          <div id='center' className='flex-grow max-w-4xl min-h-screen md:mx-10' ref={targetRef}>
+      <main id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-8 pb-12'>
+          <section id='center' className='flex-grow max-w-4xl min-h-screen md:mx-10' ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
               : <>
                 {children}
               </>
             }
-          </div>
-
-          <div id='right' className='hidden lg:block flex-col w-72 mr-5'>
+          </section>
+          <aside id='right' className='hidden lg:block flex-col w-72 mr-5'>
             <SideAreaRight targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-          </div>
-
-      </div>
+          </aside>
+      </main>
 
       <Footer title={meta.title}/>
       <JumpToTopButton targetRef={targetRef} showPercent={false} />

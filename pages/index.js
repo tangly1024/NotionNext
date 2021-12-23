@@ -3,6 +3,7 @@ import BLOG from '@/blog.config'
 import BaseLayout from '@/layouts/BaseLayout'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
+import Header from '@/components/Header'
 
 export async function getStaticProps () {
   const from = 'index'
@@ -29,8 +30,14 @@ export async function getStaticProps () {
 
 const Index = ({ allPosts, tags, meta, categories }) => {
   return (
-    <BaseLayout meta={meta} tags={tags} totalPosts={allPosts} categories={categories}>
-        <BlogPostListScroll posts={allPosts} tags={tags} />
+    <BaseLayout
+      headerSlot={<Header />}
+      meta={meta}
+      tags={tags}
+      totalPosts={allPosts}
+      categories={categories}
+    >
+      <BlogPostListScroll posts={allPosts} tags={tags} />
     </BaseLayout>
   )
 }
