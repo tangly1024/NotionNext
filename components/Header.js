@@ -93,7 +93,7 @@ export default function Header () {
       style={{
         height: 'calc(100vh + 1px)',
         backgroundImage:
-          'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.4), rgba(0, 0, 0, 0.5) ),url("./bg_image.jpg")'
+          `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.4), rgba(0, 0, 0, 0.5) ),url('${BLOG.bannerImage}')`
       }}
     >
       <div className="absolute z-10 flex h-full items-center -mt-14 justify-center w-full text-4xl md:text-7xl text-white">

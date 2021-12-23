@@ -25,7 +25,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
   return <>
 
     <div className={(!post ? 'sticky top-8 ' : ' ') + ' w-60'}>
-      <section className='hidden lg:block mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200 py-6'>
+      <section className='hidden lg:block mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
         <InfoCard postCount={postCount} />
       </section>
 
@@ -58,7 +58,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
 
     {showToc && (
       <section className='sticky top-8 pb-20  bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
-        <div className='border-b text-center text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
+        <div className='border-b text-center text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300 py-6 px-6'>
           {locale.COMMON.TABLE_OF_CONTENTS}
         </div>
         <Toc toc={post.toc} targetRef={targetRef} />
