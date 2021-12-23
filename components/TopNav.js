@@ -22,7 +22,7 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
             alt={BLOG.title}
             layout='fill'
             loading='lazy'
-            src='/avatar.svg'
+            src='/favicon.svg'
             className='border-black'
           /></div>
           <Link href='/' passHref>

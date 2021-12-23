@@ -10,6 +10,8 @@ import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef } from 'react'
+import { useRouter } from 'next/router'
+import Header from '@/components/Header'
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
  * @param children
@@ -63,6 +65,7 @@ const BaseLayout = ({
   }, [])
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
+  const router = useRouter()
 
   return (<div>
 
@@ -71,9 +74,10 @@ const BaseLayout = ({
       {/* 顶部导航栏 */}
       <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
-      {/* {useRouter().asPath === '/' && <Header/>} */}
+      {/* 首页头图 */}
+      {router.asPath === '/' && <Header/>}
 
-      <div id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-12 pb-12'>
+      <div id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-16 pb-12'>
 
           {/* <div id='left' className='hidden lg:block flex-col w-72'>
             <SideAreaLeft targetRef={targetRef} title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
@@ -89,7 +93,7 @@ const BaseLayout = ({
           </div>
 
           <div id='right' className='hidden lg:block flex-col w-72 mr-5'>
-            <SideAreaRight post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+            <SideAreaRight targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
           </div>
 
       </div>

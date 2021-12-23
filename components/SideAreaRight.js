@@ -74,7 +74,7 @@ const SideAreaRight = ({
 
       <Analytics postCount={postCount}/>
 
-      <div className="sticky top-8">
+      <div className="sticky top-14">
           {showToc && (
           <section className='pb-10 mb-5 rounded-xl shadow-md bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
             <div className='border-b text-center text-2xl bg-white text-black rounded-t-xl dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
@@ -124,7 +124,7 @@ const SideAreaRight = ({
         )}
 
         {/* 分类  */}
-        {post && categories && (
+        {categories && (
           <section className='rounded-xl shadow-md py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-2xl duration-200'>
             <div className='text-sm px-5 mb-2 flex flex-nowrap justify-between font-light'>
               <div className='pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
