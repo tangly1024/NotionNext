@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import throttle from 'lodash.throttle'
 import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
 
@@ -35,7 +36,7 @@ export default function Header () {
   const scrollTrigger = useCallback(() => {
     if (window.scrollY > windowTop & window.scrollY < window.innerHeight & !autoScroll) {
       autoScroll = true
-      scrollTo(window.innerHeight, autoScrollEnd)
+      scrollTo(wrapperTop, autoScrollEnd)
     }
     if (window.scrollY < windowTop & window.scrollY < window.innerHeight & !autoScroll) {
       autoScroll = true
@@ -57,6 +58,14 @@ export default function Header () {
     }
   }
 
+  let wrapperTop = 0
+  function updateHeaderHeight () {
+    if (window) {
+      const wrapperElement = document.getElementById('wrapper')
+      wrapperTop = wrapperElement.offsetTop
+    }
+  }
+
   useEffect(() => {
     updateHeaderHeight()
     updateTopNav()
@@ -64,14 +73,17 @@ export default function Header () {
     window.addEventListener('resize', updateHeaderHeight)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
+      window.removeEventListener('resize', updateHeaderHeight)
     }
   })
 
-  return <header id='header' className='h-screen w-full bg-cover bg-center md:-mt-14'
-    style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.4), rgba(0, 0, 0, 0.5) ),url("./bg_image.jpg")' }}>
-    <div className='static z-10 flex h-full items-center justify-center w-full text-4xl md:text-7xl text-white'>
-      <div id="typed" className='text-center font-serif'></div>
-      <div onClick={() => { scrollTo(window.innerHeight, autoScrollEnd) }} className='cursor-pointer w-full text-center text-2xl animate-bounce absolute bottom-10 text-white'><FontAwesomeIcon icon={faArrowDown} /></div>
+  return <header id='header' className='duration-500 w-full bg-cover bg-center md:-mt-14'
+    style={{ height: 'calc(100vh + 1px)', backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.4), rgba(0, 0, 0, 0.5) ),url("./bg_image.jpg")' }}>
+    <div className='absolute z-10 flex h-full items-center -mt-14 justify-center w-full text-4xl md:text-7xl text-white'>
+        <div id="typed" className='flex text-center font-serif'></div>
+    </div>
+    <div onClick={() => { scrollTo(wrapperTop, autoScrollEnd) }} className='cursor-pointer w-full text-center text-2xl animate-bounce absolute bottom-10 text-white'>
+      <FontAwesomeIcon icon={faArrowDown} />
     </div>
 </header>
 }
@@ -86,22 +98,15 @@ function scrollTo (offset, callback) {
   const onScroll = function () {
     if (window.pageYOffset.toFixed() === fixedOffset) {
       window.removeEventListener('scroll', onScroll)
+      window.onscroll = function () {}
       callback()
     }
   }
 
   window.addEventListener('scroll', onScroll)
-  onScroll()
+  window.onscroll = onScroll()
   window.scrollTo({
     top: offset,
     behavior: 'smooth'
   })
-}
-
-function updateHeaderHeight () {
-  if (window) {
-    const headerElement = document.getElementById('header')
-    console.log(headerElement, window.innerHeight)
-    headerElement?.style?.setProperty('height', window.innerHeight + 'px')
-  }
 }
