@@ -1,7 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import throttle from 'lodash.throttle'
 import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
 
@@ -23,23 +22,32 @@ export default function Header () {
       }))
     }
   })
-  const scrollToCenter = () => {
-    document.getElementById('wrapper').scrollIntoView({ behavior: 'smooth' })
-  }
-
   const { theme } = useGlobal()
   // 监听滚动
   let windowTop = 0
-  const scrollTrigger = useCallback(throttle(() => {
-    if (window.scrollY > windowTop & window.scrollY < window.innerHeight) {
-      scrollToCenter()
+  let autoScroll = false
+
+  const autoScrollEnd = () => {
+    windowTop = window.scrollY
+    autoScroll = false
+    console.log('滚动结束回调', windowTop)
+  }
+  const scrollTrigger = useCallback(() => {
+    console.log('触发 top', windowTop, 'y', window.scrollY, autoScroll)
+    if (window.scrollY > windowTop & window.scrollY < window.innerHeight & !autoScroll) {
+      // console.log('滚中间', windowTop, window.scrollY, window.innerHeight)
+      autoScroll = true
+      scrollTo(window.innerHeight, autoScrollEnd)
     }
-    if (window.scrollY < windowTop & window.scrollY < window.innerHeight) {
-      window.scroll({ top: 0, behavior: 'smooth' })
+    if (window.scrollY < windowTop & window.scrollY < window.innerHeight & !autoScroll) {
+      // console.log('滚上', windowTop, window.scrollY, window.innerHeight)
+      autoScroll = true
+      scrollTo(0, autoScrollEnd)
     }
     windowTop = window.scrollY
+
     updateTopNav()
-  }, 500))
+  })
 
   const updateTopNav = () => {
     if (theme !== 'dark') {
@@ -65,11 +73,33 @@ export default function Header () {
 
     <div className='absolute z-10 flex h-screen items-center justify-center w-full text-4xl md:text-7xl text-white'>
       <div id="typed" className=' text-center font-serif'></div>
-      <div onClick={scrollToCenter} className='cursor-pointer w-full text-center text-2xl animate-bounce absolute bottom-10 text-white'><FontAwesomeIcon icon={faArrowDown} /></div>
+      <div onClick={() => { scrollTo(window.innerHeight, autoScrollEnd) }} className='cursor-pointer w-full text-center text-2xl animate-bounce absolute bottom-10 text-white'><FontAwesomeIcon icon={faArrowDown} /></div>
     </div>
 
     <div className='bg-black bg-cover bg-center h-screen md:-mt-14  animate__fadeInRight animate_fadeIn'
         style={{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.4), rgba(0, 0, 0, 0.5) ),url("./bg_image.jpg")' }}>
     </div>
 </header>
+}
+
+/**
+ * Native scrollTo with callback
+ * @param offset - offset to scroll to
+ * @param callback - callback function
+ */
+function scrollTo (offset, callback) {
+  const fixedOffset = offset.toFixed()
+  const onScroll = function () {
+    if (window.pageYOffset.toFixed() === fixedOffset) {
+      window.removeEventListener('scroll', onScroll)
+      callback()
+    }
+  }
+
+  window.addEventListener('scroll', onScroll)
+  onScroll()
+  window.scrollTo({
+    top: offset,
+    behavior: 'smooth'
+  })
 }

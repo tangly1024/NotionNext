@@ -1,6 +1,7 @@
 import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 import Footer from '@/components/Footer'
+import Header from '@/components/Header'
 import JumpToBottomButton from '@/components/JumpToBottomButton'
 import JumpToTopButton from '@/components/JumpToTopButton'
 import LoadingCover from '@/components/LoadingCover'
@@ -8,10 +9,9 @@ import SideAreaRight from '@/components/SideAreaRight'
 import TopNav from '@/components/TopNav'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { useRouter } from 'next/router'
-import Header from '@/components/Header'
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
  * @param children
@@ -77,7 +77,7 @@ const BaseLayout = ({
       {/* 首页头图 */}
       {router.asPath === '/' && <Header/>}
 
-      <div id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-16 pb-12'>
+      <div id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-8 pb-12'>
 
           {/* <div id='left' className='hidden lg:block flex-col w-72'>
             <SideAreaLeft targetRef={targetRef} title={meta.title} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory} />
