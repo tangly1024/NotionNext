@@ -18,7 +18,7 @@ const Slug = ({ post, blockMap, tags, prev, next, allPosts, recommendPosts, cate
     return <Custom404 />
   }
   const meta = {
-    title: `${BLOG.title} | ${post.title}`,
+    title: `${post.title} | ${BLOG.title}`,
     description: post.summary,
     type: 'article',
     tags: post.tags

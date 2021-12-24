@@ -25,7 +25,7 @@ const About = ({ post, blockMap, tags, prev, next, allPosts, categories }) => {
   }
   const { locale } = useGlobal()
   const meta = {
-    title: `${BLOG.title} | ${locale.NAV.ABOUT}`,
+    title: `${locale.NAV.ABOUT} | ${BLOG.title} `,
     description: post.summary,
     type: 'post',
     tags: []

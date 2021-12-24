@@ -6,10 +6,12 @@ import BlogPostListScroll from '@/components/BlogPostListScroll'
 import React from 'react'
 import CategoryList from '@/components/CategoryList'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
+import { useGlobal } from '@/lib/global'
 
 export default function Category ({ tags, allPosts, filteredPosts, category, categories }) {
+  const { locale } = useGlobal()
   const meta = {
-    title: `${BLOG.title} | ${category}`,
+    title: `${category} | ${locale.COMMON.CATEGORY} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }

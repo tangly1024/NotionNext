@@ -5,10 +5,13 @@ import BaseLayout from '@/layouts/BaseLayout'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
 import TagList from '@/components/TagList'
 import { getNotionPageData } from '@/lib/notion/getNotionData'
+import { useGlobal } from '@/lib/global'
 
 export default function Tag ({ tags, allPosts, filteredPosts, tag, categories }) {
+  const { locale } = useGlobal()
+
   const meta = {
-    title: `${BLOG.title} | #${tag}`,
+    title: `${tag} | ${locale.COMMON.TAGS} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
