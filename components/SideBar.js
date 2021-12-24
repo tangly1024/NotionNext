@@ -7,7 +7,6 @@ import CategoryGroup from '@/components/CategoryGroup'
 import SearchInput from '@/components/SearchInput'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
-import Toc from '@/components/Toc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
 
@@ -27,10 +26,7 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
   const { locale } = useGlobal()
   return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-80 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
 
-    <section className='hidden lg:block'>
-      <InfoCard />
-      <hr className='dark:border-gray-700 mt-6 py-1' />
-    </section>
+    <InfoCard />
 
     <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-900 pb-4'}>
 
@@ -84,15 +80,6 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
         </section>
       )}
     </div>
-
-    {post && (
-      <section id='left-toc' className='sticky pb-20 top-0 bg-white dark:bg-gray-900 hidden md:block'>
-        <div className='border-b text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
-          {locale.COMMON.TABLE_OF_CONTENTS}
-        </div>
-        <Toc toc={post.toc} />
-      </section>
-    )}
 
     <section className='bg-white dark:bg-gray-900'>
       {/* 信息流广告 */}
