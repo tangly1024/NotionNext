@@ -58,43 +58,48 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                   {' '}
                   {post.title}
                 </h2>
-                <hr className="mt-4" />
-                <section className="flex-nowrap flex  mt-1 dark:text-white font-light">
-                  <Link href={`/category/${post.category}`} passHref>
-                    <a className="cursor-pointer text-md py-2 ml-1 mr-3 text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white">
-                      <FontAwesomeIcon icon={faFolderOpen} className="mr-1" />
-                      {post.category}
-                    </a>
-                  </Link>
-                  {post.type[0] !== 'Page' && (
-                    <Link
-                      href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
-                      passHref
-                    >
-                      <a className="pl-1 cursor-pointer hover:text-gray-700  dark:hover:text-gray-200 text-gray-400 dark:text-gray-400 leading-10">
-                        {date}
-                      </a>
-                    </Link>
-                  )}
 
-                  <div className="hidden busuanzi_container_page_pv font-light">
-                    <FontAwesomeIcon
-                      icon={faEye}
-                      className="text-gray-500 dark:text-gray-400 mt-3 ml-5"
-                    />
-                    &nbsp;
-                    <span className="text-gray-500 dark:text-gray-400 leading-6 busuanzi_value_page_pv"
-                    ></span>
-                  </div>
-                </section>
-
-                <h2 className="px-1 py-2 my-1 text-md font-light  text-gray-600  dark:text-gray-400">
+                <h2 className="mt-3 text-md font-light  text-gray-600  dark:text-gray-400">
                   {post.summary}
                 </h2>
 
-                <section className='flex justify-end py-2 pl-1 text-gray-600 dark:text-gray-400 items-center font-light text-sm'>
+                <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
+                  <div>
+                    <Link href={`/category/${post.category}`} passHref>
+                      <a className="cursor-pointer text-md mr-2   hover:text-black dark:hover:text-white">
+                        <FontAwesomeIcon icon={faFolderOpen} className="mr-1" />
+                        {post.category}
+                      </a>
+                    </Link>
+                    <span className='mr-2'>|</span>
+
+                    {post.type[0] !== 'Page' && (<>
+                      <Link
+                        href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                        passHref
+                      >
+                        <a className="pl-1 mr-2 cursor-pointer hover:text-gray-700  dark:hover:text-gray-200">
+                          {date}
+                        </a>
+                      </Link>
+                      <span className='mr-2'>|</span>
+                    </>)}
+
+                    <div className="hidden busuanzi_container_page_pv font-light mr-2">
+                      <FontAwesomeIcon icon={faEye} className='mr-1'/>
+                      &nbsp;
+                      <span className="mr-2 busuanzi_value_page_pv"
+                      ></span>
+                      <span className='mr-2'>|</span>
+                    </div>
+                  </div>
+                  <div className='flex flex-nowrap whitespace-nowrap items-center font-light text-md'>
                     <WordCount/>
+                   </div>
+
                 </section>
+
+                <hr className="mt-2" />
 
             </header>
 
