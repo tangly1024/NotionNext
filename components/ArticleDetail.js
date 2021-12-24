@@ -154,7 +154,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           </article>
 
           {/* 评论互动 */}
-          <div className="mt-5 lg:px-40 hover:shadow-2xl duration-200 shadow-lg w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="mt-5 lg:px-40 hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
             <Comment frontMatter={post} />
           </div>
       </div>

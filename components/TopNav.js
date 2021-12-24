@@ -16,7 +16,7 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) 
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className='flex fixed lg:relative w-full top-0 z-20 transform duration-500'>
+    <div id='sticky-nav' className='flex animate__animated animate__fadeIn fixed lg:relative w-full top-0 z-20 transform duration-500'>
       <div className='w-full flex justify-between items-center p-4 glassmorphism'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
