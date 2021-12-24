@@ -36,7 +36,7 @@ const Index = ({ allPosts, tags, categories }) => {
   })
 
   const meta = {
-    title: `${BLOG.title} | ${locale.NAV.ARCHIVE} `,
+    title: `${locale.NAV.ARCHIVE} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }

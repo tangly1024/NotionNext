@@ -11,7 +11,7 @@ import { faTags } from '@fortawesome/free-solid-svg-icons'
 export default function Tag ({ tags, allPosts, categories }) {
   const { locale } = useGlobal()
   const meta = {
-    title: `${BLOG.title} | ${locale.COMMON.TAGS}`,
+    title: `${locale.COMMON.TAGS} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }

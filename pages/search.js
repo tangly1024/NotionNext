@@ -40,7 +40,7 @@ const Search = ({ allPosts, tags, categories }) => {
   }
   const { locale } = useGlobal()
   const meta = {
-    title: `${BLOG.title} | ${locale.NAV.SEARCH} `,
+    title: `${locale.NAV.SEARCH} ${searchKey}| ${BLOG.title}  `,
     description: BLOG.description,
     type: 'website'
   }

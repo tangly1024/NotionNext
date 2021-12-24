@@ -11,7 +11,7 @@ import { faFolder, faThList } from '@fortawesome/free-solid-svg-icons'
 export default function Category ({ tags, allPosts, categories }) {
   const { locale } = useGlobal()
   const meta = {
-    title: `${BLOG.title} | ${locale.COMMON.CATEGORY}`,
+    title: `${locale.COMMON.CATEGORY} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
