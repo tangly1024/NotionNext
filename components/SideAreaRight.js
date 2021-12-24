@@ -49,7 +49,7 @@ const SideAreaRight = ({
         </div>
       </section> */}
 
-      <section className=" mb-5 py-4 px-2 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
+      <section className="shadow mb-5 py-4 px-2 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
         {/* 展示广告  */}
         <ins
           className="adsbygoogle"
@@ -76,7 +76,7 @@ const SideAreaRight = ({
 
         {/* 分类  */}
         {categories && (
-          <section className=' py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
+          <section className='shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
             <div className='text-sm px-5 mb-2 flex flex-nowrap justify-between font-light'>
               <div className='pb-1 text-gray-600 dark:text-gray-300'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
               <Link href='/category' passHref>
@@ -91,7 +91,7 @@ const SideAreaRight = ({
 
         {/* 最新文章 */}
         {posts && (
-          <section className=" py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
+          <section className="shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
             <div className="text-sm pb-2 px-5  flex flex-nowrap justify-between">
               <div className="font-light text-gray-600  dark:text-gray-300">
                 <FontAwesomeIcon icon={faArchive} className="mr-2" />
@@ -103,13 +103,13 @@ const SideAreaRight = ({
           </section>
         )}
 
-        {/* <section className=" py-4 px-5 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
+        {/* <section className="shadow py-4 px-5 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
           <SearchInput currentTag={currentTag} currentSearch={currentSearch}/>
         </section> */}
 
         {/* 标签云  */}
          {tags && (
-          <section className=" py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
+          <section className="shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
             <div className="text-sm pb-1 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200">
               <div className="text-gray-600 dark:text-gray-200">
                 <FontAwesomeIcon icon={faTags} className="mr-2" />
