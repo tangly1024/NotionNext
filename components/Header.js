@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import throttle from 'lodash.throttle'
 import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
 
@@ -34,7 +35,9 @@ export default function Header () {
     windowTop = window.scrollY
     autoScroll = false
   }
-  const scrollTrigger = useCallback(() => {
+  const scrollTrigger = throttle(() => {
+    console.log('触发 scrollTrigger')
+
     if (
       (window.scrollY > windowTop) &
       (window.scrollY < window.innerHeight) &
@@ -54,7 +57,7 @@ export default function Header () {
     windowTop = window.scrollY
 
     updateTopNav()
-  })
+  }, 500)
 
   const updateTopNav = () => {
     if (theme !== 'dark') {
@@ -96,14 +99,14 @@ export default function Header () {
           `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${BLOG.bannerImage}")`
       }}
     >
-      <div className="absolute z-10 flex h-full items-center -mt-14 justify-center w-full text-4xl md:text-7xl text-white">
+      <div className="absolute flex h-full items-center -mt-14 justify-center w-full text-4xl md:text-7xl text-white">
         <div id='typed' className='flex text-center font-serif'/>
       </div>
       <div
         onClick={() => {
           scrollTo(wrapperTop, autoScrollEnd)
         }}
-        className="cursor-pointer w-full text-center py-4 text-5xl  animate-bounce absolute bottom-10 text-white"
+        className="cursor-pointer w-full text-center py-4 text-5xl animate-bounce absolute bottom-10 text-white"
       >
         <FontAwesomeIcon icon={faAngleDown} />
       </div>
@@ -112,13 +115,14 @@ export default function Header () {
 }
 
 /**
- * Native scrollTo with callback
- * @param offset - offset to scroll to
- * @param callback - callback function
- */
-function scrollTo (offset, callback) {
+   * Native scrollTo with callback
+   * @param offset - offset to scroll to
+   * @param callback - callback function
+   */
+const scrollTo = throttle((offset, callback) => {
   const fixedOffset = offset.toFixed()
   const onScroll = function () {
+    console.log('触发 scrollTo')
     if (window.pageYOffset.toFixed() === fixedOffset) {
       window.removeEventListener('scroll', onScroll)
       window.onscroll = function () {}
@@ -132,4 +136,4 @@ function scrollTo (offset, callback) {
     top: offset,
     behavior: 'smooth'
   })
-}
+}, 500)
