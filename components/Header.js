@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
@@ -93,7 +93,7 @@ export default function Header () {
       style={{
         height: 'calc(100vh + 1px)',
         backgroundImage:
-          'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.4), rgba(0, 0, 0, 0.5) ),url("./bg_image.jpg")'
+          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${BLOG.bannerImage}")`
       }}
     >
       <div className="absolute z-10 flex h-full items-center -mt-14 justify-center w-full text-4xl md:text-7xl text-white">
@@ -103,9 +103,9 @@ export default function Header () {
         onClick={() => {
           scrollTo(wrapperTop, autoScrollEnd)
         }}
-        className="cursor-pointer w-full text-center text-2xl animate-bounce absolute bottom-10 text-white"
+        className="cursor-pointer w-full text-center py-4 text-5xl  animate-bounce absolute bottom-10 text-white"
       >
-        <FontAwesomeIcon icon={faArrowDown} />
+        <FontAwesomeIcon icon={faAngleDown} />
       </div>
     </header>
   )

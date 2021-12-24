@@ -1,5 +1,5 @@
-import React, { useImperativeHandle, useState } from 'react'
 import SideBar from '@/components/SideBar'
+import React, { useEffect, useImperativeHandle, useState } from 'react'
 
 /**
  * 侧边栏抽屉面板，可以从侧面拉出
@@ -13,8 +13,14 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, curren
       handleSwitchSideDrawerVisible: () => switchSideDrawerVisible()
     }
   })
-  const [isShow, changeHiddenStatus] = useState(false)
+
+  useEffect(() => {
+    const sideBarWrapperElement = document.getElementById('sidebar-wrapper')
+    sideBarWrapperElement?.classList?.remove('hidden')
+  })
+
   // 点击按钮更改侧边抽屉状态
+  const [isShow, changeHiddenStatus] = useState(false)
   const switchSideDrawerVisible = () => {
     const showStatus = !isShow
     changeHiddenStatus(showStatus)
@@ -31,15 +37,14 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, curren
       }
     }
   }
-  return <>
+
+  return <div id='sidebar-wrapper' className='hidden'>
     <div id='sidebar-drawer' className='-ml-80 bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50'>
       <SideBar tags={tags} post={post} posts={posts} categories={categories} currentCategory={currentCategory} />
     </div>
     {/* 背景蒙版 */}
-    <div id='sidebar-drawer-background'
-          className='hidden fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-30'
-         onClick={switchSideDrawerVisible} />
+    <div id='sidebar-drawer-background' onClick={switchSideDrawerVisible} className='hidden fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-30'/>
 
-  </>
+  </div>
 }
 export default SideBarDrawer

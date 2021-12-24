@@ -5,6 +5,7 @@ const BLOG = {
   link: 'https://tangly1024.com',
   description: '分享编程技术与记录生活',
   headerStrings: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页文字
+  bannerImage: './bg_image.jpg', // 首图
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
