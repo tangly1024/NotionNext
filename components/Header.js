@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
 
+let wrapperTop = 0
+let windowTop = 0
+let autoScroll = false
+
 /**
  *
  * @returns 头图
@@ -26,13 +30,9 @@ export default function Header () {
     }
   })
   const { theme } = useGlobal()
-  // 监听滚动
-  let windowTop = 0
-  let autoScroll = false
 
   const autoScrollEnd = () => {
     if (autoScroll) {
-      console.log('结束自动滚动')
       windowTop = window.scrollY
       autoScroll = false
     }
@@ -44,7 +44,6 @@ export default function Header () {
       (window.scrollY < window.innerHeight) &
       !autoScroll
     ) {
-      console.log('自动滚下', window.scrollY, windowTop)
       autoScroll = true
       window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
       setTimeout(autoScrollEnd, 500)
@@ -54,7 +53,6 @@ export default function Header () {
       (window.scrollY < window.innerHeight) &
       !autoScroll
     ) {
-      console.log('自动滚上')
       autoScroll = true
       window.scrollTo({ top: 0, behavior: 'smooth' })
       setTimeout(autoScrollEnd, 500)
@@ -75,12 +73,13 @@ export default function Header () {
     }
   }
 
-  let wrapperTop = 0
   function updateHeaderHeight () {
-    if (window) {
-      const wrapperElement = document.getElementById('wrapper')
-      wrapperTop = wrapperElement.offsetTop
-    }
+    setTimeout(() => {
+      if (window) {
+        const wrapperElement = document.getElementById('wrapper')
+        wrapperTop = wrapperElement.offsetTop
+      }
+    }, 500)
   }
 
   useEffect(() => {
@@ -97,9 +96,8 @@ export default function Header () {
   return (
     <header
       id="header"
-      className="duration-500 w-full bg-cover bg-center lg:-mt-14 bg-black"
+      className="duration-500 w-full bg-cover bg-center lg:-mt-14 h-screen"
       style={{
-        height: 'calc(100vh + 1px)',
         backgroundImage:
           `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${BLOG.bannerImage}")`
       }}
@@ -111,9 +109,9 @@ export default function Header () {
         onClick={() => {
           window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
         }}
-        className="cursor-pointer w-full text-center py-4 text-5xl animate-bounce absolute bottom-10 text-white"
+        className="cursor-pointer w-full text-center py-4 text-5xl absolute bottom-10 text-white"
       >
-        <FontAwesomeIcon icon={faAngleDown} />
+        <FontAwesomeIcon icon={faAngleDown} className='animate-bounce'/>
       </div>
     </header>
   )
