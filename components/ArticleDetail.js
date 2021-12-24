@@ -92,7 +92,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                   {post.summary}
                 </h2>
 
-                <section className='flex justify-end py-2 pl-1 dark:text-white items-center font-light italic text-sm'>
+                <section className='flex justify-end py-2 pl-1 text-gray-600 dark:text-gray-400 items-center font-light text-sm'>
                     <WordCount/>
                 </section>
 
