@@ -55,18 +55,13 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                 )}
                 {/* 文章Title */}
                 <h2 className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
-                  {' '}
                   {post.title}
-                </h2>
-
-                <h2 className="mt-3 text-md font-light  text-gray-600  dark:text-gray-400">
-                  {post.summary}
                 </h2>
 
                 <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
                   <div>
                     <Link href={`/category/${post.category}`} passHref>
-                      <a className="cursor-pointer text-md mr-2   hover:text-black dark:hover:text-white">
+                      <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
                         <FontAwesomeIcon icon={faFolderOpen} className="mr-1" />
                         {post.category}
                       </a>
@@ -78,7 +73,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                         href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                         passHref
                       >
-                        <a className="pl-1 mr-2 cursor-pointer hover:text-gray-700  dark:hover:text-gray-200">
+                        <a className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
                           {date}
                         </a>
                       </Link>
@@ -99,7 +94,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
 
                 </section>
 
-                <hr className="mt-2" />
+                {/* <hr className="mt-2" /> */}
 
             </header>
 
