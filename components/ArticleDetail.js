@@ -54,9 +54,9 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                           </div>
                 )}
                 {/* 文章Title */}
-                <h2 className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
+                <div className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
                   {post.title}
-                </h2>
+                </div>
 
                 <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
                   <div>
