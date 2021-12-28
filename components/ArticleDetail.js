@@ -168,9 +168,8 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
       </div>
 
       {/* 宠物 */}
-      <div className='fixed left-0 bottom-0'>
-        <Live2D/>
-      </div>
+      <Live2D/>
+
     </>)
 }
 

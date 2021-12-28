@@ -7,7 +7,7 @@ export default function Live2D () {
       initLive2D()
     }
   })
-  return <div className='animate__fadeIn  animate__bounceInUp'>
+  return <div className='fixed left-0 bottom-0 hidden md:block lg:ml-24 2xl:ml-36'>
     <canvas id="live2d" width="280" height="250"></canvas>
   </div>
 }

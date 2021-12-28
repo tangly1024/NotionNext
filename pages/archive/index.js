@@ -5,6 +5,7 @@ import { getNotionPageData } from '@/lib/notion/getNotionData'
 import React, { useEffect } from 'react'
 import { useGlobal } from '@/lib/global'
 import BlogPostArchive from '@/components/BlogPostArchive'
+import Live2D from '@/components/Live2D'
 
 export async function getStaticProps () {
   const from = 'index'
@@ -74,6 +75,7 @@ const Index = ({ allPosts, tags, categories }) => {
              <BlogPostArchive key={archiveTitle} posts={archivePosts[archiveTitle]} archiveTitle={archiveTitle}/>
           ))}
         </div>
+        <Live2D/>
     </BaseLayout>
   )
 }

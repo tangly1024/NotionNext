@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import { useEffect } from 'react'
 
-export default function Live2D () {
+export default function Live2DWife () {
   useEffect(() => {
     if (window) {
-      initLive2D()
+      initLive2DWife()
     }
   })
   return <>
@@ -12,7 +12,7 @@ export default function Live2D () {
   </>
 }
 
-function initLive2D () {
+function initLive2DWife () {
   // 注意：live2d_path 参数应使用绝对路径
   const live2dPath = 'https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/'
   // const live2d_path = "/live2d-widget/";
