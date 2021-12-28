@@ -1,9 +1,16 @@
 import BLOG from 'blog.config'
 import 'animate.css'
-import '@/styles/notion.css'
 import '@/styles/globals.css'
+// custom
+// core styles shared by all of react-notion-x (required)
+import 'react-notion-x/src/styles.css'
+import '@/styles/notion.css' //  重写部分样式
+
+// used for collection views (optional)
 import 'rc-dropdown/assets/index.css'
+// used for code syntax highlighting (optional)
 import 'prismjs/themes/prism-okaidia.css'
+// used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'

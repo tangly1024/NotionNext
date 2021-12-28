@@ -43,7 +43,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           >
             <header>
                 {post.type && !post.type.includes('Page') && post?.page_cover && (
-                          <div className="w-full h-60 lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
+                          <div className="w-full h-60 relative lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
                             <Image
                               src={post?.page_cover}
                               loading="eager"
