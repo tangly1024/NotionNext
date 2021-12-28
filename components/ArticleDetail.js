@@ -22,6 +22,7 @@ import 'prismjs/components/prism-typescript'
 import { useRef } from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import ArticleCopyright from './ArticleCopyright'
+import Live2D from './Live2D'
 import WordCount from './WordCount'
 
 /**
@@ -41,6 +42,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           <article itemScope itemType="https://schema.org/Movie"
             className="shadow hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
           >
+
             <header>
                 {post.type && !post.type.includes('Page') && post?.page_cover && (
                           <div className="w-full h-60 relative lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
@@ -163,6 +165,11 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
       <div className="block lg:hidden">
         <TocDrawerButton onClick={() => { drawerRight.current.handleSwitchVisible() }} />
         <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
+      </div>
+
+      {/* 宠物 */}
+      <div className='fixed left-0 bottom-0'>
+        <Live2D/>
       </div>
     </>)
 }
