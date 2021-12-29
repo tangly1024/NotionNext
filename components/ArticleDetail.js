@@ -101,7 +101,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             </header>
 
             {/* Notion文章主体 */}
-            <section id='notion-article' className='overflow-x-auto px-1'>
+            <section id='notion-article' className='overflow-x-auto overflow-y-hidden px-1'>
               {blockMap && (
                 <NotionRenderer
                   className={`${BLOG.font}`}
