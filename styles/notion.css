@@ -1114,7 +1114,7 @@ svg.notion-page-icon {
   padding-left: 1.5em;
 }
 
-.notion-to-do-checked .notion-to-do-item {
+.notion-to-do-checked {
   text-decoration: line-through;
   opacity: 0.375;
 }
@@ -1126,11 +1126,11 @@ svg.notion-page-icon {
 
 .notion-to-do-item .notion-property-checkbox {
   margin-right: 8px;
-  @apply w-4 h-4 border-2
+  /* @apply w-4 h-4 border-2 */
 }
 
 .notion-property-checkbox-checked {
-  @apply bg-white
+  /* @apply bg-white */
 }
 
 .notion-google-drive {
