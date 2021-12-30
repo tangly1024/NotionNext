@@ -40,10 +40,10 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   return (<>
       <div id="article-wrapper" ref={targetRef} className="flex-grow max-w-5xl mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
-            className="shadow md:hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
+            className="shadow md:hover:shadow-2xl duration-300 subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
           >
 
-            <header>
+            <header className='animate__slideInDown animate__animated'>
                 {post.type && !post.type.includes('Page') && post?.page_cover && (
                           <div className="w-full h-60 relative lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
                             <Image
@@ -101,7 +101,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             </header>
 
             {/* Notion文章主体 */}
-            <section id='notion-article' className='px-1'>
+            <section id='notion-article' className='px-1 animate__slideInUp animate__animated'>
               {blockMap && (
                 <NotionRenderer
                   className={`${BLOG.font}`}
