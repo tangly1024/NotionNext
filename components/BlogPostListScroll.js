@@ -56,7 +56,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
     return <div id='post-list-wrapper' className='mt-10 md:mt-0' ref={targetRef}>
 
       {/* 文章列表 */}
-      <div className='flex flex-wrap space-y-8'>
+      <div className='flex flex-wrap space-y-8 mx-5 md:mx-0'>
         {postsToShow.map(post => (
           <BlogPostCard key={post.id} post={post} tags={tags}/>
         ))}

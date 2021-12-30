@@ -16,7 +16,7 @@ export default function Tag ({ tags, allPosts, categories }) {
     type: 'website'
   }
   return <BaseLayout meta={meta} categories={categories} totalPosts={allPosts}>
-      <div className='bg-white dark:bg-gray-700 px-10 py-10 rounded-xl shadow-lg'>
+      <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
         <div className='dark:text-gray-200 mb-5'><FontAwesomeIcon icon={faTags} className='mr-4'/>{locale.COMMON.TAGS}:</div>
         <div id='tags-list' className='duration-200 flex flex-wrap'>
           { tags.map(tag => {

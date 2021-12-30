@@ -16,7 +16,7 @@ export default function Category ({ tags, allPosts, categories }) {
     type: 'website'
   }
   return <BaseLayout meta={meta} totalPosts={allPosts} tags={tags}>
-      <div className='bg-white dark:bg-gray-700 px-10 py-10 rounded-xl shadow-lg'>
+      <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
         <div className='dark:text-gray-200 mb-5'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}:</div>
         <div id='category-list' className='duration-200 flex flex-wrap'>
           {Object.keys(categories).map(category => {
