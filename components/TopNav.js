@@ -3,13 +3,45 @@ import SideBarDrawer from '@/components/SideBarDrawer'
 import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
+import throttle from 'lodash.throttle'
 
-const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory }) => {
+let windowTop = 0
+
+/**
+ * 顶部导航
+ * @param {*} param0
+ * @returns
+ */
+const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory, autoHide = true }) => {
   const drawer = useRef()
   const { locale } = useGlobal()
+
+  const scrollTrigger = useCallback(throttle(() => {
+    const scrollS = window.scrollY
+    if (scrollS >= windowTop && scrollS > 10) {
+      const nav = document.querySelector('#sticky-nav')
+      nav && nav.classList.replace('top-0', '-top-16')
+      windowTop = scrollS
+    } else {
+      const nav = document.querySelector('#sticky-nav')
+      nav && nav.classList.replace('-top-16', 'top-0')
+      windowTop = scrollS
+    }
+  }, 200))
+
+  // 监听滚动
+  useEffect(() => {
+    if (autoHide) {
+      scrollTrigger()
+      window.addEventListener('scroll', scrollTrigger)
+    }
+    return () => {
+      autoHide && window.removeEventListener('scroll', scrollTrigger)
+    }
+  }, [])
 
   return (<div id='top-nav'>
     {/* 侧面抽屉 */}

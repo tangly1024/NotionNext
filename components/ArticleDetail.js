@@ -38,9 +38,9 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
 
   return (<>
-      <div id="article-wrapper" ref={targetRef} className="flex-grow mt-14 md:mt-0 max-w-5xl mx-auto w-screen md:w-full ">
+      <div id="article-wrapper" ref={targetRef} className="flex-grow max-w-5xl mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
-            className="shadow hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
+            className="shadow md:hover:shadow-2xl duration-300 animate__fadeIn animate__animated subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
           >
 
             <header>
@@ -101,7 +101,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             </header>
 
             {/* Notion文章主体 */}
-            <section id='notion-article' className='overflow-x-auto overflow-y-hidden px-1'>
+            <section id='notion-article' className='px-1'>
               {blockMap && (
                 <NotionRenderer
                   className={`${BLOG.font}`}
@@ -117,7 +117,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
               )}
             </section>
 
-            <section className="px-1 py-2 my-1 text-sm font-light  text-gray-600  dark:text-gray-400">
+            <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
               {/* 文章内嵌广告 */}
               <ins className="adsbygoogle"
                 style={{ display: 'block', textAlign: 'center' }}
@@ -156,7 +156,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           </article>
 
           {/* 评论互动 */}
-          <div className="mt-5 lg:px-40 hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="mt-5 lg:px-40 md:hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
             <Comment frontMatter={post} />
           </div>
       </div>
