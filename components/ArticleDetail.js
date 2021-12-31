@@ -177,7 +177,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
       </div>
 
       {/* 宠物 */}
-      <Live2D/>
+      {BLOG.showPet && <Live2D/>}
 
     </>)
 }

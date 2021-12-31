@@ -62,7 +62,8 @@ const BLOG = {
   googleAdsenseId: 'ca-pub-2708419466378217', // 谷歌广告ID
   DaoVoiceId: '', // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
   TidioId: '', // 在线聊天 https://www.tidio.com/
-  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+  isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+  showPet: true // 详情页是否显示宠物挂件
 
 }
 // export default BLOG

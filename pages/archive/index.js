@@ -75,7 +75,7 @@ const Index = ({ allPosts, tags, categories }) => {
              <BlogPostArchive key={archiveTitle} posts={archivePosts[archiveTitle]} archiveTitle={archiveTitle}/>
           ))}
         </div>
-        <Live2D/>
+        {BLOG.showPet && <Live2D/>}
     </BaseLayout>
   )
 }
