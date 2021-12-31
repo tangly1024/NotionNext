@@ -622,6 +622,7 @@ svg.notion-page-icon {
   margin: 0;
   margin-block-start: 0.6em;
   margin-block-end: 0.6em;
+  @apply w-full;
 }
 
 .notion-list-disc {
