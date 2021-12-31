@@ -19,11 +19,12 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import ArticleCopyright from './ArticleCopyright'
 import Live2D from './Live2D'
 import WordCount from './WordCount'
+import mediumZoom from 'medium-zoom'
 
 /**
  *
@@ -37,6 +38,19 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
 
+  const zoom = typeof window !== 'undefined' && mediumZoom({
+    container: '.notion-viewport',
+    background: 'rgba(0, 0, 0, 0.2)',
+    margin: getMediumZoomMargin()
+  })
+  const zoomRef = useRef(zoom ? zoom.clone() : null)
+  function attachZoom (image) {
+    if (zoomRef.current) {
+      (zoomRef.current).attach(image)
+    }
+  }
+  const attachZoomRef = attachZoom
+
   return (<>
       <div id="article-wrapper" ref={targetRef} className="overflow-x-auto flex-grow max-w-5xl mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
@@ -45,16 +59,12 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
 
             <header className='animate__slideInDown animate__animated'>
                 {post.type && !post.type.includes('Page') && post?.page_cover && (
-                          <div className="w-full h-60 relative lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
-                            <Image
-                              src={post?.page_cover}
-                              loading="eager"
-                              objectFit="cover"
-                              layout="fill"
-                              alt={post.title}
-                            />
-                          </div>
+                  <div className="w-full relative md:flex-shrink-0 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img alt={post.title} ref={attachZoomRef}src={post?.page_cover} className='object-center' />
+                  </div>
                 )}
+
                 {/* 文章Title */}
                 <div className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
                   {post.title}
@@ -175,4 +185,22 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
+}
+
+function getMediumZoomMargin () {
+  const width = window.innerWidth
+
+  if (width < 500) {
+    return 8
+  } else if (width < 800) {
+    return 20
+  } else if (width < 1280) {
+    return 30
+  } else if (width < 1600) {
+    return 40
+  } else if (width < 1920) {
+    return 48
+  } else {
+    return 72
+  }
 }
