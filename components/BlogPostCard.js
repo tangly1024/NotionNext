@@ -32,7 +32,7 @@ const BlogPostCard = ({ post, tags }) => {
             <a className='font-light hover:underline cursor-pointer text-sm leading-4 mr-3'>{post.date.start_date}</a>
           </Link>
           </div>
-          <div className='md:flex-nowrap flex-wrap md:justify-start hidden md:inline-block'>
+          <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
             <div> {post.tagItems.map(tag => (<TagItemMini key={tag.name} tag={tag} />))}</div>
           </div>
         </div>
