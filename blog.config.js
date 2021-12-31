@@ -58,7 +58,7 @@ const BLOG = {
   },
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   googleAdsenseId: 'ca-pub-2708419466378217',
-  DaoVoiceId: 'daf1a94b' // DaoVoice http://dashboard.daovoice.io/get-started
+  DaoVoiceId: '' // DaoVoice http://dashboard.daovoice.io/get-started
 }
 // export default BLOG
 module.exports = BLOG
