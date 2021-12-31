@@ -57,7 +57,7 @@ const BaseLayout = ({
           <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
             <SideAreaLeft targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
           </aside>
-          <section id='center' className='flex-grow mt-14 md:mt-0 max-w-4xl min-h-screen overflow-x-auto' ref={targetRef}>
+          <section id='center' className='flex-grow mt-14 md:mt-0 max-w-4xl min-h-screen' ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
               : <>
