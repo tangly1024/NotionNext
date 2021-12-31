@@ -13,7 +13,7 @@ const InfoCard = ({ postCount }) => {
           height={120}
           loading='lazy'
           src='/avatar.jpg'
-          className='rounded-full border-black'
+          className='rounded-full'
         />
         </div>
         <div className='text-3xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.title}</div>

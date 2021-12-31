@@ -78,7 +78,7 @@ const SideAreaRight = ({
         {categories && (
           <section className='shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
             <div className='text-sm px-5 mb-2 flex flex-nowrap justify-between font-light'>
-              <div className='pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
+              <div className='pb-1 text-gray-600 dark:text-gray-300'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
               <Link href='/category' passHref>
                 <a className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                   {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
@@ -93,7 +93,7 @@ const SideAreaRight = ({
         {posts && (
           <section className="shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
             <div className="text-sm pb-2 px-5  flex flex-nowrap justify-between">
-              <div className="font-light text-gray-600  dark:text-gray-200">
+              <div className="font-light text-gray-600  dark:text-gray-300">
                 <FontAwesomeIcon icon={faArchive} className="mr-2" />
                 {locale.COMMON.LATEST_POSTS}
                 <span className='text-red-500 text-xs ml-1'>NEW</span>
