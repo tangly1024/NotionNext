@@ -9,7 +9,7 @@ export default function Live2D () {
       hasLoad = true
     }
   })
-  return <div className='fixed left-0 bottom-0 hidden md:block lg:ml-24 2xl:ml-36'>
+  return <div className='fixed right-0 bottom-0 hidden md:block lg:mr-24 2xl:mr-48 z-20'>
     <canvas id="live2d"className='animate__slideInLeft animate__animated' width="280" height="250"></canvas>
   </div>
 }

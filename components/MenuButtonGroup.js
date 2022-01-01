@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArchive, faHome, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faArchive, faHome, faTag, faThList } from '@fortawesome/free-solid-svg-icons'
 import BLOG from 'blog.config'
 
 const MenuButtonGroup = ({ allowCollapse = false }) => {
@@ -12,7 +12,9 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
   const links = [
     { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { id: 1, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', show: BLOG.showArchive },
-    { id: 2, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/about', show: BLOG.showAbout }
+    { id: 2, icon: faThList, name: locale.COMMON.CATEGORY, to: '/category', show: BLOG.showArchive },
+    { id: 3, icon: faTag, name: locale.COMMON.TAGS, to: '/tag', show: BLOG.showArchive }
+    // { id: 2, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/about', show: BLOG.showAbout }
     // { id: 7, icon: 'faGithub', name: 'Github', to: 'https://github.com/tangly1024', show: true },
     // { id: 5, icon: 'faWeibo', name: '微博', to: 'https://weibo.com/tangly1024', show: true },
     // { id: 4, icon: 'faEnvelope', name: locale.NAV.MAIL, to: 'mailto:tlyong1992@hotmail.com', show: true }

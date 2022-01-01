@@ -1,11 +1,8 @@
 import LatestPostsGroup from '@/components/LatestPostsGroup'
-import TagGroups from '@/components/TagGroups'
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faArchive } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
 import React from 'react'
-import CategoryGroup from '@/components/CategoryGroup'
 
 /**
  * 侧边平铺
@@ -64,7 +61,7 @@ const SideAreaRight = ({
 
       {/* <Analytics postCount={postCount}/> */}
 
-      <div className="sticky top-8">
+      <div className="sticky top-16">
           {/* {showToc && (
           <section className='pb-10 mb-5  bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
             <div className='border-b text-center text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
@@ -75,7 +72,7 @@ const SideAreaRight = ({
           )} */}
 
         {/* 分类  */}
-        {categories && (
+        {/* {categories && (
           <section className='shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
             <div className='text-sm px-5 mb-2 flex flex-nowrap justify-between font-light'>
               <div className='pb-1 text-gray-600 dark:text-gray-300'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
@@ -87,7 +84,7 @@ const SideAreaRight = ({
             </div>
             <CategoryGroup currentCategory={currentCategory} categories={categories} />
           </section>
-        )}
+        )} */}
 
         {/* 最新文章 */}
         {posts && (
@@ -108,7 +105,7 @@ const SideAreaRight = ({
         </section> */}
 
         {/* 标签云  */}
-         {tags && (
+         {/* {tags && (
           <section className="shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
             <div className="text-sm pb-1 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200">
               <div className="text-gray-600 dark:text-gray-200">
@@ -126,7 +123,7 @@ const SideAreaRight = ({
               <TagGroups tags={tags} currentTag={currentTag} />
             </div>
           </section>
-         )}
+         )} */}
 
       </div>
     </>

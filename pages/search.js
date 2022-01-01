@@ -46,14 +46,12 @@ const Search = ({ allPosts, tags, categories }) => {
   }
   return (
     <BaseLayout meta={meta} tags={tags} totalPosts={allPosts} currentSearch={searchKey} categories={categories}>
-      <div className=''>
         <StickyBar>
-          <div className='p-4 dark:text-gray-200'><FontAwesomeIcon icon={faSearch} className='mr-1'/> 搜索词： {searchKey}</div>
+          <div className='p-4 dark:text-gray-200'><FontAwesomeIcon icon={faSearch} className='mr-1'/> {locale.NAV.SEARCH}： {searchKey}</div>
         </StickyBar>
         <div className='md:mt-5'>
          <BlogPostListScroll posts={filteredPosts} tags={tags} currentSearch={searchKey} />
         </div>
-      </div>
     </BaseLayout>
   )
 }

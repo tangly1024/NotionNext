@@ -96,7 +96,7 @@ export default function Header () {
   return (
     <header
       id="header"
-      className="duration-500 md:bg-fixed w-full bg-cover bg-center lg:-mt-14 h-screen bg-black"
+      className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black"
       style={{
         backgroundImage:
           `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${BLOG.bannerImage}")`

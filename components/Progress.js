@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const Progress = ({ targetRef }) => {
+const Progress = ({ targetRef, showPercent = true }) => {
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
     if (targetRef?.current) {
@@ -24,9 +24,10 @@ const Progress = ({ targetRef }) => {
   }, [percent])
 
   return (<div className='h-4 w-full shadow-2xl bg-gray-400'>
-
-    <div className='h-4 bg-gray-600 duration-200' style={{ width: `${percent}%` }}><div className='text-right text-white text-xs'>{percent}%</div></div>
-      </div>)
+      <div className='h-4 bg-gray-600 duration-200' style={{ width: `${percent}%` }}>
+        {showPercent && <div className='text-right text-white text-xs'>{percent}%</div>}
+      </div>
+  </div>)
 }
 
 export default Progress

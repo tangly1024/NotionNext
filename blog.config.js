@@ -20,7 +20,12 @@ const BLOG = {
   showAbout: true, // WIP 是否显示关于
   showArchive: true, // WIP 是否显示归档
   autoCollapsedNavBar: false, // the automatically collapsed navigation bar
-  socialLink: 'https://weibo.com/u/2245301913',
+  socialLink: {
+    weibo: 'https://weibo.com/u/2245301913',
+    twitter: '',
+    github: 'https://github.com/tangly1024',
+    telegram: ''
+  },
   seo: {
     keywords: ['Notion', '写作', '博客'],
     googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
