@@ -24,10 +24,10 @@ const SocialButton = () => {
       {BLOG.socialLink.weibo && <a target='_blank' rel='noreferrer' title={'weibo'} href={BLOG.socialLink.weibo} >
         <FontAwesomeIcon icon={faWeibo} className='transform hover:scale-125 duration-150'/>
       </a>}
-      {BLOG.email && <a target='_blank' rel='noreferrer' title={'weibo'} href={`mailto:${BLOG.email}`} >
+      {BLOG.email && <a target='_blank' rel='noreferrer' title={'email'} href={`mailto:${BLOG.email}`} >
         <FontAwesomeIcon icon={faEnvelope} className='transform hover:scale-125 duration-150'/>
       </a>}
-      <a target='_blank' rel='noreferrer' title={'weibo'} href={'/feed'} >
+      <a target='_blank' rel='noreferrer' title={'RSS'} href={'/feed'} >
         <FontAwesomeIcon icon={faRss} className='transform hover:scale-125 duration-150'/>
       </a>
     </div>
