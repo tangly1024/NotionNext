@@ -22,7 +22,7 @@ function initLive2D () {
       loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
     ]).then(() => {
       // https://github.com/xiazeyu/live2d-widget-models
-      loadlive2d('live2d', 'https://raw.githubusercontent.com/xiazeyu/live2d-widget-models/master/packages/live2d-widget-model-wanko/assets/wanko.model.json')
+      loadlive2d('live2d', 'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json')
     })
   }
 }
