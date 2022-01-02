@@ -25,7 +25,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
   const postCount = posts?.length || 0
   return <>
 
-    <section className='sticky top-16 w-60'>
+    <section className='sticky top-8 w-60'>
 
       {/* 菜单 */}
       <section className='shadow hidden lg:block mb-5 py-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>

@@ -21,7 +21,7 @@ const BLOG = {
   showArchive: true, // WIP 是否显示归档
   autoCollapsedNavBar: false, // the automatically collapsed navigation bar
   socialLink: {
-    weibo: 'https://weibo.com/u/2245301913',
+    weibo: 'https://weibo.com/tangly1024',
     twitter: '',
     github: 'https://github.com/tangly1024',
     telegram: ''

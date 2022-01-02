@@ -61,7 +61,7 @@ const SideAreaRight = ({
 
       {/* <Analytics postCount={postCount}/> */}
 
-      <div className="sticky top-16">
+      <div className="sticky top-8">
           {/* {showToc && (
           <section className='pb-10 mb-5  bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
             <div className='border-b text-center text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>

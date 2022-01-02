@@ -60,7 +60,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                 {post.type && !post.type.includes('Page') && post?.page_cover && (
                   <div className="w-full relative md:flex-shrink-0 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img alt={post.title} ref={attachZoomRef}src={post?.page_cover} className='object-center' />
+                    <img alt={post.title} ref={attachZoomRef}src={post?.page_cover} className='object-center w-full' />
                   </div>
                 )}
 
