@@ -49,7 +49,7 @@
 - 给这个项目点个小星星 😉
 - 将 [这个 Notion 模板](https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5) 制作副本，并分享这个页面给所有人
 - [Fork](https://github.com/tangly1024/NotionNext/fork) 这个项目
-- 在 `blog.config.js` 配置相关选项
+- 在 `blog.config.js` 配置相关选项，更多关于配置的说明，请移步[NotionNext文档](https://docs.tangly1024.com/zh)
 - _(可选)_ 用自己的图片替换 `/public` 文件夹里的 `avatar.jpg`、`favicon.svg` 和 `favicon.ico`
 - 在 [Vercel](https://vercel.com) 上部署这个项目, 设定一下环境变量：
   - `NOTION_PAGE_ID`: 你刚刚分享出去的 Notion 页面网址中的页面 ID，通常是网址中工作区地址后的 32 位字符串
