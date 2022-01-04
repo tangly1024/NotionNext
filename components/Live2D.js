@@ -3,7 +3,11 @@ import BLOG from '@/blog.config'
 
 let hasLoad = false
 export default function Live2D () {
-  if (BLOG.widget?.showPet && typeof window !== 'undefined' && !hasLoad) {
+  if (!BLOG.widget?.showPet) {
+    return <></>
+  }
+
+  if (typeof window !== 'undefined' && !hasLoad) {
     initLive2D()
     hasLoad = true
   }

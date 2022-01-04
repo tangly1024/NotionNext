@@ -4,13 +4,13 @@ import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 
 /**
- * 翻页插件
+ * 简易翻页插件
  * @param page 当前页码
  * @param showNext 是否有下一页
  * @returns {JSX.Element}
  * @constructor
  */
-const Pagination = ({ page, showNext }) => {
+const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
@@ -39,4 +39,4 @@ const Pagination = ({ page, showNext }) => {
   )
 }
 
-export default Pagination
+export default PaginationSimple
