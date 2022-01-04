@@ -55,7 +55,7 @@ const BaseLayout = ({
 
       <main id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-14 pb-12'>
           <SideAreaLeft targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-          <section id='center' className='flex-grow mt-14 md:mt-0 max-w-4xl min-h-screen' ref={targetRef}>
+          <section id='center' className='flex-grow mt-14 md:mt-0 max-w-5xl min-h-screen' ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
               : <>
