@@ -9,7 +9,7 @@ const InfoCard = ({ postCount }) => {
     <div className='flex flex-col items-center justify-center '>
         <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer' onClick={ () => { Router.push('/about') }}>
           <Image
-          alt={BLOG.title}
+          alt={BLOG.author}
           width={120}
           height={120}
           loading='lazy'
@@ -17,8 +17,8 @@ const InfoCard = ({ postCount }) => {
           className='rounded-full'
         />
         </div>
-        <div className='text-3xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.title}</div>
-        <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.description}</div>
+        <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.author}</div>
+        <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.bio}</div>
         <SocialButton/>
     </div>
   </>

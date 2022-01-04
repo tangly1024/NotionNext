@@ -22,7 +22,7 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={`${link.id}-${link.to}`} title={link.to} href={link.to} >
             <a className={'py-1 my-1 px-5 mx-2 duration-300 text-base hover:bg-gray-500 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
-              (selected ? 'bg-gray-700 text-white ' : ' ')} >
+              (selected ? 'bg-gray-200 text-black' : ' ')} >
               <div className='my-auto justify-center flex '>
                 <FontAwesomeIcon icon={link.icon} />
               </div>
