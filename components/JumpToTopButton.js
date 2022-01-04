@@ -44,7 +44,7 @@ const JumpToTopButton = ({ targetRef, showPercent = false }) => {
   return (<div id='jump-to-top' className='right-1 fixed flex bottom-44 z-20'>
       <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         className={(show ? '' : 'hidden') + ' animate__fadeInRight duration-500 animate__animated animate__faster flex justify-center items-center w-8 h-8 glassmorphism cursor-pointer '}>
-        <div className='dark:text-gray-200 transform hover:scale-150 text-xs' title={locale.POST.TOP} >
+        <div className='dark:text-gray-200 transform hover:scale-150 text-xs duration-200' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
           {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}

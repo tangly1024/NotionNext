@@ -6,7 +6,7 @@ const BLOG = {
   description: '分享编程技术与记录生活',
   keywords: ['Notion', '写作', '博客'],
   home: { // 首页
-    showHomeBanner: true, // 首页是否显示大图及标语 [true,false]
+    showHomeBanner: false, // 首页是否显示大图及标语 [true,false]
     homeBannerStrings: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
     homeBannerImage: './bg_image.jpg' // 首图
   },
@@ -38,7 +38,10 @@ const BLOG = {
     showToc: true,
     showShareBar: false,
     showRelatePosts: false,
-    showCopyRight: false
+    showCopyRight: false,
+    showLatestPost: false,
+    showCategoryList: false,
+    showTagList: false
   },
   socialLink: { // 社交链接
     weibo: 'https://weibo.com/tangly1024',

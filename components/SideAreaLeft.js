@@ -24,7 +24,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   const postCount = posts?.length || 0
-  return <>
+  return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
 
     <section className='sticky top-8 w-60'>
 
@@ -51,6 +51,6 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
 
     </section>
 
- </>
+ </aside>
 }
 export default SideAreaLeft
