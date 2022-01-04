@@ -32,7 +32,9 @@ const TocDrawer = ({ post, cRef, targetRef }) => {
             <div className='text-xl font-bold text-center text-black dark:text-white bg-white dark:bg-gray-600 py-2 px-6'>
               {locale.COMMON.TABLE_OF_CONTENTS}
             </div>
-            <Toc toc={post.toc} targetRef={targetRef}/>
+           <div className='p-6 dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800'>
+             <Toc toc={post.toc} targetRef={targetRef}/>
+           </div>
           </>
           }
       </div>

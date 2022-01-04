@@ -24,6 +24,7 @@ const About = ({ post, blockMap, tags, prev, next, allPosts, categories }) => {
     return <Custom404 />
   }
   const { locale } = useGlobal()
+  post.title = locale.NAV.ABOUT
   const meta = {
     title: `${locale.NAV.ABOUT} | ${BLOG.title} `,
     description: post.summary,

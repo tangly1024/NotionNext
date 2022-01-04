@@ -1,7 +1,11 @@
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 
 export default function ArticleCopyright ({ author, url }) {
+  if (!BLOG.widget?.showCopyRight) {
+    return <></>
+  }
   const { locale } = useGlobal()
   return <section className="dark:text-gray-300 mt-6">
     <div className="text-2xl mb-2">{locale.COMMON.COPYRIGHT}</div>

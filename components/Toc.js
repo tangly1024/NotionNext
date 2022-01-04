@@ -55,7 +55,7 @@ const Toc = ({ toc, targetRef }) => {
     <div className='w-full'>
       <Progress targetRef={targetRef}/>
     </div>
-    <nav className=' dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 overflow-y-auto scroll-hidden p-6'>
+    <nav className=' overflow-y-auto scroll-hidden'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (

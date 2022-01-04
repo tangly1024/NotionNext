@@ -36,7 +36,7 @@ const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
               <div className={ (selected ? 'text-white  bg-gray-600 ' : 'text-gray-500 dark:text-gray-400 ') + ' text-xs py-1.5 flex overflow-x-hidden whitespace-nowrap hover:bg-gray-500 px-3 w-full ' +
                 'hover:text-white dark:hover:text-white cursor-pointer' }>
                 <FontAwesomeIcon icon={faFileAlt} className='mr-2'/>
-                {post.title}
+                <div className='truncate'>{post.title}</div>
               </div>
             </a>
           </Link>

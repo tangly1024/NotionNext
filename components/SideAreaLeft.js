@@ -5,6 +5,8 @@ import Toc from '@/components/Toc'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
 import Analytics from './Analytics'
+import Tabs from '@/components/Tabs'
+import BLOG from '@/blog.config'
 
 /**
  * 侧边平铺
@@ -22,37 +24,33 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   const postCount = posts?.length || 0
-  return <>
+  return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
 
-    <section className={(!post ? 'sticky top-8 ' : ' ') + ' w-60'}>
-      <section className='shadow hidden lg:block mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200 py-6'>
-        <InfoCard postCount={postCount} />
-      </section>
+    <section className='sticky top-8 w-60'>
 
       {/* 菜单 */}
-      <section className='shadow hidden lg:block mb-5 py-4  bg-white dark:bg-gray-800  hover:shadow-xl duration-200'>
+      <section className='shadow hidden lg:block mb-5 py-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
         <MenuButtonGroup allowCollapse={true} />
-        <div className='px-5 pt-2'>
+        {BLOG.menu.showSearch && <div className='px-5 pt-2'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
-        </div>
+        </div>}
       </section>
 
-      {/* 统计 */}
-      <section className='shadow hidden lg:block mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200 py-4'>
-        <Analytics postCount={postCount}/>
-      </section>
+      <Tabs>
+          {showToc && (
+            <div key={locale.COMMON.TABLE_OF_CONTENTS} className='dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 duration-200'>
+              <Toc toc={post.toc} targetRef={targetRef} />
+            </div>
+          )}
+
+          <div key={locale.NAV.ABOUT} className='mb-5 bg-white dark:bg-gray-800 duration-200 py-6'>
+            <InfoCard postCount={postCount} />
+            <Analytics postCount={postCount}/>
+          </div>
+      </Tabs>
 
     </section>
 
-    {showToc && (
-      <section className='shadow sticky top-8 pb-20  bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
-        <div className='border-b text-center text-2xl bg-white text-black dark:border-gray-700 dark:bg-gray-700 dark:text-white py-6 px-6'>
-          {locale.COMMON.TABLE_OF_CONTENTS}
-        </div>
-        <Toc toc={post.toc} targetRef={targetRef} />
-      </section>
-    )}
-
- </>
+ </aside>
 }
 export default SideAreaLeft

@@ -4,8 +4,12 @@ const BLOG = {
   email: 'tlyong1992@hotmail.com',
   link: 'https://tangly1024.com',
   description: '分享编程技术与记录生活',
-  headerStrings: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页文字
-  bannerImage: './bg_image.jpg', // 首图
+  keywords: ['Notion', '写作', '博客'],
+  home: { // 首页
+    showHomeBanner: false, // 首页是否显示大图及标语 [true,false]
+    homeBannerStrings: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
+    homeBannerImage: './bg_image.jpg' // 首图
+  },
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
@@ -17,13 +21,33 @@ const BLOG = {
   since: 2020, // if leave this empty, current year will be used.
   postsPerPage: 6, // post counts per page
   sortByDate: false,
-  showAbout: true, // WIP 是否显示关于
-  showArchive: true, // WIP 是否显示归档
-  autoCollapsedNavBar: false, // the automatically collapsed navigation bar
-  socialLink: 'https://weibo.com/u/2245301913',
-  seo: {
-    keywords: ['Notion', '写作', '博客'],
-    googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
+  autoCollapsedNavBar: true, // the automatically collapsed navigation bar
+  menu: { // menu config
+    showAbout: false,
+    showCategory: true,
+    showTag: true,
+    showArchive: true,
+    showSearch: true
+  },
+  widget: {
+    showPet: false, // 是否显示宠物挂件
+    petLink: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 模型地址 @see https://github.com/xiazeyu/live2d-widget-models
+    showToTop: true,
+    showToBottom: true,
+    showDarkMode: true,
+    showToc: true,
+    showShareBar: false,
+    showRelatePosts: false,
+    showCopyRight: false,
+    showLatestPost: false,
+    showCategoryList: false,
+    showTagList: false
+  },
+  socialLink: { // 社交链接
+    weibo: 'https://weibo.com/tangly1024',
+    twitter: 'https://twitter.com/troy1024_1',
+    github: 'https://github.com/tangly1024',
+    telegram: 'https://t.me/tangly_1024'
   },
   analytics: {
     provider: 'ga', // Currently we support Google Analytics and Ackee, please fill with 'ga' or 'ackee', leave it empty to disable it.
@@ -36,12 +60,11 @@ const BLOG = {
       measurementId: 'G-68EK0W049N' // e.g: G-XXXXXXXXXX
     },
     baiduAnalytics: 'f683ef76f06bb187cbed5546f6f28f28', // e.g only need xxxxx -> https://hm.baidu.com/hm.js?[xxxxx]
-    busuanzi: true, // see http://busuanzi.ibruce.info/
+    busuanzi: true, // 展示网站阅读量访问数 see http://busuanzi.ibruce.info/
     cnzzAnalytics: '' // 站长统计id only need xxxxxxxx -> https://s9.cnzz.com/z_stat.php?id=[xxxxxxxx]&web_id=[xxxxxxx]
   },
-  comment: {
-    // support provider: gitalk, utterances, cusdis
-    provider: 'cusdis', // leave it empty if you don't need any comment plugin
+  comment: { //  support provider: gitalk, utterances, cusdis
+    provider: '', // leave it empty if you don't need any comment plugin
     gitalkConfig: {
       repo: 'NotionNext', // The repository of store comments
       owner: 'tangly1024',
@@ -57,14 +80,15 @@ const BLOG = {
     },
     utterancesConfig: {
       repo: 'tangly1024/NotionNext'
-    }
+    },
+    DaoVoiceId: '', // DaoVoice http://dashboard.daovoice.io/get-started
+    TidioId: '' // https://www.tidio.com/
+  },
+  seo: {
+    googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
   },
   googleAdsenseId: 'ca-pub-2708419466378217', // 谷歌广告ID
-  DaoVoiceId: '', // 在线聊天 DaoVoice http://dashboard.daovoice.io/get-started
-  TidioId: '', // 在线聊天 https://www.tidio.com/
-  isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-  showPet: true // 详情页是否显示宠物挂件
-
+  isProd: process.env.VERCEL_ENV === 'production'// distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
 }
 // export default BLOG
 module.exports = BLOG

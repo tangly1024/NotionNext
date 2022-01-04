@@ -54,10 +54,8 @@ const BaseLayout = ({
       <>{headerSlot}</>
 
       <main id='wrapper' className='flex justify-center flex-1 mx-auto md:pt-14 pb-12'>
-          <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
-            <SideAreaLeft targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-          </aside>
-          <section id='center' className='flex-grow mt-14 md:mt-0 max-w-4xl min-h-screen' ref={targetRef}>
+          <SideAreaLeft targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+          <section id='center' className='flex-grow mt-14 md:mt-0 max-w-5xl min-h-screen' ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
               : <>
@@ -65,9 +63,7 @@ const BaseLayout = ({
               </>
             }
           </section>
-          <aside id='right' className='hidden 2xl:block flex-col w-60 ml-4'>
-            <SideAreaRight targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-          </aside>
+          <SideAreaRight targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
       </main>
 
       <Footer title={meta.title}/>
