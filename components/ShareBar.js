@@ -17,6 +17,9 @@ import {
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 
 const ShareBar = ({ post }) => {
+  if (!BLOG.widget?.showShareBar) {
+    return <></>
+  }
   const router = useRouter()
   const shareUrl = BLOG.link + router.asPath
 

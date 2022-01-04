@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import smoothscroll from 'smoothscroll-polyfill'
+import BLOG from '@/blog.config'
 
 /**
  * 跳转到网页顶部
@@ -13,6 +14,9 @@ import smoothscroll from 'smoothscroll-polyfill'
  * @constructor
  */
 const JumpToTopButton = ({ targetRef, showPercent = false }) => {
+  if (!BLOG.widget?.showToTop) {
+    return <></>
+  }
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
@@ -37,15 +41,13 @@ const JumpToTopButton = ({ targetRef, showPercent = false }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div id='jump-to-top' className='right-3 fixed flex bottom-48 duration-500 z-20'>
+  return (<div id='jump-to-top' className='right-1 fixed flex bottom-44 z-20'>
       <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={(show ? '' : 'hidden') + ' animate__fadeInRight animate__animated animate__faster shadow-card rounded-xl glassmorphism py-3 cursor-pointer '}>
-        <div className='text-center'>
-        <div className='w-10 dark:text-gray-200 transform hover:scale-150 duration-200 text-xs' title={locale.POST.TOP} >
+        className={(show ? '' : 'hidden') + ' animate__fadeInRight duration-500 animate__animated animate__faster flex justify-center items-center w-8 h-8 glassmorphism cursor-pointer '}>
+        <div className='dark:text-gray-200 transform hover:scale-150 text-xs' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
           {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}
-        </div>
       </div>
     </div>)
 }

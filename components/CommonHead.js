@@ -9,7 +9,7 @@ const CommonHead = ({ meta }) => {
   const title = meta?.title || BLOG.title
   const description = meta?.description || BLOG.description
   const type = meta?.type || 'website'
-  const keywords = meta?.tags || BLOG.seo.keywords
+  const keywords = meta?.tags || BLOG.keywords
 
   return <Head>
     <title>{title}</title>

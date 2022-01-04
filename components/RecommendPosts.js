@@ -1,12 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
+import BLOG from '@/blog.config'
 
 /**
  * 展示文章推荐
  */
 const RecommendPosts = ({ recommendPosts }) => {
-  if (!recommendPosts || recommendPosts.length < 1) {
+  if (!BLOG.widget?.showRelatePosts || !recommendPosts || recommendPosts.length < 1) {
     return <></>
   }
   const { locale } = useGlobal()

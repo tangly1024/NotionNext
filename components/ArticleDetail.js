@@ -51,9 +51,9 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   const attachZoomRef = attachZoom
 
   return (<>
-      <div id="article-wrapper" ref={targetRef} className="overflow-x-auto flex-grow max-w-5xl mx-auto w-screen md:w-full ">
+      <div id="article-wrapper" ref={targetRef} className="shadow md:hover:shadow-2xl duration-300 overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
-            className="shadow md:hover:shadow-2xl duration-300 subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
+            className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
           >
 
             <header className='animate__slideInDown animate__animated'>
@@ -165,7 +165,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           </article>
 
           {/* 评论互动 */}
-          <div className="mt-5 lg:px-40 md:hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="lg:px-40 md:hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
             <Comment frontMatter={post} />
           </div>
       </div>
@@ -177,7 +177,6 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
       </div>
 
       {/* 宠物 */}
-      {BLOG.showPet && <Live2D/>}
       <Live2D/>
 
     </>)

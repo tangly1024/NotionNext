@@ -7,7 +7,7 @@ import BLOG from '@/blog.config'
  */
 const ThirdPartyScript = () => {
   return (<>
-    {BLOG.DaoVoiceId && (<>
+    {BLOG.comment?.DaoVoiceId && (<>
       {/* DaoVoice 反馈 */}
       <script async dangerouslySetInnerHTML={{
         __html: `
@@ -18,7 +18,7 @@ const ThirdPartyScript = () => {
       <script async dangerouslySetInnerHTML={{
         __html: `
                  daovoice('init', {
-                    app_id: "${BLOG.DaoVoiceId}"
+                    app_id: "${BLOG.comment.DaoVoiceId}"
                   });
                   daovoice('update');
                   `
@@ -30,10 +30,10 @@ const ThirdPartyScript = () => {
     {BLOG.googleAdsenseId && (<script data-ad-client={BLOG.googleAdsenseId} async
               src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'/>)}
 
-    {BLOG.TidioId && (<>
+    {BLOG.comment?.TidioId && (<>
       {/* Tidio在线反馈 */}
       <script async
-              src={`//code.tidio.co/${BLOG.TidioId}.js`}
+              src={`//code.tidio.co/${BLOG.comment.TidioId}.js`}
       />
     </>)}
 

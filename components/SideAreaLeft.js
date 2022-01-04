@@ -6,6 +6,7 @@ import { useGlobal } from '@/lib/global'
 import React from 'react'
 import Analytics from './Analytics'
 import Tabs from '@/components/Tabs'
+import BLOG from '@/blog.config'
 
 /**
  * 侧边平铺
@@ -30,9 +31,9 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
       {/* 菜单 */}
       <section className='shadow hidden lg:block mb-5 py-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
         <MenuButtonGroup allowCollapse={true} />
-        <div className='px-5 pt-2'>
+        {BLOG.menu.showSearch && <div className='px-5 pt-2'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
-        </div>
+        </div>}
       </section>
 
       <Tabs>

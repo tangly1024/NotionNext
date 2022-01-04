@@ -35,12 +35,12 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory, au
 
   // 监听滚动
   useEffect(() => {
-    if (autoHide) {
+    if (BLOG.autoCollapsedNavBar) {
       scrollTrigger()
       window.addEventListener('scroll', scrollTrigger)
     }
     return () => {
-      autoHide && window.removeEventListener('scroll', scrollTrigger)
+      BLOG.autoCollapsedNavBar && window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
   return (<div id='top-nav' className='sticky top-0 z-40 block lg:hidden'>

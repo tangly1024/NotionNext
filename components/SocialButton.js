@@ -10,8 +10,8 @@ import React from 'react'
  * @constructor
  */
 const SocialButton = () => {
-  return <div className='w-52 justify-center flex'>
-    <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 px-6'>
+  return <div className='w-52 justify-center flex-wrap flex'>
+    <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 '>
       {BLOG.socialLink.github && <a target='_blank' rel='noreferrer' title={'github'} href={BLOG.socialLink.github} >
         <FontAwesomeIcon icon={faGithub} className='transform hover:scale-125 duration-150'/>
       </a>}

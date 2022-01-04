@@ -31,7 +31,7 @@ export async function getStaticProps () {
 const Index = ({ allPosts, tags, meta, categories }) => {
   return (
     <BaseLayout
-      headerSlot={<Header />}
+      headerSlot={BLOG.home.showHomeBanner && <Header />}
       meta={meta}
       tags={tags}
       totalPosts={allPosts}
