@@ -1,5 +1,5 @@
 import BlogPostCard from '@/components/BlogPostCard'
-import Pagination from '@/components/Pagination'
+import PaginationNumber from './PaginationNumber'
 import BLOG from '@/blog.config'
 
 import { useRouter } from 'next/router'
@@ -29,7 +29,7 @@ const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
   }
 
   // 处理分页
-  const totalPages = Math.ceil(filteredBlogPosts.length / BLOG.postsPerPage)
+  const totalPage = Math.ceil(filteredBlogPosts.length / BLOG.postsPerPage)
   const postsToShow = filteredBlogPosts.slice(
     BLOG.postsPerPage * (page - 1),
     BLOG.postsPerPage * page
@@ -43,28 +43,18 @@ const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty />
   } else {
-    return <div id='post-list-wrapper' className='pt-16 md:pt-28 px-2 md:px-20'>
-      {(!page || page === 1) && (<div className='py-5' />)}
-
-      {(page && page !== 1) && (
-        <div className='pb-5'>
-          <div className='dark:text-gray-200 flex justify-between py-1'>
-            {page && page !== 1 && (<span>页 {page} / {totalPages}</span>)}
-          </div>
-        </div>
-      )}
-
-      <div>
+    return (
+      <div id="container" className='mt-10'>
         {/* 文章列表 */}
-        <div className='flex flex-wrap'>
+        <div className="flex flex-wrap space-y-8 mx-5 md:mx-0">
           {postsToShow.map(post => (
             <BlogPostCard key={post.id} post={post} tags={tags} />
           ))}
         </div>
 
-        <Pagination page={page} showNext={showNext} />
+        <PaginationNumber page={page} showNext={showNext} totalPage={totalPage} />
       </div>
-    </div>
+    )
   }
 }
 

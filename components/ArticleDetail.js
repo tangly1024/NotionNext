@@ -51,7 +51,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
   const attachZoomRef = attachZoom
 
   return (<>
-      <div id="article-wrapper" ref={targetRef} className="shadow md:hover:shadow-2xl duration-300 overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
+      <div id="container" ref={targetRef} className="shadow md:hover:shadow-2xl duration-300 overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
             className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
           >
