@@ -1,14 +1,12 @@
-import React from 'react'
-import MenuButtonGroup from '@/components/MenuButtonGroup'
-import InfoCard from '@/components/InfoCard'
-import TagGroups from '@/components/TagGroups'
-import LatestPostsGroup from '@/components/LatestPostsGroup'
 import CategoryGroup from '@/components/CategoryGroup'
-import SearchInput from '@/components/SearchInput'
-import Link from 'next/link'
+import InfoCard from '@/components/InfoCard'
+import LatestPostsGroup from '@/components/LatestPostsGroup'
+import TagGroups from '@/components/TagGroups'
 import { useGlobal } from '@/lib/global'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
+import React from 'react'
 
 /**
  * 侧边栏
@@ -26,17 +24,9 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
   const { locale } = useGlobal()
   return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-80 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
 
-    <InfoCard />
-
     <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-900 pb-4'}>
 
-      <section className='hidden lg:block'>
-        <MenuButtonGroup allowCollapse={true} />
-      </section>
-
-      <section className='p-5'>
-        <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
-      </section>
+      <InfoCard />
 
       {/* 最新文章 */}
       {posts && (
