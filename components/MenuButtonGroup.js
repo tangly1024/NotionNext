@@ -14,7 +14,7 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
     { id: 1, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', show: BLOG.menu.showArchive },
     { id: 2, icon: faThList, name: locale.COMMON.CATEGORY, to: '/category', show: BLOG.menu.showCategory },
     { id: 3, icon: faTag, name: locale.COMMON.TAGS, to: '/tag', show: BLOG.menu.showTag },
-    { id: 2, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/about', show: BLOG.menu.showAbout }
+    { id: 4, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/about', show: BLOG.menu.showAbout }
   ]
   return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 '>
       {links.map(link => {
