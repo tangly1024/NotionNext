@@ -36,7 +36,7 @@ const StickyBar = ({ children }) => {
 
   return (
     <div id='sticky-bar' className='sticky flex-grow justify-center top-14 md:top-0 duration-500 z-10 pb-16'>
-      <div className='glassmorphism dark:border-gray-600 px-5 absolute rounded-none md:rounded-xl shadow-xl border w-full hidden-scroll'>
+      <div className='glassmorphism dark:border-gray-600 px-5 absolute shadow-xl border w-full hidden-scroll'>
           <div id='tag-container' className="md:pl-3 overflow-x-auto">
               { children }
           </div>
