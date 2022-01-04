@@ -69,6 +69,7 @@ const BLOG = {
     utterancesConfig: {
       repo: 'tangly1024/NotionNext'
     },
+    gitter: '', // gitter聊天室
     DaoVoiceId: '', // DaoVoice http://dashboard.daovoice.io/get-started
     TidioId: '' // https://www.tidio.com/
   },

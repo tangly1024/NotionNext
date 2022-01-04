@@ -37,6 +37,18 @@ const ThirdPartyScript = () => {
       />
     </>)}
 
+    {/* */}
+    {BLOG.gitter && (<>
+      <script async dangerouslySetInnerHTML={{
+        __html: `
+                ((window.gitter = {}).chat = {}).options = {
+                  room: 'tangly1024/community'
+                };
+                `
+      }}/>
+    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+    </>)}
+
     {/* 代码统计 */}
     {BLOG.isProd && (<>
 
