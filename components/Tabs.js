@@ -18,7 +18,7 @@ const Tabs = ({ children }) => {
   })
 
   if (count === 1) {
-    return <section className='shadow'>
+    return <section className='shadow hover:shadow-xl duration-200'>
       {children}
     </section>
   }
