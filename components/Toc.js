@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
@@ -12,8 +12,9 @@ import Progress from './Progress'
  */
 const Toc = ({ toc, targetRef }) => {
   // 无目录就直接返回空
-  if (!toc || toc.length < 1) return <></>
-
+  if (!toc || toc.length < 1) {
+    return <></>
+  }
   // 监听滚动事件
   React.useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
@@ -26,7 +27,7 @@ const Toc = ({ toc, targetRef }) => {
   // 同步选中目录事件
   const [activeSection, setActiveSection] = React.useState(null)
   const throttleMs = 100
-  const actionSectionScrollSpy = useCallback(throttle(() => {
+  const actionSectionScrollSpy = React.useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
