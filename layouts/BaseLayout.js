@@ -53,7 +53,7 @@ const BaseLayout = ({
 
       <>{headerSlot}</>
 
-      <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600'></div>
+      <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'></div>
 
       <main id='wrapper' className='flex justify-center flex-1 mx-auto pb-12'>
           <SideAreaLeft targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>

@@ -113,7 +113,6 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
             <section id='notion-article' className='px-1'>
               {blockMap && (
                 <NotionRenderer
-                  className={`${BLOG.font}`}
                   recordMap={blockMap}
                   mapPageUrl={mapPageUrl}
                   components={{

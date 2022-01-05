@@ -15,7 +15,7 @@ const BLOG = {
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   appearance: 'auto', // ['light', 'dark', 'auto'],
-  font: 'font-sans tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
+  font: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
   lightBackground: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   darkBackground: '#111827', // use hex value, don't forget '#'
   path: '', // leave this empty unless you want to deploy in a folder
@@ -69,6 +69,7 @@ const BLOG = {
     utterancesConfig: {
       repo: 'tangly1024/NotionNext'
     },
+    gitter: '', // gitter聊天室
     DaoVoiceId: '', // DaoVoice http://dashboard.daovoice.io/get-started
     TidioId: '' // https://www.tidio.com/
   },
