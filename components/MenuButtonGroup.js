@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArchive, faHome, faInfoCircle, faTag, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faArchive, faHome, faTag, faTh, faUser } from '@fortawesome/free-solid-svg-icons'
 import BLOG from 'blog.config'
 
 const MenuButtonGroup = ({ allowCollapse = false }) => {
@@ -12,9 +12,9 @@ const MenuButtonGroup = ({ allowCollapse = false }) => {
   const links = [
     { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { id: 1, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', show: BLOG.menu.showArchive },
-    { id: 2, icon: faThList, name: locale.COMMON.CATEGORY, to: '/category', show: BLOG.menu.showCategory },
+    { id: 2, icon: faTh, name: locale.COMMON.CATEGORY, to: '/category', show: BLOG.menu.showCategory },
     { id: 3, icon: faTag, name: locale.COMMON.TAGS, to: '/tag', show: BLOG.menu.showTag },
-    { id: 4, icon: faInfoCircle, name: locale.NAV.ABOUT, to: '/about', show: BLOG.menu.showAbout }
+    { id: 4, icon: faUser, name: locale.NAV.ABOUT, to: '/about', show: BLOG.menu.showAbout }
   ]
   return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 '>
       {links.map(link => {
