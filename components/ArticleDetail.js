@@ -150,11 +150,11 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                 data-ad-slot="3806269138"></ins>
             </section>
 
-            {/* 推荐文章 */}
-            <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
-
             {/* 版权声明 */}
             <ArticleCopyright author={BLOG.author} url={url} />
+
+            {/* 推荐文章 */}
+            <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
 
             {/* 标签列表 */}
             <section className="md:flex md:justify-between">

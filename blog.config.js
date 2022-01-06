@@ -39,8 +39,8 @@ const BLOG = {
     showDarkMode: true, // 显示日间/夜间模式切换
     showToc: true, // 移动端显示悬浮目录
     showShareBar: false, // 文章分享功能
-    showRelatePosts: false, // 关联文章推荐
-    showCopyRight: false, // 显示版权声明
+    showRelatePosts: true, // 相关文章推荐
+    showCopyRight: true, // 文章版权声明
     showLatestPost: false, // 右侧边栏显示最近更新
     showCategoryList: false, // 右侧边栏显示文章分类列表
     showTagList: false // 右侧边栏显示标签分类列表
