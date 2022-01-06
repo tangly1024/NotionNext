@@ -11,9 +11,10 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
  * @returns {JSX.Element}
  * @constructor
  */
-const PaginationNumber = ({ page, showNext, totalPage }) => {
+const PaginationNumber = ({ page, totalPage }) => {
   const router = useRouter()
   const currentPage = +page
+  const showNext = page !== totalPage
   const pages = generatePages(page, currentPage, totalPage)
 
   return (

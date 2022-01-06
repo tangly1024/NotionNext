@@ -34,11 +34,6 @@ const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
     BLOG.postsPerPage * (page - 1),
     BLOG.postsPerPage * page
   )
-  let showNext = false
-  if (filteredBlogPosts) {
-    const totalPosts = filteredBlogPosts.length
-    showNext = page * BLOG.postsPerPage < totalPosts
-  }
 
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty />
@@ -52,7 +47,7 @@ const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
           ))}
         </div>
 
-        <PaginationNumber page={page} showNext={showNext} totalPage={totalPage} />
+        <PaginationNumber page={page} totalPage={totalPage} />
       </div>
     )
   }
