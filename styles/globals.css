@@ -160,3 +160,7 @@ nav {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
+
+.medium-zoom-overlay{
+  background: none !important;
+}
