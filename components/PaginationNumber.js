@@ -57,33 +57,32 @@ function getPageElement (page, currentPage) {
 }
 function generatePages (page, currentPage, totalPage) {
   const pages = []
-  const startPage = 1 // 分组开始页码
-  const groupCount = 5 // 页码分组
-  if (totalPage <= 10) {
+  const groupCount = 7 // 最多显示页签数
+  if (totalPage <= groupCount) {
     for (let i = 1; i <= totalPage; i++) {
       pages.push(getPageElement(i, page))
     }
   } else {
     pages.push(getPageElement(1, page))
-
-    let pageLength = 0
-    if (groupCount + startPage > totalPage) {
-      pageLength = totalPage
-    } else {
-      pageLength = groupCount + startPage
+    const dynamicGroupCount = groupCount - 2
+    let startPage = currentPage - 2
+    if (startPage < 0) {
+      startPage = 2
     }
-
-    if (currentPage >= groupCount) {
+    if (startPage + dynamicGroupCount > totalPage) {
+      startPage = totalPage - dynamicGroupCount
+    }
+    if (startPage > 2) {
       pages.push(<div key={-1}>... </div>)
     }
 
-    for (let i = startPage; i < pageLength; i++) {
-      if (i <= totalPage - 1 && i > 1) {
-        pages.push(getPageElement(i, page))
+    for (let i = 0; i < dynamicGroupCount; i++) {
+      if (startPage + i < totalPage) {
+        pages.push(getPageElement(startPage + i, page))
       }
     }
 
-    if (totalPage - startPage >= groupCount + 1) {
+    if (startPage + dynamicGroupCount < totalPage) {
       pages.push(<div key={-2}>... </div>)
     }
 
