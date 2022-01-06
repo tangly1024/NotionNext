@@ -44,7 +44,7 @@ export async function getStaticProps ({ params: { page } }) {
   const tagOptions = notionPageData.tagOptions
   const tags = await getAllTags({ allPosts, tagOptions })
   const meta = {
-    title: `Page ${page} |${BLOG.title}`,
+    title: `${page} | Page |${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
