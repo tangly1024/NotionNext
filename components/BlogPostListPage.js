@@ -43,7 +43,7 @@ const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
         {/* 文章列表 */}
         <div className="flex flex-wrap space-y-8 mx-5 md:mx-0">
           {postsToShow.map(post => (
-            <BlogPostCard key={post.id} post={post} tags={tags} />
+            <BlogPostCard key={post.id} post={post} />
           ))}
         </div>
 

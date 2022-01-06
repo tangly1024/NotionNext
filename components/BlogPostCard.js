@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import TagItemMini from './TagItemMini'
 
-const BlogPostCard = ({ post, tags }) => {
+const BlogPostCard = ({ post }) => {
   return (
     <div key={post.id} className='shadow animate__animated animate__fadeIn flex xl:flex-row flex-col-reverse justify-between md:hover:shadow-xl duration-300
         w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>

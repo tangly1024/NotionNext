@@ -14,7 +14,7 @@ import { useGlobal } from '@/lib/global'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, currentTag }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, currentCategory, currentTag }) => {
   const postsPerPage = BLOG.postsPerPage
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, postsPerPage)
@@ -58,7 +58,7 @@ const BlogPostListScroll = ({ posts = [], tags, currentSearch, currentCategory, 
       {/* 文章列表 */}
       <div className='flex flex-wrap space-y-8 mx-5 md:mx-0'>
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post} tags={tags}/>
+          <BlogPostCard key={post.id} post={post}/>
         ))}
       </div>
 
