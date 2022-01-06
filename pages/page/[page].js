@@ -28,10 +28,10 @@ export async function getStaticPaths () {
   const from = 'page'
   const notionPageData = await getNotionPageData({ from })
   const allPosts = await getAllPosts({ notionPageData, from })
-  const totalPages = Math.ceil(allPosts / BLOG.postsPerPage)
+  const totalPages = Math.ceil(allPosts?.length / BLOG.postsPerPage)
   return {
     // remove first page, we 're not gonna handle that.
-    paths: Array.from({ length: totalPages - 1 }, (_, i) => `/page/${(i + 2)}`),
+    paths: Array.from({ length: totalPages - 1 }, (_, i) => ({ params: { page: '' + (i + 2) } })),
     fallback: true
   }
 }
@@ -44,7 +44,7 @@ export async function getStaticProps ({ params: { page } }) {
   const tagOptions = notionPageData.tagOptions
   const tags = await getAllTags({ allPosts, tagOptions })
   const meta = {
-    title: `${BLOG.title}`,
+    title: `Page ${page} |${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }

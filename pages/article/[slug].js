@@ -35,7 +35,7 @@ export async function getStaticPaths () {
     posts = await getAllPosts({ from: 'slug - paths', includePage: true })
   }
   return {
-    paths: posts.map(row => `${BLOG.path}/article/${row.slug}`),
+    paths: posts.map(row => ({ params: { slug: row.slug } })),
     fallback: true
   }
 }
