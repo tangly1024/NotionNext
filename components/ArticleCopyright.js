@@ -8,7 +8,7 @@ export default function ArticleCopyright ({ author, url }) {
   }
   const { locale } = useGlobal()
   return <section className="dark:text-gray-300 mt-6">
-    <ul className="text-sm dark:bg-gray-700 bg-gray-100 p-5 leading-8 border-l-2 border-blue-500">
+    <ul className="overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-700 bg-gray-100 p-5 leading-8 border-l-2 border-blue-500">
       <li>
         <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
         <Link href="/about">
@@ -23,7 +23,7 @@ export default function ArticleCopyright ({ author, url }) {
       </li>
       <li>
         <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
-      {locale.COMMON.COPYRIGHT_NOTICE}
+        {locale.COMMON.COPYRIGHT_NOTICE}
       </li>
     </ul>
   </section>
