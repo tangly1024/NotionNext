@@ -66,7 +66,7 @@ function generatePages (page, currentPage, totalPage) {
     pages.push(getPageElement(1, page))
     const dynamicGroupCount = groupCount - 2
     let startPage = currentPage - 2
-    if (startPage < 0) {
+    if (startPage <= 0) {
       startPage = 2
     }
     if (startPage + dynamicGroupCount > totalPage) {
