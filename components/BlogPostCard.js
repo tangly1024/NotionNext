@@ -18,7 +18,7 @@ const BlogPostCard = ({ post, tags }) => {
           </a>
         </Link>
 
-        <p className='my-8 text-gray-700 dark:text-gray-300 text-md font-light leading-7 italic'>{post.summary}</p>
+        <p className='my-8 text-gray-700 dark:text-gray-300 text-md font-light leading-7'>{post.summary}</p>
 
         <div className='flex items-center justify-between flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 '>
           <div>
