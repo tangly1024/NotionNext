@@ -71,7 +71,7 @@ const Toc = ({ toc, targetRef }) => {
                           display: 'inline-block',
                           marginLeft: tocItem.indentLevel * 16
                         }}
-                        className={`${activeSection === id && ' font-bold text-red-400 animate__animated animate__jello'}`}
+                        className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
                       >
                         {tocItem.text}
                       </span>
