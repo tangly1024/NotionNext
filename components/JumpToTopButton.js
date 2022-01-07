@@ -20,9 +20,8 @@ const JumpToTopButton = ({ showPercent = false }) => {
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
-  const targetRef = typeof window !== 'undefined' ? document.getElementById('wrapper') : undefined
   const scrollListener = () => {
-    // 处理是否显示回到顶部按钮
+    const targetRef = document.getElementById('wrapper')
     const clientHeight = targetRef?.clientHeight
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight

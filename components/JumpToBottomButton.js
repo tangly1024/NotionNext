@@ -18,11 +18,11 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     return <></>
   }
 
-  const targetRef = typeof window !== 'undefined' ? document.getElementById('wrapper') : undefined
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
+    const targetRef = document.getElementById('wrapper')
     const clientHeight = targetRef?.clientHeight
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
@@ -36,6 +36,7 @@ const JumpToBottomButton = ({ showPercent = false }) => {
   }
 
   function scrollToBottom () {
+    const targetRef = document.getElementById('wrapper')
     window.scrollTo({ top: targetRef.clientHeight, behavior: 'smooth' })
   }
 

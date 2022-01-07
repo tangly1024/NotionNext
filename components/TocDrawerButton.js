@@ -31,8 +31,8 @@ const TocDrawerButton = (props) => {
   })
 
   return (
-    <div id='toc-drawer-button' className='right-1 fixed bottom-52 duration-500 z-20'>
-        <div onClick={props.onClick} className={(show ? 'animate__fadeInRight' : 'hidden') + ' animate__animated glassmorphism cursor-pointer' }>
+    <div id='toc-drawer-button' className='right-1 fixed bottom-52 z-20'>
+        <div onClick={props.onClick} className={(show ? 'animate__fadeInRight' : 'hidden') + ' animate__animated animate__faster glassmorphism cursor-pointer' }>
             <div className='dark:text-gray-200 text-center transform hover:scale-150 duration-200 text-xs flex justify-center items-center w-8 h-8' title={locale.POST.TOP} >
               <FontAwesomeIcon icon={faListOl}/>
             </div>
