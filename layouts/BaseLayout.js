@@ -69,8 +69,8 @@ const BaseLayout = ({
       </main>
 
       <Footer title={meta.title}/>
-      <JumpToTopButton targetRef={targetRef} showPercent={false} />
-      <JumpToBottomButton targetRef={targetRef} showPercent={false}/>
+      <JumpToTopButton showPercent={false} />
+      <JumpToBottomButton showPercent={false}/>
       <FloatDarkModeButton/>
       </>
   )

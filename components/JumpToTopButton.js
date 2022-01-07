@@ -13,21 +13,21 @@ import BLOG from '@/blog.config'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToTopButton = ({ targetRef, showPercent = false }) => {
+const JumpToTopButton = ({ showPercent = false }) => {
   if (!BLOG.widget?.showToTop) {
     return <></>
   }
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
+  const targetRef = typeof window !== 'undefined' ? document.getElementById('wrapper') : undefined
   const scrollListener = () => {
     // 处理是否显示回到顶部按钮
-    const clientHeight = targetRef ? (targetRef.current ? targetRef.current.clientHeight : 0) : 0
+    const clientHeight = targetRef?.clientHeight
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
     let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
     if (per > 100) per = 100
-    // const shouldShow = scrollY > 100 && per > 0 && scrollY < windowTop
     const shouldShow = scrollY > 100 && per > 0
 
     if (shouldShow !== show) {

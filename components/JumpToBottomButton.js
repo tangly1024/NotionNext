@@ -13,16 +13,17 @@ import smoothscroll from 'smoothscroll-polyfill'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToBottomButton = ({ targetRef, showPercent = false }) => {
+const JumpToBottomButton = ({ showPercent = false }) => {
   if (!BLOG.widget?.showToBottom) {
     return <></>
   }
+
+  const targetRef = typeof window !== 'undefined' ? document.getElementById('wrapper') : undefined
   const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
-    // 处理是否显示回到顶部按钮
-    const clientHeight = targetRef ? (targetRef.current ? targetRef.current.clientHeight : 0) : 0
+    const clientHeight = targetRef?.clientHeight
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
     let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
@@ -33,6 +34,11 @@ const JumpToBottomButton = ({ targetRef, showPercent = false }) => {
     }
     changePercent(per)
   }
+
+  function scrollToBottom () {
+    window.scrollTo({ top: targetRef.clientHeight, behavior: 'smooth' })
+  }
+
   useEffect(() => {
     smoothscroll.polyfill()
 
@@ -40,8 +46,8 @@ const JumpToBottomButton = ({ targetRef, showPercent = false }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div id='jump-to-top' className='right-1 fixed flex bottom-36  z-20'>
-      <div onClick={() => window.scrollTo({ top: targetRef.current.clientHeight, behavior: 'smooth' })}
+  return (<div id='jump-to-top' className='right-1 fixed flex bottom-36 z-20'>
+      <div onClick={() => scrollToBottom()}
         className={(show ? '' : 'hidden') + ' animate__fadeInRight duration-500 animate__animated animate__faster glassmorphism flex justify-center items-center w-8 h-8 cursor-pointer '}>
         <div className='dark:text-gray-200 transform hover:scale-150 text-xs duration-200' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowDown} />
