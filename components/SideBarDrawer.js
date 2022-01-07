@@ -7,7 +7,7 @@ import React, { useEffect, useImperativeHandle } from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, currentCategory }) => {
+const SideBarDrawer = ({ post, currentTag, cRef, tags, slot, categories, currentCategory }) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
@@ -49,7 +49,7 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, posts, categories, curren
 
   return <div id='sidebar-wrapper' className='hidden'>
     <div id='sidebar-drawer' className='-ml-80 bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50 shadow-2xl'>
-      <SideBar tags={tags} post={post} posts={posts} categories={categories} currentCategory={currentCategory} />
+      <SideBar tags={tags} post={post} slot={slot} categories={categories} currentCategory={currentCategory} />
     </div>
     {/* 背景蒙版 */}
     <div id='sidebar-drawer-background' onClick={() => { switchSideDrawerVisible(false) }} className='hidden animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-30 w-full h-full glassmorphism'/>

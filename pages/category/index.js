@@ -1,21 +1,20 @@
-import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
 import BaseLayout from '@/layouts/BaseLayout'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
-import React from 'react'
-import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { faFolder, faThList } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
+import React from 'react'
 
-export default function Category ({ tags, allPosts, categories }) {
+export default function Category ({ tags, allPosts, categories, postCount, latestPosts }) {
   const { locale } = useGlobal()
   const meta = {
     title: `${locale.COMMON.CATEGORY} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} totalPosts={allPosts} tags={tags}>
+  return <BaseLayout meta={meta} totalPosts={allPosts} tags={tags} postCount={postCount} latestPosts={latestPosts}>
       <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
         <div className='dark:text-gray-200 mb-5'><FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}:</div>
         <div id='category-list' className='duration-200 flex flex-wrap'>
@@ -31,17 +30,16 @@ export default function Category ({ tags, allPosts, categories }) {
 }
 
 export async function getStaticProps () {
-  const from = 'tag-index-props'
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(allPosts)
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, sliceCount: 12, tagOptions })
+  const from = 'category-index-props'
+  const { allPosts, categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from })
+
   return {
     props: {
       tags,
       allPosts,
-      categories
+      categories,
+      postCount,
+      latestPosts
     },
     revalidate: 1
   }

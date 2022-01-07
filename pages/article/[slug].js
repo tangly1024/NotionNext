@@ -1,19 +1,28 @@
-import { getAllCategories, getAllPosts, getAllTags, getPostBlocks } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import { getPageTableOfContents } from 'notion-utils'
-
-import BaseLayout from '@/layouts/BaseLayout'
-import Custom404 from '@/pages/404'
-
 import ArticleDetail from '@/components/ArticleDetail'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
+import BaseLayout from '@/layouts/BaseLayout'
+import { getAllPosts, getPostBlocks } from '@/lib/notion'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import Custom404 from '@/pages/404'
+import { getPageTableOfContents } from 'notion-utils'
 
 /**
  * 根据notion的slug访问页面
  * @param {*} param0
  * @returns
  */
-const Slug = ({ post, blockMap, tags, prev, next, allPosts, recommendPosts, categories }) => {
+const Slug = ({
+  post,
+  blockMap,
+  tags,
+  prev,
+  next,
+  allPosts,
+  recommendPosts,
+  categories,
+  postCount,
+  latestPosts
+}) => {
   if (!post) {
     return <Custom404 />
   }
@@ -24,15 +33,31 @@ const Slug = ({ post, blockMap, tags, prev, next, allPosts, recommendPosts, cate
     tags: post.tags
   }
 
-  return <BaseLayout meta={meta} tags={tags} post={post} totalPosts={allPosts} categories={categories}>
-    <ArticleDetail post={post} blockMap={blockMap} recommendPosts={recommendPosts} prev={prev} next={next}/>
-  </BaseLayout>
+  return (
+    <BaseLayout
+      meta={meta}
+      tags={tags}
+      post={post}
+      postCount={postCount}
+      latestPosts={latestPosts}
+      totalPosts={allPosts}
+      categories={categories}
+    >
+      <ArticleDetail
+        post={post}
+        blockMap={blockMap}
+        recommendPosts={recommendPosts}
+        prev={prev}
+        next={next}
+      />
+    </BaseLayout>
+  )
 }
 
 export async function getStaticPaths () {
   let posts = []
   if (BLOG.isProd) {
-    posts = await getAllPosts({ from: 'slug - paths', includePage: true })
+    posts = await getAllPosts({ from: 'slug - paths', includePage: false })
   }
   return {
     paths: posts.map(row => ({ params: { slug: row.slug } })),
@@ -42,8 +67,9 @@ export async function getStaticPaths () {
 
 export async function getStaticProps ({ params: { slug } }) {
   const from = `slug-props-${slug}`
-  const notionPageData = await getNotionPageData({ from })
-  let allPosts = await getAllPosts({ notionPageData, from, includePage: true })
+  const { allPosts, categories, tags, postCount, latestPosts } =
+    await getGlobalNotionData({ from, includePage: false })
+
   const post = allPosts.find(p => p.slug === slug)
 
   if (!post) {
@@ -56,10 +82,6 @@ export async function getStaticProps ({ params: { slug } }) {
     post.toc = getPageTableOfContents(post, blockMap)
   }
 
-  allPosts = allPosts.filter(post => post.type[0] === 'Post')
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, tagOptions })
-  const categories = await getAllCategories(allPosts)
   // 上一篇、下一篇文章关联
   const index = allPosts.indexOf(post)
   const prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
@@ -68,7 +90,18 @@ export async function getStaticProps ({ params: { slug } }) {
   const recommendPosts = getRecommendPost(post, allPosts)
 
   return {
-    props: { post, blockMap, tags, prev, next, allPosts, recommendPosts, categories },
+    props: {
+      post,
+      blockMap,
+      tags,
+      prev,
+      next,
+      allPosts,
+      recommendPosts,
+      categories,
+      postCount,
+      latestPosts
+    },
     revalidate: 1
   }
 }
@@ -86,11 +119,7 @@ function getRecommendPost (post, allPosts, count = 5) {
   if (post.tags && post.tags.length) {
     const currentTag = post.tags[0]
     filteredPosts = filteredPosts.filter(
-      p =>
-        p &&
-      p.tags &&
-        p.tags.includes(currentTag) &&
-        p.slug !== post.slug
+      p => p && p.tags && p.tags.includes(currentTag) && p.slug !== post.slug
     )
   }
   shuffleSort(filteredPosts)

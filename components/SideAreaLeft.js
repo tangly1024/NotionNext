@@ -21,10 +21,9 @@ import Logo from './Logo'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch, targetRef }) => {
+const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, currentCategory, currentSearch, targetRef }) => {
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
-  const postCount = posts?.length || 0
   return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
 
     <section className='w-60'>
@@ -48,7 +47,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, posts, categories, curren
           )}
 
           <div key={locale.NAV.ABOUT} className='mb-5 bg-white dark:bg-gray-800 duration-200 py-6'>
-            <InfoCard postCount={postCount} />
+            <InfoCard />
             <Analytics postCount={postCount}/>
           </div>
       </Tabs>

@@ -1,12 +1,12 @@
-import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import BaseLayout from '@/layouts/BaseLayout'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
-import Header from '@/components/Header'
-import Custom404 from '../404'
 import BlogPostListPage from '@/components/BlogPostListPage'
+import Header from '@/components/Header'
+import LatestPostsGroup from '@/components/LatestPostsGroup'
+import BaseLayout from '@/layouts/BaseLayout'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import Custom404 from '../404'
 
-const Page = ({ page, allPosts, tags, meta, categories }) => {
+const Page = ({ page, posts, tags, meta, categories, postCount, latestPosts }) => {
   if (!meta || BLOG.postListStyle !== 'page') {
     return <Custom404/>
   }
@@ -16,19 +16,20 @@ const Page = ({ page, allPosts, tags, meta, categories }) => {
     headerSlot={BLOG.home.showHomeBanner && <Header />}
     meta={meta}
     tags={tags}
-    totalPosts={allPosts}
+    sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
+    rightAreaSlot={BLOG.widget?.showLatestPost && <LatestPostsGroup posts={latestPosts} />}
+    postCount={postCount}
     categories={categories}
   >
-    <BlogPostListPage page={page} posts={allPosts} tags={tags} />
+    <BlogPostListPage page={page} posts={posts} postCount={postCount} />
   </BaseLayout>
   )
 }
 
 export async function getStaticPaths () {
-  const from = 'page'
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const totalPages = Math.ceil(allPosts?.length / BLOG.postsPerPage)
+  const from = 'page-paths'
+  const { postCount } = await getGlobalNotionData({ from })
+  const totalPages = Math.ceil(postCount / BLOG.postsPerPage)
   return {
     // remove first page, we 're not gonna handle that.
     paths: Array.from({ length: totalPages - 1 }, (_, i) => ({ params: { page: '' + (i + 2) } })),
@@ -37,21 +38,29 @@ export async function getStaticPaths () {
 }
 
 export async function getStaticProps ({ params: { page } }) {
-  const from = 'page'
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(allPosts)
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, tagOptions })
+  const from = `page-${page}`
+  const { allPosts, latestPosts, categories, tags, postCount } = await getGlobalNotionData({ from })
   const meta = {
     title: `${page} | Page | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
+  // 处理分页
+  let postsToShow = []
+  if (BLOG.postListStyle !== 'page') {
+    postsToShow = Object.create(allPosts)
+  } else {
+    postsToShow = allPosts.slice(
+      BLOG.postsPerPage * (page - 1),
+      BLOG.postsPerPage * page
+    )
+  }
   return {
     props: {
       page,
-      allPosts,
+      posts: postsToShow,
+      postCount,
+      latestPosts,
       tags,
       categories,
       meta

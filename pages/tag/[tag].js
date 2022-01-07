@@ -1,13 +1,13 @@
-import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import StickyBar from '@/components/StickyBar'
-import BaseLayout from '@/layouts/BaseLayout'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
+import StickyBar from '@/components/StickyBar'
 import TagList from '@/components/TagList'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
+import BaseLayout from '@/layouts/BaseLayout'
 import { useGlobal } from '@/lib/global'
+import { getAllPosts } from '@/lib/notion'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 
-export default function Tag ({ tags, allPosts, filteredPosts, tag, categories }) {
+export default function Tag ({ tags, posts, tag, categories, postCount, latestPosts }) {
   const { locale } = useGlobal()
 
   const meta = {
@@ -21,12 +21,12 @@ export default function Tag ({ tags, allPosts, filteredPosts, tag, categories })
   const currentTag = tags?.find(r => r?.name === tag)
   const newTags = currentTag ? [currentTag].concat(tags.filter(r => r?.name !== tag)) : tags.filter(r => r?.name !== tag)
 
-  return <BaseLayout meta={meta} tags={tags} currentTag={tag} categories={categories} totalPosts={allPosts}>
+  return <BaseLayout meta={meta} tags={tags} currentTag={tag} categories={categories} postCount={postCount} latestPosts={latestPosts}>
       <StickyBar>
           <TagList tags={newTags} currentTag={tag}/>
       </StickyBar>
       <div className='md:mt-8'>
-        <BlogPostListScroll posts={filteredPosts} tags={tags} currentTag={tag}/>
+        <BlogPostListScroll posts={posts} tags={tags} currentTag={tag}/>
       </div>
   </BaseLayout>
 }
@@ -34,21 +34,18 @@ export default function Tag ({ tags, allPosts, filteredPosts, tag, categories })
 export async function getStaticProps ({ params }) {
   const tag = params.tag
   const from = 'tag-props'
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(allPosts)
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, tagOptions, sliceCount: 0 })
+  const { allPosts, categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from, includePage: true, tagsCount: 0 })
   const filteredPosts = allPosts.filter(
     post => post && post.tags && post.tags.includes(tag)
   )
   return {
     props: {
       tags,
-      allPosts,
-      filteredPosts,
+      posts: filteredPosts,
       tag,
-      categories
+      categories,
+      postCount,
+      latestPosts
     },
     revalidate: 1
   }

@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
-import LatestPostsGroup from '@/components/LatestPostsGroup'
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faAngleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleRight, faAngleRight, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
@@ -25,7 +24,7 @@ const SideAreaRight = ({
   tags,
   currentTag,
   post,
-  posts,
+  slot,
   categories,
   currentCategory,
   currentSearch,
@@ -69,19 +68,7 @@ const SideAreaRight = ({
           </section>
         )}
 
-        {/* 最新文章 */}
-        {widget?.showLatestPost && posts && (
-          <section className="shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">
-            <div className="text-sm pb-2 px-5  flex flex-nowrap justify-between">
-              <div className="font-light text-gray-600  dark:text-gray-300">
-                <FontAwesomeIcon icon={faArchive} className="mr-2" />
-                {locale.COMMON.LATEST_POSTS}
-                <span className='text-red-500 text-xs ml-1'>NEW</span>
-              </div>
-            </div>
-            <LatestPostsGroup posts={posts} />
-          </section>
-        )}
+        {slot}
 
          {widget?.showTagList && tags && (
           <section className="shadow py-4 mb-5 bg-white dark:bg-gray-800 hover:shadow-xl duration-200">

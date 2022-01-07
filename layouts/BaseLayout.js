@@ -35,7 +35,9 @@ const BaseLayout = ({
   tags,
   meta,
   post,
-  totalPosts,
+  postCount,
+  sideBarSlot,
+  rightAreaSlot,
   currentSearch,
   currentCategory,
   currentTag,
@@ -49,14 +51,14 @@ const BaseLayout = ({
 
       <CommonHead meta={meta} />
 
-      <TopNav tags={tags} post={post} posts={totalPosts} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
+      <TopNav tags={tags} post={post} slot={sideBarSlot} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
       <>{headerSlot}</>
 
       <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'></div>
 
       <main id='wrapper' className='flex justify-center flex-1 mx-auto pb-12'>
-          <SideAreaLeft targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+          <SideAreaLeft targetRef={targetRef} post={post} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
           <section id='center' className='flex-grow mt-14 md:mt-0 max-w-5xl min-h-screen' ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
@@ -65,7 +67,7 @@ const BaseLayout = ({
               </>
             }
           </section>
-          <SideAreaRight targetRef={targetRef} post={post} posts={totalPosts} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+          <SideAreaRight targetRef={targetRef} post={post} slot={rightAreaSlot} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
       </main>
 
       <Footer title={meta.title}/>

@@ -1,9 +1,8 @@
 import CategoryGroup from '@/components/CategoryGroup'
 import InfoCard from '@/components/InfoCard'
-import LatestPostsGroup from '@/components/LatestPostsGroup'
 import TagGroups from '@/components/TagGroups'
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleRight, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
@@ -21,7 +20,7 @@ import Logo from './Logo'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
+const SideBar = ({ title, tags, currentTag, post, slot, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
   return <aside id='sidebar' className='bg-white dark:bg-gray-900 w-80 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
 
@@ -64,15 +63,8 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
         </section>
       )}
 
-      {/* 最新文章 */}
-      {posts && (
-        <section className='mt-8'>
-          <div className='text-sm pb-4 px-5  flex flex-nowrap justify-between'>
-            <div className='font-light text-gray-600  dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-2' />{locale.COMMON.LATEST_POSTS}</div>
-          </div>
-          <LatestPostsGroup posts={posts} />
-        </section>
-      )}
+      {slot}
+
     </div>
 
     <section className='bg-white dark:bg-gray-900'>

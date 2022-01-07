@@ -15,7 +15,7 @@ let windowTop = 0
  * @param {*} param0
  * @returns
  */
-const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory, autoHide = true }) => {
+const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, autoHide = true }) => {
   const drawer = useRef()
   const { locale } = useGlobal()
   const searchDrawer = useRef()
@@ -45,7 +45,7 @@ const TopNav = ({ tags, currentTag, post, posts, categories, currentCategory, au
   }, [])
   return (<div id='top-nav' className='sticky top-0 z-40 block lg:hidden'>
     {/* 侧面抽屉 */}
-    <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} posts={posts} categories={categories} currentCategory={currentCategory}/>
+    <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} slot={slot} categories={categories} currentCategory={currentCategory}/>
     <SearchDrawer cRef={searchDrawer}/>
 
     {/* 导航栏 */}
