@@ -2,7 +2,7 @@ import CategoryGroup from '@/components/CategoryGroup'
 import InfoCard from '@/components/InfoCard'
 import TagGroups from '@/components/TagGroups'
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleRight, faTag, faThList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
@@ -50,7 +50,7 @@ const SideBar = ({ title, tags, currentTag, post, slot, categories, currentCateg
       {tags && (
         <section className='mt-4'>
           <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-2'/>{locale.COMMON.TAGS}</div>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
               <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
