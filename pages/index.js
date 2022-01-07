@@ -1,10 +1,11 @@
 import BLOG from '@/blog.config'
-import BaseLayout from '@/layouts/BaseLayout'
-import BlogPostListScroll from '@/components/BlogPostListScroll'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import Header from '@/components/Header'
 import BlogPostListPage from '@/components/BlogPostListPage'
+import BlogPostListScroll from '@/components/BlogPostListScroll'
+import Header from '@/components/Header'
 import LatestPostsGroup from '@/components/LatestPostsGroup'
+import BaseLayout from '@/layouts/BaseLayout'
+import { getPostBlocks } from '@/lib/notion'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 
 export async function getStaticProps () {
   const from = 'index'
@@ -19,12 +20,20 @@ export async function getStaticProps () {
   const page = 1
   let postsToShow = []
   if (BLOG.postListStyle !== 'page') {
-    postsToShow = Object.create(allPosts)
+    postsToShow = Array.from(allPosts)
   } else {
     postsToShow = allPosts.slice(
       BLOG.postsPerPage * (page - 1),
       BLOG.postsPerPage * page
     )
+    for (const i in postsToShow) {
+      const post = postsToShow[i]
+      const blockMap = await getPostBlocks(post.id, 'slug')
+      if (blockMap) {
+        post.blockMap = blockMap
+      }
+    }
+    console.log('加载文章预览完成')
   }
 
   return {
@@ -47,15 +56,19 @@ const Index = ({ posts, tags, meta, categories, postCount, latestPosts }) => {
       meta={meta}
       tags={tags}
       sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
-      rightAreaSlot={BLOG.widget?.showLatestPost && <LatestPostsGroup posts={latestPosts} />}
+      rightAreaSlot={
+        BLOG.widget?.showLatestPost && <LatestPostsGroup posts={latestPosts} />
+      }
       postCount={postCount}
       categories={categories}
     >
       {BLOG.postListStyle !== 'page'
-        ? (<BlogPostListScroll posts={posts} tags={tags} />)
-        : (<BlogPostListPage posts={posts} tags={tags} postCount={postCount} />)
-      }
-
+        ? (
+        <BlogPostListScroll posts={posts} tags={tags} showSummary={true} />
+          )
+        : (
+        <BlogPostListPage posts={posts} tags={tags} postCount={postCount} />
+          )}
     </BaseLayout>
   )
 }

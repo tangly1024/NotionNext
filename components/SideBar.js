@@ -6,7 +6,6 @@ import { faAngleDoubleRight, faTag, faThList } from '@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
-import Logo from './Logo'
 
 /**
  * 侧边栏
@@ -30,7 +29,6 @@ const SideBar = ({ title, tags, currentTag, post, slot, categories, currentCateg
         <InfoCard />
       </section>
 
-      <Logo/>
       {/* 分类  */}
       {categories && (
         <section className='mt-8'>

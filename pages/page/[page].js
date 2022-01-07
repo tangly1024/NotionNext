@@ -3,6 +3,7 @@ import BlogPostListPage from '@/components/BlogPostListPage'
 import Header from '@/components/Header'
 import LatestPostsGroup from '@/components/LatestPostsGroup'
 import BaseLayout from '@/layouts/BaseLayout'
+import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import Custom404 from '../404'
 
@@ -46,15 +47,20 @@ export async function getStaticProps ({ params: { page } }) {
     type: 'website'
   }
   // 处理分页
-  let postsToShow = []
-  if (BLOG.postListStyle !== 'page') {
-    postsToShow = Object.create(allPosts)
-  } else {
-    postsToShow = allPosts.slice(
-      BLOG.postsPerPage * (page - 1),
-      BLOG.postsPerPage * page
-    )
+  const postsToShow = allPosts.slice(
+    BLOG.postsPerPage * (page - 1),
+    BLOG.postsPerPage * page
+  )
+
+  for (const i in postsToShow) {
+    const post = postsToShow[i]
+    const blockMap = await getPostBlocks(post.id, 'slug')
+    if (blockMap) {
+      post.blockMap = blockMap
+    }
   }
+  console.log('加载文章预览完成')
+
   return {
     props: {
       page,

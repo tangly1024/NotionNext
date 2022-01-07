@@ -30,7 +30,7 @@ import WordCount from './WordCount'
  * @param {*} param0
  * @returns
  */
-export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, next }) {
+export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
   const targetRef = useRef(null)
   const drawerRight = useRef(null)
   const url = BLOG.link + useRouter().asPath
@@ -125,9 +125,9 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
 
             {/* Notion文章主体 */}
             <section id='notion-article' className='px-1'>
-              {blockMap && (
+              {post.blockMap && (
                 <NotionRenderer
-                  recordMap={blockMap}
+                  recordMap={post.blockMap}
                   mapPageUrl={mapPageUrl}
                   components={{
                     equation: Equation,

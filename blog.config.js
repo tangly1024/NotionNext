@@ -9,7 +9,10 @@ const BLOG = {
   home: { // 首页
     showHomeBanner: false, // 首页是否显示大图及标语 [true,false]
     homeBannerStrings: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
-    homeBannerImage: './bg_image.jpg' // 背景图地址
+    homeBannerImage: './bg_image.jpg', // 背景图地址
+    showPostCover: false, // 文章列表显示封面图
+    showPreview: true, // 列表展示文章预览
+    showSummary: false // 显示用户自定义摘要
   },
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
@@ -23,7 +26,7 @@ const BLOG = {
   postListStyle: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   postsPerPage: 6, // post counts per page
   sortByDate: false,
-  autoCollapsedNavBar: true, // the automatically collapsed navigation bar
+  topNavType: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定顶部、固定底部滑动时自动折叠，不固定
   menu: { // 菜单栏设置
     showAbout: false, // 显示关于
     showCategory: true, // 显示分类

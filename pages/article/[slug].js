@@ -13,7 +13,6 @@ import { getPageTableOfContents } from 'notion-utils'
  */
 const Slug = ({
   post,
-  blockMap,
   tags,
   prev,
   next,
@@ -45,7 +44,6 @@ const Slug = ({
     >
       <ArticleDetail
         post={post}
-        blockMap={blockMap}
         recommendPosts={recommendPosts}
         prev={prev}
         next={next}
@@ -78,8 +76,10 @@ export async function getStaticProps ({ params: { slug } }) {
 
   const blockMap = await getPostBlocks(post.id, 'slug')
   if (blockMap) {
+    post.blockMap = blockMap
     post.content = Object.keys(blockMap.block)
     post.toc = getPageTableOfContents(post, blockMap)
+    delete post.content
   }
 
   // 上一篇、下一篇文章关联
@@ -92,7 +92,6 @@ export async function getStaticProps ({ params: { slug } }) {
   return {
     props: {
       post,
-      blockMap,
       tags,
       prev,
       next,

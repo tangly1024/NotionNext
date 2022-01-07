@@ -48,7 +48,7 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, slot, categories, current
   }
 
   return <div id='sidebar-wrapper' className='hidden'>
-    <div id='sidebar-drawer' className='-ml-80 bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50 shadow-2xl'>
+    <div id='sidebar-drawer' className='-ml-80 bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50'>
       <SideBar tags={tags} post={post} slot={slot} categories={categories} currentCategory={currentCategory} />
     </div>
     {/* 背景蒙版 */}

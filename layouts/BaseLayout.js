@@ -1,3 +1,4 @@
+import BLOG from '@/blog.config'
 import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from '@/components/FloatDarkModeButton'
 import Footer from '@/components/Footer'
@@ -59,7 +60,7 @@ const BaseLayout = ({
 
       <main id='wrapper' className='flex justify-center flex-1 mx-auto pb-12'>
           <SideAreaLeft targetRef={targetRef} post={post} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-          <section id='center' className='flex-grow mt-14 md:mt-0 max-w-5xl min-h-screen' ref={targetRef}>
+          <section id='center' className={`${BLOG.topNavType !== 'normal' ? 'mt-14' : ''} flex-grow md:mt-0 max-w-5xl min-h-screen w-full`} ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
               : <>

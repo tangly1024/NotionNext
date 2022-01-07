@@ -55,11 +55,11 @@ const Search = ({ posts, tags, categories, postCount, latestPosts }) => {
       <StickyBar>
         <div className="p-4 dark:text-gray-200">
           <FontAwesomeIcon icon={faSearch} className="mr-1" />{' '}
-          {locale.NAV.SEARCH}： {searchKey}
+           {filteredPosts.length} {locale.COMMON.RESULT_OF_SEARCH}
         </div>
       </StickyBar>
       <div className="md:mt-5">
-        <BlogPostListScroll posts={filteredPosts} tags={tags} />
+        <BlogPostListScroll posts={filteredPosts} tags={tags} showSummary={true}/>
       </div>
     </BaseLayout>
   )

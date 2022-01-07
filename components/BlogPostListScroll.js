@@ -1,10 +1,9 @@
-import BlogPostCard from '@/components/BlogPostCard'
 import BLOG from '@/blog.config'
-
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import throttle from 'lodash.throttle'
+import BlogPostCard from '@/components/BlogPostCard'
 import BlogPostListEmpty from '@/components/BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
+import throttle from 'lodash.throttle'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 /**
  * 博客列表滚动分页
@@ -14,7 +13,7 @@ import { useGlobal } from '@/lib/global'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, currentCategory, currentTag }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = BLOG.home.showSummary }) => {
   const postsPerPage = BLOG.postsPerPage
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, postsPerPage)
@@ -53,12 +52,12 @@ const BlogPostListScroll = ({ posts = [], currentSearch, currentCategory, curren
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
   } else {
-    return <div id='container' className='mt-10' ref={targetRef}>
+    return <div id='container' ref={targetRef}>
 
       {/* 文章列表 */}
-      <div className='flex flex-wrap space-y-8 mx-5 md:mx-0'>
+      <div className='flex flex-wrap space-y-8'>
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post}/>
+          <BlogPostCard key={post.id} post={post} showSummary={showSummary}/>
         ))}
       </div>
 
