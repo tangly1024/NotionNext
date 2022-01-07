@@ -13,7 +13,7 @@ import BlogPostListEmpty from '@/components/BlogPostListEmpty'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListPage = ({ page = 1, posts = [], tags }) => {
+const BlogPostListPage = ({ page = 1, posts = [] }) => {
   let filteredBlogPosts = posts
 
   // 处理查询过滤 支持标签、关键词过滤
