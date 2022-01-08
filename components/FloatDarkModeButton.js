@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { loadUserThemeFromCookies, saveTheme, useGlobal } from '@/lib/global'
+import { useGlobal } from '@/lib/global'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BLOG from '@/blog.config'
+import { loadUserThemeFromCookies, saveTheme } from '@/lib/theme'
 
 export default function FloatDarkModeButton () {
   if (!BLOG.widget?.showDarkMode) {
