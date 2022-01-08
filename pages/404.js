@@ -16,12 +16,12 @@ export default function Custom404 () {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (window) {
-        const article = document.getElementById('article-wrapper')
+        const article = document.getElementById('container')
         if (!article) {
           router.push('/')
         }
       }
-    }, 3000)
+    }, 30000000)
   })
 
   return <BaseLayout meta={{ title: `${BLOG.title} | 页面找不到啦` }}>

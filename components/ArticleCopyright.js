@@ -1,11 +1,14 @@
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 
 export default function ArticleCopyright ({ author, url }) {
+  if (!BLOG.widget?.showCopyRight) {
+    return <></>
+  }
   const { locale } = useGlobal()
   return <section className="dark:text-gray-300 mt-6">
-    <div className="text-2xl mb-2">{locale.COMMON.COPYRIGHT}</div>
-    <ul className="text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-4 border-red-500">
+    <ul className="overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-700 bg-gray-100 p-5 leading-8 border-l-2 border-blue-500">
       <li>
         <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
         <Link href="/about">
@@ -19,7 +22,8 @@ export default function ArticleCopyright ({ author, url }) {
         </a>
       </li>
       <li>
-      {locale.COMMON.COPYRIGHT_NOTICE}
+        <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
+        {locale.COMMON.COPYRIGHT_NOTICE}
       </li>
     </ul>
   </section>

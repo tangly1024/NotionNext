@@ -19,7 +19,7 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import ArticleCopyright from './ArticleCopyright'
 import Live2D from './Live2D'
@@ -30,7 +30,7 @@ import WordCount from './WordCount'
  * @param {*} param0
  * @returns
  */
-export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, next }) {
+export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
   const targetRef = useRef(null)
   const drawerRight = useRef(null)
   const url = BLOG.link + useRouter().asPath
@@ -43,26 +43,40 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
     margin: getMediumZoomMargin()
   })
   const zoomRef = useRef(zoom ? zoom.clone() : null)
-  function attachZoom (image) {
-    if (zoomRef.current) {
-      (zoomRef.current).attach(image)
+
+  useEffect(() => {
+    // 将所有container下的所有图片添加medium-zoom
+    const container = document.getElementById('container')
+    const imgList = container.getElementsByTagName('img')
+    if (imgList && zoomRef.current) {
+      for (let i = 0; i < imgList.length; i++) {
+        (zoomRef.current).attach(imgList[i])
+      }
     }
-  }
-  const attachZoomRef = attachZoom
+  })
 
   return (<>
-      <div id="article-wrapper" ref={targetRef} className="overflow-x-auto flex-grow max-w-5xl mx-auto w-screen md:w-full ">
+      <div id="container" ref={targetRef} className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
           <article itemScope itemType="https://schema.org/Movie"
-            className="shadow md:hover:shadow-2xl duration-300 subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24 xl:px-32 dark:border-gray-700 bg-white dark:bg-gray-800"
+            className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
           >
 
             <header className='animate__slideInDown animate__animated'>
-                {post.type && !post.type.includes('Page') && post?.page_cover && (
+              {post.type && !post.type.includes('Page') && post?.page_cover && (
                   <div className="w-full relative md:flex-shrink-0 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img alt={post.title} ref={attachZoomRef}src={post?.page_cover} className='object-center w-full' />
+                    <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
+                    {/* <div className="w-full h-60 relative lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
+                      <Image
+                        src={post?.page_cover}
+                        loading="eager"
+                        objectFit="cover"
+                        layout="fill"
+                        alt={post.title}
+                      />
+                    </div> */}
                   </div>
-                )}
+              )}
 
                 {/* 文章Title */}
                 <div className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
@@ -111,10 +125,9 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
 
             {/* Notion文章主体 */}
             <section id='notion-article' className='px-1'>
-              {blockMap && (
+              {post.blockMap && (
                 <NotionRenderer
-                  className={`${BLOG.font}`}
-                  recordMap={blockMap}
+                  recordMap={post.blockMap}
                   mapPageUrl={mapPageUrl}
                   components={{
                     equation: Equation,
@@ -137,11 +150,11 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
                 data-ad-slot="3806269138"></ins>
             </section>
 
-            {/* 推荐文章 */}
-            <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
-
             {/* 版权声明 */}
             <ArticleCopyright author={BLOG.author} url={url} />
+
+            {/* 推荐文章 */}
+            <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
 
             {/* 标签列表 */}
             <section className="md:flex md:justify-between">
@@ -165,7 +178,7 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
           </article>
 
           {/* 评论互动 */}
-          <div className="mt-5 lg:px-40 md:hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-700">
+          <div className="lg:px-40 md:hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
             <Comment frontMatter={post} />
           </div>
       </div>
@@ -177,7 +190,6 @@ export default function ArticleDetail ({ post, blockMap, recommendPosts, prev, n
       </div>
 
       {/* 宠物 */}
-      {BLOG.showPet && <Live2D/>}
       <Live2D/>
 
     </>)

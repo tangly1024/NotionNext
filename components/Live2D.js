@@ -1,15 +1,18 @@
 /* eslint-disable no-undef */
-import { useEffect } from 'react'
+import BLOG from '@/blog.config'
 
 let hasLoad = false
 export default function Live2D () {
-  useEffect(() => {
-    if (window && !hasLoad) {
-      initLive2D()
-      hasLoad = true
-    }
-  })
-  return <div className='fixed right-0 bottom-0 hidden md:block lg:mr-24 2xl:mr-48 z-20'>
+  if (!BLOG.widget?.showPet) {
+    return <></>
+  }
+
+  if (typeof window !== 'undefined' && !hasLoad) {
+    initLive2D()
+    hasLoad = true
+  }
+
+  return <div className='fixed right-0 bottom-0 hidden md:block lg:mr-24 2xl:mr-40 z-20'>
     <canvas id="live2d"className='animate__slideInLeft animate__animated' width="280" height="250"></canvas>
   </div>
 }
@@ -22,7 +25,7 @@ function initLive2D () {
       loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
     ]).then(() => {
       // https://github.com/xiazeyu/live2d-widget-models
-      loadlive2d('live2d', 'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json')
+      loadlive2d('live2d', BLOG.widget.petLink)
     })
   }
 }

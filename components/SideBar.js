@@ -1,14 +1,11 @@
-import React from 'react'
-import MenuButtonGroup from '@/components/MenuButtonGroup'
+import CategoryGroup from '@/components/CategoryGroup'
 import InfoCard from '@/components/InfoCard'
 import TagGroups from '@/components/TagGroups'
-import LatestPostsGroup from '@/components/LatestPostsGroup'
-import CategoryGroup from '@/components/CategoryGroup'
-import SearchInput from '@/components/SearchInput'
-import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
+import { faAngleDoubleRight, faTag, faThList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/free-solid-svg-icons'
+import Link from 'next/link'
+import React from 'react'
 
 /**
  * 侧边栏
@@ -22,31 +19,15 @@ import { faAngleDoubleRight, faArchive, faTags, faThList } from '@fortawesome/fr
  * @returns {JSX.Element}
  * @constructor
  */
-const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCategory, currentSearch }) => {
+const SideBar = ({ title, tags, currentTag, post, slot, categories, currentCategory, currentSearch }) => {
   const { locale } = useGlobal()
-  return <aside id='sidebar' className='pt-5 bg-white dark:bg-gray-900 w-80 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
-
-    <InfoCard />
+  return <aside id='sidebar' className='bg-white dark:bg-gray-900 w-80 z-10 dark:border-gray-500 border-gray-200 scroll-hidden h-full'>
 
     <div className={(!post ? 'sticky top-0' : '') + ' bg-white dark:bg-gray-900 pb-4'}>
 
-      <section className='hidden lg:block'>
-        <MenuButtonGroup allowCollapse={true} />
+      <section className='py-5'>
+        <InfoCard />
       </section>
-
-      <section className='p-5'>
-        <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
-      </section>
-
-      {/* 最新文章 */}
-      {posts && (
-        <section className='mt-4'>
-          <div className='text-sm pb-4 px-5  flex flex-nowrap justify-between'>
-            <div className='font-light text-gray-600  dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-2' />{locale.COMMON.LATEST_POSTS}</div>
-          </div>
-          <LatestPostsGroup posts={posts} />
-        </section>
-      )}
 
       {/* 分类  */}
       {categories && (
@@ -65,9 +46,9 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
 
       {/* 标签云  */}
       {tags && (
-        <section className='mt-8'>
+        <section className='mt-4'>
           <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTags} className='mr-2'/>{locale.COMMON.TAGS}</div>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
               <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
@@ -79,6 +60,9 @@ const SideBar = ({ title, tags, currentTag, post, posts, categories, currentCate
           </div>
         </section>
       )}
+
+      {slot}
+
     </div>
 
     <section className='bg-white dark:bg-gray-900'>

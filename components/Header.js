@@ -19,7 +19,7 @@ export default function Header () {
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
-          strings: BLOG.headerStrings,
+          strings: BLOG.home.homeBannerStrings,
           typeSpeed: 200,
           backSpeed: 100,
           backDelay: 400,
@@ -99,7 +99,7 @@ export default function Header () {
       className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black"
       style={{
         backgroundImage:
-          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${BLOG.bannerImage}")`
+          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${BLOG.home.homeBannerImage}")`
       }}
     >
       <div className="absolute flex h-full items-center lg:-mt-14 justify-center w-full text-4xl md:text-7xl text-white">

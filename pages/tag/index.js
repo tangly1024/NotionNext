@@ -1,21 +1,20 @@
-import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import BaseLayout from '@/layouts/BaseLayout'
 import TagItem from '@/components/TagItem'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
+import BaseLayout from '@/layouts/BaseLayout'
 import { useGlobal } from '@/lib/global'
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { faTags } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 
-export default function Tag ({ tags, allPosts, categories }) {
+export default function Tag ({ tags, allPosts, categories, postCount, latestPosts }) {
   const { locale } = useGlobal()
   const meta = {
     title: `${locale.COMMON.TAGS} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} categories={categories} totalPosts={allPosts}>
+  return <BaseLayout meta={meta} categories={categories} totalPosts={allPosts} postCount={postCount} latestPosts={latestPosts}>
       <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
         <div className='dark:text-gray-200 mb-5'><FontAwesomeIcon icon={faTags} className='mr-4'/>{locale.COMMON.TAGS}:</div>
         <div id='tags-list' className='duration-200 flex flex-wrap'>
@@ -29,16 +28,15 @@ export default function Tag ({ tags, allPosts, categories }) {
 
 export async function getStaticProps () {
   const from = 'tag-index-props'
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(allPosts)
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, sliceCount: 0, tagOptions })
+  const { allPosts, categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from, includePage: true, tagsCount: 0 })
+
   return {
     props: {
       tags,
-      allPosts,
-      categories
+      posts: allPosts,
+      categories,
+      postCount,
+      latestPosts
     },
     revalidate: 1
   }

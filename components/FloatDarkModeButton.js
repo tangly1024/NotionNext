@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useGlobal } from '@/lib/global'
+import { loadUserThemeFromCookies, saveTheme, useGlobal } from '@/lib/global'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { loadUserThemeFromCookies, saveTheme } from '@/lib/theme'
+import BLOG from '@/blog.config'
 
 export default function FloatDarkModeButton () {
+  if (!BLOG.widget?.showDarkMode) {
+    return <></>
+  }
   const [show, switchShow] = useState(false)
   const scrollListener = () => {
     const scrollY = window.pageYOffset
@@ -14,9 +17,10 @@ export default function FloatDarkModeButton () {
     }
   }
   useEffect(() => {
+    scrollListener()
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
-  })
+  }, [show])
 
   const { changeTheme } = useGlobal()
   const userTheme = loadUserThemeFromCookies()
@@ -32,11 +36,12 @@ export default function FloatDarkModeButton () {
 
   return (
     <div
+      id='float-dark-mode-button'
       onClick={handleChangeDarkMode}
       className={
-        (show ? '' : 'hidden lg:block') +
-        ' animate__fadeInRight  px-3.5 py-3 animate__animated animate__faster shadow-card fixed right-3 bottom-24 z-10 duration-200 text-xs cursor-pointer rounded-xl' +
-        ' text-black shadow-card dark:border-gray-500 glassmorphism dark:bg-gray-700 dark:text-gray-200'
+        (show ? '' : ' hidden ') +
+        ' animate__fadeInRight animate__animated animate__faster  fixed right-1 bottom-28 z-10 duration-500 text-xs cursor-pointer ' +
+        ' text-black dark:border-gray-500 flex justify-center items-center w-8 h-8 glassmorphism dark:bg-gray-700 dark:text-gray-200'
       }
     >
       <FontAwesomeIcon

@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
-import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
+import { useGlobal } from '@/lib/global'
+import { faArchive, faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -10,25 +11,19 @@ import { useRouter } from 'next/router'
  * @param sliceCount 截取展示的数量 默认6
  * @constructor
  */
-const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
-  // 深拷贝
-  let postsSortByDate = Object.create(posts)
-
-  // 时间排序
-  postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.lastEditedTime || a.createdTime)
-    const dateB = new Date(b?.lastEditedTime || b.createdTime)
-    return dateB - dateA
-  })
-
-  // 只取前五
-  postsSortByDate = postsSortByDate.slice(0, sliceCount)
-
+const LatestPostsGroup = ({ posts }) => {
+  if (!posts) {
+    return <></>
+  }
   // 获取当前路径
   const currentPath = useRouter().asPath
+  const { locale } = useGlobal()
 
-  return <>
-      {postsSortByDate.map(post => {
+  return <section className='mt-8'>
+      <div className='text-sm pb-4 px-5  flex flex-nowrap justify-between'>
+        <div className='font-light text-gray-600  dark:text-gray-200'><FontAwesomeIcon icon={faArchive} className='mr-2' />{locale.COMMON.LATEST_POSTS}</div>
+      </div>
+      {posts.map(post => {
         const selected = currentPath === `${BLOG.path}/article/${post.slug}`
         return (
           <Link key={post.id} title={post.title} href={`${BLOG.path}/article/${post.slug}`} passHref>
@@ -42,6 +37,6 @@ const LatestPostsGroup = ({ posts, sliceCount = 5 }) => {
           </Link>
         )
       })}
-    </>
+    </section>
 }
 export default LatestPostsGroup

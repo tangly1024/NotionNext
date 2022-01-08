@@ -1,26 +1,25 @@
-import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
+import BlogPostListScroll from '@/components/BlogPostListScroll'
+import CategoryList from '@/components/CategoryList'
 import StickyBar from '@/components/StickyBar'
 import BaseLayout from '@/layouts/BaseLayout'
-import BlogPostListScroll from '@/components/BlogPostListScroll'
-import React from 'react'
-import CategoryList from '@/components/CategoryList'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import React from 'react'
 
-export default function Category ({ tags, allPosts, filteredPosts, category, categories }) {
+export default function Category ({ tags, posts, category, categories, latestPosts, postCount }) {
   const { locale } = useGlobal()
   const meta = {
     title: `${category} | ${locale.COMMON.CATEGORY} | ${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} tags={tags} currentCategory={category} totalPosts={allPosts} categories={categories}>
+  return <BaseLayout meta={meta} tags={tags} currentCategory={category} postCount={postCount} latestPosts={latestPosts} categories={categories}>
       <StickyBar>
         <CategoryList currentCategory={category} categories={categories} />
       </StickyBar>
       <div className='md:mt-8'>
-         <BlogPostListScroll posts={filteredPosts} tags={tags} currentCategory={category}/>
+         <BlogPostListScroll posts={posts} tags={tags} currentCategory={category}/>
       </div>
   </BaseLayout>
 }
@@ -28,31 +27,26 @@ export default function Category ({ tags, allPosts, filteredPosts, category, cat
 export async function getStaticProps ({ params }) {
   const from = 'category-props'
   const category = params.category
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(allPosts)
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, tagOptions })
+  const { allPosts, categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from })
   const filteredPosts = allPosts.filter(
     post => post && post.category && post.category.includes(category)
   )
   return {
     props: {
       tags,
-      allPosts,
-      filteredPosts,
+      posts: filteredPosts,
       category,
-      categories
+      categories,
+      postCount,
+      latestPosts
     },
     revalidate: 1
   }
 }
 
 export async function getStaticPaths () {
-  let posts = []
-  let categories = []
-  posts = await getAllPosts({ from: 'category-path' })
-  categories = await getAllCategories(posts)
+  const from = 'category-paths'
+  const { categories } = await getGlobalNotionData({ from })
   return {
     paths: Object.keys(categories).map(category => ({ params: { category } })),
     fallback: true

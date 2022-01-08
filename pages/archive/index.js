@@ -1,33 +1,31 @@
-import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import BaseLayout from '@/layouts/BaseLayout'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
-import React, { useEffect } from 'react'
-import { useGlobal } from '@/lib/global'
 import BlogPostArchive from '@/components/BlogPostArchive'
 import Live2D from '@/components/Live2D'
+import BaseLayout from '@/layouts/BaseLayout'
+import { useGlobal } from '@/lib/global'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import React, { useEffect } from 'react'
 
 export async function getStaticProps () {
   const from = 'index'
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(allPosts)
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, tagOptions })
+  const { allPosts, categories, tags, postCount } =
+    await getGlobalNotionData({ from, includePage: true })
+
   return {
     props: {
-      allPosts,
+      posts: allPosts,
       tags,
-      categories
+      categories,
+      postCount
     },
     revalidate: 1
   }
 }
 
-const Index = ({ allPosts, tags, categories }) => {
+const Index = ({ posts, tags, categories, postCount }) => {
   const { locale } = useGlobal()
   // 深拷贝
-  const postsSortByDate = Object.create(allPosts)
+  const postsSortByDate = Object.create(posts)
 
   // 时间排序
   postsSortByDate.sort((a, b) => {
@@ -42,7 +40,7 @@ const Index = ({ allPosts, tags, categories }) => {
     type: 'website'
   }
 
-  const archivePosts = { }
+  const archivePosts = {}
 
   postsSortByDate.forEach(post => {
     const date = post.date.start_date.slice(0, 7)
@@ -53,29 +51,32 @@ const Index = ({ allPosts, tags, categories }) => {
     }
   })
 
-  useEffect(
-    () => {
-      if (window) {
-        const anchor = window.location.hash
-        if (anchor) {
-          setTimeout(() => {
-            const anchorElement = document.getElementById(anchor.substring(1))
-            if (anchorElement) { anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' }) }
-          }, 300)
-        }
+  useEffect(() => {
+    if (window) {
+      const anchor = window.location.hash
+      if (anchor) {
+        setTimeout(() => {
+          const anchorElement = document.getElementById(anchor.substring(1))
+          if (anchorElement) {
+            anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' })
+          }
+        }, 300)
       }
-    },
-    []
-  )
+    }
+  }, [])
 
   return (
-    <BaseLayout meta={meta} tags={tags} categories={categories}>
-        <div className='mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 rounded-xl shadow-md min-h-full'>
-          {Object.keys(archivePosts).map(archiveTitle => (
-             <BlogPostArchive key={archiveTitle} posts={archivePosts[archiveTitle]} archiveTitle={archiveTitle}/>
-          ))}
-        </div>
-        {BLOG.showPet && <Live2D/>}
+    <BaseLayout meta={meta} tags={tags} categories={categories} postCount={postCount}>
+      <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 shadow-md min-h-full">
+        {Object.keys(archivePosts).map(archiveTitle => (
+          <BlogPostArchive
+            key={archiveTitle}
+            posts={archivePosts[archiveTitle]}
+            archiveTitle={archiveTitle}
+          />
+        ))}
+      </div>
+      <Live2D />
     </BaseLayout>
   )
 }

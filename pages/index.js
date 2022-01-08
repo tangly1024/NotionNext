@@ -1,25 +1,46 @@
-import { getAllCategories, getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import BaseLayout from '@/layouts/BaseLayout'
+import BlogPostListPage from '@/components/BlogPostListPage'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
-import { getNotionPageData } from '@/lib/notion/getNotionData'
 import Header from '@/components/Header'
+import LatestPostsGroup from '@/components/LatestPostsGroup'
+import BaseLayout from '@/layouts/BaseLayout'
+import { getPostBlocks } from '@/lib/notion'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 
 export async function getStaticProps () {
   const from = 'index'
-  const notionPageData = await getNotionPageData({ from })
-  const allPosts = await getAllPosts({ notionPageData, from })
-  const categories = await getAllCategories(allPosts)
-  const tagOptions = notionPageData.tagOptions
-  const tags = await getAllTags({ allPosts, tagOptions })
+  const { allPosts, latestPosts, categories, tags, postCount } = await getGlobalNotionData({ from })
   const meta = {
     title: `${BLOG.title}`,
     description: BLOG.description,
     type: 'website'
   }
+
+  // 处理分页
+  const page = 1
+  let postsToShow = []
+  if (BLOG.postListStyle !== 'page') {
+    postsToShow = Array.from(allPosts)
+  } else {
+    postsToShow = allPosts.slice(
+      BLOG.postsPerPage * (page - 1),
+      BLOG.postsPerPage * page
+    )
+    for (const i in postsToShow) {
+      const post = postsToShow[i]
+      const blockMap = await getPostBlocks(post.id, 'slug')
+      if (blockMap) {
+        post.blockMap = blockMap
+      }
+    }
+    console.log('加载文章预览完成')
+  }
+
   return {
     props: {
-      allPosts,
+      posts: postsToShow,
+      latestPosts,
+      postCount,
       tags,
       categories,
       meta
@@ -28,16 +49,26 @@ export async function getStaticProps () {
   }
 }
 
-const Index = ({ allPosts, tags, meta, categories }) => {
+const Index = ({ posts, tags, meta, categories, postCount, latestPosts }) => {
   return (
     <BaseLayout
-      headerSlot={<Header />}
+      headerSlot={BLOG.home.showHomeBanner && <Header />}
       meta={meta}
       tags={tags}
-      totalPosts={allPosts}
+      sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
+      rightAreaSlot={
+        BLOG.widget?.showLatestPost && <LatestPostsGroup posts={latestPosts} />
+      }
+      postCount={postCount}
       categories={categories}
     >
-      <BlogPostListScroll posts={allPosts} tags={tags} />
+      {BLOG.postListStyle !== 'page'
+        ? (
+        <BlogPostListScroll posts={posts} tags={tags} showSummary={true} />
+          )
+        : (
+        <BlogPostListPage posts={posts} tags={tags} postCount={postCount} />
+          )}
     </BaseLayout>
   )
 }
