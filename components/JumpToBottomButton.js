@@ -47,15 +47,12 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div id='jump-to-top' className='right-1 fixed flex bottom-36 z-20'>
-      <div onClick={() => scrollToBottom()}
-        className={(show ? '' : 'hidden') + ' animate__fadeInRight duration-500 animate__animated animate__faster glassmorphism flex justify-center items-center w-8 h-8 cursor-pointer '}>
+  return (<div onClick={() => scrollToBottom()}>
         <div className='dark:text-gray-200 transform hover:scale-150 text-xs duration-200' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowDown} />
         </div>
           {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}
-      </div>
-    </div>)
+      </div>)
 }
 
 export default JumpToBottomButton

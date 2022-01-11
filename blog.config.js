@@ -38,8 +38,8 @@ const BLOG = {
     showPet: false, // 是否显示宠物挂件
     petLink: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
     showToTop: true, // 是否显示回顶
-    showToBottom: true, // 显示回底
-    showDarkMode: true, // 显示日间/夜间模式切换
+    showToBottom: false, // 显示回底
+    showDarkMode: false, // 显示日间/夜间模式切换
     showToc: true, // 移动端显示悬浮目录
     showShareBar: false, // 文章分享功能
     showRelatePosts: true, // 相关文章推荐

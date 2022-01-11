@@ -1,10 +1,14 @@
 import BLOG from '@/blog.config'
 import ArticleDetail from '@/components/ArticleDetail'
+import Live2D from '@/components/Live2D'
+import TocDrawer from '@/components/TocDrawer'
+import TocDrawerButton from '@/components/TocDrawerButton'
 import BaseLayout from '@/layouts/BaseLayout'
 import { getAllPosts, getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import Custom404 from '@/pages/404'
 import { getPageTableOfContents } from 'notion-utils'
+import { useRef } from 'react'
 
 /**
  * 根据notion的slug访问页面
@@ -31,6 +35,10 @@ const Slug = ({
     tags: post.tags
   }
 
+  const drawerRight = useRef(null)
+  const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
+  const floatSlot = <div className="block lg:hidden"><TocDrawerButton onClick={() => { drawerRight?.current?.handleSwitchVisible() }} /></div>
+
   return (
     <BaseLayout
       meta={meta}
@@ -39,6 +47,7 @@ const Slug = ({
       postCount={postCount}
       latestPosts={latestPosts}
       categories={categories}
+      floatSlot={floatSlot}
     >
       <ArticleDetail
         post={post}
@@ -46,6 +55,15 @@ const Slug = ({
         prev={prev}
         next={next}
       />
+
+      {/* 悬浮目录按钮 */}
+      <div className="block lg:hidden">
+        <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
+      </div>
+
+      {/* 宠物 */}
+      <Live2D/>
+
     </BaseLayout>
   )
 }
