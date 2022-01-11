@@ -16,7 +16,6 @@ const Slug = ({
   tags,
   prev,
   next,
-  allPosts,
   recommendPosts,
   categories,
   postCount,
@@ -39,7 +38,6 @@ const Slug = ({
       post={post}
       postCount={postCount}
       latestPosts={latestPosts}
-      totalPosts={allPosts}
       categories={categories}
     >
       <ArticleDetail
@@ -95,7 +93,6 @@ export async function getStaticProps ({ params: { slug } }) {
       tags,
       prev,
       next,
-      allPosts,
       recommendPosts,
       categories,
       postCount,

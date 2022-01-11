@@ -21,7 +21,7 @@ import React from 'react'
  * @param {*} param0
  * @returns
  */
-const About = ({ post, blockMap, tags, prev, next, allPosts, categories }) => {
+const About = ({ post, blockMap, tags, prev, next, postCount, categories }) => {
   if (!post) {
     return <Custom404 />
   }
@@ -39,10 +39,10 @@ const About = ({ post, blockMap, tags, prev, next, allPosts, categories }) => {
       meta={meta}
       tags={tags}
       post={post}
-      totalPosts={allPosts}
+      postCount={postCount}
       categories={categories}
     >
-      <ArticleDetail post={post} blockMap={blockMap} allPosts={allPosts} prev={prev} next={next} />
+      <ArticleDetail post={post} blockMap={blockMap} prev={prev} next={next} />
     </BaseLayout>
   )
 }
@@ -69,7 +69,7 @@ export async function getStaticProps () {
   const next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
 
   return {
-    props: { post, blockMap, tags, prev, next, allPosts, categories, postCount, latestPosts },
+    props: { post, blockMap, tags, prev, next, categories, postCount, latestPosts },
     revalidate: 1
   }
 }
