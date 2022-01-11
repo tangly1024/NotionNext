@@ -9,7 +9,7 @@ import BLOG from 'blog.config'
 const MenuButtonGroup = ({ allowCollapse = false, postCount }) => {
   const { locale } = useGlobal()
   const router = useRouter()
-  const archiveSlot = <div className='bg-gray-300 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
+  const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   const links = [
     { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: true },

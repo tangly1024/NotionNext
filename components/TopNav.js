@@ -1,13 +1,16 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import { faBars, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleRight, faBars, faSearch, faTag, faThList, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import throttle from 'lodash.throttle'
+import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import CategoryGroup from './CategoryGroup'
 import Collapse from './Collapse'
 import Logo from './Logo'
 import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
+import TagGroups from './TagGroups'
 
 let windowTop = 0
 
@@ -50,8 +53,40 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
     changeShow(!isOpen)
   }
 
+  const searchDrawerSlot = <>
+    { categories && (
+        <section className='mt-8'>
+          <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
+            <Link href='/category' passHref>
+              <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </a>
+            </Link>
+          </div>
+          <CategoryGroup currentCategory={currentCategory} categories={categories} />
+        </section>
+    ) }
+
+    { tags && (
+        <section className='mt-4'>
+          <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
+            <Link href='/tag' passHref>
+              <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </a>
+            </Link>
+          </div>
+          <div className='px-5 py-2'>
+            <TagGroups tags={tags} currentTag={currentTag} />
+          </div>
+        </section>
+    ) }
+    </>
+
   return (<div id='top-nav' className='z-40 block lg:hidden'>
-      <SearchDrawer cRef={searchDrawer}/>
+    <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
     <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} animate__animated animate__fadeIn  lg:relative w-full top-0 z-20 transform duration-500`}>
