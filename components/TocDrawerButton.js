@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useGlobal } from '@/lib/global'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faListOl } from '@fortawesome/free-solid-svg-icons'
 import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
+import { faListOl } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 
 /**
  * 点击召唤目录抽屉
@@ -16,30 +16,9 @@ const TocDrawerButton = (props) => {
     return <></>
   }
   const { locale } = useGlobal()
-  const [show, switchShow] = useState(false)
-  const scrollListener = () => {
-    const scrollY = window.pageYOffset
-    const shouldShow = scrollY > 100
-
-    if (shouldShow !== show) {
-      switchShow(shouldShow)
-    }
-  }
-  useEffect(() => {
-    document.addEventListener('scroll', scrollListener)
-    return () => document.removeEventListener('scroll', scrollListener)
-  })
-
-  return (
-    <div id='toc-drawer-button' className='right-1 fixed bottom-52 z-20'>
-        <div onClick={props.onClick} className={(show ? 'animate__fadeInRight' : 'hidden') + ' animate__animated animate__faster glassmorphism cursor-pointer' }>
-            <div className='dark:text-gray-200 text-center transform hover:scale-150 duration-200 text-xs flex justify-center items-center w-8 h-8' title={locale.POST.TOP} >
-              <FontAwesomeIcon icon={faListOl}/>
-            </div>
-        </div>
-    </div>
-
-  )
+  return (<div onClick={props.onClick} className='px-3 py-2 cursor-pointer dark:text-gray-200 text-center transform hover:scale-150 duration-200 text-xs flex justify-center items-center' title={locale.POST.TOP} >
+    <FontAwesomeIcon icon={faListOl}/>
+  </div>)
 }
 
 export default TocDrawerButton

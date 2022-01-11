@@ -28,12 +28,11 @@ export async function getStaticProps () {
     )
     for (const i in postsToShow) {
       const post = postsToShow[i]
-      const blockMap = await getPostBlocks(post.id, 'slug')
+      const blockMap = await getPostBlocks(post.id, 'slug', 12)
       if (blockMap) {
         post.blockMap = blockMap
       }
     }
-    console.log('加载文章预览完成')
   }
 
   return {

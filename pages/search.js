@@ -25,7 +25,7 @@ export async function getStaticProps () {
   }
 }
 
-const Search = ({ posts, tags, categories, postCount, latestPosts }) => {
+const Search = ({ posts, tags, categories, postCount }) => {
   let filteredPosts = []
   const searchKey = getSearchKey()
   if (searchKey) {

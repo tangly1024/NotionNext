@@ -1,5 +1,4 @@
 import BLOG from '@/blog.config'
-import { useGlobal } from '@/lib/global'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
@@ -18,7 +17,6 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     return <></>
   }
 
-  const { locale } = useGlobal()
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
@@ -47,15 +45,12 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div id='jump-to-top' className='right-1 fixed flex bottom-36 z-20'>
-      <div onClick={() => scrollToBottom()}
-        className={(show ? '' : 'hidden') + ' animate__fadeInRight duration-500 animate__animated animate__faster glassmorphism flex justify-center items-center w-8 h-8 cursor-pointer '}>
-        <div className='dark:text-gray-200 transform hover:scale-150 text-xs duration-200' title={locale.POST.TOP} >
-          <FontAwesomeIcon icon={faArrowDown} />
-        </div>
-          {showPercent && (<div className='w-10 text-xs dark:text-gray-200'>{percent}</div>)}
-      </div>
-    </div>)
+  return (<div className='flex space-x-1 transform hover:scale-105 text-xs duration-200 py-2 px-3' onClick={scrollToBottom} >
+    <div className='dark:text-gray-200' >
+      <FontAwesomeIcon icon={faArrowDown} />
+    </div>
+    {showPercent && (<div className='text-xs dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
+  </div>)
 }
 
 export default JumpToBottomButton

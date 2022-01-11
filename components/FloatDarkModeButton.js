@@ -1,26 +1,13 @@
-import { useEffect, useState } from 'react'
-import { loadUserThemeFromCookies, saveTheme, useGlobal } from '@/lib/global'
+import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
+import { loadUserThemeFromCookies, saveTheme } from '@/lib/theme'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import BLOG from '@/blog.config'
 
 export default function FloatDarkModeButton () {
   if (!BLOG.widget?.showDarkMode) {
     return <></>
   }
-  const [show, switchShow] = useState(false)
-  const scrollListener = () => {
-    const scrollY = window.pageYOffset
-    const shouldShow = scrollY > 100
-    if (shouldShow !== show) {
-      switchShow(shouldShow)
-    }
-  }
-  useEffect(() => {
-    scrollListener()
-    document.addEventListener('scroll', scrollListener)
-    return () => document.removeEventListener('scroll', scrollListener)
-  }, [show])
 
   const { changeTheme } = useGlobal()
   const userTheme = loadUserThemeFromCookies()
@@ -36,12 +23,8 @@ export default function FloatDarkModeButton () {
 
   return (
     <div
-      id='float-dark-mode-button'
       onClick={handleChangeDarkMode}
-      className={
-        (show ? '' : ' hidden ') +
-        ' animate__fadeInRight animate__animated animate__faster  fixed right-1 bottom-28 z-10 duration-500 text-xs cursor-pointer ' +
-        ' text-black dark:border-gray-500 flex justify-center items-center w-8 h-8 glassmorphism dark:bg-gray-700 dark:text-gray-200'
+      className={ ' text-black dark:border-gray-500 flex justify-center items-center w-8 h-8 dark:text-gray-200'
       }
     >
       <FontAwesomeIcon

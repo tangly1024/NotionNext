@@ -1,12 +1,16 @@
 import BLOG from '@/blog.config'
-import SideBarDrawer from '@/components/SideBarDrawer'
 import { useGlobal } from '@/lib/global'
-import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleRight, faBars, faSearch, faTag, faThList, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import throttle from 'lodash.throttle'
-import { useCallback, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import CategoryGroup from './CategoryGroup'
+import Collapse from './Collapse'
 import Logo from './Logo'
+import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
+import TagGroups from './TagGroups'
 
 let windowTop = 0
 
@@ -15,8 +19,7 @@ let windowTop = 0
  * @param {*} param0
  * @returns
  */
-const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, autoHide = true }) => {
-  const drawer = useRef()
+const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, autoHide = true, postCount }) => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
 
@@ -43,19 +46,55 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
       BLOG.autoCollapsedNavBar && window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
+
+  const [isOpen, changeShow] = useState(false)
+
+  const toggleMenuOpen = () => {
+    changeShow(!isOpen)
+  }
+
+  const searchDrawerSlot = <>
+    { categories && (
+        <section className='mt-8'>
+          <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
+            <Link href='/category' passHref>
+              <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </a>
+            </Link>
+          </div>
+          <CategoryGroup currentCategory={currentCategory} categories={categories} />
+        </section>
+    ) }
+
+    { tags && (
+        <section className='mt-4'>
+          <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
+            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
+            <Link href='/tag' passHref>
+              <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+              </a>
+            </Link>
+          </div>
+          <div className='px-5 py-2'>
+            <TagGroups tags={tags} currentTag={currentTag} />
+          </div>
+        </section>
+    ) }
+    </>
+
   return (<div id='top-nav' className='z-40 block lg:hidden'>
-    {/* 侧面抽屉 */}
-    <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} slot={slot} categories={categories} currentCategory={currentCategory}/>
-    <SearchDrawer cRef={searchDrawer}/>
+    <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} flex animate__animated animate__fadeIn  lg:relative w-full top-0 z-20 transform duration-500`}>
+    <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} animate__animated animate__fadeIn  lg:relative w-full top-0 z-20 transform duration-500`}>
       <div className='w-full flex justify-between items-center p-4 bg-black text-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
-          <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
-               className='w-8 cursor-pointer'>
-            <FontAwesomeIcon icon={faBars} size={'lg'}/>
+          <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
+          { isOpen ? <FontAwesomeIcon icon={faTimes} size={'lg'}/> : <FontAwesomeIcon icon={faBars} size={'lg'}/> }
           </div>
         </div>
 
@@ -70,6 +109,12 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
           </div>
         </div>
       </div>
+
+      <Collapse isOpen={isOpen}>
+        <div className='bg-white py-1'>
+          <MenuButtonGroup postCount={postCount}/>
+          </div>
+      </Collapse>
     </div>
 
   </div>)
