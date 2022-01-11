@@ -43,6 +43,11 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
       BLOG.autoCollapsedNavBar && window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
+
+  const switchMenuShow = () => {
+    drawer?.current?.handleSwitchSideDrawerVisible()
+  }
+
   return (<div id='top-nav' className='z-40 block lg:hidden'>
     {/* 侧面抽屉 */}
     <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} slot={slot} categories={categories} currentCategory={currentCategory}/>
@@ -53,7 +58,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
       <div className='w-full flex justify-between items-center p-4 bg-black text-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
-          <div onClick={() => { drawer.current.handleSwitchSideDrawerVisible() }}
+          <div onClick={switchMenuShow}
                className='w-8 cursor-pointer'>
             <FontAwesomeIcon icon={faBars} size={'lg'}/>
           </div>
