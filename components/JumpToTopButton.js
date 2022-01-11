@@ -21,7 +21,7 @@ const JumpToTopButton = ({ showPercent = true, percent }) => {
         <div className='dark:text-gray-200' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
-        {showPercent && (<div className='text-xs dark:text-gray-200'>{percent}%</div>)}
+        {showPercent && (<div className='text-xs dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
     </div>)
 }
 

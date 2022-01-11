@@ -96,8 +96,8 @@ const BaseLayout = ({
           <SideAreaRight targetRef={targetRef} post={post} slot={rightAreaSlot} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
       </main>
 
-      <div className='right-4 bottom-2 fixed justify-end z-20 glassmorphism rounded font-sans'>
-      <div className={(show ? 'animate__animated ' : 'hidden') + ' m-3 animate__fadeInUp justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
+      <div className='right-4 lg:right-2 bottom-2 fixed justify-end z-20  rounded font-sans'>
+      <div className={(show ? 'animate__animated ' : 'hidden') + ' px-3 py-2 animate__fadeInUp glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
         <JumpToTopButton percent={percent}/>
         <JumpToBottomButton />
         <FloatDarkModeButton/>
