@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useGlobal } from '@/lib/global'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faListOl } from '@fortawesome/free-solid-svg-icons'
 import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
+import { faListOl } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 
 /**
  * 点击召唤目录抽屉
