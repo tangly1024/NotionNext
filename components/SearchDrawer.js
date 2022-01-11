@@ -13,7 +13,6 @@ const SearchDrawer = ({ cRef }) => {
     }
   })
   const hidden = () => {
-    console.log('点击')
     searchDrawer?.current?.classList?.add('hidden')
   }
   Router.events.on('routeChangeComplete', (...args) => {

@@ -1,11 +1,12 @@
 import BLOG from '@/blog.config'
-import SideBarDrawer from '@/components/SideBarDrawer'
 import { useGlobal } from '@/lib/global'
-import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import throttle from 'lodash.throttle'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import Collapse from './Collapse'
 import Logo from './Logo'
+import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
 
 let windowTop = 0
@@ -15,8 +16,7 @@ let windowTop = 0
  * @param {*} param0
  * @returns
  */
-const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, autoHide = true }) => {
-  const drawer = useRef()
+const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, autoHide = true, postCount }) => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
 
@@ -44,23 +44,22 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
     }
   }, [])
 
-  const switchMenuShow = () => {
-    drawer?.current?.handleSwitchSideDrawerVisible()
+  const [isOpen, changeShow] = useState(false)
+
+  const toggleMenuOpen = () => {
+    changeShow(!isOpen)
   }
 
   return (<div id='top-nav' className='z-40 block lg:hidden'>
-    {/* 侧面抽屉 */}
-    <SideBarDrawer post={post} currentTag={currentTag} cRef={drawer} tags={tags} slot={slot} categories={categories} currentCategory={currentCategory}/>
-    <SearchDrawer cRef={searchDrawer}/>
+      <SearchDrawer cRef={searchDrawer}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} flex animate__animated animate__fadeIn  lg:relative w-full top-0 z-20 transform duration-500`}>
+    <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} animate__animated animate__fadeIn  lg:relative w-full top-0 z-20 transform duration-500`}>
       <div className='w-full flex justify-between items-center p-4 bg-black text-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
-          <div onClick={switchMenuShow}
-               className='w-8 cursor-pointer'>
-            <FontAwesomeIcon icon={faBars} size={'lg'}/>
+          <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
+          { isOpen ? <FontAwesomeIcon icon={faTimes} size={'lg'}/> : <FontAwesomeIcon icon={faBars} size={'lg'}/> }
           </div>
         </div>
 
@@ -75,6 +74,12 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
           </div>
         </div>
       </div>
+
+      <Collapse isOpen={isOpen}>
+        <div className='bg-white py-1'>
+          <MenuButtonGroup postCount={postCount}/>
+          </div>
+      </Collapse>
     </div>
 
   </div>)

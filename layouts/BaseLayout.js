@@ -52,7 +52,7 @@ const BaseLayout = ({
 
       <CommonHead meta={meta} />
 
-      <TopNav tags={tags} post={post} slot={sideBarSlot} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
+      <TopNav tags={tags} postCount={postCount} post={post} slot={sideBarSlot} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
 
       <>{headerSlot}</>
 

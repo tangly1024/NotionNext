@@ -55,7 +55,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = BLOG.home
     return <div id='container' ref={targetRef}>
 
       {/* 文章列表 */}
-      <div className='flex flex-wrap space-y-8'>
+      <div className='flex flex-wrap space-y-1 lg:space-y-4'>
         {postsToShow.map(post => (
           <BlogPostCard key={post.id} post={post} showSummary={showSummary}/>
         ))}
@@ -65,7 +65,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = BLOG.home
         <div onClick={() => {
           handleGetMore()
         }}
-             className='w-full my-4 py-4  text-center cursor-pointer glassmorphism shadow-xl rounded-xl dark:text-gray-200'
+             className='w-full my-4 py-4 text-center cursor-pointer glassmorphism shadow-xl rounded-xl dark:text-gray-200'
         > {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`} </div>
       </div>
     </div>

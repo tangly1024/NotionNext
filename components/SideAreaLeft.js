@@ -30,10 +30,10 @@ const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, cu
       {/* 菜单 */}
       <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
         <Logo/>
-        <div className='pt-2'>
-        <MenuButtonGroup allowCollapse={true} />
+        <div className='pt-2 font-sans'>
+        <MenuButtonGroup allowCollapse={true} postCount={postCount} />
         </div>
-        {BLOG.menu.showSearch && <div className='px-5 pt-2'>
+        {BLOG.menu.showSearch && <div className='px-5 pt-2 font-sans'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
         </div>}
       </section>
