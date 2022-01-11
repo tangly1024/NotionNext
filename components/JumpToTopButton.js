@@ -17,7 +17,7 @@ const JumpToTopButton = ({ showPercent = true, percent }) => {
     return <></>
   }
   const { locale } = useGlobal()
-  return (<div className='flex space-x-1 transform hover:scale-105 text-xs duration-200' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
+  return (<div className='flex space-x-1 transform hover:scale-105 text-xs duration-200 py-2 px-3' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
         <div className='dark:text-gray-200' title={locale.POST.TOP} >
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
