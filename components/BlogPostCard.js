@@ -10,18 +10,19 @@ import { useGlobal } from '@/lib/global'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
+  const showPreview = BLOG.home?.showPreview && post.blockMap
   return (
     <div key={post.id} className='shadow border animate__animated animate__fadeIn flex flex-col-reverse justify-between md:hover:shadow-xl duration-300
         w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>
 
-      <div className='lg:p-8 p-4 flex flex-col justify-between w-full'>
+      <div className='lg:p-8 p-4 flex flex-col w-full'>
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <a className='cursor-pointer font-bold text-3xl text-center leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'>
+          <a className={`cursor-pointer font-bold text-3xl flex ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
             {post.title}
           </a>
         </Link>
 
-        <div className='flex mt-2 items-center justify-center flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 '>
+        <div className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}>
           <div>
           <Link href={`/category/${post.category}`} passHref>
             <a className='cursor-pointer font-light text-sm hover:underline transform'>
@@ -38,11 +39,11 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {showSummary && <p className='mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+        {(!showPreview || showSummary) && <p className='mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
           {post.summary}
         </p>}
 
-        {BLOG.home?.showPreview && post?.blockMap && <div className='max-h-screen overflow-hidden truncate max-w-full'>
+        {showPreview && post?.blockMap && <div className='max-h-screen overflow-hidden truncate max-w-full'>
           <NotionRenderer
                   recordMap={post.blockMap}
                   mapPageUrl={mapPageUrl}

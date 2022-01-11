@@ -6,7 +6,7 @@ import { faSearch, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const SearchInput = ({ currentTag, currentSearch, cRef }) => {
   const { locale } = useGlobal()
-  const [searchKey, setSearchKey] = useState(currentSearch)
+  const [searchKey, setSearchKey] = useState(currentSearch || '')
   const [onLoading, setLoadingState] = useState(false)
   const router = useRouter()
   const searchInputRef = useRef()
@@ -52,7 +52,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       className={'w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 border-gray-300 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
       onChange={e => updateSearchKey(e.target.value)}
-      defaultValue={currentSearch}
+      defaultValue={searchKey}
     />
     {(searchKey && searchKey.length && <FontAwesomeIcon icon={faTimes} className='text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
 
