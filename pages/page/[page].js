@@ -59,7 +59,6 @@ export async function getStaticProps ({ params: { page } }) {
       post.blockMap = blockMap
     }
   }
-  console.log('加载文章预览完成')
 
   return {
     props: {

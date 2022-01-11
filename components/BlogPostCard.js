@@ -43,27 +43,28 @@ const BlogPostCard = ({ post, showSummary }) => {
           {post.summary}
         </p>}
 
-        {showPreview && post?.blockMap && <div className='max-h-screen overflow-hidden truncate max-w-full'>
+        {showPreview && post?.blockMap && <div className='max-h-screen overflow-ellipsis truncate max-w-full'>
           <NotionRenderer
-                  recordMap={post.blockMap}
-                  mapPageUrl={mapPageUrl}
-                  components={{
-                    equation: Equation,
-                    code: Code,
-                    collectionRow: CollectionRow,
-                    collection: Collection
-                  }}
-                />
+            bodyClassName='max-h-full'
+            recordMap={post.blockMap}
+            mapPageUrl={mapPageUrl}
+            components={{
+              equation: Equation,
+              code: Code,
+              collectionRow: CollectionRow,
+              collection: Collection
+            }}
+          />
         </div> }
 
         <div className='border-b-2 w-full border-dashed py-2'></div>
 
-        <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <div className='flex items-center cursor-pointer pt-6 justify-end leading-tight'>
-            <a className='bg-black p-2 text-white'>{locale.COMMON.ARTICLE_DETAIL}
-             <FontAwesomeIcon icon={faAngleDoubleRight} /></a>
-          </div>
-        </Link>
+        <div className='flex items-center  pt-6 justify-end leading-tight'>
+          <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
+              <a className='bg-black p-2 text-white cursor-pointer'>{locale.COMMON.ARTICLE_DETAIL}
+                <FontAwesomeIcon icon={faAngleDoubleRight} /></a>
+          </Link>
+        </div>
       </div>
 
       {BLOG.home?.showPostCover && post?.page_cover && (
