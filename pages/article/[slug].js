@@ -37,6 +37,8 @@ const Slug = ({
 
   const drawerRight = useRef(null)
   const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
+  post.content = Object.keys(post?.blockMap?.block)
+  post.toc = getPageTableOfContents(post, post.blockMap)
   const floatSlot = post?.toc?.length > 1 ? <div className="block lg:hidden"><TocDrawerButton onClick={() => { drawerRight?.current?.handleSwitchVisible() }} /></div> : null
 
   return (
@@ -95,13 +97,7 @@ export async function getStaticProps ({ params: { slug } }) {
     return { props: {}, revalidate: 1 }
   }
 
-  const blockMap = await getPostBlocks(post.id, 'slug')
-  if (blockMap) {
-    post.blockMap = blockMap
-    post.content = Object.keys(blockMap.block)
-    post.toc = getPageTableOfContents(post, blockMap)
-    delete post.content
-  }
+  post.blockMap = await getPostBlocks(post.id, 'slug')
 
   // 上一篇、下一篇文章关联
   const index = allPosts.indexOf(post)
