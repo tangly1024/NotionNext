@@ -4,7 +4,6 @@ import StickyBar from '@/components/StickyBar'
 import TagList from '@/components/TagList'
 import BaseLayout from '@/layouts/BaseLayout'
 import { useGlobal } from '@/lib/global'
-import { getAllPosts } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 
 export default function Tag ({ tags, posts, tag, categories, postCount, latestPosts }) {
@@ -56,27 +55,21 @@ export async function getStaticProps ({ params }) {
  * @param {*}} allPosts
  * @returns
  */
-function getTagNames (allPosts) {
-  const tags = allPosts.map(p => p.tags).flat()
-
-  const tagObj = {}
+function getTagNames (tags) {
+  const tagNames = []
   tags.forEach(tag => {
-    if (tag in tagObj) {
-      tagObj[tag]++
-    } else {
-      tagObj[tag] = 1
-    }
+    tagNames.push(tag.name)
   })
-  return tagObj
+  return tagNames
 }
 
 export async function getStaticPaths () {
   const from = 'tag-static-path'
-  const posts = await getAllPosts({ from })
-  const tagNames = getTagNames(posts)
+  const { tags } = await getGlobalNotionData({ from, tagsCount: 0 })
+  const tagNames = getTagNames(tags)
 
   return {
-    paths: Object.keys(tagNames).map(tag => ({ params: { tag } })),
+    paths: Object.keys(tagNames).map(index => ({ params: { tag: tagNames[index] } })),
     fallback: true
   }
 }

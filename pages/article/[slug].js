@@ -4,7 +4,7 @@ import Live2D from '@/components/Live2D'
 import TocDrawer from '@/components/TocDrawer'
 import TocDrawerButton from '@/components/TocDrawerButton'
 import BaseLayout from '@/layouts/BaseLayout'
-import { getAllPosts, getPostBlocks } from '@/lib/notion'
+import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import Custom404 from '@/pages/404'
 import { getPageTableOfContents } from 'notion-utils'
@@ -69,12 +69,17 @@ const Slug = ({
 }
 
 export async function getStaticPaths () {
-  let posts = []
-  if (BLOG.isProd) {
-    posts = await getAllPosts({ from: 'slug - paths', includePage: false })
+  if (!BLOG.isProd) {
+    return {
+      paths: [],
+      fallback: true
+    }
   }
+
+  const from = '[slug-paths'
+  const { allPosts } = await getGlobalNotionData({ from, includePage: false })
   return {
-    paths: posts.map(row => ({ params: { slug: row.slug } })),
+    paths: allPosts.map(row => ({ params: { slug: row.slug } })),
     fallback: true
   }
 }
