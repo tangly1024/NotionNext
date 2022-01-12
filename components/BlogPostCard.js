@@ -59,7 +59,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         <div className='article-cover pointer-events-none'>
           <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-              <a className='hover:bg-opacity-100 hover:scale-105 transform duration-300 rounded-md p-2 text-red-500 cursor-pointer'>
+              <a className='hover:bg-opacity-100 hover:scale-105 pointer-events-auto transform duration-300 rounded-md p-2 text-red-500 cursor-pointer'>
                 {locale.COMMON.ARTICLE_DETAIL}
                 <FontAwesomeIcon className='ml-1' icon={faAngleRight} /></a>
           </Link>
