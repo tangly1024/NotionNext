@@ -12,6 +12,7 @@ const BLOG = {
     homeBannerImage: './bg_image.jpg', // 背景图地址
     showPostCover: false, // 文章列表显示封面图
     showPreview: true, // 列表展示文章预览
+    previewLines: 12, // 预览文章的篇幅
     showSummary: false // 显示用户自定义摘要
   },
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
