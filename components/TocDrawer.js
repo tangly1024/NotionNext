@@ -9,7 +9,7 @@ import { useGlobal } from '@/lib/global'
  * @returns {JSX.Element}
  * @constructor
  */
-const TocDrawer = ({ post, cRef, targetRef }) => {
+const TocDrawer = ({ post, cRef }) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
@@ -33,7 +33,7 @@ const TocDrawer = ({ post, cRef, targetRef }) => {
               {locale.COMMON.TABLE_OF_CONTENTS}
             </div>
            <div className='p-6 dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800'>
-             <Toc toc={post.toc} targetRef={targetRef}/>
+             <Toc toc={post.toc}/>
            </div>
           </>
           }

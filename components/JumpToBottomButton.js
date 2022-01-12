@@ -45,11 +45,11 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div className='flex space-x-1 transform hover:scale-105 text-xs duration-200 py-2 px-3' onClick={scrollToBottom} >
+  return (<div className='flex space-x-1 transform hover:scale-105 duration-200 py-2 px-3' onClick={scrollToBottom} >
     <div className='dark:text-gray-200' >
       <FontAwesomeIcon icon={faArrowDown} />
     </div>
-    {showPercent && (<div className='text-xs dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
+    {showPercent && (<div className='dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
   </div>)
 }
 
