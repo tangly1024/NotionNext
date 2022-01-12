@@ -37,7 +37,7 @@ const Slug = ({
 
   const drawerRight = useRef(null)
   const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
-  const floatSlot = post?.toc.length > 1 ? <div className="block lg:hidden"><TocDrawerButton onClick={() => { drawerRight?.current?.handleSwitchVisible() }} /></div> : null
+  const floatSlot = post?.toc?.length > 1 ? <div className="block lg:hidden"><TocDrawerButton onClick={() => { drawerRight?.current?.handleSwitchVisible() }} /></div> : null
 
   return (
     <BaseLayout
