@@ -1,12 +1,12 @@
 import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
+import { faAngleRight, faFolder } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDoubleRight, faFolder } from '@fortawesome/free-solid-svg-icons'
-import TagItemMini from './TagItemMini'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
-import { useGlobal } from '@/lib/global'
+import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
@@ -17,7 +17,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
       <div className='lg:p-8 p-4 flex flex-col w-full'>
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <a className={`cursor-pointer font-bold text-3xl flex ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+          <a className={`cursor-pointer font-bold hover:underline text-3xl flex ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
             {post.title}
           </a>
         </Link>
@@ -43,7 +43,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           {post.summary}
         </p>}
 
-        {showPreview && post?.blockMap && <div className='max-h-screen overflow-ellipsis truncate max-w-full'>
+        {showPreview && post?.blockMap && <div className='overflow-ellipsis truncate'>
           <NotionRenderer
             bodyClassName='max-h-full'
             recordMap={post.blockMap}
@@ -57,12 +57,11 @@ const BlogPostCard = ({ post, showSummary }) => {
           />
         </div> }
 
-        <div className='border-b-2 w-full border-dashed py-2'></div>
-
-        <div className='flex items-center  pt-6 justify-end leading-tight'>
+        <div className='flex-col items-center justify-center article-cover'>
           <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-              <a className='bg-black p-2 text-white cursor-pointer'>{locale.COMMON.ARTICLE_DETAIL}
-                <FontAwesomeIcon icon={faAngleDoubleRight} /></a>
+              <a className='hover:bg-opacity-100 hover:scale-105 transform duration-300 rounded-md p-2 text-red-500 cursor-pointer'>
+                {locale.COMMON.ARTICLE_DETAIL}
+                <FontAwesomeIcon className='ml-1' icon={faAngleRight} /></a>
           </Link>
         </div>
       </div>
