@@ -96,15 +96,16 @@ const BaseLayout = ({
           <SideAreaRight targetRef={targetRef} post={post} slot={rightAreaSlot} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
       </main>
 
-      <div className='right-4 lg:right-2 bottom-2 fixed justify-end z-20  rounded font-sans'>
-      <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
-        <JumpToTopButton percent={percent}/>
-        <JumpToBottomButton />
-        <FloatDarkModeButton/>
-        {floatSlot}
+      {/* 右下角悬浮 */}
+      <div className='right-8 bottom-10 lg:right-2 lg:bottom-2 fixed justify-end z-20 font-sans'>
+        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
+          <JumpToTopButton percent={percent}/>
+          <JumpToBottomButton />
+          <FloatDarkModeButton/>
+          {floatSlot}
+        </div>
       </div>
 
-      </div>
       <Footer title={meta.title}/>
       </>
   )

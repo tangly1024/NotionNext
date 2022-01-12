@@ -16,7 +16,7 @@ const TocDrawerButton = (props) => {
     return <></>
   }
   const { locale } = useGlobal()
-  return (<div onClick={props.onClick} className='px-3 py-2 cursor-pointer dark:text-gray-200 text-center transform hover:scale-150 duration-200 text-xs flex justify-center items-center' title={locale.POST.TOP} >
+  return (<div onClick={props.onClick} className='py-2 px-3 cursor-pointer dark:text-gray-200 text-center transform hover:scale-150 duration-200 flex justify-center items-center' title={locale.POST.TOP} >
     <FontAwesomeIcon icon={faListOl}/>
   </div>)
 }

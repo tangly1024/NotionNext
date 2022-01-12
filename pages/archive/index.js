@@ -9,7 +9,7 @@ import React, { useEffect } from 'react'
 export async function getStaticProps () {
   const from = 'index'
   const { allPosts, categories, tags, postCount } =
-    await getGlobalNotionData({ from, includePage: true })
+    await getGlobalNotionData({ from })
 
   return {
     props: {

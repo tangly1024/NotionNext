@@ -44,7 +44,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, cu
       <Tabs>
           {showToc && (
             <div key={locale.COMMON.TABLE_OF_CONTENTS} className='dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 duration-200'>
-              <Toc toc={post.toc} targetRef={targetRef} />
+              <Toc toc={post.toc}/>
             </div>
           )}
 

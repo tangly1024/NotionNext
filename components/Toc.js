@@ -10,7 +10,7 @@ import Progress from './Progress'
  * @returns {JSX.Element}
  * @constructor
  */
-const Toc = ({ toc, targetRef }) => {
+const Toc = ({ toc }) => {
   // 无目录就直接返回空
   if (!toc || toc.length < 1) {
     return <></>
@@ -54,7 +54,7 @@ const Toc = ({ toc, targetRef }) => {
 
   return <>
     <div className='w-full'>
-      <Progress targetRef={targetRef}/>
+      <Progress/>
     </div>
     <nav className='font-sans overflow-y-auto scroll-hidden'>
       {toc.map((tocItem) => {

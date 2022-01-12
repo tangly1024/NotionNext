@@ -172,7 +172,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
     </article>
 
     {/* 评论互动 */}
-    <div className="lg:px-40 md:hover:shadow-2xl duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
+    <div className="duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
       <Comment frontMatter={post} />
     </div>
   </div>)
