@@ -39,7 +39,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {(!showPreview || showSummary) && <p className='mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+        {(!showPreview || showSummary) && <p className='mt-4 mb-24 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
           {post.summary}
         </p>}
 
@@ -57,7 +57,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           />
         </div> }
 
-        <div className='flex-col items-center justify-center article-cover'>
+        <div className='article-cover'>
           <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
               <a className='hover:bg-opacity-100 hover:scale-105 transform duration-300 rounded-md p-2 text-red-500 cursor-pointer'>
                 {locale.COMMON.ARTICLE_DETAIL}
