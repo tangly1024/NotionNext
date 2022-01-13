@@ -6,14 +6,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
+import Card from './Card'
 import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
   const showPreview = BLOG.home?.showPreview && post.blockMap
   return (
-    <div key={post.id} className='shadow border animate__animated animate__fadeIn flex flex-col-reverse justify-between md:hover:shadow-xl duration-300
-        w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>
+    <Card className='w-full'>
+       <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300'>
 
       <div className='lg:p-8 p-4 flex flex-col w-full'>
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
@@ -74,6 +75,8 @@ const BlogPostCard = ({ post, showSummary }) => {
       </Link>
       )}
     </div >
+    </Card>
+
   )
 }
 

@@ -1,5 +1,7 @@
 import BLOG from '@/blog.config'
 import ArticleDetail from '@/components/ArticleDetail'
+import Card from '@/components/Card'
+import LatestPostsGroup from '@/components/LatestPostsGroup'
 import Live2D from '@/components/Live2D'
 import TocDrawer from '@/components/TocDrawer'
 import TocDrawerButton from '@/components/TocDrawerButton'
@@ -50,6 +52,9 @@ const Slug = ({
       latestPosts={latestPosts}
       categories={categories}
       floatSlot={floatSlot}
+      rightAreaSlot={
+        BLOG.widget?.showLatestPost && <Card><LatestPostsGroup posts={latestPosts} /></Card>
+      }
     >
       <ArticleDetail
         post={post}

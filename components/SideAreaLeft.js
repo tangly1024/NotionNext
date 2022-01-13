@@ -8,6 +8,7 @@ import Analytics from './Analytics'
 import Tabs from '@/components/Tabs'
 import BLOG from '@/blog.config'
 import Logo from './Logo'
+import Card from './Card'
 
 /**
  * 侧边平铺
@@ -30,17 +31,16 @@ const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, cu
       {/* 菜单 */}
       <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
         <Logo/>
-        <div className='pt-2 font-sans'>
+        <div className='pt-2 px-2 font-sans'>
         <MenuButtonGroup allowCollapse={true} postCount={postCount} />
         </div>
-        {BLOG.menu.showSearch && <div className='px-5 pt-2 font-sans'>
+        {BLOG.menu.showSearch && <div className='px-2 pt-2 font-sans'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
         </div>}
       </section>
-
     </section>
 
-    <section className='sticky top-4'>
+    <Card className='sticky top-4'>
       <Tabs>
           {showToc && (
             <div key={locale.COMMON.TABLE_OF_CONTENTS} className='dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 duration-200'>
@@ -53,7 +53,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, cu
             <Analytics postCount={postCount}/>
           </div>
       </Tabs>
-    </section>
+    </Card>
 
  </aside>
 }
