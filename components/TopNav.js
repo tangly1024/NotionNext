@@ -111,7 +111,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
       </div>
 
       <Collapse isOpen={isOpen}>
-        <div className='bg-white py-1'>
+        <div className='bg-white py-1 px-5'>
           <MenuButtonGroup postCount={postCount}/>
           </div>
       </Collapse>

@@ -22,17 +22,17 @@ const TocDrawer = ({ post, cRef }) => {
   }
   const { locale } = useGlobal()
   return <>
-    <div className='fixed top-0 right-0 z-40'>
+    <div className='fixed top-0 right-0 z-40 '>
       {/* 侧边菜单 */}
       <div
         className={(showDrawer ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') +
-        '  shadow-card animate__animated animate__faster max-h-96 ' +
-        ' w-60 duration-200 fixed right-4 top-16 rounded overflow-y-auto'}>
+        ' shadow-card animate__animated animate__faster max-h-96 ' +
+        ' w-60 duration-200 fixed right-4 top-16 rounded overflow-y-auto py-2 bg-white dark:bg-gray-600'}>
           {post && <>
-            <div className='text-xl font-bold text-center text-black dark:text-white bg-white dark:bg-gray-600 py-2 px-6'>
+            <div className='font-bold pb-2 text-center text-black dark:text-white '>
               {locale.COMMON.TABLE_OF_CONTENTS}
             </div>
-           <div className='p-6 dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800'>
+           <div className='dark:text-gray-400 text-gray-600 dark:bg-gray-800'>
              <Toc toc={post.toc}/>
            </div>
           </>

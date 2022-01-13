@@ -52,8 +52,8 @@ const Toc = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs))
 
-  return <>
-    <div className='w-full'>
+  return <div className='px-3'>
+    <div className='w-full pb-1'>
       <Progress/>
     </div>
     <nav className='font-sans overflow-y-auto scroll-hidden'>
@@ -79,7 +79,7 @@ const Toc = ({ toc }) => {
         )
       })}
     </nav>
-  </>
+  </div>
 }
 
 export default Toc
