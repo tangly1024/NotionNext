@@ -1,7 +1,6 @@
 import { faCopyright, faEye, faShieldAlt, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import Link from 'next/link'
 import BLOG from '@/blog.config'
 
 const Footer = ({ title }) => {
@@ -14,7 +13,7 @@ const Footer = ({ title }) => {
       <FontAwesomeIcon icon={faCopyright} /> {` ${y}`} <span> <a href={BLOG.link} className='underline font-bold text-gray-500 dark:text-gray-300 '>{BLOG.author}</a>. Powered by <a href='https://notion.so' className='underline font-bold text-gray-500 dark:text-gray-300'>Notion</a> & <a href='https://github.com/tangly1024/NotionNext' className='underline font-bold text-gray-500 dark:text-gray-300'>NotionNext</a>.</span>
       <br />
       <FontAwesomeIcon icon={faShieldAlt} /> <a href='https://beian.miit.gov.cn/' className='ml-1 font-bold'>闽ICP备20010331号</a>
-      <span > <Link href='/article/privacy-policy' ><a className='ml-1 mr-1 font-bold underline'>隐私政策</a></Link></span>
+      {/* <span > <Link href='/article/privacy-policy' ><a className='ml-1 mr-1 font-bold underline'>隐私政策</a></Link></span> */}
 
       <span className='hidden busuanzi_container_site_pv'>
             <FontAwesomeIcon icon={faEye}/><span className='px-1 busuanzi_value_site_pv'> </span>pv
