@@ -56,7 +56,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
   const searchDrawerSlot = <>
     { categories && (
         <section className='mt-8'>
-          <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
+          <div className='text-sm flex flex-nowrap justify-between font-light px-2'>
             <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
             <Link href='/category' passHref>
               <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
@@ -70,7 +70,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
 
     { tags && (
         <section className='mt-4'>
-          <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
+          <div className='text-sm py-2 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200'>
             <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
             <Link href='/tag' passHref>
               <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
@@ -78,7 +78,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
               </a>
             </Link>
           </div>
-          <div className='px-5 py-2'>
+          <div className='p-2'>
             <TagGroups tags={tags} currentTag={currentTag} />
           </div>
         </section>
