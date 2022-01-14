@@ -39,17 +39,17 @@ const SideAreaRight = ({
 
   return (<aside id='right' className='hidden 2xl:block flex-col w-60 ml-4'>
 
-      <Card>
-              {/* 展示广告  */}
-              <ins
-                className="adsbygoogle"
-                style={{ display: 'block' }}
-                data-adtest="on"
-                data-ad-client="ca-pub-2708419466378217"
-                data-ad-slot="8807314373"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-              ></ins>
+      <Card className='mb-2'>
+          {/* 展示广告  */}
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-adtest="on"
+            data-ad-client="ca-pub-2708419466378217"
+            data-ad-slot="8807314373"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
       </Card>
 
       <div className="sticky top-4">
