@@ -89,7 +89,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} animate__animated animate__fadeIn  lg:relative w-full top-0 z-20 transform duration-500`}>
+    <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} lg:relative w-full top-0 z-20 transform duration-500`}>
       <div className='w-full flex justify-between items-center p-4 bg-black text-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
