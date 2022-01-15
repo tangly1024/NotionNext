@@ -98,7 +98,7 @@ nav {
 }
 
 .shadow-card{
-  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 .gt-meta{
@@ -109,12 +109,83 @@ nav {
   @apply right-auto left-0 hidden lg:block z-10 !important
 }
 
-@media (max-width: 1300px){
-  .sidebar{
-    -ms-overflow-style: none;
-    overflow: -moz-scrollbars-none;
-    @apply border-r border-gray-200 h-screen overflow-y-scroll fixed left-0
-  }
-  .sidebar::-webkit-scrollbar { width: 0 !important }
+/* 隐藏滚动条 */
+.scroll-hidden{
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
 }
 
+.scroll-hidden::-webkit-scrollbar { width: 0 !important }
+
+.notion-collection{
+  @apply max-w-0
+}
+
+/* 渐变透明度 */
+.line-x-opacity{
+  background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgb(255, 255, 255)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, rgba(255, 255, 255,0), rgb(255, 255, 255)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* 标准的语法（必须放在最后） */
+}
+
+.-line-x-opacity{
+  background: -webkit-linear-gradient(right, rgba(255,255,255,0), rgb(255, 255, 255)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(left, rgba(255, 255, 255,0), rgb(255, 255, 255)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(left, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to left, rgba(255, 255, 255,0), rgba(255, 255, 255)); /* 标准的语法（必须放在最后） */
+}
+.dark .line-x-opacity{
+  background: -webkit-linear-gradient(left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, rgba(31, 41, 55,0), rgba(31, 41, 55)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, rgba(31, 41, 55,0), rgba(31, 41, 55)); /* 标准的语法（必须放在最后） */
+}
+
+.dark .-line-x-opacity{
+  background: -webkit-linear-gradient(right, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to left, rgba(31, 41, 55,0), rgb(31, 41, 55)); /* 标准的语法（必须放在最后） */
+}
+
+.glassmorphism{
+  background: hsla(0, 0%, 100%, .75);
+  -webkit-backdrop-filter: blur(10px);    
+  backdrop-filter: blur(10px);   
+}
+
+.dark .glassmorphism{
+  background: rgba(31, 41, 55, .75);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.medium-zoom-overlay{
+  background: none !important;
+}
+
+.article-cover{
+  -webkit-text-size-adjust: 100%;
+  font-size: 14px;
+  font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: rgba(0,0,0,.75);
+  font-variant-ligatures: common-ligatures;
+  line-height: 1.625;
+  tab-size: 4;
+  outline: 0;
+  font-weight: normal;
+  -webkit-box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 998;
+  padding-top: 160px;
+  bottom: -1px;
+  margin-top: -200px;
+  text-align: center;
+  width: 100%;
+  background-image: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 70%);
+  padding-bottom: 34px;
+}

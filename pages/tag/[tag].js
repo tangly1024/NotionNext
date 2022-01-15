@@ -1,43 +1,65 @@
-import { getAllPosts, getAllTags } from '@/lib/notion'
-import DefaultLayout from '@/layouts/DefaultLayout'
-import BLOG from '@/blog.config'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { LayoutTag } from '@/themes'
 
-export default function Tag ({ tags, posts, currentTag }) {
-  return <DefaultLayout tags={tags} posts={posts} currentTag={currentTag} />
+const Tag = (props) => {
+  return <LayoutTag {...props} />
 }
 
 export async function getStaticProps ({ params }) {
-  const currentTag = params.tag
-  let posts = await getAllPosts()
-  posts = posts.filter(
-    post => post.status[0] === 'Published' && post.type[0] === 'Post'
-  )
-  const tags = await getAllTags(posts)
-  const filteredPosts = posts.filter(
-    post => post && post.tags && post.tags.includes(currentTag)
+  const tag = params.tag
+  const from = 'tag-props'
+  const {
+    allPosts,
+    categories,
+    tags,
+    postCount,
+    latestPosts
+  } = await getGlobalNotionData({
+    from,
+    includePage: true,
+    tagsCount: 0
+  })
+  const filteredPosts = allPosts.filter(
+    post => post && post.tags && post.tags.includes(tag)
   )
   return {
     props: {
       tags,
       posts: filteredPosts,
-      currentTag
+      tag,
+      categories,
+      postCount,
+      latestPosts
     },
     revalidate: 1
   }
 }
 
+/**
+ * 获取所有的标签
+ * @returns
+ * @param tags
+ */
+function getTagNames (tags) {
+  const tagNames = []
+  tags.forEach(tag => {
+    tagNames.push(tag.name)
+  })
+  return tagNames
+}
+
 export async function getStaticPaths () {
-  if (BLOG.isProd) {
-    // 预渲染
-    const tags = await getAllTags()
-    return {
-      paths: Object.keys(tags).map(tag => ({ params: { tag } })),
-      fallback: true
-    }
-  } else {
-    return {
-      paths: [],
-      fallback: true
-    }
+  const from = 'tag-static-path'
+  const { tags } = await getGlobalNotionData({
+    from,
+    tagsCount: 0
+  })
+  const tagNames = getTagNames(tags)
+
+  return {
+    paths: Object.keys(tagNames).map(index => ({ params: { tag: tagNames[index] } })),
+    fallback: true
   }
 }
+
+export default Tag

@@ -2,12 +2,19 @@ import BLOG from '@/blog.config'
 import Head from 'next/head'
 
 const CommonHead = ({ meta }) => {
-  const url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link
+  let url = BLOG.path.length ? `${BLOG.link}/${BLOG.path}` : BLOG.link
+  if (meta) {
+    url = `${url}/${meta.slug}`
+  }
+  const title = meta?.title || BLOG.title
+  const description = meta?.description || BLOG.description
+  const type = meta?.type || 'website'
+  const keywords = meta?.tags || BLOG.keywords
 
   return <Head>
-    <title>{meta.title}</title>
-    <meta content={BLOG.darkBackground} name='theme-color' />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>{title}</title>
+    <meta name='theme-color' content={BLOG.darkBackground} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name='robots' content='follow, index' />
     <meta charSet='UTF-8' />
     {BLOG.seo.googleSiteVerification && (
@@ -16,21 +23,19 @@ const CommonHead = ({ meta }) => {
         content={BLOG.seo.googleSiteVerification}
       />
     )}
-    {BLOG.seo.keywords && (
-      <meta name='keywords' content={BLOG.seo.keywords.join(', ')} />
+    {keywords && (
+      <meta name='keywords' content={keywords.join(', ')} />
     )}
-    <meta name='description' content={meta.description} />
+    <meta name='description' content={description} />
     <meta property='og:locale' content={BLOG.lang} />
-    <meta property='og:title' content={meta.title} />
-    <meta property='og:description' content={meta.description} />
-    <meta
-      property='og:url'
-      content={meta.slug ? `${url}/${meta.slug}` : url}
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:url' content={url}
     />
-    <meta property='og:type' content={meta.type} />
+    <meta property='og:type' content={type} />
     <meta name='twitter:card' content='summary_large_image' />
-    <meta name='twitter:description' content={meta.description} />
-    <meta name='twitter:title' content={meta.title} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:title' content={title} />
     {meta.type === 'article' && (
       <>
         <meta

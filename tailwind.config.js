@@ -7,11 +7,22 @@ const fontSansCJK = !CJK()
 const fontSerifCJK = !CJK()
   ? []
   : [`"Noto Serif CJK ${CJK()}"`, `"Noto Serif ${CJK()}"`]
-
 module.exports = {
-  purge: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js'],
+  purge: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './themes/**/*.js'],
   darkMode: BLOG.appearance === 'class' ? 'media' : 'class', // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      sans: ['"IBM Plex Sans"', ...fontFamily.sans, ...fontSansCJK],
+      serif: ['"Source Serif"', ...fontFamily.serif, ...fontSerifCJK],
+      noEmoji: [
+        '"IBM Plex Sans"',
+        'ui-sans-serif',
+        'system-ui',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        'sans-serif'
+      ]
+    },
     extend: {
       colors: {
         day: {
@@ -20,18 +31,6 @@ module.exports = {
         night: {
           DEFAULT: BLOG.darkBackground || '#111827'
         }
-      },
-      fontFamily: {
-        sans: ['"IBM Plex Sans"', ...fontSansCJK, ...fontFamily.sans],
-        serif: ['"Source Serif"', ...fontSerifCJK, ...fontFamily.serif],
-        noEmoji: [
-          '"IBM Plex Sans"',
-          'ui-sans-serif',
-          'system-ui',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'sans-serif'
-        ]
       }
     }
   },

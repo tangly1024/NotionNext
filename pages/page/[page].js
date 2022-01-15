@@ -1,62 +1,66 @@
-import { getAllPosts, getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
-import DefaultLayout from '@/layouts/DefaultLayout'
-import { useRouter } from 'next/router'
+import { getPostBlocks } from '@/lib/notion'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { LayoutPage } from '@/themes'
+import Custom404 from '@/pages/404'
 
-const Page = ({ posts, tags, page }) => {
-  let filteredBlogPosts = posts
-  if (posts) {
-    const router = useRouter()
-    if (router.query && router.query.s) {
-      filteredBlogPosts = posts.filter(post => {
-        const tagContent = post.tags ? post.tags.join(' ') : ''
-        const searchContent = post.title + post.summary + tagContent
-        return searchContent.toLowerCase().includes(router.query.s.toLowerCase())
-      })
-    }
+const Page = (props) => {
+  if (!props?.meta) {
+    return <Custom404 />
   }
-
-  return <DefaultLayout tags={tags} posts={filteredBlogPosts} page={page} />
-}
-
-export async function getStaticProps (context) {
-  const { page } = context.params // Get Current Page No.
-  let posts = await getAllPosts()
-  posts = posts.filter(
-    post => post.status[0] === 'Published' && post.type[0] === 'Post'
-  )
-  const tags = await getAllTags(posts)
-  return {
-    props: {
-      tags,
-      posts,
-      page
-    },
-    revalidate: 1
-  }
+  return <LayoutPage {...props} />
 }
 
 export async function getStaticPaths () {
-  if (BLOG.isProd) {
-    // 预渲染
-    let posts = await getAllPosts()
-    posts = posts.filter(
-      post => post.status[0] === 'Published' && post.type[0] === 'Post'
-    )
-    const totalPosts = posts.length
-    const totalPages = Math.ceil(totalPosts / BLOG.postsPerPage)
-    return {
-      // remove first page, we 're not gonna handle that.
-      paths: Array.from({ length: totalPages - 1 }, (_, i) => ({
-        params: { page: '' + (i + 2) }
-      })),
-      fallback: true
+  const from = 'page-paths'
+  const { postCount } = await getGlobalNotionData({ from })
+  const totalPages = Math.ceil(postCount / BLOG.postsPerPage)
+  return {
+    // remove first page, we 're not gonna handle that.
+    paths: Array.from({ length: totalPages - 1 }, (_, i) => ({ params: { page: '' + (i + 2) } })),
+    fallback: true
+  }
+}
+
+export async function getStaticProps ({ params: { page } }) {
+  const from = `page-${page}`
+  const {
+    allPosts,
+    latestPosts,
+    categories,
+    tags,
+    postCount
+  } = await getGlobalNotionData({ from })
+  const meta = {
+    title: `${page} | Page | ${BLOG.title}`,
+    description: BLOG.description,
+    type: 'website'
+  }
+  // 处理分页
+  const postsToShow = allPosts.slice(
+    BLOG.postsPerPage * (page - 1),
+    BLOG.postsPerPage * page
+  )
+
+  for (const i in postsToShow) {
+    const post = postsToShow[i]
+    const blockMap = await getPostBlocks(post.id, 'slug', BLOG.home.previewLines)
+    if (blockMap) {
+      post.blockMap = blockMap
     }
-  } else {
-    return {
-      paths: [],
-      fallback: true
-    }
+  }
+
+  return {
+    props: {
+      page,
+      posts: postsToShow,
+      postCount,
+      latestPosts,
+      tags,
+      categories,
+      meta
+    },
+    revalidate: 1
   }
 }
 

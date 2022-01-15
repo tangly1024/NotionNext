@@ -1,27 +1,51 @@
-import { getAllPosts, getAllTags } from '@/lib/notion'
-import DefaultLayout from '@/layouts/DefaultLayout'
+import BLOG from '@/blog.config'
+import { getPostBlocks } from '@/lib/notion'
+import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { LayoutIndex } from '@/themes'
+
+const Index = (props) => {
+  return <LayoutIndex {...props}/>
+}
 
 export async function getStaticProps () {
-  let posts = await getAllPosts()
-  posts = posts.filter(
-    post => post.status[0] === 'Published' && post.type[0] === 'Post'
-  )
-  const tags = await getAllTags(posts)
+  const from = 'index'
+  const { allPosts, latestPosts, categories, tags, postCount } = await getGlobalNotionData({ from })
+  const meta = {
+    title: `${BLOG.title}`,
+    description: BLOG.description,
+    type: 'website'
+  }
+
+  // 处理分页
+  const page = 1
+  let postsToShow
+  if (BLOG.postListStyle !== 'page') {
+    postsToShow = Array.from(allPosts)
+  } else {
+    postsToShow = allPosts.slice(
+      BLOG.postsPerPage * (page - 1),
+      BLOG.postsPerPage * page
+    )
+    for (const i in postsToShow) {
+      const post = postsToShow[i]
+      const blockMap = await getPostBlocks(post.id, 'slug', BLOG.home.previewLines)
+      if (blockMap) {
+        post.blockMap = blockMap
+      }
+    }
+  }
 
   return {
     props: {
-      page: 1, // current page is 1
-      posts,
-      tags
+      posts: postsToShow,
+      latestPosts,
+      postCount,
+      tags,
+      categories,
+      meta
     },
     revalidate: 1
   }
 }
 
-const blog = ({ posts, page, tags }) => {
-  return (
-    <DefaultLayout tags={tags} posts={posts} page={page} />
-  )
-}
-
-export default blog
+export default Index

@@ -5,12 +5,12 @@ import * as gtag from '@/lib/gtag'
 const Gtag = () => {
   const router = useRouter()
   useEffect(() => {
-    const handleRouteChange = url => {
+    const gtagRouteChange = url => {
       gtag.pageview(url)
     }
-    router.events.on('routeChangeComplete', handleRouteChange)
+    router.events.on('routeChangeComplete', gtagRouteChange)
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off('routeChangeComplete', gtagRouteChange)
     }
   }, [router.events])
   return null
