@@ -1,30 +1,14 @@
 import BLOG from '@/blog.config'
-import BlogPostListPage from '@/components/BlogPostListPage'
-import Header from '@/components/Header'
-import LatestPostsGroup from '@/components/LatestPostsGroup'
-import BaseLayout from '@/layouts/BaseLayout'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import Custom404 from '../404'
+import { LayoutPage } from '@/themes'
+import Custom404 from '@/pages/404'
 
-const Page = ({ page, posts, tags, meta, categories, postCount, latestPosts }) => {
-  if (!meta || BLOG.postListStyle !== 'page') {
-    return <Custom404/>
+const Page = (props) => {
+  if (!props?.meta) {
+    return <Custom404 />
   }
-
-  return (
-    <BaseLayout
-    headerSlot={BLOG.home.showHomeBanner && <Header />}
-    meta={meta}
-    tags={tags}
-    sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
-    rightAreaSlot={BLOG.widget?.showLatestPost && <LatestPostsGroup posts={latestPosts} />}
-    postCount={postCount}
-    categories={categories}
-  >
-    <BlogPostListPage page={page} posts={posts} postCount={postCount} />
-  </BaseLayout>
-  )
+  return <LayoutPage {...props} />
 }
 
 export async function getStaticPaths () {
@@ -40,7 +24,13 @@ export async function getStaticPaths () {
 
 export async function getStaticProps ({ params: { page } }) {
   const from = `page-${page}`
-  const { allPosts, latestPosts, categories, tags, postCount } = await getGlobalNotionData({ from })
+  const {
+    allPosts,
+    latestPosts,
+    categories,
+    tags,
+    postCount
+  } = await getGlobalNotionData({ from })
   const meta = {
     title: `${page} | Page | ${BLOG.title}`,
     description: BLOG.description,

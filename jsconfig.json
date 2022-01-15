@@ -5,7 +5,7 @@
       "@/*": ["./*"],
       "@/components/*": ["components/*"],
       "@/data/*": ["data/*"],
-      "@/layouts/*": ["layouts/*"],
+      "@/layouts/*": ["theme/*"],
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"]
     }

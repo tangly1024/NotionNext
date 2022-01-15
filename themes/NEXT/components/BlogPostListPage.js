@@ -1,7 +1,7 @@
-import BlogPostCard from '@/components/BlogPostCard'
+import BlogPostCard from '@/themes/NEXT/components/BlogPostCard'
 import PaginationNumber from './PaginationNumber'
 import BLOG from '@/blog.config'
-import BlogPostListEmpty from '@/components/BlogPostListEmpty'
+import BlogPostListEmpty from '@/themes/NEXT/components/BlogPostListEmpty'
 
 /**
  * 文章列表分页表格

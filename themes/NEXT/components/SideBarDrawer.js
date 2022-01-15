@@ -1,4 +1,4 @@
-import SideBar from '@/components/SideBar'
+import SideBar from '@/themes/NEXT/components/SideBar'
 import { useRouter } from 'next/router'
 import React, { useEffect, useImperativeHandle } from 'react'
 

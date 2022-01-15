@@ -5,7 +5,7 @@ import BLOG from '@/blog.config'
  * @returns {JSX.Element}
  * @constructor
  */
-const ThirdPartyScript = () => {
+const CommonScript = () => {
   return (<>
     {BLOG.comment?.DaoVoiceId && (<>
       {/* DaoVoice 反馈 */}
@@ -109,4 +109,4 @@ const ThirdPartyScript = () => {
   </>)
 }
 
-export default ThirdPartyScript
+export default CommonScript

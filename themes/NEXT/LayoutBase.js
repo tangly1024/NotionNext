@@ -1,13 +1,13 @@
 import BLOG from '@/blog.config'
 import CommonHead from '@/components/CommonHead'
-import FloatDarkModeButton from '@/components/FloatDarkModeButton'
-import Footer from '@/components/Footer'
-import JumpToBottomButton from '@/components/JumpToBottomButton'
-import JumpToTopButton from '@/components/JumpToTopButton'
-import LoadingCover from '@/components/LoadingCover'
-import SideAreaLeft from '@/components/SideAreaLeft'
-import SideAreaRight from '@/components/SideAreaRight'
-import TopNav from '@/components/TopNav'
+import FloatDarkModeButton from './components/FloatDarkModeButton'
+import Footer from './components/Footer'
+import JumpToBottomButton from './components/JumpToBottomButton'
+import JumpToTopButton from './components/JumpToTopButton'
+import LoadingCover from './components/LoadingCover'
+import SideAreaLeft from './components/SideAreaLeft'
+import SideAreaRight from './components/SideAreaRight'
+import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
@@ -17,23 +17,18 @@ import smoothscroll from 'smoothscroll-polyfill'
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
  * @param children
  * @param layout
- * @param fullWidth
  * @param tags
  * @param meta
  * @param post
- * @param totalPosts
  * @param currentSearch
  * @param currentCategory
  * @param currentTag
  * @param categories
- * @param customMeta
  * @returns {JSX.Element}
  * @constructor
  */
-const BaseLayout = ({
+const LayoutBase = ({
   children,
-  layout,
-  fullWidth,
   headerSlot,
   tags,
   meta,
@@ -45,8 +40,7 @@ const BaseLayout = ({
   currentSearch,
   currentCategory,
   currentTag,
-  categories,
-  ...customMeta
+  categories
 }) => {
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
@@ -81,7 +75,7 @@ const BaseLayout = ({
 
       <>{headerSlot}</>
 
-      <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'></div>
+      <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'/>
 
       <main id='wrapper' className='flex justify-center flex-1 pb-12'>
           <SideAreaLeft targetRef={targetRef} post={post} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
@@ -111,8 +105,8 @@ const BaseLayout = ({
   )
 }
 
-BaseLayout.propTypes = {
+LayoutBase.propTypes = {
   children: PropTypes.node
 }
 
-export default BaseLayout
+export default LayoutBase
