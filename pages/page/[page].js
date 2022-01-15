@@ -2,8 +2,12 @@ import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { LayoutPage } from '@/themes'
+import Custom404 from '@/pages/404'
 
 const Page = (props) => {
+  if (!props?.meta) {
+    return <Custom404 />
+  }
   return <LayoutPage {...props} />
 }
 
