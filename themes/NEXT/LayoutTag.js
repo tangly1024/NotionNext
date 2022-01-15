@@ -5,7 +5,7 @@ import StickyBar from './components/StickyBar'
 import TagList from './components/TagList'
 import BlogPostListScroll from './components/BlogPostListScroll'
 
-const LayoutTag = ({ tags, posts, tag, categories, postCount, latestPosts }) => {
+export const LayoutTag = ({ tags, posts, tag, categories, postCount, latestPosts }) => {
   const { locale } = useGlobal()
 
   const meta = {
@@ -28,5 +28,3 @@ const LayoutTag = ({ tags, posts, tag, categories, postCount, latestPosts }) => 
     </div>
   </LayoutBase>
 }
-
-export default LayoutTag

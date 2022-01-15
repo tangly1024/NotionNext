@@ -1,13 +1,13 @@
-export const LayoutIndex = import('./LayoutIndex')
-export const LayoutSearch = import('./LayoutSearch')
-export const LayoutArchive = import('./LayoutArchive')
-export const LayoutSlug = import('./LayoutSlug')
-export const Layout404 = import('./Layout404')
-export const LayoutCategory = import('./LayoutCategory')
-export const LayoutCategoryIndex = import('./LayoutCategoryIndex')
-export const LayoutPage = import('./LayoutPage')
-export const LayoutTag = import('./LayoutTag')
-export const LayoutTagIndex = import('./LayoutTagIndex')
+export { LayoutIndex } from './LayoutIndex'
+export { LayoutSearch } from './LayoutSearch'
+export { LayoutArchive } from './LayoutArchive'
+export { LayoutSlug } from './LayoutSlug'
+export { Layout404 } from './Layout404'
+export { LayoutCategory } from './LayoutCategory'
+export { LayoutCategoryIndex } from './LayoutCategoryIndex'
+export { LayoutPage } from './LayoutPage'
+export { LayoutTag } from './LayoutTag'
+export { LayoutTagIndex } from './LayoutTagIndex'
 
 export const CONFIG_NEXT = {
   // 首页相关配置

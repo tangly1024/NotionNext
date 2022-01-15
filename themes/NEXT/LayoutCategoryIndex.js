@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faThList } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
-const LayoutCategoryIndex = ({
+export const LayoutCategoryIndex = ({
   tags,
   allPosts,
   categories,
@@ -36,5 +36,3 @@ const LayoutCategoryIndex = ({
     </div>
   </LayoutBase>
 }
-
-export default LayoutCategoryIndex

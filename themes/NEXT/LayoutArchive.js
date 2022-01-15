@@ -5,7 +5,7 @@ import LayoutBase from './LayoutBase'
 import BlogPostArchive from './components/BlogPostArchive'
 import Live2D from './components/Live2D'
 
-const LayoutArchive = ({ posts, tags, categories, postCount }) => {
+export const LayoutArchive = ({ posts, tags, categories, postCount }) => {
   const { locale } = useGlobal()
   // 深拷贝
   const postsSortByDate = Object.create(posts)
@@ -63,5 +63,3 @@ const LayoutArchive = ({ posts, tags, categories, postCount }) => {
     </LayoutBase>
   )
 }
-
-export default LayoutArchive

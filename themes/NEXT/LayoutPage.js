@@ -3,7 +3,7 @@ import LatestPostsGroup from './components/LatestPostsGroup'
 import BlogPostListPage from './components/BlogPostListPage'
 import { CONFIG_NEXT } from './index'
 
-const LayoutPage = ({ page, posts, tags, meta, categories, postCount, latestPosts }) => {
+export const LayoutPage = ({ page, posts, tags, meta, categories, postCount, latestPosts }) => {
   return (
     <LayoutBase
       meta={meta}
@@ -17,5 +17,3 @@ const LayoutPage = ({ page, posts, tags, meta, categories, postCount, latestPost
     </LayoutBase>
   )
 }
-
-export default LayoutPage

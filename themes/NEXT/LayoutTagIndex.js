@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTags } from '@fortawesome/free-solid-svg-icons'
 import TagItem from './components/TagItem'
 
-const LayoutTagIndex = ({ tags, categories, postCount, latestPosts }) => {
+export const LayoutTagIndex = ({ tags, categories, postCount, latestPosts }) => {
   const { locale } = useGlobal()
   const meta = {
     title: `${locale.COMMON.TAGS} | ${BLOG.title}`,
@@ -23,4 +23,3 @@ const LayoutTagIndex = ({ tags, categories, postCount, latestPosts }) => {
     </div>
   </LayoutBase>
 }
-export default LayoutTagIndex

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
 
-const Layout404 = () => {
+export const Layout404 = () => {
   const router = useRouter()
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
@@ -33,5 +33,3 @@ const Layout404 = () => {
     </div>
   </LayoutBase>
 }
-
-export default Layout404

@@ -7,7 +7,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 
-const LayoutSearch = ({ posts, tags, categories, postCount }) => {
+export const LayoutSearch = ({ posts, tags, categories, postCount }) => {
   let filteredPosts
   const searchKey = getSearchKey()
   if (searchKey) {
@@ -46,8 +46,6 @@ const LayoutSearch = ({ posts, tags, categories, postCount }) => {
     </LayoutBase>
   )
 }
-
-export default LayoutSearch
 
 function getSearchKey () {
   const router = useRouter()

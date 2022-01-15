@@ -16,7 +16,7 @@ import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
 import { CONFIG_NEXT } from './index'
 
-const LayoutSlug = ({
+export const LayoutSlug = ({
   post,
   tags,
   prev,
@@ -74,5 +74,3 @@ const LayoutSlug = ({
     </LayoutBase>
   )
 }
-
-export default LayoutSlug

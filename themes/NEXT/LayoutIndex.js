@@ -6,7 +6,7 @@ import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import { CONFIG_NEXT } from './index'
 
-const LayoutIndex = ({ posts, tags, meta, categories, postCount, latestPosts }) => {
+export const LayoutIndex = ({ posts, tags, meta, categories, postCount, latestPosts }) => {
   return <LayoutBase
     headerSlot={CONFIG_NEXT.HOME_BANNER && <Header />}
     meta={meta}
@@ -27,5 +27,3 @@ const LayoutIndex = ({ posts, tags, meta, categories, postCount, latestPosts }) 
         )}
   </LayoutBase>
 }
-
-export default LayoutIndex
