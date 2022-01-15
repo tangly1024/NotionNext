@@ -1,19 +1,19 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { ArticleLayout } from '@/themes'
+import { LayoutSlug } from '@/themes'
 import Custom404 from '@/pages/404'
 
 /**
  * 根据notion的slug访问页面
- * @param {*} param0
+ * @param {*} props
  * @returns
  */
 const Slug = (props) => {
   if (!props.post) {
     return <Custom404 />
   }
-  return <ArticleLayout {...props}/>
+  return <LayoutSlug {...props}/>
 }
 
 export async function getStaticPaths () {
@@ -69,7 +69,7 @@ export async function getStaticProps ({ params: { slug } }) {
 
 /**
  *
- * @param {获取文章推荐文章} post
+ * @param post
  * @param {*} allPosts
  * @param {*} count
  * @returns

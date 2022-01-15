@@ -1,21 +1,21 @@
-import BaseLayout from './BaseLayout'
+import LayoutBase from './LayoutBase'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import BlogPostListPage from './components/BlogPostListPage'
-import _NEXT from './_NEXT'
+import { CONFIG_NEXT } from './index'
 
-const PageLayout = ({ page, posts, tags, meta, categories, postCount, latestPosts }) => {
+const LayoutPage = ({ page, posts, tags, meta, categories, postCount, latestPosts }) => {
   return (
-    <BaseLayout
+    <LayoutBase
       meta={meta}
       tags={tags}
       sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
-      rightAreaSlot={_NEXT.RIGHT_LATEST_POSTS && <LatestPostsGroup posts={latestPosts} />}
+      rightAreaSlot={CONFIG_NEXT.RIGHT_LATEST_POSTS && <LatestPostsGroup posts={latestPosts} />}
       postCount={postCount}
       categories={categories}
     >
       <BlogPostListPage page={page} posts={posts} postCount={postCount} />
-    </BaseLayout>
+    </LayoutBase>
   )
 }
 
-export default PageLayout
+export default LayoutPage

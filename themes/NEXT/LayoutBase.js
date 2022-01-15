@@ -17,23 +17,18 @@ import smoothscroll from 'smoothscroll-polyfill'
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
  * @param children
  * @param layout
- * @param fullWidth
  * @param tags
  * @param meta
  * @param post
- * @param totalPosts
  * @param currentSearch
  * @param currentCategory
  * @param currentTag
  * @param categories
- * @param customMeta
  * @returns {JSX.Element}
  * @constructor
  */
-const BaseLayout = ({
+const LayoutBase = ({
   children,
-  layout,
-  fullWidth,
   headerSlot,
   tags,
   meta,
@@ -45,8 +40,7 @@ const BaseLayout = ({
   currentSearch,
   currentCategory,
   currentTag,
-  categories,
-  ...customMeta
+  categories
 }) => {
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
@@ -111,8 +105,8 @@ const BaseLayout = ({
   )
 }
 
-BaseLayout.propTypes = {
+LayoutBase.propTypes = {
   children: PropTypes.node
 }
 
-export default BaseLayout
+export default LayoutBase

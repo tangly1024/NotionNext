@@ -1,5 +1,5 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { SearchLayout } from '@/themes'
+import { LayoutSearch } from '@/themes'
 
 export async function getStaticProps () {
   const {
@@ -22,7 +22,7 @@ export async function getStaticProps () {
 }
 
 const Search = (props) => {
-  return <SearchLayout {...props} />
+  return <LayoutSearch {...props} />
 }
 
 export default Search

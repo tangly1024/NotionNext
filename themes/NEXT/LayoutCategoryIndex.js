@@ -1,11 +1,11 @@
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import BaseLayout from './BaseLayout'
+import LayoutBase from './LayoutBase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFolder, faThList } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
-const CategoryIndexLayout = ({
+const LayoutCategoryIndex = ({
   tags,
   allPosts,
   categories,
@@ -18,7 +18,7 @@ const CategoryIndexLayout = ({
     description: BLOG.description,
     type: 'website'
   }
-  return <BaseLayout meta={meta} totalPosts={allPosts} tags={tags} postCount={postCount} latestPosts={latestPosts}>
+  return <LayoutBase meta={meta} totalPosts={allPosts} tags={tags} postCount={postCount} latestPosts={latestPosts}>
     <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
       <div className='dark:text-gray-200 mb-5'>
         <FontAwesomeIcon icon={faThList} className='mr-4' />{locale.COMMON.CATEGORY}:
@@ -34,7 +34,7 @@ const CategoryIndexLayout = ({
         })}
       </div>
     </div>
-  </BaseLayout>
+  </LayoutBase>
 }
 
-export default CategoryIndexLayout
+export default LayoutCategoryIndex

@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { getPageTableOfContents } from 'notion-utils'
 import TocDrawerButton from './components/TocDrawerButton'
-import BaseLayout from './BaseLayout'
+import LayoutBase from './LayoutBase'
 import Card from './components/Card'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import ArticleDetail from './components/ArticleDetail'
@@ -14,9 +14,9 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
-import _NEXT from './_NEXT'
+import { CONFIG_NEXT } from './index'
 
-const ArticleLayout = ({
+const LayoutSlug = ({
   post,
   tags,
   prev,
@@ -44,7 +44,7 @@ const ArticleLayout = ({
     : null
 
   return (
-    <BaseLayout
+    <LayoutBase
       meta={meta}
       tags={tags}
       post={post}
@@ -53,7 +53,7 @@ const ArticleLayout = ({
       categories={categories}
       floatSlot={floatSlot}
       rightAreaSlot={
-        _NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup posts={latestPosts} /></Card>
+        CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup posts={latestPosts} /></Card>
       }
     >
       <ArticleDetail
@@ -71,8 +71,8 @@ const ArticleLayout = ({
       {/* 宠物 */}
       <Live2D />
 
-    </BaseLayout>
+    </LayoutBase>
   )
 }
 
-export default ArticleLayout
+export default LayoutSlug

@@ -1,4 +1,4 @@
-import BaseLayout from './BaseLayout'
+import LayoutBase from './LayoutBase'
 import StickyBar from './components/StickyBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -7,8 +7,8 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 
-const SearchLayout = ({ posts, tags, categories, postCount }) => {
-  let filteredPosts = []
+const LayoutSearch = ({ posts, tags, categories, postCount }) => {
+  let filteredPosts
   const searchKey = getSearchKey()
   if (searchKey) {
     filteredPosts = posts.filter(post => {
@@ -27,7 +27,7 @@ const SearchLayout = ({ posts, tags, categories, postCount }) => {
     type: 'website'
   }
   return (
-    <BaseLayout
+    <LayoutBase
       meta={meta}
       tags={tags}
       postCount={postCount}
@@ -43,11 +43,11 @@ const SearchLayout = ({ posts, tags, categories, postCount }) => {
       <div className="md:mt-5">
         <BlogPostListScroll posts={filteredPosts} tags={tags} showSummary={true}/>
       </div>
-    </BaseLayout>
+    </LayoutBase>
   )
 }
 
-export default SearchLayout
+export default LayoutSearch
 
 function getSearchKey () {
   const router = useRouter()

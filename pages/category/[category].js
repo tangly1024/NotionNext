@@ -1,9 +1,9 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
-import { CategoryLayout } from '@/themes'
+import { LayoutCategory } from '@/themes'
 
 export default function Category (props) {
-  return <CategoryLayout {...props} />
+  return <LayoutCategory {...props} />
 }
 
 export async function getStaticProps ({ params }) {

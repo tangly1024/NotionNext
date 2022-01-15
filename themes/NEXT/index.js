@@ -1,4 +1,15 @@
-const _NEXT = {
+export const LayoutIndex = import('./LayoutIndex')
+export const LayoutSearch = import('./LayoutSearch')
+export const LayoutArchive = import('./LayoutArchive')
+export const LayoutSlug = import('./LayoutSlug')
+export const Layout404 = import('./Layout404')
+export const LayoutCategory = import('./LayoutCategory')
+export const LayoutCategoryIndex = import('./LayoutCategoryIndex')
+export const LayoutPage = import('./LayoutPage')
+export const LayoutTag = import('./LayoutTag')
+export const LayoutTagIndex = import('./LayoutTagIndex')
+
+export const CONFIG_NEXT = {
   // 首页相关配置
   HOME_BANNER: false, // 首页是否显示大图及标语 [true,false]
   POSTS_LIST_TYPE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
@@ -74,5 +85,3 @@ const _NEXT = {
     TidioId: '' // https://www.tidio.com/
   }
 }
-// export default BLOG
-module.exports = _NEXT

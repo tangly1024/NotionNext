@@ -2,18 +2,18 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import Custom404 from '@/pages/404'
 import React from 'react'
-import { ArticleLayout } from '@/themes'
+import { LayoutSlug } from '@/themes'
 
 /**
  * 关于页面，默认取notion中slug为about的文章
- * @param {*} param0
+ * @param {*} props
  * @returns
  */
 const About = (props) => {
   if (!props.post) {
     return <Custom404 />
   }
-  return <ArticleLayout {...props} />
+  return <LayoutSlug {...props} />
 }
 
 export async function getStaticProps () {

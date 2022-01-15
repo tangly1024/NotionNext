@@ -1,10 +1,10 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { IndexLayout } from '@/themes'
+import { LayoutIndex } from '@/themes'
 
 const Index = (props) => {
-  return <IndexLayout {...props}/>
+  return <LayoutIndex {...props}/>
 }
 
 export async function getStaticProps () {
@@ -18,7 +18,7 @@ export async function getStaticProps () {
 
   // 处理分页
   const page = 1
-  let postsToShow = []
+  let postsToShow
   if (BLOG.postListStyle !== 'page') {
     postsToShow = Array.from(allPosts)
   } else {

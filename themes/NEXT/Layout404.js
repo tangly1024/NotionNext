@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router'
-import BaseLayout from './BaseLayout'
+import LayoutBase from './LayoutBase'
 import BLOG from '@/blog.config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
 
-const Custom404Layout = () => {
+const Layout404 = () => {
   const router = useRouter()
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
@@ -21,7 +21,7 @@ const Custom404Layout = () => {
     }, 30000000)
   })
 
-  return <BaseLayout meta={{ title: `${BLOG.title} | 页面找不到啦` }}>
+  return <LayoutBase meta={{ title: `${BLOG.title} | 页面找不到啦` }}>
     <div
       className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
       <div className='dark:text-gray-200'>
@@ -31,7 +31,7 @@ const Custom404Layout = () => {
         </div>
       </div>
     </div>
-  </BaseLayout>
+  </LayoutBase>
 }
 
-export default Custom404Layout
+export default Layout404

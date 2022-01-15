@@ -1,11 +1,11 @@
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import React, { useEffect } from 'react'
-import BaseLayout from './BaseLayout'
+import LayoutBase from './LayoutBase'
 import BlogPostArchive from './components/BlogPostArchive'
 import Live2D from './components/Live2D'
 
-const ArchiveLayout = ({ posts, tags, categories, postCount }) => {
+const LayoutArchive = ({ posts, tags, categories, postCount }) => {
   const { locale } = useGlobal()
   // 深拷贝
   const postsSortByDate = Object.create(posts)
@@ -49,7 +49,7 @@ const ArchiveLayout = ({ posts, tags, categories, postCount }) => {
   }, [])
 
   return (
-    <BaseLayout meta={meta} tags={tags} categories={categories} postCount={postCount}>
+    <LayoutBase meta={meta} tags={tags} categories={categories} postCount={postCount}>
       <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 shadow-md min-h-full">
         {Object.keys(archivePosts).map(archiveTitle => (
           <BlogPostArchive
@@ -60,8 +60,8 @@ const ArchiveLayout = ({ posts, tags, categories, postCount }) => {
         ))}
       </div>
       <Live2D />
-    </BaseLayout>
+    </LayoutBase>
   )
 }
 
-export default ArchiveLayout
+export default LayoutArchive

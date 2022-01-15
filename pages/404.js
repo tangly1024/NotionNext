@@ -1,4 +1,4 @@
-import { Custom404Layout } from '@/themes'
+import { Layout404 } from '@/themes'
 
 /**
  * 自定义404界面
@@ -7,5 +7,5 @@ import { Custom404Layout } from '@/themes'
  */
 
 export default function Custom404 () {
-  return <Custom404Layout />
+  return <Layout404 />
 }

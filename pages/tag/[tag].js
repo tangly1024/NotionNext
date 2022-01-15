@@ -1,8 +1,8 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { TagLayout } from '@/themes'
+import { LayoutTag } from '@/themes'
 
 const Tag = (props) => {
-  return <TagLayout {...props} />
+  return <LayoutTag {...props} />
 }
 
 export async function getStaticProps ({ params }) {
@@ -37,8 +37,8 @@ export async function getStaticProps ({ params }) {
 
 /**
  * 获取所有的标签
- * @param {*}} allPosts
  * @returns
+ * @param tags
  */
 function getTagNames (tags) {
   const tagNames = []

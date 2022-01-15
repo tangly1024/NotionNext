@@ -1,9 +1,9 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
-import { TagIndexLayout } from '@/themes'
+import { LayoutTagIndex } from '@/themes'
 
 const TagIndex = (props) => {
-  return <TagIndexLayout {...props} />
+  return <LayoutTagIndex {...props} />
 }
 
 export async function getStaticProps () {
