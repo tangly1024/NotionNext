@@ -1,10 +1,16 @@
 import BLOG from '@/blog.config'
 import ArticleDetail from '@/components/ArticleDetail'
+import Card from '@/components/Card'
+import LatestPostsGroup from '@/components/LatestPostsGroup'
+import Live2D from '@/components/Live2D'
+import TocDrawer from '@/components/TocDrawer'
+import TocDrawerButton from '@/components/TocDrawerButton'
 import BaseLayout from '@/layouts/BaseLayout'
-import { getAllPosts, getPostBlocks } from '@/lib/notion'
+import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import Custom404 from '@/pages/404'
 import { getPageTableOfContents } from 'notion-utils'
+import { useRef } from 'react'
 
 /**
  * 根据notion的slug访问页面
@@ -16,7 +22,6 @@ const Slug = ({
   tags,
   prev,
   next,
-  allPosts,
   recommendPosts,
   categories,
   postCount,
@@ -32,6 +37,12 @@ const Slug = ({
     tags: post.tags
   }
 
+  const drawerRight = useRef(null)
+  const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
+  post.content = Object.keys(post?.blockMap?.block)
+  post.toc = getPageTableOfContents(post, post.blockMap)
+  const floatSlot = post?.toc?.length > 1 ? <div className="block lg:hidden"><TocDrawerButton onClick={() => { drawerRight?.current?.handleSwitchVisible() }} /></div> : null
+
   return (
     <BaseLayout
       meta={meta}
@@ -39,8 +50,11 @@ const Slug = ({
       post={post}
       postCount={postCount}
       latestPosts={latestPosts}
-      totalPosts={allPosts}
       categories={categories}
+      floatSlot={floatSlot}
+      rightAreaSlot={
+        BLOG.widget?.showLatestPost && <Card><LatestPostsGroup posts={latestPosts} /></Card>
+      }
     >
       <ArticleDetail
         post={post}
@@ -48,17 +62,31 @@ const Slug = ({
         prev={prev}
         next={next}
       />
+
+      {/* 悬浮目录按钮 */}
+      <div className="block lg:hidden">
+        <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
+      </div>
+
+      {/* 宠物 */}
+      <Live2D/>
+
     </BaseLayout>
   )
 }
 
 export async function getStaticPaths () {
-  let posts = []
-  if (BLOG.isProd) {
-    posts = await getAllPosts({ from: 'slug - paths', includePage: false })
+  if (!BLOG.isProd) {
+    return {
+      paths: [],
+      fallback: true
+    }
   }
+
+  const from = '[slug-paths'
+  const { allPosts } = await getGlobalNotionData({ from, includePage: false })
   return {
-    paths: posts.map(row => ({ params: { slug: row.slug } })),
+    paths: allPosts.map(row => ({ params: { slug: row.slug } })),
     fallback: true
   }
 }
@@ -74,13 +102,7 @@ export async function getStaticProps ({ params: { slug } }) {
     return { props: {}, revalidate: 1 }
   }
 
-  const blockMap = await getPostBlocks(post.id, 'slug')
-  if (blockMap) {
-    post.blockMap = blockMap
-    post.content = Object.keys(blockMap.block)
-    post.toc = getPageTableOfContents(post, blockMap)
-    delete post.content
-  }
+  post.blockMap = await getPostBlocks(post.id, 'slug')
 
   // 上一篇、下一篇文章关联
   const index = allPosts.indexOf(post)
@@ -95,7 +117,6 @@ export async function getStaticProps ({ params: { slug } }) {
       tags,
       prev,
       next,
-      allPosts,
       recommendPosts,
       categories,
       postCount,

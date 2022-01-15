@@ -54,12 +54,11 @@ export async function getStaticProps ({ params: { page } }) {
 
   for (const i in postsToShow) {
     const post = postsToShow[i]
-    const blockMap = await getPostBlocks(post.id, 'slug')
+    const blockMap = await getPostBlocks(post.id, 'slug', BLOG.home.previewLines)
     if (blockMap) {
       post.blockMap = blockMap
     }
   }
-  console.log('加载文章预览完成')
 
   return {
     props: {

@@ -1,3 +1,4 @@
+import BLOG from '@/blog.config'
 import throttle from 'lodash.throttle'
 import { useCallback, useEffect } from 'react'
 
@@ -13,6 +14,9 @@ let windowTop = 0
 const StickyBar = ({ children }) => {
   if (!children) return <></>
   const scrollTrigger = useCallback(throttle(() => {
+    if (BLOG.topNavType === 'normal') {
+      return
+    }
     const scrollS = window.scrollY
     if (scrollS >= windowTop && scrollS > 10) {
       const stickyBar = document.querySelector('#sticky-bar')
@@ -35,7 +39,7 @@ const StickyBar = ({ children }) => {
   }, [])
 
   return (
-    <div id='sticky-bar' className='sticky flex-grow justify-center top-14 md:top-0 duration-500 z-10 pb-16'>
+    <div id='sticky-bar' className='sticky flex-grow justify-center top-0 duration-500 z-10 pb-16'>
       <div className='glassmorphism dark:border-gray-600 px-5 absolute shadow-md border w-full hidden-scroll'>
           <div id='tag-container' className="md:pl-3 overflow-x-auto">
               { children }

@@ -10,7 +10,7 @@ import Progress from './Progress'
  * @returns {JSX.Element}
  * @constructor
  */
-const Toc = ({ toc, targetRef }) => {
+const Toc = ({ toc }) => {
   // 无目录就直接返回空
   if (!toc || toc.length < 1) {
     return <></>
@@ -52,11 +52,11 @@ const Toc = ({ toc, targetRef }) => {
     setActiveSection(currentSectionId)
   }, throttleMs))
 
-  return <>
-    <div className='w-full'>
-      <Progress targetRef={targetRef}/>
+  return <div className='px-3'>
+    <div className='w-full pb-1'>
+      <Progress/>
     </div>
-    <nav className=' overflow-y-auto scroll-hidden'>
+    <nav className='font-sans overflow-y-auto scroll-hidden'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)
         return (
@@ -79,7 +79,7 @@ const Toc = ({ toc, targetRef }) => {
         )
       })}
     </nav>
-  </>
+  </div>
 }
 
 export default Toc

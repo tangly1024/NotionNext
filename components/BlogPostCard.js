@@ -1,27 +1,29 @@
 import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
+import { faAngleRight, faFolder } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDoubleRight, faFolder } from '@fortawesome/free-solid-svg-icons'
-import TagItemMini from './TagItemMini'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
-import { useGlobal } from '@/lib/global'
+import Card from './Card'
+import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
+  const showPreview = BLOG.home?.showPreview && post.blockMap
   return (
-    <div key={post.id} className='shadow border animate__animated animate__fadeIn flex flex-col-reverse justify-between md:hover:shadow-xl duration-300
-        w-full bg-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-600'>
+    <Card className='w-full'>
+       <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300'>
 
-      <div className='lg:p-8 p-4 flex flex-col justify-between w-full'>
+      <div className='lg:p-8 p-4 flex flex-col w-full'>
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <a className='cursor-pointer font-bold text-3xl text-center leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'>
+          <a className={`cursor-pointer font-bold hover:underline text-3xl flex ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
             {post.title}
           </a>
         </Link>
 
-        <div className='flex mt-2 items-center justify-center flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 '>
+        <div className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}>
           <div>
           <Link href={`/category/${post.category}`} passHref>
             <a className='cursor-pointer font-light text-sm hover:underline transform'>
@@ -38,31 +40,31 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {showSummary && <p className='mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+        {(!showPreview || showSummary) && <p className='mt-4 mb-24 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
           {post.summary}
         </p>}
 
-        {BLOG.home?.showPreview && post?.blockMap && <div className='max-h-screen overflow-hidden truncate max-w-full'>
+        {showPreview && post?.blockMap && <div className='overflow-ellipsis truncate'>
           <NotionRenderer
-                  recordMap={post.blockMap}
-                  mapPageUrl={mapPageUrl}
-                  components={{
-                    equation: Equation,
-                    code: Code,
-                    collectionRow: CollectionRow,
-                    collection: Collection
-                  }}
-                />
+            bodyClassName='max-h-full'
+            recordMap={post.blockMap}
+            mapPageUrl={mapPageUrl}
+            components={{
+              equation: Equation,
+              code: Code,
+              collectionRow: CollectionRow,
+              collection: Collection
+            }}
+          />
         </div> }
 
-        <div className='border-b-2 w-full border-dashed py-2'></div>
-
-        <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
-          <div className='flex items-center cursor-pointer pt-6 justify-end leading-tight'>
-            <a className='bg-black p-2 text-white'>{locale.COMMON.ARTICLE_DETAIL}
-             <FontAwesomeIcon icon={faAngleDoubleRight} /></a>
-          </div>
-        </Link>
+        <div className='article-cover pointer-events-none'>
+          <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
+              <a className='hover:bg-opacity-100 hover:scale-105 pointer-events-auto transform duration-300 rounded-md p-2 text-red-500 cursor-pointer'>
+                {locale.COMMON.ARTICLE_DETAIL}
+                <FontAwesomeIcon className='ml-1' icon={faAngleRight} /></a>
+          </Link>
+        </div>
       </div>
 
       {BLOG.home?.showPostCover && post?.page_cover && (
@@ -73,6 +75,8 @@ const BlogPostCard = ({ post, showSummary }) => {
       </Link>
       )}
     </div >
+    </Card>
+
   )
 }
 

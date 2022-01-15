@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import BlogPostListPage from '@/components/BlogPostListPage'
 import BlogPostListScroll from '@/components/BlogPostListScroll'
+import Card from '@/components/Card'
 import Header from '@/components/Header'
 import LatestPostsGroup from '@/components/LatestPostsGroup'
 import BaseLayout from '@/layouts/BaseLayout'
@@ -28,12 +29,11 @@ export async function getStaticProps () {
     )
     for (const i in postsToShow) {
       const post = postsToShow[i]
-      const blockMap = await getPostBlocks(post.id, 'slug')
+      const blockMap = await getPostBlocks(post.id, 'slug', BLOG.home.previewLines)
       if (blockMap) {
         post.blockMap = blockMap
       }
     }
-    console.log('加载文章预览完成')
   }
 
   return {
@@ -57,7 +57,7 @@ const Index = ({ posts, tags, meta, categories, postCount, latestPosts }) => {
       tags={tags}
       sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
       rightAreaSlot={
-        BLOG.widget?.showLatestPost && <LatestPostsGroup posts={latestPosts} />
+        BLOG.widget?.showLatestPost && <Card><LatestPostsGroup posts={latestPosts} /></Card>
       }
       postCount={postCount}
       categories={categories}

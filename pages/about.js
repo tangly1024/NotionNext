@@ -7,7 +7,6 @@ import {
 } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import Custom404 from '@/pages/404'
-import { getPageTableOfContents } from 'notion-utils'
 import 'prismjs'
 import 'prismjs/components/prism-bash'
 import 'prismjs/components/prism-javascript'
@@ -21,7 +20,7 @@ import React from 'react'
  * @param {*} param0
  * @returns
  */
-const About = ({ post, blockMap, tags, prev, next, allPosts, categories }) => {
+const About = ({ post, tags, prev, next, postCount, categories }) => {
   if (!post) {
     return <Custom404 />
   }
@@ -39,10 +38,10 @@ const About = ({ post, blockMap, tags, prev, next, allPosts, categories }) => {
       meta={meta}
       tags={tags}
       post={post}
-      totalPosts={allPosts}
+      postCount={postCount}
       categories={categories}
     >
-      <ArticleDetail post={post} blockMap={blockMap} allPosts={allPosts} prev={prev} next={next} />
+      <ArticleDetail post={post} prev={prev} next={next} />
     </BaseLayout>
   )
 }
@@ -56,20 +55,14 @@ export async function getStaticProps () {
     return { props: {}, revalidate: 1 }
   }
 
-  const blockMap = await getPostBlocks(post.id, 'slug')
-  post.toc = []
-  if (blockMap) {
-    post.blockMap = blockMap
-    post.content = Object.keys(blockMap.block)
-    post.toc = getPageTableOfContents(post, blockMap)
-  }
+  post.blockMap = await getPostBlocks(post.id, 'slug')
 
   const index = allPosts.indexOf(post)
   const prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
   const next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
 
   return {
-    props: { post, blockMap, tags, prev, next, allPosts, categories, postCount, latestPosts },
+    props: { post, tags, prev, next, categories, postCount, latestPosts },
     revalidate: 1
   }
 }

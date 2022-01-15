@@ -164,3 +164,28 @@ nav {
 .medium-zoom-overlay{
   background: none !important;
 }
+
+.article-cover{
+  -webkit-text-size-adjust: 100%;
+  font-size: 14px;
+  font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: rgba(0,0,0,.75);
+  font-variant-ligatures: common-ligatures;
+  line-height: 1.625;
+  tab-size: 4;
+  outline: 0;
+  font-weight: normal;
+  -webkit-box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 998;
+  padding-top: 160px;
+  bottom: -1px;
+  margin-top: -200px;
+  text-align: center;
+  width: 100%;
+  background-image: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 70%);
+  padding-bottom: 34px;
+}

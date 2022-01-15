@@ -12,6 +12,7 @@ const BLOG = {
     homeBannerImage: './bg_image.jpg', // 背景图地址
     showPostCover: false, // 文章列表显示封面图
     showPreview: true, // 列表展示文章预览
+    previewLines: 12, // 预览文章的篇幅
     showSummary: false // 显示用户自定义摘要
   },
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
@@ -38,8 +39,8 @@ const BLOG = {
     showPet: false, // 是否显示宠物挂件
     petLink: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
     showToTop: true, // 是否显示回顶
-    showToBottom: true, // 显示回底
-    showDarkMode: true, // 显示日间/夜间模式切换
+    showToBottom: false, // 显示回底
+    showDarkMode: false, // 显示日间/夜间模式切换
     showToc: true, // 移动端显示悬浮目录
     showShareBar: false, // 文章分享功能
     showRelatePosts: true, // 相关文章推荐
@@ -55,13 +56,13 @@ const BLOG = {
     telegram: 'https://t.me/tangly_1024'
   },
   comment: { // 评论插件，支持 gitalk, utterances, cusdis
-    provider: '', // 不需要则留空白
+    provider: 'gitalk', // 不需要则留空白
     gitalkConfig: {
       repo: 'NotionNext', // The repository of store comments
       owner: 'tangly1024',
       admin: ['tangly1024'],
-      clientID: 'be7864a16b693e256f8f',
-      clientSecret: 'dbd0f6d9ceea8940f6ed20936b415274b8fe66a2',
+      clientID: process.env.GITALK_ID || 'be7864a16b693e256f8f',
+      clientSecret: process.env.GITALK_SECRET || 'dbd0f6d9ceea8940f6ed20936b415274b8fe66a2',
       distractionFreeMode: false
     },
     cusdisConfig: {
