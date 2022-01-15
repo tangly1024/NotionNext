@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
-import BlogPostCard from '@/components/BlogPostCard'
-import BlogPostListEmpty from '@/components/BlogPostListEmpty'
+import BlogPostCard from '@/themes/NEXT/components/BlogPostCard'
+import BlogPostListEmpty from '@/themes/NEXT/components/BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import React, { useCallback, useEffect, useRef, useState } from 'react'

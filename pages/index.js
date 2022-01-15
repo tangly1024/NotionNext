@@ -1,12 +1,11 @@
 import BLOG from '@/blog.config'
-import BlogPostListPage from '@/components/BlogPostListPage'
-import BlogPostListScroll from '@/components/BlogPostListScroll'
-import Card from '@/components/Card'
-import Header from '@/components/Header'
-import LatestPostsGroup from '@/components/LatestPostsGroup'
-import BaseLayout from '@/layouts/BaseLayout'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { IndexLayout } from '@/themes'
+
+const Index = (props) => {
+  return <IndexLayout {...props}/>
+}
 
 export async function getStaticProps () {
   const from = 'index'
@@ -47,30 +46,6 @@ export async function getStaticProps () {
     },
     revalidate: 1
   }
-}
-
-const Index = ({ posts, tags, meta, categories, postCount, latestPosts }) => {
-  return (
-    <BaseLayout
-      headerSlot={BLOG.home.showHomeBanner && <Header />}
-      meta={meta}
-      tags={tags}
-      sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
-      rightAreaSlot={
-        BLOG.widget?.showLatestPost && <Card><LatestPostsGroup posts={latestPosts} /></Card>
-      }
-      postCount={postCount}
-      categories={categories}
-    >
-      {BLOG.postListStyle !== 'page'
-        ? (
-        <BlogPostListScroll posts={posts} tags={tags} showSummary={true} />
-          )
-        : (
-        <BlogPostListPage posts={posts} tags={tags} postCount={postCount} />
-          )}
-    </BaseLayout>
-  )
 }
 
 export default Index

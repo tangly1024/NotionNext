@@ -1,4 +1,4 @@
-import TagItemMini from '@/components/TagItemMini'
+import TagItemMini from '@/themes/NEXT/components/TagItemMini'
 
 /**
  * 标签组

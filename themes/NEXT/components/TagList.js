@@ -1,5 +1,5 @@
 import React from 'react'
-import TagItem from '@/components/TagItem'
+import TagItem from '@/themes/NEXT/components/TagItem'
 /**
  * 横向的标签列表
  * @param tags

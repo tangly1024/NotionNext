@@ -1,4 +1,4 @@
-import Toc from '@/components/Toc'
+import Toc from '@/themes/NEXT/components/Toc'
 import React, { useImperativeHandle, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 
