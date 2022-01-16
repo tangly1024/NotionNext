@@ -4,19 +4,19 @@ import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArchive, faHome, faTag, faTh, faUser } from '@fortawesome/free-solid-svg-icons'
-import BLOG from 'blog.config'
+import CONFIG_NEXT from '../config_next'
 
-const MenuButtonGroup = ({ allowCollapse = false, postCount }) => {
+const MenuButtonGroup = ({ postCount }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   const links = [
     { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { id: 1, icon: faTh, name: locale.COMMON.CATEGORY, to: '/category', show: BLOG.menu.showCategory },
-    { id: 2, icon: faTag, name: locale.COMMON.TAGS, to: '/tag', show: BLOG.menu.showTag },
-    { id: 3, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: BLOG.menu.showArchive },
-    { id: 4, icon: faUser, name: locale.NAV.ABOUT, to: '/about', show: BLOG.menu.showAbout }
+    { id: 1, icon: faTh, name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NEXT.MENU_CATEGORY },
+    { id: 2, icon: faTag, name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
+    { id: 3, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE },
+    { id: 4, icon: faUser, name: locale.NAV.ABOUT, to: '/about', show: CONFIG_NEXT.MENU_ABOUT }
   ]
   return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 font-sans'>
       {links.map(link => {

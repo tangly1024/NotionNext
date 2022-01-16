@@ -44,7 +44,7 @@ export async function getStaticProps ({ params: { page } }) {
 
   for (const i in postsToShow) {
     const post = postsToShow[i]
-    const blockMap = await getPostBlocks(post.id, 'slug', BLOG.home.previewLines)
+    const blockMap = await getPostBlocks(post.id, 'slug', BLOG.previewLines)
     if (blockMap) {
       post.blockMap = blockMap
     }

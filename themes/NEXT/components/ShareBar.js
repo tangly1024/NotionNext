@@ -15,9 +15,10 @@ import {
   faWeixin
 } from '@fortawesome/free-brands-svg-icons'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 const ShareBar = ({ post }) => {
-  if (!BLOG.widget?.showShareBar) {
+  if (!CONFIG_NEXT.ARTICLE_SHARE) {
     return <></>
   }
   const router = useRouter()
@@ -77,12 +78,12 @@ const ShareBar = ({ post }) => {
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='text-red-600' target='_blank' rel='noreferrer'href={`https://service.weibo.com/share/share.php?url=${shareUrl}&title=${post.title}`} >
+        <a className='text-red-600' target='_blank' rel='noreferrer' href={`https://service.weibo.com/share/share.php?url=${shareUrl}&title=${post.title}`} >
           <FontAwesomeIcon icon={faWeibo}/>
         </a>
       </div>
       <div className='cursor-pointer text-2xl'>
-        <a className='text-blue-400' target='_blank' rel='noreferrer'href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${post.title}&desc=${post.summary}`} >
+        <a className='text-blue-400' target='_blank' rel='noreferrer' href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${post.title}&desc=${post.summary}`} >
           <FontAwesomeIcon icon={faQq}/>
         </a>
       </div>

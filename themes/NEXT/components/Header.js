@@ -1,9 +1,9 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 let wrapperTop = 0
 let windowTop = 0
@@ -19,7 +19,7 @@ export default function Header () {
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
-          strings: BLOG.home.homeBannerStrings,
+          strings: CONFIG_NEXT.HOME_BANNER_Strings,
           typeSpeed: 200,
           backSpeed: 100,
           backDelay: 400,
@@ -41,7 +41,7 @@ export default function Header () {
   const scrollTrigger = () => {
     if (
       (window.scrollY > windowTop) &
-      (window.scrollY < window.innerHeight) &
+      (window.scrollY < window.innerHeight) &&
       !autoScroll
     ) {
       autoScroll = true
@@ -50,7 +50,7 @@ export default function Header () {
     }
     if (
       (window.scrollY < windowTop) &
-      (window.scrollY < window.innerHeight) &
+      (window.scrollY < window.innerHeight) &&
       !autoScroll
     ) {
       autoScroll = true
@@ -99,7 +99,7 @@ export default function Header () {
       className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black"
       style={{
         backgroundImage:
-          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${BLOG.home.homeBannerImage}")`
+          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${CONFIG_NEXT.HOME_BANNER_IMAGE}")`
       }}
     >
       <div className="absolute flex h-full items-center lg:-mt-14 justify-center w-full text-4xl md:text-7xl text-white">

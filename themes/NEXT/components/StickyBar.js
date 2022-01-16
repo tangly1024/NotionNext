@@ -1,20 +1,19 @@
-import BLOG from '@/blog.config'
 import throttle from 'lodash.throttle'
 import { useCallback, useEffect } from 'react'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 let windowTop = 0
 
 /**
  * 标签组导航条，默认隐藏仅在移动端显示
  * @param tags
- * @param currentTag
  * @returns {JSX.Element}
  * @constructor
  */
 const StickyBar = ({ children }) => {
   if (!children) return <></>
   const scrollTrigger = useCallback(throttle(() => {
-    if (BLOG.topNavType === 'normal') {
+    if (CONFIG_NEXT.NAV_TYPE === 'normal') {
       return
     }
     const scrollS = window.scrollY
@@ -27,7 +26,7 @@ const StickyBar = ({ children }) => {
       stickyBar && stickyBar.classList.replace('top-0', 'top-14')
       windowTop = scrollS
     }
-  }, 200))
+  }, 200), [])
 
   // 监听滚动
   useEffect(() => {

@@ -4,7 +4,7 @@ import LatestPostsGroup from './components/LatestPostsGroup'
 import Card from './components/Card'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
-import { CONFIG_NEXT } from './index'
+import CONFIG_NEXT from './config_next'
 
 export const LayoutIndex = ({ posts, tags, meta, categories, postCount, latestPosts }) => {
   return <LayoutBase
@@ -18,7 +18,7 @@ export const LayoutIndex = ({ posts, tags, meta, categories, postCount, latestPo
     postCount={postCount}
     categories={categories}
   >
-    {CONFIG_NEXT.POSTS_LIST_TYPE !== 'page'
+    {CONFIG_NEXT.POST_LIST_TYPE !== 'page'
       ? (
         <BlogPostListScroll posts={posts} tags={tags} showSummary={true} />
         )

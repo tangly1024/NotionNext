@@ -14,7 +14,7 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
-import { CONFIG_NEXT } from './index'
+import CONFIG_NEXT from './config_next'
 
 export const LayoutSlug = ({
   post,

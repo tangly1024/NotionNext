@@ -4,16 +4,16 @@ import BlogPostListEmpty from '@/themes/NEXT/components/BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 /**
  * 博客列表滚动分页
  * @param posts 所有文章
  * @param tags 所有标签
- * @param targetRef 指向父容器，用于计算下拉滚动的高度
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = BLOG.home.showSummary }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_NEXT.POST_LIST_SUMMARY }) => {
   const postsPerPage = BLOG.postsPerPage
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, postsPerPage)

@@ -1,9 +1,9 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 export default function ArticleCopyright ({ author, url }) {
-  if (!BLOG.widget?.showCopyRight) {
+  if (!CONFIG_NEXT.ARTICLE_COPYRIGHT) {
     return <></>
   }
   const { locale } = useGlobal()
@@ -11,7 +11,7 @@ export default function ArticleCopyright ({ author, url }) {
     <ul className="overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-700 bg-gray-100 p-5 leading-8 border-l-2 border-blue-500">
       <li>
         <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
-        <Link href="/about">
+        <Link href={'/about'} >
           <a className="hover:underline">{author}</a>
         </Link>
       </li>

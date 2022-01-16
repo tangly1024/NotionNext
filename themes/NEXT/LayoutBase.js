@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Footer from './components/Footer'
@@ -12,6 +11,7 @@ import { useGlobal } from '@/lib/global'
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -79,7 +79,7 @@ const LayoutBase = ({
 
       <main id='wrapper' className='flex justify-center flex-1 pb-12'>
           <SideAreaLeft targetRef={targetRef} post={post} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-          <section id='center' className={`${BLOG.topNavType !== 'normal' ? 'mt-14' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
+          <section id='center' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-40' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
             {onLoading
               ? <LoadingCover/>
               : <>

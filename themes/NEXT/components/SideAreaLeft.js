@@ -5,23 +5,20 @@ import Toc from '@/themes/NEXT/components/Toc'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
 import Tabs from '@/themes/NEXT/components/Tabs'
-import BLOG from '@/blog.config'
 import Logo from './Logo'
 import Card from './Card'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 /**
  * 侧边平铺
  * @param tags
  * @param currentTag
  * @param post
- * @param posts
- * @param categories
- * @param currentCategory
  * @param currentSearch
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, currentCategory, currentSearch, targetRef }) => {
+const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
@@ -33,7 +30,7 @@ const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, cu
         <div className='pt-2 px-2 font-sans'>
         <MenuButtonGroup allowCollapse={true} postCount={postCount} />
         </div>
-        {BLOG.menu.showSearch && <div className='px-2 pt-2 font-sans'>
+        {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
         </div>}
       </section>

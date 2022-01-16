@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import BLOG from '@/blog.config'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 let hasLoad = false
 export default function Live2D () {
-  if (!BLOG.widget?.showPet) {
+  if (!CONFIG_NEXT.WIDGET_PET) {
     return <></>
   }
 
@@ -13,7 +13,7 @@ export default function Live2D () {
   }
 
   return <div className='fixed right-0 bottom-0 hidden md:block lg:mr-24 2xl:mr-40 z-20'>
-    <canvas id="live2d"className='animate__slideInLeft animate__animated' width="280" height="250"></canvas>
+    <canvas id="live2d" className='animate__slideInLeft animate__animated' width="280" height="250"/>
   </div>
 }
 
@@ -25,7 +25,7 @@ function initLive2D () {
       loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
     ]).then(() => {
       // https://github.com/xiazeyu/live2d-widget-models
-      loadlive2d('live2d', BLOG.widget.petLink)
+      loadlive2d('live2d', CONFIG_NEXT.WIDGET_PET_LINK)
     })
   }
 }

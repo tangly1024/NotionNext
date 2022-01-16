@@ -8,10 +8,11 @@ import React from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import Card from './Card'
 import TagItemMini from './TagItemMini'
+import CONFIG_NEXT from '@/themes/NEXT/config_next'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
-  const showPreview = BLOG.home?.showPreview && post.blockMap
+  const showPreview = CONFIG_NEXT.POST_LIST_PREVIEW && post.blockMap
   return (
     <Card className='w-full'>
        <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300'>
@@ -67,7 +68,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         </div>
       </div>
 
-      {BLOG.home?.showPostCover && post?.page_cover && (
+      {CONFIG_NEXT.POST_LIST_COVER && post?.page_cover && (
         <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
         <div className='h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden'>
           <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
