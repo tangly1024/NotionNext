@@ -18,7 +18,7 @@ class MyDocument extends Document {
           <CommonScript />
         </Head>
 
-        <body className={`${BLOG.font} bg-day dark:bg-night duration-200`}>
+        <body className={`${BLOG.font} bg-day dark:bg-night`}>
           <Main />
           <NextScript />
         </body>

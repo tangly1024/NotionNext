@@ -24,8 +24,8 @@ export async function getStaticPaths () {
     }
   }
 
-  const from = '[slug-paths'
-  const { allPosts } = await getGlobalNotionData({ from, includePage: false })
+  const from = 'slug-paths'
+  const { allPosts } = await getGlobalNotionData({ from, includePage: true })
   return {
     paths: allPosts.map(row => ({ params: { slug: row.slug } })),
     fallback: true
@@ -35,7 +35,7 @@ export async function getStaticPaths () {
 export async function getStaticProps ({ params: { slug } }) {
   const from = `slug-props-${slug}`
   const { allPosts, categories, tags, postCount, latestPosts } =
-    await getGlobalNotionData({ from, includePage: false })
+    await getGlobalNotionData({ from, includePage: true })
 
   const post = allPosts.find(p => p.slug === slug)
 

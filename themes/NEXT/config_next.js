@@ -4,6 +4,8 @@ const CONFIG_NEXT = {
   HOME_BANNER_Strings: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
   HOME_BANNER_IMAGE: './bg_image.jpg', // 背景图地址
 
+  NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
+
   POST_LIST_TYPE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_COVER: false, // 文章列表显示封面图
   POST_LIST_PREVIEW: true, // 显示文章预览
@@ -33,20 +35,8 @@ const CONFIG_NEXT = {
 
   ARTICLE_SHARE: false, // 文章分享功能
   ARTICLE_RELATE_POSTS: true, // 相关文章推荐
-  ARTICLE_COPYRIGHT: true, // 文章版权声明
+  ARTICLE_COPYRIGHT: true // 文章版权声明
 
-  NAV_TYPE: 'fixed', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
-
-  appearance: 'auto', // ['light', 'dark', 'auto'],
-  font: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
-  lightBackground: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
-  darkBackground: '#111827', // use hex value, don't forget '#'
-  path: '', // leave this empty unless you want to deploy in a folder
-  since: 2020, // if leave this empty, current year will be used.
-  postListStyle: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
-  postsPerPage: 6, // post counts per page
-  sortByDate: false,
-  topNavType: 'normal' // ['fixed','autoCollapse','normal'] 分别是固定顶部、固定底部滑动时自动折叠，不固定
 }
 
 export default CONFIG_NEXT
