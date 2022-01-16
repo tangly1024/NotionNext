@@ -2,13 +2,13 @@ import React from 'react'
 import Link from 'next/link'
 import BLOG from '@/blog.config'
 /**
- * 博客归档列表
+ * 博客归档
  * @param posts 所有文章
  * @param archiveTitle 归档标题
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostArchive = ({ posts = [], archiveTitle }) => {
+const BlogArchiveItem = ({ posts = [], archiveTitle }) => {
   if (!posts || posts.length === 0) {
     return <></>
   } else {
@@ -29,4 +29,4 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
   }
 }
 
-export default BlogPostArchive
+export default BlogArchiveItem

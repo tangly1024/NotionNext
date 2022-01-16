@@ -13,7 +13,7 @@ import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
 import { useEffect, useRef } from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
-import ArticleAround from './ArticleArount'
+import ArticleAround from './ArticleAround'
 
 /**
  *
@@ -42,17 +42,18 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
     }
   })
 
-  return (<div id="container" className=" max-w-4xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
+  return (<div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
+    {post.type && !post.type.includes('Page') && post?.page_cover && (
+    <div className="w-full relative md:flex-shrink-0 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
+    </div>
+    )}
     <article itemScope itemType="https://schema.org/Movie"
-      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
+      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-gray-800"
     >
 
       <header className='animate__slideInDown animate__animated'>
-        {post.type && !post.type.includes('Page') && post?.page_cover && (
-            <div className="w-full relative md:flex-shrink-0 overflow-hidden">
-              <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
-            </div>
-        )}
 
           {/* 文章Title */}
           <div className="font-bold text-3xl text-black dark:text-white font-serif pt-10">

@@ -7,7 +7,7 @@ import SearchInput from './SearchInput'
 import SiteInfo from './SiteInfo'
 
 function AsideLeft ({ tags, currentTag, categories, currentCategory }) {
-  return <div className='w-72 bg-white min-h-screen px-10 py-14'>
+  return <div className='w-72 bg-white min-h-screen px-10 py-14 hidden lg:block'>
 
     <Logo />
 

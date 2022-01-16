@@ -1,4 +1,5 @@
 import BLOG from '@/blog.config'
+import { useEffect, useState } from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import PaginationSimple from './PaginationSimple'
@@ -13,14 +14,32 @@ import PaginationSimple from './PaginationSimple'
  */
 const BlogListPage = ({ page = 1, posts = [], postCount }) => {
   const totalPage = Math.ceil(postCount / BLOG.postsPerPage)
-  const showNext = page < totalPage
+  const showNext = page < totalPage && posts.length < postCount
+  const [colCount, changeCol] = useState(3)
+
+  function updateCol () {
+    if (window.outerWidth > 1200) {
+      changeCol(3)
+    } else {
+      changeCol(1)
+    }
+  }
+
+  useEffect(() => {
+    updateCol()
+    window.addEventListener('resize', updateCol)
+    return () => {
+      window.removeEventListener('resize', updateCol)
+    }
+  })
+
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
   } else {
     return (
       <div id="container">
         {/* 文章列表 */}
-        <div style={{ columnCount: 3 }}>
+        <div style={{ columnCount: colCount }}>
           {posts.map(post => (
             <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
               <BlogCard key={post.id} post={post} />

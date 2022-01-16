@@ -8,7 +8,7 @@ import Card from './Card'
 const BlogCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
   return (
-    <Card className='w-full max-w-sm p-2'>
+    <Card className='w-full lg:max-w-sm p-2'>
        <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300'>
 
       <div className='p-2 flex flex-col w-full'>

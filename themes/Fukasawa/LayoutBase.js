@@ -1,4 +1,5 @@
 import CommonHead from '@/components/CommonHead'
+import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
 
 /**
@@ -15,27 +16,23 @@ import AsideLeft from './components/AsideLeft'
  * @returns {JSX.Element}
  * @constructor
  */
-const LayoutBase = ({
-  children,
-  headerSlot,
-  tags,
-  meta,
-  post,
-  postCount,
-  sideBarSlot,
-  floatSlot,
-  rightAreaSlot,
-  currentSearch,
-  currentCategory,
-  currentTag,
-  categories
-}) => {
+const LayoutBase = (props) => {
+  const {
+    children,
+    headerSlot,
+    tags,
+    meta,
+    currentCategory,
+    currentTag,
+    categories
+  } = props
   return (<>
     <CommonHead meta={meta} />
-    <div className='flex flex-between'>
+    <TopNav {...props}/>
+    <div className='flex'>
       <AsideLeft tags={tags} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
-      <main id='wrapper' className='flex flex-grow py-8 justify-center'>
-        <div className='2xl:max-w-6xl md:max-w-3xl max-w-md w-full'>
+      <main id='wrapper' className='flex w-full py-8 justify-center'>
+        <div className='2xl:max-w-6xl md:max-w-3xl w-full'>
           <div> {headerSlot} </div>
           <div>{children}</div>
         </div>
