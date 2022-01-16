@@ -1,34 +1,23 @@
-import BLOG from '@/blog.config'
-import TagItem from '@/components/TagItem'
-import BaseLayout from '@/layouts/BaseLayout'
-import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { faTags } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import { LayoutTagIndex } from '@/themes'
 
-export default function Tag ({ tags, categories, postCount, latestPosts }) {
-  const { locale } = useGlobal()
-  const meta = {
-    title: `${locale.COMMON.TAGS} | ${BLOG.title}`,
-    description: BLOG.description,
-    type: 'website'
-  }
-  return <BaseLayout meta={meta} categories={categories} postCount={postCount} latestPosts={latestPosts}>
-      <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
-        <div className='dark:text-gray-200 mb-5'><FontAwesomeIcon icon={faTags} className='mr-4'/>{locale.COMMON.TAGS}:</div>
-        <div id='tags-list' className='duration-200 flex flex-wrap'>
-          { tags.map(tag => {
-            return <div key={tag.name} className='p-2'><TagItem key={tag.name} tag={tag} /></div>
-          }) }
-        </div>
-      </div>
-  </BaseLayout>
+const TagIndex = (props) => {
+  return <LayoutTagIndex {...props} />
 }
 
 export async function getStaticProps () {
   const from = 'tag-index-props'
-  const { categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from, includePage: true, tagsCount: 0 })
+  const {
+    categories,
+    tags,
+    postCount,
+    latestPosts
+  } = await getGlobalNotionData({
+    from,
+    includePage: true,
+    tagsCount: 0
+  })
 
   return {
     props: {
@@ -40,3 +29,5 @@ export async function getStaticProps () {
     revalidate: 1
   }
 }
+
+export default TagIndex

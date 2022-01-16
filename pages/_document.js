@@ -1,7 +1,7 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import BLOG from '@/blog.config'
-import ThirdPartyScript from '@/components/ThirdPartyScript'
+import CommonScript from '@/components/CommonScript'
 
 class MyDocument extends Document {
   static async getInitialProps (ctx) {
@@ -15,10 +15,10 @@ class MyDocument extends Document {
         <Head>
           <link rel='icon' href='/favicon.ico' />
           <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
-          <ThirdPartyScript />
+          <CommonScript />
         </Head>
 
-        <body className={`${BLOG.font} bg-day dark:bg-night duration-200`}>
+        <body className={`${BLOG.font} bg-day dark:bg-night`}>
           <Main />
           <NextScript />
         </body>

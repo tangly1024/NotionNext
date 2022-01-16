@@ -1,58 +1,40 @@
-import BLOG from '@/blog.config'
-import ArticleDetail from '@/components/ArticleDetail'
-import BaseLayout from '@/layouts/BaseLayout'
-import { useGlobal } from '@/lib/global'
-import {
-  getPostBlocks
-} from '@/lib/notion'
+import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import Custom404 from '@/pages/404'
-import 'prismjs'
-import 'prismjs/components/prism-bash'
-import 'prismjs/components/prism-javascript'
-import 'prismjs/components/prism-markup'
-import 'prismjs/components/prism-python'
-import 'prismjs/components/prism-typescript'
 import React from 'react'
+import { LayoutSlug } from '@/themes'
 
 /**
  * 关于页面，默认取notion中slug为about的文章
- * @param {*} param0
+ * @param {*} props
  * @returns
  */
-const About = ({ post, tags, prev, next, postCount, categories }) => {
-  if (!post) {
+const About = (props) => {
+  if (!props.post) {
     return <Custom404 />
   }
-  const { locale } = useGlobal()
-  post.title = locale.NAV.ABOUT
-  const meta = {
-    title: `${locale.NAV.ABOUT} | ${BLOG.title} `,
-    description: post.summary,
-    type: 'post',
-    tags: []
-  }
-
-  return (
-    <BaseLayout
-      meta={meta}
-      tags={tags}
-      post={post}
-      postCount={postCount}
-      categories={categories}
-    >
-      <ArticleDetail post={post} prev={prev} next={next} />
-    </BaseLayout>
-  )
+  return <LayoutSlug {...props} />
 }
 
 export async function getStaticProps () {
   const from = 'about-props'
-  const { allPosts, categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from, includePage: true })
+  const {
+    allPosts,
+    categories,
+    tags,
+    postCount,
+    latestPosts
+  } = await getGlobalNotionData({
+    from,
+    includePage: true
+  })
   const post = allPosts.find(p => p.slug === 'about')
 
   if (!post) {
-    return { props: {}, revalidate: 1 }
+    return {
+      props: {},
+      revalidate: 1
+    }
   }
 
   post.blockMap = await getPostBlocks(post.id, 'slug')
@@ -62,7 +44,15 @@ export async function getStaticProps () {
   const next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
 
   return {
-    props: { post, tags, prev, next, categories, postCount, latestPosts },
+    props: {
+      post,
+      tags,
+      prev,
+      next,
+      categories,
+      postCount,
+      latestPosts
+    },
     revalidate: 1
   }
 }
