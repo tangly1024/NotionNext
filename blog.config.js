@@ -7,6 +7,7 @@ const BLOG = {
   link: 'https://tangly1024.com', // 网站地址
   keywords: ['Notion', '写作', '博客'], // 网站关键词
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
+  beian: '闽ICP备20010331号', // 备案号
   notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   appearance: 'auto', // ['light', 'dark', 'auto'],
