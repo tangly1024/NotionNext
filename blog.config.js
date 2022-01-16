@@ -8,7 +8,7 @@ const BLOG = {
   keywords: ['Notion', '写作', '博客'], // 网站关键词
   lang: 'zh-CN', // ['zh-CN','en-US'] default lang => see /lib/lang.js for more.
   beian: '闽ICP备20010331号', // 备案号
-  notionPageId: process.env.NOTION_PAGE_ID || 'bee1fccfa3bd47a1a7be83cc71372d83', // Important page_id！！！
+  notionPageId: process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   notionAccessToken: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   appearance: 'auto', // ['light', 'dark', 'auto'],
   font: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
@@ -28,21 +28,21 @@ const BLOG = {
   },
   comment: { // 评论插件，支持 gitalk, utterances, cusdis
     provider: 'gitalk', // 不需要则留空白
-    gitalkConfig: {
-      repo: 'NotionNext', // The repository of store comments
-      owner: 'tangly1024',
-      admin: ['tangly1024'],
-      clientID: process.env.GITALK_ID || 'be7864a16b693e256f8f',
-      clientSecret: process.env.GITALK_SECRET || 'dbd0f6d9ceea8940f6ed20936b415274b8fe66a2',
+    gitalkConfig: { // see https://github.com/gitalk/gitalk/blob/master/readme-cn.md
+      repo: process.env.GITALK_REPO, // The repository of store comments
+      owner: process.env.GITALK_OWNER,
+      admin: [process.env.GITALK_ADMIN],
+      clientID: process.env.GITALK_ID,
+      clientSecret: process.env.GITALK_SECRET,
       distractionFreeMode: false
     },
     cusdisConfig: {
-      appId: '445ba48e-f751-487f-b22f-cdbe3310d28f', // data-app-id
+      appId: process.env.CUSIDS_APP_ID, // data-app-id
       host: 'https://cusdis.com', // data-host, change this if you're using self-hosted version
       scriptSrc: 'https://cusdis.com/js/cusdis.es.js' // change this if you're using self-hosted version
     },
     utterancesConfig: {
-      repo: 'tangly1024/NotionNext'
+      repo: '' // e.g 'tangly1024/NotionNext'
     },
     gitter: '', // gitter聊天室
     DaoVoiceId: '', // DaoVoice http://dashboard.daovoice.io/get-started
@@ -52,10 +52,10 @@ const BLOG = {
   analytics: { // 文章访问量统计
     busuanzi: true, // 展示网站阅读量、访问数 see http://busuanzi.ibruce.info/
     provider: 'ga', // 支持 Google Analytics and Ackee, please fill with 'ga' or 'ackee', leave it empty to disable it.
-    baiduAnalytics: 'f683ef76f06bb187cbed5546f6f28f28', // e.g only need xxxxx -> https://hm.baidu.com/hm.js?[xxxxx]
+    baiduAnalytics: process.env.BAIDU_ANALYTIC_ID, // e.g only need xxxxx -> https://hm.baidu.com/hm.js?[xxxxx]
     cnzzAnalytics: '', // 站长统计id only need xxxxxxxx -> https://s9.cnzz.com/z_stat.php?id=[xxxxxxxx]&web_id=[xxxxxxx]
     gaConfig: {
-      measurementId: 'G-68EK0W049N' // e.g: G-XXXXXXXXXX
+      measurementId: process.env.GOOGLE_ANALYTIC_ID // e.g: G-XXXXXXXXXX
     },
     ackeeConfig: {
       tracker: '', // e.g 'https://ackee.tangly1024.net/tracker.js'
@@ -66,7 +66,7 @@ const BLOG = {
   seo: {
     googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
   },
-  googleAdsenseId: 'ca-pub-2708419466378217', // 谷歌广告ID
+  googleAdsenseId: process.env.GOOGLE_AD_ID, // 谷歌广告ID
   isProd: process.env.VERCEL_ENV === 'production'// distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
 }
 // export default BLOG
