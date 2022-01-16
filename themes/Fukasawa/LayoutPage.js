@@ -4,7 +4,7 @@ import LayoutBase from './LayoutBase'
 export const LayoutPage = (props) => {
   return <LayoutBase {...props}>
 
-    <BlogListPage posts={props.posts} postCount={props.postCount}/>
+    <BlogListPage page={props.page} posts={props.posts} postCount={props.postCount}/>
 
   </LayoutBase>
 }

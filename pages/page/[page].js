@@ -36,6 +36,7 @@ export async function getStaticProps ({ params: { page } }) {
     description: BLOG.description,
     type: 'website'
   }
+
   // 处理分页
   const postsToShow = allPosts.slice(
     BLOG.postsPerPage * (page - 1),

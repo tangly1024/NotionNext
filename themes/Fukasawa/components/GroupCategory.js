@@ -4,6 +4,10 @@ import Link from 'next/link'
 import React from 'react'
 
 function GroupCategory ({ currentCategory, categories }) {
+  if (!categories) {
+    return <></>
+  }
+
   return <>
     <div id='category-list' className='dark:border-gray-600 flex flex-wrap'>
       {Object.keys(categories).map(category => {

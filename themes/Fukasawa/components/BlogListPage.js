@@ -1,7 +1,7 @@
-import BlogCard from './BlogCard'
-import PaginationNumber from './PaginationNumber'
 import BLOG from '@/blog.config'
+import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
+import PaginationSimple from './PaginationSimple'
 
 /**
  * 文章列表分页表格
@@ -13,21 +13,21 @@ import BlogPostListEmpty from './BlogListEmpty'
  */
 const BlogListPage = ({ page = 1, posts = [], postCount }) => {
   const totalPage = Math.ceil(postCount / BLOG.postsPerPage)
-
+  const showNext = page < totalPage
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
   } else {
     return (
       <div id="container">
         {/* 文章列表 */}
-        <div className="grid 2xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 ">
+        <div style={{ columnCount: 3 }}>
           {posts.map(post => (
-            <div key={post.id} className='justify-center flex'>
+            <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
               <BlogCard key={post.id} post={post} />
             </div>
           ))}
         </div>
-        <PaginationNumber page={page} totalPage={totalPage} />
+        <PaginationSimple page={page} showNext={showNext} />
       </div>
     )
   }
