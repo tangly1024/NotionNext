@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 展示文章推荐

@@ -2,7 +2,7 @@ import { useGlobal } from '@/lib/global'
 import { loadUserThemeFromCookies, saveTheme } from '@/lib/theme'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 export default function FloatDarkModeButton () {
   if (!CONFIG_NEXT.WIDGET_DARK_MODE) {

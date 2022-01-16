@@ -1,4 +1,4 @@
-import SideBar from '@/themes/NEXT/components/SideBar'
+import SideBar from './SideBar'
 import { useRouter } from 'next/router'
 import React, { useEffect, useImperativeHandle } from 'react'
 
@@ -7,7 +7,7 @@ import React, { useEffect, useImperativeHandle } from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideBarDrawer = ({ post, currentTag, cRef, tags, slot, categories, currentCategory }) => {
+const SideBarDrawer = ({ post, cRef, tags, slot, categories, currentCategory }) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
@@ -22,7 +22,7 @@ const SideBarDrawer = ({ post, currentTag, cRef, tags, slot, categories, current
 
   const router = useRouter()
   useEffect(() => {
-    const sideBarDrawerRouteListener = url => {
+    const sideBarDrawerRouteListener = () => {
       switchSideDrawerVisible(false)
     }
     router.events.on('routeChangeComplete', sideBarDrawerRouteListener)

@@ -1,10 +1,10 @@
 import BLOG from '@/blog.config'
-import BlogPostCard from '@/themes/NEXT/components/BlogPostCard'
-import BlogPostListEmpty from '@/themes/NEXT/components/BlogPostListEmpty'
+import BlogPostCard from './BlogPostCard'
+import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 博客列表滚动分页

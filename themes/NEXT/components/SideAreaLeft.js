@@ -1,13 +1,13 @@
-import InfoCard from '@/themes/NEXT/components/InfoCard'
-import MenuButtonGroup from '@/themes/NEXT/components/MenuButtonGroup'
-import SearchInput from '@/themes/NEXT/components/SearchInput'
-import Toc from '@/themes/NEXT/components/Toc'
+import InfoCard from './InfoCard'
+import MenuButtonGroup from './MenuButtonGroup'
+import SearchInput from './SearchInput'
+import Toc from './Toc'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
-import Tabs from '@/themes/NEXT/components/Tabs'
+import Tabs from './Tabs'
 import Logo from './Logo'
 import Card from './Card'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 侧边平铺
@@ -52,9 +52,9 @@ const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
                 <span className='px-1 '>
                   <strong className='font-medium'>{postCount}</strong>{locale.COMMON.POSTS}</span>
                         <span className='px-1 busuanzi_container_site_uv hidden'>
-                | <strong className='pl-1 busuanzi_value_site_uv font-medium'></strong>{locale.COMMON.VISITORS}</span>
+                | <strong className='pl-1 busuanzi_value_site_uv font-medium'/>{locale.COMMON.VISITORS}</span>
                         {/* <span className='px-1 busuanzi_container_site_pv hidden'>
-                | <strong className='pl-1 busuanzi_value_site_pv font-medium'></strong>{locale.COMMON.VIEWS}</span> */}
+                | <strong className='pl-1 busuanzi_value_site_pv font-medium'/>{locale.COMMON.VIEWS}</span> */}
               </div>
             </>
           </div>

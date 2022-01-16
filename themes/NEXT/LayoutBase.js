@@ -11,7 +11,7 @@ import { useGlobal } from '@/lib/global'
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from './config_next'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏

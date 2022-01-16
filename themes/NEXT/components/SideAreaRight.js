@@ -6,7 +6,7 @@ import React from 'react'
 import Card from './Card'
 import CategoryGroup from './CategoryGroup'
 import TagGroups from './TagGroups'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 侧边平铺

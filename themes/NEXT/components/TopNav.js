@@ -10,7 +10,7 @@ import Logo from './Logo'
 import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 let windowTop = 0
 

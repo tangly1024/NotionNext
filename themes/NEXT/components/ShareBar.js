@@ -15,7 +15,7 @@ import {
   faWeixin
 } from '@fortawesome/free-brands-svg-icons'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 const ShareBar = ({ post }) => {
   if (!CONFIG_NEXT.ARTICLE_SHARE) {

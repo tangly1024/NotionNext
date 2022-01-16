@@ -2,7 +2,7 @@ import { useGlobal } from '@/lib/global'
 import { faListOl } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 点击召唤目录抽屉

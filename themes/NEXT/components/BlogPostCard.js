@@ -8,7 +8,7 @@ import React from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import Card from './Card'
 import TagItemMini from './TagItemMini'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()

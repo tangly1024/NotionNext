@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 let hasLoad = false
 export default function Live2D () {

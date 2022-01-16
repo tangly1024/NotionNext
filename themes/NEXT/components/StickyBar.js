@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle'
 import { useCallback, useEffect } from 'react'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 let windowTop = 0
 

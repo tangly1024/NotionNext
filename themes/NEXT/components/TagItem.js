@@ -7,7 +7,7 @@ import { useGlobal } from '@/lib/global'
 const TagItem = ({ tag, selected }) => {
   const { locale } = useGlobal()
   if (!tag) {
-    <>{locale.COMMON.NOTAG}</>
+    <div> { locale.COMMON.NOTAG } </div>
   }
   return (
   <Link href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`} passHref>

@@ -1,9 +1,9 @@
 import BLOG from '@/blog.config'
-import BlogAround from '@/themes/NEXT/components/BlogAround'
+import BlogAround from './BlogAround'
 import Comment from '@/components/Comment'
-import RecommendPosts from '@/themes/NEXT/components/RecommendPosts'
-import ShareBar from '@/themes/NEXT/components/ShareBar'
-import TagItem from '@/themes/NEXT/components/TagItem'
+import RecommendPosts from './RecommendPosts'
+import ShareBar from './ShareBar'
+import TagItem from './TagItem'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
 import { faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
@@ -102,8 +102,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
               <div className="hidden busuanzi_container_page_pv font-light mr-2">
                 <FontAwesomeIcon icon={faEye} className='mr-1'/>
                 &nbsp;
-                <span className="mr-2 busuanzi_value_page_pv"
-                ></span>
+                <span className="mr-2 busuanzi_value_page_pv"/>
                 <span className='mr-2'>|</span>
               </div>
             </div>
@@ -141,7 +140,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
           data-ad-layout="in-article"
           data-ad-format="fluid"
           data-ad-client="ca-pub-2708419466378217"
-          data-ad-slot="3806269138"></ins>
+          data-ad-slot="3806269138"/>
       </section>
 
       {/* 版权声明 */}

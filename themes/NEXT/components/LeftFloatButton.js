@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import throttle from 'lodash.throttle'
-import DarkModeButton from '@/themes/NEXT/components/DarkModeButton'
+import DarkModeButton from './DarkModeButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 

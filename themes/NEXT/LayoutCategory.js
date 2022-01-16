@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import LayoutBase from '@/themes/NEXT/LayoutBase'
+import LayoutBase from './LayoutBase'
 import StickyBar from './components/StickyBar'
 import CategoryList from './components/CategoryList'
 import BlogPostListScroll from './components/BlogPostListScroll'

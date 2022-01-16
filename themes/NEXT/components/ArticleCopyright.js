@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import CONFIG_NEXT from '@/themes/NEXT/config_next'
+import CONFIG_NEXT from '../config_next'
 
 export default function ArticleCopyright ({ author, url }) {
   if (!CONFIG_NEXT.ARTICLE_COPYRIGHT) {
