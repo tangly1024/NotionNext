@@ -9,8 +9,8 @@ export const LayoutTagIndex = (props) => {
   const { locale } = useGlobal()
   const { tags } = props
   const meta = {
-    title: `${locale.COMMON.TAGS} | ${BLOG.title}`,
-    description: BLOG.description,
+    title: `${locale.COMMON.TAGS} | ${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
 

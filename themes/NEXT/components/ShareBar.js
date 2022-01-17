@@ -22,7 +22,7 @@ const ShareBar = ({ post }) => {
     return <></>
   }
   const router = useRouter()
-  const shareUrl = BLOG.link + router.asPath
+  const shareUrl = BLOG.LINK + router.asPath
 
   // 二维码悬浮
   const [qrCodeShow, setQrCodeShow] = React.useState(false)

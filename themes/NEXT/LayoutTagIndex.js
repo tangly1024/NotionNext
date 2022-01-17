@@ -8,8 +8,8 @@ import TagItem from './components/TagItem'
 export const LayoutTagIndex = ({ tags, categories, postCount, latestPosts }) => {
   const { locale } = useGlobal()
   const meta = {
-    title: `${locale.COMMON.TAGS} | ${BLOG.title}`,
-    description: BLOG.description,
+    title: `${locale.COMMON.TAGS} | ${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
   return <LayoutBase meta={meta} categories={categories} postCount={postCount} latestPosts={latestPosts}>

@@ -14,7 +14,7 @@ const Page = (props) => {
 export async function getStaticPaths () {
   const from = 'page-paths'
   const { postCount } = await getGlobalNotionData({ from })
-  const totalPages = Math.ceil(postCount / BLOG.postsPerPage)
+  const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
   return {
     // remove first page, we 're not gonna handle that.
     paths: Array.from({ length: totalPages - 1 }, (_, i) => ({ params: { page: '' + (i + 2) } })),
@@ -32,20 +32,20 @@ export async function getStaticProps ({ params: { page } }) {
     postCount
   } = await getGlobalNotionData({ from })
   const meta = {
-    title: `${page} | Page | ${BLOG.title}`,
-    description: BLOG.description,
+    title: `${page} | Page | ${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
 
   // 处理分页
   const postsToShow = allPosts.slice(
-    BLOG.postsPerPage * (page - 1),
-    BLOG.postsPerPage * page
+    BLOG.POSTS_PER_PAGE * (page - 1),
+    BLOG.POSTS_PER_PAGE * page
   )
 
   for (const i in postsToShow) {
     const post = postsToShow[i]
-    const blockMap = await getPostBlocks(post.id, 'slug', BLOG.previewLines)
+    const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
     if (blockMap) {
       post.blockMap = blockMap
     }

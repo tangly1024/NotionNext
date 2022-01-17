@@ -22,8 +22,8 @@ export const LayoutSearch = ({ posts, tags, categories, postCount }) => {
 
   const { locale } = useGlobal()
   const meta = {
-    title: `${searchKey || ''} | ${locale.NAV.SEARCH} | ${BLOG.title}  `,
-    description: BLOG.description,
+    title: `${searchKey || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
   return (

@@ -9,8 +9,8 @@ export const LayoutCategoryIndex = (props) => {
   const { locale } = useGlobal()
   const { categories } = props
   const meta = {
-    title: `${locale.COMMON.CATEGORY} | ${BLOG.title}`,
-    description: BLOG.description,
+    title: `${locale.COMMON.CATEGORY} | ${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
   return <LayoutBase {...props} meta={meta}>

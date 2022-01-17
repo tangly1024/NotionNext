@@ -23,7 +23,7 @@ function AsideLeft ({ tags, currentTag, categories, currentCategory }) {
 
     <section className='flex flex-col'>
       <hr className='w-12 my-8 ' />
-      { BLOG.description }
+      { BLOG.DESCRIPTION }
     </section>
 
     <section className='flex flex-col'>

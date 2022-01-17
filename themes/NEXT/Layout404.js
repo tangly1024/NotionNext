@@ -21,7 +21,7 @@ export const Layout404 = () => {
     }, 30000000)
   })
 
-  return <LayoutBase meta={{ title: `${BLOG.title} | 页面找不到啦` }}>
+  return <LayoutBase meta={{ title: `${BLOG.TITLE} | 页面找不到啦` }}>
     <div
       className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
       <div className='dark:text-gray-200'>

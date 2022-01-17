@@ -11,9 +11,9 @@ import { useEffect } from 'react'
 const Utterances = ({ issueTerm, layout }) => {
   useEffect(() => {
     const theme =
-      BLOG.appearance === 'auto'
+      BLOG.APPEARANCE === 'auto'
         ? 'preferred-color-scheme'
-        : BLOG.appearance === 'light'
+        : BLOG.APPEARANCE === 'light'
           ? 'github-light'
           : 'github-dark'
     const script = document.createElement('script')
@@ -21,7 +21,7 @@ const Utterances = ({ issueTerm, layout }) => {
     script.setAttribute('src', 'https://utteranc.es/client.js')
     script.setAttribute('crossorigin', 'anonymous')
     script.setAttribute('async', true)
-    script.setAttribute('repo', BLOG.comment.utterancesConfig.repo)
+    script.setAttribute('repo', BLOG.COMMENT_UTTERRANCES_REPO)
     script.setAttribute('issue-term', issueTerm)
     script.setAttribute('theme', theme)
     anchor.appendChild(script)
@@ -35,7 +35,7 @@ const Utterances = ({ issueTerm, layout }) => {
         id="comments"
         className={layout && layout === 'fullWidth' ? '' : 'md:-ml-16'}
       >
-        <div className="utterances-frame"></div>
+        <div className="utterances-frame"/>
       </div>
     </>
   )
