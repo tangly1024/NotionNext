@@ -85,14 +85,6 @@ yarn run start # 本地启动NextJS服务
 
 ## 页面样式主题
 正在开发中..将支持配置文件切换主题
-- 仿照 [fukasawa](https://andersnoren.se/themes/fukasawa) 分支-https://github.com/tangly1024/NotionNext/tree/theme-Fukasawa
-  <details><summary>fukasawa截图</summary>
-  <img src='https://github.com/tangly1024/NotionNext/blob/main/docs/screenshot-fukasawa.png?raw=true'/>
-  </details>
-- 仿照 [youtube] 主题 分支-https://github.com/tangly1024/NotionNext/tree/themw-youtube
-  <details><summary>youtube截图</summary>
-  <img src='https://github.com/tangly1024/NotionNext/blob/main/docs/screenshot-youtube.png?raw=true'/>
-  </details>
 
 ## License
 
