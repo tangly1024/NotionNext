@@ -13,7 +13,7 @@ const Slug = (props) => {
   if (!props.post) {
     return <Custom404 />
   }
-  return <LayoutSlug {...props}/>
+  return <LayoutSlug {...props} />
 }
 
 export async function getStaticPaths () {
@@ -45,10 +45,10 @@ export async function getStaticProps ({ params: { slug } }) {
 
   post.blockMap = await getPostBlocks(post.id, 'slug')
 
-  // 上一篇、下一篇文章关联
-  const index = allPosts.indexOf(post)
-  const prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
-  const next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
+  const posts = allPosts.filter(post => post?.type?.[0] === 'Post')
+  const index = posts.indexOf(post)
+  const prev = posts.slice(index - 1, index)[0] ?? posts.slice(-1)[0]
+  const next = posts.slice(index + 1, index + 2)[0] ?? posts[0]
 
   const recommendPosts = getRecommendPost(post, allPosts)
 
@@ -80,7 +80,7 @@ function getRecommendPost (post, allPosts, count = 5) {
   if (post.tags && post.tags.length) {
     const currentTag = post.tags[0]
     filteredPosts = filteredPosts.filter(
-      p => p && p.tags && p.tags.includes(currentTag) && p.slug !== post.slug
+      p => p && p.tags && p.tags.includes(currentTag) && p.slug !== post.slug && p.type === 'post'
     )
   }
   shuffleSort(filteredPosts)
