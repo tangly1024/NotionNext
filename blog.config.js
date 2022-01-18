@@ -1,5 +1,5 @@
 // 注: 配置文件可以读取Vercel的环境变量，配置方式参考：https://docs.tangly1024.com/zh/features/personality
-const BLOG = mergeDeep(process.env, {
+const BLOG = Object.assign({
   TITLE: 'NotionNext BLOG', // 站点标题
   DESCRIPTION: '这是一个由NotionNext生成的站点', // 站点描述
   AUTHOR: 'tangly1024', // 作者
@@ -76,33 +76,7 @@ const BLOG = mergeDeep(process.env, {
 
   GOOGLE_ADSENSE_ENABLE: false,
   GOOGLE_ADSENSE_ID: '', // 谷歌广告ID e.g ca-pub-xxxxxxxxxxxxxxxx
-  isProd: process.env.VERCEL_ENV === 'production'// distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-})
-
-/**
- * 深度合并两个对象
- * @param target
- * @param sources
- */
-function mergeDeep (target, ...sources) {
-  if (!sources.length) return target
-  const source = sources.shift()
-
-  if (isObject(target) && isObject(source)) {
-    for (const key in source) {
-      if (isObject(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} })
-        mergeDeep(target[key], source[key])
-      } else {
-        Object.assign(target, { [key]: source[key] })
-      }
-    }
-  }
-  return mergeDeep(target, ...sources)
-}
-
-function isObject (item) {
-  return (item && typeof item === 'object' && !Array.isArray(item))
-}
+  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+}, JSON.parse(JSON.stringify(process.env)))
 
 module.exports = BLOG
