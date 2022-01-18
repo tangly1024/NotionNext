@@ -91,7 +91,7 @@ const LayoutBase = ({
       </main>
 
       {/* 右下角悬浮 */}
-      <div className='right-8 bottom-10 lg:right-2 lg:bottom-2 fixed justify-end z-20 font-sans'>
+      <div className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
         <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
           <JumpToTopButton percent={percent}/>
           <JumpToBottomButton />

@@ -29,7 +29,6 @@ export const LayoutSlug = ({
 
   const drawerRight = useRef(null)
   const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
-  console.log(post)
   if (post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
