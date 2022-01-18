@@ -14,8 +14,8 @@ export const LayoutCategoryIndex = ({
 }) => {
   const { locale } = useGlobal()
   const meta = {
-    title: `${locale.COMMON.CATEGORY} | ${BLOG.title}`,
-    description: BLOG.description,
+    title: `${locale.COMMON.CATEGORY} | ${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
   return <LayoutBase meta={meta} totalPosts={allPosts} tags={tags} postCount={postCount} latestPosts={latestPosts}>

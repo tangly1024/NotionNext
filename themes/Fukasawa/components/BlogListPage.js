@@ -13,7 +13,7 @@ import PaginationSimple from './PaginationSimple'
  * @constructor
  */
 const BlogListPage = ({ page = 1, posts = [], postCount }) => {
-  const totalPage = Math.ceil(postCount / BLOG.postsPerPage)
+  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
   const showNext = page < totalPage && posts.length < postCount
   const [colCount, changeCol] = useState(3)
 

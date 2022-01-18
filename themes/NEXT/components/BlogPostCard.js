@@ -18,7 +18,7 @@ const BlogPostCard = ({ post, showSummary }) => {
        <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300'>
 
       <div className='lg:p-8 p-4 flex flex-col w-full'>
-        <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
+        <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
           <a className={`cursor-pointer font-bold hover:underline text-3xl flex ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
             {post.title}
           </a>
@@ -60,7 +60,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         </div> }
 
         <div className='article-cover pointer-events-none'>
-          <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
+          <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
               <a className='hover:bg-opacity-100 hover:scale-105 pointer-events-auto transform duration-300 rounded-md p-2 text-red-500 cursor-pointer'>
                 {locale.COMMON.ARTICLE_DETAIL}
                 <FontAwesomeIcon className='ml-1' icon={faAngleRight} /></a>
@@ -69,7 +69,7 @@ const BlogPostCard = ({ post, showSummary }) => {
       </div>
 
       {CONFIG_NEXT.POST_LIST_COVER && post?.page_cover && (
-        <Link href={`${BLOG.path}/article/${post.slug}`} passHref>
+        <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
         <div className='h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden'>
           <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
         </div>

@@ -27,7 +27,7 @@ export const LayoutSlug = ({
   latestPosts
 }) => {
   const meta = {
-    title: `${post.title} | ${BLOG.title}`,
+    title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
     type: 'article',
     tags: post.tags

@@ -11,24 +11,24 @@ export async function getStaticProps () {
   const from = 'index'
   const { allPosts, latestPosts, categories, tags, postCount } = await getGlobalNotionData({ from })
   const meta = {
-    title: `${BLOG.title}`,
-    description: BLOG.description,
+    title: `${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
 
   // 处理分页
   const page = 1
   let postsToShow
-  if (BLOG.postListStyle !== 'page') {
+  if (BLOG.POST_LIST_STYLE !== 'page') {
     postsToShow = Array.from(allPosts)
   } else {
     postsToShow = allPosts.slice(
-      BLOG.postsPerPage * (page - 1),
-      BLOG.postsPerPage * page
+      BLOG.POSTS_PER_PAGE * (page - 1),
+      BLOG.POSTS_PER_PAGE * page
     )
     for (const i in postsToShow) {
       const post = postsToShow[i]
-      const blockMap = await getPostBlocks(post.id, 'slug', BLOG.previewLines)
+      const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
       if (blockMap) {
         post.blockMap = blockMap
       }

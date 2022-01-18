@@ -14,7 +14,7 @@ import CONFIG_NEXT from '../config_next'
  * @constructor
  */
 const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_NEXT.POST_LIST_SUMMARY }) => {
-  const postsPerPage = BLOG.postsPerPage
+  const postsPerPage = BLOG.POSTS_PER_PAGE
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, postsPerPage)
 

@@ -12,7 +12,7 @@ import BlogPostListEmpty from './BlogPostListEmpty'
  * @constructor
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
-  const totalPage = Math.ceil(postCount / BLOG.postsPerPage)
+  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
 
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />

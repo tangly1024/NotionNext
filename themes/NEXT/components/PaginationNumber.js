@@ -23,7 +23,7 @@ const PaginationNumber = ({ page, totalPage }) => {
       {/* 上一页 */}
       <Link
         href={ {
-          pathname: (currentPage - 1 === 1 ? `${BLOG.path || '/'}` : `/page/${currentPage - 1}`), query: router.query.s ? { s: router.query.s } : {}
+          pathname: (currentPage - 1 === 1 ? `${BLOG.PATH || '/'}` : `/page/${currentPage - 1}`), query: router.query.s ? { s: router.query.s } : {}
         } } passHref >
         <div
           rel='prev'

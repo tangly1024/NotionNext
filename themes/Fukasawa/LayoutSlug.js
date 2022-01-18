@@ -11,7 +11,7 @@ import LayoutBase from './LayoutBase'
 export const LayoutSlug = (props) => {
   const { post } = props
   const meta = {
-    title: `${post.title} | ${BLOG.title}`,
+    title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
     type: 'article',
     tags: post.tags

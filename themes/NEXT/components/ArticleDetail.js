@@ -28,7 +28,7 @@ import WordCount from './WordCount'
  * @returns
  */
 export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
-  const url = BLOG.link + useRouter().asPath
+  const url = BLOG.LINK + useRouter().asPath
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
 
@@ -144,7 +144,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
       </section>
 
       {/* 版权声明 */}
-      <ArticleCopyright author={BLOG.author} url={url} />
+      <ArticleCopyright author={BLOG.AUTHOR} url={url} />
 
       {/* 推荐文章 */}
       <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />

@@ -18,8 +18,8 @@ export const LayoutArchive = ({ posts, tags, categories, postCount }) => {
   })
 
   const meta = {
-    title: `${locale.NAV.ARCHIVE} | ${BLOG.title}`,
-    description: BLOG.description,
+    title: `${locale.NAV.ARCHIVE} | ${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
 

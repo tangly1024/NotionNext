@@ -12,19 +12,19 @@ import React from 'react'
 const SocialButton = () => {
   return <div className='w-52 justify-center flex-wrap flex'>
     <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 '>
-      {BLOG.socialLink.github && <a target='_blank' rel='noreferrer' title={'github'} href={BLOG.socialLink.github} >
+      {BLOG.CONTACT_GITHUB && <a target='_blank' rel='noreferrer' title={'github'} href={BLOG.CONTACT_GITHUB} >
         <FontAwesomeIcon icon={faGithub} className='transform hover:scale-125 duration-150'/>
       </a>}
-      {BLOG.socialLink.twitter && <a target='_blank' rel='noreferrer' title={'twitter'} href={BLOG.socialLink.twitter} >
+      {BLOG.CONTACT_TWITTER && <a target='_blank' rel='noreferrer' title={'twitter'} href={BLOG.CONTACT_TWITTER} >
         <FontAwesomeIcon icon={faTwitter} className='transform hover:scale-125 duration-150'/>
       </a>}
-      {BLOG.socialLink.telegram && <a target='_blank' rel='noreferrer' href={BLOG.socialLink.telegram} title={'telegram'} >
+      {BLOG.CONTACT_TELEGRAM && <a target='_blank' rel='noreferrer' href={BLOG.CONTACT_TELEGRAM} title={'telegram'} >
         <FontAwesomeIcon icon={faTelegram} className='transform hover:scale-125 duration-150'/>
       </a>}
-      {BLOG.socialLink.weibo && <a target='_blank' rel='noreferrer' title={'weibo'} href={BLOG.socialLink.weibo} >
+      {BLOG.CONTACT_WEIBO && <a target='_blank' rel='noreferrer' title={'weibo'} href={BLOG.CONTACT_WEIBO} >
         <FontAwesomeIcon icon={faWeibo} className='transform hover:scale-125 duration-150'/>
       </a>}
-      {BLOG.email && <a target='_blank' rel='noreferrer' title={'email'} href={`mailto:${BLOG.email}`} >
+      {BLOG.CONTACT_EMAIL && <a target='_blank' rel='noreferrer' title={'email'} href={`mailto:${BLOG.CONTACT_EMAIL}`} >
         <FontAwesomeIcon icon={faEnvelope} className='transform hover:scale-125 duration-150'/>
       </a>}
       <a target='_blank' rel='noreferrer' title={'RSS'} href={'/feed'} >
