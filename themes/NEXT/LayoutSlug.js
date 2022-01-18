@@ -8,12 +8,6 @@ import ArticleDetail from './components/ArticleDetail'
 import TocDrawer from './components/TocDrawer'
 import Live2D from './components/Live2D'
 import { useRef } from 'react'
-import 'prismjs'
-import 'prismjs/components/prism-bash'
-import 'prismjs/components/prism-javascript'
-import 'prismjs/components/prism-markup'
-import 'prismjs/components/prism-python'
-import 'prismjs/components/prism-typescript'
 import CONFIG_NEXT from './config_next'
 
 export const LayoutSlug = ({
@@ -35,8 +29,11 @@ export const LayoutSlug = ({
 
   const drawerRight = useRef(null)
   const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
-  post.content = Object.keys(post?.blockMap?.block)
-  post.toc = getPageTableOfContents(post, post.blockMap)
+  console.log(post)
+  if (post?.blockMap?.block) {
+    post.content = Object.keys(post.blockMap.block)
+    post.toc = getPageTableOfContents(post, post.blockMap)
+  }
   const floatSlot = post?.toc?.length > 1
     ? <div className='block lg:hidden'><TocDrawerButton onClick={() => {
       drawerRight?.current?.handleSwitchVisible()
