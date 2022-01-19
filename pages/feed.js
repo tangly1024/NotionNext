@@ -3,8 +3,8 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 
 export async function getServerSideProps ({ res }) {
   res.setHeader('Content-Type', 'text/xml')
-  const { allPosts } = getGlobalNotionData({ from: 'rss' })
-  const xmlFeed = generateRss(allPosts.slice(0, 10))
+  const globalNotionData = await getGlobalNotionData({ from: 'rss' })
+  const xmlFeed = generateRss(globalNotionData?.allPosts?.slice(0, 10) || [])
   res.write(xmlFeed)
   res.end()
   return {
