@@ -29,16 +29,9 @@ const Utterances = ({ issueTerm, layout }) => {
       anchor.innerHTML = ''
     }
   })
-  return (
-    <>
-      <div
-        id="comments"
-        className={layout && layout === 'fullWidth' ? '' : 'md:-ml-16'}
-      >
-        <div className="utterances-frame"/>
-      </div>
-    </>
-  )
+  return <div id="comments" >
+    <div className="utterances-frame h-auto w-auto"/>
+  </div>
 }
 
 export default Utterances

@@ -1,7 +1,7 @@
-// 注: 配置文件可以读取Vercel的环境变量，配置方式参考：https://docs.tangly1024.com/zh/features/personality
+// 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/zh/features/personality
 const BLOG = {
-  TITLE: 'NotionNext BLOG', // 站点标题
-  DESCRIPTION: '这是一个由NotionNext生成的站点', // 站点描述
+  TITLE: process.env.NEXT_PUBLIC_TITLE || 'NotionNext BLOG', // 站点标题
+  DESCRIPTION: process.env.NEXT_PUBLIC_DESCRIPTION || '这是一个由NotionNext生成的站点', // 站点描述
   AUTHOR: 'tangly1024', // 作者
   BIO: '一个普通的干饭人🍚', // 作者简介
   LINK: 'https://tangly1024.com', // 网站地址
@@ -24,11 +24,11 @@ const BLOG = {
   POSTS_SORT_BY: 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: '', // 联系邮箱 e.g tlyong1992@hotmail.com
-  CONTACT_WEIBO: '', // e.g https://weibo.com/tangly1024
-  CONTACT_TWITTER: '', // e.g https://twitter.com/troy1024_1
-  CONTACT_GITHUB: '', // e.g https://github.com/tangly1024
-  CONTACT_TELEGRAM: '', // e.g https://t.me/tangly_1024
+  CONTACT_EMAIL: 'tlyong1992@hotmail.com',
+  CONTACT_WEIBO: 'https://weibo.com/tangly1024',
+  CONTACT_TWITTER: 'https://twitter.com/troy1024_1',
+  CONTACT_GITHUB: 'https://github.com/tangly1024',
+  CONTACT_TELEGRAM: 'https://t.me/tangly_1024',
 
   // 评论互动 可同时开启 CUSDIS UTTERRANCES GITALK
   COMMENT_CUSDIS_APP_ID: process.env.NEXT_PUBLIC_COMMENT_CUSDIS_APP_ID || '', // data-app-id 36位 see https://cusdis.com/
