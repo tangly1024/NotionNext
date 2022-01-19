@@ -7,7 +7,7 @@ import BLOG from '@/blog.config'
  */
 const CommonScript = () => {
   return (<>
-    {BLOG.comment?.DaoVoiceId && (<>
+    {BLOG.COMMENT_DAO_VOICE_ID && (<>
       {/* DaoVoice 反馈 */}
       <script async dangerouslySetInnerHTML={{
         __html: `
@@ -18,7 +18,7 @@ const CommonScript = () => {
       <script async dangerouslySetInnerHTML={{
         __html: `
                  daovoice('init', {
-                    app_id: "${BLOG.comment.DaoVoiceId}"
+                    app_id: "${BLOG.COMMENT_DAO_VOICE_ID}"
                   });
                   daovoice('update');
                   `
@@ -26,85 +26,80 @@ const CommonScript = () => {
       />
     </>)}
 
-    {/* GoogleAdsense 广告植入 */}
-    {BLOG.googleAdsenseId && (<script data-ad-client={BLOG.googleAdsenseId} async
+    {/* GoogleAdsense */}
+    {BLOG.ADSENSE_GOOGLE_ID && (<script data-ad-client={BLOG.ADSENSE_GOOGLE_ID} async
               src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'/>)}
 
-    {BLOG.comment?.TidioId && (<>
-      {/* Tidio在线反馈 */}
-      <script async
-              src={`//code.tidio.co/${BLOG.comment.TidioId}.js`}
-      />
-    </>)}
+    {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
 
-    {/* */}
-    {BLOG.gitter && (<>
+    {BLOG.COMMENT_TIDIO_ID && <script async src={`//code.tidio.co/${BLOG.COMMENT_TIDIO_ID}.js`} />}
+
+    {/* gitter聊天室 */}
+    {BLOG.COMMENT_GITTER_ROOM && (<>
+      <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer/>
       <script async dangerouslySetInnerHTML={{
         __html: `
                 ((window.gitter = {}).chat = {}).options = {
-                  room: 'tangly1024/community'
+                  room: '${BLOG.COMMENT_GITTER_ROOM}'
                 };
                 `
       }}/>
-    <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
     </>)}
 
     {/* 代码统计 */}
-    {BLOG.isProd && (<>
+    {/* ackee统计脚本 */}
+    {BLOG.ANALYTICS_ACKEE_TRACKER && (
+      <script async src={BLOG.ANALYTICS_ACKEE_TRACKER}
+              data-ackee-server={BLOG.ANALYTICS_ACKEE_DATA_SERVER}
+              data-ackee-domain-id={BLOG.ANALYTICS_ACKEE_DOMAIN_ID}
+      />
+    )}
 
-        {/* ackee统计脚本 */}
-        {BLOG.analytics.provider === 'ackee' && (
-          <script async src={BLOG.analytics.ackeeConfig.tracker}
-                  data-ackee-server={BLOG.analytics.ackeeConfig.dataAckeeServer}
-                  data-ackee-domain-id={BLOG.analytics.ackeeConfig.domainId}
-          />
-        )}
-        {/* 百度统计 */}
-        {BLOG.analytics.baiduAnalytics && (
-          <script async
-                  dangerouslySetInnerHTML={{
-                    __html: `
-                  var _hmt = _hmt || [];
-                  (function() {
-                    var hm = document.createElement("script");
-                    hm.src = "https://hm.baidu.com/hm.js?${BLOG.analytics.baiduAnalytics}";
-                    var s = document.getElementsByTagName("script")[0]; 
-                    s.parentNode.insertBefore(hm, s);
-                  })();
+    {/* 百度统计 */}
+    {BLOG.ANALYTICS_BAIDU_ID && (
+      <script async
+              dangerouslySetInnerHTML={{
+                __html: `
+              var _hmt = _hmt || [];
+              (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?${BLOG.ANALYTICS_BAIDU_ID}";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+              })();
+              `
+              }}
+      />
+    )}
+
+    {/* 站长统计 */}
+    {BLOG.ANALYTICS_CNZZ_ID && (
+      <script async
+              dangerouslySetInnerHTML={{
+                __html: `
+              document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_${BLOG.ANALYTICS_CNZZ_ID}'%3E%3C/span%3E%3Cscript src='https://s9.cnzz.com/z_stat.php%3Fid%3D${BLOG.ANALYTICS_CNZZ_ID}' type='text/javascript'%3E%3C/script%3E"));
+              `
+              }}
+      />
+    )}
+
+    {/* 谷歌统计 */}
+    {BLOG.ANALYTICS_GOOGLE_ID && (<>
+        <script async
+                src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.ANALYTICS_GOOGLE_ID}`}
+        />
+        <script async
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', '${BLOG.ANALYTICS_GOOGLE_ID}', {
+                      page_path: window.location.pathname,
+                    });
                   `
-                  }}
-          />
-        )}
-
-        {/* 站长统计 */}
-        {BLOG.analytics.cnzzAnalytics && (
-          <script async
-                  dangerouslySetInnerHTML={{
-                    __html: `
-                  document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_${BLOG.analytics.cnzzAnalytics}'%3E%3C/span%3E%3Cscript src='https://s9.cnzz.com/z_stat.php%3Fid%3D${BLOG.analytics.cnzzAnalytics}' type='text/javascript'%3E%3C/script%3E"));
-                  `
-                  }}
-          />
-        )}
-
-        {/* 谷歌统计 */}
-        {BLOG.analytics.provider === 'ga' && (<>
-            <script async
-                    src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.analytics.gaConfig.measurementId}`}
-            />
-            <script async
-                    dangerouslySetInnerHTML={{
-                      __html: `
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-                        gtag('config', '${BLOG.analytics.gaConfig.measurementId}', {
-                          page_path: window.location.pathname,
-                        });
-                      `
-                    }}
-            />
-          </>)}
+                }}
+        />
       </>)}
   </>)
 }

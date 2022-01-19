@@ -1,8 +1,8 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 跳转到网页顶部
@@ -13,7 +13,7 @@ import React from 'react'
  * @constructor
  */
 const JumpToTopButton = ({ showPercent = true, percent }) => {
-  if (!BLOG.widget?.showToTop) {
+  if (!CONFIG_NEXT.WIDGET_TO_TOP) {
     return <></>
   }
   const { locale } = useGlobal()

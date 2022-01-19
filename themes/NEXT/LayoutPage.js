@@ -1,7 +1,7 @@
 import LayoutBase from './LayoutBase'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import BlogPostListPage from './components/BlogPostListPage'
-import { CONFIG_NEXT } from './index'
+import CONFIG_NEXT from './config_next'
 
 export const LayoutPage = ({ page, posts, tags, meta, categories, postCount, latestPosts }) => {
   return (

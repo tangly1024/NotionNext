@@ -1,8 +1,8 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { faListOl } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 点击召唤目录抽屉
@@ -12,7 +12,7 @@ import React from 'react'
  * @constructor
  */
 const TocDrawerButton = (props) => {
-  if (!BLOG.widget?.showToc) {
+  if (!CONFIG_NEXT.WIDGET_TOC) {
     return <></>
   }
   const { locale } = useGlobal()

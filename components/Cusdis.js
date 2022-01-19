@@ -6,8 +6,7 @@ const Cusdis = ({ id, url, title }) => {
     const anchor = document.getElementById('comments')
     script.setAttribute(
       'src',
-      BLOG.comment.cusdisConfig.scriptSrc ||
-        'https://cusdis.com/js/cusdis.es.js'
+      BLOG.COMMENT_CUSDIS_SCRIPT_SRC
     )
     script.setAttribute('async', true)
     script.setAttribute('defer', true)
@@ -20,12 +19,12 @@ const Cusdis = ({ id, url, title }) => {
     <div id="comments">
       <div
         id="cusdis_thread"
-        data-host={BLOG.comment.cusdisConfig.host || 'https://cusdis.com'}
-        data-app-id={BLOG.comment.cusdisConfig.appId}
+        data-host={BLOG.COMMENT_CUSDIS_HOST}
+        data-app-id={BLOG.COMMENT_CUSDIS_APP_ID}
         data-page-id={id}
         data-page-url={url}
         data-page-title={title}
-      ></div>
+      />
     </div>
   )
 }

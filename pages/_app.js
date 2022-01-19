@@ -26,15 +26,10 @@ const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), { ssr:
 const MyApp = ({ Component, pageProps }) => {
   return (
     <GlobalContextProvider>
-        {BLOG.isProd && BLOG?.analytics?.provider === 'ackee' && (
-          <Ackee
-            ackeeServerUrl={BLOG.analytics.ackeeConfig.dataAckeeServer}
-            ackeeDomainId={BLOG.analytics.ackeeConfig.domainId}
-          />
-        )}
-        {BLOG.isProd && BLOG?.analytics?.provider === 'ga' && <Gtag />}
-        {BLOG.analytics.busuanzi && <Busuanzi/>}
-        {BLOG.googleAdsenseId && <GoogleAdsense/>}
+        {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
+        {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
+        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi/>}
+        {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense/>}
         <Component {...pageProps} />
     </GlobalContextProvider>
   )

@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { faAngleDoubleRight, faBars, faSearch, faTag, faThList, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,6 +10,7 @@ import Logo from './Logo'
 import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
+import CONFIG_NEXT from '../config_next'
 
 let windowTop = 0
 
@@ -19,7 +19,7 @@ let windowTop = 0
  * @param {*} param0
  * @returns
  */
-const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, autoHide = true, postCount }) => {
+const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
 
@@ -27,23 +27,23 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
     const scrollS = window.scrollY
     if (scrollS >= windowTop && scrollS > 10) {
       const nav = document.querySelector('#sticky-nav')
-      nav && nav.classList.replace('top-0', '-top-16')
+      nav && nav.classList.replace('top-0', '-top-40')
       windowTop = scrollS
     } else {
       const nav = document.querySelector('#sticky-nav')
-      nav && nav.classList.replace('-top-16', 'top-0')
+      nav && nav.classList.replace('-top-40', 'top-0')
       windowTop = scrollS
     }
   }, 200), [])
 
   // 监听滚动
   useEffect(() => {
-    if (BLOG.topNavType === 'autoCollapse') {
+    if (CONFIG_NEXT.NAV_TYPE === 'autoCollapse') {
       scrollTrigger()
       window.addEventListener('scroll', scrollTrigger)
     }
     return () => {
-      BLOG.autoCollapsedNavBar && window.removeEventListener('scroll', scrollTrigger)
+      CONFIG_NEXT.NAV_TYPE === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
 
@@ -58,7 +58,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
         <section className='mt-8'>
           <div className='text-sm flex flex-nowrap justify-between font-light px-2'>
             <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
-            <Link href='/category' passHref>
+            <Link href={'/category'} passHref>
               <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
               </a>
@@ -72,7 +72,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
         <section className='mt-4'>
           <div className='text-sm py-2 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200'>
             <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
-            <Link href='/tag' passHref>
+            <Link href={'/tag'} passHref>
               <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
                 {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
               </a>
@@ -89,7 +89,7 @@ const TopNav = ({ tags, currentTag, post, slot, categories, currentCategory, aut
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${BLOG.topNavType !== 'normal' ? 'fixed' : ''} lg:relative w-full top-0 z-20 transform duration-500`}>
+    <div id='sticky-nav' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'fixed' : ''} lg:relative w-full top-0 z-20 transform duration-500`}>
       <div className='w-full flex justify-between items-center p-4 bg-black text-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>

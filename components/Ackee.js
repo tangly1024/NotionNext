@@ -1,12 +1,19 @@
 import { useRouter } from 'next/router'
 import useAckee from 'use-ackee'
+import BLOG from '@/blog.config'
 
-const Ackee = ({ ackeeServerUrl, ackeeDomainId }) => {
+const Ackee = () => {
   const router = useRouter()
   useAckee(
     router.asPath,
-    { server: ackeeServerUrl, domainId: ackeeDomainId },
-    { detailed: false, ignoreLocalhost: true }
+    {
+      server: BLOG.ANALYTICS_ACKEE_DATA_SERVER,
+      domainId: BLOG.ANALYTICS_ACKEE_DOMAIN_ID
+    },
+    {
+      detailed: false,
+      ignoreLocalhost: true
+    }
   )
   return null
 }

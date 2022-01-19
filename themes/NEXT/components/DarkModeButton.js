@@ -1,6 +1,7 @@
-import { loadUserThemeFromCookies, saveTheme, useGlobal } from '@/lib/global'
+import { useGlobal } from '@/lib/global'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { loadUserThemeFromCookies, saveTheme } from '@/lib/theme'
 
 const DarkModeButton = () => {
   const { changeTheme } = useGlobal()

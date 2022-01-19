@@ -9,8 +9,8 @@ export const LayoutTag = ({ tags, posts, tag, categories, postCount, latestPosts
   const { locale } = useGlobal()
 
   const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${BLOG.title}`,
-    description: BLOG.description,
+    title: `${tag} | ${locale.COMMON.TAGS} | ${BLOG.TITLE}`,
+    description: BLOG.DESCRIPTION,
     type: 'website'
   }
 

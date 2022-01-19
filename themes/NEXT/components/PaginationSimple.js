@@ -18,7 +18,7 @@ const PaginationSimple = ({ page, showNext }) => {
     <div className='my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2'>
       <Link
         href={ {
-          pathname: (currentPage - 1 === 1 ? `${BLOG.path || '/'}` : `/page/${currentPage - 1}`), query: router.query.s ? { s: router.query.s } : {}
+          pathname: (currentPage - 1 === 1 ? `${BLOG.PATH || '/'}` : `/page/${currentPage - 1}`), query: router.query.s ? { s: router.query.s } : {}
         } } passHref >
         <button
           rel='prev'

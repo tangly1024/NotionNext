@@ -1,8 +1,8 @@
-import BLOG from '@/blog.config'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 跳转到网页顶部
@@ -13,7 +13,7 @@ import smoothscroll from 'smoothscroll-polyfill'
  * @constructor
  */
 const JumpToBottomButton = ({ showPercent = false }) => {
-  if (!BLOG.widget?.showToBottom) {
+  if (!CONFIG_NEXT.WIDGET_TO_BOTTOM) {
     return <></>
   }
 

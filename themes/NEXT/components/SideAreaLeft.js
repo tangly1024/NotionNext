@@ -1,27 +1,24 @@
-import InfoCard from '@/themes/NEXT/components/InfoCard'
-import MenuButtonGroup from '@/themes/NEXT/components/MenuButtonGroup'
-import SearchInput from '@/themes/NEXT/components/SearchInput'
-import Toc from '@/themes/NEXT/components/Toc'
+import InfoCard from './InfoCard'
+import MenuButtonGroup from './MenuButtonGroup'
+import SearchInput from './SearchInput'
+import Toc from './Toc'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
-import Tabs from '@/themes/NEXT/components/Tabs'
-import BLOG from '@/blog.config'
+import Tabs from '@/components/Tabs'
 import Logo from './Logo'
 import Card from './Card'
+import CONFIG_NEXT from '../config_next'
 
 /**
  * 侧边平铺
  * @param tags
  * @param currentTag
  * @param post
- * @param posts
- * @param categories
- * @param currentCategory
  * @param currentSearch
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, currentCategory, currentSearch, targetRef }) => {
+const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
@@ -33,13 +30,13 @@ const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, cu
         <div className='pt-2 px-2 font-sans'>
         <MenuButtonGroup allowCollapse={true} postCount={postCount} />
         </div>
-        {BLOG.menu.showSearch && <div className='px-2 pt-2 font-sans'>
+        {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
         </div>}
       </section>
     </section>
 
-    <Card className='sticky top-4'>
+    <Card className='sticky top-4 hidden lg:block'>
       <Tabs>
           {showToc && (
             <div key={locale.COMMON.TABLE_OF_CONTENTS} className='dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 duration-200'>
@@ -55,9 +52,9 @@ const SideAreaLeft = ({ title, tags, currentTag, post, postCount, categories, cu
                 <span className='px-1 '>
                   <strong className='font-medium'>{postCount}</strong>{locale.COMMON.POSTS}</span>
                         <span className='px-1 busuanzi_container_site_uv hidden'>
-                | <strong className='pl-1 busuanzi_value_site_uv font-medium'></strong>{locale.COMMON.VISITORS}</span>
+                | <strong className='pl-1 busuanzi_value_site_uv font-medium'/>{locale.COMMON.VISITORS}</span>
                         {/* <span className='px-1 busuanzi_container_site_pv hidden'>
-                | <strong className='pl-1 busuanzi_value_site_pv font-medium'></strong>{locale.COMMON.VIEWS}</span> */}
+                | <strong className='pl-1 busuanzi_value_site_pv font-medium'/>{locale.COMMON.VIEWS}</span> */}
               </div>
             </>
           </div>

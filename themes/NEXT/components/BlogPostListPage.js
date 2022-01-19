@@ -1,7 +1,7 @@
-import BlogPostCard from '@/themes/NEXT/components/BlogPostCard'
+import BlogPostCard from './BlogPostCard'
 import PaginationNumber from './PaginationNumber'
 import BLOG from '@/blog.config'
-import BlogPostListEmpty from '@/themes/NEXT/components/BlogPostListEmpty'
+import BlogPostListEmpty from './BlogPostListEmpty'
 
 /**
  * 文章列表分页表格
@@ -12,7 +12,7 @@ import BlogPostListEmpty from '@/themes/NEXT/components/BlogPostListEmpty'
  * @constructor
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
-  const totalPage = Math.ceil(postCount / BLOG.postsPerPage)
+  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
 
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
