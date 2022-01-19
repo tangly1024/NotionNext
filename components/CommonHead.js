@@ -18,10 +18,7 @@ const CommonHead = ({ meta }) => {
     <meta name='robots' content='follow, index' />
     <meta charSet='UTF-8' />
     {BLOG.SEO_GOOGLE_SITE_VERIFICATION && (
-      <meta
-        name='google-site-verification'
-        content={BLOG.SEO_GOOGLE_SITE_VERIFICATION}
-      />
+      <meta name='google-site-verification' content={BLOG.SEO_GOOGLE_SITE_VERIFICATION} />
     )}
     <meta name='keywords' content={keywords} />
     <meta name='description' content={description} />

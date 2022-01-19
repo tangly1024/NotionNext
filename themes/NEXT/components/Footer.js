@@ -15,9 +15,8 @@ const Footer = ({ title }) => {
       <br/>
 
       <span>Powered by <a href='https://notion.so' className='underline font-bold text-gray-500 dark:text-gray-300'>Notion</a> & <a href='https://github.com/tangly1024/NotionNext' className='underline font-bold text-gray-500 dark:text-gray-300'>NotionNext</a>.</span></span>
-      <br />
 
-      <FontAwesomeIcon icon={faShieldAlt} /> <a href='https://beian.miit.gov.cn/' className='mr-2 font-bold'>闽ICP备20010331号</a>
+      {BLOG.BEI_AN && <><br /><FontAwesomeIcon icon={faShieldAlt} /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br/></>}
       <span className='hidden busuanzi_container_site_pv'>
             <FontAwesomeIcon icon={faEye}/><span className='px-1 busuanzi_value_site_pv'> </span>  </span>
       <span className='pl-2 hidden busuanzi_container_site_uv'>

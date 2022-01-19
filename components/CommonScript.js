@@ -7,7 +7,7 @@ import BLOG from '@/blog.config'
  */
 const CommonScript = () => {
   return (<>
-    {BLOG.COMMENT_DAO_VOICE_ENABLE && (<>
+    {BLOG.COMMENT_DAO_VOICE_ID && (<>
       {/* DaoVoice 反馈 */}
       <script async dangerouslySetInnerHTML={{
         __html: `
@@ -27,18 +27,15 @@ const CommonScript = () => {
     </>)}
 
     {/* GoogleAdsense */}
-    {BLOG.GOOGLE_ADSENSE_ENABLE && (<script data-ad-client={BLOG.googleAdsenseId} async
+    {BLOG.ADSENSE_GOOGLE_ID && (<script data-ad-client={BLOG.ADSENSE_GOOGLE_ID} async
               src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'/>)}
 
-    {BLOG.COMMENT_TIDIO_ENABLE && (<>
-      {/* Tidio在线反馈 */}
-      <script async
-              src={`//code.tidio.co/${BLOG.COMMENT_TIDIO_ID}.js`}
-      />
-    </>)}
+    {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
+
+    {BLOG.COMMENT_TIDIO_ID && <script async src={`//code.tidio.co/${BLOG.COMMENT_TIDIO_ID}.js`} />}
 
     {/* gitter聊天室 */}
-    {BLOG.COMMENT_GITTER_ENABLE && (<>
+    {BLOG.COMMENT_GITTER_ROOM && (<>
       <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer/>
       <script async dangerouslySetInnerHTML={{
         __html: `
@@ -51,7 +48,7 @@ const CommonScript = () => {
 
     {/* 代码统计 */}
     {/* ackee统计脚本 */}
-    {BLOG.ANALYTICS_ACKEE_ENABLE && (
+    {BLOG.ANALYTICS_ACKEE_TRACKER && (
       <script async src={BLOG.ANALYTICS_ACKEE_TRACKER}
               data-ackee-server={BLOG.ANALYTICS_ACKEE_DATA_SERVER}
               data-ackee-domain-id={BLOG.ANALYTICS_ACKEE_DOMAIN_ID}
@@ -59,7 +56,7 @@ const CommonScript = () => {
     )}
 
     {/* 百度统计 */}
-    {BLOG.ANALYTICS_BAIDU_ENABLE && (
+    {BLOG.ANALYTICS_BAIDU_ID && (
       <script async
               dangerouslySetInnerHTML={{
                 __html: `
@@ -76,7 +73,7 @@ const CommonScript = () => {
     )}
 
     {/* 站长统计 */}
-    {BLOG.ANALYTICS_CNZZ_ENABLE && (
+    {BLOG.ANALYTICS_CNZZ_ID && (
       <script async
               dangerouslySetInnerHTML={{
                 __html: `
@@ -87,7 +84,7 @@ const CommonScript = () => {
     )}
 
     {/* 谷歌统计 */}
-    {BLOG.ANALYTICS_GOOGLE_ENABLE && (<>
+    {BLOG.ANALYTICS_GOOGLE_ID && (<>
         <script async
                 src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.ANALYTICS_GOOGLE_ID}`}
         />

@@ -3,14 +3,12 @@ import useAckee from 'use-ackee'
 import BLOG from '@/blog.config'
 
 const Ackee = () => {
-  const ackeeServerUrl = BLOG.ANALYTICS_ACKEE_DATA_SERVER
-  const ackeeDomainId = BLOG.ANALYTICS_ACKEE_DOMAIN_ID
   const router = useRouter()
   useAckee(
     router.asPath,
     {
-      server: ackeeServerUrl,
-      domainId: ackeeDomainId
+      server: BLOG.ANALYTICS_ACKEE_DATA_SERVER,
+      domainId: BLOG.ANALYTICS_ACKEE_DOMAIN_ID
     },
     {
       detailed: false,

@@ -36,7 +36,7 @@ const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
       </section>
     </section>
 
-    <Card className='sticky top-4'>
+    <Card className='sticky top-4 hidden lg:block'>
       <Tabs>
           {showToc && (
             <div key={locale.COMMON.TABLE_OF_CONTENTS} className='dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 duration-200'>
