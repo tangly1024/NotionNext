@@ -40,6 +40,8 @@ const CommonHead = ({ meta }) => {
         <meta property='article:author' content={BLOG.AUTHOR} />
       </>
     )}
+    {/* 谷歌字体镜像 */}
+    <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC&display=swap" rel="stylesheet"/>
   </Head>
 }
 
