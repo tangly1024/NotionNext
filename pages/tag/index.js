@@ -15,7 +15,7 @@ export async function getStaticProps () {
     latestPosts
   } = await getGlobalNotionData({
     from,
-    includePage: true,
+    includePage: false,
     tagsCount: 0
   })
 
