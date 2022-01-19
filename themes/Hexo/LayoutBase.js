@@ -31,6 +31,7 @@ const LayoutBase = ({
 }) => {
   return (<>
     <CommonHead meta={meta} />
+    {headerSlot}
     <main id='wrapper' className='flex justify-center flex-1 pb-12'>
       {children}
     </main>
