@@ -1,11 +1,8 @@
 import { useRouter } from 'next/router'
+import LayoutBase from './LayoutBase'
 
-export const LayoutSearch = ({
-  posts,
-  tags,
-  categories,
-  postCount
-}) => {
+export const LayoutSearch = (props) => {
+  const { posts } = props
   let filteredPosts
   const searchKey = getSearchKey()
   if (searchKey) {
@@ -20,9 +17,9 @@ export const LayoutSearch = ({
 
   console.log(filteredPosts)
 
-  return <div>
+  return <LayoutBase {...props}>
     Search {searchKey}
-  </div>
+  </LayoutBase>
 }
 
 function getSearchKey () {

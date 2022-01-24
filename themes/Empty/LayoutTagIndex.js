@@ -1,5 +1,8 @@
-export const LayoutTagIndex = ({ tags, categories, postCount, latestPosts }) => {
-  return <div>
+import LayoutBase from './LayoutBase'
+
+export const LayoutTagIndex = (props) => {
+  // const { tags, categories, postCount, latestPosts } = props
+  return <LayoutBase {...props}>
      TagIndex
-   </div>
+   </LayoutBase>
 }
