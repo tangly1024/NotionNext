@@ -6,7 +6,7 @@ import Custom404 from '@/pages/404'
 
 const Page = (props) => {
   if (!props?.meta) {
-    return <Custom404 />
+    return <Custom404 {...props} />
   }
   return <LayoutPage {...props} />
 }

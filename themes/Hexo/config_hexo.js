@@ -10,6 +10,7 @@ const CONFIG_HEXO = {
   MENU_ARCHIVE: true, // 显示归档
   MENU_SEARCH: true, // 显示搜索
 
-  POST_LIST_COVER: true // 文章封面
+  POST_LIST_COVER: true, // 文章封面
+  POST_LIST_SUMMARY: true // 文章摘要
 }
 export default CONFIG_HEXO

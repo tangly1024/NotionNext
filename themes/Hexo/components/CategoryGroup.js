@@ -4,6 +4,9 @@ import Link from 'next/link'
 import React from 'react'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
+  if (!categories) {
+    return <></>
+  }
   return <>
     <div id='category-list' className='dark:border-gray-600 flex flex-wrap font-sans mx-4'>
       {Object.keys(categories).map(category => {

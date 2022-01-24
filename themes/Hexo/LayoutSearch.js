@@ -1,11 +1,11 @@
+import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
+import BlogPostListPage from './components/BlogPostListPage'
+import LayoutBase from './LayoutBase'
 
-export const LayoutSearch = ({
-  posts,
-  tags,
-  categories,
-  postCount
-}) => {
+export const LayoutSearch = (props) => {
+  const { posts } = props
   let filteredPosts
   const searchKey = getSearchKey()
   if (searchKey) {
@@ -18,11 +18,15 @@ export const LayoutSearch = ({
     filteredPosts = posts
   }
 
-  console.log(filteredPosts)
-
-  return <div>
-    Search {searchKey}
-  </div>
+  const { locale } = useGlobal()
+  const meta = {
+    title: `${searchKey || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
+    description: BLOG.DESCRIPTION,
+    type: 'website'
+  }
+  return <LayoutBase {...props} meta={meta}>
+    <BlogPostListPage {...props} posts={filteredPosts}/>
+  </LayoutBase>
 }
 
 function getSearchKey () {

@@ -16,7 +16,7 @@ export async function getStaticProps ({ params }) {
     latestPosts
   } = await getGlobalNotionData({
     from,
-    includePage: true,
+    includePage: false,
     tagsCount: 0
   })
   const filteredPosts = allPosts.filter(
