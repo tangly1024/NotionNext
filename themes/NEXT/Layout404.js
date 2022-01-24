@@ -18,7 +18,7 @@ export const Layout404 = () => {
           })
         }
       }
-    }, 30000000)
+    }, 3000)
   })
 
   return <LayoutBase meta={{ title: `${BLOG.TITLE} | 页面找不到啦` }}>
