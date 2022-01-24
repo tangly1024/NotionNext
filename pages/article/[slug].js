@@ -11,7 +11,7 @@ import Custom404 from '@/pages/404'
  */
 const Slug = (props) => {
   if (!props.post) {
-    return <Custom404 />
+    return <Custom404 {...props} />
   }
   return <LayoutSlug {...props} />
 }

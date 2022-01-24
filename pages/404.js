@@ -6,6 +6,6 @@ import { Layout404 } from '@/themes'
  * @constructor
  */
 
-export default function Custom404 () {
-  return <Layout404 />
+export default function Custom404 (props) {
+  return <Layout404 {...props}/>
 }

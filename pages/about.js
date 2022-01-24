@@ -11,7 +11,7 @@ import { LayoutSlug } from '@/themes'
  */
 const About = (props) => {
   if (!props.post) {
-    return <Custom404 />
+    return <Custom404 {...props} />
   }
   return <LayoutSlug {...props} />
 }

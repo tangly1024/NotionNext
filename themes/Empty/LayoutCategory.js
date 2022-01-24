@@ -1,5 +1,8 @@
-export const LayoutCategory = ({ tags, posts, category, categories, latestPosts, postCount }) => {
-  return <div>
+import LayoutBase from './LayoutBase'
+
+export const LayoutCategory = (props) => {
+  const { category } = props
+  return <LayoutBase {...props}>
     Category -  {category}
-  </div>
+  </LayoutBase>
 }

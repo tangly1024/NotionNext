@@ -1,4 +1,7 @@
+import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
+import BlogPostListPage from './components/BlogPostListPage'
 import LayoutBase from './LayoutBase'
 
 export const LayoutSearch = (props) => {
@@ -15,10 +18,14 @@ export const LayoutSearch = (props) => {
     filteredPosts = posts
   }
 
-  console.log(filteredPosts)
-
-  return <LayoutBase {...props}>
-    Search {searchKey}
+  const { locale } = useGlobal()
+  const meta = {
+    title: `${searchKey || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
+    description: BLOG.DESCRIPTION,
+    type: 'website'
+  }
+  return <LayoutBase {...props} meta={meta}>
+    <BlogPostListPage {...props} posts={filteredPosts}/>
   </LayoutBase>
 }
 

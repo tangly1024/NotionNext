@@ -1,11 +1,8 @@
-export const LayoutCategoryIndex = ({
-  tags,
-  allPosts,
-  categories,
-  postCount,
-  latestPosts
-}) => {
-  return <div>
+import LayoutBase from './LayoutBase'
+
+export const LayoutCategoryIndex = (props) => {
+  // const { tags, allPosts, categories, postCount, latestPosts } = props
+  return <LayoutBase {...props}>
     CategoryIndex
-  </div>
+  </LayoutBase>
 }
