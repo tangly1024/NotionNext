@@ -189,3 +189,7 @@ nav {
   background-image: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 70%);
   padding-bottom: 34px;
 }
+
+.shadow-text{
+  text-shadow: 0.1em 0.1em 0.2em black;
+}

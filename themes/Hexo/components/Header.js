@@ -77,7 +77,7 @@ export default function Header () {
     setTimeout(() => {
       if (window) {
         const wrapperElement = document.getElementById('wrapper')
-        wrapperTop = wrapperElement.offsetTop
+        wrapperTop = wrapperElement?.offsetTop
       }
     }, 500)
   }
@@ -103,7 +103,7 @@ export default function Header () {
       }}
     >
       <div className="absolute flex h-full items-center lg:-mt-14 justify-center w-full text-4xl md:text-7xl text-white">
-        <div id='typed' className='flex text-center font-serif'/>
+        <div id='typed' className='flex text-center font-sans shadow-text'/>
       </div>
       <div
         onClick={() => {
