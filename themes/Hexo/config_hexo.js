@@ -11,6 +11,8 @@ const CONFIG_HEXO = {
   MENU_SEARCH: true, // 显示搜索
 
   POST_LIST_COVER: true, // 文章封面
-  POST_LIST_SUMMARY: true // 文章摘要
+  POST_LIST_SUMMARY: true, // 文章摘要
+  NAV_TYPE: 'autoCollapse', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
+  WIDGET_TO_TOP: true
 }
 export default CONFIG_HEXO
