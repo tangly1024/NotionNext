@@ -1,3 +1,4 @@
+import CONFIG_HEXO from './config_hexo'
 export { LayoutIndex } from './LayoutIndex'
 export { LayoutSearch } from './LayoutSearch'
 export { LayoutArchive } from './LayoutArchive'
@@ -8,3 +9,4 @@ export { LayoutCategoryIndex } from './LayoutCategoryIndex'
 export { LayoutPage } from './LayoutPage'
 export { LayoutTag } from './LayoutTag'
 export { LayoutTagIndex } from './LayoutTagIndex'
+export { CONFIG_HEXO as THEME_CONFIG }

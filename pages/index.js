@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutIndex } from '@/themes'
+import { LayoutIndex, THEME_CONFIG } from '@/themes'
 
 const Index = (props) => {
   return <LayoutIndex {...props}/>
@@ -26,11 +26,14 @@ export async function getStaticProps () {
       BLOG.POSTS_PER_PAGE * (page - 1),
       BLOG.POSTS_PER_PAGE * page
     )
-    for (const i in postsToShow) {
-      const post = postsToShow[i]
-      const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
-      if (blockMap) {
-        post.blockMap = blockMap
+    if (THEME_CONFIG.POST_LIST_PREVIEW || BLOG.POST_LIST_PREVIEW) {
+      console.log('加载预览')
+      for (const i in postsToShow) {
+        const post = postsToShow[i]
+        const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
+        if (blockMap) {
+          post.blockMap = blockMap
+        }
       }
     }
   }

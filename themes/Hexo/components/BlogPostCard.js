@@ -33,7 +33,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           {post.summary}
         </p>}
 
-        {showPreview && post?.blockMap && <div className='overflow-ellipsis truncate'>
+        {showPreview && <div className='overflow-ellipsis truncate'>
           <NotionRenderer
             bodyClassName='max-h-full'
             recordMap={post.blockMap}
@@ -61,7 +61,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
       </div>
 
-      {CONFIG_HEXO.POST_LIST_COVER && post?.page_cover && (
+      {CONFIG_HEXO.POST_LIST_COVER && !showPreview && post?.page_cover && (
         <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
         <a className='w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none cursor-pointer transform overflow-hidden'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
