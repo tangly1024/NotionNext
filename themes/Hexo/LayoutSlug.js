@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
+import { getPageTableOfContents } from 'notion-utils'
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
@@ -13,8 +14,10 @@ import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
 import CONFIG_NEXT from '../NEXT/config_next'
 import ArticleDetail from './components/ArticleDetail'
-import Card from './components/Card'
 import LayoutBase from './LayoutBase'
+import TocDrawerButton from './components/TocDrawerButton'
+import { useRef } from 'react'
+import TocDrawer from './components/TocDrawer'
 
 export const LayoutSlug = props => {
   const { post } = props
@@ -31,10 +34,16 @@ export const LayoutSlug = props => {
     locale.LOCALE
   )
 
-  const headerSlot = (
-    <div className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat"
-    style={{ backgroundImage: `url("/${CONFIG_NEXT.HOME_BANNER_IMAGE}")` }}>
+  if (post?.blockMap?.block) {
+    post.content = Object.keys(post.blockMap.block)
+    post.toc = getPageTableOfContents(post, post.blockMap)
+  }
 
+  const headerSlot = (
+    <div
+      className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url("/${CONFIG_NEXT.HOME_BANNER_IMAGE}")` }}
+    >
       <header className="animate__slideInDown animate__animated bg-black bg-opacity-50 absolute top-0 w-full h-96 py-10 flex justify-center items-center font-sans">
         <div>
           {/* 文章Title */}
@@ -52,7 +61,8 @@ export const LayoutSlug = props => {
               </Link>
               <span className="mr-2">|</span>
 
-              {post.type[0] !== 'Page' && (<>
+              {post.type[0] !== 'Page' && (
+                <>
                   <Link
                     href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                     passHref
@@ -61,11 +71,13 @@ export const LayoutSlug = props => {
                       {date}
                     </a>
                   </Link>
-                </>)}
+                </>
+              )}
 
               <div className="hidden busuanzi_container_page_pv font-light mr-2">
                 <span className="mr-2">|</span>
-                <span className="mr-2 busuanzi_value_page_pv" />次访问
+                <span className="mr-2 busuanzi_value_page_pv" />
+                次访问
               </div>
             </div>
           </section>
@@ -73,12 +85,39 @@ export const LayoutSlug = props => {
       </header>
     </div>
   )
+  const drawerRight = useRef(null)
+  const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
+
+  const floatSlot =
+    post?.toc?.length > 1
+      ? (
+      <div className="block lg:hidden">
+        <TocDrawerButton
+          onClick={() => {
+            drawerRight?.current?.handleSwitchVisible()
+          }}
+        />
+      </div>
+        )
+      : null
 
   return (
-    <LayoutBase headerSlot={headerSlot} {...props} meta={meta}>
-      <Card className="w-full">
+    <LayoutBase
+      headerSlot={headerSlot}
+      {...props}
+      meta={meta}
+      showCategory={false}
+      showTag={false}
+      floatSlot={floatSlot}
+    >
+      <div className="w-full lg:shadow-xl lg:hover:shadow-2xl lg:border lg:border-gray-100 lg:rounded-xl lg:px-2 lg:py-4 lg:bg-white lg:dark:bg-gray-800 lg:duration-300">
         <ArticleDetail {...props} />
-      </Card>
+      </div>
+
+      <div className='block lg:hidden'>
+        <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
+      </div>
+
     </LayoutBase>
   )
 }

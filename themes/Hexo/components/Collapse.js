@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 
 const Collapse = props => {
+  const { id, className } = props
   const collapseRef = useRef(null)
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
@@ -28,7 +29,7 @@ const Collapse = props => {
     }
   }, [props.isOpen])
   return (
-    <div ref={collapseRef} style={{ height: '0px' }} className='overflow-hidden duration-200'>
+    <div id={id} ref={collapseRef} style={{ height: '0px' }} className={'overflow-hidden duration-200 ' + className}>
       {props.children}
     </div>
   )

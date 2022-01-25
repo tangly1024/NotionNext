@@ -33,13 +33,13 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
     }
   })
 
-  return (<div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full md:px-5 ">
+  return (<div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
     <article itemScope itemType="https://schema.org/Movie"
       className="subpixel-antialiased  dark:border-gray-700 bg-white dark:bg-gray-800"
     >
 
       {/* Notion文章主体 */}
-      <section id='notion-article' className='px-1'>
+      <section id='notion-article' className='px-5'>
         {post.blockMap && (
           <NotionRenderer
             recordMap={post.blockMap}
@@ -67,9 +67,10 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
 
     </article>
 
+    <hr className='border-dashed'/>
+
     {/* 评论互动 */}
-    <div className="duration-200 px-12 w-screen md:w-full overflow-x-auto bg-white dark:bg-gray-800">
-        <div className='text-2xl mt-8 mx-8'>发表评论</div>
+    <div className="duration-200  overflow-x-auto bg-white dark:bg-gray-800">
        <Comment frontMatter={post} />
     </div>
   </div>)

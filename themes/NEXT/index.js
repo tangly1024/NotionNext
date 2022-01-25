@@ -1,3 +1,4 @@
+import CONFIG_NEXT from './config_next'
 export { LayoutIndex } from './LayoutIndex'
 export { LayoutSearch } from './LayoutSearch'
 export { LayoutArchive } from './LayoutArchive'
@@ -8,3 +9,4 @@ export { LayoutCategoryIndex } from './LayoutCategoryIndex'
 export { LayoutPage } from './LayoutPage'
 export { LayoutTag } from './LayoutTag'
 export { LayoutTagIndex } from './LayoutTagIndex'
+export { CONFIG_NEXT as THEME_CONFIG }

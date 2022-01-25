@@ -18,7 +18,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   const pages = generatePages(page, currentPage, totalPage)
 
   return (
-    <div className='my-5 flex justify-center items-end font-medium text-black duration-500 bg-white dark:bg-blue-700 dark:text-gray-300 py-3 space-x-2'>
+    <div className='mt-10 mb-5 font-sans flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2'>
 
       {/* 上一页 */}
       <Link
@@ -27,7 +27,7 @@ const PaginationNumber = ({ page, totalPage }) => {
         } } passHref >
         <div
           rel='prev'
-          className={`${currentPage === 1 ? 'invisible' : 'block'} border-white dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
+          className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
         >
           <FontAwesomeIcon icon={faAngleLeft}/>
         </div>
@@ -39,7 +39,7 @@ const PaginationNumber = ({ page, totalPage }) => {
       <Link href={ { pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} } } passHref>
         <div
           rel='next'
-          className={`${+showNext ? 'block' : 'invisible'} border-t-2 border-white dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
+          className={`${+showNext ? 'block' : 'invisible'} pb-0.5 border-t-2 border-white dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
         >
           <FontAwesomeIcon icon={faAngleRight}/>
         </div>
@@ -51,11 +51,12 @@ const PaginationNumber = ({ page, totalPage }) => {
 function getPageElement (page, currentPage) {
   return <Link href={page === 1 ? '/' : `/page/${page}`} key={page} passHref>
       <a className={(page + '' === currentPage + '' ? 'font-bold bg-blue-500 dark:bg-blue-400 text-white ' : 'border-t-2 duration-500 border-white hover:border-blue-400 ') +
-      ' border-white dark:border-blue-700 dark:hover:border-blue-400 cursor-pointer w-6 text-center font-light hover:font-bold'}>
+      ' border-white dark:border-blue-700 dark:hover:border-blue-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'}>
       {page}
       </a>
     </Link>
 }
+
 function generatePages (page, currentPage, totalPage) {
   const pages = []
   const groupCount = 7 // 最多显示页签数

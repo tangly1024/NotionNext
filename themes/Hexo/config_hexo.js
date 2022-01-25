@@ -12,7 +12,10 @@ const CONFIG_HEXO = {
 
   POST_LIST_COVER: true, // 文章封面
   POST_LIST_SUMMARY: true, // 文章摘要
+  POST_LIST_PREVIEW: false, // 读取文章预览
   NAV_TYPE: 'autoCollapse', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
-  WIDGET_TO_TOP: true
+
+  WIDGET_TO_TOP: true,
+  WIDGET_TOC: true // 移动端悬浮目录
 }
 export default CONFIG_HEXO

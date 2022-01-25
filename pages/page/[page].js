@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutPage } from '@/themes'
+import { LayoutPage, THEME_CONFIG } from '@/themes'
 import Custom404 from '@/pages/404'
 
 const Page = (props) => {
@@ -42,12 +42,15 @@ export async function getStaticProps ({ params: { page } }) {
     BLOG.POSTS_PER_PAGE * (page - 1),
     BLOG.POSTS_PER_PAGE * page
   )
-
-  for (const i in postsToShow) {
-    const post = postsToShow[i]
-    const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
-    if (blockMap) {
-      post.blockMap = blockMap
+  // 加载预览
+  if (THEME_CONFIG.POST_LIST_PREVIEW || BLOG.POST_LIST_PREVIEW) {
+    console.log('加载预览')
+    for (const i in postsToShow) {
+      const post = postsToShow[i]
+      const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
+      if (blockMap) {
+        post.blockMap = blockMap
+      }
     }
   }
 

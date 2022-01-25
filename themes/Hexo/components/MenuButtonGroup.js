@@ -23,7 +23,7 @@ const MenuButtonGroup = ({ postCount }) => {
         if (link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={`${link.id}-${link.to}`} title={link.to} href={link.to} >
-          <a className={'py-1.5 my-1 px-5 duration-300 text-base justify-between hover:bg-blue-600 rounded-lg hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+          <a className={'py-1.5 my-1 px-5 duration-300 text-base justify-between hover:bg-blue-600 hover:text-white hover:shadow-lg cursor-pointer flex flex-nowrap items-center ' +
               (selected ? 'bg-blue-600 text-white' : ' ')} >
               <div className='my-auto items-center justify-center flex '>
                 <FontAwesomeIcon icon={link.icon} />

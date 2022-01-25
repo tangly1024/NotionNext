@@ -1,9 +1,9 @@
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faBars, faSearch, faTag, faThList, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleRight, faBars, faTag, faThList, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import throttle from 'lodash.throttle'
 import Link from 'next/link'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Collapse from './Collapse'
 import Logo from './Logo'
@@ -11,6 +11,7 @@ import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import CONFIG_HEXO from '../config_hexo'
+import SearchInput from './SearchInput'
 
 let windowTop = 0
 
@@ -23,18 +24,18 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
   const { locale } = useGlobal()
   const searchDrawer = useRef()
 
-  const scrollTrigger = useCallback(throttle(() => {
+  const scrollTrigger = throttle(() => {
     const scrollS = window.scrollY
     if (scrollS >= windowTop && scrollS > 10) {
       const nav = document.querySelector('#sticky-nav')
-      nav && nav.classList.replace('top-0', '-top-40')
+      nav && nav.classList.replace('top-0', '-top-16')
       windowTop = scrollS
     } else {
       const nav = document.querySelector('#sticky-nav')
-      nav && nav.classList.replace('-top-40', 'top-0')
+      nav && nav.classList.replace('-top-16', 'top-0')
       windowTop = scrollS
     }
-  }, 200), [])
+  }, 200)
 
   // 监听滚动
   useEffect(() => {
@@ -85,35 +86,29 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
     ) }
     </>
 
-  return (<div id='top-nav' className='z-40 block lg:hidden'>
+  return (<div id='top-nav' className='z-40'>
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed' : ''} lg:relative w-full top-0 z-20 transform duration-500`}>
-      <div className='w-full flex justify-between items-center p-4 bg-black text-white'>
-        {/* 左侧LOGO 标题 */}
-        <div className='flex flex-none flex-grow-0'>
-          <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
-          { isOpen ? <FontAwesomeIcon icon={faTimes} size={'lg'}/> : <FontAwesomeIcon icon={faBars} size={'lg'}/> }
-          </div>
-        </div>
-
+    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed' : ''} w-full top-0 z-20 transform duration-500`}>
+      <div className='w-full flex justify-between items-center p-4 bg-black shadow-md bg-opacity-70 text-white'>
         <div className='flex'>
          <Logo/>
         </div>
 
         {/* 右侧功能 */}
-        <div className='mr-1 flex justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
-          <div className="cursor-pointer block lg:hidden" onClick={() => { searchDrawer?.current?.show() }}>
-            <FontAwesomeIcon icon={faSearch} className="mr-2" />{locale.NAV.SEARCH}
+        <div className='mr-1 flex lg:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
+          <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
+          { isOpen ? <FontAwesomeIcon icon={faTimes} size={'lg'}/> : <FontAwesomeIcon icon={faBars} size={'lg'}/> }
           </div>
         </div>
       </div>
 
-      <Collapse isOpen={isOpen}>
-        <div className='bg-white py-1 px-5'>
+      <Collapse isOpen={isOpen} className='shadow-xl'>
+        <div className='bg-white pt-1 py-2 px-5'>
           <MenuButtonGroup postCount={postCount}/>
-          </div>
+          <SearchInput/>
+        </div>
       </Collapse>
     </div>
 
