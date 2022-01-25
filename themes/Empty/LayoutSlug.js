@@ -1,4 +1,5 @@
 import BLOG from '@/blog.config'
+import { getPageTableOfContents } from 'notion-utils'
 import 'prismjs'
 import 'prismjs/components/prism-bash'
 import 'prismjs/components/prism-javascript'
@@ -19,6 +20,11 @@ export const LayoutSlug = (props) => {
     description: post.summary,
     type: 'article',
     tags: post.tags
+  }
+
+  if (post?.blockMap?.block) {
+    post.content = Object.keys(post.blockMap.block)
+    post.toc = getPageTableOfContents(post, post.blockMap)
   }
 
   return <LayoutBase {...props} meta={meta}>

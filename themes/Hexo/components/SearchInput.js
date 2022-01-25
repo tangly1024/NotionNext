@@ -46,19 +46,19 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     <input
       ref={searchInputRef}
       type='text'
-      className={'w-full rounded-lg text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+      className={'w-full rounded-lg bg-white text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100'}
       onKeyUp={handleKeyUp}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={searchKey}
     />
 
-    <div className='-ml-8 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'
+    <div className='-ml-8 cursor-pointer dark:hover:bg-gray-800 float-right items-center justify-center py-2'
       onClick={() => { handleSearch(searchKey) }}>
         <FontAwesomeIcon spin={onLoading} icon={onLoading ? faSpinner : faSearch} className='hover:text-black transform duration-200 text-gray-500 cursor-pointer' />
     </div>
 
     {(searchKey && searchKey.length &&
-      <div className='-ml-12 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'>
+      <div className='-ml-12 cursor-pointer dark:hover:bg-gray-800 float-right items-center justify-center py-2'>
         <FontAwesomeIcon icon={faTimes} className='hover:text-black transform duration-200 text-gray-400 cursor-pointer' onClick={cleanSearch} />
       </div>
       )}

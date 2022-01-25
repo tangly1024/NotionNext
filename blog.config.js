@@ -25,10 +25,10 @@ const BLOG = {
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: 'tlyong1992@hotmail.com',
-  CONTACT_WEIBO: 'https://weibo.com/tangly1024',
-  CONTACT_TWITTER: 'https://twitter.com/troy1024_1',
+  CONTACT_WEIBO: '',
+  CONTACT_TWITTER: '',
   CONTACT_GITHUB: 'https://github.com/tangly1024',
-  CONTACT_TELEGRAM: 'https://t.me/tangly_1024',
+  CONTACT_TELEGRAM: '',
 
   // 评论互动 可同时开启 CUSDIS UTTERRANCES GITALK
   COMMENT_CUSDIS_APP_ID: process.env.NEXT_PUBLIC_COMMENT_CUSDIS_APP_ID || '', // data-app-id 36位 see https://cusdis.com/

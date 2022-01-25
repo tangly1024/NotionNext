@@ -29,8 +29,7 @@ const Utterances = ({ issueTerm, layout }) => {
       anchor.innerHTML = ''
     }
   })
-  return <div id="comments" >
-    <div className="utterances-frame h-auto w-auto"/>
+  return <div id="comments" className='utterances' >
   </div>
 }
 

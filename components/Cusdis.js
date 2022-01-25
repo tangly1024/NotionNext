@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 const Cusdis = ({ id, url, title }) => {
   useEffect(() => {
     const script = document.createElement('script')
-    const anchor = document.getElementById('comments')
+    const anchor = document.getElementById('comments-cusdis')
     script.setAttribute(
       'src',
       BLOG.COMMENT_CUSDIS_SCRIPT_SRC
@@ -11,12 +11,9 @@ const Cusdis = ({ id, url, title }) => {
     script.setAttribute('async', true)
     script.setAttribute('defer', true)
     anchor.appendChild(script)
-    return () => {
-      anchor.innerHTML = ''
-    }
   })
   return (
-    <div id="comments">
+    <div id="comments-cusdis">
       <div
         id="cusdis_thread"
         data-host={BLOG.COMMENT_CUSDIS_HOST}
@@ -24,6 +21,7 @@ const Cusdis = ({ id, url, title }) => {
         data-page-id={id}
         data-page-url={url}
         data-page-title={title}
+        lang={BLOG.LANG.toLowerCase()}
       />
     </div>
   )
