@@ -1,12 +1,11 @@
 import BLOG from '@/blog.config'
-import { faAngleRight, faFolder } from '@fortawesome/free-solid-svg-icons'
+import { useGlobal } from '@/lib/global'
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
-import TagItemMini from './TagItemMini'
 import CONFIG_MEDIUM from '../config_medium'
-import { useGlobal } from '@/lib/global'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MEDIUM.POST_LIST_PREVIEW && post.blockMap
@@ -52,19 +51,6 @@ const BlogPostCard = ({ post, showSummary }) => {
                 </div>
               </div>
           </div> }
-
-          {/* <div className='text-gray-400 justify-between flex'>
-
-            <Link href={`/category/${post.category}`} passHref>
-                <a className='cursor-pointer font-light text-sm hover:underline transform'>
-                  <FontAwesomeIcon icon={faFolder} className='mr-1' />{post.category}
-                </a>
-              </Link>
-              <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
-                <div> {post.tagItems.map(tag => (<TagItemMini key={tag.name} tag={tag} />))}</div>
-              </div>
-          </div> */}
-
         </div>
         <hr className='w-full'/>
 

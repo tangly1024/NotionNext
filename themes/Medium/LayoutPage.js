@@ -1,8 +1,9 @@
-import LayoutBase from '../Hexo/LayoutBase'
+import LayoutBase from './LayoutBase'
+import BlogPostListPage from './components/BlogPostListPage'
 
 export const LayoutPage = (props) => {
-  const { page } = props
+  const { page, posts, postCount } = props
   return <LayoutBase {...props}>
-    Page - {page}
+      <BlogPostListPage page={page} posts={posts} postCount={postCount} />
   </LayoutBase>
 }
