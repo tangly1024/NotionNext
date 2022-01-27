@@ -39,12 +39,13 @@ export const LayoutSlug = props => {
     post.toc = getPageTableOfContents(post, post.blockMap)
   }
 
+  const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("/${CONFIG_NEXT.HOME_BANNER_IMAGE}")`
   const headerSlot = (
     <div
       className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url("/${CONFIG_NEXT.HOME_BANNER_IMAGE}")` }}
+      style={{ backgroundImage: headerImage }}
     >
-      <header className="animate__slideInDown animate__animated bg-black bg-opacity-50 absolute top-0 w-full h-96 py-10 flex justify-center items-center font-sans">
+      <header className="animate__slideInDown animate__animated bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center font-sans">
         <div>
           {/* 文章Title */}
           <div className="font-bold text-3xl shadow-text flex justify-center text-white dark:text-white font-sans">

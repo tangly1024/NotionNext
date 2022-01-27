@@ -1,3 +1,5 @@
+import CONFIG_FUKA from './config_fuka'
+export { CONFIG_FUKA as THEME_CONFIG }
 export { LayoutIndex } from './LayoutIndex'
 export { LayoutSearch } from './LayoutSearch'
 export { LayoutArchive } from './LayoutArchive'
