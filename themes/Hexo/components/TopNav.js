@@ -26,12 +26,11 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
 
   const scrollTrigger = throttle(() => {
     const scrollS = window.scrollY
-    if (scrollS >= windowTop && scrollS > 10) {
-      const nav = document.querySelector('#sticky-nav')
+    const nav = document.querySelector('#sticky-nav')
+    if (scrollS >= windowTop && scrollS > 20) {
       nav && nav.classList.replace('top-0', '-top-16')
       windowTop = scrollS
     } else {
-      const nav = document.querySelector('#sticky-nav')
       nav && nav.classList.replace('-top-16', 'top-0')
       windowTop = scrollS
     }
@@ -90,8 +89,8 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed' : ''} w-full top-0 z-20 transform duration-500`}>
-      <div className='w-full flex justify-between items-center p-4 bg-black shadow-md bg-opacity-70 text-white'>
+    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed' : ''} bg-white  bg-opacity-70 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
+      <div className='w-full flex justify-between items-center p-4  shadow-md'>
         <div className='flex'>
          <Logo/>
         </div>
