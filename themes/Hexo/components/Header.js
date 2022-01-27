@@ -1,3 +1,4 @@
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,7 +16,12 @@ let autoScroll = false
  */
 export default function Header () {
   const [typed, changeType] = useState()
+  const { theme } = useGlobal()
+
   useEffect(() => {
+    scrollTrigger()
+    updateHeaderHeight()
+    updateTopNav()
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
@@ -28,8 +34,13 @@ export default function Header () {
         })
       )
     }
+    window.addEventListener('scroll', scrollTrigger)
+    window.addEventListener('resize', updateHeaderHeight)
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+      window.removeEventListener('resize', updateHeaderHeight)
+    }
   })
-  const { theme } = useGlobal()
 
   const autoScrollEnd = () => {
     if (autoScroll) {
@@ -39,25 +50,29 @@ export default function Header () {
   }
 
   const scrollTrigger = () => {
-    if (
-      (window.scrollY > windowTop) &
-      (window.scrollY < window.innerHeight) &&
-      !autoScroll
+    const scrollS = window.scrollY
+    const nav = document.querySelector('#sticky-nav')
+
+    if (scrollS < 300) {
+      nav && nav.classList.replace('bg-white', 'bg-none')
+      nav && nav.classList.replace('text-black', 'text-white')
+    } else {
+      nav && nav.classList.replace('bg-none', 'bg-white')
+      nav && nav.classList.replace('text-white', 'text-black')
+    }
+
+    if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
     ) {
       autoScroll = true
       window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
       setTimeout(autoScrollEnd, 500)
     }
-    if (
-      (window.scrollY < windowTop) &
-      (window.scrollY < window.innerHeight) &&
-      !autoScroll
-    ) {
+    if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
       autoScroll = true
       window.scrollTo({ top: 0, behavior: 'smooth' })
       setTimeout(autoScrollEnd, 500)
     }
-    windowTop = window.scrollY
+    windowTop = scrollS
 
     updateTopNav()
   }
@@ -82,17 +97,6 @@ export default function Header () {
     }, 500)
   }
 
-  useEffect(() => {
-    updateHeaderHeight()
-    updateTopNav()
-    window.addEventListener('scroll', scrollTrigger)
-    window.addEventListener('resize', updateHeaderHeight)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-      window.removeEventListener('resize', updateHeaderHeight)
-    }
-  })
-
   return (
     <header
       id="header"
@@ -102,14 +106,15 @@ export default function Header () {
           `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${CONFIG_HEXO.HOME_BANNER_IMAGE}")`
       }}
     >
-      <div className="absolute flex h-full items-center lg:-mt-14 justify-center w-full text-4xl md:text-7xl text-white">
-        <div id='typed' className='flex text-center font-sans shadow-text'/>
+      <div className="absolute flex flex-col h-full items-center justify-center w-full font-sans">
+        <div className='text-4xl md:text-5xl text-white shadow-text'>{BLOG.TITLE}</div>
+        <div id='typed' className='flex h-10 items-center text-center text-lg shadow-text text-white'/>
       </div>
       <div
         onClick={() => {
           window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
         }}
-        className="cursor-pointer w-full text-center py-4 text-5xl absolute bottom-10 text-white"
+        className="cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white"
       >
         <FontAwesomeIcon icon={faAngleDown} className='animate-bounce'/>
       </div>

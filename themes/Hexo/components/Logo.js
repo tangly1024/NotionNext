@@ -4,8 +4,8 @@ import React from 'react'
 
 const Logo = () => {
   return <Link href='/' passHref>
-        <div className='flex flex-col justify-center items-center cursor-pointer space-y-3 font-bold'>
-          <div className='font-serif text-xl text-white'> {BLOG.TITLE}</div>
+        <div className='flex flex-col justify-center items-center cursor-pointer space-y-3'>
+          <div className='font-sans text-xl'> {BLOG.TITLE}</div>
         </div>
   </Link>
 }
