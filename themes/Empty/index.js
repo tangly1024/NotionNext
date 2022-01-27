@@ -1,3 +1,5 @@
+import CONFIG_EMPTY from './config_empty'
+export { CONFIG_EMPTY as THEME_CONFIG }
 export { LayoutIndex } from './LayoutIndex'
 export { LayoutSearch } from './LayoutSearch'
 export { LayoutArchive } from './LayoutArchive'
