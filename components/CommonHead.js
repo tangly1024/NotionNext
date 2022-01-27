@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import Head from 'next/head'
 
-const CommonHead = ({ meta }) => {
+const CommonHead = ({ meta, children }) => {
   let url = BLOG?.PATH?.length ? `${BLOG.LINK}/${BLOG.PATH}` : BLOG.LINK
   if (meta) {
     url = `${url}/${meta.slug}`
@@ -42,6 +42,7 @@ const CommonHead = ({ meta }) => {
     )}
     {/* 谷歌字体镜像 */}
     <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC&display=swap" rel="stylesheet"/>
+    {children}
   </Head>
 }
 
