@@ -1,0 +1,12 @@
+import CONFIG_MEDIUM from './config_medium'
+export { CONFIG_MEDIUM as THEME_CONFIG }
+export { LayoutIndex } from './LayoutIndex'
+export { LayoutSearch } from './LayoutSearch'
+export { LayoutArchive } from './LayoutArchive'
+export { LayoutSlug } from './LayoutSlug'
+export { Layout404 } from './Layout404'
+export { LayoutCategory } from './LayoutCategory'
+export { LayoutCategoryIndex } from './LayoutCategoryIndex'
+export { LayoutPage } from './LayoutPage'
+export { LayoutTag } from './LayoutTag'
+export { LayoutTagIndex } from './LayoutTagIndex'
