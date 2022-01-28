@@ -49,10 +49,10 @@
 ## 主题样式
 | 主题截图 | 预览地址 |
 |--|--|
-| <img src='./docs/theme-next.png' width='300'/> | [notion-next.tangly1024.com](notion-next.tangly1024.com) |
-| <img src='./docs/theme-medium.png' width='300'/>| [https://notion-medium.tangly1024.com/](https://notion-medium.tangly1024.com/) |
-| <img src='./docs/theme-hexo.png' width='300'/> | [http://notion-hexo.tangly1024.com/](http://notion-hexo.tangly1024.com/) |
-| <img src='./docs/theme-fukasawa.png' width='300'/>| [https://notion-fukasawa.tangly1024.com/](https://notion-fukasawa.tangly1024.com/) |
+| <img src='./docs/theme-next.png' width='300'/> | [notion-next.tangly1024.com](https://notion-next.tangly1024.com) |
+| <img src='./docs/theme-medium.png' width='300'/>| [notion-medium.tangly1024.com](https://notion-medium.tangly1024.com/) |
+| <img src='./docs/theme-hexo.png' width='300'/> | [notion-hexo.tangly1024.com](http://notion-hexo.tangly1024.com/) |
+| <img src='./docs/theme-fukasawa.png' width='300'/>| [notion-fukasawa.tangly1024.com](https://notion-fukasawa.tangly1024.com/) |
 
 
 ## 更新日志
