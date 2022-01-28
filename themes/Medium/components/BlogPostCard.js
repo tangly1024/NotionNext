@@ -15,7 +15,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         <div className='lg:p-8 p-4 flex flex-col w-full'>
           <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
-            <a className={'cursor-pointer font-bold font-sans hover:underline text-4xl flex justify-start leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'}>
+            <a className={'cursor-pointer font-bold font-sans hover:underline text-3xl flex justify-start leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'}>
               {post.title}
             </a>
           </Link>
