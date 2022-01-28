@@ -47,10 +47,13 @@
 - 更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
 
 ## 主题样式
-|||
+| 主题截图 | 预览地址 |
 |--|--|
-| ![Next Theme](/docs/theme-next.png) | ![Hexo Theme](/docs/theme-hexo.png) |
-| ![Medium Theme](/docs/theme-medium.png) | ![Fukasawa Theme](/docs/theme-fukasawa.png) |
+| <img src='./docs/theme-next.png' width='300'/> | [notion-next.tangly1024.com](notion-next.tangly1024.com) |
+| <img src='./docs/theme-medium.png' width='300'/>| [https://notion-medium.tangly1024.com/](https://notion-medium.tangly1024.com/) |
+| <img src='./docs/theme-hexo.png' width='300'/> | [http://notion-hexo.tangly1024.com/](http://notion-hexo.tangly1024.com/) |
+| <img src='./docs/theme-fukasawa.png' width='300'/>| [https://notion-fukasawa.tangly1024.com/](https://notion-fukasawa.tangly1024.com/) |
+
 
 ## 更新日志
 请移步 [更新文档](https://docs.tangly1024.com/zh/changelog)查看
