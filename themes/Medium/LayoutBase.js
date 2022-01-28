@@ -11,7 +11,7 @@ import LogoBar from './components/LogoBar'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta } = props
+  const { children, meta, showInfoCard = true } = props
 
   return (
     <div className='bg-white w-full h-full min-h-screen justify-center'>
@@ -19,7 +19,7 @@ const LayoutBase = props => {
       <main id="wrapper" className='max-w-7xl w-full h-full mx-auto'>
         <LogoBar/>
         <div className='pt-12 fixed top-24 w-80 pl-8 hidden lg:block'>
-          <InfoCard/>
+        {showInfoCard && <InfoCard/>}
         </div>
         <div className='lg:ml-72 max-w-3xl w-full px-5'>
             {children}
