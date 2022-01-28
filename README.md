@@ -46,6 +46,17 @@
 **🕸 &nbsp;网址美观、搜索引擎优化**
 - 更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
 
+## 主题样式
+
+![Next Theme](/docs/theme-next.png)
+
+![Hexo Theme](/docs/theme-hexo.png)
+
+![Medium Theme](/docs/theme-medium.png)
+
+![Fukasawa Theme](/docs/theme-fukasawa.png)
+
+
 ## 更新日志
 请移步 [更新文档](https://docs.tangly1024.com/zh/changelog)查看
 
@@ -82,9 +93,6 @@ yarn run start # 本地启动NextJS服务
 - **样式**: [Tailwind CSS](https://www.tailwindcss.cn/) 和 `@tailwindcss/jit` compiler
 - **评论**: Gitalk, Cusdis, Utterances
 - **图标**：[fontawesome](https://fontawesome.com/v5.15/icons?d=gallery)
-
-## 页面样式主题
-正在开发中..将支持配置文件切换主题
 
 ## License
 
