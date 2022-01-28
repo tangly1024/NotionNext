@@ -47,15 +47,10 @@
 - 更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
 
 ## 主题样式
-
-![Next Theme](/docs/theme-next.png)
-
-![Hexo Theme](/docs/theme-hexo.png)
-
-![Medium Theme](/docs/theme-medium.png)
-
-![Fukasawa Theme](/docs/theme-fukasawa.png)
-
+|||
+|--|--|
+| <img src="./docs/theme-next.png"> | <img src="./docs/theme-hexo.png"> |
+| <img src="./docs/theme-medium.png"> | <img src="./docs/theme-fukasawa.png"> |
 
 ## 更新日志
 请移步 [更新文档](https://docs.tangly1024.com/zh/changelog)查看
