@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 export default function RevolverMaps () {
   const [load, changeLoad] = useState(false)
   useEffect(() => {
-    console.log(load)
     if (!load) {
       initRevolverMaps()
       changeLoad(true)
@@ -17,7 +16,7 @@ function initRevolverMaps () {
     Promise.all([
       loadExternalResource('https://rf.revolvermaps.com/0/0/8.js?i=5jnp1havmh9&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33')
     ]).then(() => {
-      console.log('地图加载完成', document.getElementById('revolvermaps'))
+      console.log('地图加载完成')
     })
   }
 }
