@@ -26,7 +26,7 @@ const CusdisComponent = dynamic(
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
   return (
-    <div className='comment mt-5 px-5 text-gray-800 dark:text-gray-300'>
+    <div className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
         {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
           <CusdisComponent id={frontMatter.id} url={BLOG.LINK + router.asPath} title={frontMatter.title} />
