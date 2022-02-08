@@ -15,13 +15,14 @@ import formatDate from '@/lib/formatDate'
 import Link from 'next/link'
 import mediumZoom from 'medium-zoom'
 import { useEffect, useRef } from 'react'
+import ArticleAround from './components/ArticleAround'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
 
 export const LayoutSlug = (props) => {
-  const { post } = props
+  const { post, prev, next } = props
   const meta = {
     title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
@@ -86,8 +87,8 @@ export const LayoutSlug = (props) => {
       )}
     </section>
     <div>
+      <ArticleAround prev={prev} next={next}/>
       <Comment frontMatter={post}/>
-
     </div>
   </LayoutBase>
 }
