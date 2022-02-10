@@ -90,7 +90,6 @@ yarn # 安装依赖
 yarn run dev # 本地开发
 yarn run build # 本地打包编译
 yarn run start # 本地启动NextJS服务
-
 ```
 
 ## 引用技术
