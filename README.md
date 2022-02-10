@@ -47,6 +47,18 @@
 - 更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
 
 ## 主题样式
+目前提供了4种主题 ，只需修改`/themes/index.js`文件即可实现切换。
+```javascript
+// export * from './Empty' //  空模板
+// export * from './NEXT'
+// export * from './Fukasawa'
+// export * from './Hexo'
+export * from './Medium'
+
+```
+
+
+
 | 主题截图 | 预览地址 |
 |--|--|
 | <img src='./docs/theme-next.png' width='300'/> | [notion-next.tangly1024.com](https://notion-next.tangly1024.com) |
@@ -75,11 +87,8 @@
 
 ```bash
 yarn # 安装依赖
-
 yarn run dev # 本地开发
-
 yarn run build # 本地打包编译
-
 yarn run start # 本地启动NextJS服务
 
 ```
