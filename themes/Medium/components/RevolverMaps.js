@@ -8,7 +8,7 @@ export default function RevolverMaps () {
       changeLoad(true)
     }
   })
-  return <div id="revolvermaps"/>
+  return <div id="revolvermaps" className='p-4'/>
 }
 
 function initRevolverMaps () {
