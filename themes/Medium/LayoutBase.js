@@ -13,10 +13,10 @@ import CONFIG_MEDIUM from './config_medium'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true } = props
+  const { children, meta, showInfoCard = true, slotRight } = props
 
   return (
-    <div className='bg-white w-full h-full min-h-screen justify-center'>
+    <div id="container" className='bg-white w-full h-full min-h-screen justify-center'>
       <CommonHead meta={meta}/>
       <main id="wrapper" className='max-w-7xl w-full h-full mx-auto'>
         <LogoBar/>
@@ -28,6 +28,7 @@ const LayoutBase = props => {
         </div>
         <div className='w-72 px-8 py-6 fixed right-12 top-24 hidden lg:block'>
           { CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps/>}
+          { slotRight }
         </div>
       </main>
       <Footer/>
