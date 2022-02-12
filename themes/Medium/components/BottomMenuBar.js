@@ -2,6 +2,7 @@ import { faHome, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
+import JumpToTopButton from '@/themes/Medium/components/JumpToTopButton'
 
 export default function BottomMenuBar ({ className }) {
   return (
@@ -17,6 +18,9 @@ export default function BottomMenuBar ({ className }) {
             <FontAwesomeIcon icon={faSearch} />
           </div>
         </Link>
+        <div className='flex w-full items-center justify-center cursor-pointer'>
+          <JumpToTopButton/>
+        </div>
       </div>
     </div>
   )

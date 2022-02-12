@@ -14,7 +14,7 @@ import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/formatDate'
 import Link from 'next/link'
 import mediumZoom from 'medium-zoom'
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ArticleAround from './components/ArticleAround'
 import Catalog from './components/Catalog'
 
@@ -56,7 +56,9 @@ export const LayoutSlug = (props) => {
     }
   })
 
-  return <LayoutBase {...props} meta={meta} showInfoCard={true} slotRight={<Catalog toc={post.toc}/>}>
+  const slotRight = post?.toc && <div key={locale.COMMON.TABLE_OF_CONTENTS} className='mt-6'><Catalog toc={post.toc}/></div>
+
+  return <LayoutBase {...props} meta={meta} showInfoCard={true} slotRight={slotRight}>
     <h1 className='text-4xl pt-12 font-sans'>{post?.title}</h1>
     <div className='flex py-4 items-center font-sans px-1'>
       <Link href='/about' passHref>

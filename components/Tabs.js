@@ -37,7 +37,7 @@ const Tabs = ({ className, children }) => {
                    onClick={() => {
                      tabClickHandle(index)
                    }}>
-          {item?.key}
+          {item?.key || 'undefined_key'}
         </li>
       })}
     </ul>
