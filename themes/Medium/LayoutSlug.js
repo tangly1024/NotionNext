@@ -16,6 +16,7 @@ import Link from 'next/link'
 import mediumZoom from 'medium-zoom'
 import { useEffect, useRef } from 'react'
 import ArticleAround from './components/ArticleAround'
+import Catalog from './components/Catalog'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -55,7 +56,7 @@ export const LayoutSlug = (props) => {
     }
   })
 
-  return <LayoutBase {...props} meta={meta} showInfoCard={false}>
+  return <LayoutBase {...props} meta={meta} showInfoCard={false} slotRight={<Catalog toc={post.toc}/>}>
     <h1 className='text-4xl mt-12 font-sans'>{post?.title}</h1>
     <Link href='/about' passHref>
       <div className='flex py-3 items-center font-sans cursor-pointer'>
@@ -86,6 +87,7 @@ export const LayoutSlug = (props) => {
         />
       )}
     </section>
+
     <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
       {/* 文章内嵌广告 */}
       <ins className="adsbygoogle"
