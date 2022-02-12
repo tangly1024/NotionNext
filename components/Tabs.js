@@ -5,7 +5,7 @@ import React, { useState } from 'react'
  * @param {*} param0
  * @returns
  */
-const Tabs = ({ children }) => {
+const Tabs = ({ className, children }) => {
   if (!children) {
     return <></>
   }
@@ -18,7 +18,7 @@ const Tabs = ({ children }) => {
   })
 
   if (count === 1) {
-    return <section className='duration-200'>
+    return <section className={'duration-200 ' + className}>
       {children}
     </section>
   }
@@ -29,7 +29,7 @@ const Tabs = ({ children }) => {
     setCurrentTab(i)
   }
 
-  return <div className='mb-5 bg-white dark:bg-gray-800 duration-200'>
+  return <div className={'mb-5 bg-white dark:bg-gray-800 duration-200 ' + className}>
     <ul className='flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600'>
       {children.map((item, index) => {
         return <li key={index}
@@ -37,7 +37,7 @@ const Tabs = ({ children }) => {
                    onClick={() => {
                      tabClickHandle(index)
                    }}>
-          {item?.key}
+          {item?.key || 'undefined_key'}
         </li>
       })}
     </ul>

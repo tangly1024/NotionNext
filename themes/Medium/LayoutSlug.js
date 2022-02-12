@@ -14,7 +14,7 @@ import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/formatDate'
 import Link from 'next/link'
 import mediumZoom from 'medium-zoom'
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ArticleAround from './components/ArticleAround'
 import Catalog from './components/Catalog'
 
@@ -56,22 +56,26 @@ export const LayoutSlug = (props) => {
     }
   })
 
-  return <LayoutBase {...props} meta={meta} showInfoCard={false} slotRight={<Catalog toc={post.toc}/>}>
-    <h1 className='text-4xl mt-12 font-sans'>{post?.title}</h1>
-    <Link href='/about' passHref>
-      <div className='flex py-3 items-center font-sans cursor-pointer'>
-        <Image
-          alt={BLOG.AUTHOR}
-          width={25}
-          height={25}
-          loading='lazy'
-          src='/avatar.jpg'
-          className='rounded-full'
-        />
-        <div className='mr-3 ml-1 text-green-500'>{BLOG.AUTHOR}</div>
-        <div className='text-gray-500'>{date}</div>
-      </div>
-    </Link>
+  const slotRight = post?.toc && <div key={locale.COMMON.TABLE_OF_CONTENTS} className='mt-6'><Catalog toc={post.toc}/></div>
+
+  return <LayoutBase {...props} meta={meta} showInfoCard={true} slotRight={slotRight}>
+    <h1 className='text-4xl pt-12 font-sans'>{post?.title}</h1>
+    <div className='flex py-4 items-center font-sans px-1'>
+      <Link href='/about' passHref>
+        <>
+          <Image
+            alt={BLOG.AUTHOR}
+            width={25}
+            height={25}
+            loading='lazy'
+            src='/avatar.jpg'
+            className='rounded-full cursor-pointer'
+          />
+          <div className='mr-3 ml-1 text-green-500 cursor-pointer'>{BLOG.AUTHOR}</div>
+        </>
+      </Link>
+      <div className='text-gray-500'>{date}</div>
+    </div>
     {/* Notion文章主体 */}
     <section id='notion-article' className='px-1 max-w-5xl'>
       {post.blockMap && (
