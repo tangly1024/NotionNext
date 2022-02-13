@@ -4,7 +4,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
-import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
+import { Code, Collection, Equation, NotionRenderer } from 'react-notion-x'
 import CONFIG_MEDIUM from '../config_medium'
 
 const BlogPostCard = ({ post, showSummary }) => {
@@ -36,7 +36,6 @@ const BlogPostCard = ({ post, showSummary }) => {
               components={{
                 equation: Equation,
                 code: Code,
-                collectionRow: CollectionRow,
                 collection: Collection
               }}
             />
