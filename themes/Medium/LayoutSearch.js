@@ -4,6 +4,7 @@ import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
 import TagGroups from './components/TagGroups'
 import CategoryGroup from './components/CategoryGroup'
+import BlogPostListScroll from './components/BlogPostListScroll'
 
 export const LayoutSearch = (props) => {
   const { locale } = useGlobal()
@@ -19,6 +20,6 @@ export const LayoutSearch = (props) => {
       <CategoryGroup {...props}/>
     </div>
 
-    <BlogPostListPage {...props}/>
+    <BlogPostListScroll {...props}/>
   </LayoutBase>
 }
