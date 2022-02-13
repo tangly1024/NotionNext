@@ -60,7 +60,7 @@ export const LayoutSlug = (props) => {
 
   return <LayoutBase {...props} meta={meta} showInfoCard={true} slotRight={slotRight}>
     <h1 className='text-4xl pt-12 font-sans'>{post?.title}</h1>
-    <div className='flex py-4 items-center font-sans px-1'>
+    <section className='flex py-4 items-center font-sans px-1'>
       <Link href='/about' passHref>
         <>
           <Image
@@ -75,7 +75,7 @@ export const LayoutSlug = (props) => {
         </>
       </Link>
       <div className='text-gray-500'>{date}</div>
-    </div>
+    </section>
     {/* Notion文章主体 */}
     <section id='notion-article' className='px-1 max-w-5xl'>
       {post.blockMap && (
@@ -102,10 +102,10 @@ export const LayoutSlug = (props) => {
            data-ad-client="ca-pub-2708419466378217"
            data-ad-slot="3806269138"/>
     </section>
-    <div>
+    <section>
       <ArticleAround prev={prev} next={next}/>
       <Comment frontMatter={post}/>
-    </div>
+    </section>
   </LayoutBase>
 }
 

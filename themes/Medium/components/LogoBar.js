@@ -1,6 +1,4 @@
 import BLOG from '@/blog.config'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 
 export default function LogoBar () {
@@ -16,11 +14,11 @@ export default function LogoBar () {
         {/*  <a className='text-gray-600'>{locale.NAV.ABOUT}</a> */}
         {/* </Link> */}
       </div>
-      {BLOG.CONTACT_EMAIL && <Link href={`mailto:${BLOG.CONTACT_EMAIL}`} passHref>
-        <div className='bg-black px-2 py-1 rounded-full'>
-          <FontAwesomeIcon className='cursor-pointer text-white' icon={faEnvelope} />
-        </div>
-      </Link>}
+      {/* {BLOG.CONTACT_EMAIL && <Link href={`mailto:${BLOG.CONTACT_EMAIL}`} passHref> */}
+      {/*  <div className='bg-black px-2 py-1 rounded-full'> */}
+      {/*    <FontAwesomeIcon className='cursor-pointer text-white' icon={faEnvelope} /> */}
+      {/*  </div> */}
+      {/* </Link>} */}
     </div>
   </div>
 }
