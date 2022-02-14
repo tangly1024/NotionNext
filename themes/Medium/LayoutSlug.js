@@ -56,7 +56,7 @@ export const LayoutSlug = (props) => {
     }
   })
 
-  const slotRight = post?.toc && <div key={locale.COMMON.TABLE_OF_CONTENTS} className='mt-6'><Catalog toc={post.toc}/></div>
+  const slotRight = post?.toc && post?.toc?.length > 3 && <div key={locale.COMMON.TABLE_OF_CONTENTS} className='mt-6'><Catalog toc={post.toc}/></div>
 
   return <LayoutBase {...props} meta={meta} showInfoCard={true} slotRight={slotRight}>
     <h1 className='text-4xl pt-12 font-sans'>{post?.title}</h1>
