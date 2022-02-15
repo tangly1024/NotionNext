@@ -25,14 +25,13 @@ const LayoutBase = props => {
     <div id='container' className='bg-white w-full h-full min-h-screen justify-center'>
       <CommonHead meta={meta} />
       <main id='wrapper' className='flex justify-between w-full h-full mx-auto'>
-
         {/* 桌面端左侧菜单 */}
         {/* <LeftMenuBar/> */}
 
-        <div className='w-full justify-center'>
+        <div className='w-full'>
           {/* 移动端顶部菜单 */}
           <TopNavBar />
-          <div className='px-5'>
+          <div className='px-5 max-w-5xl justify-center mx-auto'>
             {children}
           </div>
         </div>
@@ -51,8 +50,8 @@ const LayoutBase = props => {
       </main>
 
       {/* 移动端底部 */}
-      <BottomMenuBar className='block md:hidden' />
       <Footer />
+      <BottomMenuBar className='block md:hidden' />
     </div>
   )
 }
