@@ -2,8 +2,7 @@ import React from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
-// import { cs } from 'react-notion-x'
-
+import JumpToTopButton from './JumpToTopButton'
 /**
  * 目录导航组件
  * @param toc
@@ -79,6 +78,7 @@ const Catalog = ({ toc }) => {
         )
       })}
     </nav>
+    <JumpToTopButton className='text-gray-400 hover:bg-gray-100 py-1 duration-200'/>
   </div>
 }
 

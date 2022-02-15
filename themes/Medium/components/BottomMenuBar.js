@@ -6,7 +6,7 @@ import JumpToTopButton from '@/themes/Medium/components/JumpToTopButton'
 
 export default function BottomMenuBar ({ className }) {
   return (
-    <div className={'fixed bottom-0 w-full h-12 bg-white ' + className}>
+    <div className={'sticky bottom-0 w-full h-12 bg-white ' + className}>
       <div className='flex justify-between h-full shadow-card'>
         <Link href='/' passHref>
           <div className='flex w-full items-center justify-center cursor-pointer'>
