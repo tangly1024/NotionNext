@@ -25,6 +25,9 @@ import ArticleAround from './components/ArticleAround'
 import Catalog from './components/Catalog'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import CategoryItem from './components/CategoryItem'
+import TagItemMini from './components/TagItemMini'
+import CONFIG_MEDIUM from './config_medium'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -135,6 +138,12 @@ export const LayoutSlug = props => {
         />
       </section>
       <section>
+        <div className='flex justify-between'>
+        { CONFIG_MEDIUM.POST_DETAIL_CATEGORY && <CategoryItem category={post.category}/>}
+        <div>
+        { CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+        </div>
+        </div>
         <ArticleAround prev={prev} next={next} />
         <Comment frontMatter={post} />
       </section>

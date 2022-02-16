@@ -1,7 +1,12 @@
 const CONFIG_MEDIUM = {
 
   POST_LIST_COVER: true, // 文章列表显示图片封面
-  POST_LIST_PREVIEW: true, // 显示文章预览
+  POST_LIST_PREVIEW: true, // 列表显示文章预览
+  POST_LIST_CATEGORY: true, // 列表显示文章分类
+  POST_LIST_TAG: true, // 列表显示文章标签
+
+  POST_DETAIL_CATEGORY: true, // 文章显示分类
+  POST_DETAIL_TAG: true, // 文章显示标签
 
   // 菜单
   MENU_ABOUT: true, // 显示关于
