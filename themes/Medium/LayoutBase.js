@@ -9,7 +9,6 @@ import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
 import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
-import JumpToTopButton from './components/JumpToTopButton'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -18,7 +17,7 @@ import JumpToTopButton from './components/JumpToTopButton'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotRight } = props
+  const { children, meta, showInfoCard = true, slotRight, slotTop } = props
   const { locale } = useGlobal()
 
   return (
@@ -32,6 +31,7 @@ const LayoutBase = props => {
           {/* 移动端顶部菜单 */}
           <TopNavBar />
           <div className='px-5 max-w-5xl justify-center mx-auto'>
+            {slotTop}
             {children}
           </div>
         </div>
