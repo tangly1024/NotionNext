@@ -12,7 +12,8 @@ const CategoryGroup = ({ currentCategory, categories }) => {
     <div className='flex flex-wrap'>
       {Object.keys(categories).map(category => {
         const selected = currentCategory === category
-        return <CategoryItem key={category} selected={selected} category={category} categoryCount={categories[category]}/>
+        const categoryCount = +categories[category]
+        return <CategoryItem key={category} selected={selected} category={category} categoryCount={categoryCount}/>
       })}
     </div>
   </div>
