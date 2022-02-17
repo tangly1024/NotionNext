@@ -2,6 +2,7 @@ import BlogPostCard from './BlogPostCard'
 import BLOG from '@/blog.config'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import PaginationSimple from './PaginationSimple'
+import { useRouter } from 'next/router'
 
 /**
  * 文章列表分页表格

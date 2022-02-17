@@ -10,8 +10,7 @@ import React from 'react'
  * @constructor
  */
 const SocialButton = () => {
-  return <div className='w-52 flex-wrap flex'>
-    <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 '>
+  return <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 flex-wrap flex justify-center '>
       {BLOG.CONTACT_GITHUB && <a target='_blank' rel='noreferrer' title={'github'} href={BLOG.CONTACT_GITHUB} >
         <FontAwesomeIcon icon={faGithub} className='transform hover:scale-125 duration-150'/>
       </a>}
@@ -31,6 +30,5 @@ const SocialButton = () => {
         <FontAwesomeIcon icon={faRss} className='transform hover:scale-125 duration-150'/>
       </a>
     </div>
-  </div>
 }
 export default SocialButton
