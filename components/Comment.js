@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import 'gitalk/dist/gitalk.css'
 import Tabs from '@/components/Tabs'
+import { ReactCusdis } from 'react-cusdis'
+import { useGlobal } from '@/lib/global'
 
 const GitalkComponent = dynamic(
   () => {
@@ -16,26 +18,29 @@ const UtterancesComponent = dynamic(
   },
   { ssr: false }
 )
-const CusdisComponent = dynamic(
-  () => {
-    return import('@/components/Cusdis')
-  },
-  { ssr: false }
-)
 
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
+  const { locale } = useGlobal()
   return (
     <div className='comment mt-5 px-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
         {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
-          <CusdisComponent id={frontMatter.id} url={BLOG.LINK + router.asPath} title={frontMatter.title} />
+          <ReactCusdis
+            lang={locale.LOCALE.toLowerCase()}
+            attrs={{
+              host: BLOG.COMMENT_CUSDIS_HOST,
+              appId: BLOG.COMMENT_CUSDIS_APP_ID,
+              pageId: frontMatter.id,
+              pageTitle: frontMatter.title,
+              pageUrl: BLOG.LINK + router.asPath
+            }}
+          />
         </div>)}
 
         {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
           <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
-        </div>
-        )}
+        </div>)}
 
         {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
           <GitalkComponent
@@ -51,7 +56,6 @@ const Comment = ({ frontMatter }) => {
             }}
           />
         </div>)}
-
       </Tabs>
     </div>
   )
