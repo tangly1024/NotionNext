@@ -41,12 +41,14 @@ const Tabs = ({ children }) => {
         </li>
       })}
     </ul>
-    {children.map((item, index) => {
-      return <section key={index}
-                      className={`${currentTab === index ? 'block animate__animated animate__fadeIn animate__faster' : 'hidden'}`}>
-        {item}
-      </section>
-    })}
+    <div>
+      {children.map((item, index) => {
+        return <section key={index}
+                        className={`${currentTab === index ? 'block animate__animated animate__fadeIn animate__faster' : 'hidden'}`}>
+          {item}
+        </section>
+      })}
+    </div>
   </div>
 }
 
