@@ -23,7 +23,7 @@ const Comment = ({ frontMatter }) => {
   const router = useRouter()
   const { locale } = useGlobal()
   return (
-    <div className='comment mt-5 px-5 text-gray-800 dark:text-gray-300'>
+    <div className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
         {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
           <ReactCusdis

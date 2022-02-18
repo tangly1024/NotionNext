@@ -6,14 +6,15 @@ import { useGlobal } from '@/lib/global'
 /**
  * 简易翻页插件
  * @param page 当前页码
- * @param showNext 是否有下一页
+ * @param totalPage 是否有下一页
  * @returns {JSX.Element}
  * @constructor
  */
-const PaginationSimple = ({ page, showNext }) => {
+const PaginationSimple = ({ page, totalPage }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
+  const showNext = currentPage <= totalPage
   return (
     <div className='my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2'>
      <Link

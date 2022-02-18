@@ -28,6 +28,7 @@ export default function HeaderArticle ({ post }) {
     }
   }
   useEffect(() => {
+    scrollTrigger()
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
@@ -36,6 +37,7 @@ export default function HeaderArticle ({ post }) {
 
   return (
       <div
+        id="header"
         className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: headerImage }}
       >

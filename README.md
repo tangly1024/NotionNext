@@ -46,6 +46,27 @@
 **🕸 &nbsp;网址美观、搜索引擎优化**
 - 更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
 
+## 主题样式
+目前提供了4种主题 ，只需修改`/themes/index.js`文件即可实现切换。
+```javascript
+// export * from './Empty' //  空模板
+// export * from './NEXT'
+// export * from './Fukasawa'
+// export * from './Hexo'
+export * from './Medium'
+
+```
+
+
+
+| 主题截图 | 预览地址 |
+|--|--|
+| <img src='./docs/theme-next.png' width='300'/> | [notion-next.tangly1024.com](https://notion-next.tangly1024.com) |
+| <img src='./docs/theme-medium.png' width='300'/>| [notion-medium.tangly1024.com](https://notion-medium.tangly1024.com/) |
+| <img src='./docs/theme-hexo.png' width='300'/> | [notion-hexo.tangly1024.com](http://notion-hexo.tangly1024.com/) |
+| <img src='./docs/theme-fukasawa.png' width='300'/>| [notion-fukasawa.tangly1024.com](https://notion-fukasawa.tangly1024.com/) |
+
+
 ## 更新日志
 请移步 [更新文档](https://docs.tangly1024.com/zh/changelog)查看
 
@@ -66,13 +87,9 @@
 
 ```bash
 yarn # 安装依赖
-
 yarn run dev # 本地开发
-
 yarn run build # 本地打包编译
-
 yarn run start # 本地启动NextJS服务
-
 ```
 
 ## 引用技术
@@ -82,9 +99,6 @@ yarn run start # 本地启动NextJS服务
 - **样式**: [Tailwind CSS](https://www.tailwindcss.cn/) 和 `@tailwindcss/jit` compiler
 - **评论**: Gitalk, Cusdis, Utterances
 - **图标**：[fontawesome](https://fontawesome.com/v5.15/icons?d=gallery)
-
-## 页面样式主题
-正在开发中..将支持配置文件切换主题
 
 ## License
 

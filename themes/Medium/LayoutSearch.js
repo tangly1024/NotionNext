@@ -1,31 +1,25 @@
-import { useRouter } from 'next/router'
 import LayoutBase from './LayoutBase'
+import BlogPostListPage from './components/BlogPostListPage'
+import SearchInput from './components/SearchInput'
+import { useGlobal } from '@/lib/global'
+import TagGroups from './components/TagGroups'
+import CategoryGroup from './components/CategoryGroup'
+import BlogPostListScroll from './components/BlogPostListScroll'
 
 export const LayoutSearch = (props) => {
-  const { posts } = props
-  let filteredPosts
-  const searchKey = getSearchKey()
-  if (searchKey) {
-    filteredPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
-      const searchContent = post.title + post.summary + tagContent
-      return searchContent.toLowerCase().includes(searchKey.toLowerCase())
-    })
-  } else {
-    filteredPosts = posts
-  }
-
-  console.log(filteredPosts)
-
+  const { locale } = useGlobal()
   return <LayoutBase {...props}>
-    Search {searchKey}
-  </LayoutBase>
-}
 
-function getSearchKey () {
-  const router = useRouter()
-  if (router.query && router.query.s) {
-    return router.query.s
-  }
-  return null
+    <div className='py-12'>
+      <div className='pb-4 w-full'>
+      {locale.NAV.SEARCH}
+      </div>
+      <SearchInput/>
+
+      <TagGroups {...props}/>
+      <CategoryGroup {...props}/>
+    </div>
+
+    <BlogPostListScroll {...props}/>
+  </LayoutBase>
 }

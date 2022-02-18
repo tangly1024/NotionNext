@@ -5,9 +5,9 @@ import React from 'react'
 import SocialButton from './SocialButton'
 
 const InfoCard = () => {
-  return <>
-    <div className='items-center justify-start font-sans '>
-        <div className='hover:scale-105 transform duration-200 cursor-pointer' onClick={ () => { Router.push('/about') }}>
+  return <div id='info-card' className='py-4'>
+    <div className='items-center justify-center font-sans '>
+        <div className='hover:scale-105 transform duration-200 cursor-pointer flex justify-center' onClick={ () => { Router.push('/about') }}>
           <Image
           alt={BLOG.AUTHOR}
           width={120}
@@ -17,11 +17,11 @@ const InfoCard = () => {
           className='rounded-full'
         />
         </div>
-        <div className='text-xl py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
-        <div className='font-light text-gray-600 mb-2 hover:scale-105 transform duration-200'>{BLOG.BIO}</div>
+        <div className='text-xl py-2 hover:scale-105 transform duration-200 flex justify-center'>{BLOG.AUTHOR}</div>
+        <div className='font-light text-gray-600 mb-2 hover:scale-105 transform duration-200 flex justify-center'>{BLOG.BIO}</div>
         <SocialButton/>
     </div>
-  </>
+  </div>
 }
 
 export default InfoCard

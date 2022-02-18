@@ -4,8 +4,10 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
-import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
+import { Code, Collection, Equation, NotionRenderer } from 'react-notion-x'
 import CONFIG_MEDIUM from '../config_medium'
+import CategoryItem from './CategoryItem'
+import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MEDIUM.POST_LIST_PREVIEW && post.blockMap
@@ -15,13 +17,19 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         <div className='lg:p-8 p-4 flex flex-col w-full'>
           <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
-            <a className={'cursor-pointer font-bold font-sans hover:underline text-4xl flex justify-start leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'}>
+            <a className={'cursor-pointer font-bold font-sans hover:underline text-3xl flex justify-start leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'}>
               {post.title}
             </a>
           </Link>
 
-          <div className={'flex mt-2 items-center justify-start flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 '}>
-            {post.date.start_date}
+          <div className={'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'}>
+            <div className='text-sm py-1'>{post.date.start_date}</div>
+            { CONFIG_MEDIUM.POST_LIST_CATEGORY && <CategoryItem category={post.category}/>}
+            { CONFIG_MEDIUM.POST_LIST_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+          </div>
+
+          <div className='flex'>
+
           </div>
 
           {(!showPreview || showSummary) && <p className='my-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
@@ -36,7 +44,6 @@ const BlogPostCard = ({ post, showSummary }) => {
               components={{
                 equation: Equation,
                 code: Code,
-                collectionRow: CollectionRow,
                 collection: Collection
               }}
             />
