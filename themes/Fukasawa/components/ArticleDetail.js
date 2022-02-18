@@ -125,7 +125,6 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
 
     {/* 评论互动 */}
     <div className="duration-200 shadow px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
-        <div className='text-2xl mt-8 mx-8'>发表评论</div>
        <Comment frontMatter={post} />
     </div>
   </div>)
