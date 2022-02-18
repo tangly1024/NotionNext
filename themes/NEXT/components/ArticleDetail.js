@@ -52,7 +52,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
   })
 
   return (<div id="container" className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
-    <article itemScope itemType="https://schema.org/Movie"
+    <div itemScope itemType="https://schema.org/Movie"
       className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
     >
 
@@ -118,7 +118,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
       </header>
 
       {/* Notion文章主体 */}
-      <section id='notion-article' className='px-1'>
+      <article id='notion-article' className='px-1'>
         {post.blockMap && (
           <NotionRenderer
             recordMap={post.blockMap}
@@ -131,7 +131,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
             }}
           />
         )}
-      </section>
+      </article>
 
       <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
         {/* 文章内嵌广告 */}
@@ -169,12 +169,12 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
 
       <BlogAround prev={prev} next={next} />
 
-    </article>
-
-    {/* 评论互动 */}
-    <div className="duration-200 shadow w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
-      <Comment frontMatter={post} />
+      {/* 评论互动 */}
+      <div className="duration-200 w-full dark:border-gray-700 bg-white dark:bg-gray-800">
+        <Comment frontMatter={post} />
+      </div>
     </div>
+
   </div>)
 }
 
