@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useEffect } from 'react'
+import { loadExternalResource } from '@/lib/utils'
 
 export default function Live2DWife () {
   useEffect(() => {
@@ -16,27 +17,6 @@ function initLive2DWife () {
   // 注意：live2d_path 参数应使用绝对路径
   const live2dPath = 'https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/'
   // const live2d_path = "/live2d-widget/";
-
-  // 封装异步加载资源的方法
-  function loadExternalResource (url, type) {
-    return new Promise((resolve, reject) => {
-      let tag
-
-      if (type === 'css') {
-        tag = document.createElement('link')
-        tag.rel = 'stylesheet'
-        tag.href = url
-      } else if (type === 'js') {
-        tag = document.createElement('script')
-        tag.src = url
-      }
-      if (tag) {
-        tag.onload = () => resolve(url)
-        tag.onerror = () => reject(url)
-        document.head.appendChild(tag)
-      }
-    })
-  }
 
   // 加载 waifu.css live2d.min.js waifu-tips.js
   if (screen.width >= 768) {

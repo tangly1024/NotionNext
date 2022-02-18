@@ -85,12 +85,12 @@ const CommonScript = () => {
 
     {/* 谷歌统计 */}
     {BLOG.ANALYTICS_GOOGLE_ID && (<>
-        <script async
-                src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.ANALYTICS_GOOGLE_ID}`}
-        />
-        <script async
-                dangerouslySetInnerHTML={{
-                  __html: `
+      <script async
+              src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.ANALYTICS_GOOGLE_ID}`}
+      />
+      <script async
+              dangerouslySetInnerHTML={{
+                __html: `
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
@@ -98,9 +98,9 @@ const CommonScript = () => {
                       page_path: window.location.pathname,
                     });
                   `
-                }}
-        />
-      </>)}
+              }}
+      />
+    </>)}
   </>)
 }
 
