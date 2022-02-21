@@ -2,6 +2,7 @@ import { faCopyright, faEye, faShieldAlt, faUsers, faHeart } from '@fortawesome/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import BLOG from '@/blog.config'
+import Link from 'next/link'
 
 const Footer = ({ title }) => {
   const d = new Date()
@@ -11,7 +12,7 @@ const Footer = ({ title }) => {
     <footer
       className='dark:bg-gray-900 flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-gray-400 text-sm p-6'
     >
-      <FontAwesomeIcon icon={faCopyright} /> {`${startYear}${currentYear}`} <span><FontAwesomeIcon icon={faHeart} className='mx-1 animate-pulse'/> <a href={BLOG.LINK} className='underline font-bold text-gray-500 dark:text-gray-300 '>{BLOG.AUTHOR}</a>.
+      <FontAwesomeIcon icon={faCopyright} /> {`${startYear}${currentYear}`} <span><FontAwesomeIcon icon={faHeart} className='mx-1 animate-pulse'/> <Link href='/about'><a className='underline font-bold text-gray-500 dark:text-gray-300 '>{BLOG.AUTHOR}</a></Link>.
       <br/>
 
       <span>Powered by <a href='https://notion.so' className='underline font-bold text-gray-500 dark:text-gray-300'>Notion</a> & <a href='https://github.com/tangly1024/NotionNext' className='underline font-bold text-gray-500 dark:text-gray-300'>NotionNext</a>.</span></span>
