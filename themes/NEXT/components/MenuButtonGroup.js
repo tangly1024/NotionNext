@@ -12,7 +12,7 @@ const MenuButtonGroup = ({ postCount }) => {
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   const links = [
-    { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: true },
+    { id: 0, icon: faHome, name: locale.NAV.INDEX, to: '/' || '/', show: CONFIG_NEXT.MENU_HOME },
     { id: 1, icon: faTh, name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NEXT.MENU_CATEGORY },
     { id: 2, icon: faTag, name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
     { id: 3, icon: faArchive, name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE },
