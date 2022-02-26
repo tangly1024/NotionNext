@@ -29,7 +29,7 @@ const MenuButtonGroup = (props) => {
           <a className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
               (selected ? 'bg-gray-200 text-black' : ' ')} >
               <div className='my-auto items-center justify-center flex '>
-                <i className={link.icon} />
+                <i className={`${link.icon} w-4 text-center`} />
                 <div className={'ml-4'}>{link.name}</div>
               </div>
               {link.slot}
