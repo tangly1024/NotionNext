@@ -68,45 +68,31 @@ export async function getStaticProps ({ params: { slug } }) {
 }
 
 /**
- *
+ * 获取文章的关联推荐文章列表，目前根据标签关联性筛选
  * @param post
  * @param {*} allPosts
  * @param {*} count
  * @returns
  */
 function getRecommendPost (post, allPosts, count = 5) {
-  let filteredPosts = Object.create(allPosts)
-  // 筛选同标签
+  let filteredPosts = []
+  for (const i in allPosts) {
+    const p = allPosts[i]
+    filteredPosts.push(Object.assign(p))
+  }
+
   if (post.tags && post.tags.length) {
     const currentTag = post.tags[0]
     filteredPosts = filteredPosts.filter(
-      p => p && p.tags && p.tags.includes(currentTag) && p.slug !== post.slug && p.type === 'post'
+      p => p && p.slug !== post.slug && p.tags && p.tags?.includes(currentTag) && p.type === ['Post']
     )
   }
-  shuffleSort(filteredPosts)
 
   // 筛选前5个
   if (filteredPosts.length > count) {
     filteredPosts = filteredPosts.slice(0, count)
   }
   return filteredPosts
-}
-
-/**
- * 洗牌乱序：从数组的最后位置开始，从前面随机一个位置，对两个数进行交换，直到循环完毕
- * @param arr
- * @returns {*}
- */
-function shuffleSort (arr) {
-  let i = arr.length - 1
-  while (i > 0) {
-    const rIndex = Math.floor(Math.random() * i)
-    const temp = arr[rIndex]
-    arr[rIndex] = arr[i]
-    arr[i] = temp
-    i--
-  }
-  return arr
 }
 
 export default Slug
