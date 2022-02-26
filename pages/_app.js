@@ -14,9 +14,6 @@ import 'prismjs/themes/prism-okaidia.css'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-config.autoAddCss = false
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -30,6 +27,7 @@ const MyApp = ({ Component, pageProps }) => {
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
         {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi/>}
         {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense/>}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
         <Component {...pageProps} />
     </GlobalContextProvider>
   )

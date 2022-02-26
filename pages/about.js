@@ -26,7 +26,7 @@ export async function getStaticProps () {
     latestPosts
   } = await getGlobalNotionData({
     from,
-    includePage: true
+    pageType: ['Page']
   })
   const post = allPosts.find(p => p.slug === 'about')
 

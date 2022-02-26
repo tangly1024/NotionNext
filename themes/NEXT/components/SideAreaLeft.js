@@ -18,7 +18,8 @@ import CONFIG_NEXT from '../config_next'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
+const SideAreaLeft = (props) => {
+  const { currentTag, post, postCount, currentSearch } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
@@ -28,7 +29,7 @@ const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
       <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
         <Logo/>
         <div className='pt-2 px-2 font-sans'>
-        <MenuButtonGroup allowCollapse={true} postCount={postCount} />
+        <MenuButtonGroup allowCollapse={true} {...props} />
         </div>
         {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />

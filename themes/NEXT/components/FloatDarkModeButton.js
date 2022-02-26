@@ -1,7 +1,5 @@
 import { useGlobal } from '@/lib/global'
 import { loadUserThemeFromCookies, saveTheme } from '@/lib/theme'
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CONFIG_NEXT from '../config_next'
 
 export default function FloatDarkModeButton () {
@@ -27,10 +25,9 @@ export default function FloatDarkModeButton () {
       className={ ' text-black dark:border-gray-500 flex justify-center items-center dark:text-gray-200 py-2 px-3'
       }
     >
-      <FontAwesomeIcon
-        icon={userTheme === 'dark' ? faSun : faMoon}
+      <i
         id="darkModeButton"
-        className="hover:scale-150 transform duration-200"
+        className={`${userTheme === 'dark' ? 'fa-sun' : 'fa-moon'} fas hover:scale-150 transform duration-200`}
       />
     </div>
   )

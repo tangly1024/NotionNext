@@ -1,6 +1,4 @@
 import { useGlobal } from '@/lib/global'
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG_NEXT from '../config_next'
@@ -111,7 +109,7 @@ export default function Header () {
         }}
         className="cursor-pointer w-full text-center py-4 text-5xl absolute bottom-10 text-white"
       >
-        <FontAwesomeIcon icon={faAngleDown} className='animate-bounce'/>
+        <i className='animate-bounce fas fa-angle-down'/>
       </div>
     </header>
   )

@@ -8,7 +8,7 @@ export async function getStaticProps () {
     tags,
     postCount,
     latestPosts
-  } = await getGlobalNotionData({ from: 'search-props' })
+  } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
   return {
     props: {
       posts: allPosts,

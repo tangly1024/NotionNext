@@ -13,7 +13,7 @@ const Slug = (props) => {
   if (!props.post) {
     return <Custom404 {...props} />
   }
-  return <LayoutSlug {...props} />
+  return <LayoutSlug {...props} showArticleInfo={true}/>
 }
 
 export async function getStaticPaths () {
@@ -25,7 +25,7 @@ export async function getStaticPaths () {
   }
 
   const from = 'slug-paths'
-  const { allPosts } = await getGlobalNotionData({ from, includePage: true })
+  const { allPosts } = await getGlobalNotionData({ from })
   return {
     paths: allPosts.map(row => ({ params: { slug: row.slug } })),
     fallback: true
@@ -34,8 +34,8 @@ export async function getStaticPaths () {
 
 export async function getStaticProps ({ params: { slug } }) {
   const from = `slug-props-${slug}`
-  const { allPosts, categories, tags, postCount, latestPosts } =
-    await getGlobalNotionData({ from, includePage: true })
+  const { customNav, allPosts, categories, tags, postCount, latestPosts } =
+    await getGlobalNotionData({ from })
 
   const post = allPosts.find(p => p.slug === slug)
 
@@ -61,7 +61,8 @@ export async function getStaticProps ({ params: { slug } }) {
       recommendPosts,
       categories,
       postCount,
-      latestPosts
+      latestPosts,
+      customNav
     },
     revalidate: 1
   }

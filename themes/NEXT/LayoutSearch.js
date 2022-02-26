@@ -1,7 +1,5 @@
 import LayoutBase from './LayoutBase'
 import StickyBar from './components/StickyBar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
@@ -36,7 +34,7 @@ export const LayoutSearch = ({ posts, tags, categories, postCount }) => {
     >
       <StickyBar>
         <div className="p-4 dark:text-gray-200">
-          <FontAwesomeIcon icon={faSearch} className="mr-1" />{' '}
+          <i className="mr-1 fas fa-search" />{' '}
           {filteredPosts.length} {locale.COMMON.RESULT_OF_SEARCH}
         </div>
       </StickyBar>

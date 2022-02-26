@@ -1,6 +1,4 @@
 import { useGlobal } from '@/lib/global'
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import CONFIG_NEXT from '../config_next'
 
@@ -19,7 +17,7 @@ const JumpToTopButton = ({ showPercent = true, percent }) => {
   const { locale } = useGlobal()
   return (<div className='flex space-x-1 items-center transform hover:scale-105 duration-200 py-2 px-3' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
         <div className='dark:text-gray-200' title={locale.POST.TOP} >
-          <FontAwesomeIcon icon={faArrowUp} />
+          <i className='fa-arrow-up fas' />
         </div>
         {showPercent && (<div className='text-xs dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
     </div>)
