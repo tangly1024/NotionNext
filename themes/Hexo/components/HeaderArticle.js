@@ -1,5 +1,3 @@
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/formatDate'
@@ -50,13 +48,15 @@ export default function HeaderArticle ({ post }) {
 
             <section className="flex-wrap shadow-text flex justify-center mt-2 text-white dark:text-gray-400 font-light leading-8">
               <div>
-                <Link href={`/category/${post.category}`} passHref>
+                {post.category && <>
+                  <Link href={`/category/${post.category}`} passHref>
                   <a className="cursor-pointer text-md mr-2 dark:hover:text-white border-b dark:border-gray-500 border-dashed">
-                    <FontAwesomeIcon icon={faFolderOpen} className="mr-1" />
+                    <i className="mr-1 fas fa-folder-open" />
                     {post.category}
                   </a>
-                </Link>
-                <span className="mr-2">|</span>
+                  </Link>
+                  <span className="mr-2">|</span>
+                </>}
 
                 {post.type[0] !== 'Page' && (
                   <>

@@ -2,9 +2,6 @@ import React from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStream } from '@fortawesome/free-solid-svg-icons'
-// import { cs } from 'react-notion-x'
 
 /**
  * 目录导航组件
@@ -55,7 +52,7 @@ const Catalog = ({ toc }) => {
   }, throttleMs))
 
   return <div className='px-3'>
-    <div className='w-full'><FontAwesomeIcon className='mr-1' icon={faStream}/> 目录</div>
+    <div className='w-full'><i className='mr-1 fas fa-stream' /> 目录</div>
     <div className='w-full py-1'>
       <Progress/>
     </div>
