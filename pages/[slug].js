@@ -35,7 +35,6 @@ export async function getStaticPaths () {
 export async function getStaticProps ({ params: { slug } }) {
   const from = `slug-props-${slug}`
   const { allPosts, categories, tags, postCount, latestPosts, customNav } = await getGlobalNotionData({ from, pageType: ['Page'] })
-
   const post = allPosts.find(p => p.slug === slug)
   if (!post) {
     return { props: {}, revalidate: 1 }

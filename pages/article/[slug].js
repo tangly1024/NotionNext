@@ -35,7 +35,7 @@ export async function getStaticPaths () {
 export async function getStaticProps ({ params: { slug } }) {
   const from = `slug-props-${slug}`
   const { customNav, allPosts, categories, tags, postCount, latestPosts } =
-    await getGlobalNotionData({ from })
+    await getGlobalNotionData({ from, pageType: ['Post'] })
 
   const post = allPosts.find(p => p.slug === slug)
 
@@ -45,10 +45,9 @@ export async function getStaticProps ({ params: { slug } }) {
 
   post.blockMap = await getPostBlocks(post.id, 'slug')
 
-  const posts = allPosts.filter(post => post?.type?.[0] === 'Post')
-  const index = posts.indexOf(post)
-  const prev = posts.slice(index - 1, index)[0] ?? posts.slice(-1)[0]
-  const next = posts.slice(index + 1, index + 2)[0] ?? posts[0]
+  const index = allPosts.indexOf(post)
+  const prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
+  const next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
 
   const recommendPosts = getRecommendPost(post, allPosts)
 
