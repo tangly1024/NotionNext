@@ -6,14 +6,15 @@ import GroupTag from './GroupTag'
 import SearchInput from './SearchInput'
 import SiteInfo from './SiteInfo'
 
-function AsideLeft ({ tags, currentTag, categories, currentCategory }) {
+function AsideLeft (props) {
+  const { tags, currentTag, categories, currentCategory } = props
   return <div className='w-72 bg-white min-h-screen px-10 py-14 hidden lg:block'>
 
     <Logo />
 
     <section className='flex flex-col text-gray-600'>
       <hr className='w-12 my-8' />
-      <GroupMenu/>
+      <GroupMenu {...props}/>
     </section>
 
     <section className='flex flex-col text-gray-600'>
