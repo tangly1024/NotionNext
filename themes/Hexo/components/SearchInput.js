@@ -44,7 +44,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     <input
       ref={searchInputRef}
       type='text'
-      className={'w-full rounded-lg bg-white text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black'}
+      className={'w-full rounded-lg text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100'}
       onKeyUp={handleKeyUp}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={searchKey}
