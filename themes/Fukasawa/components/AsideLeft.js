@@ -5,11 +5,13 @@ import GroupMenu from './GroupMenu'
 import GroupTag from './GroupTag'
 import SearchInput from './SearchInput'
 import SiteInfo from './SiteInfo'
+import Catalog from './Catalog'
 
 function AsideLeft (props) {
-  const { tags, currentTag, categories, currentCategory } = props
-  return <div className='w-72 bg-white min-h-screen px-10 py-14 hidden lg:block'>
+  const { tags, currentTag, categories, currentCategory, post } = props
+  console.log(post)
 
+  return <div className='w-72 bg-white min-h-screen px-10 py-14 hidden lg:block'>
     <Logo />
 
     <section className='flex flex-col text-gray-600'>
@@ -40,6 +42,10 @@ function AsideLeft (props) {
     <section className='flex flex-col'>
       <hr className='w-12 my-8 ' />
       <SiteInfo/>
+    </section>
+
+    <section className='sticky top-0 pt-12'>
+      <Catalog toc={post?.toc}/>
     </section>
 
   </div>
