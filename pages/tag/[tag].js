@@ -13,7 +13,8 @@ export async function getStaticProps ({ params }) {
     categories,
     tags,
     postCount,
-    latestPosts
+    latestPosts,
+    customNav
   } = await getGlobalNotionData({
     from,
     includePage: false,
@@ -29,7 +30,8 @@ export async function getStaticProps ({ params }) {
       tag,
       categories,
       postCount,
-      latestPosts
+      latestPosts,
+      customNav
     },
     revalidate: 1
   }

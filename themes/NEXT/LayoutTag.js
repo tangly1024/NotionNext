@@ -5,7 +5,8 @@ import StickyBar from './components/StickyBar'
 import TagList from './components/TagList'
 import BlogPostListScroll from './components/BlogPostListScroll'
 
-export const LayoutTag = ({ tags, posts, tag, categories, postCount, latestPosts }) => {
+export const LayoutTag = (props) => {
+  const { tags, posts, tag } = props
   const { locale } = useGlobal()
 
   const meta = {
@@ -15,11 +16,10 @@ export const LayoutTag = ({ tags, posts, tag, categories, postCount, latestPosts
   }
 
   // 将当前选中的标签置顶🔝
-  if (!tags) tags = []
   const currentTag = tags?.find(r => r?.name === tag)
   const newTags = currentTag ? [currentTag].concat(tags.filter(r => r?.name !== tag)) : tags.filter(r => r?.name !== tag)
 
-  return <LayoutBase meta={meta} tags={tags} currentTag={tag} categories={categories} postCount={postCount} latestPosts={latestPosts}>
+  return <LayoutBase meta={meta} currentTag={tag} {...props}>
     <StickyBar>
       <TagList tags={newTags} currentTag={tag}/>
     </StickyBar>

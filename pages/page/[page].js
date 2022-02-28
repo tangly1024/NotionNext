@@ -29,7 +29,8 @@ export async function getStaticProps ({ params: { page } }) {
     latestPosts,
     categories,
     tags,
-    postCount
+    postCount,
+    customNav
   } = await getGlobalNotionData({ from })
   const meta = {
     title: `${page} | Page | ${BLOG.TITLE}`,
@@ -62,7 +63,8 @@ export async function getStaticProps ({ params: { page } }) {
       latestPosts,
       tags,
       categories,
-      meta
+      meta,
+      customNav
     },
     revalidate: 1
   }

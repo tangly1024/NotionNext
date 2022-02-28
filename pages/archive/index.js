@@ -3,7 +3,7 @@ import React from 'react'
 import { LayoutArchive } from '@/themes'
 
 export async function getStaticProps () {
-  const { allPosts, categories, tags, postCount } =
+  const { allPosts, categories, tags, postCount, customNav } =
     await getGlobalNotionData({ from: 'archive-index' })
 
   return {
@@ -11,7 +11,8 @@ export async function getStaticProps () {
       posts: allPosts,
       tags,
       categories,
-      postCount
+      postCount,
+      customNav
     },
     revalidate: 1
   }

@@ -3,20 +3,15 @@ import BLOG from '@/blog.config'
 import LayoutBase from './LayoutBase'
 import Link from 'next/link'
 
-export const LayoutCategoryIndex = ({
-  tags,
-  allPosts,
-  categories,
-  postCount,
-  latestPosts
-}) => {
+export const LayoutCategoryIndex = (props) => {
+  const { allPosts, categories } = props
   const { locale } = useGlobal()
   const meta = {
     title: `${locale.COMMON.CATEGORY} | ${BLOG.TITLE}`,
     description: BLOG.DESCRIPTION,
     type: 'website'
   }
-  return <LayoutBase meta={meta} totalPosts={allPosts} tags={tags} postCount={postCount} latestPosts={latestPosts}>
+  return <LayoutBase meta={meta} totalPosts={allPosts} {...props}>
     <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
       <div className='dark:text-gray-200 mb-5'>
         <i className='mr-4 fas faTh' />{locale.COMMON.CATEGORY}:
