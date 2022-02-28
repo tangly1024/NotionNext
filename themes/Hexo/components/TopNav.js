@@ -91,7 +91,7 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
 
     {/* 导航栏 */}
     <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'}  bg-opacity-70 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
-      <div className='w-full flex justify-between items-center px-4 py-2 shadow-md'>
+      <div className='w-full flex justify-between items-center px-4 py-2 shad'>
         <div className='flex'>
          <Logo/>
         </div>
@@ -104,7 +104,7 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
         </div>
       </div>
 
-      <Collapse isOpen={isOpen} className='shadow-xl'>
+      <Collapse isOpen={isOpen} className='shadow-xl rounded-b-xl'>
         <div className='bg-white pt-1 py-2 px-5'>
           <MenuButtonGroup postCount={postCount}/>
           <SearchInput/>
