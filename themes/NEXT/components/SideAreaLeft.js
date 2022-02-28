@@ -48,7 +48,6 @@ const SideAreaLeft = (props) => {
           <div key={locale.NAV.ABOUT} className='mb-5 bg-white dark:bg-gray-800 duration-200 py-6'>
             <InfoCard />
             <>
-              {/* <div className='px-5 text-sm font-light pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faChartBar} className='mr-2' />{locale.COMMON.ANALYTICS}</div> */}
               <div className='mt-2 text-center dark:text-gray-300 font-light text-xs'>
                 <span className='px-1 '>
                   <strong className='font-medium'>{postCount}</strong>{locale.COMMON.POSTS}</span>
