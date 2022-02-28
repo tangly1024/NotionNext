@@ -5,14 +5,15 @@ import StickyBar from './components/StickyBar'
 import CategoryList from './components/CategoryList'
 import BlogPostListScroll from './components/BlogPostListScroll'
 
-export const LayoutCategory = ({ tags, posts, category, categories, latestPosts, postCount }) => {
+export const LayoutCategory = (props) => {
+  const { tags, posts, category, categories } = props
   const { locale } = useGlobal()
   const meta = {
     title: `${category} | ${locale.COMMON.CATEGORY} | ${BLOG.TITLE}`,
     description: BLOG.DESCRIPTION,
     type: 'website'
   }
-  return <LayoutBase meta={meta} tags={tags} currentCategory={category} postCount={postCount} latestPosts={latestPosts} categories={categories}>
+  return <LayoutBase meta={meta} currentCategory={category} {...props}>
     <StickyBar>
       <CategoryList currentCategory={category} categories={categories} />
     </StickyBar>

@@ -8,7 +8,7 @@ export default function Category (props) {
 
 export async function getStaticProps () {
   const from = 'category-index-props'
-  const { allPosts, categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from })
+  const { allPosts, categories, tags, postCount, latestPosts, customNav } = await getGlobalNotionData({ from })
 
   return {
     props: {
@@ -16,7 +16,8 @@ export async function getStaticProps () {
       allPosts,
       categories,
       postCount,
-      latestPosts
+      latestPosts,
+      customNav
     },
     revalidate: 1
   }

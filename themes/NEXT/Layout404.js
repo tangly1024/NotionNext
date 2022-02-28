@@ -3,7 +3,7 @@ import LayoutBase from './LayoutBase'
 import BLOG from '@/blog.config'
 import { useEffect } from 'react'
 
-export const Layout404 = () => {
+export const Layout404 = (props) => {
   const router = useRouter()
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
@@ -19,7 +19,7 @@ export const Layout404 = () => {
     }, 3000)
   })
 
-  return <LayoutBase meta={{ title: `${BLOG.TITLE} | 页面找不到啦` }}>
+  return <LayoutBase meta={{ title: `${BLOG.TITLE} | 页面找不到啦` }} {...props}>
     <div
       className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
       <div className='dark:text-gray-200'>

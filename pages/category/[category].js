@@ -14,7 +14,8 @@ export async function getStaticProps ({ params }) {
     categories,
     tags,
     postCount,
-    latestPosts
+    latestPosts,
+    customNav
   } = await getGlobalNotionData({ from })
   const filteredPosts = allPosts.filter(
     post => post && post.category && post.category.includes(category)
@@ -26,7 +27,8 @@ export async function getStaticProps ({ params }) {
       category,
       categories,
       postCount,
-      latestPosts
+      latestPosts,
+      customNav
     },
     revalidate: 1
   }
