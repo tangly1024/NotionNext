@@ -44,10 +44,10 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     <input
       ref={searchInputRef}
       type='text'
-      className={'w-full rounded-lg text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100'}
+      className={'w-full rounded-lg text-sm pl-5 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100'}
       onKeyUp={handleKeyUp}
       onChange={e => updateSearchKey(e.target.value)}
-      defaultValue={searchKey}
+      defaultValue={currentSearch}
     />
 
     <div className='-ml-8 cursor-pointer dark:hover:bg-gray-800 float-right items-center justify-center py-2'
