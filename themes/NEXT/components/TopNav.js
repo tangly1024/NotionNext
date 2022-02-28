@@ -1,6 +1,4 @@
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faBars, faSearch, faTag, faThList, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import throttle from 'lodash.throttle'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -19,7 +17,8 @@ let windowTop = 0
  * @param {*} param0
  * @returns
  */
-const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) => {
+const TopNav = (props) => {
+  const { tags, currentTag, categories, currentCategory } = props
   const { locale } = useGlobal()
   const searchDrawer = useRef()
 
@@ -57,10 +56,10 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
     { categories && (
         <section className='mt-8'>
           <div className='text-sm flex flex-nowrap justify-between font-light px-2'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
+            <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
             <Link href={'/category'} passHref>
               <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+                {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
               </a>
             </Link>
           </div>
@@ -71,10 +70,10 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
     { tags && (
         <section className='mt-4'>
           <div className='text-sm py-2 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
+            <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-tag'/>{locale.COMMON.TAGS}</div>
             <Link href={'/tag'} passHref>
               <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+                {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
               </a>
             </Link>
           </div>
@@ -94,7 +93,7 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
           <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
-          { isOpen ? <FontAwesomeIcon icon={faTimes} size={'lg'}/> : <FontAwesomeIcon icon={faBars} size={'lg'}/> }
+          { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }
           </div>
         </div>
 
@@ -105,14 +104,14 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
         {/* 右侧功能 */}
         <div className='mr-1 flex justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
           <div className="cursor-pointer block lg:hidden" onClick={() => { searchDrawer?.current?.show() }}>
-            <FontAwesomeIcon icon={faSearch} className="mr-2" />{locale.NAV.SEARCH}
+            <i className="mr-2 fas fa-search" />{locale.NAV.SEARCH}
           </div>
         </div>
       </div>
 
       <Collapse isOpen={isOpen}>
         <div className='bg-white py-1 px-5'>
-          <MenuButtonGroup postCount={postCount}/>
+          <MenuButtonGroup {...props} from='top'/>
           </div>
       </Collapse>
     </div>

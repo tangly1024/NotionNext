@@ -1,7 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * 赞赏按钮
@@ -23,7 +21,7 @@ const RewardButton = () => {
     <div className='justify-center'>
       <div onMouseEnter={openPopover} onMouseLeave={closePopover}
       className='bg-pink-500 py-2 w-36 mx-auto animate__jello text-white hover:bg-green-400 duration-200 transform hover:scale-110 px-3 rounded cursor-pointer'>
-          <FontAwesomeIcon icon={faQrcode} className='mr-2' />
+          <i className='mr-2 fas fa-qrcode' />
           <span>打赏一杯咖啡</span>
       </div>
 

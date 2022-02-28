@@ -1,7 +1,6 @@
 import React from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import Progress from './Progress'
 
 /**
  * 目录导航组件
@@ -51,11 +50,8 @@ const Catalog = ({ toc }) => {
     setActiveSection(currentSectionId)
   }, throttleMs))
 
-  return <div className='px-3'>
+  return <div>
     <div className='w-full'><i className='mr-1 fas fa-stream' /> 目录</div>
-    <div className='w-full py-1'>
-      <Progress/>
-    </div>
     <nav className='font-sans overflow-y-auto scroll-hidden text-black'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)

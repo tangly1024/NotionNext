@@ -1,5 +1,3 @@
-import { faClock, faFileWord } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect } from 'react'
 
 /**
@@ -12,7 +10,7 @@ export default function WordCount () {
   })
 
   return <div id='wordCountWrapper' className='hidden'>
-   <FontAwesomeIcon icon={faFileWord} className='mr-1'/> 本文字数 <strong id='wordCount'>0</strong> &nbsp;|&nbsp; <FontAwesomeIcon className='mr-1' icon={faClock}/> 阅读时长 ≈ <strong id='readTime'>0</strong> 分钟
+   <i className='mr-1 fas fa-file-word'/> 本文字数 <strong id='wordCount'>0</strong> &nbsp;|&nbsp; <i className='mr-1 fas fa-clock' /> 阅读时长 ≈ <strong id='readTime'>0</strong> 分钟
     </div>
 }
 

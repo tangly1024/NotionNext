@@ -1,6 +1,4 @@
 import BLOG from '@/blog.config'
-import { faFolder } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -51,7 +49,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           <Link href={`/category/${post.category}`} passHref>
               <a className='cursor-pointer font-light text-sm hover:underline transform'>
-                <FontAwesomeIcon icon={faFolder} className='mr-1' />{post.category}
+                <i className='mr-1 fas fa-folder' />{post.category}
               </a>
             </Link>
             <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>

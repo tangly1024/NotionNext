@@ -1,5 +1,3 @@
-import { faFolder, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
 
@@ -16,7 +14,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
             ? 'hover:text-white dark:hover:text-white bg-blue-600 text-white '
             : 'dark:text-gray-400 text-gray-500 hover:text-white dark:hover:text-white hover:bg-blue-600') +
             '  text-sm w-full items-center duration-300 px-2  cursor-pointer py-1 font-light'}>
-              <div>            <FontAwesomeIcon icon={selected ? faFolderOpen : faFolder} className={'mr-2'} />{category}({categories[category]})</div>
+              <div> <i className={`mr-2 fas ${selected ? 'fa-folder-open' : 'fa-folder'}`} />{category}({categories[category]})</div>
             </a>
         </Link>
       })}

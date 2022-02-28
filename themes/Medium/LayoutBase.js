@@ -29,7 +29,7 @@ const LayoutBase = props => {
 
         <div className='w-full'>
           {/* 移动端顶部菜单 */}
-          <TopNavBar />
+          <TopNavBar {...props}/>
           <div className='px-5 max-w-5xl justify-center mx-auto min-h-screen'>
             {slotTop}
             {children}

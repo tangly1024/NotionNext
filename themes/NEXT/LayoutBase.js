@@ -15,33 +15,11 @@ import CONFIG_NEXT from './config_next'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
- * @param children
- * @param layout
- * @param tags
- * @param meta
- * @param post
- * @param currentSearch
- * @param currentCategory
- * @param currentTag
- * @param categories
  * @returns {JSX.Element}
  * @constructor
  */
-const LayoutBase = ({
-  children,
-  headerSlot,
-  tags,
-  meta,
-  post,
-  postCount,
-  sideBarSlot,
-  floatSlot,
-  rightAreaSlot,
-  currentSearch,
-  currentCategory,
-  currentTag,
-  categories
-}) => {
+const LayoutBase = (props) => {
+  const { children, headerSlot, meta, sideBarSlot, floatSlot, rightAreaSlot } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
 
@@ -71,23 +49,18 @@ const LayoutBase = ({
 
       <CommonHead meta={meta} />
 
-      <TopNav tags={tags} postCount={postCount} post={post} slot={sideBarSlot} currentSearch={currentSearch} categories={categories} currentCategory={currentCategory} />
+      <TopNav slot={sideBarSlot} {...props}/>
 
       <>{headerSlot}</>
 
       <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'/>
 
       <main id='wrapper' className='flex justify-center flex-1 pb-12'>
-          <SideAreaLeft targetRef={targetRef} post={post} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+          <SideAreaLeft targetRef={targetRef} {...props}/>
           <section id='center' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-40' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
-            {onLoading
-              ? <LoadingCover/>
-              : <>
-                {children}
-              </>
-            }
+            {onLoading ? <LoadingCover/> : <> {children}</> }
           </section>
-          <SideAreaRight targetRef={targetRef} post={post} slot={rightAreaSlot} postCount={postCount} tags={tags} currentSearch={currentSearch} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+          <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props}/>
       </main>
 
       {/* 右下角悬浮 */}

@@ -1,8 +1,6 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
 /**
  * 数字翻页插件
@@ -29,7 +27,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           rel='prev'
           className={`${currentPage === 1 ? 'invisible' : 'block'} border-white dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
         >
-          <FontAwesomeIcon icon={faAngleLeft}/>
+          <i className='fas fa-angle-left'/>
         </div>
       </Link>
 
@@ -41,7 +39,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           rel='next'
           className={`${+showNext ? 'block' : 'invisible'} border-t-2 border-white dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
         >
-          <FontAwesomeIcon icon={faAngleRight}/>
+          <i className='fas fa-angle-right'/>
         </div>
       </Link>
     </div>

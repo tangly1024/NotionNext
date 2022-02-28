@@ -8,16 +8,7 @@ const TagIndex = (props) => {
 
 export async function getStaticProps () {
   const from = 'tag-index-props'
-  const {
-    categories,
-    tags,
-    postCount,
-    latestPosts
-  } = await getGlobalNotionData({
-    from,
-    includePage: false,
-    tagsCount: 0
-  })
+  const { categories, tags, postCount, latestPosts } = await getGlobalNotionData({ from, tagsCount: 0 })
 
   return {
     props: {

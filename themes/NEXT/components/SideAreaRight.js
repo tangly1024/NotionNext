@@ -1,6 +1,4 @@
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faAngleRight, faTag, faThList } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
 import Card from './Card'
@@ -51,10 +49,10 @@ const SideAreaRight = ({
         {CONFIG_NEXT.RIGHT_CATEGORY_LIST && categories && (
           <Card>
             <div className='text-sm px-2 flex flex-nowrap justify-between font-light'>
-              <div className='pb-1 text-gray-600 dark:text-gray-300'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
+              <div className='pb-1 text-gray-600 dark:text-gray-300'><i icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
               <Link href={'/category'} passHref>
                 <a className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                  {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleRight} />
+                  {locale.COMMON.MORE} <i icon={faAngleRight} />
                 </a>
               </Link>
             </div>
@@ -68,13 +66,13 @@ const SideAreaRight = ({
           <Card>
             <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200">
               <div className="text-gray-600 dark:text-gray-200">
-                <FontAwesomeIcon icon={faTag} className="mr-2" />
+                <i className="mr-2 fas fa-tag" />
                 {locale.COMMON.TAGS}
               </div>
               <Link href={'/tag'} passHref>
                 <a className="text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer">
                   {locale.COMMON.MORE}{' '}
-                  <FontAwesomeIcon icon={faAngleDoubleRight} />
+                  <i className='fas fa-angle-double-right' />
                 </a>
               </Link>
             </div>
