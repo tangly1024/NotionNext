@@ -15,13 +15,9 @@ export const LayoutTag = (props) => {
     type: 'website'
   }
 
-  // 将当前选中的标签置顶🔝
-  const currentTag = tags?.find(r => r?.name === tag)
-  const newTags = currentTag ? [currentTag].concat(tags.filter(r => r?.name !== tag)) : tags.filter(r => r?.name !== tag)
-
   return <LayoutBase meta={meta} currentTag={tag} {...props}>
     <StickyBar>
-      <TagList tags={newTags} currentTag={tag}/>
+      <TagList tags={tags} currentTag={tag}/>
     </StickyBar>
     <div className='md:mt-8'>
       <BlogPostListScroll posts={posts} tags={tags} currentTag={tag}/>
