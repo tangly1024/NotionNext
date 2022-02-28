@@ -20,17 +20,13 @@ const LayoutBase = (props) => {
   const {
     children,
     headerSlot,
-    tags,
-    meta,
-    currentCategory,
-    currentTag,
-    categories
+    meta
   } = props
   return (<>
     <CommonHead meta={meta} />
     <TopNav {...props}/>
     <div className='flex'>
-      <AsideLeft tags={tags} currentTag={currentTag} categories={categories} currentCategory={currentCategory}/>
+      <AsideLeft {...props}/>
       <main id='wrapper' className='flex w-full py-8 justify-center'>
         <div className='2xl:max-w-6xl md:max-w-3xl w-full'>
           <div> {headerSlot} </div>

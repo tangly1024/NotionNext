@@ -2,8 +2,6 @@ import CategoryGroup from './CategoryGroup'
 import InfoCard from './InfoCard'
 import TagGroups from './TagGroups'
 import { useGlobal } from '@/lib/global'
-import { faAngleDoubleRight, faTag, faThList } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
 
@@ -32,10 +30,10 @@ const SideBar = ({ tags, currentTag, post, slot, categories, currentCategory }) 
       {categories && (
         <section className='mt-8'>
           <div className='text-sm px-5 flex flex-nowrap justify-between font-light'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
+            <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
             <Link href={'/category'} passHref>
               <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+                {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
               </a>
             </Link>
           </div>
@@ -47,10 +45,10 @@ const SideBar = ({ tags, currentTag, post, slot, categories, currentCategory }) 
       {tags && (
         <section className='mt-4'>
           <div className='text-sm py-2 px-5 flex flex-nowrap justify-between font-light dark:text-gray-200'>
-            <div className='text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faTag} className='mr-2'/>{locale.COMMON.TAGS}</div>
+            <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-tag'/>{locale.COMMON.TAGS}</div>
             <Link href={'/tag'} passHref>
               <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <FontAwesomeIcon icon={faAngleDoubleRight} />
+                {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
               </a>
             </Link>
           </div>

@@ -44,9 +44,9 @@ const LayoutBase = (props) => {
 
     {headerSlot}
 
-    <main id='wrapper' className='mt-12 lg:mt-0 flex w-full justify-center py-8 min-h-screen'>
+    <main id='wrapper' className='flex w-full justify-center py-8 min-h-screen'>
 
-      <div id='container-inner' className='w-full mx-auto flex justify-between space-x-4 max-w-6xl'>
+      <div id='container-inner' className='pt-14 w-full mx-auto flex justify-between space-x-4 max-w-6xl'>
         <div className='flex-grow w-full'>{children}</div>
         <SideRight {...props}/>
       </div>

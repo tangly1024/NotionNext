@@ -1,4 +1,4 @@
-import LayoutBase from '../Hexo/LayoutBase'
+import LayoutBase from '../Empty/LayoutBase'
 
 export const LayoutPage = (props) => {
   const { page } = props

@@ -1,5 +1,3 @@
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from '../config_next'
@@ -47,7 +45,7 @@ const JumpToBottomButton = ({ showPercent = false }) => {
 
   return (<div className='flex space-x-1 transform hover:scale-105 duration-200 py-2 px-3' onClick={scrollToBottom} >
     <div className='dark:text-gray-200' >
-      <FontAwesomeIcon icon={faArrowDown} />
+      <i className='fas fa-arrow-down' />
     </div>
     {showPercent && (<div className='dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
   </div>)

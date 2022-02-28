@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
   const [searchKey, setSearchKey] = useState(currentSearch || getSearchKey() || '')
@@ -55,12 +53,12 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
 
     <div className='-ml-8 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'
       onClick={() => { handleSearch(searchKey) }}>
-        <FontAwesomeIcon spin={onLoading} icon={onLoading ? faSpinner : faSearch} className='hover:text-black transform duration-200 text-gray-500 cursor-pointer' />
+        <i className={`hover:text-black transform duration-200 text-gray-500 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'} `} />
     </div>
 
     {(searchKey && searchKey.length &&
       <div className='-ml-12 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'>
-        <FontAwesomeIcon icon={faTimes} className='hover:text-black transform duration-200 text-gray-400 cursor-pointer' onClick={cleanSearch} />
+        <i className='fas fa-times hover:text-black transform duration-200 text-gray-400 cursor-pointer' onClick={cleanSearch} />
       </div>
       )}
   </div>

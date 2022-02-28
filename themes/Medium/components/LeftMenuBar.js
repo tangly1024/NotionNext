@@ -1,6 +1,4 @@
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
 export default function LeftMenuBar () {
@@ -8,7 +6,7 @@ export default function LeftMenuBar () {
     <section>
       <Link href='/'>
         <div className='text-center cursor-pointer  hover:text-black'>
-          <FontAwesomeIcon icon={faHome} size='lg' color='gray' />
+          <i className='fas fa-home text-gray-500'/>
         </div>
       </Link>
     </section>

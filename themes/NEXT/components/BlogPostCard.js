@@ -1,7 +1,5 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import { faAngleRight, faFolder } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -26,12 +24,14 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         <div className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}>
           <div>
+          { post.category && (<>
           <Link href={`/category/${post.category}`} passHref>
             <a className='cursor-pointer font-light text-sm hover:underline transform'>
-              <FontAwesomeIcon icon={faFolder} className='mr-1' />{post.category}
+              <i className='mr-1 fas fa-folder' />{post.category}
             </a>
           </Link>
           <span className='mx-2'>|</span>
+          </>) }
           <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`} passHref>
             <a className='font-light hover:underline cursor-pointer text-sm leading-4 mr-3'>{post.date.start_date}</a>
           </Link>
@@ -63,7 +63,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           <Link href={`${BLOG.PATH}/article/${post.slug}`}>
               <a className='hover:bg-opacity-100 hover:scale-105 hover:underline pointer-events-auto transform duration-300 p-3 text-white bg-gray-800 cursor-pointer'>
                 {locale.COMMON.ARTICLE_DETAIL}
-                <FontAwesomeIcon className='ml-1' icon={faAngleRight} /></a>
+                <i className='ml-1 fas fa-angle-right' /></a>
           </Link>
         </div>
       </div>

@@ -18,7 +18,8 @@ import CONFIG_NEXT from '../config_next'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
+const SideAreaLeft = (props) => {
+  const { currentTag, post, postCount, currentSearch } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
@@ -28,7 +29,7 @@ const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
       <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
         <Logo/>
         <div className='pt-2 px-2 font-sans'>
-        <MenuButtonGroup allowCollapse={true} postCount={postCount} />
+        <MenuButtonGroup allowCollapse={true} {...props} />
         </div>
         {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
            <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
@@ -47,7 +48,6 @@ const SideAreaLeft = ({ currentTag, post, postCount, currentSearch }) => {
           <div key={locale.NAV.ABOUT} className='mb-5 bg-white dark:bg-gray-800 duration-200 py-6'>
             <InfoCard />
             <>
-              {/* <div className='px-5 text-sm font-light pb-1 text-gray-600 dark:text-gray-200'><FontAwesomeIcon icon={faChartBar} className='mr-2' />{locale.COMMON.ANALYTICS}</div> */}
               <div className='mt-2 text-center dark:text-gray-300 font-light text-xs'>
                 <span className='px-1 '>
                   <strong className='font-medium'>{postCount}</strong>{locale.COMMON.POSTS}</span>

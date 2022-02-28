@@ -6,8 +6,6 @@ import ShareBar from './ShareBar'
 import TagItem from './TagItem'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
-import { faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import mediumZoom from 'medium-zoom'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -28,7 +26,8 @@ import WordCount from './WordCount'
  * @param {*} param0
  * @returns
  */
-export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
+export default function ArticleDetail (props) {
+  const { post, recommendPosts, prev, next, showArticleInfo } = props
   const url = BLOG.LINK + useRouter().asPath
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
@@ -56,20 +55,11 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
       className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
     >
 
-      <header className='animate__slideInDown animate__animated'>
+      {showArticleInfo && <header className='animate__slideInDown animate__animated'>
         {post.type && !post.type.includes('Page') && post?.page_cover && (
             <div className="w-full relative md:flex-shrink-0 overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
-              {/* <div className="w-full h-60 relative lg:h-96 transform duration-200 md:flex-shrink-0 overflow-hidden">
-                <Image
-                  src={post?.page_cover}
-                  loading="eager"
-                  objectFit="cover"
-                  layout="fill"
-                  alt={post.title}
-                />
-              </div> */}
             </div>
         )}
 
@@ -80,14 +70,14 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
 
           <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
             <div>
-              <Link href={`/category/${post.category}`} passHref>
+              {post.category && <>
+                <Link href={`/category/${post.category}`} passHref>
                 <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
-                  <FontAwesomeIcon icon={faFolderOpen} className="mr-1" />
-                  {post.category}
+                  <i className="mr-1 far fa-folder-open" />  {post.category}
                 </a>
               </Link>
               <span className='mr-2'>|</span>
-
+              </>}
               {post.type[0] !== 'Page' && (<>
                 <Link
                   href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
@@ -101,7 +91,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
               </>)}
 
               <div className="hidden busuanzi_container_page_pv font-light mr-2">
-                <FontAwesomeIcon icon={faEye} className='mr-1'/>
+                <i className='mr-1 fa-eye'/>
                 &nbsp;
                 <span className="mr-2 busuanzi_value_page_pv"/>
                 <span className='mr-2'>|</span>
@@ -113,11 +103,9 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
 
           </section>
 
-          {/* <hr className="mt-2" /> */}
+      </header>}
 
-      </header>
-
-      {/* Notion文章主体 */}
+      {/* Notion内容主体 */}
       <article id='notion-article' className='px-1'>
         {post.blockMap && (
           <NotionRenderer
@@ -144,6 +132,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
           data-ad-slot="3806269138"/>
       </section>
 
+      {showArticleInfo && <>
       {/* 版权声明 */}
       <ArticleCopyright author={BLOG.AUTHOR} url={url} />
 
@@ -168,6 +157,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
       </section>
 
       <BlogAround prev={prev} next={next} />
+      </>}
 
       {/* 评论互动 */}
       <div className="duration-200 w-full dark:border-gray-700 bg-white dark:bg-gray-800">

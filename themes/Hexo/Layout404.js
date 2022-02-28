@@ -1,6 +1,4 @@
 import BLOG from '@/blog.config'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import LayoutBase from './LayoutBase'
@@ -26,7 +24,7 @@ export const Layout404 = props => {
       <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
         <div className="dark:text-gray-200">
           <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
-            <FontAwesomeIcon icon={faSpinner} spin={true} className="mr-2" />
+            <i className="mr-2 fas fa-spinner animate-spin" />
             404
           </h2>
           <div className="inline-block text-left h-32 leading-10 items-center">

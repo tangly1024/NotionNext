@@ -1,8 +1,6 @@
 import Comment from '@/components/Comment'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
-import { faEye, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import mediumZoom from 'medium-zoom'
 import Link from 'next/link'
 import 'prismjs'
@@ -64,7 +62,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
             <div>
               <Link href={`/category/${post.category}`} passHref>
                 <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
-                  <FontAwesomeIcon icon={faFolderOpen} className="mr-1" />
+                  <i className="mr-1 fas fa-folder-open" />
                   {post.category}
                 </a>
               </Link>
@@ -83,7 +81,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
               </>)}
 
               <div className="hidden busuanzi_container_page_pv font-light mr-2">
-                <FontAwesomeIcon icon={faEye} className='mr-1'/>
+                <i className='mr-1 fas fa-eye'/>
                 &nbsp;
                 <span className="mr-2 busuanzi_value_page_pv"/>
                 <span className='mr-2'>|</span>

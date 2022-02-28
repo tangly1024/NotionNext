@@ -4,8 +4,6 @@ import BLOG from '@/blog.config'
 import Card from './Card'
 import MenuButtonGroup from './MenuButtonGroup'
 import SearchInput from './SearchInput'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartArea, faTh } from '@fortawesome/free-solid-svg-icons'
 import CategoryGroup from './CategoryGroup'
 import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
@@ -51,7 +49,7 @@ export default function SideRight (props) {
       </Card>
       <Card>
         <div className='ml-2 mb-3 font-sans'>
-          <FontAwesomeIcon icon={faChartArea} /> 统计
+          <i className='fas fa-chart-area' /> 统计
         </div>
         <div className='text-xs font-sans font-light justify-center mx-7'>
           <div className='inline'>
@@ -78,7 +76,7 @@ export default function SideRight (props) {
       {showCategory && (
         <Card>
           <div className='ml-2 mb-1 font-sans'>
-            <FontAwesomeIcon icon={faTh} /> 分类
+            <i className='fas fa-th'/> 分类
           </div>
           <CategoryGroup
             currentCategory={currentCategory}
@@ -96,7 +94,7 @@ export default function SideRight (props) {
       </Card>}
 
       {post && post.toc && (
-        <Card className='sticky top-4'>
+        <Card className='sticky top-12'>
           <Catalog toc={post.toc} />
         </Card>
       )}

@@ -23,8 +23,6 @@ import mediumZoom from 'medium-zoom'
 import React, { useEffect, useRef } from 'react'
 import ArticleAround from './components/ArticleAround'
 import Catalog from './components/Catalog'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
 import CategoryItem from './components/CategoryItem'
 import TagItemMini from './components/TagItemMini'
 import CONFIG_MEDIUM from './config_medium'
@@ -104,7 +102,7 @@ export const LayoutSlug = props => {
         </Link>
         <div className="text-gray-500">{date}</div>
         <div className="hidden busuanzi_container_page_pv text-gray-500 font-light mr-2">
-          <FontAwesomeIcon icon={faEye} className="ml-3 mr-0.5" />
+          <i className="ml-3 mr-0.5 fas fa-eye" />
           &nbsp;
           <span className="mr-2 busuanzi_value_page_pv" />
         </div>
@@ -139,7 +137,7 @@ export const LayoutSlug = props => {
       </section>
       <section>
         <div className='flex justify-between'>
-        { CONFIG_MEDIUM.POST_DETAIL_CATEGORY && <CategoryItem category={post.category}/>}
+        { CONFIG_MEDIUM.POST_DETAIL_CATEGORY && post.category && <CategoryItem category={post.category}/>}
         <div>
         { CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
         </div>

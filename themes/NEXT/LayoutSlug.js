@@ -10,16 +10,8 @@ import Live2D from './components/Live2D'
 import { useRef } from 'react'
 import CONFIG_NEXT from './config_next'
 
-export const LayoutSlug = ({
-  post,
-  tags,
-  prev,
-  next,
-  recommendPosts,
-  categories,
-  postCount,
-  latestPosts
-}) => {
+export const LayoutSlug = (props) => {
+  const { post, prev, next, recommendPosts, latestPosts, showArticleInfo } = props
   const meta = {
     title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
@@ -41,12 +33,8 @@ export const LayoutSlug = ({
 
   return (
     <LayoutBase
+      {...props}
       meta={meta}
-      tags={tags}
-      post={post}
-      postCount={postCount}
-      latestPosts={latestPosts}
-      categories={categories}
       floatSlot={floatSlot}
       rightAreaSlot={
         CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup posts={latestPosts} /></Card>
@@ -54,9 +42,10 @@ export const LayoutSlug = ({
     >
       <ArticleDetail
         post={post}
-        recommendPosts={recommendPosts}
         prev={prev}
         next={next}
+        recommendPosts={recommendPosts}
+        showArticleInfo={showArticleInfo}
       />
 
       {/* 悬浮目录按钮 */}
