@@ -23,7 +23,7 @@ const PaginationSimple = ({ page, totalPage }) => {
         } } passHref >
         <a
           rel='prev'
-          className={`${currentPage === 1 ? 'invisible' : 'block'} text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+          className={`${currentPage === 1 ? 'invisible' : 'block'} text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold`}
         >
           ← {locale.PAGINATION.PREV}
         </a>
@@ -31,7 +31,7 @@ const PaginationSimple = ({ page, totalPage }) => {
       <Link href={ { pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} } } passHref>
         <a
           rel='next'
-          className={`${+showNext ? 'block' : 'invisible'} text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+          className={`${+showNext ? 'block' : 'invisible'} text-center w-full duration-200 px-4 py-2 hover:border-green-500 border-b-2 hover:font-bold`}
         >
           {locale.PAGINATION.NEXT} →
         </a>

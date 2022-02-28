@@ -1,7 +1,5 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
 import { Code, Collection, Equation, NotionRenderer } from 'react-notion-x'
@@ -17,7 +15,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         <div className='lg:p-8 p-4 flex flex-col w-full'>
           <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
-            <a className={'cursor-pointer font-bold font-sans hover:underline text-3xl flex justify-start leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400'}>
+            <a className={'cursor-pointer font-bold font-sans hover:underline text-3xl flex justify-start leading-tight text-gray-700 dark:text-gray-100 hover:text-green-500 dark:hover:text-green-400'}>
               {post.title}
             </a>
           </Link>
@@ -52,7 +50,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                   <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
                       <a className='hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform  text-red-500 cursor-pointer'>
                         {locale.COMMON.ARTICLE_DETAIL}
-                        <FontAwesomeIcon className='ml-1' icon={faAngleRight} /></a>
+                        <i className='ml-1 fas fa-angle-right'/></a>
 
                    </Link>
                 </div>

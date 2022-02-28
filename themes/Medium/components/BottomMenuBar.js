@@ -1,5 +1,3 @@
-import { faHome, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import React from 'react'
 import JumpToTopButton from '@/themes/Medium/components/JumpToTopButton'
@@ -10,12 +8,12 @@ export default function BottomMenuBar ({ className }) {
       <div className='flex justify-between h-full shadow-card'>
         <Link href='/' passHref>
           <div className='flex w-full items-center justify-center cursor-pointer'>
-            <FontAwesomeIcon icon={faHome} />
+            <i className='fas fa-home' />
           </div>
         </Link>
         <Link href='/search' passHref>
           <div className='flex w-full items-center justify-center cursor-pointer'>
-            <FontAwesomeIcon icon={faSearch} />
+            <i className='fas fa-search'/>
           </div>
         </Link>
         <div className='flex w-full items-center justify-center cursor-pointer'>
