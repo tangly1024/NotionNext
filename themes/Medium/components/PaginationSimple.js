@@ -14,7 +14,7 @@ const PaginationSimple = ({ page, totalPage }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
-  const showNext = currentPage <= totalPage
+  const showNext = currentPage < totalPage
   return (
     <div className='my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2'>
      <Link
