@@ -53,7 +53,7 @@ export const LayoutSlug = props => {
       showTag={false}
       floatSlot={floatSlot}
     >
-      <div className="w-full lg:shadow-xl lg:hover:shadow-2xl lg:border lg:border-gray-100 lg:rounded-xl lg:px-2 lg:py-4 lg:bg-white lg:dark:bg-gray-800 lg:duration-300">
+      <div className="w-full lg:shadow-md lg:hover:shadow-2xl lg:border lg:border-gray-100 lg:rounded-xl lg:px-2 lg:py-4 lg:bg-white lg:dark:bg-gray-800 lg:duration-300">
         <ArticleDetail {...props} />
       </div>
 
