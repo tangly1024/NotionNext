@@ -21,8 +21,8 @@ export default function TopNavBar (props) {
           if (link.show) {
             const selected = (router.pathname === link.to) || (router.asPath === link.to)
             return <Link key={`${link.id}-${link.to}`} title={link.to} href={link.to} >
-            <a className={'px-5 duration-300 text-base justify-between hover:text-green-600 hover:underline cursor-pointer flex flex-nowrap items-center ' +
-                (selected ? 'bg-green-600 text-white' : ' ')} >
+            <a className={'px-5 duration-300 text-base justify-between  hover:underline cursor-pointer flex flex-nowrap items-center ' +
+                (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600 ')} >
                 <div className='items-center justify-center flex '>
                   <i className={link.icon} />
                   <div className='ml-4 whitespace-nowrap'>{link.name}</div>
