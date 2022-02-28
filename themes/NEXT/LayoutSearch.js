@@ -5,7 +5,8 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 
-export const LayoutSearch = ({ posts, tags, categories, postCount }) => {
+export const LayoutSearch = (props) => {
+  const { posts, tags } = props
   let filteredPosts
   const searchKey = getSearchKey()
   if (searchKey) {
@@ -27,10 +28,8 @@ export const LayoutSearch = ({ posts, tags, categories, postCount }) => {
   return (
     <LayoutBase
       meta={meta}
-      tags={tags}
-      postCount={postCount}
       currentSearch={searchKey}
-      categories={categories}
+      {...props}
     >
       <StickyBar>
         <div className="p-4 dark:text-gray-200">
