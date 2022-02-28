@@ -7,7 +7,7 @@ import SocialButton from './SocialButton'
 const InfoCard = () => {
   return <>
     <div className='flex flex-col items-center justify-center '>
-        <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer' onClick={ () => { Router.push('/about') }}>
+        <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer' onClick={ () => { Router.push('/') }}>
           <Image
           alt={BLOG.AUTHOR}
           width={120}

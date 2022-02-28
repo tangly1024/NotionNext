@@ -7,7 +7,8 @@ export async function getStaticProps () {
     categories,
     tags,
     postCount,
-    latestPosts
+    latestPosts,
+    customNav
   } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
   return {
     props: {
@@ -15,7 +16,8 @@ export async function getStaticProps () {
       tags,
       categories,
       postCount,
-      latestPosts
+      latestPosts,
+      customNav
     },
     revalidate: 1
   }
