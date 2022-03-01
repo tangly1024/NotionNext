@@ -60,11 +60,12 @@ export async function getStaticProps ({ params: { keyword } }) {
     }
     post.results = []
     let hit = false
+    const re = new RegExp(`${keyword}`, 'g')
     indexContent.forEach(c => {
       const index = c.toLowerCase().indexOf(keyword.toLowerCase())
       if (index > -1) {
         hit = true
-        const referText = c?.replaceAll(keyword, `<span class='text-red-500'>${keyword}</span>`)
+        const referText = c?.replace(re, `<span class='text-red-500'>${keyword}</span>`)
         post.results.push(`<span>${referText}</span>`)
       } else {
         post.results.push(`<span>${c}</span>`)
