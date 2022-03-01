@@ -9,7 +9,7 @@ import CONFIG_HEXO from '../config_hexo'
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
   return (
-    <div className='w-full shadow-xl hover:shadow-2xl border border-gray-100 rounded-xl bg-white dark:bg-gray-800 duration-300'>
+    <div className='w-full shadow hover:shadow-2xl border border-gray-100 rounded-xl bg-white dark:bg-gray-800 duration-300'>
        <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse lg:flex-row justify-between duration-300'>
 
       <div className='lg:p-8 p-4 flex flex-col w-full'>
