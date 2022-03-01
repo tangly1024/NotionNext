@@ -27,7 +27,6 @@ export async function getStaticProps () {
       BLOG.POSTS_PER_PAGE * page
     )
     if (THEME_CONFIG.POST_LIST_PREVIEW || BLOG.POST_LIST_PREVIEW) {
-      console.log('加载预览')
       for (const i in postsToShow) {
         const post = postsToShow[i]
         const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
