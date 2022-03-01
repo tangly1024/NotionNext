@@ -20,16 +20,16 @@ export const LayoutCategoryIndex = props => {
           {locale.COMMON.CATEGORY}:
         </div>
         <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-          {Object.keys(categories).map(category => {
+          {categories.map(category => {
             return (
-              <Link key={category} href={`/category/${category}`} passHref>
+              <Link key={category.name} href={`/category/${category.name}`} passHref>
                 <div
                   className={
                     ' duration-300 dark:hover:text-white rounded-lg px-5 cursor-pointer py-2 hover:bg-blue-400 hover:text-white'
                   }
                 >
                   <i className="mr-4 fas fa-folder" />
-                  {category}({categories[category]})
+                  {category.name}({category.count})
                 </div>
               </Link>
             )
