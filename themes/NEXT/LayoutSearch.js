@@ -12,7 +12,7 @@ export const LayoutSearch = (props) => {
       <StickyBar>
         <div className="p-4 dark:text-gray-200">
           <i className="mr-1 fas fa-search" />{' '}
-          {posts.length} {locale.COMMON.RESULT_OF_SEARCH}
+          {posts?.length} {locale.COMMON.RESULT_OF_SEARCH}
         </div>
       </StickyBar>
       <div className="md:mt-5">

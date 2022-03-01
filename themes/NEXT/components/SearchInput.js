@@ -52,7 +52,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={searchKey}
     />
-    {(searchKey && searchKey.length && <i className='fas fa-times text-gray-300 float-right m-3 cursor-pointer absolute' onClick={cleanSearch} />)}
+    {(searchKey && searchKey.length && <i className='fas fa-times text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
 
     <div className='p-3 bg-gray-50 flex border-l dark:border-gray-700 dark:hover:bg-gray-800 dark:bg-gray-600 justify-center items-center cursor-pointer'
       onClick={() => { handleSearch(searchKey) }}>
