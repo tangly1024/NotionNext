@@ -42,10 +42,10 @@ const BlogPostCard = ({ post, showSummary }) => {
         </div>
 
         {(!showPreview || showSummary) && <p className='mt-4 mb-24 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
-          {post.summary}
+          {post.summary && !post.results}
           {/* 搜索结果 */}
           {post.results && <span className='mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
-            {post.results.map(r => <span key={r}>...<span dangerouslySetInnerHTML={{ __html: r }}/>...</span>)}
+            {post.results.map(r => <span key={r}><span dangerouslySetInnerHTML={{ __html: r }}/>...</span>)}
           </span>
           }
 

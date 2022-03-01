@@ -13,21 +13,20 @@ export async function getStaticPaths () {
 
 /**
  * 将对象的指定字段拼接到字符串
- * @param sourceText
+ * @param sourceTextArray
  * @param targetObj
  * @param key
  * @returns {*}
  */
-function concatPropsText (sourceText, targetObj, key) {
+function appendText (sourceTextArray, targetObj, key) {
   if (!targetObj) {
-    return sourceText
+    return sourceTextArray
   }
   const textArray = targetObj[key]
   const text = textArray ? textArray[0][0] : ''
   if (text && text !== 'Untitled') {
-    return sourceText.concat(text)
+    sourceTextArray.concat(text)
   }
-  return sourceText
 }
 
 export async function getStaticProps ({ params: { keyword } }) {
@@ -44,31 +43,28 @@ export async function getStaticProps ({ params: { keyword } }) {
   allPosts.forEach(post => {
     const cacheKey = 'page_block_' + post.id
     const page = cache.get(cacheKey)
+    console.log('读取缓存结果:', cacheKey, page)
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
-    let indexContent = post.title + ' ' + post.summary + ' ' + tagContent + ' ' + categoryContent
+    const indexContent = [post.title, post.summary, tagContent, categoryContent]
     if (page != null) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
         const properties = page?.block[id]?.value?.properties
-        indexContent = concatPropsText(indexContent, properties, 'title')
-        indexContent = concatPropsText(indexContent, properties, 'caption')
+        appendText(indexContent, properties, 'title')
+        appendText(indexContent, properties, 'caption')
       })
     }
     post.results = []
-    const index = indexContent.indexOf(keyword)
-    if (index > -1) {
-      filterPosts.push(post)
-      let start = index - 20
-      let end = index + 20
-      if (start < 0) start = 0
-      if (end > indexContent.length) end = indexContent.length
-      const referText = indexContent.substr(start, end).replaceAll(keyword, `<span class='text-red-500'>${keyword}</span>`)
-      post.results.push(`<span>${referText}</span>`)
-    }
+    indexContent.forEach(c => {
+      const index = c.indexOf(keyword)
+      if (index > -1) {
+        filterPosts.push(post)
+        const referText = c?.replaceAll(keyword, `<span class='text-red-500'>${keyword}</span>`)
+        post.results.push(`<span>${referText}</span>`)
+      }
+    })
   })
-
-  console.log(filterPosts)
 
   return {
     props: {
