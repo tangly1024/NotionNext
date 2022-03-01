@@ -25,8 +25,9 @@ function appendText (sourceTextArray, targetObj, key) {
   const textArray = targetObj[key]
   const text = textArray ? textArray[0][0] : ''
   if (text && text !== 'Untitled') {
-    sourceTextArray.concat(text)
+    return sourceTextArray.concat(text)
   }
+  return sourceTextArray
 }
 
 export async function getStaticProps ({ params: { keyword } }) {
@@ -43,28 +44,34 @@ export async function getStaticProps ({ params: { keyword } }) {
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
     const page = await getDataFromCache(cacheKey)
-    console.log('读取缓存结果:', cacheKey, page)
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
-    const indexContent = [post.title, post.summary, tagContent, categoryContent]
-    if (page != null) {
+    let indexContent = [post.title, post.summary, tagContent, categoryContent]
+    if (page !== null) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
         const properties = page?.block[id]?.value?.properties
-        appendText(indexContent, properties, 'title')
-        appendText(indexContent, properties, 'caption')
+        indexContent = appendText(indexContent, properties, 'title')
+        indexContent = appendText(indexContent, properties, 'caption')
       })
     }
+    if (page !== null) {
+      console.log('读取缓存成功', page, indexContent)
+    }
     post.results = []
+    let hit = false
     indexContent.forEach(c => {
       const index = c.toLowerCase().indexOf(keyword.toLowerCase())
       if (index > -1) {
+        hit = true
         const referText = c?.replaceAll(keyword, `<span class='text-red-500'>${keyword}</span>`)
         post.results.push(`<span>${referText}</span>`)
+      } else {
+        post.results.push(`<span>${c}</span>`)
       }
     })
 
-    if (post.results.length > 0) {
+    if (hit) {
       filterPosts.push(post)
     }
   }
