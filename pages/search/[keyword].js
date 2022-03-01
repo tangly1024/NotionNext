@@ -2,7 +2,7 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { LayoutSearch } from '@/themes'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import cache from 'memory-cache'
+import { getDataFromCache } from '@/lib/cache/cache_manager'
 
 export async function getStaticPaths () {
   return {
@@ -40,9 +40,9 @@ export async function getStaticProps ({ params: { keyword } }) {
   } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
 
   const filterPosts = []
-  allPosts.forEach(post => {
+  for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
-    const page = cache.get(cacheKey)
+    const page = await getDataFromCache(cacheKey)
     console.log('读取缓存结果:', cacheKey, page)
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
@@ -57,14 +57,17 @@ export async function getStaticProps ({ params: { keyword } }) {
     }
     post.results = []
     indexContent.forEach(c => {
-      const index = c.indexOf(keyword)
+      const index = c.toLowerCase().indexOf(keyword.toLowerCase())
       if (index > -1) {
-        filterPosts.push(post)
         const referText = c?.replaceAll(keyword, `<span class='text-red-500'>${keyword}</span>`)
         post.results.push(`<span>${referText}</span>`)
       }
     })
-  })
+
+    if (post.results.length > 0) {
+      filterPosts.push(post)
+    }
+  }
 
   return {
     props: {
