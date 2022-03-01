@@ -10,10 +10,10 @@ const CategoryList = ({ currentCategory, categories }) => {
 
   return <ul className='flex py-1 space-x-3'>
     <li className='w-16 py-2 dark:text-gray-200 whitespace-nowrap'>{locale.COMMON.CATEGORY}</li>
-    {Object.keys(categories).map(category => {
-      const selected = category === currentCategory
+    {categories.map(category => {
+      const selected = category.name === currentCategory
       return (
-        <Link key={category} href={`/category/${category}`} passHref>
+        <Link key={category.name} href={`/category/${category.name}`} passHref>
           <li
             className={`cursor-pointer border rounded-xl duration-200 mr-1 my-1 px-2 py-1 font-light text-sm whitespace-nowrap dark:text-gray-300 
                  ${selected
@@ -23,7 +23,7 @@ const CategoryList = ({ currentCategory, categories }) => {
           >
             <a>
             <i className={`${selected ? 'fa-folder-open ' : 'fa-folder '} fas mr-1`}/>
-              {`${category} `}
+              {`${category.name} (${category.count})`}
             </a>
           </li>
         </Link>)

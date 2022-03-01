@@ -1,5 +1,4 @@
 import LayoutBase from './LayoutBase'
-import BlogPostListPage from './components/BlogPostListPage'
 import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
 import TagGroups from './components/TagGroups'

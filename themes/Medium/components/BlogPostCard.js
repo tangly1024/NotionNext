@@ -45,10 +45,10 @@ const BlogPostCard = ({ post, showSummary }) => {
                 collection: Collection
               }}
             />
-             <div className='article-cover pointer-events-none'>
+             <div className='pointer-events-none border-t pt-8 border-dashed'>
                 <div className='w-full justify-start flex'>
                   <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
-                      <a className='hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform  text-red-500 cursor-pointer'>
+                      <a className='hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-green-500 cursor-pointer'>
                         {locale.COMMON.ARTICLE_DETAIL}
                         <i className='ml-1 fas fa-angle-right'/></a>
 
@@ -58,7 +58,6 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div> }
         </div>
         <hr className='w-full'/>
-
       </div>
 
   )
