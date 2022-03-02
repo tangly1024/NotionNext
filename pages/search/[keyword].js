@@ -2,7 +2,7 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { LayoutSearch } from '@/themes'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import { getPostBlocks } from '@/lib/notion/getPostBlocks'
+import { getDataFromCache } from '@/lib/cache/cache_manager'
 
 /**
  * 将对象的指定字段拼接到字符串
@@ -59,14 +59,15 @@ export async function getServerSideProps ({ params: { keyword } }) {
 
   const filterPosts = []
   for (const post of allPosts) {
-    // const cacheKey = 'page_block_' + post.id
-    const page = await getPostBlocks(post.id, 'search')
+    const cacheKey = 'page_block_' + post.id
+    // const page = await getPostBlocks(post.id, 'search')
+    const page = await getDataFromCache(cacheKey)
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.indexOf(keyword) > -1
     let indexContent = [post.summary]
-    if (page !== null) {
+    if (page && page.block) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
         const properties = page?.block[id]?.value?.properties
