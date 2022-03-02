@@ -23,11 +23,28 @@ function appendText (sourceTextArray, targetObj, key) {
     return sourceTextArray
   }
   const textArray = targetObj[key]
-  const text = textArray ? textArray[0][0] : ''
+  const text = textArray ? getTextContent(textArray) : ''
   if (text && text !== 'Untitled') {
     return sourceTextArray.concat(text)
   }
   return sourceTextArray
+}
+
+/**
+ * 递归获取层层嵌套的数组
+ * @param {*} textArray
+ * @returns
+ */
+function getTextContent (textArray) {
+  if (typeof textArray === 'object') {
+    let result = ''
+    textArray.forEach(textObj => {
+      result = result + getTextContent(textObj)
+    })
+    return result
+  } else if (typeof textArray === 'string') {
+    return textArray
+  }
 }
 
 export async function getStaticProps ({ params: { keyword } }) {
@@ -54,9 +71,6 @@ export async function getStaticProps ({ params: { keyword } }) {
         indexContent = appendText(indexContent, properties, 'title')
         indexContent = appendText(indexContent, properties, 'caption')
       })
-    }
-    if (page !== null) {
-      console.log('读取缓存成功', page, indexContent)
     }
     post.results = []
     let hit = false

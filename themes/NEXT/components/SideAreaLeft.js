@@ -19,7 +19,7 @@ import CONFIG_NEXT from '../config_next'
  * @constructor
  */
 const SideAreaLeft = (props) => {
-  const { currentTag, post, postCount, currentSearch } = props
+  const { post, postCount } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
@@ -32,7 +32,7 @@ const SideAreaLeft = (props) => {
         <MenuButtonGroup allowCollapse={true} {...props} />
         </div>
         {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
-           <SearchInput currentTag={currentTag} currentSearch={currentSearch} />
+           <SearchInput {...props} />
         </div>}
       </section>
     </section>
