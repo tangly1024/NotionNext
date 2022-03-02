@@ -29,7 +29,7 @@ function appendText (sourceTextArray, targetObj, key) {
  * @returns
  */
 function getTextContent (textArray) {
-  if (typeof textArray === 'object') {
+  if (typeof textArray === 'object' && isIterable(textArray)) {
     let result = ''
     for (const textObj of textArray) {
       result = result + getTextContent(textObj)
@@ -39,6 +39,13 @@ function getTextContent (textArray) {
     return textArray
   }
 }
+
+/**
+ * 对象是否可以遍历
+ * @param {*} obj
+ * @returns
+ */
+const isIterable = obj => obj != null && typeof obj[Symbol.iterator] === 'function'
 
 export async function getServerSideProps ({ params: { keyword } }) {
   const {
@@ -67,8 +74,7 @@ export async function getServerSideProps ({ params: { keyword } }) {
         indexContent = appendText(indexContent, properties, 'caption')
       })
     }
-    console.log('搜索是否命中缓存', page !== null, indexContent)
-
+    // console.log('搜索是否命中缓存', page !== null, indexContent)
     post.results = []
     let hitCount = 0
     const re = new RegExp(`${keyword}`, 'gim')
