@@ -64,6 +64,7 @@ export async function getStaticProps ({ params: { keyword } }) {
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
     let indexContent = [post.title, post.summary, tagContent, categoryContent]
+    console.log('搜索是否命中缓存', page !== null)
     if (page !== null) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
