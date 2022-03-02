@@ -36,10 +36,17 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
   }
   const cleanSearch = () => {
     searchInputRef.current.value = ''
+    setShowClean(false)
   }
 
+  const [showClean, setShowClean] = useState(false)
   const updateSearchKey = (val) => {
     searchInputRef.current.value = val
+    if (val) {
+      setShowClean(true)
+    } else {
+      setShowClean(false)
+    }
   }
 
   return <div className='flex border dark:border-gray-600 w-full bg-gray-100 dark:bg-gray-900'>
@@ -52,7 +59,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={currentSearch}
     />
-    {(currentSearch && currentSearch.length > 0 && <i className='fas fa-times text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
+    {(showClean && <i className='fas fa-times text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
 
     <div className='p-3 bg-gray-50 flex border-l dark:border-gray-700 dark:hover:bg-gray-800 dark:bg-gray-600 justify-center items-center cursor-pointer'
       onClick={handleSearch}>
