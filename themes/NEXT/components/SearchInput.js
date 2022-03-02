@@ -39,9 +39,19 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     searchInputRef.current.value = ''
     setShowClean(false)
   }
+  let lock = false
+  function lockSearchInput () {
+    lock = true
+  }
 
+  function unLockSearchInput () {
+    lock = false
+  }
   const [showClean, setShowClean] = useState(false)
   const updateSearchKey = (val) => {
+    if (lock) {
+      return
+    }
     searchInputRef.current.value = val
     if (val) {
       setShowClean(true)
@@ -57,6 +67,9 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
       className={'w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 border-gray-300 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
+      onCompositionStart={lockSearchInput}
+      onCompositionUpdate={lockSearchInput}
+      onCompositionEnd={unLockSearchInput}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={currentSearch}
     />
