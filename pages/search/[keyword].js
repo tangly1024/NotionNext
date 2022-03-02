@@ -4,13 +4,6 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 
-export async function getStaticPaths () {
-  return {
-    paths: [],
-    fallback: true
-  }
-}
-
 /**
  * 将对象的指定字段拼接到字符串
  * @param sourceTextArray
@@ -38,16 +31,16 @@ function appendText (sourceTextArray, targetObj, key) {
 function getTextContent (textArray) {
   if (typeof textArray === 'object') {
     let result = ''
-    textArray.forEach(textObj => {
+    for (const textObj of textArray) {
       result = result + getTextContent(textObj)
-    })
+    }
     return result
   } else if (typeof textArray === 'string') {
     return textArray
   }
 }
 
-export async function getStaticProps ({ params: { keyword } }) {
+export async function getServerSideProps ({ params: { keyword } }) {
   const {
     allPosts,
     categories,
@@ -66,7 +59,7 @@ export async function getStaticProps ({ params: { keyword } }) {
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.indexOf(keyword) > -1
     let indexContent = [post.summary]
-    console.log('搜索是否命中缓存', page !== null)
+    // console.log('搜索是否命中缓存', page !== null)
     if (page !== null) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
@@ -77,21 +70,21 @@ export async function getStaticProps ({ params: { keyword } }) {
     }
     post.results = []
     let hitCount = 0
-    const re = new RegExp(`${keyword}`, 'g')
-    indexContent.forEach((c, i) => {
+    const re = new RegExp(`${keyword}`, 'gim')
+    for (const i in indexContent) {
+      const c = indexContent[i]
       const index = c.toLowerCase().indexOf(keyword.toLowerCase())
+      const referText = c?.replace(re, `<span class='text-red-500'>${keyword}</span>`)
       if (index > -1) {
         hit = true
-        const referText = c?.replace(re, `<span class='text-red-500'>${keyword}</span>`)
-        post.results.push(`<span>${referText}</span>`)
         hitCount += 1
+        post.results.push(`<span>${referText}</span>`)
       } else {
         if ((post.results.length - 1) / hitCount < 3 || i === 0) {
-          post.results.push(`<span>${c}</span>`)
+          post.results.push(`<span>${referText}</span>`)
         }
       }
-    })
-
+    }
     if (hit) {
       filterPosts.push(post)
     }
@@ -106,8 +99,7 @@ export async function getStaticProps ({ params: { keyword } }) {
       latestPosts,
       customNav,
       keyword
-    },
-    revalidate: 1
+    }
   }
 }
 
