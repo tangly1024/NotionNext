@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import { useImperativeHandle, useRef, useState } from 'react'
 
+let lock = false
+
 const SearchInput = ({ currentTag, currentSearch, cRef }) => {
   const { locale } = useGlobal()
   // const [searchKey, setSearchKey] = useState(currentSearch || '')
@@ -39,7 +41,6 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     searchInputRef.current.value = ''
     setShowClean(false)
   }
-  let lock = false
   function lockSearchInput () {
     lock = true
   }
