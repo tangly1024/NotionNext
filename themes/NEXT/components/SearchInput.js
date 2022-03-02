@@ -15,7 +15,8 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       }
     }
   })
-  const handleSearch = (key) => {
+  const handleSearch = () => {
+    const key = searchInputRef.current.value
     if (key && key !== '') {
       setLoadingState(true)
       // router.push({ pathname: '/search/' + key }).then(r => {
@@ -38,9 +39,19 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     searchInputRef.current.value = ''
     setShowClean(false)
   }
+  let lock = false
+  function lockSearchInput () {
+    lock = true
+  }
 
+  function unLockSearchInput () {
+    lock = false
+  }
   const [showClean, setShowClean] = useState(false)
   const updateSearchKey = (val) => {
+    if (lock) {
+      return
+    }
     searchInputRef.current.value = val
     if (val) {
       setShowClean(true)
@@ -56,13 +67,16 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
       className={'w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 border-gray-300 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
+      onCompositionStart={lockSearchInput}
+      onCompositionUpdate={lockSearchInput}
+      onCompositionEnd={unLockSearchInput}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={currentSearch}
     />
     {(showClean && <i className='fas fa-times text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
 
     <div className='p-3 bg-gray-50 flex border-l dark:border-gray-700 dark:hover:bg-gray-800 dark:bg-gray-600 justify-center items-center cursor-pointer'
-      onClick={handleSearch}>
+      onClick={handleKeyUp}>
         <i className={`${onLoading ? 'fa-spinner animate-spin ' : 'fa-search'} fas hover:scale-125 hover:text-black transform duration-200 dark:text-gray-300 dark:hover:text-white text-gray-600 cursor-pointer`} />
     </div>
   </div>
