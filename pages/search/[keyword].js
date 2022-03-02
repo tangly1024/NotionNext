@@ -63,7 +63,9 @@ export async function getStaticProps ({ params: { keyword } }) {
     const page = await getDataFromCache(cacheKey)
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
-    let indexContent = [post.title, post.summary, tagContent, categoryContent]
+    const articleInfo = post.title + post.summary + tagContent + categoryContent
+    let hit = articleInfo.indexOf(keyword) > -1
+    let indexContent = [post.summary]
     console.log('搜索是否命中缓存', page !== null)
     if (page !== null) {
       const contentIds = Object.keys(page.block)
@@ -74,16 +76,19 @@ export async function getStaticProps ({ params: { keyword } }) {
       })
     }
     post.results = []
-    let hit = false
+    let hitCount = 0
     const re = new RegExp(`${keyword}`, 'g')
-    indexContent.forEach(c => {
+    indexContent.forEach((c, i) => {
       const index = c.toLowerCase().indexOf(keyword.toLowerCase())
       if (index > -1) {
         hit = true
         const referText = c?.replace(re, `<span class='text-red-500'>${keyword}</span>`)
         post.results.push(`<span>${referText}</span>`)
+        hitCount += 1
       } else {
-        post.results.push(`<span>${c}</span>`)
+        if ((post.results.length - 1) / hitCount < 3 || i === 0) {
+          post.results.push(`<span>${c}</span>`)
+        }
       }
     })
 
