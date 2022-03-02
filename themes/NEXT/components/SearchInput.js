@@ -15,7 +15,8 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       }
     }
   })
-  const handleSearch = (key) => {
+  const handleSearch = () => {
+    const key = searchInputRef.current.value
     if (key && key !== '') {
       setLoadingState(true)
       // router.push({ pathname: '/search/' + key }).then(r => {
@@ -62,7 +63,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     {(showClean && <i className='fas fa-times text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
 
     <div className='p-3 bg-gray-50 flex border-l dark:border-gray-700 dark:hover:bg-gray-800 dark:bg-gray-600 justify-center items-center cursor-pointer'
-      onClick={handleSearch}>
+      onClick={handleKeyUp}>
         <i className={`${onLoading ? 'fa-spinner animate-spin ' : 'fa-search'} fas hover:scale-125 hover:text-black transform duration-200 dark:text-gray-300 dark:hover:text-white text-gray-600 cursor-pointer`} />
     </div>
   </div>
