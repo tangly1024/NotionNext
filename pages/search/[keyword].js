@@ -3,6 +3,7 @@ import { LayoutSearch } from '@/themes'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
+import { getPostBlocks } from '@/lib/notion/getPostBlocks'
 
 /**
  * 将对象的指定字段拼接到字符串
@@ -52,14 +53,13 @@ export async function getServerSideProps ({ params: { keyword } }) {
 
   const filterPosts = []
   for (const post of allPosts) {
-    const cacheKey = 'page_block_' + post.id
-    const page = await getDataFromCache(cacheKey)
+    // const cacheKey = 'page_block_' + post.id
+    const page = await getPostBlocks(post.id, 'search')
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.indexOf(keyword) > -1
     let indexContent = [post.summary]
-    // console.log('搜索是否命中缓存', page !== null)
     if (page !== null) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
@@ -68,6 +68,8 @@ export async function getServerSideProps ({ params: { keyword } }) {
         indexContent = appendText(indexContent, properties, 'caption')
       })
     }
+    console.log('搜索是否命中缓存', page !== null, indexContent)
+
     post.results = []
     let hitCount = 0
     const re = new RegExp(`${keyword}`, 'gim')
