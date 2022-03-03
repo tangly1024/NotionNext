@@ -4,6 +4,11 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 
+/**
+ * 服务端搜索
+ * @param {*} param0
+ * @returns
+ */
 export async function getServerSideProps ({ params: { keyword } }) {
   const {
     allPosts,

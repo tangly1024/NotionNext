@@ -45,7 +45,7 @@ export default function SideRight (props) {
       </Card>
       <Card>
         <MenuButtonGroup {...props}/>
-        <SearchInput />
+        <SearchInput {...props}/>
       </Card>
       <Card>
         <div className='ml-2 mb-3 font-sans'>
