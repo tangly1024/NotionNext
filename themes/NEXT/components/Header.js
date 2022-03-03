@@ -27,7 +27,7 @@ export default function Header () {
       )
     }
   })
-  const { theme } = useGlobal()
+  const { isDarkMode } = useGlobal()
 
   const autoScrollEnd = () => {
     if (autoScroll) {
@@ -61,7 +61,7 @@ export default function Header () {
   }
 
   const updateTopNav = () => {
-    if (theme !== 'dark') {
+    if (!isDarkMode) {
       const stickyNavElement = document.getElementById('sticky-nav')
       if (window.scrollY < window.innerHeight) {
         stickyNavElement.classList.add('dark')
