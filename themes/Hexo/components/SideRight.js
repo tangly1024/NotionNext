@@ -40,7 +40,7 @@ export default function SideRight (props) {
             className='rounded-full'
           />
         </div>
-        <div className='text-center font-sans text-xl pb-4'>{BLOG.TITLE}</div>
+        <div className='text-center font-sans text-xl pb-4 dark:text-gray-300'>{BLOG.TITLE}</div>
         <SocialButton />
       </Card>
       <Card>
