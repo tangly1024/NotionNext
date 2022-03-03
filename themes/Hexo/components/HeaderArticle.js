@@ -47,7 +47,7 @@ export default function HeaderArticle ({ post }) {
             </div>
 
             <section className="flex-wrap shadow-text flex text-sm justify-center mt-2 text-white dark:text-gray-400 font-light leading-8">
-              <div>
+              <div className='dark:text-gray-200'>
                 {post.category && <>
                   <Link href={`/category/${post.category}`} passHref>
                   <a className="cursor-pointer mr-2 dark:hover:text-white border-b dark:border-gray-500 border-dashed">

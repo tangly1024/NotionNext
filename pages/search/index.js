@@ -4,6 +4,9 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 
+/**
+ * 浏览器前端搜索
+ */
 export async function getStaticProps () {
   const {
     allPosts,

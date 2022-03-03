@@ -90,7 +90,7 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'}  bg-opacity-70 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
+    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} dark:bg-black dark:bg-opacity-50 dark:text-gray-200 bg-opacity-70 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
       <div className='w-full flex justify-between items-center px-4 py-2 shad'>
         <div className='flex'>
          <Logo/>

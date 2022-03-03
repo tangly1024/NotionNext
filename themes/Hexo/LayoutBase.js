@@ -38,7 +38,7 @@ const LayoutBase = (props) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div className='bg-white'>
+  return (<div className='bg-white dark:bg-gray-900'>
     <CommonHead meta={meta} />
     <TopNav {...props}/>
 

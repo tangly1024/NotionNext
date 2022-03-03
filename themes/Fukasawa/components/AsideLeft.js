@@ -9,7 +9,7 @@ import Catalog from './Catalog'
 
 function AsideLeft (props) {
   const { tags, currentTag, categories, currentCategory, post } = props
-  return <div className='w-72 bg-white min-h-screen px-10 py-14 hidden lg:block'>
+  return <div className='w-72 bg-white dark:bg-gray-800 min-h-screen px-10 py-14 hidden lg:block'>
     <Logo />
 
     <section className='flex flex-col text-gray-600'>
@@ -19,11 +19,11 @@ function AsideLeft (props) {
 
     <section className='flex flex-col text-gray-600'>
       <hr className='w-12 my-8' />
-      <SearchInput/>
+      <SearchInput {...props}/>
     </section>
 
-    <section className='flex flex-col'>
-      <hr className='w-12 my-8 ' />
+    <section className='flex flex-col dark:text-gray-300'>
+      <hr className='w-12 my-8' />
       { BLOG.DESCRIPTION }
     </section>
 
