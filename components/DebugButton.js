@@ -43,8 +43,8 @@ export function DebugButton () {
     </div>
   </div>
 
-  <div className="fixed right-14 bottom-12 z-50">
-        <div className="bg-blue-500 text-white p-3 rounded-xl cursor-pointer" onClick={toggleShow}>调试按钮</div>
+  <div className="fixed right-20 bottom-12 z-50">
+        <div className="bg-gray-50 text-sm dark:bg-black dark:text-white shadow-2xl p-2.5 rounded-md bg-opacity-75 cursor-pointer" onClick={toggleShow}>调试按钮</div>
     </div>
   </>
 }
