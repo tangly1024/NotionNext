@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import { loadUserThemeFromCookies, saveTheme } from '@/lib/theme'
+import { saveDarkModeToCookies } from '@/lib/theme'
 import CONFIG_NEXT from '../config_next'
 
 export default function FloatDarkModeButton () {
@@ -7,16 +7,15 @@ export default function FloatDarkModeButton () {
     return <></>
   }
 
-  const { changeTheme } = useGlobal()
-  const userTheme = loadUserThemeFromCookies()
+  const { isDarkMode, updateDarkMode } = useGlobal()
   // 用户手动设置主题
   const handleChangeDarkMode = () => {
-    const newTheme = userTheme === 'light' ? 'dark' : 'light'
-    saveTheme(newTheme)
-    changeTheme(newTheme)
+    const newStatus = !isDarkMode
+    saveDarkModeToCookies(newStatus)
+    updateDarkMode(newStatus)
     const htmlElement = document.getElementsByTagName('html')[0]
-    htmlElement.classList?.remove(userTheme)
-    htmlElement.classList?.add(newTheme)
+    htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
+    htmlElement.classList?.add(newStatus ? 'dark' : 'light')
   }
 
   return (
@@ -27,7 +26,7 @@ export default function FloatDarkModeButton () {
     >
       <i
         id="darkModeButton"
-        className={`${userTheme === 'dark' ? 'fa-sun' : 'fa-moon'} fas hover:scale-150 transform duration-200`}
+        className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas hover:scale-150 transform duration-200`}
       />
     </div>
   )

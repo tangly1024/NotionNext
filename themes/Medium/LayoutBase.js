@@ -9,6 +9,7 @@ import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
 import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -19,9 +20,10 @@ import { useGlobal } from '@/lib/global'
 const LayoutBase = props => {
   const { children, meta, showInfoCard = true, slotRight, slotTop } = props
   const { locale } = useGlobal()
+  const router = useRouter()
 
   return (
-    <div id='container' className='bg-white w-full h-full min-h-screen justify-center'>
+    <div className='bg-white dark:bg-gray-800 w-full h-full min-h-screen justify-center dark:text-gray-300'>
       <CommonHead meta={meta} />
       <main id='wrapper' className='flex justify-between w-full h-full mx-auto'>
         {/* 桌面端左侧菜单 */}
@@ -37,11 +39,11 @@ const LayoutBase = props => {
         </div>
 
         {/* 桌面端右侧 */}
-        <div className='hidden xl:block border-l w-96'>
+        <div className='hidden xl:block border-l dark:border-gray-500 w-96'>
           <Tabs className='py-14 px-6 sticky top-0'>
             {slotRight}
             <div key={locale.NAV.ABOUT}>
-              <SearchInput className='mt-6  mb-12' />
+              {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
               {showInfoCard && <InfoCard />}
               {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
             </div>

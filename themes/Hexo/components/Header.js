@@ -14,7 +14,7 @@ let autoScroll = false
  */
 export default function Header () {
   const [typed, changeType] = useState()
-  const { theme } = useGlobal()
+  const { isDarkMode } = useGlobal()
 
   useEffect(() => {
     scrollTrigger()
@@ -76,7 +76,7 @@ export default function Header () {
   }
 
   const updateTopNav = () => {
-    if (theme !== 'dark') {
+    if (!isDarkMode) {
       const stickyNavElement = document.getElementById('sticky-nav')
       if (window.scrollY < window.innerHeight) {
         stickyNavElement?.classList?.add('dark')

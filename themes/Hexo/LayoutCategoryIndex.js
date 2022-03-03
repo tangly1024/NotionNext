@@ -14,7 +14,7 @@ export const LayoutCategoryIndex = props => {
   }
   return (
     <LayoutBase {...props} meta={meta}>
-      <Card className="bg-white dark:bg-gray-700 w-full min-h-screen">
+      <Card className="w-full min-h-screen">
         <div className="dark:text-gray-200 mb-5 mx-3">
           <i className="mr-4 fas fa-th" />
           {locale.COMMON.CATEGORY}:

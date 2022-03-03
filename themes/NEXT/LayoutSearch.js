@@ -2,11 +2,21 @@ import LayoutBase from './LayoutBase'
 import StickyBar from './components/StickyBar'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import { useGlobal } from '@/lib/global'
+import { useEffect } from 'react'
 
 export const LayoutSearch = (props) => {
   const { locale } = useGlobal()
-  const { posts } = props
-
+  const { posts, keyword } = props
+  useEffect(() => {
+    setTimeout(() => {
+      const container = document.getElementById('container')
+      if (container && container.innerHTML) {
+        const re = new RegExp(`${keyword}`, 'gim')
+        container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`)
+      }
+    },
+    100)
+  })
   return (
     <LayoutBase {...props} >
       <StickyBar>

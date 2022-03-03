@@ -83,7 +83,7 @@ export const LayoutSlug = props => {
       showInfoCard={true}
       slotRight={slotRight}
     >
-      <h1 className="text-4xl pt-12 font-sans">{post?.title}</h1>
+      <h1 className="text-4xl pt-12 font-sans dark:text-gray-100">{post?.title}</h1>
       <section className="flex py-4 items-center font-sans px-1">
         <Link href="/about" passHref>
           <>

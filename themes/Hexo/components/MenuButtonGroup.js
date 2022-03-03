@@ -8,7 +8,7 @@ const MenuButtonGroup = (props) => {
   const { postCount, customNav } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  const archiveSlot = <div className='bg-blue-300 dark:bg-blue-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
+  const archiveSlot = <div className='bg-blue-300 dark:bg-blue-400 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   let links = [
     { icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },

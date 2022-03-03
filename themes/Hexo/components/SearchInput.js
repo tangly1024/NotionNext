@@ -52,7 +52,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     <input
       ref={searchInputRef}
       type='text'
-      className={'w-full rounded-lg text-sm pl-5 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100'}
+      className={'w-full rounded-lg text-sm pl-5 transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-gray-100 dark:bg-gray-500'}
       onKeyUp={handleKeyUp}
       onCompositionStart={lockSearchInput}
       onCompositionUpdate={lockSearchInput}
@@ -61,14 +61,14 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
       defaultValue={currentSearch}
     />
 
-    <div className='-ml-8 cursor-pointer dark:hover:bg-gray-800 float-right items-center justify-center py-2'
+    <div className='-ml-8 cursor-pointer  float-right items-center justify-center py-2'
       onClick={() => { handleSearch(searchKey) }}>
-        <i className={`hover:text-black transform duration-200 text-gray-500 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}`} />
+        <i className={`hover:text-black transform duration-200 text-gray-500 dark:text-gray-200 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}`} />
     </div>
 
     {(searchKey && searchKey.length &&
-      <div className='-ml-12 cursor-pointer dark:hover:bg-gray-800 float-right items-center justify-center py-2'>
-        <i className='hover:text-black transform duration-200 text-gray-400 cursor-pointer fas fa-times' onClick={cleanSearch} />
+      <div className='-ml-12 cursor-pointer float-right items-center justify-center py-2'>
+        <i className='hover:text-black transform duration-200 text-gray-400 dark:text-gray-300 cursor-pointer fas fa-times' onClick={cleanSearch} />
       </div>
       )}
   </div>

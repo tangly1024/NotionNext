@@ -5,7 +5,7 @@ export default function LogoBar () {
   return <div id='top-wrapper' className='w-full max-w-5xl justify-center mx-auto font-sans'>
       <div className='w-full'>
         <Link href='/'>
-          <a className='text-2xl'>{BLOG.TITLE}</a>
+          <a className='text-2xl dark:text-gray-200'>{BLOG.TITLE}</a>
         </Link>
       </div>
   </div>

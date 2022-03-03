@@ -12,8 +12,8 @@ const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
   const showPreview = CONFIG_NEXT.POST_LIST_PREVIEW && post.blockMap
   return (
-    <Card className='w-full'>
-       <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300'>
+    <Card className='w-full animate__animated animate__fadeIn'>
+       <div key={post.id} className='flex flex-col-reverse justify-between duration-300'>
 
       <div className='lg:p-8 p-4 flex flex-col w-full'>
         <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
@@ -47,9 +47,8 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         {/* 搜索结果 */}
         {post.results && <p className='mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
-            {post.results.map(r => <span key={r}><span dangerouslySetInnerHTML={{ __html: r }}/>...</span>)}
-          </p>
-        }
+            {post.results.map(r => <span key={r}>{r}</span>)}
+        </p> }
 
         {showPreview && post?.blockMap && <div className='overflow-ellipsis truncate'>
           <NotionRenderer
