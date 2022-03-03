@@ -6,4 +6,4 @@
 export * from './NEXT'
 // export * from './Fukasawa'
 // export * from './Hexo'
-export * from './Medium'
+// export * from './Medium'
