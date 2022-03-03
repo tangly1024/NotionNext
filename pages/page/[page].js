@@ -1,14 +1,14 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutPage, THEME_CONFIG } from '@/themes'
-import Custom404 from '@/pages/404'
+import { useGlobal } from '@/lib/global'
 
 const Page = (props) => {
+  const { ThemeComponents } = useGlobal()
   if (!props?.meta) {
-    return <Custom404 {...props} />
+    return <ThemeComponents.Custom404 {...props} />
   }
-  return <LayoutPage {...props} />
+  return <ThemeComponents.LayoutPage {...props} />
 }
 
 export async function getStaticPaths () {
@@ -43,8 +43,7 @@ export async function getStaticProps ({ params: { page } }) {
     BLOG.POSTS_PER_PAGE * (page - 1),
     BLOG.POSTS_PER_PAGE * page
   )
-  // 加载预览
-  if (THEME_CONFIG.POST_LIST_PREVIEW || BLOG.POST_LIST_PREVIEW) {
+  if (BLOG.POST_LIST_PREVIEW) {
     for (const i in postsToShow) {
       const post = postsToShow[i]
       const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)

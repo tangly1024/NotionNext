@@ -1,6 +1,11 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
-import { LayoutArchive } from '@/themes'
+import { useGlobal } from '@/lib/global'
+
+const ArchiveIndex = (props) => {
+  const { ThemeComponents } = useGlobal()
+  return <ThemeComponents.LayoutArchive {...props}/>
+}
 
 export async function getStaticProps () {
   const { allPosts, categories, tags, postCount, customNav } =
@@ -16,10 +21,6 @@ export async function getStaticProps () {
     },
     revalidate: 1
   }
-}
-
-const ArchiveIndex = (props) => {
-  return <LayoutArchive {...props}/>
 }
 
 export default ArchiveIndex

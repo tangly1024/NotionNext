@@ -1,9 +1,10 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
-import { LayoutCategory } from '@/themes'
+import { useGlobal } from '@/lib/global'
 
 export default function Category (props) {
-  return <LayoutCategory {...props} />
+  const { ThemeComponents } = useGlobal()
+  return <ThemeComponents.LayoutCategory {...props} />
 }
 
 export async function getStaticProps ({ params }) {

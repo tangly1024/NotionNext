@@ -1,5 +1,4 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutSearch } from '@/themes'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
@@ -51,7 +50,10 @@ const Search = (props) => {
     description: BLOG.DESCRIPTION,
     type: 'website'
   }
-  return <LayoutSearch {...props} posts={filteredPosts} meta={meta} currentSearch={searchKey} />
+
+  const { ThemeComponents } = useGlobal()
+
+  return <ThemeComponents.LayoutSearch {...props} posts={filteredPosts} meta={meta} currentSearch={searchKey} />
 }
 
 function getSearchKey () {

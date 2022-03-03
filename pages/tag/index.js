@@ -1,9 +1,10 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
-import { LayoutTagIndex } from '@/themes'
+import { useGlobal } from '@/lib/global'
 
 const TagIndex = (props) => {
-  return <LayoutTagIndex {...props} />
+  const { ThemeComponents } = useGlobal()
+  return <ThemeComponents.LayoutTagIndex {...props} />
 }
 
 export async function getStaticProps () {

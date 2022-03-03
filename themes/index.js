@@ -3,15 +3,15 @@
  */
 
 import * as Next from './Next'
-import * as Empty from './Empty'
 import * as Fukasawa from './Fukasawa'
 import * as Hexo from './Hexo'
 import * as Medium from './Medium'
+import * as Empty from './Empty'
 export * from './Medium'
 export const ThemeMap = {
   Next,
-  Empty,
   Fukasawa,
   Hexo,
-  Medium
+  Medium,
+  Empty
 }

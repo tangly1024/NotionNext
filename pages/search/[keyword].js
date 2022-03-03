@@ -1,8 +1,20 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutSearch } from '@/themes'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
+
+const Index = (props) => {
+  const { keyword } = props
+  const { locale } = useGlobal()
+  const meta = {
+    title: `${keyword || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
+    description: BLOG.DESCRIPTION,
+    type: 'website'
+  }
+
+  const { ThemeComponents } = useGlobal()
+  return <ThemeComponents.LayoutSearch {...props} meta={meta} currentSearch={keyword} />
+}
 
 /**
  * 服务端搜索
@@ -31,17 +43,6 @@ export async function getServerSideProps ({ params: { keyword } }) {
       keyword
     }
   }
-}
-
-const Index = (props) => {
-  const { keyword } = props
-  const { locale } = useGlobal()
-  const meta = {
-    title: `${keyword || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
-    description: BLOG.DESCRIPTION,
-    type: 'website'
-  }
-  return <LayoutSearch {...props} meta={meta} currentSearch={keyword} />
 }
 
 /**

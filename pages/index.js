@@ -1,13 +1,11 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutIndex, THEME_CONFIG, ThemeMap } from '@/themes'
 import { useGlobal } from '@/lib/global'
 
 const Index = (props) => {
-  const { theme } = useGlobal()
-  console.log('模板', ThemeMap[theme].LayoutIndex)
-  return <LayoutIndex {...props}/>
+  const { ThemeComponents } = useGlobal()
+  return <ThemeComponents.LayoutIndex {...props}/>
 }
 
 export async function getStaticProps () {
@@ -29,7 +27,7 @@ export async function getStaticProps () {
       BLOG.POSTS_PER_PAGE * (page - 1),
       BLOG.POSTS_PER_PAGE * page
     )
-    if (THEME_CONFIG.POST_LIST_PREVIEW || BLOG.POST_LIST_PREVIEW) {
+    if (BLOG.POST_LIST_PREVIEW) {
       for (const i in postsToShow) {
         const post = postsToShow[i]
         const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)

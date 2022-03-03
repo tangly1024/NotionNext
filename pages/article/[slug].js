@@ -1,8 +1,8 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutSlug } from '@/themes'
-import Custom404 from '@/pages/404'
+import { useGlobal } from '@/lib/global'
+import Custom404 from '../404'
 
 /**
  * 根据notion的slug访问页面
@@ -10,10 +10,11 @@ import Custom404 from '@/pages/404'
  * @returns
  */
 const Slug = (props) => {
+  const { ThemeComponents } = useGlobal()
   if (!props.post) {
     return <Custom404 {...props} />
   }
-  return <LayoutSlug {...props} showArticleInfo={true}/>
+  return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true}/>
 }
 
 export async function getStaticPaths () {

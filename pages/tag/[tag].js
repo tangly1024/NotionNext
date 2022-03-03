@@ -1,8 +1,9 @@
+import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutTag } from '@/themes'
 
 const Tag = (props) => {
-  return <LayoutTag {...props} />
+  const { ThemeComponents } = useGlobal()
+  return <ThemeComponents.LayoutTag {...props} />
 }
 
 export async function getStaticProps ({ params }) {
