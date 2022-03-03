@@ -24,7 +24,7 @@ function GroupMenu ({ customNav }) {
         if (link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={`${link.to}`} title={link.to} href={link.to} >
-          <a className={'py-0.5 duration-500 justify-between text-gray-500 hover:text-black cursor-pointer flex flex-nowrap items-center ' +
+          <a className={'py-0.5 duration-500 justify-between text-gray-500 hover:text-black hover:underline cursor-pointer flex flex-nowrap items-center ' +
               (selected ? 'text-black' : ' ')} >
               <div className='my-auto items-center justify-center flex '>
                 <div className={ 'text-gray-500 hover:text-black'}>{link.name}</div>
