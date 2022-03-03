@@ -1,9 +1,12 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { LayoutIndex, THEME_CONFIG } from '@/themes'
+import { LayoutIndex, THEME_CONFIG, ThemeMap } from '@/themes'
+import { useGlobal } from '@/lib/global'
 
 const Index = (props) => {
+  const { theme } = useGlobal()
+  console.log('模板', ThemeMap[theme].LayoutIndex)
   return <LayoutIndex {...props}/>
 }
 

@@ -2,8 +2,16 @@
  * 修改 from 后面的路径，实现主题切换
  */
 
-// export * from './Empty' //  空主题
-// export * from './NEXT'
-// export * from './Fukasawa'
-export * from './Hexo'
-// export * from './Medium'
+import * as Next from './Next'
+import * as Empty from './Empty'
+import * as Fukasawa from './Fukasawa'
+import * as Hexo from './Hexo'
+import * as Medium from './Medium'
+export * from './Medium'
+export const ThemeMap = {
+  Next,
+  Empty,
+  Fukasawa,
+  Hexo,
+  Medium
+}
