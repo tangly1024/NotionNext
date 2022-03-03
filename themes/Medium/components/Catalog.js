@@ -62,7 +62,7 @@ const Catalog = ({ toc }) => {
           <a
             key={id}
             href={`#${id}`}
-            className={`notion-table-of-contents-item duration-300 transform font-light
+            className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
           >
                       <span

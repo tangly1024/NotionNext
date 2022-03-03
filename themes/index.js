@@ -5,5 +5,5 @@
 // export * from './Empty' //  空主题
 export * from './NEXT'
 // export * from './Fukasawa'
-export * from './Hexo'
-// export * from './Medium'
+// export * from './Hexo'
+export * from './Medium'
