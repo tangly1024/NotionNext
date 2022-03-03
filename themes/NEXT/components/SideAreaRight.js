@@ -5,6 +5,7 @@ import Card from './Card'
 import CategoryGroup from './CategoryGroup'
 import TagGroups from './TagGroups'
 import CONFIG_NEXT from '../config_next'
+import { useRouter } from 'next/router'
 
 /**
  * 侧边平铺
@@ -16,18 +17,13 @@ import CONFIG_NEXT from '../config_next'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaRight = ({
-  tags,
-  currentTag,
-  slot,
-  categories,
-  currentCategory
-}) => {
+const SideAreaRight = (props) => {
+  const { tags, currentTag, slot, categories, currentCategory } = props
   const { locale } = useGlobal()
   if (!CONFIG_NEXT.RIGHT_BAR) {
     return <></>
   }
-
+  const router = useRouter()
   return (<aside id='right' className='hidden 2xl:block flex-col w-60 ml-4'>
 
       {CONFIG_NEXT.RIGHT_AD && <Card className='mb-2'>
@@ -44,15 +40,16 @@ const SideAreaRight = ({
       </Card>}
 
       <div className="sticky top-4">
+        {slot}
 
         {/* 分类  */}
-        {CONFIG_NEXT.RIGHT_CATEGORY_LIST && categories && (
+        {CONFIG_NEXT.RIGHT_CATEGORY_LIST && router.asPath !== '/category' && categories && (
           <Card>
             <div className='text-sm px-2 flex flex-nowrap justify-between font-light'>
-              <div className='pb-1 text-gray-600 dark:text-gray-300'><i icon={faThList} className='mr-2' />{locale.COMMON.CATEGORY}</div>
+              <div className='pb-2 text-gray-600 dark:text-gray-300'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
               <Link href={'/category'} passHref>
                 <a className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                  {locale.COMMON.MORE} <i icon={faAngleRight} />
+                  {locale.COMMON.MORE} <i className='fas fa-angle-right' />
                 </a>
               </Link>
             </div>
@@ -60,9 +57,7 @@ const SideAreaRight = ({
           </Card>
         )}
 
-        {slot}
-
-         {CONFIG_NEXT.RIGHT_TAG_LIST && tags && (
+         {CONFIG_NEXT.RIGHT_TAG_LIST && router.asPath !== '/tag' && tags && (
           <Card>
             <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200">
               <div className="text-gray-600 dark:text-gray-200">

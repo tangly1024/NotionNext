@@ -36,16 +36,28 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     setSearchKey('')
   }
 
+  let lock = false
   const updateSearchKey = (val) => {
-    setSearchKey(val)
+    if (!lock) {
+      setSearchKey(val)
+    }
+  }
+  function lockSearchInput () {
+    lock = true
   }
 
+  function unLockSearchInput () {
+    lock = false
+  }
   return <div className='flex w-full bg-gray-100'>
     <input
       ref={searchInputRef}
       type='text'
       className={'w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
+      onCompositionStart={lockSearchInput}
+      onCompositionUpdate={lockSearchInput}
+      onCompositionEnd={unLockSearchInput}
       onChange={e => updateSearchKey(e.target.value)}
       defaultValue={searchKey}
     />

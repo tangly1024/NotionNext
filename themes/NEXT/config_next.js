@@ -12,10 +12,10 @@ const CONFIG_NEXT = {
   POST_LIST_SUMMARY: false, // 显示用户自定义摘要，有预览时优先只展示预览
 
   // 右侧组件
-  RIGHT_BAR: false, // 是否显示右侧栏
+  RIGHT_BAR: true, // 是否显示右侧栏
   RIGHT_LATEST_POSTS: false, // 右侧栏最新文章
-  RIGHT_CATEGORY_LIST: false, // 右侧边栏文章分类列表
-  RIGHT_TAG_LIST: false, // 右侧边栏标签分类列表
+  RIGHT_CATEGORY_LIST: true, // 右侧边栏文章分类列表
+  RIGHT_TAG_LIST: true, // 右侧边栏标签分类列表
   RIGHT_AD: false, // 右侧广告
 
   // 菜单

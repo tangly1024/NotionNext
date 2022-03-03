@@ -25,6 +25,10 @@ const Comment = ({ frontMatter }) => {
   return (
     <div className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
+        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
+          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
+        </div>)}
+
         {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
           <ReactCusdis
             lang={locale.LOCALE.toLowerCase()}
@@ -36,10 +40,6 @@ const Comment = ({ frontMatter }) => {
               pageUrl: BLOG.LINK + router.asPath
             }}
           />
-        </div>)}
-
-        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
-          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
         </div>)}
 
         {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>

@@ -46,14 +46,14 @@ const LayoutBase = (props) => {
 
     <main id='wrapper' className='flex w-full justify-center py-8 min-h-screen'>
 
-      <div id='container-inner' className='pt-14 w-full mx-auto flex justify-between space-x-4 max-w-6xl'>
+      <div id='container-inner' className='pt-14 w-full mx-auto flex justify-between space-x-4 max-w-7xl'>
         <div className='flex-grow w-full'>{children}</div>
         <SideRight {...props}/>
       </div>
 
     </main>
 
-          {/* 右下角悬浮 */}
+     {/* 右下角悬浮 */}
      <div className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
         <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
           <JumpToTopButton percent={percent}/>

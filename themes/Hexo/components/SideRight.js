@@ -23,7 +23,7 @@ export default function SideRight (props) {
     showTag
   } = props
   return (
-    <div className='w-72 space-y-4 hidden lg:block'>
+    <div className='w-96 space-y-4 hidden lg:block'>
       <Card>
         <div
           className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 transform duration-200 cursor-pointer'

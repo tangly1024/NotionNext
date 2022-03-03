@@ -9,8 +9,6 @@ import Catalog from './Catalog'
 
 function AsideLeft (props) {
   const { tags, currentTag, categories, currentCategory, post } = props
-  console.log(post)
-
   return <div className='w-72 bg-white min-h-screen px-10 py-14 hidden lg:block'>
     <Logo />
 

@@ -41,9 +41,15 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {(!showPreview || showSummary) && <p className='mt-4 mb-24 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+        {(!showPreview || showSummary) && !post.results && <p className='mt-4 mb-24 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
           {post.summary}
         </p>}
+
+        {/* 搜索结果 */}
+        {post.results && <p className='mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+            {post.results.map(r => <span key={r}><span dangerouslySetInnerHTML={{ __html: r }}/>...</span>)}
+          </p>
+        }
 
         {showPreview && post?.blockMap && <div className='overflow-ellipsis truncate'>
           <NotionRenderer
@@ -59,9 +65,9 @@ const BlogPostCard = ({ post, showSummary }) => {
           />
         </div> }
 
-        <div className='article-cover pointer-events-none text-right'>
+        <div className='text-right border-t pt-8 border-dashed'>
           <Link href={`${BLOG.PATH}/article/${post.slug}`}>
-              <a className='hover:bg-opacity-100 hover:scale-105 hover:underline pointer-events-auto transform duration-300 p-3 text-white bg-gray-800 cursor-pointer'>
+              <a className='hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 dark:bg-black cursor-pointer'>
                 {locale.COMMON.ARTICLE_DETAIL}
                 <i className='ml-1 fas fa-angle-right' /></a>
           </Link>

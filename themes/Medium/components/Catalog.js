@@ -78,7 +78,7 @@ const Catalog = ({ toc }) => {
         )
       })}
     </nav>
-    <JumpToTopButton className='text-gray-400 hover:bg-gray-100 py-1 duration-200'/>
+    <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200'/>
   </div>
 }
 
