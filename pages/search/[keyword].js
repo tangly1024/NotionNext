@@ -110,18 +110,16 @@ async function filterByMemCache (allPosts, keyword) {
     // console.log('搜索是否命中缓存', page !== null, indexContent)
     post.results = []
     let hitCount = 0
-    const re = new RegExp(`${keyword}`, 'gim')
     for (const i in indexContent) {
       const c = indexContent[i]
       const index = c.toLowerCase().indexOf(keyword.toLowerCase())
-      const referText = c?.replace(re, `<span class='text-red-500'>${keyword}</span>`)
       if (index > -1) {
         hit = true
         hitCount += 1
-        post.results.push(`<span>${referText}</span>`)
+        post.results.push(c)
       } else {
         if ((post.results.length - 1) / hitCount < 3 || i === 0) {
-          post.results.push(`<span>${referText}</span>`)
+          post.results.push(c)
         }
       }
     }
