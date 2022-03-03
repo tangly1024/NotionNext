@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
+let lock = false
 
 const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
-  const [searchKey, setSearchKey] = useState(currentSearch || getSearchKey() || '')
+  // const [searchKey, setSearchKey] = useState(currentSearch || getSearchKey() || '')
   const [onLoading, setLoadingState] = useState(false)
   const router = useRouter()
   const searchInputRef = useRef()
@@ -14,12 +15,15 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
     }
   })
 
-  const handleSearch = (key) => {
+  const handleSearch = () => {
+    const key = searchInputRef.current.value
+
     if (key && key !== '') {
       setLoadingState(true)
-      router.push({ pathname: '/search', query: { s: key } }).then(r => {
-        setLoadingState(false)
-      })
+      // router.push({ pathname: '/search/' + key }).then(r => {
+      //   setLoadingState(false)
+      // })
+      location.href = '/search/' + key
     } else {
       router.push({ pathname: '/' }).then(r => {
       })
@@ -34,13 +38,19 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
   }
   const cleanSearch = () => {
     searchInputRef.current.value = ''
-    setSearchKey('')
   }
 
-  let lock = false
+  const [showClean, setShowClean] = useState(false)
   const updateSearchKey = (val) => {
-    if (!lock) {
-      setSearchKey(val)
+    if (lock) {
+      return
+    }
+    searchInputRef.current.value = val
+
+    if (val) {
+      setShowClean(true)
+    } else {
+      setShowClean(false)
     }
   }
   function lockSearchInput () {
@@ -61,28 +71,20 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
       onCompositionUpdate={lockSearchInput}
       onCompositionEnd={unLockSearchInput}
       onChange={e => updateSearchKey(e.target.value)}
-      defaultValue={searchKey}
+      defaultValue={currentSearch}
     />
 
     <div className='-ml-8 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'
-      onClick={() => { handleSearch(searchKey) }}>
+      onClick={handleSearch}>
         <i className={`hover:text-black transform duration-200 text-gray-500 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'} `} />
     </div>
 
-    {(searchKey && searchKey.length &&
+    {(showClean &&
       <div className='-ml-12 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'>
         <i className='fas fa-times hover:text-black transform duration-200 text-gray-400 cursor-pointer' onClick={cleanSearch} />
       </div>
       )}
   </div>
-}
-
-function getSearchKey () {
-  const router = useRouter()
-  if (router.query && router.query.s) {
-    return router.query.s
-  }
-  return null
 }
 
 export default SearchInput

@@ -4,21 +4,30 @@ import { useGlobal } from '@/lib/global'
 import TagGroups from './components/TagGroups'
 import CategoryGroup from './components/CategoryGroup'
 import BlogPostListScroll from './components/BlogPostListScroll'
+import { useEffect } from 'react'
 
 export const LayoutSearch = (props) => {
   const { locale } = useGlobal()
+  const { keyword } = props
+  useEffect(() => {
+    setTimeout(() => {
+      const container = document.getElementById('container')
+      if (container && container.innerHTML) {
+        const re = new RegExp(`${keyword}`, 'gim')
+        container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`)
+      }
+    },
+    100)
+  })
   return <LayoutBase {...props}>
-
     <div className='py-12'>
-      <div className='pb-4 w-full'>
-      {locale.NAV.SEARCH}
-      </div>
-      <SearchInput/>
-
+      <div className='pb-4 w-full'>{locale.NAV.SEARCH}</div>
+      <SearchInput currentSearch={keyword} {...props}/>
       <TagGroups {...props}/>
       <CategoryGroup {...props}/>
     </div>
-
-    <BlogPostListScroll {...props}/>
+    <div id='container'>
+      <BlogPostListScroll {...props}/>
+    </div>
   </LayoutBase>
 }
