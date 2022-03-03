@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import { loadDarkModeFromCookies, saveDarkModeToCookies } from '@/lib/theme'
+import { saveDarkModeToCookies } from '@/lib/theme'
 import CONFIG_NEXT from '../config_next'
 
 export default function FloatDarkModeButton () {
