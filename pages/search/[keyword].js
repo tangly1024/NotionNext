@@ -4,6 +4,41 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 
+export async function getServerSideProps ({ params: { keyword } }) {
+  const {
+    allPosts,
+    categories,
+    tags,
+    postCount,
+    latestPosts,
+    customNav
+  } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
+
+  const filterPosts = await filterByMemCache(allPosts, keyword)
+  return {
+    props: {
+      posts: filterPosts,
+      tags,
+      categories,
+      postCount,
+      latestPosts,
+      customNav,
+      keyword
+    }
+  }
+}
+
+const Index = (props) => {
+  const { keyword } = props
+  const { locale } = useGlobal()
+  const meta = {
+    title: `${keyword || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
+    description: BLOG.DESCRIPTION,
+    type: 'website'
+  }
+  return <LayoutSearch {...props} meta={meta} currentSearch={keyword} />
+}
+
 /**
  * 将对象的指定字段拼接到字符串
  * @param sourceTextArray
@@ -47,16 +82,13 @@ function getTextContent (textArray) {
  */
 const isIterable = obj => obj != null && typeof obj[Symbol.iterator] === 'function'
 
-export async function getServerSideProps ({ params: { keyword } }) {
-  const {
-    allPosts,
-    categories,
-    tags,
-    postCount,
-    latestPosts,
-    customNav
-  } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
-
+/**
+ * 在内存缓存中进行全文索引
+ * @param {*} allPosts
+ * @param keyword 关键词
+ * @returns
+ */
+async function filterByMemCache (allPosts, keyword) {
   const filterPosts = []
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
@@ -97,29 +129,7 @@ export async function getServerSideProps ({ params: { keyword } }) {
       filterPosts.push(post)
     }
   }
-
-  return {
-    props: {
-      posts: filterPosts,
-      tags,
-      categories,
-      postCount,
-      latestPosts,
-      customNav,
-      keyword
-    }
-  }
-}
-
-const Index = (props) => {
-  const { keyword } = props
-  const { locale } = useGlobal()
-  const meta = {
-    title: `${keyword || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
-    description: BLOG.DESCRIPTION,
-    type: 'website'
-  }
-  return <LayoutSearch {...props} meta={meta} currentSearch={keyword} />
+  return filterPosts
 }
 
 export default Index
