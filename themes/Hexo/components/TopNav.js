@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Collapse from './Collapse'
 import Logo from './Logo'
-import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import CONFIG_HEXO from '../config_hexo'
 import MenuButtonGroupTop from './MenuButtonGroupTop'
+import MenuList from './MenuList'
 
 let windowTop = 0
 
@@ -108,7 +108,7 @@ const TopNav = (props) => {
 
       <Collapse isOpen={isOpen} className='shadow-xl'>
         <div className='bg-white pt-1 py-2 px-5'>
-          <MenuButtonGroup {...props}/>
+          <MenuList {...props}/>
         </div>
       </Collapse>
     </div>
