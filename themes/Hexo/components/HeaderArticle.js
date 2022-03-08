@@ -65,7 +65,7 @@ export default function HeaderArticle ({ post }) {
                       passHref
                     >
                       <a className="pl-1 mr-2 cursor-pointer hover:underline border-b dark:border-gray-500 border-dashed">
-                        {date}
+                      <i className="far fa-calendar-alt mr-1"/> {date}
                       </a>
                     </Link>
                   </>

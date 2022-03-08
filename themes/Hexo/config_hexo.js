@@ -15,6 +15,8 @@ const CONFIG_HEXO = {
   NAV_TYPE: 'autoCollapse', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
 
   WIDGET_TO_TOP: true,
+  WIDGET_TO_COMMENT: true, // 跳到评论区
+  WIDGET_DARK_MODE: true, // 夜间模式
   WIDGET_TOC: true // 移动端悬浮目录
 }
 export default CONFIG_HEXO
