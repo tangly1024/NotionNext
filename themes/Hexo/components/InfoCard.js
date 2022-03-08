@@ -1,15 +1,16 @@
 import BLOG from '@/blog.config'
 import Image from 'next/image'
-import { Router } from 'next/router'
+import { useRouter } from 'next/router'
 import Card from './Card'
 import SocialButton from './SocialButton'
 import MenuButtonGroup from './MenuButtonGroup'
 export function InfoCard (props) {
+  const router = useRouter()
   return <Card>
     <div
       className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 transform duration-200 cursor-pointer'
       onClick={() => {
-        Router.push('/')
+        router.push('/')
       }}
     >
       <Image
