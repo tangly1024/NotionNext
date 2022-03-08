@@ -1,6 +1,4 @@
 import Card from './Card'
-import MenuButtonGroup from './MenuButtonGroup'
-import SearchInput from './SearchInput'
 import CategoryGroup from './CategoryGroup'
 import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
