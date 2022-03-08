@@ -91,7 +91,7 @@ const TopNav = (props) => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} dark:bg-black dark:bg-opacity-50 dark:text-gray-200 bg-opacity-80 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
+    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} animate__animated animate__fadeIn dark:bg-black dark:bg-opacity-50 dark:text-gray-200 bg-opacity-80 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
       <div className='w-full flex justify-between items-center px-4 py-4 shadow'>
         <div className='flex'>
          <Logo/>
@@ -107,7 +107,7 @@ const TopNav = (props) => {
       </div>
 
       <Collapse isOpen={isOpen} className='shadow-xl'>
-        <div className='bg-white pt-1 py-2 px-5'>
+        <div className='bg-white pt-1 py-2 px-5 flex lg:hidden'>
           <MenuList {...props}/>
         </div>
       </Collapse>
