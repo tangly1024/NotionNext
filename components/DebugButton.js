@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import { ThemeMap } from '@/themes'
+import * as ThemeMap from '@/themes'
 import { useState } from 'react'
 
 /**
