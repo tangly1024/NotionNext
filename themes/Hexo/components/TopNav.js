@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Collapse from './Collapse'
 import Logo from './Logo'
-import MenuButtonGroup from './MenuButtonGroup'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import CONFIG_HEXO from '../config_hexo'
-import SearchInput from './SearchInput'
+import MenuButtonGroupTop from './MenuButtonGroupTop'
+import MenuList from './MenuList'
 
 let windowTop = 0
 
@@ -18,7 +18,8 @@ let windowTop = 0
  * @param {*} param0
  * @returns
  */
-const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) => {
+const TopNav = (props) => {
+  const { tags, currentTag, categories, currentCategory } = props
   const { locale } = useGlobal()
   const searchDrawer = useRef()
 
@@ -26,13 +27,13 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
     const scrollS = window.scrollY
     const nav = document.querySelector('#sticky-nav')
     const header = document.querySelector('#header')
-    const showNav = (scrollS > 10 && scrollS >= windowTop) || (header && scrollS < 5) // 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    const showNav = (scrollS > 0 && scrollS < windowTop) || (header && scrollS < 5) // 非首页无大图时影藏顶部 滚动条置顶时隐藏
 
     if (!showNav) {
-      nav && nav.classList.replace('top-0', '-top-16')
+      nav && nav.classList.replace('top-0', '-top-20')
       windowTop = scrollS
     } else {
-      nav && nav.classList.replace('-top-16', 'top-0')
+      nav && nav.classList.replace('-top-20', 'top-0')
       windowTop = scrollS
     }
   }, 200)
@@ -90,24 +91,24 @@ const TopNav = ({ tags, currentTag, categories, currentCategory, postCount }) =>
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} dark:bg-black dark:bg-opacity-50 dark:text-gray-200 bg-opacity-70 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
-      <div className='w-full flex justify-between items-center px-4 py-2 shad'>
+    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} dark:bg-black dark:bg-opacity-50 dark:text-gray-200 bg-opacity-80 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
+      <div className='w-full flex justify-between items-center px-4 py-4 shadow'>
         <div className='flex'>
          <Logo/>
         </div>
 
         {/* 右侧功能 */}
-        <div className='mr-1 flex lg:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
-          <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
+        <div className='mr-1 justify-end items-center space-x-4 font-serif dark:text-gray-200'>
+          <div className='hidden lg:flex'> <MenuButtonGroupTop {...props}/></div>
+          <div onClick={toggleMenuOpen} className='w-8 cursor-pointer flex lg:hidden'>
           { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }
           </div>
         </div>
       </div>
 
-      <Collapse isOpen={isOpen} className='shadow-xl rounded-b-xl'>
+      <Collapse isOpen={isOpen} className='shadow-xl'>
         <div className='bg-white pt-1 py-2 px-5'>
-          <MenuButtonGroup postCount={postCount}/>
-          <SearchInput/>
+          <MenuList {...props}/>
         </div>
       </Collapse>
     </div>

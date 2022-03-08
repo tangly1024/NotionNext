@@ -1,14 +1,9 @@
-import Router from 'next/router'
-import Image from 'next/image'
-import BLOG from '@/blog.config'
 import Card from './Card'
-import MenuButtonGroup from './MenuButtonGroup'
-import SearchInput from './SearchInput'
 import CategoryGroup from './CategoryGroup'
 import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
-import SocialButton from './SocialButton'
 import Catalog from './Catalog'
+import { InfoCard } from './InfoCard'
 
 export default function SideRight (props) {
   const {
@@ -24,29 +19,7 @@ export default function SideRight (props) {
   } = props
   return (
     <div className='w-96 space-y-4 hidden lg:block'>
-      <Card>
-        <div
-          className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 transform duration-200 cursor-pointer'
-          onClick={() => {
-            Router.push('/')
-          }}
-        >
-          <Image
-            alt={BLOG.AUTHOR}
-            width={120}
-            height={120}
-            loading='lazy'
-            src='/avatar.jpg'
-            className='rounded-full'
-          />
-        </div>
-        <div className='text-center font-sans text-xl pb-4 dark:text-gray-300'>{BLOG.TITLE}</div>
-        <SocialButton />
-      </Card>
-      <Card>
-        <MenuButtonGroup {...props}/>
-        <SearchInput {...props}/>
-      </Card>
+      <InfoCard {...props}/>
       <Card>
         <div className='ml-2 mb-3 font-sans'>
           <i className='fas fa-chart-area' /> 统计

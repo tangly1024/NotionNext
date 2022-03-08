@@ -4,11 +4,11 @@ import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import CONFIG_HEXO from '../config_hexo'
 
-const MenuButtonGroup = (props) => {
+const MenuList = (props) => {
   const { postCount, customNav } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  const archiveSlot = <div className='bg-blue-300 dark:bg-blue-400 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
+  const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   let links = [
     { icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
@@ -20,13 +20,14 @@ const MenuButtonGroup = (props) => {
   if (customNav) {
     links = links.concat(customNav)
   }
-  return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 font-sans w-full'>
+
+  return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 font-sans'>
       {links.map(link => {
-        if (link.show) {
+        if (link && link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={`${link.to}`} title={link.to} href={link.to} >
-          <a className={'py-1.5 my-1 px-5 duration-300 text-base justify-between hover:bg-blue-400 rounded-md hover:text-white hover:shadow-lg cursor-pointer flex flex-nowrap items-center ' +
-              (selected ? 'bg-blue-400 rounded-md text-white' : ' ')} >
+          <a className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+              (selected ? 'bg-gray-200 text-black' : ' ')} >
               <div className='my-auto items-center justify-center flex '>
                 <i className={`${link.icon} w-4 text-center`} />
                 <div className={'ml-4'}>{link.name}</div>
@@ -40,4 +41,4 @@ const MenuButtonGroup = (props) => {
       })}
     </nav>
 }
-export default MenuButtonGroup
+export default MenuList
