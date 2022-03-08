@@ -55,7 +55,7 @@ const LayoutBase = (props) => {
     </main>
 
      {/* 右下角悬浮 */}
-     <div className='bottom-12 right-2 fixed justify-end z-20 font-sans'>
+     <div className='bottom-12 right-0 fixed justify-end z-20 font-sans'>
         <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp  justify-center duration-500  animate__faster flex flex-col items-center cursor-pointer '}>
           <FloatDarkModeButton/>
           {floatSlot}

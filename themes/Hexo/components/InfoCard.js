@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Card from './Card'
 import SocialButton from './SocialButton'
-import MenuButtonGroup from './MenuButtonGroup'
+import MenuGroupCard from './MenuGroupCard'
 export function InfoCard (props) {
   const router = useRouter()
   return <Card>
@@ -23,7 +23,7 @@ export function InfoCard (props) {
       />
     </div>
     <div className='text-center font-sans text-xl pb-4 dark:text-gray-300'>{BLOG.TITLE}</div>
-    <MenuButtonGroup {...props}/>
+    <MenuGroupCard {...props}/>
     <SocialButton />
   </Card>
 }

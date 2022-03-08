@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import CONFIG_HEXO from '../config_hexo'
 
-const MenuButtonGroup = (props) => {
+const MenuGroupCard = (props) => {
   const { postCount, categories, tags } = props
   const { locale } = useGlobal()
   const archiveSlot = <div className='text-center'>{postCount}</div>
@@ -33,4 +33,4 @@ const MenuButtonGroup = (props) => {
       })}
     </nav>
 }
-export default MenuButtonGroup
+export default MenuGroupCard
