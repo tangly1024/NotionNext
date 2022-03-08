@@ -48,7 +48,7 @@ const PaginationNumber = ({ page, totalPage }) => {
 
 function getPageElement (page, currentPage) {
   return <Link href={page === 1 ? '/' : `/page/${page}`} key={page} passHref>
-      <a className={(page + '' === currentPage + '' ? 'font-bold bg-blue-500 dark:bg-blue-400 text-white ' : 'border-t-2 duration-500 border-white hover:border-blue-400 ') +
+      <a className={(page + '' === currentPage + '' ? 'font-bold bg-blue-400 dark:bg-blue-500 text-white ' : 'border-t-2 duration-500 border-white hover:border-blue-400 ') +
       ' border-white dark:border-blue-700 dark:hover:border-blue-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'}>
       {page}
       </a>

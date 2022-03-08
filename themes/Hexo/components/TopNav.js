@@ -27,7 +27,7 @@ const TopNav = (props) => {
     const scrollS = window.scrollY
     const nav = document.querySelector('#sticky-nav')
     const header = document.querySelector('#header')
-    const showNav = (scrollS > 10 && scrollS < windowTop) || (header && scrollS < 5) // 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    const showNav = (scrollS > 0 && scrollS < windowTop) || (header && scrollS < 5) // 非首页无大图时影藏顶部 滚动条置顶时隐藏
 
     if (!showNav) {
       nav && nav.classList.replace('top-0', '-top-20')

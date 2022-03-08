@@ -14,8 +14,8 @@ const TocDrawerButton = (props) => {
     return <></>
   }
   const { locale } = useGlobal()
-  return (<div onClick={props.onClick} className='py-2 px-3 cursor-pointer text-white transform duration-200 flex justify-center items-center bg-blue-400 w-7 h-7 text-center' title={locale.POST.TOP} >
-    <i className='fas fa-list-ol'/>
+  return (<div onClick={props.onClick} className='py-2 px-3 cursor-pointer text-white transform duration-200 flex justify-center items-center bg-gray-400 w-7 h-7 text-center' title={locale.POST.TOP} >
+    <i className='fas fa-list-ol text-xs'/>
   </div>)
 }
 
