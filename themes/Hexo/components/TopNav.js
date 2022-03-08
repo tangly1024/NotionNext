@@ -27,7 +27,7 @@ const TopNav = (props) => {
     const scrollS = window.scrollY
     const nav = document.querySelector('#sticky-nav')
     const header = document.querySelector('#header')
-    const showNav = (scrollS > 0 && scrollS < windowTop) || (header && scrollS < 5) // 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
 
     if (!showNav) {
       nav && nav.classList.replace('top-0', '-top-20')
@@ -41,7 +41,7 @@ const TopNav = (props) => {
   // 监听滚动
   useEffect(() => {
     if (CONFIG_HEXO.NAV_TYPE === 'autoCollapse') {
-      scrollTrigger()
+      // scrollTrigger()
       window.addEventListener('scroll', scrollTrigger)
     }
     return () => {
@@ -91,7 +91,7 @@ const TopNav = (props) => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} dark:bg-black dark:bg-opacity-50 dark:text-gray-200 bg-opacity-80 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
+    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} animate__animated animate__fadeIn dark:bg-black dark:bg-opacity-50 dark:text-gray-200 bg-opacity-80 text-black w-full top-0 z-20 transform duration-500 font-sans`}>
       <div className='w-full flex justify-between items-center px-4 py-4 shadow'>
         <div className='flex'>
          <Logo/>
@@ -100,14 +100,14 @@ const TopNav = (props) => {
         {/* 右侧功能 */}
         <div className='mr-1 justify-end items-center space-x-4 font-serif dark:text-gray-200'>
           <div className='hidden lg:flex'> <MenuButtonGroupTop {...props}/></div>
-          <div onClick={toggleMenuOpen} className='w-8 cursor-pointer flex lg:hidden'>
+          <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
           { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }
           </div>
         </div>
       </div>
 
       <Collapse isOpen={isOpen} className='shadow-xl'>
-        <div className='bg-white pt-1 py-2 px-5'>
+        <div className='bg-white pt-1 py-2 px-5 flex lg:hidden'>
           <MenuList {...props}/>
         </div>
       </Collapse>

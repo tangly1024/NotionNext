@@ -5,6 +5,10 @@ const Collapse = props => {
   const collapseRef = useRef(null)
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
+    const currentHeight = element.style.height
+    if (currentHeight === '0px') {
+      return
+    }
     requestAnimationFrame(function () {
       element.style.height = sectionHeight + 'px'
       requestAnimationFrame(function () {
