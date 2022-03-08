@@ -10,6 +10,7 @@ import 'prismjs/components/prism-typescript'
 import { useRef } from 'react'
 import ArticleDetail from './components/ArticleDetail'
 import HeaderArticle from './components/HeaderArticle'
+import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
 import LayoutBase from './LayoutBase'
@@ -31,18 +32,16 @@ export const LayoutSlug = props => {
   const drawerRight = useRef(null)
   const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
 
-  const floatSlot =
-    post?.toc?.length > 1
-      ? (
-      <div className="block lg:hidden">
+  const floatSlot = <>
+  {post?.toc?.length > 1 && <div className="block lg:hidden">
         <TocDrawerButton
           onClick={() => {
             drawerRight?.current?.handleSwitchVisible()
           }}
         />
-      </div>
-        )
-      : null
+      </div>}
+        <JumpToCommentButton/>
+      </>
 
   return (
     <LayoutBase

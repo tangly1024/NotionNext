@@ -23,7 +23,7 @@ const Comment = ({ frontMatter }) => {
   const router = useRouter()
   const { locale } = useGlobal()
   return (
-    <div className='comment mt-5 text-gray-800 dark:text-gray-300'>
+    <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
         {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
           <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
