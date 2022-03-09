@@ -6,6 +6,7 @@ import JumpToTopButton from './components/JumpToTopButton'
 import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import smoothscroll from 'smoothscroll-polyfill'
+import FloatDarkModeButton from './components/FloatDarkModeButton'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -54,10 +55,11 @@ const LayoutBase = (props) => {
     </main>
 
      {/* 右下角悬浮 */}
-     <div className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
-        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
-          <JumpToTopButton percent={percent}/>
+     <div className='bottom-12 right-0 fixed justify-end z-20 font-sans'>
+        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp  justify-center duration-500  animate__faster flex flex-col items-center cursor-pointer '}>
+          <FloatDarkModeButton/>
           {floatSlot}
+          <JumpToTopButton percent={percent}/>
         </div>
       </div>
 

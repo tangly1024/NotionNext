@@ -29,8 +29,10 @@ export async function getStaticPaths () {
 
   const from = 'slug-paths'
   const { allPosts } = await getGlobalNotionData({ from, pageType: ['Page'] })
+  const filterPosts = allPosts?.filter(e => e?.slug?.indexOf('http') !== 0) || []
+
   return {
-    paths: allPosts.map(row => ({ params: { slug: row.slug } })),
+    paths: filterPosts.map(row => ({ params: { slug: row.slug } })),
     fallback: true
   }
 }

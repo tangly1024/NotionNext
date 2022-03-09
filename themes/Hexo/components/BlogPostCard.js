@@ -14,7 +14,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
       <div className='lg:p-8 p-4 flex flex-col w-full'>
         <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
-          <a className={`cursor-pointer font-bold hover:underline text-3xl flex ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+          <a className={`cursor-pointer hover:underline text-3xl font-sans ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
             {post.title}
           </a>
         </Link>
@@ -22,7 +22,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         <div className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}>
           <div>
           <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`} passHref>
-            <a className='font-light hover:underline cursor-pointer text-sm leading-4 mr-3'>{post.date.start_date}</a>
+            <a className='font-light hover:underline cursor-pointer text-sm leading-4 mr-3'><i className="far fa-calendar-alt mr-1"/>{post.date.start_date}</a>
           </Link>
           </div>
         </div>
@@ -49,7 +49,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           <Link href={`/category/${post.category}`} passHref>
               <a className='cursor-pointer font-light text-sm hover:underline transform'>
-                <i className='mr-1 fas fa-folder' />{post.category}
+                <i className='mr-1 far fa-folder' />{post.category}
               </a>
             </Link>
             <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
