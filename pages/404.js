@@ -1,4 +1,5 @@
 import { useGlobal } from '@/lib/global'
+import * as ThemeMap from '@/themes'
 
 /**
  * 自定义404界面
@@ -7,7 +8,7 @@ import { useGlobal } from '@/lib/global'
  */
 
 export default function Custom404 (props) {
-  const { ThemeComponents } = useGlobal()
-
+  const { theme } = useGlobal()
+  const ThemeComponents = ThemeMap[theme]
   return <ThemeComponents.Layout404 {...props}/>
 }

@@ -1,6 +1,6 @@
-import LogoBar from '@/themes/Medium/components/LogoBar'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import LogoBar from './LogoBar'
 
 /**
  * 顶部导航栏 + 菜单

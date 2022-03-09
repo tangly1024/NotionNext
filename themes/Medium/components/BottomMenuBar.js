@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import JumpToTopButton from '@/themes/Medium/components/JumpToTopButton'
+import JumpToTopButton from './JumpToTopButton'
 
 export default function BottomMenuBar ({ className }) {
   return (

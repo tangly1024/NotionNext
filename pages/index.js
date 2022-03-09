@@ -1,12 +1,11 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import * as ThemeMap from '@/themes'
 import { useGlobal } from '@/lib/global'
 const Index = (props) => {
-  const { ThemeComponents } = useGlobal()
-  // return <ThemeComponents.Next.LayoutIndex {...props}/>
-  console.log(ThemeComponents)
-  // return <></>
+  const { theme } = useGlobal()
+  const ThemeComponents = ThemeMap[theme]
   return <ThemeComponents.LayoutIndex {...props}/>
 }
 

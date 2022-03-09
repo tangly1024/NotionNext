@@ -1,8 +1,10 @@
 import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import * as ThemeMap from '@/themes'
 
 const Tag = (props) => {
-  const { ThemeComponents } = useGlobal()
+  const { theme } = useGlobal()
+  const ThemeComponents = ThemeMap[theme]
   return <ThemeComponents.LayoutTag {...props} />
 }
 

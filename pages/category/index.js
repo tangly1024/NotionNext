@@ -1,9 +1,11 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
+import * as ThemeMap from '@/themes'
 
 export default function Category (props) {
-  const { ThemeComponents } = useGlobal()
+  const { theme } = useGlobal()
+  const ThemeComponents = ThemeMap[theme]
   return <ThemeComponents.LayoutCategoryIndex {...props}/>
 }
 

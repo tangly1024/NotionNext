@@ -2,31 +2,7 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-
-/**
- * 浏览器前端搜索
- */
-export async function getStaticProps () {
-  const {
-    allPosts,
-    categories,
-    tags,
-    postCount,
-    latestPosts,
-    customNav
-  } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
-  return {
-    props: {
-      posts: allPosts,
-      tags,
-      categories,
-      postCount,
-      latestPosts,
-      customNav
-    },
-    revalidate: 1
-  }
-}
+import * as ThemeMap from '@/themes'
 
 const Search = (props) => {
   const { posts } = props
@@ -51,9 +27,28 @@ const Search = (props) => {
     type: 'website'
   }
 
-  const { ThemeComponents } = useGlobal()
+  const { theme } = useGlobal()
+  const ThemeComponents = ThemeMap[theme]
 
   return <ThemeComponents.LayoutSearch {...props} posts={filteredPosts} meta={meta} currentSearch={searchKey} />
+}
+
+/**
+ * 浏览器前端搜索
+ */
+export async function getStaticProps () {
+  const { allPosts, categories, tags, postCount, latestPosts, customNav } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
+  return {
+    props: {
+      posts: allPosts,
+      tags,
+      categories,
+      postCount,
+      latestPosts,
+      customNav
+    },
+    revalidate: 1
+  }
 }
 
 function getSearchKey () {

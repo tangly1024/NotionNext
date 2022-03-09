@@ -3,6 +3,7 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import Custom404 from '../404'
+import * as ThemeMap from '@/themes'
 
 /**
  * 根据notion的slug访问页面
@@ -10,7 +11,8 @@ import Custom404 from '../404'
  * @returns
  */
 const Slug = (props) => {
-  const { ThemeComponents } = useGlobal()
+  const { theme } = useGlobal()
+  const ThemeComponents = ThemeMap[theme]
   if (!props.post) {
     return <Custom404 {...props} />
   }
