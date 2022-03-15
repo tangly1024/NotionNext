@@ -7,8 +7,10 @@ import * as ThemeMap from '@/themes'
  * @constructor
  */
 
-export default function Custom404 (props) {
+const Custom404 = (props) => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
   return <ThemeComponents.Layout404 {...props}/>
 }
+
+export default Custom404
