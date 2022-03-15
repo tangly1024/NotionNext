@@ -17,8 +17,9 @@ export default function SideRight (props) {
     showCategory,
     showTag
   } = props
+
   return (
-    <div className='w-96 space-y-4 hidden lg:block'>
+    <div className={'w-80 space-y-4 hidden lg:block'}>
       <InfoCard {...props}/>
       <Card>
         <div className='ml-2 mb-3 font-sans'>
