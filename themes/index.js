@@ -1,7 +1,6 @@
 /**
- * 修改 from 后面的路径，实现主题切换
+ * 切换主题请修改 blog.config.js 中的 THEME 字段
  */
-
 import * as next from './next'
 import * as fukasawa from './fukasawa'
 import * as hexo from './hexo'
