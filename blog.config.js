@@ -8,7 +8,7 @@ const BLOG = {
   KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID: process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
-  DEBUG_BUTTON: true, // 是否显示调试按钮，可以用来调试不同的主题和样式配置
+  DEBUG: JSON.parse(process.env.NEXT_PUBLIC_DEBUG) || false, // 是否显示调试按钮
 
   THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['Next','Hexo',"Fukasawa','Medium']
   LANG: 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.

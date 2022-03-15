@@ -11,7 +11,7 @@ export default function TopNavBar (props) {
   const { className, customNav } = props
   const router = useRouter()
 
-  return <div id='top-nav' className={'sticky top-0 lg:relative w-full z-50 ' + className}>
+  return <div id='top-nav' className={'sticky top-0 lg:relative w-full z-40 ' + className}>
     <div className='flex w-full h-12 shadow bg-white dark:bg-gray-900 px-5 items-between'>
       <LogoBar />
 
