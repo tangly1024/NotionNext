@@ -992,7 +992,7 @@ svg.notion-page-icon {
 .notion-board-header {
   display: flex;
   position: absolute;
-  z-index: 82;
+  z-index: 30;
   height: 44px;
   min-width: 100%;
 }
@@ -1749,7 +1749,7 @@ pre[class*='language-'] {
 .notion-table-header {
   display: flex;
   position: absolute;
-  z-index: 82;
+  z-index:30;
   height: 33px;
   color: var(--fg-color-3);
   min-width: var(--notion-max-width);

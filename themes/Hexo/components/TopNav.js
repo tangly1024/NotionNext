@@ -112,7 +112,6 @@ const TopNav = (props) => {
         </div>
       </Collapse>
     </div>
-
   </div>)
 }
 

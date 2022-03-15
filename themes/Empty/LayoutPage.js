@@ -1,4 +1,4 @@
-import LayoutBase from '../Empty/LayoutBase'
+import LayoutBase from './LayoutBase'
 
 export const LayoutPage = (props) => {
   const { page } = props
