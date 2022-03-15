@@ -5,8 +5,9 @@ import Card from './Card'
 import SocialButton from './SocialButton'
 import MenuGroupCard from './MenuGroupCard'
 export function InfoCard (props) {
+  const { className } = props
   const router = useRouter()
-  return <Card>
+  return <Card className={className}>
     <div
       className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 transform duration-200 cursor-pointer'
       onClick={() => {
