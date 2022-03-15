@@ -98,7 +98,7 @@ const TopNav = (props) => {
         </div>
 
         {/* 右侧功能 */}
-        <div className='mr-1 justify-end items-center space-x-4 font-serif dark:text-gray-200'>
+        <div className='mr-1 justify-end items-center space-x-4 font-serif'>
           <div className='hidden lg:flex'> <MenuButtonGroupTop {...props}/></div>
           <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
           { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }
