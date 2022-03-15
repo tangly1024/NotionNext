@@ -19,20 +19,20 @@ const MenuButtonGroupTop = (props) => {
   }
 
   return <nav id='nav' className='leading-8 flex justify-center font-sans w-full'>
-      {links.map(link => {
-        if (link.show) {
-          return <Link key={`${link.to}`} title={link.to} href={link.to} >
+    {links.map(link => {
+      if (link.show) {
+        return <Link key={`${link.to}`} title={link.to} href={link.to} >
           <a className={'py-1.5 my-1 px-2 duration-300 text-base justify-center items-center cursor-pointer'} >
-              <div className='w-full flex dark:text-white text-sm items-center justify-center hover:scale-105 duration-200 transform'>
-                <i className={`${link.icon} mr-1`}/>
-                <div className='text-center'>{link.name}</div>
-              </div>
-            </a>
-          </Link>
-        } else {
-          return null
-        }
-      })}
-    </nav>
+            <div className='w-full flex dark:text-white text-sm items-center justify-center hover:scale-105 duration-200 transform'>
+              <i className={`${link.icon} mr-1`}/>
+              <div className='text-center'>{link.name}</div>
+            </div>
+          </a>
+        </Link>
+      } else {
+        return null
+      }
+    })}
+  </nav>
 }
 export default MenuButtonGroupTop
