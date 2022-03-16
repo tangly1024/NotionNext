@@ -15,6 +15,7 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
+import { ThemeSwitch } from '@/components/ThemeSwitch'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -24,6 +25,7 @@ const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), { ssr:
 const MyApp = ({ Component, pageProps }) => {
   return (
     <GlobalContextProvider>
+        {BLOG.THEME_SWITCH && <ThemeSwitch/>}
         {BLOG.DEBUG && <DebugPanel/>}
         {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
