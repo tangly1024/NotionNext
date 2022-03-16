@@ -17,7 +17,7 @@ import FloatDarkModeButton from './components/FloatDarkModeButton'
 const LayoutBase = (props) => {
   const { children, headerSlot, floatSlot, meta } = props
   const [show, switchShow] = useState(false)
-  const [percent, changePercent] = useState(0) // 页面阅读百分比
+  // const [percent, changePercent] = useState(0) // 页面阅读百分比
 
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
@@ -31,7 +31,7 @@ const LayoutBase = (props) => {
     if (shouldShow !== show) {
       switchShow(shouldShow)
     }
-    changePercent(per)
+    // changePercent(per)
   }
   useEffect(() => {
     smoothscroll.polyfill()
@@ -55,11 +55,11 @@ const LayoutBase = (props) => {
     </main>
 
      {/* 右下角悬浮 */}
-     <div className='bottom-12 right-0 fixed justify-end z-20 font-sans'>
-        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp  justify-center duration-500  animate__faster flex flex-col items-center cursor-pointer '}>
+     <div className='bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-blue-400 rounded'>
+        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp justify-center duration-500  animate__faster flex flex-col items-center cursor-pointer '}>
           <FloatDarkModeButton/>
           {floatSlot}
-          <JumpToTopButton percent={percent}/>
+          <JumpToTopButton/>
         </div>
       </div>
 
