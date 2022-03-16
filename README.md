@@ -48,10 +48,10 @@
 ## 支持主题切换
 | 主题截图 | 预览地址 |
 |--|--|
-| <img src='./docs/theme-next.png' width='300'/> | [预览地址](https://preview.tangly1024.com/?theme=next) |
-| <img src='./docs/theme-medium.png' width='300'/>| [预览地址](https://preview.tangly1024.com/?theme=medium) |
-| <img src='./docs/theme-hexo.png' width='300'/> |  [预览地址](https://preview.tangly1024.com/?theme=hexo)  |
-| <img src='./docs/theme-fukasawa.png' width='300'/>|  [预览地址](https://preview.tangly1024.com/?theme=fukasawa) |
+| <img src='./docs/theme-next.png' width='300'/> | [预览NEXT](https://preview.tangly1024.com/?theme=next) |
+| <img src='./docs/theme-medium.png' width='300'/>| [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) |
+| <img src='./docs/theme-hexo.png' width='300'/> |  [预览HEXO](https://preview.tangly1024.com/?theme=hexo)  |
+| <img src='./docs/theme-fukasawa.png' width='300'/>|  [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
 
 *只需修改`blog.config.js`文件的`THEME`即可实现主题切换。*
 

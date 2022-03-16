@@ -10,7 +10,7 @@ const BLOG = {
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
 
-  THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['Next','Hexo',"Fukasawa','Medium']
+  THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['next','hexo',"fukasawa','medium']
   LANG: 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: 2021, // e.g if leave this empty, current year will be used.
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
