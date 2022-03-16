@@ -28,7 +28,7 @@ export async function getStaticProps () {
       BLOG.POSTS_PER_PAGE * (page - 1),
       BLOG.POSTS_PER_PAGE * page
     )
-    if (BLOG.POST_LIST_PREVIEW) {
+    if (BLOG.POST_LIST_PREVIEW === 'true') {
       for (const i in postsToShow) {
         const post = postsToShow[i]
         const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
