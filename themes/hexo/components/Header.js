@@ -51,7 +51,7 @@ export default function Header () {
     const scrollS = window.scrollY
     const nav = document.querySelector('#sticky-nav')
 
-    if (scrollS < 300) {
+    if (scrollS < 500) {
       nav && nav.classList.replace('bg-white', 'bg-none')
       nav && nav.classList.replace('text-black', 'text-white')
     } else {
@@ -59,6 +59,7 @@ export default function Header () {
       nav && nav.classList.replace('text-white', 'text-black')
     }
 
+    // 自动滚动
     if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
     ) {
       autoScroll = true
@@ -98,7 +99,7 @@ export default function Header () {
   return (
     <header
       id="header"
-      className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black"
+      className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black text-white"
       style={{
         backgroundImage:
           `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${CONFIG_HEXO.HOME_BANNER_IMAGE}")`

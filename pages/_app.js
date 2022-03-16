@@ -14,7 +14,7 @@ import 'prismjs/themes/prism-okaidia.css'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
-import { DebugButton } from '@/components/DebugButton'
+import { DebugPanel } from '@/components/DebugPanel'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -24,7 +24,7 @@ const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), { ssr:
 const MyApp = ({ Component, pageProps }) => {
   return (
     <GlobalContextProvider>
-        {BLOG.DEBUG_BUTTON && <DebugButton/>}
+        {BLOG.DEBUG && <DebugPanel/>}
         {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
         {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi/>}

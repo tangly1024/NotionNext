@@ -28,7 +28,7 @@ const LayoutBase = (props) => {
     <div className='flex'>
       <AsideLeft {...props}/>
       <main id='wrapper' className='flex w-full py-8 justify-center'>
-        <div className='2xl:max-w-6xl md:max-w-3xl w-full'>
+        <div className='2xl:max-w-6xl md:max-w-4xl w-full'>
           <div> {headerSlot} </div>
           <div>{children}</div>
         </div>

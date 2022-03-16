@@ -58,7 +58,7 @@ const ShareBar = ({ post }) => {
         <a className='text-green-600' ref={btnRef} onMouseEnter={openPopover} onMouseLeave={closePopover}>
           <i className='fab fa-weixin'/>
           <div ref={popoverRef} className={(qrCodeShow ? 'animate__animated animate__fadeIn ' : 'hidden') + ' text-center py-2'}>
-            <div className='p-2 bg-white border-0 duration-200 transform block z-50 font-normal shadow-xl mr-10'>
+            <div className='p-2 bg-white border-0 duration-200 transform block z-40 font-normal shadow-xl mr-10'>
               <QRCode value={shareUrl} fgColor='#000000' />
             </div>
             <span className='bg-white text-black font-semibold p-1 mb-0 rounded-t-lg text-sm mx-auto mr-10'>
