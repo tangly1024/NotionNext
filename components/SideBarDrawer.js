@@ -44,7 +44,7 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
   }
 
   return <div id='sidebar-wrapper' className={' ' + className}>
-    <div id='sidebar-drawer' className={`${isOpen ? 'ml-0' : '-ml-80'} bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-50`}>
+    <div id='sidebar-drawer' className={`${isOpen ? 'ml-0' : '-ml-80'} bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-40`}>
       {children}
     </div>
     {/* 背景蒙版 */}

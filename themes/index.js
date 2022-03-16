@@ -1,9 +1,15 @@
 /**
- * 修改 from 后面的路径，实现主题切换
+ * 切换主题请修改 blog.config.js 中的 THEME 字段
  */
-
-// export * from './Empty' //  空主题
-// export * from './NEXT'
-// export * from './Fukasawa'
-export * from './Hexo'
-// export * from './Medium'
+import * as next from './next'
+import * as fukasawa from './fukasawa'
+import * as hexo from './hexo'
+import * as medium from './medium'
+import * as empty from './empty'
+export {
+  next,
+  fukasawa,
+  hexo,
+  medium,
+  empty
+}
