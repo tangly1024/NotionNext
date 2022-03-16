@@ -1,9 +1,10 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Select from './Select'
+import { ALL_THEME } from '@/lib/theme'
 /**
  *
  * @returns 调试面板
@@ -13,9 +14,8 @@ export function DebugPanel () {
   const GlobalConfig = useGlobal()
   const router = useRouter()
   const { theme, setTheme } = GlobalConfig
-  const allThemes = Object.keys(ThemeMap)
   const themeOptions = []
-  allThemes.forEach(t => {
+  ALL_THEME.forEach(t => {
     themeOptions.push({ value: t, text: t })
   })
 
@@ -24,18 +24,10 @@ export function DebugPanel () {
   }
 
   function switchTheme () {
-    const currentIndex = allThemes.indexOf(theme)
-    const newIndex = currentIndex < allThemes.length - 1 ? currentIndex + 1 : 0
-    changeTheme(allThemes[newIndex])
+    const currentIndex = ALL_THEME.indexOf(theme)
+    const newIndex = currentIndex < ALL_THEME.length - 1 ? currentIndex + 1 : 0
+    changeTheme(ALL_THEME[newIndex])
   }
-
-  useEffect(() => {
-    const theme = router.query.theme
-    if (theme && allThemes.indexOf(theme) > -1) {
-      changeTheme(theme)
-    }
-  })
-
   /**
    * 切换主题
    */
@@ -59,14 +51,10 @@ export function DebugPanel () {
   return (
     <>
       {/* 调试按钮 */}
-      <div
-        className={`${
-          show ? 'right-96' : ''
-        } fixed right-0 bottom-36 duration-200 z-50`}
-      >
+      <div>
         <div
           style={{ writingMode: 'vertical-lr' }}
-          className="bg-black text-white shadow-2xl p-2.5 rounded-l-xl cursor-pointer"
+          className={`bg-black text-white shadow-2xl p-2.5 rounded-l-xl cursor-pointer ${show ? 'right-96' : 'right-0'} fixed bottom-36 duration-200 z-50`}
           onClick={toggleShow}
         >
           {show
@@ -119,7 +107,6 @@ export function DebugPanel () {
           </div>
           <div className="text-xs">
             {Object.keys(ThemeMap[theme].THEME_CONFIG).map(k => (
-              <>
                 <div key={k} className="justify-between flex py-1">
                   <span className="bg-indigo-500 p-0.5 rounded text-white mr-2">
                     {k}
@@ -128,7 +115,6 @@ export function DebugPanel () {
                     {filterResult(ThemeMap[theme].THEME_CONFIG[k] + '')}
                   </span>
                 </div>
-              </>
             ))}
           </div>
         </div>

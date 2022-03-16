@@ -28,7 +28,7 @@ const LayoutBase = props => {
       </div>
       {/* 内容主体 */}
       <main id="wrapper" className="flex justify-center flex-1 pb-12">
-        <div className="max-w-6xl">{children}</div>
+        <div className="max-w-6xl px-3">{children}</div>
       </main>
     </div>
   )

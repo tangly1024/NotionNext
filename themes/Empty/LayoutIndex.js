@@ -5,7 +5,6 @@ export const LayoutIndex = props => {
   const { posts } = props
   return (
     <LayoutBase {...props}>
-      Index
       {posts.map(p => (
         <div key={p.id} className='border my-12'>
           <Link href={`/article/${p.slug}`}>
