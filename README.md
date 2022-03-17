@@ -19,7 +19,7 @@
 
 演示地址：[https://preview.tangly1024.com/](https://preview.tangly1024.com/)
 
-## 亮点 ✨
+## 继承自Nobelium的亮点 ✨ 
 
 **🚀 &nbsp;秒开，设备全适配**
 
@@ -42,16 +42,15 @@
 - 丰富的配置项，更支持多语言
 - 使用 Tailwind CSS，轻松实现二次开发
 
-**🕸 &nbsp;网址美观、搜索引擎优化**
-- 更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
+## 特色
+- 支持更多的页面，功能，更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
+- 支持多主题切换
 
-## 支持主题切换
-| 主题截图 | 预览地址 |
-|--|--|
-| <img src='./docs/theme-next.png' width='300'/> | [预览NEXT](https://preview.tangly1024.com/?theme=next) |
-| <img src='./docs/theme-medium.png' width='300'/>| [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) |
-| <img src='./docs/theme-hexo.png' width='300'/> |  [预览HEXO](https://preview.tangly1024.com/?theme=hexo)  |
-| <img src='./docs/theme-fukasawa.png' width='300'/>|  [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
+| Next | Medium | Hexo | Fukasawa |
+|--|--|--|--|
+| <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
+
+
 
 *只需修改`blog.config.js`文件的`THEME`即可实现主题切换。*
 
@@ -87,6 +86,19 @@ yarn run start # 本地启动NextJS服务
 - **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
 - **评论**: Gitalk, Cusdis, Utterances
 - **图标**：[fontawesome](https://fontawesome.com/v5.15/icons?d=gallery)
+
+## 致谢
+感谢Craig Hart发起的Nobelium项目
+<table><tr align="left">
+  <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://notion.so/cnotion" title="Craig Hart">Craig Hart</a></td>
+</tr></table>
+
+## Contributors
+
+<table><tr align="left">
+  <td align="center"><a href="https://github.com/tangly1024"><img src="https://avatars.githubusercontent.com/u/15920488" width="64px;"alt="tangly1024"/><br/><sub><b>tangly1024</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=tangly1024" title="Owner" >🎫 🔧 🎨 🐛</a></td>
+  <td align="center"><a href="https://github.com/uWayLu"><img src="https://avatars.githubusercontent.com/u/21689326" width="64px;" alt="uWayLu"/><br/><sub><b>uWayLu</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=uWayLu" title="yokinist" >🔧 🐛</a></td>
+</tr></table>
 
 ## License
 
