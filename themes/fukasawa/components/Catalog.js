@@ -51,7 +51,7 @@ const Catalog = ({ toc }) => {
   }, throttleMs))
 
   return <div>
-    <div className='w-full dark:text-gray-300'><i className='mr-1 fas fa-stream' /> 目录</div>
+    <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' /> 目录</div>
     <nav className='font-sans overflow-y-auto scroll-hidden text-black'>
       {toc.map((tocItem) => {
         const id = uuidToId(tocItem.id)

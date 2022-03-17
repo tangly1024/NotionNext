@@ -21,7 +21,10 @@ const SearchInput = props => {
     const key = searchInputRef.current.value
     if (key && key !== '') {
       setLoadingState(true)
-      location.href = '/search/' + key
+      router.push({ pathname: '/search/' + key }).then(r => {
+        setLoadingState(false)
+      })
+      // location.href = '/search/' + key
     } else {
       router.push({ pathname: '/' }).then(r => {})
     }

@@ -45,9 +45,9 @@ const LayoutBase = (props) => {
 
     {headerSlot}
 
-    <main id='wrapper' className='flex w-full justify-center py-8 min-h-screen'>
+    <main id='wrapper' className='w-full justify-center py-8 min-h-screen'>
 
-      <div id='container-inner' className='pt-14 w-full mx-auto flex justify-between space-x-4 max-w-7xl'>
+      <div id='container-inner' className='pt-14 w-full mx-auto lg:flex justify-between md:space-x-4 max-w-7xl'>
         <div className='flex-grow w-full'>{children}</div>
         <SideRight {...props}/>
       </div>
@@ -56,7 +56,7 @@ const LayoutBase = (props) => {
 
      {/* 右下角悬浮 */}
      <div className='bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-blue-400 rounded'>
-        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp justify-center duration-500  animate__faster flex flex-col items-center cursor-pointer '}>
+        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '}>
           <FloatDarkModeButton/>
           {floatSlot}
           <JumpToTopButton/>

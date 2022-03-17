@@ -12,7 +12,8 @@ function GroupMenu ({ customNav }) {
     { name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_FUKA.MENU_CATEGORY },
     { name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_FUKA.MENU_TAG },
-    { name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_FUKA.MENU_ARCHIVE }
+    { name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_FUKA.MENU_ARCHIVE },
+    { name: locale.NAV.SEARCH, to: '/search', show: CONFIG_FUKA.MENU_SEARCH }
   ]
 
   if (customNav) {
