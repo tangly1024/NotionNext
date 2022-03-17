@@ -68,7 +68,7 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
     <hr className='border-dashed'/>
 
     {/* 评论互动 */}
-    <div className="duration-200  overflow-x-auto bg-white dark:bg-gray-800">
+    <div className="duration-200  overflow-x-auto bg-white dark:bg-gray-800 px-3">
        <Comment frontMatter={post} />
     </div>
   </div>)

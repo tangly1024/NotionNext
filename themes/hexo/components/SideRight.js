@@ -19,7 +19,7 @@ export default function SideRight (props) {
   } = props
 
   return (
-    <div className={'w-80 space-y-4'}>
+    <div className={'md:w-80 p-2 space-y-4'}>
       <InfoCard {...props}/>
       <AnalyticsCard {...props}/>
 
