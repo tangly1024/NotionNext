@@ -25,6 +25,22 @@ const Comment = ({ frontMatter }) => {
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
+
+        {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
+          <GitalkComponent
+            options={{
+              id: frontMatter.id,
+              title: frontMatter.title,
+              clientID: BLOG.COMMENT_GITALK_CLIENT_ID,
+              clientSecret: BLOG.COMMENT_GITALK_CLIENT_SECRET,
+              repo: BLOG.COMMENT_GITALK_REPO,
+              owner: BLOG.COMMENT_GITALK_OWNER,
+              admin: BLOG.COMMENT_GITALK_ADMIN.split(','),
+              distractionFreeMode: JSON.parse(BLOG.COMMENT_GITALK_DISTRACTION_FREE_MODE)
+            }}
+          />
+        </div>)}
+
         {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
           <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
         </div>)}
@@ -38,21 +54,6 @@ const Comment = ({ frontMatter }) => {
               pageId: frontMatter.id,
               pageTitle: frontMatter.title,
               pageUrl: BLOG.LINK + router.asPath
-            }}
-          />
-        </div>)}
-
-        {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
-          <GitalkComponent
-            options={{
-              id: frontMatter.id,
-              title: frontMatter.title,
-              clientID: BLOG.COMMENT_GITALK_CLIENT_ID,
-              clientSecret: BLOG.COMMENT_GITALK_CLIENT_SECRET,
-              repo: BLOG.COMMENT_GITALK_REPO,
-              owner: BLOG.COMMENT_GITALK_OWNER,
-              admin: BLOG.COMMENT_GITALK_ADMIN.split(','),
-              distractionFreeMode: JSON.parse(BLOG.COMMENT_GITALK_DISTRACTION_FREE_MODE)
             }}
           />
         </div>)}
