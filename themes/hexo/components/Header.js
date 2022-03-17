@@ -107,7 +107,9 @@ export default function Header () {
     >
       <div className="absolute flex flex-col h-full items-center justify-center w-full font-sans">
         <div className='text-4xl md:text-5xl text-white shadow-text'>{BLOG.TITLE}</div>
-        <div id='typed' className='flex h-10 items-center text-center text-lg shadow-text text-white'/>
+        <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
+          <span id='typed'/>
+        </div>
       </div>
       <div
         onClick={() => {
