@@ -10,7 +10,7 @@ function SiteInfo ({ title }) {
         >
             <span> © {`${startYear}${currentYear}`} <span> <a href={BLOG.LINK} className='text-gray-500 dark:text-gray-300 '>{BLOG.AUTHOR}</a>. <br /></span>
 
-                <span>Powered by  <a href='https://github.com/tangly1024/NotionNext' className='underline font-bold text-gray-500 dark:text-gray-300'>NotionNext</a>.</span><br /></span>
+            <span> ❤ <a href='https://github.com/tangly1024/NotionNext' className='underline font-bold text-gray-500 dark:text-gray-300'>NotionNext {BLOG.VERSION}</a></span><br /></span>
 
             {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br/></>}
 
