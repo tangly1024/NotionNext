@@ -28,7 +28,7 @@ const SearchDrawer = ({ cRef, slot }) => {
       </div>
 
       {/* 背景蒙版 */}
-      <div id='search-drawer-background' onClick={hidden} className='animate__animated animate__faster animate__fadeIn fixed bg-day dark:bg-night top-0 left-0 z-40 w-full h-full' />
+      <div id='search-drawer-background' onClick={hidden} className='animate__animated animate__faster animate__fadeIn fixed bg-day dark:bg-night top-0 left-0 z-30 w-full h-full' />
     </div>
   )
 }
