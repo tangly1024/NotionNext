@@ -21,10 +21,10 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     const key = searchInputRef.current.value
     if (key && key !== '') {
       setLoadingState(true)
-      // router.push({ pathname: '/search/' + key }).then(r => {
-      //   setLoadingState(false)
-      // })
-      location.href = '/search/' + key
+      router.push({ pathname: '/search/' + key }).then(r => {
+        setLoadingState(false)
+      })
+      // location.href = '/search/' + key
     } else {
       router.push({ pathname: '/' }).then(r => {
       })
@@ -61,26 +61,31 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     }
   }
 
-  return <div className='flex border dark:border-gray-600 w-full bg-gray-100 dark:bg-gray-900'>
-    <input
-      ref={searchInputRef}
-      type='text'
-      placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-      className={'w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 border-gray-300 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
-      onKeyUp={handleKeyUp}
-      onCompositionStart={lockSearchInput}
-      onCompositionUpdate={lockSearchInput}
-      onCompositionEnd={unLockSearchInput}
-      onChange={e => updateSearchKey(e.target.value)}
-      defaultValue={currentSearch}
-    />
-    {(showClean && <i className='fas fa-times text-gray-300 float-right m-3 cursor-pointer' onClick={cleanSearch} />)}
+  return <div className='flex w-full bg-gray-100'>
+  <input
+    ref={searchInputRef}
+    type='text'
+    placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
+    className={'w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+    onKeyUp={handleKeyUp}
+    onCompositionStart={lockSearchInput}
+    onCompositionUpdate={lockSearchInput}
+    onCompositionEnd={unLockSearchInput}
+    onChange={e => updateSearchKey(e.target.value)}
+    defaultValue={currentSearch || ''}
+  />
 
-    <div className='p-3 bg-gray-50 flex border-l dark:border-gray-700 dark:hover:bg-gray-800 dark:bg-gray-600 justify-center items-center cursor-pointer'
-      onClick={handleSearch}>
-        <i className={`${onLoading ? 'fa-spinner animate-spin ' : 'fa-search'} fas hover:scale-125 hover:text-black transform duration-200 dark:text-gray-300 dark:hover:text-white text-gray-600 cursor-pointer`} />
-    </div>
+  <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
+    onClick={handleSearch}>
+      <i className={`hover:text-black transform duration-200  text-gray-500 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}`} />
   </div>
+
+  {(showClean &&
+    <div className='-ml-12 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'>
+      <i className='hover:text-black transform duration-200 text-gray-400 cursor-pointer fas fa-times' onClick={cleanSearch} />
+    </div>
+    )}
+</div>
 }
 
 export default SearchInput
