@@ -19,7 +19,7 @@ export function InfoCard (props) {
         width={120}
         height={120}
         loading='lazy'
-        src='/avatar.jpg'
+        src={BLOG.AVATAR}
         className='rounded-full'
       />
     </div>
