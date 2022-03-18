@@ -8,7 +8,7 @@ import SiteInfo from './SiteInfo'
 import Catalog from './Catalog'
 
 function AsideLeft (props) {
-  const { tags, currentTag, categories, currentCategory, post } = props
+  const { tags, currentTag, categories, currentCategory, post, slot } = props
   return <div className='w-72 bg-white dark:bg-gray-800 min-h-screen px-10 py-14 hidden lg:block'>
     <Logo />
 
@@ -44,8 +44,10 @@ function AsideLeft (props) {
 
     <section className='sticky top-0 pt-12'>
       <Catalog toc={post?.toc}/>
+      <div className='flex justify-center'>
+        {slot}
+      </div>
     </section>
-
   </div>
 }
 

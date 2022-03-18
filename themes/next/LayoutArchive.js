@@ -3,7 +3,6 @@ import BLOG from '@/blog.config'
 import React, { useEffect } from 'react'
 import LayoutBase from './LayoutBase'
 import BlogPostArchive from './components/BlogPostArchive'
-import Live2D from './components/Live2D'
 
 export const LayoutArchive = (props) => {
   const { posts } = props
@@ -60,7 +59,6 @@ export const LayoutArchive = (props) => {
           />
         ))}
       </div>
-      <Live2D />
     </LayoutBase>
   )
 }

@@ -8,14 +8,8 @@ import { AnalyticsCard } from './AnalyticsCard'
 
 export default function SideRight (props) {
   const {
-    post,
-    currentCategory,
-    categories,
-    latestPosts,
-    tags,
-    currentTag,
-    showCategory,
-    showTag
+    post, currentCategory, categories, latestPosts, tags,
+    currentTag, showCategory, showTag, slot
   } = props
 
   return (
@@ -43,11 +37,13 @@ export default function SideRight (props) {
         <LatestPostsGroup posts={latestPosts} />
       </Card>}
 
-      {post && post.toc && (
-        <Card className='sticky top-20'>
+      <div className='sticky top-20'>
+       {post && post.toc && <Card>
           <Catalog toc={post.toc} />
-        </Card>
-      )}
+        </Card>}
+        {slot}
+      </div>
+
     </div>
   )
 }

@@ -6,7 +6,6 @@ import Card from './components/Card'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import ArticleDetail from './components/ArticleDetail'
 import TocDrawer from './components/TocDrawer'
-import Live2D from './components/Live2D'
 import { useRef } from 'react'
 import CONFIG_NEXT from './config_next'
 
@@ -52,9 +51,6 @@ export const LayoutSlug = (props) => {
       <div className='block lg:hidden'>
         <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
       </div>
-
-      {/* 宠物 */}
-      <Live2D />
 
     </LayoutBase>
   )

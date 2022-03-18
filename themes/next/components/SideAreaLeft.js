@@ -19,7 +19,7 @@ import CONFIG_NEXT from '../config_next'
  * @constructor
  */
 const SideAreaLeft = (props) => {
-  const { post, postCount } = props
+  const { post, slot, postCount } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
   return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
@@ -37,7 +37,8 @@ const SideAreaLeft = (props) => {
       </section>
     </section>
 
-    <Card className='sticky top-4 hidden lg:block'>
+    <div className='sticky top-4 hidden lg:block'>
+    <Card>
       <Tabs>
           {showToc && (
             <div key={locale.COMMON.TABLE_OF_CONTENTS} className='dark:text-gray-400 text-gray-600 bg-white dark:bg-gray-800 duration-200'>
@@ -60,6 +61,11 @@ const SideAreaLeft = (props) => {
           </div>
       </Tabs>
     </Card>
+
+   {slot && <div className='flex justify-center'>
+      {slot}
+    </div>}
+  </div>
 
  </aside>
 }

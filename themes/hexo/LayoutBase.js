@@ -7,6 +7,7 @@ import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import smoothscroll from 'smoothscroll-polyfill'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
+import Live2D from '@/components/Live2D'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -18,6 +19,7 @@ const LayoutBase = (props) => {
   const { children, headerSlot, floatSlot, meta } = props
   const [show, switchShow] = useState(false)
   // const [percent, changePercent] = useState(0) // 页面阅读百分比
+  const rightAreaSlot = <Live2D/>
 
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
@@ -49,7 +51,7 @@ const LayoutBase = (props) => {
 
       <div id='container-inner' className='pt-14 w-full mx-auto lg:flex justify-between md:space-x-4 max-w-7xl'>
         <div className='flex-grow w-full'>{children}</div>
-        <SideRight {...props}/>
+        <SideRight {...props} slot={rightAreaSlot}/>
       </div>
 
     </main>

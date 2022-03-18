@@ -34,6 +34,7 @@ const MyApp = ({ Component, pageProps }) => {
         {/* FontawesomeCDN */}
         <link href={BLOG.FONT_AWESOME_PATH} rel="stylesheet" referrerPolicy="no-referrer" />
         <Component {...pageProps} />
+
     </GlobalContextProvider>
   )
 }

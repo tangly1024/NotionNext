@@ -12,6 +12,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from './config_next'
+import Live2D from '@/components/Live2D'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -22,6 +23,7 @@ const LayoutBase = (props) => {
   const { children, headerSlot, meta, sideBarSlot, floatSlot, rightAreaSlot } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
+  const leftAreaSlot = <Live2D/>
 
   const [show, switchShow] = useState(false)
   const [percent, changePercent] = useState(0) // 页面阅读百分比
@@ -56,7 +58,7 @@ const LayoutBase = (props) => {
       <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'/>
 
       <main id='wrapper' className='flex justify-center flex-1 pb-12'>
-          <SideAreaLeft targetRef={targetRef} {...props}/>
+          <SideAreaLeft slot={leftAreaSlot} targetRef={targetRef} {...props}/>
           <section id='center' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-40' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
             {onLoading ? <LoadingCover/> : <> {children}</> }
           </section>
