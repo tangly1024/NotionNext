@@ -10,12 +10,18 @@ const Tabs = ({ className, children }) => {
     return <></>
   }
 
-  let count = children.length
+  children = children.filter(c => c !== '')
+
+  let count = 0
   children.forEach(e => {
-    if (!e) {
-      count--
+    if (e) {
+      count++
     }
   })
+
+  if (count === 0) {
+    return <></>
+  }
 
   if (count === 1) {
     return <section className={'duration-200 ' + className}>

@@ -21,14 +21,16 @@ export const LayoutSearch = props => {
       // 自动聚焦到搜索框
       cRef.current.focus()
       if (currentSearch && !handleTextColor) {
-        const container = document.getElementById('container')
-        if (container && container.innerHTML) {
-          const re = new RegExp(`${currentSearch}`, 'gim')
-          container.innerHTML = container.innerHTML.replace(
-            re,
+        const targets = document.getElementsByClassName('replace')
+        for (const container of targets) {
+          if (container && container.innerHTML) {
+            const re = new RegExp(`${currentSearch}`, 'gim')
+            container.innerHTML = container.innerHTML.replace(
+              re,
             `<span class='text-red-500 border-b border-dashed'>${currentSearch}</span>`
-          )
-          handleTextColor = true
+            )
+            handleTextColor = true
+          }
         }
       }
     }, 100)

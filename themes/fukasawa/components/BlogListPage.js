@@ -14,8 +14,8 @@ import PaginationSimple from './PaginationSimple'
  */
 const BlogListPage = ({ page = 1, posts = [], postCount }) => {
   const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
-  const showNext = page < totalPage && posts.length <= BLOG.POSTS_PER_PAGE && posts.length < postCount
-  const [colCount, changeCol] = useState(3)
+  const showNext = page < totalPage && posts.length === BLOG.POSTS_PER_PAGE && posts.length < postCount
+  const [colCount, changeCol] = useState(1)
 
   function updateCol () {
     if (window.outerWidth > 1200) {
