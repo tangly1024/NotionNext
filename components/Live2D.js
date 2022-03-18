@@ -1,21 +1,27 @@
 /* eslint-disable no-undef */
-import CONFIG_NEXT from '../config_next'
+import BLOG from '@/blog.config'
 import { loadExternalResource } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
-let hasLoad = false
 export default function Live2D () {
-  if (!CONFIG_NEXT.WIDGET_PET) {
+  if (!BLOG.WIDGET_PET) {
     return <></>
   }
+  const [init, setInit] = useState()
 
-  if (typeof window !== 'undefined' && !hasLoad) {
-    initLive2D()
-    hasLoad = true
-  }
+  // if (typeof window !== 'undefined' && !hasLoad) {
+  //   initLive2D()
+  //   hasLoad = true
+  // }
 
-  return <div className='fixed right-0 bottom-0 hidden md:block lg:mr-24 2xl:mr-40 z-20'>
-    <canvas id="live2d" className='animate__slideInLeft animate__animated' width="280" height="250"/>
-  </div>
+  useEffect(() => {
+    if (!init) {
+      initLive2D()
+      setInit(true)
+    }
+  }, [init])
+
+  return <canvas id="live2d" className='animate__slideInUp animate__animated' width="280" height="250"/>
 }
 
 function initLive2D () {
@@ -26,7 +32,7 @@ function initLive2D () {
       loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
     ]).then(() => {
       // https://github.com/xiazeyu/live2d-widget-models
-      loadlive2d('live2d', CONFIG_NEXT.WIDGET_PET_LINK)
+      loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
     })
   }
 }

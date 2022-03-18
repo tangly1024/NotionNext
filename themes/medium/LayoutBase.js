@@ -10,6 +10,7 @@ import SearchInput from './components/SearchInput'
 import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
+import Live2D from '@/components/Live2D'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -40,7 +41,8 @@ const LayoutBase = props => {
 
         {/* 桌面端右侧 */}
         <div className='hidden xl:block border-l dark:border-gray-500 w-96'>
-          <Tabs className='py-14 px-6 sticky top-0'>
+         <div className='py-14 px-6 sticky top-0'>
+          <Tabs>
             {slotRight}
             <div key={locale.NAV.ABOUT}>
               {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
@@ -48,8 +50,14 @@ const LayoutBase = props => {
               {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
             </div>
           </Tabs>
+           <Live2D/>
+         </div>
         </div>
       </main>
+
+      <div className='fixed right-0 bottom-0 hidden md:block lg:mr-6 z-20'>
+
+      </div>
 
       {/* 移动端底部 */}
       <Footer />
