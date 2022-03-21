@@ -51,7 +51,7 @@ export async function getStaticProps ({ params: { slug } }) {
   const prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
   const next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
 
-  const recommendPosts = getRecommendPost(post, allPosts)
+  const recommendPosts = getRecommendPost(post, allPosts, BLOG.POST_RECOMMEND_COUNT)
 
   return {
     props: {
@@ -76,25 +76,32 @@ export async function getStaticProps ({ params: { slug } }) {
  * @param {*} count
  * @returns
  */
-function getRecommendPost (post, allPosts, count = 5) {
-  let filteredPosts = []
-  for (const i in allPosts) {
+function getRecommendPost (post, allPosts, count = 6) {
+  let recommendPosts = []
+  const postIds = []
+  const currentTags = post.tags
+  for (let i = 0; i < allPosts.length; i++) {
     const p = allPosts[i]
-    filteredPosts.push(Object.assign(p))
+    if (p.id === post.id || p.type.indexOf('Post') < 0) {
+      continue
+    }
+
+    for (let j = 0; j < currentTags.length; j++) {
+      const t = currentTags[j]
+      if (postIds.indexOf(p.id) > -1) {
+        continue
+      }
+      if (p.tags && p.tags.indexOf(t) > -1) {
+        recommendPosts.push(p)
+        postIds.push(p.id)
+      }
+    }
   }
 
-  if (post.tags && post.tags.length) {
-    const currentTag = post.tags[0]
-    filteredPosts = filteredPosts.filter(
-      p => p && p.slug !== post.slug && p.tags && p.tags?.includes(currentTag) && p.type === ['Post']
-    )
+  if (recommendPosts.length > count) {
+    recommendPosts = recommendPosts.slice(0, count)
   }
-
-  // 筛选前5个
-  if (filteredPosts.length > count) {
-    filteredPosts = filteredPosts.slice(0, count)
-  }
-  return filteredPosts
+  return recommendPosts
 }
 
 export default Slug
