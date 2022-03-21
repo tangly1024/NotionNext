@@ -8,6 +8,8 @@ import TopNav from './components/TopNav'
 import smoothscroll from 'smoothscroll-polyfill'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Live2D from '@/components/Live2D'
+import LoadingCover from './components/LoadingCover'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -20,6 +22,7 @@ const LayoutBase = (props) => {
   const [show, switchShow] = useState(false)
   // const [percent, changePercent] = useState(0) // 页面阅读百分比
   const rightAreaSlot = <Live2D/>
+  const { onLoading } = useGlobal()
 
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
@@ -43,6 +46,7 @@ const LayoutBase = (props) => {
 
   return (<div className='bg-white dark:bg-gray-900'>
     <CommonHead meta={meta} />
+
     <TopNav {...props}/>
 
     {headerSlot}
@@ -50,7 +54,10 @@ const LayoutBase = (props) => {
     <main id='wrapper' className='w-full justify-center py-8 min-h-screen'>
 
       <div id='container-inner' className='pt-14 w-full mx-auto lg:flex justify-between md:space-x-4 max-w-7xl'>
-        <div className='flex-grow w-full'>{children}</div>
+        <div className='flex-grow w-full'>
+          {onLoading ? <LoadingCover/> : children}
+        </div>
+
         <SideRight {...props} slot={rightAreaSlot}/>
       </div>
 

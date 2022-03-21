@@ -8,13 +8,16 @@ import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
 import { useEffect, useRef } from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
+import ArticleAdjacent from './ArticleAdjacent'
+import ArticleCopyright from './ArticleCopyright'
 
 /**
  *
  * @param {*} param0
  * @returns
  */
-export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
+export default function ArticleDetail (props) {
+  const { post } = props
   const zoom = typeof window !== 'undefined' && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
@@ -62,6 +65,9 @@ export default function ArticleDetail ({ post, recommendPosts, prev, next }) {
           data-ad-client="ca-pub-2708419466378217"
           data-ad-slot="3806269138"/>
       </section>
+
+      <ArticleCopyright {...props}/>
+      <ArticleAdjacent {...props}/>
 
     </article>
 

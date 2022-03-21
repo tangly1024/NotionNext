@@ -14,6 +14,9 @@ const CONFIG_HEXO = {
   POST_LIST_PREVIEW: true, // 读取文章预览
   NAV_TYPE: 'autoCollapse', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
 
+  ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
+  ARTICLE_COPYRIGHT: true, // 显示文章版权声明
+
   WIDGET_TO_TOP: true,
   WIDGET_TO_COMMENT: true, // 跳到评论区
   WIDGET_DARK_MODE: true, // 夜间模式
