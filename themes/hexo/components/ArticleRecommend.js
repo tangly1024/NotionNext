@@ -9,7 +9,7 @@ import { useGlobal } from '@/lib/global'
  * @returns
  */
 export default function ArticleRecommend ({ recommendPosts }) {
-  if (!recommendPosts || !CONFIG_HEXO.ARTICLE_RECOMMEND) {
+  if (!CONFIG_HEXO.ARTICLE_RECOMMEND || !recommendPosts || recommendPosts.length === 0) {
     return <></>
   }
   const { locale } = useGlobal()
