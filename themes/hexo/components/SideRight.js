@@ -5,7 +5,7 @@ import TagGroups from './TagGroups'
 import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import { AnalyticsCard } from './AnalyticsCard'
-
+import CONFIG_HEXO from '../config_hexo'
 export default function SideRight (props) {
   const {
     post, currentCategory, categories, latestPosts, tags,
@@ -13,9 +13,9 @@ export default function SideRight (props) {
   } = props
 
   return (
-    <div className={'md:w-80 p-2 space-y-4'}>
+    <div className={'lg:w-80 p-2 space-y-4'}>
       <InfoCard {...props}/>
-      <AnalyticsCard {...props}/>
+      { CONFIG_HEXO.WIDGET_ANALYTICS && <AnalyticsCard {...props}/>}
 
       {showCategory && (
         <Card>
@@ -33,7 +33,7 @@ export default function SideRight (props) {
           <TagGroups tags={tags} currentTag={currentTag} />
         </Card>
       )}
-      {latestPosts && <Card>
+      {CONFIG_HEXO.WIDGET_LATEST_POSTS && latestPosts && <Card>
         <LatestPostsGroup posts={latestPosts} />
       </Card>}
 

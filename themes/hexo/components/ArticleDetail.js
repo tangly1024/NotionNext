@@ -10,6 +10,7 @@ import { useEffect, useRef } from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
 import ArticleAdjacent from './ArticleAdjacent'
 import ArticleCopyright from './ArticleCopyright'
+import ArticleRecommend from './ArticleRecommend'
 
 /**
  *
@@ -67,6 +68,7 @@ export default function ArticleDetail (props) {
       </section>
 
       <ArticleCopyright {...props}/>
+      <ArticleRecommend {...props}/>
       <ArticleAdjacent {...props}/>
 
     </article>
