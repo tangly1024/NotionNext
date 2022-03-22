@@ -28,7 +28,11 @@ const LayoutBase = props => {
       {/* 内容主体 */}
       <main id="wrapper" className="flex justify-center flex-1 pb-12">
         <div className="max-w-4xl px-3">{children}</div>
-        <div><Live2D/></div>
+        <div >
+          <div className='sticky top-0 z-40'>
+          <Live2D/>
+          </div>
+        </div>
       </main>
       <footer
       className='font-sans dark:bg-gray-900 flex-shrink-0  justify-center text-center m-auto w-full leading-6 text-sm p-6'
