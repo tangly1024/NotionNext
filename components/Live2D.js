@@ -23,7 +23,7 @@ export default function Live2D () {
     }
   }, [init])
 
-  return <canvas id="live2d" className='animate__slideInUp animate__animated cursor-pointer' width="280" height="250" onClick={switchTheme} alt='切换主题' title='切换主题'/>
+  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={switchTheme} alt='切换主题' title='切换主题'/>
 }
 
 function initLive2D () {
