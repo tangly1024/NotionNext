@@ -41,7 +41,7 @@ export async function getStaticPaths () {
   const from = 'category-paths'
   const { categories } = await getGlobalNotionData({ from })
   return {
-    paths: Object.keys(categories).map(category => ({ params: { category } })),
+    paths: Object.keys(categories).map(category => ({ params: { category: categories[category]?.name } })),
     fallback: true
   }
 }
