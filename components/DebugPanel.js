@@ -1,19 +1,17 @@
 import BLOG from '@/blog.config'
-import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import Select from './Select'
 import { ALL_THEME } from '@/lib/theme'
+import { useGlobal } from '@/lib/global'
 /**
  *
  * @returns 调试面板
  */
 export function DebugPanel () {
   const [show, setShow] = useState(false)
-  const GlobalConfig = useGlobal()
-  const router = useRouter()
-  const { theme, setTheme } = GlobalConfig
+  const { theme, changeTheme, switchTheme } = useGlobal()
+
   const themeOptions = []
   ALL_THEME.forEach(t => {
     themeOptions.push({ value: t, text: t })
@@ -21,19 +19,6 @@ export function DebugPanel () {
 
   function toggleShow () {
     setShow(!show)
-  }
-
-  function switchTheme () {
-    const currentIndex = ALL_THEME.indexOf(theme)
-    const newIndex = currentIndex < ALL_THEME.length - 1 ? currentIndex + 1 : 0
-    changeTheme(ALL_THEME[newIndex])
-  }
-  /**
-   * 切换主题
-   */
-  function changeTheme (theme) {
-    router.query.theme = ''
-    setTheme(theme)
   }
 
   function filterResult (text) {
