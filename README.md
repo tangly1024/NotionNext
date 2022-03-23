@@ -72,6 +72,17 @@
 
 ## 快速开发
 
+- 通过Docker体验本地部署
+```bash
+# 从Dockerhub仓库中下载体验
+docker pull tangly1024/notionnext:2.8.1
+docker run -p 3000:3000 tangly1024/notionnext:2.8.1  
+# 可以在环境变量中直接配置NOTION_PAGE_ID
+docker run -p 3000:3000 -e NOTION_PAGE_ID="你的Notion_Page_ID" tangly1024/notionnext:2.8.1  
+
+```
+
+- 本地安装Nodejs进行开发
 ```bash
 yarn # 安装依赖
 yarn run dev # 本地开发
