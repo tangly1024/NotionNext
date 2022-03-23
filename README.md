@@ -72,6 +72,13 @@
 
 ## 快速开发
 
+- 通过Docker体验本地部署
+```bash
+docker build  -t notionnext .    
+docker run -p 3000:3000 notionnext   
+```
+
+- 本地安装Nodejs进行开发
 ```bash
 yarn # 安装依赖
 yarn run dev # 本地开发
