@@ -11,10 +11,11 @@ export default function Live2D () {
   const [init, setInit] = useState()
   const { switchTheme } = useGlobal()
 
-  // if (typeof window !== 'undefined' && !hasLoad) {
-  //   initLive2D()
-  //   hasLoad = true
-  // }
+  function handleClick () {
+    if (BLOG.WIDGET_PET_SWITCH_THEME) {
+      switchTheme()
+    }
+  }
 
   useEffect(() => {
     if (!init) {
@@ -23,7 +24,7 @@ export default function Live2D () {
     }
   }, [init])
 
-  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={switchTheme} alt='切换主题' title='切换主题'/>
+  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='切换主题' title='切换主题'/>
 }
 
 function initLive2D () {

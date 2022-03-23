@@ -6,9 +6,11 @@ import GroupTag from './GroupTag'
 import SearchInput from './SearchInput'
 import SiteInfo from './SiteInfo'
 import Catalog from './Catalog'
+import { useRouter } from 'next/router'
 
 function AsideLeft (props) {
   const { tags, currentTag, categories, currentCategory, post, slot } = props
+  const router = useRouter()
   return <div className='w-72 bg-white dark:bg-gray-800 min-h-screen px-10 py-14 hidden lg:block'>
     <Logo />
 
@@ -27,15 +29,15 @@ function AsideLeft (props) {
       { BLOG.DESCRIPTION }
     </section>
 
-    <section className='flex flex-col'>
+    {router.asPath !== '/tag' && <section className='flex flex-col'>
       <hr className='w-12 my-8 ' />
       <GroupTag tags={tags} currentTag={currentTag}/>
-    </section>
+    </section>}
 
-    <section className='flex flex-col'>
+    {router.asPath !== '/category' && <section className='flex flex-col'>
       <hr className='w-12 my-8 ' />
       <GroupCategory categories={categories} currentCategory={currentCategory}/>
-    </section>
+    </section>}
 
     <section className='flex flex-col'>
       <hr className='w-12 my-8 ' />

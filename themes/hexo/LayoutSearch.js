@@ -19,7 +19,7 @@ export const LayoutSearch = props => {
   useEffect(() => {
     setTimeout(() => {
       // 自动聚焦到搜索框
-      cRef.current.focus()
+      cRef?.current?.focus()
       if (currentSearch && !handleTextColor) {
         const targets = document.getElementsByClassName('replace')
         for (const container of targets) {
