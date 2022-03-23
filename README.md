@@ -74,15 +74,12 @@
 
 - 通过Docker体验本地部署
 ```bash
-# 从Dockerhub残酷中直接下载体验
+# 从Dockerhub仓库中下载体验
+docker pull tangly1024/notionnext:2.8.1
 docker run -p 3000:3000 tangly1024/notionnext:2.8.1  
-
-# 或本地编译
-docker build  -t notionnext .     # 编译镜像
-docker run -p 3000:3000 notionnext    # 启动演示镜像
-
-# 切换成你的notion数据
+# 可以在环境变量中直接配置NOTION_PAGE_ID
 docker run -p 3000:3000 -e NOTION_PAGE_ID="你的Notion_Page_ID" tangly1024/notionnext:2.8.1  
+
 ```
 
 - 本地安装Nodejs进行开发
