@@ -26,5 +26,6 @@ export const LayoutCategoryIndex = (props) => {
           </Link>
         })}
       </div>
-    </div>  </LayoutBase>
+    </div>
+  </LayoutBase>
 }
