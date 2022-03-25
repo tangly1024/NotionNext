@@ -120,7 +120,10 @@ async function filterByMemCache (allPosts, keyword) {
     let hitCount = 0
     for (const i in indexContent) {
       const c = indexContent[i]
-      const index = c.toLowerCase().indexOf(keyword.toLowerCase())
+      if (!c) {
+        continue
+      }
+      const index = c.toLowerCase().indexOf(keyword.toLowerCase()) || -1
       if (index > -1) {
         hit = true
         hitCount += 1
