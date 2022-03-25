@@ -21,8 +21,8 @@ export const ArticleLock = props => {
     }
   }
 
-  return (
-    <div className="shadow md:hover:shadow-2xl overflow-x-auto max-w-5xl  w-screen md:w-full  py-10 px-5 lg:pt-24 md:px-24 min-h-screen dark:border-gray-700 bg-white dark:bg-gray-800 duration-200">
+  return (<div className="flex justify-center">
+    <div className="shadow md:hover:shadow-2xl overflow-x-auto max-w-5xl  w-screen md:w-full  py-10 px-5 lg:pt-24 md:px-24 min-h-screen dark:border-gray-700 bg-white dark:bg-gray-800 duration-200 subpixel-antialiased">
       <div className="w-full flex justify-center items-center h-96 font-sans">
         <div className="text-center space-y-3">
           <div className="font-bold">文章已加锁，请输入访问密码:</div>
@@ -44,5 +44,5 @@ export const ArticleLock = props => {
         </div>
       </div>
     </div>
-  )
+  </div>)
 }
