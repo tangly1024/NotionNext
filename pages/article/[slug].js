@@ -79,7 +79,7 @@ export async function getStaticProps ({ params: { slug } }) {
 function getRecommendPost (post, allPosts, count = 6) {
   let recommendPosts = []
   const postIds = []
-  const currentTags = post.tags
+  const currentTags = post.tags || []
   for (let i = 0; i < allPosts.length; i++) {
     const p = allPosts[i]
     if (p.id === post.id || p.type.indexOf('Post') < 0) {
