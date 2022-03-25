@@ -7,8 +7,9 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import ArticleDetail from './components/ArticleDetail'
+import { ArticleLock } from './components/ArticleLock'
 import HeaderArticle from './components/HeaderArticle'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
@@ -24,7 +25,16 @@ export const LayoutSlug = props => {
     tags: post.tags
   }
 
-  if (post?.blockMap?.block) {
+  // 文章加锁
+  const articleLock = post.password && post.password !== ''
+  const [lock, setLock] = useState(articleLock)
+  const validPassword = result => {
+    if (result) {
+      setLock(false)
+    }
+  }
+
+  if (!lock && post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
   }
@@ -53,7 +63,8 @@ export const LayoutSlug = props => {
       floatSlot={floatSlot}
     >
       <div className="w-full dark:border-gray-600 lg:shadow-md lg:hover:shadow-xl lg:border lg:border-gray-100 lg:rounded-xl lg:px-2 lg:py-4 lg:bg-white lg:dark:bg-gray-800">
-        <ArticleDetail {...props} />
+        {!lock && <ArticleDetail {...props} />}
+        {lock && <ArticleLock password={post.password} validPassword={validPassword} />}
       </div>
 
       <div className='block lg:hidden'>
