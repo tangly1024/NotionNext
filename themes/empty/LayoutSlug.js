@@ -14,6 +14,9 @@ import {
   NotionRenderer
 } from 'react-notion-x'
 import LayoutBase from './LayoutBase'
+import { useState, useRef, useEffect } from 'react'
+import { ArticleLock } from './components/ArticleLock'
+import mediumZoom from 'medium-zoom'
 
 const mapPageUrl = id => {
   return 'https://www.notion.so/' + id.replace(/-/g, '')
@@ -27,18 +30,46 @@ export const LayoutSlug = props => {
     type: 'article',
     tags: post.tags
   }
+  // 文章加锁
+  const articleLock = post.password && post.password !== ''
+  const [lock, setLock] = useState(articleLock)
+  const validPassword = result => {
+    if (result) {
+      setLock(false)
+    }
+  }
 
-  if (post?.blockMap?.block) {
+  if (!lock && post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
   }
 
+  const zoom =
+  typeof window !== 'undefined' &&
+  mediumZoom({
+    container: '.notion-viewport',
+    background: 'rgba(0, 0, 0, 0.2)',
+    margin: getMediumZoomMargin()
+  })
+  const zoomRef = useRef(zoom ? zoom.clone() : null)
+  useEffect(() => {
+    // 将所有container下的所有图片添加medium-zoom
+    const container = document.getElementById('notion-article')
+    const imgList = container?.getElementsByTagName('img')
+    if (imgList && zoomRef.current) {
+      for (let i = 0; i < imgList.length; i++) {
+        zoomRef.current.attach(imgList[i])
+      }
+    }
+  })
   return (
     <LayoutBase {...props} meta={meta}>
       <div>
         <h2>{post?.title}</h2>
-        <p>
-          <section id="notion-article" className="px-1">
+
+        {lock && <ArticleLock password={post.password} validPassword={validPassword} />}
+
+        {!lock && <section id="notion-article" className="px-1">
             {post.blockMap && (
               <NotionRenderer
                 recordMap={post.blockMap}
@@ -51,9 +82,27 @@ export const LayoutSlug = props => {
                 }}
               />
             )}
-          </section>
-        </p>
+          </section>}
+
       </div>
     </LayoutBase>
   )
+}
+
+function getMediumZoomMargin () {
+  const width = window.innerWidth
+
+  if (width < 500) {
+    return 8
+  } else if (width < 800) {
+    return 20
+  } else if (width < 1280) {
+    return 30
+  } else if (width < 1600) {
+    return 40
+  } else if (width < 1920) {
+    return 48
+  } else {
+    return 72
+  }
 }

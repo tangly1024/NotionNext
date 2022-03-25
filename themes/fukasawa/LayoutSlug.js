@@ -8,6 +8,8 @@ import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
 import ArticleDetail from './components/ArticleDetail'
 import LayoutBase from './LayoutBase'
+import { useState } from 'react'
+import { ArticleLock } from './components/ArticleLock'
 
 export const LayoutSlug = (props) => {
   const { post } = props
@@ -18,6 +20,15 @@ export const LayoutSlug = (props) => {
     tags: post.tags
   }
 
+  // 文章加锁
+  const articleLock = post.password && post.password !== ''
+  const [lock, setLock] = useState(articleLock)
+  const validPassword = result => {
+    if (result) {
+      setLock(false)
+    }
+  }
+
   if (post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
@@ -25,7 +36,8 @@ export const LayoutSlug = (props) => {
 
   return (
     <LayoutBase meta={meta} {...props} >
-      <ArticleDetail {...props} />
-    </LayoutBase>
+        {!lock && <ArticleDetail {...props} />}
+        {lock && <ArticleLock password={post.password} validPassword={validPassword} />}
+      </LayoutBase>
   )
 }
