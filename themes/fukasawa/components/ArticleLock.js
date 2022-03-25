@@ -1,3 +1,5 @@
+import { useGlobal } from '@/lib/global'
+
 /**
  * 加密文章校验组件
  * @param {password, validPassword} props
@@ -7,6 +9,8 @@
  */
 export const ArticleLock = props => {
   const { password, validPassword } = props
+  const { locale } = useGlobal()
+
   const submitPassword = () => {
     const p = document.getElementById('password')
     if (p && p.value && p.value === password) {
@@ -15,8 +19,7 @@ export const ArticleLock = props => {
       const tips = document.getElementById('tips')
       if (tips) {
         tips.innerHTML = ''
-        tips.innerHTML =
-          "<div class='text-red-500 animate__shakeX animate__animated'>密码输入错误</div>"
+        tips.innerHTML = `<div class='text-red-500 animate__shakeX animate__animated'>${locale.COMMON.PASSWORD_ERROR}</div>`
       }
     }
   }
@@ -25,7 +28,7 @@ export const ArticleLock = props => {
     <div className="shadow md:hover:shadow-2xl overflow-x-auto max-w-5xl  w-screen md:w-full  py-10 px-5 lg:pt-24 md:px-24 min-h-screen dark:border-gray-700 bg-white dark:bg-gray-800 duration-200 subpixel-antialiased">
       <div className="w-full flex justify-center items-center h-96 font-sans">
         <div className="text-center space-y-3">
-          <div className="font-bold">文章已加锁，请输入访问密码:</div>
+        <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
           <div className="flex">
             <input
               id="password" type='password'
@@ -35,9 +38,7 @@ export const ArticleLock = props => {
               onClick={submitPassword}
               className="px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 bg-gray-700 hover:bg-gray-400 text-white rounded-r duration-300"
             >
-              <i className={'duration-200 cursor-pointer fas fa-key'}>
-                &nbsp;提交
-              </i>
+              <i className={'duration-200 cursor-pointer fas fa-key'} >&nbsp;{locale.COMMON.SUBMIT}</i>
             </div>
           </div>
           <div id="tips"></div>
