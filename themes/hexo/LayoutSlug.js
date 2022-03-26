@@ -7,7 +7,7 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import ArticleDetail from './components/ArticleDetail'
 import { ArticleLock } from './components/ArticleLock'
 import HeaderArticle from './components/HeaderArticle'
@@ -17,21 +17,12 @@ import TocDrawerButton from './components/TocDrawerButton'
 import LayoutBase from './LayoutBase'
 
 export const LayoutSlug = props => {
-  const { post } = props
+  const { post, lock, validPassword } = props
   const meta = {
     title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
     type: 'article',
     tags: post.tags
-  }
-
-  // 文章加锁
-  const articleLock = post.password && post.password !== ''
-  const [lock, setLock] = useState(articleLock)
-  const validPassword = result => {
-    if (result) {
-      setLock(false)
-    }
   }
 
   if (!lock && post?.blockMap?.block) {

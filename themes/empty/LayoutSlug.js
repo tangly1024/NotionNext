@@ -14,7 +14,7 @@ import {
   NotionRenderer
 } from 'react-notion-x'
 import LayoutBase from './LayoutBase'
-import { useState, useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { ArticleLock } from './components/ArticleLock'
 import mediumZoom from 'medium-zoom'
 
@@ -23,20 +23,12 @@ const mapPageUrl = id => {
 }
 
 export const LayoutSlug = props => {
-  const { post } = props
+  const { post, lock, validPassword } = props
   const meta = {
     title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
     type: 'article',
     tags: post.tags
-  }
-  // 文章加锁
-  const articleLock = post.password && post.password !== ''
-  const [lock, setLock] = useState(articleLock)
-  const validPassword = result => {
-    if (result) {
-      setLock(false)
-    }
   }
 
   if (!lock && post?.blockMap?.block) {
