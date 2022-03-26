@@ -4,27 +4,18 @@ import { getPageTableOfContents } from 'notion-utils'
 import LayoutBase from './LayoutBase'
 import { useGlobal } from '@/lib/global'
 import mediumZoom from 'medium-zoom'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Catalog from './components/Catalog'
 import { ArticleDetail } from './components/ArticleDetail'
 import { ArticleLock } from './components/ArticleLock'
 
 export const LayoutSlug = props => {
-  const { post } = props
+  const { post, lock, validPassword } = props
   const meta = {
     title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
     type: 'article',
     tags: post.tags
-  }
-
-  // 文章加锁
-  const articleLock = post.password && post.password !== ''
-  const [lock, setLock] = useState(articleLock)
-  const validPassword = result => {
-    if (result) {
-      setLock(false)
-    }
   }
 
   if (!lock && post?.blockMap?.block) {

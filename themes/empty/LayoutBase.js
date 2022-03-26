@@ -68,7 +68,7 @@ const LayoutBase = props => {
       {/* 内容主体 */}
       <main id="wrapper" className="flex justify-center flex-1 pb-12">
         <div className="max-w-4xl w-full px-3">{children}</div>
-        <div>
+        <div className='hidden md:block'>
           <div className="sticky top-0 z-40">
             <Live2D />
           </div>

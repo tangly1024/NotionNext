@@ -6,26 +6,17 @@ import Card from './components/Card'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import ArticleDetail from './components/ArticleDetail'
 import TocDrawer from './components/TocDrawer'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import CONFIG_NEXT from './config_next'
 import { ArticleLock } from './components/ArticleLock'
 
 export const LayoutSlug = (props) => {
-  const { post, latestPosts } = props
+  const { post, latestPosts, lock, validPassword } = props
   const meta = {
     title: `${post.title} | ${BLOG.TITLE}`,
     description: post.summary,
     type: 'article',
     tags: post.tags
-  }
-
-  // 文章加锁
-  const articleLock = post.password && post.password !== ''
-  const [lock, setLock] = useState(articleLock)
-  const validPassword = result => {
-    if (result) {
-      setLock(false)
-    }
   }
 
   if (!lock && post?.blockMap?.block) {

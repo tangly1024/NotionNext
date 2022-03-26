@@ -3,6 +3,7 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
+import { useEffect, useState } from 'react'
 
 /**
  * 根据notion的slug访问页面，针对类型为Page的页面
@@ -12,9 +13,33 @@ import * as ThemeMap from '@/themes'
 const Slug = (props) => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
-  if (!props.post) {
+  const { post } = props
+  if (!post) {
     return <ThemeComponents.Layout404 {...props}/>
   }
+
+  // 文章锁🔐
+  const [lock, setLock] = useState(true)
+  useEffect(() => {
+    if (post && post.password && post.password !== '') {
+      setLock(true)
+    } else {
+      setLock(false)
+    }
+  }, [post])
+
+  /**
+   * 验证文章密码
+   * @param {*} result
+   */
+  const validPassword = result => {
+    if (result) {
+      setLock(false)
+    }
+  }
+
+  props = { ...props, lock, setLock, validPassword }
+
   return <ThemeComponents.LayoutSlug {...props} showArticleInfo={false}/>
 }
 
