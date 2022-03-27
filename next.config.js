@@ -3,7 +3,7 @@ module.exports = {
     webpack5: true
   },
   images: {
-    domains: ['gravatar.com', 'www.notion.so', 'avatars.githubusercontent.com']
+    domains: ['gravatar.com', 'www.notion.so', 'avatars.githubusercontent.com', 'images.unsplash.com'] // 允许next/image加载的图片 域名
   },
   async headers () {
     return [

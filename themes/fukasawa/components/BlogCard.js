@@ -1,5 +1,4 @@
 import BLOG from '@/blog.config'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import CONFIG_FUKA from '../config_fuka'
@@ -26,7 +25,9 @@ const BlogCard = ({ post, showSummary }) => {
       {CONFIG_FUKA.POST_LIST_COVER && post?.page_cover && (
         <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
         <div className='h-40 w-full relative duration-200 cursor-pointer transform overflow-hidden'>
-          <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={post?.page_cover} alt={post.title} className='hover:scale-125 transform duration-500'></img>
+          {/* <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
         </div>
       </Link>
       )}

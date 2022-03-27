@@ -1,5 +1,4 @@
 import BLOG from '@/blog.config'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { Code, Collection, CollectionRow, Equation, NotionRenderer } from 'react-notion-x'
@@ -60,8 +59,8 @@ const BlogPostCard = ({ post, showSummary }) => {
         <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
         <a className='w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none cursor-pointer transform overflow-hidden'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* <img src={post?.page_cover} alt={post.title} className='h-full object-cover'></img> */}
-          <Image className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' />
+          <img src={post?.page_cover} alt={post.title} className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform duration-500'></img>
+          {/* <Image className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
         </a>
       </Link>
       )}
