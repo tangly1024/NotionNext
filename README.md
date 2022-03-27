@@ -62,21 +62,12 @@
 - 给这个项目点个小星星 😉
 - 将 [这个 Notion 模板](https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5) 制作副本，并分享这个页面给所有人
 - [Fork](https://github.com/tangly1024/NotionNext/fork) 这个项目
-- _(可选)_ 用自己的图片替换 `/public` 文件夹里的 `avatar.jpg`、`favicon.svg` 和 `favicon.ico`
-- 在 `blog.config.js` 配置相关选项，`NOTION_PAGE_ID`: 你刚刚分享出去的 Notion 页面网址中的页面 ID，通常是网址中工作区地址后的 32 位字符串
-
-
-部署方式一：
-- 点击 [Vercel一键开始](https://vercel.com/new/clone?demo-description=Notion%20powered%20site%20Built%20with%20Next.js.&demo-image=https%3A%2F%2Fdocs.tangly1024.com%2Ftheme-medium.png&demo-title=Notion%20Next%20Blog&demo-url=https%3A%2F%2Fblog.tangly1024.com%2F&project-name=notion-next-blog&repository-name=NotionNext&s=https%3A%2F%2Fgithub.com%2Ftangly1024%2FNotionNext) 部署该项目
-  
-部署方式二：
-- 通过Docker部署
-```bash
-docker run -p 3000:3000 -e NOTION_PAGE_ID="你的Notion_Page_ID" tangly1024/notionnext:2.8.1
-```
-
+  - _(可选)_ 用自己的图片替换 `/public` 文件夹里的 `avatar.jpg`、`favicon.svg` 和 `favicon.ico`
+  - 在 `blog.config.js` 配置相关选项，`NOTION_PAGE_ID`: 你刚刚分享出去的 Notion 页面网址中的页面 ID，通常是网址中工作区地址后的 32 位字符串
+- 在 [Vercel](https://vercel.com)中部署项目
 - **稍微等等就可以访问了！** 简单吗?
-- 更多项目特性及配置的说明，请移步 [NotionNext文档](https://docs.tangly1024.com/zh) 查看，文档正在完善中,欢迎 [参与编辑](https://github.com/tangly1024/nextjs-docs-notion-next)
+
+更多项目特性及配置的说明，请移步 [NotionNext文档](https://docs.tangly1024.com/zh) 查看，文档正在完善中,欢迎 [参与编辑](https://github.com/tangly1024/nextjs-docs-notion-next)
 
 ## 快速开发
 - 需要安装Nodejs环境
