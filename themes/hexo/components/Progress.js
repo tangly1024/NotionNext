@@ -29,7 +29,7 @@ const Progress = ({ targetRef, showPercent = true }) => {
   return (
     <div className="h-4 w-full shadow-2xl bg-gray-400 font-sans">
       <div
-        className="h-4 bg-blue-400 duration-200"
+        className="h-4 bg-indigo-400 duration-200"
         style={{ width: `${percent}%` }}
       >
         {showPercent && (

@@ -8,23 +8,23 @@ import CONFIG_HEXO from '../config_hexo'
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
   return (
-    <div className='w-full shadow hover:shadow-2xl border border-gray-100 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 duration-300'>
+    <div className='w-full shadow hover:shadow-2xl border border-gray-100 dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-300'>
       <div key={post.id} className='animate__animated animate__fadeIn flex flex-col-reverse lg:flex-row justify-between duration-300'>
 
       <div className='lg:p-8 p-4 flex flex-col w-full'>
         <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
-          <a className={`replace cursor-pointer hover:underline text-2xl font-sans ${showPreview ? 'text-center' : ''} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+          <a className={`replace cursor-pointer hover:underline text-2xl font-sans ${showPreview ? 'text-center' : ''} leading-tight text-gray-700 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
             {post.title}
           </a>
         </Link>
 
-        <div className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}>
+        <div className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 hover:text-indigo-700 dark:hover:text-indigo-400`}>
           <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`} passHref>
             <a className='font-light hover:underline cursor-pointer text-sm leading-4 mr-3'><i className="far fa-calendar-alt mr-1"/>{post.date.start_date}</a>
           </Link>
         </div>
 
-        {(!showPreview || showSummary) && <p className='replace my-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+        {(!showPreview || showSummary) && <p className='replace my-4 text-gray-700  dark:text-gray-300 text-sm font-light leading-7'>
           {post.summary}
         </p>}
 
@@ -44,7 +44,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         <div className='text-gray-400 justify-between flex'>
           <Link href={`/category/${post.category}`} passHref>
-              <a className='cursor-pointer font-light text-sm hover:underline transform'>
+              <a className='cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform'>
                 <i className='mr-1 far fa-folder' />{post.category}
               </a>
             </Link>
