@@ -18,13 +18,25 @@ const UtterancesComponent = dynamic(
   },
   { ssr: false }
 )
+const GiscusComponent = dynamic(
+  () => {
+    return import('@/components/Giscus')
+  },
+  { ssr: false }
+)
 
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
-  const { locale } = useGlobal()
+  const { locale, isDarkMode } = useGlobal()
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
+
+        {BLOG.COMMENT_GISCUS_REPO && (
+          <div key="Giscus">
+            <GiscusComponent isDarkMode={isDarkMode} className="px-2" />
+          </div>
+        )}
 
         {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
           <GitalkComponent

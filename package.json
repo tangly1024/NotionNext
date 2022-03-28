@@ -16,9 +16,12 @@
     "dev": "next dev",
     "build": "next build && next-sitemap --config next-sitemap.config.js",
     "start": "next start",
-    "post-build": "next-sitemap --config next-sitemap.config.js"
+    "post-build": "next-sitemap --config next-sitemap.config.js",
+    "bundle-report": "ANALYZE=true yarn build"
   },
   "dependencies": {
+    "@giscus/react": "^1.1.2",
+    "@next/bundle-analyzer": "^12.1.1",
     "@popperjs/core": "^2.9.3",
     "animate.css": "^4.1.1",
     "axios": ">=0.21.1",
@@ -53,7 +56,8 @@
     "eslint-plugin-react": "^7.23.2",
     "next-sitemap": "^1.6.203",
     "postcss": "^8.2.15",
-    "tailwindcss": "^2.1.2"
+    "tailwindcss": "^2.1.2",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {
     "axios": ">=0.21.1"
