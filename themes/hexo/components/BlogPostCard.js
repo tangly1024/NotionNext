@@ -57,11 +57,11 @@ const BlogPostCard = ({ post, showSummary }) => {
 
       {CONFIG_HEXO.POST_LIST_COVER && !showPreview && post?.page_cover && (
         <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
-        <a className='w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none cursor-pointer transform overflow-hidden'>
+        <div className='flex w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none cursor-pointer transform overflow-hidden'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={post?.page_cover} alt={post.title} className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform duration-500'></img>
+          <img src={post?.page_cover} alt={post.title} className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform object-cover duration-500'/>
           {/* <Image className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
-        </a>
+        </div>
       </Link>
       )}
     </div>
