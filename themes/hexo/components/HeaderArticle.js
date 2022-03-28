@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 
 export default function HeaderArticle ({ post }) {
   const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("/${CONFIG_HEXO.HOME_BANNER_IMAGE}")`
+  const { isDarkMode } = useGlobal()
 
   const { locale } = useGlobal()
   const date = formatDate(
@@ -24,6 +25,7 @@ export default function HeaderArticle ({ post }) {
       nav && nav.classList.replace('bg-none', 'bg-white')
       nav && nav.classList.replace('text-white', 'text-black')
     }
+    updateTopNav()
   }
   useEffect(() => {
     scrollTrigger()
@@ -32,6 +34,17 @@ export default function HeaderArticle ({ post }) {
       window.removeEventListener('scroll', scrollTrigger)
     }
   })
+
+  const updateTopNav = () => {
+    if (!isDarkMode) {
+      const stickyNavElement = document.getElementById('sticky-nav')
+      if (window.scrollY < window.innerHeight) {
+        stickyNavElement?.classList?.add('dark')
+      } else {
+        stickyNavElement?.classList?.remove('dark')
+      }
+    }
+  }
 
   return (
       <div

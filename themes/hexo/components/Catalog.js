@@ -71,7 +71,7 @@ const Catalog = ({ toc }) => {
                           display: 'inline-block',
                           marginLeft: tocItem.indentLevel * 16
                         }}
-                        className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
+                        className={`${activeSection === id && ' font-bold text-indigo-400 underline'}`}
                       >
                         {tocItem.text}
                       </span>

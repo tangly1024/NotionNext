@@ -18,11 +18,11 @@ const MenuButtonGroupTop = (props) => {
     links = links.concat(customNav)
   }
 
-  return <nav id='nav' className='leading-8 flex justify-center font-sans w-full'>
+  return <nav id='nav' className='leading-8 flex justify-center font-sans font-light w-full'>
     {links.map(link => {
       if (link.show) {
         return <Link key={`${link.to}`} title={link.to} href={link.to} >
-          <a className={'py-1.5 my-1 px-2 duration-300 text-base justify-center items-center cursor-pointer'} >
+          <a className={'py-1.5 my-1 px-3 duration-300 text-base justify-center items-center cursor-pointer'} >
             <div className='w-full flex text-sm items-center justify-center hover:scale-105 transform'>
               <i className={`${link.icon} mr-1`}/>
               <div className='text-center'>{link.name}</div>

@@ -53,7 +53,7 @@ export const LayoutSlug = props => {
       showTag={false}
       floatSlot={floatSlot}
     >
-      <div className="w-full dark:border-gray-600 lg:shadow-md lg:hover:shadow-xl lg:border lg:border-gray-100 lg:rounded-xl lg:px-2 lg:py-4 lg:bg-white lg:dark:bg-gray-800">
+      <div className="w-full lg:shadow-sm lg:hover:shadow lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black">
         {!lock && <ArticleDetail {...props} />}
         {lock && <ArticleLock password={post.password} validPassword={validPassword} />}
       </div>

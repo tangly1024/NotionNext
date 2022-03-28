@@ -38,7 +38,7 @@ export default function ArticleDetail (props) {
   })
 
   return (<div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
-    <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased bg-white dark:bg-gray-800" >
+    <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
 
       {/* Notion文章主体 */}
       <section id='notion-article' className='px-5'>
@@ -76,7 +76,7 @@ export default function ArticleDetail (props) {
     <hr className='border-dashed'/>
 
     {/* 评论互动 */}
-    <div className="duration-200  overflow-x-auto bg-white dark:bg-gray-800 px-3">
+    <div className="duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3">
        <Comment frontMatter={post} />
     </div>
   </div>)

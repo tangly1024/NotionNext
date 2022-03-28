@@ -13,6 +13,11 @@ module.exports = {
         },
         night: {
           DEFAULT: BLOG.BACKGROUND_DARK || '#111827'
+        },
+        hexo: {
+          'background-gray': '#f5f5f5',
+          'black-gray': '#101414',
+          'light-gray': '#e5e5e5'
         }
       }
     }
