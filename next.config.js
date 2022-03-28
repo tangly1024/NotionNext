@@ -3,7 +3,16 @@ module.exports = {
     webpack5: true
   },
   images: {
+    loader: 'akamai',
+    path: '',
     domains: ['gravatar.com', 'www.notion.so', 'avatars.githubusercontent.com', 'images.unsplash.com'] // 允许next/image加载的图片 域名
+  },
+  exportPathMap: async function (defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
+    console.log(defaultPathMap)
+    return {
+      '/': { page: '/' },
+      '/archive': { page: 'archive' }
+    }
   },
   async headers () {
     return [

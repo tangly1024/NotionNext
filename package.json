@@ -16,7 +16,8 @@
     "dev": "next dev",
     "build": "next build && next-sitemap --config next-sitemap.config.js",
     "start": "next start",
-    "post-build": "next-sitemap --config next-sitemap.config.js"
+    "post-build": "next-sitemap --config next-sitemap.config.js",
+    "export": "next export"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.3",
