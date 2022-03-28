@@ -19,6 +19,7 @@
     "post-build": "next-sitemap --config next-sitemap.config.js"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^12.1.1",
     "@popperjs/core": "^2.9.3",
     "animate.css": "^4.1.1",
     "axios": ">=0.21.1",
