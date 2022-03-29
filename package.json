@@ -14,10 +14,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap --config next-sitemap.config.js",
+    "build": "VERCEL_ENV=production next build && next-sitemap --config next-sitemap.config.js",
     "start": "next start",
     "post-build": "next-sitemap --config next-sitemap.config.js",
-    "export": "next export"
+    "export": "VERCEL_ENV=production next export"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.3",

@@ -11,7 +11,9 @@ module.exports = {
     console.log(defaultPathMap)
     return {
       '/': { page: '/' },
-      '/archive': { page: 'archive' }
+      '/archive': { page: 'archive' },
+      '/article/[slug]': { page: '/article/[slug]' },
+      '/[slug]': { page: '/[slug]' }
     }
   },
   async headers () {
