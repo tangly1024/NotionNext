@@ -26,8 +26,8 @@ const TocDrawer = ({ post, cRef }) => {
       {/* 侧边菜单 */}
       <div
         className={(showDrawer ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') +
-        ' shadow-card animate__animated animate__faster max-h-96 ' +
-        ' w-60 duration-200 fixed right-4 top-16 rounded overflow-y-auto py-2 bg-white dark:bg-gray-600'}>
+        ' shadow-card animate__animated animate__faster ' +
+        ' w-60 duration-200 fixed right-4 top-16 rounded py-2 bg-white dark:bg-gray-600'}>
           {post && <>
             <div className='font-bold pb-2 text-center text-black dark:text-white '>
               {locale.COMMON.TABLE_OF_CONTENTS}
