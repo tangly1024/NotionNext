@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
@@ -22,6 +22,10 @@ const Catalog = ({ toc }) => {
       window.removeEventListener('scroll', actionSectionScrollSpy)
     }
   }, [])
+
+  // 目录自动滚动
+  const tRef = useRef(null)
+  const tocIds = []
 
   // 同步选中目录事件
   const [activeSection, setActiveSection] = React.useState(null)
@@ -49,6 +53,8 @@ const Catalog = ({ toc }) => {
       break
     }
     setActiveSection(currentSectionId)
+    const index = tocIds.indexOf(currentSectionId) || 0
+    tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
   }, throttleMs))
 
   return <div className='px-3'>
@@ -56,29 +62,29 @@ const Catalog = ({ toc }) => {
     <div className='w-full py-3'>
       <Progress/>
     </div>
-    <nav className='font-sans overflow-y-auto scroll-hidden text-black'>
-      {toc.map((tocItem) => {
-        const id = uuidToId(tocItem.id)
-        return (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200
+    <div className='overflow-y-auto max-h-36 lg:max-h-96' ref={tRef}>
+      <nav className='h-full font-sans text-black'>
+        {toc.map((tocItem) => {
+          const id = uuidToId(tocItem.id)
+          tocIds.push(id)
+          return (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
-          >
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          marginLeft: tocItem.indentLevel * 16
-                        }}
-                        className={`${activeSection === id && ' font-bold text-indigo-400 underline'}`}
-                      >
-                        {tocItem.text}
-                      </span>
-          </a>
-        )
-      })}
-    </nav>
+            >
+              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
+                    className={`${activeSection === id && ' font-bold text-indigo-400 underline'}`}
+              >
+                {tocItem.text}
+              </span>
+            </a>
+          )
+        })}
+      </nav>
+
+    </div>
   </div>
 }
 
