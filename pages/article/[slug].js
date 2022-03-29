@@ -55,7 +55,7 @@ export async function getStaticPaths () {
   const { allPosts } = await getGlobalNotionData({ from })
   return {
     paths: allPosts.map(row => ({ params: { slug: row.slug } })),
-    fallback: true
+    fallback: false
   }
 }
 

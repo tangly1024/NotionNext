@@ -57,7 +57,7 @@ export async function getStaticPaths () {
 
   return {
     paths: filterPosts.map(row => ({ params: { slug: row.slug } })),
-    fallback: true
+    fallback: false
   }
 }
 
