@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import * as ThemeMap from '@/themes'
 import { useState } from 'react'
 import Select from './Select'
-import { ALL_THEME } from '@/lib/theme'
+import { ALL_THEME } from '@/themes'
 import { useGlobal } from '@/lib/global'
 /**
  *

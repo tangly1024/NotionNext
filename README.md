@@ -50,12 +50,9 @@
 |--|--|--|--|
 | <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
 
+*只需修改`blog.config.js`文件的`THEME`即可实现主题切换。* 没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
 
 
-*只需修改`blog.config.js`文件的`THEME`即可实现主题切换。*
-
-## 更新日志
-请移步 [更新文档](https://docs.tangly1024.com/zh/changelog)查看
 
 ## 快速起步
 
@@ -80,11 +77,15 @@ yarn run start # 本地启动NextJS服务
 
 ## 引用技术
 
-- **框架**: Next.js
+- **框架**: [Next.js](https://nextjs.org)
 - **样式**: [Tailwind CSS](https://www.tailwindcss.cn/) 和 `@tailwindcss/jit` compiler
 - **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
-- **评论**: Gitalk, Cusdis, Utterances
-- **图标**：[fontawesome](https://fontawesome.com/v5.15/icons?d=gallery)
+- **评论**: [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://gitalk.github.io), [Utterances](https://utteranc.es)
+- **图标**：[fontawesome v5.15](https://fontawesome.com/v5.15/icons?d=gallery)
+
+## 更新日志
+请移步 [更新文档](https://docs.tangly1024.com/zh/changelog)查看
+
 
 ## 致谢
 感谢Craig Hart发起的Nobelium项目
@@ -92,12 +93,15 @@ yarn run start # 本地启动NextJS服务
   <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://notion.so/cnotion" title="Craig Hart">Craig Hart</a></td>
 </tr></table>
 
-## Contributors
+## 贡献者
 
 <table><tr align="left">
   <td align="center"><a href="https://github.com/tangly1024"><img src="https://avatars.githubusercontent.com/u/15920488" width="64px;"alt="tangly1024"/><br/><sub><b>tangly1024</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=tangly1024" title="Owner" >🎫 🔧 🎨 🐛</a></td>
   <td align="center"><a href="https://github.com/uWayLu"><img src="https://avatars.githubusercontent.com/u/21689326" width="64px;" alt="uWayLu"/><br/><sub><b>uWayLu</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=uWayLu" title="yokinist" >🔧 🐛</a></td>
 </tr></table>
+
+十分期待你的[贡献](/CONTRIBUTING.md)，一起来完善这个项目~
+
 
 ## License
 
