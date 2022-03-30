@@ -1,18 +1,16 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import * as ThemeMap from '@/themes'
 
-const Index = (props) => {
-  const { keyword } = props
+const Index = props => {
+  const { keyword, siteInfo } = props
   const { locale } = useGlobal()
   const meta = {
-    title: `${keyword || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
-    description: BLOG.DESCRIPTION,
+    title: `${keyword || ''} | ${locale.NAV.SEARCH} | ${siteInfo.title}`,
+    description: siteInfo.title,
     type: 'website'
   }
-
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
   return <ThemeComponents.LayoutSearch {...props} meta={meta} currentSearch={keyword} />
@@ -24,26 +22,10 @@ const Index = (props) => {
  * @returns
  */
 export async function getServerSideProps ({ params: { keyword } }) {
-  const {
-    allPosts,
-    categories,
-    tags,
-    postCount,
-    latestPosts,
-    customNav
-  } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
-
-  const filterPosts = await filterByMemCache(allPosts, keyword)
+  const props = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
+  props.posts = await filterByMemCache(props.allPosts, keyword)
   return {
-    props: {
-      posts: filterPosts,
-      tags,
-      categories,
-      postCount,
-      latestPosts,
-      customNav,
-      keyword
-    }
+    props
   }
 }
 

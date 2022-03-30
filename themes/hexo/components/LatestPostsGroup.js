@@ -2,7 +2,6 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import CONFIG_HEXO from '../config_hexo'
 
 /**
  * 最新文章列表
@@ -30,7 +29,7 @@ const LatestPostsGroup = ({ posts }) => {
         const selected = currentPath === `${BLOG.PATH}/article/${post.slug}`
         const headerImage = post?.page_cover
           ? `url("${post.page_cover}")`
-          : `url("/${CONFIG_HEXO.HOME_BANNER_IMAGE}")`
+          : `url("/${BLOG.HOME_BANNER_IMAGE}")`
 
         return (
           <Link

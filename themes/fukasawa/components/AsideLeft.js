@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import Logo from './Logo'
 import GroupCategory from './GroupCategory'
 import GroupMenu from './GroupMenu'
@@ -9,10 +8,10 @@ import Catalog from './Catalog'
 import { useRouter } from 'next/router'
 
 function AsideLeft (props) {
-  const { tags, currentTag, categories, currentCategory, post, slot } = props
+  const { tags, currentTag, categories, currentCategory, post, slot, siteInfo } = props
   const router = useRouter()
   return <div className='w-72 bg-white dark:bg-gray-800 min-h-screen px-10 py-14 hidden lg:block'>
-    <Logo />
+    <Logo {...props}/>
 
     <section className='flex flex-col text-gray-600'>
       <hr className='w-12 my-8' />
@@ -26,7 +25,7 @@ function AsideLeft (props) {
 
     <section className='flex flex-col dark:text-gray-300'>
       <hr className='w-12 my-8' />
-      { BLOG.DESCRIPTION }
+      { siteInfo.description }
     </section>
 
     {router.asPath !== '/tag' && <section className='flex flex-col'>

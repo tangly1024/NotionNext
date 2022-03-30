@@ -1,11 +1,8 @@
-import BLOG from '@/blog.config'
-import { useGlobal } from '@/lib/global'
 import { useEffect } from 'react'
 import BlogArchiveItem from './components/BlogPostArchive'
 import LayoutBase from './LayoutBase'
 
 export const LayoutArchive = (props) => {
-  const { locale } = useGlobal()
   const { posts } = props
   // 深拷贝
   const postsSortByDate = Object.create(posts)
@@ -16,13 +13,6 @@ export const LayoutArchive = (props) => {
     const dateB = new Date(b?.date.start_date || b.createdTime)
     return dateB - dateA
   })
-
-  const meta = {
-    title: `${locale.NAV.ARCHIVE} | ${BLOG.TITLE}`,
-    description: BLOG.DESCRIPTION,
-    type: 'website'
-  }
-
   const archivePosts = {}
 
   postsSortByDate.forEach(post => {
@@ -47,7 +37,7 @@ export const LayoutArchive = (props) => {
       }
     }
   }, [])
-  return <LayoutBase {...props} meta={meta}>
+  return <LayoutBase {...props}>
       <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 shadow-md min-h-full">
         {Object.keys(archivePosts).map(archiveTitle => (
           <BlogArchiveItem

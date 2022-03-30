@@ -11,7 +11,7 @@ import { useGlobal } from '@/lib/global'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, customNav } = props
+  const { children, meta, customNav, siteInfo } = props
   const { locale } = useGlobal()
   const d = new Date()
   const currentYear = d.getFullYear()
@@ -35,10 +35,10 @@ const LayoutBase = props => {
       <div className="w-full flex justify-center my-2">
         <div className=" max-w-6xl justify-between w-full flex">
           <section>
-            <Link title={BLOG.TITLE} href={'/'}>
+            <Link title={siteInfo.title} href={'/'}>
               <a className={'cursor-pointer flex items-center hover:underline'}>
                 <i className={'fas fa-home mr-1'} />
-                <div className="text-center">{BLOG.TITLE} </div>
+                <div className="text-center">{siteInfo.title} </div>
               </a>
             </Link>
           </section>
@@ -126,7 +126,7 @@ const LayoutBase = props => {
           <span className="px-1 busuanzi_value_site_uv"> </span>{' '}
         </span>
         <br />
-        <h1>{meta?.title || BLOG.TITLE}</h1>
+        <h1>{meta?.title || siteInfo.title}</h1>
       </footer>
     </div>
   )

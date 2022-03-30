@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import { getPageTableOfContents } from 'notion-utils'
 import 'prismjs'
 import 'prismjs/components/prism-bash'
@@ -18,12 +17,6 @@ import LayoutBase from './LayoutBase'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const meta = {
-    title: `${post.title} | ${BLOG.TITLE}`,
-    description: post.summary,
-    type: 'article',
-    tags: post.tags
-  }
 
   if (!lock && post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
@@ -48,7 +41,6 @@ export const LayoutSlug = props => {
     <LayoutBase
       headerSlot={<HeaderArticle post={post}/>}
       {...props}
-      meta={meta}
       showCategory={false}
       showTag={false}
       floatSlot={floatSlot}

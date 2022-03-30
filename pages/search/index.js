@@ -1,11 +1,10 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import * as ThemeMap from '@/themes'
 
-const Search = (props) => {
-  const { posts } = props
+const Search = props => {
+  const { posts, siteInfo } = props
   let filteredPosts
   const searchKey = getSearchKey()
   // 静态过滤
@@ -22,31 +21,25 @@ const Search = (props) => {
 
   const { locale } = useGlobal()
   const meta = {
-    title: `${searchKey || ''} | ${locale.NAV.SEARCH} | ${BLOG.TITLE}  `,
-    description: BLOG.DESCRIPTION,
+    title: `${searchKey || ''} | ${locale.NAV.SEARCH} | ${siteInfo.title}`,
+    description: siteInfo.description,
     type: 'website'
   }
 
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
 
-  return <ThemeComponents.LayoutSearch {...props} posts={filteredPosts} meta={meta} currentSearch={searchKey} />
+  return <ThemeComponents.LayoutSearch {...props} posts={filteredPosts} currentSearch={searchKey} meta={meta} />
 }
 
 /**
  * 浏览器前端搜索
  */
 export async function getStaticProps () {
-  const { allPosts, categories, tags, postCount, latestPosts, customNav } = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
+  const props = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
+  props.posts = props.allPosts
   return {
-    props: {
-      posts: allPosts,
-      tags,
-      categories,
-      postCount,
-      latestPosts,
-      customNav
-    },
+    props,
     revalidate: 1
   }
 }

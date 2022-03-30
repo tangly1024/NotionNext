@@ -1,17 +1,11 @@
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import LayoutBase from './LayoutBase'
 import Link from 'next/link'
 
 export const LayoutCategoryIndex = (props) => {
   const { allPosts, categories } = props
   const { locale } = useGlobal()
-  const meta = {
-    title: `${locale.COMMON.CATEGORY} | ${BLOG.TITLE}`,
-    description: BLOG.DESCRIPTION,
-    type: 'website'
-  }
-  return <LayoutBase meta={meta} totalPosts={allPosts} {...props}>
+  return <LayoutBase totalPosts={allPosts} {...props}>
     <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow h-full'>
       <div className='dark:text-gray-200 mb-5'>
         <i className='mr-4 fas faTh' />{locale.COMMON.CATEGORY}:

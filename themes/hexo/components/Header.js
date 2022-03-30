@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
@@ -12,10 +11,10 @@ let autoScroll = false
  *
  * @returns 头图
  */
-export default function Header () {
+const Header = props => {
   const [typed, changeType] = useState()
   const { isDarkMode } = useGlobal()
-
+  const { siteInfo } = props
   useEffect(() => {
     scrollTrigger()
     updateHeaderHeight()
@@ -102,11 +101,11 @@ export default function Header () {
       className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black text-white"
       style={{
         backgroundImage:
-          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${CONFIG_HEXO.HOME_BANNER_IMAGE}")`
+          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${siteInfo.pageCover}")`
       }}
     >
       <div className="absolute flex flex-col h-full items-center justify-center w-full font-sans">
-        <div className='text-4xl md:text-5xl text-white shadow-text'>{BLOG.TITLE}</div>
+        <div className='text-4xl md:text-5xl text-white shadow-text'>{siteInfo.title}</div>
         <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
           <span id='typed'/>
         </div>
@@ -122,3 +121,5 @@ export default function Header () {
     </header>
   )
 }
+
+export default Header

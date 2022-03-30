@@ -18,7 +18,7 @@ import CONFIG_NEXT from '../config_next'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideAreaLeft = (props) => {
+const SideAreaLeft = props => {
   const { post, slot, postCount } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
@@ -27,7 +27,7 @@ const SideAreaLeft = (props) => {
     <section className='w-60'>
       {/* 菜单 */}
       <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-gray-800 hover:shadow-xl duration-200'>
-        <Logo/>
+        <Logo {...props}/>
         <div className='pt-2 px-2 font-sans'>
         <MenuButtonGroup allowCollapse={true} {...props} />
         </div>
