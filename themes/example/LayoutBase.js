@@ -29,7 +29,7 @@ const LayoutBase = props => {
   }
 
   return (
-    <div>
+    <div className='dark:text-gray-300'>
       <CommonHead meta={meta} />
       {/* 导航菜单 */}
       <div className="w-full flex justify-center my-2">
