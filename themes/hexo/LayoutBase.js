@@ -10,6 +10,7 @@ import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
+import BLOG from '@/blog.config'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -72,7 +73,7 @@ const LayoutBase = (props) => {
         </div>
       </div>
 
-    <Footer title={siteInfo.title}/>
+    <Footer title={siteInfo?.title || BLOG.TITLE}/>
 
   </div>)
 }
