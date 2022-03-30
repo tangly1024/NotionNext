@@ -6,22 +6,20 @@ import * as ThemeMap from '@/themes'
 export default function Category (props) {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
-  return <ThemeComponents.LayoutCategoryIndex {...props}/>
+  const { locale } = useGlobal()
+  const { siteInfo } = props
+  const meta = {
+    title: `${locale.COMMON.CATEGORY} | ${siteInfo.title}`,
+    description: siteInfo.description,
+    type: 'website'
+  }
+  return <ThemeComponents.LayoutCategoryIndex {...props} meta={meta}/>
 }
 
 export async function getStaticProps () {
-  const from = 'category-index-props'
-  const { allPosts, categories, tags, postCount, latestPosts, customNav } = await getGlobalNotionData({ from, categoryCount: 0 })
-
+  const props = await getGlobalNotionData({ from: 'category-index-props', categoryCount: 0 })
   return {
-    props: {
-      tags,
-      allPosts,
-      categories,
-      postCount,
-      latestPosts,
-      customNav
-    },
+    props,
     revalidate: 1
   }
 }

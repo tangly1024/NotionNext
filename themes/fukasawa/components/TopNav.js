@@ -8,7 +8,7 @@ import Logo from './Logo'
  * @param {*} param0
  * @returns
  */
-const TopNav = (props) => {
+const TopNav = props => {
   const [isOpen, changeShow] = useState(false)
 
   const toggleMenuOpen = () => {
@@ -27,7 +27,7 @@ const TopNav = (props) => {
       <div className='w-full flex justify-between items-center p-4 bg-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
-          <Logo/>
+          <Logo {...props}/>
         </div>
         <div className='flex'>
         </div>

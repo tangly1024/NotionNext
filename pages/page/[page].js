@@ -4,13 +4,19 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 
-const Page = (props) => {
+const Page = props => {
   const { theme } = useGlobal()
+  const { siteInfo } = props
   const ThemeComponents = ThemeMap[theme]
-  if (!props?.meta) {
-    return <ThemeComponents.Layout404 {...props}/>
+  if (!siteInfo) {
+    return <></>
   }
-  return <ThemeComponents.LayoutPage {...props} />
+  const meta = {
+    title: `${props.page} | Page | ${siteInfo.title}`,
+    description: siteInfo.description,
+    type: 'website'
+  }
+  return <ThemeComponents.LayoutPage {...props} meta={meta} />
 }
 
 export async function getStaticPaths () {
@@ -26,28 +32,16 @@ export async function getStaticPaths () {
 
 export async function getStaticProps ({ params: { page } }) {
   const from = `page-${page}`
-  const {
-    allPosts,
-    latestPosts,
-    categories,
-    tags,
-    postCount,
-    customNav
-  } = await getGlobalNotionData({ from })
-  const meta = {
-    title: `${page} | Page | ${BLOG.TITLE}`,
-    description: BLOG.DESCRIPTION,
-    type: 'website'
-  }
-
+  const props = await getGlobalNotionData({ from })
+  props.page = page
   // 处理分页
-  const postsToShow = allPosts.slice(
+  props.posts = props.allPosts.slice(
     BLOG.POSTS_PER_PAGE * (page - 1),
     BLOG.POSTS_PER_PAGE * page
   )
   if (BLOG.POST_LIST_PREVIEW === 'true') {
-    for (const i in postsToShow) {
-      const post = postsToShow[i]
+    for (const i in props.posts) {
+      const post = props.posts[i]
       const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
       if (blockMap) {
         post.blockMap = blockMap
@@ -56,16 +50,7 @@ export async function getStaticProps ({ params: { page } }) {
   }
 
   return {
-    props: {
-      page,
-      posts: postsToShow,
-      postCount,
-      latestPosts,
-      tags,
-      categories,
-      meta,
-      customNav
-    },
+    props,
     revalidate: 1
   }
 }

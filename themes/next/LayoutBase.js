@@ -20,7 +20,7 @@ import Live2D from '@/components/Live2D'
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, meta, sideBarSlot, floatSlot, rightAreaSlot } = props
+  const { children, headerSlot, meta, sideBarSlot, floatSlot, rightAreaSlot, siteInfo } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
   const leftAreaSlot = <Live2D/>
@@ -75,7 +75,7 @@ const LayoutBase = (props) => {
         </div>
       </div>
 
-      <Footer title={meta.title}/>
+      <Footer title={siteInfo?.title}/>
       </>
   )
 }

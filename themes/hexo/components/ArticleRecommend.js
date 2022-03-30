@@ -25,7 +25,7 @@ export default function ArticleRecommend ({ recommendPosts }) {
         {recommendPosts.map(post => {
           const headerImage = post?.page_cover
             ? `url("${post.page_cover}")`
-            : `url("/${CONFIG_HEXO.HOME_BANNER_IMAGE}")`
+            : `url("/${BLOG.HOME_BANNER_IMAGE}")`
 
           return (
             <Link key={post.id} title={post.title} href={`${BLOG.PATH}/article/${post.slug}`} passHref>

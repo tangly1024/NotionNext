@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import { getPageTableOfContents } from 'notion-utils'
 
 import LayoutBase from './LayoutBase'
@@ -11,12 +10,6 @@ import { ArticleLock } from './components/ArticleLock'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const meta = {
-    title: `${post.title} | ${BLOG.TITLE}`,
-    description: post.summary,
-    type: 'article',
-    tags: post.tags
-  }
 
   if (!lock && post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
@@ -53,7 +46,6 @@ export const LayoutSlug = props => {
   return (
     <LayoutBase
       {...props}
-      meta={meta}
       showInfoCard={true}
       slotRight={slotRight}
     >

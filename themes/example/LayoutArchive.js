@@ -1,11 +1,9 @@
 import BLOG from '@/blog.config'
-import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import LayoutBase from './LayoutBase'
 
 export const LayoutArchive = props => {
   const { posts } = props
-  const { locale } = useGlobal()
   const postsSortByDate = Object.create(posts)
 
   postsSortByDate.sort((a, b) => {
@@ -13,12 +11,6 @@ export const LayoutArchive = props => {
     const dateB = new Date(b?.date.start_date || b.createdTime)
     return dateB - dateA
   })
-
-  const meta = {
-    title: `${locale.NAV.ARCHIVE} | ${BLOG.TITLE}`,
-    description: BLOG.DESCRIPTION,
-    type: 'website'
-  }
 
   const archivePosts = {}
 
@@ -31,7 +23,7 @@ export const LayoutArchive = props => {
     }
   })
   return (
-    <LayoutBase {...props} meta={meta}>
+    <LayoutBase {...props}>
       <div className="mb-10 pb-20 md:p-12 p-3  min-h-full">
         {Object.keys(archivePosts).map(archiveTitle => (
           <div key={archiveTitle}>

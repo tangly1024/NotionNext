@@ -98,7 +98,7 @@ const TopNav = (props) => {
         </div>
 
         <div className='flex'>
-         <Logo/>
+         <Logo {...props}/>
         </div>
 
         {/* 右侧功能 */}

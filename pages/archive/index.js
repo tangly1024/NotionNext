@@ -3,24 +3,24 @@ import React from 'react'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 
-const ArchiveIndex = (props) => {
-  const { theme } = useGlobal()
+const ArchiveIndex = props => {
+  const { theme, locale } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
-  return <ThemeComponents.LayoutArchive {...props}/>
+  const { siteInfo } = props
+  const meta = {
+    title: `${locale.NAV.ARCHIVE} | ${siteInfo.title}`,
+    description: siteInfo.description,
+    type: 'website'
+  }
+
+  return <ThemeComponents.LayoutArchive {...props} meta={meta}/>
 }
 
 export async function getStaticProps () {
-  const { allPosts, categories, tags, postCount, customNav } =
-    await getGlobalNotionData({ from: 'archive-index' })
-
+  const props = await getGlobalNotionData({ from: 'archive-index' })
+  props.posts = props.allPosts
   return {
-    props: {
-      posts: allPosts,
-      tags,
-      categories,
-      postCount,
-      customNav
-    },
+    props,
     revalidate: 1
   }
 }

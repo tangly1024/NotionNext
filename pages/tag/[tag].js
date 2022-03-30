@@ -2,40 +2,31 @@ import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import * as ThemeMap from '@/themes'
 
-const Tag = (props) => {
+const Tag = props => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
-  return <ThemeComponents.LayoutTag {...props} />
+  const { locale } = useGlobal()
+  const { tag, siteInfo, posts } = props
+
+  if (!posts) {
+    return <ThemeComponents.Layout404 {...props}/>
+  }
+
+  const meta = {
+    title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
+    description: siteInfo?.description,
+    type: 'website'
+  }
+  return <ThemeComponents.LayoutTag {...props} meta={meta}/>
 }
 
-export async function getStaticProps ({ params }) {
-  const tag = params.tag
-  const from = 'tag-props'
-  const {
-    allPosts,
-    categories,
-    tags,
-    postCount,
-    latestPosts,
-    customNav
-  } = await getGlobalNotionData({
-    from,
-    includePage: false,
-    tagsCount: 0
-  })
-  const filteredPosts = allPosts.filter(
-    post => post && post.tags && post.tags.includes(tag)
-  )
+export async function getStaticProps ({ params: { tag } }) {
+  const props = await getGlobalNotionData({ from: 'tag-props', includePage: false, tagsCount: 0 })
+  const { allPosts } = props
+  props.posts = allPosts.filter(post => post && post.tags && post.tags.includes(tag))
+  props.tag = tag
   return {
-    props: {
-      tags,
-      posts: filteredPosts,
-      tag,
-      categories,
-      postCount,
-      latestPosts,
-      customNav
-    },
+    props,
     revalidate: 1
   }
 }

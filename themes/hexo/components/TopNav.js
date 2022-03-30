@@ -18,7 +18,7 @@ let windowTop = 0
  * @param {*} param0
  * @returns
  */
-const TopNav = (props) => {
+const TopNav = props => {
   const { tags, currentTag, categories, currentCategory } = props
   const { locale } = useGlobal()
   const searchDrawer = useRef()
@@ -94,7 +94,7 @@ const TopNav = (props) => {
     <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full top-0 z-20 transform duration-200 font-san `}>
       <div className='w-full flex justify-between items-center px-4 py-2 border dark:border-transparent'>
         <div className='flex'>
-         <Logo/>
+         <Logo {...props}/>
         </div>
 
         {/* 右侧功能 */}

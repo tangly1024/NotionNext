@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/formatDate'
-import CONFIG_HEXO from '../config_hexo'
 import { useEffect } from 'react'
+import BLOG from '@/blog.config'
 
 export default function HeaderArticle ({ post }) {
-  const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("/${CONFIG_HEXO.HOME_BANNER_IMAGE}")`
+  const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("/${BLOG.HOME_BANNER_IMAGE}")`
   const { isDarkMode } = useGlobal()
 
   const { locale } = useGlobal()

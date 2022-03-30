@@ -11,10 +11,11 @@ const Index = (props) => {
 
 export async function getStaticProps () {
   const from = 'index'
-  const { allPosts, latestPosts, categories, tags, postCount, customNav } = await getGlobalNotionData({ from, pageType: ['Post'] })
+  const props = await getGlobalNotionData({ from, pageType: ['Post'] })
+  const { allPosts, siteInfo } = props
   const meta = {
-    title: `${BLOG.TITLE}`,
-    description: BLOG.DESCRIPTION,
+    title: `${siteInfo.title}`,
+    description: siteInfo.description,
     type: 'website'
   }
 
@@ -38,16 +39,11 @@ export async function getStaticProps () {
       }
     }
   }
+  props.posts = postsToShow
 
   return {
     props: {
-      posts: postsToShow,
-      latestPosts,
-      postCount,
-      tags,
-      categories,
-      meta,
-      customNav
+      meta, ...props
     },
     revalidate: 1
   }

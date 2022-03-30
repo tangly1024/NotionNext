@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
  * @param {*} props
  * @returns
  */
-const Slug = (props) => {
+const Slug = props => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
   const { post } = props
@@ -38,7 +38,15 @@ const Slug = (props) => {
     }
   }
 
-  props = { ...props, lock, setLock, validPassword }
+  const { siteInfo } = props
+  const meta = {
+    title: `${post.title} | ${siteInfo.title}`,
+    description: post.summary,
+    type: 'article',
+    tags: post.tags
+  }
+
+  props = { ...props, meta, lock, setLock, validPassword }
 
   return <ThemeComponents.LayoutSlug {...props} showArticleInfo={false}/>
 }
@@ -63,23 +71,23 @@ export async function getStaticPaths () {
 
 export async function getStaticProps ({ params: { slug } }) {
   const from = `slug-props-${slug}`
-  const { allPosts, categories, tags, postCount, latestPosts, customNav } = await getGlobalNotionData({ from, pageType: ['Page'] })
+  const props = await getGlobalNotionData({ from, pageType: ['Page'] })
+  const { allPosts } = props
   const post = allPosts.find(p => p.slug === slug)
   if (!post) {
     return { props: {}, revalidate: 1 }
   }
 
-  post.blockMap = await getPostBlocks(post.id, 'slug')
+  try {
+    post.blockMap = await getPostBlocks(post.id, 'slug')
+  } catch (error) {
+    console.error('获取文章详情失败', error)
+  }
+
+  props.post = post
 
   return {
-    props: {
-      post,
-      tags,
-      categories,
-      postCount,
-      latestPosts,
-      customNav
-    },
+    props,
     revalidate: 1
   }
 }
