@@ -1,0 +1,4 @@
+#!/var/lang/node16/bin/node
+next start -p 9000
+
+
