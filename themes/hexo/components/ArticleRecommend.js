@@ -8,7 +8,7 @@ import { useGlobal } from '@/lib/global'
  * @param {prev,next} param0
  * @returns
  */
-export default function ArticleRecommend ({ recommendPosts }) {
+export default function ArticleRecommend ({ recommendPosts, siteInfo }) {
   if (!CONFIG_HEXO.ARTICLE_RECOMMEND || !recommendPosts || recommendPosts.length === 0) {
     return <></>
   }
@@ -25,7 +25,7 @@ export default function ArticleRecommend ({ recommendPosts }) {
         {recommendPosts.map(post => {
           const headerImage = post?.page_cover
             ? `url("${post.page_cover}")`
-            : `url("/${BLOG.HOME_BANNER_IMAGE}")`
+            : `url("${siteInfo?.pageCover}")`
 
           return (
             <Link key={post.id} title={post.title} href={`${BLOG.PATH}/article/${post.slug}`} passHref>

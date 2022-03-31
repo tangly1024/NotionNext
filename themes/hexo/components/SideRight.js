@@ -34,7 +34,7 @@ export default function SideRight (props) {
         </Card>
       )}
       {CONFIG_HEXO.WIDGET_LATEST_POSTS && latestPosts && latestPosts.length > 0 && <Card>
-        <LatestPostsGroup posts={latestPosts} />
+        <LatestPostsGroup posts={latestPosts} {...props} />
       </Card>}
 
       <div className='sticky top-20'>
