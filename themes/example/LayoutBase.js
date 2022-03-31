@@ -82,29 +82,11 @@ const LayoutBase = props => {
           <i className="mx-1 animate-pulse fas fa-heart" />{' '}
           <a
             href={BLOG.LINK}
-            className="underline font-bold dark:text-gray-300 "
+            className="underline dark:text-gray-300 "
           >
             {BLOG.AUTHOR}
           </a>
           .
-          <br />
-          <span>
-            Powered by{' '}
-            <a
-              href="https://notion.so"
-              className="underline font-bold dark:text-gray-300"
-            >
-              Notion
-            </a>{' '}
-            &{' '}
-            <a
-              href="https://github.com/tangly1024/NotionNext"
-              className="underline font-bold  dark:text-gray-300"
-            >
-              NotionNext {BLOG.VERSION}
-            </a>
-            .
-          </span>
         </span>
         {BLOG.BEI_AN && (
           <>
@@ -127,6 +109,16 @@ const LayoutBase = props => {
         </span>
         <br />
         <h1>{meta?.title || siteInfo.title}</h1>
+        <span className='text-xs font-serif'>
+            Powered by{' '}
+            <a
+              href="https://github.com/tangly1024/NotionNext"
+              className="underline dark:text-gray-300"
+            >
+              NotionNext {BLOG.VERSION}
+            </a>
+            .
+          </span>
       </footer>
     </div>
   )
