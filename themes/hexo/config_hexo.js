@@ -11,7 +11,6 @@ const CONFIG_HEXO = {
   POST_LIST_COVER: true, // 文章封面
   POST_LIST_SUMMARY: true, // 文章摘要
   POST_LIST_PREVIEW: true, // 读取文章预览
-  NAV_TYPE: 'autoCollapse', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
 
   ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
   ARTICLE_COPYRIGHT: true, // 显示文章版权声明
