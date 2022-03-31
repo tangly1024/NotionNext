@@ -1,5 +1,12 @@
 #!/bin/bash
-cp -r . /tmp
-export PORT=9000
-cd /tmp
-/var/lang/node16/bin/node start.js # 改为您自己的启动函数名 # node ./start.js
+pIDa=`/usr/sbin/lsof -i :9000|grep -v "PID" | awk '{print $2}'`
+if [ "$pIDa" != "" ];
+then
+   echo "1"
+else
+  cp -r . /tmp
+  cd /tmp
+  export PORT=9000
+  /var/lang/node16/bin/node start.js
+  #node ./start.js
+fi
