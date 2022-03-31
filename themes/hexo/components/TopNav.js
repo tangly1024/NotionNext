@@ -7,7 +7,6 @@ import Collapse from './Collapse'
 import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
-import CONFIG_HEXO from '../config_hexo'
 import MenuButtonGroupTop from './MenuButtonGroupTop'
 import MenuList from './MenuList'
 
@@ -40,12 +39,9 @@ const TopNav = props => {
 
   // 监听滚动
   useEffect(() => {
-    if (CONFIG_HEXO.NAV_TYPE === 'autoCollapse') {
-      // scrollTrigger()
-      window.addEventListener('scroll', scrollTrigger)
-    }
+    window.addEventListener('scroll', scrollTrigger)
     return () => {
-      CONFIG_HEXO.NAV_TYPE === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
+      window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
 
@@ -91,7 +87,7 @@ const TopNav = props => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_HEXO.NAV_TYPE !== 'normal' ? 'fixed bg-white' : ' bg-none -mb-10'} animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full top-0 z-20 transform duration-200 font-san `}>
+    <div id='sticky-nav' className={'fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full top-0 z-20 transform duration-200 font-san'}>
       <div className='w-full flex justify-between items-center px-4 py-2 border dark:border-transparent'>
         <div className='flex'>
          <Logo {...props}/>
