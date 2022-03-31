@@ -2,10 +2,9 @@ import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/formatDate'
 import { useEffect } from 'react'
-import BLOG from '@/blog.config'
 
-export default function HeaderArticle ({ post }) {
-  const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("/${BLOG.HOME_BANNER_IMAGE}")`
+export default function HeaderArticle ({ post, siteInfo }) {
+  const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("${siteInfo?.pageCover}")`
   const { isDarkMode } = useGlobal()
 
   const { locale } = useGlobal()

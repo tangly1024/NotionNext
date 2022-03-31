@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
  * @param sliceCount 截取展示的数量 默认6
  * @constructor
  */
-const LatestPostsGroup = ({ posts }) => {
+const LatestPostsGroup = ({ posts, siteInfo }) => {
   if (!posts) {
     return <></>
   }
@@ -29,7 +29,7 @@ const LatestPostsGroup = ({ posts }) => {
         const selected = currentPath === `${BLOG.PATH}/article/${post.slug}`
         const headerImage = post?.page_cover
           ? `url("${post.page_cover}")`
-          : `url("/${BLOG.HOME_BANNER_IMAGE}")`
+          : `url("${siteInfo?.pageCover}")`
 
         return (
           <Link
