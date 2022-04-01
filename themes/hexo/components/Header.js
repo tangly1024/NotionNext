@@ -53,9 +53,11 @@ const Header = props => {
     if (scrollS < 500) {
       nav && nav.classList.replace('bg-white', 'bg-none')
       nav && nav.classList.replace('text-black', 'text-white')
+      nav && nav.classList.replace('border', 'border-transparent')
     } else {
       nav && nav.classList.replace('bg-none', 'bg-white')
       nav && nav.classList.replace('text-white', 'text-black')
+      nav && nav.classList.replace('border-transparent', 'border')
     }
 
     // 自动滚动
