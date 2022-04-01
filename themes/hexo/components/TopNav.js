@@ -87,8 +87,8 @@ const TopNav = props => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={'fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full top-0 z-20 transform duration-200 font-san'}>
-      <div className='w-full flex justify-between items-center px-4 py-2 border dark:border-transparent'>
+    <div id='sticky-nav' className={'fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full top-0 z-20 transform duration-200 font-san border-transparent  dark:border-transparent'}>
+      <div className='w-full flex justify-between items-center px-4 py-2'>
         <div className='flex'>
          <Logo {...props}/>
         </div>
