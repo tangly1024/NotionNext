@@ -95,10 +95,15 @@ yarn run start # 本地启动NextJS服务
 
 ## 贡献者
 
-<table><tr align="left">
-  <td align="center"><a href="https://github.com/tangly1024"><img src="https://avatars.githubusercontent.com/u/15920488" width="64px;"alt="tangly1024"/><br/><sub><b>tangly1024</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=tangly1024" title="Owner" >🎫 🔧 🎨 🐛</a></td>
-  <td align="center"><a href="https://github.com/uWayLu"><img src="https://avatars.githubusercontent.com/u/21689326" width="64px;" alt="uWayLu"/><br/><sub><b>uWayLu</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=uWayLu" title="yokinist" >🔧 🐛</a></td>
-</tr></table>
+<table>
+  <tr align="left">
+  <td align="center"><a href="https://github.com/tangly1024"><img src="https://avatars.githubusercontent.com/u/15920488" width="64px;"alt="tangly1024"/><br/><sub><b>tangly1024</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=tangly1024" title="Owner" >🎫 🔧 🎨 🐛</a></td>  
+<td align="center"><a href="https://github.com/uWayLu"><img src="https://avatars.githubusercontent.com/u/21689326" width="64px;" alt="uWayLu"/><br/><sub><b>uWayLu</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=uWayLu" title="uWayLu" >🔧 🐛</a>
+</td>
+    <td align="center"><a href="https://github.com/txs"><img src="https://avatars.githubusercontent.com/u/554329" width="64px;" alt="txs"/><br/><sub><b>txs</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=txs" title="txs" >🔧 🐛</a>
+</td>  
+</tr>
+</table>
 
 十分期待你的[贡献](/CONTRIBUTING.md)，一起来完善这个项目~
 
