@@ -3,9 +3,17 @@
  */
 import * as next from './next'
 import * as fukasawa from './fukasawa'
+import * as apple_ios_hexo from './apple_ios_hexo'
 import * as hexo from './hexo'
 import * as medium from './medium'
 import * as example from './example'
 
-export const ALL_THEME = ['hexo', 'next', 'medium', 'fukasawa', 'example']
-export { hexo, next, medium, fukasawa, example }
+export const ALL_THEME = [
+  'hexo',
+  'next',
+  'medium',
+  'fukasawa',
+  'example',
+  'apple_ios_hexo'
+]
+export { hexo, next, medium, fukasawa, example, apple_ios_hexo }
