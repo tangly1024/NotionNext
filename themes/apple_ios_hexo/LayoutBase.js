@@ -45,7 +45,7 @@ const LayoutBase = props => {
   }, [show])
 
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="bg-white dark:bg-black">
       <CommonHead meta={meta} />
 
       <TopNav {...props} />
@@ -66,11 +66,11 @@ const LayoutBase = props => {
       </main>
 
       {/* 右下角悬浮 */}
-      <div className="bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-blue-400 rounded">
+      <div className="bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-blue-400 dark:bg-hexo-black-gray rounded">
         <div
           className={
             (show ? 'animate__animated ' : 'hidden') +
-            ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '
+            ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center  cursor-pointer '
           }
         >
           <FloatDarkModeButton />

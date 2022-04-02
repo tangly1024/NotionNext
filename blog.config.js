@@ -1,22 +1,22 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/zh/features/personality
 const BLOG = {
-  AUTHOR: process.env.AUTHOR || 'tangly1024', // 作者
-  BIO: process.env.BIO || '一个普通的干饭人🍚', // 作者简介
-  LINK: process.env.LINK || 'https://tangly1024.com', // 网站地址
+  AUTHOR: 'Andy', // 作者
+  BIO: '喜歡 Apple 產品, Javascript 與軟式網球的工程師', // 作者简介
+  LINK: 'https://tw.andys.pro', // 网站地址
   AVATAR: process.env.AVATAR || '/avatar.png', // 个人头像 默认取public目录下的avatar.png
-  KEYWORDS: process.env.KEYWORDS || 'Notion, 博客', // 网站关键词 英文逗号隔开
+  KEYWORDS:
+    'YouTube, Notion, 部落格, Apple, 蘋果, iPhone, iPad, MacBook, Apple Watch, AirPods, Javascript, React, React Native, Soft Tennis, 軟式網球', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
-
   THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['next','hexo',"fukasawa','medium']
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
-  LANG: process.env.LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
+  LANG: 'zh-TW', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   HOME_BANNER_IMAGE: process.env.HOME_BANNER_IMAGE || './bg_image.jpg', // 首页背景大图，默认文件：/public/bg_image.jpg 。会被Notion中的封面图覆盖。
-  SINCE: process.env.SINCE || 2021, // e.g if leave this empty, current year will be used.
+  SINCE: 2020, // e.g if leave this empty, current year will be used.
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
-  APPEARANCE: process.env.APPEARANCE || 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
+  APPEARANCE: process.env.APPEARANCE || 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   FONT: process.env.FONT || 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
   FONT_AWESOME_PATH:
     process.env.FONT_AWESOME_PATH ||
@@ -24,7 +24,6 @@ const BLOG = {
   BACKGROUND_LIGHT: process.env.BACKGROUND_LIGHT || '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: process.env.BACKGROUND_DARK || '#000000', // use hex value, don't forget '#'
   PATH: process.env.PATH || '', // leave this empty unless you want to deploy in a folder
-
   POST_LIST_STYLE: process.env.POST_LIST_STYLE || 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
   POST_PREVIEW_LINES: process.env.POST_PREVIEW_LINES || 12, // 预览博客行数
@@ -113,9 +112,10 @@ const BLOG = {
   ADSENSE_GOOGLE_ID: process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_ID || '', // 谷歌广告ID e.g ca-pub-xxxxxxxxxxxxxxxx
 
   // 无关紧要的配置
-  TITLE: process.env.NEXT_PUBLIC_TITLE || 'NotionNext BLOG', // 站点标题 ，被notion中的页面标题覆盖
+  TITLE: process.env.NEXT_PUBLIC_TITLE || "Andy's Pro Blog", // 站点标题 ，被notion中的页面标题覆盖
   DESCRIPTION:
-    process.env.NEXT_PUBLIC_DESCRIPTION || '这是一个由NotionNext生成的站点', // 站点描述，被notion中的页面描述覆盖
+    process.env.NEXT_PUBLIC_DESCRIPTION ||
+    '歡迎來到 Andys.pro! 在這裡與 YouTube, 我分享 Apple iPhone, MacBook 產品心得, Javascript 開發,以及軟式網球的技巧!', // 站点描述，被notion中的页面描述覆盖
 
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   VERSION: '2.9.1' // 版本号

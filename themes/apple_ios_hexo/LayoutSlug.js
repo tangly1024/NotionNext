@@ -30,36 +30,40 @@ export const LayoutSlug = props => {
   }
 
   const drawerRight = useRef(null)
-  const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
+  const targetRef =
+    typeof window !== 'undefined' ? document.getElementById('container') : null
 
-  const floatSlot = <>
-  {post?.toc?.length > 1 && <div className="block lg:hidden">
-        <TocDrawerButton
-          onClick={() => {
-            drawerRight?.current?.handleSwitchVisible()
-          }}
-        />
-      </div>}
-        <JumpToCommentButton/>
-      </>
+  const floatSlot = (
+    <>
+      {post?.toc?.length > 1 && (
+        <div className="block lg:hidden">
+          <TocDrawerButton
+            onClick={() => {
+              drawerRight?.current?.handleSwitchVisible()
+            }}
+          />
+        </div>
+      )}
+      <JumpToCommentButton />
+    </>
+  )
 
   return (
     <LayoutBase
-      headerSlot={<HeaderArticle post={post}/>}
+      headerSlot={<HeaderArticle post={post} />}
       {...props}
       meta={meta}
       showCategory={false}
       showTag={false}
       floatSlot={floatSlot}
     >
-      <div className="w-full dark:border-gray-600 lg:shadow-md lg:hover:shadow-xl lg:border lg:border-gray-100 lg:rounded-xl lg:px-2 lg:py-4 lg:bg-white lg:dark:bg-gray-800">
+      <div className="w-full lg:shadow-sm lg:hover:shadow lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black">
         <ArticleDetail {...props} />
       </div>
 
-      <div className='block lg:hidden'>
+      <div className="block lg:hidden">
         <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
       </div>
-
     </LayoutBase>
   )
 }
