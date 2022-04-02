@@ -7,7 +7,7 @@ const CONFIG_NEXT = {
 
   POST_LIST_TYPE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_COVER: false, // 文章列表显示封面图
-  POST_LIST_PREVIEW: true, // 显示文章预览
+  POST_LIST_PREVIEW: false, // 显示文章预览
   POST_LIST_SUMMARY: true, // 显示用户自定义摘要，有预览时优先只展示预览
 
   // 右侧组件
