@@ -13,8 +13,7 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG} className="test">
         <Head>
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+          <link rel="icon" href={'/favicon.' + BLOG.LANG + '.ico'} />
           {/* 谷歌字体镜像 */}
           <link
             href="https://fonts.loli.net/css2?family=Noto+Serif+SC&display=swap"
