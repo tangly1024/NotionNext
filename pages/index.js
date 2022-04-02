@@ -32,6 +32,9 @@ export async function getStaticProps () {
     if (BLOG.POST_LIST_PREVIEW === 'true') {
       for (const i in postsToShow) {
         const post = postsToShow[i]
+        if (post.password && post.password !== '') {
+          continue
+        }
         const blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
         if (blockMap) {
           post.blockMap = blockMap
