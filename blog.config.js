@@ -1,10 +1,10 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/zh/features/personality
 const BLOG = {
-  AUTHOR: 'tangly1024', // 作者
-  BIO: '一个普通的干饭人🍚', // 作者简介
-  LINK: 'https://tangly1024.com', // 网站地址
-  AVATAR: '/avatar.png', // 个人头像 默认取public目录下的avatar.png
-  KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
+  AUTHOR: process.env.AUTHOR || 'tangly1024', // 作者
+  BIO: process.env.BIO || '一个普通的干饭人🍚', // 作者简介
+  LINK: process.env.LINK || 'https://tangly1024.com', // 网站地址
+  AVATAR: process.env.AVATAR || '/avatar.png', // 个人头像 默认取public目录下的avatar.png
+  KEYWORDS: process.env.KEYWORDS || 'Notion, 博客', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
@@ -12,40 +12,42 @@ const BLOG = {
 
   THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['next','hexo',"fukasawa','medium']
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
-  LANG: 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
-  HOME_BANNER_IMAGE: './bg_image.jpg', // 首页背景大图，默认文件：/public/bg_image.jpg 。会被Notion中的封面图覆盖。
-  SINCE: 2021, // e.g if leave this empty, current year will be used.
+  LANG: process.env.LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
+  HOME_BANNER_IMAGE: process.env.HOME_BANNER_IMAGE || './bg_image.jpg', // 首页背景大图，默认文件：/public/bg_image.jpg 。会被Notion中的封面图覆盖。
+  SINCE: process.env.SINCE || 2021, // e.g if leave this empty, current year will be used.
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
-  APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
-  FONT: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
+  APPEARANCE: process.env.APPEARANCE || 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
+  FONT: process.env.FONT || 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
   FONT_AWESOME_PATH:
+    process.env.FONT_AWESOME_PATH ||
     'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css', // 图标库CDN ，国内推荐BootCDN，国外推荐 CloudFlare https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
-  BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
-  BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
-  PATH: '', // leave this empty unless you want to deploy in a folder
+  BACKGROUND_LIGHT: process.env.BACKGROUND_LIGHT || '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
+  BACKGROUND_DARK: process.env.BACKGROUND_DARK || '#000000', // use hex value, don't forget '#'
+  PATH: process.env.PATH || '', // leave this empty unless you want to deploy in a folder
 
-  POST_LIST_STYLE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
+  POST_LIST_STYLE: process.env.POST_LIST_STYLE || 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
-  POST_PREVIEW_LINES: 12, // 预览博客行数
-  POST_RECOMMEND_COUNT: 6, // 推荐文章数量
-  POSTS_PER_PAGE: 6, // post counts per page
-  POSTS_SORT_BY: 'notion', // 排序方式 'date'按时间,'notion'由notion控制
+  POST_PREVIEW_LINES: process.env.POST_PREVIEW_LINES || 12, // 预览博客行数
+  POST_RECOMMEND_COUNT: process.env.POST_RECOMMEND_COUNT || 6, // 推荐文章数量
+  POSTS_PER_PAGE: process.env.POSTS_PER_PAGE || 6, // post counts per page
+  POSTS_SORT_BY: process.env.POSTS_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
-  PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
-  PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
+  PREVIEW_CATEGORY_COUNT: process.env.PREVIEW_CATEGORY_COUNT || 16, // 首页最多展示的分类数量，0为不限制
+  PREVIEW_TAG_COUNT: process.env.PREVIEW_TAG_COUNT || 16, // 首页最多展示的标签数量，0为不限制
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: 'mail@tangly1024.com',
-  CONTACT_WEIBO: '',
-  CONTACT_TWITTER: '',
-  CONTACT_GITHUB: 'https://github.com/tangly1024',
-  CONTACT_TELEGRAM: '',
+  CONTACT_EMAIL: process.env.CONTACT_EMAIL || 'mail@tangly1024.com',
+  CONTACT_WEIBO: process.env.CONTACT_WEIBO || '',
+  CONTACT_TWITTER: process.env.CONTACT_TWITTER || '',
+  CONTACT_GITHUB: process.env.CONTACT_GITHUB || 'https://github.com/tangly1024',
+  CONTACT_TELEGRAM: process.env.CONTACT_TELEGRAM || '',
 
   // 悬浮挂件
   WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
   WIDGET_PET_LINK:
+    process.env.WIDGET_PET_LINK ||
     'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
-  WIDGET_PET_SWITCH_THEME: true, // 点击宠物挂件切换博客主题
+  WIDGET_PET_SWITCH_THEME: process.env.WIDGET_PET_SWITCH_THEME || true, // 点击宠物挂件切换博客主题
 
   // 评论互动 可同时开启多个支持 GISCUS CUSDIS UTTERRANCES GITALK
 

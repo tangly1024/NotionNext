@@ -1,4 +1,4 @@
-const CONFIG_APPLE_IOS_HEXO = {
+const CONFIG_ANDYSPRO = {
   HOME_BANNER_ENABLE: true,
   HOME_BANNER_GREETINGS: [
     'Hi，我是一個工程師！',
@@ -34,4 +34,4 @@ const CONFIG_APPLE_IOS_HEXO = {
   WIDGET_DARK_MODE: true, // 夜间模式
   WIDGET_TOC: true // 移动端悬浮目录
 }
-export default CONFIG_APPLE_IOS_HEXO
+export default CONFIG_ANDYSPRO
