@@ -39,7 +39,7 @@ export const LayoutSlug = props => {
 
   return (
     <LayoutBase
-      headerSlot={<HeaderArticle post={post}/>}
+      headerSlot={<HeaderArticle {...props}/>}
       {...props}
       showCategory={false}
       showTag={false}

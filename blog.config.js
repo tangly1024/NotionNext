@@ -19,7 +19,7 @@ const BLOG = {
   FONT: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
   FONT_AWESOME_PATH: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css', // 图标库CDN ，国内推荐BootCDN，国外推荐 CloudFlare https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
-  BACKGROUND_DARK: '#111827', // use hex value, don't forget '#'
+  BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
   PATH: '', // leave this empty unless you want to deploy in a folder
 
   POST_LIST_STYLE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
@@ -95,7 +95,7 @@ const BLOG = {
   DESCRIPTION: process.env.NEXT_PUBLIC_DESCRIPTION || '这是一个由NotionNext生成的站点', // 站点描述，被notion中的页面描述覆盖
 
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-  VERSION: '2.9.0' // 版本号
+  VERSION: '2.9.1' // 版本号
 }
 
 module.exports = BLOG
