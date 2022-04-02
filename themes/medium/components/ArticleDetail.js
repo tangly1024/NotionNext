@@ -35,7 +35,7 @@ export const ArticleDetail = props => {
     post?.date?.start_date || post.createdTime,
     locale.LOCALE
   )
-  return <>
+  return <div id='container'>
     <h1 className="text-4xl pt-12 font-sans dark:text-gray-100">{post?.title}</h1>
     <section className="flex py-4 items-center font-sans px-1">
       <Link href="/about" passHref>
@@ -98,5 +98,5 @@ export const ArticleDetail = props => {
       <ArticleAround prev={prev} next={next} />
       <Comment frontMatter={post} />
     </section>
-    </>
+  </div>
 }
