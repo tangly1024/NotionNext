@@ -14,7 +14,7 @@ export async function getStaticProps () {
   const props = await getGlobalNotionData({ from, pageType: ['Post'] })
   const { allPosts, siteInfo } = props
   const meta = {
-    title: `${siteInfo.title}`,
+    title: `${siteInfo.title} | ${siteInfo.description}`,
     description: siteInfo.description,
     type: 'website'
   }
