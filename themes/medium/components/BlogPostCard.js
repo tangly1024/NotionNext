@@ -11,7 +11,7 @@ const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MEDIUM.POST_LIST_PREVIEW && post.blockMap
   const { locale } = useGlobal()
   return (
-      <div key={post.id} className='animate__animated animate__fadeIn duration-300 mb-6 max-w-7xl '>
+      <div key={post.id} className='animate__animated animate__fadeIn duration-300 mb-6 max-w-7xl border-b dark:border-gray-800 '>
 
         <div className='lg:p-8 p-4 flex flex-col w-full'>
           <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
@@ -57,7 +57,6 @@ const BlogPostCard = ({ post, showSummary }) => {
               </div>
           </div> }
         </div>
-        <hr className='w-full'/>
       </div>
 
   )

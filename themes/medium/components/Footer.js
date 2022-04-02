@@ -7,7 +7,7 @@ const Footer = ({ title }) => {
   const startYear = BLOG.SINCE && BLOG.SINCE !== currentYear && BLOG.SINCE + '-'
   return (
     <footer
-      className='dark:bg-gray-900 flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-gray-400 text-sm p-6'
+      className='dark:bg-hexo-black-gray flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-gray-400 text-sm p-6'
     >
       <i className='fas fa-copyright' /> {`${startYear}${currentYear}`} <span><i className='mx-1 animate-pulse fas fa-heart'/> <a href={BLOG.LINK} className='underline font-bold text-gray-500 dark:text-gray-300 '>{BLOG.AUTHOR}</a>.<br/>
 

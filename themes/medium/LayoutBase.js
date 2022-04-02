@@ -24,7 +24,7 @@ const LayoutBase = props => {
   const router = useRouter()
 
   return (
-    <div className='bg-white dark:bg-gray-800 w-full h-full min-h-screen justify-center dark:text-gray-300'>
+    <div className='bg-white dark:bg-black w-full h-full min-h-screen justify-center dark:text-gray-300'>
       <CommonHead meta={meta} />
       <main id='wrapper' className='flex justify-between w-full h-full mx-auto'>
         {/* 桌面端左侧菜单 */}
@@ -40,7 +40,7 @@ const LayoutBase = props => {
         </div>
 
         {/* 桌面端右侧 */}
-        <div className='hidden xl:block border-l dark:border-gray-500 w-96'>
+        <div className='hidden xl:block border-l dark:border-transparent w-96'>
          <div className='py-14 px-6 sticky top-0'>
           <Tabs>
             {slotRight}

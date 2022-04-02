@@ -38,7 +38,7 @@ export const LayoutSlug = props => {
   })
 
   const slotRight = post?.toc && post?.toc?.length > 3 && (
-    <div key={locale.COMMON.TABLE_OF_CONTENTS} className="mt-6">
+    <div key={locale.COMMON.TABLE_OF_CONTENTS} >
       <Catalog toc={post.toc} />
     </div>
   )

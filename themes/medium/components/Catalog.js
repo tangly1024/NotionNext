@@ -58,7 +58,7 @@ const Catalog = ({ toc }) => {
   }, throttleMs))
 
   return <div className='px-3'>
-    <div className='w-full py-1'>
+    <div className='w-full mt-2 mb-4'>
       <Progress/>
     </div>
     <div className='overflow-y-auto max-h-96 overscroll-none' ref={tRef}>
