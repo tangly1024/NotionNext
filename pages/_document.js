@@ -4,19 +4,22 @@ import BLOG from '@/blog.config'
 import CommonScript from '@/components/CommonScript'
 
 class MyDocument extends Document {
-  static async getInitialProps (ctx) {
+  static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
     return { ...initialProps }
   }
 
-  render () {
+  render() {
     return (
-      <Html lang={BLOG.LANG} className='test'>
+      <Html lang={BLOG.LANG} className="test">
         <Head>
-          <link rel='icon' href='/favicon.ico' />
-          <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
+          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
           {/* 谷歌字体镜像 */}
-          <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC&display=swap" rel="stylesheet"/>
+          <link
+            href="https://fonts.loli.net/css2?family=Noto+Serif+SC&display=swap"
+            rel="stylesheet"
+          />
           <CommonScript />
         </Head>
 
