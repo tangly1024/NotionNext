@@ -18,7 +18,7 @@ export const LayoutIndex = props => {
   return (
     <LayoutBase {...props}>
       {posts.map(p => (
-        <div key={p.id} className='border p-4 my-12'>
+        <div key={p.id} className='border dark:border-hexo-black-gray p-4 my-12'>
           <Link href={`/article/${p.slug}`}>
             <a className='underline cursor-pointer'>{p.title}</a>
           </Link>

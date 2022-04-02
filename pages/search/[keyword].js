@@ -24,6 +24,7 @@ const Index = props => {
 export async function getServerSideProps ({ params: { keyword } }) {
   const props = await getGlobalNotionData({ from: 'search-props', pageType: ['Post'] })
   props.posts = await filterByMemCache(props.allPosts, keyword)
+  props.keyword = keyword
   return {
     props
   }

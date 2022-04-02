@@ -32,8 +32,8 @@ const LayoutBase = props => {
     <div className='dark:text-gray-300'>
       <CommonHead meta={meta} />
       {/* 导航菜单 */}
-      <div className="w-full flex justify-center my-2">
-        <div className=" max-w-6xl justify-between w-full flex">
+      <div className="w-full flex justify-center my-2 text-xs md:text-base px-5">
+        <div className="max-w-6xl justify-between w-full flex">
           <section>
             <Link title={siteInfo.title} href={'/'}>
               <a className={'cursor-pointer flex items-center hover:underline'}>
@@ -42,14 +42,14 @@ const LayoutBase = props => {
               </a>
             </Link>
           </section>
-          <nav className="space-x-3 flex">
+          <nav className="space-x-3 flex flex-nowrap overflow-x-auto">
             {links.map(link => {
               if (link) {
                 return (
                   <Link key={`${link.to}`} title={link.to} href={link.to}>
                     <a
                       className={
-                        'cursor-pointer flex items-center hover:underline'
+                        'cursor-pointer flex whitespace-nowrap items-center hover:underline'
                       }
                     >
                       <i className={`${link.icon} mr-1`} />
