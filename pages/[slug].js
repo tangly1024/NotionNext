@@ -15,7 +15,7 @@ const Slug = props => {
   const ThemeComponents = ThemeMap[theme]
   const { post } = props
   if (!post) {
-    return <ThemeComponents.Layout404 {...props}/>
+    return <ThemeComponents.Layout404 {...props} />
   }
 
   // 文章锁🔐
@@ -42,16 +42,18 @@ const Slug = props => {
   const meta = {
     title: `${post.title} | ${siteInfo.title}`,
     description: post.summary,
+    slug: post.slug,
+    image: post.page_cover,
     type: 'article',
     tags: post.tags
   }
 
   props = { ...props, meta, lock, setLock, validPassword }
 
-  return <ThemeComponents.LayoutSlug {...props} showArticleInfo={false}/>
+  return <ThemeComponents.LayoutSlug {...props} showArticleInfo={false} />
 }
 
-export async function getStaticPaths () {
+export async function getStaticPaths() {
   if (!BLOG.isProd) {
     return {
       paths: [],
@@ -61,7 +63,8 @@ export async function getStaticPaths () {
 
   const from = 'slug-paths'
   const { allPosts } = await getGlobalNotionData({ from, pageType: ['Page'] })
-  const filterPosts = allPosts?.filter(e => e?.slug?.indexOf('http') !== 0) || []
+  const filterPosts =
+    allPosts?.filter(e => e?.slug?.indexOf('http') !== 0) || []
 
   return {
     paths: filterPosts.map(row => ({ params: { slug: row.slug } })),
@@ -69,7 +72,7 @@ export async function getStaticPaths () {
   }
 }
 
-export async function getStaticProps ({ params: { slug } }) {
+export async function getStaticProps({ params: { slug } }) {
   const from = `slug-props-${slug}`
   const props = await getGlobalNotionData({ from, pageType: ['Page'] })
   const { allPosts } = props

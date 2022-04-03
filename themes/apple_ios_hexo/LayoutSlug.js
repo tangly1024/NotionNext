@@ -17,12 +17,6 @@ import LayoutBase from './LayoutBase'
 
 export const LayoutSlug = props => {
   const { post } = props
-  const meta = {
-    title: `${post.title} | ${BLOG.TITLE}`,
-    description: post.summary,
-    type: 'article',
-    tags: post.tags
-  }
 
   if (post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
@@ -52,7 +46,6 @@ export const LayoutSlug = props => {
     <LayoutBase
       headerSlot={<HeaderArticle post={post} />}
       {...props}
-      meta={meta}
       showCategory={false}
       showTag={false}
       floatSlot={floatSlot}

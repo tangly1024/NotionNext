@@ -7,7 +7,9 @@ export const LayoutIndex = props => {
   return (
     <LayoutBase
       {...props}
-      headerSlot={CONFIG_APPLE_IOS_HEXO.HOME_BANNER_ENABLE && <Header />}
+      headerSlot={
+        CONFIG_APPLE_IOS_HEXO.HOME_BANNER_ENABLE && <Header {...props} />
+      }
     >
       <BlogPostListPage {...props} />
     </LayoutBase>

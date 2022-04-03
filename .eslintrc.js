@@ -23,8 +23,8 @@ module.exports = {
     }
   },
   rules: {
-    'react/prop-types': 'off',
-    'space-before-function-paren': 0
+    'react/prop-types': 'off'
+    // 'space-before-function-paren': 0
   },
   globals: {
     React: true

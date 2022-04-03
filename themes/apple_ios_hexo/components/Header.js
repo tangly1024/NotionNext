@@ -12,9 +12,10 @@ let autoScroll = false
  *
  * @returns 头图
  */
-export default function Header() {
+const Header = props => {
   const [typed, changeType] = useState()
   const { isDarkMode } = useGlobal()
+  const { siteInfo } = props
 
   useEffect(() => {
     scrollTrigger()
@@ -100,12 +101,12 @@ export default function Header() {
       id="header"
       className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black text-white"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0), rgba(0, 0, 0, 0.5) ),url("${CONFIG_APPLE_IOS_HEXO.HOME_BANNER_IMAGE}")`
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0), rgba(0, 0, 0, 0.5) ),url("${siteInfo.pageCover}")`
       }}
     >
       <div className="absolute flex flex-col h-full items-center justify-center w-full font-sans">
         <div className="text-4xl md:text-5xl text-white shadow-text">
-          {BLOG.TITLE}
+          {siteInfo.title}
         </div>
         <div className="mt-2 h-12 items-center text-center shadow-text text-white text-lg">
           <span id="typed" />
@@ -122,3 +123,4 @@ export default function Header() {
     </header>
   )
 }
+export default Header
