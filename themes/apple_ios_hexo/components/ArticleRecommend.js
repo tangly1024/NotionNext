@@ -35,7 +35,7 @@ export default function ArticleRecommend({ recommendPosts }) {
             <Link
               key={post.id}
               title={post.title}
-              href={`${BLOG.PATH}/article/${post.slug}`}
+              href={`${BLOG.SUB_PATH}/article/${post.slug}`}
               passHref
             >
               <a
