@@ -14,6 +14,7 @@ const Page = props => {
   const meta = {
     title: `${props.page} | Page | ${siteInfo.title}`,
     description: siteInfo.description,
+    slug: 'page/' + props.page,
     type: 'website'
   }
   return <ThemeComponents.LayoutPage {...props} meta={meta} />

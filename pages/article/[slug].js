@@ -61,7 +61,7 @@ const Slug = props => {
     title: `${props.post.title} | ${siteInfo.title}`,
     description: props.post.summary,
     type: 'article',
-    slug: props.post.slug,
+    slug: 'article/' + props.post.slug,
     image: props.post.page_cover,
     tags: props.post.tags
   }

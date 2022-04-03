@@ -11,12 +11,13 @@ const TagIndex = props => {
   const meta = {
     title: `${locale.COMMON.TAGS} | ${siteInfo.title}`,
     description: siteInfo.description,
+    slug: 'tag',
     type: 'website'
   }
   return <ThemeComponents.LayoutTagIndex {...props} meta={meta} />
 }
 
-export async function getStaticProps () {
+export async function getStaticProps() {
   const from = 'tag-index-props'
   const props = await getGlobalNotionData({ from, tagsCount: 0 })
   return {

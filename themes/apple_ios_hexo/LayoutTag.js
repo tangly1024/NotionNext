@@ -7,14 +7,8 @@ export const LayoutTag = props => {
   const { tags, posts, tag } = props
   const { locale } = useGlobal()
 
-  const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${BLOG.TITLE}`,
-    description: BLOG.DESCRIPTION,
-    type: 'website'
-  }
-
   return (
-    <LayoutBase {...props} meta={meta}>
+    <LayoutBase {...props}>
       <BlogPostListScroll posts={posts} tags={tags} currentTag={tag} />
     </LayoutBase>
   )
