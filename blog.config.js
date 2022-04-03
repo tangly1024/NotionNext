@@ -17,7 +17,7 @@ const BLOG = {
   SINCE: 2020, // e.g if leave this empty, current year will be used.
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
   APPEARANCE: process.env.APPEARANCE || 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
-  FONT: process.env.FONT || 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
+  FONT: process.env.FONT || 'font-sans tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
   FONT_AWESOME_PATH:
     process.env.FONT_AWESOME_PATH ||
     'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css', // 图标库CDN ，国内推荐BootCDN，国外推荐 CloudFlare https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
@@ -29,7 +29,7 @@ const BLOG = {
   POST_PREVIEW_LINES: process.env.POST_PREVIEW_LINES || 12, // 预览博客行数
   POST_RECOMMEND_COUNT: process.env.POST_RECOMMEND_COUNT || 6, // 推荐文章数量
   POSTS_PER_PAGE: process.env.POSTS_PER_PAGE || 6, // post counts per page
-  POSTS_SORT_BY: process.env.POSTS_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
+  POSTS_SORT_BY: process.env.POSTS_SORT_BY || 'date', // 排序方式 'date'按时间,'notion'由notion控制
 
   PREVIEW_CATEGORY_COUNT: process.env.PREVIEW_CATEGORY_COUNT || 16, // 首页最多展示的分类数量，0为不限制
   PREVIEW_TAG_COUNT: process.env.PREVIEW_TAG_COUNT || 16, // 首页最多展示的标签数量，0为不限制

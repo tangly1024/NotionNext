@@ -98,7 +98,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                   src={post?.page_cover}
                   alt={post.title}
                   loading="lazy"
-                  className="lg:hover:scale-110 rounded-xl lg:rounded-t-none transform object-cover duration-500"
+                  className="lg:hover:scale-110 rounded-xl lg:rounded-t-none transform object-cover duration-500 h-full"
                 />
                 {/* <Image
                   className="rounded-xl transform duration-500 hover:scale-110 object-cover"
