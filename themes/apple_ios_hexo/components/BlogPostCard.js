@@ -21,7 +21,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         className="animate__animated animate__fadeIn flex flex-col-reverse lg:flex-row justify-between duration-300"
       >
         <div className="lg:p-8 p-4 flex flex-col w-full">
-          <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
+          <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
             <a
               className={`replace cursor-pointer hover:underline text-2xl font-sans line-clamp-2 ${
                 showPreview ? 'text-center' : ''
@@ -90,7 +90,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         {CONFIG_APPLE_IOS_HEXO.POST_LIST_COVER &&
           !showPreview &&
           post?.page_cover && (
-            <Link href={`${BLOG.PATH}/article/${post.slug}`} passHref>
+            <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
               <a className="lg:hover:scale-110 w-full relative duration-200 rounded-t-xl lg:rounded-r-xl cursor-pointer transform overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 {/* <img src={post?.page_cover} alt={post.title} className='h-full object-cover'></img> */}
