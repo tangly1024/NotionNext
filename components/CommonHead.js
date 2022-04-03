@@ -2,8 +2,8 @@ import BLOG from '@/blog.config'
 import Head from 'next/head'
 
 const CommonHead = ({ meta, children }) => {
-  let url = BLOG?.PATH?.length ? `${BLOG.LINK}/${BLOG.PATH}` : BLOG.LINK
-  console.log(meta)
+  // let url = BLOG?.PATH?.length ? `${BLOG.LINK}/${BLOG.PATH}` : BLOG.LINK
+  let url = BLOG.LINK
   let image
   if (meta) {
     url = `${url}/${meta.slug}`
