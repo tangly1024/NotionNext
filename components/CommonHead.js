@@ -12,6 +12,7 @@ const CommonHead = ({ meta, children }) => {
   const description = meta?.description || BLOG.DESCRIPTION
   const type = meta?.type || 'website'
   const keywords = meta?.tags || BLOG.KEYWORDS
+  const lang = BLOG.LANG.replace('-', '_')
 
   return (
     <Head>
@@ -31,7 +32,7 @@ const CommonHead = ({ meta, children }) => {
       )}
       <meta name="keywords" content={keywords} />
       <meta name="description" content={description} />
-      <meta property="og:locale" content={BLOG.LANG} />
+      <meta property="og:locale" content={lang} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
