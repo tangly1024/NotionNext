@@ -16,46 +16,69 @@ const PaginationNumber = ({ page, totalPage }) => {
   const pages = generatePages(page, currentPage, totalPage)
 
   return (
-    <div className='mt-10 mb-5 font-sans flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2'>
-
+    <div className="mt-10 mb-5 font-sans flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
       {/* 上一页 */}
       <Link
-        href={ {
-          pathname: (currentPage - 1 === 1 ? `${BLOG.PATH || '/'}` : `/page/${currentPage - 1}`), query: router.query.s ? { s: router.query.s } : {}
-        } } passHref >
+        href={{
+          pathname:
+            currentPage - 1 === 1
+              ? `${BLOG.SUB_PATH || '/'}`
+              : `/page/${currentPage - 1}`,
+          query: router.query.s ? { s: router.query.s } : {}
+        }}
+        passHref
+      >
         <div
-          rel='prev'
-          className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
+          rel="prev"
+          className={`${
+            currentPage === 1 ? 'invisible' : 'block'
+          } pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
         >
-          <i className='fas fa-angle-left'/>
+          <i className="fas fa-angle-left" />
         </div>
       </Link>
 
       {pages}
 
       {/* 下一页 */}
-      <Link href={ { pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} } } passHref>
+      <Link
+        href={{
+          pathname: `/page/${currentPage + 1}`,
+          query: router.query.s ? { s: router.query.s } : {}
+        }}
+        passHref
+      >
         <div
-          rel='next'
-          className={`${+showNext ? 'block' : 'invisible'} pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
+          rel="next"
+          className={`${
+            +showNext ? 'block' : 'invisible'
+          } pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
         >
-          <i className='fas fa-angle-right'/>
+          <i className="fas fa-angle-right" />
         </div>
       </Link>
     </div>
   )
 }
 
-function getPageElement (page, currentPage) {
-  return <Link href={page === 1 ? '/' : `/page/${page}`} key={page} passHref>
-      <a className={(page + '' === currentPage + '' ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white ' : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
-      ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'}>
-      {page}
+function getPageElement(page, currentPage) {
+  return (
+    <Link href={page === 1 ? '/' : `/page/${page}`} key={page} passHref>
+      <a
+        className={
+          (page + '' === currentPage + ''
+            ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
+            : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
+          ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
+        }
+      >
+        {page}
       </a>
     </Link>
+  )
 }
 
-function generatePages (page, currentPage, totalPage) {
+function generatePages(page, currentPage, totalPage) {
   const pages = []
   const groupCount = 7 // 最多显示页签数
   if (totalPage <= groupCount) {
