@@ -55,7 +55,6 @@ const Slug = props => {
   }
 
   props = { ...props, lock, setLock, validPassword }
-
   const { siteInfo } = props
   const meta = {
     title: `${props.post.title} | ${siteInfo.title}`,
@@ -63,6 +62,7 @@ const Slug = props => {
     type: 'article',
     slug: 'article/' + props.post.slug,
     image: props.post.page_cover,
+    articleSection: post.category[0],
     tags: props.post.tags
   }
 

@@ -13,7 +13,7 @@ const CommonHead = ({ meta, children }) => {
   const type = meta?.type || 'website'
   const keywords = meta?.tags || BLOG.KEYWORDS
   const lang = BLOG.LANG.replace('-', '_')
-
+  const section = meta?.articleSection || '軟體科技'
   return (
     <Head>
       <title>{title}</title>
@@ -38,6 +38,7 @@ const CommonHead = ({ meta, children }) => {
       <meta property="og:url" content={url} />
       <meta property="og:type" content={type} />
       <meta property="og:image" content={image} />
+      <meta property="og:site_name" content={BLOG.TITLE} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
@@ -51,6 +52,8 @@ const CommonHead = ({ meta, children }) => {
             content={meta.date || meta.createdTime}
           />
           <meta property="article:author" content={BLOG.AUTHOR} />
+          <meta property="article:section" content={section} />
+          <meta property="article:publisher" content={BLOG.FACEBOOK_PAGE} />
         </>
       )}
       {children}

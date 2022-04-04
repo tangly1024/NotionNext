@@ -9,7 +9,6 @@ export default function HeaderArticle({ post }) {
   const headerImage = post?.page_cover
     ? `url("${post.page_cover}")`
     : `url("/${CONFIG_APPLE_IOS_HEXO.HOME_BANNER_IMAGE}")`
-  console.log(post)
   const { locale } = useGlobal()
   const date = formatDate(
     post?.date?.start_date || post.createdTime,
