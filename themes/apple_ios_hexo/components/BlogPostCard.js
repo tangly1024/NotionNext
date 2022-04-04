@@ -91,7 +91,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           !showPreview &&
           post?.page_cover && (
             <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
-              <a className="lg:hover:scale-110 w-full relative duration-200 rounded-t-xl lg:rounded-r-xl cursor-pointer transform overflow-hidden">
+              <a className="lg:hover:scale-110 w-full relative duration-200 rounded-xl lg:rounded-xl cursor-pointer transform overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 {/* <img src={post?.page_cover} alt={post.title} className='h-full object-cover'></img> */}
                 <img
