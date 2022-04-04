@@ -15,12 +15,17 @@
 - [x] Site icon 2022/03/27
 - [x] TagPage Hashtag title 2022/03/27
 - [x] CategoryPage Folder title 2022/03/27
-- [ ] Change footer
-- [ ] Add cover to the article list in mobile
-- [ ] Fix facebook link info head metatdata
+- [x] Add cover to the article list in mobile 2022/04/04
+- [x] Change footer 2022/04/04
+- [x] Fix facebook link info head metatdata 2022/04/04
+- [x] 美化標題 2022/04/05
+- [ ] PR - More detail SEO for Facebook OpenGraph
+- [ ] SEO publish time fix
+- [ ] Add Facebook Messenger chat bubble
+- [ ] Facebook fanpage iframe to sidebar
+- [ ] Bigger floating buttons
 - [ ] PWA
 - [ ] 字數統計
-- [ ] 美化標題
 - [ ] 簡繁切換
 - [ ] H1, H2... span anchor use meaningful title instead of id
 - [ ] H1, H2... span anchor link scroll to target position instead of not scrolling
