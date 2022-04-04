@@ -61,13 +61,17 @@ const Slug = props => {
     title: `${props.post.title} | ${siteInfo.title}`,
     description: props.post.summary,
     type: 'article',
+    slug: 'article/' + props.post.slug,
+    image: props.post.page_cover,
     tags: props.post.tags
   }
 
-  return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta}/>
+  return (
+    <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
+  )
 }
 
-export async function getStaticPaths () {
+export async function getStaticPaths() {
   if (!BLOG.isProd) {
     return {
       paths: [],
@@ -83,7 +87,7 @@ export async function getStaticPaths () {
   }
 }
 
-export async function getStaticProps ({ params: { slug } }) {
+export async function getStaticProps({ params: { slug } }) {
   const from = `slug-props-${slug}`
   const props = await getGlobalNotionData({ from, pageType: ['Post'] })
   const allPosts = props.allPosts
@@ -96,7 +100,11 @@ export async function getStaticProps ({ params: { slug } }) {
   const index = allPosts.indexOf(props.post)
   props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
   props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-  props.recommendPosts = getRecommendPost(props.post, allPosts, BLOG.POST_RECOMMEND_COUNT)
+  props.recommendPosts = getRecommendPost(
+    props.post,
+    allPosts,
+    BLOG.POST_RECOMMEND_COUNT
+  )
   return {
     props,
     revalidate: 1
@@ -110,7 +118,7 @@ export async function getStaticProps ({ params: { slug } }) {
  * @param {*} count
  * @returns
  */
-function getRecommendPost (post, allPosts, count = 6) {
+function getRecommendPost(post, allPosts, count = 6) {
   let recommendPosts = []
   const postIds = []
   const currentTags = post.tags || []

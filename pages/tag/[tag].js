@@ -9,21 +9,28 @@ const Tag = props => {
   const { tag, siteInfo, posts } = props
 
   if (!posts) {
-    return <ThemeComponents.Layout404 {...props}/>
+    return <ThemeComponents.Layout404 {...props} />
   }
 
   const meta = {
     title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
     description: siteInfo?.description,
+    slug: 'tag/' + tag,
     type: 'website'
   }
-  return <ThemeComponents.LayoutTag {...props} meta={meta}/>
+  return <ThemeComponents.LayoutTag {...props} meta={meta} />
 }
 
-export async function getStaticProps ({ params: { tag } }) {
-  const props = await getGlobalNotionData({ from: 'tag-props', includePage: false, tagsCount: 0 })
+export async function getStaticProps({ params: { tag } }) {
+  const props = await getGlobalNotionData({
+    from: 'tag-props',
+    includePage: false,
+    tagsCount: 0
+  })
   const { allPosts } = props
-  props.posts = allPosts.filter(post => post && post.tags && post.tags.includes(tag))
+  props.posts = allPosts.filter(
+    post => post && post.tags && post.tags.includes(tag)
+  )
   props.tag = tag
   return {
     props,
@@ -36,7 +43,7 @@ export async function getStaticProps ({ params: { tag } }) {
  * @returns
  * @param tags
  */
-function getTagNames (tags) {
+function getTagNames(tags) {
   const tagNames = []
   tags.forEach(tag => {
     tagNames.push(tag.name)
@@ -44,13 +51,15 @@ function getTagNames (tags) {
   return tagNames
 }
 
-export async function getStaticPaths () {
+export async function getStaticPaths() {
   const from = 'tag-static-path'
   const { tags } = await getGlobalNotionData({ from, tagsCount: 0 })
   const tagNames = getTagNames(tags)
 
   return {
-    paths: Object.keys(tagNames).map(index => ({ params: { tag: tagNames[index] } })),
+    paths: Object.keys(tagNames).map(index => ({
+      params: { tag: tagNames[index] }
+    })),
     fallback: true
   }
 }
