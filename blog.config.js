@@ -7,6 +7,8 @@ const BLOG = {
   BIO: '喜歡 Apple 產品, Javascript 與軟式網球的工程師', // 作者简介
   LINK: 'https://tw.andys.pro', // 网站地址
   FACEBOOK_PAGE: 'https://www.facebook.com/tw.andys.pro',
+  FACEBOOK_PAGE_ID: process.env.FACEBOOK_PAGE_ID || '', //Facebook Page ID 來啟用 messenger 聊天功能
+  FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID || '', //Facebook App ID 來啟用 messenger 聊天功能
   AVATAR: process.env.AVATAR || '/avatar.png', // 个人头像 默认取public目录下的avatar.png
   KEYWORDS:
     'YouTube, Notion, 部落格, Apple, 蘋果, iPhone, iPad, MacBook, Apple Watch, AirPods, Javascript, React, React Native, Soft Tennis, 軟式網球', // 网站关键词 英文逗号隔开
