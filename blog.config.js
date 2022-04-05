@@ -6,7 +6,7 @@ const BLOG = {
   AUTHOR: 'Andy', // 作者
   BIO: '喜歡 Apple 產品, Javascript 與軟式網球的工程師', // 作者简介
   LINK: 'https://tw.andys.pro', // 网站地址
-  FACEBOOK_PAGE: 'https://www.facebook.com/tw.andys.pro',
+  FACEBOOK_PAGE: process.env.NEXT_PUBLIC_FACEBOOK_PAGE || '',
   FACEBOOK_PAGE_ID: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID || '', //Facebook Page ID 來啟用 messenger 聊天功能
   FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '', //Facebook App ID 來啟用 messenger 聊天功能
   PROFILE_LINK: process.env.NEXT_PUBLIC_PROFILE_LINK || '/', // 預設 '/' 快速回到首頁，也可以設定 '/about' 到關於我的頁面
