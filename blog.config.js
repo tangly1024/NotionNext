@@ -9,8 +9,8 @@ const BLOG = {
     process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
-  FACEBOOK_PAGE_ID: process.env.FACEBOOK_PAGE_ID || '', //Facebook Page ID 來啟用 messenger 聊天功能
-  FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID || '', //Facebook App ID 來啟用 messenger 聊天功能
+  FACEBOOK_PAGE_ID: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID || '', //Facebook Page ID 來啟用 messenger 聊天功能
+  FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '', //Facebook App ID 來啟用 messenger 聊天功能
 
   THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['next','hexo',"fukasawa','medium']
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
