@@ -21,7 +21,12 @@ const SocialButton = () => {
           </a>
         )}
         {BLOG.CONTACT_GITHUB && (
-          <a target="_blank" rel="noreferrer" title={'github'}>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            title={'github'}
+            href={BLOG.CONTACT_GITHUB}
+          >
             <i className="transform hover:scale-125 duration-150 fab fa-github" />
           </a>
         )}
