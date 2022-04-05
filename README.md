@@ -19,10 +19,16 @@
 - [x] Change footer 2022/04/04
 - [x] Fix facebook link info head metatdata 2022/04/04
 - [x] 美化標題 2022/04/05
+- [x] Add Facebook Messenger chat bubble 2022/04/05
 - [ ] PR - More detail SEO for Facebook OpenGraph
 - [ ] SEO publish time fix
-- [ ] Add Facebook Messenger chat bubble
 - [ ] Facebook fanpage iframe to sidebar
+- [ ] User Head click to YouTube
+- [ ] YouTube Social Button
+- [ ] Facebook Social Button
+- [ ] Discord Social Button
+- [ ] Facebook Comment
+- [ ] Discus Comment
 - [ ] Bigger floating buttons
 - [ ] PWA
 - [ ] 字數統計
