@@ -63,6 +63,7 @@ const Slug = props => {
     type: 'article',
     slug: 'article/' + props.post.slug,
     image: props.post.page_cover,
+    category: props.post.category?.[0],
     tags: props.post.tags
   }
 
