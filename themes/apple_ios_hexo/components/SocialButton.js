@@ -10,23 +10,18 @@ const SocialButton = () => {
   return (
     <div className="w-full justify-center flex-wrap flex">
       <div className="space-x-3 text-xl text-gray-600 dark:text-gray-400 ">
-        {BLOG.CONTACT_GITHUB && (
+        {BLOG.CONTACT_YOUTUBE && (
           <a
             target="_blank"
             rel="noreferrer"
-            title={'github'}
-            href={BLOG.CONTACT_GITHUB}
+            title={'youtube'}
+            href={BLOG.CONTACT_YOUTUBE}
           >
-            <i className="transform hover:scale-125 duration-150 fab fa-github" />
+            <i className="transform hover:scale-125 duration-150 fab fa-youtube text-red-600 fa-lg" />
           </a>
         )}
         {BLOG.CONTACT_GITHUB && (
-          <a
-            target="_blank"
-            rel="noreferrer"
-            title={'github'}
-            href={BLOG.CONTACT_GITHUB}
-          >
+          <a target="_blank" rel="noreferrer" title={'github'}>
             <i className="transform hover:scale-125 duration-150 fab fa-github" />
           </a>
         )}
@@ -71,7 +66,7 @@ const SocialButton = () => {
           </a>
         )}
         <a target="_blank" rel="noreferrer" title={'RSS'} href={'/feed'}>
-          <i className="transform hover:scale-125 duration-150 fas fa-rss" />
+          <i className="transform hover:scale-125 duration-150 fas fa-rss notion-orange" />
         </a>
       </div>
     </div>

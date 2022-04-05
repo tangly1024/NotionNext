@@ -7,9 +7,9 @@ const BLOG = {
   BIO: '喜歡 Apple 產品, Javascript 與軟式網球的工程師', // 作者简介
   LINK: 'https://tw.andys.pro', // 网站地址
   FACEBOOK_PAGE: 'https://www.facebook.com/tw.andys.pro',
-  FACEBOOK_PAGE_ID: process.env.FACEBOOK_PAGE_ID || '', //Facebook Page ID 來啟用 messenger 聊天功能
-  FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID || '', //Facebook App ID 來啟用 messenger 聊天功能
-  PROFILE_LINK: 'https://youtube.com/c/AndysTV', // 預設 '/' 快速回到首頁，也可以設定 '/about' 到關於我的頁面
+  FACEBOOK_PAGE_ID: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID || '', //Facebook Page ID 來啟用 messenger 聊天功能
+  FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '', //Facebook App ID 來啟用 messenger 聊天功能
+  PROFILE_LINK: process.env.NEXT_PUBLIC_PROFILE_LINK || '/', // 預設 '/' 快速回到首頁，也可以設定 '/about' 到關於我的頁面
   AVATAR: process.env.AVATAR || '/avatar.png', // 个人头像 默认取public目录下的avatar.png
   KEYWORDS:
     'YouTube, Notion, 部落格, Apple, 蘋果, iPhone, iPad, MacBook, Apple Watch, AirPods, Javascript, React, React Native, Soft Tennis, 軟式網球', // 网站关键词 英文逗号隔开
@@ -42,11 +42,13 @@ const BLOG = {
   PREVIEW_TAG_COUNT: process.env.PREVIEW_TAG_COUNT || 16, // 首页最多展示的标签数量，0为不限制
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: process.env.CONTACT_EMAIL || 'mail@tangly1024.com',
-  CONTACT_WEIBO: process.env.CONTACT_WEIBO || '',
-  CONTACT_TWITTER: process.env.CONTACT_TWITTER || '',
-  CONTACT_GITHUB: process.env.CONTACT_GITHUB || 'https://github.com/tangly1024',
-  CONTACT_TELEGRAM: process.env.CONTACT_TELEGRAM || '',
+  CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'mail@tangly1024.com',
+  CONTACT_WEIBO: process.env.NEXT_PUBLIC_CONTACT_WEIBO || '',
+  CONTACT_TWITTER: process.env.NEXT_PUBLIC_CONTACT_TWITTER || '',
+  CONTACT_GITHUB:
+    process.env.NEXT_PUBLIC_CONTACT_GITHUB || 'https://github.com/tangly1024',
+  CONTACT_TELEGRAM: process.env.NEXT_PUBLIC_CONTACT_TELEGRAM || '',
+  CONTACT_YOUTUBE: process.env.NEXT_PUBLIC_CONTACT_YOUTUBE || '',
 
   // 悬浮挂件
   WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
