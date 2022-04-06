@@ -42,7 +42,7 @@ export default function ArticleDetail(props) {
         </div>
 
         <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
-          <div>
+          <div className='flex  flex-wrap'>
             {post.category && <>
               <Link href={`/category/${post.category}`} passHref>
                 <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
@@ -61,19 +61,23 @@ export default function ArticleDetail(props) {
                 </a>
               </Link>
               <span className='mr-2'>|</span>
+              <div className="hidden busuanzi_container_page_pv font-light mr-2">
+                <i className='mr-1 fas fa-eye' />
+                &nbsp;
+                <span className="mr-2 busuanzi_value_page_pv" />
+              </div>
+
             </>)}
 
-            <div className="hidden busuanzi_container_page_pv font-light mr-2">
-              <i className='mr-1 fas fa-eye' />
-              &nbsp;
-              <span className="mr-2 busuanzi_value_page_pv" />
-              <span className='mr-2'>|</span>
-            </div>
           </div>
+
+          <div className='mr-2'>
+            <i className='far fa-clock mr-2' />{locale.COMMON.LAST_EDITED_TIME} {post.lastEditedTime}
+          </div>
+
           <div className='flex flex-nowrap whitespace-nowrap items-center font-light text-md'>
             <WordCount />
           </div>
-
         </section>
 
       </header>}

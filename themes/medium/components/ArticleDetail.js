@@ -37,6 +37,9 @@ export const ArticleDetail = props => {
         </>
       </Link>
       <div className="text-gray-500">{date}</div>
+      <div className='mx-2 text-gray-300 dark:text-gray-600'>
+        {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
+      </div>
       <div className="hidden busuanzi_container_page_pv text-gray-500 font-light mr-2">
         <i className="ml-3 mr-0.5 fas fa-eye" />
         &nbsp;

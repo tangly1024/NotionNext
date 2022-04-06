@@ -51,13 +51,15 @@ export default function ArticleDetail({ post, recommendPosts, prev, next }) {
                 </a>
               </Link>
               <span className='mr-2'>|</span>
+              <span className='mx-2 text-gray-400 dark:text-gray-500'>
+                {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
+              </span>
             </>)}
 
-            <div className="hidden busuanzi_container_page_pv font-light mr-2">
+            <div className=" busuanzi_container_page_pv font-light mr-2">
               <i className='mr-1 fas fa-eye' />
               &nbsp;
               <span className="mr-2 busuanzi_value_page_pv" />
-              <span className='mr-2'>|</span>
             </div>
           </div>
 
