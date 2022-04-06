@@ -3,16 +3,10 @@ import { useGlobal } from '@/lib/global'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import {
-  Code,
-  Collection,
-  CollectionRow,
-  Equation,
-  NotionRenderer
-} from 'react-notion-x'
 import Card from './Card'
 import TagItemMini from './TagItemMini'
 import CONFIG_NEXT from '../config_next'
+import NotionPage from '@/components/NotionPage'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
@@ -26,18 +20,16 @@ const BlogPostCard = ({ post, showSummary }) => {
         <div className="lg:p-8 p-4 flex flex-col w-full">
           <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
             <a
-              className={`cursor-pointer font-bold hover:underline text-3xl ${
-                showPreview ? 'text-center' : ''
-              } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
+              className={`cursor-pointer font-bold hover:underline text-3xl ${showPreview ? 'text-center' : ''
+                } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
             >
               {post.title}
             </a>
           </Link>
 
           <div
-            className={`flex mt-2 items-center ${
-              showPreview ? 'justify-center' : 'justify-start'
-            } flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}
+            className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'
+              } flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}
           >
             <div>
               {post.category && (
@@ -87,17 +79,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           {showPreview && post?.blockMap && (
             <div className="overflow-ellipsis truncate">
-              <NotionRenderer
-                bodyClassName="max-h-full"
-                recordMap={post.blockMap}
-                mapPageUrl={mapPageUrl}
-                components={{
-                  equation: Equation,
-                  code: Code,
-                  collectionRow: CollectionRow,
-                  collection: Collection
-                }}
-              />
+              <NotionPage post={post} />
             </div>
           )}
 
@@ -128,10 +110,6 @@ const BlogPostCard = ({ post, showSummary }) => {
       </div>
     </Card>
   )
-}
-
-const mapPageUrl = id => {
-  return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
 
 export default BlogPostCard
