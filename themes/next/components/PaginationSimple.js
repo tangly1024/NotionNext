@@ -15,22 +15,38 @@ const PaginationSimple = ({ page, showNext }) => {
   const router = useRouter()
   const currentPage = +page
   return (
-    <div className='my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2'>
+    <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
       <Link
-        href={ {
-          pathname: (currentPage - 1 === 1 ? `${BLOG.PATH || '/'}` : `/page/${currentPage - 1}`), query: router.query.s ? { s: router.query.s } : {}
-        } } passHref >
+        href={{
+          pathname:
+            currentPage - 1 === 1
+              ? `${BLOG.SUB_PATH || '/'}`
+              : `/page/${currentPage - 1}`,
+          query: router.query.s ? { s: router.query.s } : {}
+        }}
+        passHref
+      >
         <button
-          rel='prev'
-          className={`${currentPage === 1 ? 'invisible' : 'block'} w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+          rel="prev"
+          className={`${
+            currentPage === 1 ? 'invisible' : 'block'
+          } w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
         >
           ← {locale.PAGINATION.PREV}
         </button>
       </Link>
-      <Link href={ { pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} } } passHref>
+      <Link
+        href={{
+          pathname: `/page/${currentPage + 1}`,
+          query: router.query.s ? { s: router.query.s } : {}
+        }}
+        passHref
+      >
         <button
-          rel='next'
-          className={`${+showNext ? 'block' : 'invisible'} w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+          rel="next"
+          className={`${
+            +showNext ? 'block' : 'invisible'
+          } w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
         >
           {locale.PAGINATION.NEXT} →
         </button>

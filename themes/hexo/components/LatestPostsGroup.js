@@ -26,7 +26,7 @@ const LatestPostsGroup = ({ posts, siteInfo }) => {
         </div>
       </div>
       {posts.map(post => {
-        const selected = currentPath === `${BLOG.PATH}/article/${post.slug}`
+        const selected = currentPath === `${BLOG.SUB_PATH}/article/${post.slug}`
         const headerImage = post?.page_cover
           ? `url("${post.page_cover}")`
           : `url("${siteInfo?.pageCover}")`
@@ -35,7 +35,7 @@ const LatestPostsGroup = ({ posts, siteInfo }) => {
           <Link
             key={post.id}
             title={post.title}
-            href={`${BLOG.PATH}/article/${post.slug}`}
+            href={`${BLOG.SUB_PATH}/article/${post.slug}`}
             passHref
           >
             <a className={'my-1 flex font-sans'}>
