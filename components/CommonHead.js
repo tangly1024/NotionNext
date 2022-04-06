@@ -12,6 +12,8 @@ const CommonHead = ({ meta, children }) => {
   const description = meta?.description || BLOG.DESCRIPTION
   const type = meta?.type || 'website'
   const keywords = meta?.tags || BLOG.KEYWORDS
+  const lang = BLOG.LANG.replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
+  const category = meta?.category || BLOG.KEYWORDS || '軟體科技' // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
 
   return (
     <Head>
@@ -31,11 +33,12 @@ const CommonHead = ({ meta, children }) => {
       )}
       <meta name="keywords" content={keywords} />
       <meta name="description" content={description} />
-      <meta property="og:locale" content={BLOG.LANG} />
+      <meta property="og:locale" content={lang} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
+      <meta property="og:site_name" content={BLOG.TITLE} />
       <meta property="og:type" content={type} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:description" content={description} />
@@ -50,6 +53,8 @@ const CommonHead = ({ meta, children }) => {
             content={meta.date || meta.createdTime}
           />
           <meta property="article:author" content={BLOG.AUTHOR} />
+          <meta property="article:section" content={category} />
+          <meta property="article:publisher" content={BLOG.FACEBOOK_PAGE} />
         </>
       )}
       {children}

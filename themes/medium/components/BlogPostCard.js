@@ -1,8 +1,8 @@
 import BLOG from '@/blog.config'
+import NotionPage from '@/components/NotionPage'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import React from 'react'
-import { Code, Collection, Equation, NotionRenderer } from 'react-notion-x'
 import CONFIG_MEDIUM from '../config_medium'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
@@ -51,16 +51,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         {showPreview && (
           <div className="overflow-ellipsis truncate">
-            <NotionRenderer
-              bodyClassName="max-h-full"
-              recordMap={post.blockMap}
-              mapPageUrl={mapPageUrl}
-              components={{
-                equation: Equation,
-                code: Code,
-                collection: Collection
-              }}
-            />
+            <NotionPage post={post} />
             <div className="pointer-events-none border-t pt-8 border-dashed">
               <div className="w-full justify-start flex">
                 <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
@@ -76,10 +67,6 @@ const BlogPostCard = ({ post, showSummary }) => {
       </div>
     </div>
   )
-}
-
-const mapPageUrl = id => {
-  return 'https://www.notion.so/' + id.replace(/-/g, '')
 }
 
 export default BlogPostCard
