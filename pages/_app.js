@@ -21,7 +21,12 @@ import { ThemeSwitch } from '@/components/ThemeSwitch'
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
-const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), { ssr: false })
+const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), {
+  ssr: false
+})
+const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
+  ssr: false
+})
 
 const MyApp = ({ Component, pageProps }) => {
   return (
@@ -32,10 +37,14 @@ const MyApp = ({ Component, pageProps }) => {
       {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
       {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
       {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
+      {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
       {/* FontawesomeCDN */}
-      <link href={BLOG.FONT_AWESOME_PATH} rel="stylesheet" referrerPolicy="no-referrer" />
+      <link
+        href={BLOG.FONT_AWESOME_PATH}
+        rel="stylesheet"
+        referrerPolicy="no-referrer"
+      />
       <Component {...pageProps} />
-
     </GlobalContextProvider>
   )
 }
