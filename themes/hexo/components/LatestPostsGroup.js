@@ -9,14 +9,13 @@ import { useRouter } from 'next/router'
  * @param sliceCount 截取展示的数量 默认6
  * @constructor
  */
-const LatestPostsGroup = ({ posts, siteInfo }) => {
-  if (!posts) {
+const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
+  if (!latestPosts) {
     return <></>
   }
   // 获取当前路径
   const currentPath = useRouter().asPath
   const { locale } = useGlobal()
-
   return (
     <>
       <div className="font-sans mb-2 px-1 flex flex-nowrap justify-between">
@@ -25,7 +24,7 @@ const LatestPostsGroup = ({ posts, siteInfo }) => {
           {locale.COMMON.LATEST_POSTS}
         </div>
       </div>
-      {posts.map(post => {
+      {latestPosts.map(post => {
         const selected = currentPath === `${BLOG.SUB_PATH}/article/${post.slug}`
         const headerImage = post?.page_cover
           ? `url("${post.page_cover}")`
@@ -52,7 +51,7 @@ const LatestPostsGroup = ({ posts, siteInfo }) => {
               >
                 <div>
                   <div style={{ WebkitLineClamp: 2 }}>{post.title}</div>
-                  <div className="text-gray-500">{post.date?.start_date}</div>
+                  <div className="text-gray-500">{post.lastEditedTime}</div>
                 </div>
               </div>
             </a>

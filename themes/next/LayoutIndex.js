@@ -8,7 +8,7 @@ import CONFIG_NEXT from './config_next'
 
 export const LayoutIndex = (props) => {
   const { latestPosts } = props
-  const rightAreaSlot = CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup posts={latestPosts} /></Card>
+  const rightAreaSlot = CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup latestPosts={latestPosts} /></Card>
   return <LayoutBase
     headerSlot={CONFIG_NEXT.HOME_BANNER && <Header />}
     sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
@@ -18,6 +18,6 @@ export const LayoutIndex = (props) => {
     {CONFIG_NEXT.POST_LIST_TYPE !== 'page'
       ? <BlogPostListScroll {...props} showSummary={true} />
       : <BlogPostListPage {...props} />
-      }
+    }
   </LayoutBase>
 }
