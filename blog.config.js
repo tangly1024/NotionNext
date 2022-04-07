@@ -42,7 +42,7 @@ const BLOG = {
   CONTACT_EMAIL: 'hi@spac.ml',
   CONTACT_WEIBO: '',
   CONTACT_TWITTER: '',
-  CONTACT_GITHUB: '',
+  CONTACT_GITHUB: 'https://github.com/spacding/NotionNext',
   CONTACT_TELEGRAM: '',
 
   // 悬浮挂件
