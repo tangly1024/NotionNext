@@ -22,7 +22,7 @@ const LayoutBase = (props) => {
   const { children, headerSlot, floatSlot, meta, siteInfo } = props
   const [show, switchShow] = useState(false)
   // const [percent, changePercent] = useState(0) // 页面阅读百分比
-  const rightAreaSlot = <Live2D/>
+  const rightAreaSlot = <Live2D />
   const { onLoading } = useGlobal()
 
   const scrollListener = () => {
@@ -48,7 +48,7 @@ const LayoutBase = (props) => {
   return (<div className='bg-hexo-background-gray dark:bg-black'>
     <CommonHead meta={meta} />
 
-    <TopNav {...props}/>
+    <TopNav {...props} />
 
     {headerSlot}
 
@@ -56,24 +56,24 @@ const LayoutBase = (props) => {
 
       <div id='container-inner' className='pt-14 w-full mx-auto lg:flex justify-center lg:space-x-4'>
         <div className='flex-grow w-full lg:max-w-4xl'>
-          {onLoading ? <LoadingCover/> : children}
+          {onLoading ? <LoadingCover /> : children}
         </div>
 
-        <SideRight {...props} slot={rightAreaSlot}/>
+        <SideRight {...props} slot={rightAreaSlot} />
       </div>
 
     </main>
 
-     {/* 右下角悬浮 */}
-     <div className='bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm'>
-        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '}>
-          <FloatDarkModeButton/>
-          {floatSlot}
-          <JumpToTopButton/>
-        </div>
+    {/* 右下角悬浮 */}
+    <div className='bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm'>
+      <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '}>
+        <FloatDarkModeButton />
+        {floatSlot}
+        <JumpToTopButton />
       </div>
+    </div>
 
-    <Footer title={siteInfo?.title || BLOG.TITLE}/>
+    <Footer title={siteInfo?.title || BLOG.TITLE} />
 
   </div>)
 }
