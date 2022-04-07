@@ -9,8 +9,8 @@ import { useRouter } from 'next/router'
  * @param sliceCount 截取展示的数量 默认6
  * @constructor
  */
-const LatestPostsGroup = ({ posts }) => {
-  if (!posts) {
+const LatestPostsGroup = ({ latestPosts }) => {
+  if (!latestPosts) {
     return <></>
   }
   // 获取当前路径
@@ -21,11 +21,11 @@ const LatestPostsGroup = ({ posts }) => {
     <>
       <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between">
         <div className="font-light text-gray-600  dark:text-gray-200">
-          <i className="mr-2 fas fa-archive" />
+          <i className="mr-2 fas fa-history" />
           {locale.COMMON.LATEST_POSTS}
         </div>
       </div>
-      {posts.map(post => {
+      {latestPosts.map(post => {
         const selected = currentPath === `${BLOG.SUB_PATH}/article/${post.slug}`
         return (
           <Link

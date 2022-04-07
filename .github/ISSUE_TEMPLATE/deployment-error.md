@@ -1,7 +1,7 @@
 ---
-name: Deployment error
-about: Do you need help to install Nobelium?
+name: Deployment error （部署错误）
+about: Do you need help to install NotionNext?
 title: ''
 labels: deployment
-assignees: craigary
+assignees: tangly1024
 ---
