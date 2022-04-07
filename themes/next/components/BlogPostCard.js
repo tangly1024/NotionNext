@@ -63,7 +63,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
 
           {(!showPreview || showSummary) && !post.results && (
-            <p className="mt-4 mb-24 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+            <p className="mt-4 mb-10 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
               {post.summary}
             </p>
           )}
@@ -83,9 +83,9 @@ const BlogPostCard = ({ post, showSummary }) => {
             </div>
           )}
 
-          <div className="text-right border-t pt-8 border-dashed">
+          <div className="text-right border-t pt-4 border-dashed">
             <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`}>
-              <a className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 dark:bg-black cursor-pointer">
+              <a className="hover:bg-opacity-100 hover:underline transform duration-300 p-2 text-white bg-gray-800 dark:bg-black cursor-pointer">
                 {locale.COMMON.ARTICLE_DETAIL}
                 <i className="ml-1 fas fa-angle-right" />
               </a>
