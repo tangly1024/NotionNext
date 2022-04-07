@@ -1,9 +1,9 @@
 ---
-name: Feature request
+name: Feature request （新特性建议）
 about: Suggest an idea for Nobelium.
 title: ''
 labels: enhancement
-assignees: craigary
+assignees: tangly1024
 ---
 
 <!--

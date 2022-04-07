@@ -1,9 +1,9 @@
 ---
-name: Bug report
+name: Bug report （Bug反馈）
 about: Create a report to help Nobelium get better.
 title: ''
 labels: bug
-assignees: craigary
+assignees: tangly1024
 ---
 
 <!--
