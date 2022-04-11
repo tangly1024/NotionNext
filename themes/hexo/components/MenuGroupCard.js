@@ -20,7 +20,7 @@ const MenuGroupCard = (props) => {
       {links.map(link => {
         if (link.show) {
           return <Link key={`${link.to}`} title={link.to} href={link.to} >
-          <a className={'py-1.5 my-1 px-2 duration-300 text-base justify-center items-center cursor-pointer'} >
+          <a target={link.to.indexOf('http') === 0 ? '_blank' : '_self'} className={'py-1.5 my-1 px-2 duration-300 text-base justify-center items-center cursor-pointer'} >
               <div className='w-full items-center justify-center hover:scale-105 duration-200 transform dark:hover:text-indigo-400 hover:text-indigo-600'>
                 <div className='text-center'>{link.name}</div>
                 <div className='text-center font-semibold'>{link.slot}</div>

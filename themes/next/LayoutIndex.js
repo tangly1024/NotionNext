@@ -10,7 +10,7 @@ export const LayoutIndex = (props) => {
   const { latestPosts } = props
   const rightAreaSlot = CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup latestPosts={latestPosts} /></Card>
   return <LayoutBase
-    headerSlot={CONFIG_NEXT.HOME_BANNER && <Header />}
+    headerSlot={CONFIG_NEXT.HOME_BANNER && <Header {...props} />}
     sideBarSlot={<LatestPostsGroup posts={latestPosts} />}
     rightAreaSlot={rightAreaSlot}
     {...props}

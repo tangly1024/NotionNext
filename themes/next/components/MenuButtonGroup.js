@@ -26,7 +26,7 @@ const MenuButtonGroup = (props) => {
         if (link && link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
           return <Link key={`${link.to}`} title={link.to} href={link.to} >
-          <a className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+          <a target={link.to.indexOf('http') === 0 ? '_blank' : '_self'} className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
               (selected ? 'bg-gray-200 text-black' : ' ')} >
               <div className='my-auto items-center justify-center flex '>
                 <i className={`${link.icon} w-4 text-center`} />
