@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 const PaginationNumber = ({ page, totalPage }) => {
   const router = useRouter()
   const currentPage = +page
-  const showNext = page !== totalPage
+  const showNext = page < totalPage
   const pages = generatePages(page, currentPage, totalPage)
 
   return (
@@ -30,9 +30,8 @@ const PaginationNumber = ({ page, totalPage }) => {
       >
         <div
           rel="prev"
-          className={`${
-            currentPage === 1 ? 'invisible' : 'block'
-          } pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
+          className={`${currentPage === 1 ? 'invisible' : 'block'
+            } pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
         >
           <i className="fas fa-angle-left" />
         </div>
@@ -50,9 +49,8 @@ const PaginationNumber = ({ page, totalPage }) => {
       >
         <div
           rel="next"
-          className={`${
-            +showNext ? 'block' : 'invisible'
-          } pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
+          className={`${+showNext ? 'block' : 'invisible'
+            } pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
         >
           <i className="fas fa-angle-right" />
         </div>
