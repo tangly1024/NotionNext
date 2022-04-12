@@ -11,6 +11,7 @@ import { NotionRenderer } from 'react-notion-x'
 import mediumZoom from 'medium-zoom'
 import { useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
@@ -43,6 +44,8 @@ const NotionPage = ({ post }) => {
   })
   const zoomRef = useRef(zoom ? zoom.clone() : null)
 
+  const router = useRouter()
+
   useEffect(() => {
     // 将所有container下的所有图片添加medium-zoom
     const container = document?.getElementById('container')
@@ -52,7 +55,7 @@ const NotionPage = ({ post }) => {
         (zoomRef.current).attach(imgList[i])
       }
     }
-  })
+  }, [router.events])
 
   return <NotionRenderer
     recordMap={post.blockMap}
