@@ -10,13 +10,14 @@ const ArchiveIndex = props => {
   const meta = {
     title: `${locale.NAV.ARCHIVE} | ${siteInfo.title}`,
     description: siteInfo.description,
+    slug: 'archive',
     type: 'website'
   }
 
-  return <ThemeComponents.LayoutArchive {...props} meta={meta}/>
+  return <ThemeComponents.LayoutArchive {...props} meta={meta} />
 }
 
-export async function getStaticProps () {
+export async function getStaticProps() {
   const props = await getGlobalNotionData({ from: 'archive-index' })
   props.posts = props.allPosts
   return {
