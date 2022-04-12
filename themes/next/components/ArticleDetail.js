@@ -25,7 +25,7 @@ export default function ArticleDetail(props) {
 
   return (<div id="container" className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
     <div itemScope itemType="https://schema.org/Movie"
-      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
+      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
     >
 
       {showArticleInfo && <header className='animate__slideInDown animate__animated'>
