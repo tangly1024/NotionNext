@@ -2,14 +2,14 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import * as ThemeMap from '@/themes'
+import BLOG from '@/blog.config'
 
 const Index = props => {
   const { keyword, siteInfo } = props
   const { locale } = useGlobal()
   const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo.title
-      }`,
-    description: siteInfo.title,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
+    description: siteInfo?.title,
     slug: 'search/' + (keyword || ''),
     type: 'website'
   }
@@ -29,7 +29,7 @@ const Index = props => {
  * @param {*} param0
  * @returns
  */
-export async function getServerSideProps({ params: { keyword } }) {
+export async function getStaticProps({ params: { keyword } }) {
   const props = await getGlobalNotionData({
     from: 'search-props',
     pageType: ['Post']
@@ -38,6 +38,13 @@ export async function getServerSideProps({ params: { keyword } }) {
   props.keyword = keyword
   return {
     props
+  }
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { keyword: BLOG.TITLE } }],
+    fallback: true
   }
 }
 
