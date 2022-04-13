@@ -38,7 +38,7 @@ const Modal = dynamic(
 )
 const NotionPage = ({ post }) => {
   if (!post || !post.blockMap) {
-    return <>Loading...</>
+    return <>{post?.summary || ''}</>
   }
 
   const zoom = typeof window !== 'undefined' && mediumZoom({
