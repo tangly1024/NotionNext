@@ -37,7 +37,8 @@ export async function getStaticProps({ params: { keyword } }) {
   props.posts = await filterByMemCache(props.allPosts, keyword)
   props.keyword = keyword
   return {
-    props
+    props,
+    revalidate: 1
   }
 }
 
