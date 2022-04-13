@@ -7,9 +7,8 @@ const Index = props => {
   const { keyword, siteInfo } = props
   const { locale } = useGlobal()
   const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${
-      siteInfo.title
-    }`,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo.title
+      }`,
     description: siteInfo.title,
     slug: 'search/' + (keyword || ''),
     type: 'website'
@@ -111,7 +110,7 @@ async function filterByMemCache(allPosts, keyword) {
         indexContent = appendText(indexContent, properties, 'caption')
       })
     }
-    // console.log('搜索是否命中缓存', page !== null, indexContent)
+    console.log('搜索是否命中缓存', page !== null, indexContent)
     post.results = []
     let hitCount = 0
     for (const i in indexContent) {

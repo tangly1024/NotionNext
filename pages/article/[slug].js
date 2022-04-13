@@ -24,19 +24,18 @@ const Slug = props => {
           const article = document.getElementById('container')
           if (!article) {
             router.push('/404').then(() => {
-              console.log('找不到页面', router.asPath)
+              console.warn('找不到页面', router.asPath)
             })
           }
         }
       }, 3000)
     })
-
-    return <p>Redirecting...</p>
+    const meta = { title: `${props?.siteInfo?.title} | loading` }
+    return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 
   // 文章锁🔐
   const [lock, setLock] = useState(post.password && post.password !== '')
-  console.log('lock 默认值', lock)
   useEffect(() => {
     if (post.password && post.password !== '') {
       setLock(true)

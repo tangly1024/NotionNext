@@ -26,6 +26,9 @@ const GiscusComponent = dynamic(
 )
 
 const Comment = ({ frontMatter }) => {
+  if (!frontMatter) {
+    return <>Loading...</>
+  }
   const router = useRouter()
   const { locale, isDarkMode } = useGlobal()
   return (

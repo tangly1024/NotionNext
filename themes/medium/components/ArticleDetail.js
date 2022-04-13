@@ -15,7 +15,7 @@ export const ArticleDetail = props => {
   const { locale } = useGlobal()
 
   const date = formatDate(
-    post?.date?.start_date || post.createdTime,
+    post?.date?.start_date || post?.createdTime,
     locale.LOCALE
   )
   return <div id='container'>
@@ -48,7 +48,7 @@ export const ArticleDetail = props => {
     </section>
     {/* Notion文章主体 */}
     <section id="notion-article" className="px-1 max-w-5xl">
-      {post.blockMap && (<NotionPage post={post} />)}
+      {post && (<NotionPage post={post} />)}
     </section>
 
     <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">

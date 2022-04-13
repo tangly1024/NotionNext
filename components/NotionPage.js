@@ -37,6 +37,10 @@ const Modal = dynamic(
   }
 )
 const NotionPage = ({ post }) => {
+  if (!post || !post.blockMap) {
+    return <>Loading...</>
+  }
+
   const zoom = typeof window !== 'undefined' && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
@@ -57,16 +61,18 @@ const NotionPage = ({ post }) => {
     }
   }, [router.events])
 
-  return <NotionRenderer
-    recordMap={post.blockMap}
-    mapPageUrl={mapPageUrl}
-    components={{
-      Code,
-      Collection,
-      Equation,
-      Modal,
-      Pdf
-    }} />
+  return <div id='container'>
+    <NotionRenderer
+      recordMap={post.blockMap}
+      mapPageUrl={mapPageUrl}
+      components={{
+        Code,
+        Collection,
+        Equation,
+        Modal,
+        Pdf
+      }} />
+  </div>
 }
 
 const mapPageUrl = id => {
