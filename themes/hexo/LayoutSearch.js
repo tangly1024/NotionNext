@@ -27,7 +27,7 @@ export const LayoutSearch = props => {
             const re = new RegExp(`${currentSearch}`, 'gim')
             container.innerHTML = container.innerHTML.replace(
               re,
-            `<span class='text-red-500 border-b border-dashed'>${currentSearch}</span>`
+              `<span class='text-red-500 border-b border-dashed'>${currentSearch}</span>`
             )
             handleTextColor = true
           }
@@ -46,7 +46,7 @@ export const LayoutSearch = props => {
             {locale.COMMON.CATEGORY}:
           </div>
           <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-            {categories.map(category => {
+            {categories?.map(category => {
               return (
                 <Link
                   key={category.name}
@@ -73,7 +73,7 @@ export const LayoutSearch = props => {
             {locale.COMMON.TAGS}:
           </div>
           <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
-            {tags.map(tag => {
+            {tags?.map(tag => {
               return (
                 <div key={tag.name} className="p-2">
                   <TagItemMini key={tag.name} tag={tag} />
