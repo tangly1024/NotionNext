@@ -13,14 +13,13 @@ export const LayoutSearch = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentSearch = keyword || router?.query?.s
-  let handleTextColor = false
   const cRef = useRef(null)
 
   useEffect(() => {
     setTimeout(() => {
       // 自动聚焦到搜索框
       cRef?.current?.focus()
-      if (currentSearch && !handleTextColor) {
+      if (currentSearch) {
         const targets = document.getElementsByClassName('replace')
         for (const container of targets) {
           if (container && container.innerHTML) {
@@ -29,7 +28,6 @@ export const LayoutSearch = props => {
               re,
               `<span class='text-red-500 border-b border-dashed'>${currentSearch}</span>`
             )
-            handleTextColor = true
           }
         }
       }
