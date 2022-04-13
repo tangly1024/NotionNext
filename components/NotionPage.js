@@ -59,7 +59,7 @@ const NotionPage = ({ post }) => {
         (zoomRef.current).attach(imgList[i])
       }
     }
-  }, [router.events])
+  }, [router?.events])
 
   return <div id='container'>
     <NotionRenderer
