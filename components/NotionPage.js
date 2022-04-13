@@ -11,6 +11,7 @@ import { NotionRenderer } from 'react-notion-x'
 import mediumZoom from 'medium-zoom'
 import { useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code)
@@ -36,12 +37,18 @@ const Modal = dynamic(
   }
 )
 const NotionPage = ({ post }) => {
+  if (!post || !post.blockMap) {
+    return <>{post?.summary || ''}</>
+  }
+
   const zoom = typeof window !== 'undefined' && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
     margin: getMediumZoomMargin()
   })
   const zoomRef = useRef(zoom ? zoom.clone() : null)
+
+  const router = useRouter()
 
   useEffect(() => {
     // 将所有container下的所有图片添加medium-zoom
@@ -52,18 +59,20 @@ const NotionPage = ({ post }) => {
         (zoomRef.current).attach(imgList[i])
       }
     }
-  })
+  }, [router.events])
 
-  return <NotionRenderer
-    recordMap={post.blockMap}
-    mapPageUrl={mapPageUrl}
-    components={{
-      Code,
-      Collection,
-      Equation,
-      Modal,
-      Pdf
-    }} />
+  return <div id='container'>
+    <NotionRenderer
+      recordMap={post.blockMap}
+      mapPageUrl={mapPageUrl}
+      components={{
+        Code,
+        Collection,
+        Equation,
+        Modal,
+        Pdf
+      }} />
+  </div>
 }
 
 const mapPageUrl = id => {

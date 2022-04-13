@@ -19,9 +19,9 @@ const Slug = props => {
   }
 
   // 文章锁🔐
-  const [lock, setLock] = useState(true)
+  const [lock, setLock] = useState(post.password && post.password !== '')
   useEffect(() => {
-    if (post && post.password && post.password !== '') {
+    if (post.password && post.password !== '') {
       setLock(true)
     } else {
       setLock(false)

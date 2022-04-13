@@ -4,12 +4,15 @@ import formatDate from '@/lib/formatDate'
 import { useEffect } from 'react'
 
 export default function HeaderArticle({ post, siteInfo }) {
+  if (!post) {
+    return <>loading...</>
+  }
   const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("${siteInfo?.pageCover}")`
   const { isDarkMode } = useGlobal()
 
   const { locale } = useGlobal()
   const date = formatDate(
-    post?.date?.start_date || post.createdTime,
+    post?.date?.start_date || post?.createdTime,
     locale.LOCALE
   )
 
@@ -71,7 +74,7 @@ export default function HeaderArticle({ post, siteInfo }) {
               </>}
             </div>
             <div className='flex justify-center'>
-              {post.type[0] !== 'Page' && (
+              {post?.type[0] !== 'Page' && (
                 <>
                   <Link
                     href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}

@@ -60,10 +60,10 @@ const Toc = ({ toc }) => {
 
   return <div className='px-3'>
     <div className='w-full pb-1'>
-      <Progress/>
+      <Progress />
     </div>
     <div className='overflow-y-auto max-h-96 overscroll-none' ref={tRef}>
-      <nav className='h-full font-sans text-black'>
+      <nav className='h-full font-sans text-black dark:text-gray-300'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
           tocIds.push(id)
@@ -74,9 +74,9 @@ const Toc = ({ toc }) => {
               className={`notion-table-of-contents-item duration-300 transform font-light
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
-                <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }} className={`${activeSection === id && ' font-bold text-red-400 underline'}`}>
-                  {tocItem.text}
-                </span>
+              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }} className={`${activeSection === id && ' font-bold text-red-400 underline'}`}>
+                {tocItem.text}
+              </span>
             </a>
           )
         })}

@@ -2,15 +2,14 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import * as ThemeMap from '@/themes'
+import BLOG from '@/blog.config'
 
 const Index = props => {
   const { keyword, siteInfo } = props
   const { locale } = useGlobal()
   const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${
-      siteInfo.title
-    }`,
-    description: siteInfo.title,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
+    description: siteInfo?.title,
     slug: 'search/' + (keyword || ''),
     type: 'website'
   }
@@ -30,7 +29,7 @@ const Index = props => {
  * @param {*} param0
  * @returns
  */
-export async function getServerSideProps({ params: { keyword } }) {
+export async function getStaticProps({ params: { keyword } }) {
   const props = await getGlobalNotionData({
     from: 'search-props',
     pageType: ['Post']
@@ -38,7 +37,15 @@ export async function getServerSideProps({ params: { keyword } }) {
   props.posts = await filterByMemCache(props.allPosts, keyword)
   props.keyword = keyword
   return {
-    props
+    props,
+    revalidate: 1
+  }
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { keyword: BLOG.TITLE } }],
+    fallback: true
   }
 }
 
@@ -94,9 +101,11 @@ const isIterable = obj =>
  */
 async function filterByMemCache(allPosts, keyword) {
   const filterPosts = []
+  if (keyword) {
+    keyword = keyword.trim()
+  }
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
-    // const page = await getPostBlocks(post.id, 'search')
     const page = await getDataFromCache(cacheKey)
     const tagContent = post.tags ? post.tags.join(' ') : ''
     const categoryContent = post.category ? post.category.join(' ') : ''
@@ -111,7 +120,7 @@ async function filterByMemCache(allPosts, keyword) {
         indexContent = appendText(indexContent, properties, 'caption')
       })
     }
-    // console.log('搜索是否命中缓存', page !== null, indexContent)
+    console.log('全文搜索缓存', cacheKey, page != null)
     post.results = []
     let hitCount = 0
     for (const i in indexContent) {
@@ -119,7 +128,7 @@ async function filterByMemCache(allPosts, keyword) {
       if (!c) {
         continue
       }
-      const index = c.toLowerCase().indexOf(keyword.toLowerCase()) || -1
+      const index = c.toLowerCase().indexOf(keyword.toLowerCase())
       if (index > -1) {
         hit = true
         hitCount += 1
