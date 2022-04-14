@@ -6,7 +6,7 @@ const BLOG = {
   AVATAR: '/avatar.png', // 个人头像 默认取public目录下的avatar.png
   KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
-    process.env.NOTION_PAGE_ID || 'ec0d63c758af4ac78bfc537c2c455fec?v=61a35a271e72451f8a45f7d2ff1daf76', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
+    process.env.NOTION_PAGE_ID || 'ec0d63c758af4ac78bfc537c2c455fec', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
 
