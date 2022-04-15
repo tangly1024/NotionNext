@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Saira Stencil One
+- Font Author: Copyright 2019 The Saira Stencil Project Authors (https://github.com/Omnibus-Type/Saira)
+- Font Source: http://fonts.gstatic.com/s/sairastencilone/v12/SLXSc03I6HkvZGJ1GvvipLoYSTEL9AsMawif2YQ2.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
