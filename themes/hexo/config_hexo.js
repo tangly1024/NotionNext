@@ -1,6 +1,6 @@
 const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['Hi, I am an entry-level programmer', 'Hi, I am a photographer', 'Hi, I am an editor', 'Welcome to my blog'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['Hi, I am a programmer', 'Hi, I am a photographer', 'Hi, I am an video editor', 'Welcome to my blog'], // 首页大图标语文字
 
   // 菜单配置
   MENU_CATEGORY: true, // 显示分类
