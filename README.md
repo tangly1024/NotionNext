@@ -1,3 +1,6 @@
+## 本仓库文件已经根据个人使用需求进行修改
+## 以下是原项目 README 内容
+
 # NotionNext
 
 一个使用 NextJS + Notion API 实现的，部署在 Vercel 上的静态博客系统。为Notion和所有创作者设计。
