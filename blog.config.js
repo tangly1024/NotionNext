@@ -28,10 +28,10 @@ const BLOG = {
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
   SUB_PATH: '', // leave this empty unless you want to deploy in a folder
 
-  POST_LIST_STYLE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
+  POST_LIST_STYLE: 'scroll', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'true', //  是否在列表加载文章预览
   POST_PREVIEW_LINES: 3, // 预览博客行数
-  POST_RECOMMEND_COUNT: 3, // 推荐文章数量
+  POST_RECOMMEND_COUNT: 4, // 推荐文章数量
   POSTS_PER_PAGE: 6, // post counts per page
   POSTS_SORT_BY: 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
