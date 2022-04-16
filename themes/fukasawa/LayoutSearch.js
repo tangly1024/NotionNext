@@ -14,10 +14,9 @@ export const LayoutSearch = (props) => {
         const re = new RegExp(`${currentSearch}`, 'gim')
         container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${currentSearch}</span>`)
       }
-    },
-    100)
+    }, 100)
   })
   return <LayoutBase {...props} currentSearch={currentSearch}>
-        <BlogListPage {...props}/>
+    <BlogListPage {...props} />
   </LayoutBase>
 }

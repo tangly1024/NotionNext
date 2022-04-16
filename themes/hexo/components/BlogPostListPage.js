@@ -13,7 +13,7 @@ import BlogPostListEmpty from './BlogPostListEmpty'
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
   const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
-  const showPagination = posts.length === BLOG.POSTS_PER_PAGE
+  const showPagination = postCount >= BLOG.POSTS_PER_PAGE
 
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
@@ -26,7 +26,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
             <BlogPostCard key={post.id} post={post} />
           ))}
         </div>
-       {showPagination && <PaginationNumber page={page} totalPage={totalPage} /> }
+        {showPagination && <PaginationNumber page={page} totalPage={totalPage} />}
       </div>
     )
   }

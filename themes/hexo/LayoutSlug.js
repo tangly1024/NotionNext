@@ -15,6 +15,15 @@ import ArticleRecommend from './components/ArticleRecommend'
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
+  if (!post) {
+    return <LayoutBase
+      headerSlot={<HeaderArticle {...props} />}
+      {...props}
+      showCategory={false}
+      showTag={false}
+    ></LayoutBase>
+  }
+
   if (!lock && post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
@@ -50,7 +59,7 @@ export const LayoutSlug = props => {
           <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
             {/* Notion文章主体 */}
             <section id='notion-article' className='px-5'>
-              {post.blockMap && <NotionPage post={post} />}
+              {post && <NotionPage post={post} />}
             </section>
 
             <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">

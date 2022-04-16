@@ -8,13 +8,18 @@ import formatDate from '@/lib/formatDate'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+
+  if (!post) {
+    return <LayoutBase {...props} />
+  }
+
   if (!lock && post?.blockMap?.block) {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
   }
 
   const { locale } = useGlobal()
-  const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
+  const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
   return (
     <LayoutBase {...props}>
@@ -34,7 +39,7 @@ export const LayoutSlug = props => {
               </Link>
               <span className='mr-2'>|</span>
 
-              {post.type[0] !== 'Page' && (<>
+              {post?.type[0] !== 'Page' && (<>
                 <Link
                   href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                   passHref
@@ -60,7 +65,7 @@ export const LayoutSlug = props => {
 
           </section>
 
-          {post.blockMap && <NotionPage post={post} />}
+          {post && <NotionPage post={post} />}
         </section>}
 
       </div>

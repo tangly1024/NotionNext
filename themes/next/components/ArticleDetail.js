@@ -21,15 +21,15 @@ export default function ArticleDetail(props) {
   const { post, recommendPosts, prev, next, showArticleInfo } = props
   const url = BLOG.LINK + useRouter().asPath
   const { locale } = useGlobal()
-  const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
+  const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
   return (<div id="container" className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
     <div itemScope itemType="https://schema.org/Movie"
-      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-gray-800"
+      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
     >
 
       {showArticleInfo && <header className='animate__slideInDown animate__animated'>
-        {post.type && !post.type.includes('Page') && post?.page_cover && (
+        {post?.type && !post?.type.includes('Page') && post?.page_cover && (
           <div className="w-full relative md:flex-shrink-0 overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
@@ -51,7 +51,7 @@ export default function ArticleDetail(props) {
               </Link>
               <span className='mr-2'>|</span>
             </>}
-            {post.type[0] !== 'Page' && (<>
+            {post?.type[0] !== 'Page' && (<>
               <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref
@@ -84,7 +84,7 @@ export default function ArticleDetail(props) {
 
       {/* Notion内容主体 */}
       <article id='notion-article' className='px-1'>
-        {post.blockMap && (<NotionPage post={post} />)}
+        {post && (<NotionPage post={post} />)}
       </article>
 
       <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">

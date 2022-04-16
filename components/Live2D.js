@@ -2,32 +2,28 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-export default function Live2D () {
+export default function Live2D() {
   if (!BLOG.WIDGET_PET) {
     return <></>
   }
-  const [init, setInit] = useState()
   const { switchTheme } = useGlobal()
 
-  function handleClick () {
+  function handleClick() {
     if (BLOG.WIDGET_PET_SWITCH_THEME) {
       switchTheme()
     }
   }
 
   useEffect(() => {
-    if (!init) {
-      initLive2D()
-      setInit(true)
-    }
-  }, [init])
+    initLive2D()
+  }, [])
 
-  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='切换主题' title='切换主题'/>
+  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='切换主题' title='切换主题' />
 }
 
-function initLive2D () {
+function initLive2D() {
   // 加载 waifu.css live2d.min.js waifu-tips.js
   if (screen.width >= 768) {
     Promise.all([

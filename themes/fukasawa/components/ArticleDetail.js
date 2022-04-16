@@ -10,11 +10,15 @@ import ArticleAround from './ArticleAround'
  * @param {*} param0
  * @returns
  */
-export default function ArticleDetail({ post, recommendPosts, prev, next }) {
+export default function ArticleDetail(props) {
+  const { post, prev, next } = props
+  if (!post) {
+    return <></>
+  }
   const { locale } = useGlobal()
-  const date = formatDate(post?.date?.start_date || post.createdTime, locale.LOCALE)
+  const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
   return (<div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
-    {post.type && !post.type.includes('Page') && post?.page_cover && (
+    {post?.type && !post?.type.includes('Page') && post?.page_cover && (
       <div className="w-full relative md:flex-shrink-0 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
@@ -41,7 +45,7 @@ export default function ArticleDetail({ post, recommendPosts, prev, next }) {
             </Link>
             <span className='mr-2'>|</span>
 
-            {post.type[0] !== 'Page' && (<>
+            {post?.type[0] !== 'Page' && (<>
               <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref
@@ -69,7 +73,7 @@ export default function ArticleDetail({ post, recommendPosts, prev, next }) {
 
       {/* Notion文章主体 */}
       <section id='notion-article' className='px-1'>
-        {post.blockMap && <NotionPage post={post} />}
+        {post && <NotionPage post={post} />}
       </section>
 
       <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
