@@ -45,6 +45,7 @@
     "react-facebook": "^8.1.4",
     "react-messenger-customer-chat": "^0.8.0",
     "react-notion-x": "4.16.0",
+    "react-share": "^4.4.0",
     "smoothscroll-polyfill": "^0.4.4",
     "typed.js": "^2.0.12",
     "use-ackee": "^3.0.0"

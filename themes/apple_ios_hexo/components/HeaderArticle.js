@@ -4,8 +4,13 @@ import formatDate from '@/lib/formatDate'
 import TagItemMini from './TagItemMini'
 import CONFIG_APPLE_IOS_HEXO from '../config_apple_ios_hexo'
 import { useEffect } from 'react'
+import ShareButtons from '@/components/ShareButtons'
+import BLOG from '@/blog.config'
 
 export default function HeaderArticle({ post }) {
+  console.log(post)
+  const shareUrl =
+    BLOG.LINK + '/' + (post?.type?.[0] == 'Post' ? 'article/' : '') + post?.slug
   const headerImage = post?.page_cover
     ? `url("${post.page_cover}")`
     : `url("/${CONFIG_APPLE_IOS_HEXO.HOME_BANNER_IMAGE}")`
@@ -105,6 +110,24 @@ export default function HeaderArticle({ post }) {
                     </div>
                   </>
                 )}
+              </div>
+              <div className=" font-light mx-1 inline-block">
+                <ShareButtons
+                  shareUrl={shareUrl}
+                  title={post.title}
+                  image={post.page_cover}
+                  body={
+                    post.title +
+                    ' | ' +
+                    BLOG.TITLE +
+                    BLOG.POSTS_SHARE_SEPARATOR +
+                    BLOG.POSTS_SHARE_FROM +
+                    ' ' +
+                    shareUrl +
+                    BLOG.POSTS_SHARE_SEPARATOR +
+                    post.summary
+                  }
+                />
               </div>
             </section>
           </div>

@@ -38,6 +38,11 @@ const BLOG = {
   POSTS_PER_PAGE: process.env.POSTS_PER_PAGE || 6, // post counts per page
   POSTS_SORT_BY: process.env.POSTS_SORT_BY || 'date', // 排序方式 'date'按时间,'notion'由notion控制
 
+  POSTS_SHARE_FROM: process.env.NEXT_PUBLIC_SHARE_FROM || 'Share From: ', //分享來自: url 的標題
+  POSTS_SHARE_SERVICES:
+    process.env.NEXT_PUBLIC_SHARE_SERVICES || 'facebook, messenger, line', //分享的服務
+  POSTS_SHARE_SEPARATOR: process.env.NEXT_PUBLIC_SHARE_SEPARATOR || '\n\n', //分享標題與內文的分隔符號
+
   PREVIEW_CATEGORY_COUNT: process.env.PREVIEW_CATEGORY_COUNT || 16, // 首页最多展示的分类数量，0为不限制
   PREVIEW_TAG_COUNT: process.env.PREVIEW_TAG_COUNT || 16, // 首页最多展示的标签数量，0为不限制
 
