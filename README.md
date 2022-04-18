@@ -21,9 +21,9 @@
 - [x] 美化標題 2022/04/05
 - [x] Add Facebook Messenger chat bubble 2022/04/05
 - [ ] Facebook fanpage iframe to sidebar 2022/04/06 Need PR
+- [ ] Add social share buttons Need PR 2022-04-18 23:37:29
 - [ ] PR - More detail SEO for Facebook OpenGraph
 - [ ] SEO publish time fix
-- [ ] Add social share buttons
 - [ ] User Head click to YouTube
 - [ ] YouTube Social Button
 - [ ] Facebook Social Button
