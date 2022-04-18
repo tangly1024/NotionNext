@@ -12,7 +12,11 @@ const BLOG = {
 
   FACEBOOK_PAGE_ID: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID || '', // Facebook Page ID 來啟用 messenger 聊天功能
   FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '', // Facebook App ID 來啟用 messenger 聊天功能
-  FACEBOOK_PAGE: process.env.NEXT_PUBLIC_FACEBOOK_PAGE || 'https://www.facebook.com/tw.andys.pro', // Facebook Page 的連結
+  FACEBOOK_PAGE_TITLE:
+    process.env.NEXT_PUBLIC_FACEBOOK_PAGE_TITLE || 'FACEBOOK 粉絲團', // 邊欄 Facebook Page widget 的標題欄，填''則無標題欄
+  FACEBOOK_PAGE:
+    process.env.NEXT_PUBLIC_FACEBOOK_PAGE ||
+    'https://www.facebook.com/tw.andys.pro', // Facebook Page 的連結
 
   THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['next','hexo',"fukasawa','medium']
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮

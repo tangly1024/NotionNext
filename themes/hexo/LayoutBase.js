@@ -11,6 +11,7 @@ import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
+import FacebookPage from '@/components/FacebookPage'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -18,11 +19,16 @@ import BLOG from '@/blog.config'
  * @returns {JSX.Element}
  * @constructor
  */
-const LayoutBase = (props) => {
+const LayoutBase = props => {
   const { children, headerSlot, floatSlot, meta, siteInfo } = props
   const [show, switchShow] = useState(false)
   // const [percent, changePercent] = useState(0) // 页面阅读百分比
-  const rightAreaSlot = <Live2D />
+  const rightAreaSlot = (
+    <>
+      <FacebookPage />
+      <Live2D />
+    </>
+  )
   const { onLoading } = useGlobal()
 
   const scrollListener = () => {
@@ -30,7 +36,7 @@ const LayoutBase = (props) => {
     const clientHeight = targetRef?.clientHeight
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
-    let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
+    let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
     if (per > 100) per = 100
     const shouldShow = scrollY > 100 && per > 0
 
@@ -45,37 +51,44 @@ const LayoutBase = (props) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<div className='bg-hexo-background-gray dark:bg-black'>
-    <CommonHead meta={meta} />
+  return (
+    <div className="bg-hexo-background-gray dark:bg-black">
+      <CommonHead meta={meta} />
 
-    <TopNav {...props} />
+      <TopNav {...props} />
 
-    {headerSlot}
+      {headerSlot}
 
-    <main id='wrapper' className='w-full py-8 min-h-screen'>
+      <main id="wrapper" className="w-full py-8 min-h-screen">
+        <div
+          id="container-inner"
+          className="pt-14 w-full mx-auto lg:flex justify-center lg:space-x-4"
+        >
+          <div className="flex-grow w-full lg:max-w-4xl">
+            {onLoading ? <LoadingCover /> : children}
+          </div>
 
-      <div id='container-inner' className='pt-14 w-full mx-auto lg:flex justify-center lg:space-x-4'>
-        <div className='flex-grow w-full lg:max-w-4xl'>
-          {onLoading ? <LoadingCover /> : children}
+          <SideRight {...props} slot={rightAreaSlot} />
         </div>
+      </main>
 
-        <SideRight {...props} slot={rightAreaSlot} />
+      {/* 右下角悬浮 */}
+      <div className="bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm">
+        <div
+          className={
+            (show ? 'animate__animated ' : 'hidden') +
+            ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '
+          }
+        >
+          <FloatDarkModeButton />
+          {floatSlot}
+          <JumpToTopButton />
+        </div>
       </div>
 
-    </main>
-
-    {/* 右下角悬浮 */}
-    <div className='bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm'>
-      <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '}>
-        <FloatDarkModeButton />
-        {floatSlot}
-        <JumpToTopButton />
-      </div>
+      <Footer title={siteInfo?.title || BLOG.TITLE} />
     </div>
-
-    <Footer title={siteInfo?.title || BLOG.TITLE} />
-
-  </div>)
+  )
 }
 
 export default LayoutBase
