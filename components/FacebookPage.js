@@ -2,9 +2,12 @@ import BLOG from '@/blog.config'
 import { FacebookProvider, Page } from 'react-facebook'
 import { FacebookIcon } from 'react-share'
 
-const FacebookPage = () => (
-  <div className="shadow-md hover:shadow-xl dark:text-gray-300 border dark:border-black rounded-xl px-2 py-4 bg-white dark:bg-hexo-black-gray lg:duration-100 justify-center">
-    {BLOG.FACEBOOK_PAGE_TITLE && (
+const FacebookPage = () => {
+  if (!BLOG.FACEBOOK_APP_ID && !BLOG.FACEBOOK_PAGE) {
+    return <></>
+  }
+  return <div className="shadow-md hover:shadow-xl dark:text-gray-300 border dark:border-black rounded-xl px-2 py-4 bg-white dark:bg-hexo-black-gray lg:duration-100 justify-center">
+    {BLOG.FACEBOOK_PAGE && (
       <div className="flex  items-center pb-2">
         <a
           href={BLOG.FACEBOOK_PAGE}
@@ -19,9 +22,9 @@ const FacebookPage = () => (
         </a>
       </div>
     )}
-    <FacebookProvider appId={BLOG.FACEBOOK_APP_ID}>
+    {BLOG.FACEBOOK_APP_ID && <FacebookProvider appId={BLOG.FACEBOOK_APP_ID}>
       <Page href={BLOG.FACEBOOK_PAGE} tabs="timeline" />
-    </FacebookProvider>
+    </FacebookProvider>}
   </div>
-)
+}
 export default FacebookPage
