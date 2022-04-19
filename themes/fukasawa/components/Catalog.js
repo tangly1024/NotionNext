@@ -58,7 +58,7 @@ const Catalog = ({ toc }) => {
 
   return <div>
     <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' /> 目录</div>
-    <div className='overflow-y-auto max-h-96 overscroll-none' ref={tRef}>
+    <div className='overflow-y-auto max-h-96 overscroll-none scroll-hidden' ref={tRef}>
       <nav className='h-full font-sans text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
@@ -70,11 +70,11 @@ const Catalog = ({ toc }) => {
               className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
-                <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                  className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
-                >
-                  {tocItem.text}
-                </span>
+              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
+                className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
+              >
+                {tocItem.text}
+              </span>
             </a>
           )
         })}
