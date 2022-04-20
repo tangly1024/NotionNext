@@ -26,6 +26,8 @@
 - [x] do not change link if there's no youtube property 2022-04-21 00:13:10
 - [x] turn youtube player to a new file 2022-04-21 00:37:41
 
+- [ ] #Bug white navbar text cannot see
+
 - [ ] Facebook fanpage iframe to sidebar 2022/04/06 Need PR
 - [ ] Add social share buttons Need PR 2022-04-18 23:37:29
 - [ ] PR - More detail SEO for Facebook OpenGraph

@@ -3,15 +3,11 @@ import YouTube from 'react-youtube'
 
 export const YouTubePlayer = ({ post }) => {
   const [YTTime, setYTTime] = useState(0)
-
   let youtubeId
   if (post?.youtube) {
     const YouTubeURL = new URL(post.youtube)
     const params = new URLSearchParams(YouTubeURL.search)
     youtubeId = params.get('v')
-  }
-
-  if (!!post.youtube) {
     useEffect(() => {
       const onHashChanged = () => {
         const linkHash = window.location.hash
