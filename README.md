@@ -21,9 +21,9 @@
 - [x] 美化標題 2022/04/05
 - [x] Add Facebook Messenger chat bubble 2022/04/05
 
-- [ ] Add anchor hidden div for targeting video position
+- [x] Add anchor hidden div for targeting video position 2022-04-21 00:13:04
 - [ ] float video player
-- [ ] do not change link if there's no youtube property
+- [x] do not change link if there's no youtube property 2022-04-21 00:13:10
 - [ ] turn youtube player to a new file
 
 - [ ] Facebook fanpage iframe to sidebar 2022/04/06 Need PR

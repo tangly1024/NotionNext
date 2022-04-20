@@ -7,8 +7,7 @@ import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
 import { useRouter } from 'next/dist/client/router'
-import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import {
   Code,
   Collection,
@@ -19,7 +18,7 @@ import {
 import ArticleAdjacent from './ArticleAdjacent'
 import ArticleCopyright from './ArticleCopyright'
 import ArticleRecommend from './ArticleRecommend'
-import YouTube from 'react-youtube'
+import { YouTubePlayer } from '@/components/YouTubePlayer'
 
 /**
  *
@@ -27,7 +26,6 @@ import YouTube from 'react-youtube'
  * @returns
  */
 export default function ArticleDetail(props) {
-  const [YTTime, setYTTime] = useState(0)
   const router = useRouter()
   const { post } = props
   const zoom =
@@ -38,12 +36,6 @@ export default function ArticleDetail(props) {
       margin: getMediumZoomMargin()
     })
   const zoomRef = useRef(zoom ? zoom.clone() : null)
-  let youtubeId
-  if (post?.youtube) {
-    const YouTubeURL = new URL(post.youtube)
-    const params = new URLSearchParams(YouTubeURL.search)
-    youtubeId = params.get('v')
-  }
 
   useEffect(() => {
     // 将所有container下的所有图片添加medium-zoom
@@ -55,38 +47,6 @@ export default function ArticleDetail(props) {
       }
     }
   })
-
-  useEffect(() => {
-    const onHashChanged = () => {
-      const linkHash = window.location.hash
-      if (linkHash.includes('youtube')) {
-        setYTTime(parseInt(linkHash.replace(/\D/g, '')))
-      }
-    }
-    window.addEventListener('hashchange', onHashChanged)
-    const a = container?.getElementsByClassName('notion-link')
-    for (let i = 0; i < a.length; i++) {
-      if (a[i].href.includes('youtube')) {
-        let urlTime
-        if (a[i].href.includes('t=')) {
-          //original link
-          const itemHref = new URL(a[i].href)
-          const itemParams = new URLSearchParams(itemHref.search)
-          urlTime = itemParams.get('t')
-        } else {
-          const hrefCut = a[i].href.split('=')
-          urlTime = hrefCut[1]
-        }
-        a[i].href = `#youtube-time=${urlTime}`
-        a[i].target = ''
-        a[i].rel = ''
-      }
-    }
-
-    return () => {
-      window.removeEventListener('hashchange', onHashChanged)
-    }
-  }, [])
 
   return (
     <div
@@ -100,24 +60,7 @@ export default function ArticleDetail(props) {
       >
         {/* Notion文章主体 */}
         <section id="notion-article" className="px-2">
-          {youtubeId && (
-            <div
-              className="video-player w-full"
-              style={{ aspectRatio: '16/9' }}
-            >
-              <YouTube
-                videoId={youtubeId}
-                opts={{
-                  width: '100%',
-                  height: '100%',
-                  playerVars: {
-                    start: YTTime,
-                    autoplay: 1
-                  }
-                }}
-              />
-            </div>
-          )}
+          <YouTubePlayer {...props} />
           ----
           {post.blockMap && (
             <NotionRenderer

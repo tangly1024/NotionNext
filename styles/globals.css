@@ -24,10 +24,16 @@ body::-webkit-scrollbar-thumb {
   background: rgba(45, 170, 219, 0.3);
 }
 
+/* For componets/YouTube.js  */
 .video-player > div {
   width: 100%;
   height: 100%;
 }
+.video-player > .yt-anchor {
+  position: relative;
+  height: 0px;
+}
+/* For componets/YouTube.js  */
 
 .wrapper {
   min-height: 100vh;

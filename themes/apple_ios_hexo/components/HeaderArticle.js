@@ -8,7 +8,6 @@ import { useEffect } from 'react'
 import BLOG from '@/blog.config'
 
 export default function HeaderArticle({ post }) {
-  console.log(post)
   const shareUrl =
     BLOG.LINK + '/' + (post?.type?.[0] == 'Post' ? 'article/' : '') + post?.slug
   const headerImage = post?.page_cover
