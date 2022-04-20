@@ -61,7 +61,6 @@ export default function ArticleDetail(props) {
         {/* Notion文章主体 */}
         <section id="notion-article" className="px-2">
           <YouTubePlayer {...props} />
-          ----
           {post.blockMap && (
             <NotionRenderer
               recordMap={post.blockMap}

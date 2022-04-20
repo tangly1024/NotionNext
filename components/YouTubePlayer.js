@@ -11,7 +11,7 @@ export const YouTubePlayer = ({ post }) => {
     youtubeId = params.get('v')
   }
 
-  if (post.youtube && post.youtube !== '') {
+  if (!!post.youtube) {
     useEffect(() => {
       const onHashChanged = () => {
         const linkHash = window.location.hash
@@ -20,8 +20,8 @@ export const YouTubePlayer = ({ post }) => {
         }
       }
       window.addEventListener('hashchange', onHashChanged)
+      const container = document?.getElementById('container')
       const a = container?.getElementsByClassName('notion-link')
-      let newAnchors = ''
       for (let i = 0; i < a.length; i++) {
         if (a[i].href.includes('youtube')) {
           let urlTime
@@ -31,7 +31,7 @@ export const YouTubePlayer = ({ post }) => {
             urlTime = itemParams.get('t')
             const ytAnchor = document?.getElementById(`youtube-time=${urlTime}`)
             if (!ytAnchor) {
-              let newYTAnchor = document.createElement('div')
+              const newYTAnchor = document.createElement('div')
               newYTAnchor.id = `youtube-time=${urlTime}`
               newYTAnchor.classList.add('yt-anchor')
               newYTAnchor.classList.add('notion-header-anchor')
