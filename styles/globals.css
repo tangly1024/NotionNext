@@ -24,6 +24,11 @@ body::-webkit-scrollbar-thumb {
   background: rgba(45, 170, 219, 0.3);
 }
 
+.video-player > div {
+  width: 100%;
+  height: 100%;
+}
+
 .wrapper {
   min-height: 100vh;
   display: flex;
@@ -97,47 +102,50 @@ nav {
   }
 }
 
-.shadow-card{
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+.shadow-card {
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-.gt-meta{
-  @apply dark:text-gray-300
+.gt-meta {
+  @apply dark:text-gray-300;
 }
 
 #waifu {
-  @apply right-auto left-0 hidden lg:block z-10 !important
+  @apply right-auto left-0 hidden lg:block z-10 !important;
 }
 
 /* 隐藏滚动条 */
-.scroll-hidden{
+.scroll-hidden {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
 }
 
-.scroll-hidden::-webkit-scrollbar { width: 0 !important }
-
-.notion-collection{
-  @apply max-w-0
+.scroll-hidden::-webkit-scrollbar {
+  width: 0 !important;
 }
 
+.notion-collection {
+  @apply max-w-0;
+}
 
-.glassmorphism{
-  background: hsla(0, 0%, 100%, .75);
+.glassmorphism {
+  background: hsla(0, 0%, 100%, 0.75);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
-.dark .glassmorphism{
-  background: rgba(31, 41, 55, .75);
+.dark .glassmorphism {
+  background: rgba(31, 41, 55, 0.75);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
-.medium-zoom-overlay{
+.medium-zoom-overlay {
   background: none !important;
 }
 
-.shadow-text{
+.shadow-text {
   text-shadow: 0.1em 0.1em 0.2em black;
 }

@@ -20,6 +20,12 @@
 - [x] Fix facebook link info head metatdata 2022/04/04
 - [x] 美化標題 2022/04/05
 - [x] Add Facebook Messenger chat bubble 2022/04/05
+
+- [ ] Add anchor hidden div for targeting video position
+- [ ] float video player
+- [ ] do not change link if there's no youtube property
+- [ ] turn youtube player to a new file
+
 - [ ] Facebook fanpage iframe to sidebar 2022/04/06 Need PR
 - [ ] Add social share buttons Need PR 2022-04-18 23:37:29
 - [ ] PR - More detail SEO for Facebook OpenGraph

@@ -51,14 +51,14 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
   return (
     <>
       {services.map(singleService => {
-        if (singleService == 'facebook') {
+        if (singleService === 'facebook') {
           return (
             <FacebookShareButton key="{item}" url={shareUrl} className="mx-1">
               <FacebookIcon size={32} round />
             </FacebookShareButton>
           )
         }
-        if (singleService == 'messenger') {
+        if (singleService === 'messenger') {
           return (
             <FacebookMessengerShareButton
               key="{item}"
@@ -70,14 +70,14 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             </FacebookMessengerShareButton>
           )
         }
-        if (singleService == 'line') {
+        if (singleService === 'line') {
           return (
             <LineShareButton key="{item}" url={shareUrl} className="mx-1">
               <LineIcon size={32} round />
             </LineShareButton>
           )
         }
-        if (singleService == 'reddit') {
+        if (singleService === 'reddit') {
           return (
             <RedditShareButton
               key="{item}"
@@ -91,7 +91,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             </RedditShareButton>
           )
         }
-        if (singleService == 'email') {
+        if (singleService === 'email') {
           return (
             <EmailShareButton
               key="{item}"
@@ -104,7 +104,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             </EmailShareButton>
           )
         }
-        if (singleService == 'twitter') {
+        if (singleService === 'twitter') {
           ;<TwitterShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -113,7 +113,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <TwitterIcon size={32} round />
           </TwitterShareButton>
         }
-        if (singleService == 'telegram') {
+        if (singleService === 'telegram') {
           ;<TelegramShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -122,7 +122,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <TelegramIcon size={32} round />
           </TelegramShareButton>
         }
-        if (singleService == 'whatsapp') {
+        if (singleService === 'whatsapp') {
           ;<WhatsappShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -132,27 +132,27 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
         }
-        if (singleService == 'linkedin') {
+        if (singleService === 'linkedin') {
           ;<LinkedinShareButton url={shareUrl} className="mx-1">
             <LinkedinIcon size={32} round />
           </LinkedinShareButton>
         }
-        if (singleService == 'pinterest') {
+        if (singleService === 'pinterest') {
           ;<PinterestShareButton url={shareUrl} media={image} className="mx-1">
             <PinterestIcon size={32} round />
           </PinterestShareButton>
         }
-        if (singleService == 'vkshare') {
+        if (singleService === 'vkshare') {
           ;<VKShareButton url={shareUrl} image={image} className="mx-1">
             <VKIcon size={32} round />
           </VKShareButton>
         }
-        if (singleService == 'okshare') {
+        if (singleService === 'okshare') {
           ;<OKShareButton url={shareUrl} image={image} className="mx-1">
             <OKIcon size={32} round />
           </OKShareButton>
         }
-        if (singleService == 'tumblr') {
+        if (singleService === 'tumblr') {
           ;<TumblrShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -161,7 +161,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <TumblrIcon size={32} round />
           </TumblrShareButton>
         }
-        if (singleService == 'livejournal') {
+        if (singleService === 'livejournal') {
           ;<LivejournalShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -171,7 +171,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <LivejournalIcon size={32} round />
           </LivejournalShareButton>
         }
-        if (singleService == 'mailru') {
+        if (singleService === 'mailru') {
           ;<MailruShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -180,7 +180,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <MailruIcon size={32} round />
           </MailruShareButton>
         }
-        if (singleService == 'viber') {
+        if (singleService === 'viber') {
           ;<ViberShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -189,7 +189,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <ViberIcon size={32} round />
           </ViberShareButton>
         }
-        if (singleService == 'workplace') {
+        if (singleService === 'workplace') {
           ;<WorkplaceShareButton
             url={shareUrl}
             quote={titleWithSiteInfo}
@@ -198,7 +198,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <WorkplaceIcon size={32} round />
           </WorkplaceShareButton>
         }
-        if (singleService == 'weibo') {
+        if (singleService === 'weibo') {
           ;<WeiboShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -208,7 +208,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <WeiboIcon size={32} round />
           </WeiboShareButton>
         }
-        if (singleService == 'pocket') {
+        if (singleService === 'pocket') {
           ;<PocketShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -217,7 +217,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <PocketIcon size={32} round />
           </PocketShareButton>
         }
-        if (singleService == 'instapaper') {
+        if (singleService === 'instapaper') {
           ;<InstapaperShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -226,7 +226,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <InstapaperIcon size={32} round />
           </InstapaperShareButton>
         }
-        if (singleService == 'hatena') {
+        if (singleService === 'hatena') {
           ;<HatenaShareButton
             url={shareUrl}
             title={titleWithSiteInfo}
@@ -237,6 +237,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
             <HatenaIcon size={32} round />
           </HatenaShareButton>
         }
+        return <></>
       })}
     </>
   )

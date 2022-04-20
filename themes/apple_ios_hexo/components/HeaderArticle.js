@@ -4,7 +4,7 @@ import formatDate from '@/lib/formatDate'
 import TagItemMini from './TagItemMini'
 import CONFIG_APPLE_IOS_HEXO from '../config_apple_ios_hexo'
 import { useEffect } from 'react'
-import ShareButtons from '@/components/ShareButtons'
+// import ShareButtons from '@/components/ShareButtons'
 import BLOG from '@/blog.config'
 
 export default function HeaderArticle({ post }) {
@@ -112,7 +112,7 @@ export default function HeaderArticle({ post }) {
                 )}
               </div>
               <div className=" font-light mx-1 inline-block">
-                <ShareButtons
+                {/* <ShareButtons
                   shareUrl={shareUrl}
                   title={post.title}
                   image={post.page_cover}
@@ -127,7 +127,7 @@ export default function HeaderArticle({ post }) {
                     BLOG.POSTS_SHARE_SEPARATOR +
                     post.summary
                   }
-                />
+                /> */}
               </div>
             </section>
           </div>
