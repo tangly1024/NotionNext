@@ -116,7 +116,6 @@
   }
 }
 
-
 .notion-page-content-inner {
   position: relative;
   display: flex;
@@ -197,8 +196,8 @@
 
 .medium-zoom-overlay {
   z-index: 300;
-  -webkit-backdrop-filter: blur(5px);    
-  backdrop-filter: blur(5px);   
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 .medium-zoom-image {
@@ -389,7 +388,7 @@
 .notion-h1 {
   font-size: 1.575em;
   margin-top: 1.08em;
-  @apply border-b w-full
+  @apply border-b w-full;
 }
 
 .notion-header-anchor {
@@ -871,6 +870,11 @@ svg.notion-page-icon {
   font-size: 14px;
   line-height: 1.4;
   color: var(--fg-color-3);
+}
+
+/* Fix caption darkmode text color */
+.dark .notion-asset-caption {
+  color: grey;
 }
 
 .notion-callout {
@@ -1393,7 +1397,7 @@ svg.notion-page-icon {
 }
 
 .notion-collection-row {
-  @apply hidden
+  @apply hidden;
 }
 
 .notion-collection-row-body {
@@ -1623,12 +1627,16 @@ svg + .notion-page-title-text {
   @apply text-gray-600 dark:text-gray-300;
 }
 
-.notion-gray_background,.notion-brown_background,
-.notion-orange_background,.notion-yellow_background,
-.notion-blue_background,.notion-purple_background,
-.notion-teal_background,.notion-red_background,
-.notion-pink_background{
-  @apply dark:text-black
+.notion-gray_background,
+.notion-brown_background,
+.notion-orange_background,
+.notion-yellow_background,
+.notion-blue_background,
+.notion-purple_background,
+.notion-teal_background,
+.notion-red_background,
+.notion-pink_background {
+  @apply dark:text-black;
 }
 
 .notion-code > code {
@@ -1668,7 +1676,7 @@ pre[class*='language-'] {
   padding: 4px 2px;
   white-space: nowrap;
   overflow: hidden;
-  @apply px-0 !important
+  @apply px-0 !important;
 }
 
 .notion-collection-header-title {
@@ -1734,7 +1742,7 @@ pre[class*='language-'] {
 .notion-table {
   align-self: center;
   overflow: auto hidden;
-  @apply w-full !important
+  @apply w-full !important;
 }
 
 .notion-table-view {
@@ -1743,13 +1751,13 @@ pre[class*='language-'] {
   min-width: var(--notion-max-width);
   padding-left: 0;
   transition: padding 200ms ease-out;
-  @apply px-0 !important
+  @apply px-0 !important;
 }
 
 .notion-table-header {
   display: flex;
   position: absolute;
-  z-index:30;
+  z-index: 30;
   height: 33px;
   color: var(--fg-color-3);
   min-width: var(--notion-max-width);
