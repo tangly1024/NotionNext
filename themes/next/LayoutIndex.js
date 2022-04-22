@@ -16,7 +16,7 @@ export const LayoutIndex = (props) => {
     rightAreaSlot={rightAreaSlot}
     {...props}
   >
-    {BLOG.POST_LIST_TYPE !== 'page'
+    {BLOG.POST_LIST_STYLE !== 'page'
       ? <BlogPostListScroll {...props} showSummary={true} />
       : <BlogPostListPage {...props} />
     }
