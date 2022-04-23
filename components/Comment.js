@@ -5,6 +5,7 @@ import 'gitalk/dist/gitalk.css'
 import Tabs from '@/components/Tabs'
 import { ReactCusdis } from 'react-cusdis'
 import { useGlobal } from '@/lib/global'
+import { Disqus } from '@/components/Disqus'
 
 const GitalkComponent = dynamic(
   () => {
@@ -32,12 +33,37 @@ const FacbookCommentComponent = dynamic(
   { ssr: false }
 )
 
+const DisqusCommentComponent = dynamic(
+  () => {
+    return import('@/components/Disqus')
+  },
+  { ssr: false }
+)
+
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
   const { locale, isDarkMode } = useGlobal()
   return (
     <div id="comment" className="comment mt-5 text-gray-800 dark:text-gray-300">
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>留言區</h1>
+      <p>
+        <br />
+        如果你想使用 Facebook, Google, Twitter 帳號留言，或是匿名分享，可以使用
+        Disqus 留言。
+        <br /> 擁有 Facebook 帳號的朋友可以使用 Facbook 原生社群插件留言。
+        <br /> 若是有 Github 帳號可以使用 Giscus 留言！
+      </p>
+      <br />
       <Tabs>
+        {BLOG.COMMENT_DISQUS_SHORTNAME && (
+          <div key="Disqus">
+            <Disqus
+              id={frontMatter.id}
+              title={frontMatter.title}
+              url={BLOG.LINK + router.asPath}
+            />
+          </div>
+        )}
         {BLOG.FACEBOOK_APP_ID && (
           <div key="Facebook">
             <FacbookCommentComponent isDarkMode={isDarkMode} />

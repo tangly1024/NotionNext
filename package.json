@@ -27,6 +27,7 @@
     "animate.css": "^4.1.1",
     "axios": ">=0.21.1",
     "copy-to-clipboard": "^3.3.1",
+    "disqus-react": "^1.1.2",
     "dotenv": "^16.0.0",
     "feed": "^4.2.2",
     "gitalk": "^1.7.2",

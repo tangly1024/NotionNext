@@ -39,7 +39,8 @@
 - [ ] Discord Social Button [ Need customize ]
 - [x] Facebook Comment 2022-04-24 04:12:02
 - [ ] Facebook Need PR for useEffect only run once and comment only if app_id is available
-- [ ] Discus Comment
+- [x] Discus Comment 2022-04-24 05:16:06
+- [ ] Discus Comment Need PR
 - [ ] Bigger floating buttons sidebuttons
 - [ ] PWA
 - [ ] 字數統計

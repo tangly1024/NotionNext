@@ -46,14 +46,17 @@ import {
 
 const ShareButtons = ({ shareUrl, title, body, image }) => {
   const services = BLOG.POSTS_SHARE_SERVICES.split(', ')
-  console.log(image)
   const titleWithSiteInfo = title + ' | ' + BLOG.TITLE
   return (
     <>
       {services.map(singleService => {
         if (singleService === 'facebook') {
           return (
-            <FacebookShareButton key="{item}" url={shareUrl} className="mx-1">
+            <FacebookShareButton
+              key={singleService}
+              url={shareUrl}
+              className="mx-1"
+            >
               <FacebookIcon size={32} round />
             </FacebookShareButton>
           )
@@ -61,7 +64,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'messenger') {
           return (
             <FacebookMessengerShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               appId={BLOG.FACEBOOK_APP_ID}
               className="mx-1"
@@ -72,7 +75,11 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         }
         if (singleService === 'line') {
           return (
-            <LineShareButton key="{item}" url={shareUrl} className="mx-1">
+            <LineShareButton
+              key={singleService}
+              url={shareUrl}
+              className="mx-1"
+            >
               <LineIcon size={32} round />
             </LineShareButton>
           )
@@ -80,7 +87,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'reddit') {
           return (
             <RedditShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               windowWidth={660}
@@ -94,7 +101,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'email') {
           return (
             <EmailShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               subject={titleWithSiteInfo}
               body={body}
@@ -107,7 +114,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'twitter') {
           return (
             <TwitterShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               className="mx-1"
@@ -119,7 +126,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'telegram') {
           return (
             <TelegramShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               className="mx-1"
@@ -131,7 +138,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'whatsapp') {
           return (
             <WhatsappShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               separator=":: "
@@ -143,7 +150,11 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         }
         if (singleService === 'linkedin') {
           return (
-            <LinkedinShareButton key="{item}" url={shareUrl} className="mx-1">
+            <LinkedinShareButton
+              key={singleService}
+              url={shareUrl}
+              className="mx-1"
+            >
               <LinkedinIcon size={32} round />
             </LinkedinShareButton>
           )
@@ -151,7 +162,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'pinterest') {
           return (
             <PinterestShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               media={image}
               className="mx-1"
@@ -163,7 +174,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'vkshare') {
           return (
             <VKShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               image={image}
               className="mx-1"
@@ -175,7 +186,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'okshare') {
           return (
             <OKShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               image={image}
               className="mx-1"
@@ -187,7 +198,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'tumblr') {
           return (
             <TumblrShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               className="mx-1"
@@ -199,7 +210,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'livejournal') {
           return (
             <LivejournalShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               description={shareUrl}
@@ -212,7 +223,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'mailru') {
           return (
             <MailruShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               className="mx-1"
@@ -224,7 +235,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'viber') {
           return (
             <ViberShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               className="mx-1"
@@ -236,7 +247,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'workplace') {
           return (
             <WorkplaceShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               quote={titleWithSiteInfo}
               className="mx-1"
@@ -248,7 +259,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'weibo') {
           return (
             <WeiboShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               image={image}
@@ -261,7 +272,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'pocket') {
           return (
             <PocketShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               className="mx-1"
@@ -273,7 +284,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'instapaper') {
           return (
             <InstapaperShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               className="mx-1"
@@ -285,7 +296,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
         if (singleService === 'hatena') {
           return (
             <HatenaShareButton
-              key="{item}"
+              key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
               windowWidth={660}
