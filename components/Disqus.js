@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { DiscussionEmbed } from 'disqus-react'
 
-export default ({ url, id, title }) => (
+const Disqus = ({ url, id, title }) => (
   <DiscussionEmbed
     shortname={BLOG.COMMENT_DISQUS_SHORTNAME}
     config={{
@@ -12,3 +12,4 @@ export default ({ url, id, title }) => (
     }}
   />
 )
+export default Disqus
