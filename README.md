@@ -33,13 +33,13 @@
 - [ ] Add social share buttons Need PR 2022-04-18 23:37:29
 - [ ] PR - More detail SEO for Facebook OpenGraph
 - [ ] SEO publish time fix
-- [ ] User Head click to YouTube
-- [ ] YouTube Social Button
-- [ ] Facebook Social Button
-- [ ] Discord Social Button
+- [x] User Head click to YouTube
+- [x] YouTube Social Button
+- [x] Facebook Social Button
+- [ ] Discord Social Button [ Need customize ]
 - [ ] Facebook Comment
 - [ ] Discus Comment
-- [ ] Bigger floating buttons
+- [ ] Bigger floating buttons sidebuttons
 - [ ] PWA
 - [ ] 字數統計
 - [ ] 簡繁切換
