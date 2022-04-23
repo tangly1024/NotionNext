@@ -105,137 +105,196 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
           )
         }
         if (singleService === 'twitter') {
-          ;<TwitterShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <TwitterIcon size={32} round />
-          </TwitterShareButton>
+          return (
+            <TwitterShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+          )
         }
         if (singleService === 'telegram') {
-          ;<TelegramShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <TelegramIcon size={32} round />
-          </TelegramShareButton>
+          return (
+            <TelegramShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <TelegramIcon size={32} round />
+            </TelegramShareButton>
+          )
         }
         if (singleService === 'whatsapp') {
-          ;<WhatsappShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            separator=":: "
-            className="mx-1"
-          >
-            <WhatsappIcon size={32} round />
-          </WhatsappShareButton>
+          return (
+            <WhatsappShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              separator=":: "
+              className="mx-1"
+            >
+              <WhatsappIcon size={32} round />
+            </WhatsappShareButton>
+          )
         }
         if (singleService === 'linkedin') {
-          ;<LinkedinShareButton url={shareUrl} className="mx-1">
-            <LinkedinIcon size={32} round />
-          </LinkedinShareButton>
+          return (
+            <LinkedinShareButton key="{item}" url={shareUrl} className="mx-1">
+              <LinkedinIcon size={32} round />
+            </LinkedinShareButton>
+          )
         }
         if (singleService === 'pinterest') {
-          ;<PinterestShareButton url={shareUrl} media={image} className="mx-1">
-            <PinterestIcon size={32} round />
-          </PinterestShareButton>
+          return (
+            <PinterestShareButton
+              key="{item}"
+              url={shareUrl}
+              media={image}
+              className="mx-1"
+            >
+              <PinterestIcon size={32} round />
+            </PinterestShareButton>
+          )
         }
         if (singleService === 'vkshare') {
-          ;<VKShareButton url={shareUrl} image={image} className="mx-1">
-            <VKIcon size={32} round />
-          </VKShareButton>
+          return (
+            <VKShareButton
+              key="{item}"
+              url={shareUrl}
+              image={image}
+              className="mx-1"
+            >
+              <VKIcon size={32} round />
+            </VKShareButton>
+          )
         }
         if (singleService === 'okshare') {
-          ;<OKShareButton url={shareUrl} image={image} className="mx-1">
-            <OKIcon size={32} round />
-          </OKShareButton>
+          return (
+            <OKShareButton
+              key="{item}"
+              url={shareUrl}
+              image={image}
+              className="mx-1"
+            >
+              <OKIcon size={32} round />
+            </OKShareButton>
+          )
         }
         if (singleService === 'tumblr') {
-          ;<TumblrShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <TumblrIcon size={32} round />
-          </TumblrShareButton>
+          return (
+            <TumblrShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <TumblrIcon size={32} round />
+            </TumblrShareButton>
+          )
         }
         if (singleService === 'livejournal') {
-          ;<LivejournalShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            description={shareUrl}
-            className="mx-1"
-          >
-            <LivejournalIcon size={32} round />
-          </LivejournalShareButton>
+          return (
+            <LivejournalShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              description={shareUrl}
+              className="mx-1"
+            >
+              <LivejournalIcon size={32} round />
+            </LivejournalShareButton>
+          )
         }
         if (singleService === 'mailru') {
-          ;<MailruShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <MailruIcon size={32} round />
-          </MailruShareButton>
+          return (
+            <MailruShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <MailruIcon size={32} round />
+            </MailruShareButton>
+          )
         }
         if (singleService === 'viber') {
-          ;<ViberShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <ViberIcon size={32} round />
-          </ViberShareButton>
+          return (
+            <ViberShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <ViberIcon size={32} round />
+            </ViberShareButton>
+          )
         }
         if (singleService === 'workplace') {
-          ;<WorkplaceShareButton
-            url={shareUrl}
-            quote={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <WorkplaceIcon size={32} round />
-          </WorkplaceShareButton>
+          return (
+            <WorkplaceShareButton
+              key="{item}"
+              url={shareUrl}
+              quote={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <WorkplaceIcon size={32} round />
+            </WorkplaceShareButton>
+          )
         }
         if (singleService === 'weibo') {
-          ;<WeiboShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            image={image}
-            className="mx-1"
-          >
-            <WeiboIcon size={32} round />
-          </WeiboShareButton>
+          return (
+            <WeiboShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              image={image}
+              className="mx-1"
+            >
+              <WeiboIcon size={32} round />
+            </WeiboShareButton>
+          )
         }
         if (singleService === 'pocket') {
-          ;<PocketShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <PocketIcon size={32} round />
-          </PocketShareButton>
+          return (
+            <PocketShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <PocketIcon size={32} round />
+            </PocketShareButton>
+          )
         }
         if (singleService === 'instapaper') {
-          ;<InstapaperShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            className="mx-1"
-          >
-            <InstapaperIcon size={32} round />
-          </InstapaperShareButton>
+          return (
+            <InstapaperShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              className="mx-1"
+            >
+              <InstapaperIcon size={32} round />
+            </InstapaperShareButton>
+          )
         }
         if (singleService === 'hatena') {
-          ;<HatenaShareButton
-            url={shareUrl}
-            title={titleWithSiteInfo}
-            windowWidth={660}
-            windowHeight={460}
-            className="mx-1"
-          >
-            <HatenaIcon size={32} round />
-          </HatenaShareButton>
+          return (
+            <HatenaShareButton
+              key="{item}"
+              url={shareUrl}
+              title={titleWithSiteInfo}
+              windowWidth={660}
+              windowHeight={460}
+              className="mx-1"
+            >
+              <HatenaIcon size={32} round />
+            </HatenaShareButton>
+          )
         }
         return <></>
       })}
