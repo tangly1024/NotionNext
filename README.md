@@ -37,7 +37,8 @@
 - [x] YouTube Social Button
 - [x] Facebook Social Button
 - [ ] Discord Social Button [ Need customize ]
-- [ ] Facebook Comment
+- [x] Facebook Comment 2022-04-24 04:12:02
+- [ ] Facebook Need PR for useEffect only run once and comment only if app_id is available
 - [ ] Discus Comment
 - [ ] Bigger floating buttons sidebuttons
 - [ ] PWA
