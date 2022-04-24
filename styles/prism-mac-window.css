@@ -1,0 +1,61 @@
+.code-toolbar {
+  position: relative;
+
+  background: #000;
+
+  padding-top: 20px;
+
+  border-radius: 5px;
+}
+
+pre[class*='language-'].line-numbers {
+  position: relative;
+
+  padding: 3px; /*修改*/
+
+  padding-left: 3.8em;
+
+  counter-reset: linenumber;
+
+  max-height: 400px; /*修改*/
+
+  background: #151515; /*修改*/
+
+  border: none;
+}
+
+.pre-mac {
+  position: absolute;
+
+  top: 7px;
+
+  left: 10px;
+
+  width: 100px;
+
+  z-index: 99;
+}
+
+.pre-mac > span {
+  float: left;
+
+  width: 10px;
+
+  height: 10px;
+
+  border-radius: 50%;
+
+  margin-right: 5px;
+}
+
+.pre-mac > span:nth-child(1) {
+  background: red;
+}
+
+.pre-mac > span:nth-child(2) {
+  background: sandybrown;
+}
+
+.pre-mac > span:nth-child(3) {
+  background: limegreen;
+}

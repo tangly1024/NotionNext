@@ -41,6 +41,7 @@
 - [ ] Facebook Need PR for useEffect only run once and comment only if app_id is available
 - [x] Discus Comment 2022-04-24 05:16:06
 - [ ] Discus Comment Need PR
+- [ ] Fix Cusdis language
 - [ ] Bigger floating buttons sidebuttons
 - [ ] PWA
 - [ ] 字數統計

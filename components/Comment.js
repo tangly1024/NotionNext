@@ -5,7 +5,6 @@ import 'gitalk/dist/gitalk.css'
 import Tabs from '@/components/Tabs'
 import { ReactCusdis } from 'react-cusdis'
 import { useGlobal } from '@/lib/global'
-// import Disqus from './Disqus'
 
 const GitalkComponent = dynamic(
   () => {

@@ -11,10 +11,11 @@ export const YouTubePlayer = ({ post }) => {
     useEffect(() => {
       const onHashChanged = () => {
         const linkHash = window.location.hash
-        if (linkHash.includes('youtube')) {
+        if (linkHash.includes('youtube-time')) {
           setYTTime(parseInt(linkHash.replace(/\D/g, '')))
         }
       }
+      onHashChanged()
       window.addEventListener('hashchange', onHashChanged)
       const container = document?.getElementById('container')
       const a = container?.getElementsByClassName('notion-link')
@@ -47,7 +48,6 @@ export const YouTubePlayer = ({ post }) => {
           a[i].rel = ''
         }
       }
-
       return () => {
         window.removeEventListener('hashchange', onHashChanged)
       }
