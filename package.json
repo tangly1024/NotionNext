@@ -37,6 +37,7 @@
     "next": "^12.0.5",
     "notion-client": "4.16.0",
     "notion-utils": "4.16.0",
+    "opencc-js": "^1.0.3",
     "preact": "^10.5.15",
     "prism-themes": "^1.9.0",
     "qrcode.react": "^1.0.1",

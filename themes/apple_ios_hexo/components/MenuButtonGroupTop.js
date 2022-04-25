@@ -2,6 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import CONFIG_APPLE_IOS_HEXO from '../config_apple_ios_hexo'
+import dynamic from 'next/dynamic'
+const ChiConv = dynamic(() => import('@/components/ChiConv'), {
+  ssr: false
+})
 
 const MenuButtonGroupTop = props => {
   const { customNav } = props
@@ -60,6 +64,7 @@ const MenuButtonGroupTop = props => {
           return null
         }
       })}
+      <ChiConv />
     </nav>
   )
 }
