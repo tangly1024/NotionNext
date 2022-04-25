@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Prism } from 'prismjs'
 
 const PrismMac = () => {
   useEffect(() => {
