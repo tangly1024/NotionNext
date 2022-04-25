@@ -5,6 +5,7 @@ import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { idToUuid } from 'notion-utils'
 
 /**
  * 根据notion的slug访问页面
@@ -30,7 +31,7 @@ const Slug = props => {
         }
       }, 3000)
     })
-    const meta = { title: `${props?.siteInfo?.title} | loading` }
+    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading` }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 
@@ -92,7 +93,9 @@ export async function getStaticProps({ params: { slug } }) {
   const from = `slug-props-${slug}`
   const props = await getGlobalNotionData({ from, pageType: ['Post'] })
   const allPosts = props.allPosts
-  props.post = props.allPosts.find(p => p.slug === slug)
+  props.post = props.allPosts.find((p) => {
+    return p.slug === slug || p.id === idToUuid(slug)
+  })
   if (!props.post) {
     return { props, revalidate: 1 }
   }

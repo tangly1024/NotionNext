@@ -38,7 +38,7 @@ export const LayoutSearch = props => {
     <LayoutBase {...props}>
       <h2>Search - {keyword}</h2>
       <SearchInput {...props} />
-      {postsToShow.map(p => (
+      {postsToShow?.map(p => (
         <div key={p.id} className="border my-12">
           <Link href={`/article/${p.slug}`}>
             <a className="underline cursor-pointer">{p.title}</a>
