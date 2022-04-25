@@ -1601,7 +1601,7 @@ svg.notion-page-icon {
 }
 
 svg.notion-page-icon {
-  @apply hidden;
+  /* @apply hidden;*/
 }
 
 svg + .notion-page-title-text {
