@@ -20,6 +20,8 @@ const BlogListPage = ({ page = 1, posts = [], postCount }) => {
   function updateCol() {
     if (window.outerWidth > 1200) {
       changeCol(3)
+    } else if (window.outerWidth > 900) {
+      changeCol(2)
     } else {
       changeCol(1)
     }
