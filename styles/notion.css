@@ -428,7 +428,7 @@
   float: left;
   margin-left: -20px;
   padding-right: 4px;
-  fill: var(--fg-color-icon);
+  fill: grey;
 }
 
 .notion-page-cover {
