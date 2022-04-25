@@ -10,9 +10,7 @@ import '@/styles/prism-mac-style.css' //  將 Prism 加入 mac 視窗樣式
 // used for collection views (optional)
 import 'rc-dropdown/assets/index.css'
 // used for code syntax highlighting (optional)
-// import 'prismjs/themes/prism-okaidia.css'
 import 'prism-themes/themes/prism-one-dark.css'
-// import 'prismjs/themes/prism-tomorrow.css'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
