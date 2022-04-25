@@ -75,8 +75,14 @@ const NotionPage = ({ post }) => {
   </div>
 }
 
+/**
+ * 将id映射成博文内部链接。
+ * @param {*} id
+ * @returns
+ */
 const mapPageUrl = id => {
-  return 'https://www.notion.so/' + id.replace(/-/g, '')
+  // return 'https://www.notion.so/' + id.replace(/-/g, '')
+  return '/article/' + id.replace(/-/g, '')
 }
 
 function getMediumZoomMargin() {
