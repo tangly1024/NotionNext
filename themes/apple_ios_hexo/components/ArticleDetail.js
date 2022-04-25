@@ -6,8 +6,10 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
+import 'prismjs/plugins/toolbar/prism-toolbar'
+import 'prismjs/plugins/show-language/prism-show-language'
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 import { useRouter } from 'next/dist/client/router'
-import Prism from 'prismjs'
 import { useEffect, useRef } from 'react'
 import {
   Code,
@@ -20,6 +22,7 @@ import ArticleAdjacent from './ArticleAdjacent'
 import ArticleCopyright from './ArticleCopyright'
 import ArticleRecommend from './ArticleRecommend'
 import { YouTubePlayer } from '@/components/YouTubePlayer'
+import PrismMac from '@/components/PrismMac'
 
 /**
  *
@@ -48,23 +51,6 @@ export default function ArticleDetail(props) {
       }
     }
   })
-  useEffect(() => {
-    const container = document?.getElementById('container')
-    const codeBlocks = container?.getElementsByTagName('pre')
-    Array.from(codeBlocks).forEach(item => {
-      item.classList.add('line-numbers')
-      item.style.whiteSpace = 'pre-wrap'
-      // Add pre-mac element for MacOS window UI
-      const preMac = document.createElement('div')
-      preMac.classList.add('pre-mac')
-      preMac.innerHTML = '<span></span><span></span><span></span>'
-      item.parentElement.insertBefore(preMac, item)
-    })
-    Prism.highlightAll()
-    // console.log(codeBlocks)
-    // $("pre").before('<div class="pre-mac"><span></span><span></span><span></span></div>');
-    // }
-  }, [])
 
   return (
     <div
@@ -78,6 +64,7 @@ export default function ArticleDetail(props) {
       >
         {/* Notion文章主体 */}
         <section id="notion-article" className="px-2">
+          <PrismMac />
           <YouTubePlayer {...props} />
           {post.blockMap && (
             <NotionRenderer

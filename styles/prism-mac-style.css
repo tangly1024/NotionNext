@@ -1,11 +1,28 @@
 .code-toolbar {
   position: relative;
 
+  width: 100%;
+
   background: #000;
 
   padding-top: 20px;
 
-  border-radius: 5px;
+  border-radius: 0.75rem;
+}
+
+.toolbar {
+  position: absolute;
+  margin-left: 100%;
+  top: 10px;
+  right: 4px;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  line-height: 1rem;
+}
+
+.toolbar-item > button {
+  margin-top: -0.1rem;
 }
 
 pre[class*='language-'].line-numbers {
@@ -19,15 +36,22 @@ pre[class*='language-'].line-numbers {
 
   max-height: 400px; /*修改*/
 
-  background: #151515; /*修改*/
+  background: black;
 
   border: none;
+}
+
+.notion-code > code[class*='language-'],
+pre[class*='language-'] {
+  background: black;
 }
 
 .pre-mac {
   position: relative;
 
-  top: 7px;
+  margin-top: -7px;
+
+  top: 21px;
 
   left: 10px;
 
