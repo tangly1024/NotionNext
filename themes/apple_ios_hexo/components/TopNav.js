@@ -111,7 +111,7 @@ const TopNav = props => {
         id="sticky-nav"
         className={`${
           CONFIG_APPLE_IOS_HEXO.NAV_TYPE !== 'normal'
-            ? 'sm:local md:fixed bg-white'
+            ? 'fixed bg-white'
             : ' bg-none -mb-10'
         } animate__animated animate__fadeIn dark:bg-black dark:bg-opacity-50 dark:text-gray-200  bg-opacity-80 text-black w-full top-0 z-20 transform duration-200 font-sans`}
       >
@@ -140,7 +140,7 @@ const TopNav = props => {
         </div>
 
         <Collapse isOpen={isOpen} className="shadow-xl">
-          <div className="bg-white pt-1 py-2 px-5 lg:hidden">
+          <div className="bg-white dark:bg-black pt-1 py-2 px-5 lg:hidden">
             <MenuList {...props} />
           </div>
         </Collapse>

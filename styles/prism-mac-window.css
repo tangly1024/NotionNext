@@ -25,7 +25,7 @@ pre[class*='language-'].line-numbers {
 }
 
 .pre-mac {
-  position: absolute;
+  position: relative;
 
   top: 7px;
 

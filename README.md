@@ -41,6 +41,8 @@
 - [ ] Facebook Need PR for useEffect only run once and comment only if app_id is available
 - [x] Discus Comment 2022-04-24 05:16:06
 - [ ] Discus Comment Need PR
+- [ ] Add Mac style comment for prism.js
+- [x] fix navbar not showing text in white mode 2022-04-26 01:50:20
 - [ ] Fix Cusdis language
 - [ ] Bigger floating buttons sidebuttons
 - [ ] PWA

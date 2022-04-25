@@ -7,6 +7,7 @@ import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
 import { useRouter } from 'next/dist/client/router'
+import Prism from 'prismjs'
 import { useEffect, useRef } from 'react'
 import {
   Code,
@@ -47,6 +48,23 @@ export default function ArticleDetail(props) {
       }
     }
   })
+  useEffect(() => {
+    const container = document?.getElementById('container')
+    const codeBlocks = container?.getElementsByTagName('pre')
+    Array.from(codeBlocks).forEach(item => {
+      item.classList.add('line-numbers')
+      item.style.whiteSpace = 'pre-wrap'
+      // Add pre-mac element for MacOS window UI
+      const preMac = document.createElement('div')
+      preMac.classList.add('pre-mac')
+      preMac.innerHTML = '<span></span><span></span><span></span>'
+      item.parentElement.insertBefore(preMac, item)
+    })
+    Prism.highlightAll()
+    // console.log(codeBlocks)
+    // $("pre").before('<div class="pre-mac"><span></span><span></span><span></span></div>');
+    // }
+  }, [])
 
   return (
     <div
