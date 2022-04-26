@@ -3,6 +3,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import CONFIG_APPLE_IOS_HEXO from '../config_apple_ios_hexo'
+import dynamic from 'next/dynamic'
+const ChiConv = dynamic(() => import('@/components/ChiConv'), {
+  ssr: false
+})
 
 const MenuList = props => {
   const { postCount, customNav } = props
@@ -75,7 +79,20 @@ const MenuList = props => {
           return null
         }
       })}
-      {/* <button>簡</button> */}
+      <ChiConv inList length="4" />
+      {/* <a
+        className={
+          'py-1.5 px-5 text-base justify-between hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center '
+        }
+      >
+        <div className="my-auto items-center justify-center flex ">
+          <i className={`fa fa-language w-4 text-center`} />
+          {/* <div className={'ml-4'}>{link.name}</div> */}
+      {/* <div className={'ml-4'}>
+            <ChiConv inList length="4" />
+          </div>
+        </div> */}
+      {/* </a> */}
     </nav>
   )
 }

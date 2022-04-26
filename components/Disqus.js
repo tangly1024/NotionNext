@@ -12,13 +12,16 @@ const Disqus = ({ url, id, title }) => {
   }, [])
 
   useEffect(() => {
-    document
-      .getElementById('comment')
-      .addEventListener('transitionend', transitionEnd)
-    return () =>
-      document
-        .getElementById('comment')
-        .removeEventListener('transitionend', transitionEnd)
+    const Comment = document.getElementById('comment')
+    if (Comment) {
+      Comment.addEventListener('transitionend', transitionEnd)
+    }
+    return () => {
+      const Comment = document.getElementById('comment')
+      if (Comment) {
+        Comment.removeEventListener('transitionend', transitionEnd)
+      }
+    }
   }, [transitionEnd])
   return (
     <DiscussionEmbed
