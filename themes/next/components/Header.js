@@ -27,7 +27,7 @@ export default function Header(props) {
         })
       )
     }
-  })
+  }, [])
   const { isDarkMode } = useGlobal()
 
   const autoScrollEnd = () => {
@@ -90,7 +90,7 @@ export default function Header(props) {
       window.removeEventListener('scroll', scrollTrigger)
       window.removeEventListener('resize', updateHeaderHeight)
     }
-  })
+  }, [])
 
   return (
     <header
