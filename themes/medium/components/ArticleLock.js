@@ -24,7 +24,7 @@ export const ArticleLock = props => {
     }
   }
 
-  return <div className='w-full flex justify-center items-center h-96 font-sans'>
+  return <div id='container' className='w-full flex justify-center items-center h-96 font-sans'>
     <div className='text-center space-y-3'>
       <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
       <div className='flex'>
@@ -36,5 +36,5 @@ export const ArticleLock = props => {
       <div id='tips'>
       </div>
     </div>
-</div>
+  </div>
 }
