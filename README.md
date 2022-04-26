@@ -20,15 +20,12 @@
 - [x] Fix facebook link info head metatdata 2022/04/04
 - [x] 美化標題 2022/04/05
 - [x] Add Facebook Messenger chat bubble 2022/04/05
-
 - [x] Add anchor hidden div for targeting video position 2022-04-21 00:13:04
 - [ ] float video player
 - [x] do not change link if there's no youtube property 2022-04-21 00:13:10
 - [x] turn youtube player to a new file 2022-04-21 00:37:41
-
 - [ ] #Bug white navbar text cannot see
 - [ ] Better SEO for LINE Sharing
-
 - [ ] Facebook fanpage iframe to sidebar 2022/04/06 Need PR
 - [ ] Add social share buttons Need PR 2022-04-18 23:37:29
 - [ ] PR - More detail SEO for Facebook OpenGraph
@@ -45,12 +42,20 @@
 - [ ] Add Mac style comment for prism.js Need PR
 - [x] fix navbar not showing text in white mode 2022-04-26 01:50:20
 - [x] fix PrismMac Error when changing dark mode 2022-04-27 00:20:28
-- [ ] fix disqus Error color when changing dark mode
+- [x] fix disqus Error color when changing dark mode 2022-04-27 04:36:33
+- [ ] fix disqus Error color when changing dark mode PR
 - [ ] Fix Cusdis language
 - [ ] Bigger floating buttons sidebuttons
 - [ ] PWA
 - [ ] 字數統計
-- [ ] 簡繁切換
+- [ ] 閱讀時間
+- [x] 簡繁切換按鍵 2022-04-26 07:55:53
+- [ ] 簡繁切換 PR
+- [ ] 簡繁切換表單
+- [ ] 簡繁切換 Global Props
+- [ ] 簡繁切換使用者記憶
+- [ ] 多設定同 Repo
+- [ ] Comment Collapsed
 - [ ] H1, H2... span anchor use meaningful title instead of id
 - [ ] H1, H2... span anchor link scroll to target position instead of not scrolling
 
