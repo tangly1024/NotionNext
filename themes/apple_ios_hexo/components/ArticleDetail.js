@@ -1,4 +1,5 @@
 import Comment from '@/components/Comment'
+import dynamic from 'next/dynamic'
 import mediumZoom from 'medium-zoom'
 import 'prismjs'
 import 'prismjs/components/prism-bash'
@@ -6,9 +7,6 @@ import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-markup'
 import 'prismjs/components/prism-python'
 import 'prismjs/components/prism-typescript'
-import 'prismjs/plugins/toolbar/prism-toolbar'
-import 'prismjs/plugins/show-language/prism-show-language'
-import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 import { useRouter } from 'next/dist/client/router'
 import { useEffect, useRef } from 'react'
 import {
@@ -22,7 +20,10 @@ import ArticleAdjacent from './ArticleAdjacent'
 import ArticleCopyright from './ArticleCopyright'
 import ArticleRecommend from './ArticleRecommend'
 import { YouTubePlayer } from '@/components/YouTubePlayer'
-import PrismMac from '@/components/PrismMac'
+// import PrismMac from '@/components/PrismMac'
+const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+  ssr: false
+})
 
 /**
  *

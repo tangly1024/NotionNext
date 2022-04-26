@@ -44,6 +44,8 @@
 - [x] Add Mac style comment for prism.js 2022-04-26 06:47:30
 - [ ] Add Mac style comment for prism.js Need PR
 - [x] fix navbar not showing text in white mode 2022-04-26 01:50:20
+- [x] fix PrismMac Error when changing dark mode 2022-04-27 00:20:28
+- [ ] fix disqus Error color when changing dark mode
 - [ ] Fix Cusdis language
 - [ ] Bigger floating buttons sidebuttons
 - [ ] PWA

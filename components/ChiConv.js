@@ -20,7 +20,7 @@ const ChiConv = () => {
     HTMLConvertHandler.restore()
   }
   if (lang === 'zh-TW') {
-    return <button onClick={tts}>簡</button>
+    return <button onClick={tts}>简</button>
   }
   if (lang === 'zh-CN') {
     return <button onClick={stt}>繁</button>

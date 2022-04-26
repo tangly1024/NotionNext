@@ -1,11 +1,23 @@
-import { useEffect } from 'react'
+import {
+  useEffect
+  // useState
+} from 'react'
 import Prism from 'prismjs'
+import { useGlobal } from '@/lib/global'
+import 'prismjs/plugins/toolbar/prism-toolbar'
+import 'prismjs/plugins/show-language/prism-show-language'
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 
 const PrismMac = () => {
+  const { isDarkMode } = useGlobal()
   useEffect(() => {
     const container = document?.getElementById('container')
-    const codeBlocks = container?.getElementsByTagName('pre')
     const existPreMac = container?.getElementsByClassName('pre-mac')
+    const existCodeToolbar = container?.getElementsByClassName('code-toolbar')
+    // Remove existCodeToolbar and existPreMac
+    Array.from(existPreMac).forEach(item => item.remove())
+    Array.from(existCodeToolbar).forEach(item => item.remove())
+    const codeBlocks = container?.getElementsByTagName('pre')
     Array.from(codeBlocks).forEach(item => {
       // Add line numbers
       item.classList.add('line-numbers')
@@ -20,10 +32,7 @@ const PrismMac = () => {
       }
     })
     Prism.highlightAll()
-    // console.log(codeBlocks)
-    // $("pre").before('<div class="pre-mac"><span></span><span></span><span></span></div>');
-    // }
-  }, [])
+  }, [isDarkMode])
   return <></>
 }
 
