@@ -4,20 +4,20 @@ import { useEffect } from 'react'
  * 字数统计
  * @returns
  */
-export default function WordCount () {
+export default function WordCount() {
   useEffect(() => {
     countWords()
-  })
+  }, [])
 
   return <div id='wordCountWrapper' className='hidden'>
-   <i className='mr-1 fas fa-file-word'/> 本文字数 <strong id='wordCount'>0</strong> &nbsp;|&nbsp; <i className='mr-1 fas fa-clock' /> 阅读时长 ≈ <strong id='readTime'>0</strong> 分钟
-    </div>
+    <i className='mr-1 fas fa-file-word' /> 本文字数 <strong id='wordCount'>0</strong> &nbsp;|&nbsp; <i className='mr-1 fas fa-clock' /> 阅读时长 ≈ <strong id='readTime'>0</strong> 分钟
+  </div>
 }
 
 /**
  * 更新字数统计和阅读时间
  */
-function countWords () {
+function countWords() {
   if (window) {
     const articleElement = document.getElementById('notion-article')
     if (articleElement) {
@@ -33,13 +33,13 @@ function countWords () {
 }
 
 // 去除html标签
-function deleteHtmlTag (str) {
+function deleteHtmlTag(str) {
   str = str.replace(/<[^>]+>|&[^>]+;/g, '').trim()// 去掉所有的html标签和&nbsp;之类的特殊符合
   return str
 }
 
 // 用word方式计算正文字数
-function fnGetCpmisWords (str) {
+function fnGetCpmisWords(str) {
   let sLen = 0
   try {
     // eslint-disable-next-line no-irregular-whitespace

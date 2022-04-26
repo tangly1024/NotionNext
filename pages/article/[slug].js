@@ -22,7 +22,7 @@ const Slug = props => {
     useEffect(() => {
       setTimeout(() => {
         if (window) {
-          const article = document.getElementById('container')
+          const article = typeof document !== 'undefined' && document.getElementById('container')
           if (!article) {
             router.push('/404').then(() => {
               console.warn('找不到页面', router.asPath)

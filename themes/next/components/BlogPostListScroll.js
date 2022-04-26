@@ -44,7 +44,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_NE
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
-  })
+  }, [])
 
   const targetRef = useRef(null)
   const { locale } = useGlobal()
@@ -57,7 +57,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_NE
       {/* 文章列表 */}
       <div className='flex flex-wrap space-y-1 lg:space-y-4'>
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post} showSummary={showSummary}/>
+          <BlogPostCard key={post.id} post={post} showSummary={showSummary} />
         ))}
       </div>
 
@@ -65,7 +65,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_NE
         <div onClick={() => {
           handleGetMore()
         }}
-             className='w-full my-4 py-4 text-center cursor-pointer glassmorphism shadow hover:shadow-xl duration-200 dark:text-gray-200'
+          className='w-full my-4 py-4 text-center cursor-pointer glassmorphism shadow hover:shadow-xl duration-200 dark:text-gray-200'
         > {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`} </div>
       </div>
     </div>

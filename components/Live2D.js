@@ -5,7 +5,7 @@ import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
 
 export default function Live2D() {
-  if (!BLOG.WIDGET_PET) {
+  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
     return <></>
   }
   const { switchTheme } = useGlobal()
@@ -29,7 +29,7 @@ function initLive2D() {
     Promise.all([
       // loadExternalResource('https://cdn.zhangxinxu.com/sp/demo/live2d/live2d/js/live2d.js', 'js')
       loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
-    ]).then(() => {
+    ]).then((e) => {
       // https://github.com/xiazeyu/live2d-widget-models
       loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
     })
