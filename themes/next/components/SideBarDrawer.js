@@ -18,7 +18,7 @@ const SideBarDrawer = ({ post, cRef, tags, slot, categories, currentCategory }) 
   useEffect(() => {
     const sideBarWrapperElement = document.getElementById('sidebar-wrapper')
     sideBarWrapperElement?.classList?.remove('hidden')
-  })
+  }, [])
 
   const router = useRouter()
   useEffect(() => {
@@ -52,7 +52,7 @@ const SideBarDrawer = ({ post, cRef, tags, slot, categories, currentCategory }) 
       <SideBar tags={tags} post={post} slot={slot} categories={categories} currentCategory={currentCategory} />
     </div>
     {/* 背景蒙版 */}
-    <div id='sidebar-drawer-background' onClick={() => { switchSideDrawerVisible(false) }} className='hidden animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-30 w-full h-full glassmorphism'/>
+    <div id='sidebar-drawer-background' onClick={() => { switchSideDrawerVisible(false) }} className='hidden animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-30 w-full h-full glassmorphism' />
 
   </div>
 }

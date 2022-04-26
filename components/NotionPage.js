@@ -1,12 +1,3 @@
-
-import 'prismjs'
-import 'prismjs/components/prism-bash'
-import 'prismjs/components/prism-javascript'
-import 'prismjs/components/prism-markup'
-import 'prismjs/components/prism-python'
-import 'prismjs/components/prism-typescript'
-import 'prismjs/components/prism-java'
-
 import { NotionRenderer } from 'react-notion-x'
 import mediumZoom from 'medium-zoom'
 import { useEffect, useRef } from 'react'
@@ -14,27 +5,22 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 const Code = dynamic(() =>
-  import('react-notion-x/build/third-party/code').then((m) => m.Code)
+  import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: false }
 )
 const Collection = dynamic(() =>
-  import('react-notion-x/build/third-party/collection').then(
-    (m) => m.Collection
-  )
+  import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: false }
 )
+
 const Equation = dynamic(() =>
-  import('react-notion-x/build/third-party/equation').then((m) => m.Equation)
+  import('react-notion-x/build/third-party/equation').then((m) => m.Equation), { ssr: false }
 )
+
 const Pdf = dynamic(
-  () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
-  {
-    ssr: false
-  }
+  () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf), { ssr: false }
 )
+
 const Modal = dynamic(
-  () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal),
-  {
-    ssr: false
-  }
+  () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), { ssr: false }
 )
 const NotionPage = ({ post }) => {
   if (!post || !post.blockMap) {
