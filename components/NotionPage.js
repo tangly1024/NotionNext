@@ -47,7 +47,7 @@ const NotionPage = ({ post }) => {
     }
   }
 
-  return <div id='container'>
+  return <div id='container' className='max-w-4xl mx-auto'>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}

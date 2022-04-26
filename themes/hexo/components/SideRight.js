@@ -13,7 +13,7 @@ export default function SideRight(props) {
   } = props
 
   return (
-    <div className={'lg:w-80 px-2 space-y-4 pt-4 lg:pt-0'}>
+    <div className={'space-y-4'}>
       <InfoCard {...props} />
       {CONFIG_HEXO.WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
 
