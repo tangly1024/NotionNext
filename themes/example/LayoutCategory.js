@@ -23,26 +23,39 @@ export const LayoutCategory = props => {
     updatePage(page + 1)
   }
 
-  return (
-    <LayoutBase {...props}>
-      Category - {category}
-      {postsToShow.map(p => (
-        <div key={p.id} className="border my-12">
-          <Link href={`/article/${p.slug}`}>
-            <a className="underline cursor-pointer">{p.title}</a>
-          </Link>
-          <div>{p.summary}</div>
+  return <LayoutBase {...props}>
+        <div className='w-full'>
+            <div className='pb-12'>{category}</div>
+
+            {postsToShow.map(p => (
+                <article key={p.id} className="mb-12" >
+                    <h2 className="mb-4">
+                        <Link href={`/article/${p.slug}`}>
+                            <a className="text-black text-xl md:text-2xl no-underline hover:underline">  {p.title}</a>
+                        </Link>
+                    </h2>
+
+                    <div className="mb-4 text-sm text-gray-700">
+                        by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
+                        <span className="font-bold mx-1"> | </span>
+                        <a href="#" className="text-gray-700">{p.category}</a>
+                        <span className="font-bold mx-1"> | </span>
+                        {/* <a href="#" className="text-gray-700">2 Comments</a> */}
+                    </div>
+
+                    <p className="text-gray-700 leading-normal">
+                        {p.summary}
+                    </p>
+                </article>
+            ))}
+
+            <div
+                onClick={handleGetMore}
+                className="w-full my-4 py-4 text-center cursor-pointer "
+            >
+                {' '}
+                {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+            </div>
         </div>
-      ))}
-      <div>
-        <div
-          onClick={handleGetMore}
-          className="w-full my-4 py-4 text-center cursor-pointer "
-        >
-          {' '}
-          {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
-        </div>
-      </div>
-    </LayoutBase>
-  )
+    </LayoutBase >
 }

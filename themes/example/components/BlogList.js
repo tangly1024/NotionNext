@@ -1,31 +1,27 @@
+
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useState } from 'react'
-import LayoutBase from './LayoutBase'
 
-export const LayoutTag = props => {
-  const { posts } = props
+export const BlogList = (props) => {
+  const { posts, postCount } = props
+
   const { locale } = useGlobal()
+  const router = useRouter()
+  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
 
-  const [page, updatePage] = useState(1)
+  const page = 1
+  const showNext =
+        page < totalPage &&
+        posts.length === BLOG.POSTS_PER_PAGE &&
+        posts.length < postCount
 
-  let hasMore = false
-  const postsToShow = posts
-    ? Object.assign(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
-    : []
+  const currentPage = +page
 
-  if (posts) {
-    const totalCount = posts.length
-    hasMore = page * BLOG.POSTS_PER_PAGE < totalCount
-  }
-  const handleGetMore = () => {
-    if (!hasMore) return
-    updatePage(page + 1)
-  }
+  return <div className="w-full md:pr-12 mb-12">
 
-  return <LayoutBase>
-        {postsToShow.map(p => (
+        {posts.map(p => (
             <article key={p.id} className="mb-12" >
                 <h2 className="mb-4">
                     <Link href={`/article/${p.slug}`}>
@@ -47,13 +43,13 @@ export const LayoutTag = props => {
             </article>
         ))}
 
-        <div
-            onClick={handleGetMore}
-            className="w-full my-4 py-4 text-center cursor-pointer "
-        >
-            {' '}
-            {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+        <div className="flex justify-between text-xs">
+            <Link href="/">
+                <a className={`${currentPage > 1 ? 'bg-black ' : 'bg-gray '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.PREV}</a>
+            </Link>
+            <Link href={{ pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
+                <a className={`${showNext ? 'bg-black ' : 'bg-gray '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.NEXT}</a>
+            </Link>
         </div>
-
-    </LayoutBase >
+    </div>
 }
