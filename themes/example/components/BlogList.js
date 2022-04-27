@@ -44,10 +44,10 @@ export const BlogList = (props) => {
 
         <div className="flex justify-between text-xs">
             <Link href={{ pathname: currentPage - 1 === 1 ? `${BLOG.SUB_PATH || '/'}` : `/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
-                <a className={`${currentPage > 1 ? 'bg-black ' : 'bg-gray '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.PREV}</a>
+                <a className={`${currentPage > 1 ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.PREV}</a>
             </Link>
             <Link href={{ pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
-                <a className={`${showNext ? 'bg-black ' : 'bg-gray '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.NEXT}</a>
+                <a className={`${showNext ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.NEXT}</a>
             </Link>
         </div>
     </div>
