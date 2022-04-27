@@ -28,7 +28,7 @@ const LayoutBase = props => {
 
                 <Title {...props} />
 
-                <div className="container max-w-4xl mx-auto md:flex items-start py-8 px-12 md:px-0">
+                <div className="container max-w-4xl mx-auto md:flex items-start py-8">
 
                     <div className='px-2 w-full flex-grow'>{children}</div>
 
