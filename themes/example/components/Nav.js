@@ -1,4 +1,5 @@
 import { useGlobal } from '@/lib/global'
+import Link from 'next/link'
 
 /**
  * 菜单导航
@@ -23,7 +24,11 @@ export const Nav = (props) => {
         <div className="container mx-auto max-w-4xl md:flex justify-between items-center text-sm md:text-md md:justify-start">
             <div className="w-full md:w-2/3 text-center md:text-left py-4 flex flex-wrap justify-center items-stretch md:justify-start md:items-start">
                 {links.map(link => {
-                  return link && <a href={link.to} className="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-light">{link.name}</a>
+                  return link && <Link href={link.to}>
+                        <a className="px-2 md:pl-0 md:mr-3 md:pr-3 text-gray-700 no-underline md:border-r border-gray-light">
+                            {link.name}
+                        </a>
+                    </Link>
                 })}
             </div>
             <div className="w-full md:w-1/3 text-center md:text-right">
