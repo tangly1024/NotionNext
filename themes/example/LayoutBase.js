@@ -28,9 +28,9 @@ const LayoutBase = props => {
 
                 <Title {...props} />
 
-                <div className="container max-w-4xl mx-auto md:flex items-start py-8">
+                <div className="container max-w-4xl mx-auto md:flex items-start py-8 px-2">
 
-                    <div className='px-2 w-full flex-grow'>{children}</div>
+                    <div className='w-full flex-grow'>{children}</div>
 
                     <SideBar {...props} />
 
