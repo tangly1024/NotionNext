@@ -5,13 +5,12 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 export const BlogList = (props) => {
-  const { posts, postCount } = props
+  const { page, posts, postCount } = props
 
   const { locale } = useGlobal()
   const router = useRouter()
   const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
 
-  const page = 1
   const showNext =
         page < totalPage &&
         posts.length === BLOG.POSTS_PER_PAGE &&
@@ -33,7 +32,7 @@ export const BlogList = (props) => {
                     by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
                     <span className="font-bold mx-1"> | </span>
                     <a href="#" className="text-gray-700">{p.category}</a>
-                    <span className="font-bold mx-1"> | </span>
+                    {/* <span className="font-bold mx-1"> | </span> */}
                     {/* <a href="#" className="text-gray-700">2 Comments</a> */}
                 </div>
 
@@ -44,7 +43,7 @@ export const BlogList = (props) => {
         ))}
 
         <div className="flex justify-between text-xs">
-            <Link href="/">
+            <Link href={{ pathname: currentPage - 1 === 1 ? `${BLOG.SUB_PATH || '/'}` : `/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
                 <a className={`${currentPage > 1 ? 'bg-black ' : 'bg-gray '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.PREV}</a>
             </Link>
             <Link href={{ pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
