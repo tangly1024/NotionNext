@@ -64,7 +64,7 @@ const LayoutBase = props => {
           id="container-inner"
           className="pt-14 w-full mx-auto xl:flex xl:space-x-4 justify-center"
         >
-          <div className="w-full">
+          <div className="w-full max-w-4xl">
             {onLoading ? <LoadingCover /> : children}
           </div>
           <SideRight {...props} slot={rightAreaSlot} />
