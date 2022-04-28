@@ -1,5 +1,3 @@
-**本仓库文件已经根据个人使用需求进行过修改 以下是原项目 README 内容**
-
 # NotionNext
 
 一个使用 NextJS + Notion API 实现的，部署在 Vercel 上的静态博客系统。为Notion和所有创作者设计。
@@ -92,7 +90,7 @@ yarn run start # 本地启动NextJS服务
 ## 致谢
 感谢Craig Hart发起的Nobelium项目
 <table><tr align="left">
-  <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://notion.so/cnotion" title="Craig Hart">Craig Hart</a></td>
+  <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://github.com/craigary" title="Craig Hart">Craig Hart</a></td>
 </tr></table>
 
 ## 贡献者

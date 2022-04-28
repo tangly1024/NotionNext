@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 export default function HeaderArticle({ post, siteInfo }) {
   if (!post) {
-    return <>loading...</>
+    return <></>
   }
   const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("${siteInfo?.pageCover}")`
   const { isDarkMode } = useGlobal()

@@ -74,7 +74,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
         <div onClick={() => {
           handleGetMore()
         }}
-          className='w-full my-4 py-4 text-center cursor-pointer glassmorphism shadow-xl rounded-xl dark:text-gray-200'
+          className='w-full my-4 py-4 text-center cursor-pointer dark:text-gray-200'
         > {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`} </div>
       </div>
     </div>

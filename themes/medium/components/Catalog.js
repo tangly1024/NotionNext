@@ -59,9 +59,9 @@ const Catalog = ({ toc }) => {
 
   return <div className='px-3'>
     <div className='w-full mt-2 mb-4'>
-      <Progress/>
+      <Progress />
     </div>
-    <div className='overflow-y-auto max-h-96 overscroll-none' ref={tRef}>
+    <div className='overflow-y-auto max-h-96 overscroll-none scroll-hidden' ref={tRef}>
       <nav className='h-full font-sans text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
@@ -73,17 +73,17 @@ const Catalog = ({ toc }) => {
               className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
-                <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                  className={`${activeSection === id && ' font-bold text-green-500 underline'}`}
-                >
-                  {tocItem.text}
-                </span>
+              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
+                className={`${activeSection === id && ' font-bold text-green-500 underline'}`}
+              >
+                {tocItem.text}
+              </span>
             </a>
           )
         })}
       </nav>
     </div>
-    <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200'/>
+    <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' />
   </div>
 }
 

@@ -3,6 +3,6 @@ import LayoutBase from './LayoutBase'
 
 export const LayoutIndex = (props) => {
   return <LayoutBase {...props}>
-    <BlogListPage {...props}/>
+    <BlogListPage {...props} />
   </LayoutBase>
 }
