@@ -25,7 +25,7 @@ function AsideLeft (props) {
 
     <section className='flex flex-col dark:text-gray-300'>
       <hr className='w-12 my-8' />
-      { siteInfo.description }
+      { siteInfo?.description }
     </section>
 
     {router.asPath !== '/tag' && <section className='flex flex-col'>

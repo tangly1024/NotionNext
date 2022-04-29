@@ -9,8 +9,8 @@ const TagIndex = props => {
   const { locale } = useGlobal()
   const { siteInfo } = props
   const meta = {
-    title: `${locale.COMMON.TAGS} | ${siteInfo.title}`,
-    description: siteInfo.description,
+    title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
+    description: siteInfo?.description,
     slug: 'tag',
     type: 'website'
   }
