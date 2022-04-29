@@ -9,8 +9,8 @@ export default function Category(props) {
   const { locale } = useGlobal()
   const { siteInfo } = props
   const meta = {
-    title: `${locale.COMMON.CATEGORY} | ${siteInfo.title}`,
-    description: siteInfo.description,
+    title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
+    description: siteInfo?.description,
     slug: 'category',
     type: 'website'
   }
