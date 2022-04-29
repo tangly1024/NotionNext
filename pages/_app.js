@@ -27,23 +27,24 @@ const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
 })
 
 const MyApp = ({ Component, pageProps }) => {
+  // 外部插件
+  const externalPlugins = <>
+        {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
+        {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
+        {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
+        {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
+        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
+        {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
+        {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
+    </>
+
   return (
-    <GlobalContextProvider>
-      {BLOG.THEME_SWITCH && <ThemeSwitch />}
-      {BLOG.DEBUG && <DebugPanel />}
-      {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
-      {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
-      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
-      {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-      {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
-      {/* FontawesomeCDN */}
-      <link
-        href={BLOG.FONT_AWESOME_PATH}
-        rel="stylesheet"
-        referrerPolicy="no-referrer"
-      />
-      <Component {...pageProps} />
-    </GlobalContextProvider>
+        <GlobalContextProvider>
+            {externalPlugins}
+            {/* FontawesomeCDN */}
+            <link rel="stylesheet" href={BLOG.FONT_AWESOME_PATH} referrerPolicy="no-referrer" />
+            <Component {...pageProps} />
+        </GlobalContextProvider>
   )
 }
 
