@@ -149,7 +149,8 @@ nav {
 
 .fireworks{
     position: fixed;
-left: 0;
-top: 0;
-z-index: 11;
-pointer-events: none;}
+    left: 0;
+    top: 0;
+    z-index: 11;
+    pointer-events: none;
+}
