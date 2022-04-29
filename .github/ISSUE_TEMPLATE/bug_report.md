@@ -1,33 +1,33 @@
 ---
 name: Bug report （Bug反馈）
-about: Create a report to help Nobelium get better.
+about: 报告一个软件的BUG来让NotionNext变得更好
 title: ''
 labels: bug
 assignees: tangly1024
 ---
 
 <!--
-  !!! IMPORTANT !!!
-  Please do not ignore this template. If you do, your issue will be closed.
+  !!! 重要 !!!
+  请遵守这个模板的格式填写，否则你的Issue将被关闭
 -->
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**描述bug**
+简单说明bug的现象、相关的错误提示、日志等
 
-**To Reproduce**
-Steps to reproduce the behavior:
+**复现步骤**
+出现这个bug的操作步骤
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**期望的正常结果**
+希望按这个步骤，正常操作结果是什么
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**截图**
+相关的页面，应该用结果
 
-**Platform:**
+**环境**
 
-- OS: [e.g. iOS, Android, macOS]
-- Browser [e.g. chrome, safari, firefox]
-- Version [e.g. 22]
+- 操作系统: [例如. iOS, Android, macOS, windows]
+- 浏览器 [例如. chrome, safari, firefox]
+- 版本 [e.g. 22]
 
-**Additional context**
-Add any other context about the problem here.
+**补充说明**
+与问题相关的其它说明

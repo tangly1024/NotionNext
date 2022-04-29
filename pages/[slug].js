@@ -3,7 +3,8 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
-import { useEffect, useState } from 'react'
+import React from 'react'
+import { useRouter } from 'next/router'
 
 /**
  * 根据notion的slug访问页面，针对类型为Page的页面
@@ -11,16 +12,32 @@ import { useEffect, useState } from 'react'
  * @returns
  */
 const Slug = props => {
-  const { theme } = useGlobal()
+  const { theme, changeLoadingState } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
   const { post } = props
+
   if (!post) {
-    return <ThemeComponents.Layout404 {...props} />
+    changeLoadingState(true)
+    const router = useRouter()
+    setTimeout(() => {
+      if (typeof document !== 'undefined') {
+        const article = document.getElementById('container')
+        if (!article) {
+          router.push('/404').then(() => {
+            console.warn('找不到页面', router.asPath)
+          })
+        }
+      }
+    }, 5000)
+    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading` }
+    return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 
+  changeLoadingState(false)
+
   // 文章锁🔐
-  const [lock, setLock] = useState(post.password && post.password !== '')
-  useEffect(() => {
+  const [lock, setLock] = React.useState(post.password && post.password !== '')
+  React.useEffect(() => {
     if (post.password && post.password !== '') {
       setLock(true)
     } else {
@@ -40,12 +57,13 @@ const Slug = props => {
 
   const { siteInfo } = props
   const meta = {
-    title: `${post.title} | ${siteInfo.title}`,
-    description: post.summary,
+    title: `${post?.title} | ${siteInfo?.title}`,
+    description: post?.summary,
     type: 'article',
-    image: post.page_cover,
-    slug: post.slug,
-    tags: post.tags
+    slug: 'article/' + post?.slug,
+    image: post?.page_cover,
+    category: post?.category?.[0],
+    tags: post?.tags
   }
 
   props = { ...props, meta, lock, setLock, validPassword }

@@ -113,6 +113,7 @@ nav {
 .scroll-hidden{
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
+  scrollbar-width: none; /* firefox */
 }
 
 .scroll-hidden::-webkit-scrollbar { width: 0 !important }
@@ -140,4 +141,8 @@ nav {
 
 .shadow-text{
   text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+.notion-code-copy-button > svg{
+  pointer-events:none
 }

@@ -6,7 +6,7 @@ export const LayoutCategoryIndex = (props) => {
   const { categories } = props
   const { locale } = useGlobal()
   return <LayoutBase {...props}>
-    <div className=' p-10'>
+    <div className=' p-10 w-full'>
       <div className='dark:text-gray-200 mb-5'>
         <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
       </div>

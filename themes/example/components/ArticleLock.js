@@ -24,9 +24,9 @@ export const ArticleLock = props => {
     }
   }
 
-  return <div className='w-full flex justify-center items-center h-96 font-sans'>
+  return <div id='container' className='w-full flex justify-center items-center h-96 font-sans'>
     <div className='text-center space-y-3'>
-    <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
+      <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
       <div className='flex'>
         <input id="password" type='password' className='w-full text-sm pl-5 rounded-l transition focus:shadow-lgfont-light leading-10 text-black bg-white dark:bg-gray-500'></input>
         <div onClick={submitPassword} className="px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 rounded-r duration-300 bg-gray-300" >
@@ -36,5 +36,5 @@ export const ArticleLock = props => {
       <div id='tips'>
       </div>
     </div>
-</div>
+  </div>
 }

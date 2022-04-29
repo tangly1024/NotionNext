@@ -24,15 +24,13 @@ export const LayoutArchive = props => {
   })
   return (
     <LayoutBase {...props}>
-      <div className="mb-10 pb-20 md:p-12 p-3  min-h-full">
+      <div className="mb-10 pb-20 md:p-12 p-3  min-h-screen w-full">
         {Object.keys(archivePosts).map(archiveTitle => (
           <div key={archiveTitle}>
-            <div
-              className="pt-16 pb-4 text-3xl dark:text-gray-300"
-              id={archiveTitle}
-            >
+            <div id={archiveTitle} className="pt-16 pb-4 text-3xl dark:text-gray-300" >
               {archiveTitle}
             </div>
+
             <ul>
               {archivePosts[archiveTitle].map(post => (
                 <li

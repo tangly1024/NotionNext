@@ -9,7 +9,7 @@ export const LayoutSearch = props => {
   const { keyword, posts } = props
   useEffect(() => {
     setTimeout(() => {
-      const container = document.getElementById('container')
+      const container = typeof document !== 'undefined' && document.getElementById('container')
       if (container && container.innerHTML) {
         const re = new RegExp(`${keyword}`, 'gim')
         container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`)
@@ -33,28 +33,58 @@ export const LayoutSearch = props => {
     if (!hasMore) return
     updatePage(page + 1)
   }
+  useEffect(() => {
+    setTimeout(() => {
+      if (keyword) {
+        const targets = document.getElementsByClassName('replace')
+        for (const container of targets) {
+          if (container && container.innerHTML) {
+            const re = new RegExp(`${keyword}`, 'gim')
+            container.innerHTML = container.innerHTML.replace(
+              re,
+              `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`
+            )
+          }
+        }
+      }
+    }, 100)
+  }, [])
 
-  return (
-    <LayoutBase {...props}>
-      <h2>Search - {keyword}</h2>
-      <SearchInput {...props} />
-      {postsToShow?.map(p => (
-        <div key={p.id} className="border my-12">
-          <Link href={`/article/${p.slug}`}>
-            <a className="underline cursor-pointer">{p.title}</a>
-          </Link>
-          <div>{p.summary}</div>
+  return <LayoutBase {...props}>
+        <div className='py-2'>
+            <SearchInput {...props} />
         </div>
-      ))}
-      <div>
-        <div
-          onClick={handleGetMore}
-          className="w-full my-4 py-4 text-center cursor-pointer "
-        >
-          {' '}
-          {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+
+        {postsToShow.map(p => (
+            <article key={p.id} className="mb-12" >
+                <h2 className="mb-4">
+                    <Link href={`/article/${p.slug}`}>
+                        <a className="text-black text-xl md:text-2xl no-underline hover:underline replace">  {p.title}</a>
+                    </Link>
+                </h2>
+
+                <div className="mb-4 text-sm text-gray-700">
+                    by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
+                    <span className="font-bold mx-1"> | </span>
+                    <a href="#" className="text-gray-700">{p.category}</a>
+                    <span className="font-bold mx-1"> | </span>
+                    {/* <a href="#" className="text-gray-700">2 Comments</a> */}
+                </div>
+
+                <p className="text-gray-700 leading-normal replace">
+                    {p.summary}
+                </p>
+            </article>
+        ))}
+
+        <div>
+            <div
+                onClick={handleGetMore}
+                className="w-full my-4 py-4 text-center cursor-pointer "
+            >
+                {' '}
+                {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+            </div>
         </div>
-      </div>
     </LayoutBase>
-  )
 }
