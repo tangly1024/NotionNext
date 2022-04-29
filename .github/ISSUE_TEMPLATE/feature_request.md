@@ -7,18 +7,18 @@ assignees: tangly1024
 ---
 
 <!--
-  !!! IMPORTANT !!!
-  Please do not ignore this template. If you do, your issue will be closed.
+  !!! 重要 !!!
+  请遵守这个模板的格式填写，否则你的Issue将被关闭
 -->
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**为什么提出这个新的特性改动**
+简要说明此特性解决的问题，例如，『博客站点的读者互动性不够强，和读者无法建立紧密的联系...』
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**描述一下你推荐的解决方案**
+简要说明你的解决方案建议，例如，『Giscus评论插件功能更加强大，用户只需留言既可在你的邮箱收到通知。。。』
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**描述一下你考虑过的其它替代解决方案**
+简要说明你所有想过的有可能解决此问题的方案。
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**补充说明**
+补充与此特性相关的内容

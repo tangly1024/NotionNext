@@ -19,7 +19,7 @@ export const Footer = (props) => {
   //       <span className="px-1 busuanzi_value_site_uv"> </span>{' '}
   //     </span>
   //     <br />
-  //     <h1>{meta?.title || siteInfo.title}</h1>
+  //     <h1>{meta?.title || siteInfo?.title}</h1>
   //     <span className='text-xs font-serif'>
   //       Powered by{' '}
   //       <a

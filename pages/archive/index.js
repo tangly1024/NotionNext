@@ -8,8 +8,8 @@ const ArchiveIndex = props => {
   const ThemeComponents = ThemeMap[theme]
   const { siteInfo } = props
   const meta = {
-    title: `${locale.NAV.ARCHIVE} | ${siteInfo.title}`,
-    description: siteInfo.description,
+    title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
+    description: siteInfo?.description,
     slug: 'archive',
     type: 'website'
   }
