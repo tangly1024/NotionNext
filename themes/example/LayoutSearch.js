@@ -1,12 +1,15 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SearchInput from './components/SearchInput'
 import LayoutBase from './LayoutBase'
 
 export const LayoutSearch = props => {
   const { keyword, posts } = props
+  const router = useRouter()
+
   useEffect(() => {
     setTimeout(() => {
       const container = typeof document !== 'undefined' && document.getElementById('container')
@@ -15,7 +18,7 @@ export const LayoutSearch = props => {
         container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`)
       }
     }, 100)
-  })
+  }, [router.events])
 
   const { locale } = useGlobal()
 
@@ -51,7 +54,7 @@ export const LayoutSearch = props => {
   }, [])
 
   return <LayoutBase {...props}>
-        <div className='py-2'>
+        <div className='pb-12'>
             <SearchInput {...props} />
         </div>
 

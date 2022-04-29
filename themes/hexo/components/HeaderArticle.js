@@ -41,6 +41,9 @@ export default function HeaderArticle({ post, siteInfo }) {
     if (!isDarkMode) {
       const stickyNavElement = document.getElementById('sticky-nav')
       const header = document.querySelector('#header')
+      if (!header || !stickyNavElement) {
+        return
+      }
       if (window.scrollY < header.clientHeight) {
         stickyNavElement?.classList?.add('dark')
       } else {

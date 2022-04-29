@@ -39,6 +39,14 @@ export const BlogList = (props) => {
                 <p className="text-gray-700 leading-normal">
                     {p.summary}
                 </p>
+                      {/* 搜索结果 */}
+                {p.results && (
+                    <p className="mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+                    {p.results.map(r => (
+                        <span key={r}>{r}</span>
+                    ))}
+                    </p>
+                )}
             </article>
         ))}
 

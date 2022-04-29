@@ -4,7 +4,7 @@ import LayoutBase from './LayoutBase'
 export const LayoutTagIndex = (props) => {
   const { tags } = props
   return <LayoutBase {...props}>
-        <div className='p-10'>
+        <div>
             <div id='tags-list' className='duration-200 flex flex-wrap'>
                 {tags.map(tag => {
                   return <div key={tag.name} className='p-2'>

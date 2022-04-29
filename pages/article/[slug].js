@@ -29,7 +29,7 @@ const Slug = props => {
           })
         }
       }
-    }, 5000)
+    }, 10000)
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading` }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
