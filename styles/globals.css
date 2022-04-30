@@ -146,3 +146,11 @@ nav {
 .notion-code-copy-button > svg{
   pointer-events:none
 }
+
+.fireworks{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    pointer-events: none;
+}

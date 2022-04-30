@@ -16,7 +16,7 @@ export async function getStaticProps() {
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
     description: siteInfo?.description,
-    image: siteInfo.pageCover,
+    image: siteInfo?.pageCover,
     slug: '',
     type: 'website'
   }
