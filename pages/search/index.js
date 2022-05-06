@@ -23,9 +23,9 @@ const Search = props => {
   const { locale } = useGlobal()
   const meta = {
     title: `${searchKey || ''}${searchKey ? ' | ' : ''}${locale.NAV.SEARCH} | ${
-      siteInfo.title
+      siteInfo?.title
     }`,
-    description: siteInfo.description,
+    description: siteInfo?.description,
     slug: 'search',
     type: 'website'
   }

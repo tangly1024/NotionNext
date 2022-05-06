@@ -1,5 +1,6 @@
 import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
+import mediumZoom from 'medium-zoom'
 import React from 'react'
 
 const Code = dynamic(() =>
@@ -26,11 +27,32 @@ const NotionPage = ({ post }) => {
     return <>{post?.summary || ''}</>
   }
 
-  React.useEffect(() => {
-    addWatch4Dom()
+  const zoom = typeof window !== 'undefined' && mediumZoom({
+    container: '.notion-viewport',
+    background: 'rgba(0, 0, 0, 0.2)',
+    margin: getMediumZoomMargin()
   })
 
-  return <div id='container'>
+  const zoomRef = React.useRef(zoom ? zoom.clone() : null)
+
+  React.useEffect(() => {
+    addWatch4Dom()
+    // 将相册gallery下的图片加入放大功能
+    // const container = document?.getElementById('container')
+    const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
+    if (imgList && zoomRef.current) {
+      for (let i = 0; i < imgList.length; i++) {
+        (zoomRef.current).attach(imgList[i])
+      }
+    }
+
+    const cards = document.getElementsByClassName('notion-collection-card')
+    for (const e of cards) {
+      e.removeAttribute('href')
+    }
+  })
+
+  return <div id='container' className='max-w-4xl mx-auto'>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
@@ -43,8 +65,6 @@ const NotionPage = ({ post }) => {
       }} />
   </div>
 }
-
-export default NotionPage
 
 /**
  * 监听DOM变化
@@ -116,3 +136,23 @@ const mapPageUrl = id => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
   return '/article/' + id.replace(/-/g, '')
 }
+
+function getMediumZoomMargin() {
+  const width = window.innerWidth
+
+  if (width < 500) {
+    return 8
+  } else if (width < 800) {
+    return 20
+  } else if (width < 1280) {
+    return 30
+  } else if (width < 1600) {
+    return 40
+  } else if (width < 1920) {
+    return 48
+  } else {
+    return 72
+  }
+}
+
+export default NotionPage

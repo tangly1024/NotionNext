@@ -530,8 +530,7 @@
   width: 100%;
   margin: 6px 0;
   padding: 0;
-  border-top: none;
-  border-color: var(--fg-color-0);
+  border-bottom-width: 1px;
 }
 
 .notion-link {

@@ -1,6 +1,7 @@
+import LayoutBase from './LayoutBase'
 
-export const Layout404 = () => {
-  return <div>
-   404 Not found.
-  </div>
+export const Layout404 = (props) => {
+  return <LayoutBase {...props}>
+        404 Not found.
+    </LayoutBase>
 }
