@@ -37,6 +37,8 @@ const NotionPage = ({ post }) => {
 
   React.useEffect(() => {
     addWatch4Dom()
+  }, [])
+  setTimeout(() => {
     // 将相册gallery下的图片加入放大功能
     // const container = document?.getElementById('container')
     const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
@@ -50,7 +52,7 @@ const NotionPage = ({ post }) => {
     for (const e of cards) {
       e.removeAttribute('href')
     }
-  })
+  }, 800)
 
   return <div id='container' className='max-w-4xl mx-auto'>
     <NotionRenderer
@@ -87,7 +89,6 @@ function addWatch4Dom(element) {
       switch (type) {
         case 'childList':
           if (mutation.target.className === 'notion-code-copy') {
-            // console.log('1', mutation)
             fixCopy(mutation)
           }
           //   console.log('A child node has been added or removed.')
