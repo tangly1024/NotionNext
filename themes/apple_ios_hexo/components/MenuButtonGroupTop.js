@@ -64,7 +64,7 @@ const MenuButtonGroupTop = props => {
           return null
         }
       })}
-      <ChiConv />
+      <ChiConv {...props} />
     </nav>
   )
 }

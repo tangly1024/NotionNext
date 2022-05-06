@@ -1,10 +1,8 @@
-import { useGlobal } from '@/lib/global'
-import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 const OpenCC = require('opencc-js')
 
-const ChiConv = props => {
-  const { length = 1 } = props
+const ChiConvList = props => {
+  const { length = 4 } = props
   const hostname =
     typeof window !== 'undefined' && window.location.hostname
       ? window.location.hostname
@@ -29,25 +27,30 @@ const ChiConv = props => {
     setLang('zh-TW')
     HTMLConvertHandler.restore()
   }
-  // Run when page change
-  const router = useRouter()
-  console.log(router)
-  const { onLoading } = useGlobal()
   useEffect(() => {
-    const existLang = localStorage.getItem('lang') || defaultLanguage
-    if (existLang === 'zh-CN') {
-      HTMLConvertHandler.restore()
-      HTMLConvertHandler.convert()
-      setLang('zh-CN')
+    const localLang = localStorage.getItem('lang') || defaultLanguage
+    if (localLang !== lang) {
+      setLang(localLang)
     }
-  }, [onLoading, router])
+  }, [props])
   const onClick = lang === 'zh-TW' ? tts : stt
   const langString = (lang === 'zh-TW' ? '简体中文' : '繁體中文').substring(
     0,
     length
   )
-  // console.log(locale)
-  return <button onClick={onClick}>{langString}</button>
+  return (
+    <a
+      onClick={onClick}
+      className={
+        'py-1.5 px-5 text-base justify-between hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center '
+      }
+    >
+      <div className="my-auto items-center justify-center flex ">
+        <i className={'fa fa-language w-4 text-center'} />
+        <div className={'ml-4'}>{langString}</div>
+      </div>
+    </a>
+  )
 }
 
-export default ChiConv
+export default ChiConvList

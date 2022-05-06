@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import CONFIG_APPLE_IOS_HEXO from '../config_apple_ios_hexo'
 import dynamic from 'next/dynamic'
-const ChiConv = dynamic(() => import('@/components/ChiConv'), {
+const ChiConvList = dynamic(() => import('@/components/ChiConvList'), {
   ssr: false
 })
 
@@ -79,7 +79,7 @@ const MenuList = props => {
           return null
         }
       })}
-      <ChiConv inList length="4" />
+      <ChiConvList {...props} />
       {/* <a
         className={
           'py-1.5 px-5 text-base justify-between hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center '

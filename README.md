@@ -53,8 +53,8 @@
 - [ ] 簡繁切換 PR
 - [x] 簡繁切換表單 2022-04-27 05:27:58
 - [ ] 簡繁切換表單 PR
-- [ ] 簡繁切換 Global Props
-- [ ] 簡繁切換使用者記憶
+- [x] 簡繁切換使用者記憶 localstorage 2022-05-06 23:38:54
+- [ ] 簡繁切換使用者記憶 localstorage PR
 - [ ] 多設定同 Repo
 - [ ] Comment Collapsed
 - [ ] H1, H2... span anchor use meaningful title instead of id
