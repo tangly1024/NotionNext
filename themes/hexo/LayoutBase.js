@@ -59,10 +59,10 @@ const LayoutBase = props => {
 
       {headerSlot}
 
-      <main id="wrapper" className="w-full py-8 md:px-8 xl:px-24 min-h-screen">
+      <main id="wrapper" className="w-full py-8 md:px-8 lg:px-24 min-h-screen">
         <div
           id="container-inner"
-          className="pt-14 w-full mx-auto xl:flex xl:space-x-4 justify-center"
+          className="pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center"
         >
           <div className="w-full max-w-4xl">
             {onLoading ? <LoadingCover /> : children}

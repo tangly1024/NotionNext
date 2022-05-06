@@ -31,29 +31,30 @@ const NotionPage = ({ post }) => {
     background: 'rgba(0, 0, 0, 0.2)',
     margin: getMediumZoomMargin()
   })
+
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
   setTimeout(() => {
-    if (typeof document === 'undefined') {
-      return
-    }
-    const buttons = document.getElementsByClassName('notion-code-copy')
-    for (const e of buttons) {
-      e.addEventListener('click', fixCopy)
-    }
-    // 将所有container下的所有图片添加medium-zoom
-    const container = document?.getElementById('container')
-    const imgList = container?.getElementsByTagName('img')
-    if (imgList && zoomRef.current) {
-      for (let i = 0; i < imgList.length; i++) {
-        (zoomRef.current).attach(imgList[i])
+    if (typeof document !== 'undefined') {
+      const buttons = document.getElementsByClassName('notion-code-copy')
+      for (const e of buttons) {
+        e.addEventListener('click', fixCopy)
+      }
+      // 将相册gallery下的图片加入放大功能
+      // const container = document?.getElementById('container')
+      const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
+      if (imgList && zoomRef.current) {
+        for (let i = 0; i < imgList.length; i++) {
+          (zoomRef.current).attach(imgList[i])
+        }
+      }
+
+      const cards = document.getElementsByClassName('notion-collection-card')
+      for (const e of cards) {
+        e.removeAttribute('href')
       }
     }
-    const cards = document.getElementsByClassName('notion-collection-card')
-    for (const e of cards) {
-      e.removeAttribute('href')
-    }
-  }, 500)
+  }, 800)
 
   /**
    * 复制代码后，会重复 @see https://github.com/tangly1024/NotionNext/issues/165
