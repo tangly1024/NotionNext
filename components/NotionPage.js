@@ -40,7 +40,6 @@ const NotionPage = ({ post }) => {
   }, [])
   setTimeout(() => {
     // 将相册gallery下的图片加入放大功能
-    // const container = document?.getElementById('container')
     const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
     if (imgList && zoomRef.current) {
       for (let i = 0; i < imgList.length; i++) {
@@ -48,7 +47,7 @@ const NotionPage = ({ post }) => {
       }
     }
 
-    const cards = document.getElementsByClassName('notion-collection-card')
+    const cards = document?.getElementsByClassName('notion-collection-card')
     for (const e of cards) {
       e.removeAttribute('href')
     }
@@ -74,7 +73,7 @@ const NotionPage = ({ post }) => {
  */
 function addWatch4Dom(element) {
   // 选择需要观察变动的节点
-  const targetNode = element || document.getElementById('container')
+  const targetNode = element || document?.getElementById('container')
   // 观察器的配置（需要观察什么变动）
   const config = {
     attributes: true,
