@@ -2,7 +2,6 @@ import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
 import mediumZoom from 'medium-zoom'
 import React from 'react'
-import anime from 'animejs'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: false }
@@ -34,17 +33,6 @@ const NotionPage = ({ post }) => {
   })
 
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
-  React.useEffect(() => {
-    anime({
-      targets: 'div:not(.notion-viewport)', // 动效不能加载图片缩放遮罩上。
-      keyframes: [
-        { translateY: 40 },
-        { translateY: 0 }
-      ],
-      duration: 3000,
-      easing: 'easeInOutSine'
-    })
-  }, [])
 
   setTimeout(() => {
     if (typeof document !== 'undefined') {
