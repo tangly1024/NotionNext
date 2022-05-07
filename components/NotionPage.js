@@ -39,17 +39,19 @@ const NotionPage = ({ post }) => {
     addWatch4Dom()
   }, [])
   setTimeout(() => {
-    // 将相册gallery下的图片加入放大功能
-    const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
-    if (imgList && zoomRef.current) {
-      for (let i = 0; i < imgList.length; i++) {
-        (zoomRef.current).attach(imgList[i])
+    if (typeof document !== 'undefined') {
+      // 将相册gallery下的图片加入放大功能
+      const imgList = document.querySelectorAll('.notion-collection-card-cover img')
+      if (imgList && zoomRef.current) {
+        for (let i = 0; i < imgList.length; i++) {
+          (zoomRef.current).attach(imgList[i])
+        }
       }
-    }
 
-    const cards = document?.getElementsByClassName('notion-collection-card')
-    for (const e of cards) {
-      e.removeAttribute('href')
+      const cards = document.getElementsByClassName('notion-collection-card')
+      for (const e of cards) {
+        e.removeAttribute('href')
+      }
     }
   }, 800)
 
