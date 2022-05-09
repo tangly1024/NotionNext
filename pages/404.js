@@ -15,11 +15,8 @@ const NoFound = props => {
 }
 
 export async function getStaticProps () {
-  const props = await getGlobalNotionData({ from: 'category-index-props', categoryCount: 0 })
-  return {
-    props,
-    revalidate: 1
-  }
+  const props = await getGlobalNotionData({ from: '404' }) || {}
+  return { props }
 }
 
 export default NoFound
