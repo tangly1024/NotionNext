@@ -2,7 +2,7 @@
 const BLOG = {
   AUTHOR: 'Spac', // 作者
   BIO: 'Hi ~ ', // 作者简介
-  LINK: 'https://next.spac.ml', // 网站地址
+  LINK: 'https://spac.ml', // 网站地址
   AVATAR: '/avatar.png', // 个人头像 默认取public目录下的avatar.png
   KEYWORDS: 'Notion, Blog', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID: 
