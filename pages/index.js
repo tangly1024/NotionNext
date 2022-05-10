@@ -55,7 +55,7 @@ export async function getStaticProps() {
       meta,
       ...props
     },
-    revalidate: 1
+    revalidate: 5
   }
 }
 
