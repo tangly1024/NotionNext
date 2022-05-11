@@ -9,8 +9,7 @@ export function ThemeSwitch () {
   return (
     <div draggable="true" className="fixed left-4 bottom-12 text-white bg-black rounded z-50">
       <div className="p-2 cursor-pointer" onClick={switchTheme}>
-        <i className="fas fa-sync mr-1" />
-        切换主题：{theme}
+        <i className="fas fa-palette mr-1" /> {theme} <i className='fas fa-sync text-xs'/>
       </div>
     </div>
   )

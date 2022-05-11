@@ -24,19 +24,19 @@ export const BlogList = (props) => {
             <article key={p.id} className="mb-12" >
                 <h2 className="mb-4">
                     <Link href={`/article/${p.slug}`}>
-                        <a className="text-black text-xl md:text-2xl no-underline hover:underline">  {p.title}</a>
+                        <a className="text-black dark:text-gray-100 text-xl md:text-2xl no-underline hover:underline">  {p.title}</a>
                     </Link>
                 </h2>
 
-                <div className="mb-4 text-sm text-gray-700">
-                    by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
+                <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
+                    by <a href="#" className="text-gray-700 dark:text-gray-300">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
                     <span className="font-bold mx-1"> | </span>
-                    <a href="#" className="text-gray-700">{p.category}</a>
+                    <a href="#" className="text-gray-700 dark:text-gray-300">{p.category}</a>
                     {/* <span className="font-bold mx-1"> | </span> */}
                     {/* <a href="#" className="text-gray-700">2 Comments</a> */}
                 </div>
 
-                <p className="text-gray-700 leading-normal">
+                <p className="text-gray-700 dark:text-gray-400 leading-normal">
                     {p.summary}
                 </p>
                       {/* 搜索结果 */}

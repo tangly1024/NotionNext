@@ -6,6 +6,7 @@ import SearchInput from './SearchInput'
 import SiteInfo from './SiteInfo'
 import Catalog from './Catalog'
 import { useRouter } from 'next/router'
+import DarkModeButton from '@/components/DarkModeButton'
 
 function AsideLeft (props) {
   const { tags, currentTag, categories, currentCategory, post, slot, siteInfo } = props
@@ -48,6 +49,9 @@ function AsideLeft (props) {
       <div className='flex justify-center'>
         <div>{slot}</div>
       </div>
+    </section>
+    <section className='flex justify-center dark:text-gray-200'>
+        <DarkModeButton/>
     </section>
   </div>
 }
