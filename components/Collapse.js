@@ -1,25 +1,60 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 
+/**
+ * 折叠面板组件，支持水平折叠、垂直折叠
+ * @param {type:['horizontal','vertical'],isOpen} props
+ * @returns
+ */
 const Collapse = props => {
-  const collapseRef = useRef(null)
+  const collapseRef = React.useRef(null)
+  const type = props.type || 'vertical'
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
+    const sectionWidth = element.scrollWidth
+
     requestAnimationFrame(function () {
-      element.style.height = sectionHeight + 'px'
-      requestAnimationFrame(function () {
-        element.style.height = 0 + 'px'
-      })
+      switch (type) {
+        case 'horizontal':
+          element.style.width = sectionWidth + 'px'
+          requestAnimationFrame(function () {
+            element.style.width = 0 + 'px'
+          })
+          break
+        case 'vertical':
+          element.style.height = sectionHeight + 'px'
+          requestAnimationFrame(function () {
+            element.style.height = 0 + 'px'
+          })
+      }
     })
   }
+
+  /**
+   * 展开
+   * @param {*} element
+   */
   const expandSection = element => {
     const sectionHeight = element.scrollHeight
-    element.style.height = sectionHeight + 'px'
-    const clearTime = setTimeout(() => {
-      element.style.height = 'auto'
-    }, 400)
+    const sectionWidth = element.scrollWidth
+    let clearTime = 0
+    switch (type) {
+      case 'horizontal':
+        element.style.width = sectionWidth + 'px'
+        clearTime = setTimeout(() => {
+          element.style.width = 'auto'
+        }, 400)
+        break
+      case 'vertical':
+        element.style.height = sectionHeight + 'px'
+        clearTime = setTimeout(() => {
+          element.style.height = 'auto'
+        }, 400)
+    }
+
     clearTimeout(clearTime)
   }
-  useEffect(() => {
+
+  React.useEffect(() => {
     const element = collapseRef.current
     if (props.isOpen) {
       expandSection(element)
@@ -27,8 +62,9 @@ const Collapse = props => {
       collapseSection(element)
     }
   }, [props.isOpen])
+
   return (
-    <div ref={collapseRef} style={{ height: '0px' }} className={'overflow-hidden duration-200 ' + props.className }>
+    <div ref={collapseRef} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={'overflow-hidden duration-200 ' + props.className }>
       {props.children}
     </div>
   )

@@ -19,7 +19,7 @@ export default function TopNavBar(props) {
   }
 
   return <div id='top-nav' className={'sticky top-0 lg:relative w-full z-40 ' + className}>
-        <Collapse isOpen={isOpen} className='flex md:hidden'>
+        <Collapse type='vertical' isOpen={isOpen} className='flex md:hidden'>
             <div className='py-1 px-5'>
                 <GroupMenu {...props} />
             </div>
