@@ -46,7 +46,7 @@ const LayoutBase = props => {
             {slotRight}
             <div key={locale.NAV.ABOUT}>
               {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
-              {showInfoCard && <InfoCard />}
+              {showInfoCard && <InfoCard {...props} />}
               {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
             </div>
           </Tabs>
