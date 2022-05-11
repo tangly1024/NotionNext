@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Collapse from './Collapse'
+import Collapse from '@/components/Collapse'
 import GroupMenu from './GroupMenu'
 import Logo from './Logo'
 import SearchInput from './SearchInput'
