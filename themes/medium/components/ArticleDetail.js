@@ -1,5 +1,4 @@
 import Comment from '@/components/Comment'
-import Image from 'next/image'
 import Link from 'next/link'
 import ArticleAround from './ArticleAround'
 import CategoryItem from './CategoryItem'
@@ -11,7 +10,7 @@ import BLOG from '@/blog.config'
 import NotionPage from '@/components/NotionPage'
 
 export const ArticleDetail = props => {
-  const { post, prev, next } = props
+  const { post, prev, next, siteInfo } = props
   const { locale } = useGlobal()
 
   const date = formatDate(
@@ -23,14 +22,10 @@ export const ArticleDetail = props => {
     <section className="flex py-4 items-center font-sans px-1">
       <Link href="/about" passHref>
         <>
-          <Image
-            alt={BLOG.AUTHOR}
-            width={25}
-            height={25}
-            loading="lazy"
-            src="/avatar.jpg"
-            className="rounded-full cursor-pointer"
-          />
+
+         {/* eslint-disable-next-line @next/next/no-img-element */}
+         <img src={siteInfo?.icon} className='rounded-full cursor-pointer' width={25}/>
+
           <div className="mr-3 ml-1 text-green-500 cursor-pointer">
             {BLOG.AUTHOR}
           </div>
