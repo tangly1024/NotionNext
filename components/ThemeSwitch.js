@@ -1,17 +1,22 @@
 import { useGlobal } from '@/lib/global'
-
+import React from 'react'
+import { Draggable } from './Draggable'
 /**
  *
  * @returns 主题切换
  */
-export function ThemeSwitch () {
+export function ThemeSwitch() {
   const { theme, switchTheme } = useGlobal()
-  return (
-    <div draggable="true" className="fixed left-4 bottom-12 text-white bg-black rounded z-50">
-      <div className="p-2 cursor-pointer" onClick={switchTheme}>
-        <i className="fas fa-sync mr-1" />
-        切换主题：{theme}
-      </div>
-    </div>
+
+  return (<>
+        <Draggable>
+            <div id="draggableBox" style={{ left: '10px', top: '90vh' }} className="fixed text-white bg-black z-50 rounded-lg shadow-card">
+                <div className="p-2 flex items-center">
+                    <i className="fas fa-palette mr-1 cursor-move" />
+                    <div className='uppercase font-sans whitespace-nowrap' >{theme} <i className='fas fa-sync cursor-pointer border-l pl-2' title='click to change theme' alt='click to change theme' onClick={switchTheme} /></div>
+                </div>
+            </div>
+        </Draggable>
+    </>
   )
 }
