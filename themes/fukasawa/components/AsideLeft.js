@@ -11,7 +11,7 @@ import DarkModeButton from '@/components/DarkModeButton'
 function AsideLeft (props) {
   const { tags, currentTag, categories, currentCategory, post, slot, siteInfo } = props
   const router = useRouter()
-  return <div className='w-72 bg-white dark:bg-gray-800 min-h-screen px-10 py-14 hidden lg:block'>
+  return <div className='w-72 bg-white dark:bg-hexo-black-gray min-h-screen px-10 py-14 hidden lg:block'>
     <Logo {...props}/>
 
     <section className='flex flex-col text-gray-600'>
@@ -44,15 +44,17 @@ function AsideLeft (props) {
       <SiteInfo/>
     </section>
 
+    <section className='flex justify-center dark:text-gray-200'>
+        <DarkModeButton/>
+    </section>
+
     <section className='sticky top-0 pt-12'>
       <Catalog toc={post?.toc}/>
       <div className='flex justify-center'>
         <div>{slot}</div>
       </div>
     </section>
-    <section className='flex justify-center dark:text-gray-200'>
-        <DarkModeButton/>
-    </section>
+
   </div>
 }
 
