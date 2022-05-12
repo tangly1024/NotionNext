@@ -48,19 +48,12 @@ export const Draggable = (props) => {
         }
       }
       if (currentObj) {
-        console.log('拖拽有效', currentObj)
-      }
-
-      if (currentObj) {
         if (event.type === 'touchstart') {
           document.documentElement.style.overflow = 'hidden' // 防止页面一起滚动
         }
         offsetX = event.mx - currentObj.offsetLeft
         offsetY = event.my - currentObj.offsetTop
 
-        // if (offsetY > 100) {
-        //   console.error('偏移量 oY event,', offsetY, event.my, event.y, currentObj.offsetTop)
-        // }
         document.onmousemove = move// 注册鼠标移动事件处理函数
         document.ontouchmove = move
         document.onmouseup = stop// 注册松开鼠标事件处理函数
@@ -70,16 +63,9 @@ export const Draggable = (props) => {
 
     function move(event) { // 鼠标移动处理函数
       event = e(event)
-      //   const { offsetTop, offsetLeft } = currentObj // 窗口位置
-      //   console.log('移动 mx,my,top,left,ox,oy', event.mx, event.my, offsetTop, offsetLeft, offsetX, offsetY)
-
       if (currentObj) {
         const left = event.mx - offsetX// 定义拖动元素的x轴距离
         const top = event.my - offsetY// 定义拖动元素的y轴距离
-        // console.log('终点位置 left,top', left, top)
-        // if (top < 0) {
-        //   console.error('非法终点', left, top)
-        // }
         currentObj.style.left = left + 'px'// 定义拖动元素的x轴距离
         currentObj.style.top = top + 'px'// 定义拖动元素的y轴距离
         checkInWindow()
@@ -101,17 +87,8 @@ export const Draggable = (props) => {
     function inDragBox(event, drag) {
       const { clientX, clientY } = event // 鼠标位置
       const { offsetHeight, offsetWidth, offsetTop, offsetLeft } = drag.firstElementChild // 窗口位置
-
-      //   console.log('遍历元素', drag)
-      //   console.log('鼠标', clientX, clientY)
-      console.log('窗口位置', offsetLeft, offsetTop)
-      console.log('窗口尺寸', offsetWidth, offsetHeight)
-      console.log('鼠标', event.mx, event.my)
-      //   console.log('窗口', drag.firstElementChild)
-
       const horizontal = clientX > offsetLeft && clientX < offsetLeft + offsetWidth
       const vertical = clientY > offsetTop && clientY < offsetTop + offsetHeight
-      console.log('判断是否可拖拽 水平 ', horizontal, '垂直', vertical)
 
       if (horizontal && vertical) {
         return true
