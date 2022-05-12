@@ -18,15 +18,26 @@ export const Draggable = (props) => {
         event.layerX = event.offsetX
         event.layerY = event.offsetY
       }
+      // 移动端
+      if (event.type === 'touchstart' || event.type === 'touchmove') {
+        event.clientX = event.touches[0].clientX
+        event.clientY = event.touches[0].clientY
+      }
+
       event.mx = event.pageX || event.clientX + document.body.scrollLeft
       // 计算鼠标指针的x轴距离
       event.my = event.pageY || event.clientY + document.body.scrollTop
       // 计算鼠标指针的y轴距离
+
       return event // 返回标准化的事件对象
     }
 
     // 定义鼠标事件处理函数
-    document.onmousedown = function (event) { // 按下鼠标时，初始化处理
+    // document.pointerdown = start
+    document.onmousedown = start
+    document.ontouchstart = start
+
+    function start (event) { // 按下鼠标时，初始化处理
       if (!draggableElements) return
       event = e(event)// 获取标准事件对象
 
@@ -36,30 +47,50 @@ export const Draggable = (props) => {
           currentObj = drag.firstElementChild
         }
       }
-      //   console.log('当前拖拽目标', currentObj)
+      if (currentObj) {
+        console.log('拖拽有效', currentObj)
+      }
 
       if (currentObj) {
+        if (event.type === 'touchstart') {
+          document.documentElement.style.overflow = 'hidden' // 防止页面一起滚动
+        }
         offsetX = event.mx - currentObj.offsetLeft
         offsetY = event.my - currentObj.offsetTop
-        console.log(offsetX, offsetY)
+
+        // if (offsetY > 100) {
+        //   console.error('偏移量 oY event,', offsetY, event.my, event.y, currentObj.offsetTop)
+        // }
         document.onmousemove = move// 注册鼠标移动事件处理函数
+        document.ontouchmove = move
         document.onmouseup = stop// 注册松开鼠标事件处理函数
+        document.ontouchend = stop
       }
     }
 
     function move(event) { // 鼠标移动处理函数
       event = e(event)
+      //   const { offsetTop, offsetLeft } = currentObj // 窗口位置
+      //   console.log('移动 mx,my,top,left,ox,oy', event.mx, event.my, offsetTop, offsetLeft, offsetX, offsetY)
+
       if (currentObj) {
-        currentObj.style.left = event.mx - offsetX + 'px'// 定义拖动元素的x轴距离
-        currentObj.style.top = event.my - offsetY + 'px'// 定义拖动元素的y轴距离
+        const left = event.mx - offsetX// 定义拖动元素的x轴距离
+        const top = event.my - offsetY// 定义拖动元素的y轴距离
+        // console.log('终点位置 left,top', left, top)
+        // if (top < 0) {
+        //   console.error('非法终点', left, top)
+        // }
+        currentObj.style.left = left + 'px'// 定义拖动元素的x轴距离
+        currentObj.style.top = top + 'px'// 定义拖动元素的y轴距离
         checkInWindow()
       }
     }
 
     function stop(event) { // 松开鼠标处理函数
       event = e(event)
-      // 释放所有操作对象
-      currentObj = document.onmousemove = document.onmouseup = null
+      //   释放所有操作对象
+      document.documentElement.style.overflow = 'auto' // 解除页面滚动限制
+      currentObj = document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
     }
 
     /**
@@ -73,13 +104,14 @@ export const Draggable = (props) => {
 
       //   console.log('遍历元素', drag)
       //   console.log('鼠标', clientX, clientY)
-      //   console.log('窗口', offsetLeft, offsetWidth, offsetTop, offsetHeight)
-      //   console.log('鼠标', event)
-      //   console.log('窗口', dragTarget)
+      console.log('窗口位置', offsetLeft, offsetTop)
+      console.log('窗口尺寸', offsetWidth, offsetHeight)
+      console.log('鼠标', event.mx, event.my)
+      //   console.log('窗口', drag.firstElementChild)
 
       const horizontal = clientX > offsetLeft && clientX < offsetLeft + offsetWidth
       const vertical = clientY > offsetTop && clientY < offsetTop + offsetHeight
-      //   console.log('判断是否可拖拽 水平 ', horizontal, '垂直', vertical)
+      console.log('判断是否可拖拽 水平 ', horizontal, '垂直', vertical)
 
       if (horizontal && vertical) {
         return true
@@ -121,7 +153,7 @@ export const Draggable = (props) => {
     }
   }, [])
 
-  return <div className='draggable cursor-move'>
+  return <div className='draggable cursor-move pointer-events-none'>
      {children}
   </div>
 }
