@@ -52,6 +52,7 @@ export const Draggable = (props) => {
       if (currentObj) {
         currentObj.style.left = event.mx - offsetX + 'px'// 定义拖动元素的x轴距离
         currentObj.style.top = event.my - offsetY + 'px'// 定义拖动元素的y轴距离
+        checkInWindow()
       }
     }
 
@@ -87,11 +88,37 @@ export const Draggable = (props) => {
       return false
     }
 
+    /**
+     * 若超出窗口则吸附。
+     */
     function checkInWindow() {
       // 检查是否悬浮在窗口内
+      for (const drag of draggableElements) {
+        // 判断鼠标点击的区域是否是拖拽框内
+        const { offsetHeight, offsetWidth, offsetTop, offsetLeft } = drag.firstElementChild
+        const { clientHeight, clientWidth } = document.documentElement
+        if (offsetTop < 0) {
+          drag.firstElementChild.style.top = 0
+        }
+        if (offsetTop > (clientHeight - offsetHeight)) {
+          drag.firstElementChild.style.top = clientHeight - offsetHeight + 'px'
+        }
+        if (offsetLeft < 0) {
+          drag.firstElementChild.style.left = 0
+        }
+        if (offsetLeft > (clientWidth - offsetWidth)) {
+          drag.firstElementChild.style.left = clientWidth - offsetWidth + 'px'
+        }
+      }
     }
 
     window.addEventListener('resize', checkInWindow)
+
+    return () => {
+      return () => {
+        window.removeEventListener('resize', checkInWindow)
+      }
+    }
   }, [])
 
   return <div className='draggable cursor-move'>
