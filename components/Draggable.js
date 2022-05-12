@@ -130,7 +130,7 @@ export const Draggable = (props) => {
     }
   }, [])
 
-  return <div className='draggable cursor-move pointer-events-none'>
+  return <div className='draggable cursor-move'>
      {children}
   </div>
 }
