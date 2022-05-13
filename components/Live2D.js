@@ -17,7 +17,10 @@ export default function Live2D() {
   }
 
   useEffect(() => {
-    initLive2D()
+    window.addEventListener('scroll', initLive2D)
+    return () => {
+      window.removeEventListener('scroll', initLive2D)
+    }
   }, [])
 
   return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='切换主题' title='切换主题' />
@@ -27,6 +30,7 @@ export default function Live2D() {
  * 加载宠物
  */
 function initLive2D() {
+  window.removeEventListener('scroll', initLive2D)
   setTimeout(() => {
     // 加载 waifu.css live2d.min.js waifu-tips.js
     if (screen.width >= 768) {
@@ -38,5 +42,5 @@ function initLive2D() {
         loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
       })
     }
-  }, 1000)
+  }, 300)
 }
