@@ -25,7 +25,7 @@ const Slug = props => {
         const article = document.getElementById('container')
         if (!article) {
           router.push('/404').then(() => {
-            console.warn('找不到页面', router.asPath)
+            // console.warn('找不到页面', router.asPath)
           })
         }
       }
