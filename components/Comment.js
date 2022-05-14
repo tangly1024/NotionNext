@@ -1,14 +1,13 @@
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import 'gitalk/dist/gitalk.css'
 import Tabs from '@/components/Tabs'
 import { ReactCusdis } from 'react-cusdis'
 import { useGlobal } from '@/lib/global'
 
 const GitalkComponent = dynamic(
   () => {
-    return import('gitalk/dist/gitalk-component')
+    return import('@/components/Gitalk')
   },
   { ssr: false }
 )

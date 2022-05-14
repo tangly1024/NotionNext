@@ -102,7 +102,7 @@ const TopNav = props => {
         </div>
       </div>
 
-      <Collapse isOpen={isOpen} className='shadow-xl'>
+      <Collapse type='vertical' isOpen={isOpen} className='shadow-xl'>
         <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-5 lg:hidden '>
           <MenuList {...props}/>
         </div>

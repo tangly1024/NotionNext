@@ -17,7 +17,7 @@ export const LayoutSearch = (props) => {
         container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`)
       }
     },
-      100)
+    100)
   })
   return <LayoutBase {...props}>
     <div className='py-12'>
