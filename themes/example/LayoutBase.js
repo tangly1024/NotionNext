@@ -15,7 +15,7 @@ import JumpToTopButton from './components/JumpToTopButton'
 const LayoutBase = props => {
   const { children, meta } = props
   return (
-        <div className='dark:text-gray-300'>
+        <div className='dark:text-gray-300  bg-white dark:bg-black'>
             <CommonHead meta={meta} />
             {/* 顶栏LOGO */}
             <Header {...props} />
@@ -24,13 +24,13 @@ const LayoutBase = props => {
             <Nav {...props} />
 
             {/* 主体 */}
-            <div className="w-full bg-white">
+            <div className="w-full">
 
                 <Title {...props} />
 
-                <div className="container max-w-4xl mx-auto md:flex items-start py-8 px-2">
+                <div className="container mx-auto justify-center md:flex items-start py-8 px-2">
 
-                    <div className='w-full flex-grow'>{children}</div>
+                    <div className='w-full max-w-3xl xl:px-14 lg:px-4 '>{children}</div>
 
                     <SideBar {...props} />
 

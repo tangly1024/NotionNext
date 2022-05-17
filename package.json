@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.3.1",
+  "version": "3.3.5",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -24,6 +24,7 @@
     "@next/bundle-analyzer": "^12.1.1",
     "@popperjs/core": "^2.9.3",
     "animate.css": "^4.1.1",
+    "animejs": "^3.2.1",
     "axios": ">=0.21.1",
     "copy-to-clipboard": "^3.3.1",
     "feed": "^4.2.2",
@@ -32,7 +33,7 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "next": "^12.0.5",
-    "notion-client": "6.10.0",
+    "notion-client": "6.12.9",
     "notion-utils": "6.10.0",
     "preact": "^10.5.15",
     "qrcode.react": "^1.0.1",

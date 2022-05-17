@@ -28,9 +28,9 @@ export const ArticleLock = props => {
     <div className='text-center space-y-3'>
       <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
       <div className='flex'>
-        <input id="password" type='password' className='w-full text-sm pl-5 rounded-l transition focus:shadow-lgfont-light leading-10 text-black bg-white dark:bg-gray-500'></input>
+        <input id="password" type='password' className='w-full text-sm pl-5 rounded-l transition font-light leading-10 text-black dark:bg-gray-500 bg-gray-50'></input>
         <div onClick={submitPassword} className="px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 rounded-r duration-300 bg-gray-300" >
-          <i className={'duration-200 cursor-pointer fas fa-key'} >&nbsp;{locale.COMMON.SUBMIT}</i>
+          <i className={'duration-200 cursor-pointer fas fa-key dark:text-black'} >&nbsp;{locale.COMMON.SUBMIT}</i>
         </div>
       </div>
       <div id='tips'>

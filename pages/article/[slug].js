@@ -25,11 +25,11 @@ const Slug = props => {
         const article = document.getElementById('container')
         if (!article) {
           router.push('/404').then(() => {
-            console.warn('找不到页面', router.asPath)
+            // console.warn('找不到页面', router.asPath)
           })
         }
       }
-    }, 5000)
+    }, 10000)
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading` }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }

@@ -25,7 +25,7 @@ export default function ArticleDetail(props) {
       </div>
     )}
     <article itemScope itemType="https://schema.org/Movie"
-      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-gray-800"
+      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
     >
 
       <header className='animate__slideInDown animate__animated'>
@@ -92,7 +92,7 @@ export default function ArticleDetail(props) {
     <ArticleAround prev={prev} next={next} />
 
     {/* 评论互动 */}
-    <div className="duration-200 shadow px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
+    <div className="duration-200 shadow px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-hexo-black-gray">
       <Comment frontMatter={post} />
     </div>
   </div>)

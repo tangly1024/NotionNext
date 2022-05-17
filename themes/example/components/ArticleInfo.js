@@ -34,14 +34,13 @@ export const ArticleInfo = (props) => {
                     {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
                 </span>
                 <span className='mr-2'>|</span>
-
-            </>)}
-
-            <span className="hidden busuanzi_container_page_pv font-light mr-2">
+                <span className="hidden busuanzi_container_page_pv font-light mr-2">
                 <i className='mr-1 fas fa-eye' />
                 &nbsp;
                 <span className="mr-2 busuanzi_value_page_pv" />
             </span>
+            </>)}
+
         </div>
 
     </section>
