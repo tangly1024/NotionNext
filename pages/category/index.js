@@ -11,6 +11,7 @@ export default function Category(props) {
   const meta = {
     title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
     description: siteInfo?.description,
+    image: siteInfo?.pageCover,
     slug: 'category',
     type: 'website'
   }

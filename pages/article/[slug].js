@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 const Slug = props => {
   const { theme, changeLoadingState } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
-  const { post } = props
+  const { post, siteInfo } = props
 
   if (!post) {
     changeLoadingState(true)
@@ -30,7 +30,7 @@ const Slug = props => {
         }
       }
     }, 10000)
-    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading` }
+    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 
@@ -58,7 +58,6 @@ const Slug = props => {
 
   props = { ...props, lock, setLock, validPassword }
 
-  const { siteInfo } = props
   const meta = {
     title: `${post?.title} | ${siteInfo?.title}`,
     description: post?.summary,
