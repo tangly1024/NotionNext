@@ -10,6 +10,7 @@ const ArchiveIndex = props => {
   const meta = {
     title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
     description: siteInfo?.description,
+    image: siteInfo?.pageCover,
     slug: 'archive',
     type: 'website'
   }
