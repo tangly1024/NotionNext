@@ -37,13 +37,16 @@ export default function ArticleDetail(props) {
 
         <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
           <div>
-            <Link href={`/category/${post.category}`} passHref>
-              <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
-                <i className="mr-1 fas fa-folder-open" />
-                {post.category}
-              </a>
-            </Link>
-            <span className='mr-2'>|</span>
+
+            {post?.category && (<>
+                <Link href={`/category/${post.category}`} passHref>
+                <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
+                  <i className="mr-1 fas fa-folder-open" />
+                  {post.category}
+                </a>
+              </Link>
+              <span className='mr-2'>|</span>
+            </>)}
 
             {post?.type[0] !== 'Page' && (<>
               <Link
