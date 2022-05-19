@@ -26,6 +26,7 @@ const Search = props => {
       siteInfo?.title
     }`,
     description: siteInfo?.description,
+    image: siteInfo?.pageCover,
     slug: 'search',
     type: 'website'
   }

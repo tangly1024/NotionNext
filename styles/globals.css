@@ -154,3 +154,7 @@ nav {
     z-index: 1000;
     pointer-events: none;
 }
+
+.medium-zoom-image--opened{
+  width: auto !important;
+}

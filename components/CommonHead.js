@@ -6,7 +6,7 @@ const CommonHead = ({ meta, children }) => {
   let image
   if (meta) {
     url = `${url}/${meta.slug}`
-    image = meta.image || ''
+    image = meta.image || '/bg_image.jpg'
   }
   const title = meta?.title || BLOG.TITLE
   const description = meta?.description || BLOG.DESCRIPTION

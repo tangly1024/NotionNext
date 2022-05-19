@@ -10,6 +10,7 @@ const Index = props => {
   const meta = {
     title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
     description: siteInfo?.title,
+    image: siteInfo?.pageCover,
     slug: 'search/' + (keyword || ''),
     type: 'website'
   }
