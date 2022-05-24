@@ -23,6 +23,13 @@ const GiscusComponent = dynamic(
   },
   { ssr: false }
 )
+const Valine = dynamic(() => import('@/components/Valine'), {
+  ssr: false
+})
+const ValinePanel = dynamic(
+  () => import('@/components/ValinePanel'),
+  { ssr: false }
+)
 
 const Comment = ({ frontMatter }) => {
   if (!frontMatter) {
@@ -30,6 +37,8 @@ const Comment = ({ frontMatter }) => {
   }
   const router = useRouter()
   const { locale, isDarkMode } = useGlobal()
+  const theme = isDarkMode ? 'dark' : 'light'
+
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
@@ -39,6 +48,36 @@ const Comment = ({ frontMatter }) => {
             <GiscusComponent isDarkMode={isDarkMode} className="px-2" />
           </div>
         )}
+
+        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
+          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
+        </div>)}
+
+        {BLOG.COMMENT_VALINE_APP_ID && (<div key='Valine' name='reply'>
+
+          <Valine appId={BLOG.COMMENT_VALINE_APP_ID}
+                    appKey={BLOG.COMMENT_VALINE_APP_KEY}
+                    pagesize={BLOG.POSTS_PER_PAGE}
+                    customTxt={{
+                      tips: { sofa: '抢个沙发吧~' },
+                      ctrl: { more: '再给我来一打' }
+                    }}>
+                <ValinePanel uniqStr={'tangly1024'} themeMode={theme} />
+            </Valine>
+        </div>)}
+
+        {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
+          <ReactCusdis
+            lang={locale.LOCALE.toLowerCase()}
+            attrs={{
+              host: BLOG.COMMENT_CUSDIS_HOST,
+              appId: BLOG.COMMENT_CUSDIS_APP_ID,
+              pageId: frontMatter.id,
+              pageTitle: frontMatter.title,
+              pageUrl: BLOG.LINK + router.asPath
+            }}
+          />
+        </div>)}
 
         {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
           <GitalkComponent
@@ -51,23 +90,6 @@ const Comment = ({ frontMatter }) => {
               owner: BLOG.COMMENT_GITALK_OWNER,
               admin: BLOG.COMMENT_GITALK_ADMIN.split(','),
               distractionFreeMode: JSON.parse(BLOG.COMMENT_GITALK_DISTRACTION_FREE_MODE)
-            }}
-          />
-        </div>)}
-
-        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
-          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
-        </div>)}
-
-        {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
-          <ReactCusdis
-            lang={locale.LOCALE.toLowerCase()}
-            attrs={{
-              host: BLOG.COMMENT_CUSDIS_HOST,
-              appId: BLOG.COMMENT_CUSDIS_APP_ID,
-              pageId: frontMatter.id,
-              pageTitle: frontMatter.title,
-              pageUrl: BLOG.LINK + router.asPath
             }}
           />
         </div>)}
