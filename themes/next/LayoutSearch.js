@@ -2,12 +2,13 @@ import LayoutBase from './LayoutBase'
 import StickyBar from './components/StickyBar'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import { useGlobal } from '@/lib/global'
+import { isBrowser } from '@/lib/utils'
 
 export const LayoutSearch = (props) => {
   const { locale } = useGlobal()
   const { posts, keyword } = props
   setTimeout(() => {
-    const container = typeof document !== 'undefined' && document.getElementById('container')
+    const container = isBrowser() && document.getElementById('container')
     if (container && container.innerHTML) {
       const re = new RegExp(`${keyword}`, 'gim')
       container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`)

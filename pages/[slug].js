@@ -5,6 +5,7 @@ import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import React from 'react'
 import { useRouter } from 'next/router'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面，针对类型为Page的页面
@@ -20,7 +21,7 @@ const Slug = props => {
     changeLoadingState(true)
     const router = useRouter()
     setTimeout(() => {
-      if (typeof document !== 'undefined') {
+      if (isBrowser()) {
         const article = document.getElementById('container')
         if (!article) {
           router.push('/404').then(() => {

@@ -18,17 +18,15 @@ export default function WordCount() {
  * 更新字数统计和阅读时间
  */
 function countWords() {
-  if (window) {
-    const articleElement = document.getElementById('notion-article')
-    if (articleElement) {
-      const articleText = deleteHtmlTag(articleElement.innerHTML)
-      const wordCount = fnGetCpmisWords(articleText)
-      // 阅读速度 300-500每分钟
-      document.getElementById('wordCount').innerHTML = wordCount
-      document.getElementById('readTime').innerHTML = Math.floor(wordCount / 400) + 1
-      const wordCountWrapper = document.getElementById('wordCountWrapper')
-      wordCountWrapper.classList.remove('hidden')
-    }
+  const articleElement = document.getElementById('notion-article')
+  if (articleElement) {
+    const articleText = deleteHtmlTag(articleElement.innerHTML)
+    const wordCount = fnGetCpmisWords(articleText)
+    // 阅读速度 300-500每分钟
+    document.getElementById('wordCount').innerHTML = wordCount
+    document.getElementById('readTime').innerHTML = Math.floor(wordCount / 400) + 1
+    const wordCountWrapper = document.getElementById('wordCountWrapper')
+    wordCountWrapper.classList.remove('hidden')
   }
 }
 
