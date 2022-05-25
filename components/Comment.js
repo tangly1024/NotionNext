@@ -23,13 +23,10 @@ const GiscusComponent = dynamic(
   },
   { ssr: false }
 )
-const Valine = dynamic(() => import('@/components/Valine'), {
+
+const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
   ssr: false
 })
-const ValinePanel = dynamic(
-  () => import('@/components/ValinePanel'),
-  { ssr: false }
-)
 
 const Comment = ({ frontMatter }) => {
   if (!frontMatter) {
@@ -37,7 +34,7 @@ const Comment = ({ frontMatter }) => {
   }
   const router = useRouter()
   const { locale, isDarkMode } = useGlobal()
-  const theme = isDarkMode ? 'dark' : 'light'
+  // const theme = isDarkMode ? 'dark' : 'light'
 
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
@@ -49,21 +46,12 @@ const Comment = ({ frontMatter }) => {
           </div>
         )}
 
-        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
-          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
+        {BLOG.COMMENT_VALINE_APP_ID && (<div key='Valine' name='reply'>
+            <ValineComponent path={frontMatter.id}/>
         </div>)}
 
-        {BLOG.COMMENT_VALINE_APP_ID && (<div key='Valine' name='reply'>
-
-          <Valine appId={BLOG.COMMENT_VALINE_APP_ID}
-                    appKey={BLOG.COMMENT_VALINE_APP_KEY}
-                    pagesize={BLOG.POSTS_PER_PAGE}
-                    customTxt={{
-                      tips: { sofa: '抢个沙发吧~' },
-                      ctrl: { more: '再给我来一打' }
-                    }}>
-                <ValinePanel uniqStr={'tangly1024'} themeMode={theme} />
-            </Valine>
+        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
+          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
         </div>)}
 
         {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
