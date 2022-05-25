@@ -3,15 +3,13 @@ import React from 'react'
 import Valine from 'valine'
 
 const ValineComponent = (props) => {
-  const { path } = props
   React.useEffect(() => {
     const valine = Valine({
       el: '#vcomments',
       appId: BLOG.COMMENT_VALINE_APP_ID,
       appKey: BLOG.COMMENT_VALINE_APP_KEY,
       avatar: '',
-      path: path,
-      recordIP: false,
+      recordIP: true,
       placeholder: BLOG.COMMENT_VALINE_PLACEHOLDER,
       serverURLs: BLOG.COMMENT_VALINE_SERVER_URLS,
       visitor: true

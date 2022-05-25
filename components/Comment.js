@@ -40,19 +40,15 @@ const Comment = ({ frontMatter }) => {
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
 
+        {BLOG.COMMENT_VALINE_APP_ID && (<div key='Valine' name='reply'>
+            <ValineComponent path={frontMatter.id}/>
+        </div>)}
+
         {BLOG.COMMENT_GISCUS_REPO && (
           <div key="Giscus">
             <GiscusComponent isDarkMode={isDarkMode} className="px-2" />
           </div>
         )}
-
-        {BLOG.COMMENT_VALINE_APP_ID && (<div key='Valine' name='reply'>
-            <ValineComponent path={frontMatter.id}/>
-        </div>)}
-
-        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
-          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
-        </div>)}
 
         {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
           <ReactCusdis
@@ -65,6 +61,10 @@ const Comment = ({ frontMatter }) => {
               pageUrl: BLOG.LINK + router.asPath
             }}
           />
+        </div>)}
+
+        {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
+          <UtterancesComponent issueTerm={frontMatter.id} className='px-2' />
         </div>)}
 
         {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
