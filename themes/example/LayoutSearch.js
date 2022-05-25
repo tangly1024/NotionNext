@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SearchInput from './components/SearchInput'
 import LayoutBase from './LayoutBase'
+import { isBrowser } from '@/lib/utils'
 
 export const LayoutSearch = props => {
   const { keyword, posts } = props
@@ -12,7 +13,7 @@ export const LayoutSearch = props => {
 
   useEffect(() => {
     setTimeout(() => {
-      const container = typeof document !== 'undefined' && document.getElementById('container')
+      const container = isBrowser() && document.getElementById('container')
       if (container && container.innerHTML) {
         const re = new RegExp(`${keyword}`, 'gim')
         container.innerHTML = container.innerHTML.replace(re, `<span class='text-red-500 border-b border-dashed'>${keyword}</span>`)

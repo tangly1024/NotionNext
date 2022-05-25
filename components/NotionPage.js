@@ -2,6 +2,7 @@ import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
 import mediumZoom from 'medium-zoom'
 import React from 'react'
+import { isBrowser } from '@/lib/utils'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: false }
@@ -27,7 +28,7 @@ const NotionPage = ({ post }) => {
     return <>{post?.summary || ''}</>
   }
 
-  const zoom = typeof window !== 'undefined' && mediumZoom({
+  const zoom = isBrowser() && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
     margin: getMediumZoomMargin()
@@ -39,7 +40,7 @@ const NotionPage = ({ post }) => {
     addWatch4Dom()
   }, [])
   setTimeout(() => {
-    if (typeof document !== 'undefined') {
+    if (isBrowser()) {
       // 将相册gallery下的图片加入放大功能
       const imgList = document.querySelectorAll('.notion-collection-card-cover img')
       if (imgList && zoomRef.current) {
