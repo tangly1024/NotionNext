@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
  * @param {*} props
  * @returns
  */
-export const WalineComponent = (props) => {
+const WalineComponent = (props) => {
   const walineInstanceRef = React.useRef(null)
   const containerRef = React.createRef()
   const router = useRouter()
@@ -32,3 +32,5 @@ export const WalineComponent = (props) => {
 
   return <div ref={containerRef} />
 }
+
+export default WalineComponent

@@ -1,10 +1,21 @@
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import Tabs from '@/components/Tabs'
-import { ReactCusdis } from 'react-cusdis'
 import { useGlobal } from '@/lib/global'
-import { WalineComponent } from './WalineComponent'
+
+const WalineComponent = dynamic(
+  () => {
+    return import('@/components/WalineComponent')
+  },
+  { ssr: false }
+)
+
+const CusdisComponent = dynamic(
+  () => {
+    return import('@/components/CusdisComponent')
+  },
+  { ssr: false }
+)
 
 const GitalkComponent = dynamic(
   () => {
@@ -33,9 +44,7 @@ const Comment = ({ frontMatter }) => {
   if (!frontMatter) {
     return <>Loading...</>
   }
-  const router = useRouter()
-  const { locale, isDarkMode } = useGlobal()
-  // const theme = isDarkMode ? 'dark' : 'light'
+  const { isDarkMode } = useGlobal()
 
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
@@ -56,16 +65,7 @@ const Comment = ({ frontMatter }) => {
         )}
 
         {BLOG.COMMENT_CUSDIS_APP_ID && (<div key='Cusdis'>
-          <ReactCusdis
-            lang={locale.LOCALE.toLowerCase()}
-            attrs={{
-              host: BLOG.COMMENT_CUSDIS_HOST,
-              appId: BLOG.COMMENT_CUSDIS_APP_ID,
-              pageId: frontMatter.id,
-              pageTitle: frontMatter.title,
-              pageUrl: BLOG.LINK + router.asPath
-            }}
-          />
+          <CusdisComponent frontMatter={frontMatter}/>
         </div>)}
 
         {BLOG.COMMENT_UTTERRANCES_REPO && (<div key='Utterance'>
@@ -73,18 +73,7 @@ const Comment = ({ frontMatter }) => {
         </div>)}
 
         {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
-          <GitalkComponent
-            options={{
-              id: frontMatter.id,
-              title: frontMatter.title,
-              clientID: BLOG.COMMENT_GITALK_CLIENT_ID,
-              clientSecret: BLOG.COMMENT_GITALK_CLIENT_SECRET,
-              repo: BLOG.COMMENT_GITALK_REPO,
-              owner: BLOG.COMMENT_GITALK_OWNER,
-              admin: BLOG.COMMENT_GITALK_ADMIN.split(','),
-              distractionFreeMode: JSON.parse(BLOG.COMMENT_GITALK_DISTRACTION_FREE_MODE)
-            }}
-          />
+          <GitalkComponent frontMatter={frontMatter}/>
         </div>)}
       </Tabs>
     </div>
