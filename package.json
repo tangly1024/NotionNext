@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.3.7",
+  "version": "3.3.8",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -51,6 +51,7 @@
     "valine": "^1.4.18"
   },
   "devDependencies": {
+    "@waline/client": "^2.5.1",
     "autoprefixer": "^10.2.5",
     "eslint": "^7.26.0",
     "eslint-config-next": "^11.0.0",
