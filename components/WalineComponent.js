@@ -13,30 +13,21 @@ export const WalineComponent = (props) => {
   const containerRef = React.createRef()
   const router = useRouter()
 
+  const updateWaline = url => {
+    walineInstanceRef.current?.update(props)
+  }
+
   React.useEffect(() => {
     walineInstanceRef.current = init({
       ...props,
       el: containerRef.current,
       serverURL: BLOG.COMMENT_WALINE_SERVER_URL
     })
-
-    return () => walineInstanceRef.current?.destroy()
-  }, [])
-
-  const updateWaline = url => {
-    walineInstanceRef.current?.update(props)
-  }
-
-  React.useEffect(() => {
-    walineInstanceRef.current?.update(props)
     router.events.on('routeChangeComplete', updateWaline)
     return () => {
+      walineInstanceRef.current?.destroy()
       router.events.off('routeChangeComplete', updateWaline)
     }
-  }, [])
-
-  React.useEffect(() => {
-
   }, [])
 
   return <div ref={containerRef} />
