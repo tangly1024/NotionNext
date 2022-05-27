@@ -1,6 +1,7 @@
 import React from 'react'
 import { init } from '@waline/client'
 import BLOG from '@/blog.config'
+import { useRouter } from 'next/router'
 
 /**
  * @see https://waline.js.org/guide/get-started.html
@@ -10,6 +11,7 @@ import BLOG from '@/blog.config'
 export const WalineComponent = (props) => {
   const walineInstanceRef = React.useRef(null)
   const containerRef = React.createRef()
+  const router = useRouter()
 
   React.useEffect(() => {
     walineInstanceRef.current = init({
@@ -21,9 +23,21 @@ export const WalineComponent = (props) => {
     return () => walineInstanceRef.current?.destroy()
   }, [])
 
+  const updateWaline = url => {
+    walineInstanceRef.current?.update(props)
+  }
+
   React.useEffect(() => {
     walineInstanceRef.current?.update(props)
-  }, props)
+    router.events.on('routeChangeComplete', updateWaline)
+    return () => {
+      router.events.off('routeChangeComplete', updateWaline)
+    }
+  }, [])
+
+  React.useEffect(() => {
+
+  }, [])
 
   return <div ref={containerRef} />
 }
