@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Tabs from '@/components/Tabs'
 import { ReactCusdis } from 'react-cusdis'
 import { useGlobal } from '@/lib/global'
+import { WalineComponent } from './WalineComponent'
 
 const GitalkComponent = dynamic(
   () => {
@@ -39,6 +40,10 @@ const Comment = ({ frontMatter }) => {
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
+
+        { BLOG.COMMENT_WALINE_SERVER_URL && (<div key='Waline'>
+            <WalineComponent/>
+        </div>) }
 
         {BLOG.COMMENT_VALINE_APP_ID && (<div key='Valine' name='reply'>
             <ValineComponent path={frontMatter.id}/>
