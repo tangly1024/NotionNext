@@ -26,12 +26,9 @@ const WalineComponent = (props) => {
     router.events.on('routeChangeComplete', updateWaline)
 
     const anchor = window.location.hash
-    /** 需要跳转到评论区 */
     if (anchor) {
       // 选择需要观察变动的节点
       const targetNode = document.getElementsByClassName('wl-cards')[0]
-      const commentNode = document.getElementById('comment')
-      commentNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
 
       // 当观察到变动时执行的回调函数
       const mutationCallback = (mutations) => {
@@ -44,6 +41,7 @@ const WalineComponent = (props) => {
               setTimeout(() => {
                 anchorElement.classList.add('animate__animated')
                 anchorElement.classList.add('animate__bounceIn')
+                observer.disconnect()
               }, 300)
             }
           }
@@ -51,7 +49,8 @@ const WalineComponent = (props) => {
       }
 
       // 观察子节点 变化
-      new MutationObserver(mutationCallback).observe(targetNode, { childList: true })
+      const observer = new MutationObserver(mutationCallback)
+      observer.observe(targetNode, { childList: true })
     }
 
     return () => {
