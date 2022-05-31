@@ -6,7 +6,7 @@ import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import { AnalyticsCard } from './AnalyticsCard'
 import CONFIG_HEXO from '../config_hexo'
-import WalineRecentComment from './WalineRecentsComments'
+import HexoRecentComments from './HexoRecentComments'
 import BLOG from '@/blog.config'
 
 /**
@@ -45,7 +45,7 @@ export default function SideRight(props) {
         <LatestPostsGroup {...props} />
       </Card>}
 
-      {BLOG.COMMENT_WALINE_SERVER_URL && <WalineRecentComment/>}
+      {BLOG.COMMENT_WALINE_SERVER_URL && <HexoRecentComments/>}
 
       <div className='sticky top-20'>
         {post && post.toc && post.toc.length > 1 && <Card>

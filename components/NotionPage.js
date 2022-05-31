@@ -37,24 +37,34 @@ const NotionPage = ({ post }) => {
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
   React.useEffect(() => {
-    addWatch4Dom()
-  }, [])
-  setTimeout(() => {
-    if (isBrowser()) {
-      // 将相册gallery下的图片加入放大功能
-      const imgList = document.querySelectorAll('.notion-collection-card-cover img')
-      if (imgList && zoomRef.current) {
-        for (let i = 0; i < imgList.length; i++) {
-          (zoomRef.current).attach(imgList[i])
+    setTimeout(() => {
+      if (window.location.hash) {
+        const tocNode = document.getElementById(window.location.hash.substring(1))
+        if (tocNode && tocNode.className.indexOf('notion') > -1) {
+          tocNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
         }
       }
+    }, 180)
 
-      const cards = document.getElementsByClassName('notion-collection-card')
-      for (const e of cards) {
-        e.removeAttribute('href')
+    setTimeout(() => {
+      if (isBrowser()) {
+        // 将相册gallery下的图片加入放大功能
+        const imgList = document.querySelectorAll('.notion-collection-card-cover img')
+        if (imgList && zoomRef.current) {
+          for (let i = 0; i < imgList.length; i++) {
+            (zoomRef.current).attach(imgList[i])
+          }
+        }
+
+        const cards = document.getElementsByClassName('notion-collection-card')
+        for (const e of cards) {
+          e.removeAttribute('href')
+        }
       }
-    }
-  }, 800)
+    }, 800)
+
+    addWatch4Dom()
+  }, [])
 
   return <div id='container' className='max-w-4xl mx-auto'>
     <NotionRenderer

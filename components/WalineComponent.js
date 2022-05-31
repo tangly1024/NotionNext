@@ -36,11 +36,11 @@ const WalineComponent = (props) => {
           const type = mutation.type
           if (type === 'childList') {
             const anchorElement = document.getElementById(anchor.substring(1))
-            if (anchorElement) {
+            if (anchorElement && anchorElement.className === 'wl-item') {
               anchorElement.scrollIntoView({ block: 'end', behavior: 'smooth' })
               setTimeout(() => {
                 anchorElement.classList.add('animate__animated')
-                anchorElement.classList.add('animate__bounceIn')
+                anchorElement.classList.add('animate__bounceInRight')
                 observer.disconnect()
               }, 300)
             }
