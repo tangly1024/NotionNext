@@ -1,8 +1,6 @@
 import React from 'react'
 import { RecentComments } from '@waline/client'
 import BLOG from '@/blog.config'
-import Card from '@/themes/hexo/components/Card'
-import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 
 /**
@@ -10,9 +8,8 @@ import Link from 'next/link'
  * @param {*} props
  * @returns
  */
-const WalineRecentComment = (props) => {
+const NextRecentComments = (props) => {
   const [comments, updateComments] = React.useState([])
-  const { locale } = useGlobal()
   const [onLoading, changeLoading] = React.useState(true)
   React.useEffect(() => {
     RecentComments({
@@ -24,20 +21,15 @@ const WalineRecentComment = (props) => {
     })
   }, [])
 
-  return <Card >
-        <div className="font-sans mb-2 px-1 justify-between">
-            <i className="mr-2 fas fas fa-comment" />
-            {locale.COMMON.RECENT_COMMENTS}
-        </div>
-
+  return <>
         {onLoading && <div>Loading...<i className='ml-2 fas fa-spinner animate-spin' /></div>}
         {!onLoading && comments && comments.length === 0 && <div>No Comments</div>}
         {!onLoading && comments && comments.length > 0 && comments.map((comment) => <div key={comment.objectId} className='pb-2'>
-            <div className='dark:text-gray-200 text-sm waline-recent-content' dangerouslySetInnerHTML={{ __html: comment.comment }} />
-            <div className='dark:text-gray-100 font-sans text-sm text-right cursor-pointer hover:text-red-500 hover:underline pt-1'><Link href={comment.url + '#' + comment.objectId}><a >-- {comment.nick}</a></Link></div>
+            <div className='dark:text-gray-300 text-gray-600 text-xs waline-recent-content' dangerouslySetInnerHTML={{ __html: comment.comment }} />
+            <div className='dark:text-gray-400 text-gray-400 font-sans text-sm text-right cursor-pointer hover:text-red-500 hover:underline pt-1'><Link href={comment.url + '#' + comment.objectId}><a >-- {comment.nick}</a></Link></div>
         </div>)}
 
-  </Card>
+  </>
 }
 
-export default WalineRecentComment
+export default NextRecentComments

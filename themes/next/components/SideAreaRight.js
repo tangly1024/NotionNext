@@ -6,6 +6,8 @@ import CategoryGroup from './CategoryGroup'
 import TagGroups from './TagGroups'
 import CONFIG_NEXT from '../config_next'
 import { useRouter } from 'next/router'
+import NextRecentComments from './NextRecentComments'
+import BLOG from '@/blog.config'
 
 /**
  * 侧边平铺
@@ -76,6 +78,24 @@ const SideAreaRight = (props) => {
             </div>
           </Card>
          )}
+
+        {BLOG.COMMENT_WALINE_SERVER_URL && <Card>
+            <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200">
+              <div className="text-gray-600 dark:text-gray-200">
+                <i className="mr-2 fas fa-tag" />
+                {locale.COMMON.RECENT_COMMENTS}
+              </div>
+              <Link href={'/tag'} passHref>
+                <a className="text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer">
+                  {locale.COMMON.MORE}{' '}
+                  <i className='fas fa-angle-double-right' />
+                </a>
+              </Link>
+            </div>
+            <div className="px-2 pt-2">
+                <NextRecentComments/>
+            </div>
+         </Card>}
 
       </div>
     </aside>

@@ -6,7 +6,7 @@ import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import { AnalyticsCard } from './AnalyticsCard'
 import CONFIG_HEXO from '../config_hexo'
-import WalineRecentComment from '@/components/WalineRecentsComments'
+import WalineRecentComment from './WalineRecentsComments'
 import BLOG from '@/blog.config'
 
 /**
