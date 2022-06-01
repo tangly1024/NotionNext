@@ -85,12 +85,6 @@ const SideAreaRight = (props) => {
                 <i className="mr-2 fas fa-tag" />
                 {locale.COMMON.RECENT_COMMENTS}
               </div>
-              <Link href={'/tag'} passHref>
-                <a className="text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer">
-                  {locale.COMMON.MORE}{' '}
-                  <i className='fas fa-angle-double-right' />
-                </a>
-              </Link>
             </div>
             <div className="px-2 pt-2">
                 <NextRecentComments/>
