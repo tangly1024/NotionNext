@@ -171,3 +171,10 @@ nav {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
+.vcontent .wl-emoji {
+  display: inline-block;
+  vertical-align: baseline;
+  height: 1.25em;
+  margin: -.125em .25em;
+}
