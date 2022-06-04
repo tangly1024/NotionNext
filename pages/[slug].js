@@ -5,6 +5,7 @@ import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import React from 'react'
 import { useRouter } from 'next/router'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面，针对类型为Page的页面
@@ -20,7 +21,7 @@ const Slug = props => {
     changeLoadingState(true)
     const router = useRouter()
     setTimeout(() => {
-      if (typeof document !== 'undefined') {
+      if (isBrowser()) {
         const article = document.getElementById('container')
         if (!article) {
           router.push('/404').then(() => {
@@ -80,12 +81,10 @@ export async function getStaticPaths() {
   }
 
   const from = 'slug-paths'
-  const { allPosts } = await getGlobalNotionData({ from, pageType: ['Page'] })
-  const filterPosts =
-    allPosts?.filter(e => e?.slug?.indexOf('http') !== 0) || []
+  const { allPages } = await getGlobalNotionData({ from, pageType: ['Page'] })
 
   return {
-    paths: filterPosts.map(row => ({ params: { slug: row.slug } })),
+    paths: allPages.map(row => ({ params: { slug: row.slug } })),
     fallback: true
   }
 }
@@ -93,19 +92,19 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { slug } }) {
   const from = `slug-props-${slug}`
   const props = await getGlobalNotionData({ from, pageType: ['Page'] })
-  const { allPosts } = props
-  const post = allPosts.find(p => p.slug === slug)
-  if (!post) {
+  const { allPages } = props
+  const page = allPages?.find(p => p.slug === slug)
+  if (!page) {
     return { props: {}, revalidate: 1 }
   }
 
   try {
-    post.blockMap = await getPostBlocks(post.id, 'slug')
+    page.blockMap = await getPostBlocks(page.id, 'slug')
   } catch (error) {
     console.error('获取文章详情失败', error)
   }
 
-  props.post = post
+  props.post = page
 
   return {
     props,

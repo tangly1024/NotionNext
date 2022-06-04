@@ -74,10 +74,8 @@ export default function Header(props) {
 
   function updateHeaderHeight() {
     setTimeout(() => {
-      if (window) {
-        const wrapperElement = document.getElementById('wrapper')
-        wrapperTop = wrapperElement.offsetTop
-      }
+      const wrapperElement = document.getElementById('wrapper')
+      wrapperTop = wrapperElement.offsetTop
     }, 500)
   }
 

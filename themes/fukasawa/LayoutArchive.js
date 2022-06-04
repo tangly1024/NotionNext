@@ -25,16 +25,14 @@ export const LayoutArchive = (props) => {
   })
 
   useEffect(() => {
-    if (window) {
-      const anchor = window.location.hash
-      if (anchor) {
-        setTimeout(() => {
-          const anchorElement = document.getElementById(anchor.substring(1))
-          if (anchorElement) {
-            anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' })
-          }
-        }, 300)
-      }
+    const anchor = window.location.hash
+    if (anchor) {
+      setTimeout(() => {
+        const anchorElement = document.getElementById(anchor.substring(1))
+        if (anchorElement) {
+          anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' })
+        }
+      }, 300)
     }
   }, [])
   return <LayoutBase {...props}>

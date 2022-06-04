@@ -27,7 +27,7 @@ export async function getStaticProps() {
   if (BLOG.POST_LIST_STYLE !== 'page') {
     postsToShow = Array.from(allPosts)
   } else {
-    postsToShow = allPosts.slice(
+    postsToShow = allPosts?.slice(
       BLOG.POSTS_PER_PAGE * (page - 1),
       BLOG.POSTS_PER_PAGE * page
     )

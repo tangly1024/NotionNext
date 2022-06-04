@@ -8,6 +8,7 @@ import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import NotionPage from '@/components/NotionPage'
+import React from 'react'
 
 export const ArticleDetail = props => {
   const { post, prev, next, siteInfo } = props

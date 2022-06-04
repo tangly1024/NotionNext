@@ -1,19 +1,18 @@
 import { useRouter } from 'next/router'
 import LayoutBase from './LayoutBase'
 import { useEffect } from 'react'
+import { isBrowser } from '@/lib/utils'
 
 export const Layout404 = props => {
   const router = useRouter()
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      if (window) {
-        const article = typeof document !== 'undefined' && document.getElementById('container')
-        if (!article) {
-          router.push('/').then(() => {
-            // console.log('找不到页面', router.asPath)
-          })
-        }
+      const article = isBrowser() && document.getElementById('container')
+      if (!article) {
+        router.push('/').then(() => {
+          // console.log('找不到页面', router.asPath)
+        })
       }
     }, 3000)
   }, [])

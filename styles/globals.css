@@ -154,3 +154,27 @@ nav {
     z-index: 1000;
     pointer-events: none;
 }
+
+.medium-zoom-image--opened{
+  width: auto !important;
+}
+
+[data-waline] p {
+  color: var(--waline-color);
+  @apply dark:text-gray-200 !important
+}
+
+.waline-recent-content p{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.vcontent .wl-emoji {
+  display: inline-block;
+  vertical-align: baseline;
+  height: 1.25em;
+  margin: -.125em .25em;
+}

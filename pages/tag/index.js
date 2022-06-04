@@ -11,6 +11,7 @@ const TagIndex = props => {
   const meta = {
     title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
     description: siteInfo?.description,
+    image: siteInfo?.pageCover,
     slug: 'tag',
     type: 'website'
   }

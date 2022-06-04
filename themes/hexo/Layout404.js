@@ -7,13 +7,11 @@ export const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      if (window) {
-        const article = typeof document !== 'undefined' && document.getElementById('container')
-        if (!article) {
-          router.push('/').then(() => {
-            // console.log('找不到页面', router.asPath)
-          })
-        }
+      const article = typeof document !== 'undefined' && document.getElementById('container')
+      if (!article) {
+        router.push('/').then(() => {
+          // console.log('找不到页面', router.asPath)
+        })
       }
     }, 3000)
   })
