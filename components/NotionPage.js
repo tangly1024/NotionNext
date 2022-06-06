@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import mediumZoom from 'medium-zoom'
 import React from 'react'
 import { isBrowser } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: false }
@@ -75,7 +77,9 @@ const NotionPage = ({ post }) => {
         Collection,
         Equation,
         Modal,
-        Pdf
+        Pdf,
+        nextImage: Image,
+        nextLink: Link
       }} />
   </div>
 }
