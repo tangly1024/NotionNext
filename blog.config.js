@@ -1,9 +1,9 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/zh/features/personality
 const BLOG = {
-  AUTHOR: '令狐afmaof ', // 作者
-  BIO: '一个专注于B端的产品狗 ', // 作者简介
-  LINK: 'https://notion-next-newblog-hv7n1qcmt-lhuafmaof.vercel.app/', // 网站地址
-  KEYWORDS: 'B端,人工智能,CRM,客服,中后台', // 网站关键词 英文逗号隔开
+  AUTHOR:'令狐afmaof',// 作者
+  BIO:'一个专注于B端的产品狗',//作者简介
+  LINK:'https://notion-next-newblog-hv7n1qcmt-lhuafmaof.vercel.app/', // 网站地址
+  KEYWORDS:'B端,人工智能,CRM,客服,中后台', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
   process.env.NOTION_PAGE_ID || 'cf56595225424c7f97e38420db4331f6', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
