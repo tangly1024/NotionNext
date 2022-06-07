@@ -1,7 +1,7 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/zh/features/personality
 const BLOG = {
-  AUTHOR: '令狐afmaof', // 作者
-  BIO: '一个专注于B端的产品狗', // 作者简介
+  AUTHOR: '令狐afmaof ', // 作者
+  BIO: '一个专注于B端的产品狗 ', // 作者简介
   LINK: 'https://notion-next-newblog-hv7n1qcmt-lhuafmaof.vercel.app/', // 网站地址
   KEYWORDS: 'B端,人工智能,CRM,客服,中后台', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
