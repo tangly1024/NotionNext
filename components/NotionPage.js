@@ -105,7 +105,12 @@ function addWatch4Dom(element) {
       switch (type) {
         case 'childList':
           if (mutation.target.className === 'notion-code-copy') {
-            fixCopy(mutation)
+            fixCopy(mutation.target)
+          } else if (mutation.target.className?.indexOf('language-') > -1) {
+            const copyCode = mutation.target.parentElement?.firstElementChild
+            if (copyCode) {
+              fixCopy(copyCode)
+            }
           }
           //   console.log('A child node has been added or removed.')
           break
@@ -132,12 +137,11 @@ function addWatch4Dom(element) {
 }
 
 /**
-   * 复制代码后，会重复 @see https://github.com/tangly1024/NotionNext/issues/165
-   * @param {*} e
-   */
-function fixCopy(e) {
-  const codeE = e.target.parentElement.lastElementChild
-  //   console.log('2', codeE)
+ * 复制代码后，会重复 @see https://github.com/tangly1024/NotionNext/issues/165
+ * @param {*} e
+ */
+function fixCopy(codeCopy) {
+  const codeE = codeCopy.parentElement.lastElementChild
   const codeEnd = codeE.lastChild
   if (codeEnd.nodeName === '#text' && codeE.childNodes.length > 1) {
     codeEnd.nodeValue = null
