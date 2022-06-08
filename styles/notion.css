@@ -207,6 +207,20 @@
 
 .medium-zoom-image--opened {
   z-index: 301;
+  /* width: auto !important; */
+}
+
+@media (max-width: 768px){
+    .medium-zoom-image--opened {
+        object-fit: fill !important;
+        height: auto !important;
+    }
+}
+
+@media (min-width: 768px){
+    .medium-zoom-image--opened {
+        object-fit: scale-down !important;
+    }
 }
 
 .notion-frame {
