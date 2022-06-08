@@ -1352,8 +1352,13 @@ svg.notion-page-icon {
   margin-right: 6px;
 }
 
+.notion-collection-card{
+  cursor: default !important;
+}
+
 .notion-collection-card-property .notion-link {
   border-bottom: 0 none;
+  cursor: pointer
 }
 
 .notion-collection-card-property .notion-page-title {

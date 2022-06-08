@@ -61,12 +61,20 @@ const NotionPage = ({ post }) => {
         const cards = document.getElementsByClassName('notion-collection-card')
         for (const e of cards) {
           e.removeAttribute('href')
+          const links = e.querySelectorAll('.notion-link')
+          if (links && links.length > 0) {
+            for (const l of links) {
+              l.onclick = function() {
+                window.open('http://' + l.innerText)
+              }
+            }
+          }
         }
       }
     }, 800)
 
     addWatch4Dom()
-  }, [])
+  })
 
   return <div id='container' className='max-w-4xl mx-auto'>
     <NotionRenderer
