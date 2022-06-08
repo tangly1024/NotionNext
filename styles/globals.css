@@ -137,6 +137,7 @@ nav {
 
 .medium-zoom-overlay{
   background: none !important;
+  /* background: rgba(0, 0, 0, 0.01) none repeat scroll 0% 0% !important; */
 }
 
 .shadow-text{
@@ -156,7 +157,7 @@ nav {
 }
 
 .medium-zoom-image--opened{
-  width: auto !important;
+  /* width: auto !important; */
 }
 
 [data-waline] p {
