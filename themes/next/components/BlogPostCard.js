@@ -48,7 +48,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                 passHref
               >
                 <a className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
-                  {post.date.start_date}
+                  {post.date?.start_date}
                 </a>
               </Link>
             </div>

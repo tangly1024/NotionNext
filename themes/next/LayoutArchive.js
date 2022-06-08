@@ -9,15 +9,15 @@ export const LayoutArchive = (props) => {
 
   // 时间排序
   postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.date.start_date || a.createdTime)
-    const dateB = new Date(b?.date.start_date || b.createdTime)
+    const dateA = new Date(a?.date?.start_date || a.createdTime)
+    const dateB = new Date(b?.date?.start_date || b.createdTime)
     return dateB - dateA
   })
 
   const archivePosts = {}
 
   postsSortByDate.forEach(post => {
-    const date = post.date.start_date.slice(0, 7)
+    const date = post.date?.start_date.slice(0, 7)
     if (archivePosts[date]) {
       archivePosts[date].push(post)
     } else {
