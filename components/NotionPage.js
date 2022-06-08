@@ -33,6 +33,7 @@ const NotionPage = ({ post }) => {
   const zoom = isBrowser() && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
+    scrollOffset: 200,
     margin: getMediumZoomMargin()
   })
 
