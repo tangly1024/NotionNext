@@ -156,10 +156,6 @@ nav {
     pointer-events: none;
 }
 
-.medium-zoom-image--opened{
-  /* width: auto !important; */
-}
-
 [data-waline] p {
   color: var(--waline-color);
   @apply dark:text-gray-200 !important
