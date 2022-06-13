@@ -8,7 +8,8 @@ import '@/styles/notion.css' //  重写部分样式
 
 // used for collection views (optional)
 // import 'rc-dropdown/assets/index.css'
-import 'prismjs/themes/prism-tomorrow.min.css'
+// import 'prismjs/themes/prism-tomorrow.min.css'
+import 'prismjs/themes/prism-coy.min.css'
 import 'react-notion-x/build/third-party/equation.css'
 
 // waline 评论插件
