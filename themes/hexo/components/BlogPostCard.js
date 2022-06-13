@@ -33,7 +33,7 @@ const BlogPostCard = ({ post, showSummary }) => {
             >
               <a className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
                 <i className="far fa-calendar-alt mr-1" />
-                {post.date.start_date}
+                {post.date?.start_date || post.lastEditedTime}
               </a>
             </Link>
           </div>

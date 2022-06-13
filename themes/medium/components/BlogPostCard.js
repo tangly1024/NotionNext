@@ -31,7 +31,7 @@ const BlogPostCard = ({ post, showSummary }) => {
             'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
           }
         >
-          <div className="text-sm py-1">{post.date.start_date}</div>
+          <div className="text-sm py-1">{post.date?.start_date}</div>
           {CONFIG_MEDIUM.POST_LIST_CATEGORY && (
             <CategoryItem category={post.category} />
           )}

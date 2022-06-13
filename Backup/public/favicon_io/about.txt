@@ -1,23 +1,6 @@
 This favicon was generated using the following font:
 
-- Font Title: Saira Stencil One
-- Font Author: Copyright 2019 The Saira Stencil Project Authors (https://github.com/Omnibus-Type/Saira)
-- Font Source: http://fonts.gstatic.com/s/sairastencilone/v12/SLXSc03I6HkvZGJ1GvvipLoYSTEL9AsMawif2YQ2.ttf
+- Font Title: ZCOOL QingKe HuangYou
+- Font Author: Copyright 2018 The ZCOOL QingKe HuangYou Project Authors (https://www.github.com/googlefonts/zcool-qingke-huangyou)
+- Font Source: http://fonts.gstatic.com/s/zcoolqingkehuangyou/v13/2Eb5L_R5IXJEWhD3AOhSvFC554MOOahI4mRIi_28c8bHWA.ttf
 - Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
-
-Installation
-First, use the download button to download the files listed below. Place the files in the root directory of your website.
-
-- android-chrome-192x192.png
-- android-chrome-512x512.png
-- apple-touch-icon.png
-- favicon-16x16.png
-- favicon-32x32.png
-- favicon.ico
-- site.webmanifest
-
-Next, copy the following link tags and paste them into the head of your HTML.
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
