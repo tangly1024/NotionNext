@@ -1311,6 +1311,10 @@ svg.notion-page-icon {
   user-select: none;
   border-radius: 3px;
   transition: background 20ms ease-in 0s;
+  text-align: center;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  scrollbar-width: none; /* firefox */
 }
 
 .notion-equation-inline {
