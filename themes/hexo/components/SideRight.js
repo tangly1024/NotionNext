@@ -45,7 +45,7 @@ export default function SideRight(props) {
         <LatestPostsGroup {...props} />
       </Card>}
 
-      {BLOG.COMMENT_WALINE_SERVER_URL && <HexoRecentComments/>}
+      {BLOG.COMMENT_WALINE_SERVER_URL && BLOG.COMMENT_WALINE_RECENT && <HexoRecentComments/>}
 
       <div className='sticky top-20'>
         {post && post.toc && post.toc.length > 1 && <Card>
