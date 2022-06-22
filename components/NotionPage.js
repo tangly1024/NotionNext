@@ -5,10 +5,8 @@ import React from 'react'
 import { isBrowser } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Code } from 'react-notion-x/build/third-party/code'
 
-const Code = dynamic(() =>
-  import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: true }
-)
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
 )
