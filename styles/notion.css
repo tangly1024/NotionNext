@@ -670,7 +670,7 @@ svg.notion-page-icon {
 
 .notion-asset-wrapper {
   margin: 0.5rem 0;
-  max-width: 100vw;
+  max-width: 100%;
   min-width: 100%;
   align-self: center;
   display: flex;
@@ -701,8 +701,8 @@ svg.notion-page-icon {
   width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  padding: 3px 2px;
-  margin: 1px 0;
+  padding: 3px 2px !important;
+  margin: 1px 0 !important;
 }
 
 .notion-text:first-child {

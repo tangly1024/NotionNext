@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/formatDate'
+import BLOG from '@/blog.config'
 
 export default function HeaderArticle({ post, siteInfo }) {
   if (!post) {
@@ -55,10 +56,10 @@ export default function HeaderArticle({ post, siteInfo }) {
                 {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
               </div>
             </div>
-            <div className=" busuanzi_container_page_pv font-light mr-2">
+            {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
               次访问
-            </div>
+            </div>}
           </section>
         </div>
       </header>
