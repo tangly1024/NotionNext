@@ -33,7 +33,7 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "mongodb": "^4.6.0",
-    "next": "^12.0.5",
+    "next": "12.1.6",
     "notion-client": "6.12.9",
     "notion-utils": "6.10.0",
     "preact": "^10.5.15",
