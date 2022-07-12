@@ -45,8 +45,8 @@ const BLOG = {
   CONTACT_EMAIL: 'ha8ha6ha@gmail.com',
   CONTACT_WEIBO: '',
   CONTACT_TWITTER: '',
-  CONTACT_GITHUB: 'https://github.com/winsight',
-  CONTACT_TELEGRAM: '',
+  CONTACT_GITHUB: '',
+  CONTACT_TELEGRAM: 'https://t.me/winsight',
 
   // 鼠标点击烟花特效
   FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || true, // 鼠标点击烟花特效
