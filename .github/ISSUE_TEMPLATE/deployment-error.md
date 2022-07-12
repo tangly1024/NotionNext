@@ -2,10 +2,10 @@
 name: Deployment error （部署错误）
 about: 在安装部署NotionNext时需要什么帮助吗
 title: ''
-labels: deployment
-assignees: tangly1024
----
+labels: ''
+assignees: ''
 
+---
 
 <!--
   !!! 重要 !!!
