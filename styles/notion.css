@@ -68,7 +68,7 @@
 }
 
 .notion {
-  font-size: 17px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--fg-color);
   caret-color: var(--fg-color);
@@ -164,11 +164,11 @@
 }
 
 .notion-aside-table-of-contents .notion-table-of-contents-item-indent-level-1 {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .notion-aside-table-of-contents .notion-table-of-contents-item-indent-level-2 {
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .notion-aside-table-of-contents .notion-table-of-contents-item-body {
