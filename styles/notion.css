@@ -919,6 +919,7 @@ svg.notion-page-icon {
 
 .notion-toggle {
   padding: 3px 2px;
+  max-width: 100%;
 }
 .notion-toggle > summary {
   cursor: pointer;
