@@ -4,9 +4,7 @@ import { loadExternalResource } from '@/lib/utils'
 
 export default function Live2DWife() {
   useEffect(() => {
-    if (window) {
-      initLive2DWife()
-    }
+    initLive2DWife()
   }, [])
   return <>
     <Head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" /></Head>

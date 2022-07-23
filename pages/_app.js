@@ -11,6 +11,9 @@ import '@/styles/notion.css' //  重写部分样式
 import 'prismjs/themes/prism-tomorrow.min.css'
 import 'react-notion-x/build/third-party/equation.css'
 
+// waline 评论插件
+import '@waline/client/dist/waline.css'
+
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'

@@ -6,6 +6,7 @@ import * as ThemeMap from '@/themes'
 import React from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
@@ -15,22 +16,22 @@ import { useRouter } from 'next/router'
 const Slug = props => {
   const { theme, changeLoadingState } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
-  const { post } = props
+  const { post, siteInfo } = props
 
   if (!post) {
     changeLoadingState(true)
     const router = useRouter()
     setTimeout(() => {
-      if (typeof document !== 'undefined') {
+      if (isBrowser()) {
         const article = document.getElementById('container')
         if (!article) {
           router.push('/404').then(() => {
-            console.warn('找不到页面', router.asPath)
+            // console.warn('找不到页面', router.asPath)
           })
         }
       }
     }, 10000)
-    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading` }
+    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 
@@ -58,7 +59,6 @@ const Slug = props => {
 
   props = { ...props, lock, setLock, validPassword }
 
-  const { siteInfo } = props
   const meta = {
     title: `${post?.title} | ${siteInfo?.title}`,
     description: post?.summary,

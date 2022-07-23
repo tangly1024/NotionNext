@@ -7,7 +7,7 @@ import Link from 'next/link'
 export const Header = (props) => {
   const { siteInfo } = props
 
-  return <header className="w-full px-6 bg-white">
+  return <header className="w-full px-6 bg-white  dark:bg-black">
         <div className="container mx-auto max-w-4xl md:flex justify-between items-center">
             <Link href='/'>
                 <a className="py-6 w-full text-center md:text-left md:w-auto text-gray-dark no-underline flex justify-center items-center">
