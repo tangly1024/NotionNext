@@ -15,6 +15,7 @@ const Tag = props => {
   const meta = {
     title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
     description: siteInfo?.description,
+    image: siteInfo?.pageCover,
     slug: 'tag/' + tag,
     type: 'website'
   }

@@ -1,6 +1,8 @@
+import BLOG from '@/blog.config'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
+import ExampleRecentComments from './ExampleRecentComments'
 
 export const SideBar = (props) => {
   const { locale } = useGlobal()
@@ -8,7 +10,7 @@ export const SideBar = (props) => {
   return <div className="w-full md:w-64 sticky top-8">
 
         <aside className="rounded shadow overflow-hidden mb-6">
-            <h3 className="text-sm bg-gray-100 text-gray-700 py-3 px-4 border-b">{locale.COMMON.CATEGORY}</h3>
+            <h3 className="text-sm bg-gray-100 text-gray-700 dark:bg-hexo-black-gray dark:text-gray-200 py-3 px-4 dark:border-hexo-black-gray border-b">{locale.COMMON.CATEGORY}</h3>
 
             <div className="p-4">
                 <ul className="list-reset leading-normal">
@@ -23,7 +25,7 @@ export const SideBar = (props) => {
         </aside>
 
         <aside className="rounded shadow overflow-hidden mb-6">
-            <h3 className="text-sm bg-gray-100 text-gray-700 py-3 px-4 border-b">{locale.COMMON.LATEST_POSTS}</h3>
+            <h3 className="text-sm bg-gray-100 text-gray-700 dark:bg-hexo-black-gray dark:text-gray-200 py-3 px-4 dark:border-hexo-black-gray border-b">{locale.COMMON.LATEST_POSTS}</h3>
 
             <div className="p-4">
                 <ul className="list-reset leading-normal">
@@ -35,6 +37,14 @@ export const SideBar = (props) => {
                 </ul>
             </div>
         </aside>
+
+        {BLOG.COMMENT_WALINE_SERVER_URL && BLOG.COMMENT_WALINE_RECENT && <aside className="rounded shadow overflow-hidden mb-6">
+            <h3 className="text-sm bg-gray-100 text-gray-700 dark:bg-hexo-black-gray dark:text-gray-200 py-3 px-4 dark:border-hexo-black-gray border-b">{locale.COMMON.RECENT_COMMENTS}</h3>
+
+            <div className="p-4">
+                <ExampleRecentComments/>
+            </div>
+        </aside>}
 
         <aside className="rounded  overflow-hidden mb-6">
             <Live2D />

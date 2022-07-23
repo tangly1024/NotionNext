@@ -25,7 +25,7 @@ export default function ArticleDetail(props) {
       </div>
     )}
     <article itemScope itemType="https://schema.org/Movie"
-      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-gray-800"
+      className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
     >
 
       <header className='animate__slideInDown animate__animated'>
@@ -37,13 +37,16 @@ export default function ArticleDetail(props) {
 
         <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
           <div>
-            <Link href={`/category/${post.category}`} passHref>
-              <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
-                <i className="mr-1 fas fa-folder-open" />
-                {post.category}
-              </a>
-            </Link>
-            <span className='mr-2'>|</span>
+
+            {post?.category && (<>
+                <Link href={`/category/${post.category}`} passHref>
+                <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
+                  <i className="mr-1 fas fa-folder-open" />
+                  {post.category}
+                </a>
+              </Link>
+              <span className='mr-2'>|</span>
+            </>)}
 
             {post?.type[0] !== 'Page' && (<>
               <Link
@@ -92,7 +95,7 @@ export default function ArticleDetail(props) {
     <ArticleAround prev={prev} next={next} />
 
     {/* 评论互动 */}
-    <div className="duration-200 shadow px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-gray-800">
+    <div className="duration-200 shadow px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-hexo-black-gray">
       <Comment frontMatter={post} />
     </div>
   </div>)

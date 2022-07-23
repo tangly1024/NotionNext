@@ -11,6 +11,7 @@ import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
 import ArticleRecommend from './components/ArticleRecommend'
+import { isBrowser } from '@/lib/utils'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
@@ -30,7 +31,7 @@ export const LayoutSlug = props => {
   }
 
   const drawerRight = useRef(null)
-  const targetRef = typeof window !== 'undefined' ? document.getElementById('container') : null
+  const targetRef = isBrowser() ? document.getElementById('container') : null
 
   const floatSlot = <>
     {post?.toc?.length > 1 && <div className="block lg:hidden">
@@ -58,7 +59,7 @@ export const LayoutSlug = props => {
 
           <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
             {/* Notion文章主体 */}
-            <section id='notion-article' className='px-5 justify-center mx-auto'>
+            <section id='notion-article' className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
               {post && <NotionPage post={post} />}
             </section>
 

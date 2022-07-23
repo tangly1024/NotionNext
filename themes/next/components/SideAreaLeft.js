@@ -47,7 +47,7 @@ const SideAreaLeft = props => {
           )}
 
           <div key={locale.NAV.ABOUT} className='mb-5 bg-white dark:bg-hexo-black-gray duration-200 py-6'>
-            <InfoCard />
+            <InfoCard {...props} />
             <>
               <div className='mt-2 text-center dark:text-gray-300 font-light text-xs'>
                 <span className='px-1 '>

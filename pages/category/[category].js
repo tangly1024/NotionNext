@@ -17,6 +17,7 @@ export default function Category(props) {
     }`,
     description: siteInfo?.description,
     slug: 'category/' + props.category,
+    image: siteInfo?.pageCover,
     type: 'website'
   }
   return <ThemeComponents.LayoutCategory {...props} meta={meta} />
