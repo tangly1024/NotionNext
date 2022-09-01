@@ -62,11 +62,11 @@ const BLOG = {
 
   // giscus @see https://giscus.app/
   COMMENT_GISCUS_REPO: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO || 'eliaszon/NotionNext', // 你的Github仓库名 e.g 'tangly1024/NotionNext'
-  COMMENT_GISCUS_REPO_ID: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO_ID || 'R_kgDOHSbQdQ', // 你的Github Repo ID e.g ( 設定完 giscus 即可看到 )
+  COMMENT_GISCUS_REPO_ID: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO_ID || 'R_kgDOHZTdMQ', // 你的Github Repo ID e.g ( 設定完 giscus 即可看到 )
   COMMENT_GISCUS_CATEGORY_ID:
-    process.env.NEXT_PUBLIC_COMMENT_GISCUS_CATEGORY_ID || 'DIC_kwDOHSbQdc4CPSdD', // 你的Github Discussions 內的 Category ID ( 設定完 giscus 即可看到 )
+    process.env.NEXT_PUBLIC_COMMENT_GISCUS_CATEGORY_ID || 'DIC_kwDOHZTdMc4CPSeM', // 你的Github Discussions 內的 Category ID ( 設定完 giscus 即可看到 )
   COMMENT_GISCUS_MAPPING:
-    process.env.NEXT_PUBLIC_COMMENT_GISCUS_MAPPING || 'url', // 你的Github Discussions 使用哪種方式來標定文章, 預設 'pathname'
+    process.env.NEXT_PUBLIC_COMMENT_GISCUS_MAPPING || 'URL', // 你的Github Discussions 使用哪種方式來標定文章, 預設 'pathname'
   COMMENT_GISCUS_REACTIONS_ENABLED:
     process.env.NEXT_PUBLIC_COMMENT_GISCUS_REACTIONS_ENABLED || '1', // 你的 Giscus 是否開啟文章表情符號 '1' 開啟 "0" 關閉 預設開啟
   COMMENT_GISCUS_EMIT_METADATA:
@@ -108,8 +108,8 @@ const BLOG = {
   COMMENT_VALINE_SERVER_URLS: process.env.NEXT_PUBLIC_VALINE_SERVER_URLS || '', // 该配置适用于国内自定义域名用户, 海外版本会自动检测(无需手动填写) @see https://valine.js.org/configuration.html#serverURLs
   COMMENT_VALINE_PLACEHOLDER: process.env.NEXT_PUBLIC_VALINE_PLACEHOLDER || '抢个沙发吧~', // 可以搭配后台管理评论 https://github.com/DesertsP/Valine-Admin  便于查看评论，以及邮件通知，垃圾评论过滤等功能
 
-  COMMENT_WALINE_SERVER_URL: process.env.NEXT_PUBLIC_WALINE_SERVER_URL || '/', // Waline 评论 @see https://waline.js.org/guide/get-started.html
-  COMMENT_WALINE_RECENT: process.env.NEXT_PUBLIC_WALINE_RECENT || false, // 最新评论
+  COMMENT_WALINE_SERVER_URL: process.env.NEXT_PUBLIC_WALINE_SERVER_URL || 'railway-starter-production-85d1.up.railway.app', // Waline 评论 @see https://waline.js.org/guide/get-started.html
+  COMMENT_WALINE_RECENT: process.env.NEXT_PUBLIC_WALINE_RECENT || true, // 最新评论
 
   // 站点统计
   ANALYTICS_BUSUANZI_ENABLE: true, // 展示网站阅读量、访问数 see http://busuanzi.ibruce.info/
