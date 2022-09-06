@@ -148,14 +148,6 @@ nav {
   pointer-events:none
 }
 
-.fireworks{
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    pointer-events: none;
-}
-
 [data-waline] p {
   color: var(--waline-color);
   @apply dark:text-gray-200 !important
