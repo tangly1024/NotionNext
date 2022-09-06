@@ -52,7 +52,6 @@ const CommonHead = ({ meta, children }) => {
           />
           <meta property="article:author" content={BLOG.AUTHOR} />
           <meta property="article:section" content={category} />
-          <meta property="article:publisher" content={BLOG.FACEBOOK_PAGE} />
         </>
       )}
       {children}
