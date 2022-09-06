@@ -37,7 +37,7 @@ If your language is not yet supported by NotionNext, please contribute a
 localization! Follow these steps to add a new localization:
 
 1. Copy one of the [en-US.js][en-US.js] in [lang-dir][lang-dir] and rename the new
-   directory into your language's code ( e.g. `zh-CN.js`).
+   directory into your language's code ( e.g. `zh-TW.js`).
 2. Start translating the strings.
 3. Add your language config to [lang.js][lang.js]. 
 4. [Create a PR][pr] with your localization updates.
