@@ -7,7 +7,6 @@ import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import smoothscroll from 'smoothscroll-polyfill'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
-import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
@@ -25,8 +24,6 @@ const LayoutBase = props => {
   // const [percent, changePercent] = useState(0) // 页面阅读百分比
   const rightAreaSlot = (
     <>
-      <FacebookPage />
-      <Live2D />
     </>
   )
   const { onLoading } = useGlobal()

@@ -118,14 +118,10 @@ function addWatch4Dom(element) {
               fixCopy(copyCode)
             }
           }
-          //   console.log('A child node has been added or removed.')
           break
         case 'attributes':
-        //   console.log(`The ${mutation.attributeName} attribute was modified.`)
-        //   console.log(mutation.attributeName)
           break
         case 'subtree':
-        //   console.log('The subtree was modified.')
           break
         default:
           break
@@ -135,8 +131,6 @@ function addWatch4Dom(element) {
 
   // 创建一个观察器实例并传入回调函数
   const observer = new MutationObserver(mutationCallback)
-  //   console.log(observer)
-  // 以上述配置开始观察目标节点
   observer.observe(targetNode, config)
 
   // observer.disconnect();
