@@ -57,7 +57,7 @@ const Catalog = ({ toc }) => {
   }, throttleMs))
 
   return <div>
-    <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' /> 目录</div>
+    <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' /> Content</div>
     <div className='overflow-y-auto max-h-96 overscroll-none scroll-hidden' ref={tRef}>
       <nav className='h-full font-sans text-black'>
         {toc.map((tocItem) => {

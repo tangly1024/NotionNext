@@ -18,7 +18,6 @@ import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
-import { Fireworks } from '@/components/Fireworks'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -28,7 +27,7 @@ const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), {
 })
 
 const MyApp = ({ Component, pageProps }) => {
-  // 外部插件
+  // 外部插
   const externalPlugins = <>
         {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
         {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
@@ -36,7 +35,6 @@ const MyApp = ({ Component, pageProps }) => {
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
         {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
         {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-        {JSON.parse(BLOG.FIREWORKS) && <Fireworks/>}
     </>
 
   return (

@@ -10,7 +10,6 @@ import SearchInput from './components/SearchInput'
 import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import Live2D from '@/components/Live2D'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -50,7 +49,6 @@ const LayoutBase = props => {
               {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
             </div>
           </Tabs>
-           <Live2D/>
          </div>
         </div>
       </main>
