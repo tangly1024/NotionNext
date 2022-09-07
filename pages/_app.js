@@ -17,7 +17,6 @@ import '@waline/client/dist/waline.css'
 import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
-import { ThemeSwitch } from '@/components/ThemeSwitch'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -29,7 +28,6 @@ const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), {
 const MyApp = ({ Component, pageProps }) => {
   // 外部插
   const externalPlugins = <>
-        {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
         {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
         {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
