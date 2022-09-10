@@ -126,7 +126,7 @@ const TopNav = props => {
 
         {/* 右侧功能 */}
         <div className='mr-1 justify-end items-center font-serif'>
-          <div className='hidden lg:flex'> <MenuButtonGroupTop {...props}/></div>
+          <div className='hidden lg:flex'> <MenuButtonGroupTop /></div>
           <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
           { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }
           </div>
@@ -135,7 +135,7 @@ const TopNav = props => {
 
       <Collapse type='vertical' isOpen={isOpen} className='shadow-xl'>
         <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-5 lg:hidden '>
-          <MenuList {...props}/>
+          <MenuList />
         </div>
       </Collapse>
     </div>
