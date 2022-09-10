@@ -20,7 +20,6 @@ import { DebugPanel } from '@/components/DebugPanel'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
-const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
 const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), {
   ssr: false
 })
@@ -31,7 +30,6 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
         {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
-        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
         {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
     </>
 

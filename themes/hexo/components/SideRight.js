@@ -4,7 +4,6 @@ import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
 import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
-import { AnalyticsCard } from './AnalyticsCard'
 import CONFIG_HEXO from '../config_hexo'
 import HexoRecentComments from './HexoRecentComments'
 import BLOG from '@/blog.config'
@@ -23,7 +22,6 @@ export default function SideRight(props) {
   return (
     <div className={'space-y-4 lg:w-80 lg:pt-0 px-2 pt-4'}>
       <InfoCard {...props} />
-      {CONFIG_HEXO.WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
 
       {showCategory && (
         <Card>
