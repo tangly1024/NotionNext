@@ -14,10 +14,8 @@ import 'react-notion-x/build/third-party/equation.css'
 // waline 评论插件
 import '@waline/client/dist/waline.css'
 
-import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
-
 
 const MyApp = ({ Component, pageProps }) => {
   // 外部插
