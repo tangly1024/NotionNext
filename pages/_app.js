@@ -18,19 +18,11 @@ import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 
-const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
-const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
-const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), {
-  ssr: false
-})
 
 const MyApp = ({ Component, pageProps }) => {
   // 外部插
   const externalPlugins = <>
         {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
-        {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
-        {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
-        {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
     </>
 
   return (

@@ -26,10 +26,6 @@ const CommonScript = () => {
       />
     </>)}
 
-    {/* GoogleAdsense */}
-    {BLOG.ADSENSE_GOOGLE_ID && (<script data-ad-client={BLOG.ADSENSE_GOOGLE_ID} async
-              src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'/>)}
-
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
 
     {BLOG.COMMENT_TIDIO_ID && <script async src={`//code.tidio.co/${BLOG.COMMENT_TIDIO_ID}.js`} />}
@@ -46,32 +42,6 @@ const CommonScript = () => {
       }}/>
     </>)}
 
-    {/* 代码统计 */}
-    {/* ackee统计脚本 */}
-    {BLOG.ANALYTICS_ACKEE_TRACKER && (
-      <script async src={BLOG.ANALYTICS_ACKEE_TRACKER}
-              data-ackee-server={BLOG.ANALYTICS_ACKEE_DATA_SERVER}
-              data-ackee-domain-id={BLOG.ANALYTICS_ACKEE_DOMAIN_ID}
-      />
-    )}
-
-    {/* 百度统计 */}
-    {BLOG.ANALYTICS_BAIDU_ID && (
-      <script async
-              dangerouslySetInnerHTML={{
-                __html: `
-              var _hmt = _hmt || [];
-              (function() {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?${BLOG.ANALYTICS_BAIDU_ID}";
-                var s = document.getElementsByTagName("script")[0]; 
-                s.parentNode.insertBefore(hm, s);
-              })();
-              `
-              }}
-      />
-    )}
-
     {/* 站长统计 */}
     {BLOG.ANALYTICS_CNZZ_ID && (
       <script async
@@ -82,25 +52,6 @@ const CommonScript = () => {
               }}
       />
     )}
-
-    {/* 谷歌统计 */}
-    {BLOG.ANALYTICS_GOOGLE_ID && (<>
-      <script async
-              src={`https://www.googletagmanager.com/gtag/js?id=${BLOG.ANALYTICS_GOOGLE_ID}`}
-      />
-      <script async
-              dangerouslySetInnerHTML={{
-                __html: `
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', '${BLOG.ANALYTICS_GOOGLE_ID}', {
-                      page_path: window.location.pathname,
-                    });
-                  `
-              }}
-      />
-    </>)}
   </>)
 }
 
