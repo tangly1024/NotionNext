@@ -9,6 +9,7 @@ import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import MenuButtonGroupTop from './MenuButtonGroupTop'
 import MenuList from './MenuList'
+import { useRouter } from 'next/router'
 
 let windowTop = 0
 
@@ -21,12 +22,27 @@ const TopNav = props => {
   const { tags, currentTag, categories, currentCategory } = props
   const { locale } = useGlobal()
   const searchDrawer = useRef()
+  const { isDarkMode } = useGlobal()
+  const router = useRouter()
 
   const scrollTrigger = throttle(() => {
     const scrollS = window.scrollY
     const nav = document.querySelector('#sticky-nav')
     const header = document.querySelector('#header')
     const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
+
+    if (header && navTransparent) {
+      nav && nav.classList.replace('bg-white', 'bg-none')
+      nav && nav.classList.replace('text-black', 'text-white')
+      nav && nav.classList.replace('border', 'border-transparent')
+      nav && nav.classList.replace('shadow-md', 'shadow-none')
+    } else {
+      nav && nav.classList.replace('bg-none', 'bg-white')
+      nav && nav.classList.replace('text-white', 'text-black')
+      nav && nav.classList.replace('border-transparent', 'border')
+      nav && nav.classList.replace('shadow-none', 'shadow-md')
+    }
 
     if (!showNav) {
       nav && nav.classList.replace('top-0', '-top-20')
@@ -35,10 +51,25 @@ const TopNav = props => {
       nav && nav.classList.replace('-top-20', 'top-0')
       windowTop = scrollS
     }
+    navDarkMode()
   }, 200)
+
+  const navDarkMode = () => {
+    const nav = document.getElementById('sticky-nav')
+    const header = document.querySelector('#header')
+    if (!isDarkMode && nav && header) {
+      if (window.scrollY < header.clientHeight) {
+        nav?.classList?.add('dark')
+      } else {
+        nav?.classList?.remove('dark')
+      }
+    }
+  }
 
   // 监听滚动
   useEffect(() => {
+    scrollTrigger()
+
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
@@ -87,7 +118,7 @@ const TopNav = props => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={'top-0 shadow fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform duration-200 font-san border-transparent  dark:border-transparent'}>
+    <div id='sticky-nav' className={'top-0 shadow-md fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform duration-200 font-san border-transparent  dark:border-transparent'}>
       <div className='w-full flex justify-between items-center px-4 py-2'>
         <div className='flex'>
          <Logo {...props}/>

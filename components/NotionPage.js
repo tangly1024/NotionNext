@@ -3,16 +3,16 @@ import dynamic from 'next/dynamic'
 import mediumZoom from 'medium-zoom'
 import React from 'react'
 import { isBrowser } from '@/lib/utils'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Code } from 'react-notion-x/build/third-party/code'
 
-const Code = dynamic(() =>
-  import('react-notion-x/build/third-party/code').then((m) => m.Code), { ssr: false }
-)
 const Collection = dynamic(() =>
-  import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: false }
+  import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
 )
 
 const Equation = dynamic(() =>
-  import('react-notion-x/build/third-party/equation').then((m) => m.Equation), { ssr: false }
+  import('react-notion-x/build/third-party/equation').then((m) => m.Equation), { ssr: true }
 )
 
 const Pdf = dynamic(
@@ -31,6 +31,7 @@ const NotionPage = ({ post }) => {
   const zoom = isBrowser() && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
+    scrollOffset: 200,
     margin: getMediumZoomMargin()
   })
 
@@ -56,9 +57,16 @@ const NotionPage = ({ post }) => {
           }
         }
 
+        // 相册中的url替换成可点击
         const cards = document.getElementsByClassName('notion-collection-card')
         for (const e of cards) {
           e.removeAttribute('href')
+          const links = e.querySelectorAll('.notion-link')
+          if (links && links.length > 0) {
+            for (const l of links) {
+              l.parentElement.innerHTML = `<a href='${l.innerText}' rel='noreferrer' target='_blank'>${l.innerText}</a>`
+            }
+          }
         }
       }
     }, 800)
@@ -75,7 +83,9 @@ const NotionPage = ({ post }) => {
         Collection,
         Equation,
         Modal,
-        Pdf
+        Pdf,
+        nextImage: Image,
+        nextLink: Link
       }} />
   </div>
 }
@@ -101,7 +111,12 @@ function addWatch4Dom(element) {
       switch (type) {
         case 'childList':
           if (mutation.target.className === 'notion-code-copy') {
-            fixCopy(mutation)
+            fixCopy(mutation.target)
+          } else if (mutation.target.className?.indexOf('language-') > -1) {
+            const copyCode = mutation.target.parentElement?.firstElementChild
+            if (copyCode) {
+              fixCopy(copyCode)
+            }
           }
           //   console.log('A child node has been added or removed.')
           break
@@ -128,12 +143,11 @@ function addWatch4Dom(element) {
 }
 
 /**
-   * 复制代码后，会重复 @see https://github.com/tangly1024/NotionNext/issues/165
-   * @param {*} e
-   */
-function fixCopy(e) {
-  const codeE = e.target.parentElement.lastElementChild
-  //   console.log('2', codeE)
+ * 复制代码后，会重复 @see https://github.com/tangly1024/NotionNext/issues/165
+ * @param {*} e
+ */
+function fixCopy(codeCopy) {
+  const codeE = codeCopy.parentElement.lastElementChild
   const codeEnd = codeE.lastChild
   if (codeEnd.nodeName === '#text' && codeE.childNodes.length > 1) {
     codeEnd.nodeValue = null
