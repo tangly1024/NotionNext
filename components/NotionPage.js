@@ -7,6 +7,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
 
+// 支持更多的自定义语言
+import 'prismjs/components/prism-r.js'
+
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
 )
