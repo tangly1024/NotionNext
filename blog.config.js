@@ -20,7 +20,7 @@ const BLOG = {
   THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['next','hexo',"fukasawa','medium','example'] @see https://preview.tangly1024.com
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || true, // 是否显示切换主题按钮
   LANG: 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
-  HOME_BANNER_IMAGE: './bg_image.jpg', // 首页背景大图，默认文件：/public/bg_image.jpg 。会被Notion中的封面图覆盖。
+  HOME_BANNER_IMAGE: '', // 首页背景大图，默认文件：/public/bg_image.jpg 。会被Notion中的封面图覆盖。
   SINCE: '', // e.g if leave this empty, current year will be used.
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
   APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
@@ -36,7 +36,7 @@ const BLOG = {
   POST_PREVIEW_LINES: 12, // 预览博客行数
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
   POSTS_PER_PAGE: 6, // post counts per page
-  POSTS_SORT_BY: 'notion', // 排序方式 'date'按时间,'notion'由notion控制
+  POSTS_SORT_BY: 'date', // 排序方式 'date'按时间,'notion'由notion控制
 
   PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
@@ -142,7 +142,7 @@ const BLOG = {
     tags: 'tags',
     icon: 'icon'
   },
-  AVATAR: '/avatar.png', // 作者头像，被notion中的ICON覆盖。如果没有ICON则取public目录下的avatar.png
+  AVATAR: '', // 作者头像，被notion中的ICON覆盖。如果没有ICON则取public目录下的avatar.png
   TITLE: process.env.NEXT_PUBLIC_TITLE || 'NotionNext BLOG', // 站点标题 ，被notion中的页面标题覆盖
   DESCRIPTION:
     process.env.NEXT_PUBLIC_DESCRIPTION || '这是一个由NotionNext生成的站点', // 站点描述，被notion中的页面描述覆盖
