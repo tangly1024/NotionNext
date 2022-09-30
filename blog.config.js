@@ -2,7 +2,7 @@
 const BLOG = {
   AUTHOR: 'Mukii', // 作者
   BIO: '没有理想的人不伤心', // 作者简介
-  LINK: 'https://tangly1024.com', // 网站地址
+  LINK: 'https://mukiispace.vercel.app/', // 网站地址
   KEYWORDS: '木木君,个人网站', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
   process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5

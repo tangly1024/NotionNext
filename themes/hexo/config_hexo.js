@@ -1,6 +1,6 @@
 const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['Hi，我是Mukii，一个大二学生', 'Hi，我是Mukii，热爱哲学与音乐', 'Hi，我是Mukii，希望做一个很酷的人！'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['Hi，我是Mukii，一个大二学生', 'Hi，我是Mukii，热爱哲学与音乐', 'Hi，我是Mukii，想做一个很酷的人！'], // 首页大图标语文字
 
   // 菜单配置
   MENU_CATEGORY: true, // 显示分类
