@@ -1,7 +1,9 @@
 {
   "name": "notion-next",
-  "version": "3.4.4",
+
+  "version": "3.4.5",
   "homepage": "https://github.com/Jeffreyhung/NotionNext-NotionBlog",
+
   "license": "MIT",
   "repository": {
     "type": "git",
