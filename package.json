@@ -61,7 +61,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.2.0",
     "eslint-plugin-react": "7.31.8",
-    "next-sitemap": "1.9.12",
+    "next-sitemap": "3.1.23",
     "postcss": "8.4.17",
     "tailwindcss": "2.2.19",
     "webpack-bundle-analyzer": "4.6.1"
