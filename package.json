@@ -22,7 +22,7 @@
     "bundle-report": "ANALYZE=true yarn build"
   },
   "dependencies": {
-    "@giscus/react": "1.1.2",
+    "@giscus/react": "2.2.0",
     "@next/bundle-analyzer": "12.3.1",
     "@popperjs/core": "2.11.6",
     "animate.css": "4.1.1",
