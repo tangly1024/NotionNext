@@ -37,7 +37,7 @@
     "mongodb": "4.10.0",
     "next": "12.3.1",
     "notion-client": "6.13.8",
-    "notion-utils": "6.10.0",
+    "notion-utils": "6.13.4",
     "preact": "10.11.0",
     "qrcode.react": "1.0.1",
     "react": "17.0.2",
