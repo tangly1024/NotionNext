@@ -54,7 +54,7 @@
   "devDependencies": {
     "@waline/client": "2.11.3",
     "autoprefixer": "10.4.12",
-    "eslint": "7.32.0",
+    "eslint": "8.24.0",
     "eslint-config-next": "11.1.4",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.26.0",
