@@ -55,7 +55,7 @@
     "@waline/client": "2.11.3",
     "autoprefixer": "10.4.12",
     "eslint": "8.24.0",
-    "eslint-config-next": "11.1.4",
+    "eslint-config-next": "12.3.1",
     "eslint-config-standard": "16.0.3",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
