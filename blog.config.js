@@ -2,7 +2,7 @@
 const BLOG = {
   AUTHOR: 'Kvylin', // 作者
   BIO: '未来农家人', // 作者简介
-  LINK: 'https://kvylin.com', // 网站地址
+  LINK: 'https://www.kvylin.com', // 网站地址
   KEYWORDS: '记忆,IT,三生万物', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
   process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
