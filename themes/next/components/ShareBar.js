@@ -79,7 +79,7 @@ const ShareBar = ({ post }) => {
       </div>
       <div className='cursor-pointer text-2xl'>
         <a className='text-yellow-600' onClick={copyUrl} >
-          <i className='fab fa-link'/>
+          <i className='fas fa-link'/>
         </a>
       </div>
     </div>
