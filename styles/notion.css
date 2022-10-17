@@ -388,13 +388,11 @@
 
 .notion-h {
   position: relative;
-  display: inline-block;
-
+  display: block; // 修复H标题不换行的问题
   font-weight: 600;
   line-height: 1.3;
   padding: 3px 2px;
   margin-bottom: 1px;
-
   max-width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
