@@ -128,20 +128,22 @@ const BLOG = {
 
   ADSENSE_GOOGLE_ID: process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_ID || '', // 谷歌广告ID e.g ca-pub-xxxxxxxxxxxxxxxx
 
-  // 无关紧要的配置
   // 自定义配置notion数据库字段名
   NOTION_PROPERTY_NAME: {
-    password: 'password',
-    type: 'type',
-    title: 'title',
-    status: 'status',
-    summary: 'summary',
-    slug: 'slug',
-    category: 'category',
-    date: 'date',
-    tags: 'tags',
-    icon: 'icon'
+    password: process.env.NEXT_PUBLIC_NOTION_PROPERTY_PASSWORD || 'password',
+    type: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE || 'type',
+    title: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TITLE || 'title',
+    status: process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS || 'status',
+    summary: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SUMMARY || 'summary',
+    slug: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SLUG || 'slug',
+    category: process.env.NEXT_PUBLIC_NOTION_PROPERTY_CATEGORY || 'category',
+    date: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DATE || 'date',
+    tags: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TAGS || 'tags',
+    icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon'
   },
+
+  ENABLE_CACHE: false, // 开启缓存 会将Notion数据缓存在内存中，稍微提升访问速度，但要更新内容需要多次刷新页面
+
   AVATAR: '/avatar.png', // 作者头像，被notion中的ICON覆盖。如果没有ICON则取public目录下的avatar.png
   TITLE: process.env.NEXT_PUBLIC_TITLE || 'NotionNext BLOG', // 站点标题 ，被notion中的页面标题覆盖
   DESCRIPTION:
