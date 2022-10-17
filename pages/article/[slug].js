@@ -5,7 +5,7 @@ import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import React from 'react'
 import { idToUuid } from 'notion-utils'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 import { isBrowser } from '@/lib/utils'
 
 /**
@@ -17,10 +17,10 @@ const Slug = props => {
   const { theme, changeLoadingState } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
   const { post, siteInfo } = props
+  const router = Router.useRouter()
 
   if (!post) {
     changeLoadingState(true)
-    const router = useRouter()
     setTimeout(() => {
       if (isBrowser()) {
         const article = document.getElementById('container')
@@ -48,9 +48,9 @@ const Slug = props => {
   }, [post])
 
   /**
-     * 验证文章密码
-     * @param {*} result
-     */
+   * 验证文章密码
+   * @param {*} result
+   */
   const validPassword = result => {
     if (result) {
       setLock(false)
@@ -68,6 +68,10 @@ const Slug = props => {
     category: post?.category?.[0],
     tags: post?.tags
   }
+
+  Router.events.on('routeChangeComplete', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
 
   return (
     <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />

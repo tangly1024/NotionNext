@@ -129,6 +129,19 @@ const BLOG = {
   ADSENSE_GOOGLE_ID: process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_ID || '', // 谷歌广告ID e.g ca-pub-xxxxxxxxxxxxxxxx
 
   // 无关紧要的配置
+  // 自定义配置notion数据库字段名
+  NOTION_PROPERTY_NAME: {
+    password: 'password',
+    type: 'type',
+    title: 'title',
+    status: 'status',
+    summary: 'summary',
+    slug: 'slug',
+    category: 'category',
+    date: 'date',
+    tags: 'tags',
+    icon: 'icon'
+  },
   AVATAR: '/avatar.png', // 作者头像，被notion中的ICON覆盖。如果没有ICON则取public目录下的avatar.png
   TITLE: process.env.NEXT_PUBLIC_TITLE || 'NotionNext BLOG', // 站点标题 ，被notion中的页面标题覆盖
   DESCRIPTION:

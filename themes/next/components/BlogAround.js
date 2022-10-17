@@ -17,7 +17,7 @@ export default function BlogAround ({ prev, next }) {
     </Link>}
     {next && <Link href={`/article/${next.slug}`} passHref>
       <a className='text-sm flex py-3 text-gray-400 hover:underline cursor-pointer'>{next.title}
-        <i className='ml-1 my-1 fas -fa-angle-double-right' />
+        <i className='ml-1 my-1 fas fa-angle-double-right' />
       </a>
     </Link>}
   </section>
