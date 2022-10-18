@@ -35,7 +35,9 @@ export async function getStaticProps({ params: { keyword } }) {
     from: 'search-props',
     pageType: ['Post']
   })
-  props.posts = await filterByMemCache(props.allPosts, keyword)
+  const { allPages } = props
+  const allPosts = allPages.filter(page => page.type === 'Post')
+  props.posts = await filterByMemCache(allPosts, keyword)
   props.keyword = keyword
   return {
     props,

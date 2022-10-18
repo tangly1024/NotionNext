@@ -52,7 +52,9 @@ export async function getStaticProps() {
     from: 'search-props',
     pageType: ['Post']
   })
-  props.posts = props.allPosts
+  const { allPages } = props
+  const allPosts = allPages.filter(page => page.type === 'Post')
+  props.posts = allPosts
   return {
     props,
     revalidate: 1
