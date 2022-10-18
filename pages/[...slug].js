@@ -99,8 +99,7 @@ export async function getStaticProps({ params: { slug } }) {
   const fullSlug = slug.join('/')
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalNotionData({ from, pageType: ['Post'] })
-  const allPosts = props.allPages.filter(page => page.type === 'Post')
-  props.post = allPosts.find((p) => {
+  props.post = props.allPages.find((p) => {
     return p.slug === fullSlug || p.id === idToUuid(fullSlug)
   })
   if (!props.post) {
@@ -109,6 +108,7 @@ export async function getStaticProps({ params: { slug } }) {
   }
   props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
 
+  const allPosts = props.allPages.filter(page => page.type === 'Post')
   const index = allPosts.indexOf(props.post)
   props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
   props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
