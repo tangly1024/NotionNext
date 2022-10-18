@@ -108,6 +108,8 @@ yarn run start # 本地启动NextJS服务
   <td align="center"><a href="https://github.com/Hscpro"><img src="https://avatars.githubusercontent.com/u/13926044" width="64px;" alt="Hscpro"/><br/><sub><b>Hscpro</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Hscpro" title="Hscpro" >🔧 🐛</a></td> 
     
   <td align="center"><a href="https://github.com/JensonMiao"><img src="https://avatars.githubusercontent.com/u/46488783" width="64px;" alt="JensonMiao"/><br/><sub><b>JensonMiao</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=JensonMiao" title="JensonMiao" >🔧 🐛</a></td> 
+  
+  <td align="center"><a href="https://github.com/haixin1225"><img src="https://avatars.githubusercontent.com/u/28828438" width="64px;"  alt="haixin1225"/><br/><sub><b>haixin1225</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=haixin1225" title="haixin1225" >🔧 🐛</a></td>
 
 </tr>
 </table>
