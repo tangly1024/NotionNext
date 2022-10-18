@@ -44,7 +44,7 @@ const CommonHead = ({ meta, children }) => {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
       {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="no-referrer-when-downgrade" />}
-      {meta?.type === 'article' && (
+      {meta?.type === 'Post' && (
         <>
           <meta
             property="article:published_time"

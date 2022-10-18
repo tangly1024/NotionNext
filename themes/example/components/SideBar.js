@@ -30,7 +30,7 @@ export const SideBar = (props) => {
             <div className="p-4">
                 <ul className="list-reset leading-normal">
                     {latestPosts?.map(p => {
-                      return <Link key={p.id} href={`/article/${p.slug}`} passHref>
+                      return <Link key={p.id} href={`/${p.slug}`} passHref>
                             <li>  <a href="#" className="text-gray-darkest text-sm">{p.title}</a></li>
                         </Link>
                     })}
