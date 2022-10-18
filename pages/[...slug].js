@@ -87,9 +87,9 @@ export async function getStaticPaths() {
   }
 
   const from = 'slug-paths'
-  const { allPosts } = await getGlobalNotionData({ from })
+  const { allPages } = await getGlobalNotionData({ from })
   return {
-    paths: allPosts.map(row => ({ params: { slug: row.slug } })),
+    paths: allPages.map(row => ({ params: { slug: row.slug } })),
     fallback: true
   }
 }
