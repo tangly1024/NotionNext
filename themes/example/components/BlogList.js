@@ -23,7 +23,7 @@ export const BlogList = (props) => {
         {posts.map(p => (
             <article key={p.id} className="mb-12" >
                 <h2 className="mb-4">
-                    <Link href={`/article/${p.slug}`}>
+                    <Link href={`/${p.slug}`}>
                         <a className="text-black dark:text-gray-100 text-xl md:text-2xl no-underline hover:underline">  {p.title}</a>
                     </Link>
                 </h2>

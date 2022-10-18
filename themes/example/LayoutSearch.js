@@ -62,7 +62,7 @@ export const LayoutSearch = props => {
         {postsToShow.map(p => (
             <article key={p.id} className="mb-12" >
                 <h2 className="mb-4">
-                    <Link href={`/article/${p.slug}`}>
+                    <Link href={`/${p.slug}`}>
                         <a className="text-black text-xl md:text-2xl no-underline hover:underline replace">  {p.title}</a>
                     </Link>
                 </h2>

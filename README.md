@@ -80,7 +80,7 @@ yarn run start # 本地启动NextJS服务
 - **框架**: [Next.js](https://nextjs.org)
 - **样式**: [Tailwind CSS](https://www.tailwindcss.cn/) 和 `@tailwindcss/jit` compiler
 - **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
-- **评论**: [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://gitalk.github.io), [Utterances](https://utteranc.es)
+- **评论**: [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://cusdis.com), [Utterances](https://utteranc.es)
 - **图标**：[fontawesome v5.15](https://fontawesome.com/v5.15/icons?d=gallery)
 
 ## 更新日志
