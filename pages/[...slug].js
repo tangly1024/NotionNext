@@ -62,8 +62,8 @@ const Slug = props => {
   const meta = {
     title: `${post?.title} | ${siteInfo?.title}`,
     description: post?.summary,
-    type: 'article',
-    slug: 'article/' + post?.slug,
+    type: post.type,
+    slug: post?.slug,
     image: post?.page_cover,
     category: post?.category?.[0],
     tags: post?.tags
@@ -95,13 +95,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const from = `slug-props-${slug}`
+  // slug 是个数组
+  const fullSlug = slug.join('/')
+  const from = `slug-props-${fullSlug}`
   const props = await getGlobalNotionData({ from, pageType: ['Post'] })
-  const allPosts = props.allPosts
-  props.post = props.allPosts.find((p) => {
-    return p.slug === slug || p.id === idToUuid(slug)
+  const allPosts = props.allPages.filter(page => page.type === 'Post')
+  props.post = allPosts.find((p) => {
+    return p.slug === fullSlug || p.id === idToUuid(fullSlug)
   })
   if (!props.post) {
+    console.warn('无效地址', fullSlug)
     return { props, revalidate: 1 }
   }
   props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
@@ -114,6 +117,7 @@ export async function getStaticProps({ params: { slug } }) {
     allPosts,
     BLOG.POST_RECOMMEND_COUNT
   )
+  delete props.allPages
   return {
     props,
     revalidate: 1

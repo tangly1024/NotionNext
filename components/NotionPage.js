@@ -164,7 +164,7 @@ function fixCopy(codeCopy) {
  */
 const mapPageUrl = id => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/article/' + id.replace(/-/g, '')
+  return '/' + id.replace(/-/g, '')
 }
 
 function getMediumZoomMargin() {
