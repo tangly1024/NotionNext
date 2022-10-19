@@ -24,7 +24,7 @@ export default function HeaderArticle({ post, siteInfo }) {
       <header className="animate__slideInDown animate__animated bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center font-sans">
         <div className='mt-24'>
           {/* 文章Title */}
-          <div className="font-bold text-xl shadow-text flex justify-center text-white dark:text-white font-sans">
+          <div className="font-bold text-xl shadow-text flex justify-center text-center text-white dark:text-white font-sans">
             {post.title}
           </div>
 

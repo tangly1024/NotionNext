@@ -124,7 +124,7 @@ nav {
 
 
 .glassmorphism{
-  background: hsla(0, 0%, 100%, .75);
+  background: hsla(0, 0%, 100%, .05);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
