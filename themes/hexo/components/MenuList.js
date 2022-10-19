@@ -21,7 +21,7 @@ const MenuList = (props) => {
     links = links.concat(customNav)
   }
 
-  return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-300 font-sans'>
+  return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-300 '>
     {links.map(link => {
       if (link && link.show) {
         const selected = (router.pathname === link.to) || (router.asPath === link.to)

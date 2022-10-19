@@ -16,7 +16,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   const pages = generatePages(page, currentPage, totalPage)
 
   return (
-    <div className="mt-10 mb-5 font-sans flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
+    <div className="mt-10 mb-5  flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
       {/* 上一页 */}
       <Link
         href={{

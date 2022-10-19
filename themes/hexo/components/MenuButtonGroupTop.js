@@ -18,7 +18,7 @@ const MenuButtonGroupTop = (props) => {
     links = links.concat(customNav)
   }
 
-  return <nav id='nav' className='leading-8 flex justify-center font-sans font-light w-full'>
+  return <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
     {links.map(link => {
       if (link.show) {
         return <Link key={`${link.to}`} title={link.to} href={link.to} >

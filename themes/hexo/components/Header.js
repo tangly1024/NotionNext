@@ -78,7 +78,7 @@ const Header = props => {
           `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0,0,0,0.5), rgba(0,0,0,0.3), rgba(0,0,0,0.5), rgba(0, 0, 0, 0.9) ),url("${siteInfo?.pageCover}")`
       }}
     >
-      <div className="absolute flex flex-col h-full items-center justify-center w-full font-sans">
+      <div className="absolute flex flex-col h-full items-center justify-center w-full ">
         <div className='text-4xl md:text-5xl text-white shadow-text'>{siteInfo?.title}</div>
         <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
           <span id='typed'/>
