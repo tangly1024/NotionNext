@@ -24,10 +24,21 @@ const BLOG = {
   SINCE: 2021, // e.g if leave this empty, current year will be used.
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
   APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
-  FONT: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
+
+  // 字体相关
+  FONT: 'font-sans', // 预设三种文章字体 ['font-sans', 'font-serif', 'font-mono'] @see /lib/font.js https://www.tailwindcss.cn/docs/font-family
   FONT_URL: 'https://fonts.font.im/css2?family=Noto+Serif+SC&display=swap', // 谷歌字体中国站镜像;对应的国际站地址：https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap
-  FONT_AWESOME_PATH:
-    'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css', // 图标库CDN ，国内推荐BootCDN，国外推荐 CloudFlare https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
+  FONT_CUSTOM: ['-apple-system', 'BlinkMacSystemFont', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Segoe UI"', '"PingFang SC"', 'HarmonyOS_Regular', '"Hiragino Sans GB"', '"Microsoft YaHei"', '"Helvetica Neue"', 'Helvetica', '"Source Han Sans SC"', '"Noto Sans CJK SC"', '"WenQuanYi Micro Hei"', 'Arial', 'sans-serif'],
+
+  // 自定义google字体示例： 请先将FONT 改为  'font-custom'， 并将FONT_URL改为你的字体地址，同时在FONT_CUSTOM中指定你的 fontfamily
+  // 以下是示例：
+  //   FONT:'font-custom',
+  //   FONT_URL: 'https://fonts.font.im/css2?family=Ma+Shan+Zheng&display=swap',
+  //   FONT_CUSTOM_FAMILY: ['"Times New Roman"', 'Ma Shan Zheng'],
+
+  // 图标字体
+  FONT_AWESOME_PATH: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css', // 图标库CDN ，国内推荐BootCDN，国外推荐 CloudFlare https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
+
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
   SUB_PATH: '', // leave this empty unless you want to deploy in a folder

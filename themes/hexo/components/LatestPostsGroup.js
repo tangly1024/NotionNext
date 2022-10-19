@@ -18,7 +18,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
   const { locale } = useGlobal()
   return (
     <>
-      <div className="font-sans mb-2 px-1 flex flex-nowrap justify-between">
+      <div className=" mb-2 px-1 flex flex-nowrap justify-between">
         <div>
           <i className="mr-2 fas fas fa-history" />
           {locale.COMMON.LATEST_POSTS}
@@ -37,7 +37,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
             href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
           >
-            <a className={'my-1 flex font-sans'}>
+            <a className={'my-1 flex '}>
               <div
                 className="w-20 h-16 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: headerImage }}
