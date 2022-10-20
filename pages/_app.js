@@ -19,6 +19,7 @@ import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { Fireworks } from '@/components/Fireworks'
+import TailwindCustomCssInit from '@/components/TailwindCustomCssInit'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -33,6 +34,7 @@ const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
 const MyApp = ({ Component, pageProps }) => {
   // 外部插件
   const externalPlugins = <>
+        <TailwindCustomCssInit/>
         {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
         {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
         {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}

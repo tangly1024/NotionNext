@@ -34,7 +34,7 @@ const BLOG = {
   // 以下是示例：
   // FONT: 'font-custom',
   // FONT_URL: 'https://fonts.font.im/css2?family=Ma+Shan+Zheng&display=swap',
-  // FONT_CUSTOM_FAMILY: ['"Times New Roman"', 'Ma Shan Zheng'],
+  // FONT_CUSTOM_FAMILY: ['"Times New Roman"', '"Ma Shan Zheng"'],
 
   // 图标字体
   FONT_AWESOME_PATH: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css', // 图标库CDN ，国内推荐BootCDN，国外推荐 CloudFlare https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
