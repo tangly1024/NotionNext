@@ -657,6 +657,10 @@ svg.notion-page-icon {
  list-style-type: lower-alpha;
 }
 
+.notion-list-numbered > .notion-list-numbered > .notion-list-numbered {
+    list-style-type: lower-roman;
+   }
+
 .notion-list-disc li {
   padding-left: 0.1em;
 }
