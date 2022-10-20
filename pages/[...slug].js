@@ -98,7 +98,7 @@ export async function getStaticProps({ params: { slug } }) {
   // slug 是个数组
   const fullSlug = slug.join('/')
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalNotionData({ from, pageType: ['Post'] })
+  const props = await getGlobalNotionData({ from })
   props.post = props.allPages.find((p) => {
     return p.slug === fullSlug || p.id === idToUuid(fullSlug)
   })
