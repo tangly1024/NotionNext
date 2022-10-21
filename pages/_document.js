@@ -23,9 +23,8 @@ class MyDocument extends Document {
         </Head>
 
         <body className={'tracking-wider subpixel-antialiased bg-day dark:bg-night'}>
-           字体 <div>{JSON.parse(BLOG.CUSTOM_FONT)}</div> <span>{BLOG.CUSTOM_FONT_URL}</span>
-        <Main />
-        <NextScript />
+            <Main />
+            <NextScript />
         </body>
       </Html>
     )
