@@ -51,7 +51,7 @@ const LayoutBase = (props) => {
     if (fb.length === 0) {
       floatButtonGroup?.current?.classList.replace('bottom-24', 'bottom-12')
     } else {
-      floatButtonGroup?.current?.classList.remove('bottom-12', 'bottom-24')
+      floatButtonGroup?.current?.classList.replace('bottom-12', 'bottom-24')
     }
 
     document.addEventListener('scroll', scrollListener)
@@ -73,7 +73,8 @@ const LayoutBase = (props) => {
           <section id='center' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-40' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
             {onLoading ? <LoadingCover/> : <> {children}</> }
           </section>
-          <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props}/>
+          {/* 右侧栏样式 */}
+          { CONFIG_NEXT.RIGHT_BAR && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props}/> }
       </main>
 
       {/* 右下角悬浮 */}
