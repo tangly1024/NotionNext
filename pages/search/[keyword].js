@@ -35,7 +35,9 @@ export async function getStaticProps({ params: { keyword } }) {
     from: 'search-props',
     pageType: ['Post']
   })
-  props.posts = await filterByMemCache(props.allPosts, keyword)
+  const { allPages } = props
+  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = await filterByMemCache(allPosts, keyword)
   props.keyword = keyword
   return {
     props,
@@ -107,7 +109,7 @@ async function filterByMemCache(allPosts, keyword) {
   }
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
-    const page = await getDataFromCache(cacheKey)
+    const page = await getDataFromCache(cacheKey, true)
     const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
     const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
@@ -121,7 +123,7 @@ async function filterByMemCache(allPosts, keyword) {
         indexContent = appendText(indexContent, properties, 'caption')
       })
     }
-    console.log('全文搜索缓存', cacheKey, page != null)
+    // console.log('全文搜索缓存', cacheKey, page != null)
     post.results = []
     let hitCount = 0
     for (const i in indexContent) {

@@ -11,8 +11,9 @@ const Index = props => {
 
 export async function getStaticProps() {
   const from = 'index'
-  const props = await getGlobalNotionData({ from, pageType: ['Post'] })
-  const { allPosts, siteInfo } = props
+  const props = await getGlobalNotionData({ from })
+  const { allPages, siteInfo } = props
+  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
     description: siteInfo?.description,

@@ -38,8 +38,10 @@ export async function getStaticProps({ params: { page } }) {
   const from = `page-${page}`
   const props = await getGlobalNotionData({ from })
   props.page = page
+  const { allPages } = props
+  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   // 处理分页
-  props.posts = props.allPosts.slice(
+  props.posts = allPosts.slice(
     BLOG.POSTS_PER_PAGE * (page - 1),
     BLOG.POSTS_PER_PAGE * page
   )

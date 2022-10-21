@@ -26,12 +26,12 @@ const LatestPostsGroup = ({ latestPosts }) => {
         </div>
       </div>
       {latestPosts.map(post => {
-        const selected = currentPath === `${BLOG.SUB_PATH}/article/${post.slug}`
+        const selected = currentPath === `${BLOG.SUB_PATH}/${post.slug}`
         return (
           <Link
             key={post.id}
             title={post.title}
-            href={`${BLOG.SUB_PATH}/article/${post.slug}`}
+            href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
           >
             <a className={'my-1 flex font-light'}>

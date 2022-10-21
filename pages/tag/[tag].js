@@ -28,7 +28,8 @@ export async function getStaticProps({ params: { tag } }) {
     includePage: false,
     tagsCount: 0
   })
-  const { allPosts } = props
+  const { allPages } = props
+  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   props.posts = allPosts.filter(
     post => post && post.tags && post.tags.includes(tag)
   )

@@ -26,7 +26,9 @@ export default function Category(props) {
 export async function getStaticProps({ params: { category } }) {
   const from = 'category-props'
   let props = await getGlobalNotionData({ from })
-  const posts = props.allPosts.filter(
+  const { allPages } = props
+  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const posts = allPosts.filter(
     post => post && post.category && post.category.includes(category)
   )
   props = { ...props, posts, category }

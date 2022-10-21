@@ -45,7 +45,7 @@ export const LayoutArchive = props => {
                     </span>{' '}
                     &nbsp;
                     <Link
-                      href={`${BLOG.SUB_PATH}/article/${post.slug}`}
+                      href={`${BLOG.SUB_PATH}/${post.slug}`}
                       passHref
                     >
                       <a className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">

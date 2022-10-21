@@ -22,9 +22,6 @@ import BLOG from '@/blog.config'
 const SideAreaRight = (props) => {
   const { tags, currentTag, slot, categories, currentCategory } = props
   const { locale } = useGlobal()
-  if (!CONFIG_NEXT.RIGHT_BAR) {
-    return <></>
-  }
   const router = useRouter()
   return (<aside id='right' className='hidden 2xl:block flex-col w-60 ml-4'>
 

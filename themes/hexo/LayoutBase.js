@@ -64,7 +64,7 @@ const LayoutBase = props => {
           id="container-inner"
           className="pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center"
         >
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-4xl overflow-x-hidden">
             {onLoading ? <LoadingCover /> : children}
           </div>
           <SideRight {...props} slot={rightAreaSlot} />
@@ -72,7 +72,7 @@ const LayoutBase = props => {
       </main>
 
       {/* 右下角悬浮 */}
-      <div className="bottom-12 right-1 fixed justify-end z-20 font-sans text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm">
+      <div className="bottom-12 right-1 fixed justify-end z-20  text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm">
         <div
           className={
             (show ? 'animate__animated ' : 'hidden') +

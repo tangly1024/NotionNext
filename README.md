@@ -80,7 +80,7 @@ yarn run start # 本地启动NextJS服务
 - **框架**: [Next.js](https://nextjs.org)
 - **样式**: [Tailwind CSS](https://www.tailwindcss.cn/) 和 `@tailwindcss/jit` compiler
 - **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
-- **评论**: [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://gitalk.github.io), [Utterances](https://utteranc.es)
+- **评论**: [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://cusdis.com), [Utterances](https://utteranc.es)
 - **图标**：[fontawesome v5.15](https://fontawesome.com/v5.15/icons?d=gallery)
 
 ## 更新日志
@@ -108,6 +108,11 @@ yarn run start # 本地启动NextJS服务
   <td align="center"><a href="https://github.com/Hscpro"><img src="https://avatars.githubusercontent.com/u/13926044" width="64px;" alt="Hscpro"/><br/><sub><b>Hscpro</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Hscpro" title="Hscpro" >🔧 🐛</a></td> 
     
   <td align="center"><a href="https://github.com/JensonMiao"><img src="https://avatars.githubusercontent.com/u/46488783" width="64px;" alt="JensonMiao"/><br/><sub><b>JensonMiao</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=JensonMiao" title="JensonMiao" >🔧 🐛</a></td> 
+  
+  <td align="center"><a href="https://github.com/haixin1225"><img src="https://avatars.githubusercontent.com/u/28828438" width="64px;"  alt="haixin1225"/><br/><sub><b>haixin1225</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=haixin1225" title="haixin1225" >🔧 🐛</a></td>
+
+  <td align="center"><a href="https://github.com/mouyase"><img src="https://avatars.githubusercontent.com/u/7844572" width="64px;"  alt="mouyase"/><br/><sub><b>mouyase</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=mouyase" title="mouyase" >🔧 🐛</a></td>
+  
 
 </tr>
 </table>

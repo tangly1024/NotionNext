@@ -27,7 +27,7 @@ export default function SideRight(props) {
 
       {showCategory && (
         <Card>
-          <div className='ml-2 mb-1 font-sans'>
+          <div className='ml-2 mb-1 '>
             <i className='fas fa-th' /> 分类
           </div>
           <CategoryGroup
