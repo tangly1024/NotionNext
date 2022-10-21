@@ -15,15 +15,15 @@ class MyDocument extends Document {
         <Head>
           <link rel='icon' href='/favicon.ico' />
           <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
-          {/* 谷歌字体镜像 */}
-          {BLOG.CUSTOM_FONT
-            ? <link href='https://fonts.font.im/css2?family=Noto+Serif+SC&display=swap' rel='stylesheet' />
-            : BLOG.CUSTOM_FONT_URL?.map(fontUrl =>
-              <link href={`${fontUrl}`} key={fontUrl} rel='stylesheet' />)}
+          { BLOG.CUSTOM_FONT
+            ? BLOG.CUSTOM_FONT_URL?.map(fontUrl =>
+                <link href={`${fontUrl}`} key={fontUrl} rel='stylesheet' />)
+            : <link href='https://fonts.font.im/css2?family=Noto+Serif+SC&display=swap' rel='stylesheet' /> }
           <CommonScript />
         </Head>
 
-        <body className={`${BLOG.FONT} tracking-wider subpixel-antialiased bg-day dark:bg-night`}>
+        <body className={'tracking-wider subpixel-antialiased bg-day dark:bg-night'}>
+           字体 <div>{JSON.parse(BLOG.CUSTOM_FONT)}</div> <span>{BLOG.CUSTOM_FONT_URL}</span>
         <Main />
         <NextScript />
         </body>
