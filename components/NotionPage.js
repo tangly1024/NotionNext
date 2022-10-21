@@ -77,7 +77,7 @@ const NotionPage = ({ post }) => {
     addWatch4Dom()
   }, [])
 
-  return <div id='container' className='max-w-4xl mx-auto'>
+  return <div id='container' className='max-w-5xl overflow-x-hidden mx-auto'>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}

@@ -179,6 +179,10 @@
   color: var(--select-color-2) !important;
 }
 
+.notion-simple-table {
+  @apply whitespace-nowrap overflow-x-scroll block
+}
+
 .notion-app {
   position: relative;
   background: var(--bg-color);
@@ -197,8 +201,8 @@
 
 .medium-zoom-overlay {
   z-index: 300;
-  -webkit-backdrop-filter: blur(5px);    
-  backdrop-filter: blur(5px);   
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 .medium-zoom-image {
@@ -656,6 +660,10 @@ svg.notion-page-icon {
 .notion-list-numbered > .notion-list-numbered {
  list-style-type: lower-alpha;
 }
+
+.notion-list-numbered > .notion-list-numbered > .notion-list-numbered {
+    list-style-type: lower-roman;
+   }
 
 .notion-list-disc li {
   padding-left: 0.1em;
