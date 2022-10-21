@@ -24,10 +24,6 @@ body::-webkit-scrollbar-thumb {
   background: rgba(45, 170, 219, 0.3);
 }
 
-.font-custom {
-    font-family: theme(fontFamily.custom)
-}
-
 .wrapper {
   min-height: 100vh;
   display: flex;
