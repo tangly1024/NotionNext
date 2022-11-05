@@ -100,29 +100,31 @@ export default function ArticleDetail(props) {
 
       {showArticleInfo && <>
         {/* 版权声明 */}
-        <ArticleCopyright author={BLOG.AUTHOR} url={url} />
+        {post.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} /> }
 
         {/* 推荐文章 */}
-        <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
+        {post.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}
 
         {/* 标签列表 */}
-        <section className="md:flex md:justify-between">
-          {post.tagItems && (
-            <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
-              <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
-                {locale.COMMON.TAGS}：
-              </div>
-              {post.tagItems.map(tag => (
-                <TagItem key={tag.name} tag={tag} />
-              ))}
+        {post.type === 'Post' && (
+            <section className="md:flex md:justify-between">
+            {post.tagItems && (
+                <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
+                <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
+                    {locale.COMMON.TAGS}：
+                </div>
+                {post.tagItems.map(tag => (
+                    <TagItem key={tag.name} tag={tag} />
+                ))}
+                </div>
+            )}
+            <div>
+                <ShareBar post={post} />
             </div>
-          )}
-          <div>
-            <ShareBar post={post} />
-          </div>
-        </section>
+            </section>
+        )}
 
-        <BlogAround prev={prev} next={next} />
+        {post.type === 'Post' && <BlogAround prev={prev} next={next} /> }
       </>}
 
       {/* 评论互动 */}
