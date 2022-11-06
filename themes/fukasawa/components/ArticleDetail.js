@@ -92,7 +92,7 @@ export default function ArticleDetail(props) {
 
     </article>
 
-    <ArticleAround prev={prev} next={next} />
+    {post.type === 'Post' && <ArticleAround prev={prev} next={next} /> }
 
     {/* 评论互动 */}
     <div className="duration-200 shadow px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-hexo-black-gray">
