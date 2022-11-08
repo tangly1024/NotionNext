@@ -12,7 +12,7 @@ const InfoCard = (props) => {
         <img src={siteInfo?.icon} className='rounded-full' width={120}/>
         </div>
         <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
-        <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.BIO}</div>
+        <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center'>{BLOG.BIO}</div>
         <SocialButton/>
     </div>
   </>
