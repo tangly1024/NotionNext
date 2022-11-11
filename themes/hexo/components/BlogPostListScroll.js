@@ -5,6 +5,7 @@ import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG_HEXO from '../config_hexo'
+import { getListByPage } from '@/lib/utils'
 
 /**
  * 博客列表滚动分页
@@ -16,7 +17,7 @@ import CONFIG_HEXO from '../config_hexo'
 const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HEXO.POST_LIST_SUMMARY }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
   const [page, updatePage] = useState(1)
-  const postsToShow = getPostByPage(page, posts, postsPerPage)
+  const postsToShow = getListByPage(posts, page, postsPerPage)
 
   let hasMore = false
   if (posts) {
@@ -72,17 +73,4 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HE
   }
 }
 
-/**
- * 获取从第1页到指定页码的文章
- * @param page 第几页
- * @param totalPosts 所有文章
- * @param postsPerPage 每页文章数量
- * @returns {*}
- */
-const getPostByPage = function (page, totalPosts, postsPerPage) {
-  return totalPosts.slice(
-    0,
-    postsPerPage * page
-  )
-}
 export default BlogPostListScroll
