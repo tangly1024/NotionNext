@@ -62,14 +62,12 @@ const PaginationNumber = ({ page, totalPage }) => {
 function getPageElement(page, currentPage) {
   return (
     <Link href={page === 1 ? '/' : `/page/${page}`} key={page} passHref>
-      <a
-        className={
+      <a className={
           (page + '' === currentPage + ''
             ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
             : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
           ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
-        }
-      >
+        } >
         {page}
       </a>
     </Link>

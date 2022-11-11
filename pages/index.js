@@ -23,33 +23,22 @@ export async function getStaticProps() {
   }
 
   // 处理分页
-  const page = 1
-  let postsToShow
-  if (BLOG.POST_LIST_STYLE !== 'page') {
-    postsToShow = Array.from(allPosts)
-  } else {
-    postsToShow = allPosts?.slice(
-      BLOG.POSTS_PER_PAGE * (page - 1),
-      BLOG.POSTS_PER_PAGE * page
-    )
-    if (BLOG.POST_LIST_PREVIEW === 'true') {
-      for (const i in postsToShow) {
-        const post = postsToShow[i]
-        if (post.password && post.password !== '') {
-          continue
-        }
-        const blockMap = await getPostBlocks(
-          post.id,
-          'slug',
-          BLOG.POST_PREVIEW_LINES
-        )
-        if (blockMap) {
-          post.blockMap = blockMap
-        }
+  if (BLOG.POST_LIST_STYLE === 'scroll') {
+    props.posts = Array.from(allPosts)
+  } else if (BLOG.POST_LIST_STYLE === 'page') {
+    props.posts = allPosts?.slice(0, BLOG.POSTS_PER_PAGE)
+  }
+
+  // 预览文章内容
+  if (BLOG.POST_LIST_PREVIEW === 'true') {
+    for (const i in props.posts) {
+      const post = props.posts[i]
+      if (post.password && post.password !== '') {
+        continue
       }
+      post.blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
     }
   }
-  props.posts = postsToShow
 
   return {
     props: {

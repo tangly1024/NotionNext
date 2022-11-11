@@ -41,24 +41,16 @@ export async function getStaticProps({ params: { page } }) {
   const { allPages } = props
   const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   // 处理分页
-  props.posts = allPosts.slice(
-    BLOG.POSTS_PER_PAGE * (page - 1),
-    BLOG.POSTS_PER_PAGE * page
-  )
+  props.posts = allPosts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
+
+  // 处理预览
   if (BLOG.POST_LIST_PREVIEW === 'true') {
     for (const i in props.posts) {
       const post = props.posts[i]
       if (post.password && post.password !== '') {
         continue
       }
-      const blockMap = await getPostBlocks(
-        post.id,
-        'slug',
-        BLOG.POST_PREVIEW_LINES
-      )
-      if (blockMap) {
-        post.blockMap = blockMap
-      }
+      post.blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
     }
   }
 
