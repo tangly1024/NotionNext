@@ -1,6 +1,6 @@
 const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['保持激情', 保持激情、好奇心', '保持激情、好奇心和冒险精神', '欢迎来到我的博客'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['保持激情', '保持激情、好奇心', '保持激情、好奇心和冒险精神', '欢迎来到我的博客'], // 首页大图标语文字
 
   HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
 
