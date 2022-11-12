@@ -26,18 +26,16 @@ const Tag = props => {
 export async function getStaticProps({ params: { tag, page } }) {
   const from = 'tag-page-props'
   const props = await getGlobalNotionData({ from })
-  // 过滤状态
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
-  // 过滤标签
-  props.posts = props.posts.filter(post => post && post.tags && post.tags.includes(tag))
-  // 处理文章页数
+  // 过滤状态、标签
+  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag))
+  // 处理文章数
   props.postCount = props.posts.length
   // 处理分页
   props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page - 1)
 
   props.tag = tag
   props.page = page
-
+  delete props.allPages
   return {
     props,
     revalidate: 1
@@ -46,16 +44,22 @@ export async function getStaticProps({ params: { tag, page } }) {
 
 export async function getStaticPaths() {
   const from = 'tag-page-static-path'
-  const { tags } = await getGlobalNotionData({ from })
-  const tagNames = []
-  tags.forEach(tag => {
-    tagNames.push(tag.name)
+  const { tags, allPages } = await getGlobalNotionData({ from })
+  const paths = []
+  tags?.forEach(tag => {
+    // 过滤状态类型
+    const categoryPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.tags.includes(tag.name))
+    // 处理文章页数
+    const postCount = categoryPosts.length
+    const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+    if (totalPages > 1) {
+      for (let i = 1; i <= totalPages; i++) {
+        paths.push({ params: { tag: tag.name, page: '' + i } })
+      }
+    }
   })
-
   return {
-    paths: Object.keys(tagNames).map(index => ({
-      params: { tag: tagNames[index], page: '1' }
-    })),
+    paths: paths,
     fallback: true
   }
 }

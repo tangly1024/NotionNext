@@ -28,10 +28,7 @@ export async function getStaticProps({ params: { tag } }) {
   const props = await getGlobalNotionData({ from })
 
   // 过滤状态
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
-
-  // 处理标签
-  props.posts = props.posts.filter(post => post && post.tags && post.tags.includes(tag))
+  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag))
 
   // 处理文章页数
   props.postCount = props.posts.length
