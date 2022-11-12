@@ -45,7 +45,7 @@ export async function getStaticProps({ params: { tag, page } }) {
 }
 
 export async function getStaticPaths() {
-  const from = 'tag-static-path'
+  const from = 'tag-page-static-path'
   const { tags } = await getGlobalNotionData({ from })
   const tagNames = []
   tags.forEach(tag => {
