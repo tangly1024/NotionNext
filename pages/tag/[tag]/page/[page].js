@@ -1,6 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import * as ThemeMap from '@/themes'
+import BLOG from '@/blog.config'
 
 const Tag = props => {
   const { theme } = useGlobal()
@@ -22,45 +23,38 @@ const Tag = props => {
   return <ThemeComponents.LayoutTag {...props} meta={meta} />
 }
 
-export async function getStaticProps({ params: { tag } }) {
-  const props = await getGlobalNotionData({
-    from: 'tag-props',
-    includePage: false,
-    tagsCount: 0
-  })
-  const { allPages } = props
-  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
-  props.posts = allPosts.filter(
-    post => post && post.tags && post.tags.includes(tag)
-  )
+export async function getStaticProps({ params: { tag, page } }) {
+  const from = 'tag-page-props'
+  const props = await getGlobalNotionData({ from })
+  // 过滤状态
+  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  // 过滤标签
+  props.posts = props.posts.filter(post => post && post.tags && post.tags.includes(tag))
+  // 处理文章页数
+  props.postCount = props.posts.length
+  // 处理分页
+  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page - 1)
+
   props.tag = tag
+  props.page = page
+
   return {
     props,
     revalidate: 1
   }
 }
 
-/**
- * 获取所有的标签
- * @returns
- * @param tags
- */
-function getTagNames(tags) {
+export async function getStaticPaths() {
+  const from = 'tag-static-path'
+  const { tags } = await getGlobalNotionData({ from })
   const tagNames = []
   tags.forEach(tag => {
     tagNames.push(tag.name)
   })
-  return tagNames
-}
-
-export async function getStaticPaths() {
-  const from = 'tag-static-path'
-  const { tags } = await getGlobalNotionData({ from })
-  const tagNames = getTagNames(tags)
 
   return {
     paths: Object.keys(tagNames).map(index => ({
-      params: { tag: tagNames[index] }
+      params: { tag: tagNames[index], page: '1' }
     })),
     fallback: true
   }

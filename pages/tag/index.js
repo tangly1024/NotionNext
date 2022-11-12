@@ -3,6 +3,11 @@ import React from 'react'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 
+/**
+ * 标签首页
+ * @param {*} props
+ * @returns
+ */
 const TagIndex = props => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
