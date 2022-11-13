@@ -41,7 +41,7 @@ import 'prismjs/components/prism-swift.js'
 import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import 'prismjs/components/prism-r.js'
-import Mermaid from './Mermaid'
+import mermaid from 'mermaid'
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
@@ -66,10 +66,18 @@ const NotionPage = ({ post }) => {
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
   React.useEffect(() => {
+    // 支持 Mermaid
+    const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
+    for (const e of mermaids) {
+      const chart = e.innerText
+      e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
+      mermaid.contentLoaded()
+    }
+
     setTimeout(() => {
       if (window.location.hash) {
         const tocNode = document.getElementById(window.location.hash.substring(1))
-        if (tocNode && tocNode.className.indexOf('notion') > -1) {
+        if (tocNode && tocNode?.className?.indexOf('notion') > -1) {
           tocNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
         }
       }
@@ -102,10 +110,7 @@ const NotionPage = ({ post }) => {
     addWatch4Dom()
   }, [])
 
-  const test = 'graph LR\nM{判断中位点<br>与旋转点的位置}--左侧元素小于中位点-->N[旋转点在中位点右侧 <br> 中位点左侧是有序序列]\nN-->O{目标值与<br>中位点的位置}\nO-- 最左侧元素 <= 目标 < 中位数-->B[目标值在中位点左侧 <br> right=mid]\nO-- 否则 -->D[目标值在中位点的右侧 <br> left=mid]\nM--左侧元素大于中位点-->E[旋转点在中位点左侧 <br> 中位点右侧是有序序列]\nE-->A{目标值与<br>中位点的位置}\nA--中位数 <= 查找目标 <= 最右侧元素-->F[目标值在中位点的右侧 <br> left=mid]\nA--否则-->G[目标值在中位点的左侧 <br> right=mid]\nM--左侧元素等于中位点 <br> 这种情况说明mid=0-->N\nM--右侧元素小于中位点-->N\nM--右侧元素大于中位点-->E\nM--右侧元素等于中位点 <br> 这种情况说明mid=-1-->E'
-
   return <div id='container' className='max-w-5xl overflow-x-hidden mx-auto'>
-    <Mermaid chart={test}/>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
@@ -143,7 +148,7 @@ function addWatch4Dom(element) {
         case 'childList':
           if (mutation.target.className === 'notion-code-copy') {
             fixCopy(mutation.target)
-          } else if (mutation.target.className?.indexOf('language-') > -1) {
+          } else if (mutation.target.className && typeof (mutation.target.className) === 'string' && mutation?.target?.className?.indexOf('language-') > -1) {
             const copyCode = mutation.target.parentElement?.firstElementChild
             if (copyCode) {
               fixCopy(copyCode)
