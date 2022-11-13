@@ -27,7 +27,6 @@ const TagIndex = props => {
 export async function getStaticProps() {
   const from = 'tag-index-props'
   const props = await getGlobalNotionData({ from })
-  console.log('获取所有标签', props)
   props.tags = getAllTags({ allPages: props.allPages, sliceCount: 0, tagOptions: props.tagOptions })
   delete props.tagOptions
   return {

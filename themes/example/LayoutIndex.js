@@ -1,11 +1,11 @@
 
-import { BlogList } from './components/BlogList'
+import { BlogListPage } from './components/BlogListPage'
 import LayoutBase from './LayoutBase'
 
 export const LayoutIndex = props => {
   return (
     <LayoutBase {...props}>
-      <BlogList {...props} page={1} />
+      <BlogListPage {...props} page={1} />
     </LayoutBase>
   )
 }
