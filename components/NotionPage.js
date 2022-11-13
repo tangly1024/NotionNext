@@ -41,6 +41,7 @@ import 'prismjs/components/prism-swift.js'
 import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import 'prismjs/components/prism-r.js'
+import mermaid from 'mermaid'
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
@@ -65,10 +66,18 @@ const NotionPage = ({ post }) => {
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
   React.useEffect(() => {
+    // 支持 Mermaid
+    const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
+    for (const e of mermaids) {
+      const chart = e.innerText
+      e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
+      mermaid.contentLoaded()
+    }
+
     setTimeout(() => {
       if (window.location.hash) {
         const tocNode = document.getElementById(window.location.hash.substring(1))
-        if (tocNode && tocNode.className.indexOf('notion') > -1) {
+        if (tocNode && tocNode?.className?.indexOf('notion') > -1) {
           tocNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
         }
       }
@@ -139,7 +148,7 @@ function addWatch4Dom(element) {
         case 'childList':
           if (mutation.target.className === 'notion-code-copy') {
             fixCopy(mutation.target)
-          } else if (mutation.target.className?.indexOf('language-') > -1) {
+          } else if (mutation.target.className && typeof (mutation.target.className) === 'string' && mutation?.target?.className?.indexOf('language-') > -1) {
             const copyCode = mutation.target.parentElement?.firstElementChild
             if (copyCode) {
               fixCopy(copyCode)
