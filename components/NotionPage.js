@@ -92,6 +92,12 @@ const NotionPage = ({ post }) => {
             (zoomRef.current).attach(imgList[i])
           }
         }
+
+        // 相册图片不允许点击
+        const cards = document.getElementsByClassName('notion-collection-card')
+        for (const e of cards) {
+          e.removeAttribute('href')
+        }
       }
     }, 800)
 
