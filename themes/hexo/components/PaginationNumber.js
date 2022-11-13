@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -13,78 +12,66 @@ const PaginationNumber = ({ page, totalPage }) => {
   const router = useRouter()
   const currentPage = +page
   const showNext = page < totalPage
-  const pages = generatePages(page, currentPage, totalPage)
+  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
   return (
-    <div className="mt-10 mb-5  flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
-      {/* 上一页 */}
-      <Link
-        href={{
-          pathname:
-            currentPage - 1 === 1
-              ? `${BLOG.SUB_PATH || '/'}`
-              : `/page/${currentPage - 1}`,
-          query: router.query.s ? { s: router.query.s } : {}
-        }}
-        passHref
-      >
-        <div
-          rel="prev"
-          className={`${currentPage === 1 ? 'invisible' : 'block'
-            } pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
-        >
-          <i className="fas fa-angle-left" />
-        </div>
-      </Link>
+        <div className="mt-10 mb-5  flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
+            {/* 上一页 */}
+            <Link
+                href={{
+                  pathname: currentPage === 2
+                    ? pagePrefix
+                    : `${pagePrefix}/page/${currentPage - 1}`,
+                  query: router.query.s ? { s: router.query.s } : {}
+                }}
+            >
+                <a rel="prev" className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
+                    <i className="fas fa-angle-left" />
+                </a>
+            </Link>
 
-      {pages}
+            {pages}
 
-      {/* 下一页 */}
-      <Link
-        href={{
-          pathname: `/page/${currentPage + 1}`,
-          query: router.query.s ? { s: router.query.s } : {}
-        }}
-        passHref
-      >
-        <div
-          rel="next"
-          className={`${+showNext ? 'block' : 'invisible'
-            } pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
-        >
-          <i className="fas fa-angle-right" />
+            {/* 下一页 */}
+            <Link
+                href={{
+                  pathname: `${pagePrefix}/page/${currentPage + 1}`,
+                  query: router.query.s ? { s: router.query.s } : {}
+                }}
+            >
+                <a rel="next" className={`${+showNext ? 'block' : 'invisible'} pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}>
+                    <i className="fas fa-angle-right" />
+                </a>
+            </Link>
         </div>
-      </Link>
-    </div>
   )
 }
 
-function getPageElement(page, currentPage) {
+function getPageElement(page, currentPage, pagePrefix) {
   return (
-    <Link href={page === 1 ? '/' : `/page/${page}`} key={page} passHref>
-      <a
-        className={
-          (page + '' === currentPage + ''
-            ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
-            : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
-          ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
-        }
-      >
-        {page}
-      </a>
-    </Link>
+        <Link href={page === 1 ? `${pagePrefix}` : `${pagePrefix}/page/${page}`} key={page} passHref>
+            <a className={
+                (page + '' === currentPage + ''
+                  ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
+                  : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
+                ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
+            } >
+                {page}
+            </a>
+        </Link>
   )
 }
 
-function generatePages(page, currentPage, totalPage) {
+function generatePages(pagePrefix, page, currentPage, totalPage) {
   const pages = []
   const groupCount = 7 // 最多显示页签数
   if (totalPage <= groupCount) {
     for (let i = 1; i <= totalPage; i++) {
-      pages.push(getPageElement(i, page))
+      pages.push(getPageElement(i, page, pagePrefix))
     }
   } else {
-    pages.push(getPageElement(1, page))
+    pages.push(getPageElement(1, page, pagePrefix))
     const dynamicGroupCount = groupCount - 2
     let startPage = currentPage - 2
     if (startPage <= 1) {
@@ -99,7 +86,7 @@ function generatePages(page, currentPage, totalPage) {
 
     for (let i = 0; i < dynamicGroupCount; i++) {
       if (startPage + i < totalPage) {
-        pages.push(getPageElement(startPage + i, page))
+        pages.push(getPageElement(startPage + i, page, pagePrefix))
       }
     }
 
@@ -107,7 +94,7 @@ function generatePages(page, currentPage, totalPage) {
       pages.push(<div key={-2}>... </div>)
     }
 
-    pages.push(getPageElement(totalPage, page))
+    pages.push(getPageElement(totalPage, page, pagePrefix))
   }
   return pages
 }

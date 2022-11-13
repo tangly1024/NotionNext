@@ -4,19 +4,16 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-export const BlogList = (props) => {
-  const { page, posts, postCount } = props
-
+export const BlogListPage = props => {
+  const { page = 1, posts, postCount } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
-
-  const showNext =
-        page < totalPage &&
-        posts.length === BLOG.POSTS_PER_PAGE &&
-        posts.length < postCount
-
   const currentPage = +page
+
+  const showPrev = currentPage > 1
+  const showNext = page < totalPage
+  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return <div className="w-full md:pr-12 mb-12">
 
@@ -51,10 +48,10 @@ export const BlogList = (props) => {
         ))}
 
         <div className="flex justify-between text-xs">
-            <Link href={{ pathname: currentPage - 1 === 1 ? `${BLOG.SUB_PATH || '/'}` : `/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
-                <a className={`${currentPage > 1 ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.PREV}</a>
+            <Link href={{ pathname: currentPage - 1 === 1 ? `${BLOG.SUB_PATH || pagePrefix}` : `${pagePrefix}/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
+                <a className={`${showPrev ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.PREV}</a>
             </Link>
-            <Link href={{ pathname: `/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
+            <Link href={{ pathname: `${pagePrefix}/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
                 <a className={`${showNext ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.NEXT}</a>
             </Link>
         </div>
