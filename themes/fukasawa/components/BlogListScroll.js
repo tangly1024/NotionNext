@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { useEffect, useState } from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
-import PaginationSimple from './PaginationSimple'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 文章列表分页表格
@@ -12,10 +12,10 @@ import PaginationSimple from './PaginationSimple'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogListPage = ({ page = 1, posts = [], postCount }) => {
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
-  const showNext = page < totalPage
+const BlogListScroll = props => {
+  const { posts = [] } = props
   const [colCount, changeCol] = useState(1)
+  const { locale } = useGlobal()
 
   function updateCol() {
     if (window.outerWidth > 1200) {
@@ -25,6 +25,22 @@ const BlogListPage = ({ page = 1, posts = [], postCount }) => {
     } else {
       changeCol(1)
     }
+  }
+
+  const [page, updatePage] = useState(1)
+
+  let hasMore = false
+  const postsToShow = posts
+    ? Object.assign(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
+    : []
+
+  if (posts) {
+    const totalCount = posts.length
+    hasMore = page * BLOG.POSTS_PER_PAGE < totalCount
+  }
+  const handleGetMore = () => {
+    if (!hasMore) return
+    updatePage(page + 1)
   }
 
   useEffect(() => {
@@ -42,16 +58,23 @@ const BlogListPage = ({ page = 1, posts = [], postCount }) => {
       <div id="container">
         {/* 文章列表 */}
         <div style={{ columnCount: colCount }}>
-          {posts?.map(post => (
+          {postsToShow?.map(post => (
             <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
               <BlogCard key={post.id} post={post} />
             </div>
           ))}
         </div>
-        <PaginationSimple page={page} showNext={showNext} />
+
+        <div
+              onClick={handleGetMore}
+              className="w-full my-4 py-4 text-center cursor-pointer "
+          >
+              {' '}
+              {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+          </div>
       </div>
     )
   }
 }
 
-export default BlogListPage
+export default BlogListScroll

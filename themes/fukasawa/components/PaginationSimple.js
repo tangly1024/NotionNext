@@ -14,14 +14,16 @@ const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
+  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+
   return (
     <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
       <Link
         href={{
           pathname:
             currentPage === 2
-              ? `${BLOG.SUB_PATH || '/'}`
-              : `/page/${currentPage - 1}`,
+              ? `${pagePrefix}`
+              : `${pagePrefix}/page/${currentPage - 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
@@ -37,7 +39,7 @@ const PaginationSimple = ({ page, showNext }) => {
       </Link>
       <Link
         href={{
-          pathname: `/page/${currentPage + 1}`,
+          pathname: `${pagePrefix}/page/${currentPage + 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
