@@ -1902,3 +1902,11 @@ pre[class*='language-'] {
 .notion-table-cell-multi_select {
   padding: 7px 8px 0;
 }
+
+.notion-simple-table  {
+ width: 100% !important;
+}
+
+.notion-simple-table td {
+ white-space: nowrap;
+}
