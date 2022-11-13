@@ -48,9 +48,9 @@ export async function getStaticPaths() {
   const paths = []
   tags?.forEach(tag => {
     // 过滤状态类型
-    const categoryPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.tags.includes(tag.name))
+    const tagPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag.name))
     // 处理文章页数
-    const postCount = categoryPosts.length
+    const postCount = tagPosts.length
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {
