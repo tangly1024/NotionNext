@@ -1,13 +1,14 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import { useState } from 'react'
+import React from 'react'
+import throttle from 'lodash.throttle'
 
 export const BlogListScroll = props => {
   const { posts } = props
   const { locale } = useGlobal()
 
-  const [page, updatePage] = useState(1)
+  const [page, updatePage] = React.useState(1)
 
   let hasMore = false
   const postsToShow = posts
@@ -23,7 +24,26 @@ export const BlogListScroll = props => {
     updatePage(page + 1)
   }
 
-  return <div className="w-full md:pr-12 mb-12">
+  const targetRef = React.useRef(null)
+
+  // 监听滚动自动分页加载
+  const scrollTrigger = React.useCallback(throttle(() => {
+    const scrollS = window.scrollY + window.outerHeight
+    const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
+    if (scrollS > clientHeight + 100) {
+      handleGetMore()
+    }
+  }, 500))
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', scrollTrigger)
+
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+    }
+  })
+
+  return <div className="w-full md:pr-12 mb-12" ref={targetRef}>
           {postsToShow.map(p => (
               <article key={p.id} className="mb-12" >
                   <h2 className="mb-4">

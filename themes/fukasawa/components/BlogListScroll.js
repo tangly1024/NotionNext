@@ -1,9 +1,9 @@
 import BLOG from '@/blog.config'
-import { useEffect, useState } from 'react'
+import React from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import { useGlobal } from '@/lib/global'
-
+import throttle from 'lodash.throttle'
 /**
  * 文章列表分页表格
  * @param page 当前页
@@ -14,7 +14,7 @@ import { useGlobal } from '@/lib/global'
  */
 const BlogListScroll = props => {
   const { posts = [] } = props
-  const [colCount, changeCol] = useState(1)
+  const [colCount, changeCol] = React.useState(1)
   const { locale } = useGlobal()
 
   function updateCol() {
@@ -26,8 +26,9 @@ const BlogListScroll = props => {
       changeCol(1)
     }
   }
+  const targetRef = React.useRef(null)
 
-  const [page, updatePage] = useState(1)
+  const [page, updatePage] = React.useState(1)
 
   let hasMore = false
   const postsToShow = posts
@@ -43,11 +44,23 @@ const BlogListScroll = props => {
     updatePage(page + 1)
   }
 
-  useEffect(() => {
+  // 监听滚动自动分页加载
+  const scrollTrigger = React.useCallback(throttle(() => {
+    const scrollS = window.scrollY + window.outerHeight
+    const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
+    if (scrollS > clientHeight + 100) {
+      handleGetMore()
+    }
+  }, 500))
+
+  React.useEffect(() => {
     updateCol()
+    window.addEventListener('scroll', scrollTrigger)
+
     window.addEventListener('resize', updateCol)
     return () => {
       window.removeEventListener('resize', updateCol)
+      window.removeEventListener('scroll', scrollTrigger)
     }
   })
 
@@ -55,7 +68,7 @@ const BlogListScroll = props => {
     return <BlogPostListEmpty />
   } else {
     return (
-      <div id="container">
+      <div id="container" ref={targetRef} >
         {/* 文章列表 */}
         <div style={{ columnCount: colCount }}>
           {postsToShow?.map(post => (
