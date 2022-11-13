@@ -58,7 +58,7 @@ export default function HeaderArticle({ post, siteInfo }) {
             </div>
             {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
-              次访问
+              {locale.COMMON.VIEWS}
             </div>}
           </section>
         </div>

@@ -1,10 +1,10 @@
-import { BlogList } from './components/BlogList'
+import { BlogListPage } from './components/BlogListPage'
 import LayoutBase from './LayoutBase'
 
 export const LayoutPage = props => {
   return (
     <LayoutBase {...props}>
-        <BlogList {...props} />
+        <BlogListPage {...props} />
     </LayoutBase>
   )
 }
