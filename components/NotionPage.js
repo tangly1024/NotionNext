@@ -92,18 +92,6 @@ const NotionPage = ({ post }) => {
             (zoomRef.current).attach(imgList[i])
           }
         }
-
-        // 相册中的url替换成可点击
-        const cards = document.getElementsByClassName('notion-collection-card')
-        for (const e of cards) {
-          e.removeAttribute('href')
-          const links = e.querySelectorAll('.notion-link')
-          if (links && links.length > 0) {
-            for (const l of links) {
-              l.parentElement.innerHTML = `<a href='${l.innerText}' rel='noreferrer' target='_blank'>${l.innerText}</a>`
-            }
-          }
-        }
       }
     }, 800)
 
