@@ -33,6 +33,7 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "mongodb": "^4.6.0",
+    "mermaid": "9.2.2",
     "next": "12.1.6",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
