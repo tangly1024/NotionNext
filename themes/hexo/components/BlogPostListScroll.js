@@ -3,7 +3,7 @@ import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React from 'react'
 import CONFIG_HEXO from '../config_hexo'
 import { getListByPage } from '@/lib/utils'
 
@@ -16,7 +16,7 @@ import { getListByPage } from '@/lib/utils'
  */
 const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HEXO.POST_LIST_SUMMARY }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
-  const [page, updatePage] = useState(1)
+  const [page, updatePage] = React.useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
 
   let hasMore = false
@@ -31,7 +31,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HE
   }
 
   // 监听滚动自动分页加载
-  const scrollTrigger = useCallback(throttle(() => {
+  const scrollTrigger = React.useCallback(throttle(() => {
     const scrollS = window.scrollY + window.outerHeight
     const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
     if (scrollS > clientHeight + 100) {
@@ -40,14 +40,14 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HE
   }, 500))
 
   // 监听滚动
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
   })
 
-  const targetRef = useRef(null)
+  const targetRef = React.useRef(null)
   const { locale } = useGlobal()
 
   if (!postsToShow || postsToShow.length === 0) {
