@@ -41,7 +41,10 @@ import 'prismjs/components/prism-swift.js'
 import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import 'prismjs/components/prism-r.js'
+// mermaid图
 import mermaid from 'mermaid'
+// 化学方程式
+import '@/lib/mhchem'
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
@@ -66,6 +69,18 @@ const NotionPage = ({ post }) => {
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
   React.useEffect(() => {
+    // 准备接入化学方程式
+    // console.log('kk', katex)
+    // const html = katex.renderToString('\\ce{CO2 + C -> 2 C0}')
+    // console.log(html)
+    // katex.__parse('\\ce{CO2 + C -> 2 CO}')
+    // katex.render('\ce{2H2O->2H2 + O2}', document.getElementById('test1'))
+    // katex.render('(\ce{2H + O -> H2O}\)', document.getElementById('test2'))
+    // katex.render('\\ce{2H2O->2H2 + O2}', document.getElementById('test3'))
+
+    // document.getElementById('test').innerHTML = katex.renderToString('\ce{2H2O->2H2 + O2}')
+    // document.getElementById('test').innerHTML = katex.renderToString('\(\ce{2H + O -> H2O}\)')
+
     // 支持 Mermaid
     const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
     for (const e of mermaids) {
@@ -93,7 +108,7 @@ const NotionPage = ({ post }) => {
           }
         }
 
-        // 相册图片不允许点击
+        // 相册图片点击不跳转
         const cards = document.getElementsByClassName('notion-collection-card')
         for (const e of cards) {
           e.removeAttribute('href')
@@ -105,6 +120,10 @@ const NotionPage = ({ post }) => {
   }, [])
 
   return <div id='container' className='max-w-5xl overflow-x-hidden mx-auto'>
+    <script async src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/mhchem.min.js" integrity="sha384-5gCAXJ0ZgozlShOzzT0OWArn7yCPGWVIvgo+BAd8NUKbCmulrJiQuCVR9cHlPHeG"></script>
+    <div id='test1'></div>
+    <div id='test2'></div>
+    <div id='test2'></div>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
