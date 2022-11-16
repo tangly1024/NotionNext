@@ -2,8 +2,8 @@
 const BLOG = {
   AUTHOR: 'FYZ', // 作者
   BIO: '一个不甘平凡的人', // 作者简介
-  LINK: 'https://fyz.me', // 网站地址
-  KEYWORDS: 'FYZ Blog, FYZ博客', // 网站关键词 英文逗号隔开
+  LINK: 'https://iwrwr.net', // 网站地址
+  KEYWORDS: '葳蕤, 葳蕤笔记', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
   process.env.NOTION_PAGE_ID || '9be3bd772c234e1f842eaea73e018cd7', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
@@ -62,7 +62,7 @@ const BLOG = {
   FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || false, // 鼠标点击烟花特效
 
   // 悬浮挂件
-  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
+  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || false, // 是否显示宠物挂件
   WIDGET_PET_LINK:
     'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
   WIDGET_PET_SWITCH_THEME: false, // 点击宠物挂件切换博客主题
@@ -160,7 +160,7 @@ const BLOG = {
     process.env.NEXT_PUBLIC_DESCRIPTION || '这是一个由NotionNext生成的站点', // 站点描述，被notion中的页面描述覆盖
 
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
- // VERSION: process.env.NEXT_PUBLIC_VERSION // 版本号
+  VERSION: process.env.NEXT_PUBLIC_VERSION // 版本号
 }
 
 module.exports = BLOG
