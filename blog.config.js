@@ -2,8 +2,8 @@
 const BLOG = {
   AUTHOR: 'dongdong', // 作者
   BIO: '一个普通的求学者', // 作者简介
-  LINK: 'dongliang1996.cn', // 网站地址
-  KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
+  LINK: 'https://www.zhihu.com/people/dong-dong-53-57-14', // 网站地址
+  KEYWORDS: 'Notion, 博客, 生产力, 学习, 工作, 系统', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
   process.env.NOTION_PAGE_ID || '1858c69018c24b9e9385b170f4113ed9', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
