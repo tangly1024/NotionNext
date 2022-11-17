@@ -8,7 +8,10 @@ import '@/styles/notion.css' //  重写部分样式
 
 // used for collection views (optional)
 // import 'rc-dropdown/assets/index.css'
-import 'prismjs/themes/prism-tomorrow.min.css'
+// import 'prismjs/themes/prism-tomorrow.min.css'
+import 'prism-themes/themes/prism-one-dark.css'
+import '@/styles/prism-mac-style.css' //  將 Prism 加入 mac 視窗樣式
+
 // import 'react-notion-x/build/third-party/equation.css'
 import 'katex/dist/katex.min.css'
 

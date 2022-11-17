@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
 import { Pdf } from 'react-notion-x/build/third-party/pdf'
 import { Equation } from 'react-notion-x/build/third-party/equation'
+
 import 'prismjs/components/prism-bash.js'
 import 'prismjs/components/prism-markup-templating.js'
 import 'prismjs/components/prism-markup.js'
@@ -41,10 +42,19 @@ import 'prismjs/components/prism-swift.js'
 import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import 'prismjs/components/prism-r.js'
+import 'prismjs/plugins/line-numbers/prism-line-numbers'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+
 // mermaid图
 import mermaid from 'mermaid'
 // 化学方程式
 import '@/lib/mhchem'
+
+// https://github.com/txs
+// import PrismMac from '@/components/PrismMac'
+const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+  ssr: false
+})
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
@@ -69,18 +79,6 @@ const NotionPage = ({ post }) => {
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
   React.useEffect(() => {
-    // 准备接入化学方程式
-    // console.log('kk', katex)
-    // const html = katex.renderToString('\\ce{CO2 + C -> 2 C0}')
-    // console.log(html)
-    // katex.__parse('\\ce{CO2 + C -> 2 CO}')
-    // katex.render('\ce{2H2O->2H2 + O2}', document.getElementById('test1'))
-    // katex.render('(\ce{2H + O -> H2O}\)', document.getElementById('test2'))
-    // katex.render('\\ce{2H2O->2H2 + O2}', document.getElementById('test3'))
-
-    // document.getElementById('test').innerHTML = katex.renderToString('\ce{2H2O->2H2 + O2}')
-    // document.getElementById('test').innerHTML = katex.renderToString('\(\ce{2H + O -> H2O}\)')
-
     // 支持 Mermaid
     const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
     for (const e of mermaids) {
@@ -115,15 +113,10 @@ const NotionPage = ({ post }) => {
         }
       }
     }, 800)
-
-    addWatch4Dom()
   }, [])
 
   return <div id='container' className='max-w-5xl overflow-x-hidden mx-auto'>
-    <script async src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/mhchem.min.js" integrity="sha384-5gCAXJ0ZgozlShOzzT0OWArn7yCPGWVIvgo+BAd8NUKbCmulrJiQuCVR9cHlPHeG"></script>
-    <div id='test1'></div>
-    <div id='test2'></div>
-    <div id='test2'></div>
+    <PrismMac />
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
@@ -137,72 +130,6 @@ const NotionPage = ({ post }) => {
         nextLink: Link
       }} />
   </div>
-}
-
-/**
- * 监听DOM变化
- * @param {*} element
- */
-function addWatch4Dom(element) {
-  // 选择需要观察变动的节点
-  const targetNode = element || document?.getElementById('container')
-  // 观察器的配置（需要观察什么变动）
-  const config = {
-    attributes: true,
-    childList: true,
-    subtree: true
-  }
-
-  // 当观察到变动时执行的回调函数
-  const mutationCallback = (mutations) => {
-    for (const mutation of mutations) {
-      const type = mutation.type
-      switch (type) {
-        case 'childList':
-          if (mutation.target.className === 'notion-code-copy') {
-            fixCopy(mutation.target)
-          } else if (mutation.target.className && typeof (mutation.target.className) === 'string' && mutation?.target?.className?.indexOf('language-') > -1) {
-            const copyCode = mutation.target.parentElement?.firstElementChild
-            if (copyCode) {
-              fixCopy(copyCode)
-            }
-          }
-          //   console.log('A child node has been added or removed.')
-          break
-        case 'attributes':
-        //   console.log(`The ${mutation.attributeName} attribute was modified.`)
-        //   console.log(mutation.attributeName)
-          break
-        case 'subtree':
-        //   console.log('The subtree was modified.')
-          break
-        default:
-          break
-      }
-    }
-  }
-
-  // 创建一个观察器实例并传入回调函数
-  const observer = new MutationObserver(mutationCallback)
-  //   console.log(observer)
-  // 以上述配置开始观察目标节点
-  if (targetNode) {
-    observer.observe(targetNode, config)
-  }
-
-  // observer.disconnect();
-}
-
-/**
- * 复制代码后，会重复 @see https://github.com/tangly1024/NotionNext/issues/165
- * @param {*} e
- */
-function fixCopy(codeCopy) {
-  const codeE = codeCopy.parentElement.lastElementChild
-  const codeEnd = codeE.lastChild
-  if (codeEnd.nodeName === '#text' && codeE.childNodes.length > 1) {
-    codeEnd.nodeValue = null
-  }
 }
 
 /**

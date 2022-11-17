@@ -1,0 +1,107 @@
+/**
+ * @author https://github.com/txs
+ **/
+.code-toolbar {
+  position: relative;
+
+  width: 100%;
+
+  background: #000;
+
+  padding-top: 20px;
+
+  border-radius: 0.75rem;
+}
+
+.toolbar {
+  position: absolute;
+  margin-left: 100%;
+  top: 10px;
+  right: 4px;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  line-height: 1rem;
+}
+
+.toolbar-item{
+  @apply whitespace-nowrap
+}
+
+.toolbar-item > button {
+  margin-top: -0.1rem;
+}
+
+pre[class*='language-'].line-numbers {
+  position: relative;
+
+  padding: 3px; /*修改*/
+
+  padding-left: 3.8em;
+
+  counter-reset: linenumber;
+
+  max-height: 400px; /*修改*/
+
+  background: black;
+
+  border: none;
+}
+
+.notion-code > code[class*='language-'],
+pre[class*='language-'] {
+  background: black;
+}
+
+.pre-mac {
+  position: relative;
+
+  margin-top: -7px;
+
+  top: 21px;
+
+  left: 10px;
+
+  width: 100px;
+
+  z-index: 99;
+}
+
+.pre-mac > span {
+  float: left;
+
+  width: 10px;
+
+  height: 10px;
+
+  border-radius: 50%;
+
+  margin-right: 5px;
+}
+
+.pre-mac > span:nth-child(1) {
+  background: red;
+}
+
+.pre-mac > span:nth-child(2) {
+  background: sandybrown;
+}
+
+.pre-mac > span:nth-child(3) {
+  background: limegreen;
+}
+
+/* 引用块中的代码样式调 */
+blockquote  .code-toolbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 5px;
+}
+
+blockquote .pre-mac {
+  top: 15px;
+}
+
+details .code-toolbar {
+  top: 10px;
+}
