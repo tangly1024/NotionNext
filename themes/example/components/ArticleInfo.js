@@ -10,7 +10,7 @@ export const ArticleInfo = (props) => {
 
   return <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
         <div>
-            {post?.type[0] !== 'Page' && <>
+            {post?.type !== 'Page' && <>
                 <Link href={`/category/${post.category}`} passHref>
                     <a className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
                         <i className="mr-1 fas fa-folder-open" />
@@ -20,7 +20,7 @@ export const ArticleInfo = (props) => {
                 <span className='mr-2'>|</span>
             </>}
 
-            {post?.type[0] !== 'Page' && (<>
+            {post?.type !== 'Page' && (<>
                 <Link
                     href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                     passHref
