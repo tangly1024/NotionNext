@@ -43,7 +43,7 @@ export const BlogListScroll = props => {
     }
   })
 
-  return <div className="w-full md:pr-12 mb-12" ref={targetRef}>
+  return <div id="container" className="w-full md:pr-12 mb-12" ref={targetRef}>
           {postsToShow.map(p => (
               <article key={p.id} className="mb-12" >
                   <h2 className="mb-4">
