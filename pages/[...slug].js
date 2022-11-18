@@ -108,7 +108,7 @@ export async function getStaticProps({ params: { slug } }) {
   }
   props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
 
-  const allPosts = props.allPages.filter(page => page.type === 'Post')
+  const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   const index = allPosts.indexOf(props.post)
   props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
   props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
