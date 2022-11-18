@@ -52,11 +52,12 @@ const BLOG = {
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: 'mail@tangly1024.com',
-  CONTACT_WEIBO: '',
-  CONTACT_TWITTER: '',
-  CONTACT_GITHUB: 'https://github.com/tangly1024',
-  CONTACT_TELEGRAM: '',
+  CONTACT_EMAIL: 'mail@tangly1024.com', // 邮箱
+  CONTACT_WEIBO: '', // 你的微博个人主页
+  CONTACT_TWITTER: '', // 你的twitter个人主页
+  CONTACT_GITHUB: 'https://github.com/tangly1024', // 你的github个人主页
+  CONTACT_TELEGRAM: '', // 你的telegram 地址 例如 https://t.me/tangly_1024
+  CONTACT_LINKEDIN: '', // 你的linkedIn 首页
 
   // 鼠标点击烟花特效
   FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || false, // 鼠标点击烟花特效
