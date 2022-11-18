@@ -27,12 +27,12 @@ const BLOG = {
 
   // 自定义字体示例： 请先将 CUSTOM_FONT 改为 true， 并将 CUSTOM_FONT_URL 改为你的字体CSS地址，同时在 CUSTOM_FONT_SANS 与 CUSTOM_FONT_SERIF 中指定你的 fontfamily
   CUSTOM_FONT: true, // 是否使用自定义字体
-  CUSTOM_FONT_URL: ['https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.6.0/lxgwwenkaiscreen.css'], // 自定义字体的CSS
-  CUSTOM_FONT_SANS: ['LXGW WenKai Screen'], // 自定义无衬线字体
-  CUSTOM_FONT_SERIF: ['LXGW WenKai Screen'], // 自定义衬线字体
+  CUSTOM_FONT_URL: ['https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.6.0/style.min.css'], // 自定义字体的CSS
+  CUSTOM_FONT_SANS: ['LXGW WenKai'], // 自定义无衬线字体
+  CUSTOM_FONT_SERIF: ['LXGW WenKai'], // 自定义衬线字体
 
   // 图标库CDN(可以直接改版本号）
-  FONT_AWESOME_PATH: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.0/css/all.min.css',
+  FONT_AWESOME_PATH: 'https://npm.elemecdn.com/ajax/libs/font-awesome/6.2.0/css/all.min.css',
 
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
@@ -52,11 +52,12 @@ const BLOG = {
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: 'mail@tangly1024.com',
-  CONTACT_WEIBO: '',
-  CONTACT_TWITTER: '',
-  CONTACT_GITHUB: 'https://github.com/tangly1024',
-  CONTACT_TELEGRAM: '',
+  CONTACT_EMAIL: 'mail@tangly1024.com', // 邮箱
+  CONTACT_WEIBO: '', // 你的微博个人主页
+  CONTACT_TWITTER: '', // 你的twitter个人主页
+  CONTACT_GITHUB: 'https://github.com/tangly1024', // 你的github个人主页
+  CONTACT_TELEGRAM: '', // 你的telegram 地址 例如 https://t.me/tangly_1024
+  CONTACT_LINKEDIN: '', // 你的linkedIn 首页
 
   // 鼠标点击烟花特效
   FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || false, // 鼠标点击烟花特效
