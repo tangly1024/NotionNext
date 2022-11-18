@@ -1835,6 +1835,7 @@ pre[class*='language-'] {
   line-height: 120%;
   min-width: 0;
   font-size: 14px;
+  @apply dark:text-gray-200
 }
 
 .notion-collection-column-title-icon {
@@ -1845,6 +1846,8 @@ pre[class*='language-'] {
   min-height: 14px;
   fill: var(--fg-color-2);
   margin-right: 6px;
+  @apply dark:text-gray-200
+
 }
 
 .notion-collection-column-title-body {

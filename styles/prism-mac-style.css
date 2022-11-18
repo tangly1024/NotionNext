@@ -3,14 +3,8 @@
  **/
 .code-toolbar {
   position: relative;
-
-  width: 100%;
-
-  background: #000;
-
-  padding-top: 20px;
-
-  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, .4);
+  @apply mb-8 pt-6 w-full rounded-lg bg-black
 }
 
 .toolbar {
@@ -34,17 +28,11 @@
 
 pre[class*='language-'].line-numbers {
   position: relative;
-
   padding: 3px; /*修改*/
-
   padding-left: 3.8em;
-
   counter-reset: linenumber;
-
   max-height: 400px; /*修改*/
-
   background: black;
-
   border: none;
 }
 
@@ -54,29 +42,15 @@ pre[class*='language-'] {
 }
 
 .pre-mac {
-  position: relative;
-
-  margin-top: -7px;
-
-  top: 21px;
-
-  left: 10px;
-
-  width: 100px;
-
-  z-index: 99;
+    position: absolute;
+    left: 15px;
+    @apply z-10 top-4 left-3
 }
 
 .pre-mac > span {
-  float: left;
-
-  width: 10px;
-
-  height: 10px;
-
   border-radius: 50%;
-
   margin-right: 5px;
+  @apply float-left
 }
 
 .pre-mac > span:nth-child(1) {
@@ -91,17 +65,6 @@ pre[class*='language-'] {
   background: limegreen;
 }
 
-/* 引用块中的代码样式调 */
-blockquote  .code-toolbar {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: 5px;
-}
-
-blockquote .pre-mac {
-  top: 15px;
-}
-
-details .code-toolbar {
-  top: 10px;
+.notion-code-copy{
+  display: none;
 }

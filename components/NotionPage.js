@@ -45,16 +45,14 @@ import 'prismjs/components/prism-r.js'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
-// mermaid图
-import mermaid from 'mermaid'
 // 化学方程式
 import '@/lib/mhchem'
 
 // https://github.com/txs
-// import PrismMac from '@/components/PrismMac'
-const PrismMac = dynamic(() => import('@/components/PrismMac'), {
-  ssr: false
-})
+import PrismMac from '@/components/PrismMac'
+// const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+//   ssr: false
+// })
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
@@ -79,14 +77,6 @@ const NotionPage = ({ post }) => {
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
   React.useEffect(() => {
-    // 支持 Mermaid
-    const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
-    for (const e of mermaids) {
-      const chart = e.innerText
-      e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
-      mermaid.contentLoaded()
-    }
-
     setTimeout(() => {
       if (window.location.hash) {
         const tocNode = document.getElementById(window.location.hash.substring(1))
@@ -115,7 +105,7 @@ const NotionPage = ({ post }) => {
     }, 800)
   }, [])
 
-  return <div id='container' className='max-w-5xl overflow-x-hidden mx-auto'>
+  return <div id='container' className='max-w-5xl overflow-x-visible mx-auto'>
     <PrismMac />
     <NotionRenderer
       recordMap={post.blockMap}
