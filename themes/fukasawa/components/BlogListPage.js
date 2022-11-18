@@ -39,9 +39,9 @@ const BlogListPage = ({ page = 1, posts = [], postCount }) => {
     return <BlogPostListEmpty />
   } else {
     return (
-      <div id="container">
+      <div>
         {/* 文章列表 */}
-        <div style={{ columnCount: colCount }}>
+        <div id="container" style={{ columnCount: colCount }}>
           {posts?.map(post => (
             <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
               <BlogCard key={post.id} post={post} />

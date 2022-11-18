@@ -1,5 +1,7 @@
 import LayoutBase from './LayoutBase'
+import BLOG from '@/blog.config'
 import BlogListPage from './components/BlogListPage'
+import BlogListScroll from './components/BlogListScroll'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { isBrowser } from '@/lib/utils'
@@ -18,6 +20,6 @@ export const LayoutSearch = (props) => {
     }, 100)
   })
   return <LayoutBase {...props} currentSearch={currentSearch}>
-    <BlogListPage {...props} />
+    {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props}/>}
   </LayoutBase>
 }
