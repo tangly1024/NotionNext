@@ -11,6 +11,8 @@ import { useRouter } from 'next/router'
 import ArticleCopyright from './ArticleCopyright'
 import WordCount from './WordCount'
 import NotionPage from '@/components/NotionPage'
+import CONFIG_NEXT from '../config_next'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  *
@@ -29,7 +31,7 @@ export default function ArticleDetail(props) {
     >
 
       {showArticleInfo && <header className='animate__slideInDown animate__animated'>
-        {post?.type && !post?.type.includes('Page') && post?.page_cover && (
+        {CONFIG_NEXT.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.page_cover && (
           <div className="w-full relative md:flex-shrink-0 overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
@@ -38,7 +40,7 @@ export default function ArticleDetail(props) {
 
         {/* 文章Title */}
         <div className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
-          {post.title}
+          <NotionIcon icon={post.pageIcon}/>{post.title}
         </div>
 
         <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
@@ -51,7 +53,7 @@ export default function ArticleDetail(props) {
               </Link>
               <span className='mr-2'>|</span>
             </>}
-            {post?.type[0] !== 'Page' && (<>
+            {post?.type !== 'Page' && (<>
               <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref

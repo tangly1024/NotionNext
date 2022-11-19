@@ -1,6 +1,6 @@
 import LayoutBase from './LayoutBase'
-import BlogPostListScroll from './components/BlogPostListScroll'
 import BLOG from '@/blog.config'
+import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 
 export const LayoutTag = (props) => {
