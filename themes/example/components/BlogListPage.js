@@ -50,7 +50,7 @@ export const BlogListPage = props => {
         </div>
 
         <div className="flex justify-between text-xs">
-            <Link href={{ pathname: currentPage - 1 === 1 ? `${BLOG.SUB_PATH || pagePrefix}` : `${pagePrefix}/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
+            <Link href={{ pathname: currentPage - 1 === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
                 <a className={`${showPrev ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>{locale.PAGINATION.PREV}</a>
             </Link>
             <Link href={{ pathname: `${pagePrefix}/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}>
