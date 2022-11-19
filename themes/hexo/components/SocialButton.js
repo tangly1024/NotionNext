@@ -15,6 +15,12 @@ const SocialButton = () => {
       {BLOG.CONTACT_TWITTER && <a target='_blank' rel='noreferrer' title={'twitter'} href={BLOG.CONTACT_TWITTER} >
         <i className='transform hover:scale-125 duration-150 fab fa-twitter dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
+       {BLOG.CONTACT_YOUTUBE && <a target='_blank' rel='noreferrer' title={'youtube'} href={BLOG.CONTACT_YOUTUBE} >
+        <i className='transform hover:scale-125 duration-150 fab fa-youtube text-red-600 fa-lg'/>
+      </a>}
+         {BLOG.CONTACT_FACEBOOK && <a target='_blank' rel='noreferrer' title={'facebook'} href={BLOG.CONTACT_FACEBOOK} >
+        <i className='transform hover:scale-125 duration-150 fab fa-facebook text-blue-600 fa-lg'/>
+      </a>}
       {BLOG.CONTACT_TELEGRAM && <a target='_blank' rel='noreferrer' href={BLOG.CONTACT_TELEGRAM} title={'telegram'} >
         <i className='transform hover:scale-125 duration-150 fab fa-telegram dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
@@ -28,7 +34,7 @@ const SocialButton = () => {
         <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
       <a target='_blank' rel='noreferrer' title={'RSS'} href={'/feed'} >
-        <i className='transform hover:scale-125 duration-150 fas fa-rss dark:hover:text-indigo-400 hover:text-indigo-600'/>
+        <i className='transform hover:scale-125 duration-150 fas fa-rss dark:hover:text-orange-400 hover:text-orange-600'/>
       </a>
     </div>
   </div>
