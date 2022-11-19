@@ -30,7 +30,7 @@ const LayoutBase = props => {
         {/* 桌面端左侧菜单 */}
         {/* <LeftMenuBar/> */}
 
-        <div className='w-full'>
+        <div id='container-inner' className='w-full'>
           {/* 移动端顶部菜单 */}
           <TopNavBar {...props}/>
           <div className='px-5 max-w-5xl justify-center mx-auto min-h-screen'>
