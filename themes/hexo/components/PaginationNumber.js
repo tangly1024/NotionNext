@@ -13,6 +13,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   const currentPage = +page
   const showNext = page < totalPage
   const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  console.log('哈哈', pagePrefix, page, currentPage, totalPage)
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
   return (
