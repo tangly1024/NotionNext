@@ -40,37 +40,42 @@ function renderPrismMac() {
   const container = document?.getElementById('container-inner')
   const codeToolBars = container?.getElementsByClassName('code-toolbar')
 
-  Array.from(codeToolBars).forEach(item => {
-    const codeBlocks = item.getElementsByTagName('pre')
-    if (codeBlocks.length === 0) {
-      item.remove()
-    }
-  })
-
+  if (codeToolBars) {
+    Array.from(codeToolBars).forEach(item => {
+      const codeBlocks = item.getElementsByTagName('pre')
+      if (codeBlocks.length === 0) {
+        item.remove()
+      }
+    })
+  }
   // 重新渲染之前检查所有的多余text
 
   try {
     Prism.highlightAll()
     // Add line numbers
     const codeBlocks = container?.getElementsByTagName('pre')
-    Array.from(codeBlocks).forEach(item => {
-      if (!item.classList.contains('line-numbers')) {
-        item.classList.add('line-numbers')
-        item.style.whiteSpace = 'pre-wrap'
-      }
-    })
+    if (codeBlocks) {
+      Array.from(codeBlocks).forEach(item => {
+        if (!item.classList.contains('line-numbers')) {
+          item.classList.add('line-numbers')
+          item.style.whiteSpace = 'pre-wrap'
+        }
+      })
+    }
 
     setTimeout(() => {
       // Add pre-mac element for Mac Style UI
-      Array.from(codeToolBars).forEach(item => {
-        const existPreMac = item.getElementsByClassName('pre-mac')
-        if (existPreMac.length < codeToolBars.length) {
-          const preMac = document.createElement('div')
-          preMac.classList.add('pre-mac')
-          preMac.innerHTML = '<span></span><span></span><span></span>'
-          item?.appendChild(preMac, item)
-        }
-      })
+      if (codeToolBars) {
+        Array.from(codeToolBars).forEach(item => {
+          const existPreMac = item.getElementsByClassName('pre-mac')
+          if (existPreMac.length < codeToolBars.length) {
+            const preMac = document.createElement('div')
+            preMac.classList.add('pre-mac')
+            preMac.innerHTML = '<span></span><span></span><span></span>'
+            item?.appendChild(preMac, item)
+          }
+        })
+      }
     }, 0)
   } catch (err) {
     console.log('代码渲染', err)
