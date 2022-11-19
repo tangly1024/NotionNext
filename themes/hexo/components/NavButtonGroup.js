@@ -9,6 +9,9 @@ import Link from 'next/link'
  */
 const NavButtonGroup = (props) => {
   const { categories } = props
+  if (!categories || categories.length === 0) {
+    return <></>
+  }
 
   return <nav id='home-nav-button' className={'md:h-52 md:mt-6 xl:mt-32 px-5 py-2 mt-8 flex flex-wrap md:max-w-5xl space-y-2 md:space-y-0 md:flex justify-center max-h-80 overflow-auto'}>
     {categories.map(category => {

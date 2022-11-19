@@ -2,18 +2,23 @@ import BLOG from '@/blog.config'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import LayoutBase from './LayoutBase'
-import TagItemMini from '../next/components/TagItemMini'
 import React from 'react'
+import Link from 'next/link'
 
 export const LayoutTag = (props) => {
-  const currentTag = props.tags.find((t) => {
+  const tag = props.tags.find((t) => {
     return t.name === props.tag
   })
 
   return <LayoutBase {...props}>
-        {currentTag && (
-            <div className="cursor-pointer px-5 py-1 mb-2 font-light hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform text-center dark:text-white">
-                <TagItemMini tag={currentTag} />
+        {tag && (
+            <div className="cursor-pointer px-3 py-2 mb-2 font-light hover:text-indigo-700 dark:hover:text-indigo-400 transform dark:text-white">
+                <Link key={tag} href={`/tag/${encodeURIComponent(tag.name)}`} passHref>
+                    <a className={`cursor-pointer inline-block rounded duration-200
+                            mr-2 py-0.5 px-1 text-xl whitespace-nowrap ` }>
+                        <div className='font-light dark:text-gray-400 dark:hover:text-white'> #{tag.name + (tag.count ? `(${tag.count})` : '')} </div>
+                    </a>
+                </Link>
             </div>
         )}
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
