@@ -60,8 +60,6 @@ const PaginationNumber = ({ page, totalPage }) => {
 }
 
 function getPageElement(pagePrefix, page, currentPage) {
-  console.log(pagePrefix, page, currentPage)
-
   return (
         <Link href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`} key={page} passHref>
             <a className={
