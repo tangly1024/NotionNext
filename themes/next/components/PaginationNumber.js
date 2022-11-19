@@ -22,7 +22,7 @@ const PaginationNumber = ({ page, totalPage }) => {
                 href={{
                   pathname:
                         currentPage - 1 === 1
-                          ? `${pagePrefix}}`
+                          ? `${pagePrefix}/`
                           : `${pagePrefix}/page/${currentPage - 1}`,
                   query: router.query.s ? { s: router.query.s } : {}
                 }}
@@ -63,7 +63,7 @@ function getPageElement(pagePrefix, page, currentPage) {
   console.log(pagePrefix, page, currentPage)
 
   return (
-        <Link href={page === 1 ? `${pagePrefix}` : `${pagePrefix}/page/${page}`} key={page} passHref>
+        <Link href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`} key={page} passHref>
             <a className={
                 (page + '' === currentPage + ''
                   ? 'font-bold bg-gray-500 dark:bg-gray-400 text-white '

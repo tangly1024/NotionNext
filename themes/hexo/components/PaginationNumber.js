@@ -13,6 +13,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   const currentPage = +page
   const showNext = page < totalPage
   const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  console.log('哈哈', pagePrefix, page, currentPage, totalPage)
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
   return (
@@ -21,7 +22,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             <Link
                 href={{
                   pathname: currentPage === 2
-                    ? pagePrefix
+                    ? `${pagePrefix}/`
                     : `${pagePrefix}/page/${currentPage - 1}`,
                   query: router.query.s ? { s: router.query.s } : {}
                 }}
@@ -50,7 +51,7 @@ const PaginationNumber = ({ page, totalPage }) => {
 
 function getPageElement(page, currentPage, pagePrefix) {
   return (
-        <Link href={page === 1 ? `${pagePrefix}` : `${pagePrefix}/page/${page}`} key={page} passHref>
+        <Link href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`} key={page} passHref>
             <a className={
                 (page + '' === currentPage + ''
                   ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
