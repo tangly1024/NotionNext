@@ -47,10 +47,10 @@ import 'prismjs/components/prism-r.js'
 import '@/lib/mhchem'
 
 // https://github.com/txs
-import PrismMac from '@/components/PrismMac'
-// const PrismMac = dynamic(() => import('@/components/PrismMac'), {
-//   ssr: false
-// })
+// import PrismMac from '@/components/PrismMac'
+const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+  ssr: false
+})
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
