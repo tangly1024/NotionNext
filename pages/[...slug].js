@@ -105,7 +105,11 @@ export async function getStaticProps({ params: { slug } }) {
   })
 
   if (!props.post) {
-    const post = await getNotion(slug.slice(-1)[0])
+    const pageId = slug.slice(-1)[0]
+    if (pageId.length < 32) {
+      return { props, revalidate: 1 }
+    }
+    const post = await getNotion(pageId)
     if (post) {
       props.post = post
     } else {

@@ -42,8 +42,6 @@ import 'prismjs/components/prism-swift.js'
 import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import 'prismjs/components/prism-r.js'
-import 'prismjs/plugins/line-numbers/prism-line-numbers'
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // 化学方程式
 import '@/lib/mhchem'

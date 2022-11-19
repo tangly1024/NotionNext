@@ -4,9 +4,12 @@ import 'prismjs/plugins/toolbar/prism-toolbar'
 import 'prismjs/plugins/show-language/prism-show-language'
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 import 'prismjs/plugins/autoloader/prism-autoloader'
+import 'prismjs/plugins/line-numbers/prism-line-numbers'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
 import mermaid from 'mermaid'
+import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 
 /**
@@ -15,39 +18,52 @@ import { useRouter } from 'next/router'
  */
 const PrismMac = () => {
   const router = useRouter()
+  const { isDarkMode } = useGlobal()
   React.useEffect(() => {
-    // addWatch4Dom()
     renderPrismMac()
+
+    const codeToolBars = document?.getElementsByClassName('code-toolbar')
+    // Add pre-mac element for Mac Style UI
+    Array.from(codeToolBars).forEach(item => {
+      const existPreMac = item.getElementsByClassName('pre-mac')
+      if (existPreMac.length < codeToolBars.length) {
+        const preMac = document.createElement('div')
+        preMac.classList.add('pre-mac')
+        preMac.innerHTML = '<span></span><span></span><span></span>'
+        item?.appendChild(preMac, item)
+      }
+    })
     router.events.on('routeChangeComplete', renderPrismMac)
     return () => {
       router.events.off('routeChangeComplete', renderPrismMac)
     }
-  }, [])
+  }, [isDarkMode])
   return <></>
 }
 
 function renderPrismMac() {
   const container = document?.getElementById('container-inner')
-
-  const codeBlocks = container?.getElementsByTagName('pre')
-  Array.from(codeBlocks).forEach(item => {
-    // Add line numbers
-    if (!item.classList.contains('line-numbers')) {
-      item.classList.add('line-numbers')
-      item.style.whiteSpace = 'pre-wrap'
-    }
-  })
-
   const codeToolBars = container?.getElementsByClassName('code-toolbar')
 
   Array.from(codeToolBars).forEach(item => {
-    // Add pre-mac element for Mac Style UI
-    const findPreMac = item.getElementsByClassName('pre-mac')
-    if (findPreMac.length === 0) {
-      const preMac = document.createElement('div')
-      preMac.classList.add('pre-mac')
-      preMac.innerHTML = '<span></span><span></span><span></span>'
-      item?.appendChild(preMac, item)
+    const codeBlocks = item.getElementsByTagName('pre')
+    if (codeBlocks.length === 0) {
+      item.remove()
+    }
+  })
+
+  try {
+    Prism.highlightAll()
+  } catch (err) {
+    console.log('代码渲染', err)
+  }
+
+  // Add line numbers
+  const codeBlocks = container?.getElementsByTagName('pre')
+  Array.from(codeBlocks).forEach(item => {
+    if (!item.classList.contains('line-numbers')) {
+      item.classList.add('line-numbers')
+      item.style.whiteSpace = 'pre-wrap'
     }
   })
 
@@ -58,12 +74,6 @@ function renderPrismMac() {
     e.parentElement.parentElement.classList.remove('code-toolbar')
     e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
     mermaid.contentLoaded()
-  }
-
-  try {
-    Prism.highlightAll()
-  } catch (err) {
-    console.log('代码渲染', err)
   }
 }
 
@@ -88,14 +98,14 @@ function addWatch4Dom(element) {
       const type = mutation.type
       switch (type) {
         case 'childList':
-        //   console.log('A child node has been added or removed.', mutation.target)
+          console.log('A child node has been added or removed.', mutation.target)
           break
         case 'attributes':
-        //   console.log(`The ${mutation.attributeName} attribute was modified.`)
-        //   console.log(mutation.attributeName)
+          console.log(`The ${mutation.attributeName} attribute was modified.`, mutation.target)
+          console.log(mutation.attributeName)
           break
         case 'subtree':
-        //   console.log('The subtree was modified.')
+          console.log('The subtree was modified.', mutation.target)
           break
         default:
           break
@@ -111,7 +121,7 @@ function addWatch4Dom(element) {
     observer.observe(targetNode, config)
   }
 
-//   observer.disconnect()
+  //   observer.disconnect()
 }
 
 export default PrismMac
