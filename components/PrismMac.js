@@ -19,9 +19,9 @@ import { useRouter } from 'next/router'
 const PrismMac = () => {
   const router = useRouter()
   const { isDarkMode } = useGlobal()
+
   React.useEffect(() => {
     renderPrismMac()
-
     const codeToolBars = document?.getElementsByClassName('code-toolbar')
     // Add pre-mac element for Mac Style UI
     Array.from(codeToolBars).forEach(item => {
@@ -38,6 +38,10 @@ const PrismMac = () => {
       router.events.off('routeChangeComplete', renderPrismMac)
     }
   }, [isDarkMode])
+
+  React.useEffect(() => {
+    mermaid.contentLoaded()
+  })
   return <></>
 }
 
@@ -70,10 +74,15 @@ function renderPrismMac() {
   // 支持 Mermaid
   const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
   for (const e of mermaids) {
-    const chart = e.innerText
     e.parentElement.parentElement.classList.remove('code-toolbar')
-    e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
-    mermaid.contentLoaded()
+    const chart = e.firstChild.textContent
+    if (e.firstElementChild) {
+      e.parentElement.parentElement.remove()
+      continue
+    }
+    if (chart) {
+      e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
+    }
   }
 }
 
