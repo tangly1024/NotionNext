@@ -8,12 +8,7 @@ module.exports = {
     fontFamily: fontFamilies,
     extend: {
       colors: {
-        indigo: {
-          light: '#10B981',
-          DEFAULT: '#10B981',
-          dark: '#34D399',
-          }
-      }
+      
         day: {
           DEFAULT: BLOG.BACKGROUND_LIGHT || '#ffffff'
         },
