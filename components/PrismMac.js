@@ -127,7 +127,7 @@ function addWatch4Dom(element) {
 
   // 创建一个观察器实例并传入回调函数
   observer = new MutationObserver(mutationCallback)
-  console.log('观察节点变化', observer)
+  //   console.log('观察节点变化', observer)
   // 以上述配置开始观察目标节点
   if (targetNode) {
     observer.observe(targetNode, config)
@@ -144,7 +144,6 @@ const mutationCallback = (mutations) => {
       case 'childList':
         //   console.log('A child node has been added or removed.', mutation)
         if (mutation.addedNodes.length > 0) {
-          console.log('改变内容', mutation)
           if (mutation?.target?.parentElement?.nodeName === 'PRE' || mutation?.target?.parentElement?.nodeName === 'CODE') {
             if (mutation.addedNodes[0].nodeName === '#text') {
               mutation.addedNodes[0].remove() // 移除新增的内容
