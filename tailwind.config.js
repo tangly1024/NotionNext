@@ -8,7 +8,9 @@ module.exports = {
     fontFamily: fontFamilies,
     extend: {
       colors: {
-        'teal': '#0d9488',
+        transparent: 'transparent',
+        'teal': '#10B981',
+        'indigo': '#10B981',
         day: {
           DEFAULT: BLOG.BACKGROUND_LIGHT || '#ffffff'
         },
