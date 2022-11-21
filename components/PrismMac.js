@@ -3,7 +3,7 @@ import Prism from 'prismjs'
 import 'prismjs/plugins/toolbar/prism-toolbar'
 import 'prismjs/plugins/show-language/prism-show-language'
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
-import 'prismjs/plugins/autoloader/prism-autoloader'
+// import 'prismjs/plugins/autoloader/prism-autoloader'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
@@ -11,6 +11,9 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import mermaid from 'mermaid'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
+import { isBrowser } from '@/lib/utils'
+// 页面渲染观察者
+let observer
 
 /**
  * @author https://github.com/txs/
@@ -21,6 +24,10 @@ const PrismMac = () => {
   const { isDarkMode } = useGlobal()
   const scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
 
+  if (isBrowser() && !observer) {
+    addWatch4Dom()
+  }
+
   React.useEffect(() => {
     renderPrismMac()
     window.scrollTo(0, scrollTop)
@@ -29,10 +36,6 @@ const PrismMac = () => {
       router.events.off('routeChangeComplete', renderPrismMac)
     }
   }, [isDarkMode])
-
-  React.useEffect(() => {
-    addWatch4Dom()
-  }, [])
   return <></>
 }
 
@@ -76,25 +79,35 @@ function renderPrismMac() {
           }
         })
       }
-    }, 0)
+    }, 10)
   } catch (err) {
     console.log('代码渲染', err)
   }
 
-  // 支持 Mermaid
+  //   支持 Mermaid
   const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
-  for (const e of mermaids) {
-    e.parentElement.parentElement.classList.remove('code-toolbar')
-    const chart = e.firstChild.textContent
-    if (e.firstElementChild) {
-      e.parentElement.parentElement.remove()
-      continue
-    }
-    if (chart) {
-      e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
+  if (mermaids) {
+    for (const e of mermaids) {
+      e.parentElement.parentElement.classList.remove('code-toolbar')
+      const chart = e.firstChild.textContent
+      if (e.firstElementChild) {
+        e.parentElement.parentElement.remove()
+        continue
+      }
+      if (chart) {
+        e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
+      }
     }
   }
-  mermaid.contentLoaded()
+
+  const mermaidsSvg = document.querySelectorAll('.mermaid')
+  if (mermaidsSvg) {
+    for (const e of mermaidsSvg) {
+      if (e?.firstChild?.nodeName !== 'svg') {
+        mermaid.contentLoaded()
+      }
+    }
+  }
 }
 
 /**
@@ -112,41 +125,43 @@ function addWatch4Dom(element) {
     subtree: true
   }
 
-  // 当观察到变动时执行的回调函数
-  const mutationCallback = (mutations) => {
-    for (const mutation of mutations) {
-      const type = mutation.type
-      switch (type) {
-        case 'childList':
-        //   console.log('A child node has been added or removed.', mutation)
-          if (mutation.addedNodes.length > 0) {
-            if (mutation.addedNodes[0].nodeName === '#text') {
-              mutation.addedNodes[0].remove() // 移除新增的内容
-            }
-          }
-          break
-        case 'attributes':
-        //   console.log(`The ${mutation.attributeName} attribute was modified.`, mutation.target)
-        //   console.log(mutation.attributeName)
-          break
-        case 'subtree':
-        //   console.log('The subtree was modified.', mutation.target)
-          break
-        default:
-          break
-      }
-    }
-  }
-
   // 创建一个观察器实例并传入回调函数
-  const observer = new MutationObserver(mutationCallback)
-  //   console.log('observer', observer)
+  observer = new MutationObserver(mutationCallback)
+  //   console.log('观察节点变化', observer)
   // 以上述配置开始观察目标节点
   if (targetNode) {
     observer.observe(targetNode, config)
   }
 
   //   observer.disconnect()
+}
+
+// 当页面发生时会调用此函数
+const mutationCallback = (mutations) => {
+  for (const mutation of mutations) {
+    const type = mutation.type
+    switch (type) {
+      case 'childList':
+        //   console.log('A child node has been added or removed.', mutation)
+        if (mutation.addedNodes.length > 0) {
+          if (mutation?.target?.parentElement?.nodeName === 'PRE' || mutation?.target?.parentElement?.nodeName === 'CODE') {
+            if (mutation.addedNodes[0].nodeName === '#text') {
+              mutation.addedNodes[0].remove() // 移除新增的内容
+            }
+          }
+        }
+        break
+      case 'attributes':
+        //   console.log(`The ${mutation.attributeName} attribute was modified.`, mutation.target)
+        //   console.log(mutation.attributeName)
+        break
+      case 'subtree':
+        //   console.log('The subtree was modified.', mutation.target)
+        break
+      default:
+        break
+    }
+  }
 }
 
 export default PrismMac
