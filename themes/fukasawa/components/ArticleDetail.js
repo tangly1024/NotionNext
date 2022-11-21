@@ -48,7 +48,7 @@ export default function ArticleDetail(props) {
               <span className='mr-2'>|</span>
             </>)}
 
-            {post?.type[0] !== 'Page' && (<>
+            {post?.type !== 'Page' && (<>
               <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref
@@ -92,7 +92,7 @@ export default function ArticleDetail(props) {
 
     </article>
 
-    <ArticleAround prev={prev} next={next} />
+    {post.type === 'Post' && <ArticleAround prev={prev} next={next} /> }
 
     {/* 评论互动 */}
     <div className="duration-200 shadow px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-hexo-black-gray">

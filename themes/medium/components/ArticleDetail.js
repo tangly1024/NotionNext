@@ -66,7 +66,7 @@ export const ArticleDetail = props => {
           {CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
         </div>
       </div>
-      <ArticleAround prev={prev} next={next} />
+      {post.type === 'Post' && <ArticleAround prev={prev} next={next} /> }
       <Comment frontMatter={post} />
     </section>
   </div>
