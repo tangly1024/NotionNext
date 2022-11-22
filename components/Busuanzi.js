@@ -4,9 +4,14 @@ import { useGlobal } from '@/lib/global'
 // import { useRouter } from 'next/router'
 import React from 'react'
 
-export default function Busuanzi () {
+export default function Busuanzi() {
   const { theme } = useGlobal()
   const router = useRouter()
+  const isMount = React.useRef(false)
+
+  React.useEffect(() => {
+    isMount.current = true
+  }, [])
 
   // 切换文章时更新
   React.useEffect(() => {
@@ -21,9 +26,9 @@ export default function Busuanzi () {
 
   // 更换主题时更新
   React.useEffect(() => {
-    if (theme) {
+    if (theme && isMount.current) {
       busuanzi.fetch()
     }
-  })
+  }, [theme])
   return null
 }
