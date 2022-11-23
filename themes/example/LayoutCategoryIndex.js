@@ -5,7 +5,6 @@ export const LayoutCategoryIndex = (props) => {
   const { categories } = props
 
   return <LayoutBase {...props}>
-    <div >
       <div id='category-list' className='duration-200 flex flex-wrap'>
         {categories && categories.map(category => {
           return <Link key={category.name} href={`/category/${category.name}`} passHref>
@@ -16,6 +15,5 @@ export const LayoutCategoryIndex = (props) => {
           </Link>
         })}
       </div>
-    </div>
   </LayoutBase>
 }

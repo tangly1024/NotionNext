@@ -30,6 +30,7 @@ const TopNav = props => {
     const nav = document.querySelector('#sticky-nav')
     const header = document.querySelector('#header')
     const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    // 是否将导航栏透明
     const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
 
     if (header && navTransparent) {
@@ -37,11 +38,13 @@ const TopNav = props => {
       nav && nav.classList.replace('text-black', 'text-white')
       nav && nav.classList.replace('border', 'border-transparent')
       nav && nav.classList.replace('shadow-md', 'shadow-none')
+      nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
     } else {
       nav && nav.classList.replace('bg-none', 'bg-white')
       nav && nav.classList.replace('text-white', 'text-black')
       nav && nav.classList.replace('border-transparent', 'border')
       nav && nav.classList.replace('shadow-none', 'shadow-md')
+      nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
     }
 
     if (!showNav) {
@@ -118,14 +121,14 @@ const TopNav = props => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={'top-0 shadow-md fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform duration-200 font-san border-transparent  dark:border-transparent'}>
+    <div id='sticky-nav' className={'top-0 shadow-md fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform duration-200 border-transparent dark:border-transparent'}>
       <div className='w-full flex justify-between items-center px-4 py-2'>
         <div className='flex'>
          <Logo {...props}/>
         </div>
 
         {/* 右侧功能 */}
-        <div className='mr-1 justify-end items-center font-serif'>
+        <div className='mr-1 justify-end items-center '>
           <div className='hidden lg:flex'> <MenuButtonGroupTop {...props}/></div>
           <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
           { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }

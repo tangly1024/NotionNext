@@ -16,7 +16,7 @@ const MenuGroupCard = (props) => {
     { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG_HEXO.MENU_TAG }
   ]
 
-  return <nav id='nav' className='leading-8 flex justify-center  font-sans w-full'>
+  return <nav id='nav' className='leading-8 flex justify-center   w-full'>
       {links.map(link => {
         if (link.show) {
           return <Link key={`${link.to}`} title={link.to} href={link.to} >

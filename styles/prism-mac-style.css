@@ -1,0 +1,70 @@
+/**
+ * @author https://github.com/txs
+ **/
+.code-toolbar {
+  position: relative;
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, .4);
+  @apply mb-8 pt-6 w-full rounded-lg bg-black
+}
+
+.toolbar {
+  position: absolute;
+  margin-left: 100%;
+  top: 8px;
+  right: 4px;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  line-height: 1rem;
+}
+
+.toolbar-item{
+  @apply whitespace-nowrap
+}
+
+.toolbar-item > button {
+  margin-top: -0.1rem;
+}
+
+pre[class*='language-'].line-numbers {
+  position: relative;
+  padding: 3px; /*修改*/
+  padding-left: 3.8em;
+  counter-reset: linenumber;
+  max-height: 400px; /*修改*/
+  background: black;
+  border: none;
+}
+
+.notion-code > code[class*='language-'],
+pre[class*='language-'] {
+  background: black;
+}
+
+.pre-mac {
+    position: absolute;
+    left: 15px;
+    @apply z-10 top-4 left-3
+}
+
+.pre-mac > span {
+  border-radius: 50%;
+  margin-right: 5px;
+  @apply float-left
+}
+
+.pre-mac > span:nth-child(1) {
+  background: red;
+}
+
+.pre-mac > span:nth-child(2) {
+  background: sandybrown;
+}
+
+.pre-mac > span:nth-child(3) {
+  background: limegreen;
+}
+
+.notion-code-copy{
+  display: none;
+}

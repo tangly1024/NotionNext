@@ -7,6 +7,7 @@ import Card from './Card'
 import TagItemMini from './TagItemMini'
 import CONFIG_NEXT from '../config_next'
 import NotionPage from '@/components/NotionPage'
+import NotionIcon from '@/components/NotionIcon'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
@@ -18,12 +19,12 @@ const BlogPostCard = ({ post, showSummary }) => {
         className="flex flex-col-reverse justify-between duration-300"
       >
         <div className="lg:p-8 p-4 flex flex-col w-full">
-          <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
+          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
             <a
-              className={`cursor-pointer font-bold hover:underline text-3xl ${showPreview ? 'text-center' : ''
+              className={`cursor-pointer hover:underline text-3xl ${showPreview ? 'text-center' : ''
                 } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
             >
-              {post.title}
+             <NotionIcon icon={post.pageIcon} /> {post.title}
             </a>
           </Link>
 
@@ -84,7 +85,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           )}
 
           <div className="text-right border-t pt-8 border-dashed">
-            <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`}>
+            <Link href={`${BLOG.SUB_PATH}/${post.slug}`}>
               <a className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 dark:bg-black cursor-pointer">
                 {locale.COMMON.ARTICLE_DETAIL}
                 <i className="ml-1 fas fa-angle-right" />
@@ -94,7 +95,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         </div>
 
         {CONFIG_NEXT.POST_LIST_COVER && post?.page_cover && (
-          <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
+          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"

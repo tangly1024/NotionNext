@@ -20,7 +20,10 @@ const ArchiveIndex = props => {
 
 export async function getStaticProps() {
   const props = await getGlobalNotionData({ from: 'archive-index' })
-  props.posts = props.allPosts
+  // 处理分页
+  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  delete props.allPages
+
   return {
     props,
     revalidate: 1

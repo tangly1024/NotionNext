@@ -24,12 +24,22 @@ const BLOG = {
   SINCE: 2021, // e.g if leave this empty, current year will be used.
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
   APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
-  FONT: 'font-serif tracking-wider subpixel-antialiased', // 文章字体 ['font-sans', 'font-serif', 'font-mono'] @see https://www.tailwindcss.cn/docs/font-family
-  FONT_AWESOME_PATH:
-    'https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css', // 图标库CDN ，国内推荐BootCDN，国外推荐 CloudFlare https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
+  
+  // 自定义字体示例： 请先将 CUSTOM_FONT 改为 true， 并将 CUSTOM_FONT_URL 改为你的字体CSS地址，同时在 CUSTOM_FONT_SANS 与 CUSTOM_FONT_SERIF 中指定你的 fontfamily
+  CUSTOM_FONT: true, // 是否使用自定义字体
+  CUSTOM_FONT_URL: ['https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'], // 自定义字体的CSS
+  CUSTOM_FONT_SANS: ['LXGW WenKai'], // 自定义无衬线字体
+  CUSTOM_FONT_SERIF: ['LXGW WenKai'], // 自定义衬线字体
+
+  // 图标库CDN(可以直接改版本号）
+  FONT_AWESOME_PATH: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.0/css/all.min.css',
+
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
   SUB_PATH: '', // leave this empty unless you want to deploy in a folder
+
+  POST_URL_PREFIX: process.env.NEXT_PUBLIC_POST_URL_PREFIX || 'article', // POST类型文章的默认路径前缀，例如默认POST类型的路径是  /article/[slug]
+  // 如果此项配置为 '' 空， 则文章将没有前缀路径，使用场景： 希望 文章前缀路径为 /post 的情况 支持多级
 
   POST_LIST_STYLE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'true', //  是否在列表加载文章预览
@@ -46,7 +56,9 @@ const BLOG = {
   CONTACT_WEIBO: '',
   CONTACT_TWITTER: 'https://twitter.com/thedavidweng',
   CONTACT_GITHUB: 'https://github.com/thedavidweng',
-  CONTACT_TELEGRAM: '',
+  CONTACT_TELEGRAM: '', // 你的telegram 地址 例如 https://t.me/tangly_1024
+  CONTACT_LINKEDIN: 'https://www.linkedin.com/in/thedavidweng', // 你的linkedIn 首页
+
 
   // 鼠标点击烟花特效
   FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || false, // 鼠标点击烟花特效
@@ -128,24 +140,26 @@ const BLOG = {
 
   ADSENSE_GOOGLE_ID: process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_ID || '', // 谷歌广告ID e.g ca-pub-xxxxxxxxxxxxxxxx
 
-  // 无关紧要的配置
   // 自定义配置notion数据库字段名
   NOTION_PROPERTY_NAME: {
-    password: 'password',
-    type: 'type',
-    title: 'title',
-    status: 'status',
-    summary: 'summary',
-    slug: 'slug',
-    category: 'category',
-    date: 'date',
-    tags: 'tags',
-    icon: 'icon'
+    password: process.env.NEXT_PUBLIC_NOTION_PROPERTY_PASSWORD || 'password',
+    type: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE || 'type',
+    title: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TITLE || 'title',
+    status: process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS || 'status',
+    summary: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SUMMARY || 'summary',
+    slug: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SLUG || 'slug',
+    category: process.env.NEXT_PUBLIC_NOTION_PROPERTY_CATEGORY || 'category',
+    date: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DATE || 'date',
+    tags: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TAGS || 'tags',
+    icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon'
   },
+
+  ENABLE_CACHE: process.env.ENABLE_CACHE || false, // 开启缓存 会将Notion数据缓存在内存中，稍微提升访问速度，但要更新内容需要多次刷新页面
+
   AVATAR: '/avatar.png', // 作者头像，被notion中的ICON覆盖。如果没有ICON则取public目录下的avatar.png
-  TITLE: process.env.NEXT_PUBLIC_TITLE || 'NotionNext BLOG', // 站点标题 ，被notion中的页面标题覆盖
+  TITLE: process.env.NEXT_PUBLIC_TITLE || "DAVID'S BLOG", // 站点标题 ，被notion中的页面标题覆盖
   DESCRIPTION:
-    process.env.NEXT_PUBLIC_DESCRIPTION || '这是一个由NotionNext生成的站点', // 站点描述，被notion中的页面描述覆盖
+    process.env.NEXT_PUBLIC_DESCRIPTION || 'Leave something freely on the Internet.', // 站点描述，被notion中的页面描述覆盖
 
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   VERSION: process.env.NEXT_PUBLIC_VERSION // 版本号

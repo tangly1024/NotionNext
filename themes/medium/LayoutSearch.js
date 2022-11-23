@@ -3,9 +3,11 @@ import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
 import TagGroups from './components/TagGroups'
 import CategoryGroup from './components/CategoryGroup'
-import BlogPostListScroll from './components/BlogPostListScroll'
 import { useEffect } from 'react'
 import { isBrowser } from '@/lib/utils'
+import BLOG from '@/blog.config'
+import BlogPostListScroll from './components/BlogPostListScroll'
+import BlogPostListPage from './components/BlogPostListPage'
 
 export const LayoutSearch = (props) => {
   const { locale } = useGlobal()
@@ -27,8 +29,8 @@ export const LayoutSearch = (props) => {
       <TagGroups {...props} />
       <CategoryGroup {...props} />
     </div>
-    <div id='container'>
-      <BlogPostListScroll {...props} />
+    <div>
+        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </div>
   </LayoutBase>
 }

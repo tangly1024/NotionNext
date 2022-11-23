@@ -11,6 +11,8 @@ import { useRouter } from 'next/router'
 import ArticleCopyright from './ArticleCopyright'
 import WordCount from './WordCount'
 import NotionPage from '@/components/NotionPage'
+import CONFIG_NEXT from '../config_next'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  *
@@ -29,7 +31,7 @@ export default function ArticleDetail(props) {
     >
 
       {showArticleInfo && <header className='animate__slideInDown animate__animated'>
-        {post?.type && !post?.type.includes('Page') && post?.page_cover && (
+        {CONFIG_NEXT.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.page_cover && (
           <div className="w-full relative md:flex-shrink-0 overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
@@ -38,7 +40,7 @@ export default function ArticleDetail(props) {
 
         {/* 文章Title */}
         <div className="font-bold text-3xl text-black dark:text-white font-serif pt-10">
-          {post.title}
+          <NotionIcon icon={post.pageIcon}/>{post.title}
         </div>
 
         <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
@@ -51,7 +53,7 @@ export default function ArticleDetail(props) {
               </Link>
               <span className='mr-2'>|</span>
             </>}
-            {post?.type[0] !== 'Page' && (<>
+            {post?.type !== 'Page' && (<>
               <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref
@@ -100,29 +102,31 @@ export default function ArticleDetail(props) {
 
       {showArticleInfo && <>
         {/* 版权声明 */}
-        <ArticleCopyright author={BLOG.AUTHOR} url={url} />
+        {post.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} /> }
 
         {/* 推荐文章 */}
-        <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
+        {post.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}
 
         {/* 标签列表 */}
-        <section className="md:flex md:justify-between">
-          {post.tagItems && (
-            <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
-              <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
-                {locale.COMMON.TAGS}：
-              </div>
-              {post.tagItems.map(tag => (
-                <TagItem key={tag.name} tag={tag} />
-              ))}
+        {post.type === 'Post' && (
+            <section className="md:flex md:justify-between">
+            {post.tagItems && (
+                <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
+                <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
+                    {locale.COMMON.TAGS}：
+                </div>
+                {post.tagItems.map(tag => (
+                    <TagItem key={tag.name} tag={tag} />
+                ))}
+                </div>
+            )}
+            <div>
+                <ShareBar post={post} />
             </div>
-          )}
-          <div>
-            <ShareBar post={post} />
-          </div>
-        </section>
+            </section>
+        )}
 
-        <BlogAround prev={prev} next={next} />
+        {post.type === 'Post' && <BlogAround prev={prev} next={next} /> }
       </>}
 
       {/* 评论互动 */}

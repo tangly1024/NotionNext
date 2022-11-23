@@ -97,71 +97,74 @@ nav {
   }
 }
 
-.shadow-card{
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+.shadow-card {
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
-.gt-meta{
-  @apply dark:text-gray-300
+.gt-meta {
+  @apply dark:text-gray-300;
 }
 
 #waifu {
-  @apply right-auto left-0 hidden lg:block z-10 !important
+  @apply right-auto left-0 hidden lg:block z-10 !important;
 }
 
 /* 隐藏滚动条 */
-.scroll-hidden{
+.scroll-hidden {
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
   scrollbar-width: none; /* firefox */
 }
 
-.scroll-hidden::-webkit-scrollbar { width: 0 !important }
-
-.notion-collection{
-  @apply max-w-0
+.scroll-hidden::-webkit-scrollbar {
+  width: 0 !important;
 }
 
+.notion-collection {
+  @apply max-w-0;
+}
 
-.glassmorphism{
-  background: hsla(0, 0%, 100%, .75);
+.glassmorphism {
+  background: hsla(0, 0%, 100%, 0.05);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
-.dark .glassmorphism{
-  background: rgba(31, 41, 55, .75);
+.dark .glassmorphism {
+  background: rgba(31, 41, 55, 0.75);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
-.medium-zoom-overlay{
+.medium-zoom-overlay {
   background: none !important;
   /* background: rgba(0, 0, 0, 0.01) none repeat scroll 0% 0% !important; */
 }
 
-.shadow-text{
+.shadow-text {
   text-shadow: 0.1em 0.1em 0.2em black;
 }
 
-.notion-code-copy-button > svg{
-  pointer-events:none
+.notion-code-copy-button > svg {
+  pointer-events: none;
 }
 
-.fireworks{
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    pointer-events: none;
+.fireworks {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  pointer-events: none;
 }
 
 [data-waline] p {
   color: var(--waline-color);
-  @apply dark:text-gray-200 !important
+  @apply dark:text-gray-200 !important;
 }
 
-.waline-recent-content p{
+.waline-recent-content p {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -173,5 +176,19 @@ nav {
   display: inline-block;
   vertical-align: baseline;
   height: 1.25em;
-  margin: -.125em .25em;
+  margin: -0.125em 0.25em;
+}
+
+
+/* waline评论插件夜间适配 */
+.wl-panel{
+  @apply dark:bg-black dark:border-gray-800
+}
+
+.wl-input,.wl-editor{
+  @apply dark:focus-within:bg-gray-900 dark:text-gray-200
+}
+
+.wl-meta > span {
+  @apply dark:bg-gray-800 !important
 }
