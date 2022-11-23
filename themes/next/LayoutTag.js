@@ -9,14 +9,14 @@ export const LayoutTag = (props) => {
   const { tags, tag } = props
 
   return <LayoutBase currentTag={tag} {...props}>
-    <StickyBar>
-      <TagList tags={tags} currentTag={tag}/>
-    </StickyBar>
-    <div className='md:mt-8'>
-      {BLOG.POST_LIST_STYLE !== 'page'
-        ? <BlogPostListScroll {...props} showSummary={true} />
-        : <BlogPostListPage {...props} />
-    }
-    </div>
-  </LayoutBase>
+        <StickyBar>
+            <TagList tags={tags} currentTag={tag} />
+        </StickyBar>
+        <div className='md:mt-8'>
+            {BLOG.POST_LIST_STYLE !== 'page'
+              ? <BlogPostListScroll {...props} showSummary={true} />
+              : <BlogPostListPage {...props} />
+            }
+        </div>
+    </LayoutBase>
 }

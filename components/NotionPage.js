@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
 import { Pdf } from 'react-notion-x/build/third-party/pdf'
 import { Equation } from 'react-notion-x/build/third-party/equation'
+
 import 'prismjs/components/prism-bash.js'
 import 'prismjs/components/prism-markup-templating.js'
 import 'prismjs/components/prism-markup.js'
@@ -41,7 +42,17 @@ import 'prismjs/components/prism-swift.js'
 import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import 'prismjs/components/prism-r.js'
-import mermaid from 'mermaid'
+
+// 化学方程式
+import '@/lib/mhchem'
+// 页面渲染观察者
+let observer
+
+// https://github.com/txs
+// import PrismMac from '@/components/PrismMac'
+const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+  ssr: false
+})
 
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
@@ -65,15 +76,11 @@ const NotionPage = ({ post }) => {
 
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
 
-  React.useEffect(() => {
-    // 支持 Mermaid
-    const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
-    for (const e of mermaids) {
-      const chart = e.innerText
-      e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
-      mermaid.contentLoaded()
-    }
+  if (isBrowser() && !observer) {
+    addWatch4Dom()
+  }
 
+  React.useEffect(() => {
     setTimeout(() => {
       if (window.location.hash) {
         const tocNode = document.getElementById(window.location.hash.substring(1))
@@ -93,18 +100,17 @@ const NotionPage = ({ post }) => {
           }
         }
 
-        // 相册图片不允许点击
+        // 相册图片点击不跳转
         const cards = document.getElementsByClassName('notion-collection-card')
         for (const e of cards) {
           e.removeAttribute('href')
         }
       }
     }, 800)
-
-    addWatch4Dom()
   }, [])
 
-  return <div id='container' className='max-w-5xl overflow-x-hidden mx-auto'>
+  return <div id='container' className='max-w-5xl overflow-x-visible mx-auto'>
+    <PrismMac />
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
@@ -118,72 +124,6 @@ const NotionPage = ({ post }) => {
         nextLink: Link
       }} />
   </div>
-}
-
-/**
- * 监听DOM变化
- * @param {*} element
- */
-function addWatch4Dom(element) {
-  // 选择需要观察变动的节点
-  const targetNode = element || document?.getElementById('container')
-  // 观察器的配置（需要观察什么变动）
-  const config = {
-    attributes: true,
-    childList: true,
-    subtree: true
-  }
-
-  // 当观察到变动时执行的回调函数
-  const mutationCallback = (mutations) => {
-    for (const mutation of mutations) {
-      const type = mutation.type
-      switch (type) {
-        case 'childList':
-          if (mutation.target.className === 'notion-code-copy') {
-            fixCopy(mutation.target)
-          } else if (mutation.target.className && typeof (mutation.target.className) === 'string' && mutation?.target?.className?.indexOf('language-') > -1) {
-            const copyCode = mutation.target.parentElement?.firstElementChild
-            if (copyCode) {
-              fixCopy(copyCode)
-            }
-          }
-          //   console.log('A child node has been added or removed.')
-          break
-        case 'attributes':
-        //   console.log(`The ${mutation.attributeName} attribute was modified.`)
-        //   console.log(mutation.attributeName)
-          break
-        case 'subtree':
-        //   console.log('The subtree was modified.')
-          break
-        default:
-          break
-      }
-    }
-  }
-
-  // 创建一个观察器实例并传入回调函数
-  const observer = new MutationObserver(mutationCallback)
-  //   console.log(observer)
-  // 以上述配置开始观察目标节点
-  if (targetNode) {
-    observer.observe(targetNode, config)
-  }
-
-  // observer.disconnect();
-}
-
-/**
- * 复制代码后，会重复 @see https://github.com/tangly1024/NotionNext/issues/165
- * @param {*} e
- */
-function fixCopy(codeCopy) {
-  const codeE = codeCopy.parentElement.lastElementChild
-  const codeEnd = codeE.lastChild
-  if (codeEnd.nodeName === '#text' && codeE.childNodes.length > 1) {
-    codeEnd.nodeValue = null
-  }
 }
 
 /**
@@ -211,6 +151,63 @@ function getMediumZoomMargin() {
     return 48
   } else {
     return 72
+  }
+}
+
+/**
+ * 监听DOM变化
+ * @param {*} element
+ */
+// eslint-disable-next-line no-unused-vars
+function addWatch4Dom(element) {
+  // 选择需要观察变动的节点
+  const targetNode = element || document?.getElementById('container')
+  // 观察器的配置（需要观察什么变动）
+  const config = {
+    attributes: true,
+    childList: true,
+    subtree: true
+  }
+
+  // 创建一个观察器实例并传入回调函数
+  observer = new MutationObserver(mutationCallback)
+  //   console.log('观察节点变化', observer)
+  // 以上述配置开始观察目标节点
+  if (targetNode) {
+    observer.observe(targetNode, config)
+  }
+
+  //   observer.disconnect()
+}
+
+// 当页面发生时会调用此函数
+const mutationCallback = (mutations) => {
+  for (const mutation of mutations) {
+    const type = mutation.type
+    switch (type) {
+      case 'childList':
+        //   console.log('A child node has been added or removed.', mutation)
+        if (mutation.addedNodes.length > 0) {
+          if (mutation?.target?.parentElement?.nodeName === 'PRE' || mutation?.target?.parentElement?.nodeName === 'CODE') {
+            if (mutation.addedNodes[0].nodeName === '#text' && mutation.target.childElementCount > 0) {
+              mutation.addedNodes[0].remove() // 移除新增的内容
+            }
+          }
+          if (mutation?.target?.className === 'language-mermaid') {
+            // mermaid重刷新bug TODO
+          }
+        }
+        break
+      case 'attributes':
+        //   console.log(`The ${mutation.attributeName} attribute was modified.`, mutation.target)
+        //   console.log(mutation.attributeName)
+        break
+      case 'subtree':
+        //   console.log('The subtree was modified.', mutation.target)
+        break
+      default:
+        break
+    }
   }
 }
 

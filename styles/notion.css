@@ -1835,6 +1835,7 @@ pre[class*='language-'] {
   line-height: 120%;
   min-width: 0;
   font-size: 14px;
+  @apply dark:text-gray-200
 }
 
 .notion-collection-column-title-icon {
@@ -1845,6 +1846,8 @@ pre[class*='language-'] {
   min-height: 14px;
   fill: var(--fg-color-2);
   margin-right: 6px;
+  @apply dark:text-gray-200
+
 }
 
 .notion-collection-column-title-body {
@@ -1909,4 +1912,33 @@ pre[class*='language-'] {
 
 .notion-simple-table td {
  white-space: nowrap;
+}
+
+.pre-mac {
+  position: relative;
+  margin-top: -7px;
+  top: 21px;
+  left: 10px;
+  width: 100px;
+  z-index: 99;
+}
+
+.pre-mac > span {
+  float: left;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.pre-mac > span:nth-child(1) {
+  background: red;
+}
+
+.pre-mac > span:nth-child(2) {
+  background: sandybrown;
+}
+
+.pre-mac > span:nth-child(3) {
+  background: limegreen;
 }

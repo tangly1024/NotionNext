@@ -21,7 +21,7 @@ const PaginationSimple = ({ page, showNext }) => {
         href={{
           pathname:
             currentPage === 2
-              ? `${pagePrefix}`
+              ? `${pagePrefix}/`
               : `${pagePrefix}/page/${currentPage - 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
