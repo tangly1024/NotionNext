@@ -1,8 +1,8 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/zh/features/personality
 const BLOG = {
   AUTHOR: 'spike', // 作者
-  BIO: '一个普通的干饭人🍚', // 作者简介
-  LINK: '', // 网站地址
+  BIO: '夏天的风🤞', // 作者简介
+  LINK: 'https://spiiike.gq/', // 网站地址
   KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
   process.env.NOTION_PAGE_ID || 'f553f04f83f64750b72ec8b64b6f13f0', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
@@ -52,10 +52,10 @@ const BLOG = {
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: 'mail@tangly1024.com',
-  CONTACT_WEIBO: '',
+  CONTACT_EMAIL: '744175247@qq.com',
+  CONTACT_WEIBO: 'https://weibo.com/Anthony22d',
   CONTACT_TWITTER: '',
-  CONTACT_GITHUB: 'https://github.com/tangly1024',
+  CONTACT_GITHUB: 'https://github.com/Willlllll/',
   CONTACT_TELEGRAM: '',
 
   // 鼠标点击烟花特效
