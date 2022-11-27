@@ -18,7 +18,7 @@ export default function ArticleDetail(props) {
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
   return (<div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
-    {post?.type && !post?.type.includes('Page') && post?.page_cover && (
+    {post?.type && !post?.type !== 'Page' && post?.page_cover && (
       <div className="w-full relative md:flex-shrink-0 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
