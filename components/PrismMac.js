@@ -51,35 +51,36 @@ function renderPrismMac() {
       }
     })
   }
+  // Add line numbers
+  const codeBlocks = container?.getElementsByTagName('pre')
+  if (codeBlocks) {
+    Array.from(codeBlocks).forEach(item => {
+      if (!item.classList.contains('line-numbers')) {
+        item.classList.add('line-numbers')
+        item.style.whiteSpace = 'pre-wrap'
+      }
+    })
+  }
+
+  setTimeout(() => {
+    // Add pre-mac element for Mac Style UI
+    if (codeToolBars) {
+      Array.from(codeToolBars).forEach(item => {
+        const existPreMac = item.getElementsByClassName('pre-mac')
+        if (existPreMac.length < codeToolBars.length) {
+          const preMac = document.createElement('div')
+          preMac.classList.add('pre-mac')
+          preMac.innerHTML = '<span></span><span></span><span></span>'
+          item?.appendChild(preMac, item)
+        }
+      })
+    }
+  }, 10)
+
   // 重新渲染之前检查所有的多余text
 
   try {
     Prism.highlightAll()
-    // Add line numbers
-    const codeBlocks = container?.getElementsByTagName('pre')
-    if (codeBlocks) {
-      Array.from(codeBlocks).forEach(item => {
-        if (!item.classList.contains('line-numbers')) {
-          item.classList.add('line-numbers')
-          item.style.whiteSpace = 'pre-wrap'
-        }
-      })
-    }
-
-    setTimeout(() => {
-      // Add pre-mac element for Mac Style UI
-      if (codeToolBars) {
-        Array.from(codeToolBars).forEach(item => {
-          const existPreMac = item.getElementsByClassName('pre-mac')
-          if (existPreMac.length < codeToolBars.length) {
-            const preMac = document.createElement('div')
-            preMac.classList.add('pre-mac')
-            preMac.innerHTML = '<span></span><span></span><span></span>'
-            item?.appendChild(preMac, item)
-          }
-        })
-      }
-    }, 10)
   } catch (err) {
     console.log('代码渲染', err)
   }
