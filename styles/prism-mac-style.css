@@ -68,3 +68,8 @@ pre[class*='language-'] {
 .notion-code-copy{
   display: none;
 }
+
+pre[class*="language-mermaid"] {
+  background: transparent !important; 
+  @apply dark:bg-gray-200 !important;
+}
