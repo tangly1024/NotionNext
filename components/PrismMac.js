@@ -70,14 +70,6 @@ function renderPrismMac() {
     }
   }, 10)
 
-  // 重新渲染之前检查所有的多余text
-
-  try {
-    Prism.highlightAll()
-  } catch (err) {
-    console.log('代码渲染', err)
-  }
-
   //   支持 Mermaid
   const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
   if (mermaids) {
@@ -101,6 +93,14 @@ function renderPrismMac() {
         mermaid.contentLoaded()
       }
     }
+  }
+
+  // 重新渲染之前检查所有的多余text
+
+  try {
+    Prism.highlightAll()
+  } catch (err) {
+    console.log('代码渲染', err)
   }
 }
 
