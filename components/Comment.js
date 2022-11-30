@@ -43,9 +43,6 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
 })
 
 const Comment = ({ frontMatter }) => {
-  if (!frontMatter) {
-    return <>Loading...</>
-  }
   const { isDarkMode } = useGlobal()
   const router = useRouter()
 
@@ -60,6 +57,10 @@ const Comment = ({ frontMatter }) => {
       }
     }, 200)
   }, [])
+
+  if (!frontMatter) {
+    return <>Loading...</>
+  }
 
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
