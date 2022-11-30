@@ -55,33 +55,18 @@ function renderPrismMac() {
     })
   }
 
-  setTimeout(() => {
-    // Add pre-mac element for Mac Style UI
-    if (codeToolBars) {
-      Array.from(codeToolBars).forEach(item => {
-        const existPreMac = item.getElementsByClassName('pre-mac')
-        if (existPreMac.length < codeToolBars.length) {
-          const preMac = document.createElement('div')
-          preMac.classList.add('pre-mac')
-          preMac.innerHTML = '<span></span><span></span><span></span>'
-          item?.appendChild(preMac, item)
-        }
-      })
-    }
-  }, 10)
-
   //   支持 Mermaid
   const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
   if (mermaids) {
     for (const e of mermaids) {
-      e.parentElement.parentElement.classList.remove('code-toolbar')
+      e.parentElement.classList.remove('code-toolbar')
       const chart = e.firstChild.textContent
       if (e.firstElementChild) {
-        e.parentElement.parentElement.remove()
+        e.parentElement.remove()
         continue
       }
       if (chart) {
-        e.parentElement.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
+        e.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
       }
     }
   }
@@ -101,6 +86,19 @@ function renderPrismMac() {
     Prism.highlightAll()
   } catch (err) {
     console.log('代码渲染', err)
+  }
+
+  // Add pre-mac element for Mac Style UI
+  if (codeToolBars) {
+    Array.from(codeToolBars).forEach(item => {
+      const existPreMac = item.getElementsByClassName('pre-mac')
+      if (existPreMac.length < codeToolBars.length) {
+        const preMac = document.createElement('div')
+        preMac.classList.add('pre-mac')
+        preMac.innerHTML = '<span></span><span></span><span></span>'
+        item?.appendChild(preMac, item)
+      }
+    })
   }
 }
 
