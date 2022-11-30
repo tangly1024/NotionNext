@@ -11,9 +11,6 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import mermaid from 'mermaid'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import { isBrowser } from '@/lib/utils'
-// 页面渲染观察者
-let observer
 
 /**
  * @author https://github.com/txs/
@@ -23,10 +20,6 @@ const PrismMac = () => {
   const router = useRouter()
   const { isDarkMode } = useGlobal()
   const scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
-
-  if (isBrowser() && !observer) {
-    addWatch4Dom()
-  }
 
   React.useEffect(() => {
     renderPrismMac()
@@ -77,14 +70,6 @@ function renderPrismMac() {
     }
   }, 10)
 
-  // 重新渲染之前检查所有的多余text
-
-  try {
-    Prism.highlightAll()
-  } catch (err) {
-    console.log('代码渲染', err)
-  }
-
   //   支持 Mermaid
   const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
   if (mermaids) {
@@ -109,59 +94,13 @@ function renderPrismMac() {
       }
     }
   }
-}
 
-/**
- * 监听DOM变化
- * @param {*} element
- */
-// eslint-disable-next-line no-unused-vars
-function addWatch4Dom(element) {
-  // 选择需要观察变动的节点
-  const targetNode = element || document?.getElementById('container')
-  // 观察器的配置（需要观察什么变动）
-  const config = {
-    attributes: true,
-    childList: true,
-    subtree: true
-  }
+  // 重新渲染之前检查所有的多余text
 
-  // 创建一个观察器实例并传入回调函数
-  observer = new MutationObserver(mutationCallback)
-  //   console.log('观察节点变化', observer)
-  // 以上述配置开始观察目标节点
-  if (targetNode) {
-    observer.observe(targetNode, config)
-  }
-
-  //   observer.disconnect()
-}
-
-// 当页面发生时会调用此函数
-const mutationCallback = (mutations) => {
-  for (const mutation of mutations) {
-    const type = mutation.type
-    switch (type) {
-      case 'childList':
-        //   console.log('A child node has been added or removed.', mutation)
-        if (mutation.addedNodes.length > 0) {
-          if (mutation?.target?.parentElement?.nodeName === 'PRE' || mutation?.target?.parentElement?.nodeName === 'CODE') {
-            if (mutation.addedNodes[0].nodeName === '#text') {
-              mutation.addedNodes[0].remove() // 移除新增的内容
-            }
-          }
-        }
-        break
-      case 'attributes':
-        //   console.log(`The ${mutation.attributeName} attribute was modified.`, mutation.target)
-        //   console.log(mutation.attributeName)
-        break
-      case 'subtree':
-        //   console.log('The subtree was modified.', mutation.target)
-        break
-      default:
-        break
-    }
+  try {
+    Prism.highlightAll()
+  } catch (err) {
+    console.log('代码渲染', err)
   }
 }
 

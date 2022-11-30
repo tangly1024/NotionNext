@@ -45,8 +45,6 @@ import 'prismjs/components/prism-r.js'
 
 // 化学方程式
 import '@/lib/mhchem'
-// 页面渲染观察者
-let observer
 
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
@@ -63,10 +61,6 @@ const Modal = dynamic(
 )
 
 const NotionPage = ({ post }) => {
-  if (!post || !post.blockMap) {
-    return <>{post?.summary || ''}</>
-  }
-
   const zoom = isBrowser() && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
@@ -75,10 +69,6 @@ const NotionPage = ({ post }) => {
   })
 
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
-
-  if (isBrowser() && !observer) {
-    addWatch4Dom()
-  }
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -109,8 +99,11 @@ const NotionPage = ({ post }) => {
     }, 800)
   }, [])
 
+  if (!post || !post.blockMap) {
+    return <>{post?.summary || ''}</>
+  }
+
   return <div id='container' className='max-w-5xl overflow-x-visible mx-auto'>
-    <PrismMac />
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
@@ -123,6 +116,9 @@ const NotionPage = ({ post }) => {
         nextImage: Image,
         nextLink: Link
       }} />
+
+      <PrismMac />
+
   </div>
 }
 
@@ -151,63 +147,6 @@ function getMediumZoomMargin() {
     return 48
   } else {
     return 72
-  }
-}
-
-/**
- * 监听DOM变化
- * @param {*} element
- */
-// eslint-disable-next-line no-unused-vars
-function addWatch4Dom(element) {
-  // 选择需要观察变动的节点
-  const targetNode = element || document?.getElementById('container')
-  // 观察器的配置（需要观察什么变动）
-  const config = {
-    attributes: true,
-    childList: true,
-    subtree: true
-  }
-
-  // 创建一个观察器实例并传入回调函数
-  observer = new MutationObserver(mutationCallback)
-  //   console.log('观察节点变化', observer)
-  // 以上述配置开始观察目标节点
-  if (targetNode) {
-    observer.observe(targetNode, config)
-  }
-
-  //   observer.disconnect()
-}
-
-// 当页面发生时会调用此函数
-const mutationCallback = (mutations) => {
-  for (const mutation of mutations) {
-    const type = mutation.type
-    switch (type) {
-      case 'childList':
-        //   console.log('A child node has been added or removed.', mutation)
-        if (mutation.addedNodes.length > 0) {
-          if (mutation?.target?.parentElement?.nodeName === 'PRE' || mutation?.target?.parentElement?.nodeName === 'CODE') {
-            if (mutation.addedNodes[0].nodeName === '#text' && mutation.target.childElementCount > 0) {
-              mutation.addedNodes[0].remove() // 移除新增的内容
-            }
-          }
-          if (mutation?.target?.className === 'language-mermaid') {
-            // mermaid重刷新bug TODO
-          }
-        }
-        break
-      case 'attributes':
-        //   console.log(`The ${mutation.attributeName} attribute was modified.`, mutation.target)
-        //   console.log(mutation.attributeName)
-        break
-      case 'subtree':
-        //   console.log('The subtree was modified.', mutation.target)
-        break
-      default:
-        break
-    }
   }
 }
 
