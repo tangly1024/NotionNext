@@ -21,7 +21,7 @@ const Slug = props => {
   const router = Router.useRouter()
 
   // 文章锁🔐
-  const [lock, setLock] = React.useState(true)
+  const [lock, setLock] = React.useState(post?.password && post?.password !== '')
 
   React.useEffect(() => {
     if (post?.password && post?.password !== '') {
