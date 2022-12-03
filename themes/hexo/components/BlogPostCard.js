@@ -7,6 +7,11 @@ import NotionPage from '@/components/NotionPage'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
+  const linkedCoverPrefix = 'https://www.notion.so/image/'
+  if (post?.page_cover && post?.page_cover?.startsWith(linkedCoverPrefix)) {
+    const linkedCoverPrefixLength = linkedCoverPrefix.length
+    post.page_cover = decodeURIComponent(post.page_cover.slice(linkedCoverPrefixLength))
+  }
   return (
     <div className="w-full shadow-sm hover:shadow border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-300">
       <div
