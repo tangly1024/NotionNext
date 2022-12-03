@@ -6,6 +6,7 @@ import BlogPostListPage from './components/BlogPostListPage'
 import LayoutBase from './LayoutBase'
 import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
+import Mark from 'mark.js'
 import TagItemMini from './components/TagItemMini'
 import Card from './components/Card'
 import Link from 'next/link'
@@ -25,10 +26,12 @@ export const LayoutSearch = props => {
         const targets = document.getElementsByClassName('replace')
         for (const container of targets) {
           if (container && container.innerHTML) {
-            const re = new RegExp(`${currentSearch}`, 'gim')
-            container.innerHTML = container.innerHTML.replace(
-              re, `<span class='text-red-500 border-b border-dashed'>${currentSearch}</span>`
-            )
+            const re = new RegExp(currentSearch, 'gim')
+            const instance = new Mark(container)
+            instance.markRegExp(re, {
+              element: 'span',
+              className: 'text-red-500 border-b border-dashed'
+            })
           }
         }
       }

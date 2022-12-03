@@ -32,6 +32,7 @@
     "gitalk": "^1.7.2",
     "localStorage": "^1.0.4",
     "lodash.throttle": "^4.1.1",
+    "mark.js": "^8.11.1",
     "memory-cache": "^0.2.0",
     "mermaid": "9.2.2",
     "mongodb": "^4.6.0",
