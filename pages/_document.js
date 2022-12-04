@@ -14,7 +14,7 @@ class MyDocument extends Document {
       <Html lang={BLOG.LANG} className='test'>
         <Head>
           <link rel='icon' href='/favicon.ico' />
-          <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
+          {/* <link rel='icon' href='/favicon.svg' type='image/svg+xml' /> */}
           { BLOG.CUSTOM_FONT
             ? BLOG.CUSTOM_FONT_URL?.map(fontUrl =>
                 <link href={`${fontUrl}`} key={fontUrl} rel='stylesheet' />)
