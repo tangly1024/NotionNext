@@ -14,8 +14,7 @@ import BlogPostListEmpty from './BlogPostListEmpty'
 const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
   const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
   const showPagination = postCount >= BLOG.POSTS_PER_PAGE
-
-  if (!posts || posts.length === 0) {
+  if (!posts || posts.length === 0 || page > totalPage) {
     return <BlogPostListEmpty />
   } else {
     return (

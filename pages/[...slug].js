@@ -7,6 +7,7 @@ import React from 'react'
 import { idToUuid } from 'notion-utils'
 import Router from 'next/router'
 import { isBrowser } from '@/lib/utils'
+import { getNotion } from '@/lib/notion/getNotion'
 
 /**
  * 根据notion的slug访问页面
@@ -19,26 +20,9 @@ const Slug = props => {
   const { post, siteInfo } = props
   const router = Router.useRouter()
 
-  if (!post) {
-    changeLoadingState(true)
-    setTimeout(() => {
-      if (isBrowser()) {
-        const article = document.getElementById('container')
-        if (!article) {
-          router.push('/404').then(() => {
-            // console.warn('找不到页面', router.asPath)
-          })
-        }
-      }
-    }, 10000)
-    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
-    return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
-  }
-
-  changeLoadingState(false)
-
   // 文章锁🔐
   const [lock, setLock] = React.useState(post?.password && post?.password !== '')
+
   React.useEffect(() => {
     if (post?.password && post?.password !== '') {
       setLock(true)
@@ -46,6 +30,24 @@ const Slug = props => {
       setLock(false)
     }
   }, [post])
+
+  if (!post) {
+    changeLoadingState(true)
+    setTimeout(() => {
+      if (isBrowser()) {
+        const article = document.getElementById('container')
+        if (!article) {
+          router.push('/404').then(() => {
+            console.warn('找不到页面', router.asPath)
+          })
+        }
+      }
+    }, 20 * 1000)
+    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
+    return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
+  }
+
+  changeLoadingState(false)
 
   /**
    * 验证文章密码
@@ -62,7 +64,7 @@ const Slug = props => {
   const meta = {
     title: `${post?.title} | ${siteInfo?.title}`,
     description: post?.summary,
-    type: post.type,
+    type: post?.type,
     slug: post?.slug,
     image: post?.page_cover,
     category: post?.category?.[0],
@@ -102,13 +104,23 @@ export async function getStaticProps({ params: { slug } }) {
   props.post = props.allPages.find((p) => {
     return p.slug === fullSlug || p.id === idToUuid(fullSlug)
   })
-  if (!props.post) {
-    console.warn('无效地址', fullSlug)
-    return { props, revalidate: 1 }
-  }
-  props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
 
-  const allPosts = props.allPages.filter(page => page.type === 'Post')
+  if (!props.post) {
+    const pageId = slug.slice(-1)[0]
+    if (pageId.length < 32) {
+      return { props, revalidate: 1 }
+    }
+    const post = await getNotion(pageId)
+    if (post) {
+      props.post = post
+    } else {
+      return { props, revalidate: 1 }
+    }
+  } else {
+    props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
+  }
+
+  const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   const index = allPosts.indexOf(props.post)
   props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
   props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
@@ -134,7 +146,7 @@ export async function getStaticProps({ params: { slug } }) {
 function getRecommendPost(post, allPosts, count = 6) {
   let recommendPosts = []
   const postIds = []
-  const currentTags = post.tags || []
+  const currentTags = post?.tags || []
   for (let i = 0; i < allPosts.length; i++) {
     const p = allPosts[i]
     if (p.id === post.id || p.type.indexOf('Post') < 0) {

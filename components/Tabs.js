@@ -6,6 +6,8 @@ import React, { useState } from 'react'
  * @returns
  */
 const Tabs = ({ className, children }) => {
+  const [currentTab, setCurrentTab] = useState(0)
+
   if (!children) {
     return <></>
   }
@@ -28,8 +30,6 @@ const Tabs = ({ className, children }) => {
       {children}
     </section>
   }
-
-  const [currentTab, setCurrentTab] = useState(0)
 
   function tabClickHandle (i) {
     setCurrentTab(i)

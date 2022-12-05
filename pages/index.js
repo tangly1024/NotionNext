@@ -12,8 +12,8 @@ const Index = props => {
 export async function getStaticProps() {
   const from = 'index'
   const props = await getGlobalNotionData({ from })
-  const { allPages, siteInfo } = props
-  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const { siteInfo } = props
+  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
     description: siteInfo?.description,
@@ -21,35 +21,23 @@ export async function getStaticProps() {
     slug: '',
     type: 'website'
   }
-
   // 处理分页
-  const page = 1
-  let postsToShow
-  if (BLOG.POST_LIST_STYLE !== 'page') {
-    postsToShow = Array.from(allPosts)
-  } else {
-    postsToShow = allPosts?.slice(
-      BLOG.POSTS_PER_PAGE * (page - 1),
-      BLOG.POSTS_PER_PAGE * page
-    )
-    if (BLOG.POST_LIST_PREVIEW === 'true') {
-      for (const i in postsToShow) {
-        const post = postsToShow[i]
-        if (post.password && post.password !== '') {
-          continue
-        }
-        const blockMap = await getPostBlocks(
-          post.id,
-          'slug',
-          BLOG.POST_PREVIEW_LINES
-        )
-        if (blockMap) {
-          post.blockMap = blockMap
-        }
+  if (BLOG.POST_LIST_STYLE === 'scroll') {
+    // 滚动列表默认给前端返回所有数据
+  } else if (BLOG.POST_LIST_STYLE === 'page') {
+    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
+  }
+
+  // 预览文章内容
+  if (BLOG.POST_LIST_PREVIEW === 'true') {
+    for (const i in props.posts) {
+      const post = props.posts[i]
+      if (post.password && post.password !== '') {
+        continue
       }
+      post.blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
     }
   }
-  props.posts = postsToShow
 
   return {
     props: {
