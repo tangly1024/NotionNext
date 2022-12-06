@@ -1946,3 +1946,7 @@ pre[class*='language-'] {
 .notion-asset-wrapper-pdf > div {
     display: block !important;
 }
+
+::selection {
+    @apply bg-blue-500 text-gray-50 !important; 
+}
