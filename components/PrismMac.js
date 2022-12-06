@@ -9,26 +9,15 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
 import mermaid from 'mermaid'
-import { useGlobal } from '@/lib/global'
-import { useRouter } from 'next/router'
 
 /**
  * @author https://github.com/txs/
  * @returns
  */
 const PrismMac = () => {
-  const router = useRouter()
-  const { isDarkMode } = useGlobal()
-  const scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
-
   React.useEffect(() => {
     renderPrismMac()
-    window.scrollTo(0, scrollTop)
-    router.events.on('routeChangeComplete', renderPrismMac)
-    return () => {
-      router.events.off('routeChangeComplete', renderPrismMac)
-    }
-  }, [isDarkMode])
+  })
   return <></>
 }
 

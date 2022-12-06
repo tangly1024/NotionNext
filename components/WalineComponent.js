@@ -3,6 +3,8 @@ import { init } from '@waline/client'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 
+const path = ''
+
 /**
  * @see https://waline.js.org/guide/get-started.html
  * @param {*} props
@@ -14,7 +16,9 @@ const WalineComponent = (props) => {
   const router = useRouter()
 
   const updateWaline = url => {
-    walineInstanceRef.current?.update(props)
+    if (url !== path) {
+      walineInstanceRef.current?.update(props)
+    }
   }
 
   React.useEffect(() => {
