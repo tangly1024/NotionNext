@@ -120,7 +120,7 @@ async function filterByMemCache(allPosts, keyword) {
     const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
     const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
-    let hit = articleInfo.indexOf(keyword) > -1
+    let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
     let indexContent = [post.summary]
     if (page && page.block) {
       const contentIds = Object.keys(page.block)
