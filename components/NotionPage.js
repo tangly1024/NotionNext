@@ -7,8 +7,8 @@ import { isBrowser } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
-import { Pdf } from 'react-notion-x/build/third-party/pdf'
-import { Equation } from 'react-notion-x/build/third-party/equation'
+// import { Pdf } from 'react-notion-x/build/third-party/pdf'
+// import { Equation } from 'react-notion-x/build/third-party/equation'
 
 import 'prismjs/components/prism-bash.js'
 import 'prismjs/components/prism-markup-templating.js'
@@ -43,8 +43,19 @@ import 'prismjs/components/prism-wasm.js'
 import 'prismjs/components/prism-yaml.js'
 import 'prismjs/components/prism-r.js'
 
-// 化学方程式
-import '@/lib/mhchem'
+const Equation = dynamic(() =>
+  import('react-notion-x/build/third-party/equation').then(async (m) => {
+    // 化学方程式
+    await import('@/lib/mhchem')
+    return m.Equation
+  })
+)
+const Pdf = dynamic(
+  () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
+  {
+    ssr: false
+  }
+)
 
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
