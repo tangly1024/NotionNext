@@ -98,7 +98,9 @@ export async function getStaticProps({ params: { slug } }) {
   let fullSlug = slug.join('/')
   console.log('[读取Notion]', fullSlug)
   if (BLOG.PSEUDO_STATIC) {
-    fullSlug += '.html'
+    if (!fullSlug.endsWith('.html')) {
+      fullSlug += '.html'
+    }
   }
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalNotionData({ from })
