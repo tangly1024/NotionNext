@@ -60,6 +60,10 @@ pre[class*='language-'] {
 }
 
 pre[class*="language-mermaid"] {
-  background: transparent !important; 
-  @apply dark:bg-gray-200 !important;
+  @apply bg-gray-50 dark:bg-gray-200 !important;
+}
+
+/* mermaid 原文隐藏 */
+code.language-mermaid {
+  display:none
 }
