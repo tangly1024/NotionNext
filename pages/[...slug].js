@@ -24,6 +24,7 @@ const Slug = props => {
   const [lock, setLock] = React.useState(post?.password && post?.password !== '')
 
   React.useEffect(() => {
+    changeLoadingState(false)
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
@@ -32,7 +33,6 @@ const Slug = props => {
   }, [post])
 
   if (!post) {
-    changeLoadingState(true)
     setTimeout(() => {
       if (isBrowser()) {
         const article = document.getElementById('container')
@@ -46,8 +46,6 @@ const Slug = props => {
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
-
-  changeLoadingState(false)
 
   /**
    * 验证文章密码

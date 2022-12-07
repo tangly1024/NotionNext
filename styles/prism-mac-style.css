@@ -26,16 +26,6 @@
   margin-top: -0.1rem;
 }
 
-pre[class*='language-'].line-numbers {
-  position: relative;
-  padding: 3px; /*修改*/
-  padding-left: 3.8em;
-  counter-reset: linenumber;
-  max-height: 400px; /*修改*/
-  background: black;
-  border: none;
-}
-
 .notion-code > code[class*='language-'],
 pre[class*='language-'] {
   background: black;
@@ -72,8 +62,4 @@ pre[class*='language-'] {
 pre[class*="language-mermaid"] {
   background: transparent !important; 
   @apply dark:bg-gray-200 !important;
-}
-
-.line-numbers-rows > span {
-    height:auto !important;
 }
