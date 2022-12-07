@@ -30,7 +30,7 @@ const PrismMac = () => {
         }
       }
     })
-    observer.observe(document.querySelector('article'), { attributes: true, subtree: true })
+    observer.observe(document.querySelector('#container'), { attributes: true, subtree: true })
   }, [])
   return <></>
 }
