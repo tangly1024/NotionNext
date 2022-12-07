@@ -43,7 +43,7 @@ export async function getStaticProps({ params: { tag } }) {
   props.tag = tag
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 
