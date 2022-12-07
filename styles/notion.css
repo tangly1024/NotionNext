@@ -1950,3 +1950,11 @@ pre[class*='language-'] {
 ::selection {
     @apply bg-blue-500 text-gray-50 !important; 
 }
+
+.dark img{
+    @apply opacity-80
+}
+
+.dark #live2d {
+    @apply opacity-80
+}
