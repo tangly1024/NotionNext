@@ -9,15 +9,17 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
 import mermaid from 'mermaid'
+import { useGlobal } from '@/lib/global'
 
 /**
  * @author https://github.com/txs/
  * @returns
  */
 const PrismMac = () => {
+  const { theme } = useGlobal()
   React.useEffect(() => {
     renderPrismMac()
-  })
+  }, [theme])
   return <></>
 }
 
@@ -46,9 +48,9 @@ function renderPrismMac() {
 
   //   支持 Mermaid
   const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
+  console.log('检查 mermaids', mermaids)
   if (mermaids) {
     for (const e of mermaids) {
-      e.parentElement.classList.remove('code-toolbar')
       const chart = e.firstChild.textContent
       if (e.firstElementChild) {
         e.parentElement.remove()
@@ -57,6 +59,14 @@ function renderPrismMac() {
       if (chart) {
         e.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
       }
+    }
+  }
+
+  // mermaid 样式
+  const mermaidsCodeBar = document.querySelectorAll('.language-mermaid')
+  if (mermaidsCodeBar) {
+    for (const e of mermaidsCodeBar) {
+      e.parentElement.classList.replace('code-toolbar', 'w-full')
     }
   }
 
