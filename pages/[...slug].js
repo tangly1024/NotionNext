@@ -20,6 +20,17 @@ const Slug = props => {
   const { post, siteInfo } = props
   const router = Router.useRouter()
 
+  // 文章锁🔐
+  const [lock, setLock] = React.useState(post?.password && post?.password !== '')
+
+  React.useEffect(() => {
+    if (post?.password && post?.password !== '') {
+      setLock(true)
+    } else {
+      setLock(false)
+    }
+  }, [post])
+
   if (!post) {
     changeLoadingState(true)
     setTimeout(() => {
@@ -37,16 +48,6 @@ const Slug = props => {
   }
 
   changeLoadingState(false)
-
-  // 文章锁🔐
-  const [lock, setLock] = React.useState(post?.password && post?.password !== '')
-  React.useEffect(() => {
-    if (post?.password && post?.password !== '') {
-      setLock(true)
-    } else {
-      setLock(false)
-    }
-  }, [post])
 
   /**
    * 验证文章密码

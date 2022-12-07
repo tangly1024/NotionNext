@@ -1942,3 +1942,11 @@ pre[class*='language-'] {
 .pre-mac > span:nth-child(3) {
   background: limegreen;
 }
+
+.notion-asset-wrapper-pdf > div {
+    display: block !important;
+}
+
+::selection {
+    @apply bg-blue-500 text-gray-50 !important; 
+}

@@ -4,7 +4,7 @@
 .code-toolbar {
   position: relative;
   box-shadow: 0 10px 30px 0 rgba(0, 0, 0, .4);
-  @apply mb-8 pt-6 w-full rounded-lg bg-black
+  @apply mb-8 mt-4 pt-6 w-full rounded-lg bg-black
 }
 
 .toolbar {
@@ -24,16 +24,6 @@
 
 .toolbar-item > button {
   margin-top: -0.1rem;
-}
-
-pre[class*='language-'].line-numbers {
-  position: relative;
-  padding: 3px; /*修改*/
-  padding-left: 3.8em;
-  counter-reset: linenumber;
-  max-height: 400px; /*修改*/
-  background: black;
-  border: none;
 }
 
 .notion-code > code[class*='language-'],
@@ -67,4 +57,9 @@ pre[class*='language-'] {
 
 .notion-code-copy{
   display: none;
+}
+
+pre[class*="language-mermaid"] {
+  background: transparent !important; 
+  @apply dark:bg-gray-200 !important;
 }
