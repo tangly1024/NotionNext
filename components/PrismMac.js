@@ -18,6 +18,19 @@ import BLOG from '@/blog.config'
 const PrismMac = () => {
   React.useEffect(() => {
     renderPrismMac()
+
+    // 折叠代码行号bug
+    const observer = new MutationObserver(mutationsList => {
+      for (const m of mutationsList) {
+        if (m.target.nodeName === 'DETAILS') {
+          const preCode = m.target.querySelector('pre.notion-code')
+          if (preCode) {
+            Prism.plugins.lineNumbers.resize(preCode)
+          }
+        }
+      }
+    })
+    observer.observe(document.querySelector('#container'), { attributes: true, subtree: true })
   }, [])
   return <></>
 }
@@ -42,7 +55,6 @@ function renderPrismMac() {
   if (mermaidPres) {
     for (const e of mermaidPres) {
       const chart = e.querySelector('code').textContent
-      console.log(e.parentElement)
       if (chart && !e.querySelector('.mermaid')) {
         const m = document.createElement('div')
         m.className = 'mermaid'
