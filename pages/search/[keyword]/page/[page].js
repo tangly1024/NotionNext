@@ -45,7 +45,7 @@ export async function getStaticProps({ params: { keyword, page } }) {
   props.page = page
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

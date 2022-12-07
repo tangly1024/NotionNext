@@ -47,7 +47,7 @@ export async function getStaticProps({ params: { category, page } }) {
 
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

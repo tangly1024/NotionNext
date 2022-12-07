@@ -15,7 +15,7 @@ const WalineComponent = (props) => {
   const router = useRouter()
 
   const updateWaline = url => {
-    if (url !== path) {
+    if (url !== path && waline) {
       waline.update(props)
     }
   }

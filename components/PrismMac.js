@@ -17,7 +17,7 @@ import mermaid from 'mermaid'
 const PrismMac = () => {
   React.useEffect(() => {
     renderPrismMac()
-  })
+  }, [])
   return <></>
 }
 
@@ -25,14 +25,6 @@ function renderPrismMac() {
   const container = document?.getElementById('container-inner')
   const codeToolBars = container?.getElementsByClassName('code-toolbar')
 
-  if (codeToolBars) {
-    Array.from(codeToolBars).forEach(item => {
-      const codeBlocks = item.getElementsByTagName('pre')
-      if (codeBlocks.length === 0) {
-        item.remove()
-      }
-    })
-  }
   // Add line numbers
   const codeBlocks = container?.getElementsByTagName('pre')
   if (codeBlocks) {
@@ -45,27 +37,30 @@ function renderPrismMac() {
   }
 
   //   支持 Mermaid
-  const mermaids = document.querySelectorAll('.notion-code .language-mermaid')
-  if (mermaids) {
-    for (const e of mermaids) {
-      e.parentElement.classList.remove('code-toolbar')
-      const chart = e.firstChild.textContent
-      if (e.firstElementChild) {
-        e.parentElement.remove()
-        continue
-      }
-      if (chart) {
-        e.parentElement.innerHTML = `<div class="mermaid">${chart}</div>`
+  const mermaidPres = document.querySelectorAll('pre.notion-code.language-mermaid')
+  if (mermaidPres) {
+    for (const e of mermaidPres) {
+      const chart = e.querySelector('code').textContent
+      console.log(e.parentElement)
+      if (chart && !e.querySelector('.mermaid')) {
+        const m = document.createElement('div')
+        m.className = 'mermaid'
+        m.innerHTML = chart
+        e.appendChild(m)
       }
     }
   }
 
   const mermaidsSvg = document.querySelectorAll('.mermaid')
   if (mermaidsSvg) {
+    let needLoad = false
     for (const e of mermaidsSvg) {
       if (e?.firstChild?.nodeName !== 'svg') {
-        mermaid.contentLoaded()
+        needLoad = true
       }
+    }
+    if (needLoad) {
+      mermaid.contentLoaded()
     }
   }
 
