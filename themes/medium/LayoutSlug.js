@@ -9,6 +9,8 @@ import { ArticleLock } from './components/ArticleLock'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const { locale } = useGlobal()
+
   if (!post) {
     return <LayoutBase
       {...props}
@@ -20,7 +22,6 @@ export const LayoutSlug = props => {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
   }
-  const { locale } = useGlobal()
 
   const slotRight = post?.toc && post?.toc?.length > 3 && (
     <div key={locale.COMMON.TABLE_OF_CONTENTS} >
