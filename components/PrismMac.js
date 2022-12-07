@@ -3,12 +3,13 @@ import Prism from 'prismjs'
 import 'prismjs/plugins/toolbar/prism-toolbar'
 import 'prismjs/plugins/show-language/prism-show-language'
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
-// import 'prismjs/plugins/autoloader/prism-autoloader'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
-
+// 所有语言的prismjs 使用autoloader引入
+import 'prismjs/plugins/autoloader/prism-autoloader'
 // mermaid图
 import mermaid from 'mermaid'
+import BLOG from '@/blog.config'
 
 /**
  * @author https://github.com/txs/
@@ -67,6 +68,8 @@ function renderPrismMac() {
   // 重新渲染之前检查所有的多余text
 
   try {
+    // setup autoloader
+    Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
     Prism.highlightAll()
   } catch (err) {
     console.log('代码渲染', err)
