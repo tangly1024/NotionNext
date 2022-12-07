@@ -1975,3 +1975,7 @@ pre[class*='language-'] {
   font-size: 1em;
   /* color: var(--notion-gray); */
 }
+
+.notion-asset-wrapper-pdf>div{
+    width:unset!important
+}
