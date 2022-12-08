@@ -62,8 +62,10 @@ const WalineComponent = (props) => {
     }
 
     return () => {
-      waline.destroy()
-      waline = null
+      if (waline) {
+        waline.destroy()
+        waline = null
+      }
       router.events.off('routeChangeComplete', updateWaline)
     }
   }, [])
