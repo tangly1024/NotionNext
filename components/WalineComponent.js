@@ -25,7 +25,9 @@ const WalineComponent = (props) => {
       waline = init({
         ...props,
         el: containerRef.current,
-        serverURL: BLOG.COMMENT_WALINE_SERVER_URL
+        serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
+        lang: BLOG.lang,
+        reaction: true
       })
     }
 
