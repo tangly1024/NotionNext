@@ -124,14 +124,17 @@ export async function getStaticProps({ params: { slug } }) {
   }
 
   const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
-  const index = allPosts.indexOf(props.post)
-  props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
-  props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-  props.recommendPosts = getRecommendPost(
-    props.post,
-    allPosts,
-    BLOG.POST_RECOMMEND_COUNT
-  )
+  if (allPosts && allPosts.length > 0) {
+    const index = allPosts.indexOf(props.post)
+    props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
+    props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
+    props.recommendPosts = getRecommendPost(props.post, allPosts, BLOG.POST_RECOMMEND_COUNT)
+  } else {
+    props.prev = null
+    props.next = null
+    props.recommendPosts = []
+  }
+
   delete props.allPages
   return {
     props,
