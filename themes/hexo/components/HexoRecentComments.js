@@ -1,9 +1,11 @@
 import React from 'react'
-import { RecentComments } from '@waline/client'
 import BLOG from '@/blog.config'
 import Card from '@/themes/hexo/components/Card'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const { RecentComments } = dynamic(() => import('@waline/client'))
 
 /**
  * @see https://waline.js.org/guide/get-started.html

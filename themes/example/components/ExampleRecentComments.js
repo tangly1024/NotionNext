@@ -1,7 +1,9 @@
 import React from 'react'
-import { RecentComments } from '@waline/client'
 import BLOG from '@/blog.config'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const { RecentComments } = dynamic(() => import('@waline/client'))
 
 /**
  * @see https://waline.js.org/guide/get-started.html
