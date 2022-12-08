@@ -1910,10 +1910,6 @@ pre[class*='language-'] {
  width: 100% !important;
 }
 
-.notion-simple-table td {
- white-space: nowrap;
-}
-
 .pre-mac {
   position: relative;
   margin-top: -7px;
@@ -1984,4 +1980,16 @@ pre[class*='language-'] {
 .react-pdf__Page__canvas,.react-pdf__Page__textContent{
     width: 100% !important;
     height: auto !important;
+}
+
+
+/* simple table设置 */
+table,thead,tbody{
+    display:block
+}
+
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
 }
