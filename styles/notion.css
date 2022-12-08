@@ -1979,3 +1979,9 @@ pre[class*='language-'] {
 .notion-asset-wrapper-pdf>div{
     width:unset!important
 }
+
+/* pdf预览适配页面 */
+.react-pdf__Page__canvas,.react-pdf__Page__textContent{
+    width: 100% !important;
+    height: auto !important;
+}
