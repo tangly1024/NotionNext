@@ -1,7 +1,7 @@
 import React from 'react'
 import BLOG from '@/blog.config'
 import DarkModeButton from '@/components/DarkModeButton'
-import Logo from 'https://icp.gov.moe/images/ico64.png'
+import Logo from '@/components/ico64.png'
 
 const Footer = ({ title }) => {
   const d = new Date()
