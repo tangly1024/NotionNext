@@ -94,7 +94,7 @@ export default function ArticleDetail(props) {
                 <section className="flex justify-between">
                     {/* 分类 */}
                     {post.category && <>
-                        <div className="cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
+                        <div className="cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:text-gray-500 border-dashed">
                             <Link href={`/category/${post.category}`} passHref>
                                 <><i className="mr-1 far fa-folder-open" /> {post.category}</>
                             </Link>
@@ -123,7 +123,7 @@ export default function ArticleDetail(props) {
             </>}
 
             {/* 评论互动 */}
-            <div className="duration-200 w-full dark:border-gray-700 bg-white dark:bg-gray-800">
+            <div className="duration-200 w-full dark:border-gray-700 bg-white dark:bg-hexo-black-gray">
                 <Comment frontMatter={post} />
             </div>
         </div>
