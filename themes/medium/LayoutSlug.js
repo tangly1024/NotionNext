@@ -12,9 +12,7 @@ export const LayoutSlug = props => {
   const { locale } = useGlobal()
 
   if (!post) {
-    return <LayoutBase
-      {...props}
-      showInfoCard={true}
+    return <LayoutBase {...props} showInfoCard={true}
     />
   }
 
@@ -30,15 +28,8 @@ export const LayoutSlug = props => {
   )
 
   return (
-    <LayoutBase
-      {...props}
-      showInfoCard={true}
-      slotRight={slotRight}
-    >
-
-      {!lock && <ArticleDetail {...props} />}
-
-      {lock && <ArticleLock password={post.password} validPassword={validPassword} />}
+    <LayoutBase showInfoCard={true} slotRight={slotRight} {...props} >
+      {!lock ? <ArticleDetail {...props} /> : <ArticleLock password={post.password} validPassword={validPassword} />}
     </LayoutBase>
   )
 }
