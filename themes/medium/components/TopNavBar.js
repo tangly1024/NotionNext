@@ -35,12 +35,12 @@ export default function TopNavBar(props) {
   return <div id='top-nav' className={'sticky top-0 lg:relative w-full z-40 ' + className}>
         {/* 折叠菜单 */}
         <Collapse type='vertical' isOpen={isOpen} className='md:hidden'>
-            <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-5 lg:hidden '>
+            <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-7 lg:hidden '>
                 <GroupMenu {...props} />
             </div>
         </Collapse>
 
-        <div className='flex w-full h-12 shadow bg-white dark:bg-hexo-black-gray px-5 items-between'>
+        <div className='flex w-full h-12 shadow bg-white dark:bg-hexo-black-gray px-7 items-between'>
 
             {/* 图标Logo */}
             <LogoBar {...props} />
