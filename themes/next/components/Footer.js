@@ -28,8 +28,7 @@ const Footer = ({ title }) => {
           <i className='fas fa-users' /> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <br />
         <h1>{title}</h1>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <a href="https://icp.gov.moe/?keyword=20225199" target="_blank"> <img style={{ width: '24px', height: '24px' }} src="https://icp.gov.moe/images/ico64.png"></img> 萌ICP备20225199号</a>
+        <a href="https://icp.gov.moe/?keyword=20225199" target="_blank">萌ICP备20225199号</a>
         <br />
         <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by  <a href='https://github.com/tangly1024/NotionNext' className='underline '>NotionNext {BLOG.VERSION}</a>.</span>
        </span>
