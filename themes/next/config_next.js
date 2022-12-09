@@ -28,7 +28,7 @@ const CONFIG_NEXT = {
 
   WIDGET_TO_TOP: true, // 是否显示回顶
   WIDGET_TO_BOTTOM: true, // 显示回底
-  WIDGET_DARK_MODE: true, // 显示日间/夜间模式切换
+  WIDGET_DARK_MODE: false, // 显示日间/夜间模式切换
   WIDGET_TOC: true, // 移动端显示悬浮目录
 
   ARTICLE_SHARE: true, // 文章分享功能
