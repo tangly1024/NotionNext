@@ -1,7 +1,6 @@
 import React from 'react'
 import BLOG from '@/blog.config'
 import DarkModeButton from '@/components/DarkModeButton'
-import Logo from '@/components/ico64.png'
 
 const Footer = ({ title }) => {
   const d = new Date()
@@ -29,7 +28,6 @@ const Footer = ({ title }) => {
           <i className='fas fa-users' /> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <br />
         <h1>{title}</h1>
-        const img=<img style={{width:'32px',height:'32px'}} src={Logo}></img>
         <a href="https://icp.gov.moe/?keyword=20225199" target="_blank">萌ICP备20225199号</a>
         <br />
         <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by  <a href='https://github.com/tangly1024/NotionNext' className='underline '>NotionNext {BLOG.VERSION}</a>.</span>
