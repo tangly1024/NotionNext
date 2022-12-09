@@ -33,5 +33,5 @@ const Footer = ({ title }) => {
     </footer>
   )
 }
-
+<a href="https://icp.gov.moe/?keyword=20225199" target="_blank">萌ICP备20225199号</a>
 export default Footer
