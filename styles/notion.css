@@ -1993,3 +1993,7 @@ thead, tbody tr {
     width:100%;
     table-layout:fixed;
 }
+
+.notion-collection-card{
+    @apply dark:hover:text-gray-200
+}
