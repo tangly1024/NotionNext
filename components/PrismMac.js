@@ -23,8 +23,8 @@ const PrismMac = () => {
     const observer = new MutationObserver(mutationsList => {
       for (const m of mutationsList) {
         if (m.target.nodeName === 'DETAILS') {
-          const preCode = m.target.querySelector('pre.notion-code')
-          if (preCode) {
+          const preCodes = m.target.querySelectorAll('pre.notion-code')
+          for (const preCode of preCodes) {
             Prism.plugins.lineNumbers.resize(preCode)
           }
         }
