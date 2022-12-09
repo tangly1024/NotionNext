@@ -32,7 +32,7 @@ const Footer = ({ title }) => {
         <a href="https://icp.gov.moe/?keyword=20225199" target="_blank">萌ICP备20225199号</a>
         <br />
         <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by  <a href='https://github.com/tangly1024/NotionNext' className='underline '>NotionNext {BLOG.VERSION}</a>.</span>
-      </span>
+       </span>
     </footer>
   )
 }
