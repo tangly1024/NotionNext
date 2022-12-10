@@ -14,8 +14,7 @@ const MenuButtonGroup = (props) => {
     { icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NEXT.MENU_CATEGORY },
     { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE },
-    { icon: 'fas fa-user', name: locale.NAV.ABOUT, to: '/about', show: CONFIG_NEXT.MENU_ABOUT }
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE }
   ]
   let links = [].concat(defaultLinks)
   if (customNav) {
