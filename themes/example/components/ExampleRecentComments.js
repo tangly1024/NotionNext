@@ -1,7 +1,7 @@
 import React from 'react'
-import { RecentComments } from '@waline/client'
 import BLOG from '@/blog.config'
 import Link from 'next/link'
+import { RecentComments } from '@waline/client'
 
 /**
  * @see https://waline.js.org/guide/get-started.html
