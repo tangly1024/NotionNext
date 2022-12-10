@@ -11,7 +11,7 @@ let windowTop = 0
  * @constructor
  */
 const StickyBar = ({ children }) => {
-  if (!children) return <></>
+  // 滚动页面时导航条样式调整
   const scrollTrigger = useCallback(throttle(() => {
     if (CONFIG_NEXT.NAV_TYPE === 'normal') {
       return
@@ -36,6 +36,8 @@ const StickyBar = ({ children }) => {
       window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
+
+  if (!children) return <></>
 
   return (
     <div id='sticky-bar' className='sticky flex-grow justify-center top-0 duration-500 z-10 pb-16'>
