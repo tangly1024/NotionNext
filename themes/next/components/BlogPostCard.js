@@ -86,7 +86,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           <div className="text-right border-t pt-8 border-dashed">
             <Link href={`${BLOG.SUB_PATH}/${post.slug}`}>
-              <a className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 dark:bg-black cursor-pointer">
+              <a className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
                 {locale.COMMON.ARTICLE_DETAIL}
                 <i className="ml-1 fas fa-angle-right" />
               </a>
