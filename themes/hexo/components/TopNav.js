@@ -34,17 +34,17 @@ const TopNav = props => {
     const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
 
     if (header && navTransparent) {
-      nav && nav.classList.replace('bg-white', 'bg-none')
+      nav && nav.classList.replace('bg-transparent', 'bg-transparent')
       nav && nav.classList.replace('text-black', 'text-white')
       nav && nav.classList.replace('border', 'border-transparent')
       nav && nav.classList.replace('shadow-md', 'shadow-none')
-      nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
+      nav && nav.classList.replace('dark:bg-transparent', 'transparent')
     } else {
-      nav && nav.classList.replace('bg-none', 'bg-white')
+      nav && nav.classList.replace('bg-transparent', 'bg-transparent')
       nav && nav.classList.replace('text-white', 'text-black')
       nav && nav.classList.replace('border-transparent', 'border')
       nav && nav.classList.replace('shadow-none', 'shadow-md')
-      nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
+      nav && nav.classList.replace('transparent', 'dark:bg-transparent')
     }
 
     if (!showNav) {
@@ -121,7 +121,7 @@ const TopNav = props => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={'top-0 shadow-md fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform duration-200 border-transparent dark:border-transparent'}>
+    <div id='sticky-nav' className={'top-0 shadow-md fixed bg-transparent animate__animated animate__fadeIn dark:bg-transparent dark:text-gray-200 text-black w-full z-20 transform duration-200 border-transparent dark:border-transparent'}>
       <div className='w-full flex justify-between items-center px-4 py-2'>
         <div className='flex'>
          <Logo {...props}/>
@@ -137,7 +137,7 @@ const TopNav = props => {
       </div>
 
       <Collapse type='vertical' isOpen={isOpen} className='shadow-xl'>
-        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-5 lg:hidden '>
+        <div className='bg-transparent dark:bg-transparent pt-1 py-2 px-5 lg:hidden '>
           <MenuList {...props}/>
         </div>
       </Collapse>
