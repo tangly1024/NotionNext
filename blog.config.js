@@ -2,7 +2,7 @@
 const BLOG = {
   AUTHOR: '萧晓', // 作者
   BIO: '凝固那还未幻灭的风景', // 作者简介
-  LINK: 'https://error.im/web/@xjxx', // 网站地址
+  LINK: 'https://xjxx.vedfolnir.top', // 网站地址
   KEYWORDS: '仓库, 自留地, 以及我想给你看的一切', // 网站关键词 英文逗号隔开
   NOTION_PAGE_ID:
   process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5', // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
