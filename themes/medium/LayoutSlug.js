@@ -9,10 +9,10 @@ import { ArticleLock } from './components/ArticleLock'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const { locale } = useGlobal()
+
   if (!post) {
-    return <LayoutBase
-      {...props}
-      showInfoCard={true}
+    return <LayoutBase {...props} showInfoCard={true}
     />
   }
 
@@ -20,7 +20,6 @@ export const LayoutSlug = props => {
     post.content = Object.keys(post.blockMap.block)
     post.toc = getPageTableOfContents(post, post.blockMap)
   }
-  const { locale } = useGlobal()
 
   const slotRight = post?.toc && post?.toc?.length > 3 && (
     <div key={locale.COMMON.TABLE_OF_CONTENTS} >
@@ -29,15 +28,8 @@ export const LayoutSlug = props => {
   )
 
   return (
-    <LayoutBase
-      {...props}
-      showInfoCard={true}
-      slotRight={slotRight}
-    >
-
-      {!lock && <ArticleDetail {...props} />}
-
-      {lock && <ArticleLock password={post.password} validPassword={validPassword} />}
+    <LayoutBase showInfoCard={true} slotRight={slotRight} {...props} >
+      {!lock ? <ArticleDetail {...props} /> : <ArticleLock password={post.password} validPassword={validPassword} />}
     </LayoutBase>
   )
 }

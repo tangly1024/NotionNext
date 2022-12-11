@@ -17,6 +17,14 @@ module.exports = withBundleAnalyzer({
       'images.unsplash.com'
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/:path*.html',
+        destination: '/:path*'
+      }
+    ]
+  },
   async headers() {
     return [
       {

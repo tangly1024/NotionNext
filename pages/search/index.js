@@ -2,6 +2,7 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import * as ThemeMap from '@/themes'
+import BLOG from '@/blog.config'
 
 const Search = props => {
   const { posts, siteInfo } = props
@@ -58,7 +59,7 @@ export async function getStaticProps() {
   props.posts = allPosts
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

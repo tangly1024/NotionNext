@@ -9,18 +9,18 @@ function GroupMenu ({ customNav }) {
   const router = useRouter()
 
   let links = [
-    { name: locale.NAV.INDEX, to: '/' || '/', show: true },
+    // { name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_MEDIUM.MENU_CATEGORY },
     { name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_MEDIUM.MENU_TAG },
-    { name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_MEDIUM.MENU_ARCHIVE },
-    { name: locale.NAV.SEARCH, to: '/search', show: CONFIG_MEDIUM.MENU_SEARCH }
+    { name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_MEDIUM.MENU_ARCHIVE }
+    // { name: locale.NAV.SEARCH, to: '/search', show: CONFIG_MEDIUM.MENU_SEARCH }
   ]
 
   if (customNav) {
     links = links.concat(customNav)
   }
 
-  return <nav id='nav' className='font-sans text-sm'>
+  return <nav id='nav' className='font-sans text-md'>
       {links.map(link => {
         if (link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)

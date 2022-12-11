@@ -24,6 +24,7 @@ const Slug = props => {
   const [lock, setLock] = React.useState(post?.password && post?.password !== '')
 
   React.useEffect(() => {
+    changeLoadingState(false)
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
@@ -32,7 +33,6 @@ const Slug = props => {
   }, [post])
 
   if (!post) {
-    changeLoadingState(true)
     setTimeout(() => {
       if (isBrowser()) {
         const article = document.getElementById('container')
@@ -46,8 +46,6 @@ const Slug = props => {
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
-
-  changeLoadingState(false)
 
   /**
    * 验证文章密码
@@ -97,8 +95,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  // slug 是个数组
-  const fullSlug = slug.join('/')
+  let fullSlug = slug.join('/')
+  console.log('[读取Notion]', fullSlug)
+  if (BLOG.PSEUDO_STATIC) {
+    if (!fullSlug.endsWith('.html')) {
+      fullSlug += '.html'
+    }
+  }
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalNotionData({ from })
   props.post = props.allPages.find((p) => {
@@ -108,31 +111,34 @@ export async function getStaticProps({ params: { slug } }) {
   if (!props.post) {
     const pageId = slug.slice(-1)[0]
     if (pageId.length < 32) {
-      return { props, revalidate: 1 }
+      return { props, revalidate: BLOG.NEXT_REVALIDATE_SECOND }
     }
     const post = await getNotion(pageId)
     if (post) {
       props.post = post
     } else {
-      return { props, revalidate: 1 }
+      return { props, revalidate: BLOG.NEXT_REVALIDATE_SECOND }
     }
   } else {
     props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
   }
 
   const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
-  const index = allPosts.indexOf(props.post)
-  props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
-  props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-  props.recommendPosts = getRecommendPost(
-    props.post,
-    allPosts,
-    BLOG.POST_RECOMMEND_COUNT
-  )
+  if (allPosts && allPosts.length > 0) {
+    const index = allPosts.indexOf(props.post)
+    props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
+    props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
+    props.recommendPosts = getRecommendPost(props.post, allPosts, BLOG.POST_RECOMMEND_COUNT)
+  } else {
+    props.prev = null
+    props.next = null
+    props.recommendPosts = []
+  }
+
   delete props.allPages
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

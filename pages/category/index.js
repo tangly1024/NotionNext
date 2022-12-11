@@ -3,6 +3,7 @@ import React from 'react'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import { getAllCategories } from '@/lib/notion/getAllCategories'
+import BLOG from '@/blog.config'
 
 /**
  * 分类首页
@@ -30,6 +31,6 @@ export async function getStaticProps() {
   delete props.categoryOptions
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
