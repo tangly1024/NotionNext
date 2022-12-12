@@ -31,6 +31,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error' // Checks rules of Hooks
   },
   globals: {
-    React: true
+    React: true,
+  "error": true
   }
 }
