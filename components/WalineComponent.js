@@ -19,7 +19,6 @@ const WalineComponent = (props) => {
       waline.update(props)
     }
   }
-
   const locale = {
     nick: '昵称',
     nickError: '昵称不能少于3个字符',
