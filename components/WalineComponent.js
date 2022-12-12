@@ -65,14 +65,6 @@ const WalineComponent = (props) => {
     reactionTitle: '你认为这篇文章怎么样？'
   }
 
-  Waline.init({
-    el: '#waline',
-    serverURL: 'YOUR_SERVER_URL',
-    path: location.pathname,
-    // ...
-    locale
-  })
-
   React.useEffect(() => {
     if (!waline) {
       waline = init({
