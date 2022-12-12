@@ -53,14 +53,7 @@ const locale = {
   word: '字',
   wordHint: '评论字数应在 $0 到 $1 字之间！\n当前字数：$2',
   anonymous: '匿名',
-  level0: '潜水',
-  level1: '冒泡',
-  level2: '吐槽',
-  level3: '活跃',
-  level4: '话痨',
-  level5: '传说',
   gif: '表情包',
-  gifSearchPlaceholder: '搜索表情包',
   profile: '个人资料',
   approved: '通过',
   waiting: '待审核',
@@ -70,7 +63,7 @@ const locale = {
   latest: '按正序',
   hottest: '按热度',
   reactionTitle: '你认为这篇文章怎么样？',
-};
+}
 
 Waline.init({
   el: '#waline',
