@@ -15,6 +15,7 @@ import { isBrowser } from '@/lib/utils'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const drawerRight = useRef(null)
 
   if (!post) {
     return <LayoutBase
@@ -30,7 +31,6 @@ export const LayoutSlug = props => {
     post.toc = getPageTableOfContents(post, post.blockMap)
   }
 
-  const drawerRight = useRef(null)
   const targetRef = isBrowser() ? document.getElementById('container') : null
 
   const floatSlot = <>
