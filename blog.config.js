@@ -15,7 +15,7 @@ const BLOG = {
   LINK: 'https://www.tobemaster.site', // 网站地址
   KEYWORDS: '达人之路', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: 'mail@yiran56@gmail.com', // 邮箱
+  CONTACT_EMAIL: 'yiran56@gmail.com', // 邮箱
   CONTACT_WEIBO: '', // 你的微博个人主页
   CONTACT_TWITTER: 'https://twitter.com/tobemaster56', // 你的twitter个人主页
   CONTACT_GITHUB: 'https://github.com/tobemaster56', // 你的github个人主页
