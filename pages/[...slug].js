@@ -4,11 +4,12 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import React from 'react'
-import { idToUuid, getPageTableOfContents } from 'notion-utils'
+import { idToUuid } from 'notion-utils'
 import Router from 'next/router'
 import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import md5 from 'js-md5'
+import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 
 /**
  * 根据notion的slug访问页面
