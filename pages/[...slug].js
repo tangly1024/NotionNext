@@ -8,6 +8,7 @@ import { idToUuid, getPageTableOfContents } from 'notion-utils'
 import Router from 'next/router'
 import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
+import md5 from 'js-md5'
 
 /**
  * 根据notion的slug访问页面
@@ -57,7 +58,7 @@ const Slug = props => {
    * @param {*} result
    */
   const validPassword = passInput => {
-    if (passInput && passInput === post.password) {
+    if (passInput && md5(post.slug + passInput) === post.password) {
       setLock(false)
       return true
     }
