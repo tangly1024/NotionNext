@@ -4,7 +4,7 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import React from 'react'
-import { idToUuid } from 'notion-utils'
+import { idToUuid, getPageTableOfContents } from 'notion-utils'
 import Router from 'next/router'
 import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
@@ -28,6 +28,11 @@ const Slug = props => {
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
+      if (!lock && post?.blockMap?.block) {
+        post.content = Object.keys(post.blockMap.block)
+        post.toc = getPageTableOfContents(post, post.blockMap)
+      }
+
       setLock(false)
     }
   }, [post])
@@ -51,10 +56,12 @@ const Slug = props => {
    * 验证文章密码
    * @param {*} result
    */
-  const validPassword = result => {
-    if (result) {
+  const validPassword = passInput => {
+    if (passInput && passInput === post.password) {
       setLock(false)
+      return true
     }
+    return false
   }
 
   props = { ...props, lock, setLock, validPassword }
