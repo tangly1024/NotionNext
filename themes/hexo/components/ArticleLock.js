@@ -8,13 +8,11 @@ import { useGlobal } from '@/lib/global'
  * @returns
  */
 export const ArticleLock = props => {
-  const { password, validPassword } = props
+  const { validPassword } = props
   const { locale } = useGlobal()
   const submitPassword = () => {
     const p = document.getElementById('password')
-    if (p && p.value && p.value === password) {
-      validPassword(true)
-    } else {
+    if (!validPassword(p?.value)) {
       const tips = document.getElementById('tips')
       if (tips) {
         tips.innerHTML = ''
