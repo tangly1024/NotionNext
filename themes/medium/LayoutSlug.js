@@ -1,5 +1,3 @@
-import { getPageTableOfContents } from 'notion-utils'
-
 import LayoutBase from './LayoutBase'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
@@ -16,11 +14,6 @@ export const LayoutSlug = props => {
     />
   }
 
-  if (!lock && post?.blockMap?.block) {
-    post.content = Object.keys(post.blockMap.block)
-    post.toc = getPageTableOfContents(post, post.blockMap)
-  }
-
   const slotRight = post?.toc && post?.toc?.length > 3 && (
     <div key={locale.COMMON.TABLE_OF_CONTENTS} >
       <Catalog toc={post.toc} />
@@ -29,7 +22,7 @@ export const LayoutSlug = props => {
 
   return (
     <LayoutBase showInfoCard={true} slotRight={slotRight} {...props} >
-      {!lock ? <ArticleDetail {...props} /> : <ArticleLock password={post.password} validPassword={validPassword} />}
+      {!lock ? <ArticleDetail {...props} /> : <ArticleLock validPassword={validPassword} />}
     </LayoutBase>
   )
 }
