@@ -14,7 +14,7 @@ export function InfoCard (props) {
       }}
     >
     {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={siteInfo?.icon} className='rounded-full' width={120}/>
+    <img src={siteInfo?.icon} className='rounded-full' width={120} alt={BLOG.AUTHOR}/>
     </div>
     <div className='text-center text-xl pb-4'>{BLOG.AUTHOR}</div>
     <div className='text-sm text-center'>{BLOG.BIO}</div>
