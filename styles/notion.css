@@ -392,7 +392,7 @@
 
 .notion-h {
   position: relative;
-  display: block;
+  /* display: block; */
   font-weight: 600;
   line-height: 1.3;
   padding: 3px 2px;
@@ -427,7 +427,7 @@
   margin-top: 2px;
 } */
 .notion-h2 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   margin-top: 1.1em;
 }
 .notion-h3 {

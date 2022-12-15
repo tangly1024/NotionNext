@@ -10,12 +10,13 @@ import { useRouter } from 'next/router'
  * @constructor
  */
 const LatestPostsGroup = ({ latestPosts }) => {
-  if (!latestPosts) {
-    return <></>
-  }
   // 获取当前路径
   const currentPath = useRouter().asPath
   const { locale } = useGlobal()
+
+  if (!latestPosts) {
+    return <></>
+  }
 
   return (
     <>
@@ -40,12 +41,11 @@ const LatestPostsGroup = ({ latestPosts }) => {
                   (selected
                     ? 'text-white  bg-gray-600 '
                     : 'text-gray-500 dark:text-gray-400 ') +
-                  ' text-xs py-1.5 flex overflow-x-hidden whitespace-nowrap hover:bg-gray-500 px-2 duration-200 w-full ' +
+                  ' text-xs py-1.5 flex hover:bg-gray-500 px-2 duration-200 w-full ' +
                   'hover:text-white dark:hover:text-white cursor-pointer'
                 }
               >
-                <i className="mr-2 fas fa-file-alt" />
-                <div className="truncate">{post.title}</div>
+                <li className="text-line-2">{post.title}</li>
               </div>
             </a>
           </Link>
