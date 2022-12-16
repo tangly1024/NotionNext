@@ -43,6 +43,12 @@ const CommonHead = ({ meta, children }) => {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
+
+      { BLOG.CUSTOM_FONT
+        ? BLOG.CUSTOM_FONT_URL?.map(fontUrl =>
+            <link href={`${fontUrl}`} key={fontUrl} rel="stylesheet"/>)
+        : <link href='https://fonts.font.im/css2?family=Noto+Serif+SC&display=optional' rel="stylesheet"/> }
+
       {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="no-referrer-when-downgrade" />}
       {meta?.type === 'Post' && (
         <>
