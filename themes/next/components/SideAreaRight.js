@@ -6,8 +6,9 @@ import CategoryGroup from './CategoryGroup'
 import TagGroups from './TagGroups'
 import CONFIG_NEXT from '../config_next'
 import { useRouter } from 'next/router'
-import NextRecentComments from './NextRecentComments'
 import BLOG from '@/blog.config'
+import dynamic from 'next/dynamic'
+const NextRecentComments = dynamic(() => import('./NextRecentComments'))
 
 /**
  * 侧边平铺

@@ -2,7 +2,8 @@ import BLOG from '@/blog.config'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import ExampleRecentComments from './ExampleRecentComments'
+import dynamic from 'next/dynamic'
+const ExampleRecentComments = dynamic(() => import('./ExampleRecentComments'))
 
 export const SideBar = (props) => {
   const { locale } = useGlobal()
