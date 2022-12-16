@@ -49,9 +49,9 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.FIREWORKS) && <Fireworks/>}
     </>
 
-  // 延迟加载字体
+  // 延迟加载fontAwesome
   React.useEffect(() => {
-    loadFont()
+    loadExternalResource(BLOG.FONT_AWESOME_PATH, 'css')
   }, [])
 
   return (
@@ -62,13 +62,4 @@ const MyApp = ({ Component, pageProps }) => {
   )
 }
 
-/**
- * 延迟加载字体
- */
-const loadFont = () => {
-  loadExternalResource(BLOG.FONT_AWESOME_PATH, 'css')
-  for (const fontUrl of BLOG.CUSTOM_FONT_URL) {
-    loadExternalResource(fontUrl, 'css')
-  }
-}
 export default MyApp
