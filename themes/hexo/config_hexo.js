@@ -1,6 +1,6 @@
 const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['本来是ID number，没注册下来，那就ID nunber吧😆'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['ID number没注册下来，那就ID nunber吧😆'], // 首页大图标语文字
 
   HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
 
