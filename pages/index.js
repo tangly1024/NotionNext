@@ -13,7 +13,10 @@ export async function getStaticProps() {
   const from = 'index'
   const props = await getGlobalNotionData({ from })
   const { siteInfo } = props
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  console.log(props.allPages) // todo
+  props.posts = props.allPages.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
     description: siteInfo?.description,
@@ -35,7 +38,11 @@ export async function getStaticProps() {
       if (post.password && post.password !== '') {
         continue
       }
-      post.blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
+      post.blockMap = await getPostBlocks(
+        post.id,
+        'slug',
+        BLOG.POST_PREVIEW_LINES
+      )
     }
   }
 

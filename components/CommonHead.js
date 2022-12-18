@@ -43,16 +43,18 @@ const CommonHead = ({ meta, children }) => {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
-      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="no-referrer-when-downgrade" />}
+      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && (
+        <meta name="referrer" content="no-referrer-when-downgrade" />
+      )}
       {meta?.type === 'Post' && (
         <>
           <meta
             property="article:published_time"
             content={meta.date || meta.createdTime}
           />
-          <meta property="article:author" content={BLOG.AUTHOR} />
+          {/* <meta property="article:author" content={BLOG.AUTHOR} /> */}
           <meta property="article:section" content={category} />
-          <meta property="article:publisher" content={BLOG.FACEBOOK_PAGE} />
+          {/* <meta property="article:publisher" content={BLOG.FACEBOOK_PAGE} /> */}
         </>
       )}
       {children}
