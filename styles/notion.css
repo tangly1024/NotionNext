@@ -1958,17 +1958,17 @@ pre[class*='language-'] {
 /* https://github.com/kchen0x */
 .notion-quote {
   display: block;
-  border-radius: 5px;
+  border-radius: 3px;
   border-color: var(--notion-blue);
   border-left-color: var(--notion-blue);
   background-color: var(--notion-blue_background_co);
-  width: 100%;
+  width: 90%;
   white-space: pre-wrap;
   word-break: break-word;
   border-left: 10px solid;
   padding: 0.2em 0.9em;
-  margin: 6px 0;
-  font-size: 1em;
+  margin: 3px 0;
+  font-size: 0.9em;
   /* color: var(--notion-gray); */
 }
 
