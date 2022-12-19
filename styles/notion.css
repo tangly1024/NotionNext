@@ -1968,7 +1968,7 @@ pre[class*='language-'] {
   border-left: 10px solid;
   padding: 0.2em 0.9em;
   margin: 3px 0;
-  font-size: 0.9em;
+  font-size: 0.5em;
   /* color: var(--notion-gray); */
 }
 
