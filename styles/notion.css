@@ -1962,13 +1962,13 @@ pre[class*='language-'] {
   border-color: var(--notion-blue);
   border-left-color: var(--notion-blue);
   background-color: var(--notion-blue_background_co);
-  width: 90%;
+  width: 95%;
   white-space: pre-wrap;
   word-break: break-word;
-  border-left: 10px solid;
+  border-left: 3px solid;
   padding: 0.2em 0.9em;
   margin: 3px 0;
-  font-size: 0.5em;
+  font-size: 0.9em;
   /* color: var(--notion-gray); */
 }
 
