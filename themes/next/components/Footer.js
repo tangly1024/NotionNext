@@ -25,7 +25,7 @@ const Footer = ({ title }) => {
           <i className='fas fa-eye' /><span className='px-1 busuanzi_value_site_pv'> </span> </span>
         <span className='pl-2 hidden busuanzi_container_site_uv'>
           <i className='fas fa-users' /> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
-          </br>
+        <br />
         <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by  <a href='https://github.com/tangly1024/NotionNext' className='underline '>NotionNext {BLOG.VERSION}</a>.</span>
       </span>
     </footer>
