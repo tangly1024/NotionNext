@@ -533,13 +533,13 @@
 
 .notion-quote {
   display: block;
-  width: 100%;
+  width: 90%;
   white-space: pre-wrap;
   word-break: break-word;
   border-left: 3px solid currentcolor;
   padding: 0.2em 0.9em;
-  margin: 6px 0;
-  font-size: 1.2em;
+  margin: 3px 0;
+  font-size: 0.9em;
 }
 
 .notion-hr {
