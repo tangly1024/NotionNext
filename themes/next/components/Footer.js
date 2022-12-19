@@ -18,7 +18,7 @@ const Footer = ({ title }) => {
     >
       <span>
         <i className='fas fa-copyright' /> {`${copyrightDate}`} <span className='mx-1 animate-pulse'><i className='fas fa-heart' /></span> <a href={BLOG.LINK} className='underline font-bold '>{BLOG.AUTHOR}</a>
-        &nbsp;
+        &nbsp;&nbsp;
         {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a></>}
 
         <span className='hidden busuanzi_container_site_pv'>
