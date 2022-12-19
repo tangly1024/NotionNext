@@ -1962,7 +1962,7 @@ pre[class*='language-'] {
   border-color: var(--notion-blue);
   border-left-color: var(--notion-blue);
   background-color: var(--notion-blue_background_co);
-  width: 99%;
+  width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
   border-left: 3px solid;
