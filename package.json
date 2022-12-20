@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.6.7",
+  "version": "3.6.8",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -52,6 +52,7 @@
     "react-notion-x": "6.15.6",
     "react-share": "^4.4.0",
     "smoothscroll-polyfill": "^0.4.4",
+    "twikoo": "^1.6.8",
     "typed.js": "^2.0.12",
     "use-ackee": "^3.0.0",
     "valine": "^1.4.18"
