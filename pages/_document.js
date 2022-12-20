@@ -15,10 +15,6 @@ class MyDocument extends Document {
         <Head>
           <link rel='icon' href='/favicon.ico' />
           <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
-          { BLOG.CUSTOM_FONT
-            ? BLOG.CUSTOM_FONT_URL?.map(fontUrl =>
-                <link href={`${fontUrl}`} key={fontUrl} rel='stylesheet' />)
-            : <link href='https://fonts.font.im/css2?family=Noto+Serif+SC&display=swap' rel='stylesheet' /> }
           <CommonScript />
         </Head>
 
