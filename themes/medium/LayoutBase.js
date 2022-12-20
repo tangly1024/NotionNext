@@ -24,7 +24,7 @@ const LayoutBase = props => {
   const router = useRouter()
 
   return (
-    <div className='bg-white dark:bg-black w-full h-full min-h-screen justify-center dark:text-gray-300'>
+    <div className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
       <CommonHead meta={meta} />
       <main id='wrapper' className='flex justify-between w-full h-full mx-auto'>
         {/* 桌面端左侧菜单 */}
