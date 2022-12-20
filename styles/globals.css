@@ -198,3 +198,8 @@ nav {
 	word-wrap: break-word;
 	word-break: break-all;
 }
+
+
+.custom-background{
+  background: linear-gradient(180deg, #fed6e3, #c0efec) ; 
+}
