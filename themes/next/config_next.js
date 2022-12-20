@@ -26,11 +26,11 @@ const CONFIG_NEXT = {
   MENU_SEARCH: true, // 显示搜索
 
   WIDGET_TO_TOP: true, // 是否显示回顶
-  WIDGET_TO_BOTTOM: false, // 显示回底
+  WIDGET_TO_BOTTOM: true, // 显示回底
   WIDGET_DARK_MODE: false, // 显示日间/夜间模式切换
   WIDGET_TOC: true, // 移动端显示悬浮目录
 
-  ARTICLE_SHARE: false, // 文章分享功能
+  ARTICLE_SHARE: true, // 文章分享功能
   ARTICLE_RELATE_POSTS: true, // 相关文章推荐
   ARTICLE_COPYRIGHT: true // 文章版权声明
 
