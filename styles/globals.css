@@ -132,11 +132,6 @@ nav {
   backdrop-filter: blur(10px);
 }
 
-.dark .glassmorphism {
-  background: rgba(31, 41, 55, 0.75);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
 
 .medium-zoom-overlay {
   background: none !important;
