@@ -21,8 +21,7 @@ import NotionIcon from '@/components/NotionIcon'
  */
 export default function ArticleDetail(props) {
   const { post, recommendPosts, prev, next, showArticleInfo } = props
-  // const url = BLOG.LINK + useRouter().asPath
-  const url = 'https://zhangqiyuan.xyz/article/wechat'
+  const url = BLOG.LINK + useRouter().asPath
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
