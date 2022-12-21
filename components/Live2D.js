@@ -2,13 +2,17 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
-import { useEffect } from 'react'
+import React from 'react'
 
 export default function Live2D() {
-  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
-    return <></>
-  }
   const { switchTheme } = useGlobal()
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', initLive2D)
+    return () => {
+      window.removeEventListener('scroll', initLive2D)
+    }
+  }, [])
 
   function handleClick() {
     if (BLOG.WIDGET_PET_SWITCH_THEME) {
@@ -16,12 +20,9 @@ export default function Live2D() {
     }
   }
 
-  useEffect(() => {
-    window.addEventListener('scroll', initLive2D)
-    return () => {
-      window.removeEventListener('scroll', initLive2D)
-    }
-  }, [])
+  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
+    return <></>
+  }
 
   return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='切换主题' title='切换主题' />
 }

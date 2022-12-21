@@ -38,7 +38,7 @@ export async function getStaticProps({ params: { tag, page } }) {
   delete props.allPages
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

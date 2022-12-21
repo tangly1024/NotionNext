@@ -15,11 +15,11 @@ const BlogPostCard = ({ post, showSummary }) => {
       key={post.id}
       className="animate__animated animate__fadeIn duration-300 mb-6 max-w-7xl border-b dark:border-gray-800 "
     >
-      <div className="lg:p-8 p-4 flex flex-col w-full">
+      <div className="lg:py-8 py-4 flex flex-col w-full">
         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
           <a
             className={
-              'cursor-pointer font-bold font-sans hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-100 hover:text-green-500 dark:hover:text-green-400'
+              'cursor-pointer font-bold font-sans hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
             }
           >
             {post.title}

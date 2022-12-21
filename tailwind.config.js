@@ -1,5 +1,5 @@
 const BLOG = require('./blog.config')
-const fontFamilies = require('./lib/font')
+const { fontFamilies } = require('./lib/font')
 
 module.exports = {
   purge: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './themes/**/*.js'],
