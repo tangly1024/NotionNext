@@ -36,6 +36,10 @@ const Slug = props => {
 
       setLock(false)
     }
+
+    Router.events.on('routeChangeComplete', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
   }, [post])
 
   if (!post) {
@@ -52,8 +56,6 @@ const Slug = props => {
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
-
-  changeLoadingState(false)
 
   /**
    * 验证文章密码
@@ -79,9 +81,7 @@ const Slug = props => {
     tags: post?.tags
   }
 
-  Router.events.on('routeChangeComplete', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  })
+  changeLoadingState(false)
 
   return (
     <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />

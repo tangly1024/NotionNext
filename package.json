@@ -26,6 +26,7 @@
     "animate.css": "^4.1.1",
     "animejs": "^3.2.1",
     "axios": ">=0.21.1",
+    "chrome-aws-lambda": "^10.1.0",
     "copy-to-clipboard": "^3.3.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "feed": "^4.2.2",
@@ -38,6 +39,7 @@
     "mermaid": "9.2.2",
     "mongodb": "^4.6.0",
     "next": "12.1.6",
+    "next-api-og-image": "^4.3.0",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
     "preact": "^10.5.15",
@@ -58,6 +60,7 @@
     "valine": "^1.4.18"
   },
   "devDependencies": {
+    "@types/react": "^18.0.26",
     "@waline/client": "^2.5.1",
     "autoprefixer": "^10.2.5",
     "eslint": "^7.26.0",
@@ -70,6 +73,7 @@
     "next-sitemap": "^1.6.203",
     "postcss": "^8.2.15",
     "tailwindcss": "^2.1.2",
+    "typescript": "^4.9.4",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {
