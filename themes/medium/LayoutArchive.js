@@ -24,7 +24,7 @@ export const LayoutArchive = props => {
   })
   return (
     <LayoutBase {...props}>
-      <div className="mb-10 pb-20 md:p-12 p-3  min-h-full">
+      <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
         {Object.keys(archivePosts).map(archiveTitle => (
           <div key={archiveTitle}>
             <div
@@ -45,7 +45,7 @@ export const LayoutArchive = props => {
                     </span>{' '}
                     &nbsp;
                     <Link
-                      href={`${BLOG.SUB_PATH}/article/${post.slug}`}
+                      href={`${BLOG.SUB_PATH}/${post.slug}`}
                       passHref
                     >
                       <a className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">

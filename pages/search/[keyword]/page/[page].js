@@ -30,22 +30,28 @@ const Index = props => {
  * @param {*} param0
  * @returns
  */
-export async function getStaticProps({ params: { keyword } }) {
+export async function getStaticProps({ params: { keyword, page } }) {
   const props = await getGlobalNotionData({
     from: 'search-props',
     pageType: ['Post']
   })
-  props.posts = await filterByMemCache(props.allPosts, keyword)
+  const { allPages } = props
+  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = await filterByMemCache(allPosts, keyword)
+  props.postCount = props.posts.length
+  // 处理分页
+  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page - 1)
   props.keyword = keyword
+  props.page = page
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { keyword: BLOG.TITLE } }],
+    paths: [{ params: { keyword: BLOG.TITLE, page: '1' } }],
     fallback: true
   }
 }
@@ -107,7 +113,7 @@ async function filterByMemCache(allPosts, keyword) {
   }
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
-    const page = await getDataFromCache(cacheKey)
+    const page = await getDataFromCache(cacheKey, true)
     const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
     const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
@@ -121,7 +127,7 @@ async function filterByMemCache(allPosts, keyword) {
         indexContent = appendText(indexContent, properties, 'caption')
       })
     }
-    console.log('全文搜索缓存', cacheKey, page != null)
+    // console.log('全文搜索缓存', cacheKey, page != null)
     post.results = []
     let hitCount = 0
     for (const i in indexContent) {

@@ -14,9 +14,9 @@ const BlogPostCard = ({ post, showSummary }) => {
         className="animate__animated animate__fadeIn flex flex-col-reverse lg:flex-row justify-between duration-300"
       >
         <div className="lg:p-8 p-4 flex flex-col w-full">
-          <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
+          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
             <a
-              className={`replace cursor-pointer hover:underline text-2xl font-sans ${showPreview ? 'text-center' : ''
+              className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
                 } leading-tight text-gray-700 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}
             >
               {post.title}
@@ -79,7 +79,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         </div>
 
         {CONFIG_HEXO.POST_LIST_COVER && !showPreview && post?.page_cover && !post.results && (
-          <Link href={`${BLOG.SUB_PATH}/article/${post.slug}`} passHref>
+          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
             <div className="flex w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none cursor-pointer transform overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

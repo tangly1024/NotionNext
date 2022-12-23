@@ -6,7 +6,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
     return <></>
   }
   return <>
-    <div id='category-list' className='dark:border-gray-600 flex flex-wrap font-sans mx-4'>
+    <div id='category-list' className='dark:border-gray-600 flex flex-wrap  mx-4'>
       {categories.map(category => {
         const selected = currentCategory === category.name
         return <Link key={category.name} href={`/category/${category.name}`} passHref>

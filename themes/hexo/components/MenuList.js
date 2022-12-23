@@ -21,12 +21,12 @@ const MenuList = (props) => {
     links = links.concat(customNav)
   }
 
-  return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-300 font-sans'>
+  return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-300 '>
     {links.map(link => {
       if (link && link.show) {
         const selected = (router.pathname === link.to) || (router.asPath === link.to)
         return <Link key={`${link.to}`} title={link.to} href={link.to} >
-          <a target='_blank' className={'py-1.5 px-5 text-base justify-between hover:bg-indigo-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+          <a className={'py-1.5 px-5 text-base justify-between hover:bg-indigo-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
             (selected ? 'bg-gray-200 text-black' : ' ')} >
             <div className='my-auto items-center justify-center flex '>
               <i className={`${link.icon} w-4 text-center`} />

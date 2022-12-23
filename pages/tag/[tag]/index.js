@@ -1,6 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import * as ThemeMap from '@/themes'
+import BLOG from '@/blog.config'
 
 const Tag = props => {
   const { theme } = useGlobal()
@@ -23,19 +24,26 @@ const Tag = props => {
 }
 
 export async function getStaticProps({ params: { tag } }) {
-  const props = await getGlobalNotionData({
-    from: 'tag-props',
-    includePage: false,
-    tagsCount: 0
-  })
-  const { allPosts } = props
-  props.posts = allPosts.filter(
-    post => post && post.tags && post.tags.includes(tag)
-  )
+  const from = 'tag-props'
+  const props = await getGlobalNotionData({ from })
+
+  // 过滤状态
+  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag))
+
+  // 处理文章页数
+  props.postCount = props.posts.length
+
+  // 处理分页
+  if (BLOG.POST_LIST_STYLE === 'scroll') {
+    // 滚动列表 给前端返回所有数据
+  } else if (BLOG.POST_LIST_STYLE === 'page') {
+    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE - 1)
+  }
+
   props.tag = tag
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

@@ -1,4 +1,3 @@
-import { getPageTableOfContents } from 'notion-utils'
 import { useRef } from 'react'
 import { ArticleLock } from './components/ArticleLock'
 import HeaderArticle from './components/HeaderArticle'
@@ -15,6 +14,7 @@ import { isBrowser } from '@/lib/utils'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const drawerRight = useRef(null)
 
   if (!post) {
     return <LayoutBase
@@ -25,12 +25,6 @@ export const LayoutSlug = props => {
     ></LayoutBase>
   }
 
-  if (!lock && post?.blockMap?.block) {
-    post.content = Object.keys(post.blockMap.block)
-    post.toc = getPageTableOfContents(post, post.blockMap)
-  }
-
-  const drawerRight = useRef(null)
   const targetRef = isBrowser() ? document.getElementById('container') : null
 
   const floatSlot = <>
@@ -53,13 +47,13 @@ export const LayoutSlug = props => {
       floatSlot={floatSlot}
     >
       <div className="w-full lg:shadow-sm lg:hover:shadow lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black">
-        {lock && <ArticleLock password={post.password} validPassword={validPassword} />}
+        {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && <div id="container" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
           <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
             {/* Notion文章主体 */}
-            <section id='notion-article' className='px-5 justify-center mx-auto'>
+            <section id='notion-article' className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
               {post && <NotionPage post={post} />}
             </section>
 
@@ -74,9 +68,10 @@ export const LayoutSlug = props => {
                 data-ad-slot="3806269138" />
             </section>
 
-            <ArticleCopyright {...props} />
-            <ArticleRecommend {...props} />
-            <ArticleAdjacent {...props} />
+            {post.type === 'Post' && <ArticleCopyright {...props} /> }
+            {post.type === 'Post' && <ArticleRecommend {...props} /> }
+            {post.type === 'Post' && <ArticleAdjacent {...props} /> }
+
           </article>
 
           <hr className='border-dashed' />

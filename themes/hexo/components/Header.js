@@ -1,7 +1,7 @@
-import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG_HEXO from '../config_hexo'
+import NavButtonGroup from './NavButtonGroup'
 
 let wrapperTop = 0
 let windowTop = 0
@@ -13,12 +13,10 @@ let autoScroll = false
  */
 const Header = props => {
   const [typed, changeType] = useState()
-  const { isDarkMode } = useGlobal()
   const { siteInfo } = props
   useEffect(() => {
     scrollTrigger()
     updateHeaderHeight()
-    updateTopNav()
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
@@ -48,17 +46,6 @@ const Header = props => {
 
   const scrollTrigger = () => {
     const scrollS = window.scrollY
-    const nav = document.querySelector('#sticky-nav')
-
-    if (scrollS < 500) {
-      nav && nav.classList.replace('bg-white', 'bg-none')
-      nav && nav.classList.replace('text-black', 'text-white')
-      nav && nav.classList.replace('border', 'border-transparent')
-    } else {
-      nav && nav.classList.replace('bg-none', 'bg-white')
-      nav && nav.classList.replace('text-white', 'text-black')
-      nav && nav.classList.replace('border-transparent', 'border')
-    }
 
     // 自动滚动
     if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
@@ -73,19 +60,6 @@ const Header = props => {
       setTimeout(autoScrollEnd, 500)
     }
     windowTop = scrollS
-
-    updateTopNav()
-  }
-
-  const updateTopNav = () => {
-    if (!isDarkMode) {
-      const stickyNavElement = document.getElementById('sticky-nav')
-      if (window.scrollY < window.innerHeight) {
-        stickyNavElement?.classList?.add('dark')
-      } else {
-        stickyNavElement?.classList?.remove('dark')
-      }
-    }
   }
 
   function updateHeaderHeight () {
@@ -101,14 +75,18 @@ const Header = props => {
       className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black text-white"
       style={{
         backgroundImage:
-          `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0,0,0,0.2), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${siteInfo?.pageCover}")`
+          `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0,0,0,0.5), rgba(0,0,0,0.3), rgba(0,0,0,0.5), rgba(0, 0, 0, 0.9) ),url("${siteInfo?.pageCover}")`
       }}
     >
-      <div className="absolute flex flex-col h-full items-center justify-center w-full font-sans">
+      <div className="absolute flex flex-col h-full items-center justify-center w-full ">
         <div className='text-4xl md:text-5xl text-white shadow-text'>{siteInfo?.title}</div>
         <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
           <span id='typed'/>
         </div>
+
+        {/* 首页导航插件 */}
+        { CONFIG_HEXO.HOME_NAV_BUTTONS && <NavButtonGroup {...props}/>}
+
       </div>
       <div
         onClick={() => {

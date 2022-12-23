@@ -19,6 +19,13 @@ const CusdisComponent = dynamic(
   { ssr: false }
 )
 
+const TwikooCompenent = dynamic(
+  () => {
+    return import('@/components/Twikoo')
+  },
+  { ssr: false }
+)
+
 const GitalkComponent = dynamic(
   () => {
     return import('@/components/Gitalk')
@@ -43,9 +50,6 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
 })
 
 const Comment = ({ frontMatter }) => {
-  if (!frontMatter) {
-    return <>Loading...</>
-  }
   const { isDarkMode } = useGlobal()
   const router = useRouter()
 
@@ -61,9 +65,17 @@ const Comment = ({ frontMatter }) => {
     }, 200)
   }, [])
 
+  if (!frontMatter) {
+    return <>Loading...</>
+  }
+
   return (
     <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
       <Tabs>
+
+         { BLOG.COMMENT_TWIKOO_ENV_ID && (<div key='Twikoo'>
+            <TwikooCompenent/>
+         </div>)}
 
         { BLOG.COMMENT_WALINE_SERVER_URL && (<div key='Waline'>
             <WalineComponent/>

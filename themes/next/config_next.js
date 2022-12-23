@@ -9,6 +9,8 @@ const CONFIG_NEXT = {
   POST_LIST_PREVIEW: true, // 显示文章预览
   POST_LIST_SUMMARY: false, // 显示用户自定义摘要，有预览时优先只展示预览
 
+  POST_HEADER_IMAGE_VISIBLE: false, // 文章详情页是否显示封面图
+
   // 右侧组件
   RIGHT_BAR: true, // 是否显示右侧栏
   RIGHT_LATEST_POSTS: true, // 右侧栏最新文章
@@ -21,7 +23,6 @@ const CONFIG_NEXT = {
   MENU_CATEGORY: true, // 显示分类
   MENU_TAG: true, // 显示标签
   MENU_ARCHIVE: true, // 显示归档
-  MENU_ABOUT: false, // 显示关于
   MENU_SEARCH: true, // 显示搜索
 
   WIDGET_TO_TOP: true, // 是否显示回顶

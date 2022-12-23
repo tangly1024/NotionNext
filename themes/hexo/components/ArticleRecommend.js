@@ -19,7 +19,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   const { locale } = useGlobal()
   return (
     <div className="p-2">
-      <div className="font-sans mb-2 px-1 flex flex-nowrap justify-between">
+      <div className=" mb-2 px-1 flex flex-nowrap justify-between">
         <div>
           <i className="mr-2 fas fa-thumbs-up" />
           {locale.COMMON.RELATE_POSTS}
@@ -35,7 +35,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
             <Link
               key={post.id}
               title={post.title}
-              href={`${BLOG.SUB_PATH}/article/${post.slug}`}
+              href={`${BLOG.SUB_PATH}/${post.slug}`}
               passHref
             >
               <a
@@ -47,7 +47,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                   style={{ backgroundImage: headerImage }}
                 >
                   <div className="flex items-center justify-center bg-black bg-opacity-60 hover:bg-opacity-10 w-full h-full duration-300 ">
-                    <div className="font-sans text-sm  text-white text-center shadow-text">
+                    <div className=" text-sm  text-white text-center shadow-text">
                       <div>
                         <i className="fas fa-calendar-alt mr-1" />
                         {post.date?.start_date}
