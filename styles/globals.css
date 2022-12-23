@@ -203,3 +203,8 @@ nav {
 .custom-background{
   background: linear-gradient(180deg, #fed6e3, #c0efec) ; 
 }
+
+
+.dark .custom-background{
+  background: none;
+}
