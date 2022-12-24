@@ -3,13 +3,13 @@ import throttle from 'lodash.throttle'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
-import Collapse from './Collapse'
 import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import MenuButtonGroupTop from './MenuButtonGroupTop'
-import MenuList from './MenuList'
 import { useRouter } from 'next/router'
+import SideBarDrawer from '@/components/SideBarDrawer'
+import SideBar from './SideBar'
 
 let windowTop = 0
 
@@ -34,16 +34,16 @@ const TopNav = props => {
     const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
 
     if (header && navTransparent) {
-      nav && nav.classList.replace('bg-white', 'bg-none')
+      nav && nav.classList.replace('bg-indigo-700', 'bg-none')
       nav && nav.classList.replace('text-black', 'text-white')
       nav && nav.classList.replace('border', 'border-transparent')
-      nav && nav.classList.replace('shadow-md', 'shadow-none')
+      nav && nav.classList.replace('shadow-sm', 'shadow-none')
       nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
     } else {
-      nav && nav.classList.replace('bg-none', 'bg-white')
+      nav && nav.classList.replace('bg-none', 'bg-indigo-700')
       nav && nav.classList.replace('text-white', 'text-black')
       nav && nav.classList.replace('border-transparent', 'border')
-      nav && nav.classList.replace('shadow-none', 'shadow-md')
+      nav && nav.classList.replace('shadow-none', 'shadow-sm')
       nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
     }
 
@@ -85,6 +85,10 @@ const TopNav = props => {
     changeShow(!isOpen)
   }
 
+  const toggleMenuClose = () => {
+    changeShow(false)
+  }
+
   const searchDrawerSlot = <>
     { categories && (
         <section className='mt-8'>
@@ -117,12 +121,19 @@ const TopNav = props => {
     ) }
     </>
 
-  return (<div id='top-nav' className='z-40'>
+  return (<div id='top-nav'>
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={'top-0 drop-shadow-md fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform duration-200 border-transparent dark:border-transparent'}>
-      <div className='w-full flex justify-between items-center px-4 py-2'>
+    <div id='sticky-nav' className={'flex justify-center top-0 shadow-black shadow-sm fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray text-gray-200 w-full z-30 transform duration-200'}>
+      <div className='w-full max-w-6xl flex justify-between items-center px-4 py-2'>
+        {/* 左侧功能 */}
+         <div className='justify-start items-center block lg:hidden '>
+          <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
+          { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }
+          </div>
+        </div>
+
         <div className='flex'>
          <Logo {...props}/>
         </div>
@@ -130,18 +141,18 @@ const TopNav = props => {
         {/* 右侧功能 */}
         <div className='mr-1 justify-end items-center '>
           <div className='hidden lg:flex'> <MenuButtonGroupTop {...props}/></div>
-          <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
-          { isOpen ? <i className='fas fa-times'/> : <i className='fas fa-bars'/> }
-          </div>
+          <Link href={'/search'}>
+            <a><i className='fas fa-search'/></a>
+          </Link>
         </div>
       </div>
 
-      <Collapse type='vertical' isOpen={isOpen} className='shadow-xl'>
-        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-5 lg:hidden '>
-          <MenuList {...props}/>
-        </div>
-      </Collapse>
     </div>
+
+    <SideBarDrawer isOpen={isOpen} onClose={toggleMenuClose}>
+        <SideBar {...props}/>
+    </SideBarDrawer>
+
   </div>)
 }
 

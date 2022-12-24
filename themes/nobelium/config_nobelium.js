@@ -1,4 +1,4 @@
-const CONFIG_EMPTY = {
+const CONFIG_NOBELIUM = {
   TEST_CONFIG: 'TESET'
 }
-export default CONFIG_EMPTY
+export default CONFIG_NOBELIUM

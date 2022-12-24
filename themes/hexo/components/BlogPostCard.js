@@ -8,7 +8,7 @@ import NotionPage from '@/components/NotionPage'
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
   return (
-    <div className="w-full shadow-sm hover:shadow border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-300">
+    <div className="w-full drop-shadow-md hover:shadow border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-300">
       <div
         key={post.id}
         className="animate__animated animate__fadeIn flex flex-col-reverse lg:flex-row justify-between duration-300"
