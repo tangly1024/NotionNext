@@ -8,9 +8,11 @@ export default function Live2D() {
   const { switchTheme } = useGlobal()
 
   React.useEffect(() => {
-    window.addEventListener('scroll', initLive2D)
-    return () => {
-      window.removeEventListener('scroll', initLive2D)
+    if (BLOG.WIDGET_PET) {
+      window.addEventListener('scroll', initLive2D)
+      return () => {
+        window.removeEventListener('scroll', initLive2D)
+      }
     }
   }, [])
 
