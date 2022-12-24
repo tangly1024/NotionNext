@@ -9,7 +9,6 @@ import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
-import ArticleRecommend from './components/ArticleRecommend'
 import { isBrowser } from '@/lib/utils'
 
 export const LayoutSlug = props => {
@@ -46,10 +45,10 @@ export const LayoutSlug = props => {
       showTag={false}
       floatSlot={floatSlot}
     >
-      <div className="w-full lg:shadow-sm lg:hover:shadow lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black">
+      <div className="-mt-32 rounded-md mx-3 lg:shadow-sm lg:hover:shadow lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && <div id="container" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
+        {!lock && <div id="container" className="overflow-x-auto flex-grow md:w-full ">
 
           <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
             {/* Notion文章主体 */}
@@ -69,18 +68,20 @@ export const LayoutSlug = props => {
             </section>
 
             {post.type === 'Post' && <ArticleCopyright {...props} /> }
-            {post.type === 'Post' && <ArticleRecommend {...props} /> }
-            {post.type === 'Post' && <ArticleAdjacent {...props} /> }
 
           </article>
 
           <hr className='border-dashed' />
 
           {/* 评论互动 */}
-          <div className="duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3">
+          <div className="duration-200 overflow-x-auto dark:bg-hexo-black-gray px-3">
             <Comment frontMatter={post} />
           </div>
         </div>}
+      </div>
+
+      <div className='px-3'>
+      {post.type === 'Post' && <ArticleAdjacent {...props} /> }
       </div>
 
       <div className='block lg:hidden'>

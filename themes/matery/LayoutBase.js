@@ -42,7 +42,7 @@ const LayoutBase = props => {
   }, [show])
 
   return (
-    <div className="bg-hexo-background-gray dark:bg-black w-full overflow-hidden">
+    <div id="outer-wrapper" className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full overflow-hidden">
 
       <CommonHead meta={meta} siteInfo={siteInfo}/>
 
@@ -50,15 +50,9 @@ const LayoutBase = props => {
 
       {headerSlot}
 
-      <main id="wrapper" className="w-full py-8 md:px-8 lg:px-24 min-h-screen">
-        <div
-          id="container-inner"
-          className="pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center"
-        >
-          <div className="w-full max-w-4xl overflow-x-hidden">
+      <main id="wrapper" className="flex-1 w-full py-8 md:px-8 lg:px-24">
+        <div id="container-inner" className="w-full mx-auto lg:flex lg:space-x-4 justify-center">
             {onLoading ? <LoadingCover /> : children}
-          </div>
-          {/* <SideRight {...props} slot={rightAreaSlot} /> */}
         </div>
       </main>
 
