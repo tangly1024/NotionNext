@@ -8,22 +8,23 @@ export default function Live2D() {
   const { switchTheme } = useGlobal()
 
   React.useEffect(() => {
-    window.addEventListener('scroll', initLive2D)
-    return () => {
-      window.removeEventListener('scroll', initLive2D)
+    if (BLOG.WIDGET_PET) {
+      window.addEventListener('scroll', initLive2D)
+      return () => {
+        window.removeEventListener('scroll', initLive2D)
+      }
     }
   }, [])
+
+  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
+    return <></>
+  }
 
   function handleClick() {
     if (BLOG.WIDGET_PET_SWITCH_THEME) {
       switchTheme()
     }
   }
-
-  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
-    return <></>
-  }
-
   return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='切换主题' title='切换主题' />
 }
 

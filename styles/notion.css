@@ -737,7 +737,8 @@ svg.notion-page-icon {
   width: 100%;
   padding: 30px 16px 30px 20px;
   margin: 4px 0;
-  border-radius: 10px;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   tab-size: 2;
   display: block;
   box-sizing: border-box;
@@ -1996,4 +1997,21 @@ thead, tbody tr {
 
 .notion-collection-card{
     @apply dark:hover:text-gray-200
+}
+
+.notion-code-copy{
+    display: none;
+}
+
+pre[class*="language-mermaid"] {
+    @apply bg-gray-50 dark:bg-gray-200 !important;
+}
+
+/* mermaid 原文隐藏 */
+code.language-mermaid {
+    display:none
+}
+
+pre.notion-code.line-numbers{
+    margin-bottom: 0 !important
 }
