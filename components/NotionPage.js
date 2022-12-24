@@ -7,7 +7,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
 
-import 'prism-themes/themes/prism-material-light.css'
 import 'katex/dist/katex.min.css'
 
 const Equation = dynamic(() =>
