@@ -392,7 +392,7 @@
 
 .notion-h {
   position: relative;
-  display: block;
+  /* display: block; */
   font-weight: 600;
   line-height: 1.3;
   padding: 3px 2px;
@@ -427,7 +427,7 @@
   margin-top: 2px;
 } */
 .notion-h2 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   margin-top: 1.1em;
 }
 .notion-h3 {
@@ -929,7 +929,7 @@ svg.notion-page-icon {
 
 .notion-toggle {
   padding: 3px 2px;
-  max-width: 100%;
+  width: 100%;
 }
 .notion-toggle > summary {
   cursor: pointer;
@@ -1910,10 +1910,6 @@ pre[class*='language-'] {
  width: 100% !important;
 }
 
-.notion-simple-table td {
- white-space: nowrap;
-}
-
 .pre-mac {
   position: relative;
   margin-top: -7px;
@@ -1941,4 +1937,63 @@ pre[class*='language-'] {
 
 .pre-mac > span:nth-child(3) {
   background: limegreen;
+}
+
+.notion-asset-wrapper-pdf > div {
+    display: block !important;
+}
+
+::selection {
+    @apply bg-blue-500 text-gray-50 !important; 
+}
+
+.dark img{
+    @apply opacity-80
+}
+
+.dark #live2d {
+    @apply opacity-80
+}
+
+/* https://github.com/kchen0x */
+.notion-quote {
+  display: block;
+  border-radius: 5px;
+  border-color: var(--notion-blue);
+  border-left-color: var(--notion-blue);
+  background-color: var(--notion-blue_background_co);
+  width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-left: 10px solid;
+  padding: 0.2em 0.9em;
+  margin: 6px 0;
+  font-size: 1em;
+  /* color: var(--notion-gray); */
+}
+
+.notion-asset-wrapper-pdf>div{
+    width:unset!important
+}
+
+/* pdf预览适配页面 */
+.react-pdf__Page__canvas,.react-pdf__Page__textContent{
+    width: 100% !important;
+    height: auto !important;
+}
+
+
+/* simple table设置 */
+table,thead,tbody{
+    display:block
+}
+
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
+.notion-collection-card{
+    @apply dark:hover:text-gray-200
 }

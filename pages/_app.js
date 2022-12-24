@@ -23,6 +23,8 @@ import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { Fireworks } from '@/components/Fireworks'
+import React from 'react'
+import { loadExternalResource } from '@/lib/utils'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -47,10 +49,13 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.FIREWORKS) && <Fireworks/>}
     </>
 
+  // 延迟加载fontAwesome
+  React.useEffect(() => {
+    loadExternalResource(BLOG.FONT_AWESOME_PATH, 'css')
+  }, [])
+
   return (
         <GlobalContextProvider>
-            {/* FontawesomeCDN */}
-            <link rel="stylesheet" href={BLOG.FONT_AWESOME_PATH} referrerPolicy="no-referrer" />
             {externalPlugins}
             <Component {...pageProps} />
         </GlobalContextProvider>

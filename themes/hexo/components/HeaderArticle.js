@@ -4,12 +4,13 @@ import formatDate from '@/lib/formatDate'
 import BLOG from '@/blog.config'
 
 export default function HeaderArticle({ post, siteInfo }) {
+  const { locale } = useGlobal()
+
   if (!post) {
     return <></>
   }
   const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("${siteInfo?.pageCover}")`
 
-  const { locale } = useGlobal()
   const date = formatDate(
     post?.date?.start_date || post?.createdTime,
     locale.LOCALE
