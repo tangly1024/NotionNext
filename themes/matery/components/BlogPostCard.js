@@ -13,16 +13,14 @@ const BlogPostCard = ({ post, showSummary }) => {
 
                 {CONFIG_MATERY.POST_LIST_COVER && !showPreview && post?.page_cover && !post.results && (
                     <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
-                        <div className="flex w-full relative duration-200 bg-black rounded-t-md lg:rounded-r-md lg:rounded-t-none cursor-pointer transform overflow-hidden">
+                        <div className="flex w-full relative duration-200 bg-black rounded-t-md  cursor-pointer transform overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={post?.page_cover}
                                 alt={post.title}
-                                className="opacity-50 max-h-52 lg:max-h-72 w-full hover:scale-125 rounded-t-md lg:rounded-r-md lg:rounded-t-none transform object-cover duration-500"
+                                className="opacity-50 max-h-52 lg:max-h-72 w-full hover:scale-125 rounded-t-md  transform object-cover duration-500"
                             />
                             <span className='absolute bottom-0 left-0 text-white p-6 text-2xl' > {post.title}</span>
-
-                            {/* <Image className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
                         </div>
                     </Link>
                 )}

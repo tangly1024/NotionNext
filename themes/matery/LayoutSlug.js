@@ -45,7 +45,8 @@ export const LayoutSlug = props => {
       showTag={false}
       floatSlot={floatSlot}
     >
-      <div className="-mt-32 rounded-md mx-3 lg:shadow-sm lg:hover:shadow lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+     <div>
+     <div className="-mt-32 rounded-md mx-3 lg:shadow-sm lg:hover:shadow lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
         {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && <div id="container" className="overflow-x-auto flex-grow md:w-full ">
@@ -81,9 +82,10 @@ export const LayoutSlug = props => {
       </div>
 
       <div className='px-3'>
-      {post.type === 'Post' && <ArticleAdjacent {...props} /> }
+         {post.type === 'Post' && <ArticleAdjacent {...props} /> }
       </div>
 
+     </div>
       <div className='block lg:hidden'>
         <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
       </div>
