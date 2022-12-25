@@ -17,7 +17,7 @@ export const LayoutSlug = props => {
 
   const scrollListener = () => {
     const scrollY = window.pageYOffset
-    const shouldShow = scrollY > 220
+    const shouldShow = scrollY > 220 && post?.toc?.length > 0
 
     if (shouldShow !== show) {
       switchShow(shouldShow)
@@ -46,7 +46,7 @@ export const LayoutSlug = props => {
         >
 
             <div id='inner-wrapper' className='flex'>
-                <div className='drop-shadow-xl max-w-4xl 2xl:ml-52'>
+                <div className={'drop-shadow-xl max-w-4xl 2xl:ml-36'}>
                     <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                         {lock && <ArticleLock validPassword={validPassword} />}
 
