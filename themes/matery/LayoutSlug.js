@@ -46,17 +46,19 @@ export const LayoutSlug = props => {
             showTag={false}
             floatSlot={floatSlot}
         >
-            <div className='inner-wrapper drop-shadow-xl'>
+            <div className='inner-wrapper drop-shadow-xl max-w-4xl'>
                 <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                     {lock && <ArticleLock validPassword={validPassword} />}
 
                     {!lock && <div id="container" className="overflow-x-auto flex-grow md:w-full ">
                         {/* <ArticleInfo */}
+                        {post?.type === 'Post' && <>
                         <div className='px-5'>
                             <ArticleInfo post={post} />
                         </div>
 
                         <hr />
+                        </>}
 
                         <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
                             {/* Notion文章主体 */}

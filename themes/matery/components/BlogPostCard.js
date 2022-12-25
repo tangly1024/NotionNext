@@ -6,7 +6,6 @@ import CONFIG_MATERY from '../config_matery'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MATERY.POST_LIST_PREVIEW && post.blockMap
-  console.log('文章', post)
   return (
         <div
             data-aos="fade-up"
@@ -39,24 +38,24 @@ const BlogPostCard = ({ post, showSummary }) => {
 
                 <div>
                     {/* 描述 */}
-                    <div className="px-4 flex flex-col w-full">
+                    <div className="px-4 flex flex-col w-full  text-gray-700  dark:text-gray-300">
 
                         {(!showPreview || showSummary) && !post.results && post.summary && (
                             <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '4', WebkitBoxOrient: 'vertical' }}
-                                className="replace my-2 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
+                                className="replace my-2 text-sm font-light leading-7">
                                 {post.summary}
                             </p>
                         )}
                          {/* 搜索结果 */}
                         {post.results && (
-                            <p className="mt-4 replace text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+                            <p className="mt-4 replace text-sm font-light leading-7">
                             {post.results.map(r => (
                                 <span key={r}>{r}</span>
                             ))}
                             </p>
                         )}
 
-                        <div className='text-gray-800 justify-between flex my-2'>
+                        <div className='text-gray-800 justify-between flex my-2  dark:text-gray-300'>
                             <Link
                                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                                 passHref
