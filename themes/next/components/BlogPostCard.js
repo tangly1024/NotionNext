@@ -13,7 +13,7 @@ const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
   const showPreview = CONFIG_NEXT.POST_LIST_PREVIEW && post.blockMap
   return (
-    <Card className="w-full animate__animated animate__fadeIn">
+    <Card className="w-full">
       <div
         key={post.id}
         className="flex flex-col-reverse justify-between duration-300"

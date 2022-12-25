@@ -25,7 +25,14 @@ export default function ArticleDetail(props) {
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
-  return (<div id="container" className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
+  return (<div id="container"
+        data-aos="fade-down"
+        data-aos-duration="600"
+        data-aos-easing="ease-in-out"
+        data-aos-once="false"
+        data-aos-anchor-placement="top-bottom"
+
+        className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
         <div itemScope itemType="https://schema.org/Movie"
             className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
         >
@@ -50,7 +57,7 @@ export default function ArticleDetail(props) {
                         {post?.type !== 'Page' && (<>
                             <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`} passHref>
                                 <div className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
-                                  <i className='far fa-calendar mr-1' /> {date}
+                                    <i className='far fa-calendar mr-1' /> {date}
                                 </div>
                             </Link>
                             <span className='mr-2'> | <i className='far fa-calendar-check mr-2' />{post.lastEditedTime} </span>

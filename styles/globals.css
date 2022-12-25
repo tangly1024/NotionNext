@@ -198,3 +198,11 @@ nav {
 	word-wrap: break-word;
 	word-break: break-all;
 }
+
+.nobelium{
+    @apply flex flex-col justify-between
+}
+
+.nobelium .notion-code{
+    @apply max-w-2xl;
+}
