@@ -12,6 +12,9 @@ import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import FacebookPage from '@/components/FacebookPage'
+import AOS from 'aos'
+import 'aos/dist/aos.css' // You can also use <link> for styles
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -50,6 +53,10 @@ const LayoutBase = props => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
+
+  if (isBrowser()) {
+    AOS.init()
+  }
 
   return (
     <div className="bg-hexo-background-gray dark:bg-black">
