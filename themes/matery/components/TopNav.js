@@ -28,12 +28,13 @@ const TopNav = props => {
   const scrollTrigger = throttle(() => {
     const scrollS = window.scrollY
     const nav = document.querySelector('#sticky-nav')
-    const header = document.querySelector('#header')
-    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    // const header = document.querySelector('#header')
+    const showNav = scrollS <= windowTop || scrollS < 5 // 非首页无大图时影藏顶部 滚动条置顶时隐藏
     // 是否将导航栏透明
     const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
+    console.log('导航栏透明', navTransparent)
 
-    if (header && navTransparent) {
+    if (navTransparent) {
       nav && nav.classList.replace('bg-indigo-700', 'bg-none')
       nav && nav.classList.replace('text-black', 'text-white')
       nav && nav.classList.replace('border', 'border-transparent')
