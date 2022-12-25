@@ -31,8 +31,8 @@ const SideBar = (props) => {
                 <div className='mx-5 pt-6'>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={siteInfo?.icon} className='rounded-full' width={80} alt={BLOG.AUTHOR} />
-                    <div className='text-white text-xl my-1'>{siteInfo.title}</div>
-                    <div className='text-xs my-1 text-gray-300'>{siteInfo.description}</div>
+                    <div className='text-white text-xl my-1'>{siteInfo?.title}</div>
+                    <div className='text-xs my-1 text-gray-300'>{siteInfo?.description}</div>
                 </div>
             </div>
             <nav>
