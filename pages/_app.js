@@ -1,29 +1,23 @@
 import BLOG from 'blog.config'
+import React from 'react'
+import dynamic from 'next/dynamic'
+
 import 'animate.css'
 import '@/styles/globals.css'
-// custom
+
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
 
-// used for collection views (optional)
-// import 'rc-dropdown/assets/index.css'
-// import 'prismjs/themes/prism-tomorrow.min.css'
-import 'prism-themes/themes/prism-one-dark.css'
-import '@/styles/prism-mac-style.css' //  將 Prism 加入 mac 視窗樣式
+// 代码样式  更多样式参考： https://github.com/PrismJS/prism-themes
+import 'prism-themes/themes/prism-material-light.css'
 
-// import 'react-notion-x/build/third-party/equation.css'
-import 'katex/dist/katex.min.css'
+// import '@/styles/prism-mac-style.css' // code 左上角显示mac的红黄绿图标
 
-// waline 评论插件
-import '@waline/client/dist/waline.css'
-
-import dynamic from 'next/dynamic'
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { Fireworks } from '@/components/Fireworks'
-import React from 'react'
 import { loadExternalResource } from '@/lib/utils'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })

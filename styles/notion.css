@@ -733,18 +733,25 @@ svg.notion-page-icon {
   font-size: 85%;
 }
 
+pre[class*='language-'] {
+  line-height: inherit;
+}
+
+code[class*='language-'] {
+  background: unset !important;
+}
+  
 .notion-code {
-  width: 100%;
   padding: 30px 16px 30px 20px;
-  margin: 4px 0;
-  border-radius: 10px;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   tab-size: 2;
   display: block;
   box-sizing: border-box;
   overflow: auto;
-  background: #272822;
   font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
+  @apply w-full mb-4 dark:bg-black;
 }
 
 .notion-column {
@@ -1665,14 +1672,6 @@ svg + .notion-page-title-text {
   @apply dark:text-black
 }
 
-.notion-code > code {
-  color: unset;
-}
-
-pre[class*='language-'] {
-  line-height: inherit;
-}
-
 .notion-bookmark:hover {
   @apply border-blue-400;
 }
@@ -1910,35 +1909,6 @@ pre[class*='language-'] {
  width: 100% !important;
 }
 
-.pre-mac {
-  position: relative;
-  margin-top: -7px;
-  top: 21px;
-  left: 10px;
-  width: 100px;
-  z-index: 99;
-}
-
-.pre-mac > span {
-  float: left;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.pre-mac > span:nth-child(1) {
-  background: red;
-}
-
-.pre-mac > span:nth-child(2) {
-  background: sandybrown;
-}
-
-.pre-mac > span:nth-child(3) {
-  background: limegreen;
-}
-
 .notion-asset-wrapper-pdf > div {
     display: block !important;
 }
@@ -1996,4 +1966,18 @@ thead, tbody tr {
 
 .notion-collection-card{
     @apply dark:hover:text-gray-200
+}
+
+.notion-code-copy{
+    display: none;
+}
+
+
+pre[class*="language-mermaid"] {
+    @apply bg-gray-50 dark:bg-gray-200 !important;
+}
+
+/* mermaid 原文隐藏 */
+code.language-mermaid {
+    display:none
 }
