@@ -7,7 +7,6 @@ import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import MenuButtonGroupTop from './MenuButtonGroupTop'
-import { useRouter } from 'next/router'
 import SideBarDrawer from '@/components/SideBarDrawer'
 import SideBar from './SideBar'
 
@@ -23,27 +22,23 @@ const TopNav = props => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
   const { isDarkMode } = useGlobal()
-  const router = useRouter()
 
   const scrollTrigger = throttle(() => {
     const scrollS = window.scrollY
     const nav = document.querySelector('#sticky-nav')
-    // const header = document.querySelector('#header')
+    const header = document.querySelector('#header')
     const showNav = scrollS <= windowTop || scrollS < 5 // 非首页无大图时影藏顶部 滚动条置顶时隐藏
     // 是否将导航栏透明
-    const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
-    console.log('导航栏透明', navTransparent)
+    const navTransparent = header && scrollS < 300 // 透明导航条的条件
 
     if (navTransparent) {
       nav && nav.classList.replace('bg-indigo-700', 'bg-none')
       nav && nav.classList.replace('text-black', 'text-white')
-      nav && nav.classList.replace('border', 'border-transparent')
       nav && nav.classList.replace('shadow-sm', 'shadow-none')
       nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
     } else {
       nav && nav.classList.replace('bg-none', 'bg-indigo-700')
       nav && nav.classList.replace('text-white', 'text-black')
-      nav && nav.classList.replace('border-transparent', 'border')
       nav && nav.classList.replace('shadow-none', 'shadow-sm')
       nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
     }
