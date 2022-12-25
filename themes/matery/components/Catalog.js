@@ -58,7 +58,7 @@ const Catalog = ({ toc }) => {
     return <></>
   }
 
-  return <div className='px-3 w-64'>
+  return <div className='px-3 w-72'>
     <div className='dark:text-white'><i className='mr-1 fas fa-stream' /> 目录</div>
     <div className='w-full py-3'>
       <Progress />

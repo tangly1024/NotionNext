@@ -63,54 +63,60 @@ export const LayoutSlug = props => {
             floatSlot={floatSlot}
         >
 
-            <div className='inner-wrapper drop-shadow-xl max-w-4xl'>
-                <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
-                    {lock && <ArticleLock validPassword={validPassword} />}
+            <div id='inner-wrapper' className='flex'>
+                <div className='drop-shadow-xl max-w-4xl 2xl:ml-52'>
+                    <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+                        {lock && <ArticleLock validPassword={validPassword} />}
 
-                    {!lock && <div id="container" className="overflow-x-auto flex-grow md:w-full ">
-                        {post?.type === 'Post' && <>
-                        <div className='px-5'>
-                            <ArticleInfo post={post} />
-                        </div>
+                        {!lock && <div id="container" className="overflow-x-auto flex-grow md:w-full ">
+                            {post?.type === 'Post' && <>
+                                <div className='px-10'>
+                                    <ArticleInfo post={post} />
+                                </div>
+                                <hr />
+                            </>}
 
-                        <hr />
-                        </>}
+                            <div className='lg:px-10 '>
+                                <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
+                                    {/* Notion文章主体 */}
+                                    <section id='notion-article' className='justify-center mx-auto max-w-2xl lg:max-w-full'>
+                                        {post && <NotionPage post={post} />}
+                                    </section>
 
-                        <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
-                            {/* Notion文章主体 */}
-                            <section id='notion-article' className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
-                                {post && <NotionPage post={post} />}
-                            </section>
+                                    <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
+                                        {/* 文章内嵌广告 */}
+                                        <ins className="adsbygoogle"
+                                            style={{ display: 'block', textAlign: 'center' }}
+                                            data-adtest="on"
+                                            data-ad-layout="in-article"
+                                            data-ad-format="fluid"
+                                            data-ad-client="ca-pub-2708419466378217"
+                                            data-ad-slot="3806269138" />
+                                    </section>
 
-                            <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
-                                {/* 文章内嵌广告 */}
-                                <ins className="adsbygoogle"
-                                    style={{ display: 'block', textAlign: 'center' }}
-                                    data-adtest="on"
-                                    data-ad-layout="in-article"
-                                    data-ad-format="fluid"
-                                    data-ad-client="ca-pub-2708419466378217"
-                                    data-ad-slot="3806269138" />
-                            </section>
+                                    {post.type === 'Post' && <ArticleCopyright {...props} />}
 
-                            {post.type === 'Post' && <ArticleCopyright {...props} />}
+                                </article>
 
-                        </article>
+                                <hr className='border-dashed' />
 
-                        <hr className='border-dashed' />
+                                {/* 评论互动 */}
+                                <div className="duration-200 overflow-x-auto dark:bg-hexo-black-gray px-3">
+                                    <Comment frontMatter={post} />
+                                </div>
+                            </div>
 
-                        {/* 评论互动 */}
-                        <div className="duration-200 overflow-x-auto dark:bg-hexo-black-gray px-3">
-                            <Comment frontMatter={post} />
-                        </div>
-                    </div>}
+                        </div>}
+                    </div>
+                    {post.type === 'Post' && <ArticleAdjacent {...props} />}
                 </div>
-                {post.type === 'Post' && <ArticleAdjacent {...props} />}
-            </div>
 
-            {show && <div className='sticky top-0 hidden xl:block '>
-                <Catalog toc={post.toc}/>
-            </div>}
+                <div id='toc-widget' className='w-60 hidden xl:block '>
+                    <div className='fixed top-24 overflow-auto'>
+                        {show && <Catalog toc={post.toc} />}
+                    </div>
+                </div>
+            </div>
 
             <div className='block lg:hidden'>
                 <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
