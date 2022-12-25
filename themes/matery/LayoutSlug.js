@@ -45,12 +45,12 @@ export const LayoutSlug = props => {
             showTag={false}
         >
 
-            <div id='inner-wrapper' className='flex'>
-                <div className={'drop-shadow-xl max-w-4xl 2xl:ml-36'}>
+            <div id='inner-wrapper'>
+                <div className={`drop-shadow-xl max-w-4xl  ${show ? '2xl:ml-36' : ''}`}>
                     <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                         {lock && <ArticleLock validPassword={validPassword} />}
 
-                        {!lock && <div id="container" className="overflow-x-auto flex-grow md:w-full ">
+                        {!lock && <div id="container" className="overflow-x-auto md:w-full px-3 ">
                             {post?.type === 'Post' && <>
                                 <div className='px-10'>
                                     <ArticleInfo post={post} />

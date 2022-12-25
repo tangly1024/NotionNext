@@ -50,7 +50,7 @@ const LayoutBase = props => {
   }
 
   return (
-        <div id="outer-wrapper" className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full overflow-hidden">
+        <div id="outer-wrapper" className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
 
             <CommonHead meta={meta} siteInfo={siteInfo} />
 
