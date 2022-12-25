@@ -10,10 +10,6 @@ import Progress from './Progress'
  * @constructor
  */
 const Catalog = ({ toc }) => {
-  // 无目录就直接返回空
-  if (!toc || toc.length < 1) {
-    return <></>
-  }
   // 监听滚动事件
   React.useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
@@ -57,12 +53,17 @@ const Catalog = ({ toc }) => {
     tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
   }, throttleMs))
 
-  return <div className='px-3'>
-    <div className='w-full'><i className='mr-1 fas fa-stream' /> 目录</div>
+  // 无目录就直接返回空
+  if (!toc || toc.length < 1) {
+    return <></>
+  }
+
+  return <div className='px-3 w-64'>
+    <div className='dark:text-white'><i className='mr-1 fas fa-stream' /> 目录</div>
     <div className='w-full py-3'>
       <Progress />
     </div>
-    <div className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden' ref={tRef}>
+    <div className='overflow-y-auto overscroll-none scroll-hidden' ref={tRef}>
       <nav className='h-full  text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
@@ -75,7 +76,7 @@ const Catalog = ({ toc }) => {
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
               <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-indigo-400 underline'}`}
+                className={`${activeSection === id && ' font-bold text-green-500 underline'}`}
               >
                 {tocItem.text}
               </span>

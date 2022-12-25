@@ -32,7 +32,7 @@ const LayoutBase = props => {
     const fullHeight = clientHeight - window.outerHeight
     let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
     if (per > 100) per = 100
-    const shouldShow = scrollY > 100 && per > 0
+    const shouldShow = scrollY > 300 && per > 0
 
     if (shouldShow !== show) {
       switchShow(shouldShow)
@@ -72,6 +72,7 @@ const LayoutBase = props => {
             <div className="bottom-24 right-2 fixed justify-end z-20">
                 <FloatDarkModeButton />
             </div>
+
             {/* 右下角悬浮 */}
             <div className="bottom-12 right-2 fixed justify-end z-20">
                 <div className={

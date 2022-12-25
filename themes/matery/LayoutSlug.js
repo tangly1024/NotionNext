@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import React from 'react'
 import { ArticleLock } from './components/ArticleLock'
 import HeaderArticle from './components/HeaderArticle'
 import JumpToCommentButton from './components/JumpToCommentButton'
@@ -11,10 +11,26 @@ import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
 import { isBrowser } from '@/lib/utils'
 import { ArticleInfo } from './components/ArticleInfo'
+import Catalog from './components/Catalog'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const drawerRight = useRef(null)
+  const drawerRight = React.useRef(null)
+
+  const [show, switchShow] = React.useState(false)
+
+  const scrollListener = () => {
+    const scrollY = window.pageYOffset
+    const shouldShow = scrollY > 220
+
+    if (shouldShow !== show) {
+      switchShow(shouldShow)
+    }
+  }
+  React.useEffect(() => {
+    document.addEventListener('scroll', scrollListener)
+    return () => document.removeEventListener('scroll', scrollListener)
+  }, [show])
 
   if (!post) {
     return <LayoutBase
@@ -46,6 +62,7 @@ export const LayoutSlug = props => {
             showTag={false}
             floatSlot={floatSlot}
         >
+
             <div className='inner-wrapper drop-shadow-xl max-w-4xl'>
                 <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                     {lock && <ArticleLock validPassword={validPassword} />}
@@ -88,10 +105,13 @@ export const LayoutSlug = props => {
                         </div>
                     </div>}
                 </div>
-
                 {post.type === 'Post' && <ArticleAdjacent {...props} />}
-
             </div>
+
+            {show && <div className='sticky top-0 hidden xl:block '>
+                <Catalog toc={post.toc}/>
+            </div>}
+
             <div className='block lg:hidden'>
                 <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
             </div>
