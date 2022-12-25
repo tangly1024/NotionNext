@@ -91,7 +91,7 @@ export const LayoutSlug = props => {
                     </div>
                     {post.type === 'Post' && <ArticleAdjacent {...props} />}
 
-                    {post?.toc?.length > 0 && <div id='toc-wrapper' className='absolute top-0 w-full h-full xl:block hidden' >
+                    {post?.toc?.length > 0 && <div id='toc-wrapper' style={{ zIndex: '-1' }} className='absolute top-0 w-full h-full xl:block hidden' >
                         <div className='relative h-full'>
                             <div className='float-right -mr-72 h-full mt-40'>
                                 <div className='sticky top-24'>
