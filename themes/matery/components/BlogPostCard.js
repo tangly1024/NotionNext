@@ -6,6 +6,7 @@ import CONFIG_MATERY from '../config_matery'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MATERY.POST_LIST_PREVIEW && post.blockMap
+  console.log('文章', post)
   return (
         <div
             data-aos="fade-up"
@@ -22,7 +23,7 @@ const BlogPostCard = ({ post, showSummary }) => {
             <div key={post.id} className="flex flex-col justify-between h-96">
 
                 {/* 头部图片 填充卡片 */}
-                {CONFIG_MATERY.POST_LIST_COVER && !showPreview && post?.page_cover && !post.results && (
+                {CONFIG_MATERY.POST_LIST_COVER && !showPreview && post?.page_cover && (
                     <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
                         <div className="flex flex-grow w-full relative duration-200 bg-black rounded-t-md  cursor-pointer transform overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,7 +32,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                                 alt={post.title}
                                 className="opacity-50 h-full w-full hover:scale-125 rounded-t-md  transform object-cover duration-500"
                             />
-                            <span className='absolute bottom-0 left-0 text-white p-6 text-2xl' > {post.title}</span>
+                            <span className='absolute bottom-0 left-0 text-white p-6 text-2xl replace' > {post.title}</span>
                         </div>
                     </Link>
                 )}
@@ -44,6 +45,14 @@ const BlogPostCard = ({ post, showSummary }) => {
                             <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '4', WebkitBoxOrient: 'vertical' }}
                                 className="replace my-2 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
                                 {post.summary}
+                            </p>
+                        )}
+                         {/* 搜索结果 */}
+                        {post.results && (
+                            <p className="mt-4 replace text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+                            {post.results.map(r => (
+                                <span key={r}>{r}</span>
+                            ))}
                             </p>
                         )}
 

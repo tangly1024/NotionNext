@@ -40,7 +40,7 @@ export const LayoutSearch = props => {
   return (
         <LayoutBase {...props} currentSearch={currentSearch}>
             {!currentSearch && <>
-                <div className="my-6 px-2">
+                <div className="my-6 px-2 mt-12">
                     <SearchInput cRef={cRef} {...props} />
                     {/* 分类 */}
                     <Card className="w-full mt-4">

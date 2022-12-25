@@ -3,24 +3,38 @@ import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import LayoutBase from './LayoutBase'
 import React from 'react'
-import Link from 'next/link'
+import HeaderArticle from './components/HeaderArticle'
+import { useGlobal } from '@/lib/global'
+import TagItemMiddle from './components/TagItemMiddle'
 
 export const LayoutTag = (props) => {
-  const tag = props.tags.find((t) => {
-    return t.name === props.tag
-  })
+  const { tags, tag } = props
 
-  return <LayoutBase {...props}>
-        {tag && (
-            <div className="cursor-pointer px-3 py-2 mb-2 font-light hover:text-indigo-700 dark:hover:text-indigo-400 transform dark:text-white">
-                <Link key={tag} href={`/tag/${encodeURIComponent(tag.name)}`} passHref>
-                    <a className={`cursor-pointer inline-block rounded duration-200
-                            mr-2 py-0.5 px-1 text-xl whitespace-nowrap ` }>
-                        <div className='font-light dark:text-gray-400 dark:hover:text-white'> #{tag.name + (tag.count ? `(${tag.count})` : '')} </div>
-                    </a>
-                </Link>
+  const { locale } = useGlobal()
+
+  return <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
+
+        <div className='inner-wrapper drop-shadow-xl'>
+
+            <div className="-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+
+                <div className="dark:text-gray-200 py-5 text-center  text-2xl">
+                    <i className="fas fa-tags" />  {locale.COMMON.TAGS}
+                </div>
+
+                <div id="tags-list" className="duration-200 flex flex-wrap justify-center pb-12">
+                    {tags.map(e => {
+                      const selected = tag === e.name
+                      return (
+                            <div key={e.id} className="p-2">
+                                <TagItemMiddle key={e.id} tag={e} selected={selected} />
+                            </div>
+                      )
+                    })}
+                </div>
             </div>
-        )}
+        </div>
+
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </LayoutBase>
 }

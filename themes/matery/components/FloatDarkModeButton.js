@@ -2,12 +2,13 @@ import { useGlobal } from '@/lib/global'
 import { saveDarkModeToCookies } from '@/lib/theme'
 import CONFIG_MATERY from '../config_matery'
 
-export default function FloatDarkModeButton () {
+export default function FloatDarkModeButton() {
+  const { isDarkMode, updateDarkMode } = useGlobal()
+
   if (!CONFIG_MATERY.WIDGET_DARK_MODE) {
     return <></>
   }
 
-  const { isDarkMode, updateDarkMode } = useGlobal()
   // 用户手动设置主题
   const handleChangeDarkMode = () => {
     const newStatus = !isDarkMode
@@ -19,12 +20,13 @@ export default function FloatDarkModeButton () {
   }
 
   return (
-    <div
-      onClick={handleChangeDarkMode}
-      className={'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'
-      }
-    >
-      <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}/>
-    </div>
+        <div
+            onClick={handleChangeDarkMode}
+            className={'justify-center items-center text-center'
+            }
+        >
+            <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas 
+      text-2xl text-white bg-indigo-700 px-3 py-2.5 rounded-full dark:bg-black cursor-pointer`} />
+        </div>
   )
 }
