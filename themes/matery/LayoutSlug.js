@@ -18,7 +18,6 @@ export const LayoutSlug = props => {
   const scrollListener = () => {
     const scrollY = window.pageYOffset
     const shouldShow = scrollY > 220 && post?.toc?.length > 0
-
     if (shouldShow !== show) {
       switchShow(shouldShow)
     }
@@ -46,7 +45,7 @@ export const LayoutSlug = props => {
         >
 
             <div id='inner-wrapper'>
-                <div className={`drop-shadow-xl max-w-4xl  ${show ? '2xl:ml-36' : ''}`}>
+                <div className={'drop-shadow-xl max-w-4xl'}>
                     <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                         {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -91,17 +90,23 @@ export const LayoutSlug = props => {
                         </div>}
                     </div>
                     {post.type === 'Post' && <ArticleAdjacent {...props} />}
+
+                    {post?.toc?.length > 0 && <div id='toc-wrapper' className='absolute top-0 w-full h-full xl:block hidden' >
+                        <div className='relative h-full'>
+                            <div className='float-right -mr-72 h-full mt-40'>
+                                <div className='sticky top-24'>
+                                    <Catalog toc={post.toc} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+
                 </div>
 
                 <div className='fixed bottom-28 right-4'>
                     <JumpToCommentButton />
                 </div>
 
-                <div id='toc-widget' className='w-60 hidden xl:block '>
-                    <div className='fixed top-24 overflow-auto'>
-                        {show && <Catalog toc={post.toc} />}
-                    </div>
-                </div>
             </div>
 
         </LayoutBase>
