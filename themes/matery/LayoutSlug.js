@@ -51,7 +51,6 @@ export const LayoutSlug = props => {
                     {lock && <ArticleLock validPassword={validPassword} />}
 
                     {!lock && <div id="container" className="overflow-x-auto flex-grow md:w-full ">
-                        {/* <ArticleInfo */}
                         {post?.type === 'Post' && <>
                         <div className='px-5'>
                             <ArticleInfo post={post} />

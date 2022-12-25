@@ -10,7 +10,7 @@ export const ArticleInfo = (props) => {
   const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
-  return <section className='mb-3'>
+  return <section className='mb-3 dark:text-gray-200'>
         <div className='my-3'>
             {post.tagItems && (
                 <div className="flex flex-nowrap overflow-x-auto">
