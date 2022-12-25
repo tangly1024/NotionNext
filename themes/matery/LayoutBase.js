@@ -69,7 +69,7 @@ const LayoutBase = props => {
                 <Live2D />
             </div>
 
-            <div className="bottom-24 right-2 fixed justify-end z-20">
+            <div className="bottom-40 right-2 fixed justify-end z-20">
                 <FloatDarkModeButton />
             </div>
 

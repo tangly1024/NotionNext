@@ -1,21 +1,17 @@
 import React from 'react'
 import { ArticleLock } from './components/ArticleLock'
 import HeaderArticle from './components/HeaderArticle'
-import JumpToCommentButton from './components/JumpToCommentButton'
-import TocDrawer from './components/TocDrawer'
-import TocDrawerButton from './components/TocDrawerButton'
 import LayoutBase from './LayoutBase'
 import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
-import { isBrowser } from '@/lib/utils'
 import { ArticleInfo } from './components/ArticleInfo'
 import Catalog from './components/Catalog'
+import JumpToCommentButton from './components/JumpToCommentButton'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const drawerRight = React.useRef(null)
 
   const [show, switchShow] = React.useState(false)
 
@@ -41,26 +37,12 @@ export const LayoutSlug = props => {
         ></LayoutBase>
   }
 
-  const targetRef = isBrowser() ? document.getElementById('container') : null
-
-  const floatSlot = <>
-        {post?.toc?.length > 1 && <div className="block lg:hidden">
-            <TocDrawerButton
-                onClick={() => {
-                  drawerRight?.current?.handleSwitchVisible()
-                }}
-            />
-        </div>}
-        <JumpToCommentButton />
-    </>
-
   return (
         <LayoutBase
             headerSlot={<HeaderArticle {...props} />}
             {...props}
             showCategory={false}
             showTag={false}
-            floatSlot={floatSlot}
         >
 
             <div id='inner-wrapper' className='flex'>
@@ -111,15 +93,15 @@ export const LayoutSlug = props => {
                     {post.type === 'Post' && <ArticleAdjacent {...props} />}
                 </div>
 
+                <div className='fixed bottom-28 right-4'>
+                    <JumpToCommentButton />
+                </div>
+
                 <div id='toc-widget' className='w-60 hidden xl:block '>
                     <div className='fixed top-24 overflow-auto'>
                         {show && <Catalog toc={post.toc} />}
                     </div>
                 </div>
-            </div>
-
-            <div className='block lg:hidden'>
-                <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
             </div>
 
         </LayoutBase>

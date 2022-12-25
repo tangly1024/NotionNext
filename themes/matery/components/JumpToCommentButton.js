@@ -15,15 +15,13 @@ const JumpToCommentButton = () => {
     if (document.getElementById('comment')) {
       window.scrollTo({ top: document.getElementById('comment').offsetTop, behavior: 'smooth' })
     }
-    // 兼容性不好
-    // const commentElement = document.getElementById('comment')
-    // if (commentElement) {
-    // commentElement?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
   }
 
-  return (<div className='flex space-x-1 items-center justify-center transform hover:scale-105 duration-200 w-7 h-7 text-center' onClick={navToComment} >
-    <i className='fas fa-comment text-xs' />
-  </div>)
+  return (<div
+        onClick={navToComment}
+        className='flex space-x-1 items-center justify-center cursor-pointer transform hover:scale-105 duration-200 w-7 h-7 text-center'>
+        <i className='fas fa-comments text-xl text-white bg-indigo-700 py-3 px-2 rounded-full' />
+    </div>)
 }
 
 export default JumpToCommentButton
