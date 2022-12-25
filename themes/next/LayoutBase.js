@@ -13,6 +13,9 @@ import React from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from './config_next'
 import Live2D from '@/components/Live2D'
+import AOS from 'aos'
+import 'aos/dist/aos.css' // You can also use <link> for styles
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -57,6 +60,10 @@ const LayoutBase = (props) => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
+
+  if (isBrowser()) {
+    AOS.init()
+  }
 
   return (<>
 

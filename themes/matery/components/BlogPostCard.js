@@ -13,10 +13,10 @@ const BlogPostCard = ({ post, showSummary }) => {
             data-aos-easing="ease-in-out"
             data-aos-once="false"
             data-aos-anchor-placement="top-bottom"
-            className="w-full mb-4 drop-shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
+            className="w-full mb-4 h-full overflow-auto drop-shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
-            {/* 固定高度72 ，没有描述用图片填充 */}
-            <div key={post.id} className="flex flex-col justify-between h-96">
+            {/* 固定高度 ，空白用图片拉升填充 */}
+            <div key={post.id} className="flex flex-col h-96 justify-between">
 
                 {/* 头部图片 填充卡片 */}
                 {CONFIG_MATERY.POST_LIST_COVER && !showPreview && post?.page_cover && (
@@ -33,7 +33,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                     </Link>
                 )}
 
-                <div>
+                <div >
                     {/* 描述 */}
                     <div className="px-4 flex flex-col w-full  text-gray-700  dark:text-gray-300">
 

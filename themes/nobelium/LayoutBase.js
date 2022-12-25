@@ -3,6 +3,7 @@ import React from 'react'
 import Nav from './components/Nav'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
+import Live2D from '@/components/Live2D'
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
 
@@ -33,6 +34,11 @@ const LayoutBase = props => {
 
             <div className='fixed right-4 bottom-4'>
                 <JumpToTopButton />
+            </div>
+
+            {/* 左下角悬浮 */}
+            <div className="bottom-4 -left-14 fixed justify-end z-40">
+                <Live2D />
             </div>
         </div>
   )
