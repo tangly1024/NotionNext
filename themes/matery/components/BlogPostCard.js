@@ -9,14 +9,11 @@ const BlogPostCard = ({ post, showSummary }) => {
   return (
         <div
             data-aos="fade-up"
-            data-aos-offset="10"
-            data-aos-delay="50"
             data-aos-duration="600"
             data-aos-easing="ease-in-out"
-            data-aos-mirror="true"
             data-aos-once="false"
-            data-aos-anchor-placement="top-center"
-            className="w-full mb-4 drop-shadow-md hover:shadow border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-500  hover:scale-105">
+            data-aos-anchor-placement="top-bottom"
+            className="w-full mb-4 drop-shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
             {/* 固定高度72 ，没有描述用图片填充 */}
             <div key={post.id} className="flex flex-col justify-between h-96">
