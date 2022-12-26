@@ -14,9 +14,9 @@ export const LayoutTag = (props) => {
 
   return <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
 
-        <div className='inner-wrapper drop-shadow-xl'>
+        <div className='inner-wrapper'>
 
-            <div className="-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+            <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
 
                 <div className="dark:text-gray-200 py-5 text-center  text-2xl">
                     <i className="fas fa-tags" />  {locale.COMMON.TAGS}
@@ -33,8 +33,10 @@ export const LayoutTag = (props) => {
                     })}
                 </div>
             </div>
+
+            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+
         </div>
 
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </LayoutBase>
 }
