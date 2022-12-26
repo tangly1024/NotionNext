@@ -86,7 +86,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
         {CONFIG_HEXO.POST_LIST_COVER && !showPreview && post?.page_cover && !post.results && (
           <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
-            <div className="flex w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none cursor-pointer transform overflow-hidden">
+            <div className="flex w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-l-none cursor-pointer transform overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={post?.page_cover}

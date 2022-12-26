@@ -1,35 +1,32 @@
-import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import Card from './components/Card'
+import HeaderArticle from './components/HeaderArticle'
 import LayoutBase from './LayoutBase'
 
 export const LayoutCategoryIndex = props => {
   const { categories } = props
-  const { locale } = useGlobal()
+
   return (
-    <LayoutBase {...props}>
-      <Card className="w-full min-h-screen">
-        <div className="dark:text-gray-200 mb-5 mx-3">
-          <i className="mr-4 fas fa-th" />
-          {locale.COMMON.CATEGORY}:
-        </div>
-        <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-          {categories.map(category => {
-            return (
-              <Link key={category.name} href={`/category/${category.name}`} passHref>
-                <div
-                  className={
-                    ' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'
-                  }
-                >
-                  <i className="mr-4 fas fa-folder" />
-                  {category.name}({category.count})
+        <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
+
+            <div className='inner-wrapper'>
+
+                <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+
+                    <div className='flex justify-center flex-wrap'>
+                        {categories.map(e => {
+                          return (
+                                <Link key={e.name} href={`/category/${e.name}`} passHref>
+                                    <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400' >
+                                        <i className={'mr-4 fas fa-folder'} />
+                                        {e.name}({e.count})
+                                    </div>
+                                </Link>
+                          )
+                        })}
+                    </div>
                 </div>
-              </Link>
-            )
-          })}
-        </div>
-      </Card>
-    </LayoutBase>
+
+            </div>
+        </LayoutBase>
   )
 }
