@@ -71,7 +71,7 @@ const LayoutBase = props => {
           id="container-inner"
           className="pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center"
         >
-          <div className="w-full max-w-4xl overflow-x-hidden">
+          <div className="w-full max-w-4xl overflow-x-hidden scroll-hidden">
             {onLoading ? <LoadingCover /> : children}
           </div>
           <SideRight {...props} slot={rightAreaSlot} />
