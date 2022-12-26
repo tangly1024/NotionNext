@@ -28,15 +28,14 @@ export const ArticleInfo = (props) => {
                     passHref
                 >
                     <a className="cursor-pointer whitespace-nowrap">
-                        <i className='far fa-calendar-minus fa-fw'/>发布日期: {date}
+                        <i className='far fa-calendar-minus fa-fw'/> 发布日期: {date}
                     </a>
                 </Link>
                 <span className='whitespace-nowrap'>
                     <i className='far fa-calendar-check fa-fw' /> 更新日期: {post.lastEditedTime}
                 </span>
                 <span className="hidden busuanzi_container_page_pv font-light mr-2">
-                    <i className='mr-1 fas fa-eye' />
-                    <span className="busuanzi_value_page_pv" />
+                    <i className='mr-1 fas fa-eye' /><span className="busuanzi_value_page_pv" />
                 </span>
                 <WordCount />
             </>)}
