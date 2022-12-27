@@ -72,7 +72,7 @@ export const LayoutSlug = props => {
                                         data-aos-duration="500"
                                         data-aos-easing="ease-in-out"
                                         data-aos-once="false"
-                                        data-aos-anchor-placement="top-center"
+                                        data-aos-anchor-placement="top-bottom"
                                         className='justify-center mx-auto max-w-2xl lg:max-w-full'>
                                         {post && <NotionPage post={post} />}
                                     </section>
