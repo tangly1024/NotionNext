@@ -44,9 +44,15 @@ const Header = props => {
     }
   }
 
+  /**
+   * 自动吸附滚动，移动端体验不好暂时关闭
+   */
   const scrollTrigger = () => {
-    const scrollS = window.scrollY
+    if (screen.width <= 768) {
+      return
+    }
 
+    const scrollS = window.scrollY
     // 自动滚动
     if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
     ) {
