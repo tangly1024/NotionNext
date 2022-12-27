@@ -692,7 +692,7 @@ svg.notion-page-icon {
 }
 
 .notion-asset-wrapper-full {
-  max-width: 100vw;
+  /* max-width: 100vw; */
 }
 
 .notion-asset-wrapper img {
