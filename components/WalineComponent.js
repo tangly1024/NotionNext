@@ -29,7 +29,7 @@ const WalineComponent = (props) => {
     optional: '可选',
     placeholder: '来叭叭，信息都不留也行哈~\n如果留邮箱的话，被回复时有通知~',
     sofa: '来发评论吧~',
-    submit: '提交',
+    submit: '提交~',
     like: '喜欢~',
     cancelLike: '取消喜欢',
     reply: '回复~',
@@ -62,7 +62,7 @@ const WalineComponent = (props) => {
     oldest: '按倒序',
     latest: '按正序',
     hottest: '按热度',
-    reactionTitle: '你认为这篇文章怎么样？'
+    reactionTitle: '这篇文章怎么样？选一个叭~'
   }
 
   React.useEffect(() => {
@@ -73,7 +73,10 @@ const WalineComponent = (props) => {
         locale,
         serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
         lang: BLOG.lang,
-        reaction: true
+        reaction: true,
+        emoji: [
+          '//unpkg.com/@waline/emojis@1.1.0/weibo',
+          '//unpkg.com/@waline/emojis@1.1.0/bilibili',
       })
     }
 
