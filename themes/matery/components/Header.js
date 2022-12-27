@@ -43,7 +43,15 @@ const Header = props => {
     }
   }
 
+  /**
+   * 吸附滚动，移动端关闭
+   * @returns
+   */
   const scrollTrigger = () => {
+    if (screen.width <= 768) {
+      return
+    }
+
     const scrollS = window.scrollY
 
     // 自动滚动
