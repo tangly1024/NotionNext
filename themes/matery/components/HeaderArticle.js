@@ -13,7 +13,7 @@ export default function HeaderArticle({ post, siteInfo }) {
             <img
                 src={headerImage}
                 alt={title}
-                className="opacity-50 dark:opacity-40 h-full w-full rounded-t-md object-cover"
+                className="opacity-50 dark:opacity-40 h-full w-full object-cover"
             />
             <span className='absolute text-white p-6 text-3xl'>{title}</span>
         </div>
