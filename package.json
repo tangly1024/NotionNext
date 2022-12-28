@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.7.1",
+  "version": "3.7.2",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -20,6 +20,9 @@
     "bundle-report": "ANALYZE=true yarn build"
   },
   "dependencies": {
+    "@fontsource/noto-sans-sc": "^4.5.12",
+    "@fontsource/noto-serif-sc": "^4.5.11",
+    "@fortawesome/fontawesome-free": "^6.2.1",
     "@giscus/react": "^1.1.2",
     "@next/bundle-analyzer": "^12.1.1",
     "@popperjs/core": "^2.9.3",
