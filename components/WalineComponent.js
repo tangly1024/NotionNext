@@ -76,8 +76,8 @@ const WalineComponent = (props) => {
         reaction: true,
         emoji: [
           '//unpkg.com/@waline/emojis@1.1.0/weibo',
-          '//unpkg.com/@waline/emojis@1.1.0/bilibili',
-        ],
+          '//unpkg.com/@waline/emojis@1.1.0/bilibili'
+        ]
       })
     }
 
