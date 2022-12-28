@@ -75,9 +75,9 @@ const WalineComponent = (props) => {
         lang: BLOG.lang,
         reaction: true,
         emoji: [
-          '//unpkg.com/@waline/emojis@1.1.0/tieba',
-          '//unpkg.com/@waline/emojis@1.1.0/weibo',
-          '//unpkg.com/@waline/emojis@1.1.0/bilibili'
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/tieba',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/weibo',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/bilibili'
         ]
       })
     }
