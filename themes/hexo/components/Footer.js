@@ -30,7 +30,6 @@ const Footer = ({ title }) => {
         <h1>{title}</h1>
         <a href="https://icp.gov.moe/?keyword=20225199" target="_blank">萌ICP备20225199号</a>
         <br />
-        <a target="_blank" href="http://www.freecdn.pw/?zzwz" title="免费云加速（FreeCDN），为您免费提供网站加速和网站防御（DDOS、CC攻击）" alt="免费云加速（FreeCDN），为您免费提供网站加速和网站防御（DDOS、CC攻击）">本站由免费云加速（FreeCDN）提供网站加速和攻击防御服务</a>
         <span className='text-xs '>Powered by <a href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>.</span></span><br/>
 
     </footer>
