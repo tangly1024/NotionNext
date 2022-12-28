@@ -13,9 +13,9 @@ const BLOG = {
   AUTHOR: 'LiuXin', // 作者
   BIO: '一个普通的干饭人🍚', // 作者简介
   LINK: 'https://xinlwork.cn', // 网站地址
-  KEYWORDS: 'Notion, 博客, 学习, 思考, 记录, 笔记', // 网站关键词 英文逗号隔开
+  KEYWORDS: '博客, 学习, 思考, 记录, 笔记', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: 'mail@tangly1024.com', // 邮箱
+  CONTACT_EMAIL: 'mrliosen@gmail.com', // 邮箱
   CONTACT_WEIBO: '', // 你的微博个人主页
   CONTACT_TWITTER: '', // 你的twitter个人主页
   CONTACT_GITHUB: 'https://github.com/liuxin303', // 你的github个人主页
