@@ -206,3 +206,6 @@ nav {
 .nobelium .notion-code{
     @apply max-w-2xl;
 }
+.custom-background{
+	background: linear-gradient(288deg, #FFB6B9 0%, #FFB6B9 35%, #FAE3D9 calc(35% + 1px), #FAE3D9 45%, #BBDED6 calc(45% + 1px), #BBDED6 65%, #61C0BF calc(65% + 1px), #61C0BF 100%);
+}
