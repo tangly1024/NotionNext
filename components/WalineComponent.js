@@ -48,11 +48,11 @@ const WalineComponent = (props) => {
     uploading: '正在上传',
     login: '登录',
     logout: '退出',
-    admin: '博主',
-    sticky: '置顶',
+    admin: '博主同志',
+    sticky: '置个顶',
     word: '字',
     wordHint: '评论字数应在 $0 到 $1 字之间！\n当前字数：$2',
-    anonymous: '匿名',
+    anonymous: '匿名同志',
     gif: '表情包',
     profile: '个人资料',
     approved: '通过',
@@ -62,7 +62,7 @@ const WalineComponent = (props) => {
     oldest: '按倒序',
     latest: '按正序',
     hottest: '按热度',
-    reactionTitle: '这篇文章怎么样？选一个叭~'
+    reactionTitle: 'hi,觉得这篇文章咋样？选一个叭~'
   }
 
   React.useEffect(() => {
@@ -75,6 +75,7 @@ const WalineComponent = (props) => {
         lang: BLOG.lang,
         reaction: true,
         emoji: [
+          '//unpkg.com/@waline/emojis@1.1.0/tieba',
           '//unpkg.com/@waline/emojis@1.1.0/weibo',
           '//unpkg.com/@waline/emojis@1.1.0/bilibili'
         ]
