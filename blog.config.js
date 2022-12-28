@@ -22,8 +22,9 @@ const BLOG = {
   CONTACT_TELEGRAM: 'https://t.me/tangly_1024', // 你的telegram 地址 例如 https://t.me/tangly_1024
   CONTACT_LINKEDIN: '', // 你的linkedIn 首页
 
-  // 自定义字体示例： 请先将 CUSTOM_FONT 改为 true， 并将 CUSTOM_FONT_URL 改为你的字体CSS地址，同时在 CUSTOM_FONT_SANS 与 CUSTOM_FONT_SERIF 中指定你的 fontfamily
-  CUSTOM_FONT: true, // 是否使用自定义字体
+  // 网站默认使用PingFangSC及NotoSansSC，
+  // 如需自定义字体，请将CUSTOM_FONT改为 true，并将CUSTOM_FONT_URL改为你的字体CSS地址，同时在CUSTOM_FONT_SANS与CUSTOM_FONT_SERIF中指定你的font-family
+  CUSTOM_FONT: process.env.NEXT_PUBLIC_CUSTOM_FONT || false, // 是否使用自定义字体
   CUSTOM_FONT_URL: ['https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'], // 自定义字体的CSS
   CUSTOM_FONT_SANS: ['LXGW WenKai'], // 自定义无衬线字体
   CUSTOM_FONT_SERIF: ['LXGW WenKai'], // 自定义衬线字体
@@ -36,8 +37,6 @@ const BLOG = {
 
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
 
-  // 图标库CDN(可以直接改版本号）
-  FONT_AWESOME_PATH: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.0/css/all.min.css',
   // PrismJs CDN
   PRISM_JS_PATH: 'https://npm.elemecdn.com/prismjs@1.29.0/components/',
 

@@ -58,11 +58,6 @@ const MyApp = ({ Component, pageProps }) => {
   // 用户指定CUSTOM_FONT 则取CUSTOM_FONT_URL
   const FONTS_URL = BLOG.CUSTOM_FONT ? BLOG.CUSTOM_FONT_URL : DEFAULT_FONTS_URL
 
-  // 延迟加载fontAwesome
-  React.useEffect(() => {
-    // loadExternalResource(BLOG.FONT_AWESOME_PATH, 'css')
-  }, [])
-
   return (
         <GlobalContextProvider>
             {/* 渲染所有字体 */}
