@@ -12,6 +12,9 @@ import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import FacebookPage from '@/components/FacebookPage'
+import AOS from 'aos'
+import 'aos/dist/aos.css' // You can also use <link> for styles
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -51,6 +54,10 @@ const LayoutBase = props => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
+  if (isBrowser()) {
+    AOS.init()
+  }
+
   return (
     <div className="bg-hexo-background-gray dark:bg-black">
       <CommonHead meta={meta} siteInfo={siteInfo}/>
@@ -64,7 +71,7 @@ const LayoutBase = props => {
           id="container-inner"
           className="pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center"
         >
-          <div className="w-full max-w-4xl overflow-x-hidden">
+          <div className="w-full max-w-4xl overflow-x-hidden scroll-hidden">
             {onLoading ? <LoadingCover /> : children}
           </div>
           <SideRight {...props} slot={rightAreaSlot} />

@@ -13,6 +13,9 @@ import React from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from './config_next'
 import Live2D from '@/components/Live2D'
+import AOS from 'aos'
+import 'aos/dist/aos.css' // You can also use <link> for styles
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -58,6 +61,10 @@ const LayoutBase = (props) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
+  if (isBrowser()) {
+    AOS.init()
+  }
+
   return (<>
 
       <CommonHead meta={meta} />
@@ -69,6 +76,7 @@ const LayoutBase = (props) => {
       <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'/>
 
       <main id='wrapper' className='flex justify-center flex-1 pb-12'>
+          {/* 左侧栏样式 */}
           <SideAreaLeft slot={leftAreaSlot} targetRef={targetRef} {...props}/>
           <section id='container-inner' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-40' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
             {onLoading ? <LoadingCover/> : <> {children}</> }
@@ -78,7 +86,7 @@ const LayoutBase = (props) => {
       </main>
 
       {/* 右下角悬浮 */}
-      <div ref={floatButtonGroup} className='right-8 bottom-12 bottom-24 lg:right-2 fixed justify-end z-20 font-sans'>
+      <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
         <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
           <JumpToTopButton percent={percent}/>
           <JumpToBottomButton />

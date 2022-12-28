@@ -3,6 +3,7 @@ import React from 'react'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
 import { getAllTags } from '@/lib/notion'
+import BLOG from '@/blog.config'
 
 /**
  * 标签首页
@@ -31,7 +32,7 @@ export async function getStaticProps() {
   delete props.tagOptions
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

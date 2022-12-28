@@ -56,7 +56,7 @@ export async function getStaticProps({ params: { page } }) {
 
   return {
     props,
-    revalidate: 1
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

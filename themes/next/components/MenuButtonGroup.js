@@ -10,22 +10,22 @@ const MenuButtonGroup = (props) => {
   const router = useRouter()
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
-  let links = [
+  const defaultLinks = [
     { icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NEXT.MENU_CATEGORY },
     { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE },
-    { icon: 'fas fa-user', name: locale.NAV.ABOUT, to: '/about', show: CONFIG_NEXT.MENU_ABOUT }
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE }
   ]
+  let links = [].concat(defaultLinks)
   if (customNav) {
-    links = links.concat(customNav)
+    links = defaultLinks.concat(customNav)
   }
 
   return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 font-sans'>
       {links.map(link => {
         if (link && link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
-          return <Link key={`${link.to}`} title={link.to} href={link.to} >
+          return <Link key={link.to} title={link.to} href={link.to} >
           <a target={link.to.indexOf('http') === 0 ? '_blank' : '_self'} className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
               (selected ? 'bg-gray-200 text-black' : ' ')} >
               <div className='my-auto items-center justify-center flex '>
@@ -36,7 +36,7 @@ const MenuButtonGroup = (props) => {
             </a>
           </Link>
         } else {
-          return null
+          return <></>
         }
       })}
     </nav>
