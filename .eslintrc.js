@@ -28,7 +28,7 @@ module.exports = {
   rules: {
     'react/prop-types': 'off',
     'space-before-function-paren': 0,
-    'react-hooks/rules-of-hooks': 'error' // Checks rules of Hooks
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'no-unused-vars': "off"
   },
   globals: {
