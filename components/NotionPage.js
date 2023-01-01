@@ -106,7 +106,7 @@ const NotionPage = ({ post }) => {
  */
 const mapPageUrl = id => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/' + id.replace(/-/g, '');
+  return '/' + id.replace(/-/g, '')
 }
 
 function getMediumZoomMargin() {
