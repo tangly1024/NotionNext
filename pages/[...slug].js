@@ -50,7 +50,7 @@ const Slug = props => {
         }
       }
     }, 20 * 1000)
-    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
+    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 

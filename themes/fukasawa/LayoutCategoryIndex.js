@@ -24,10 +24,10 @@ export const LayoutCategoryIndex = (props) => {
                   <i className='mr-4 fas fa-folder' />{category.name}({category.count})
                 </div>
               </Link>
-            );
+            )
           })}
         </div>
       </div>
     </LayoutBase>
-  );
+  )
 }

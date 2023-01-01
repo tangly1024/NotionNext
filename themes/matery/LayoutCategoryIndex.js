@@ -21,12 +21,12 @@ export const LayoutCategoryIndex = props => {
                                     {e.name}({e.count})
                                 </div>
                             </Link>
-                        );
+                        )
                       })}
                   </div>
               </div>
 
           </div>
       </LayoutBase>
-  );
+  )
 }
