@@ -66,6 +66,26 @@ const BLOG = {
   WIDGET_PET_LINK: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
   WIDGET_PET_SWITCH_THEME: true, // 点击宠物挂件切换博客主题
 
+  // 音乐播放插件
+  MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || true, // 是否使用音乐播放插件
+  MUSIC_PLAYER_VISIBLE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_VISIBLE || true, // 是否在左下角显示播放和切换
+  MUSIC_PLAYER_AUTO_PLAY: process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || true, // 是否自动播放（移动设备不支持自动播放）
+  MUSIC_PLAYER_ORDER: 'list', // 默认播放方式，顺序 list，随机 random
+  MUSIC_PLAYER_AUDIO_LIST: [ // 除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
+    {
+      name: '风を共に舞う気持ち',
+      artist: 'Falcom Sound Team jdk',
+      url: 'https://music.163.com/song/media/outer/url?id=731419.mp3',
+      cover: 'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+    },
+    {
+      name: '王都グランセル',
+      artist: 'Falcom Sound Team jdk',
+      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
+      cover: 'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+    }
+  ],
+
   // ----> 评论互动 可同时开启多个支持 WALINE VALINE GISCUS CUSDIS UTTERRANCES GITALK
 
   // twikoo

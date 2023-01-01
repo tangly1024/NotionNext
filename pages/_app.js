@@ -19,12 +19,16 @@ import '@fontsource/noto-serif-sc'
 // local fontawesome 6.2.1 @see https://www.npmjs.com/package/@fortawesome/fontawesome-free
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
+// Aplayer.js 的样式
+import 'aplayer/dist/APlayer.min.css'
+
 // import '@/styles/prism-mac-style.css' // code 左上角显示mac的红黄绿图标
 
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { Fireworks } from '@/components/Fireworks'
+import MusicPlayer from '@/components/MusicPlayer'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -64,6 +68,7 @@ const MyApp = ({ Component, pageProps }) => {
             {FONTS_URL?.map(fontUrl => <link href={`${fontUrl}`} key={fontUrl} rel="stylesheet" />)}
             {externalPlugins}
             <Component {...pageProps} />
+            <MusicPlayer />
         </GlobalContextProvider>
   )
 }
