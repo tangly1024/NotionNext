@@ -7,47 +7,52 @@ export const getServerSideProps = async (ctx) => {
   const { allPages } = await getGlobalNotionData({ from: 'rss' })
   const defaultFields = [
     {
-      loc: `${BLOG.LINK}`, // Absolute url
+      loc: `${BLOG.LINK}`,
       lastmod: new Date(),
       changefreq: 'daily',
       priority: '0.7'
     }, {
-      loc: `${BLOG.LINK}/archive`, // Absolute url
+      loc: `${BLOG.LINK}/archive`,
       lastmod: new Date(),
       changefreq: 'daily',
       priority: '0.7'
     }, {
-      loc: `${BLOG.LINK}/category`, // Absolute url
+      loc: `${BLOG.LINK}/category`,
       lastmod: new Date(),
       changefreq: 'daily',
       priority: '0.7'
     }, {
-      loc: `${BLOG.LINK}/feed`, // Absolute url
+      loc: `${BLOG.LINK}/feed`,
       lastmod: new Date(),
       changefreq: 'daily',
       priority: '0.7'
     }, {
-      loc: `${BLOG.LINK}/search`, // Absolute url
+      loc: `${BLOG.LINK}/search`,
       lastmod: new Date(),
       changefreq: 'daily',
       priority: '0.7'
     }, {
-      loc: `${BLOG.LINK}/tag`, // Absolute url
+      loc: `${BLOG.LINK}/tag`,
       lastmod: new Date(),
       changefreq: 'daily',
       priority: '0.7'
     }
   ]
   const postFields = allPages?.map(post => {
-    console.log(post)
     return {
-      loc: `${BLOG.LINK}/${post.slug}`, // Absolute url
+      loc: `${BLOG.LINK}/${post.slug}`,
       lastmod: new Date(post?.date?.start_date || post?.createdTime),
       changefreq: 'daily',
       priority: '0.7'
     }
   })
   const fields = defaultFields.concat(postFields)
+
+  // 缓存
+  //   ctx.res.setHeader(
+  //     'Cache-Control',
+  //     'public, s-maxage=10, stale-while-revalidate=59'
+  //   )
 
   return getServerSideSitemap(ctx, fields)
 }

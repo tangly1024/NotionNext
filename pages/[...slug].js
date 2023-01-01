@@ -108,7 +108,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug } }) {
   let fullSlug = slug.join('/')
-  console.log('[读取Notion]', fullSlug)
   if (BLOG.PSEUDO_STATIC) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
