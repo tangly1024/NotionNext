@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap --config next-sitemap.config.js",
+    "build": "next build",
     "start": "next start",
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "bundle-report": "ANALYZE=true yarn build"

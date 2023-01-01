@@ -1965,7 +1965,7 @@ thead, tbody tr {
 }
 
 .notion-collection-card{
-    @apply dark:hover:text-gray-200
+    @apply dark:text-gray-200 dark:bg-gray-800 dark:hover:bg-black
 }
 
 .notion-code-copy{

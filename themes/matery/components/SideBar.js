@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import CONFIG_MATERY from '../config_matery'
 
 /**
  * 标签组
@@ -18,7 +19,10 @@ const SideBar = (props) => {
   const defaultLinks = [
     { icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
     { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: true },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: true }
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_MATERY.MENU_ARCHIVE },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_MATERY.MENU_CATEGORY },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_MATERY.MENU_TAG }
+
   ]
   let links = [].concat(defaultLinks)
   if (customNav) {
