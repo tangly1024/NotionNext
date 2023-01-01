@@ -58,7 +58,7 @@ const Catalog = ({ toc }) => {
     return <></>
   }
 
-  return <div className='px-3 w-72'>
+  return <div className='px-3 '>
     <div className='dark:text-white'><i className='mr-1 fas fa-stream' /> 目录</div>
     <div className='w-full py-3'>
       <Progress />
@@ -76,7 +76,7 @@ const Catalog = ({ toc }) => {
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
               <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-green-500 underline'}`}
+                className={`${activeSection === id && ' font-bold text-green-500 underline overflow-ellipsis truncate'}`}
               >
                 {tocItem.text}
               </span>
