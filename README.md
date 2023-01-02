@@ -65,6 +65,10 @@
 
   <td align="center"><a href="https://github.com/Ylarod"><img src="https://avatars.githubusercontent.com/u/30978685" width="64px;"  alt="Ylarod"/><br/><sub><b>Ylarod</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Ylarod" title="Ylarod" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/lifeafter619"><img src="https://avatars.githubusercontent.com/u/65111206" width="64px;"  alt="Etherrreal."/><br/><sub><b>Etherrreal.</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=lifeafter619" title="Etherrreal." >🔧 🐛</a></td>
+  
+  <td align="center"><a href="https://github.com/ykxkykx"><img src="https://avatars.githubusercontent.com/u/17985993" width="64px;"  alt="Joshua Astray"/><br/><sub><b>Joshua Astray</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=ykxkykx" title="ykxkykx" >🔧 🐛</a></td>
+
 </tr>
 </table>
 
