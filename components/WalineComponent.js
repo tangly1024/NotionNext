@@ -28,7 +28,7 @@ const WalineComponent = (props) => {
         el: containerRef.current,
         serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
         lang: BLOG.lang,
-        reaction: true
+        reaction: true,
         emoji: [
           '//unpkg.com/@waline/emojis@1.1.0/bmoji',
           '//unpkg.com/@waline/emojis@1.1.0/bilibili',
