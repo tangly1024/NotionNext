@@ -21,24 +21,33 @@ const MenuButtonGroup = (props) => {
     links = defaultLinks.concat(customNav)
   }
 
-  return <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 font-sans'>
-      {links.map(link => {
-        if (link && link.show) {
-          const selected = (router.pathname === link.to) || (router.asPath === link.to)
-          return <Link key={link.to} title={link.to} href={link.to} >
-          <a target={link.to.indexOf('http') === 0 ? '_blank' : '_self'} className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
-              (selected ? 'bg-gray-200 text-black' : ' ')} >
-              <div className='my-auto items-center justify-center flex '>
-                <i className={`${link.icon} w-4 text-center`} />
-                <div className={'ml-4'}>{link.name}</div>
-              </div>
-              {link.slot}
-            </a>
-          </Link>
-        } else {
-          return <></>
-        }
-      })}
-    </nav>
+  return (
+    <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 font-sans'>
+        {links.map(link => {
+          if (link && link.show) {
+            const selected = (router.pathname === link.to) || (router.asPath === link.to)
+            return (
+              <Link
+                key={link.to}
+                title={link.to}
+                href={link.to}
+                target={link.to.indexOf('http') === 0 ? '_blank' : '_self'}
+                className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+                    (selected ? 'bg-gray-200 text-black' : ' ')}>
+
+                <div className='my-auto items-center justify-center flex '>
+                  <i className={`${link.icon} w-4 text-center`} />
+                  <div className={'ml-4'}>{link.name}</div>
+                </div>
+                {link.slot}
+
+              </Link>
+            );
+          } else {
+            return <></>
+          }
+        })}
+      </nav>
+  );
 }
 export default MenuButtonGroup

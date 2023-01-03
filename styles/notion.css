@@ -407,6 +407,12 @@
   margin-top: 1.08em;
   @apply border-b w-full
 }
+.notion-h2 {
+  @apply w-full
+}
+.notion-h3 {
+  @apply w-full
+}
 
 .notion-header-anchor {
   position: absolute;

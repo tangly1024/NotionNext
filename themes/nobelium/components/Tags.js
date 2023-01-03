@@ -22,10 +22,10 @@ const Tags = (props) => {
               <Link
                 key={tag.id}
                 href={selected ? '/search' : `/tag/${encodeURIComponent(tag.name)}`}
-              >
-                <a className="px-4 py-2 block">
-                  {`${tag.name} (${tag.count})`}
-                </a>
+                className="px-4 py-2 block">
+
+                {`${tag.name} (${tag.count})`}
+
               </Link>
             </li>
           )

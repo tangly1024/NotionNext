@@ -45,10 +45,10 @@ export const LayoutArchive = props => {
                     <Link
                       href={`${BLOG.SUB_PATH}/${post.slug}`}
                       passHref
-                    >
-                      <a className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
-                        {post.title}
-                      </a>
+                      className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
+
+                      {post.title}
+
                     </Link>
                   </div>
                 </li>
