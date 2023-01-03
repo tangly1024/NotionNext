@@ -69,6 +69,8 @@
   
   <td align="center"><a href="https://github.com/ykxkykx"><img src="https://avatars.githubusercontent.com/u/17985993" width="64px;"  alt="Joshua Astray"/><br/><sub><b>Joshua Astray</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=ykxkykx" title="ykxkykx" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/Vixcity"><img src="https://avatars.githubusercontent.com/u/57704177" width="64px;"  alt="Vixcity"/><br/><sub><b>Vixcity</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Vixcity" title="Vixcity" >🔧 🐛</a></td>
+
 </tr>
 </table>
 
