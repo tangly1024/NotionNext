@@ -210,6 +210,10 @@ nav {
 .custom-background{
 	background: linear-gradient(81deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rgba(239,78,123,.1) 30%,rgba(161,102,171,.1) 44%,rgba(80,115,184,.1) 58%,rgba(16,152,173,.1) 72%,rgba(7,179,155,.1) 86%,rgba(109,186,130,.1));
 }
+}
+.dark .custom-background{
+  background: none;
+}
 /* 侧边栏个人信息卡片动态渐变色 */
 #aside-content > .card-widget.card-info {
     background: linear-gradient(
