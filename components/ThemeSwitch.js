@@ -15,14 +15,13 @@ export function ThemeSwitch() {
 
   return (<>
         <Draggable>
-            <div id="draggableBox" style={{ left: '10px', top: '90vh' }} className="fixed text-white bg-black z-50 rounded-lg shadow-card">
+            <div id="draggableBox" className="fixed left-1 bottom-20 text-white bg-black z-50 rounded-lg shadow-card">
                 <div className="p-2 flex items-center">
                     <i className='fas fa-arrows cursor-move px-2' />
                     {/* <div className='uppercase font-sans whitespace-nowrap cursor-pointer ' onClick={switchTheme}> {theme}</div> */}
-                    <select onChange={onSelectChange} name="cars" className='text-white bg-black uppercase cursor-pointer'>
+                    <select value={theme} onChange={onSelectChange} name="cars" className='text-white bg-black uppercase cursor-pointer'>
                         {ALL_THEME.map(t => {
-                          const selected = t === theme
-                          return <option key={t} value={t} selected={selected}>{t}</option>
+                          return <option key={t} value={t}>{t}</option>
                         })}
                     </select>
                 </div>

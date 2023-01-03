@@ -18,21 +18,30 @@ const MenuButtonGroupTop = (props) => {
     links = links.concat(customNav)
   }
 
-  return <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
-    {links.map(link => {
-      if (link.show) {
-        return <Link key={`${link.to}`} title={link.to} href={link.to} >
-          <a target={link.to.indexOf('http') === 0 ? '_blank' : '_self'} className={'py-1.5 my-1 px-3  text-base justify-center items-center cursor-pointer'} >
-            <div className='w-full flex text-sm items-center justify-center hover:scale-125 duration-200 transform'>
-              <i className={`${link.icon} mr-1`}/>
-              <div className='text-center'>{link.name}</div>
-            </div>
-          </a>
-        </Link>
-      } else {
-        return null
-      }
-    })}
-  </nav>
+  return (
+    <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
+      {links.map(link => {
+        if (link.show) {
+          return (
+            <Link
+              key={`${link.to}`}
+              title={link.to}
+              href={link.to}
+              target={link.to.indexOf('http') === 0 ? '_blank' : '_self'}
+              className={'py-1.5 my-1 px-3  text-base justify-center items-center cursor-pointer'}>
+
+              <div className='w-full flex text-sm items-center justify-center hover:scale-125 duration-200 transform'>
+                <i className={`${link.icon} mr-1`}/>
+                <div className='text-center'>{link.name}</div>
+              </div>
+
+            </Link>
+          );
+        } else {
+          return null
+        }
+      })}
+    </nav>
+  );
 }
 export default MenuButtonGroupTop

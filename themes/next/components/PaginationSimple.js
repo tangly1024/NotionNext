@@ -31,7 +31,7 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-      >
+        legacyBehavior>
         <button
           rel="prev"
           className={`${
@@ -47,7 +47,7 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-      >
+        legacyBehavior>
         <button
           rel="next"
           className={`${
@@ -58,7 +58,7 @@ const PaginationSimple = ({ page, showNext }) => {
         </button>
       </Link>
     </div>
-  )
+  );
 }
 
 export default PaginationSimple
