@@ -28,7 +28,12 @@ const WalineComponent = (props) => {
         el: containerRef.current,
         serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
         lang: BLOG.lang,
-        reaction: true
+        reaction: true,
+        emoji: [
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/tieba',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/weibo',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/bilibili'
+        ]
       })
     }
 
