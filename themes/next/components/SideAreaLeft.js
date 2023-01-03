@@ -8,6 +8,7 @@ import Tabs from '@/components/Tabs'
 import Logo from './Logo'
 import Card from './Card'
 import CONFIG_NEXT from '../config_next'
+import BLOG from '@/blog.config'
 
 /**
  * 侧边平铺
@@ -22,7 +23,7 @@ const SideAreaLeft = props => {
   const { post, slot, postCount } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
-  return <aside id='left' className='hidden lg:block flex-col w-60 mr-4'>
+  return <aside id='left' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'ml-4' : 'mr-4') + ' hidden lg:block flex-col w-60'}>
 
         <section
             data-aos="fade-down"
