@@ -60,7 +60,7 @@ const LayoutBase = props => {
       </div>
 
       {/* 移动端底部 */}
-      <Footer />
+      <Footer title={siteInfo?.title}/>
       <BottomMenuBar className='block md:hidden' />
     </div>
   )
