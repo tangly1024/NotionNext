@@ -60,6 +60,9 @@ const BLOG = {
 
   // 鼠标点击烟花特效
   FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || true, // 鼠标点击烟花特效
+  // 是否启用彩色的烟花
+  FIREWORKSCOLOR: true,
+  FIREWORKSBIG: true,
 
   // 悬浮挂件
   WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件

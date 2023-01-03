@@ -4,6 +4,7 @@
  */
 import React from 'react'
 import anime from 'animejs'
+import BLOG from 'blog.config'
 
 export const Fireworks = () => {
   React.useEffect(() => {
@@ -17,7 +18,10 @@ export const Fireworks = () => {
    * @param config
    */
 function createFireworks(config) {
-  const defaultColors = ['102, 167, 221', '62, 131, 225', '33, 78, 194']
+  let defaultColors = []
+  BLOG.FIREWORKSCOLOR
+    ? defaultColors = ['255, 20, 97', '24, 255, 146', '90, 135, 255', '251, 243, 140']
+    : defaultColors = ['102, 167, 221', '62, 131, 225', '33, 78, 194']
   const defaultConfig = {
     colors: defaultColors,
     numberOfParticules: 20,
