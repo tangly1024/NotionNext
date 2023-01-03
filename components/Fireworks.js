@@ -19,7 +19,7 @@ export const Fireworks = () => {
    */
 function createFireworks(config) {
   const defaultConfig = {
-    colors: BLOG.FIREWORKSCOLOR,
+    colors: BLOG.FIREWORKS_COLOR,
     numberOfParticules: 20,
     orbitRadius: {
       min: 50,
