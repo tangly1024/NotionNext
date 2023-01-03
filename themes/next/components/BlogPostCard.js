@@ -19,13 +19,14 @@ const BlogPostCard = ({ post, showSummary }) => {
         className="flex flex-col-reverse justify-between duration-300"
       >
         <div className="lg:p-8 p-4 flex flex-col w-full">
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
-            <a
-              className={`cursor-pointer hover:underline text-3xl ${showPreview ? 'text-center' : ''
-                } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
-            >
-             <NotionIcon icon={post.pageIcon} /> {post.title}
-            </a>
+          <Link
+            href={`${BLOG.SUB_PATH}/${post.slug}`}
+            passHref
+            className={`cursor-pointer hover:underline text-3xl ${showPreview ? 'text-center' : ''
+              } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+
+            <NotionIcon icon={post.pageIcon} /> {post.title}
+
           </Link>
 
           <div
@@ -35,11 +36,14 @@ const BlogPostCard = ({ post, showSummary }) => {
             <div>
               {post.category && (
                 <>
-                  <Link href={`/category/${post.category}`} passHref>
-                    <a className="cursor-pointer font-light text-sm hover:underline transform">
-                      <i className="mr-1 fas fa-folder" />
-                      {post.category}
-                    </a>
+                  <Link
+                    href={`/category/${post.category}`}
+                    passHref
+                    className="cursor-pointer font-light text-sm hover:underline transform">
+
+                    <i className="mr-1 fas fa-folder" />
+                    {post.category}
+
                   </Link>
                   <span className="mx-2">|</span>
                 </>
@@ -47,10 +51,10 @@ const BlogPostCard = ({ post, showSummary }) => {
               <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref
-              >
-                <a className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
-                  {post.date?.start_date}
-                </a>
+                className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
+
+                {post.date?.start_date}
+
               </Link>
             </div>
             <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
@@ -85,17 +89,19 @@ const BlogPostCard = ({ post, showSummary }) => {
           )}
 
           <div className="text-right border-t pt-8 border-dashed">
-            <Link href={`${BLOG.SUB_PATH}/${post.slug}`}>
-              <a className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
-                {locale.COMMON.ARTICLE_DETAIL}
-                <i className="ml-1 fas fa-angle-right" />
-              </a>
+            <Link
+              href={`${BLOG.SUB_PATH}/${post.slug}`}
+              className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
+
+              {locale.COMMON.ARTICLE_DETAIL}
+              <i className="ml-1 fas fa-angle-right" />
+
             </Link>
           </div>
         </div>
 
         {CONFIG_NEXT.POST_LIST_COVER && post?.page_cover && (
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
+          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"
@@ -110,7 +116,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         )}
       </div>
     </Card>
-  )
+  );
 }
 
 export default BlogPostCard

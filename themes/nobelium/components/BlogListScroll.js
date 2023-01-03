@@ -43,36 +43,40 @@ export const BlogListScroll = props => {
     }
   })
 
-  return <div id="container" className="w-full md:pr-12 mb-12" ref={targetRef}>
-          {postsToShow.map(p => (
-              <article key={p.id} className="mb-12" >
-                  <h2 className="mb-4">
-                      <Link href={`/${p.slug}`}>
-                          <a className="text-black text-xl md:text-2xl no-underline hover:underline">  {p.title}</a>
-                      </Link>
-                  </h2>
+  return (
+      <div id="container" className="w-full md:pr-12 mb-12" ref={targetRef}>
+              {postsToShow.map(p => (
+                  <article key={p.id} className="mb-12" >
+                      <h2 className="mb-4">
+                          <Link
+                              href={`/${p.slug}`}
+                              className="text-black text-xl md:text-2xl no-underline hover:underline">
+                                {p.title}
+                          </Link>
+                      </h2>
 
-                  <div className="mb-4 text-sm text-gray-700">
-                      by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
-                      <span className="font-bold mx-1"> | </span>
-                      <a href="#" className="text-gray-700">{p.category}</a>
-                      <span className="font-bold mx-1"> | </span>
-                      {/* <a href="#" className="text-gray-700">2 Comments</a> */}
-                  </div>
+                      <div className="mb-4 text-sm text-gray-700">
+                          by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
+                          <span className="font-bold mx-1"> | </span>
+                          <a href="#" className="text-gray-700">{p.category}</a>
+                          <span className="font-bold mx-1"> | </span>
+                          {/* <a href="#" className="text-gray-700">2 Comments</a> */}
+                      </div>
 
-                  <p className="text-gray-700 leading-normal">
-                      {p.summary}
-                  </p>
-              </article>
-          ))}
+                      <p className="text-gray-700 leading-normal">
+                          {p.summary}
+                      </p>
+                  </article>
+              ))}
 
-          <div
-              onClick={handleGetMore}
-              className="w-full my-4 py-4 text-center cursor-pointer "
-          >
-              {' '}
-              {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+              <div
+                  onClick={handleGetMore}
+                  className="w-full my-4 py-4 text-center cursor-pointer "
+              >
+                  {' '}
+                  {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+              </div>
+
           </div>
-
-      </div>
+  );
 }

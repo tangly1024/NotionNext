@@ -11,6 +11,7 @@ import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
+import BLOG from '@/blog.config'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -26,7 +27,7 @@ const LayoutBase = props => {
   return (
     <div className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
       <CommonHead meta={meta} />
-      <main id='wrapper' className='flex justify-between w-full h-full mx-auto'>
+      <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex justify-between w-full h-full mx-auto'}>
         {/* 桌面端左侧菜单 */}
         {/* <LeftMenuBar/> */}
 
