@@ -26,12 +26,15 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-        rel="prev"
-        className={`${
-          currentPage === 1 ? 'invisible' : 'visible'
-        } text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}>
-        ←{locale.PAGINATION.PREV}
-
+      >
+        <a
+          rel="prev"
+          className={`${
+            currentPage === 1 ? 'invisible' : 'visible'
+          } text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+        >
+          ← {locale.PAGINATION.PREV}
+        </a>
       </Link>
       <Link
         href={{
@@ -39,15 +42,18 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-        rel="next"
-        className={`${
-          showNext ? 'visible' : 'invisible'
-        } text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}>
-
-        {locale.PAGINATION.NEXT}→
+      >
+        <a
+          rel="next"
+          className={`${
+            showNext ? 'visible' : 'invisible'
+          } text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
+        >
+          {locale.PAGINATION.NEXT} →
+        </a>
       </Link>
     </div>
-  );
+  )
 }
 
 export default PaginationSimple

@@ -19,9 +19,10 @@ export function ThemeSwitch() {
                 <div className="p-2 flex items-center">
                     <i className='fas fa-arrows cursor-move px-2' />
                     {/* <div className='uppercase font-sans whitespace-nowrap cursor-pointer ' onClick={switchTheme}> {theme}</div> */}
-                    <select value={theme} onChange={onSelectChange} name="cars" className='text-white bg-black uppercase cursor-pointer'>
+                    <select onChange={onSelectChange} name="cars" className='text-white bg-black uppercase cursor-pointer'>
                         {ALL_THEME.map(t => {
-                          return <option key={t} value={t}>{t}</option>
+                          const selected = t === theme
+                          return <option key={t} value={t} selected={selected}>{t}</option>
                         })}
                     </select>
                 </div>

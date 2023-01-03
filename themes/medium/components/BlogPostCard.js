@@ -16,15 +16,14 @@ const BlogPostCard = ({ post, showSummary }) => {
       className="animate__animated animate__fadeIn duration-300 mb-6 max-w-7xl border-b dark:border-gray-800 "
     >
       <div className="lg:py-8 py-4 flex flex-col w-full">
-        <Link
-          href={`${BLOG.SUB_PATH}/${post.slug}`}
-          passHref
-          className={
-            'cursor-pointer font-bold font-sans hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
-          }>
-
-          {post.title}
-
+        <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
+          <a
+            className={
+              'cursor-pointer font-bold font-sans hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
+            }
+          >
+            {post.title}
+          </a>
         </Link>
 
         <div
@@ -55,14 +54,11 @@ const BlogPostCard = ({ post, showSummary }) => {
             <NotionPage post={post} />
             <div className="pointer-events-none border-t pt-8 border-dashed">
               <div className="w-full justify-start flex">
-                <Link
-                  href={`${BLOG.SUB_PATH}/${post.slug}`}
-                  passHref
-                  className="hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-green-500 cursor-pointer">
-
-                  {locale.COMMON.ARTICLE_DETAIL}
-                  <i className="ml-1 fas fa-angle-right" />
-
+                <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
+                  <a className="hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-green-500 cursor-pointer">
+                    {locale.COMMON.ARTICLE_DETAIL}
+                    <i className="ml-1 fas fa-angle-right" />
+                  </a>
                 </Link>
               </div>
             </div>
@@ -70,7 +66,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         )}
       </div>
     </div>
-  );
+  )
 }
 
 export default BlogPostCard
