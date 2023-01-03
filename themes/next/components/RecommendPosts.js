@@ -18,15 +18,15 @@ const RecommendPosts = ({ recommendPosts }) => {
         <ul className="font-light text-sm">
           {recommendPosts.map(post => (
             <li className="py-1" key={post.id}>
-              <Link href={`/${post.slug}`}>
-                <a className="cursor-pointer hover:underline">
-                  {post.title}
-                </a>
+              <Link href={`/${post.slug}`} className="cursor-pointer hover:underline">
+
+                {post.title}
+
               </Link>
             </li>
           ))}
         </ul>
     </div>
-  )
+  );
 }
 export default RecommendPosts

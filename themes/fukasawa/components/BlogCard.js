@@ -13,13 +13,14 @@ const BlogCard = ({ post, showSummary }) => {
         className="animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300"
       >
         <div className="p-2 flex flex-col w-full">
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
-            <a
-              className={`cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'
-                } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
-            >
-              {post.title}
-            </a>
+          <Link
+            href={`${BLOG.SUB_PATH}/${post.slug}`}
+            passHref
+            className={`cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'
+              } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+
+            {post.title}
+
           </Link>
 
           {(!showPreview || showSummary) && (
@@ -30,7 +31,7 @@ const BlogCard = ({ post, showSummary }) => {
         </div>
 
         {CONFIG_FUKA.POST_LIST_COVER && post?.page_cover && (
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
+          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
             <div className="h-40 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -44,7 +45,7 @@ const BlogCard = ({ post, showSummary }) => {
         )}
       </div>
     </Card>
-  )
+  );
 }
 
 export default BlogCard
