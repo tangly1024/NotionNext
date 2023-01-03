@@ -9,6 +9,8 @@ import { useGlobal } from '@/lib/global'
  * @returns
  */
 export default function ArticleRecommend({ recommendPosts, siteInfo }) {
+  const { locale } = useGlobal()
+
   if (
     !CONFIG_HEXO.ARTICLE_RECOMMEND ||
     !recommendPosts ||
@@ -16,7 +18,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   ) {
     return <></>
   }
-  const { locale } = useGlobal()
+
   return (
     <div className="p-2">
       <div className=" mb-2 px-1 flex flex-nowrap justify-between">
