@@ -13,6 +13,7 @@ import React from 'react'
 import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from './config_next'
 import Live2D from '@/components/Live2D'
+import BLOG from '@/blog.config'
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
 import { isBrowser } from '@/lib/utils'
@@ -75,7 +76,7 @@ const LayoutBase = (props) => {
 
       <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block'/>
 
-      <main id='wrapper' className='flex justify-center flex-1 pb-12'>
+      <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex justify-center flex-1 pb-12'}>
           {/* 左侧栏样式 */}
           <SideAreaLeft slot={leftAreaSlot} targetRef={targetRef} {...props}/>
           <section id='container-inner' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-40' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
