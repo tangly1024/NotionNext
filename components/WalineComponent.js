@@ -36,8 +36,8 @@ const WalineComponent = (props) => {
           '//unpkg.com/@waline/emojis@1.1.0/tw-emoji',
           '//unpkg.com/@waline/emojis@1.1.0/tieba',
           '//unpkg.com/@waline/emojis@1.1.0/qq',
-        ]
-      })
+        ],
+      });
 
     // 跳转评论
     router.events.on('routeChangeComplete', updateWaline)
