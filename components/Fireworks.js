@@ -18,12 +18,8 @@ export const Fireworks = () => {
    * @param config
    */
 function createFireworks(config) {
-  let defaultColors = []
-  BLOG.FIREWORKSCOLOR
-    ? defaultColors = ['255, 20, 97', '24, 255, 146', '90, 135, 255', '251, 243, 140']
-    : defaultColors = ['102, 167, 221', '62, 131, 225', '33, 78, 194']
   const defaultConfig = {
-    colors: defaultColors,
+    colors: BLOG.FIREWORKSCOLOR,
     numberOfParticules: 20,
     orbitRadius: {
       min: 50,
@@ -48,7 +44,7 @@ function createFireworks(config) {
   let pointerY = 0
 
   // sky blue
-  const colors = config.colors || defaultColors
+  const colors = config.colors
 
   const canvasEl = document.querySelector('.fireworks')
   const ctx = canvasEl.getContext('2d')
