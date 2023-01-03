@@ -71,6 +71,8 @@
 
   <td align="center"><a href="https://github.com/Vixcity"><img src="https://avatars.githubusercontent.com/u/57704177" width="64px;"  alt="Vixcity"/><br/><sub><b>Vixcity</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Vixcity" title="Vixcity" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/ipatpat"><img src="https://avatars.githubusercontent.com/u/39089551" width="64px;"  alt="ipatpat"/><br/><sub><b>ipatpat</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=ipatpat" title="ipatpat" >🔧 🐛</a></td>
+
 </tr>
 </table>
 
