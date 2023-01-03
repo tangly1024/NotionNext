@@ -6,12 +6,12 @@ export default function BottomMenuBar ({ className }) {
   return (
     <div className={'sticky bottom-0 w-full h-12 bg-white dark:bg-hexo-black-gray ' + className}>
       <div className='flex justify-between h-full shadow-card'>
-        <Link href='/' passHref>
+        <Link href='/' passHref legacyBehavior>
           <div className='flex w-full items-center justify-center cursor-pointer'>
             <i className='fas fa-home' />
           </div>
         </Link>
-        <Link href='/search' passHref>
+        <Link href='/search' passHref legacyBehavior>
           <div className='flex w-full items-center justify-center cursor-pointer'>
             <i className='fas fa-search'/>
           </div>
@@ -21,5 +21,5 @@ export default function BottomMenuBar ({ className }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
