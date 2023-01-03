@@ -16,51 +16,57 @@ const PaginationNumber = ({ page, totalPage }) => {
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
   return (
-        <div className="mt-10 mb-5  flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
-            {/* 上一页 */}
-            <Link
-                href={{
-                  pathname: currentPage === 2
-                    ? `${pagePrefix}/`
-                    : `${pagePrefix}/page/${currentPage - 1}`,
-                  query: router.query.s ? { s: router.query.s } : {}
-                }}
-            >
-                <a rel="prev" className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
-                    <i className="fas fa-angle-left" />
-                </a>
-            </Link>
+    <div className="mt-10 mb-5  flex justify-center items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
+        {/* 上一页 */}
+        <Link
+          href={{
+            pathname: currentPage === 2
+              ? `${pagePrefix}/`
+              : `${pagePrefix}/page/${currentPage - 1}`,
+            query: router.query.s ? { s: router.query.s } : {}
+          }}
+          rel="prev"
+          className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
 
-            {pages}
+          <i className="fas fa-angle-left" />
 
-            {/* 下一页 */}
-            <Link
-                href={{
-                  pathname: `${pagePrefix}/page/${currentPage + 1}`,
-                  query: router.query.s ? { s: router.query.s } : {}
-                }}
-            >
-                <a rel="next" className={`${+showNext ? 'block' : 'invisible'} pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}>
-                    <i className="fas fa-angle-right" />
-                </a>
-            </Link>
-        </div>
-  )
+        </Link>
+
+        {pages}
+
+        {/* 下一页 */}
+        <Link
+          href={{
+            pathname: `${pagePrefix}/page/${currentPage + 1}`,
+            query: router.query.s ? { s: router.query.s } : {}
+          }}
+          rel="next"
+          className={`${+showNext ? 'block' : 'invisible'} pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}>
+
+          <i className="fas fa-angle-right" />
+
+        </Link>
+    </div>
+  );
 }
 
 function getPageElement(page, currentPage, pagePrefix) {
   return (
-        <Link href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`} key={page} passHref>
-            <a className={
-                (page + '' === currentPage + ''
-                  ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
-                  : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
-                ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
-            } >
-                {page}
-            </a>
-        </Link>
-  )
+    (<Link
+      href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
+      key={page}
+      passHref
+      className={
+          (page + '' === currentPage + ''
+            ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
+            : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
+          ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
+      }>
+
+      {page}
+
+    </Link>)
+  );
 }
 
 function generatePages(pagePrefix, page, currentPage, totalPage) {
