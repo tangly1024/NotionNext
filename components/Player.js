@@ -12,7 +12,7 @@ const Player = () => {
   const meting = JSON.parse(BLOG.MUSIC_PLAYER_METING)
 
   React.useEffect(() => {
-    if (!meting) {
+    if (!meting && window.APlayer) {
       setPlayer(new window.APlayer({
         container: ref.current,
         fixed: true,
