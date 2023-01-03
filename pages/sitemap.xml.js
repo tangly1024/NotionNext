@@ -8,32 +8,32 @@ export const getServerSideProps = async (ctx) => {
   const defaultFields = [
     {
       loc: `${BLOG.LINK}`,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }, {
       loc: `${BLOG.LINK}/archive`,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }, {
       loc: `${BLOG.LINK}/category`,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }, {
       loc: `${BLOG.LINK}/feed`,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }, {
       loc: `${BLOG.LINK}/search`,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }, {
       loc: `${BLOG.LINK}/tag`,
-      lastmod: new Date(),
+      lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }
@@ -41,7 +41,7 @@ export const getServerSideProps = async (ctx) => {
   const postFields = allPages?.map(post => {
     return {
       loc: `${BLOG.LINK}/${post.slug}`,
-      lastmod: new Date(post?.date?.start_date || post?.createdTime),
+      lastmod: new Date(post?.date?.start_date || post?.createdTime).toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }
