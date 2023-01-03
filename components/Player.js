@@ -5,14 +5,20 @@ const Player = () => {
   const [player, setPlayer] = React.useState()
   const ref = React.useRef(null)
 
+  const showLrc = JSON.parse(BLOG.MUSIC_PLAYER_SHOW_LRC)
+  const playerVisible = JSON.parse(BLOG.MUSIC_PLAYER_VISIBLE)
+  const autoPlay = JSON.parse(BLOG.MUSIC_PLAYER_AUTO_PLAY)
+
+  const meting = JSON.parse(BLOG.MUSIC_PLAYER_METING)
+
   React.useEffect(() => {
-    if (BLOG.MUSIC_PLAYER && !BLOG.MUSIC_PLAYER_METING) {
+    if (!meting) {
       setPlayer(new window.APlayer({
         container: ref.current,
         fixed: true,
-        showlrc: BLOG.MUSIC_PLAYER_SHOW_LRC,
+        showlrc: showLrc,
+        autoplay: autoPlay,
         order: BLOG.MUSIC_PLAYER_ORDER,
-        autoplay: BLOG.MUSIC_PLAYER_AUTO_PLAY,
         audio: BLOG.MUSIC_PLAYER_AUDIO_LIST
       }))
     }
@@ -22,18 +28,18 @@ const Player = () => {
   }, [])
 
   return (
-    <div className={BLOG.MUSIC_PLAYER_VISIBLE ? 'visible' : 'invisible'}>
+    <div className={playerVisible ? 'visible' : 'invisible'}>
       <link
         rel="stylesheet"
         type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css"
       />
-      {BLOG.MUSIC_PLAYER && BLOG.MUSIC_PLAYER_METING
+      {meting
         ? <meting-js
             fixed
             type="playlist"
+            autoplay={autoPlay}
             order={BLOG.MUSIC_PLAYER_ORDER}
-            autoplay={BLOG.MUSIC_PLAYER_AUTO_PLAY}
             server={BLOG.MUSIC_PLAYER_METING_SERVER}
             id={BLOG.MUSIC_PLAYER_METING_ID}
           />
