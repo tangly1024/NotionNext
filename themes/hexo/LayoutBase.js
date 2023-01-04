@@ -60,6 +60,7 @@ const LayoutBase = props => {
 
   return (
     <canvas id="universe"></canvas>
+    <div className="custom-background dark:bg-black">
       <CommonHead meta={meta} siteInfo={siteInfo}/>
 
       <TopNav {...props} />
