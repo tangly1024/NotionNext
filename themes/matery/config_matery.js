@@ -1,6 +1,6 @@
 const CONFIG_MATERY = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['知足且上进，温柔且鉴定，保持热爱，未来可期。'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['知足且上进，温柔且坚定，保持热爱，未来可期。'], // 首页大图标语文字
 
   HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
 
