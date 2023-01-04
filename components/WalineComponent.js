@@ -39,7 +39,6 @@ const WalineComponent = (props) => {
         ]
       })
     }
-    
     // 跳转评论
     router.events.on('routeChangeComplete', updateWaline)
     const anchor = window.location.hash
