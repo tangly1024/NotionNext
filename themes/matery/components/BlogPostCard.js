@@ -8,8 +8,8 @@ const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MATERY.POST_LIST_PREVIEW && post.blockMap
   return (
       <div
-          data-aos="fade-up"
-          data-aos-duration="600"
+          data-aos="zoom-in"
+          data-aos-duration="300"
           data-aos-easing="ease-in-out"
           data-aos-once="false"
           data-aos-anchor-placement="top-bottom"
@@ -83,7 +83,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
 
       </div>
-  );
+  )
 }
 
 export default BlogPostCard

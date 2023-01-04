@@ -10,7 +10,7 @@ export const LayoutCategory = props => {
   return (
       <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
 
-            <div className='inner-wrapper'>
+            <div id='inner-wrapper' className='w-full'>
 
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
 
@@ -24,7 +24,7 @@ export const LayoutCategory = props => {
                                       {e.name}({e.count})
                                   </div>
                               </Link>
-                          );
+                          )
                         })}
                     </div>
                 </div>
@@ -34,5 +34,5 @@ export const LayoutCategory = props => {
             </div>
 
         </LayoutBase>
-  );
+  )
 }
