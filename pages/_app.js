@@ -48,11 +48,7 @@ const MyApp = ({ Component, pageProps }) => {
         {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
         {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
         {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
-<<<<<<< HEAD
-        <script type="text/javascript" src="/static/snow.js"></script>
-=======
         {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
->>>>>>> 324dadbbd1addfb0b99dc26638d3ab2634eaf844
     </>
 
   // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；
