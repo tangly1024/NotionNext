@@ -49,6 +49,7 @@ const MyApp = ({ Component, pageProps }) => {
         {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
         {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
         {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
+        <script type="text/javascript" src="/static/snow.js"></script>
     </>
 
   // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；
