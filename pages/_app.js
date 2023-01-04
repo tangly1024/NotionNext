@@ -52,6 +52,7 @@ const MyApp = ({ Component, pageProps }) => {
         <script type="text/javascript" src="/static/snow.js"></script>
         <script defer src="/static/cursor.js"></script>
         <script defer src="/static/universe.js"></script>
+        <canvas id="universe"></canvas>
     </>
 
   // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；
