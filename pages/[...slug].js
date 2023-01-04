@@ -50,7 +50,7 @@ const Slug = props => {
         }
       }
     }, 20 * 1000)
-    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover }
+    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 
@@ -108,7 +108,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug } }) {
   let fullSlug = slug.join('/')
-  console.log('[读取Notion]', fullSlug)
   if (BLOG.PSEUDO_STATIC) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'

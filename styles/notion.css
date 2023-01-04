@@ -407,6 +407,12 @@
   margin-top: 1.08em;
   @apply border-b w-full
 }
+.notion-h2 {
+  @apply w-full
+}
+.notion-h3 {
+  @apply w-full
+}
 
 .notion-header-anchor {
   position: absolute;
@@ -1965,7 +1971,7 @@ thead, tbody tr {
 }
 
 .notion-collection-card{
-    @apply dark:hover:text-gray-200
+    @apply dark:text-gray-200 dark:bg-gray-800 dark:hover:bg-black
 }
 
 .notion-code-copy{

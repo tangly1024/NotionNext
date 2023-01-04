@@ -65,6 +65,16 @@
 
   <td align="center"><a href="https://github.com/Ylarod"><img src="https://avatars.githubusercontent.com/u/30978685" width="64px;"  alt="Ylarod"/><br/><sub><b>Ylarod</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Ylarod" title="Ylarod" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/lifeafter619"><img src="https://avatars.githubusercontent.com/u/65111206" width="64px;"  alt="Etherrreal."/><br/><sub><b>Etherrreal.</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=lifeafter619" title="Etherrreal." >🔧 🐛</a></td>
+  
+  <td align="center"><a href="https://github.com/ykxkykx"><img src="https://avatars.githubusercontent.com/u/17985993" width="64px;"  alt="Joshua Astray"/><br/><sub><b>Joshua Astray</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=ykxkykx" title="ykxkykx" >🔧 🐛</a></td>
+
+  <td align="center"><a href="https://github.com/Vixcity"><img src="https://avatars.githubusercontent.com/u/57704177" width="64px;"  alt="Vixcity"/><br/><sub><b>Vixcity</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Vixcity" title="Vixcity" >🔧 🐛</a></td>
+
+  <td align="center"><a href="https://github.com/ipatpat"><img src="https://avatars.githubusercontent.com/u/39089551" width="64px;"  alt="ipatpat"/><br/><sub><b>ipatpat</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=ipatpat" title="ipatpat" >🔧 🐛</a></td>
+
+  <td align="center"><a href="https://github.com/xloong"><img src="https://avatars.githubusercontent.com/u/8479955" width="64px;"  alt="xloong"/><br/><sub><b>xloong</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=xloong" title="xloong" >🔧 🐛</a></td>
+
 </tr>
 </table>
 

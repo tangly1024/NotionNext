@@ -45,7 +45,7 @@ export const LayoutSlug = props => {
         >
 
             <div id='inner-wrapper'>
-                <div className={'drop-shadow-xl max-w-4xl'}>
+                <div className={'drop-shadow-xl w-full lg:max-w-3xl 2xl:max-w-4xl'}>
                     <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                         {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -112,7 +112,7 @@ export const LayoutSlug = props => {
                             data-aos-once="false"
                             data-aos-anchor-placement="top-center"
                             className='relative h-full'>
-                            <div className='float-right -mr-72 h-full mt-40'>
+                            <div className='float-right xl:-mr-72 xl:w-72 w-56 -mr-56 h-full mt-40'>
                                 <div className='sticky top-24'>
                                     <Catalog toc={post.toc} />
                                 </div>

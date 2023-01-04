@@ -30,12 +30,18 @@ const WalineComponent = (props) => {
         lang: BLOG.lang,
         reaction: true,
         emoji: [
+<<<<<<< HEAD
           '//unpkg.com/@waline/emojis@1.1.0/qq',
           '//unpkg.com/@waline/emojis@1.1.0/bmoji',
           '//unpkg.com/@waline/emojis@1.1.0/bilibili',
           '//unpkg.com/@waline/emojis@1.1.0/weibo',
           '//unpkg.com/@waline/emojis@1.1.0/tieba',
           '//unpkg.com/@waline/emojis@1.1.0/tw-food'
+=======
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/tieba',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/weibo',
+          '//npm.elemecdn.com/@waline/emojis@1.1.0/bilibili'
+>>>>>>> 324dadbbd1addfb0b99dc26638d3ab2634eaf844
         ]
       })
     }
