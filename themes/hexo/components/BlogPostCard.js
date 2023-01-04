@@ -103,7 +103,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         )}
       </div>
     </div>
-  );
+  )
 }
 
 export default BlogPostCard
