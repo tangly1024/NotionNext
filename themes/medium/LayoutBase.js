@@ -20,7 +20,7 @@ import BLOG from '@/blog.config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotRight, slotTop } = props
+  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
 
@@ -61,7 +61,7 @@ const LayoutBase = props => {
       </div>
 
       {/* 移动端底部 */}
-      <Footer />
+      <Footer title={siteInfo?.title}/>
       <BottomMenuBar className='block md:hidden' />
     </div>
   )
