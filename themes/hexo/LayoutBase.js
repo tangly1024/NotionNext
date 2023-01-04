@@ -60,6 +60,7 @@ const LayoutBase = props => {
 
   return (
     <div className="custom-background dark:bg-black">
+    <div className="card-widget.card-info dark:bg-black">
       <CommonHead meta={meta} siteInfo={siteInfo}/>
 
       <TopNav {...props} />
