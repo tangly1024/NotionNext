@@ -49,7 +49,7 @@ const MyApp = ({ Component, pageProps }) => {
         {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
         {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
         {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
-        <script type="text/javascript" src="/static/snow.js"></script>
+        <script async src="/static/snow.js"></script>
         <script defer src="/static/cursor.js"></script>
     </>
 
