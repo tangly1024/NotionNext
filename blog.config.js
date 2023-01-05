@@ -11,7 +11,7 @@ const BLOG = {
   APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
   AUTHOR: '故人', // 作者
-  BIO: '一个普通的干饭人🍚', // 作者简介
+  BIO: '一个爱折腾的干饭人🍚', // 作者简介
   LINK: 'https://blog.vvvv.gay', // 网站地址
   KEYWORDS: '故人, Blog', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
