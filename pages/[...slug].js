@@ -9,7 +9,7 @@ import Router from 'next/router'
 import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
-import { createHash } from 'crypto'
+import md5 from 'js-md5'
 
 /**
  * 根据notion的slug访问页面
@@ -59,9 +59,8 @@ const Slug = props => {
    * @param {*} result
    */
   const validPassword = passInput => {
-    const encrypt = createHash('md5')
-      .update(post.slug + passInput)
-      .digest('hex').trim().toLowerCase()
+    const encrypt = md5(post.slug + passInput)
+
     if (passInput && encrypt === post.password) {
       setLock(false)
       return true

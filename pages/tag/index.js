@@ -30,6 +30,7 @@ export async function getStaticProps() {
   const props = await getGlobalNotionData({ from })
   props.tags = getAllTags({ allPages: props.allPages, sliceCount: 0, tagOptions: props.tagOptions })
   delete props.tagOptions
+  delete props.allPages
   return {
     props,
     revalidate: BLOG.NEXT_REVALIDATE_SECOND

@@ -43,6 +43,7 @@ export async function getStaticProps({ params: { keyword, page } }) {
   props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page - 1)
   props.keyword = keyword
   props.page = page
+  delete props.allPages
   return {
     props,
     revalidate: BLOG.NEXT_REVALIDATE_SECOND

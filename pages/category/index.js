@@ -29,6 +29,7 @@ export async function getStaticProps() {
   const props = await getGlobalNotionData({ from: 'category-index-props' })
   props.categories = getAllCategories({ allPages: props.allPages, categoryOptions: props.categoryOptions, sliceCount: 0 })
   delete props.categoryOptions
+  delete props.allPages
   return {
     props,
     revalidate: BLOG.NEXT_REVALIDATE_SECOND

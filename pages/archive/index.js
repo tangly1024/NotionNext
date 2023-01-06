@@ -45,6 +45,7 @@ export async function getStaticProps() {
   })
 
   props.archivePosts = archivePosts
+  delete props.allPages
 
   return {
     props,
