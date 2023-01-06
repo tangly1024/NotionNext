@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.8.0",
+  "version": "3.8.1",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -34,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "feed": "^4.2.2",
     "gitalk": "^1.7.2",
+    "js-md5": "^0.7.3",
     "localStorage": "^1.0.4",
     "lodash.throttle": "^4.1.1",
     "mark.js": "^8.11.1",
