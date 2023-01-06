@@ -3,16 +3,12 @@ import formatDate from '@/lib/formatDate'
 import Image from 'next/image'
 import BLOG from '@/blog.config'
 import TagItem from './TagItem'
-import { createHash } from 'crypto'
+import md5 from 'js-md5'
 
 export const ArticleInfo = (props) => {
   const { post } = props
 
-  const emailHash = createHash('md5')
-    .update(BLOG.CONTACT_EMAIL)
-    .digest('hex')
-    .trim()
-    .toLowerCase()
+  const emailHash = md5(BLOG.CONTACT_EMAIL)
 
   return <section className="flex-wrap flex mt-2 text-gray--600 dark:text-gray-400 font-light leading-8">
         <div>

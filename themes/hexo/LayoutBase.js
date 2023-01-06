@@ -11,10 +11,17 @@ import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import FacebookPage from '@/components/FacebookPage'
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
 import { isBrowser } from '@/lib/utils'
+import dynamic from 'next/dynamic'
+
+const FacebookPage = dynamic(
+  () => {
+    return import('@/components/FacebookPage')
+  },
+  { ssr: false }
+)
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
