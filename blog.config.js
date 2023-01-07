@@ -70,7 +70,7 @@ const BLOG = {
   SAKURA: process.env.NEXT_PUBLIC_SAKURA || false, // 开关
 
   // 星空雨特效 黑夜模式才会生效
-  START: process.env.NEXT_PUBLIC_START || false, // 开关
+  STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
   // 悬浮挂件
   WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件

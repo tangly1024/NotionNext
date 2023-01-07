@@ -5,13 +5,13 @@
  */
 import React from 'react'
 
-export const Start = () => {
+export const StarrySky = () => {
   React.useEffect(() => {
     dark()
   }, [])
   return (
     <div className="relative">
-      <canvas id="START_VIXCITY" className="fixed"></canvas>
+      <canvas id="starry-sky-vixcity" className="fixed"></canvas>
     </div>
   )
 }
@@ -31,7 +31,7 @@ function dark() {
     i,
     h,
     t = 0.05,
-    s = document.getElementById('START_VIXCITY'),
+    s = document.getElementById('starry-sky-vixcity'),
     o = !0,
     a = '180,184,240',
     r = '226,225,142',
