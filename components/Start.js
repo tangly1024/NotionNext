@@ -10,8 +10,8 @@ export const Start = () => {
     dark()
   }, [])
   return (
-    <div class="relative">
-      <canvas id="START_VIXCITY" class="fixed"></canvas>
+    <div className="relative">
+      <canvas id="START_VIXCITY" className="fixed"></canvas>
     </div>
   )
 }
