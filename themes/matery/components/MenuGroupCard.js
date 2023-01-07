@@ -34,12 +34,12 @@ const MenuGroupCard = (props) => {
                 </div>
 
               </Link>
-            );
+            )
           } else {
             return null
           }
         })}
       </nav>
-  );
+  )
 }
 export default MenuGroupCard

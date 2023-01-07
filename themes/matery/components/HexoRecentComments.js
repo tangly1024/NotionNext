@@ -39,7 +39,7 @@ const HexoRecentComments = (props) => {
           </div>)}
 
     </Card>
-  );
+  )
 }
 
 export default HexoRecentComments

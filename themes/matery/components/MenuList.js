@@ -41,12 +41,12 @@ const MenuList = (props) => {
               {link.slot}
 
             </Link>
-          );
+          )
         } else {
           return null
         }
       })}
     </nav>
-  );
+  )
 }
 export default MenuList

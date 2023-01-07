@@ -47,7 +47,7 @@ const PaginationNumber = ({ page, totalPage }) => {
 
         </Link>
     </div>
-  );
+  )
 }
 
 function getPageElement(page, currentPage, pagePrefix) {
@@ -66,7 +66,7 @@ function getPageElement(page, currentPage, pagePrefix) {
       {page}
 
     </Link>)
-  );
+  )
 }
 
 function generatePages(pagePrefix, page, currentPage, totalPage) {
