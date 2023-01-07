@@ -29,7 +29,7 @@ export const ArticleInfo = (props) => {
                         passHref
                         className="cursor-pointer whitespace-nowrap">
 
-                        <i className='far fa-calendar-minus fa-fw'/>发布日期:{date}
+                        <i className='far fa-calendar-minus fa-fw'/> 发布日期:{date}
 
                     </Link>
                     <span className='whitespace-nowrap'>
@@ -43,5 +43,5 @@ export const ArticleInfo = (props) => {
             </div>
 
         </section>
-  );
+  )
 }
