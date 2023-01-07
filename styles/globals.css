@@ -7,7 +7,7 @@ html {
   --thumbBG: #39C5BB;
 }
 body::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 body {
   scrollbar-width: thin;
