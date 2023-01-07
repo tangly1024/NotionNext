@@ -26,6 +26,7 @@ import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { Fireworks } from '@/components/Fireworks'
 import { Sakura } from '@/components/Sakura'
+import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
@@ -50,6 +51,7 @@ const MyApp = ({ Component, pageProps }) => {
         {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
         {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
         {JSON.parse(BLOG.SAKURA) && <Sakura />}
+        {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
         {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
     </>
 
