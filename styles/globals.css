@@ -266,70 +266,37 @@ background: linear-gradient(90deg, rgba(93, 51, 247, 0.1), rgba(85, 180, 243, 0.
 [data-theme="dark"] #snow{
   display: none;
 }
-
-.categoryBar-list {
-    max-height: 400px;
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.clock-row {
-    overflow: hidden;
-    text-overflow: ellipsis;
+::-webkit-scrollbar-track {
+  background-color: rgba(73, 177, 245, 0.2);
+  border-radius: 2em;
 }
 
-/*3s为加载动画的时间，1为加载动画的次数，ease-in-out为动画效果*/
-
-#page-header,
-#web_bg {
-    -webkit-animation: imgblur 2s 1 ease-in-out;
-    animation: imgblur 2s 1 ease-in-out;
+::-webkit-scrollbar-thumb {
+  background-color: var(--theme-color);
+  background-image: -webkit-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.4) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.4) 75%,
+    transparent 75%,
+    transparent
+  );
+  border-radius: 2em;
 }
 
-@keyframes imgblur {
-    0% {
-        filter: blur(5px);
-    }
-    100% {
-        filter: blur(0px);
-    }
+::-webkit-scrollbar-corner {
+  background-color: transparent;
 }
 
-/*适配使用-webkit内核的浏览器 */
-
-@-webkit-keyframes imgblur {
-    0% {
-        -webkit-filter: blur(5px);
-    }
-    100% {
-        -webkit-filter: blur(0px);
-    }
-}
-.table-wrap img {
-    margin: .6rem auto .1rem !important;
-}
-
-/* 标签外挂 网站卡片 start */
-
-.site-card-group img {
-    margin: 0 auto .1rem !important;
-}
-
-.site-card-group .info a img {
-    margin-right: 10px !important;
-}
-
-[data-theme='dark'] .site-card-group .site-card .info .title {
-    color: #f0f0f0 !important;
-}
-
-[data-theme='dark'] .site-card-group .site-card .info .desc {
-    color: rgba(255, 255, 255, .7) !important;
-}
-
-.site-card-group .info .desc {
-    margin-top: 4px !important;
-}
-/* 代码块颜色 */
-
-figure.highlight pre .addition {
-    color: #00bf03 !important;
+::-moz-selection {
+  color: #fff;
+  background-color: var(--theme-color);
 }
