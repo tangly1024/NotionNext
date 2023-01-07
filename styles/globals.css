@@ -250,22 +250,6 @@ background: linear-gradient(90deg, rgba(93, 51, 247, 0.1), rgba(85, 180, 243, 0.
   -ms-transform: scale(0.5);
   -o-transform: scale(0.5);
 }
-/* 雪花特效 */
-[data-theme="light"] #snow{
-  display: block;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -2;
-}
-
-/* 雪花黑夜模式不显示 */
-[data-theme="dark"] #snow{
-  display: none;
-}
 /* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 8px;
@@ -298,5 +282,5 @@ background: linear-gradient(90deg, rgba(93, 51, 247, 0.1), rgba(85, 180, 243, 0.
 
 ::-moz-selection {
   color: #fff;
-  background-color: var(--theme-color);
+  background-color: var(--color-card);
 }
