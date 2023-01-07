@@ -36,12 +36,12 @@ const MenuButtonGroupTop = (props) => {
               </div>
 
             </Link>
-          );
+          )
         } else {
           return null
         }
       })}
     </nav>
-  );
+  )
 }
 export default MenuButtonGroupTop
