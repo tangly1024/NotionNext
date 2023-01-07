@@ -10,6 +10,6 @@ const Logo = props => {
         <div className=' text-lg p-1.5 rounded dark:border-white hover:scale-110 transform duration-200'> {siteInfo?.title || BLOG.TITLE}</div>
       </div>
     </Link>
-  );
+  )
 }
 export default Logo

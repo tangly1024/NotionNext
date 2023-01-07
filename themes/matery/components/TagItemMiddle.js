@@ -14,7 +14,7 @@ const TagItemMiddle = ({ tag, selected = false }) => {
               {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
 
       </Link>
-  );
+  )
 }
 
 export default TagItemMiddle

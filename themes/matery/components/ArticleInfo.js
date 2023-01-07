@@ -43,5 +43,5 @@ export const ArticleInfo = (props) => {
             </div>
 
         </section>
-  );
+  )
 }

@@ -57,9 +57,9 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
               </div>
 
             </Link>)
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

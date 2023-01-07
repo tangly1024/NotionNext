@@ -51,7 +51,7 @@ const PaginationSimple = ({ page, totalPage }) => {
         </button>
       </Link>
     </div>
-  );
+  )
 }
 
 export default PaginationSimple
