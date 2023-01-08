@@ -5,7 +5,7 @@ import NavButtonGroup from './NavButtonGroup'
 
 let wrapperTop = 0
 let windowTop = 0
-let autoScroll = false
+let autoScroll = true
 
 /**
  *
@@ -81,7 +81,7 @@ const Header = props => {
       className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black text-white"
       style={{
         backgroundImage:
-          `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0,0,0,0.5), rgba(0,0,0,0.3), rgba(0,0,0,0.5), rgba(0, 0, 0, 0.9) ),url("${siteInfo?.pageCover}")`
+          `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0,0,0,0.3), rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0, 0, 0, 0.6) ),url("${siteInfo?.pageCover}")`
       }}
     >
       <div className="absolute flex flex-col h-full items-center justify-center w-full ">
