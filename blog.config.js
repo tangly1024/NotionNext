@@ -16,8 +16,8 @@ const BLOG = {
   KEYWORDS: '故人, Blog', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: 'mail@guren88@888.com', // 邮箱
-  CONTACT_WEIBO: '', // 你的微博个人主页
-  CONTACT_TWITTER: '', // 你的twitter个人主页
+  CONTACT_WEIBO: 'https://weibo.com/u/6235415554', // 你的微博个人主页
+  CONTACT_TWITTER: 'https://twitter.com/xngh30864300', // 你的twitter个人主页
   CONTACT_GITHUB: 'https://github.com/gurbk', // 你的github个人主页
   CONTACT_TELEGRAM: 'https://t.me/studyvip', // 你的telegram 地址 例如 https://t.me/tangly_1024
   CONTACT_LINKEDIN: '', // 你的linkedIn 首页
