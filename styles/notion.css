@@ -841,6 +841,7 @@ code[class*='language-'] {
 .notion-bookmark-link {
   display: flex;
   margin-top: 6px;
+  @apply w-52 md:w-80
 }
 
 .notion-bookmark-link > img {
