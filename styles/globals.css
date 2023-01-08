@@ -21,7 +21,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 ::selection {
-  background: rgba(0, 196, 182, 0);
+  background: rgba(45, 170, 219, 0.3);
 }
 
 .wrapper {
