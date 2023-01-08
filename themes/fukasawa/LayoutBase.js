@@ -30,7 +30,7 @@ const LayoutBase = (props) => {
     <TopNav {...props}/>
     <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
       <AsideLeft {...props} slot={leftAreaSlot}/>
-      <main id='wrapper' className='flex w-full py-8 justify-center'>
+      <main id='wrapper' className='relative flex w-full py-8 justify-center'>
         <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full'>
           <div> {headerSlot} </div>
           <div>{children}</div>

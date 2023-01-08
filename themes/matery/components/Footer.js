@@ -14,7 +14,7 @@ const Footer = ({ title }) => {
 
   return (
     <footer
-      className=' dark:bg-black flex-shrink-0 bg-indigo-700 text-gray-300 justify-center text-center m-auto w-full leading-6  dark:text-gray-100 text-sm p-6'
+      className='relative dark:bg-black flex-shrink-0 bg-indigo-700 text-gray-300 justify-center text-center m-auto w-full leading-6  dark:text-gray-100 text-sm p-6'
     >
       <DarkModeButton/>
 

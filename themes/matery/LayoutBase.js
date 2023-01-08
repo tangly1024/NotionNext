@@ -58,7 +58,7 @@ const LayoutBase = props => {
 
             {headerSlot}
 
-            <main id="wrapper" className="flex-1 w-full py-8 md:px-8 lg:px-24">
+            <main id="wrapper" className="flex-1 w-full py-8 md:px-8 lg:px-24 relative">
                 <div id="container-inner" className="w-full max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center">
                     {onLoading ? <LoadingCover /> : children}
                 </div>
