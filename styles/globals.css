@@ -284,3 +284,12 @@ background: linear-gradient(90deg, rgba(93, 51, 247, 0.1), rgba(85, 180, 243, 0.
   color: #fff;
   background-color: var(--theme-color)!important;
 }
+/* 鼠标在有序标签上旋转 */
+#article-container ol li:hover:before
+{
+-webkit-transform: rotate(360deg);
+-moz-transform: rotate(360deg);
+-o-transform: rotate(360deg);
+-ms-transform: rotate(360deg);
+transform: rotate(360deg)
+}
