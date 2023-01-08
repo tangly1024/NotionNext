@@ -59,7 +59,7 @@ export async function getStaticProps() {
   props.posts = allPosts
   return {
     props,
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 

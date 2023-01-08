@@ -73,7 +73,7 @@ const LayoutBase = props => {
 
       {headerSlot}
 
-      <main id="wrapper" className="w-full py-8 md:px-8 lg:px-24 min-h-screen">
+      <main id="wrapper" className="w-full py-8 md:px-8 lg:px-24 min-h-screen relative">
         <div
           id="container-inner"
           className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center'}
