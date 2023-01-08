@@ -132,7 +132,6 @@ nav {
   backdrop-filter: blur(10px);
 }
 
-
 .medium-zoom-overlay {
   background: none !important;
   /* background: rgba(0, 0, 0, 0.01) none repeat scroll 0% 0% !important; */
@@ -173,7 +172,6 @@ nav {
   height: 1.25em;
   margin: -0.125em 0.25em;
 }
-
 
 /* waline评论插件夜间适配 */
 .wl-panel{
