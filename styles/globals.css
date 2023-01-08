@@ -21,7 +21,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 ::selection {
-  background: rgba(0, 196, 182, 0);
+  background: rgba(45, 170, 219, 0.3);
 }
 
 .wrapper {
@@ -132,7 +132,6 @@ nav {
   backdrop-filter: blur(10px);
 }
 
-
 .medium-zoom-overlay {
   background: none !important;
   /* background: rgba(0, 0, 0, 0.01) none repeat scroll 0% 0% !important; */
@@ -174,7 +173,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-
 /* waline评论插件夜间适配 */
 .wl-panel{
   @apply dark:bg-black dark:border-gray-800
@@ -209,7 +207,7 @@ nav {
 }
 .custom-background{
 	
-background: linear-gradient(90deg, rgba(93, 51, 247, 0.1), rgba(85, 180, 243, 0.1) 15%, rgba(239, 78, 123, .1) 30%, rgba(171, 139, 102, 0.1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 125, 179, 0.1) 86%, rgba(109, 186, 129, 0.164));
+background: linear-gradient(91deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rgba(239,78,123,.1) 30%,rgba(161,102,171,.1) 44%,rgba(80,115,184,.1) 58%,rgba(16,152,173,.1) 72%,rgba(7,179,155,.1) 86%,rgba(109,186,130,.1));
 }
 .dark .custom-background{
   background: none;

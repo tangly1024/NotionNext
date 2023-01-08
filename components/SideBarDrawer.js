@@ -10,7 +10,7 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
   const router = useRouter()
   React.useEffect(() => {
     const sideBarDrawerRouteListener = () => {
-      switchSideDrawerVisible(false)
+      switchSideDrawerVisible(true)
     }
     router.events.on('routeChangeComplete', sideBarDrawerRouteListener)
     return () => {

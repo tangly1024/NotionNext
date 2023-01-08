@@ -8,7 +8,7 @@ const BLOG = {
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
   LANG: 'en-US', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: 2021, // e.g if leave this empty, current year will be used.
-  APPEARANCE: '', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
+  APPEARANCE: 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
   AUTHOR: '故人', // 作者
   BIO: '一个爱折腾的干饭人🍚', // 作者简介
@@ -16,8 +16,8 @@ const BLOG = {
   KEYWORDS: '故人, Blog', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: 'mail@guren88@888.com', // 邮箱
-  CONTACT_WEIBO: '', // 你的微博个人主页
-  CONTACT_TWITTER: '', // 你的twitter个人主页
+  CONTACT_WEIBO: 'https://weibo.com/u/6235415554', // 你的微博个人主页
+  CONTACT_TWITTER: 'https://twitter.com/xngh30864300', // 你的twitter个人主页
   CONTACT_GITHUB: 'https://github.com/gurbk', // 你的github个人主页
   CONTACT_TELEGRAM: 'https://t.me/studyvip', // 你的telegram 地址 例如 https://t.me/tangly_1024
   CONTACT_LINKEDIN: '', // 你的linkedIn 首页
@@ -55,7 +55,7 @@ const BLOG = {
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
   POST_PREVIEW_LINES: 12, // 预览博客行数
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
-  POSTS_PER_PAGE: 16, // post counts per page
+  POSTS_PER_PAGE: 12, // post counts per page
   POSTS_SORT_BY: 'date', // 排序方式 'date'按时间,'notion'由notion控制
 
   PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
