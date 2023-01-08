@@ -45,7 +45,7 @@ export async function getStaticProps() {
       meta,
       ...props
     },
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 

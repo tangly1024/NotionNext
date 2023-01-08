@@ -48,7 +48,7 @@ export async function getStaticProps({ params: { keyword } }) {
   props.keyword = keyword
   return {
     props,
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 
