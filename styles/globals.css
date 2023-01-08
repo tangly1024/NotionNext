@@ -209,7 +209,7 @@ nav {
 }
 .custom-background{
 	
-background: linear-gradient(90deg, rgba(93, 51, 247, 0.1), rgba(85, 180, 243, 0.1) 15%, rgba(239, 78, 123, .1) 30%, rgba(171, 139, 102, 0.1) 44%, rgba(80, 115, 184, .1) 58%, rgba(16, 152, 173, .1) 72%, rgba(7, 125, 179, 0.1) 86%, rgba(109, 186, 129, 0.164));
+background: linear-gradient(91deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rgba(239,78,123,.1) 30%,rgba(161,102,171,.1) 44%,rgba(80,115,184,.1) 58%,rgba(16,152,173,.1) 72%,rgba(7,179,155,.1) 86%,rgba(109,186,130,.1));
 }
 .dark .custom-background{
   background: none;
@@ -283,13 +283,4 @@ background: linear-gradient(90deg, rgba(93, 51, 247, 0.1), rgba(85, 180, 243, 0.
 ::-moz-selection {
   color: #fff;
   background-color: var(--theme-color)!important;
-}
-/* 鼠标在有序标签上旋转 */
-#article-container ol li:hover:before
-{
--webkit-transform: rotate(360deg);
--moz-transform: rotate(360deg);
--o-transform: rotate(360deg);
--ms-transform: rotate(360deg);
-transform: rotate(360deg)
 }
