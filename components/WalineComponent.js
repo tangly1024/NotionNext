@@ -3,7 +3,6 @@ import { init } from '@waline/client'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import '@waline/client/dist/waline.css'
-
 const path = ''
 let waline = null
 /**
@@ -20,7 +19,6 @@ const WalineComponent = (props) => {
       waline.update(props)
     }
   }
-
   React.useEffect(() => {
     if (!waline) {
       waline = init({
@@ -45,7 +43,6 @@ const WalineComponent = (props) => {
     if (anchor) {
       // 选择需要观察变动的节点
       const targetNode = document.getElementsByClassName('wl-cards')[0]
-
       // 当观察到变动时执行的回调函数
       const mutationCallback = (mutations) => {
         for (const mutation of mutations) {
@@ -63,12 +60,10 @@ const WalineComponent = (props) => {
           }
         }
       }
-
       // 观察子节点 变化
       const observer = new MutationObserver(mutationCallback)
       observer.observe(targetNode, { childList: true })
     }
-
     return () => {
       if (waline) {
         waline.destroy()
@@ -77,8 +72,6 @@ const WalineComponent = (props) => {
       router.events.off('routeChangeComplete', updateWaline)
     }
   }, [])
-
   return <div ref={containerRef} />
 }
-
 export default WalineComponent
