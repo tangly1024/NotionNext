@@ -10,7 +10,7 @@ import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
 
 // 代码样式  更多样式参考： https://github.com/PrismJS/prism-themes
-import 'prism-themes/themes/prism-holi-theme.css'
+import 'prism-themes/themes/prism-one-dark.css'
 
 // local webfont @see https://fontsource.org/
 import '@fontsource/noto-sans-sc'
