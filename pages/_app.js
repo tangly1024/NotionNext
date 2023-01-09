@@ -6,12 +6,10 @@ import '@/styles/globals.css'
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
-
 // 代码样式  更多样式参考： https://github.com/PrismJS/prism-themes
-import 'prism-themes/themes/prism-one-dark.css'
-
+import 'prism-themes/themes/prism-holi-theme.css'
 // local webfont @see https://fontsource.org/
-import '@fontsource/noto-sans-sc'
+import '@fontsource/alatsi'
 import '@fontsource/noto-serif-sc'
 
 // local fontawesome 6.2.1 @see https://www.npmjs.com/package/@fortawesome/fontawesome-free
