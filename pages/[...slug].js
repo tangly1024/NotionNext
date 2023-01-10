@@ -121,13 +121,13 @@ export async function getStaticProps({ params: { slug } }) {
   if (!props.post) {
     const pageId = slug.slice(-1)[0]
     if (pageId.length < 32) {
-      return { props, revalidate: BLOG.NEXT_REVALIDATE_SECOND }
+      return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
     }
     const post = await getNotion(pageId)
     if (post) {
       props.post = post
     } else {
-      return { props, revalidate: BLOG.NEXT_REVALIDATE_SECOND }
+      return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
     }
   } else {
     props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
@@ -148,7 +148,7 @@ export async function getStaticProps({ params: { slug } }) {
   delete props.allPages
   return {
     props,
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 
