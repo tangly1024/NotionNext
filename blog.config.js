@@ -10,9 +10,9 @@ const BLOG = {
   SINCE: 2021, // e.g if leave this empty, current year will be used.
   APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
-  AUTHOR: 'OFFICEDAILY', // 作者
-  BIO: 'offices  direct to your retinas', // 作者简介
-  LINK: 'https://apaper.super.site', // 网站地址
+  AUTHOR: 'apaper', // 作者
+  BIO: 'book', // 作者简介
+  LINK: '', // 网站地址
   KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: 'daheitian@foxmail.com', // 邮箱
