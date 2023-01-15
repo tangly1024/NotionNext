@@ -5,7 +5,7 @@ const BLOG = {
   PSEUDO_STATIC: false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: 72000, // 更新内容缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
   THEME: process.env.NEXT_PUBLIC_THEME || 'hexo', // 主题， 支持 ['next','hexo',"fukasawa','medium','example'] @see https://preview.tangly1024.com
-  THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
+  THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || true, // 是否显示切换主题按钮
   LANG: 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: 2021, // e.g if leave this empty, current year will be used.
   APPEARANCE: 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
@@ -24,7 +24,7 @@ const BLOG = {
 
   // 网站默认使用PingFangSC及NotoSansSC，
   // 如需自定义字体，请将CUSTOM_FONT改为 true，并将CUSTOM_FONT_URL改为你的字体CSS地址，同时在CUSTOM_FONT_SANS与CUSTOM_FONT_SERIF中指定你的font-family
-  CUSTOM_FONT: process.env.NEXT_PUBLIC_CUSTOM_FONT || false, // 是否使用自定义字体
+  CUSTOM_FONT: process.env.NEXT_PUBLIC_CUSTOM_FONT || true, // 是否使用自定义字体
   // 自定义字体示例： 请先将 CUSTOM_FONT 改为 true， 并将 CUSTOM_FONT_URL 改为你的字体CSS地址，同时在 CUSTOM_FONT_SANS 与 CUSTOM_FONT_SERIF 中指定你的 fontfamily
   CUSTOM_FONT_URL: ['https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'], // 自定义字体的CSS
   CUSTOM_FONT_SANS: ['LXGW WenKai'], // 自定义无衬线字体
@@ -73,7 +73,7 @@ const BLOG = {
   STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || true, // 开关
 
   // 悬浮挂件
-  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || false, // 是否显示宠物挂件
+  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
   WIDGET_PET_LINK: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
   WIDGET_PET_SWITCH_THEME: true, // 点击宠物挂件切换博客主题
 
