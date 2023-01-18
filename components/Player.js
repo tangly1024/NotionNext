@@ -36,7 +36,7 @@ const Player = () => {
       />
       {meting
         ? <meting-js
-            fixed="true" 
+            fixed="true"
             type="playlist"
             preload="auto"
             lrc-type="1"
