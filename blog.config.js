@@ -43,6 +43,7 @@ const BLOG = {
 
   // PrismJs CDN
   PRISM_JS_PATH: 'https://npm.elemecdn.com/prismjs@1.29.0/components/',
+  CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || 'false',
 
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'

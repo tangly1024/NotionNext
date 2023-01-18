@@ -73,16 +73,17 @@ function renderPrismMac() {
   const container = document?.getElementById('container-inner')
 
   // Add line numbers
-  const codeBlocks = container?.getElementsByTagName('pre')
-  if (codeBlocks) {
-    Array.from(codeBlocks).forEach(item => {
-      if (!item.classList.contains('line-numbers')) {
-        item.classList.add('line-numbers')
-        item.style.whiteSpace = 'pre-wrap'
-      }
-    })
+  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+    const codeBlocks = container?.getElementsByTagName('pre')
+    if (codeBlocks) {
+      Array.from(codeBlocks).forEach(item => {
+        if (!item.classList.contains('line-numbers')) {
+          item.classList.add('line-numbers')
+          item.style.whiteSpace = 'pre-wrap'
+        }
+      })
+    }
   }
-
   // 重新渲染之前检查所有的多余text
 
   try {
