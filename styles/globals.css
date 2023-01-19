@@ -250,8 +250,8 @@ background: linear-gradient(91deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rg
 }
 /* 滚动条样式 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
