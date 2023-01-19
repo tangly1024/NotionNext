@@ -103,7 +103,7 @@ const CommonScript = () => {
     </>)}
 
     {/* 引入音乐播放 */}
-    {JSON.parse(BLOG.MUSIC_PLAYER) && <script async src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js" />}
+    {JSON.parse(BLOG.MUSIC_PLAYER) && <script async src={BLOG.MUSIC_PLAYER_CDN_URL} />}
     {JSON.parse(BLOG.MUSIC_PLAYER) && JSON.parse(BLOG.MUSIC_PLAYER_METING) && <script async src="https://cdnjs.cloudflare.com/ajax/libs/meting/2.0.1/Meting.min.js" />}
   </>)
 }
