@@ -75,6 +75,8 @@
 
   <td align="center"><a href="https://github.com/xloong"><img src="https://avatars.githubusercontent.com/u/8479955" width="64px;"  alt="xloong"/><br/><sub><b>xloong</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=xloong" title="xloong" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/expoli"><img src="https://avatars.githubusercontent.com/u/31023767" width="64px;"  alt="expoli"/><br/><sub><b>expoli</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=expoli" title="expoli" >🔧 🐛</a></td>
+
 </tr>
 </table>
 

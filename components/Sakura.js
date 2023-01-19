@@ -162,7 +162,7 @@ function createSakura() {
       sakura.draw(cxt)
       sakuraList.push(sakura)
     }
-    stop = requestAnimationFrame(asd())
+    stop = requestAnimationFrame(asd)
     function asd() {
       cxt.clearRect(0, 0, canvas.width, canvas.height)
       sakuraList.update()
