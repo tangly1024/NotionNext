@@ -31,7 +31,7 @@ export async function getStaticProps({ params: { tag, page } }) {
   // 处理文章数
   props.postCount = props.posts.length
   // 处理分页
-  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page - 1)
+  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
 
   props.tag = tag
   props.page = page

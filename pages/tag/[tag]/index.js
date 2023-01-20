@@ -37,7 +37,7 @@ export async function getStaticProps({ params: { tag } }) {
   if (BLOG.POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
   } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE - 1)
+    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
   }
 
   props.tag = tag
