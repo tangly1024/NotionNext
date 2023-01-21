@@ -40,7 +40,7 @@ export async function getStaticProps({ params: { keyword, page } }) {
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
   // 处理分页
-  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page - 1)
+  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
   props.keyword = keyword
   props.page = page
   delete props.allPages
