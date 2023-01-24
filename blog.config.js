@@ -11,7 +11,7 @@ const BLOG = {
   APPEARANCE: 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
   AUTHOR: '', // 作者
-  BIO: '禅修和成长', // 作者简介
+  BIO: '', // 作者简介
   LINK: '', // 网站地址
   KEYWORDS: '禅修, 成长', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
