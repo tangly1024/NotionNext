@@ -11,16 +11,6 @@ const Footer = ({ title }) => {
     }
     return currentYear
   })()
-
-  return (
-    <footer
-      className='relative dark:bg-black flex-shrink-0 bg-hexo-light-gray justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm p-6'
-    >
-      <DarkModeButton/>
-
-     
-    </footer>
-  )
 }
 
 export default Footer
