@@ -1,12 +1,10 @@
 import CommonHead from '@/components/CommonHead'
 import { useEffect, useState } from 'react'
 
-import Footer from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import smoothscroll from 'smoothscroll-polyfill'
-import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
@@ -93,13 +91,11 @@ const LayoutBase = props => {
             ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '
           }
         >
-          <FloatDarkModeButton />
           {floatSlot}
           <JumpToTopButton />
         </div>
       </div>
 
-      <Footer title={siteInfo?.title || BLOG.TITLE} />
     </div>
   )
 }
