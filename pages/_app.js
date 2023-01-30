@@ -25,6 +25,7 @@ import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { Fireworks } from '@/components/Fireworks'
+import { Nest } from '@/components/Nest'
 import { Sakura } from '@/components/Sakura'
 import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
@@ -53,6 +54,7 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.SAKURA) && <Sakura />}
         {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
         {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
+        {JSON.parse(BLOG.NEST) && <Nest />}
     </>
 
   // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；

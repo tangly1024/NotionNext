@@ -23,7 +23,7 @@ const SideAreaLeft = props => {
   const { post, slot, postCount } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
-  return <aside id='left' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'ml-4' : 'mr-4') + ' hidden lg:block flex-col w-60'}>
+  return <aside id='left' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'ml-4' : 'mr-4') + ' hidden lg:block flex-col w-60 z-10 relative'}>
 
         <section
             data-aos="fade-down"

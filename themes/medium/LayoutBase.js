@@ -31,7 +31,7 @@ const LayoutBase = props => {
         {/* 桌面端左侧菜单 */}
         {/* <LeftMenuBar/> */}
 
-        <div id='container-inner' className='w-full'>
+        <div id='container-inner' className='w-full relative z-10'>
           {/* 移动端顶部菜单 */}
           <TopNavBar {...props}/>
           <div className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
@@ -41,7 +41,7 @@ const LayoutBase = props => {
         </div>
 
         {/* 桌面端右侧 */}
-        <div className='hidden xl:block border-l dark:border-transparent w-96'>
+        <div className='hidden xl:block border-l dark:border-transparent w-96 relative z-10'>
          <div className='py-14 px-6 sticky top-0'>
           <Tabs>
             {slotRight}

@@ -25,7 +25,8 @@ const LayoutBase = props => {
             <Nav {...props} />
 
             {/* 主体 */}
-            <div id='container-inner' className="w-full">
+            <div id='wrapper'>
+            <div id='container-inner' className="w-full relative z-10">
 
                 <Title {...props} />
 
@@ -37,6 +38,7 @@ const LayoutBase = props => {
 
                 </div>
 
+            </div>
             </div>
 
             <Footer {...props} />

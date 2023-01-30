@@ -8,7 +8,7 @@ export const Header = (props) => {
   const { siteInfo } = props
 
   return (
-      <header className="w-full px-6 bg-white  dark:bg-black">
+      <header className="w-full px-6 bg-white  dark:bg-black relative z-10">
             <div className="container mx-auto max-w-4xl md:flex justify-between items-center">
                 <Link
                     href='/'
