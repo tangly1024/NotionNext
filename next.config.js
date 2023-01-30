@@ -1,10 +1,8 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 })
+
 module.exports = withBundleAnalyzer({
-  future: {
-    webpack5: true
-  },
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
@@ -14,6 +12,14 @@ module.exports = withBundleAnalyzer({
       'www.notion.so',
       'avatars.githubusercontent.com',
       'images.unsplash.com'
+    ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/:path*.html',
+        destination: '/:path*'
+      }
     ]
   },
   async headers() {
@@ -38,13 +44,13 @@ module.exports = withBundleAnalyzer({
   },
   webpack: (config, { dev, isServer }) => {
     // Replace React with Preact only in client production build
-    if (!dev && !isServer) {
-      Object.assign(config.resolve.alias, {
-        react: 'preact/compat',
-        'react-dom/test-utils': 'preact/test-utils',
-        'react-dom': 'preact/compat'
-      })
-    }
+    // if (!dev && !isServer) {
+    //   Object.assign(config.resolve.alias, {
+    //     react: 'preact/compat',
+    //     'react-dom/test-utils': 'preact/test-utils',
+    //     'react-dom': 'preact/compat'
+    //   })
+    // }
     return config
   }
 })

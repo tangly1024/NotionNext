@@ -66,7 +66,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     ref={searchInputRef}
     type='text'
     placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-    className={'w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+    className={'w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white'}
     onKeyUp={handleKeyUp}
     onCompositionStart={lockSearchInput}
     onCompositionUpdate={lockSearchInput}

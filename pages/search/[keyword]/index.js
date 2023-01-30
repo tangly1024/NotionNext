@@ -43,12 +43,12 @@ export async function getStaticProps({ params: { keyword } }) {
   if (BLOG.POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
   } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE - 1)
+    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
   }
   props.keyword = keyword
   return {
     props,
-    revalidate: 1
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 
@@ -120,7 +120,7 @@ async function filterByMemCache(allPosts, keyword) {
     const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
     const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
-    let hit = articleInfo.indexOf(keyword) > -1
+    let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
     let indexContent = [post.summary]
     if (page && page.block) {
       const contentIds = Object.keys(page.block)

@@ -3,26 +3,7 @@ import BlogArchiveItem from './components/BlogPostArchive'
 import LayoutBase from './LayoutBase'
 
 export const LayoutArchive = (props) => {
-  const { posts } = props
-  // 深拷贝
-  const postsSortByDate = Object.create(posts)
-
-  // 时间排序
-  postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.date?.start_date || a.createdTime)
-    const dateB = new Date(b?.date?.start_date || b.createdTime)
-    return dateB - dateA
-  })
-  const archivePosts = {}
-
-  postsSortByDate.forEach(post => {
-    const date = post.date?.start_date.slice(0, 7)
-    if (archivePosts[date]) {
-      archivePosts[date].push(post)
-    } else {
-      archivePosts[date] = [post]
-    }
-  })
+  const { archivePosts } = props
 
   useEffect(() => {
     const anchor = window.location.hash

@@ -15,7 +15,13 @@ const PaginationSimple = ({ page, showNext }) => {
   const router = useRouter()
   const currentPage = +page
   return (
-    <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
+    <div
+        data-aos="fade-down"
+        data-aos-duration="600"
+        data-aos-easing="ease-in-out"
+        data-aos-once="false"
+        data-aos-anchor-placement="top-bottom"
+        className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
       <Link
         href={{
           pathname:
@@ -25,7 +31,7 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-      >
+        legacyBehavior>
         <button
           rel="prev"
           className={`${
@@ -41,7 +47,7 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-      >
+        legacyBehavior>
         <button
           rel="next"
           className={`${
@@ -52,7 +58,7 @@ const PaginationSimple = ({ page, showNext }) => {
         </button>
       </Link>
     </div>
-  )
+  );
 }
 
 export default PaginationSimple
