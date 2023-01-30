@@ -1305,6 +1305,7 @@ code[class*='language-'] {
 .notion-file-info {
   display: flex;
   align-items: baseline;
+  overflow-x: auto;
 }
 
 .notion-file-title {
