@@ -207,6 +207,7 @@
 
 .medium-zoom-image {
   border-radius: 0;
+  @apply bg-gray-100 dark:bg-black
 }
 
 .medium-zoom-image--opened {
@@ -698,6 +699,10 @@ svg.notion-page-icon {
 
 .notion-asset-wrapper-image {
   max-width: 100%;
+}
+
+.notion-asset-wrapper-image > div {
+    height: auto !important;
 }
 
 .notion-asset-wrapper-full {

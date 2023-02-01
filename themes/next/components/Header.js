@@ -93,7 +93,7 @@ export default function Header(props) {
   return (
     <header
       id="header"
-      className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black"
+      className="duration-500 md:bg-fixed w-full bg-cover bg-center h-screen bg-black relative z-10"
       style={{
         backgroundImage:
           `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.2), rgba(0, 0, 0, 0.8) ),url("${siteInfo?.pageCover}")`
