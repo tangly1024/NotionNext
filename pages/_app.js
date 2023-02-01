@@ -31,6 +31,7 @@ import { Ribbon } from '@/components/Ribbon'
 import { Sakura } from '@/components/Sakura'
 import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
+import ExternalScript from '@/components/ExternalScript'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -59,6 +60,7 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.NEST) && <Nest />}
         {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
         {JSON.parse(BLOG.RIBBON) && <Ribbon />}
+        <ExternalScript/>
     </>
 
   // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；
