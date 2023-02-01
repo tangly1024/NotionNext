@@ -15,7 +15,6 @@ const Header = props => {
   const [typed, changeType] = useState()
   const { siteInfo } = props
   useEffect(() => {
-    scrollTrigger()
     updateHeaderHeight()
     if (!typed && window && document.getElementById('typed')) {
       changeType(
@@ -29,44 +28,19 @@ const Header = props => {
         })
       )
     }
-    window.addEventListener('scroll', scrollTrigger)
+    if (enableAutoScroll) {
+      scrollTrigger()
+      window.addEventListener('scroll', scrollTrigger)
+    }
+
     window.addEventListener('resize', updateHeaderHeight)
     return () => {
-      window.removeEventListener('scroll', scrollTrigger)
+      if (enableAutoScroll) {
+        window.removeEventListener('scroll', scrollTrigger)
+      }
       window.removeEventListener('resize', updateHeaderHeight)
     }
   })
-
-  const autoScrollEnd = () => {
-    if (autoScroll) {
-      windowTop = window.scrollY
-      autoScroll = false
-    }
-  }
-
-  /**
-   * 自动吸附滚动，移动端体验不好暂时关闭
-   */
-  const scrollTrigger = () => {
-    if (screen.width <= 768) {
-      return
-    }
-
-    const scrollS = window.scrollY
-    // 自动滚动
-    if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
-    ) {
-      autoScroll = true
-      window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-      setTimeout(autoScrollEnd, 500)
-    }
-    if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
-      autoScroll = true
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      setTimeout(autoScrollEnd, 500)
-    }
-    windowTop = scrollS
-  }
 
   function updateHeaderHeight () {
     setTimeout(() => {
@@ -104,6 +78,39 @@ const Header = props => {
       </div>
     </header>
   )
+}
+
+const enableAutoScroll = false // 是否开启自动吸附滚动
+
+const autoScrollEnd = () => {
+  if (autoScroll) {
+    windowTop = window.scrollY
+    autoScroll = false
+  }
+}
+
+/**
+   * 自动吸附滚动，移动端体验不好暂时关闭
+   */
+const scrollTrigger = () => {
+  if (screen.width <= 768) {
+    return
+  }
+
+  const scrollS = window.scrollY
+  // 自动滚动
+  if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
+  ) {
+    autoScroll = true
+    window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+    setTimeout(autoScrollEnd, 500)
+  }
+  if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
+    autoScroll = true
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setTimeout(autoScrollEnd, 500)
+  }
+  windowTop = scrollS
 }
 
 export default Header

@@ -14,7 +14,6 @@ class MyDocument extends Document {
       <Html lang={BLOG.LANG} className='test'>
         <Head>
           <link rel='icon' href='/favicon.ico' />
-          <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
           <CommonScript />
         </Head>
 

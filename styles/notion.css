@@ -700,6 +700,10 @@ svg.notion-page-icon {
   max-width: 100%;
 }
 
+.notion-asset-wrapper-image > div {
+    height: auto !important;
+}
+
 .notion-asset-wrapper-full {
   /* max-width: 100vw; */
 }
