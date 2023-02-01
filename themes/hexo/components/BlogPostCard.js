@@ -14,7 +14,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         data-aos-easing="ease-in-out"
         data-aos-once="false"
         data-aos-anchor-placement="top-bottom"
-        className="w-full drop-shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-300">
+        className="w-full drop-shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-300 coverArticle">
       <div
         key={post.id}
         className="animate__animated animate__fadeIn flex flex-col-reverse lg:flex-row justify-between duration-300"
