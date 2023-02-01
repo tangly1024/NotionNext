@@ -207,6 +207,7 @@
 
 .medium-zoom-image {
   border-radius: 0;
+  @apply bg-gray-100 dark:bg-black
 }
 
 .medium-zoom-image--opened {
