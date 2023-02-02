@@ -212,42 +212,7 @@ background: linear-gradient(91deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rg
 .dark .custom-background{
   background: none;
 }
-/* 鼠标样式 */
-#cursor {
-  position: fixed;
-  width: 16px;
-  height: 16px;
-  /* 这里改变跟随的底色 */
-  background: rgb(57, 197, 187);
-  border-radius: 8px;
-  opacity: 0.25;
-  z-index: 10086;
-  pointer-events: none;
-  transition: 0.2s ease-in-out;
-  transition-property: background, opacity, transform;
-}
 
-#cursor.hidden {
-  opacity: 0;
-}
-
-#cursor.hover {
-  opacity: 0.1;
-  transform: scale(2.5);
-  -webkit-transform: scale(2.5);
-  -moz-transform: scale(2.5);
-  -ms-transform: scale(2.5);
-  -o-transform: scale(2.5);
-}
-
-#cursor.active {
-  opacity: 0.5;
-  transform: scale(0.5);
-  -webkit-transform: scale(0.5);
-  -moz-transform: scale(0.5);
-  -ms-transform: scale(0.5);
-  -o-transform: scale(0.5);
-}
 /* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 6px;

@@ -53,7 +53,6 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
         {JSON.parse(BLOG.RIBBON) && <Ribbon />}
         <ExternalScript/>
-        <script defer src="/static/cursor.js"></script>
     </>
   // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；
   const DEFAULT_FONTS_URL = [
