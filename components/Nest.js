@@ -69,7 +69,7 @@ function createNest() {
   var a = (function () {
       const t = e
       return {
-        z: n(t, 'zIndex', 0),
+        z: n(t, 'zIndex', -1),
         o: n(t, 'opacity', 0.7),
         c: n(t, 'color', '0,0,0'),
         n: n(t, 'count', 99)
