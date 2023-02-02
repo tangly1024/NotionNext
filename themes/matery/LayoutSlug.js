@@ -64,7 +64,7 @@ export const LayoutSlug = props => {
                             </>}
 
                             <div className='lg:px-10 '>
-                                <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
+                                <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
                                     {/* Notion文章主体 */}
                                     <section id='notion-article'
                                         data-aos-delay="200"

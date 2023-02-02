@@ -12,10 +12,11 @@ import ArticleAround from './ArticleAround'
  */
 export default function ArticleDetail(props) {
   const { post, prev, next } = props
+  const { locale } = useGlobal()
+
   if (!post) {
     return <></>
   }
-  const { locale } = useGlobal()
   const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
   return (
     <div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
@@ -26,7 +27,7 @@ export default function ArticleDetail(props) {
         </div>
       )}
       <article itemScope itemType="https://schema.org/Movie"
-        className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
+        className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
       >
 
         <header className='animate__slideInDown animate__animated'>
@@ -103,5 +104,5 @@ export default function ArticleDetail(props) {
         <Comment frontMatter={post} />
       </div>
     </div>
-  );
+  )
 }
