@@ -1,8 +1,4 @@
 /* eslint-disable */
-/**
- * https://codepen.io/juliangarnier/pen/gmOwJX
- * custom by hexo-theme-yun @YunYouJun
- */
 import React from 'react'
 
 export const StarrySky = () => {
