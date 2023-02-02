@@ -26,7 +26,7 @@ export default function ArticleDetail(props) {
         </div>
       )}
       <article itemScope itemType="https://schema.org/Movie"
-        className="subpixel-antialiased py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
+        className="subpixel-antialiased scroll-hidden py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
       >
 
         <header className='animate__slideInDown animate__animated'>
@@ -103,5 +103,5 @@ export default function ArticleDetail(props) {
         <Comment frontMatter={post} />
       </div>
     </div>
-  );
+  )
 }
