@@ -27,7 +27,7 @@ const BlogPostCard = ({ post, showSummary, index }) => {
             className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
               } leading-tight text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
 
-            {post.title} {index % 2}
+            {post.title}
 
           </Link>
 
