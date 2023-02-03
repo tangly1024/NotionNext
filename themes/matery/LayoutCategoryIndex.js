@@ -3,7 +3,7 @@ import HeaderArticle from './components/HeaderArticle'
 import LayoutBase from './LayoutBase'
 
 export const LayoutCategoryIndex = props => {
-  const { categories } = props
+  const { categoryOptions } = props
 
   return (
       <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
@@ -13,7 +13,7 @@ export const LayoutCategoryIndex = props => {
               <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
 
                   <div className='flex justify-center flex-wrap'>
-                      {categories.map(e => {
+                      {categoryOptions.map(e => {
                         return (
                             <Link key={e.name} href={`/category/${e.name}`} passHref legacyBehavior>
                                 <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400' >

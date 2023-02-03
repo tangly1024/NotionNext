@@ -2,7 +2,6 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
-import { getAllTags } from '@/lib/notion'
 import BLOG from '@/blog.config'
 
 /**
@@ -28,8 +27,6 @@ const TagIndex = props => {
 export async function getStaticProps() {
   const from = 'tag-index-props'
   const props = await getGlobalNotionData({ from })
-  props.tags = getAllTags({ allPages: props.allPages, sliceCount: 0, tagOptions: props.tagOptions })
-  delete props.tagOptions
   delete props.allPages
   return {
     props,

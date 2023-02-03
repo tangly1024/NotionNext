@@ -4,7 +4,7 @@ import LayoutBase from './LayoutBase'
 
 export const LayoutCategoryIndex = (props) => {
   const { locale } = useGlobal()
-  const { categories } = props
+  const { categoryOptions } = props
   return (
     <LayoutBase {...props}>
       <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
@@ -12,7 +12,7 @@ export const LayoutCategoryIndex = (props) => {
           <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
         </div>
         <div id='category-list' className='duration-200 flex flex-wrap'>
-          {categories && categories.map(category => {
+          {categoryOptions?.map(category => {
             return (
               <Link
                 key={category.name}

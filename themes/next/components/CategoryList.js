@@ -2,16 +2,16 @@ import Link from 'next/link'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 
-const CategoryList = ({ currentCategory, categories }) => {
-  if (!categories) {
+const CategoryList = ({ currentCategory, categoryOptions }) => {
+  const { locale } = useGlobal()
+  if (!categoryOptions) {
     return <></>
   }
-  const { locale } = useGlobal()
 
   return (
     <ul className='flex py-1 space-x-3'>
       <li className='w-16 py-2 dark:text-gray-200 whitespace-nowrap'>{locale.COMMON.CATEGORY}</li>
-      {categories.map(category => {
+      {categoryOptions.map(category => {
         const selected = category.name === currentCategory
         return (
           <Link
@@ -32,10 +32,10 @@ const CategoryList = ({ currentCategory, categories }) => {
               </a>
             </li>
           </Link>
-        );
+        )
       })}
     </ul>
-  );
+  )
 }
 
 export default CategoryList
