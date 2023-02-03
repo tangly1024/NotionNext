@@ -15,7 +15,6 @@ export const BlogListPage = props => {
   const showNext = page < totalPage
   const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
-  console.log('p', posts)
   return (
       <div className="w-full md:pr-12 mb-12">
 
