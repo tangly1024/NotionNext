@@ -8,7 +8,7 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_MATERY.POST_LIST_PREVIEW && post.blockMap
   // matery 主题默认强制显示图片
   if (post && !post.page_cover) {
-    post.page_cover = siteInfo.pageCover
+    post.page_cover = siteInfo?.pageCover
   }
   const showPageCover = CONFIG_MATERY.POST_LIST_COVER && !showPreview && post?.page_cover
   return (
