@@ -69,7 +69,7 @@ function createNest() {
   var a = (function () {
       const t = e
       return {
-        z: n(t, 'zIndex', -1),
+        z: n(t, 'zIndex', 0),
         o: n(t, 'opacity', 0.7),
         c: n(t, 'color', '0,0,0'),
         n: n(t, 'count', 99)
@@ -90,7 +90,7 @@ function createNest() {
   var r,
     s = { x: null, y: null, max: 2e4 }
   ;(i.style.cssText =
-    'position:fixed;top:0;left:0;z-index:' + a.z + ';opacity:' + a.o),
+    'position:fixed;top:0;left:0;pointer-events:none;z-index:' + a.z + ';opacity:' + a.o),
     (r = 'body'), e.appendChild(i),
     t(),
     (window.onresize = t),
