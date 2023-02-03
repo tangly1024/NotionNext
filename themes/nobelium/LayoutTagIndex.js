@@ -2,12 +2,12 @@ import Link from 'next/link'
 import LayoutBase from './LayoutBase'
 
 export const LayoutTagIndex = (props) => {
-  const { tags } = props
+  const { tagOptions } = props
   return (
       <LayoutBase {...props}>
             <div>
                 <div id='tags-list' className='duration-200 flex flex-wrap'>
-                    {tags.map(tag => {
+                    {tagOptions.map(tag => {
                       return (
                           <div key={tag.name} className='p-2'>
                                 <Link
@@ -21,9 +21,9 @@ export const LayoutTagIndex = (props) => {
 
                                 </Link>
                             </div>
-                      );
+                      )
                     })}
                 </div>
             </div>   </LayoutBase>
-  );
+  )
 }
