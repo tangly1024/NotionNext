@@ -17,7 +17,7 @@ const BLOG = {
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: 'mail@66619.eu.org', // 邮箱
   CONTACT_WEIBO: 'https://weibo.com/u/7458711630', // 你的微博个人主页
-  CONTACT_TWITTER: 'https://twitter.com/619Ethereal', // 你的twitter个人主页
+  CONTACT_TWITTER: 'https://twitter.com/ethereal619', // 你的twitter个人主页
   CONTACT_GITHUB: 'https://github.com/lifeafter619', // 你的github个人主页
   CONTACT_TELEGRAM: 'https://t.me/ethereal619', // 你的telegram 地址 例如 https://t.me/tangly_1024
   CONTACT_LINKEDIN: '', // 你的linkedIn 首页
@@ -75,7 +75,7 @@ const BLOG = {
   SAKURA: process.env.NEXT_PUBLIC_SAKURA || false, // 开关
 
   // 漂浮线段特效
-  NEST: process.env.NEXT_PUBLIC_NEST || false, // 开关
+  NEST: process.env.NEXT_PUBLIC_NEST || true, // 开关
 
   // 动态彩带特效
   FLUTTERINGRIBBON: process.env.NEXT_PUBLIC_FLUTTERINGRIBBON || false, // 开关
@@ -83,7 +83,7 @@ const BLOG = {
   RIBBON: process.env.NEXT_PUBLIC_RIBBON || false, // 开关
 
   // 星空雨特效 黑夜模式才会生效
-  STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || true, // 开关
+  STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
   // 悬浮挂件
   WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
