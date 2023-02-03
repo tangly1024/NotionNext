@@ -7,7 +7,7 @@ const ExampleRecentComments = dynamic(() => import('./ExampleRecentComments'))
 
 export const SideBar = (props) => {
   const { locale } = useGlobal()
-  const { latestPosts, categories } = props
+  const { latestPosts, categoryOptions } = props
   return (
       <div className="w-full md:w-64 sticky top-8">
 
@@ -16,16 +16,16 @@ export const SideBar = (props) => {
 
                 <div className="p-4">
                     <ul className="list-reset leading-normal">
-                        {categories?.map(category => {
+                        {categoryOptions?.map(category => {
                           return (
                               <Link
                                   key={category.name}
                                   href={`/category/${category.name}`}
                                   passHref
                                   legacyBehavior>
-                                    <li>  <a href="#" className="text-gray-darkest text-sm">{category.name}({category.count})</a></li>
+                                    <li>  <a href={`/category/${category.name}`} className="text-gray-darkest text-sm">{category.name}({category.count})</a></li>
                                 </Link>
-                          );
+                          )
                         })}
                     </ul>
                 </div>
@@ -40,9 +40,9 @@ export const SideBar = (props) => {
                         {latestPosts?.map(p => {
                           return (
                               <Link key={p.id} href={`/${p.slug}`} passHref legacyBehavior>
-                                    <li>  <a href="#" className="text-gray-darkest text-sm">{p.title}</a></li>
+                                    <li>  <a href={`/${p.slug}`} className="text-gray-darkest text-sm">{p.title}</a></li>
                                 </Link>
-                          );
+                          )
                         })}
                     </ul>
                 </div>
@@ -61,5 +61,5 @@ export const SideBar = (props) => {
             </aside>
 
         </div>
-  );
+  )
 }

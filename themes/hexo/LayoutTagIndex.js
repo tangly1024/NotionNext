@@ -4,7 +4,7 @@ import TagItemMini from './components/TagItemMini'
 import LayoutBase from './LayoutBase'
 
 export const LayoutTagIndex = props => {
-  const { tags } = props
+  const { tagOptions } = props
   const { locale } = useGlobal()
   return (
     <LayoutBase {...props}>
@@ -14,7 +14,7 @@ export const LayoutTagIndex = props => {
           {locale.COMMON.TAGS}:
         </div>
         <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
-          {tags.map(tag => {
+          {tagOptions.map(tag => {
             return (
               <div key={tag.name} className="p-2">
                 <TagItemMini key={tag.name} tag={tag} />

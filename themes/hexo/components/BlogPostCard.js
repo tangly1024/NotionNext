@@ -7,7 +7,7 @@ import NotionPage from '@/components/NotionPage'
 
 const BlogPostCard = ({ post, showSummary, index }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
-  const showPageCover = CONFIG_HEXO.POST_LIST_COVER
+  const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover
   return (
     <div
         key={post.id}

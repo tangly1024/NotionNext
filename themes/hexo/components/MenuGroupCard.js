@@ -4,11 +4,11 @@ import { useGlobal } from '@/lib/global'
 import CONFIG_HEXO from '../config_hexo'
 
 const MenuGroupCard = (props) => {
-  const { postCount, categories, tags } = props
+  const { postCount, categoryOptions, tagOptions } = props
   const { locale } = useGlobal()
   const archiveSlot = <div className='text-center'>{postCount}</div>
-  const categorySlot = <div className='text-center'>{categories?.length}</div>
-  const tagSlot = <div className='text-center'>{tags?.length}</div>
+  const categorySlot = <div className='text-center'>{categoryOptions?.length}</div>
+  const tagSlot = <div className='text-center'>{tagOptions?.length}</div>
 
   const links = [
     { name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG_HEXO.MENU_ARCHIVE },
@@ -34,12 +34,12 @@ const MenuGroupCard = (props) => {
                 </div>
 
               </Link>
-            );
+            )
           } else {
             return null
           }
         })}
       </nav>
-  );
+  )
 }
 export default MenuGroupCard

@@ -58,10 +58,10 @@ export async function getStaticProps({ params: { category } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categories } = await getGlobalNotionData({ from })
+  const { categoryOptions } = await getGlobalNotionData({ from })
   return {
-    paths: Object.keys(categories).map(category => ({
-      params: { category: categories[category]?.name }
+    paths: Object.keys(categoryOptions).map(category => ({
+      params: { category: categoryOptions[category]?.name }
     })),
     fallback: true
   }
