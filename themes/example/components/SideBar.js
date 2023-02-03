@@ -23,7 +23,7 @@ export const SideBar = (props) => {
                                   href={`/category/${category.name}`}
                                   passHref
                                   legacyBehavior>
-                                    <li>  <a href="#" className="text-gray-darkest text-sm">{category.name}({category.count})</a></li>
+                                    <li>  <a href={`/category/${category.name}`} className="text-gray-darkest text-sm">{category.name}({category.count})</a></li>
                                 </Link>
                           )
                         })}
@@ -40,7 +40,7 @@ export const SideBar = (props) => {
                         {latestPosts?.map(p => {
                           return (
                               <Link key={p.id} href={`/${p.slug}`} passHref legacyBehavior>
-                                    <li>  <a href="#" className="text-gray-darkest text-sm">{p.title}</a></li>
+                                    <li>  <a href={`/${p.slug}`} className="text-gray-darkest text-sm">{p.title}</a></li>
                                 </Link>
                           )
                         })}
