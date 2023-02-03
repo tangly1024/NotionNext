@@ -16,7 +16,7 @@ const LayoutBase = props => {
   const fullWidth = post?.fullWidth ?? false
 
   return (
-        <div className='nobelium dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
+        <div className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
             <CommonHead meta={meta} />
 
             {/* 顶部导航栏 */}
