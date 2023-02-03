@@ -11,7 +11,7 @@ export const Footer = (props) => {
     return currentYear
   })()
 
-  return <footer className="relative w-full bg-white px-6 border-t dark:border-hexo-black-gray dark:bg-hexo-black-gray ">
+  return <footer className="z-10 relative w-full bg-white px-6 border-t dark:border-hexo-black-gray dark:bg-hexo-black-gray ">
         <DarkModeButton className='text-center pt-4'/>
 
         <div className="container mx-auto max-w-4xl py-6 md:flex flex-wrap md:flex-no-wrap md:justify-between items-center text-sm">
