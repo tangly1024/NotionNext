@@ -4,7 +4,7 @@ import Card from './components/Card'
 import LayoutBase from './LayoutBase'
 
 export const LayoutCategoryIndex = props => {
-  const { categories } = props
+  const { categoryOptions } = props
   const { locale } = useGlobal()
   return (
     <LayoutBase {...props}>
@@ -14,7 +14,7 @@ export const LayoutCategoryIndex = props => {
           {locale.COMMON.CATEGORY}:
         </div>
         <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-          {categories.map(category => {
+          {categoryOptions.map(category => {
             return (
               <Link
                 key={category.name}

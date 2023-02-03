@@ -3,7 +3,7 @@ import LayoutBase from './LayoutBase'
 import Link from 'next/link'
 
 export const LayoutCategoryIndex = (props) => {
-  const { allPosts, categories } = props
+  const { allPosts, categoryOptions } = props
   const { locale } = useGlobal()
   return (
     <LayoutBase totalPosts={allPosts} {...props}>
@@ -12,7 +12,7 @@ export const LayoutCategoryIndex = (props) => {
           <i className='mr-4 fas faTh' />{locale.COMMON.CATEGORY}:
         </div>
         <div id='category-list' className='duration-200 flex flex-wrap'>
-          {categories.map(category => {
+          {categoryOptions.map(category => {
             return (
               <Link
                 key={category.name}
@@ -24,10 +24,10 @@ export const LayoutCategoryIndex = (props) => {
                   <i className='mr-4 fas fa-folder' />{category.name}({category.count})
                 </div>
               </Link>
-            );
+            )
           })}
         </div>
       </div>
     </LayoutBase>
-  );
+  )
 }
