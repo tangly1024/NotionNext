@@ -14,7 +14,7 @@ import { getListByPage } from '@/lib/utils'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MATERY.POST_LIST_SUMMARY }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MATERY.POST_LIST_SUMMARY, siteInfo }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
   const [page, updatePage] = React.useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
@@ -58,7 +58,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MA
       {/* 文章列表 */}
       <div className='flex flex-wrap space-y-1 lg:space-y-4 px-2'>
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post} showSummary={showSummary}/>
+          <BlogPostCard key={post.id} post={post} showSummary={showSummary} siteInfo={siteInfo}/>
         ))}
       </div>
 

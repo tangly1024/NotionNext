@@ -4,8 +4,14 @@ import React from 'react'
 import CONFIG_FUKA from '../config_fuka'
 import Card from './Card'
 
-const BlogCard = ({ post, showSummary }) => {
+const BlogCard = ({ post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
+  // matery 主题默认强制显示图片
+  if (post && !post.page_cover) {
+    post.page_cover = siteInfo?.pageCover
+  }
+  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.page_cover
+
   return (
     <Card className="w-full lg:max-w-sm p-2 h-full overflow-auto">
       <div
@@ -30,14 +36,14 @@ const BlogCard = ({ post, showSummary }) => {
           )}
         </div>
 
-        {CONFIG_FUKA.POST_LIST_COVER && post?.page_cover && (
+        {showPageCover && (
           <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
             <div className="h-40 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={post?.page_cover}
                 alt={post.title}
-                className="hover:scale-125 transform duration-500"
+                className="w-full hover:scale-125 transform duration-500"
               ></img>
               {/* <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
             </div>
@@ -45,7 +51,7 @@ const BlogCard = ({ post, showSummary }) => {
         )}
       </div>
     </Card>
-  );
+  )
 }
 
 export default BlogCard
