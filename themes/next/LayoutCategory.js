@@ -6,10 +6,10 @@ import BlogPostListPage from './components/BlogPostListPage'
 import BLOG from '@/blog.config'
 
 export const LayoutCategory = (props) => {
-  const { category, categories } = props
+  const { category, categoryOptions } = props
   return <LayoutBase currentCategory={category} {...props}>
     <StickyBar>
-      <CategoryList currentCategory={category} categories={categories} />
+      <CategoryList currentCategory={category} categoryOptions={categoryOptions} />
     </StickyBar>
     <div className='md:mt-8'>
       {BLOG.POST_LIST_STYLE !== 'page'
