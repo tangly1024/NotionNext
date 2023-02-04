@@ -1,5 +1,8 @@
 import CommonHead from '@/components/CommonHead'
-import React from 'react'
+import { React, useEffect, useState } from 'react'
+import smoothscroll from 'smoothscroll-polyfill'
+import JumpToTopButton from './components/JumpToTopButton'
+import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import RevolverMaps from './components/RevolverMaps'
@@ -20,9 +23,30 @@ import BLOG from '@/blog.config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo } = props
+  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo, floatSlot } = props
+  const [show, switchShow] = useState(false)
   const { locale } = useGlobal()
   const router = useRouter()
+
+  const scrollListener = () => {
+    const targetRef = document.getElementById('wrapper')
+    const clientHeight = targetRef?.clientHeight
+    const scrollY = window.pageYOffset
+    const fullHeight = clientHeight - window.outerHeight
+    let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
+    if (per > 100) per = 100
+    const shouldShow = scrollY > 100 && per > 0
+
+    if (shouldShow !== show) {
+      switchShow(shouldShow)
+    }
+    // changePercent(per)
+  }
+  useEffect(() => {
+    smoothscroll.polyfill()
+    document.addEventListener('scroll', scrollListener)
+    return () => document.removeEventListener('scroll', scrollListener)
+  }, [show])
 
   return (
     <div className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
@@ -55,6 +79,20 @@ const LayoutBase = props => {
          </div>
         </div>
       </main>
+
+      {/* 右下角悬浮 */}
+      <div className="bottom-12 right-1 fixed justify-end z-20  text-white bg-red-400 dark:bg-hexo-black-gray rounded-sm">
+        <div
+          className={
+            (show ? 'animate__animated ' : 'hidden') +
+            ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '
+          }
+        >
+          <FloatDarkModeButton />
+          {floatSlot}
+          <JumpToTopButton />
+        </div>
+      </div>
 
       <div className='fixed right-0 bottom-0 hidden md:block lg:mr-6 z-20'>
 

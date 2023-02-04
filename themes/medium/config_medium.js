@@ -16,6 +16,10 @@ const CONFIG_MEDIUM = {
 
   // Widget
   WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
-  WIDGET_TO_TOP: true // 跳回顶部
+  WIDGET_TO_TOP: true, // 跳回顶部
+
+  WIDGET_TO_COMMENT: true, // 跳到评论区
+  WIDGET_DARK_MODE: true, // 夜间模式
+  WIDGET_TOC: true // 移动端悬浮目录
 }
 export default CONFIG_MEDIUM
