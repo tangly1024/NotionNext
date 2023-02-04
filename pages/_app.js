@@ -1,6 +1,7 @@
 import BLOG from 'blog.config'
 import React from 'react'
 import dynamic from 'next/dynamic'
+import { Analytics } from '@vercel/analytics/react'
 
 import 'animate.css'
 import '@/styles/globals.css'
@@ -78,6 +79,7 @@ const MyApp = ({ Component, pageProps }) => {
             {FONTS_URL?.map(fontUrl => <link href={`${fontUrl}`} key={fontUrl} rel="stylesheet" />)}
             {externalPlugins}
             <Component {...pageProps} />
+            <Analytics />
         </GlobalContextProvider>
   )
 }
