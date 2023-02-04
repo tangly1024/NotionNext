@@ -10,10 +10,6 @@ import JumpToTopButton from './JumpToTopButton'
  * @constructor
  */
 const Catalog = ({ toc }) => {
-  // 无目录就直接返回空
-  if (!toc || toc.length < 1) {
-    return <></>
-  }
   // 监听滚动事件
   React.useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
@@ -56,6 +52,11 @@ const Catalog = ({ toc }) => {
     const index = tocIds.indexOf(currentSectionId) || 0
     tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
   }, throttleMs))
+
+  // 无目录就直接返回空
+  if (!toc || toc.length < 1) {
+    return <></>
+  }
 
   return <div className='px-3'>
     <div className='w-full mt-2 mb-4'>
