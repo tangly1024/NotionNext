@@ -68,7 +68,7 @@ const locale = {
   oldest: '按倒序',
   latest: '按正序',
   hottest: '按热度',
-  reactionTitle: '你认为这篇文章怎么样？',
+  reactionTitle: '你认为这篇文章怎么样？'
 }
   React.useEffect(() => {
     if (!waline) {
