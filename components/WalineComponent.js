@@ -19,6 +19,9 @@ const WalineComponent = (props) => {
       waline.update(props)
     }
   }
+    const locale = {
+    placeholder: '欢迎评论~(填写邮箱可在被回复时收到邮件提醒)'
+  }
   React.useEffect(() => {
     if (!waline) {
       waline = init({
