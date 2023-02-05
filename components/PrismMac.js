@@ -1,6 +1,7 @@
 import React from 'react'
 import Prism from 'prismjs'
 import 'prismjs/plugins/toolbar/prism-toolbar'
+import 'prismjs/plugins/toolbar/prism-toolbar.min.css'
 import 'prismjs/plugins/show-language/prism-show-language'
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
@@ -70,19 +71,19 @@ const renderMermaid = async() => {
 
 function renderPrismMac() {
   const container = document?.getElementById('container-inner')
-  const codeToolBars = container?.getElementsByClassName('code-toolbar')
 
   // Add line numbers
-  const codeBlocks = container?.getElementsByTagName('pre')
-  if (codeBlocks) {
-    Array.from(codeBlocks).forEach(item => {
-      if (!item.classList.contains('line-numbers')) {
-        item.classList.add('line-numbers')
-        item.style.whiteSpace = 'pre-wrap'
-      }
-    })
+  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+    const codeBlocks = container?.getElementsByTagName('pre')
+    if (codeBlocks) {
+      Array.from(codeBlocks).forEach(item => {
+        if (!item.classList.contains('line-numbers')) {
+          item.classList.add('line-numbers')
+          item.style.whiteSpace = 'pre-wrap'
+        }
+      })
+    }
   }
-
   // 重新渲染之前检查所有的多余text
 
   try {
@@ -93,6 +94,7 @@ function renderPrismMac() {
     console.log('代码渲染', err)
   }
 
+  const codeToolBars = container?.getElementsByClassName('code-toolbar')
   // Add pre-mac element for Mac Style UI
   if (codeToolBars) {
     Array.from(codeToolBars).forEach(item => {

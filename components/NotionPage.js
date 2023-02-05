@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
 
+import 'katex/dist/katex.min.css'
+
 const Equation = dynamic(() =>
   import('react-notion-x/build/third-party/equation').then(async (m) => {
     // 化学方程式

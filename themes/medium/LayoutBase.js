@@ -11,6 +11,7 @@ import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
+import BLOG from '@/blog.config'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -19,18 +20,18 @@ import Live2D from '@/components/Live2D'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotRight, slotTop } = props
+  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
 
   return (
-    <div className='bg-white dark:bg-black w-full h-full min-h-screen justify-center dark:text-gray-300'>
+    <div className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
       <CommonHead meta={meta} />
-      <main id='wrapper' className='flex justify-between w-full h-full mx-auto'>
+      <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
         {/* 桌面端左侧菜单 */}
         {/* <LeftMenuBar/> */}
 
-        <div id='container-inner' className='w-full'>
+        <div id='container-inner' className='w-full relative z-10'>
           {/* 移动端顶部菜单 */}
           <TopNavBar {...props}/>
           <div className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
@@ -40,7 +41,7 @@ const LayoutBase = props => {
         </div>
 
         {/* 桌面端右侧 */}
-        <div className='hidden xl:block border-l dark:border-transparent w-96'>
+        <div className='hidden xl:block border-l dark:border-transparent w-96 relative z-10'>
          <div className='py-14 px-6 sticky top-0'>
           <Tabs>
             {slotRight}
@@ -60,7 +61,7 @@ const LayoutBase = props => {
       </div>
 
       {/* 移动端底部 */}
-      <Footer />
+      <Footer title={siteInfo?.title}/>
       <BottomMenuBar className='block md:hidden' />
     </div>
   )
