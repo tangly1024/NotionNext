@@ -4,10 +4,10 @@
 
 html {
   --scrollbarBG: #ffffff00;
-  --thumbBG: #b8b8b8;
+  --thumbBG: #39C5BB;
 }
 body::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 body {
   scrollbar-width: thin;
@@ -132,7 +132,6 @@ nav {
   backdrop-filter: blur(10px);
 }
 
-
 .medium-zoom-overlay {
   background: none !important;
   /* background: rgba(0, 0, 0, 0.01) none repeat scroll 0% 0% !important; */
@@ -174,7 +173,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-
 /* waline评论插件夜间适配 */
 .wl-panel{
   @apply dark:bg-black dark:border-gray-800
@@ -205,4 +203,47 @@ nav {
 
 .nobelium .notion-code{
     @apply max-w-2xl;
+/* 背景颜色渐变色 */
+}
+.custom-background{
+	
+background: linear-gradient(91deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rgba(239,78,123,.1) 30%,rgba(161,102,171,.1) 44%,rgba(80,115,184,.1) 58%,rgba(16,152,173,.1) 72%,rgba(7,179,155,.1) 86%,rgba(109,186,130,.1));
+}
+.dark .custom-background{
+  background: none;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(73, 177, 245, 0.2);
+  border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--theme-color);
+  background-image: -webkit-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.4) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.4) 75%,
+    transparent 75%,
+    transparent
+  );
+  border-radius: 2em;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-moz-selection {
+  color: #fff;
+  background-color: var(--theme-color)!important;
 }
