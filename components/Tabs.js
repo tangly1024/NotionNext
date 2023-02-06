@@ -53,7 +53,7 @@ const Tabs = ({ className, children }) => {
                     data-aos="fade-up"
                     data-aos-duration="600"
                     data-aos-easing="ease-in-out"
-                    data-aos-once="false"
+                    data-aos-once="true"
                     data-aos-anchor-placement="top-bottom">
                     {currentTab === index && item}
                 </section>
