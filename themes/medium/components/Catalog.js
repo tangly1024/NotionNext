@@ -28,6 +28,7 @@ const Catalog = ({ toc }) => {
 
   const throttleMs = 100
   const actionSectionScrollSpy = React.useCallback(throttle(() => {
+    console.log('滚动')
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
@@ -51,6 +52,7 @@ const Catalog = ({ toc }) => {
     }
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
+    console.log(tRef?.current)
     tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
   }, throttleMs))
 
