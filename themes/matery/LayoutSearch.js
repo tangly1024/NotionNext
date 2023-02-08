@@ -12,7 +12,7 @@ import Card from './components/Card'
 import Link from 'next/link'
 
 export const LayoutSearch = props => {
-  const { keyword, tags, categories } = props
+  const { keyword, tagOptions, categoryOptions } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const currentSearch = keyword || router?.query?.s
@@ -49,7 +49,7 @@ export const LayoutSearch = props => {
                           {locale.COMMON.CATEGORY}:
                       </div>
                       <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-                          {categories?.map(category => {
+                          {categoryOptions?.map(category => {
                             return (
                                 <Link
                                     key={category.name}
@@ -76,7 +76,7 @@ export const LayoutSearch = props => {
                           {locale.COMMON.TAGS}:
                       </div>
                       <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
-                          {tags?.map(tag => {
+                          {tagOptions?.map(tag => {
                             return (
                                   <div key={tag.name} className="p-2">
                                       <TagItemMini key={tag.name} tag={tag} />
