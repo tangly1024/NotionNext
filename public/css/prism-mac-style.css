@@ -5,11 +5,15 @@
   position: relative;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-  @apply w-full rounded-lg 
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  /* @apply w-full rounded-lg  */
 }
 
 .toolbar-item{
-  @apply whitespace-nowrap
+  /* @apply whitespace-nowrap */
+  white-space: nowrap;
 }
 
 .toolbar-item > button {
@@ -18,10 +22,18 @@
 
 pre[class*='language-'] {
   @apply mt-0 mb-2 pt-6 !important;
+  margin-top: 0rem !important;
+  margin-bottom: 0rem !important;
+  padding-top: 1.5rem !important;
+
 }
 
 .pre-mac {
-  @apply left-5 top-2 z-10 absolute
+  /* @apply left-5 top-2 z-10 absolute */
+  position: absolute;
+  left: 1.25rem;
+  top: 0.5rem;
+  z-index: 10;
 }
 
 .pre-mac > span {
@@ -29,7 +41,8 @@ pre[class*='language-'] {
   height: 10px;
   border-radius: 50%;
   margin-right: 5px;
-  @apply float-left
+  float: left;
+  /* @apply float-left */
 }
 
 .pre-mac > span:nth-child(1) {

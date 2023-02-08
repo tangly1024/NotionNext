@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
-import JumpToTopButton from './JumpToTopButton'
+
 /**
  * 目录导航组件
  * @param toc
@@ -28,6 +28,7 @@ const Catalog = ({ toc }) => {
 
   const throttleMs = 100
   const actionSectionScrollSpy = React.useCallback(throttle(() => {
+    console.log('滚动')
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
@@ -85,7 +86,6 @@ const Catalog = ({ toc }) => {
         })}
       </nav>
     </div>
-    <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' />
   </div>
 }
 

@@ -18,6 +18,9 @@ const ExternalScript = () => {
         loadExternalResource(url, 'css')
       }
     }
+    // 静态导入本地自定义样式
+    loadExternalResource('/css/custom.css', 'css')
+    loadExternalResource('/js/custom.js', 'js')
   }, [])
   return null
 }

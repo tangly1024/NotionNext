@@ -10,7 +10,7 @@ import { Code } from 'react-notion-x/build/third-party/code'
 import 'katex/dist/katex.min.css'
 
 const Equation = dynamic(() =>
-  import('react-notion-x/build/third-party/equation').then(async (m) => {
+  import('@/components/Equation').then(async (m) => {
     // 化学方程式
     await import('@/lib/mhchem')
     return m.Equation
@@ -26,7 +26,7 @@ const Pdf = dynamic(
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
-  ssr: false
+  ssr: true
 })
 
 const Collection = dynamic(() =>

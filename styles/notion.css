@@ -1999,5 +1999,5 @@ code.language-mermaid {
 }
 
 .code-toolbar{
-  @apply w-full;
+  @apply w-full shadow-md;
 }

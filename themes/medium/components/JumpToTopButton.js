@@ -11,10 +11,10 @@ import CONFIG_MEDIUM from '../config_medium'
  * @constructor
  */
 const JumpToTopButton = ({ showPercent = false, percent, className }) => {
+  const { locale } = useGlobal()
   if (!CONFIG_MEDIUM.WIDGET_TO_TOP) {
     return <></>
   }
-  const { locale } = useGlobal()
   return (<div className={'flex space-x-1 items-center cursor-pointer w-full justify-center ' + className } onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
         <div title={locale.POST.TOP} >
           <i className='fas fa-arrow-up'/>
