@@ -1,5 +1,5 @@
 import CommonHead from '@/components/CommonHead'
-import React from 'react'
+import { useState, createContext, useContext } from 'react'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import RevolverMaps from './components/RevolverMaps'
@@ -12,6 +12,7 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
+const ThemeGlobalMedium = createContext()
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -23,9 +24,10 @@ const LayoutBase = props => {
   const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
+  const [tocVisible, changeTocVisible] = useState(false)
 
   return (
-    <div className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+    <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }} className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
       <CommonHead meta={meta} />
       <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
         {/* 桌面端左侧菜单 */}
@@ -62,9 +64,10 @@ const LayoutBase = props => {
 
       {/* 移动端底部 */}
       <Footer title={siteInfo?.title}/>
-      <BottomMenuBar className='block md:hidden' />
-    </div>
+      <BottomMenuBar {...props} className='block md:hidden' />
+    </ThemeGlobalMedium.Provider>
   )
 }
 
 export default LayoutBase
+export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
