@@ -26,7 +26,7 @@ const Pdf = dynamic(
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
-  ssr: false
+  ssr: true
 })
 
 const Collection = dynamic(() =>

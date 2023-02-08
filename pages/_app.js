@@ -9,9 +9,6 @@ import '@/styles/globals.css'
 import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
 
-// 代码样式  更多样式参考： https://github.com/PrismJS/prism-themes
-import 'prism-themes/themes/prism-material-light.css'
-
 // local webfont @see https://fontsource.org/
 import '@fontsource/noto-sans-sc'
 import '@fontsource/noto-serif-sc'
