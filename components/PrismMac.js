@@ -10,12 +10,20 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import 'prismjs/plugins/autoloader/prism-autoloader'
 // mermaid图
 import BLOG from '@/blog.config'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 /**
  * @author https://github.com/txs/
  * @returns
  */
 const PrismMac = () => {
+  if (isBrowser()) {
+    loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
+    if (BLOG.CODE_MAC_BAR) {
+      loadExternalResource('/css/prism-mac-style.css', 'css')
+    }
+  }
+
   React.useEffect(() => {
     renderPrismMac()
     renderMermaid()
