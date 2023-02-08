@@ -36,8 +36,6 @@ const Search = props => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
 
-  console.log('search', props)
-
   return (
     <ThemeComponents.LayoutSearch
       {...props}
