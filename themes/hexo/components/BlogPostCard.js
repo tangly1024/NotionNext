@@ -92,7 +92,7 @@ const BlogPostCard = ({ post, showSummary, index, siteInfo }) => {
           </div>
         </div>
 
-        {showPageCover && !showPreview && post?.page_cover && !post.results && (
+        {showPageCover && !showPreview && post?.page_cover && (
            <div className="flex relative duration-200 cursor-pointer transform overflow-hidden md:w-5/12 ">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
