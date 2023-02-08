@@ -11,9 +11,6 @@ import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import AOS from 'aos'
-import 'aos/dist/aos.css' // You can also use <link> for styles
-import { isBrowser } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 
 const FacebookPage = dynamic(
@@ -60,10 +57,6 @@ const LayoutBase = props => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
-
-  if (isBrowser()) {
-    AOS.init()
-  }
 
   return (
     <div className="bg-hexo-background-gray dark:bg-black">
