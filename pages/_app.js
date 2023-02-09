@@ -9,15 +9,6 @@ import '@/styles/globals.css'
 import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
 
-// local webfont @see https://fontsource.org/
-import '@fontsource/noto-sans-sc'
-import '@fontsource/noto-serif-sc'
-
-// local fontawesome 6.2.1 @see https://www.npmjs.com/package/@fortawesome/fontawesome-free
-import '@fortawesome/fontawesome-free/css/all.min.css'
-
-// import '@/styles/prism-mac-style.css' // code 左上角显示mac的红黄绿图标
-
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
@@ -29,8 +20,9 @@ import { Sakura } from '@/components/Sakura'
 import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
 import ExternalScript from '@/components/ExternalScript'
-import AOS from 'aos'
 import { isBrowser } from '@/lib/utils'
+
+import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
@@ -63,23 +55,12 @@ const MyApp = ({ Component, pageProps }) => {
         <ExternalScript/>
     </>
 
-  // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；
-  const DEFAULT_FONTS_URL = [
-    // 'https://fonts.font.im/css2?family=Noto+Sans+SC&display=optional',
-    // 'https://fonts.font.im/css2?family=Noto+Serif+SC&display=optional'
-  ]
-
-  // 用户指定CUSTOM_FONT 则取CUSTOM_FONT_URL
-  const FONTS_URL = BLOG.CUSTOM_FONT ? BLOG.CUSTOM_FONT_URL : DEFAULT_FONTS_URL
-
   if (isBrowser()) {
     AOS.init()
   }
 
   return (
         <GlobalContextProvider>
-            {/* 渲染所有字体 */}
-            {FONTS_URL?.map(fontUrl => <link href={`${fontUrl}`} key={fontUrl} rel="stylesheet" />)}
             {externalPlugins}
             <Component {...pageProps} />
         </GlobalContextProvider>

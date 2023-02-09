@@ -1,5 +1,6 @@
 /**
  * @author https://github.com/txs
+ * 当配置文件 CODE_MAC_BAR 开启时，此样式会被动态引入，将开启代码组件左上角的mac图标
  **/
 .code-toolbar {
   position: relative;

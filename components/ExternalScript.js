@@ -19,8 +19,14 @@ const ExternalScript = () => {
       }
     }
     // 静态导入本地自定义样式
+    loadExternalResource('/css/all.min.css', 'css')
     loadExternalResource('/css/custom.css', 'css')
     loadExternalResource('/js/custom.js', 'js')
+
+    // 渲染所有字体
+    BLOG.FONT_URL?.forEach(e => {
+      loadExternalResource(e, 'css')
+    })
   }, [])
   return null
 }
