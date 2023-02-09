@@ -43,10 +43,10 @@ export const LayoutSlug = props => {
             {!lock && <div id='container'>
 
                 {/* title */}
-                <h1 className="text-3xl pt-12 font-sans dark:text-gray-300">{post?.title}</h1>
+                <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
 
                 {/* meta */}
-                <section className="py-2 items-center text-sm font-sans px-1">
+                <section className="py-2 items-center text-sm  px-1">
                     <div className='flex flex-wrap text-gray-500 py-1 dark:text-gray-600'>
                         <span className='whitespace-nowrap'> <i className='far fa-calendar mr-2' />{date}</span>
                         <span className='mx-1'>|</span>
