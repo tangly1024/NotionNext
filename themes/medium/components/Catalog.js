@@ -28,7 +28,6 @@ const Catalog = ({ toc }) => {
 
   const throttleMs = 100
   const actionSectionScrollSpy = React.useCallback(throttle(() => {
-    console.log('滚动')
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
