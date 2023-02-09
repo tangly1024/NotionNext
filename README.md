@@ -77,6 +77,8 @@
 
   <td align="center"><a href="https://github.com/expoli"><img src="https://avatars.githubusercontent.com/u/31023767" width="64px;"  alt="expoli"/><br/><sub><b>expoli</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=expoli" title="expoli" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/SuperHuangXu"><img src="https://avatars.githubusercontent.com/u/14816052" width="64px;"  alt="SuperHuangXu"/><br/><sub><b>bUBBLE</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=SuperHuangXu" title="SuperHuangXu" >🔧 🐛</a></td>
+
 </tr>
 </table>
 
