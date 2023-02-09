@@ -51,7 +51,7 @@ export const LayoutSlug = props => {
 
         {!lock && <div id="container" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
-          <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased" >
+          <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
             {/* Notion文章主体 */}
             <section id='notion-article' className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
               {post && <NotionPage post={post} />}

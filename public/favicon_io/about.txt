@@ -1,6 +1,0 @@
-This favicon was generated using the following font:
-
-- Font Title: ZCOOL QingKe HuangYou
-- Font Author: Copyright 2018 The ZCOOL QingKe HuangYou Project Authors (https://www.github.com/googlefonts/zcool-qingke-huangyou)
-- Font Source: http://fonts.gstatic.com/s/zcoolqingkehuangyou/v13/2Eb5L_R5IXJEWhD3AOhSvFC554MOOahI4mRIi_28c8bHWA.ttf
-- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))

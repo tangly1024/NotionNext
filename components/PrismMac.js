@@ -10,12 +10,20 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import 'prismjs/plugins/autoloader/prism-autoloader'
 // mermaid图
 import BLOG from '@/blog.config'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 /**
  * @author https://github.com/txs/
  * @returns
  */
 const PrismMac = () => {
+  if (isBrowser()) {
+    loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
+    if (BLOG.CODE_MAC_BAR) {
+      loadExternalResource('/css/prism-mac-style.css', 'css')
+    }
+  }
+
   React.useEffect(() => {
     renderPrismMac()
     renderMermaid()
@@ -73,16 +81,17 @@ function renderPrismMac() {
   const container = document?.getElementById('container-inner')
 
   // Add line numbers
-  const codeBlocks = container?.getElementsByTagName('pre')
-  if (codeBlocks) {
-    Array.from(codeBlocks).forEach(item => {
-      if (!item.classList.contains('line-numbers')) {
-        item.classList.add('line-numbers')
-        item.style.whiteSpace = 'pre-wrap'
-      }
-    })
+  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+    const codeBlocks = container?.getElementsByTagName('pre')
+    if (codeBlocks) {
+      Array.from(codeBlocks).forEach(item => {
+        if (!item.classList.contains('line-numbers')) {
+          item.classList.add('line-numbers')
+          item.style.whiteSpace = 'pre-wrap'
+        }
+      })
+    }
   }
-
   // 重新渲染之前检查所有的多余text
 
   try {

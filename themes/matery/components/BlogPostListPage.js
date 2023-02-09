@@ -11,7 +11,7 @@ import PaginationSimple from './PaginationSimple'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
+const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
   const showPagination = postCount >= BLOG.POSTS_PER_PAGE
   if (!posts || posts.length === 0 || page > totalPage) {
@@ -23,7 +23,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
         {/* 文章列表 */}
         <div className="px-4 pt-4 xl:columns-3 md:columns-2 pb-24" >
           {posts.map(post => (
-            <BlogPostCard key={post.id} post={post} />
+            <BlogPostCard key={post.id} post={post} siteInfo={siteInfo} />
           ))}
         </div>
         {showPagination && <PaginationSimple page={page} totalPage={totalPage} />}

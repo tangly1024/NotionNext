@@ -4,11 +4,11 @@ import TagItemMiddle from './components/TagItemMiddle'
 import LayoutBase from './LayoutBase'
 
 export const LayoutTagIndex = props => {
-  const { tags } = props
+  const { tagOptions } = props
   const { locale } = useGlobal()
   return (
         <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
-            <div className='inner-wrapper drop-shadow-xl'>
+            <div id='inner-wrapper' className='w-full drop-shadow-xl'>
 
                 <div className="-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
 
@@ -17,7 +17,7 @@ export const LayoutTagIndex = props => {
                     </div>
 
                     <div id="tags-list" className="duration-200 flex flex-wrap justify-center pb-12">
-                        {tags.map(tag => {
+                        {tagOptions.map(tag => {
                           return (
                                 <div key={tag.name} className="p-2">
                                     <TagItemMiddle key={tag.name} tag={tag} />

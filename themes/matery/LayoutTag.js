@@ -8,7 +8,7 @@ import { useGlobal } from '@/lib/global'
 import TagItemMiddle from './components/TagItemMiddle'
 
 export const LayoutTag = (props) => {
-  const { tags, tag } = props
+  const { tagOptions, tag } = props
 
   const { locale } = useGlobal()
 
@@ -23,7 +23,7 @@ export const LayoutTag = (props) => {
                 </div>
 
                 <div id="tags-list" className="duration-200 flex flex-wrap justify-center pb-12">
-                    {tags.map(e => {
+                    {tagOptions.map(e => {
                       const selected = tag === e.name
                       return (
                             <div key={e.id} className="p-2">

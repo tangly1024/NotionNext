@@ -13,7 +13,7 @@ import throttle from 'lodash.throttle'
  * @constructor
  */
 const BlogListScroll = props => {
-  const { posts = [] } = props
+  const { posts = [], siteInfo } = props
   const [colCount, changeCol] = React.useState(1)
   const { locale } = useGlobal()
 
@@ -73,15 +73,13 @@ const BlogListScroll = props => {
         <div style={{ columnCount: colCount }}>
           {postsToShow?.map(post => (
             <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
-              <BlogCard key={post.id} post={post} />
+              <BlogCard key={post.id} post={post} siteInfo={siteInfo} />
             </div>
           ))}
         </div>
 
-        <div
-              onClick={handleGetMore}
-              className="w-full my-4 py-4 text-center cursor-pointer "
-          >
+        <div className="w-full my-4 py-4 text-center cursor-pointer "
+              onClick={handleGetMore}>
               {' '}
               {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
           </div>

@@ -16,13 +16,13 @@ const LayoutBase = props => {
   const fullWidth = post?.fullWidth ?? false
 
   return (
-        <div className='nobelium dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
+        <div className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
             <CommonHead meta={meta} />
 
             {/* 顶部导航栏 */}
             <Nav {...props} />
 
-            <main className={`m-auto flex-grow w-full transition-all ${
+            <main className={`relative m-auto flex-grow w-full transition-all ${
                 !fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'
                 }`}>
 

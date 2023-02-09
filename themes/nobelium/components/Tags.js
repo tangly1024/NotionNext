@@ -1,14 +1,15 @@
 import Link from 'next/link'
 
-const Tags = (props) => {
-  const { tags, tag } = props
+const Tags = props => {
+  const { tagOptions, tag } = props
+  console.log(props)
   const currentTag = tag
-  if (!tags) return null
+  if (!tagOptions) return null
   return (
     <div className="tag-container">
       <ul className="flex max-w-full mt-4 overflow-x-auto">
-        {Object.keys(tags).map(key => {
-          const tag = tags[key]
+        {Object.keys(tagOptions).map(key => {
+          const tag = tagOptions[key]
           const selected = tag.name === currentTag
           return (
             <li
@@ -22,10 +23,10 @@ const Tags = (props) => {
               <Link
                 key={tag.id}
                 href={selected ? '/search' : `/tag/${encodeURIComponent(tag.name)}`}
-              >
-                <a className="px-4 py-2 block">
-                  {`${tag.name} (${tag.count})`}
-                </a>
+                className="px-4 py-2 block">
+
+                {`${tag.name} (${tag.count})`}
+
               </Link>
             </li>
           )

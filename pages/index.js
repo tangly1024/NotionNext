@@ -14,6 +14,7 @@ export async function getStaticProps() {
   const props = await getGlobalNotionData({ from })
   const { siteInfo } = props
   props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  delete props.allPages
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
     description: siteInfo?.description,
@@ -44,7 +45,7 @@ export async function getStaticProps() {
       meta,
       ...props
     },
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 
