@@ -7,6 +7,7 @@ import SearchInput from './components/SearchInput'
 import Mark from 'mark.js'
 import LayoutBase from './LayoutBase'
 import { isBrowser } from '@/lib/utils'
+import Tags from './components/Tags'
 
 export const LayoutSearch = props => {
   const { keyword } = props
@@ -48,6 +49,7 @@ export const LayoutSearch = props => {
             <SearchInput {...props} />
         </div>
 
+        <Tags {...props}/>
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
 
     </LayoutBase>

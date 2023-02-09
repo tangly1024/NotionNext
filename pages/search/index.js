@@ -19,7 +19,7 @@ const Search = props => {
       return searchContent.toLowerCase().includes(searchKey.toLowerCase())
     })
   } else {
-    filteredPosts = posts
+    filteredPosts = []
   }
 
   const { locale } = useGlobal()

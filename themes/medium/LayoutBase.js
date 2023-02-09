@@ -41,11 +41,23 @@ const LayoutBase = props => {
                         <div className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
                             {slotTop}
                             {children}
+                            <div
+                              data-aos="fade-up"
+                              data-aos-duration="300"
+                              data-aos-easing="ease-in-out"
+                              data-aos-once="false"
+                              data-aos-anchor-placement="top-center"
+                              className='fixed right-96 bottom-24 hidden lg:block z-20'>
+                              <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }}/>
+                            </div>
                         </div>
+
+                        {/* 底部 */}
+                        <Footer title={siteInfo?.title} />
                     </div>
 
                     {/* 桌面端右侧 */}
-                    <div className='hidden xl:block border-l dark:border-transparent w-96 relative z-10'>
+                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
                         <div className='py-14 px-6 sticky top-0'>
                             <Tabs>
                                 {slotRight}
@@ -60,12 +72,6 @@ const LayoutBase = props => {
                     </div>
                 </main>
 
-                <div className='fixed right-0 bottom-0 hidden md:block lg:mr-6 z-20'>
-
-                </div>
-
-                {/* 移动端底部 */}
-                <Footer title={siteInfo?.title} />
                 <BottomMenuBar {...props} className='block md:hidden' />
             </div>
         </ThemeGlobalMedium.Provider>

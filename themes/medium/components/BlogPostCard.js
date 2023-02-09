@@ -20,7 +20,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           href={`${BLOG.SUB_PATH}/${post.slug}`}
           passHref
           className={
-            'cursor-pointer font-bold font-sans hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
+            'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
           }>
 
           {post.title}
