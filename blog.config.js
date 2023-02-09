@@ -23,7 +23,7 @@ const BLOG = {
   CONTACT_LINKEDIN: '', // 你的linkedIn 首页
 
   // 网站字体
-  FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
+  FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
   FONT_URL: [// 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
     'https://fonts.googleapis.com/css?family=Bitter&display=swap',
     'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap',
@@ -48,8 +48,8 @@ const BLOG = {
   CUSTOM_FONT_SERIF: ['LXGW WenKai'], // 自定义衬线字体
 
   // 自定义外部脚本，外部样式
-  CUSTOM_EXTERNAL_JS: ['https://jsd.cdn.zzko.cn/gh/88lin/PicX@master/snow.js'], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
-  CUSTOM_EXTERNAL_CSS: ['https://jsd.cdn.zzko.cn/gh/88lin/PicX@master/snow.css'], // e.g. ['http://xx.com/style.css','http://xx.com/style.css']
+  CUSTOM_EXTERNAL_JS: ['https://jsd.cdn.zzko.cn/gh/88lin/PicX@master/light.js'], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
+  CUSTOM_EXTERNAL_CSS: ['https://jsd.cdn.zzko.cn/gh/88lin/PicX@master/light.css'], // e.g. ['http://xx.com/style.css','http://xx.com/style.css']
 
   // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
   LAYOUT_SIDEBAR_REVERSE: false,
