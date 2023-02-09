@@ -29,10 +29,10 @@ const BlogPostCard = ({ post, showSummary }) => {
                         'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
                     }>
                     <div>
-                        <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
+                        {CONFIG_MEDIUM.POST_LIST_COVER && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={post.page_cover} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
-                        </div>
+                        </div>}
                         {post.title}
                     </div>
 
