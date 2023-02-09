@@ -7,6 +7,7 @@ import '@/styles/globals.css'
 import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
 
+
 // 代码样式  更多样式参考： https://github.com/PrismJS/prism-themes
 import 'prism-themes/themes/prism-holi-theme.css'
 // local webfont @see https://fontsource.org/
@@ -26,8 +27,9 @@ import { Sakura } from '@/components/Sakura'
 import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
 import ExternalScript from '@/components/ExternalScript'
-import AOS from 'aos'
 import { isBrowser } from '@/lib/utils'
+
+import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
@@ -58,6 +60,7 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.RIBBON) && <Ribbon />}
         <ExternalScript/>
     </>
+
   // 默认Webfont:  请在font.js文件中检查font-family 新版改从npm本地导入；
   const DEFAULT_FONTS_URL = [
     // 'https://fonts.font.im/css2?family=Noto+Sans+SC&display=optional',
@@ -71,8 +74,6 @@ const MyApp = ({ Component, pageProps }) => {
   }
   return (
         <GlobalContextProvider>
-            {/* 渲染所有字体 */}
-            {FONTS_URL?.map(fontUrl => <link href={`${fontUrl}`} key={fontUrl} rel="stylesheet" />)}
             {externalPlugins}
             <Component {...pageProps} />
         </GlobalContextProvider>

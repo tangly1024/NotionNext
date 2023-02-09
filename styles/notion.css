@@ -1,5 +1,5 @@
 :root {
-  --fg-color: rgb(55, 53, 47);
+  --fg-color: rgb(0, 0, 0); 
   --fg-color-0: rgba(55, 53, 47, 0.09);
   --fg-color-1: rgba(55, 53, 47, 0.16);
   --fg-color-2: rgba(55, 53, 47, 0.4);
@@ -2000,4 +2000,12 @@ code.language-mermaid {
 
 .code-toolbar{
   @apply w-full shadow-md;
+}
+
+.mermaid > svg {
+  margin: auto;
+}
+
+em .katex-display {
+  margin: 0 0 !important;
 }

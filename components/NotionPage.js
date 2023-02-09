@@ -80,7 +80,7 @@ const NotionPage = ({ post }) => {
     return <>{post?.summary || ''}</>
   }
 
-  return <div id='container' className='max-w-5xl overflow-x-visible mx-auto'>
+  return <div id='container' className='max-w-5xl font-medium mx-auto'>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}

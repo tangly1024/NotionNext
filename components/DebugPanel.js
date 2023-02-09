@@ -58,7 +58,7 @@ export function DebugPanel() {
             <div>
                 <div
                     style={{ writingMode: 'vertical-lr' }}
-                    className={`bg-black text-white shadow-2xl p-2.5 rounded-l-xl cursor-pointer ${show ? 'right-96' : 'right-0'} fixed bottom-56 duration-200 z-50`}
+                    className={`bg-black text-xs text-white shadow-2xl p-1.5 rounded-l-xl cursor-pointer ${show ? 'right-96' : 'right-0'} fixed bottom-56 duration-200 z-50`}
                     onClick={toggleShow}
                 >
                     {show
@@ -71,15 +71,21 @@ export function DebugPanel() {
             <div
                 className={` ${show ? 'shadow-card w-96 right-0 ' : '-right-96 w-0'} overflow-y-scroll h-full p-5 bg-white fixed bottom-0 z-50 duration-200`}
             >
-                <div className="flex space-x-1 my-5">
-                    <Select
-                        label={locale.COMMON.THEME_SWITCH}
-                        value={debugTheme}
-                        options={themeOptions}
-                        onChange={handleUpdateDebugTheme}
-                    />
-                    <div className="p-2 cursor-pointer" onClick={handleChangeDebugTheme}>
-                        <i className="fas fa-sync" />
+                <div className="flex justify-between space-x-1 my-5">
+                    <div className='flex'>
+                        <Select
+                            label={locale.COMMON.THEME_SWITCH}
+                            value={debugTheme}
+                            options={themeOptions}
+                            onChange={handleUpdateDebugTheme}
+                        />
+                        <div className="p-2 cursor-pointer" onClick={handleChangeDebugTheme}>
+                            <i className="fas fa-sync" />
+                        </div>
+                    </div>
+
+                    <div className='p-2'>
+                        <i className='fas fa-times' onClick={toggleShow}/>
                     </div>
                 </div>
 
