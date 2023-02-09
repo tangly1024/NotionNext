@@ -2001,3 +2001,7 @@ code.language-mermaid {
 .code-toolbar{
   @apply w-full shadow-md;
 }
+
+.mermaid > {
+  margin: auto;
+}
