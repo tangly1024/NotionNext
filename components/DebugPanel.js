@@ -55,7 +55,7 @@ export function DebugPanel () {
       <div
         className={` ${
           show ? 'shadow-card' : '-right-96'
-        } w-96 overflow-y-scroll font-sans h-full p-5 bg-white fixed right-0 bottom-0 z-50 duration-200`}
+        } w-96 overflow-y-scroll h-full p-5 bg-white fixed right-0 bottom-0 z-50 duration-200`}
       >
         <div className="flex space-x-1 my-12">
           <Select

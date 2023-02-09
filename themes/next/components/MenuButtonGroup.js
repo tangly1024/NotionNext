@@ -42,12 +42,12 @@ const MenuButtonGroup = (props) => {
                 {link.slot}
 
               </Link>
-            );
+            )
           } else {
             return <></>
           }
         })}
       </nav>
-  );
+  )
 }
 export default MenuButtonGroup
