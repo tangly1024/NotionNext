@@ -3,7 +3,6 @@ import { useGlobal } from '@/lib/global'
 import React from 'react'
 import Catalog from './components/Catalog'
 import { ArticleLock } from './components/ArticleLock'
-import JumpToTopButton from './components/JumpToTopButton'
 import formatDate from '@/lib/formatDate'
 import BLOG from '@/blog.config'
 import Link from 'next/link'
@@ -31,7 +30,7 @@ export const LayoutSlug = props => {
   const slotRight = post?.toc && post?.toc?.length > 3 && (
         <div key={locale.COMMON.TABLE_OF_CONTENTS} >
             <Catalog toc={post.toc} />
-            <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' />
+            {/* <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' /> */}
         </div>
   )
 
@@ -43,10 +42,10 @@ export const LayoutSlug = props => {
             {!lock && <div id='container'>
 
                 {/* title */}
-                <h1 className="text-3xl pt-12 font-sans dark:text-gray-300">{post?.title}</h1>
+                <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
 
                 {/* meta */}
-                <section className="py-2 items-center text-sm font-sans px-1">
+                <section className="py-2 items-center text-sm  px-1">
                     <div className='flex flex-wrap text-gray-500 py-1 dark:text-gray-600'>
                         <span className='whitespace-nowrap'> <i className='far fa-calendar mr-2' />{date}</span>
                         <span className='mx-1'>|</span>

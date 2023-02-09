@@ -17,7 +17,7 @@ class MyDocument extends Document {
           <CommonScript />
         </Head>
 
-        <body className={'tracking-wider subpixel-antialiased bg-day dark:bg-night'}>
+        <body className={`${BLOG.FONT_STYLE} tracking-wider bg-day dark:bg-night`}>
             <Main />
             <NextScript />
         </body>

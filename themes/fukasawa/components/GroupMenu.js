@@ -39,13 +39,13 @@ function GroupMenu ({ customNav }) {
                 {link.slot}
 
               </Link>
-            );
+            )
           } else {
             return null
           }
         })}
       </nav>
-  );
+  )
 }
 
 export default GroupMenu
