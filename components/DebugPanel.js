@@ -67,12 +67,9 @@ export function DebugPanel() {
                 </div>
             </div>
 
-            {/* 预编译tailwindCSS */}
-            <div className='right-96 -right-96 right-0'></div>
-
             {/* 调试侧拉抽屉 */}
             <div
-                className={` ${show ? 'shadow-card' : '-right-96'} w-96 overflow-y-scroll h-full p-5 bg-white fixed right-0 bottom-0 z-50 duration-200`}
+                className={` ${show ? 'shadow-card w-96 right-0 ' : '-right-96 w-0'} overflow-y-scroll h-full p-5 bg-white fixed bottom-0 z-50 duration-200`}
             >
                 <div className="flex space-x-1 my-5">
                     <Select
