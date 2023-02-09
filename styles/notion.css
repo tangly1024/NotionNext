@@ -2002,7 +2002,7 @@ code.language-mermaid {
   @apply w-full shadow-md;
 }
 
-.mermaid > {
+.mermaid > svg {
   margin: auto;
 }
 
