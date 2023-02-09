@@ -2005,3 +2005,7 @@ code.language-mermaid {
 .mermaid > {
   margin: auto;
 }
+
+em .katex-display {
+  margin: 0 0 !important;
+}
