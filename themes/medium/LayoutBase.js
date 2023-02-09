@@ -41,13 +41,15 @@ const LayoutBase = props => {
                         <div className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
                             {slotTop}
                             {children}
+
+                            {/* 回顶按钮 */}
                             <div
                               data-aos="fade-up"
                               data-aos-duration="300"
                               data-aos-easing="ease-in-out"
                               data-aos-once="false"
                               data-aos-anchor-placement="top-center"
-                              className='fixed right-96 bottom-24 hidden lg:block z-20'>
+                              className='fixed xl:right-80 right-2 mr-6 bottom-24 hidden lg:block z-20'>
                               <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }}/>
                             </div>
                         </div>
