@@ -42,10 +42,13 @@ const LayoutBase = props => {
                             {slotTop}
                             {children}
                         </div>
+
+                        {/* 底部 */}
+                        <Footer title={siteInfo?.title} />
                     </div>
 
                     {/* 桌面端右侧 */}
-                    <div className='hidden xl:block border-l dark:border-transparent w-96 relative z-10'>
+                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
                         <div className='py-14 px-6 sticky top-0'>
                             <Tabs>
                                 {slotRight}
@@ -64,8 +67,6 @@ const LayoutBase = props => {
 
                 </div>
 
-                {/* 移动端底部 */}
-                <Footer title={siteInfo?.title} />
                 <BottomMenuBar {...props} className='block md:hidden' />
             </div>
         </ThemeGlobalMedium.Provider>

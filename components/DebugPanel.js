@@ -47,11 +47,12 @@ export function DebugPanel () {
             <i className="fas fa-times">&nbsp;关闭调试</i>
               )
             : (
-            <i className="fas fa-tools">&nbsp;打开调试</i>
+            <i className="fas fa-tools">&nbsp;调试主题</i>
               )}
         </div>
       </div>
 
+      {/* 调试侧拉抽屉 */}
       <div
         className={` ${
           show ? 'shadow-card' : '-right-96'

@@ -31,7 +31,7 @@ export const LayoutSlug = props => {
   const slotRight = post?.toc && post?.toc?.length > 3 && (
         <div key={locale.COMMON.TABLE_OF_CONTENTS} >
             <Catalog toc={post.toc} />
-            <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' />
+            {/* <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' /> */}
         </div>
   )
 
