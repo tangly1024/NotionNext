@@ -10,7 +10,7 @@ export const LayoutCategoryIndex = props => {
 
           <div id='inner-wrapper' className='w-full'>
 
-              <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+              <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300">
 
                   <div className='flex justify-center flex-wrap'>
                       {categoryOptions.map(e => {
