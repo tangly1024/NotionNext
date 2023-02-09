@@ -29,10 +29,9 @@ export function DebugPanel() {
   }
 
   function handleChangeDebugTheme() {
-    switchTheme()
-    updateThemeConfig(Object.assign({}, ThemeMap[theme].THEME_CONFIG))
-    updateDebugTheme(theme)
-    console.log('更换主题', debugTheme)
+    const newTheme = switchTheme()
+    updateThemeConfig(Object.assign({}, ThemeMap[newTheme].THEME_CONFIG))
+    updateDebugTheme(newTheme)
   }
 
   function handleUpdateDebugTheme(e) {
