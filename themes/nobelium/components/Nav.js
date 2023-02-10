@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
+import CONFIG_NOBELIUM from '../config_nobelium'
 
-const Nav = ({ navBarTitle, fullWidth }) => {
+const Nav = props => {
+  const { navBarTitle, fullWidth } = props
   const useSticky = !BLOG.autoCollapsedNavBar
   const navRef = useRef(null)
   const sentinalRef = useRef([])
@@ -83,21 +85,21 @@ const Nav = ({ navBarTitle, fullWidth }) => {
           </p>
             )}
       </div>
-      <NavBar />
+      <NavBar {...props}/>
     </div>
-  </>;
+  </>
 }
 
-const NavBar = (props) => {
+const NavBar = props => {
   const { customNav } = props
 
   const { locale } = useGlobal()
   let links = [
-    { id: 2, name: locale.NAV.RSS, to: '/feed', show: true },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: true },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: true },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: false },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: true }
+    { id: 2, name: locale.NAV.RSS, to: '/feed', show: CONFIG_NOBELIUM.MENU_RSS, target: '_blank' },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_NOBELIUM.MENU_SEARCH },
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_NOBELIUM.MENU_ARCHIVE },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NOBELIUM.MENU_CATEGORY },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NOBELIUM.MENU_TAG }
   ]
   if (customNav) {
     links = links.concat(customNav)
@@ -112,7 +114,7 @@ const NavBar = (props) => {
                 key={link.id}
                 className="block ml-4 text-black dark:text-gray-50 nav"
               >
-                <Link href={link.to}>
+                <Link href={link.to} target={link.target}>
                   {link.name}
                 </Link>
               </li>
@@ -120,7 +122,7 @@ const NavBar = (props) => {
         )}
       </ul>
     </div>
-  );
+  )
 }
 
 export default Nav

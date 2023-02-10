@@ -48,8 +48,8 @@ const LatestPostsGroup = ({ latestPosts }) => {
           </div>
 
         </Link>)
-      );
+      )
     })}
-  </>;
+  </>
 }
 export default LatestPostsGroup
