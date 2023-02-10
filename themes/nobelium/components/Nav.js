@@ -104,7 +104,6 @@ const NavBar = props => {
   if (customNav) {
     links = links.concat(customNav)
   }
-  console.log(links)
   return (
     <div className="flex-shrink-0">
       <ul className="flex flex-row">
