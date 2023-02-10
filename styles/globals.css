@@ -247,3 +247,8 @@ background: linear-gradient(91deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rg
   color: #fff;
   background-color: var(--theme-color)!important;
 }
+
+.next #announcement-content *{
+ font-size:10px !important;
+ line-height:1.5 !important;
+}

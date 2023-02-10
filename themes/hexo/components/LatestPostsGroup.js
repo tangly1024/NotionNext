@@ -57,8 +57,8 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           </div>
 
         </Link>)
-      );
+      )
     })}
-  </>;
+  </>
 }
 export default LatestPostsGroup

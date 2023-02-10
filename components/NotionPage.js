@@ -37,7 +37,7 @@ const Modal = dynamic(
   () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), { ssr: false }
 )
 
-const NotionPage = ({ post }) => {
+const NotionPage = ({ post, className }) => {
   const zoom = isBrowser() && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
@@ -80,7 +80,7 @@ const NotionPage = ({ post }) => {
     return <>{post?.summary || ''}</>
   }
 
-  return <div id='container' className='max-w-5xl font-medium mx-auto'>
+  return <div id='container' className={`max-w-5xl font-medium mx-auto ${className}`}>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
