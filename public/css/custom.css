@@ -1,2 +1,8 @@
 /* 静态文件导入 自定义样式*/
-
+#announcement-wrapper > * {
+ width: 190px;
+ height: 254px;
+ background: linear-gradient(135deg, #ebadb6 0%, #aceae1 100%);
+ border-radius: 7px;
+ box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+}
