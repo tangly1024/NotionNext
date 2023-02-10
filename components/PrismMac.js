@@ -1,13 +1,14 @@
 import React from 'react'
 import Prism from 'prismjs'
+// 所有语言的prismjs 使用autoloader引入
+// import 'prismjs/plugins/autoloader/prism-autoloader'
 import 'prismjs/plugins/toolbar/prism-toolbar'
 import 'prismjs/plugins/toolbar/prism-toolbar.min.css'
 import 'prismjs/plugins/show-language/prism-show-language'
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
-// 所有语言的prismjs 使用autoloader引入
-import 'prismjs/plugins/autoloader/prism-autoloader'
+
 // mermaid图
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
@@ -18,18 +19,17 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
  */
 const PrismMac = () => {
   if (isBrowser()) {
-    // setup autoloader
-    if (Prism && Prism.plugins && Prism.plugins.autoloader) {
-      Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
-    }
-    loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
     if (BLOG.CODE_MAC_BAR) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
+    loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
+    loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((e) => {
+      Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+      renderPrismMac()
+    })
   }
 
   React.useEffect(() => {
-    renderPrismMac()
     renderMermaid()
   }, [])
   return <></>
