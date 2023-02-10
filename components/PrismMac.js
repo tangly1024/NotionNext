@@ -18,6 +18,10 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
  */
 const PrismMac = () => {
   if (isBrowser()) {
+    // setup autoloader
+    if (Prism && Prism.plugins && Prism.plugins.autoloader) {
+      Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+    }
     loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
     if (BLOG.CODE_MAC_BAR) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
@@ -27,19 +31,6 @@ const PrismMac = () => {
   React.useEffect(() => {
     renderPrismMac()
     renderMermaid()
-
-    // 折叠代码行号bug
-    const observer = new MutationObserver(mutationsList => {
-      for (const m of mutationsList) {
-        if (m.target.nodeName === 'DETAILS') {
-          const preCodes = m.target.querySelectorAll('pre.notion-code')
-          for (const preCode of preCodes) {
-            Prism.plugins.lineNumbers.resize(preCode)
-          }
-        }
-      }
-    })
-    observer.observe(document.querySelector('#container'), { attributes: true, subtree: true })
   }, [])
   return <></>
 }
@@ -95,8 +86,6 @@ function renderPrismMac() {
   // 重新渲染之前检查所有的多余text
 
   try {
-    // setup autoloader
-    Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
     Prism.highlightAll()
   } catch (err) {
     console.log('代码渲染', err)
@@ -115,6 +104,36 @@ function renderPrismMac() {
       }
     })
   }
+
+  // 折叠代码行号bug
+  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+    fixCodeLineStyle()
+  }
+}
+
+/**
+ * 行号样式在首次渲染或被detail折叠后行高判断错误
+ * 在此手动resize计算
+ */
+const fixCodeLineStyle = () => {
+  const observer = new MutationObserver(mutationsList => {
+    for (const m of mutationsList) {
+      if (m.target.nodeName === 'DETAILS') {
+        const preCodes = m.target.querySelectorAll('pre.notion-code')
+        for (const preCode of preCodes) {
+          Prism.plugins.lineNumbers.resize(preCode)
+        }
+      }
+    }
+  })
+  observer.observe(document.querySelector('#container'), { attributes: true, subtree: true })
+  setTimeout(() => {
+    const preCodes = document.querySelectorAll('pre.notion-code')
+    for (const preCode of preCodes) {
+      console.log('code', preCode)
+      Prism.plugins.lineNumbers.resize(preCode)
+    }
+  }, 10)
 }
 
 export default PrismMac
