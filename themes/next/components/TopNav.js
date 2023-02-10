@@ -90,11 +90,11 @@ const TopNav = (props) => {
     ) }
     </>
 
-  return (<div id='top-nav' className='z-40 block lg:hidden'>
+  return (<div id='top-nav' className='block lg:hidden'>
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'fixed' : ''} lg:relative w-full top-0 z-20 transform duration-500`}>
+    <div id='sticky-nav' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
       <div className='w-full flex justify-between items-center p-4 bg-black dark:bg-gray-800 text-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>

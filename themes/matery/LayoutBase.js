@@ -9,10 +9,7 @@ import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import AOS from 'aos'
-import 'aos/dist/aos.css' // You can also use <link> for styles
 import FloatDarkModeButton from './components/FloatDarkModeButton'
-import { isBrowser } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -45,10 +42,6 @@ const LayoutBase = props => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  if (isBrowser()) {
-    AOS.init()
-  }
-
   return (
         <div id="outer-wrapper" className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
 
@@ -59,7 +52,7 @@ const LayoutBase = props => {
             {headerSlot}
 
             <main id="wrapper" className="flex-1 w-full py-8 md:px-8 lg:px-24 relative">
-                <div id="container-inner" className="w-full max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center">
+                <div id="container-inner" className="w-full max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center relative z-10">
                     {onLoading ? <LoadingCover /> : children}
                 </div>
             </main>

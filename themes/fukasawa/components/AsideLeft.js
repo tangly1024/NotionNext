@@ -9,9 +9,9 @@ import { useRouter } from 'next/router'
 import DarkModeButton from '@/components/DarkModeButton'
 
 function AsideLeft (props) {
-  const { tags, currentTag, categories, currentCategory, post, slot, siteInfo } = props
+  const { tagOptions, currentTag, categoryOptions, currentCategory, post, slot, siteInfo } = props
   const router = useRouter()
-  return <div className='relative w-72 bg-white dark:bg-hexo-black-gray min-h-screen px-10 py-14 hidden lg:block'>
+  return <div className='relative w-72 bg-white dark:bg-hexo-black-gray min-h-screen px-10 py-14 hidden lg:block z-10'>
     <Logo {...props}/>
 
     <section className='flex flex-col text-gray-600'>
@@ -31,12 +31,12 @@ function AsideLeft (props) {
 
     {router.asPath !== '/tag' && <section className='flex flex-col'>
       <hr className='w-12 my-8 ' />
-      <GroupTag tags={tags} currentTag={currentTag}/>
+      <GroupTag tags={tagOptions} currentTag={currentTag}/>
     </section>}
 
     {router.asPath !== '/category' && <section className='flex flex-col'>
       <hr className='w-12 my-8 ' />
-      <GroupCategory categories={categories} currentCategory={currentCategory}/>
+      <GroupCategory categories={categoryOptions} currentCategory={currentCategory}/>
     </section>}
 
     <section className='flex flex-col'>

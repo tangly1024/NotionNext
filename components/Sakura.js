@@ -1,15 +1,10 @@
 /* eslint-disable */
-/**
- * https://codepen.io/juliangarnier/pen/gmOwJX
- * custom by hexo-theme-yun @YunYouJun
- */
 import React from 'react'
 
 export const Sakura = () => {
   React.useEffect(() => {
     createSakura({})
   }, [])
-  //   return <canvas id="fireworks" className="fireworks"></canvas>
 }
 
 /**

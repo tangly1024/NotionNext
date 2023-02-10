@@ -11,9 +11,6 @@ import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import AOS from 'aos'
-import 'aos/dist/aos.css' // You can also use <link> for styles
-import { isBrowser } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 
 const FacebookPage = dynamic(
@@ -61,10 +58,6 @@ const LayoutBase = props => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  if (isBrowser()) {
-    AOS.init()
-  }
-
   return (
     <div className="bg-hexo-background-gray dark:bg-black">
       <CommonHead meta={meta} siteInfo={siteInfo}/>
@@ -76,9 +69,9 @@ const LayoutBase = props => {
       <main id="wrapper" className="w-full py-8 md:px-8 lg:px-24 min-h-screen relative">
         <div
           id="container-inner"
-          className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center'}
+          className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'}
         >
-          <div className="w-full max-w-4xl overflow-x-hidden scroll-hidden">
+          <div className="w-full max-w-4xl h-full">
             {onLoading ? <LoadingCover /> : children}
           </div>
           <SideRight {...props} slot={rightAreaSlot} />

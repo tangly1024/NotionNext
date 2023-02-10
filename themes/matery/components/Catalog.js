@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 目录导航组件
@@ -10,6 +11,7 @@ import Progress from './Progress'
  * @constructor
  */
 const Catalog = ({ toc }) => {
+  const { locale } = useGlobal()
   // 监听滚动事件
   React.useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
@@ -59,7 +61,7 @@ const Catalog = ({ toc }) => {
   }
 
   return <div className='px-3 '>
-    <div className='dark:text-white'><i className='mr-1 fas fa-stream' /> 目录</div>
+    <div className='dark:text-white'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
     <div className='w-full py-3'>
       <Progress />
     </div>

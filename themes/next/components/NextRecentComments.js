@@ -29,7 +29,7 @@ const NextRecentComments = (props) => {
             <div className='dark:text-gray-400 text-gray-400 font-sans text-sm text-right cursor-pointer hover:text-red-500 hover:underline pt-1'><Link href={{ pathname: comment.url, hash: comment.objectId, query: { target: 'comment' } } }>--{comment.nick}</Link></div>
         </div>)}
 
-  </>;
+  </>
 }
 
 export default NextRecentComments

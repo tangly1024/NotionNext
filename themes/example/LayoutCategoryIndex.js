@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import LayoutBase from './LayoutBase'
 
-export const LayoutCategoryIndex = (props) => {
-  const { categories } = props
-
+export const LayoutCategoryIndex = props => {
+  const { categoryOptions } = props
   return (
     <LayoutBase {...props}>
         <div id='category-list' className='duration-200 flex flex-wrap'>
-          {categories && categories.map(category => {
+          {categoryOptions?.map(category => {
             return (
               <Link
                 key={category.name}

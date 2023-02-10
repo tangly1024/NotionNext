@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.8.1",
+  "version": "3.9.6",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -20,9 +20,6 @@
     "bundle-report": "ANALYZE=true yarn build"
   },
   "dependencies": {
-    "@fontsource/noto-sans-sc": "^4.5.12",
-    "@fontsource/noto-serif-sc": "^4.5.11",
-    "@fortawesome/fontawesome-free": "^6.2.1",
     "@giscus/react": "^1.1.2",
     "@next/bundle-analyzer": "^12.1.1",
     "@popperjs/core": "^2.9.3",
@@ -53,10 +50,10 @@
     "react-dom": "^18.2.0",
     "react-facebook": "^8.1.4",
     "react-messenger-customer-chat": "^0.8.0",
-    "react-notion-x": "6.15.6",
+    "react-notion-x": "6.15.8",
     "react-share": "^4.4.0",
     "smoothscroll-polyfill": "^0.4.4",
-    "twikoo": "^1.6.8",
+    "twikoo": "1.6.9",
     "typed.js": "^2.0.12",
     "use-ackee": "^3.0.0",
     "valine": "^1.4.18"

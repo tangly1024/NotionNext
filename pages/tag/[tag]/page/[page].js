@@ -31,7 +31,7 @@ export async function getStaticProps({ params: { tag, page } }) {
   // 处理文章数
   props.postCount = props.posts.length
   // 处理分页
-  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page - 1)
+  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
 
   props.tag = tag
   props.page = page
@@ -44,9 +44,9 @@ export async function getStaticProps({ params: { tag, page } }) {
 
 export async function getStaticPaths() {
   const from = 'tag-page-static-path'
-  const { tags, allPages } = await getGlobalNotionData({ from })
+  const { tagOptions, allPages } = await getGlobalNotionData({ from })
   const paths = []
-  tags?.forEach(tag => {
+  tagOptions?.forEach(tag => {
     // 过滤状态类型
     const tagPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag.name))
     // 处理文章页数

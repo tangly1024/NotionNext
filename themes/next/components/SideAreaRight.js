@@ -24,7 +24,7 @@ const SideAreaRight = (props) => {
   const { tags, currentTag, slot, categories, currentCategory } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  return (<aside id='right' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'mr-4' : 'ml-4') + ' hidden 2xl:block flex-col w-60'}>
+  return (<aside id='right' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'mr-4' : 'ml-4') + ' hidden 2xl:block flex-col w-60 relative z-10'}>
 
         {CONFIG_NEXT.RIGHT_AD && <Card className='mb-2'>
           {/* 展示广告  */}

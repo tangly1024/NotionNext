@@ -21,7 +21,7 @@ function GroupMenu ({ customNav }) {
   }
 
   return (
-    <nav id='nav' className='font-sans text-md'>
+    <nav id='nav' className=' text-md'>
         {links.map(link => {
           if (link.show) {
             const selected = (router.pathname === link.to) || (router.asPath === link.to)

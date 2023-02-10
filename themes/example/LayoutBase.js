@@ -25,7 +25,7 @@ const LayoutBase = props => {
             <Nav {...props} />
 
             {/* 主体 */}
-            <div id='container-inner' className="w-full">
+            <div id='container-inner' className="w-full relative z-10">
 
                 <Title {...props} />
 
@@ -41,7 +41,7 @@ const LayoutBase = props => {
 
             <Footer {...props} />
 
-            <div className='fixed right-4 bottom-4'>
+            <div className='fixed right-4 bottom-4 z-10'>
                 <JumpToTopButton />
             </div>
         </div>

@@ -14,9 +14,6 @@ import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from './config_next'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
-import AOS from 'aos'
-import 'aos/dist/aos.css' // You can also use <link> for styles
-import { isBrowser } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -62,10 +59,6 @@ const LayoutBase = (props) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  if (isBrowser()) {
-    AOS.init()
-  }
-
   return (<>
 
       <CommonHead meta={meta} />
@@ -79,7 +72,7 @@ const LayoutBase = (props) => {
       <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-center flex-1 pb-12'}>
           {/* 左侧栏样式 */}
           <SideAreaLeft slot={leftAreaSlot} targetRef={targetRef} {...props}/>
-          <section id='container-inner' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-40' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full`} ref={targetRef}>
+          <section id='container-inner' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
             {onLoading ? <LoadingCover/> : <> {children}</> }
           </section>
           {/* 右侧栏样式 */}
