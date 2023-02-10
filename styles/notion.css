@@ -2006,6 +2006,6 @@ code.language-mermaid {
   margin: auto;
 }
 
-em .katex-display {
+.notion-equation-inline .katex-display {
   margin: 0 0 !important;
 }
