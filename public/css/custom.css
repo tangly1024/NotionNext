@@ -1,4 +1,4 @@
 /* 静态文件导入 自定义样式*/
-#announcement-wrapper > * {
+.announcement-wrapper {
  background: linear-gradient(135deg, #ebadb6 0%, #aceae1 100%);
 }
