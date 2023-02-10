@@ -16,7 +16,7 @@ const BlogCard = ({ post, showSummary, siteInfo }) => {
     <Card className="w-full lg:max-w-sm p-2 h-full overflow-auto">
       <div
         key={post.id}
-        className="animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300"
+        className="flex flex-col-reverse justify-between duration-300"
       >
         <div className="p-2 flex flex-col w-full">
           <Link
