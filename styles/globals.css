@@ -203,6 +203,7 @@ nav {
 
 .nobelium .notion-code{
     @apply max-w-2xl;
+}
 /* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 6px;
