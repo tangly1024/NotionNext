@@ -1,7 +1,4 @@
 /* 静态文件导入 自定义样式*/
-.drop-shadow-md{
- background: linear-gradient(135deg, #ebadb6 0%, #aceae1 100%);
-}
 /* 页脚footer渐变色滚动动画 */
 @-webkit-keyframes Gradient {
     0% {
