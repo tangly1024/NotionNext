@@ -58,65 +58,7 @@ footer {
 footer:before {
     background-color: rgba(0, 0, 0, 0);
 }
-/*背景颜色渐变*/
-#wrapper{
-  background: -webkit-linear-gradient(
-    0deg,
-    rgba(247, 149, 51, 0.1) 0,
-    rgba(243, 112, 85, 0.1) 15%,
-    rgba(239, 78, 123, 0.1) 30%,
-    rgba(161, 102, 171, 0.1) 44%,
-    rgba(80, 115, 184, 0.1) 58%,
-    rgba(16, 152, 173, 0.1) 72%,
-    rgba(7, 179, 155, 0.1) 86%,
-    rgba(109, 186, 130, 0.1) 100%
-  );
-  background: -moz-linear-gradient(
-    0deg,
-    rgba(247, 149, 51, 0.1) 0,
-    rgba(243, 112, 85, 0.1) 15%,
-    rgba(239, 78, 123, 0.1) 30%,
-    rgba(161, 102, 171, 0.1) 44%,
-    rgba(80, 115, 184, 0.1) 58%,
-    rgba(16, 152, 173, 0.1) 72%,
-    rgba(7, 179, 155, 0.1) 86%,
-    rgba(109, 186, 130, 0.1) 100%
-  );
-  background: -o-linear-gradient(
-    0deg,
-    rgba(247, 149, 51, 0.1) 0,
-    rgba(243, 112, 85, 0.1) 15%,
-    rgba(239, 78, 123, 0.1) 30%,
-    rgba(161, 102, 171, 0.1) 44%,
-    rgba(80, 115, 184, 0.1) 58%,
-    rgba(16, 152, 173, 0.1) 72%,
-    rgba(7, 179, 155, 0.1) 86%,
-    rgba(109, 186, 130, 0.1) 100%
-  );
-  background: -ms-linear-gradient(
-    0deg,
-    rgba(247, 149, 51, 0.1) 0,
-    rgba(243, 112, 85, 0.1) 15%,
-    rgba(239, 78, 123, 0.1) 30%,
-    rgba(161, 102, 171, 0.1) 44%,
-    rgba(80, 115, 184, 0.1) 58%,
-    rgba(16, 152, 173, 0.1) 72%,
-    rgba(7, 179, 155, 0.1) 86%,
-    rgba(109, 186, 130, 0.1) 100%
-  );
-  background: linear-gradient(
-    90deg,
-    rgba(247, 149, 51, 0.1) 0,
-    rgba(243, 112, 85, 0.1) 15%,
-    rgba(239, 78, 123, 0.1) 30%,
-    rgba(161, 102, 171, 0.1) 44%,
-    rgba(80, 115, 184, 0.1) 58%,
-    rgba(16, 152, 173, 0.1) 72%,
-    rgba(7, 179, 155, 0.1) 86%,
-    rgba(109, 186, 130, 0.1) 100%
-  );
-}
-/* 黑夜霓虹灯 */
+/* 首页黑夜霓虹灯 */
 .text-4xl,
 .text-lg,
 #typed {
@@ -220,4 +162,53 @@ footer:before {
   100% {
     text-shadow: #5636ed 0 0 5px;
   }
+}
+/* 搜索框霓虹灯 */
+.input-group {
+  position: relative;
+}
+.input {
+  border: 3px solid #000;
+  background: none;
+  padding: 1rem;
+  font-size: 1rem;
+  color: black;
+}
+
+.user-label {
+  position: absolute;
+  left: 15px;
+  color: #000;
+  pointer-events: none;
+  transform: translateY(1rem);
+  transition: 350ms;
+}
+
+.input:focus,
+input:valid {
+  outline: none;
+  --angle: 0deg;
+  border-bottom: 3px solid;
+  border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
+  animation: 3s rotate9234 linear infinite;
+}
+
+@keyframes rotate9234 {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.input:focus~label,
+input:valid~label {
+  transform: translateY(235%) scale(1);
+  background-color: #e8e8e8;
+  padding: 0 .2em;
+  color: #2196f3;
 }
