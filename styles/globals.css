@@ -252,3 +252,12 @@ background: linear-gradient(91deg,rgba(247,149,51,.1),rgba(243,112,85,.1) 15%,rg
  font-size:10px !important;
  line-height:1.5 !important;
 }
+/*设置鼠标样式*/
+body {
+    cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur),
+        default;
+}
+a,img {
+    cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/pointer.cur),
+        default;
+}
