@@ -95,17 +95,17 @@ function createSakura() {
       case 'fnx':
         random = -0.5 + Math.random() * 1
         ret = function (x, y) {
-          return x + 0.5 * random - 1
+          return x + 0.5 * random - 1.7
         }
         break
       case 'fny':
-        random = 0.5 + Math.random() * 0.5
+        random = 1.5 + Math.random() * 0.7
         ret = function (x, y) {
           return y + random
         }
         break
       case 'fnr':
-        random = Math.random() * 0.01
+        random = Math.random() * 0.02
         ret = function (r) {
           return r + random
         }
