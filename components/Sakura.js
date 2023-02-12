@@ -2,6 +2,7 @@ if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobi
     // 移动端不显示
 } else {
     // document.write('<canvas id="sakura" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none"></canvas>');
+}
 /* eslint-disable */
 import React from 'react'
 
