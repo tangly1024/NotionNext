@@ -8,7 +8,7 @@ const BLOG = {
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
   LANG: 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: 2023, // e.g if leave this empty, current year will be used.
-  APPEARANCE: 'dark', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
+  APPEARANCE: 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
   AUTHOR: 'Pylogmon', // 作者
   BIO: '一个热爱code的coder', // 作者简介
@@ -73,7 +73,7 @@ const BLOG = {
   POST_PREVIEW_LINES: 12, // 预览博客行数
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
   POSTS_PER_PAGE: 12, // post counts per page
-  POSTS_SORT_BY: 'notion', // 排序方式 'date'按时间,'notion'由notion控制
+  POSTS_SORT_BY: 'date', // 排序方式 'date'按时间,'notion'由notion控制
 
   PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
