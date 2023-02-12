@@ -9,7 +9,7 @@ import { Giscus } from '@giscus/react'
  */
 
 const GiscusComponent = ({ isDarkMode }) => {
-  const theme = isDarkMode ? 'dark' : 'light'
+  const theme = isDarkMode ? 'https://blog.huguoyang.cn/css/giscus-style.css' : 'light'
   return (
     <Giscus
       repo={BLOG.COMMENT_GISCUS_REPO}
