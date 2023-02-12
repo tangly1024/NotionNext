@@ -1,0 +1,94 @@
+/*! MIT License
+ * Copyright (c) 2018 GitHub Inc.
+ * https://github.com/primer/primitives/blob/main/LICENSE
+ */
+
+main {
+    --color-prettylights-syntax-comment: #8b949e;
+    --color-prettylights-syntax-constant: #79c0ff;
+    --color-prettylights-syntax-entity: #d2a8ff;
+    --color-prettylights-syntax-storage-modifier-import: #c9d1d9;
+    --color-prettylights-syntax-entity-tag: #a5d6ff;
+    --color-prettylights-syntax-keyword: #ec8e2c;
+    --color-prettylights-syntax-string: #a5d6ff;
+    --color-prettylights-syntax-variable: #fdac54;
+    --color-prettylights-syntax-brackethighlighter-unmatched: #d47616;
+    --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+    --color-prettylights-syntax-invalid-illegal-bg: #6c3906;
+    --color-prettylights-syntax-carriage-return-text: #f0f6fc;
+    --color-prettylights-syntax-carriage-return-bg: #914d04;
+    --color-prettylights-syntax-string-regexp: #a5d6ff;
+    --color-prettylights-syntax-markup-list: #f2cc60;
+    --color-prettylights-syntax-markup-heading: #1f6feb;
+    --color-prettylights-syntax-markup-italic: #c9d1d9;
+    --color-prettylights-syntax-markup-bold: #c9d1d9;
+    --color-prettylights-syntax-markup-deleted-text: #ffe2bb;
+    --color-prettylights-syntax-markup-deleted-bg: #4e2906;
+    --color-prettylights-syntax-markup-inserted-text: #cae8ff;
+    --color-prettylights-syntax-markup-inserted-bg: #0c2d6b;
+    --color-prettylights-syntax-markup-changed-text: #ffe2bb;
+    --color-prettylights-syntax-markup-changed-bg: #4e2906;
+    --color-prettylights-syntax-markup-ignored-text: #c9d1d9;
+    --color-prettylights-syntax-markup-ignored-bg: #1158c7;
+    --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+    --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
+    --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+    --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+    --color-btn-text: #c9d1d9;
+    --color-btn-bg: #424242;
+    --color-btn-border: rgb(240 246 252 / 10%);
+    --color-btn-shadow: 0 0 transparent;
+    --color-btn-inset-shadow: 0 0 transparent;
+    --color-btn-hover-bg: #282828;
+    --color-btn-hover-border: #8b949e;
+    --color-btn-active-bg: hsl(212deg 12% 18% / 100%);
+    --color-btn-active-border: #6e7681;
+    --color-btn-selected-bg: #282828;
+    --color-btn-primary-text: #fff;
+    --color-btn-primary-bg: #1f6feb;
+    --color-btn-primary-border: rgb(240 246 252 / 10%);
+    --color-btn-primary-shadow: 0 0 transparent;
+    --color-btn-primary-inset-shadow: 0 0 transparent;
+    --color-btn-primary-hover-bg: #388bfd;
+    --color-btn-primary-hover-border: rgb(240 246 252 / 10%);
+    --color-btn-primary-selected-bg: #1f6feb;
+    --color-btn-primary-selected-shadow: 0 0 transparent;
+    --color-btn-primary-disabled-text: rgb(255 255 255 / 50%);
+    --color-btn-primary-disabled-bg: rgb(31 111 235 / 60%);
+    --color-btn-primary-disabled-border: rgb(240 246 252 / 10%);
+    --color-fg-default: #c9d1d9;
+    --color-fg-muted: #8b949e;
+    --color-fg-subtle: #6e7681;
+    --color-canvas-default: #282828;
+    --color-canvas-overlay: #424242;
+    --color-canvas-inset: #252525;
+    --color-canvas-subtle: #424242;
+    --color-border-default: #282828;
+    --color-border-muted: #424242;
+    --color-neutral-muted: rgb(110 118 129 / 40%);
+    --color-accent-fg: #58a6ff;
+    --color-accent-emphasis: #1f6feb;
+    --color-accent-muted: #282828;
+    --color-accent-subtle: #282828;
+    --color-success-fg: #58a6ff;
+    --color-attention-fg: #d29922;
+    --color-danger-fg: #d47616;
+    --color-primer-shadow-inset: 0 0 transparent;
+    --color-primer-shadow-focus: 0 0 0 3px #0c2d6b;
+    --color-scale-gray-7: #424242;
+    --color-scale-blue-8: #0c2d6b;
+
+    /*! Extensions from @primer/css/alerts/flash.scss */
+    --color-social-reaction-bg-hover: var(--color-scale-gray-7);
+    --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8);
+
+    color-scheme: dark;
+}
+
+main .pagination-loader-container {
+    background-image: url("https://github.com/images/modules/pulls/progressive-disclosure-line-dark.svg");
+}
+
+main .gsc-loading-image {
+    background-image: url("https://github.githubassets.com/images/mona-loading-dark.gif");
+}
