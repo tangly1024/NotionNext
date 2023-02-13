@@ -15,7 +15,7 @@ const TagItemMini = ({ tag, selected = false }) => {
       <div className='font-light dark:text-gray-400'>{selected && <i className='mr-1 fas fa-tag'/>} {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
 
     </Link>
-  );
+  )
 }
 
 export default TagItemMini
