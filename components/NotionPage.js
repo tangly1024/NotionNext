@@ -3,11 +3,10 @@ import dynamic from 'next/dynamic'
 import mediumZoom from '@fisch0920/medium-zoom'
 import React from 'react'
 import { isBrowser } from '@/lib/utils'
-import Image from 'next/image'
-import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
 
 import 'katex/dist/katex.min.css'
+import { mapImgUrl } from '@/lib/notion/mapImage'
 
 const Equation = dynamic(() =>
   import('@/components/Equation').then(async (m) => {
@@ -84,14 +83,13 @@ const NotionPage = ({ post, className }) => {
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
+      mapImageUrl={mapImgUrl}
       components={{
         Code,
         Collection,
         Equation,
         Modal,
-        Pdf,
-        nextImage: Image,
-        nextLink: Link
+        Pdf
       }} />
 
       <PrismMac />
