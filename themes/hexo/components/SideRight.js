@@ -9,6 +9,7 @@ import CONFIG_HEXO from '../config_hexo'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Announcement from './Announcement'
+import { useGlobal } from '@/lib/global'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
 /**
@@ -21,6 +22,8 @@ export default function SideRight(props) {
     post, currentCategory, categories, latestPosts, tags,
     currentTag, showCategory, showTag, slot, notice
   } = props
+
+  const { locale } = useGlobal()
   return (
     <div className={'space-y-4 lg:w-80 lg:pt-0 px-2 pt-4'}>
       <InfoCard {...props} />
@@ -29,7 +32,7 @@ export default function SideRight(props) {
       {showCategory && (
         <Card>
           <div className='ml-2 mb-1 '>
-            <i className='fas fa-th' /> 分类
+            <i className='fas fa-th' /> {locale.COMMON.CATEGORY}
           </div>
           <CategoryGroup
             currentCategory={currentCategory}
