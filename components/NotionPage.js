@@ -3,11 +3,10 @@ import dynamic from 'next/dynamic'
 import mediumZoom from '@fisch0920/medium-zoom'
 import React from 'react'
 import { isBrowser } from '@/lib/utils'
-import Image from 'next/image'
-import Link from 'next/link'
 import { Code } from 'react-notion-x/build/third-party/code'
 
 import 'katex/dist/katex.min.css'
+import { mapImgUrl } from '@/lib/notion/mapImage'
 
 const Equation = dynamic(() =>
   import('@/components/Equation').then(async (m) => {
@@ -37,7 +36,7 @@ const Modal = dynamic(
   () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), { ssr: false }
 )
 
-const NotionPage = ({ post }) => {
+const NotionPage = ({ post, className }) => {
   const zoom = isBrowser() && mediumZoom({
     container: '.notion-viewport',
     background: 'rgba(0, 0, 0, 0.2)',
@@ -80,18 +79,17 @@ const NotionPage = ({ post }) => {
     return <>{post?.summary || ''}</>
   }
 
-  return <div id='container' className='max-w-5xl font-medium mx-auto'>
+  return <div id='container' className={`max-w-5xl font-medium mx-auto ${className}`}>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
+      mapImageUrl={mapImgUrl}
       components={{
         Code,
         Collection,
         Equation,
         Modal,
-        Pdf,
-        nextImage: Image,
-        nextLink: Link
+        Pdf
       }} />
 
       <PrismMac />
