@@ -4,33 +4,32 @@ const BLOG = {
   NOTION_PAGE_ID: process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5',
   PSEUDO_STATIC: false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 5, // 更新内容缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
-  THEME: process.env.NEXT_PUBLIC_THEME || 'hexo', // 主题， 支持 ['next','hexo',"fukasawa','medium','example'] @see https://preview.tangly1024.com
+  THEME: process.env.NEXT_PUBLIC_THEME || 'medium', // 主题， 支持 ['next','hexo',"fukasawa','medium','example'] @see https://preview.tangly1024.com
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
   LANG: 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: 2021, // e.g if leave this empty, current year will be used.
-  APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
+  APPEARANCE: 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
-  AUTHOR: 'NotionNext', // 您的昵称 例如 tangly1024
-  BIO: '一个普通的干饭人🍚', // 作者简介
-  LINK: 'https://tangly1024.com', // 网站地址
-  KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
+  AUTHOR: 'Oceanic', // 您的昵称 例如 tangly1024
+  BIO: '✅8️⃣', // 作者简介
+  LINK: 'https://blog.oceanum.top', // 网站地址
+  KEYWORDS: 'Notion,博客,Oceanic,海边的木子', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
-  CONTACT_EMAIL: '', // 邮箱地址 例如mail@tangly1024.com
-  CONTACT_WEIBO: '', // 你的微博个人主页
+  CONTACT_EMAIL: 'yangruizhi4@outlook.com', // 邮箱地址 例如mail@tangly1024.com
+  CONTACT_WEIBO: 'https://weibo.com/u/7323395715', // 你的微博个人主页
   CONTACT_TWITTER: '', // 你的twitter个人主页
   CONTACT_GITHUB: '', // 你的github个人主页 例如 https://github.com/tangly1024
-  CONTACT_TELEGRAM: '', // 你的telegram 地址 例如 https://t.me/tangly_1024
+  CONTACT_TELEGRAM: 'https://t.me/Oceanic1231', // 你的telegram 地址 例如 https://t.me/tangly_1024
   CONTACT_LINKEDIN: '', // 你的linkedIn 首页
 
   // 网站字体
-  FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
+  FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
   FONT_URL: [// 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
     'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500&display=swap'
+    'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'
   ],
   FONT_SANS: [// 无衬线字体 例如'LXGW WenKai'
-    'Bitter', '"PingFang SC"', '-apple-system', 'BlinkMacSystemFont', '"Hiragino Sans GB"',
+    'Bitter', '"LXGW WenKai"', '-apple-system', 'BlinkMacSystemFont', '"Hiragino Sans GB"',
     '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Segoe UI"', '"Noto Sans SC"', 'HarmonyOS_Regular',
     '"Microsoft YaHei"', '"Helvetica Neue"', 'Helvetica', '"Source Han Sans SC"',
     'Arial', 'sans-serif', '"Apple Color Emoji"'],
@@ -65,10 +64,10 @@ const BLOG = {
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
   SUB_PATH: '', // leave this empty unless you want to deploy in a folder
 
-  POST_URL_PREFIX: process.env.NEXT_PUBLIC_POST_URL_PREFIX || 'article', // POST类型文章的默认路径前缀，例如默认POST类型的路径是  /article/[slug]
+  POST_URL_PREFIX: process.env.NEXT_PUBLIC_POST_URL_PREFIX || '', // POST类型文章的默认路径前缀，例如默认POST类型的路径是  /article/[slug]
   // 如果此项配置为 '' 空， 则文章将没有前缀路径，使用场景： 希望文章前缀路径为 /post 的情况 支持多级
 
-  POST_LIST_STYLE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
+  POST_LIST_STYLE: 'scroll', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
   POST_PREVIEW_LINES: 12, // 预览博客行数
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
@@ -98,7 +97,7 @@ const BLOG = {
   STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
   // 悬浮挂件
-  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
+  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || false, // 是否显示宠物挂件
   WIDGET_PET_LINK: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
   WIDGET_PET_SWITCH_THEME: true, // 点击宠物挂件切换博客主题
 
@@ -131,19 +130,19 @@ const BLOG = {
   // ----> 评论互动 可同时开启多个支持 WALINE VALINE GISCUS CUSDIS UTTERRANCES GITALK
 
   // twikoo
-  COMMENT_TWIKOO_ENV_ID: process.env.NEXT_PUBLIC_COMMENT_ENV_ID || '', // TWIKOO地址 腾讯云环境填 envId；Vercel 环境域名地址（https://xxx.vercel.app)
+  COMMENT_TWIKOO_ENV_ID: process.env.NEXT_PUBLIC_COMMENT_ENV_ID || 'https://twikoo.oceanum.top/', // TWIKOO地址 腾讯云环境填 envId；Vercel 环境域名地址（https://xxx.vercel.app)
 
   // utterance
   COMMENT_UTTERRANCES_REPO: process.env.NEXT_PUBLIC_COMMENT_UTTERRANCES_REPO || '', // 你的代码仓库名， 例如我是 'tangly1024/NotionNext'； 更多文档参考 https://utteranc.es/
 
   // giscus @see https://giscus.app/
-  COMMENT_GISCUS_REPO: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO || '', // 你的Github仓库名 e.g 'tangly1024/NotionNext'
-  COMMENT_GISCUS_REPO_ID: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO_ID || '', // 你的Github Repo ID e.g ( 設定完 giscus 即可看到 )
-  COMMENT_GISCUS_CATEGORY_ID: process.env.NEXT_PUBLIC_COMMENT_GISCUS_CATEGORY_ID || '', // 你的Github Discussions 內的 Category ID ( 設定完 giscus 即可看到 )
-  COMMENT_GISCUS_MAPPING: process.env.NEXT_PUBLIC_COMMENT_GISCUS_MAPPING || 'pathname', // 你的Github Discussions 使用哪種方式來標定文章, 預設 'pathname'
+  COMMENT_GISCUS_REPO: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO || 'Wisof-Young/NotionNext', // 你的Github仓库名 e.g 'tangly1024/NotionNext'
+  COMMENT_GISCUS_REPO_ID: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO_ID || 'R_kgDOI-8l9A', // 你的Github Repo ID e.g ( 設定完 giscus 即可看到 )
+  COMMENT_GISCUS_CATEGORY_ID: process.env.NEXT_PUBLIC_COMMENT_GISCUS_CATEGORY_ID || 'DIC_kwDOI-8l9M4CURPJ', // 你的Github Discussions 內的 Category ID ( 設定完 giscus 即可看到 )
+  COMMENT_GISCUS_MAPPING: process.env.NEXT_PUBLIC_COMMENT_GISCUS_MAPPING || 'title', // 你的Github Discussions 使用哪種方式來標定文章, 預設 'pathname'
   COMMENT_GISCUS_REACTIONS_ENABLED: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REACTIONS_ENABLED || '1', // 你的 Giscus 是否開啟文章表情符號 '1' 開啟 "0" 關閉 預設開啟
-  COMMENT_GISCUS_EMIT_METADATA: process.env.NEXT_PUBLIC_COMMENT_GISCUS_EMIT_METADATA || '0', // 你的 Giscus 是否提取 Metadata '1' 開啟 '0' 關閉 預設關閉
-  COMMENT_GISCUS_INPUT_POSITION: process.env.NEXT_PUBLIC_COMMENT_GISCUS_INPUT_POSITION || 'bottom', // 你的 Giscus 發表留言位置 'bottom' 尾部 'top' 頂部, 預設 'bottom'
+  COMMENT_GISCUS_EMIT_METADATA: process.env.NEXT_PUBLIC_COMMENT_GISCUS_EMIT_METADATA || '1', // 你的 Giscus 是否提取 Metadata '1' 開啟 '0' 關閉 預設關閉
+  COMMENT_GISCUS_INPUT_POSITION: process.env.NEXT_PUBLIC_COMMENT_GISCUS_INPUT_POSITION || 'top', // 你的 Giscus 發表留言位置 'bottom' 尾部 'top' 頂部, 預設 'bottom'
   COMMENT_GISCUS_LANG: process.env.NEXT_PUBLIC_COMMENT_GISCUS_LANG || 'zh-CN', // 你的 Giscus 語言 e.g 'en', 'zh-TW', 'zh-CN', 預設 'en'
   COMMENT_GISCUS_LOADING: process.env.NEXT_PUBLIC_COMMENT_GISCUS_LOADING || 'lazy', // 你的 Giscus 載入是否漸進式載入, 預設 'lazy'
   COMMENT_GISCUS_CROSSORIGIN: process.env.NEXT_PUBLIC_COMMENT_GISCUS_CROSSORIGIN || 'anonymous', // 你的 Giscus 可以跨網域, 預設 'anonymous'
