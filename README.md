@@ -79,6 +79,9 @@
 
   <td align="center"><a href="https://github.com/SuperHuangXu"><img src="https://avatars.githubusercontent.com/u/14816052" width="64px;"  alt="SuperHuangXu"/><br/><sub><b>bUBBLE</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=SuperHuangXu" title="SuperHuangXu" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/Pylogmon"><img src="https://avatars.githubusercontent.com/u/59004461" width="64px;"  alt="Pylogmon"/><br/><sub><b>Pylogmon</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Pylogmon" title="Pylogmon" >🔧 🐛</a></td>
+  
+
 </tr>
 </table>
 
