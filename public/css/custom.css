@@ -166,27 +166,6 @@ footer:before {
     text-shadow: #5636ed 0 0 5px;
   }
 }
-/* 搜索框霓虹灯 */
-.input:focus,
-input:valid {
-  outline: none;
-  --angle: 0deg;
-  border-bottom: 3px solid;
-  border-image: conic-gradient(from var(--angle), red, yellow, lime, aqua, blue, magenta, red) 1;
-  animation: 2s rotate9234 linear infinite;
-}
-
-@keyframes rotate9234 {
-  to {
-    --angle: 360deg;
-  }
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
 /*背景颜色渐变*/
 #wrapper{
   background: -webkit-linear-gradient(
