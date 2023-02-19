@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import { Giscus } from '@giscus/react'
+import Giscus from '@giscus/react'
 
 /**
  * Giscus评论 @see https://giscus.app/zh-CN
