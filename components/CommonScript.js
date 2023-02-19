@@ -28,7 +28,7 @@ const CommonScript = () => {
 
     {/* GoogleAdsense */}
     {BLOG.ADSENSE_GOOGLE_ID && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`}
-     crossorigin="anonymous" />}
+     crossOrigin="anonymous" />}
 
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
 
