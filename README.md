@@ -79,6 +79,13 @@
 
   <td align="center"><a href="https://github.com/SuperHuangXu"><img src="https://avatars.githubusercontent.com/u/14816052" width="64px;"  alt="SuperHuangXu"/><br/><sub><b>bUBBLE</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=SuperHuangXu" title="SuperHuangXu" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/Pylogmon"><img src="https://avatars.githubusercontent.com/u/59004461" width="64px;"  alt="Pylogmon"/><br/><sub><b>派了个萌 </b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Pylogmon" title="Pylogmon" >🔧 🐛</a></td>
+  
+  <td align="center"><a href="https://github.com/SkysCrystal"><img src="https://avatars.githubusercontent.com/u/49473463" width="64px;"  alt="SkysCrystal"/><br/><sub><b>Simon Shi
+</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=SkysCrystal" title="SkysCrystal" >🔧 🐛</a></td>
+  
+  
+
 </tr>
 </table>
 
