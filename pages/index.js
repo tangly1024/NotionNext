@@ -3,6 +3,7 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import * as ThemeMap from '@/themes'
 import { useGlobal } from '@/lib/global'
+import { generateRss } from '@/lib/rss'
 const Index = props => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
@@ -12,8 +13,10 @@ const Index = props => {
 export async function getStaticProps() {
   const from = 'index'
   const props = await getGlobalNotionData({ from })
+
   const { siteInfo } = props
   props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+
   delete props.allPages
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
@@ -39,6 +42,9 @@ export async function getStaticProps() {
       post.blockMap = await getPostBlocks(post.id, 'slug', BLOG.POST_PREVIEW_LINES)
     }
   }
+
+  // 异步生成Feed订阅
+  generateRss(props?.latestPosts || [])
 
   return {
     props: {

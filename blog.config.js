@@ -10,10 +10,11 @@ const BLOG = {
   SINCE: 2021, // e.g if leave this empty, current year will be used.
   APPEARANCE: 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
-  AUTHOR: '619', // 作者
+  AUTHOR: '619', // 您的昵称 例如 tangly1024
   BIO: 'a Githuber in this CHAOTIC world.', // 作者简介
-  LINK: 'https://66619.eu.org', // 网站地址
-  KEYWORDS: 'blog,boring,博客', // 网站关键词 英文逗号隔开
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://66619.eu.org', // 网站地址
+  KEYWORDS: 'blog, boring, 博客', // 网站关键词 英文逗号隔开
+
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: 'mail@66619.eu.org', // 邮箱
   CONTACT_WEIBO: 'https://weibo.com/u/7458711630', // 你的微博个人主页
