@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Tabs from '@/components/Tabs'
-import { useGlobal } from '@/lib/global'
 import React from 'react'
 import { useRouter } from 'next/router'
 
@@ -50,7 +49,6 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
 })
 
 const Comment = ({ frontMatter }) => {
-  const { isDarkMode } = useGlobal()
   const router = useRouter()
 
   React.useEffect(() => {
@@ -87,7 +85,7 @@ const Comment = ({ frontMatter }) => {
 
         {BLOG.COMMENT_GISCUS_REPO && (
           <div key="Giscus">
-            <GiscusComponent isDarkMode={isDarkMode} className="px-2" />
+            <GiscusComponent className="px-2" />
           </div>
         )}
 

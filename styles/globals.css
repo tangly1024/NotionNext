@@ -206,3 +206,8 @@ nav {
 .nobelium .notion-code{
     @apply max-w-2xl;
 }
+
+.next #announcement-content *{
+ font-size:10px !important;
+ line-height:1.5 !important;
+}

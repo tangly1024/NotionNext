@@ -37,13 +37,13 @@ const TopNav = props => {
       nav && nav.classList.replace('bg-white', 'bg-none')
       nav && nav.classList.replace('text-black', 'text-white')
       nav && nav.classList.replace('border', 'border-transparent')
-      nav && nav.classList.replace('shadow-md', 'shadow-none')
+      nav && nav.classList.replace('drop-shadow-md', 'shadow-none')
       nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
     } else {
       nav && nav.classList.replace('bg-none', 'bg-white')
       nav && nav.classList.replace('text-white', 'text-black')
       nav && nav.classList.replace('border-transparent', 'border')
-      nav && nav.classList.replace('shadow-none', 'shadow-md')
+      nav && nav.classList.replace('shadow-none', 'drop-shadow-md')
       nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
     }
 
@@ -90,10 +90,13 @@ const TopNav = props => {
         <section className='mt-8'>
           <div className='text-sm flex flex-nowrap justify-between font-light px-2'>
             <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
-            <Link href={'/category'} passHref>
-              <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
-              </a>
+            <Link
+              href={'/category'}
+              passHref
+              className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+
+              {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
+
             </Link>
           </div>
           <CategoryGroup currentCategory={currentCategory} categories={categories} />
@@ -104,10 +107,13 @@ const TopNav = props => {
         <section className='mt-4'>
           <div className='text-sm py-2 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200'>
             <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-tag'/>{locale.COMMON.TAGS}</div>
-            <Link href={'/tag'} passHref>
-              <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
-              </a>
+            <Link
+              href={'/tag'}
+              passHref
+              className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+
+              {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
+
             </Link>
           </div>
           <div className='p-2'>
@@ -121,7 +127,7 @@ const TopNav = props => {
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={'top-0 shadow-md fixed bg-none animate__animated animate__fadeIn dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform duration-200 border-transparent dark:border-transparent'}>
+    <div id='sticky-nav' className={'top-0 shadow-none fixed bg-none dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform transition-all duration-200 border-transparent dark:border-transparent'}>
       <div className='w-full flex justify-between items-center px-4 py-2'>
         <div className='flex'>
          <Logo {...props}/>

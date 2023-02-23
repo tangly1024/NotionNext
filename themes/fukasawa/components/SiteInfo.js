@@ -12,7 +12,7 @@ function SiteInfo ({ title }) {
 
   return (
         <footer
-            className='leading-6 justify-start w-full text-gray-400 text-xs font-sans'
+            className='relative leading-6 justify-start w-full text-gray-400 text-xs font-sans'
         >
             <span> © {`${copyrightDate}`} <span> <a href={BLOG.LINK} className='text-gray-500 dark:text-gray-300 '> <i className='mx-1 animate-pulse fas fa-heart'/> {BLOG.AUTHOR}</a>. <br /></span>
 

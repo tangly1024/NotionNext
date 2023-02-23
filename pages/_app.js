@@ -9,16 +9,21 @@ import '@/styles/globals.css'
 import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
 
-// 代码样式  更多样式参考： https://github.com/PrismJS/prism-themes
-import 'prism-themes/themes/prism-material-light.css'
-
-// import '@/styles/prism-mac-style.css' // code 左上角显示mac的红黄绿图标
-
 import { GlobalContextProvider } from '@/lib/global'
 import { DebugPanel } from '@/components/DebugPanel'
 import { ThemeSwitch } from '@/components/ThemeSwitch'
 import { Fireworks } from '@/components/Fireworks'
-import { loadExternalResource } from '@/lib/utils'
+import { Nest } from '@/components/Nest'
+import { FlutteringRibbon } from '@/components/FlutteringRibbon'
+import { Ribbon } from '@/components/Ribbon'
+import { Sakura } from '@/components/Sakura'
+import { StarrySky } from '@/components/StarrySky'
+import MusicPlayer from '@/components/MusicPlayer'
+import ExternalScript from '@/components/ExternalScript'
+import { isBrowser } from '@/lib/utils'
+
+import AOS from 'aos'
+import 'aos/dist/aos.css' // You can also use <link> for styles
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -40,13 +45,19 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
         {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
         {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
-        {JSON.parse(BLOG.FIREWORKS) && <Fireworks/>}
+        {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
+        {JSON.parse(BLOG.SAKURA) && <Sakura />}
+        {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
+        {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
+        {JSON.parse(BLOG.NEST) && <Nest />}
+        {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
+        {JSON.parse(BLOG.RIBBON) && <Ribbon />}
+        <ExternalScript/>
     </>
 
-  // 延迟加载fontAwesome
-  React.useEffect(() => {
-    loadExternalResource(BLOG.FONT_AWESOME_PATH, 'css')
-  }, [])
+  if (isBrowser()) {
+    AOS.init()
+  }
 
   return (
         <GlobalContextProvider>

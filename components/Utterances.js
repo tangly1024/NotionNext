@@ -22,7 +22,7 @@ const Utterances = ({ issueTerm, layout }) => {
     script.setAttribute('crossorigin', 'anonymous')
     script.setAttribute('async', true)
     script.setAttribute('repo', BLOG.COMMENT_UTTERRANCES_REPO)
-    script.setAttribute('issue-term', issueTerm)
+    script.setAttribute('issue-term', 'title')
     script.setAttribute('theme', theme)
     anchor.appendChild(script)
     return () => {

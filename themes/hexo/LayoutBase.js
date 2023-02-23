@@ -11,7 +11,14 @@ import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import FacebookPage from '@/components/FacebookPage'
+import dynamic from 'next/dynamic'
+
+const FacebookPage = dynamic(
+  () => {
+    return import('@/components/FacebookPage')
+  },
+  { ssr: false }
+)
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -59,12 +66,12 @@ const LayoutBase = props => {
 
       {headerSlot}
 
-      <main id="wrapper" className="w-full py-8 md:px-8 lg:px-24 min-h-screen">
+      <main id="wrapper" className="w-full py-8 md:px-8 lg:px-24 min-h-screen relative">
         <div
           id="container-inner"
-          className="pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center"
+          className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'}
         >
-          <div className="w-full max-w-4xl overflow-x-hidden">
+          <div className="w-full max-w-4xl h-full">
             {onLoading ? <LoadingCover /> : children}
           </div>
           <SideRight {...props} slot={rightAreaSlot} />

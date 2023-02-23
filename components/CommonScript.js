@@ -27,8 +27,8 @@ const CommonScript = () => {
     </>)}
 
     {/* GoogleAdsense */}
-    {BLOG.ADSENSE_GOOGLE_ID && (<script data-ad-client={BLOG.ADSENSE_GOOGLE_ID} async
-              src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'/>)}
+    {BLOG.ADSENSE_GOOGLE_ID && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`}
+     crossOrigin="anonymous" />}
 
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
 
@@ -101,6 +101,10 @@ const CommonScript = () => {
               }}
       />
     </>)}
+
+    {/* 引入音乐播放 */}
+    {JSON.parse(BLOG.MUSIC_PLAYER) && <script async src={BLOG.MUSIC_PLAYER_CDN_URL} />}
+    {JSON.parse(BLOG.MUSIC_PLAYER) && JSON.parse(BLOG.MUSIC_PLAYER_METING) && <script async src="https://cdnjs.cloudflare.com/ajax/libs/meting/2.0.1/Meting.min.js" />}
   </>)
 }
 

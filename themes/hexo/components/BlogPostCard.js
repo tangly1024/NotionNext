@@ -5,22 +5,33 @@ import TagItemMini from './TagItemMini'
 import CONFIG_HEXO from '../config_hexo'
 import NotionPage from '@/components/NotionPage'
 
-const BlogPostCard = ({ post, showSummary }) => {
+const BlogPostCard = ({ post, showSummary, index, siteInfo }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
+  if (post && !post.page_cover && CONFIG_HEXO.POST_LIST_COVER_DEFAULT) {
+    post.page_cover = siteInfo?.pageCover
+  }
+  const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover
   return (
-    <div className="w-full shadow-sm hover:shadow border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray duration-300">
-      <div
+    <div
         key={post.id}
-        className="animate__animated animate__fadeIn flex flex-col-reverse lg:flex-row justify-between duration-300"
-      >
-        <div className="lg:p-8 p-4 flex flex-col w-full">
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
-            <a
-              className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
-                } leading-tight text-gray-700 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}
-            >
-              {post.title}
-            </a>
+        data-aos="fade-up"
+        data-aos-duration="600"
+        data-aos-easing="ease-in-out"
+        data-aos-once="false"
+        data-aos-anchor-placement="top-bottom"
+        className={`flex md:flex-row flex-col-reverse  ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}
+        w-full md:h-72 h-96 justify-between overflow-hidden drop-shadow-md  
+        border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray  `}>
+
+        <div className={`lg:p-8 p-4 flex flex-col  ${showPageCover ? 'md:w-7/12 w-full' : 'w-full'}`}>
+          <Link
+            href={`${BLOG.SUB_PATH}/${post.slug}`}
+            passHref
+            className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
+              } leading-tight text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
+
+            {post.title}
+
           </Link>
 
           <div
@@ -30,11 +41,11 @@ const BlogPostCard = ({ post, showSummary }) => {
             <Link
               href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
               passHref
-            >
-              <a className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
-                <i className="far fa-calendar-alt mr-1" />
-                {post.date?.start_date || post.lastEditedTime}
-              </a>
+              className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
+
+              <i className="far fa-calendar-alt mr-1" />
+              {post.date?.start_date || post.lastEditedTime}
+
             </Link>
           </div>
 
@@ -61,11 +72,14 @@ const BlogPostCard = ({ post, showSummary }) => {
           )}
 
           <div className="text-gray-400 justify-between flex">
-            <Link href={`/category/${post.category}`} passHref>
-              <a className="cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform">
-                <i className="mr-1 far fa-folder" />
-                {post.category}
-              </a>
+            <Link
+              href={`/category/${post.category}`}
+              passHref
+              className="cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform">
+
+              <i className="mr-1 far fa-folder" />
+              {post.category}
+
             </Link>
             <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
               <div>
@@ -78,20 +92,20 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {CONFIG_HEXO.POST_LIST_COVER && !showPreview && post?.page_cover && !post.results && (
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref>
-            <div className="flex w-full relative duration-200 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none cursor-pointer transform overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={post?.page_cover}
-                alt={post.title}
-                className="max-h-52 lg:max-h-72 w-full hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform object-cover duration-500"
-              />
-              {/* <Image className='hover:scale-125 rounded-t-xl lg:rounded-r-xl lg:rounded-t-none transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
+        {showPageCover && !showPreview && post?.page_cover && (
+           <div className="flex relative duration-200 cursor-pointer transform overflow-hidden md:w-5/12 ">
+                <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src={post?.page_cover}
+                        alt={post.title}
+                        className="h-full w-full hover:scale-125 transform object-cover duration-500"
+                    />
+                    {/* <Image className='hover:scale-125 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
+                </Link>
             </div>
-          </Link>
         )}
-      </div>
+
     </div>
   )
 }

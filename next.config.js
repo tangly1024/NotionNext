@@ -3,9 +3,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer({
-  future: {
-    webpack5: true
-  },
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
@@ -15,6 +12,16 @@ module.exports = withBundleAnalyzer({
       'www.notion.so',
       'avatars.githubusercontent.com',
       'images.unsplash.com'
+    ]
+  },
+  // 默认将feed重定向至 /public/rss/feed.xml
+  async redirects() {
+    return [
+      {
+        source: '/feed',
+        destination: '/rss/feed.xml',
+        permanent: true
+      }
     ]
   },
   async rewrites() {

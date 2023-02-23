@@ -27,34 +27,39 @@ const Tabs = ({ className, children }) => {
 
   if (count === 1) {
     return <section className={'duration-200 ' + className}>
-      {children}
-    </section>
+            {children}
+        </section>
   }
 
-  function tabClickHandle (i) {
+  function tabClickHandle(i) {
     setCurrentTab(i)
   }
 
   return <div className={'mb-5 duration-200 ' + className}>
-    <ul className='flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600'>
-      {children.map((item, index) => {
-        return <li key={index}
-                   className={(currentTab === index ? 'font-black border-b-2 border-red-400 text-red-400 animate__animated animate__jello ' : 'font-extralight cursor-pointer') + ' text-sm font-sans '}
-                   onClick={() => {
-                     tabClickHandle(index)
-                   }}>
-          {item?.key}
-        </li>
-      })}
-    </ul>
-    <div>
-      {children.map((item, index) => {
-        return <section key={index} className={ 'animate__animated animate__fadeIn animate__faster'}>
-          {currentTab === index && item}
-        </section>
-      })}
+        <ul className='flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600 overflow-auto'>
+            {children.map((item, index) => {
+              return <li key={index}
+                    className={(currentTab === index ? 'font-black border-b-2 border-red-400 text-red-400 animate__animated animate__jello ' : 'font-extralight cursor-pointer') + ' text-sm font-sans '}
+                    onClick={() => {
+                      tabClickHandle(index)
+                    }}>
+                    {item?.key}
+                </li>
+            })}
+        </ul>
+        <div>
+            {children.map((item, index) => {
+              return <section key={index}
+                    data-aos="fade-up"
+                    data-aos-duration="600"
+                    data-aos-easing="ease-in-out"
+                    data-aos-once="true"
+                    data-aos-anchor-placement="top-bottom">
+                    {currentTab === index && item}
+                </section>
+            })}
+        </div>
     </div>
-  </div>
 }
 
 export default Tabs

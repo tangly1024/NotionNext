@@ -3,7 +3,7 @@ const CONFIG_NEXT = {
   HOME_BANNER: false, // 首页是否显示大图及标语 [true,false]
   HOME_BANNER_Strings: ['Hi, I am Spac', 'Welcome to my Blog 🎉'], // 首页大图标语文字
 
-  NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
+  NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
 
   POST_LIST_COVER: false, // 文章列表显示封面图
   POST_LIST_PREVIEW: false, // 显示文章预览
