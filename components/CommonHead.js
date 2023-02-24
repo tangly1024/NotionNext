@@ -43,7 +43,6 @@ const CommonHead = ({ meta, children }) => {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
-      {meta?.type === 'article' && (
         <>
           <meta
             property="article:published_time"

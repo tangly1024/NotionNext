@@ -8,13 +8,11 @@ import { useGlobal } from '@/lib/global'
  * @returns
  */
 export const ArticleLock = props => {
-  const { password, validPassword } = props
+  const { validPassword } = props
   const { locale } = useGlobal()
   const submitPassword = () => {
     const p = document.getElementById('password')
-    if (p && p.value && p.value === password) {
-      validPassword(true)
-    } else {
+    if (!validPassword(p?.value)) {
       const tips = document.getElementById('tips')
       if (tips) {
         tips.innerHTML = ''
@@ -23,7 +21,7 @@ export const ArticleLock = props => {
     }
   }
 
-  return <div id='container' className='w-full flex justify-center items-center h-96 font-sans'>
+  return <div id='container' className='w-full flex justify-center items-center h-96 '>
     <div className='text-center space-y-3'>
       <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
       <div className='flex'>
