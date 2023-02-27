@@ -11,7 +11,7 @@ const BLOG = {
   APPEARANCE: 'light', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
 
   AUTHOR: 'Devin', // 您的昵称 例如 tangly1024
-  BIO: '想搞钱但搞不到钱的普通人', // 作者简介
+  BIO: '一个俗人', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://google.com', // 网站地址
   KEYWORDS: 'Notion, 博客', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
