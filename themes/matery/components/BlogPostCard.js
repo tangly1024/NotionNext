@@ -16,7 +16,7 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
           data-aos="zoom-in"
           data-aos-duration="300"
           data-aos-easing="ease-in-out"
-          data-aos-once="false"
+          data-aos-once="true"
           data-aos-anchor-placement="top-bottom"
           className="w-full mb-4 h-full overflow-auto drop-shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
