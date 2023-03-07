@@ -27,7 +27,7 @@ const SideAreaLeft = props => {
 
         <section
             data-aos="fade-down"
-            data-aos-duration="600"
+            data-aos-duration="300"
             data-aos-easing="ease-in-out"
             data-aos-once="false"
             data-aos-anchor-placement="top-bottom"
@@ -41,7 +41,9 @@ const SideAreaLeft = props => {
                 {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
                     <SearchInput {...props} />
                 </div>}
+
             </section>
+
         </section>
 
         <div className='sticky top-4 hidden lg:block'>

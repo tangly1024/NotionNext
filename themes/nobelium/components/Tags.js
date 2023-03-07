@@ -2,7 +2,6 @@ import Link from 'next/link'
 
 const Tags = props => {
   const { tagOptions, tag } = props
-  console.log(props)
   const currentTag = tag
   if (!tagOptions) return null
   return (

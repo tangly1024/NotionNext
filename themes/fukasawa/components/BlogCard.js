@@ -16,13 +16,13 @@ const BlogCard = ({ post, showSummary, siteInfo }) => {
     <Card className="w-full lg:max-w-sm p-2 h-full overflow-auto">
       <div
         key={post.id}
-        className="animate__animated animate__fadeIn flex flex-col-reverse justify-between duration-300"
+        className="flex flex-col-reverse justify-between duration-300"
       >
         <div className="p-2 flex flex-col w-full">
           <Link
             href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
-            className={`cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'
+            className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'
               } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
 
             {post.title}

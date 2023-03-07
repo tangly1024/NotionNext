@@ -2,8 +2,11 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
+import CONFIG_NOBELIUM from '../config_nobelium'
+import { SvgIcon } from './SvgIcon'
 
-const Nav = ({ navBarTitle, fullWidth }) => {
+const Nav = props => {
+  const { navBarTitle, fullWidth, siteInfo } = props
   const useSticky = !BLOG.autoCollapsedNavBar
   const navRef = useRef(null)
   const sentinalRef = useRef([])
@@ -40,33 +43,12 @@ const Nav = ({ navBarTitle, fullWidth }) => {
         <Link href="/" aria-label={BLOG.title}>
 
           <div className="h-6">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                width="24"
-                height="24"
-                className="fill-current text-black dark:text-white"
-              />
-              <rect width="24" height="24" fill="url(#paint0_radial)" />
-              <defs>
-                <radialGradient
-                  id="paint0_radial"
-                  cx="0"
-                  cy="0"
-                  r="1"
-                  gradientUnits="userSpaceOnUse"
-                  gradientTransform="rotate(45) scale(39.598)"
-                >
-                  <stop stopColor="#CFCFCF" stopOpacity="0.6" />
-                  <stop offset="1" stopColor="#E9E9E9" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-            </svg>
+            {/* <SvgIcon/> */}
+            {CONFIG_NOBELIUM.NAV_NOTION_ICON
+            /* eslint-disable-next-line @next/next/no-img-element */
+              ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR}/>
+              : <SvgIcon/>}
+
           </div>
 
         </Link>
@@ -78,26 +60,26 @@ const Nav = ({ navBarTitle, fullWidth }) => {
             )
           : (
           <p className="ml-2 font-medium text-day dark:text-night header-name">
-            {BLOG.title},{' '}
-            <span className="font-normal">{BLOG.description}</span>
+            {siteInfo?.title}
+            {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
           </p>
             )}
       </div>
-      <NavBar />
+      <NavBar {...props}/>
     </div>
-  </>;
+  </>
 }
 
-const NavBar = (props) => {
+const NavBar = props => {
   const { customNav } = props
 
   const { locale } = useGlobal()
   let links = [
-    { id: 2, name: locale.NAV.RSS, to: '/feed', show: true },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: true },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: true },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: false },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: true }
+    { id: 2, name: locale.NAV.RSS, to: '/feed', show: CONFIG_NOBELIUM.MENU_RSS, target: '_blank' },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_NOBELIUM.MENU_SEARCH },
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_NOBELIUM.MENU_ARCHIVE },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NOBELIUM.MENU_CATEGORY },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NOBELIUM.MENU_TAG }
   ]
   if (customNav) {
     links = links.concat(customNav)
@@ -112,7 +94,7 @@ const NavBar = (props) => {
                 key={link.id}
                 className="block ml-4 text-black dark:text-gray-50 nav"
               >
-                <Link href={link.to}>
+                <Link href={link.to} target={link.target}>
                   {link.name}
                 </Link>
               </li>
@@ -120,7 +102,7 @@ const NavBar = (props) => {
         )}
       </ul>
     </div>
-  );
+  )
 }
 
 export default Nav

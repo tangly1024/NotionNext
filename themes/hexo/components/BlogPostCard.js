@@ -15,9 +15,9 @@ const BlogPostCard = ({ post, showSummary, index, siteInfo }) => {
     <div
         key={post.id}
         data-aos="fade-up"
-        data-aos-duration="600"
+        data-aos-duration="300"
         data-aos-easing="ease-in-out"
-        data-aos-once="false"
+        data-aos-once="true"
         data-aos-anchor-placement="top-bottom"
         className={`flex md:flex-row flex-col-reverse  ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}
         w-full md:h-72 h-96 justify-between overflow-hidden drop-shadow-md  

@@ -49,7 +49,7 @@ const LayoutBase = props => {
                               data-aos-easing="ease-in-out"
                               data-aos-once="false"
                               data-aos-anchor-placement="top-center"
-                              className='fixed xl:right-80 right-2 mr-6 bottom-24 hidden lg:block z-20'>
+                              className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20'>
                               <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }}/>
                             </div>
                         </div>
