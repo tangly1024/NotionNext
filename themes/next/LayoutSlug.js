@@ -19,32 +19,23 @@ export const LayoutSlug = (props) => {
     }} /></div>
     : null
 
-  if (!post) {
-    return <LayoutBase
-          {...props}
-          rightAreaSlot={
-            CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup posts={latestPosts} /></Card>
-          }
-        />
-  }
+  const rightAreaSlog = CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup latestPosts={latestPosts} /></Card>
 
   return (
     <LayoutBase
       {...props}
       floatSlot={floatSlot}
-      rightAreaSlot={
-        CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup posts={latestPosts} /></Card>
-      }
+      rightAreaSlot={rightAreaSlog}
     >
 
-      {!lock && <ArticleDetail {...props} />}
+      {post && !lock && <ArticleDetail {...props} />}
 
-      {lock && <ArticleLock validPassword={validPassword} />}
+      {post && lock && <ArticleLock validPassword={validPassword} />}
 
       {/* 悬浮目录按钮 */}
-      <div className='block lg:hidden'>
+      {post && <div className='block lg:hidden'>
         <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
-      </div>
+      </div>}
 
     </LayoutBase>
   )

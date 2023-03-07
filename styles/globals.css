@@ -259,3 +259,9 @@ a,img {
     cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/pointer.cur),
         default;
 }
+
+
+/* twikoo 评论区超链接样式 */
+.tk-main a {
+   @apply text-blue-700
+}

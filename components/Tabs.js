@@ -51,7 +51,7 @@ const Tabs = ({ className, children }) => {
             {children.map((item, index) => {
               return <section key={index}
                     data-aos="fade-up"
-                    data-aos-duration="600"
+                    data-aos-duration="300"
                     data-aos-easing="ease-in-out"
                     data-aos-once="true"
                     data-aos-anchor-placement="top-bottom">
