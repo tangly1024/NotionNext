@@ -16,17 +16,20 @@ export const Header = (props) => {
                     {/* 可使用一张单图作为logo */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     {/* <img className='max-h-48 hover:opacity-60 duration-200 transition-all cursor-pointer' src={CONFIG_SIMPLE.LOGO_IMG}/> */}
-                    <div>
+                    <div className='flex space-x-12'>
                         <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer'>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={siteInfo?.icon} className='rounded-full' width={120} alt={BLOG.AUTHOR} />
                         </div>
-                        <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
-                        <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center'>{BLOG.BIO}</div>
-                    </div>
 
+                        <div>
+                            <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
+                            <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center'>{BLOG.BIO}</div>
+                        </div>
+                   </div>
                 </Link>
-                <div className='text-xs text-gray-500 dark:text-gray-300'>{siteInfo?.description}</div>
+
+                <div className='text-xs mt-4 text-gray-500 dark:text-gray-300'>{siteInfo?.description}</div>
             </div>
         </header>
   )
