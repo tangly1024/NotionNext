@@ -1,13 +1,11 @@
 
 import BLOG from '@/blog.config'
-import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { BlogItem } from './BlogItem'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
-  const { locale } = useGlobal()
   const router = useRouter()
   const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
   const currentPage = +page
@@ -28,13 +26,13 @@ export const BlogListPage = props => {
             <div className="flex justify-between text-xs">
                 <Link
                     href={{ pathname: currentPage - 1 === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}
-                    className={`${showPrev ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>
-                    {locale.PAGINATION.PREV}
+                    className={`${showPrev ? 'text-blue-400 border-b border-blue-400 ' : 'bg-gray pointer-events-none '} text-white no-underline pb-1 px-3`}>
+                    NEWER POSTS <i className="fa-solid fa-arrow-left"></i>
                 </Link>
                 <Link
                     href={{ pathname: `${pagePrefix}/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}
-                    className={`${showNext ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>
-                    {locale.PAGINATION.NEXT}
+                    className={`${showNext ? 'text-blue-400 border-b border-blue-400 ' : 'bg-gray pointer-events-none '} text-white no-underline pb-1 px-3`}>
+                    OLDER POSTS <i className="fa-solid fa-arrow-right"></i>
                 </Link>
             </div>
         </div>

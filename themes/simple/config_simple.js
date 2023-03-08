@@ -4,6 +4,8 @@ const CONFIG_SIMPLE = {
   TOP_BAR: true, // 显示顶栏
   TOP_BAR_CONTENT: process.env.NEXT_PUBLIC_THEME_SIMPLE_TOP_TIPS || '',
 
+  AUTHOR_LINK: process.env.NEXT_PUBLIC_AUTHOR_LINK || '#',
+
   // 菜单配置
   MENU_CATEGORY: true, // 显示分类
   MENU_TAG: true, // 显示标签

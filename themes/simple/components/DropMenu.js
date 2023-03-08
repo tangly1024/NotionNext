@@ -17,9 +17,9 @@ export const DropMenu = ({ link }) => {
         </Link>
 
         {/* 子菜单 */}
-        {hasSubMenu && <ul className={`${show ? 'visible opacity-100' : 'invisible opacity-0'} transition-all duration-300 z-20 top-12 absolute block border border-gray-100 bg-white drop-shadow-lg `}>
+        {hasSubMenu && <ul className={`${show ? 'visible opacity-100' : 'invisible opacity-0'} border-gray-100  bg-white  dark:bg-black dark:border-gray-800 transition-all duration-300 z-20 top-12 absolute block border drop-shadow-lg `}>
             {link.subMenus.map(sLink => {
-              return <li key={sLink.id} className=' text-blue-400 hover:bg-gray-50 tracking-widest transition-all duration-200 border-b py-3 pr-6 pl-2'>
+              return <li key={sLink.id} className=' text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800  py-3 pr-6 pl-2'>
                 <Link href={sLink.to}>
                 <span className='text-xs'>{sLink.title}</span>
                 </Link>

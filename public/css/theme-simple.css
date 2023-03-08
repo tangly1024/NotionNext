@@ -6,6 +6,10 @@
   color: #276077;
 }
 
+.dark #theme-simple #blog-item-title {
+  color: #d1d5db;
+}
+
 .notion {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
