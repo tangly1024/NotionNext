@@ -3,7 +3,6 @@ import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import SearchInput from './components/SearchInput'
 import Mark from 'mark.js'
 import LayoutBase from './LayoutBase'
 import { isBrowser } from '@/lib/utils'
@@ -44,9 +43,6 @@ export const LayoutSearch = props => {
   }, [])
 
   return <LayoutBase {...props}>
-        <div className='pb-12'>
-            <SearchInput {...props} />
-        </div>
 
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
 
