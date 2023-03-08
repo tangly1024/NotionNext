@@ -31,7 +31,7 @@ export const Nav = ({ customNav, customMenu }) => {
   return (
         <nav className="w-full bg-white md:pt-0 px-6 relative z-20 shadow-md border-t border-gray-100 dark:border-hexo-black-gray dark:bg-black">
             <div className="container mx-auto max-w-8xl md:flex justify-between items-center text-sm md:text-md md:justify-start">
-                <div className="w-full text-center md:text-left flex flex-wrap justify-center items-stretch md:justify-start md:items-start">
+                <div className="w-full text-center md:text-left flex flex-wrap justify-center items-stretch md:justify-start md:items-start py-4 space-x-4">
 
                     {links?.map(link => {
                       if (link?.show) {

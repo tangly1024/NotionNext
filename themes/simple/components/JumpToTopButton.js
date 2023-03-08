@@ -11,8 +11,24 @@ import React from 'react'
  */
 const JumpToTopButton = () => {
   const { locale } = useGlobal()
-  return <div title={locale.POST.TOP} className='cursor-pointer p-2 text-center' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-    ><i className='fas fa-angle-up text-2xl' />
+  const [show, switchShow] = React.useState(false)
+  const scrollListener = () => {
+    const scrollY = window.pageYOffset
+    const shouldShow = scrollY > 200
+    if (shouldShow !== show) {
+      switchShow(shouldShow)
+    }
+  }
+
+  React.useEffect(() => {
+    document.addEventListener('scroll', scrollListener)
+    return () => document.removeEventListener('scroll', scrollListener)
+  }, [show])
+
+  return <div title={locale.POST.TOP}
+        className={(show ? ' opacity-100 ' : 'invisible  opacity-0') + ' transition-all duration-300 flex items-center justify-center cursor-pointer bg-black h-10 w-10 bg-opacity-40 rounded-sm'}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    ><i className='fas fa-angle-up text-white ' />
     </div>
 }
 

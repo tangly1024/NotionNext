@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Footer from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import TopNav from './components/TopNav'
-import smoothscroll from 'smoothscroll-polyfill'
 import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
@@ -37,7 +36,6 @@ const LayoutBase = props => {
     // changePercent(per)
   }
   useEffect(() => {
-    smoothscroll.polyfill()
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])

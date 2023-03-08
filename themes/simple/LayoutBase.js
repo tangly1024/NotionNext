@@ -25,7 +25,7 @@ const LayoutBase = props => {
         <div id='theme-simple' className='dark:text-gray-300  bg-white dark:bg-black'>
             <CommonHead meta={meta} />
 
-            {CONFIG_SIMPLE.TOP_BAR && <TopBar {...props}/>}
+            {CONFIG_SIMPLE.TOP_BAR && <TopBar {...props} />}
 
             {/* 顶部LOGO */}
             <Header {...props} />
@@ -38,7 +38,7 @@ const LayoutBase = props => {
 
                 {/* <Title {...props} /> */}
 
-                <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'w-full relative container mx-auto justify-start md:flex items-start py-8 px-2'}>
+                <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'w-full relative container mx-auto justify-start md:flex items-start pt-12 px-2'}>
 
                     <div className='w-full max-w-6xl'>{children}</div>
 

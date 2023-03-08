@@ -2,7 +2,7 @@ const CONFIG_SIMPLE = {
 
   LOGO_IMG: '/Logo.webp',
   TOP_BAR: true, // 显示顶栏
-  TOP_BAR_CONTENT: '<div>欢迎访问我的网站，NotionNext最新版本已更新至3.12.0，欢迎体验！<div>',
+  TOP_BAR_CONTENT: process.env.NEXT_PUBLIC_THEME_SIMPLE_TOP_TIPS || '',
 
   // 菜单配置
   MENU_CATEGORY: true, // 显示分类

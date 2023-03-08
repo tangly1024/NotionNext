@@ -1,8 +1,8 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
 import React from 'react'
 import throttle from 'lodash.throttle'
+import { BlogItem } from './BlogItem'
 
 export const BlogListScroll = props => {
   const { posts } = props
@@ -44,39 +44,17 @@ export const BlogListScroll = props => {
   })
 
   return (
-      <div id="container" className="w-full md:pr-12 mb-12" ref={targetRef}>
+      <div id="container" className="w-full md:pr-8 mb-12" ref={targetRef}>
               {postsToShow.map(p => (
-                  <article key={p.id} className="mb-12" >
-                      <h2 className="mb-4">
-                          <Link
-                              href={`/${p.slug}`}
-                              className="text-black text-xl md:text-2xl no-underline hover:underline">
-                                {p.title}
-                          </Link>
-                      </h2>
-
-                      <div className="mb-4 text-sm text-gray-700">
-                          by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
-                          <span className="font-bold mx-1"> | </span>
-                          <a href="#" className="text-gray-700">{p.category}</a>
-                          <span className="font-bold mx-1"> | </span>
-                          {/* <a href="#" className="text-gray-700">2 Comments</a> */}
-                      </div>
-
-                      <p className="text-gray-700 leading-normal">
-                          {p.summary}
-                      </p>
-                  </article>
+                  <BlogItem key={p.id} post={p}/>
               ))}
 
-              <div
-                  onClick={handleGetMore}
-                  className="w-full my-4 py-4 text-center cursor-pointer "
-              >
+              <div onClick={handleGetMore}
+                   className="w-full my-4 py-4 text-center cursor-pointer ">
                   {' '}
                   {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
               </div>
 
           </div>
-  );
+  )
 }

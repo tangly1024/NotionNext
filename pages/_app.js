@@ -21,6 +21,7 @@ import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
 import ExternalScript from '@/components/ExternalScript'
 import { isBrowser } from '@/lib/utils'
+import smoothscroll from 'smoothscroll-polyfill'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
@@ -57,6 +58,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   if (isBrowser()) {
     AOS.init()
+    smoothscroll.polyfill()
   }
 
   return (

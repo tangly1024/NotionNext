@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from '../config_next'
 
 /**
@@ -11,12 +10,18 @@ import CONFIG_NEXT from '../config_next'
  * @constructor
  */
 const JumpToBottomButton = ({ showPercent = false }) => {
+  const [show, switchShow] = useState(false)
+  const [percent, changePercent] = useState(0)
+
+  useEffect(() => {
+    document.addEventListener('scroll', scrollListener)
+    return () => document.removeEventListener('scroll', scrollListener)
+  }, [show])
+
   if (!CONFIG_NEXT.WIDGET_TO_BOTTOM) {
     return <></>
   }
 
-  const [show, switchShow] = useState(false)
-  const [percent, changePercent] = useState(0)
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
     const clientHeight = targetRef?.clientHeight
@@ -35,13 +40,6 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     const targetRef = document.getElementById('wrapper')
     window.scrollTo({ top: targetRef.clientHeight, behavior: 'smooth' })
   }
-
-  useEffect(() => {
-    smoothscroll.polyfill()
-
-    document.addEventListener('scroll', scrollListener)
-    return () => document.removeEventListener('scroll', scrollListener)
-  }, [show])
 
   return (<div className='flex space-x-1 transform hover:scale-105 duration-200 py-2 px-3' onClick={scrollToBottom} >
     <div className='dark:text-gray-200' >

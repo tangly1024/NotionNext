@@ -6,8 +6,8 @@ const Announcement = ({ post, className }) => {
   if (!post) {
     return <></>
   }
-  return <>{post && (<div id="announcement-content">
-        <NotionPage post={post} className='text-center ' />
+  return <>{post && (<div id="announcement-content" className='px-3'>
+        <NotionPage post={post} />
     </div>)} </>
 }
 export default Announcement
