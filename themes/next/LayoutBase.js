@@ -59,7 +59,7 @@ const LayoutBase = (props) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<>
+  return (<div id='theme-next'>
 
       <CommonHead meta={meta} />
 
@@ -90,7 +90,7 @@ const LayoutBase = (props) => {
       </div>
 
       <Footer title={siteInfo?.title}/>
-      </>
+    </div>
   )
 }
 

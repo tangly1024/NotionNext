@@ -74,7 +74,7 @@ export default function TopNavBar(props) {
                                 {link.slot}
 
                             </Link>
-                        );
+                        )
                       } else {
                         return null
                       }
@@ -82,5 +82,5 @@ export default function TopNavBar(props) {
                 </div>
             </div>
         </div>
-  );
+  )
 }

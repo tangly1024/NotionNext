@@ -216,3 +216,19 @@ nav {
 .tk-main a {
    @apply text-blue-700
 }
+
+
+/*  菜单下划线动画 */
+.menu-link {
+    text-decoration: none;
+    background-image: linear-gradient(#dd3333, #dd3333);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 0 2px;
+    transition: background-size 100ms ease-in-out;
+}
+ 
+.menu-link:hover {
+    background-size: 100% 2px;
+    color: #dd3333;
+}

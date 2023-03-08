@@ -59,7 +59,7 @@ const LayoutBase = props => {
   }, [show])
 
   return (
-    <div className="bg-hexo-background-gray dark:bg-black">
+    <div id='theme-hexo' className="bg-hexo-background-gray dark:bg-black">
       <CommonHead meta={meta} siteInfo={siteInfo}/>
 
       <TopNav {...props} />
