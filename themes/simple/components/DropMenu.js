@@ -27,7 +27,7 @@ export const DropMenu = ({ link }) => {
             {link.subMenus.map(sLink => {
               return <li key={sLink.id} className=' text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800  py-3 pr-6 pl-2'>
                     <Link href={sLink.to}>
-                        <span className='text-xs'>{sLink.title}</span>
+                        <span className='text-xs font-extralight'>{sLink.title}</span>
                     </Link>
                 </li>
             })}
