@@ -3,14 +3,15 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import CONFIG_SIMPLE from '../config_simple'
-import { DropMenu } from './DropMenu'
+import { NavBarMenu } from './NavBarMenu'
 
 /**
  * 菜单导航
  * @param {*} props
  * @returns
  */
-export const Nav = ({ customNav, customMenu }) => {
+export const NavBar = (props) => {
+  const { customNav, customMenu } = props
   const { locale } = useGlobal()
   const [showSearchInput, changeShowSearchInput] = useState(false)
   const router = useRouter()
@@ -47,23 +48,17 @@ export const Nav = ({ customNav, customMenu }) => {
   }
 
   return (
-        <nav className="w-full bg-white md:pt-0 px-6 relative z-20 shadow-md border-t border-gray-100 dark:border-hexo-black-gray dark:bg-black">
-            <div className="container mx-auto max-w-8xl md:flex justify-between items-center text-sm md:text-md md:justify-start">
-                <div className="w-full h-12 text-center md:text-left flex flex-wrap justify-center items-stretch md:justify-start md:items-start space-x-4">
-                    {showSearchInput && <input id="theme-simple-search" onKeyUp={onKeyUp} className='h-full px-4 w-full' aria-label="Submit search" type="search" name="s" autoComplete="off" placeholder="Type then hit enter to search..."/>}
-
-                    {!showSearchInput && links?.map(link => {
-                      if (link?.show) {
-                        return <DropMenu key={link.id} link={link}/>
-                      } else {
-                        return null
-                      }
-                    })}
+        <nav className="w-full bg-white md:pt-0  relative z-20 shadow border-t border-gray-100 dark:border-hexo-black-gray dark:bg-black">
+            <div id="nav-bar-inner" className="h-12 mx-auto max-w-9/10 justify-between items-center text-sm md:text-md md:justify-start">
+                {/* 左侧菜单 */}
+                <div className="h-full w-full float-left text-center md:text-left flex flex-wrap items-stretch md:justify-start md:items-start space-x-4">
+                    {showSearchInput && <input id="theme-simple-search" onKeyUp={onKeyUp} className='float-left w-full outline-none h-full px-4' aria-label="Submit search" type="search" name="s" autoComplete="off" placeholder="Type then hit enter to search..." />}
+                    {!showSearchInput && (<NavBarMenu {...props}/>)}
                 </div>
 
-                <div className="w-full md:w-1/3 text-center md:text-right hidden md:block">
+                <div className="absolute right-12 h-full text-center px-2 flex items-center">
                     {/* <!-- extra links --> */}
-                    <i className={showSearchInput ? 'fa-regular fa-circle-xmark' : 'fa-solid fa-magnifying-glass ' + ' cursor-pointer'} onClick={toggleShowSearchInput}></i>
+                    <i className={showSearchInput ? 'fa-regular fa-circle-xmark' : 'fa-solid fa-magnifying-glass' + ' align-middle cursor-pointer'} onClick={toggleShowSearchInput}></i>
                 </div>
             </div>
         </nav>

@@ -3,6 +3,7 @@ const CONFIG_SIMPLE = {
   LOGO_IMG: '/Logo.webp',
   TOP_BAR: true, // 显示顶栏
   TOP_BAR_CONTENT: process.env.NEXT_PUBLIC_THEME_SIMPLE_TOP_TIPS || '',
+  LOGO_DESCRIPTION: process.env.NEXT_PUBLIC_THEME_SIMPLE_LOGO_DESCRIPTION || '<div>程序员<br/>互联网爱好者/人文历史<br/>创业财富</div>',
 
   AUTHOR_LINK: process.env.NEXT_PUBLIC_AUTHOR_LINK || '#',
 

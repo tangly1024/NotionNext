@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
+import CONFIG_SIMPLE from '../config_simple'
 // import CONFIG_SIMPLE from '../config_simple'
 
 /**
@@ -19,12 +20,12 @@ export const Header = (props) => {
                     <div className='flex space-x-12'>
                         <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer'>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={siteInfo?.icon} className='rounded-full' width={120} alt={BLOG.AUTHOR} />
+                            <img src={siteInfo?.icon} className='rounded-full' width={160} alt={BLOG.AUTHOR} />
                         </div>
 
                         <div>
-                            <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
-                            <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center'>{BLOG.BIO}</div>
+                            <div className='text-3xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
+                            <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center' dangerouslySetInnerHTML={{ __html: CONFIG_SIMPLE.LOGO_DESCRIPTION }}/>
                         </div>
                    </div>
                 </Link>

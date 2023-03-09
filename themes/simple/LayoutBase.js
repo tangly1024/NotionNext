@@ -1,7 +1,7 @@
 import CommonHead from '@/components/CommonHead'
 import React from 'react'
 import { Header } from './components/Header'
-import { Nav } from './components/Nav'
+import { NavBar } from './components/NavBar'
 import { Footer } from './components/Footer'
 // import { Title } from './components/Title'
 import { SideBar } from './components/SideBar'
@@ -30,17 +30,17 @@ const LayoutBase = props => {
             {/* 顶部LOGO */}
             <Header {...props} />
 
-            {/* 菜单 */}
-            <Nav {...props} />
+            {/* 导航栏 */}
+            <NavBar {...props} />
 
             {/* 主体 */}
-            <div id='container-inner' className="w-full relative z-10">
+            <div id='container-wrap' className="w-full relative">
 
                 {/* <Title {...props} /> */}
 
-                <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full relative container mx-auto justify-start md:flex items-start pt-12 px-2'}>
+                <div id='container-inner' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + '  max-w-9/10 w-full relative container mx-auto flex justify-center items-start pt-12'}>
 
-                    <div className='w-full max-w-6xl'>{children}</div>
+                    <div className='w-full flex-grow'>{children}</div>
 
                     <SideBar {...props} />
 
@@ -48,7 +48,7 @@ const LayoutBase = props => {
 
             </div>
 
-            <div className='fixed right-4 bottom-4 z-10'>
+            <div className='fixed right-4 bottom-4'>
                 <JumpToTopButton />
             </div>
 
