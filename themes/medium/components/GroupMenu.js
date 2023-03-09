@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import CONFIG_MEDIUM from '../config_medium'
 
-function GroupMenu ({ customNav }) {
+function GroupMenu ({ customMenu, customNav }) {
   const { locale } = useGlobal()
   const router = useRouter()
 
@@ -39,13 +39,13 @@ function GroupMenu ({ customNav }) {
                 {link.slot}
 
               </Link>
-            );
+            )
           } else {
             return null
           }
         })}
       </nav>
-  );
+  )
 }
 
 export default GroupMenu

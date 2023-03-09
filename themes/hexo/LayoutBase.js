@@ -5,7 +5,6 @@ import Footer from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
-import smoothscroll from 'smoothscroll-polyfill'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
@@ -53,13 +52,12 @@ const LayoutBase = props => {
     // changePercent(per)
   }
   useEffect(() => {
-    smoothscroll.polyfill()
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
   return (
-    <div className="custom-background dark:bg-black">
+    <div id='theme-hexo' className="custom-background dark:bg-black">
       <CommonHead meta={meta} siteInfo={siteInfo}/>
 
       <TopNav {...props} />

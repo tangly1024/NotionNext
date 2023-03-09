@@ -25,7 +25,7 @@ const LayoutBase = (props) => {
     meta
   } = props
   const leftAreaSlot = <Live2D/>
-  return (<>
+  return (<div id='theme-fukasawa' >
     <CommonHead meta={meta} />
     <TopNav {...props}/>
     <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
@@ -38,7 +38,7 @@ const LayoutBase = (props) => {
       </main>
     </div>
 
-  </>)
+  </div>)
 }
 
 export default LayoutBase
