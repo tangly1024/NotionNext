@@ -8,7 +8,7 @@ const Announcement = ({ post, className }) => {
   if (post?.blockMap) {
     return <div
         data-aos="fade-up"
-        data-aos-duration="600"
+        data-aos-duration="300"
         data-aos-easing="ease-in-out"
         data-aos-once="false"
         data-aos-anchor-placement="top-bottom"

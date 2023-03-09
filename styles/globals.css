@@ -204,7 +204,7 @@ nav {
 }
 
 .nobelium .notion-code{
-    @apply max-w-2xl;
+    /* @apply max-w-2xl; */
 }
 
 .next #announcement-content *{

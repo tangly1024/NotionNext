@@ -8,6 +8,10 @@ import React from 'react'
 const Collapse = props => {
   const collapseRef = React.useRef(null)
   const type = props.type || 'vertical'
+  /**
+   * 折叠
+   * @param {*} element
+   */
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
     const sectionWidth = element.scrollWidth
@@ -54,17 +58,20 @@ const Collapse = props => {
     clearTimeout(clearTime)
   }
 
+  const updateHeight = () => {
+    collapseRef.current.style.height = 'auto'
+  }
+
   React.useEffect(() => {
-    const element = collapseRef.current
     if (props.isOpen) {
-      expandSection(element)
+      expandSection(collapseRef.current)
     } else {
-      collapseSection(element)
+      collapseSection(collapseRef.current)
     }
   }, [props.isOpen])
 
   return (
-    <div ref={collapseRef} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={'overflow-hidden duration-200 ' + props.className }>
+    <div ref={collapseRef} onClick={updateHeight} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={'overflow-hidden duration-200 ' + props.className }>
       {props.children}
     </div>
   )

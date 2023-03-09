@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import CONFIG_EMPTY from '../config_empty'
+import CONFIG_EXAMPLE from '../config_example'
 
 /**
  * 菜单导航
@@ -11,10 +11,10 @@ export const Nav = (props) => {
   const { customNav } = props
   const { locale } = useGlobal()
   let links = [
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_EMPTY.MENU_SEARCH },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_EMPTY.MENU_ARCHIVE },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_EMPTY.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_EMPTY.MENU_TAG }
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_EXAMPLE.MENU_SEARCH },
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_EXAMPLE.MENU_ARCHIVE },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_EXAMPLE.MENU_CATEGORY },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_EXAMPLE.MENU_TAG }
   ]
 
   if (customNav) {

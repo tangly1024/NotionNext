@@ -50,7 +50,7 @@ export const LayoutSlug = props => {
                         {lock && <ArticleLock validPassword={validPassword} />}
 
                         {!lock && <div id="container" className="overflow-x-auto md:w-full px-3 ">
-                            {post?.type === 'Post' && <>
+                            { post?.type && post?.type === 'Post' && <>
                                 <div
                                     data-aos="fade-down"
                                     data-aos-duration="500"

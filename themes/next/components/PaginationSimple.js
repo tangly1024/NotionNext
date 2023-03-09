@@ -17,7 +17,7 @@ const PaginationSimple = ({ page, showNext }) => {
   return (
     <div
         data-aos="fade-down"
-        data-aos-duration="600"
+        data-aos-duration="300"
         data-aos-easing="ease-in-out"
         data-aos-once="false"
         data-aos-anchor-placement="top-bottom"
