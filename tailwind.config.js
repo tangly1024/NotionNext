@@ -21,9 +21,10 @@ module.exports = {
         }
       },
       maxWidth: {
-        side: '14rem'
+        side: '14rem',
+        '9/10': '90%'
       }
-    },
+    }
   },
   variants: {
     extend: {}

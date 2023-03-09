@@ -5,7 +5,7 @@ import TagItemMini from './TagItemMini'
 import CONFIG_HEXO from '../config_hexo'
 import NotionPage from '@/components/NotionPage'
 
-const BlogPostCard = ({ post, showSummary, index, siteInfo }) => {
+const BlogPostCard = ({ post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
   if (post && !post.page_cover && CONFIG_HEXO.POST_LIST_COVER_DEFAULT) {
     post.page_cover = siteInfo?.pageCover
@@ -19,9 +19,9 @@ const BlogPostCard = ({ post, showSummary, index, siteInfo }) => {
         data-aos-easing="ease-in-out"
         data-aos-once="true"
         data-aos-anchor-placement="top-bottom"
-        className={`flex md:flex-row flex-col-reverse  ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}
-        w-full md:h-72 h-96 justify-between overflow-hidden drop-shadow-md  
-        border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray  `}>
+        className='flex md:flex-row flex-col-reverse even:md:flex-row-reverse
+        w-full md:h-72 h-96 justify-between overflow-hidden drop-shadow-md
+        border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray'>
 
         <div className={`lg:p-8 p-4 flex flex-col  ${showPageCover ? 'md:w-7/12 w-full' : 'w-full'}`}>
           <Link
