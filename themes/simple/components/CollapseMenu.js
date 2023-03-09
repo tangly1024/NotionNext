@@ -22,7 +22,7 @@ export const CollapseMenu = ({ link }) => {
   }
 
   return <>
-        <div className='w-full px-8 py-3 text-left border-b' onClick={toggleShow} >
+        <div className='w-full px-8 py-3 text-left border-b dark:bg-hexo-black-gray dark:border-black' onClick={toggleShow} >
             {!hasSubMenu && <Link
                 href={link?.to}
                 className="font-extralight  flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
@@ -39,7 +39,7 @@ export const CollapseMenu = ({ link }) => {
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen}>
             {link.subMenus.map(sLink => {
-              return <div key={sLink.id} className='font-extralight text-left px-10 justify-start text-blue-400 bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
+              return <div key={sLink.id} className='font-extralight dark:bg-black text-left px-10 justify-start text-blue-400 bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
                     <Link href={sLink.to}>
                         <span className='text-xs'>{sLink.title}</span>
                     </Link>

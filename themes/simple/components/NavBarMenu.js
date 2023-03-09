@@ -61,7 +61,7 @@ export const NavBarMenu = ({ customNav, customMenu }) => {
             </div>
 
             <Collapse className='absolute w-full top-12 left-0' isOpen={isOpen}>
-                <div id='menu-wrap' className='bg-white border'>
+                <div id='menu-wrap' className='bg-white dark:border-hexo-black-gray border'>
                 {links?.map(link => {
                   if (link?.show) {
                     return <CollapseMenu key={link.id} link={link} />
