@@ -4,7 +4,6 @@ import CONFIG_SIMPLE from '../config_simple'
 
 export const BlogItem = props => {
   const { post } = props
-  console.log(post)
 
   return <div key={post.id} className="mb-10 pb-12 border-b dark:border-gray-800" >
         <h2 className="mb-5 ">
