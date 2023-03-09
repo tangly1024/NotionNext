@@ -207,7 +207,6 @@
 
 .medium-zoom-image {
   border-radius: 0;
-  @apply bg-gray-100 dark:bg-black
 }
 
 .medium-zoom-image--opened {
@@ -939,7 +938,7 @@ code[class*='language-'] {
   align-self: flex-start;
   width: 24px;
   height: 24px;
-  font-size: 1.3em;
+  font-size: 1em;
   line-height: 1em;
 }
 
