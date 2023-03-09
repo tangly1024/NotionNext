@@ -18,10 +18,6 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  if (!CONFIG_NEXT.WIDGET_TO_BOTTOM) {
-    return <></>
-  }
-
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
     const clientHeight = targetRef?.clientHeight
@@ -39,6 +35,10 @@ const JumpToBottomButton = ({ showPercent = false }) => {
   function scrollToBottom () {
     const targetRef = document.getElementById('wrapper')
     window.scrollTo({ top: targetRef.clientHeight, behavior: 'smooth' })
+  }
+
+  if (!CONFIG_NEXT.WIDGET_TO_BOTTOM) {
+    return <></>
   }
 
   return (<div className='flex space-x-1 transform hover:scale-105 duration-200 py-2 px-3' onClick={scrollToBottom} >
