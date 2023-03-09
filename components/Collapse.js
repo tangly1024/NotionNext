@@ -8,6 +8,10 @@ import React from 'react'
 const Collapse = props => {
   const collapseRef = React.useRef(null)
   const type = props.type || 'vertical'
+  /**
+   * 折叠
+   * @param {*} element
+   */
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
     const sectionWidth = element.scrollWidth

@@ -56,7 +56,7 @@ export const NavBar = (props) => {
                     {!showSearchInput && (<NavBarMenu {...props}/>)}
                 </div>
 
-                <div className="absolute right-12 h-full text-center px-2 flex items-center">
+                <div className="absolute right-12 h-full text-center px-2 flex items-center text-blue-400">
                     {/* <!-- extra links --> */}
                     <i className={showSearchInput ? 'fa-regular fa-circle-xmark' : 'fa-solid fa-magnifying-glass' + ' align-middle cursor-pointer'} onClick={toggleShowSearchInput}></i>
                 </div>

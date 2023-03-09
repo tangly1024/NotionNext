@@ -7,7 +7,6 @@ export const DropMenu = ({ link }) => {
 
   return <div onMouseOver={() => changeShow(true)} onMouseOut={() => changeShow(false)} >
 
-        {/* 大屏菜单 */}
             <Link
                 href={link?.to}
                 className="font-sans menu-link pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1">

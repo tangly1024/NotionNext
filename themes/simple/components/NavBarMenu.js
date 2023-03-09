@@ -1,6 +1,9 @@
 import BLOG from '@/blog.config'
+import Collapse from '@/components/Collapse'
 import { useGlobal } from '@/lib/global'
+import { useState } from 'react'
 import CONFIG_SIMPLE from '../config_simple'
+import { CollapseMenu } from './CollapseMenu'
 import { DropMenu } from './DropMenu'
 
 /**
@@ -10,6 +13,10 @@ import { DropMenu } from './DropMenu'
  */
 export const NavBarMenu = ({ customNav, customMenu }) => {
   const { locale } = useGlobal()
+  const [isOpen, changeIsOpen] = useState(true)
+  const toggleIsOpen = () => {
+    changeIsOpen(!isOpen)
+  }
 
   let links = [
     { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_SIMPLE.MENU_SEARCH },
@@ -40,12 +47,24 @@ export const NavBarMenu = ({ customNav, customMenu }) => {
             })}
         </div>
         <div id='nav-menu-mobile' className='flex md:hidden my-auto justify-start'>
-            <div className='cursor-pointer hover:text-red-400 transition-all duration-200'>
-                <i className='fa fa-bars mr-3'/>
-                <span>MENU</span>
+            <div onClick={toggleIsOpen} className='cursor-pointer hover:text-red-400 transition-all duration-200'>
+                <i className='fa fa-bars mr-3' />
+                <span>{isOpen ? 'CLOSE' : 'MENU'}</span>
             </div>
+
+            <Collapse className='absolute w-full top-12 left-0 border-b' isOpen={isOpen}>
+                <div id='menu-wrap' className='bg-white border'>
+                {links?.map(link => {
+                  if (link?.show) {
+                    return <CollapseMenu key={link.id} link={link} />
+                  } else {
+                    return null
+                  }
+                })}
+                </div>
+            </Collapse>
         </div>
-        </>
+    </>
 
   )
 }
