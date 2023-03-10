@@ -10,6 +10,7 @@ import BLOG from '@/blog.config'
 import { TopBar } from './components/TopBar'
 import CONFIG_SIMPLE from './config_simple'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { Cover } from './components/Cover'
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
 
@@ -53,6 +54,8 @@ const LayoutBase = props => {
             </div>
 
             <Footer {...props} />
+
+            <Cover/>
 
         </div>
   )
