@@ -23,7 +23,7 @@ export const NavBarMenu = ({ customNav, customMenu }) => {
   }
   const router = useRouter()
   useEffect(() => {
-    router.events.on('routeChangeComplete', closeMenu)
+    router.events.on('routeChangeStart', closeMenu)
   })
 
   let links = [
