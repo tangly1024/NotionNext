@@ -18,18 +18,32 @@ let windowTop = 0
  * @returns
  */
 const TopNav = props => {
+  const searchDrawer = useRef()
   const { tags, currentTag, categories, currentCategory } = props
   const { locale } = useGlobal()
-  const searchDrawer = useRef()
   const { isDarkMode } = useGlobal()
   const router = useRouter()
+
+  const [isOpen, changeShow] = useState(false)
+
+  const toggleMenuOpen = () => {
+    changeShow(!isOpen)
+  }
+
+  // 监听滚动
+  useEffect(() => {
+    scrollTrigger()
+    window.addEventListener('scroll', scrollTrigger)
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+    }
+  }, [])
 
   const scrollTrigger = () => {
     requestAnimationFrame(() => {
       const scrollS = window.scrollY
       const nav = document.querySelector('#sticky-nav')
       const header = document.querySelector('#header')
-      const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
       // 是否将导航栏透明
       const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
 
@@ -47,6 +61,7 @@ const TopNav = props => {
         nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
       }
 
+      const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
       if (!showNav) {
         nav && nav.classList.replace('top-0', '-top-20')
         windowTop = scrollS
@@ -69,21 +84,6 @@ const TopNav = props => {
       }
     }
   }
-
-  const [isOpen, changeShow] = useState(false)
-
-  const toggleMenuOpen = () => {
-    changeShow(!isOpen)
-  }
-
-  // 监听滚动
-  useEffect(() => {
-    scrollTrigger()
-    window.addEventListener('scroll', scrollTrigger)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-    }
-  }, [])
 
   const searchDrawerSlot = <>
         {categories && (
@@ -127,7 +127,7 @@ const TopNav = props => {
         <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
         {/* 导航栏 */}
-        <div id='sticky-nav' className={'top-0 shadow-none fixed bg-none dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform transition-all duration-200 border-transparent dark:border-transparent'}>
+        <div id='sticky-nav' className={'top-0  duration-200 transition-all  shadow-none fixed bg-none dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent'}>
             <div className='w-full flex justify-between items-center px-4 py-2'>
                 <div className='flex'>
                     <Logo {...props} />

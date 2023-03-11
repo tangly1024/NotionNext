@@ -18,7 +18,6 @@ const PaginationSimple = ({ page, showNext }) => {
     <div
         data-aos="fade-down"
         data-aos-duration="300"
-        data-aos-easing="ease-in-out"
         data-aos-once="false"
         data-aos-anchor-placement="top-bottom"
         className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
@@ -58,7 +57,7 @@ const PaginationSimple = ({ page, showNext }) => {
         </button>
       </Link>
     </div>
-  );
+  )
 }
 
 export default PaginationSimple

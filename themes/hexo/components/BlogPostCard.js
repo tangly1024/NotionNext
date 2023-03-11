@@ -15,11 +15,11 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
     <div
         key={post.id}
         data-aos="fade-up"
-        data-aos-duration="150"
-        data-aos-once="false"
+        data-aos-duration="200"
+        data-aos-once="true"
         data-aos-anchor-placement="top-bottom"
         className={`flex md:flex-row flex-col-reverse ${CONFIG_HEXO.POST_LIST_IMG_CROSSOVER ? 'even:md:flex-row-reverse' : ''}
-        w-full md:h-72 h-96 justify-between overflow-hidden drop-shadow-md
+        w-full md:h-72 h-96 justify-between overflow-hidden shadow-md
         border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
 
         <div className={`lg:p-8 p-4 flex flex-col  ${showPageCover ? 'md:w-7/12 w-full' : 'w-full'}`}>

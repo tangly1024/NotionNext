@@ -42,10 +42,10 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MA
 
   // 监听滚动
   React.useEffect(() => {
-    window.addEventListener('scroll', scrollTrigger)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-    }
+    // window.addEventListener('scroll', scrollTrigger)
+    // return () => {
+    //   window.removeEventListener('scroll', scrollTrigger)
+    // }
   })
 
   const targetRef = React.useRef(null)

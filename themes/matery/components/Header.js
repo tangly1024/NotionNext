@@ -32,13 +32,14 @@ const Header = props => {
     if (enableAutoScroll) {
       scrollTrigger()
       window.addEventListener('scroll', scrollTrigger)
-    } window.addEventListener('resize', updateHeaderHeight)
+    }
+    window.addEventListener('resize', updateHeaderHeight)
     return () => {
       if (enableAutoScroll) {
         window.removeEventListener('scroll', scrollTrigger)
       } window.removeEventListener('resize', updateHeaderHeight)
     }
-  })
+  }, [])
 
   const autoScrollEnd = () => {
     if (autoScroll) {

@@ -13,8 +13,8 @@ const Catalog = ({ toc }) => {
   const { locale } = useGlobal()
   // 监听滚动事件
   React.useEffect(() => {
-    window.addEventListener('scroll', actionSectionScrollSpy)
     actionSectionScrollSpy()
+    window.addEventListener('scroll', actionSectionScrollSpy)
     return () => {
       window.removeEventListener('scroll', actionSectionScrollSpy)
     }

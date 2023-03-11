@@ -27,7 +27,7 @@ const FacebookPage = dynamic(
  */
 const LayoutBase = props => {
   const { children, headerSlot, floatSlot, meta, siteInfo } = props
-  const [show, switchShow] = useState(false)
+  const [showFloatButton, switchShow] = useState(false)
   // const [percent, changePercent] = useState(0) // 页面阅读百分比
   const rightAreaSlot = (
     <>
@@ -47,7 +47,7 @@ const LayoutBase = props => {
       if (per > 100) per = 100
       const shouldShow = scrollY > 100 && per > 0
 
-      if (shouldShow !== show) {
+      if (shouldShow !== showFloatButton) {
         switchShow(shouldShow)
       }
     // changePercent(per)
@@ -56,7 +56,7 @@ const LayoutBase = props => {
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
-  }, [show])
+  }, [])
 
   return (
     <div id='theme-hexo' className="bg-hexo-background-gray dark:bg-black">
@@ -79,7 +79,7 @@ const LayoutBase = props => {
       </main>
 
       {/* 右下角悬浮 */}
-      <div className={(show ? 'opacity-100 ' : 'invisible opacity-0') + '  duration-300 transition-all bottom-12 right-1 fixed justify-end z-20  text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm'}>
+      <div className={(showFloatButton ? 'opacity-100 ' : 'invisible opacity-0') + '  duration-300 transition-all bottom-12 right-1 fixed justify-end z-20  text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm'}>
         <div className={'justify-center  flex flex-col items-center cursor-pointer'}>
           <FloatDarkModeButton />
           {floatSlot}
