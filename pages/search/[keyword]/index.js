@@ -122,7 +122,8 @@ async function filterByMemCache(allPosts, keyword) {
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
     let indexContent = [post.summary]
-    if (page && page.block) {
+    // 防止搜到加密文章的内容
+    if (page && page.block && !post.password) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
         const properties = page?.block[id]?.value?.properties
