@@ -47,7 +47,7 @@ export const LayoutSlug = props => {
 
         <div id='inner-wrapper'>
             <div className={'w-full lg:max-w-3xl 2xl:max-w-4xl'}>
-                <div className="-mt-32 shadow-md rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+                <div className="-mt-32 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                     {lock && <ArticleLock validPassword={validPassword} />}
 
                     {!lock && <div id="container" className="overflow-x-auto md:w-full px-3 ">
