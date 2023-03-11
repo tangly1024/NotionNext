@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Footer from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import TopNav from './components/TopNav'
-import smoothscroll from 'smoothscroll-polyfill'
 import Live2D from '@/components/Live2D'
 import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
@@ -23,27 +22,28 @@ const LayoutBase = props => {
   const { onLoading } = useGlobal()
 
   const scrollListener = () => {
-    const targetRef = document.getElementById('wrapper')
-    const clientHeight = targetRef?.clientHeight
-    const scrollY = window.pageYOffset
-    const fullHeight = clientHeight - window.outerHeight
-    let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-    if (per > 100) per = 100
-    const shouldShow = scrollY > 300 && per > 0
-
-    if (shouldShow !== show) {
-      switchShow(shouldShow)
-    }
+    requestAnimationFrame(() => {
+    //   const targetRef = document.getElementById('wrapper')
+    //   const clientHeight = targetRef?.clientHeight
+      const scrollY = window.pageYOffset
+      //   const fullHeight = clientHeight - window.outerHeight
+      //   let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
+      //   if (per > 100) per = 100
+      const shouldShow = scrollY > 300
+      console.log(scrollY)
+      if (shouldShow !== show) {
+        switchShow(shouldShow)
+      }
     // changePercent(per)
+    })
   }
   useEffect(() => {
-    smoothscroll.polyfill()
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
-  }, [show])
+  }, [])
 
   return (
-        <div id="outer-wrapper" className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
+        <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
 
             <CommonHead meta={meta} siteInfo={siteInfo} />
 
@@ -67,12 +67,8 @@ const LayoutBase = props => {
             </div>
 
             {/* 右下角悬浮 */}
-            <div className="bottom-12 right-2 fixed justify-end z-20">
-                <div className={
-                    (show ? 'animate__animated ' : 'hidden') +
-                    ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '
-                }
-                >
+            <div className={ (show ? ' opacity-100 fixed ' : ' hidden opacity-0 ') + ' transition-all duration-200  bottom-12 right-2 justify-end z-20' }>
+                <div className= ' justify-center  flex flex-col items-center cursor-pointer '>
                     <JumpToTopButton />
                 </div>
             </div>

@@ -2,7 +2,6 @@ const Card = ({ children, headerSlot, className }) => {
   return <div
     data-aos="fade-down"
     data-aos-duration="300"
-    data-aos-easing="ease-in-out"
     data-aos-once="true"
     data-aos-anchor-placement="top-bottom"
     className={className}>

@@ -4,8 +4,7 @@ export default function HeaderArticle({ post, siteInfo }) {
   return (
         <div
             data-aos="fade-down"
-            data-aos-duration="500"
-            data-aos-easing="ease-in-out"
+            data-aos-duration="300"
             data-aos-once="false"
             data-aos-anchor-placement="top-center"
             id='header' className="flex h-96 justify-center align-middle items-center w-full relative duration-200 bg-black">

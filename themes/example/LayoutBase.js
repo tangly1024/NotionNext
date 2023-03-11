@@ -16,7 +16,7 @@ import BLOG from '@/blog.config'
 const LayoutBase = props => {
   const { children, meta } = props
   return (
-        <div className='dark:text-gray-300  bg-white dark:bg-black'>
+        <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
             <CommonHead meta={meta} />
             {/* 顶栏LOGO */}
             <Header {...props} />

@@ -1,5 +1,5 @@
 import BLOG from 'blog.config'
-import React from 'react'
+import React, { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 
 import 'animate.css'
@@ -20,7 +20,7 @@ import { Sakura } from '@/components/Sakura'
 import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
 import ExternalScript from '@/components/ExternalScript'
-import { isBrowser } from '@/lib/utils'
+import smoothscroll from 'smoothscroll-polyfill'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
@@ -55,9 +55,10 @@ const MyApp = ({ Component, pageProps }) => {
         <ExternalScript/>
     </>
 
-  if (isBrowser()) {
+  useEffect(() => {
     AOS.init()
-  }
+    smoothscroll.polyfill()
+  })
 
   return (
         <GlobalContextProvider>

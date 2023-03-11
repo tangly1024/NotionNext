@@ -26,7 +26,7 @@ const Catalog = ({ toc }) => {
     }
   }, [])
 
-  const throttleMs = 100
+  const throttleMs = 200
   const actionSectionScrollSpy = React.useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
