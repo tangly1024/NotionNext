@@ -38,18 +38,20 @@ const LayoutBase = props => {
   const { onLoading } = useGlobal()
 
   const scrollListener = () => {
-    const targetRef = document.getElementById('wrapper')
-    const clientHeight = targetRef?.clientHeight
-    const scrollY = window.pageYOffset
-    const fullHeight = clientHeight - window.outerHeight
-    let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-    if (per > 100) per = 100
-    const shouldShow = scrollY > 100 && per > 0
+    requestAnimationFrame(() => {
+      const targetRef = document.getElementById('wrapper')
+      const clientHeight = targetRef?.clientHeight
+      const scrollY = window.pageYOffset
+      const fullHeight = clientHeight - window.outerHeight
+      let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
+      if (per > 100) per = 100
+      const shouldShow = scrollY > 100 && per > 0
 
-    if (shouldShow !== show) {
-      switchShow(shouldShow)
-    }
+      if (shouldShow !== show) {
+        switchShow(shouldShow)
+      }
     // changePercent(per)
+    })
   }
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)
@@ -78,12 +80,7 @@ const LayoutBase = props => {
 
       {/* 右下角悬浮 */}
       <div className={(show ? 'opacity-100 ' : 'invisible opacity-0') + '  duration-300 transition-all bottom-12 right-1 fixed justify-end z-20  text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm'}>
-        <div
-          className={
-
-            '  justify-center  flex flex-col items-center cursor-pointer '
-          }
-        >
+        <div className={'justify-center  flex flex-col items-center cursor-pointer'}>
           <FloatDarkModeButton />
           {floatSlot}
           <JumpToTopButton />
