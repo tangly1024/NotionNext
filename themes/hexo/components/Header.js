@@ -43,10 +43,10 @@ const Header = props => {
   })
 
   function updateHeaderHeight () {
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       const wrapperElement = document.getElementById('wrapper')
       wrapperTop = wrapperElement?.offsetTop
-    }, 500)
+    })
   }
 
   return (
@@ -103,12 +103,12 @@ const scrollTrigger = () => {
   ) {
     autoScroll = true
     window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-    setTimeout(autoScrollEnd, 500)
+    requestAnimationFrame(autoScrollEnd)
   }
   if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
     autoScroll = true
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    setTimeout(autoScrollEnd, 500)
+    requestAnimationFrame(autoScrollEnd)
   }
   windowTop = scrollS
 }

@@ -77,11 +77,11 @@ const LayoutBase = props => {
       </main>
 
       {/* 右下角悬浮 */}
-      <div className="bottom-12 right-1 fixed justify-end z-20  text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm">
+      <div className={(show ? 'opacity-100 ' : 'invisible opacity-0') + '  duration-300 transition-all bottom-12 right-1 fixed justify-end z-20  text-white bg-indigo-500 dark:bg-hexo-black-gray rounded-sm'}>
         <div
           className={
-            (show ? 'animate__animated ' : 'hidden') +
-            ' animate__fadeInUp justify-center duration-300  animate__faster flex flex-col items-center cursor-pointer '
+
+            '  justify-center  flex flex-col items-center cursor-pointer '
           }
         >
           <FloatDarkModeButton />
