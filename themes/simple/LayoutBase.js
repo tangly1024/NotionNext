@@ -23,8 +23,8 @@ const LayoutBase = props => {
   const { onLoading } = useGlobal()
 
   /**
-   * 路由跳转时的遮罩
-   */
+     * 路由跳转时的遮罩
+     */
   const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
         <div className='w-full h-96 flex justify-center items-center'>
             <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
@@ -47,16 +47,13 @@ const LayoutBase = props => {
             <NavBar {...props} />
 
             {/* 主体 */}
-            <div id='container-wrap' className="w-full relative">
+            <div id='container-wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex items-start max-w-9/10 mx-auto pt-12'}>
+                <div id='container-inner ' className='w-full flex-grow'>
+                    {onLoading ? LoadingCover : children}
+                </div>
 
-                <div id='container-inner' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + '  max-w-9/10 w-full relative container mx-auto flex justify-center items-start pt-12'}>
-
-                    <div className='w-full flex-grow'>
-                        {onLoading ? LoadingCover : children}
-                    </div>
-
+                <div className="hidden xl:block flex-none sticky top-8 w-96 border-l dark:border-gray-800 pl-12 border-gray-100">
                     <SideBar {...props} />
-
                 </div>
 
             </div>

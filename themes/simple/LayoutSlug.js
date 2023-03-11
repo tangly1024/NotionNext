@@ -16,7 +16,7 @@ export const LayoutSlug = props => {
 
                 {lock && <ArticleLock validPassword={validPassword} />}
 
-                {!lock && <div id="notion-article" className="px-2">
+                {!lock && <div id="notion-article" className="px-2 xl:max-w-4xl 2xl:max-w-6xl ">
 
                     {post && <>
                         <ArticleInfo post={post} />

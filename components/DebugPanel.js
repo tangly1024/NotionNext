@@ -69,7 +69,7 @@ export function DebugPanel() {
 
             {/* 调试侧拉抽屉 */}
             <div
-                className={` ${show ? 'shadow-card w-96 right-0 ' : '-right-96 w-0'} overflow-y-scroll h-full p-5 bg-white fixed bottom-0 z-50 duration-200`}
+                className={` ${show ? 'shadow-card w-96 right-0 ' : '-right-96 invisible w-0'} overflow-y-scroll h-full p-5 bg-white fixed bottom-0 z-50 duration-200`}
             >
                 <div className="flex justify-between space-x-1 my-5">
                     <div className='flex'>

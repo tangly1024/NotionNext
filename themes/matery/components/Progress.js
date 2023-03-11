@@ -10,16 +10,18 @@ const Progress = ({ targetRef, showPercent = true }) => {
   const currentRef = targetRef?.current || targetRef
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
-    const target = currentRef || (isBrowser() && document.getElementById('container'))
-    if (target) {
-      const clientHeight = target.clientHeight
-      const scrollY = window.pageYOffset
-      const fullHeight = clientHeight - window.outerHeight
-      let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-      if (per > 100) per = 100
-      if (per < 0) per = 0
-      changePercent(per)
-    }
+    requestAnimationFrame(() => {
+      const target = currentRef || (isBrowser() && document.getElementById('container'))
+      if (target) {
+        const clientHeight = target.clientHeight
+        const scrollY = window.pageYOffset
+        const fullHeight = clientHeight - window.outerHeight
+        let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
+        if (per > 100) per = 100
+        if (per < 0) per = 0
+        changePercent(per)
+      }
+    })
   }
 
   useEffect(() => {

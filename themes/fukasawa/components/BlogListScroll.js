@@ -3,7 +3,7 @@ import React from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import { useGlobal } from '@/lib/global'
-import throttle from 'lodash.throttle'
+
 /**
  * 文章列表分页表格
  * @param page 当前页
@@ -45,13 +45,15 @@ const BlogListScroll = props => {
   }
 
   // 监听滚动自动分页加载
-  const scrollTrigger = React.useCallback(throttle(() => {
-    const scrollS = window.scrollY + window.outerHeight
-    const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
-    if (scrollS > clientHeight + 100) {
-      handleGetMore()
-    }
-  }, 500))
+  const scrollTrigger = () => {
+    requestAnimationFrame(() => {
+      const scrollS = window.scrollY + window.outerHeight
+      const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
+      if (scrollS > clientHeight + 100) {
+        handleGetMore()
+      }
+    })
+  }
 
   React.useEffect(() => {
     updateCol()
@@ -68,22 +70,22 @@ const BlogListScroll = props => {
     return <BlogPostListEmpty />
   } else {
     return (
-      <div id="container" ref={targetRef} >
-        {/* 文章列表 */}
-        <div style={{ columnCount: colCount }}>
-          {postsToShow?.map(post => (
-            <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
-              <BlogCard key={post.id} post={post} siteInfo={siteInfo} />
-            </div>
-          ))}
-        </div>
+            <div id="container" ref={targetRef} >
+                {/* 文章列表 */}
+                <div style={{ columnCount: colCount }}>
+                    {postsToShow?.map(post => (
+                        <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
+                            <BlogCard key={post.id} post={post} siteInfo={siteInfo} />
+                        </div>
+                    ))}
+                </div>
 
-        <div className="w-full my-4 py-4 text-center cursor-pointer "
-              onClick={handleGetMore}>
-              {' '}
-              {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
-          </div>
-      </div>
+                <div className="w-full my-4 py-4 text-center cursor-pointer "
+                    onClick={handleGetMore}>
+                    {' '}
+                    {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+                </div>
+            </div>
     )
   }
 }
