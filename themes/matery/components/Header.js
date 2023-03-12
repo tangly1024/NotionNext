@@ -1,4 +1,4 @@
-import Image from 'next/image'
+// import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG_MATERY from '../config_matery'
@@ -90,11 +90,13 @@ const Header = props => {
             className="md:bg-fixed w-full h-screen bg-black text-white relative"
         >
             <div className='w-full h-full absolute'>
-                <Image src={siteInfo.pageCover} fill
+                {/* <Image src={siteInfo.pageCover} fill
                     style={{ objectFit: 'cover' }}
                     className='opacity-70'
                     placeholder='blur'
-                    blurDataURL='/bg_image.jpg' />
+                    blurDataURL='/bg_image.jpg' /> */}
+                     {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={siteInfo.pageCover} className='h-full w-full object-cover opacity-70 ' />
             </div>
 
             <div className="absolute flex flex-col h-full items-center justify-center w-full ">

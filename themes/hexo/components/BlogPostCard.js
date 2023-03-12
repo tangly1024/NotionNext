@@ -4,7 +4,7 @@ import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG_HEXO from '../config_hexo'
 import NotionPage from '@/components/NotionPage'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 const BlogPostCard = ({ post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
@@ -97,12 +97,12 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
            <div className="flex overflow-hidden md:w-5/12 h-full">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    {/* <img
+                    <img
                         src={post?.page_cover}
                         alt={post.title}
                         className="w-full cursor-pointer object-cover duration-200 hover:scale-125 "
-                    /> */}
-                    <div className='relative w-full h-full'>
+                    />
+                    {/* <div className='relative w-full h-full'>
                     <Image
                      className='hover:scale-125 transition cursor-pointer duration-500'
                      src={post?.page_cover}
@@ -112,7 +112,7 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
                      blurDataURL='/bg_image.jpg'
                      style={{ objectFit: 'cover' }}
                      fill/>
-                    </div>
+                    </div> */}
                 </Link>
             </div>
         )}
