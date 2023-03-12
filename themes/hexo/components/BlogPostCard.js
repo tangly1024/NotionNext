@@ -100,7 +100,7 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
                         alt={post.title}
                         className="h-full w-full hover:scale-125 transform object-cover duration-500"
                     />
-                    {/* <Image className='hover:scale-125 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
+                    {/* <Image className='hover:scale-125 transform duration-500' src={post?.page_cover} style={{ objectFit: 'cover' }} alt={post.title} fill loading='lazy' /> */}
                 </Link>
             </div>
         )}

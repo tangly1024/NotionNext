@@ -58,7 +58,7 @@ const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
     AOS.init()
     smoothscroll.polyfill()
-  })
+  }, [])
 
   return (
         <GlobalContextProvider>
