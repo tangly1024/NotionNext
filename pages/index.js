@@ -43,8 +43,10 @@ export async function getStaticProps() {
     }
   }
 
-  // 异步生成Feed订阅
-  generateRss(props?.latestPosts || [])
+  // 生成Feed订阅
+  if (JSON.parse(BLOG.ENABLE_RSS)) {
+    generateRss(props?.latestPosts || [])
+  }
 
   return {
     props: {
