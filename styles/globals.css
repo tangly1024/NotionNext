@@ -167,6 +167,13 @@ nav {
   -webkit-box-orient: vertical;
 }
 
+.waline-recent-content .wl-emoji {
+  height: 1.1rem !important;
+  display: inline-block !important;
+  line-height: 1.25rem !important;
+  vertical-align: text-bottom !important;
+}
+
 .vcontent .wl-emoji {
   display: inline-block;
   vertical-align: baseline;
