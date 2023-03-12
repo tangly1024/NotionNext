@@ -75,7 +75,7 @@ const NavBar = props => {
 
   const { locale } = useGlobal()
   let links = [
-    { id: 2, name: locale.NAV.RSS, to: '/feed', show: CONFIG_NOBELIUM.MENU_RSS, target: '_blank' },
+    { id: 2, name: locale.NAV.RSS, to: '/feed', show: BLOG.ENABLE_RSS && CONFIG_NOBELIUM.MENU_RSS, target: '_blank' },
     { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_NOBELIUM.MENU_SEARCH },
     { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_NOBELIUM.MENU_ARCHIVE },
     { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NOBELIUM.MENU_CATEGORY },

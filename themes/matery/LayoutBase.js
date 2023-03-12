@@ -23,18 +23,11 @@ const LayoutBase = props => {
 
   const scrollListener = () => {
     requestAnimationFrame(() => {
-    //   const targetRef = document.getElementById('wrapper')
-    //   const clientHeight = targetRef?.clientHeight
       const scrollY = window.pageYOffset
-      //   const fullHeight = clientHeight - window.outerHeight
-      //   let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-      //   if (per > 100) per = 100
       const shouldShow = scrollY > 300
-      console.log(scrollY)
       if (shouldShow !== show) {
         switchShow(shouldShow)
       }
-    // changePercent(per)
     })
   }
   useEffect(() => {
