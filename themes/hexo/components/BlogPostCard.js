@@ -94,7 +94,7 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
         </div>
 
         {showPageCover && !showPreview && post?.page_cover && (
-           <div className="flex overflow-hidden md:w-5/12 ">
+           <div className="flex overflow-hidden md:w-5/12 h-full">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     {/* <img
@@ -102,7 +102,7 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
                         alt={post.title}
                         className="w-full cursor-pointer object-cover duration-200 hover:scale-125 "
                     /> */}
-                    <div className='relative w-full'>
+                    <div className='relative w-full h-full'>
                     <Image
                      className='hover:scale-125 transition cursor-pointer duration-500'
                      src={post?.page_cover}

@@ -12,6 +12,7 @@ module.exports = withBundleAnalyzer({
       'www.notion.so',
       'avatars.githubusercontent.com',
       'images.unsplash.com',
+      'source.unsplash.com',
       'p1.qhimg.com'
     ]
   },
