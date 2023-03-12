@@ -59,7 +59,9 @@ const Header = props => {
             className="md:bg-fixed w-full h-screen bg-black text-white relative"
         >
             <div className='w-full h-full fixed'>
-                <Image src={siteInfo.pageCover} fill style={{ objectFit: 'cover' }}
+                <Image src={siteInfo.pageCover} fill
+                    style={{ objectFit: 'cover' }}
+                    className='opacity-70'
                     placeholder='blur'
                     blurDataURL='/bg_image.jpg' />
             </div>
