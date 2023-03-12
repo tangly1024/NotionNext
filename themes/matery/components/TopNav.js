@@ -27,7 +27,7 @@ const TopNav = props => {
       const scrollS = window.scrollY
       const nav = document.querySelector('#sticky-nav')
       const header = document.querySelector('#header')
-      const showNav = scrollS <= windowTop || scrollS < 5 // 非首页无大图时影藏顶部 滚动条置顶时隐藏
+      const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight * 2)// 非首页无大图时影藏顶部 滚动条置顶时隐藏// 非首页无大图时影藏顶部 滚动条置顶时隐藏
       // 是否将导航栏透明
       const navTransparent = header && scrollS < 300 // 透明导航条的条件
 
