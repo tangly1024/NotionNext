@@ -56,9 +56,9 @@ const Header = props => {
   return (
         <header
             id="header"
-            className="md:bg-fixed w-full h-screen bg-black text-white relative"
+            className="w-full h-screen bg-black text-white relative"
         >
-            <div className='w-full h-full fixed'>
+            <div className='w-full h-full'>
                 <Image src={siteInfo.pageCover} fill
                     style={{ objectFit: 'cover' }}
                     className='opacity-70'
