@@ -11,7 +11,8 @@ module.exports = withBundleAnalyzer({
       'gravatar.com',
       'www.notion.so',
       'avatars.githubusercontent.com',
-      'images.unsplash.com'
+      'images.unsplash.com',
+      'p1.qhimg.com'
     ]
   },
   // 默认将feed重定向至 /public/rss/feed.xml

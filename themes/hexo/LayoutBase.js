@@ -14,7 +14,13 @@ import dynamic from 'next/dynamic'
 
 const FacebookPage = dynamic(
   () => {
-    return import('@/components/FacebookPage')
+    let facebook = <></>
+    try {
+      facebook = import('@/components/FacebookPage')
+    } catch (err) {
+      console.error(err)
+    }
+    return facebook
   },
   { ssr: false }
 )

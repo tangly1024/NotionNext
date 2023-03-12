@@ -62,8 +62,8 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
         <GlobalContextProvider>
-            {externalPlugins}
             <Component {...pageProps} />
+            {externalPlugins}
         </GlobalContextProvider>
   )
 }
