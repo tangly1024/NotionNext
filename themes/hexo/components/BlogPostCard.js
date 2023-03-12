@@ -4,6 +4,7 @@ import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG_HEXO from '../config_hexo'
 import NotionPage from '@/components/NotionPage'
+import Image from 'next/image'
 
 const BlogPostCard = ({ post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
@@ -15,6 +16,7 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
     <div
         key={post.id}
         data-aos="fade-up"
+        data-aso-delay="200"
         data-aos-duration="200"
         data-aos-once="true"
         data-aos-anchor-placement="top-bottom"
@@ -92,15 +94,25 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
         </div>
 
         {showPageCover && !showPreview && post?.page_cover && (
-           <div className="flex relative duration-200 cursor-pointer transform overflow-hidden md:w-5/12 ">
+           <div className="flex overflow-hidden md:w-5/12 ">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    {/* <img
                         src={post?.page_cover}
                         alt={post.title}
-                        className="h-full w-full hover:scale-125 transform object-cover duration-500"
-                    />
-                    {/* <Image className='hover:scale-125 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
+                        className="w-full cursor-pointer object-cover duration-200 hover:scale-125 "
+                    /> */}
+                    <div className='relative w-full'>
+                    <Image
+                     className='hover:scale-125 transition cursor-pointer duration-500'
+                     src={post?.page_cover}
+                     alt={post.title}
+                     quality={30}
+                     placeholder='blur'
+                     blurDataURL='/bg_image.jpg'
+                     style={{ objectFit: 'cover' }}
+                     fill/>
+                    </div>
                 </Link>
             </div>
         )}

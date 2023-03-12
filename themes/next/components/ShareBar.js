@@ -8,17 +8,17 @@ import { useGlobal } from '@/lib/global'
 import CONFIG_NEXT from '../config_next'
 
 const ShareBar = ({ post }) => {
+  const router = useRouter()
+  const [qrCodeShow, setQrCodeShow] = React.useState(false)
+  const { locale } = useGlobal()
   if (!CONFIG_NEXT.ARTICLE_SHARE) {
     return <></>
   }
-  const router = useRouter()
   const shareUrl = BLOG.LINK + router.asPath
 
   // 二维码悬浮
-  const [qrCodeShow, setQrCodeShow] = React.useState(false)
   const btnRef = React.createRef()
   const popoverRef = React.createRef()
-  const { locale } = useGlobal()
 
   const openPopover = () => {
     createPopper(btnRef.current, popoverRef.current, {
@@ -57,7 +57,7 @@ const ShareBar = ({ post }) => {
       <div className='cursor-pointer text-2xl'>
         <a className='text-green-600' ref={btnRef} onMouseEnter={openPopover} onMouseLeave={closePopover}>
           <i className='fab fa-weixin'/>
-          <div ref={popoverRef} className={(qrCodeShow ? 'animate__animated animate__fadeIn ' : 'hidden') + ' text-center py-2'}>
+          <div ref={popoverRef} className={(qrCodeShow ? 'opacity-100 ' : 'invisible opacity-0') + ' transition-all duration-200 text-center py-2'}>
             <div className='p-2 bg-white border-0 duration-200 transform block z-40 font-normal shadow-xl mr-10'>
               <QRCode value={shareUrl} fgColor='#000000' />
             </div>

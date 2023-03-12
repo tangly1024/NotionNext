@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG_HEXO from '../config_hexo'
@@ -45,7 +46,7 @@ const Header = props => {
     }
   })
 
-  function updateHeaderHeight () {
+  function updateHeaderHeight() {
     requestAnimationFrame(() => {
       const wrapperElement = document.getElementById('wrapper')
       wrapperTop = wrapperElement?.offsetTop
@@ -53,32 +54,36 @@ const Header = props => {
   }
 
   return (
-    <header
-      id="header"
-      className="md:bg-fixed w-full bg-cover bg-center h-screen bg-black text-white relative z-10"
-      style={{
-        backgroundImage:
-          `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0,0,0,0.5), rgba(0,0,0,0.3), rgba(0,0,0,0.5), rgba(0, 0, 0, 0.9) ),url("${siteInfo?.pageCover}")`
-      }}
-    >
-      <div className="absolute flex flex-col h-full items-center justify-center w-full ">
-        <div className='text-4xl md:text-5xl text-white shadow-text'>{siteInfo?.title}</div>
-        <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
-          <span id='typed'/>
-        </div>
+        <header
+            id="header"
+            className="md:bg-fixed w-full h-screen bg-black text-white relative"
+        >
+            <div className='w-full h-full fixed'>
+                <Image src={siteInfo.pageCover} fill
+                    style={{ objectFit: 'cover' }}
+                    className='opacity-70'
+                    placeholder='blur'
+                    blurDataURL='/bg_image.jpg' />
+            </div>
 
-        {/* 首页导航插件 */}
-        { CONFIG_HEXO.HOME_NAV_BUTTONS && <NavButtonGroup {...props}/>}
+            <div className="absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
+                <div className='text-4xl md:text-5xl text-white shadow-text'>{siteInfo?.title}</div>
+                <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
+                    <span id='typed' />
+                </div>
 
-      </div>
+                {/* 首页导航插件 */}
+                {CONFIG_HEXO.HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
 
-      <div
-        onClick={() => { window.scrollTo({ top: wrapperTop, behavior: 'smooth' }) }}
-        className="cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white"
-      >
-        <i className='animate-bounce fas fa-angle-down'/>
-      </div>
-    </header>
+            </div>
+
+            <div
+                onClick={() => { window.scrollTo({ top: wrapperTop, behavior: 'smooth' }) }}
+                className="cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white"
+            >
+                <i className='animate-bounce fas fa-angle-down' />
+            </div>
+        </header>
   )
 }
 
@@ -104,12 +109,12 @@ const scrollTrigger = () => {
     ) {
       autoScroll = true
       window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-      requestAnimationFrame(autoScrollEnd)
+      autoScrollEnd()
     }
     if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
       autoScroll = true
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      requestAnimationFrame(autoScrollEnd)
+      autoScrollEnd()
     }
     windowTop = scrollS
   })

@@ -1,12 +1,13 @@
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { loadExternalResource } from '@/lib/utils'
+import { useEffect } from 'react'
 
 /**
  * 自定义引入外部JS 和 CSS
  * @returns
  */
 const ExternalScript = () => {
-  if (isBrowser()) {
+  useEffect(() => {
     // 静态导入本地自定义样式
     loadExternalResource(BLOG.FONT_AWESOME, 'css')
     loadExternalResource('/css/custom.css', 'css')
@@ -25,7 +26,7 @@ const ExternalScript = () => {
     BLOG.FONT_URL?.forEach(e => {
       loadExternalResource(e, 'css')
     })
-  }
+  }, [])
 
   return null
 }
