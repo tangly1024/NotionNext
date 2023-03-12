@@ -5,6 +5,7 @@ import CONFIG_MATERY from '../config_matery'
 let wrapperTop = 0
 let windowTop = 0
 let autoScroll = false
+const enableAutoScroll = false // 是否开启自动吸附滚动
 
 /**
  *
@@ -28,13 +29,17 @@ const Header = props => {
         })
       )
     }
-    window.addEventListener('scroll', scrollTrigger)
+    if (enableAutoScroll) {
+      scrollTrigger()
+      window.addEventListener('scroll', scrollTrigger)
+    }
     window.addEventListener('resize', updateHeaderHeight)
     return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-      window.removeEventListener('resize', updateHeaderHeight)
+      if (enableAutoScroll) {
+        window.removeEventListener('scroll', scrollTrigger)
+      } window.removeEventListener('resize', updateHeaderHeight)
     }
-  })
+  }, [])
 
   const autoScrollEnd = () => {
     if (autoScroll) {
@@ -48,32 +53,34 @@ const Header = props => {
    * @returns
    */
   const scrollTrigger = () => {
-    if (screen.width <= 768) {
-      return
-    }
+    requestAnimationFrame(() => {
+      if (screen.width <= 768) {
+        return
+      }
 
-    const scrollS = window.scrollY
+      const scrollS = window.scrollY
 
-    // 自动滚动
-    if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
-    ) {
-      autoScroll = true
-      window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-      setTimeout(autoScrollEnd, 500)
-    }
-    if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
-      autoScroll = true
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      setTimeout(autoScrollEnd, 500)
-    }
-    windowTop = scrollS
+      // 自动滚动
+      if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
+      ) {
+        autoScroll = true
+        window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+        setTimeout(autoScrollEnd, 500)
+      }
+      if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
+        autoScroll = true
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        setTimeout(autoScrollEnd, 500)
+      }
+      windowTop = scrollS
+    })
   }
 
   function updateHeaderHeight () {
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       const wrapperElement = document.getElementById('wrapper')
       wrapperTop = wrapperElement?.offsetTop
-    }, 500)
+    })
   }
 
   return (

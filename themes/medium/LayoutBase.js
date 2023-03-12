@@ -46,7 +46,6 @@ const LayoutBase = props => {
                             <div
                               data-aos="fade-up"
                               data-aos-duration="300"
-                              data-aos-easing="ease-in-out"
                               data-aos-once="false"
                               data-aos-anchor-placement="top-center"
                               className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20'>
