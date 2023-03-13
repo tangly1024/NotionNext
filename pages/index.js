@@ -44,14 +44,14 @@ export async function getStaticProps() {
     }
   }
 
-  // 生成Feed订阅
-  if (JSON.parse(BLOG.ENABLE_RSS)) {
-    generateRss(props?.latestPosts || [])
-  }
   // 生成robotTxt
   generateRobotsTxt()
   // 生成sitemap.xml
   generateSitemapXml({ allPages: props.allPages })
+  // 生成Feed订阅
+  if (JSON.parse(BLOG.ENABLE_RSS)) {
+    generateRss(props?.latestPosts || [])
+  }
 
   delete props.allPages
 
