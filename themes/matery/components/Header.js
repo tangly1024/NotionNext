@@ -1,12 +1,14 @@
 // import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG_MATERY from '../config_matery'
+import throttle from 'lodash.throttle'
 
 let wrapperTop = 0
 let windowTop = 0
 let autoScroll = false
 const enableAutoScroll = false // 是否开启自动吸附滚动
+const throttleMs = 200
 
 /**
  *
@@ -53,29 +55,27 @@ const Header = props => {
      * 吸附滚动，移动端关闭
      * @returns
      */
-  const scrollTrigger = () => {
-    requestAnimationFrame(() => {
-      if (screen.width <= 768) {
-        return
-      }
+  const scrollTrigger = useCallback(throttle(() => {
+    if (screen.width <= 768) {
+      return
+    }
 
-      const scrollS = window.scrollY
+    const scrollS = window.scrollY
 
-      // 自动滚动
-      if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
-      ) {
-        autoScroll = true
-        window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-        setTimeout(autoScrollEnd, 500)
-      }
-      if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
-        autoScroll = true
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-        setTimeout(autoScrollEnd, 500)
-      }
-      windowTop = scrollS
-    })
-  }
+    // 自动滚动
+    if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
+    ) {
+      autoScroll = true
+      window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+      setTimeout(autoScrollEnd, 500)
+    }
+    if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
+      autoScroll = true
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      setTimeout(autoScrollEnd, 500)
+    }
+    windowTop = scrollS
+  }, throttleMs))
 
   function updateHeaderHeight() {
     requestAnimationFrame(() => {

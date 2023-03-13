@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
@@ -8,6 +8,7 @@ import TagGroups from './TagGroups'
 import MenuButtonGroupTop from './MenuButtonGroupTop'
 import SideBarDrawer from '@/components/SideBarDrawer'
 import SideBar from './SideBar'
+import throttle from 'lodash.throttle'
 
 let windowTop = 0
 
@@ -21,8 +22,8 @@ const TopNav = props => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
   const { isDarkMode } = useGlobal()
-
-  const scrollTrigger = () => {
+  const throttleMs = 200
+  const scrollTrigger = useCallback(throttle(() => {
     requestAnimationFrame(() => {
       const scrollS = window.scrollY
       const nav = document.querySelector('#sticky-nav')
@@ -52,7 +53,7 @@ const TopNav = props => {
       }
       navDarkMode()
     })
-  }
+  }, throttleMs))
 
   const navDarkMode = () => {
     const nav = document.getElementById('sticky-nav')

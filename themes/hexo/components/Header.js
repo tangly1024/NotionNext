@@ -1,8 +1,9 @@
 // import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG_HEXO from '../config_hexo'
 import NavButtonGroup from './NavButtonGroup'
+import throttle from 'lodash.throttle'
 
 let wrapperTop = 0
 let windowTop = 0
@@ -53,6 +54,34 @@ const Header = props => {
     })
   }
 
+  const autoScrollEnd = () => {
+    if (autoScroll) {
+      windowTop = window.scrollY
+      autoScroll = false
+    }
+  }
+  const throttleMs = 200
+  const scrollTrigger = useCallback(throttle(() => {
+    if (screen.width <= 768) {
+      return
+    }
+
+    const scrollS = window.scrollY
+    // 自动滚动
+    if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
+    ) {
+      autoScroll = true
+      window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+      autoScrollEnd()
+    }
+    if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
+      autoScroll = true
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      autoScrollEnd()
+    }
+    windowTop = scrollS
+  }, throttleMs))
+
   return (
         <header
             id="header"
@@ -87,39 +116,6 @@ const Header = props => {
             </div>
         </header>
   )
-}
-
-const autoScrollEnd = () => {
-  if (autoScroll) {
-    windowTop = window.scrollY
-    autoScroll = false
-  }
-}
-
-/**
-   * 自动吸附滚动，移动端体验不好暂时关闭
-   */
-const scrollTrigger = () => {
-  requestAnimationFrame(() => {
-    if (screen.width <= 768) {
-      return
-    }
-
-    const scrollS = window.scrollY
-    // 自动滚动
-    if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
-    ) {
-      autoScroll = true
-      window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-      autoScrollEnd()
-    }
-    if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
-      autoScroll = true
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      autoScrollEnd()
-    }
-    windowTop = scrollS
-  })
 }
 
 export default Header

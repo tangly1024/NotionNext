@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import Image from 'next/image'
+// import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -40,14 +40,16 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                     className={'my-2 flex'}>
 
                     <div className="w-20 h-16 overflow-hidden relative">
-                          <Image
+                          {/* <Image
                             src={headerImage}
                             fill
                             style={{ objectFit: 'cover' }}
                             placeholder='blur'
                             blurDataURL='/bg_image.jpg'
                             quality={10}
-                            alt={post.title} />
+                            alt={post.title} /> */}
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={headerImage} className='object-cover w-full h-full'/>
                     </div>
                     <div
                         className={
