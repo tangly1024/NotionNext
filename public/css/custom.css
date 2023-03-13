@@ -184,7 +184,7 @@ footer:before {
   background: none;
 }
 /* 侧边栏个人信息卡片动态渐变色 */
-.drop-shadow-md{
+.shadow-md{
   background: linear-gradient(
     -45deg,
     #e8d8b9,
@@ -233,7 +233,7 @@ footer:before {
   }
 }
 /* 黑夜模式适配 */
-.dark .drop-shadow-md {
+.dark .shadow-md {
   background:  #191919ee;
 }
 /* 头像呼吸灯 */
