@@ -5,6 +5,7 @@ import * as ThemeMap from '@/themes'
 import { useGlobal } from '@/lib/global'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
+import { generateSitemapXml } from '@/lib/sitemap.xml'
 const Index = props => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
@@ -45,6 +46,7 @@ export async function getStaticProps() {
 
   // 生成robotTxt
   generateRobotsTxt()
+  generateSitemapXml()
   // 生成Feed订阅
   if (JSON.parse(BLOG.ENABLE_RSS)) {
     generateRss(props?.latestPosts || [])
