@@ -1,6 +1,6 @@
 import CommonHead from '@/components/CommonHead'
-import { useEffect, useState } from 'react'
-
+import { useCallback, useEffect, useState } from 'react'
+import throttle from 'lodash.throttle'
 import Footer from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import SideRight from './components/SideRight'
@@ -42,23 +42,20 @@ const LayoutBase = props => {
     </>
   )
   const { onLoading } = useGlobal()
+  const throttleMs = 200
+  const scrollListener = useCallback(throttle(() => {
+    const targetRef = document.getElementById('wrapper')
+    const clientHeight = targetRef?.clientHeight
+    const scrollY = window.pageYOffset
+    const fullHeight = clientHeight - window.outerHeight
+    let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
+    if (per > 100) per = 100
+    const shouldShow = scrollY > 100 && per > 0
 
-  const scrollListener = () => {
-    requestAnimationFrame(() => {
-      const targetRef = document.getElementById('wrapper')
-      const clientHeight = targetRef?.clientHeight
-      const scrollY = window.pageYOffset
-      const fullHeight = clientHeight - window.outerHeight
-      let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-      if (per > 100) per = 100
-      const shouldShow = scrollY > 100 && per > 0
-
-      if (shouldShow !== showFloatButton) {
-        switchShow(shouldShow)
-      }
-    // changePercent(per)
-    })
-  }
+    if (shouldShow !== showFloatButton) {
+      switchShow(shouldShow)
+    }
+  }, throttleMs))
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
