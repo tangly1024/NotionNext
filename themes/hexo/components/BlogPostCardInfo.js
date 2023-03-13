@@ -34,8 +34,8 @@ export const BlogPostCardInfo = ({ post, showPreview, showSummary }) => {
 
         {/* 摘要 */}
         {(!showPreview || showSummary) && !post.results && (
-            <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical' }}
-                className="replace py-3 h-28 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
+            <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical' }}
+                className="replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
                 {post.summary}
             </p>
         )}
