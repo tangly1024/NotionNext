@@ -2,9 +2,10 @@ import BLOG from '@/blog.config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
-import React from 'react'
+import React, { useCallback } from 'react'
 import CONFIG_MATERY from '../config_matery'
 import { getListByPage } from '@/lib/utils'
+import throttle from 'lodash.throttle'
 
 /**
  * 博客列表滚动分页
@@ -29,8 +30,8 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MA
     updatePage(page + 1)
   }
 
-  // 监听滚动自动分页加载
-  const scrollTrigger = () => {
+  const throttleMs = 200
+  const scrollTrigger = useCallback(throttle(() => {
     requestAnimationFrame(() => {
       const scrollS = window.scrollY + window.outerHeight
       const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
@@ -38,14 +39,13 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MA
         handleGetMore()
       }
     })
-  }
-
+  }, throttleMs))
   // 监听滚动
   React.useEffect(() => {
-    // window.addEventListener('scroll', scrollTrigger)
-    // return () => {
-    //   window.removeEventListener('scroll', scrollTrigger)
-    // }
+    window.addEventListener('scroll', scrollTrigger)
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+    }
   })
 
   const targetRef = React.useRef(null)
@@ -59,7 +59,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MA
       {/* 文章列表 */}
       <div className='flex flex-wrap space-y-1 lg:space-y-4 px-2'>
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post} showSummary={showSummary} siteInfo={siteInfo}/>
+          <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} showSummary={showSummary} siteInfo={siteInfo}/>
         ))}
       </div>
 
