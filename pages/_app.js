@@ -32,9 +32,6 @@ const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
 const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), {
   ssr: false
 })
-const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
-  ssr: false
-})
 
 const MyApp = ({ Component, pageProps }) => {
   // 外部插件
@@ -45,7 +42,6 @@ const MyApp = ({ Component, pageProps }) => {
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
         {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
         {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-        {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
         {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
         {JSON.parse(BLOG.SAKURA) && <Sakura />}
         {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
