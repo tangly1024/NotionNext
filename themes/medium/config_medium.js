@@ -18,7 +18,7 @@ const CONFIG_MEDIUM = {
   MENU_SEARCH: true, // 显示搜索
 
   // Widget
-  WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
+  WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'true', // 地图插件
   WIDGET_TO_TOP: true // 跳回顶部
 }
 export default CONFIG_MEDIUM
