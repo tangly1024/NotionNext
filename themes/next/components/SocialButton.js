@@ -27,6 +27,12 @@ const SocialButton = () => {
       {BLOG.CONTACT_EMAIL && <a target='_blank' rel='noreferrer' title={'email'} href={`mailto:${BLOG.CONTACT_EMAIL}`} >
         <i className='fas fa-envelope transform hover:scale-125 duration-150'/>
       </a>}
+      {BLOG.CONTACT_Bilibili && <a target='_blank' rel='noreferrer' title={'bilibili'} href={BLOG.CONTACT_Bilibili} >
+        <i className='transform hover:scale-125 duration-150 fas fa-tv dark:hover:text-indigo-400 hover:text-indigo-600'/>
+      </a>}
+      {BLOG.CONTACT_INSTAGRAM && <a target='_blank' rel='noreferrer' title={'instagram'} href={BLOG.CONTACT_INSTAGRAM} >
+        <i className='transform hover:scale-125 duration-150 fab fa-instagram dark:hover:text-indigo-400 hover:text-indigo-600'/>
+      </a>}
       <a target='_blank' rel='noreferrer' title={'RSS'} href={'/feed'} >
         <i className='fas fa-rss transform hover:scale-125 duration-150'/>
       </a>
