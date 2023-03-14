@@ -18,8 +18,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   return (
     <div
         data-aos="fade-down"
-        data-aos-duration="600"
-        data-aos-easing="ease-in-out"
+        data-aos-duration="300"
         data-aos-once="false"
         data-aos-anchor-placement="top-bottom"
         className="my-5 flex justify-center items-end font-medium text-black hover:shadow-xl duration-500 bg-white dark:bg-hexo-black-gray dark:text-gray-300 py-3 shadow space-x-2">
@@ -62,7 +61,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             </div>
         </Link>
     </div>
-  );
+  )
 }
 
 function getPageElement(pagePrefix, page, currentPage) {
@@ -81,7 +80,7 @@ function getPageElement(pagePrefix, page, currentPage) {
       {page}
 
     </Link>)
-  );
+  )
 }
 function generatePages(pagePrefix, page, currentPage, totalPage) {
   const pages = []

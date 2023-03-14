@@ -22,7 +22,7 @@ const NextRecentComments = dynamic(() => import('./NextRecentComments'))
  * @constructor
  */
 const SideAreaRight = (props) => {
-  const { tags, currentTag, slot, categories, currentCategory, notice } = props
+  const { tagOptions, currentTag, slot, categoryOptions, currentCategory, notice } = props
   const { locale } = useGlobal()
   const router = useRouter()
   return (<aside id='right' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'mr-4' : 'ml-4') + ' space-y-4 hidden 2xl:block flex-col w-60 relative z-10'}>
@@ -50,7 +50,7 @@ const SideAreaRight = (props) => {
             {slot}
 
             {/* 分类  */}
-            {CONFIG_NEXT.RIGHT_CATEGORY_LIST && router.asPath !== '/category' && categories && (
+            {CONFIG_NEXT.RIGHT_CATEGORY_LIST && router.asPath !== '/category' && categoryOptions && (
                 <Card>
                     <div className='text-sm px-2 flex flex-nowrap justify-between font-light'>
                         <div className='pb-2 text-gray-600 dark:text-gray-300'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
@@ -63,11 +63,11 @@ const SideAreaRight = (props) => {
 
                         </Link>
                     </div>
-                    <CategoryGroup currentCategory={currentCategory} categories={categories} />
+                    <CategoryGroup currentCategory={currentCategory} categories={categoryOptions} />
                 </Card>
             )}
 
-            {CONFIG_NEXT.RIGHT_TAG_LIST && router.asPath !== '/tag' && tags && (
+            {CONFIG_NEXT.RIGHT_TAG_LIST && router.asPath !== '/tag' && tagOptions && (
                 <Card>
                     <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200">
                         <div className="text-gray-600 dark:text-gray-200">
@@ -85,7 +85,7 @@ const SideAreaRight = (props) => {
                         </Link>
                     </div>
                     <div className="px-2 pt-2">
-                        <TagGroups tags={tags} currentTag={currentTag} />
+                        <TagGroups tags={tagOptions} currentTag={currentTag} />
                     </div>
                 </Card>
             )}
