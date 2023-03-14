@@ -24,6 +24,7 @@ import smoothscroll from 'smoothscroll-polyfill'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
+import { isMobile } from '@/lib/utils'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -57,13 +58,15 @@ const MyApp = ({ Component, pageProps }) => {
 
   useEffect(() => {
     AOS.init()
-    smoothscroll.polyfill()
-  })
+    if (isMobile()) {
+      smoothscroll.polyfill()
+    }
+  }, [])
 
   return (
         <GlobalContextProvider>
-            {externalPlugins}
             <Component {...pageProps} />
+            {externalPlugins}
         </GlobalContextProvider>
   )
 }

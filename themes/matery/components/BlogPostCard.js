@@ -3,19 +3,22 @@ import Link from 'next/link'
 import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG_MATERY from '../config_matery'
+// import Image from 'next/image'
 
-const BlogPostCard = ({ post, showSummary, siteInfo }) => {
+const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_MATERY.POST_LIST_PREVIEW && post.blockMap
   // matery 主题默认强制显示图片
   if (post && !post.page_cover) {
     post.page_cover = siteInfo?.pageCover
   }
   const showPageCover = CONFIG_MATERY.POST_LIST_COVER && !showPreview && post?.page_cover
+  const delay = (index % 3) * 300
   return (
       <div
           data-aos="zoom-in"
-          data-aos-duration="300"
-          data-aos-once="false"
+          data-aos-duration="500"
+          data-aos-delay={delay}
+          data-aos-once="true"
           data-aos-anchor-placement="top-bottom"
           className="w-full mb-4 h-full overflow-auto shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
@@ -25,13 +28,25 @@ const BlogPostCard = ({ post, showSummary, siteInfo }) => {
               {/* 头部图片 填充卡片 */}
               {showPageCover && (
                   <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                      <div className="flex flex-grow w-full relative duration-200 bg-black rounded-t-md  cursor-pointer transform overflow-hidden">
+                      <div
+                      className="flex flex-grow w-full relative duration-200 bg-black rounded-t-md  cursor-pointer transform overflow-hidden">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                               src={post?.page_cover}
                               alt={post.title}
                               className="opacity-50 h-full w-full hover:scale-125 rounded-t-md  transform object-cover duration-500"
                           />
+                          {/* <div className='relative w-full'>
+                            <Image
+                            className='hover:scale-125 opacity-50 transition cursor-pointer duration-500'
+                            src={post?.page_cover}
+                            alt={post.title}
+                            quality={30}
+                            placeholder='blur'
+                            blurDataURL='/bg_image.jpg'
+                            style={{ objectFit: 'cover' }}
+                            fill/>
+                          </div> */}
                           <span className='absolute bottom-0 left-0 text-white p-6 text-2xl replace' > {post.title}</span>
                       </div>
                   </Link>

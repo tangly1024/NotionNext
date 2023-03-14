@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { ArticleLock } from './components/ArticleLock'
 import HeaderArticle from './components/HeaderArticle'
 import LayoutBase from './LayoutBase'
@@ -9,21 +9,21 @@ import ArticleCopyright from './components/ArticleCopyright'
 import { ArticleInfo } from './components/ArticleInfo'
 import Catalog from './components/Catalog'
 import JumpToCommentButton from './components/JumpToCommentButton'
+import throttle from 'lodash.throttle'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
   const [show, switchShow] = React.useState(false)
+  const throttleMs = 200
 
-  const scrollListener = () => {
-    requestAnimationFrame(() => {
-      const scrollY = window.pageYOffset
-      const shouldShow = scrollY > 220 && post?.toc?.length > 0
-      if (shouldShow !== show) {
-        switchShow(shouldShow)
-      }
-    })
-  }
+  const scrollListener = useCallback(throttle(() => {
+    const scrollY = window.pageYOffset
+    const shouldShow = scrollY > 220 && post?.toc?.length > 0
+    if (shouldShow !== show) {
+      switchShow(shouldShow)
+    }
+  }, throttleMs))
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)

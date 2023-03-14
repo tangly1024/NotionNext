@@ -1,5 +1,5 @@
 import CommonHead from '@/components/CommonHead'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import Footer from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
@@ -9,6 +9,7 @@ import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
+import throttle from 'lodash.throttle'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -21,22 +22,15 @@ const LayoutBase = props => {
   const [show, switchShow] = useState(false)
   const { onLoading } = useGlobal()
 
-  const scrollListener = () => {
-    requestAnimationFrame(() => {
-    //   const targetRef = document.getElementById('wrapper')
-    //   const clientHeight = targetRef?.clientHeight
-      const scrollY = window.pageYOffset
-      //   const fullHeight = clientHeight - window.outerHeight
-      //   let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-      //   if (per > 100) per = 100
-      const shouldShow = scrollY > 300
-      console.log(scrollY)
-      if (shouldShow !== show) {
-        switchShow(shouldShow)
-      }
-    // changePercent(per)
-    })
-  }
+  const throttleMs = 200
+  const scrollListener = useCallback(throttle(() => {
+    const scrollY = window.pageYOffset
+    const shouldShow = scrollY > 300
+    if (shouldShow !== show) {
+      switchShow(shouldShow)
+    }
+  }, throttleMs))
+
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)

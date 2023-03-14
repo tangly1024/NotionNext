@@ -180,7 +180,7 @@
 }
 
 .notion-simple-table {
-  @apply whitespace-nowrap overflow-x-scroll block
+  @apply whitespace-nowrap overflow-x-auto block
 }
 
 .notion-app {

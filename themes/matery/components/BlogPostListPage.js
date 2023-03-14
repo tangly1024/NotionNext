@@ -23,7 +23,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
         {/* 文章列表 */}
         <div className="px-4 pt-4 xl:columns-3 md:columns-2 pb-24" >
           {posts.map(post => (
-            <BlogPostCard key={post.id} post={post} siteInfo={siteInfo} />
+            <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
           ))}
         </div>
         {showPagination && <PaginationSimple page={page} totalPage={totalPage} />}
