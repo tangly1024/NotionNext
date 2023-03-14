@@ -15,7 +15,7 @@ const ExternalScript = () => {
 
     // 自动添加图片阴影
     if (BLOG.IMG_SHADOW) {
-      loadExternalResource('/css/img-shadow.css', 'js')
+      loadExternalResource('/css/img-shadow.css', 'css')
     }
 
     if (BLOG.CUSTOM_EXTERNAL_JS && BLOG.CUSTOM_EXTERNAL_JS.length > 0) {
