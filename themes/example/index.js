@@ -1,4 +1,4 @@
-import CONFIG_EMPTY from './config_empty'
+import CONFIG_EXAMPLE from './config_example'
 import { LayoutIndex } from './LayoutIndex'
 import { LayoutSearch } from './LayoutSearch'
 import { LayoutArchive } from './LayoutArchive'
@@ -11,7 +11,7 @@ import { LayoutTag } from './LayoutTag'
 import { LayoutTagIndex } from './LayoutTagIndex'
 
 export {
-  CONFIG_EMPTY as THEME_CONFIG,
+  CONFIG_EXAMPLE as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

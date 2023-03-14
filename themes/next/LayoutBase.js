@@ -10,7 +10,6 @@ import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import PropTypes from 'prop-types'
 import React from 'react'
-import smoothscroll from 'smoothscroll-polyfill'
 import CONFIG_NEXT from './config_next'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
@@ -45,8 +44,6 @@ const LayoutBase = (props) => {
   }
 
   React.useEffect(() => {
-    smoothscroll.polyfill()
-
     // facebook messenger 插件需要调整右下角悬浮按钮的高度
     const fb = document.getElementsByClassName('fb-customerchat')
     if (fb.length === 0) {
@@ -59,7 +56,7 @@ const LayoutBase = (props) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return (<>
+  return (<div id='theme-next'>
 
       <CommonHead meta={meta} />
 
@@ -90,7 +87,7 @@ const LayoutBase = (props) => {
       </div>
 
       <Footer title={siteInfo?.title}/>
-      </>
+    </div>
   )
 }
 

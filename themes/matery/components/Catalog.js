@@ -27,7 +27,7 @@ const Catalog = ({ toc }) => {
 
   // 同步选中目录事件
   const [activeSection, setActiveSection] = React.useState(null)
-  const throttleMs = 100
+  const throttleMs = 200
   const actionSectionScrollSpy = React.useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null

@@ -167,6 +167,13 @@ nav {
   -webkit-box-orient: vertical;
 }
 
+.waline-recent-content .wl-emoji {
+  height: 1.1rem !important;
+  display: inline-block !important;
+  line-height: 1.25rem !important;
+  vertical-align: text-bottom !important;
+}
+
 .vcontent .wl-emoji {
   display: inline-block;
   vertical-align: baseline;
@@ -204,10 +211,15 @@ nav {
 }
 
 .nobelium .notion-code{
-    @apply max-w-2xl;
+    /* @apply max-w-2xl; */
 }
 
 .next #announcement-content *{
  font-size:10px !important;
  line-height:1.5 !important;
+}
+
+/* twikoo 评论区超链接样式 */
+.tk-main a {
+   @apply text-blue-700
 }

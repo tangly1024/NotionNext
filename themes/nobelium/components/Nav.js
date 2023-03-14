@@ -3,9 +3,10 @@ import Link from 'next/link'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import CONFIG_NOBELIUM from '../config_nobelium'
+import { SvgIcon } from './SvgIcon'
 
 const Nav = props => {
-  const { navBarTitle, fullWidth } = props
+  const { navBarTitle, fullWidth, siteInfo } = props
   const useSticky = !BLOG.autoCollapsedNavBar
   const navRef = useRef(null)
   const sentinalRef = useRef([])
@@ -42,33 +43,12 @@ const Nav = props => {
         <Link href="/" aria-label={BLOG.title}>
 
           <div className="h-6">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                width="24"
-                height="24"
-                className="fill-current text-black dark:text-white"
-              />
-              <rect width="24" height="24" fill="url(#paint0_radial)" />
-              <defs>
-                <radialGradient
-                  id="paint0_radial"
-                  cx="0"
-                  cy="0"
-                  r="1"
-                  gradientUnits="userSpaceOnUse"
-                  gradientTransform="rotate(45) scale(39.598)"
-                >
-                  <stop stopColor="#CFCFCF" stopOpacity="0.6" />
-                  <stop offset="1" stopColor="#E9E9E9" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-            </svg>
+            {/* <SvgIcon/> */}
+            {CONFIG_NOBELIUM.NAV_NOTION_ICON
+            /* eslint-disable-next-line @next/next/no-img-element */
+              ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR}/>
+              : <SvgIcon/>}
+
           </div>
 
         </Link>
@@ -80,8 +60,8 @@ const Nav = props => {
             )
           : (
           <p className="ml-2 font-medium text-day dark:text-night header-name">
-            {BLOG.title},{' '}
-            <span className="font-normal">{BLOG.description}</span>
+            {siteInfo?.title}
+            {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
           </p>
             )}
       </div>
@@ -95,7 +75,7 @@ const NavBar = props => {
 
   const { locale } = useGlobal()
   let links = [
-    { id: 2, name: locale.NAV.RSS, to: '/feed', show: CONFIG_NOBELIUM.MENU_RSS, target: '_blank' },
+    { id: 2, name: locale.NAV.RSS, to: '/feed', show: BLOG.ENABLE_RSS && CONFIG_NOBELIUM.MENU_RSS, target: '_blank' },
     { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_NOBELIUM.MENU_SEARCH },
     { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_NOBELIUM.MENU_ARCHIVE },
     { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NOBELIUM.MENU_CATEGORY },

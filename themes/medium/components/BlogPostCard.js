@@ -14,8 +14,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         <div
             key={post.id}
             data-aos="fade-up"
-            data-aos-duration="600"
-            data-aos-easing="ease-in-out"
+            data-aos-duration="300"
             data-aos-once="false"
             data-aos-anchor-placement="top-bottom"
             className="mb-6 max-w-7xl border-b dark:border-gray-800 "

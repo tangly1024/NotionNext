@@ -49,10 +49,10 @@ export const getServerSideProps = async (ctx) => {
   const fields = defaultFields.concat(postFields)
 
   // 缓存
-  //   ctx.res.setHeader(
-  //     'Cache-Control',
-  //     'public, s-maxage=10, stale-while-revalidate=59'
-  //   )
+  ctx.res.setHeader(
+    'Cache-Control',
+    'public, max-age=3600, stale-while-revalidate=59'
+  )
 
   return getServerSideSitemap(ctx, fields)
 }
