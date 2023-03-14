@@ -12,6 +12,12 @@ const ExternalScript = () => {
     loadExternalResource(BLOG.FONT_AWESOME, 'css')
     loadExternalResource('/css/custom.css', 'css')
     loadExternalResource('/js/custom.js', 'js')
+
+    // 自动添加图片阴影
+    if (BLOG.IMG_SHADOW) {
+      loadExternalResource('/css/img-shadow.css', 'css')
+    }
+
     if (BLOG.CUSTOM_EXTERNAL_JS && BLOG.CUSTOM_EXTERNAL_JS.length > 0) {
       for (const url of BLOG.CUSTOM_EXTERNAL_JS) {
         loadExternalResource(url, 'js')
