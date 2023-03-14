@@ -38,7 +38,10 @@ export const getServerSideProps = async (ctx) => {
       priority: '0.7'
     }
   ]
-  const postFields = allPages?.map(post => {
+
+  // 过滤不被公开的文章与页面
+  const sitemapContent = allPages.filter(page => page.status === 'Published')
+  const postFields = sitemapContent?.map(post => {
     return {
       loc: `${BLOG.LINK}/${post.slug}`,
       lastmod: new Date(post?.date?.start_date || post?.createdTime).toISOString().split('T')[0],
