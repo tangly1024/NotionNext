@@ -87,7 +87,7 @@ const Header = props => {
             id="header"
             className="w-full h-screen bg-black text-white relative"
         >
-            <div className='w-full h-full'>
+            <div className={`w-full h-full ${CONFIG_HEXO.HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}>
                 {/* <Image src={siteInfo.pageCover} fill
                     style={{ objectFit: 'cover' }}
                     className='opacity-70'
