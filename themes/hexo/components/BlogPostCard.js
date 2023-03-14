@@ -11,7 +11,6 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post.page_cover = siteInfo?.pageCover
   }
   const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover
-  const delay = (index % 2) * 200
 
   return (
     <div
@@ -21,17 +20,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
 
         {/* 文字内容 */}
-        <div
-            data-aos="fade-up"
-            data-aos-duration="200"
-            data-aos-delay={delay}
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"
-            className={`flex flex-col justify-start lg:p-6 p-4 md:max-h-60 ${showPageCover ? 'md:w-7/12 w-full ' : 'w-full'}`}>
-
-            <BlogPostCardInfo post={post} showPreview={showPreview} showSummary={showSummary}/>
-
-        </div>
+        <BlogPostCardInfo index={index} post={post} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary}/>
 
          {/* 图片封面 */}
         {showPageCover && !showPreview && post?.page_cover && (
@@ -44,7 +33,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         loading='lazy'
                         className="w-full relative cursor-pointer object-cover duration-200 hover:scale-125 "
                     /> */}
-                    <div className='bg-center bg-cover md:h-full h-52' style={{ backgroundImage: `url(${post?.page_cover})` }}/>
+                    <div className='bg-center bg-cover md:h-full h-52' style={{ backgroundImage: `url('${post?.page_cover}')` }}/>
 
                     {/* <div className='relative w-full h-full'>
                     <Image

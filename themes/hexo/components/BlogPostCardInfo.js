@@ -3,10 +3,25 @@ import NotionPage from '@/components/NotionPage'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 
-export const BlogPostCardInfo = ({ post, showPreview, showSummary }) => {
-  return <>
-        {/* 标题 */}
-        <Link
+/**
+ * 博客列表的文字内容
+ * @param {*} param0
+ * @returns
+ */
+export const BlogPostCardInfo = ({ index, post, showPreview, showPageCover, showSummary }) => {
+  const delay = (index % 2) * 200
+
+  return <div
+            data-aos="fade-up"
+            data-aos-duration="200"
+            data-aos-delay={delay}
+            data-aos-once="true"
+            data-aos-anchor-placement="top-bottom"
+            className={`h-56 flex flex-col justify-between lg:p-6 p-4 md:max-h-60 ${showPageCover ? 'md:w-7/12 w-full ' : 'w-full'}`}>
+       <div>
+
+         {/* 标题 */}
+         <Link
             href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
             className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
@@ -32,13 +47,13 @@ export const BlogPostCardInfo = ({ post, showPreview, showSummary }) => {
             </Link>
         </div>
 
-        {/* 摘要 */}
-        {(!showPreview || showSummary) && !post.results && (
+          {/* 摘要 */}
+          {(!showPreview || showSummary) && !post.results && (
             <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical' }}
                 className="replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
                 {post.summary}
             </p>
-        )}
+          )}
 
         {/* 搜索结果 */}
         {post.results && (
@@ -55,8 +70,11 @@ export const BlogPostCardInfo = ({ post, showPreview, showSummary }) => {
             </div>
         )}
 
-        {/* 分类标签 */}
-        <div className="text-gray-400 justify-between flex">
+       </div>
+
+       <div>
+         {/* 分类标签 */}
+         <div className="text-gray-400 justify-between flex">
             <Link
                 href={`/category/${post.category}`}
                 passHref
@@ -75,5 +93,6 @@ export const BlogPostCardInfo = ({ post, showPreview, showSummary }) => {
                 </div>
             </div>
         </div>
-    </>
+       </div>
+       </div>
 }
