@@ -38,7 +38,7 @@ export const getServerSideProps = async (ctx) => {
       priority: '0.7'
     }
   ]
-  const postFields = allPages?.map(post => {
+  const postFields = allPages?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)?.map(post => {
     return {
       loc: `${BLOG.LINK}/${post.slug}`,
       lastmod: new Date(post?.date?.start_date || post?.createdTime).toISOString().split('T')[0],
