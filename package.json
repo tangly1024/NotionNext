@@ -20,6 +20,7 @@
     "bundle-report": "ANALYZE=true yarn build"
   },
   "dependencies": {
+    "@giscus/react": "^2.2.8",
     "@next/bundle-analyzer": "^12.1.1",
     "@popperjs/core": "^2.9.3",
     "animate.css": "^4.1.1",
@@ -44,6 +45,7 @@
     "preact": "^10.5.15",
     "prism-themes": "1.9.0",
     "qrcode": "^1.5.1",
+    "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-cookies": "^0.1.1",
     "react-cusdis": "^2.1.3",
