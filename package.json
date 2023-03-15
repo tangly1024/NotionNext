@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.12.3",
+  "version": "3.12.4",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -50,7 +50,7 @@
     "react-dom": "^18.2.0",
     "react-facebook": "^8.1.4",
     "react-messenger-customer-chat": "^0.8.0",
-    "react-notion-x": "6.15.8",
+    "react-notion-x": "6.16.0",
     "react-share": "^4.4.0",
     "react-tweet-embed": "~2.0.0",
     "smoothscroll-polyfill": "^0.4.4",
