@@ -1,6 +1,7 @@
 import BLOG from 'blog.config'
 import React, { useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import { Analytics } from '@vercel/analytics/react'
 
 import 'animate.css'
 import '@/styles/globals.css'
@@ -38,23 +39,25 @@ const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
 
 const MyApp = ({ Component, pageProps }) => {
   // 外部插件
-  const externalPlugins = <>
-        {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
-        {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
-        {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
-        {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
-        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
-        {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-        {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
-        {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
-        {JSON.parse(BLOG.SAKURA) && <Sakura />}
-        {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
-        {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
-        {JSON.parse(BLOG.NEST) && <Nest />}
-        {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
-        {JSON.parse(BLOG.RIBBON) && <Ribbon />}
-        <ExternalScript/>
+  const externalPlugins = (
+    <>
+      {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
+      {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
+      {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
+      {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
+      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
+      {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
+      {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
+      {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
+      {JSON.parse(BLOG.SAKURA) && <Sakura />}
+      {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
+      {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
+      {JSON.parse(BLOG.NEST) && <Nest />}
+      {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
+      {JSON.parse(BLOG.RIBBON) && <Ribbon />}
+      <ExternalScript />
     </>
+  )
 
   useEffect(() => {
     AOS.init()
@@ -64,10 +67,11 @@ const MyApp = ({ Component, pageProps }) => {
   }, [])
 
   return (
-        <GlobalContextProvider>
-            <Component {...pageProps} />
-            {externalPlugins}
-        </GlobalContextProvider>
+    <GlobalContextProvider>
+      <Component {...pageProps} />
+      {externalPlugins}
+      <Analytics />
+    </GlobalContextProvider>
   )
 }
 
