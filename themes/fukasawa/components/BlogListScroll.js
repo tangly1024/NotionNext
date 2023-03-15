@@ -14,18 +14,7 @@ import { useGlobal } from '@/lib/global'
  */
 const BlogListScroll = props => {
   const { posts = [], siteInfo } = props
-  const [colCount, changeCol] = React.useState(1)
   const { locale } = useGlobal()
-
-  function updateCol() {
-    if (window.outerWidth > 1200) {
-      changeCol(3)
-    } else if (window.outerWidth > 900) {
-      changeCol(2)
-    } else {
-      changeCol(1)
-    }
-  }
   const targetRef = React.useRef(null)
 
   const [page, updatePage] = React.useState(1)
@@ -56,29 +45,23 @@ const BlogListScroll = props => {
   }
 
   React.useEffect(() => {
-    updateCol()
     window.addEventListener('scroll', scrollTrigger)
-
-    window.addEventListener('resize', updateCol)
     return () => {
-      window.removeEventListener('resize', updateCol)
       window.removeEventListener('scroll', scrollTrigger)
     }
-  })
+  }, [])
 
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
   } else {
     return (
-            <div id="container" ref={targetRef} >
+            <div id="container" ref={targetRef} className='grid-container' >
                 {/* 文章列表 */}
-                <div style={{ columnCount: colCount }}>
                     {postsToShow?.map(post => (
-                        <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
-                            <BlogCard key={post.id} post={post} siteInfo={siteInfo} />
+            <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>
+            <BlogCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
                         </div>
                     ))}
-                </div>
 
                 <div className="w-full my-4 py-4 text-center cursor-pointer "
                     onClick={handleGetMore}>

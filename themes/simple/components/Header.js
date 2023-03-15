@@ -9,6 +9,7 @@ import CONFIG_SIMPLE from '../config_simple'
  */
 export const Header = (props) => {
   const { siteInfo } = props
+  const avatar = siteInfo?.icon || BLOG.AVATAR
 
   return (
         <header className="text-center justify-between items-center px-6 bg-white h-80 dark:bg-black relative z-10">
@@ -20,7 +21,7 @@ export const Header = (props) => {
                     <div className='flex space-x-6'>
                         <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer'>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={siteInfo?.icon} className='rounded-full' width={160} alt={BLOG.AUTHOR} />
+                            <img src={avatar} className='rounded-full' width={160} alt={BLOG.AUTHOR} />
                         </div>
 
                         <div>

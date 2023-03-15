@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Collapse from './Collapse'
 import Logo from './Logo'
@@ -9,6 +9,7 @@ import TagGroups from './TagGroups'
 import MenuButtonGroupTop from './MenuButtonGroupTop'
 import MenuList from './MenuList'
 import { useRouter } from 'next/router'
+import throttle from 'lodash.throttle'
 
 let windowTop = 0
 
@@ -39,39 +40,40 @@ const TopNav = props => {
     }
   }, [])
 
-  const scrollTrigger = () => {
-    requestAnimationFrame(() => {
-      const scrollS = window.scrollY
-      const nav = document.querySelector('#sticky-nav')
-      const header = document.querySelector('#header')
-      // 是否将导航栏透明
-      const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
+  const throttleMs = 200
 
-      if (header && navTransparent) {
-        nav && nav.classList.replace('bg-white', 'bg-none')
-        nav && nav.classList.replace('text-black', 'text-white')
-        nav && nav.classList.replace('border', 'border-transparent')
-        nav && nav.classList.replace('drop-shadow-md', 'shadow-none')
-        nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
-      } else {
-        nav && nav.classList.replace('bg-none', 'bg-white')
-        nav && nav.classList.replace('text-white', 'text-black')
-        nav && nav.classList.replace('border-transparent', 'border')
-        nav && nav.classList.replace('shadow-none', 'drop-shadow-md')
-        nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
-      }
+  const scrollTrigger = useCallback(throttle(() => {
+    const scrollS = window.scrollY
+    const nav = document.querySelector('#sticky-nav')
+    const header = document.querySelector('#header')
+    // 是否将导航栏透明
+    const navTransparent = (scrollS < document.documentElement.clientHeight - 12 && router.route === '/') || scrollS < 300 // 透明导航条的条件
 
-      const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
-      if (!showNav) {
-        nav && nav.classList.replace('top-0', '-top-20')
-        windowTop = scrollS
-      } else {
-        nav && nav.classList.replace('-top-20', 'top-0')
-        windowTop = scrollS
-      }
-      navDarkMode()
-    })
-  }
+    if (header && navTransparent) {
+      nav && nav.classList.replace('bg-white', 'bg-none')
+      nav && nav.classList.replace('text-black', 'text-white')
+      nav && nav.classList.replace('border', 'border-transparent')
+      nav && nav.classList.replace('drop-shadow-md', 'shadow-none')
+      nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
+    } else {
+      nav && nav.classList.replace('bg-none', 'bg-white')
+      nav && nav.classList.replace('text-white', 'text-black')
+      nav && nav.classList.replace('border-transparent', 'border')
+      nav && nav.classList.replace('shadow-none', 'drop-shadow-md')
+      nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
+    }
+
+    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight * 2)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    if (!showNav) {
+      nav && nav.classList.replace('top-0', '-top-20')
+      windowTop = scrollS
+    } else {
+      nav && nav.classList.replace('-top-20', 'top-0')
+      windowTop = scrollS
+    }
+    navDarkMode()
+  }, throttleMs)
+  )
 
   const navDarkMode = () => {
     const nav = document.getElementById('sticky-nav')
