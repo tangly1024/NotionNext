@@ -11,39 +11,30 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post.page_cover = siteInfo?.pageCover
   }
   const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover
-  const delay = (index % 2) * 200
 
   return (
     <div
         key={post.id}
         className={`flex md:flex-row flex-col-reverse ${CONFIG_HEXO.POST_LIST_IMG_CROSSOVER ? 'even:md:flex-row-reverse' : ''}
-        w-full md:h-52 justify-between overflow-hidden
+        w-full justify-between overflow-hidden
         border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
 
         {/* 文字内容 */}
-        <div
-            data-aos="fade-up"
-            data-aos-duration="200"
-            data-aos-delay={delay}
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"
-            className={`flex flex-col lg:p-6 p-4  ${showPageCover ? 'md:w-7/12 w-full ' : 'w-full'}`}>
-
-            <BlogPostCardInfo post={post} showPreview={showPreview} showSummary={showSummary}/>
-
-        </div>
+        <BlogPostCardInfo index={index} post={post} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary}/>
 
          {/* 图片封面 */}
         {showPageCover && !showPreview && post?.page_cover && (
-           <div className="flex overflow-hidden md:w-5/12 h-full">
+           <div className="h-auto md:w-5/12">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    {/* <img
                         src={post?.page_cover}
                         alt={post.title}
                         loading='lazy'
-                        className="w-full cursor-pointer object-cover duration-200 hover:scale-125 "
-                    />
+                        className="w-full relative cursor-pointer object-cover duration-200 hover:scale-125 "
+                    /> */}
+                    <div className='bg-center bg-cover md:h-full h-52' style={{ backgroundImage: `url('${post?.page_cover}')` }}/>
+
                     {/* <div className='relative w-full h-full'>
                     <Image
                      className='hover:scale-125 transition cursor-pointer duration-500'
