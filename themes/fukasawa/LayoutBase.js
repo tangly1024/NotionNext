@@ -3,6 +3,7 @@ import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -25,6 +26,11 @@ const LayoutBase = (props) => {
     meta
   } = props
   const leftAreaSlot = <Live2D/>
+
+  if (isBrowser()) {
+    loadExternalResource('/css/theme-fukasawa.css', 'css')
+  }
+
   return (<div id='theme-fukasawa' >
     <CommonHead meta={meta} />
     <TopNav {...props}/>
