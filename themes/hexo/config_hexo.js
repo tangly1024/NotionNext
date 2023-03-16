@@ -1,6 +1,6 @@
 const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['Hi，我是你大爷', 'Hi，IM Your Nightmare', 'Hi，我爱格斗游戏', 'Welcom To My Blog🎉'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['Hi，我是你大爷', 'Hi，I AM Your Nightmare', 'I Love FTG&FGC!', 'Welcome To My Blog🎉'], // 首页大图标语文字
 
   HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
   HOME_NAV_BACKGROUND_IMG_FIXED: true, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
