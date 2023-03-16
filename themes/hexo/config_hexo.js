@@ -6,17 +6,17 @@ const CONFIG_HEXO = {
   HOME_NAV_BACKGROUND_IMG_FIXED: true, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
 
   // 菜单配置
-  MENU_INDEX: flase, // 显示首页
+  MENU_INDEX: false, // 显示首页
   MENU_CATEGORY: true, // 显示分类
   MENU_TAG: false, // 显示标签
-  MENU_ARCHIVE: flase, // 显示归档
+  MENU_ARCHIVE: false, // 显示归档
   MENU_SEARCH: true, // 显示搜索
 
   POST_LIST_COVER: true, // 列表显示文章封面
   POST_LIST_COVER_DEFAULT: true, // 封面为空时用站点背景做默认封面
   POST_LIST_SUMMARY: true, // 文章摘要
   POST_LIST_PREVIEW: true, // 读取文章预览
-  POST_LIST_IMG_CROSSOVER: flase, // 博客列表图片左右交错
+  POST_LIST_IMG_CROSSOVER: false, // 博客列表图片左右交错
 
   ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
   ARTICLE_COPYRIGHT: true, // 显示文章版权声明
