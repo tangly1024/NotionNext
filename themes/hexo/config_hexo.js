@@ -6,6 +6,7 @@ const CONFIG_HEXO = {
   HOME_NAV_BACKGROUND_IMG_FIXED: true, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
 
   // 菜单配置
+  MENU_INDEX: true, // 显示首页
   MENU_CATEGORY: true, // 显示分类
   MENU_TAG: true, // 显示标签
   MENU_ARCHIVE: true, // 显示归档

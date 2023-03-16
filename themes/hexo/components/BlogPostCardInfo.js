@@ -8,18 +8,10 @@ import TagItemMini from './TagItemMini'
  * @param {*} param0
  * @returns
  */
-export const BlogPostCardInfo = ({ index, post, showPreview, showPageCover, showSummary }) => {
-  const delay = (index % 2) * 200
+export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
+  return <div className={`h-56 flex flex-col justify-between lg:p-6 p-4 md:max-h-60 ${showPageCover ? 'md:w-7/12 w-full ' : 'w-full'}`}>
 
-  return <div
-            data-aos="fade-up"
-            data-aos-duration="200"
-            data-aos-delay={delay}
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"
-            className={`h-56 flex flex-col justify-between lg:p-6 p-4 md:max-h-60 ${showPageCover ? 'md:w-7/12 w-full ' : 'w-full'}`}>
        <div>
-
          {/* 标题 */}
          <Link
             href={`${BLOG.SUB_PATH}/${post.slug}`}

@@ -20,10 +20,10 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
           data-aos-delay={delay}
           data-aos-once="true"
           data-aos-anchor-placement="top-bottom"
-          className="w-full mb-4 h-full overflow-auto shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
+          className="w-full mb-4 overflow-auto shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
           {/* 固定高度 ，空白用图片拉升填充 */}
-          <div key={post.id} className="flex flex-col h-96 justify-between">
+          <div className="flex flex-col h-80 justify-between">
 
               {/* 头部图片 填充卡片 */}
               {showPageCover && (
@@ -36,22 +36,12 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                               alt={post.title}
                               className="opacity-50 h-full w-full hover:scale-125 rounded-t-md  transform object-cover duration-500"
                           />
-                          {/* <div className='relative w-full'>
-                            <Image
-                            className='hover:scale-125 opacity-50 transition cursor-pointer duration-500'
-                            src={post?.page_cover}
-                            alt={post.title}
-                            quality={30}
-                            placeholder='blur'
-                            blurDataURL='/bg_image.jpg'
-                            style={{ objectFit: 'cover' }}
-                            fill/>
-                          </div> */}
-                          <span className='absolute bottom-0 left-0 text-white p-6 text-2xl replace' > {post.title}</span>
+                          <span className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full' > {post.title}</span>
                       </div>
                   </Link>
               )}
 
+              {/* 文字描述 */}
               <div >
                   {/* 描述 */}
                   <div className="px-4 flex flex-col w-full  text-gray-700  dark:text-gray-300">
