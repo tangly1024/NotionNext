@@ -84,8 +84,9 @@
   <td align="center"><a href="https://github.com/SkysCrystal"><img src="https://avatars.githubusercontent.com/u/49473463" width="64px;"  alt="SkysCrystal"/><br/><sub><b>Simon Shi</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=SkysCrystal" title="SkysCrystal" >🔧 🐛</a></td>
   
   <td align="center"><a href="https://github.com/siygle"><img src="https://avatars.githubusercontent.com/u/173408" width="64px;"  alt="S.Y. Lee"/><br/><sub><b>S.Y. Lee</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=siygle" title="siygle" >🔧 🐛</a></td>
-  
-  
+
+  <td align="center"><a href="https://github.com/fighting-bug"><img src="https://avatars.githubusercontent.com/u/56441589" width="64px;"  alt="fighting-buf"/><br/><sub><b>fighting-buf</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=fighting-bug" title="fighting-buf" >🔧 🐛</a></td>
+
 
 </tr>
 </table>

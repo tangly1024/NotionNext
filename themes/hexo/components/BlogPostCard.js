@@ -11,9 +11,15 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post.page_cover = siteInfo?.pageCover
   }
   const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover
+  const delay = (index % 2) * 200
 
   return (
     <div
+        data-aos="fade-up"
+        data-aos-duration="200"
+        data-aos-delay={delay}
+        data-aos-once="true"
+        data-aos-anchor-placement="top-bottom"
         key={post.id}
         className={`flex md:flex-row flex-col-reverse ${CONFIG_HEXO.POST_LIST_IMG_CROSSOVER ? 'even:md:flex-row-reverse' : ''}
         w-full justify-between overflow-hidden
