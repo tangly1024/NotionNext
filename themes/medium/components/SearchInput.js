@@ -3,7 +3,6 @@ import { useImperativeHandle, useRef, useState } from 'react'
 let lock = false
 
 const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
-  // const [searchKey, setSearchKey] = useState(currentSearch || getSearchKey() || '')
   const [onLoading, setLoadingState] = useState(false)
   const router = useRouter()
   const searchInputRef = useRef()
@@ -20,9 +19,6 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
 
     if (key && key !== '') {
       setLoadingState(true)
-      // router.push({ pathname: '/search/' + key }).then(r => {
-      //   setLoadingState(false)
-      // })
       location.href = '/search/' + key
     } else {
       router.push({ pathname: '/' }).then(r => {
@@ -65,7 +61,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
     <input
       ref={searchInputRef}
       type='text'
-      className={'w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+      className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
       onCompositionStart={lockSearchInput}
       onCompositionUpdate={lockSearchInput}

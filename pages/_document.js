@@ -14,15 +14,10 @@ class MyDocument extends Document {
       <Html lang={BLOG.LANG} className='test'>
         <Head>
           <link rel='icon' href='/favicon.ico' />
-          <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
-          { BLOG.CUSTOM_FONT
-            ? BLOG.CUSTOM_FONT_URL?.map(fontUrl =>
-                <link href={`${fontUrl}`} key={fontUrl} rel='stylesheet' />)
-            : <link href='https://fonts.font.im/css2?family=Noto+Serif+SC&display=swap' rel='stylesheet' /> }
           <CommonScript />
         </Head>
 
-        <body className={'tracking-wider subpixel-antialiased bg-day dark:bg-night'}>
+        <body className={`${BLOG.FONT_STYLE} tracking-wider bg-day dark:bg-night`}>
             <Main />
             <NextScript />
         </body>

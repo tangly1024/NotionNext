@@ -54,9 +54,10 @@ export async function getStaticProps({ params: { page } }) {
     }
   }
 
+  delete props.allPages
   return {
     props,
-    revalidate: 1
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 
