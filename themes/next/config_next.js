@@ -3,7 +3,7 @@ const CONFIG_NEXT = {
   HOME_BANNER: false, // 首页是否显示大图及标语 [true,false]
   HOME_BANNER_Strings: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
 
-  NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部、屏幕顶部自动折叠，不固定
+  NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
 
   POST_LIST_COVER: false, // 文章列表显示封面图
   POST_LIST_PREVIEW: true, // 显示文章预览
@@ -30,7 +30,7 @@ const CONFIG_NEXT = {
   WIDGET_DARK_MODE: false, // 显示日间/夜间模式切换
   WIDGET_TOC: true, // 移动端显示悬浮目录
 
-  ARTICLE_SHARE: false, // 文章分享功能
+  ARTICLE_SHARE: process.env.NEXT_PUBLIC_ARTICLE_SHARE || false, // 文章分享功能
   ARTICLE_RELATE_POSTS: true, // 相关文章推荐
   ARTICLE_COPYRIGHT: true // 文章版权声明
 

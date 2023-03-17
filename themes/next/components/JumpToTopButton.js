@@ -11,10 +11,10 @@ import CONFIG_NEXT from '../config_next'
  * @constructor
  */
 const JumpToTopButton = ({ showPercent = true, percent }) => {
+  const { locale } = useGlobal()
   if (!CONFIG_NEXT.WIDGET_TO_TOP) {
     return <></>
   }
-  const { locale } = useGlobal()
   return (<div className='flex space-x-1 items-center transform hover:scale-105 duration-200 py-2 px-3' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
         <div className='dark:text-gray-200' title={locale.POST.TOP} >
           <i className='fa-arrow-up fas' />

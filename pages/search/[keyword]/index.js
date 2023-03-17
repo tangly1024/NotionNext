@@ -43,12 +43,12 @@ export async function getStaticProps({ params: { keyword } }) {
   if (BLOG.POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
   } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE - 1)
+    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
   }
   props.keyword = keyword
   return {
     props,
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 
@@ -122,7 +122,8 @@ async function filterByMemCache(allPosts, keyword) {
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
     let indexContent = [post.summary]
-    if (page && page.block) {
+    // 防止搜到加密文章的内容
+    if (page && page.block && !post.password) {
       const contentIds = Object.keys(page.block)
       contentIds.forEach(id => {
         const properties = page?.block[id]?.value?.properties
