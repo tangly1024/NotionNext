@@ -2011,3 +2011,10 @@ code.language-mermaid {
 .notion-equation-inline .katex-display {
   margin: 0 0 !important;
 }
+
+.two-line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
