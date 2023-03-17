@@ -1,5 +1,5 @@
 const CONFIG_HEXO = {
-  HOME_BANNER_ENABLE: true,
+  HOME_BANNER_ENABLE: false,
   HOME_BANNER_GREETINGS: ['Hi，我是一个游戏美术', 'Hi，我是一个场景原画', 'Hi，我是一个概念设计', '欢迎来到我的博客🎉'], // 首页大图标语文字
 
   HOME_NAV_BUTTONS: false, // 首页是否显示分类大图标按钮
@@ -8,7 +8,7 @@ const CONFIG_HEXO = {
   // 菜单配置
   MENU_INDEX: true, // 显示首页
   MENU_CATEGORY: false, // 显示分类
-  MENU_TAG: true, // 显示标签
+  MENU_TAG: false, // 显示标签
   MENU_ARCHIVE: true, // 显示归档
   MENU_SEARCH: true, // 显示搜索
 
