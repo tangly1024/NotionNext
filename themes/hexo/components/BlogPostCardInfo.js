@@ -48,7 +48,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
 
         {/* 搜索结果 */}
         {post.results && (
-            <p className="mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+            <p className="two-line-clamp mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
                 {post.results.map(r => (
                     <span key={r}>{r}</span>
                 ))}
