@@ -25,10 +25,10 @@ const Progress = ({ targetRef, showPercent = true }) => {
   useEffect(() => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
-  }, [percent])
+  }, [])
 
   return (
-    <div className="h-4 w-full shadow-2xl bg-hexo-light-gray dark:bg-hexo-black-gray font-sans">
+    <div className="h-4 w-full shadow-2xl bg-hexo-light-gray dark:bg-black">
       <div
         className="h-4 bg-gray-600 duration-200"
         style={{ width: `${percent}%` }}

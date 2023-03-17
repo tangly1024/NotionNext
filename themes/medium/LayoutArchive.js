@@ -3,25 +3,8 @@ import Link from 'next/link'
 import LayoutBase from './LayoutBase'
 
 export const LayoutArchive = props => {
-  const { posts } = props
-  const postsSortByDate = Object.create(posts)
+  const { archivePosts } = props
 
-  postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.date?.start_date || a.createdTime)
-    const dateB = new Date(b?.date?.start_date || b.createdTime)
-    return dateB - dateA
-  })
-
-  const archivePosts = {}
-
-  postsSortByDate.forEach(post => {
-    const date = post.date?.start_date.slice(0, 7)
-    if (archivePosts[date]) {
-      archivePosts[date].push(post)
-    } else {
-      archivePosts[date] = [post]
-    }
-  })
   return (
     <LayoutBase {...props}>
       <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
@@ -47,10 +30,10 @@ export const LayoutArchive = props => {
                     <Link
                       href={`${BLOG.SUB_PATH}/${post.slug}`}
                       passHref
-                    >
-                      <a className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
-                        {post.title}
-                      </a>
+                      className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
+
+                      {post.title}
+
                     </Link>
                   </div>
                 </li>

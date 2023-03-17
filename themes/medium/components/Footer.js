@@ -14,7 +14,7 @@ const Footer = ({ title }) => {
 
   return (
     <footer
-      className='dark:bg-hexo-black-gray flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-gray-400 text-sm p-6'
+      className='z-10 dark:bg-hexo-black-gray flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-gray-400 text-sm p-6 relative'
     >
        <DarkModeButton/>
       <i className='fas fa-copyright' /> {`${copyrightDate}`} <span><i className='mx-1 animate-pulse fas fa-heart'/> <a href={BLOG.LINK} className='underline font-bold text-gray-500 dark:text-gray-300 '>{BLOG.AUTHOR}</a>.<br/>

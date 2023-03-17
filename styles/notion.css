@@ -1,5 +1,5 @@
 :root {
-  --fg-color: rgb(55, 53, 47);
+  --fg-color: rgb(0, 0, 0); 
   --fg-color-0: rgba(55, 53, 47, 0.09);
   --fg-color-1: rgba(55, 53, 47, 0.16);
   --fg-color-2: rgba(55, 53, 47, 0.4);
@@ -180,7 +180,7 @@
 }
 
 .notion-simple-table {
-  @apply whitespace-nowrap overflow-x-scroll block
+  @apply whitespace-nowrap overflow-x-auto block
 }
 
 .notion-app {
@@ -390,9 +390,12 @@
   line-height: 1.2;
 }
 
+summary > .notion-h {
+  display: inline;
+}
+
 .notion-h {
   position: relative;
-  /* display: block; */
   font-weight: 600;
   line-height: 1.3;
   padding: 3px 2px;
@@ -406,6 +409,12 @@
   font-size: 1.575em;
   margin-top: 1.08em;
   @apply border-b w-full
+}
+.notion-h2 {
+  @apply w-full
+}
+.notion-h3 {
+  @apply w-full
 }
 
 .notion-header-anchor {
@@ -691,8 +700,12 @@ svg.notion-page-icon {
   max-width: 100%;
 }
 
+.notion-asset-wrapper-image > div {
+    height: auto !important;
+}
+
 .notion-asset-wrapper-full {
-  max-width: 100vw;
+  /* max-width: 100vw; */
 }
 
 .notion-asset-wrapper img {
@@ -733,19 +746,29 @@ svg.notion-page-icon {
   font-size: 85%;
 }
 
+pre[class*='language-'] {
+  line-height: inherit;
+}
+
+code[class*='language-'] {
+  background: unset !important;
+}
+  
 .notion-code {
-  width: 100%;
   padding: 30px 16px 30px 20px;
+<<<<<<< HEAD
   margin: 4px 0;
+=======
+>>>>>>> main
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
   tab-size: 2;
   display: block;
   box-sizing: border-box;
   overflow: auto;
-  background: #272822;
   font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
+  @apply w-full mb-4 dark:bg-black;
 }
 
 .notion-column {
@@ -829,6 +852,7 @@ svg.notion-page-icon {
 .notion-bookmark-link {
   display: flex;
   margin-top: 6px;
+  @apply w-52 md:w-80
 }
 
 .notion-bookmark-link > img {
@@ -918,7 +942,7 @@ svg.notion-page-icon {
   align-self: flex-start;
   width: 24px;
   height: 24px;
-  font-size: 1.3em;
+  font-size: 1em;
   line-height: 1em;
 }
 
@@ -1097,10 +1121,11 @@ svg.notion-page-icon {
 .notion-table-of-contents {
   width: 100%;
   margin: 4px 0;
+  @apply bg-gray-50 dark:bg-black p-2
 }
 
 .notion-table-of-contents-item {
-  color: inherit;
+  /* color: inherit; */
   text-decoration: none;
   user-select: none;
   transition: background 20ms ease-in 0s;
@@ -1116,6 +1141,8 @@ svg.notion-page-icon {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @apply text-blue-600 dark:text-blue-200
 }
 
 .notion-table-of-contents-item:hover {
@@ -1289,6 +1316,7 @@ svg.notion-page-icon {
 .notion-file-info {
   display: flex;
   align-items: baseline;
+  overflow-x: auto;
 }
 
 .notion-file-title {
@@ -1666,14 +1694,6 @@ svg + .notion-page-title-text {
   @apply dark:text-black
 }
 
-.notion-code > code {
-  color: unset;
-}
-
-pre[class*='language-'] {
-  line-height: inherit;
-}
-
 .notion-bookmark:hover {
   @apply border-blue-400;
 }
@@ -1911,35 +1931,6 @@ pre[class*='language-'] {
  width: 100% !important;
 }
 
-.pre-mac {
-  position: relative;
-  margin-top: -7px;
-  top: 21px;
-  left: 10px;
-  width: 100px;
-  z-index: 99;
-}
-
-.pre-mac > span {
-  float: left;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.pre-mac > span:nth-child(1) {
-  background: red;
-}
-
-.pre-mac > span:nth-child(2) {
-  background: sandybrown;
-}
-
-.pre-mac > span:nth-child(3) {
-  background: limegreen;
-}
-
 .notion-asset-wrapper-pdf > div {
     display: block !important;
 }
@@ -1996,13 +1987,21 @@ thead, tbody tr {
 }
 
 .notion-collection-card{
+<<<<<<< HEAD
     @apply dark:hover:text-gray-200
+=======
+    @apply dark:text-gray-200 dark:bg-gray-800 dark:hover:bg-black
+>>>>>>> main
 }
 
 .notion-code-copy{
     display: none;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 pre[class*="language-mermaid"] {
     @apply bg-gray-50 dark:bg-gray-200 !important;
 }
@@ -2012,6 +2011,19 @@ code.language-mermaid {
     display:none
 }
 
+<<<<<<< HEAD
 pre.notion-code.line-numbers{
     margin-bottom: 0 !important
+=======
+.code-toolbar{
+  @apply w-full shadow-md;
+}
+
+.mermaid > svg {
+  margin: auto;
+}
+
+.notion-equation-inline .katex-display {
+  margin: 0 0 !important;
+>>>>>>> main
 }
