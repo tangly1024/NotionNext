@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import Generator from '../components/Generator'
+import BackTop from '../components/BackTop.astro'
+import '../message.css'
+import 'katex/dist/katex.min.css'
+import 'highlight.js/styles/atom-one-dark.css'
+---
+
+<Layout title="百川🌊的ChatGpt机器人">
+  <main >
+    <Header />
+    <Generator client:load />
+    <Footer />
+    <BackTop/>
+  </main>
+</Layout>
+
+<script>
+async function checkCurrentAuth() {
+  const password = localStorage.getItem('pass')
+  const response = await fetch('/api/auth', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      pass: password,
+    }),
+  })
+  const responseJson = await response.json()
+  if (responseJson.code !== 0) {
+    window.location.href = '/password'
+  }
+}
+checkCurrentAuth()
+</script>
+

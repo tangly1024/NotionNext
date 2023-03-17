@@ -1,0 +1,29 @@
+<button id="backtop_btn" class="gpt-back-top-btn">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.2em"
+    height="1.2em"
+    viewBox="0 0 32 32"
+    ><path
+      fill="currentColor"
+      d="M16 4L6 14l1.41 1.41L15 7.83V28h2V7.83l7.59 7.58L26 14L16 4z"
+    ></path></svg
+  >
+</button>
+
+<script>
+  const backtop_btn = document.getElementById("backtop_btn") as HTMLElement;
+  backtop_btn.style.display = "none";
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      backtop_btn.style.display = "block";
+    } else {
+      backtop_btn.style.display = "none";
+    }
+  });
+
+  backtop_btn.onclick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+</script>

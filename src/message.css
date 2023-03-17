@@ -1,0 +1,26 @@
+.message pre {
+  background-color: #64748b10;
+  font-size: 0.8rem;
+  padding: 0.4rem 1rem;
+}
+
+.message .hljs {
+  background-color: transparent;
+}
+
+.message table {
+  font-size: 0.8em;
+}
+
+.message table thead tr {
+  background-color: #64748b40;
+  text-align: left;
+}
+
+.message table th, .message table td {
+  padding: 0.6rem 1rem;
+}
+
+.message table tbody tr:last-of-type {
+  border-bottom: 2px solid #64748b40;
+}

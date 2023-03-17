@@ -1,0 +1,7 @@
+[build.environment]
+  NETLIFY_USE_PNPM = "true"
+  NODE_VERSION = "18"
+
+[build]
+  command = "OUTPUT=netlify astro build"
+  publish = "dist"
