@@ -74,7 +74,7 @@ const LayoutBase = props => {
           id="container-inner"
           className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' pt-14 w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'}
         >
-          <div className="w-full max-w-4xl h-full">
+          <div className="w-full h-full max-w-6xl">
             {onLoading ? <LoadingCover /> : children}
           </div>
           <SideRight {...props} slot={rightAreaSlot} />
