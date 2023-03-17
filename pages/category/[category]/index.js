@@ -43,7 +43,7 @@ export async function getStaticProps({ params: { category } }) {
   if (BLOG.POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
   } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE - 1)
+    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
   }
 
   delete props.allPages
@@ -52,16 +52,16 @@ export async function getStaticProps({ params: { category } }) {
 
   return {
     props,
-    revalidate: 1
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categories } = await getGlobalNotionData({ from })
+  const { categoryOptions } = await getGlobalNotionData({ from })
   return {
-    paths: Object.keys(categories).map(category => ({
-      params: { category: categories[category]?.name }
+    paths: Object.keys(categoryOptions).map(category => ({
+      params: { category: categoryOptions[category]?.name }
     })),
     fallback: true
   }

@@ -7,14 +7,14 @@ import TagItemMini from './TagItemMini'
  * @returns {JSX.Element}
  * @constructor
  */
-const TagGroups = ({ tags, currentTag }) => {
-  if (!tags) return <></>
+const TagGroups = ({ tagOptions, currentTag }) => {
+  if (!tagOptions) return <></>
   return (
     <div id='tags-group' className='dark:border-gray-600 py-4'>
       <div className='mb-2'><i className='mr-2 fas fa-tag' />标签</div>
       <div className='space-y-2'>
         {
-          tags?.map(tag => {
+          tagOptions?.map(tag => {
             const selected = tag.name === currentTag
             return <TagItemMini key={tag.name} tag={tag} selected={selected} />
           })

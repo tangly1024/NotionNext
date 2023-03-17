@@ -3,7 +3,7 @@ import React from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import { useGlobal } from '@/lib/global'
-import throttle from 'lodash.throttle'
+
 /**
  * 文章列表分页表格
  * @param page 当前页
@@ -13,19 +13,8 @@ import throttle from 'lodash.throttle'
  * @constructor
  */
 const BlogListScroll = props => {
-  const { posts = [] } = props
-  const [colCount, changeCol] = React.useState(1)
+  const { posts = [], siteInfo } = props
   const { locale } = useGlobal()
-
-  function updateCol() {
-    if (window.outerWidth > 1200) {
-      changeCol(3)
-    } else if (window.outerWidth > 900) {
-      changeCol(2)
-    } else {
-      changeCol(1)
-    }
-  }
   const targetRef = React.useRef(null)
 
   const [page, updatePage] = React.useState(1)
@@ -45,47 +34,41 @@ const BlogListScroll = props => {
   }
 
   // 监听滚动自动分页加载
-  const scrollTrigger = React.useCallback(throttle(() => {
-    const scrollS = window.scrollY + window.outerHeight
-    const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
-    if (scrollS > clientHeight + 100) {
-      handleGetMore()
-    }
-  }, 500))
+  const scrollTrigger = () => {
+    requestAnimationFrame(() => {
+      const scrollS = window.scrollY + window.outerHeight
+      const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
+      if (scrollS > clientHeight + 100) {
+        handleGetMore()
+      }
+    })
+  }
 
   React.useEffect(() => {
-    updateCol()
     window.addEventListener('scroll', scrollTrigger)
-
-    window.addEventListener('resize', updateCol)
     return () => {
-      window.removeEventListener('resize', updateCol)
       window.removeEventListener('scroll', scrollTrigger)
     }
-  })
+  }, [])
 
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
   } else {
     return (
-      <div id="container" ref={targetRef} >
-        {/* 文章列表 */}
-        <div style={{ columnCount: colCount }}>
-          {postsToShow?.map(post => (
-            <div key={post.id} className='justify-center flex' style={{ breakInside: 'avoid' }}>
-              <BlogCard key={post.id} post={post} />
-            </div>
-          ))}
-        </div>
+            <div id="container" ref={targetRef} className='grid-container' >
+                {/* 文章列表 */}
+                    {postsToShow?.map(post => (
+            <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>
+            <BlogCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
+                        </div>
+                    ))}
 
-        <div
-              onClick={handleGetMore}
-              className="w-full my-4 py-4 text-center cursor-pointer "
-          >
-              {' '}
-              {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
-          </div>
-      </div>
+                <div className="w-full my-4 py-4 text-center cursor-pointer "
+                    onClick={handleGetMore}>
+                    {' '}
+                    {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+                </div>
+            </div>
     )
   }
 }

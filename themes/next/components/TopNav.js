@@ -57,10 +57,13 @@ const TopNav = (props) => {
         <section className='mt-8'>
           <div className='text-sm flex flex-nowrap justify-between font-light px-2'>
             <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-th-list' />{locale.COMMON.CATEGORY}</div>
-            <Link href={'/category'} passHref>
-              <a className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
-              </a>
+            <Link
+              href={'/category'}
+              passHref
+              className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+
+              {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
+
             </Link>
           </div>
           <CategoryGroup currentCategory={currentCategory} categories={categories} />
@@ -71,10 +74,13 @@ const TopNav = (props) => {
         <section className='mt-4'>
           <div className='text-sm py-2 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200'>
             <div className='text-gray-600 dark:text-gray-200'><i className='mr-2 fas fa-tag'/>{locale.COMMON.TAGS}</div>
-            <Link href={'/tag'} passHref>
-              <a className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
-                {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
-              </a>
+            <Link
+              href={'/tag'}
+              passHref
+              className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+
+              {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
+
             </Link>
           </div>
           <div className='p-2'>
@@ -84,12 +90,12 @@ const TopNav = (props) => {
     ) }
     </>
 
-  return (<div id='top-nav' className='z-40 block lg:hidden'>
+  return (<div id='top-nav' className='block lg:hidden'>
     <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot}/>
 
     {/* 导航栏 */}
-    <div id='sticky-nav' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'fixed' : ''} lg:relative w-full top-0 z-20 transform duration-500`}>
-      <div className='w-full flex justify-between items-center p-4 bg-black text-white'>
+    <div id='sticky-nav' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
+      <div className='w-full flex justify-between items-center p-4 bg-black dark:bg-gray-800 text-white'>
         {/* 左侧LOGO 标题 */}
         <div className='flex flex-none flex-grow-0'>
           <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>

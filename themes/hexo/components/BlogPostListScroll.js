@@ -2,7 +2,6 @@ import BLOG from '@/blog.config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
-import throttle from 'lodash.throttle'
 import React from 'react'
 import CONFIG_HEXO from '../config_hexo'
 import { getListByPage } from '@/lib/utils'
@@ -14,7 +13,7 @@ import { getListByPage } from '@/lib/utils'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HEXO.POST_LIST_SUMMARY }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HEXO.POST_LIST_SUMMARY, siteInfo }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
   const [page, updatePage] = React.useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
@@ -31,13 +30,15 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HE
   }
 
   // 监听滚动自动分页加载
-  const scrollTrigger = React.useCallback(throttle(() => {
-    const scrollS = window.scrollY + window.outerHeight
-    const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
-    if (scrollS > clientHeight + 100) {
-      handleGetMore()
-    }
-  }, 500))
+  const scrollTrigger = () => {
+    requestAnimationFrame(() => {
+      const scrollS = window.scrollY + window.outerHeight
+      const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
+      if (scrollS > clientHeight + 100) {
+        handleGetMore()
+      }
+    })
+  }
 
   // 监听滚动
   React.useEffect(() => {
@@ -58,7 +59,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HE
       {/* 文章列表 */}
       <div className='flex flex-wrap space-y-1 lg:space-y-4 px-2'>
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post} showSummary={showSummary}/>
+          <BlogPostCard key={post.id} post={post} showSummary={showSummary} siteInfo={siteInfo}/>
         ))}
       </div>
 

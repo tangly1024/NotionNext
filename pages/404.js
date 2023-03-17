@@ -15,7 +15,7 @@ const NoFound = props => {
 }
 
 export async function getStaticProps () {
-  const props = await getGlobalNotionData({ from: '404' }) || {}
+  const props = (await getGlobalNotionData({ from: '404' })) || {}
   return { props }
 }
 
