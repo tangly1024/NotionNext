@@ -756,10 +756,7 @@ code[class*='language-'] {
   
 .notion-code {
   padding: 30px 16px 30px 20px;
-<<<<<<< HEAD
   margin: 4px 0;
-=======
->>>>>>> main
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
   tab-size: 2;
@@ -1987,21 +1984,13 @@ thead, tbody tr {
 }
 
 .notion-collection-card{
-<<<<<<< HEAD
     @apply dark:hover:text-gray-200
-=======
-    @apply dark:text-gray-200 dark:bg-gray-800 dark:hover:bg-black
->>>>>>> main
 }
 
 .notion-code-copy{
     display: none;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 pre[class*="language-mermaid"] {
     @apply bg-gray-50 dark:bg-gray-200 !important;
 }
@@ -2011,19 +2000,6 @@ code.language-mermaid {
     display:none
 }
 
-<<<<<<< HEAD
 pre.notion-code.line-numbers{
     margin-bottom: 0 !important
-=======
-.code-toolbar{
-  @apply w-full shadow-md;
-}
-
-.mermaid > svg {
-  margin: auto;
-}
-
-.notion-equation-inline .katex-display {
-  margin: 0 0 !important;
->>>>>>> main
 }
