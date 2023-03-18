@@ -1,0 +1,11 @@
+name: auto-update-cron
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  build:
+    name: Trigger Site Rebuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel Hook
+        run: curl -X POST "https://api.vercel.com/v1/integrations/deploy/prj_2yh4d6Ec7TrzZ15neGX2VlBEkERN/ro9myGxqCD"
