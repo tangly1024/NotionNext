@@ -1,13 +1,13 @@
 import React from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import CONFIG_NEXT from '../config_next'
+import BLOG from '@/blog.config'
+import { DropMenu } from './DropMenu'
+import { CollapseMenu } from './CollapseMenu'
 
 const MenuButtonGroup = (props) => {
-  const { postCount, customNav } = props
+  const { postCount, customNav, customMenu } = props
   const { locale } = useGlobal()
-  const router = useRouter()
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   const defaultLinks = [
@@ -21,33 +21,23 @@ const MenuButtonGroup = (props) => {
     links = defaultLinks.concat(customNav)
   }
 
+  // 如果 开启自定义菜单，则覆盖Page生成的菜单
+  if (BLOG.CUSTOM_MENU) {
+    links = customMenu
+  }
+
   return (
-    <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-400 font-sans'>
-        {links.map(link => {
-          if (link && link.show) {
-            const selected = (router.pathname === link.to) || (router.asPath === link.to)
-            return (
-              <Link
-                key={link.to}
-                title={link.to}
-                href={link.to}
-                target={link.to.indexOf('http') === 0 ? '_blank' : '_self'}
-                className={'py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
-                    (selected ? 'bg-gray-200 text-black' : ' ')}>
+        <>
+            {/* 大屏模式菜单 */}
+            <nav id='nav' className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
+                {links.map(link => link && link.show && <DropMenu key={link.id} link={link} />)}
+            </nav>
 
-                <div className='my-auto items-center justify-center flex '>
-                  <i className={`${link.icon} w-4 text-center`} />
-                  <div className={'ml-4'}>{link.name}</div>
-                </div>
-                {link.slot}
-
-              </Link>
-            )
-          } else {
-            return <></>
-          }
-        })}
-      </nav>
+            {/* 移动端菜单 */}
+            <div id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
+                {links?.map(link => link && link.show && <CollapseMenu onHeightChange={props.onHeightChange} key={link.id} link={link} />)}
+            </div>
+        </>
   )
 }
 export default MenuButtonGroup

@@ -37,14 +37,17 @@ export const NavBarMenu = ({ customNav, customMenu }) => {
     links = links.concat(customNav)
   }
 
+  // 如果 开启自定义菜单，则覆盖Page生成的菜单
   if (BLOG.CUSTOM_MENU) {
     links = customMenu
   }
+
   if (!links || links.length === 0) {
     return null
   }
 
   return (<>
+        {/* 大屏模式菜单 */}
         <div id='nav-menu-pc' className='hidden md:flex my-auto'>
             {links?.map(link => {
               if (link?.show) {
@@ -54,6 +57,7 @@ export const NavBarMenu = ({ customNav, customMenu }) => {
               }
             })}
         </div>
+        {/* 移动端小屏菜单 */}
         <div id='nav-menu-mobile' className='flex md:hidden my-auto justify-start'>
             <div onClick={toggleIsOpen} className='cursor-pointer hover:text-red-400 transition-all duration-200'>
                 <i className='fa fa-bars mr-3' />

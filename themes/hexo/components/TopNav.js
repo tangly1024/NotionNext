@@ -2,7 +2,6 @@ import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
-import Collapse from './Collapse'
 import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
@@ -10,6 +9,7 @@ import MenuButtonGroupTop from './MenuButtonGroupTop'
 import MenuList from './MenuList'
 import { useRouter } from 'next/router'
 import throttle from 'lodash.throttle'
+import Collapse from '@/components/Collapse'
 
 let windowTop = 0
 
