@@ -1,11 +1,12 @@
 import React from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import CONFIG_HEXO from '../config_hexo'
+import BLOG from '@/blog.config'
+import { DropMenu } from './DropMenu'
 
 const MenuList = (props) => {
-  const { postCount, customNav } = props
+  const { postCount, customNav, customMenu } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
@@ -21,32 +22,22 @@ const MenuList = (props) => {
     links = links.concat(customNav)
   }
 
+  // 如果 开启自定义菜单，则覆盖Page生成的菜单
+  if (BLOG.CUSTOM_MENU) {
+    links = customMenu
+  }
+
   return (
     <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-300 '>
       {links.map(link => {
         if (link && link.show) {
           const selected = (router.pathname === link.to) || (router.asPath === link.to)
-          return (
-            <Link
-              key={`${link.to}`}
-              title={link.to}
-              href={link.to}
-              className={'py-1.5 px-5 text-base justify-between hover:bg-indigo-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
-                (selected ? 'bg-gray-200 text-black' : ' ')}>
-
-              <div className='my-auto items-center justify-center flex '>
-                <i className={`${link.icon} w-4 text-center`} />
-                <div className={'ml-4'}>{link.name}</div>
-              </div>
-              {link.slot}
-
-            </Link>
-          );
+          return <DropMenu key={link.id} selected={selected} link={link} />
         } else {
           return null
         }
       })}
     </nav>
-  );
+  )
 }
 export default MenuList

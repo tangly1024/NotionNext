@@ -11,7 +11,7 @@ export const Sakura = () => {
       
   useEffect(() => {
     createSakura({})
-    return () => destroyRibbon()
+    return () => destroySakura()
   }, [])
   return <></>
 }
