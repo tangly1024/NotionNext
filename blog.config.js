@@ -178,9 +178,9 @@ const BLOG = {
   COMMENT_WALINE_RECENT: process.env.NEXT_PUBLIC_WALINE_RECENT || false, // 最新评论
 
   COMMENT_WEBMENTION: {
-    ENABLE: process.env.WEBMENTION_ENABLE || true,
-    AUTH: process.env.WEBMENTION_AUTH || 'https://github.com/siygle',
-    HOSTNAME: process.env.WEBMENTION_HOSTNAME || '0a64-111-254-47-199.jp.ngrok.io'
+    ENABLE: (process.env.WEBMENTION_ENABLE === 'yes'),
+    AUTH: process.env.WEBMENTION_AUTH || '',
+    HOSTNAME: process.env.WEBMENTION_HOSTNAME || ''
   },
 
   // <---- 评论插件
