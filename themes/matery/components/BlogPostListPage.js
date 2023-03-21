@@ -21,9 +21,9 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
       <div id="container" className='w-full'>
         <div className='pt-6'></div>
         {/* 文章列表 */}
-        <div className="px-4 pt-4 xl:columns-3 md:columns-2 pb-24" >
+        <div className="px-4 pt-4 flex flex-wrap pb-24" >
           {posts.map(post => (
-            <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
+           <div key={post.id} className='xl:w-1/3 md:w-1/2 w-full p-4'> <BlogPostCard index={posts.indexOf(post)} post={post} siteInfo={siteInfo} /></div>
           ))}
         </div>
         {showPagination && <PaginationSimple page={page} totalPage={totalPage} />}
