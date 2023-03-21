@@ -177,6 +177,12 @@ const BLOG = {
   COMMENT_WALINE_SERVER_URL: process.env.NEXT_PUBLIC_WALINE_SERVER_URL || '', // 请配置完整的Waline评论地址 例如 hhttps://preview-waline.tangly1024.com @see https://waline.js.org/guide/get-started.html
   COMMENT_WALINE_RECENT: process.env.NEXT_PUBLIC_WALINE_RECENT || false, // 最新评论
 
+  COMMENT_WEBMENTION: {
+    ENABLE: process.env.WEBMENTION_ENABLE || true,
+    AUTH: process.env.WEBMENTION_AUTH || 'https://github.com/siygle',
+    HOSTNAME: process.env.WEBMENTION_HOSTNAME || '0a64-111-254-47-199.jp.ngrok.io'
+  },
+
   // <---- 评论插件
 
   // ----> 站点统计
