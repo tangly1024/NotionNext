@@ -49,7 +49,7 @@ const Slug = props => {
           })
         }
       }
-    }, 20 * 1000)
+    }, 8 * 1000) // 404时长
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE }
     return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
@@ -100,7 +100,7 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalNotionData({ from })
   return {
-    paths: allPages.map(row => ({ params: { slug: [row.slug] } })),
+    paths: allPages?.map(row => ({ params: { slug: [row.slug] } })),
     fallback: true
   }
 }

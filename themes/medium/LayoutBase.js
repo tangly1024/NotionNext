@@ -28,7 +28,7 @@ const LayoutBase = props => {
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
-            <div className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
                 <CommonHead meta={meta} />
 
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
@@ -46,7 +46,6 @@ const LayoutBase = props => {
                             <div
                               data-aos="fade-up"
                               data-aos-duration="300"
-                              data-aos-easing="ease-in-out"
                               data-aos-once="false"
                               data-aos-anchor-placement="top-center"
                               className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20'>
