@@ -24,7 +24,7 @@ const CONFIG_HEXO = {
 
   WIDGET_LATEST_POSTS: false, // 显示最新文章卡
   WIDGET_ANALYTICS: false, // 显示统计卡
-  WIDGET_TO_TOP: true,
+  WIDGET_TO_TOP: false,
   WIDGET_TO_COMMENT: false, // 跳到评论区
   WIDGET_DARK_MODE: false, // 夜间模式
   WIDGET_TOC: false // 移动端悬浮目录
