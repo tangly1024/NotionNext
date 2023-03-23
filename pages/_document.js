@@ -15,27 +15,15 @@ class MyDocument extends Document {
         <Head>
           <link rel='icon' href='/favicon.ico' />
           <CommonScript />
-          {console.log(this.renderCSS())}
-          {this.renderCSS()}
         </Head>
         <body
-          className={'tracking-wider subpixel-antialiased bg-day dark:bg-night'}
+          className={'bg-day dark:bg-night'}
         >
           <Main />
           <NextScript />
         </body>
       </Html>
     )
-  }
-
-  renderCSS() {
-    if (BLOG.CSS_LIST && BLOG.CSS_LIST.length > 0) {
-      return BLOG.CSS_LIST.map((item, index) => {
-        return (
-          <link rel="stylesheet" key={index + 'stylesheet'} href={item}></link>
-        )
-      })
-    }
   }
 }
 
