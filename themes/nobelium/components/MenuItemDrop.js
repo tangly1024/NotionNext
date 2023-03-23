@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-export const DropMenu = ({ link }) => {
+export const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
 
@@ -19,7 +19,7 @@ export const DropMenu = ({ link }) => {
         {hasSubMenu &&
             <div className='block ml-4 text-black dark:text-gray-50 nav'>
                 {link?.name}
-                <i className='px-2 fa fa-angle-down'></i>
+                <i className={`px-2 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
             </div>
         }
 

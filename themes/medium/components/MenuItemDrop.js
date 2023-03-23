@@ -19,7 +19,7 @@ export const MenuItemDrop = ({ link }) => {
             (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
                 <div className='px-1'>
                     {link?.name}
-                    {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
+                    {hasSubMenu && <i className={`px-2 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>}
                 </div>
             </div>
         }

@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import CONFIG_EXAMPLE from '../config_example'
-import { DropMenu } from './DropMenu'
+import { MenuItemDrop } from './MenuItemDrop'
 
 /**
  * 菜单导航
@@ -37,7 +37,7 @@ export const Nav = (props) => {
             <div className="container mx-auto max-w-4xl md:flex justify-between items-center text-sm md:text-md md:justify-start">
                 <ul className="w-full text-center md:text-left flex flex-wrap justify-center items-stretch md:justify-start md:items-start">
                     {/* {links.map(link => <NormalMenuItem key={link.id} link={link}/>)} */}
-                    {links.map(link => <DropMenu key={link.id} link={link} />)}
+                    {links.map(link => <MenuItemDrop key={link.id} link={link} />)}
                 </ul>
                 <div className="w-full md:w-1/3 text-center md:text-right">
                     {/* <!-- extra links --> */}

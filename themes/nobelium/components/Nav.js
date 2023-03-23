@@ -4,7 +4,7 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import CONFIG_NOBELIUM from '../config_nobelium'
 import { SvgIcon } from './SvgIcon'
-import { DropMenu } from './DropMenu'
+import { MenuItemDrop } from './MenuItemDrop'
 
 const Nav = props => {
   const { navBarTitle, fullWidth, siteInfo } = props
@@ -95,7 +95,7 @@ const NavBar = props => {
     <div className="flex-shrink-0">
       <ul className="flex flex-row">
         {links.map(
-          link => link && link.show && <DropMenu key={link.id} link={link}/>
+          link => link && link.show && <MenuItemDrop key={link.id} link={link}/>
         )}
       </ul>
     </div>

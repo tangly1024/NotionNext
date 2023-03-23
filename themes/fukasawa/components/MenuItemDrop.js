@@ -18,7 +18,7 @@ export const MenuItemDrop = ({ link }) => {
             <div className='w-full my-auto items-center justify-between flex '>
                 <div><div className={`${link.icon} text-center w-4 mr-2`} />{link.name}</div>
                 {link.slot}
-                {hasSubMenu && <div className='text-right'><i className='px-2 fa fa-angle-right'></i></div>}
+                {hasSubMenu && <div className='text-right'><i className={`px-2 fas fa-chevron-right duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i></div>}
             </div>}
 
         {/* 子菜单 */}
