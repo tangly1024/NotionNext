@@ -41,6 +41,7 @@
     "next": "^13.1.1",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
+    "nprogress": "^0.2.0",
     "preact": "^10.5.15",
     "prism-themes": "1.9.0",
     "qrcode.react": "^1.0.1",
