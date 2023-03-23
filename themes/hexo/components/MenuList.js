@@ -1,14 +1,12 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 import CONFIG_HEXO from '../config_hexo'
 import BLOG from '@/blog.config'
-import { DropMenu } from './DropMenu'
+import { MenuItemDrop } from './MenuItemDrop'
 
 const MenuList = (props) => {
   const { postCount, customNav, customMenu } = props
   const { locale } = useGlobal()
-  const router = useRouter()
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   let links = [
@@ -29,14 +27,7 @@ const MenuList = (props) => {
 
   return (
     <nav id='nav' className='leading-8 text-gray-500 dark:text-gray-300 '>
-      {links.map(link => {
-        if (link && link.show) {
-          const selected = (router.pathname === link.to) || (router.asPath === link.to)
-          return <DropMenu key={link.id} selected={selected} link={link} />
-        } else {
-          return null
-        }
-      })}
+      {links.map(link => <MenuItemDrop key={link.id} link={link} />)}
     </nav>
   )
 }

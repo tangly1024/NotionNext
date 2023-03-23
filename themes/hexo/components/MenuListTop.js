@@ -1,10 +1,10 @@
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG_HEXO from '../config_hexo'
-import { DropMenu } from './DropMenu'
+import { MenuItemDrop } from './MenuItemDrop'
 import BLOG from '@/blog.config'
 
-const MenuButtonGroupTop = (props) => {
+export const MenuListTop = (props) => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
@@ -27,8 +27,7 @@ const MenuButtonGroupTop = (props) => {
 
   return (
         <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
-            {links.map(link => link && link.show && <DropMenu key={link.id} link={link} />)}
+            {links.map(link => link && link.show && <MenuItemDrop key={link.id} link={link} />)}
         </nav>
   )
 }
-export default MenuButtonGroupTop

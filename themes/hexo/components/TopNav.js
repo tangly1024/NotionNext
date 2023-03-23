@@ -5,7 +5,7 @@ import CategoryGroup from './CategoryGroup'
 import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
-import MenuButtonGroupTop from './MenuButtonGroupTop'
+import { MenuListTop } from './MenuListTop'
 import MenuList from './MenuList'
 import { useRouter } from 'next/router'
 import throttle from 'lodash.throttle'
@@ -137,7 +137,7 @@ const TopNav = props => {
 
                 {/* 右侧功能 */}
                 <div className='mr-1 justify-end items-center '>
-                    <div className='hidden lg:flex'> <MenuButtonGroupTop {...props} /></div>
+                    <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
                     <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
                         {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
                     </div>
