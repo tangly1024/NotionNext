@@ -34,14 +34,17 @@ const LayoutBase = (props) => {
   return (<div id='theme-fukasawa' >
     <CommonHead meta={meta} />
     <TopNav {...props}/>
+
     <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
       <AsideLeft {...props} slot={leftAreaSlot}/>
-      <main id='wrapper' className='relative flex w-full py-8 justify-center'>
-        <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
+
+      <main id='wrapper' className='relative flex w-full py-8 justify-center z-10'>
+        <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative'>
           <div> {headerSlot} </div>
           <div>{children}</div>
         </div>
       </main>
+
     </div>
 
   </div>)

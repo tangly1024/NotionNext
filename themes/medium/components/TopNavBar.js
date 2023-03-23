@@ -1,5 +1,5 @@
 import LogoBar from './LogoBar'
-import React, { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Collapse from '@/components/Collapse'
 import { MenuBarMobile } from './MenuBarMobile'
 import { useGlobal } from '@/lib/global'
@@ -14,7 +14,7 @@ import { MenuItemDrop } from './MenuItemDrop'
  */
 export default function TopNavBar(props) {
   const { className, customNav, customMenu } = props
-  const [isOpen, changeShow] = React.useState(false)
+  const [isOpen, changeShow] = useState(false)
   const collapseRef = useRef(null)
 
   const { locale } = useGlobal()

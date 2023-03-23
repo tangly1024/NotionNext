@@ -2,10 +2,10 @@ import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG_NEXT from '../config_next'
 import BLOG from '@/blog.config'
-import { DropMenu } from './DropMenu'
+import { MenuItemDrop } from './MenuItemDrop'
 import { CollapseMenu } from './CollapseMenu'
 
-const MenuButtonGroup = (props) => {
+export const MenuList = (props) => {
   const { postCount, customNav, customMenu } = props
   const { locale } = useGlobal()
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
@@ -16,6 +16,7 @@ const MenuButtonGroup = (props) => {
     { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
     { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE }
   ]
+
   let links = [].concat(defaultLinks)
   if (customNav) {
     links = defaultLinks.concat(customNav)
@@ -30,7 +31,7 @@ const MenuButtonGroup = (props) => {
         <>
             {/* 大屏模式菜单 */}
             <nav id='nav' className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
-                {links.map(link => link && link.show && <DropMenu key={link.id} link={link} />)}
+                {links.map(link => link && link.show && <MenuItemDrop key={link.id} link={link} />)}
             </nav>
 
             {/* 移动端菜单 */}
@@ -40,4 +41,3 @@ const MenuButtonGroup = (props) => {
         </>
   )
 }
-export default MenuButtonGroup

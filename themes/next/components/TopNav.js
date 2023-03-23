@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Collapse from '@/components/Collapse'
 import Logo from './Logo'
-import MenuButtonGroup from './MenuButtonGroup'
+import { MenuList } from './MenuList'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import CONFIG_NEXT from '../config_next'
@@ -117,7 +117,7 @@ const TopNav = (props) => {
             </div>
 
             <Collapse collapseRef={collapseRef} type='vertical' isOpen={isOpen}>
-                <MenuButtonGroup onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} {...props} from='top' />
+                <MenuList onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} {...props} from='top' />
             </Collapse>
         </div>
 
