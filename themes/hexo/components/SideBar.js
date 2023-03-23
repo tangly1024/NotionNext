@@ -1,4 +1,6 @@
 import BLOG from '@/blog.config'
+import { useRouter } from 'next/router'
+import MenuGroupCard from './MenuGroupCard'
 import { MenuListSide } from './MenuListSide'
 
 /**
@@ -10,19 +12,22 @@ import { MenuListSide } from './MenuListSide'
  */
 const SideBar = (props) => {
   const { siteInfo } = props
-
+  const router = useRouter()
   return (
-      <div id='side-bar' className=''>
-          <div className="mh-48 w-full bg-indigo-700">
-              <div className='mx-5 pt-6 pb-2'>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={siteInfo?.icon} className='cursor-pointer rounded-full' width={80} alt={BLOG.AUTHOR} />
-                  <div className='text-white text-xl my-1'>{siteInfo?.title}</div>
-                  <div className='text-xs my-1 text-gray-300'>{siteInfo?.description}</div>
-              </div>
-          </div>
-          <MenuListSide {...props} />
-      </div>
+        <div id='side-bar'>
+            <div className="h-52 w-full flex justify-center">
+                <div>
+                    <div onClick={() => { router.push('/') }}
+                        className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 dark:text-gray-100  transform duration-200 cursor-pointer'>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={siteInfo?.icon} className='rounded-full' width={80} alt={BLOG.AUTHOR} />
+                    </div>
+                    <MenuGroupCard {...props} />
+                </div>
+            </div>
+            <hr className=' border-dashed'/>
+            <MenuListSide {...props} />
+        </div>
   )
 }
 
