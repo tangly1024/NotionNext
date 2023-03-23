@@ -43,7 +43,7 @@ export const MenuItemCollapse = ({ link }) => {
 
             {hasSubMenu && <div onClick={hasSubMenu ? toggleOpenSubMenu : null} className='my-auto items-center w-full justify-between flex '>
                 <div className=''>{link?.name}</div>
-                <i className='px-2 fa fa-plus text-gray-400'></i>
+                <i className={`px-2 fas ${isOpen ? 'fa-chevron-down' : 'fa-chevron-left'}`}></i>
             </div>}
         </div>
 
