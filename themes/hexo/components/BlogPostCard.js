@@ -15,6 +15,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
   return (
     <div
+        id='blog-post-card'
         data-aos="fade-up"
         data-aos-duration="200"
         data-aos-delay={delay}
