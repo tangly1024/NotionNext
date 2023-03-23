@@ -16,22 +16,22 @@ export const MenuItemDrop = ({ link }) => {
 
         {hasSubMenu &&
             <div className={'h-full whitespace-nowrap px-2 duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
-            (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
+                (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
                 <div className='px-1'>
-                    {link?.name}
+                    {link?.icon && <i className={link?.icon} />} {link?.name}
                     {hasSubMenu && <i className={`px-2 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>}
                 </div>
             </div>
         }
 
         {!hasSubMenu &&
-           <div className={'h-full whitespace-nowrap px-2 duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
-           (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
-               <Link href={link?.to} className='px-1'>
-                   {link?.name}
-               </Link>
-           </div>
-         }
+            <div className={'h-full whitespace-nowrap px-2 duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
+                (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
+                <Link href={link?.to} className='px-1'>
+                    {link?.icon && <i className={link?.icon} />} {link?.name}
+                </Link>
+            </div>
+        }
 
         {/* 子菜单 */}
         {hasSubMenu && <ul className={`${show ? 'visible opacity-100 top-12 ' : 'invisible opacity-0 top-0 '} border-gray-100  bg-white  dark:bg-black dark:border-gray-800 transition-all duration-300 z-20 absolute block drop-shadow-lg `}>

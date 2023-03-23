@@ -39,9 +39,9 @@ export const Nav = (props) => {
                     {/* {links.map(link => <NormalMenuItem key={link.id} link={link}/>)} */}
                     {links.map(link => <MenuItemDrop key={link.id} link={link} />)}
                 </ul>
-                <div className="w-full md:w-1/3 text-center md:text-right">
+                {/* <div className="w-full md:w-1/3 text-center md:text-right"> */}
                     {/* <!-- extra links --> */}
-                </div>
+                {/* </div> */}
             </div>
         </nav>
   )

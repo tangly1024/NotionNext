@@ -10,7 +10,7 @@ export const MenuItemDrop = ({ link }) => {
         {!hasSubMenu &&
             <div className="block ml-4 text-black dark:text-gray-50 nav">
                 <Link href={link?.to} >
-                {link?.name}
+                {link?.icon && <i className={link?.icon} />} {link?.name}
                 {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
             </Link>
             </div>
@@ -18,7 +18,7 @@ export const MenuItemDrop = ({ link }) => {
 
         {hasSubMenu &&
             <div className='block ml-4 text-black dark:text-gray-50 nav'>
-                {link?.name}
+                {link?.icon && <i className={link?.icon} />} {link?.name}
                 <i className={`px-2 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
             </div>
         }
