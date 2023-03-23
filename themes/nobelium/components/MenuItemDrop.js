@@ -10,9 +10,9 @@ export const MenuItemDrop = ({ link }) => {
         {!hasSubMenu &&
             <div className="block ml-4 text-black dark:text-gray-50 nav">
                 <Link href={link?.to} >
-                {link?.icon && <i className={link?.icon} />} {link?.name}
-                {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
-            </Link>
+                    {link?.icon && <i className={link?.icon} />} {link?.name}
+                    {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
+                </Link>
             </div>
         }
 
@@ -28,7 +28,7 @@ export const MenuItemDrop = ({ link }) => {
             {link.subMenus.map(sLink => {
               return <li key={sLink.id} className='not:last-child:border-b-0 border-b text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 py-3 pr-6 pl-2'>
                     <Link href={sLink.to}>
-                        <span className='text-xs font-extralight'>{sLink.title}</span>
+                    <span className='text-sm text-nowrap font-extralight'>{link?.icon && <i className={sLink?.icon} > &nbsp; </i>}{sLink.title}</span>
                     </Link>
                 </li>
             })}
