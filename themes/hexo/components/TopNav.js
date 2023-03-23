@@ -6,10 +6,10 @@ import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import { MenuListTop } from './MenuListTop'
-import MenuList from './MenuList'
 import { useRouter } from 'next/router'
 import throttle from 'lodash.throttle'
-import Collapse from '@/components/Collapse'
+import SideBarDrawer from '@/components/SideBarDrawer'
+import SideBar from './SideBar'
 
 let windowTop = 0
 
@@ -29,6 +29,10 @@ const TopNav = props => {
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
+  }
+
+  const toggleSideBarClose = () => {
+    changeShow(false)
   }
 
   // 监听滚动
@@ -129,7 +133,7 @@ const TopNav = props => {
         <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
         {/* 导航栏 */}
-        <div id='sticky-nav' style={{ 'backdrop-filter': 'blur(3px)' }} className={'top-0  duration-200 transition-all  shadow-none fixed bg-none dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent'}>
+        <div id='sticky-nav' style={{ 'backdrop-filter': 'blur(3px)' }} className={'top-0 duration-200 transition-all  shadow-none fixed bg-none dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent'}>
             <div className='w-full flex justify-between items-center px-4 py-2'>
                 <div className='flex'>
                     <Logo {...props} />
@@ -143,13 +147,12 @@ const TopNav = props => {
                     </div>
                 </div>
             </div>
-
-            <Collapse type='vertical' isOpen={isOpen} className='shadow-xl'>
-                <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-5 lg:hidden '>
-                    <MenuList {...props} />
-                </div>
-            </Collapse>
         </div>
+
+        {/* 折叠侧边栏 */}
+        <SideBarDrawer className='h-screen' isOpen={isOpen} onClose={toggleSideBarClose}>
+            <SideBar {...props} />
+        </SideBarDrawer>
     </div>)
 }
 

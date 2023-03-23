@@ -7,7 +7,7 @@ import { useState } from 'react'
  * @param {*} param0
  * @returns
  */
-export const CollapseMenu = ({ link }) => {
+export const MenuItemCollapse = ({ link }) => {
   const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
 
@@ -19,6 +19,10 @@ export const CollapseMenu = ({ link }) => {
 
   const toggleOpenSubMenu = () => {
     changeIsOpen(!isOpen)
+  }
+
+  if (!link || !link.show) {
+    return null
   }
 
   return <>

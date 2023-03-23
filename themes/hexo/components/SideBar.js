@@ -12,7 +12,7 @@ const SideBar = (props) => {
   const { siteInfo } = props
 
   return (
-      <div id='side-bar'>
+      <div id='side-bar' className=''>
           <div className="mh-48 w-full bg-indigo-700">
               <div className='mx-5 pt-6 pb-2'>
                   {/* eslint-disable-next-line @next/next/no-img-element */}

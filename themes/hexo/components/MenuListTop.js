@@ -1,8 +1,8 @@
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG_HEXO from '../config_hexo'
-import { MenuItemDrop } from './MenuItemDrop'
 import BLOG from '@/blog.config'
+import { MenuItemDrop } from './MenuItemDrop'
 
 export const MenuListTop = (props) => {
   const { customNav, customMenu } = props
@@ -25,9 +25,9 @@ export const MenuListTop = (props) => {
     links = customMenu
   }
 
-  return (
-        <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
-            {links.map(link => link && link.show && <MenuItemDrop key={link.id} link={link} />)}
+  return (<>
+        <nav id='nav-mobile' className='leading-8 justify-center font-light w-full flex'>
+            {links?.map(link => link && link.show && <MenuItemDrop key={link.id} link={link} />)}
         </nav>
-  )
+    </>)
 }
