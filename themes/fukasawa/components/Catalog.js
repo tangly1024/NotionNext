@@ -52,7 +52,6 @@ const Catalog = ({ toc }) => {
     }
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
-    console.log('滚动目录', tRef.current)
     tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
   }, throttleMs))
 
