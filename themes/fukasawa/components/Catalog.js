@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import { useGlobal } from '@/lib/global'
@@ -28,7 +28,7 @@ const Catalog = ({ toc }) => {
   // 同步选中目录事件
   const [activeSection, setActiveSection] = React.useState(null)
   const throttleMs = 200
-  const actionSectionScrollSpy = React.useCallback(throttle(() => {
+  const actionSectionScrollSpy = useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
@@ -60,10 +60,10 @@ const Catalog = ({ toc }) => {
     return <></>
   }
 
-  return <div>
+  return <div id='catalog'>
     <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
-    <div className='overflow-y-auto max-h-96 overscroll-none scroll-hidden' ref={tRef}>
-      <nav className='h-full font-sans text-black'>
+    <div className='h-96'>
+      <nav ref={tRef} className='h-full overflow-y-auto overscroll-none scroll-hidden font-sans text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
           tocIds.push(id)

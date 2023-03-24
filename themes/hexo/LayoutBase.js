@@ -11,6 +11,7 @@ import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 const FacebookPage = dynamic(
   () => {
@@ -61,6 +62,9 @@ const LayoutBase = props => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [])
 
+  if (isBrowser()) {
+    loadExternalResource('/css/theme-hexo.css', 'css')
+  }
   return (
     <div id='theme-hexo'>
       <CommonHead meta={meta} siteInfo={siteInfo}/>
