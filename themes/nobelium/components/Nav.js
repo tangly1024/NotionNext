@@ -94,9 +94,7 @@ const NavBar = props => {
   return (
     <div className="flex-shrink-0">
       <ul className="flex flex-row">
-        {links.map(
-          link => link && link.show && <MenuItemDrop key={link.id} link={link}/>
-        )}
+        {links.map(link => <MenuItemDrop key={link.id} link={link}/>)}
       </ul>
     </div>
   )

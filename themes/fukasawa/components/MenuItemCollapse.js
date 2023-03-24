@@ -49,7 +49,7 @@ export const MenuItemCollapse = (props) => {
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
             {link.subMenus.map(sLink => {
-              return <div key={sLink.id} className='
+              return <div key={sLink.id} className='whitespace-nowrap
               not:last-child:border-b-0 border-b dark:border-gray-800 py-2 px-14 cursor-pointer hover:bg-gray-100
               font-extralight dark:bg-black text-left justify-start text-gray-600 bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200'>
                     <Link href={sLink.to}>
