@@ -29,16 +29,17 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
     const sideBarDrawerBackground = window.document.getElementById('sidebar-drawer-background')
 
     if (showStatus) {
-      sideBarDrawer.classList.replace('-ml-60', 'ml-0')
+      sideBarDrawer.classList.replace('-mr-72', 'mr-0')
       sideBarDrawerBackground.classList.replace('hidden', 'block')
     } else {
-      sideBarDrawer.classList.replace('ml-0', '-ml-60')
+      sideBarDrawer.classList.replace('mr-0', '-mr-72')
       sideBarDrawerBackground.classList.replace('block', 'hidden')
     }
   }
 
   return <div id='sidebar-wrapper' className={' block md:hidden top-0 ' + className }>
-    <div id="sidebar-drawer" className={`${isOpen ? 'ml-0 w-56 visible' : '-ml-60 max-w-side invisible'} bg-white dark:bg-gray-900 shadow-black shadow-lg flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-30`}>
+
+    <div id="sidebar-drawer" className={`${isOpen ? 'mr-0 w-72 visible' : '-mr-72 max-w-side invisible'} bg-gray-50 right-0 top-0 dark:bg-gray-900 shadow-black shadow-lg flex flex-col duration-300 fixed h-full overflow-y-scroll scroll-hidden z-30`}>
       {children}
     </div>
 

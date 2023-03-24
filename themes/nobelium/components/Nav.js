@@ -4,6 +4,7 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import CONFIG_NOBELIUM from '../config_nobelium'
 import { SvgIcon } from './SvgIcon'
+import { MenuItemDrop } from './MenuItemDrop'
 
 const Nav = props => {
   const { navBarTitle, fullWidth, siteInfo } = props
@@ -54,12 +55,12 @@ const Nav = props => {
         </Link>
         {navBarTitle
           ? (
-          <p className="ml-2 font-medium text-day dark:text-night header-name">
+          <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
             {navBarTitle}
           </p>
             )
           : (
-          <p className="ml-2 font-medium text-day dark:text-night header-name">
+          <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
             {siteInfo?.title}
             {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
           </p>
@@ -71,7 +72,7 @@ const Nav = props => {
 }
 
 const NavBar = props => {
-  const { customNav } = props
+  const { customMenu, customNav } = props
 
   const { locale } = useGlobal()
   let links = [
@@ -84,21 +85,17 @@ const NavBar = props => {
   if (customNav) {
     links = links.concat(customNav)
   }
+
+  // 如果 开启自定义菜单，则覆盖Page生成的菜单
+  if (BLOG.CUSTOM_MENU) {
+    links = customMenu
+  }
+
   return (
     <div className="flex-shrink-0">
       <ul className="flex flex-row">
         {links.map(
-          link =>
-            link.show && (
-              <li
-                key={link.id}
-                className="block ml-4 text-black dark:text-gray-50 nav"
-              >
-                <Link href={link.to} target={link.target}>
-                  {link.name}
-                </Link>
-              </li>
-            )
+          link => link && link.show && <MenuItemDrop key={link.id} link={link}/>
         )}
       </ul>
     </div>

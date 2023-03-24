@@ -7,7 +7,7 @@ export const StarrySky = () => {
   }, [])
   return (
     <div className="relative">
-      <canvas id="starry-sky-vixcity" className="fixed pointer-events-none"></canvas>
+      <canvas id="starry-sky-vixcity" style={{zIndex:1}} className="top-0 fixed pointer-events-none"></canvas>
     </div>
   )
 }
