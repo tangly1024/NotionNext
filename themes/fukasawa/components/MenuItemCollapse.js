@@ -42,7 +42,7 @@ export const MenuItemCollapse = (props) => {
                 onClick={hasSubMenu ? toggleOpenSubMenu : null}
                 className="py-2 font-extralight flex justify-between cursor-pointer  dark:text-gray-200 no-underline tracking-widest">
                 <div><div className={`${link.icon} text-center w-4 mr-4`} />{link.name}</div>
-                <div className='inline-flex items-center '><i className='px-2 fa fa-plus text-gray-400'></i></div>
+                <div className='inline-flex items-center '><i className={`px-2 fas fa-chevron-right transition-all duration-200 ${isOpen ? 'rotate-90' : ''}`}></i></div>
             </div>}
         </div>
 

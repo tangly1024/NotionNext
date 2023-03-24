@@ -35,7 +35,7 @@ export const MenuItemCollapse = ({ link }) => {
 
             {!hasSubMenu && <Link href={link?.to}>
                 <div className='my-auto items-center justify-between flex '>
-                    <i className={`${link.icon} w-4 ml-3 mr-6 text-center`} />
+                    <i className={`${link.icon} w-4 mr-6 text-center`} />
                     <div >{link.name}</div>
                 </div>
                 {link.slot}
@@ -43,7 +43,7 @@ export const MenuItemCollapse = ({ link }) => {
 
             {hasSubMenu && <div onClick={hasSubMenu ? toggleOpenSubMenu : null} className='my-auto items-center w-full justify-between flex '>
                 <div className=''>{link?.name}</div>
-                <i className={`px-2 fas ${isOpen ? 'fa-chevron-down' : 'fa-chevron-left'}`}></i>
+                <i className={`px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''}`}></i>
             </div>}
         </div>
 

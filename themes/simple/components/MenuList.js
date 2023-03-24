@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import Collapse from '@/components/Collapse'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CONFIG_SIMPLE from '../config_simple'
 import { MenuItemCollapse } from './MenuItemCollapse'
 import { MenuItemDrop } from './MenuItemDrop'
@@ -22,6 +22,8 @@ export const MenuList = ({ customNav, customMenu }) => {
     changeIsOpen(false)
   }
   const router = useRouter()
+  const collapseRef = useRef(null)
+
   useEffect(() => {
     router.events.on('routeChangeStart', closeMenu)
   })
@@ -54,13 +56,13 @@ export const MenuList = ({ customNav, customMenu }) => {
         {/* 移动端小屏菜单 */}
         <div id='nav-menu-mobile' className='flex md:hidden my-auto justify-start'>
             <div onClick={toggleIsOpen} className='cursor-pointer hover:text-red-400 transition-all duration-200'>
-                <i className='fa fa-bars mr-3' />
+                <i className={`${isOpen && 'rotate-90'} transition-all duration-200 fa fa-bars mr-3`} />
                 <span>{!isOpen ? 'MENU' : 'CLOSE'}</span>
             </div>
 
-            <Collapse className='absolute w-full top-12 left-0' isOpen={isOpen}>
+            <Collapse collapseRef={collapseRef} className='absolute w-full top-12 left-0' isOpen={isOpen}>
                 <div id='menu-wrap' className='bg-white dark:border-hexo-black-gray border'>
-                {links?.map(link => <MenuItemCollapse key={link.id} link={link} />)}
+                {links?.map(link => <MenuItemCollapse key={link.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
                 </div>
             </Collapse>
         </div>
