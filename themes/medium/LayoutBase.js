@@ -25,6 +25,13 @@ const LayoutBase = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
+  const { onLoading } = useGlobal()
+
+  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
+        <div className='w-full h-screen flex justify-center items-center'>
+            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
+        </div>
+    </div>
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
@@ -42,7 +49,8 @@ const LayoutBase = props => {
 
                         <div id='container-inner' className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
                             {slotTop}
-                            {children}
+
+                            {onLoading ? LoadingCover : children}
 
                             {/* 回顶按钮 */}
                             <div
