@@ -3,7 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import CONFIG_SIMPLE from '../config_simple'
-import { NavBarMenu } from './NavBarMenu'
+import { MenuList } from './MenuList'
 
 /**
  * 菜单导航
@@ -53,7 +53,7 @@ export const NavBar = (props) => {
                 {/* 左侧菜单 */}
                 <div className="h-full w-full float-left text-center md:text-left flex flex-wrap items-stretch md:justify-start md:items-start space-x-4">
                     {showSearchInput && <input id="theme-simple-search" onKeyUp={onKeyUp} className='float-left w-full outline-none h-full px-4' aria-label="Submit search" type="search" name="s" autoComplete="off" placeholder="Type then hit enter to search..." />}
-                    {!showSearchInput && (<NavBarMenu {...props}/>)}
+                    {!showSearchInput && (<MenuList {...props}/>)}
                 </div>
 
                 <div className="absolute right-12 h-full text-center px-2 flex items-center text-blue-400">

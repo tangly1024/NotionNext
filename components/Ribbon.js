@@ -1,10 +1,20 @@
 /* eslint-disable */
-import React from 'react'
+import { useEffect } from 'react'
+const id = 'canvasRibbon'
 
 export const Ribbon = () => {
-  React.useEffect(() => {
+ const destroyRibbon = ()=>{
+    const ribbon = document.getElementById(id)
+      if(ribbon && ribbon.parentNode){
+        ribbon.parentNode.removeChild(ribbon)
+      }
+  }
+  
+  useEffect(() => {
     createRibbon()
+    return () => destroyRibbon()
   }, [])
+  return <></>
 }
 
 /**
@@ -29,6 +39,7 @@ function createRibbon() {
       a = window.innerWidth,
       l = window.innerHeight,
       d = e.s
+    i.id= id
     let r, s
     const u = Math
     let h = 0

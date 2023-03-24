@@ -1,6 +1,6 @@
 import Logo from './Logo'
 import GroupCategory from './GroupCategory'
-import GroupMenu from './GroupMenu'
+import { MenuList } from './MenuList'
 import GroupTag from './GroupTag'
 import SearchInput from './SearchInput'
 import SiteInfo from './SiteInfo'
@@ -11,12 +11,12 @@ import DarkModeButton from '@/components/DarkModeButton'
 function AsideLeft (props) {
   const { tagOptions, currentTag, categoryOptions, currentCategory, post, slot, siteInfo } = props
   const router = useRouter()
-  return <div className='relative w-72 bg-white dark:bg-hexo-black-gray min-h-screen px-10 py-14 hidden lg:block z-10'>
+  return <div className='relative w-72 bg-white dark:bg-hexo-black-gray min-h-screen px-10 py-14 hidden lg:block z-20'>
     <Logo {...props}/>
 
     <section className='flex flex-col text-gray-600'>
       <hr className='w-12 my-8' />
-      <GroupMenu {...props}/>
+      <MenuList {...props}/>
     </section>
 
     <section className='flex flex-col text-gray-600'>
