@@ -36,16 +36,16 @@ export const MenuItemCollapse = ({ link }) => {
                 onClick={hasSubMenu ? toggleOpenSubMenu : null}
                 className="font-extralight flex items-center justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest pb-1">
                 <span className='transition-all items-center duration-200'>{link?.icon && <i className={link.icon + ' mr-4'} />}{link?.name}</span>
-                <i className={`px-2 fas ${isOpen ? 'fa-chevron-down' : 'fa-chevron-left'} text-gray-400`}></i>
+                <i className={`px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''} text-gray-400`}></i>
             </div>}
         </div>
 
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen}>
             {link.subMenus.map(sLink => {
-              return <div key={sLink.id} className='dark:bg-black text-left px-10 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  py-3 pr-6'>
+              return <div key={sLink.id} className='dark:bg-black dark:text-gray-200 text-left px-10 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  py-3 pr-6'>
                     <Link href={sLink.to}>
-                        <span className='text-sm ml-4'>{link?.icon && <i className={sLink.icon + ' mr-2'} />} {sLink.title}</span>
+                        <span className='text-sm ml-4 whitespace-nowrap'>{link?.icon && <i className={sLink.icon + ' mr-2'} />} {sLink.title}</span>
                     </Link>
                 </div>
             })}

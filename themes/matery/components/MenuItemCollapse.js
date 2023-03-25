@@ -35,24 +35,24 @@ export const MenuItemCollapse = ({ link }) => {
 
             {!hasSubMenu && <Link href={link?.to}>
                 <div className='my-auto items-center justify-between flex '>
-                    <i className={`${link.icon} w-4 ml-3 mr-6 text-center`} />
+                    {link.icon && <i className={`${link.icon} w-4 mr-6 text-center`} />}
                     <div >{link.name}</div>
                 </div>
                 {link.slot}
             </Link>}
 
             {hasSubMenu && <div onClick={hasSubMenu ? toggleOpenSubMenu : null} className='my-auto items-center w-full justify-between flex '>
-                <div className=''>{link?.name}</div>
-                <i className={`px-2 fas ${isOpen ? 'fa-chevron-down' : 'fa-chevron-left'}`}></i>
+                <div className=''><i className={`${link.icon} w-4 mr-6 text-center`} />{link?.name}</div>
+                <i className={`px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''}`}></i>
             </div>}
         </div>
 
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen}>
             {link.subMenus.map(sLink => {
-              return <div key={sLink.id} className='cursor-pointer w-full font-extralight dark:bg-black text-left px-10 justify-start bg-gray-100  hover:bg-indigo-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
+              return <div key={sLink.id} className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-indigo-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
                     <Link href={sLink.to}>
-                        <span className='text-sm'>{sLink.title}</span>
+                        <span className='text-sm'><i className={`${sLink.icon} w-4 mr-3 text-center`} />{sLink.title}</span>
                     </Link>
                 </div>
             })}

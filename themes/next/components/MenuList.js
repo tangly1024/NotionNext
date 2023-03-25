@@ -3,7 +3,7 @@ import { useGlobal } from '@/lib/global'
 import CONFIG_NEXT from '../config_next'
 import BLOG from '@/blog.config'
 import { MenuItemDrop } from './MenuItemDrop'
-import { CollapseMenu } from './CollapseMenu'
+import { MenuItemCollapse } from './MenuItemCollapse'
 
 export const MenuList = (props) => {
   const { postCount, customNav, customMenu } = props
@@ -36,7 +36,7 @@ export const MenuList = (props) => {
 
             {/* 移动端菜单 */}
             <div id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
-                {links?.map(link => link && link.show && <CollapseMenu onHeightChange={props.onHeightChange} key={link.id} link={link} />)}
+                {links?.map(link => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={link.id} link={link} />)}
             </div>
         </>
   )

@@ -42,15 +42,15 @@ export const MenuItemCollapse = (props) => {
                 onClick={hasSubMenu ? toggleOpenSubMenu : null}
                 className="py-2 font-extralight flex justify-between cursor-pointer  dark:text-gray-200 no-underline tracking-widest">
                 <div><div className={`${link.icon} text-center w-4 mr-4`} />{link.name}</div>
-                <div className='inline-flex items-center '><i className='px-2 fa fa-plus text-gray-400'></i></div>
+                <div className='inline-flex items-center '><i className={`px-2 fas fa-chevron-right transition-all duration-200 ${isOpen ? 'rotate-90' : ''}`}></i></div>
             </div>}
         </div>
 
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
-            {link.subMenus.map(sLink => {
+            {link?.subMenus?.map(sLink => {
               return <div key={sLink.id} className='
-              not:last-child:border-b-0 border-b dark:border-gray-800 py-2 px-14 cursor-pointer hover:bg-gray-100
+              not:last-child:border-b-0 border-b dark:border-gray-800 py-2 px-14 cursor-pointer hover:bg-gray-100 dark:text-gray-200
               font-extralight dark:bg-black text-left justify-start text-gray-600 bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200'>
                     <Link href={sLink.to}>
                         <div><div className={`${sLink.icon} text-center w-3 mr-3 text-xs`} />{sLink.title}</div>
