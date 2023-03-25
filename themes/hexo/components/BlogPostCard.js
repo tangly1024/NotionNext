@@ -22,9 +22,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         data-aos-once="true"
         data-aos-anchor-placement="top-bottom"
         key={post.id}
-        className={`flex md:flex-row flex-col-reverse bg-[#191919ee] ${CONFIG_HEXO.POST_LIST_IMG_CROSSOVER ? 'even:md:flex-row-reverse' : ''}
+        className={`flex md:flex-row flex-col-reverse ${CONFIG_HEXO.POST_LIST_IMG_CROSSOVER ? 'even:md:flex-row-reverse' : ''}
         w-full justify-between overflow-hidden
-        border dark:border-black rounded-xl`}>
+        border dark:border-black rounded-xl bg-white drak:bg-[#191919ee]`}>
 
         {/* 文字内容 */}
         <BlogPostCardInfo index={index} post={post} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary}/>
