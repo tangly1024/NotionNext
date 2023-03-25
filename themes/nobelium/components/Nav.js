@@ -102,9 +102,9 @@ const NavBar = props => {
             <ul className=" hidden md:flex flex-row">
                 {links.map(link => <MenuItemDrop key={link.id} link={link} />)}
             </ul>
-            <div><i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5'></i>
+            <div className='md:hidden'><i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 block md:hidden'></i>
                 <Collapse collapseRef={collapseRef} isOpen={isOpen} type='vertical' className='fixed top-16 right-6'>
-                    <div className=' bg-white rounded border p-2 text-sm'>
+                    <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
                         {links.map(link => <MenuItemCollapse key={link.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
                     </div>
                 </Collapse>
