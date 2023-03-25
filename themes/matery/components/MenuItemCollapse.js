@@ -50,7 +50,7 @@ export const MenuItemCollapse = ({ link }) => {
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen}>
             {link.subMenus.map(sLink => {
-              return <div key={sLink.id} className='cursor-pointer w-full font-extralight dark:bg-black text-left px-10 justify-start bg-gray-100  hover:bg-indigo-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
+              return <div key={sLink.id} className='cursor-pointer  dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-10 justify-start bg-gray-100  hover:bg-indigo-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
                     <Link href={sLink.to}>
                         <span className='text-sm'>{sLink.title}</span>
                     </Link>

@@ -104,7 +104,7 @@ const NavBar = props => {
             </ul>
             <div><i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5'></i>
                 <Collapse collapseRef={collapseRef} isOpen={isOpen} type='vertical' className='fixed top-16 right-6'>
-                    <div className=' bg-white rounded border p-2 text-sm'>
+                    <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
                         {links.map(link => <MenuItemCollapse key={link.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
                     </div>
                 </Collapse>
