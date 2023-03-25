@@ -41,7 +41,7 @@ export default function TopNavBar(props) {
       <div id='top-nav' className={'sticky top-0 lg:relative w-full z-40 ' + className}>
 
             {/* 移动端折叠菜单 */}
-            <Collapse type='vertical'collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
+            <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
                 <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
                     <MenuBarMobile {...props} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />
                 </div>
@@ -62,7 +62,7 @@ export default function TopNavBar(props) {
 
                 {/* 桌面端顶部菜单 */}
                 <div className='hidden md:flex'>
-                    {links && links.map(link => <MenuItemDrop key={link.id} link={link}/>)}
+                    {links && links?.map(link => <MenuItemDrop key={link.id} link={link}/>)}
                 </div>
             </div>
         </div>

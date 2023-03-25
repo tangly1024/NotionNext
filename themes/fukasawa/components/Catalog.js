@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import { useGlobal } from '@/lib/global'
@@ -13,7 +13,7 @@ const Catalog = ({ toc }) => {
   const { locale } = useGlobal()
 
   // 监听滚动事件
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
     actionSectionScrollSpy()
     return () => {
@@ -26,7 +26,7 @@ const Catalog = ({ toc }) => {
   const tocIds = []
 
   // 同步选中目录事件
-  const [activeSection, setActiveSection] = React.useState(null)
+  const [activeSection, setActiveSection] = useState(null)
   const throttleMs = 200
   const actionSectionScrollSpy = useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')

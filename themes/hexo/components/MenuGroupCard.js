@@ -17,7 +17,7 @@ const MenuGroupCard = (props) => {
   ]
 
   return (
-    <nav id='nav' className='leading-8 flex justify-center   w-full'>
+    <nav id='nav' className='leading-8 flex justify-center  dark:text-gray-200 w-full'>
         {links.map(link => {
           if (link.show) {
             return (
