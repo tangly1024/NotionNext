@@ -15,13 +15,13 @@ export const MenuItemDrop = ({ link }) => {
             <Link
                 href={link?.to}
                 className="font-sans menu-link pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1">
-                {link?.name}
-                {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
+                <>{link?.icon && <span className='mr-2'><i className={link.icon} /></span>}{link?.name}
+                    {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}</>
             </Link>}
 
         {hasSubMenu && <>
             <div className='cursor-pointer font-sans menu-link pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1'>
-                {link?.name}
+                {link?.icon && <span className='mr-2'><i className={link.icon} /></span>} {link?.name}
                 <i className={`px-2 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
             </div>
         </>}
@@ -31,7 +31,7 @@ export const MenuItemDrop = ({ link }) => {
             {link.subMenus.map(sLink => {
               return <li key={sLink.id} className='not:last-child:border-b-0 border-b text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 dark:border-gray-800  py-3 pr-6 pl-2'>
                     <Link href={sLink.to}>
-                    <span className='text-sm text-nowrap font-extralight'>{link?.icon && <i className={sLink?.icon} > &nbsp; </i>}{sLink.title}</span>
+                        <span className='text-sm text-nowrap font-extralight'>{sLink?.icon && <i className={sLink?.icon} > &nbsp; </i>}{sLink.title}</span>
                     </Link>
                 </li>
             })}
