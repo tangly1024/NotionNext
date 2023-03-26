@@ -27,6 +27,10 @@ export const MenuList = (props) => {
     links = customMenu
   }
 
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (
         <>
             {/* 大屏模式菜单 */}
