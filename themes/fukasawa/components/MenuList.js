@@ -25,6 +25,10 @@ export const MenuList = (props) => {
     links = customMenu
   }
 
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (<>
         <nav id='nav-pc' className='hidden md:block font-sans text-sm z-20'>
             {links?.map(link => <MenuItemDrop key={link.id} link={link} />)}
