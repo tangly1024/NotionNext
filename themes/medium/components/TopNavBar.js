@@ -37,6 +37,10 @@ export default function TopNavBar(props) {
     links = customMenu
   }
 
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (
       <div id='top-nav' className={'sticky top-0 lg:relative w-full z-40 ' + className}>
 
