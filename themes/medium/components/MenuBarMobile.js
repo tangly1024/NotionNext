@@ -31,8 +31,8 @@ export const MenuBarMobile = (props) => {
 
   return (
     <nav id='nav' className=' text-md'>
-        {/* {links.map(link => <NormalMenu key={link.id} link={link}/>)} */}
-        {links?.map(link => <MenuItemCollapse onHeightChange={props.onHeightChange} key={link.id} link={link}/>)}
+        {/* {links.map(link => <NormalMenu key={link?.id} link={link}/>)} */}
+        {links?.map(link => <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.id} link={link}/>)}
 
     </nav>
   )
