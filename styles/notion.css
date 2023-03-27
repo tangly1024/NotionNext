@@ -655,10 +655,15 @@ svg.notion-page-icon {
 
 .notion-list-disc {
   list-style-type: disc;
-  padding-inline-start: 1.7em;
+  padding-inline-start: 1.4em;
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.notion-list-disc > ul.notion-list-disc {
+  padding-inline-start: 0em;
+}
+
 .notion-list-numbered {
   list-style-type: decimal;
   padding-inline-start: 1.6em;
