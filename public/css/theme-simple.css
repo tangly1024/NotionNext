@@ -17,7 +17,7 @@
 
 
 /*  菜单下划线动画 */
-.menu-link {
+#theme-simple .menu-link {
     text-decoration: none;
     background-image: linear-gradient(#dd3333, #dd3333);
     background-repeat: no-repeat;
@@ -26,7 +26,7 @@
     transition: background-size 100ms ease-in-out;
 }
  
-.menu-link:hover {
+#theme-simple .menu-link:hover {
     background-size: 100% 2px;
     color: #dd3333;
 }

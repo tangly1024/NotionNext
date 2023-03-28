@@ -10,6 +10,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import throttle from 'lodash.throttle'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -35,6 +36,10 @@ const LayoutBase = props => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [])
+
+  if (isBrowser()) {
+    loadExternalResource('/css/theme-matery.css', 'css')
+  }
 
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">

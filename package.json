@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.12.4",
+  "version": "3.13.2",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -41,6 +41,7 @@
     "next": "^13.1.1",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
+    "nprogress": "^0.2.0",
     "preact": "^10.5.15",
     "prism-themes": "1.9.0",
     "qrcode.react": "^1.0.1",
