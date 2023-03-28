@@ -25,31 +25,41 @@ const LayoutBase = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
+  const { onLoading } = useGlobal()
+
+  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
+        <div className='w-full h-screen flex justify-center items-center'>
+            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
+        </div>
+    </div>
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
+            <CommonHead meta={meta} />
+
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
-                <CommonHead meta={meta} />
 
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
                     {/* 桌面端左侧菜单 */}
                     {/* <LeftMenuBar/> */}
 
                     <div id='container-inner' className='w-full relative z-10'>
-                        {/* 移动端顶部菜单 */}
+                        {/* 顶部导航栏 */}
                         <TopNavBar {...props} />
-                        <div className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
+
+                        <div id='container-inner' className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
                             {slotTop}
-                            {children}
+
+                            {onLoading ? LoadingCover : children}
 
                             {/* 回顶按钮 */}
                             <div
-                              data-aos="fade-up"
-                              data-aos-duration="300"
-                              data-aos-once="false"
-                              data-aos-anchor-placement="top-center"
-                              className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20'>
-                              <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }}/>
+                                data-aos="fade-up"
+                                data-aos-duration="300"
+                                data-aos-once="false"
+                                data-aos-anchor-placement="top-center"
+                                className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20'>
+                                <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
                             </div>
                         </div>
 
@@ -73,6 +83,7 @@ const LayoutBase = props => {
                     </div>
                 </main>
 
+                {/* 移动端底部导航栏 */}
                 <BottomMenuBar {...props} className='block md:hidden' />
             </div>
         </ThemeGlobalMedium.Provider>
