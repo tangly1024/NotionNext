@@ -41,7 +41,8 @@ export default function ArticleDetail(props) {
                     {CONFIG_NEXT.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.page_cover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
+                            {/* <img alt={post.title} src={post?.page_cover} className='object-center w-full' /> */}
+                            <img alt={post.title} src={post?.page_cover} className='w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat animate__animated animate__fadeIn' />
                         </div>
                     )}
 
