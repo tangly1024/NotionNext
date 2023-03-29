@@ -11,7 +11,7 @@ const CONFIG_NEXT = {
   POST_LIST_PREVIEW: true, // 读取文章预览
   POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
 
-  POST_HEADER_IMAGE_VISIBLE: true, // 文章详情页是否显示封面图
+  POST_HEADER_IMAGE_VISIBLE: false, // 文章详情页是否显示封面图
 
   // 右侧组件
   RIGHT_BAR: true, // 是否显示右侧栏
