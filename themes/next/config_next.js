@@ -30,7 +30,7 @@ const CONFIG_NEXT = {
   WIDGET_DARK_MODE: false, // 显示日间/夜间模式切换
   WIDGET_TOC: true, // 移动端显示悬浮目录
 
-  ARTICLE_SHARE: false, // 文章分享功能
+  ARTICLE_SHARE: process.env.NEXT_PUBLIC_ARTICLE_SHARE || false, // 文章分享功能
   ARTICLE_RELATE_POSTS: true, // 相关文章推荐
   ARTICLE_COPYRIGHT: true // 文章版权声明
 

@@ -1,5 +1,5 @@
 import InfoCard from './InfoCard'
-import MenuButtonGroup from './MenuButtonGroup'
+import { MenuList } from './MenuList'
 import SearchInput from './SearchInput'
 import Toc from './Toc'
 import { useGlobal } from '@/lib/global'
@@ -23,12 +23,11 @@ const SideAreaLeft = props => {
   const { post, slot, postCount } = props
   const { locale } = useGlobal()
   const showToc = post && post.toc && post.toc.length > 1
-  return <aside id='left' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'ml-4' : 'mr-4') + ' hidden lg:block flex-col w-60 z-10 relative'}>
+  return <aside id='left' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'ml-4' : 'mr-4') + ' hidden lg:block flex-col w-60 z-20 relative'}>
 
         <section
             data-aos="fade-down"
             data-aos-duration="300"
-            data-aos-easing="ease-in-out"
             data-aos-once="false"
             data-aos-anchor-placement="top-bottom"
             className='w-60'>
@@ -36,7 +35,7 @@ const SideAreaLeft = props => {
             <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-hexo-black-gray hover:shadow-xl duration-200'>
                 <Logo {...props} className='h-32' />
                 <div className='pt-2 px-2 font-sans'>
-                    <MenuButtonGroup allowCollapse={true} {...props} />
+                    <MenuList allowCollapse={true} {...props} />
                 </div>
                 {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
                     <SearchInput {...props} />

@@ -13,7 +13,7 @@ export const LayoutTagIndex = props => {
           {locale.COMMON.TAGS}:
         </div>
         <div id="tags-list" className="duration-200 flex flex-wrap">
-          {tagOptions.map(tag => {
+          {tagOptions?.map(tag => {
             return (
               <div key={tag.name} className="p-2">
                 <TagItemMini key={tag.name} tag={tag} />

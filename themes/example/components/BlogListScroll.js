@@ -78,5 +78,5 @@ export const BlogListScroll = props => {
               </div>
 
           </div>
-  );
+  )
 }
