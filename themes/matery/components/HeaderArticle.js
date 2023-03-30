@@ -21,7 +21,7 @@ export default function HeaderArticle({ post, siteInfo }) {
                     className='opacity-50'
                     placeholder='blur'
                     blurDataURL='/bg_image.jpg' />
-            <span className='absolute text-white p-6 text-3xl'>{title}</span>
+            <span className='absolute text-white p-6 text-3xl shadow-text'>{title}</span>
         </div>
   )
 }
