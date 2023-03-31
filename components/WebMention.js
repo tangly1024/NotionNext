@@ -80,7 +80,7 @@ const WebmentionReplies = ({ target }) => {
   const [mentions, setMentions] = useState([])
   const fetchMentions = async (target) =>
     fetch(
-      `https://webmention.io/api/mentions.jf2?per-page=500&target=${target}`
+      `https://webmention.io/api/mentions.jf2?per-page=500&target=${target}&token=${BLOG.COMMENT_WEBMENTION.TOKEN}`
     ).then((response) => (response.json ? response.json() : response))
   useEffect(() => {
     async function getMentions() {
@@ -153,7 +153,7 @@ const WebMentionBlock = ({ frontMatter }) => {
         <a
           target="_blank"
           id='tweet-post-url'
-          href={`https://twitter.com/intent/tweet?text=${encodeURI(tweet)}`}
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`}
           rel="noopener noreferrer"
         >tweet this post</a>{' '}
         or{' '}
