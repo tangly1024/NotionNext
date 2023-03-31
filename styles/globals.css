@@ -238,6 +238,11 @@ nav {
   margin-bottom: .5rem;
 }
 
+.webmention-block-intro a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
 .webmention {
   margin-top: 1rem;
   padding-top: 1rem;

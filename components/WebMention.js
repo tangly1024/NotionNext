@@ -139,26 +139,30 @@ const WebmentionReplies = ({ target }) => {
 
 const WebMentionBlock = ({ frontMatter }) => {
   const router = useRouter()
-  const url = `https://${BLOG.COMMENT_WEBMENTION.HOSTNAME}/${router.asPath}`
-  const tweet = `${frontMatter.title} by @siygle ${url}`
+  const url = `https://${BLOG.COMMENT_WEBMENTION.HOSTNAME}${router.asPath}`
+  const tweet = `${frontMatter.title} by @${BLOG.COMMENT_WEBMENTION.TWITTER_USERNAME} ${url}`
+  console.log('ini', url, tweet, router.asPath)
 
   return (
     <div className='webmention-block'>
       <h1 className='webmention-header'>
-        powered by WebMention
+        powered by <a href="https://webmention.io" target='_blank' rel='noreferrer'>WebMention.io</a>
       </h1>
       <div className='webmention-block-intro'>
-        This post is using{' '}
-        <a target="_blank" rel='noreferrer' href="https://webmention.io">
-          WebMention.io
-        </a>{' '}
-        as the comment system.{' '}
+        You can{' '}
         <a
           target="_blank"
           id='tweet-post-url'
           href={`https://twitter.com/intent/tweet?text=${encodeURI(tweet)}`}
           rel="noopener noreferrer"
-        >Tweet this post</a>
+        >tweet this post</a>{' '}
+        or{' '}
+        <a
+          target='_blank'
+          id='tweet-discuss-url'
+          href={`https://www.twitter.com/search?q=${url}`}
+          rel='noopener noreferrer'
+        >discuss it on Twitter</a>
         , the comments will show up here.
       </div>
       <div className='webmention-info'>

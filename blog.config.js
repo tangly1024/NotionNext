@@ -180,7 +180,8 @@ const BLOG = {
   COMMENT_WEBMENTION: {
     ENABLE: process.env.NEXT_PUBLIC_WEBMENTION_ENABLE || false,
     AUTH: process.env.NEXT_PUBLIC_WEBMENTION_AUTH || '',
-    HOSTNAME: process.env.NEXT_PUBLIC_WEBMENTION_HOSTNAME || ''
+    HOSTNAME: process.env.NEXT_PUBLIC_WEBMENTION_HOSTNAME || '',
+    TWITTER_USERNAME: process.env.NEXT_PUBLIC_TWITTER_USERNAME || ''
   },
 
   // <---- 评论插件
