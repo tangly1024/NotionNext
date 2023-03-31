@@ -7,6 +7,7 @@ import { Title } from './components/Title'
 import { SideBar } from './components/SideBar'
 import JumpToTopButton from './components/JumpToTopButton'
 import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
 
@@ -15,6 +16,14 @@ import BLOG from '@/blog.config'
  */
 const LayoutBase = props => {
   const { children, meta } = props
+  const { onLoading } = useGlobal()
+
+  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
+        <div className='w-full h-screen flex justify-center items-center'>
+            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
+        </div>
+    </div>
+
   return (
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
             <CommonHead meta={meta} />
@@ -31,7 +40,7 @@ const LayoutBase = props => {
 
                 <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative container mx-auto justify-center md:flex items-start py-8 px-2'}>
 
-                    <div className='w-full max-w-3xl xl:px-14 lg:px-4 '>{children}</div>
+                    <div className='w-full max-w-3xl xl:px-14 lg:px-4 '> {onLoading ? LoadingCover : children}</div>
 
                     <SideBar {...props} />
 

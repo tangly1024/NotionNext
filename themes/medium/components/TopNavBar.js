@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 import LogoBar from './LogoBar'
-import React from 'react'
+import { useRef, useState } from 'react'
 import Collapse from '@/components/Collapse'
-import GroupMenu from './GroupMenu'
+import { MenuBarMobile } from './MenuBarMobile'
 import { useGlobal } from '@/lib/global'
 import CONFIG_MEDIUM from '../config_medium'
+import BLOG from '@/blog.config'
+import { MenuItemDrop } from './MenuItemDrop'
 
 /**
  * 顶部导航栏 + 菜单
@@ -13,9 +13,9 @@ import CONFIG_MEDIUM from '../config_medium'
  * @returns
  */
 export default function TopNavBar(props) {
-  const { className, customNav } = props
-  const router = useRouter()
-  const [isOpen, changeShow] = React.useState(false)
+  const { className, customNav, customMenu } = props
+  const [isOpen, changeShow] = useState(false)
+  const collapseRef = useRef(null)
 
   const { locale } = useGlobal()
 
@@ -26,59 +26,47 @@ export default function TopNavBar(props) {
     { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_MEDIUM.MENU_SEARCH }
   ]
 
-  const navs = defaultLinks.concat(customNav)
+  let links = defaultLinks.concat(customNav)
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
   }
 
+  // 如果 开启自定义菜单，则覆盖Page生成的菜单
+  if (BLOG.CUSTOM_MENU) {
+    links = customMenu
+  }
+
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (
       <div id='top-nav' className={'sticky top-0 lg:relative w-full z-40 ' + className}>
-            {/* 折叠菜单 */}
-            <Collapse type='vertical' isOpen={isOpen} className='md:hidden'>
-                <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-7 lg:hidden '>
-                    <GroupMenu {...props} />
+
+            {/* 移动端折叠菜单 */}
+            <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
+                <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
+                    <MenuBarMobile {...props} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />
                 </div>
             </Collapse>
 
+            {/* 导航栏菜单 */}
             <div className='flex w-full h-12 shadow bg-white dark:bg-hexo-black-gray px-7 items-between'>
 
-                {/* 图标Logo */}
+                {/* 左侧图标Logo */}
                 <LogoBar {...props} />
 
-                {/* 右侧功能 */}
+                {/* 折叠按钮、仅移动端显示 */}
                 <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
                     <div onClick={toggleMenuOpen} className='cursor-pointer'>
                         {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
                     </div>
                 </div>
 
-                {/* 顶部菜单 */}
+                {/* 桌面端顶部菜单 */}
                 <div className='hidden md:flex'>
-                    {navs && navs.map(link => {
-                      if (link?.show) {
-                        const selected = (router.pathname === link.to) || (router.asPath === link.to)
-                        return (
-                            <Link
-                                key={`${link.id}-${link.to}`}
-                                title={link.to}
-                                href={link.to}
-                                target={link.to.indexOf('http') === 0 ? '_blank' : '_self'}
-                                className={'px-2 duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
-                                    (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
-
-                                <div className='items-center justify-center flex '>
-                                    <i className={link.icon} />
-                                    <div className='ml-2 whitespace-nowrap'>{link.name}</div>
-                                </div>
-                                {link.slot}
-
-                            </Link>
-                        )
-                      } else {
-                        return null
-                      }
-                    })}
+                    {links && links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
                 </div>
             </div>
         </div>

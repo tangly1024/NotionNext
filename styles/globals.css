@@ -215,11 +215,20 @@ nav {
 }
 
 .next #announcement-content *{
- font-size:10px !important;
+ font-size:12px !important;
  line-height:1.5 !important;
 }
 
 /* twikoo 评论区超链接样式 */
 .tk-main a {
    @apply text-blue-700
+}
+
+/* 最多显示4行文字 */
+.p-4-lines {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
