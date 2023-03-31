@@ -63,7 +63,7 @@ const WebmentionCount = ({ target }) => {
 }
 
 const Avatar = ({ author }) => (
-  <a className='avattar-wrapper' href={author.url} key={author.name}>
+  <a className='avatar-wrapper' href={author.url} key={author.name}>
     <Image
       className="avatar"
       src={author.photo}
