@@ -249,6 +249,11 @@ nav {
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.webmention-counts {
+  padding: 16px 0;
+  font-weight: bold;
+}
+
 .webmention-counts .count {
   font-weight: bold;
   margin-right: .2rem;

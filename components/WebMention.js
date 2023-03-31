@@ -22,14 +22,13 @@ const WebmentionCount = ({ target }) => {
   }
   const [counts, setCounts] = useState(initialCounts)
   const fetchCounts = async (target) => {
-    const responseData = await fetch(`https://webmention.io/api/count.json?target=${target}`)
-    console.log('!!!', responseData)
+    const responseData = await fetch(`https://webmention.io/api/count.json?target=${encodeURIComponent(target)}`)
     return (responseData.json) ? await responseData.json() : responseData
   }
   useEffect(() => {
     async function getCounts() {
       const responseCounts = await fetchCounts(target)
-      console.log('rere', responseCounts)
+      console.log(responseCounts)
       setCounts(responseCounts)
     }
     getCounts()
