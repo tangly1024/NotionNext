@@ -80,7 +80,7 @@ const WebmentionReplies = ({ target }) => {
   const [mentions, setMentions] = useState([])
   const fetchMentions = async (target) =>
     fetch(
-      `https://webmention.io/api/mentions.jf2?per-page=500&target=${target}&token=${BLOG.COMMENT_WEBMENTION.TOKEN}`
+      `https://webmention.io/api/mentions.jf2?per-page=500&target=${encodeURIComponent(target)}&token=${BLOG.COMMENT_WEBMENTION.TOKEN}`
     ).then((response) => (response.json ? response.json() : response))
   useEffect(() => {
     async function getMentions() {
