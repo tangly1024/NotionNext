@@ -107,7 +107,7 @@ const Comment = ({ frontMatter }) => {
           <GitalkComponent frontMatter={frontMatter}/>
         </div>)}
 
-        {BLOG.COMMENT_WEBMENTION.ENABLE === 'yes' && (<div key='WebMention'>
+        {BLOG.COMMENT_WEBMENTION.ENABLE && (<div key='WebMention'>
           <WebMentionComponent frontMatter={frontMatter} className="px-2" />
         </div>)}
       </Tabs>
