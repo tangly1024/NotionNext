@@ -178,9 +178,9 @@ const BLOG = {
   COMMENT_WALINE_RECENT: process.env.NEXT_PUBLIC_WALINE_RECENT || false, // 最新评论
 
   COMMENT_WEBMENTION: {
-    ENABLE: (process.env.WEBMENTION_ENABLE === 'yes'),
-    AUTH: process.env.WEBMENTION_AUTH || '',
-    HOSTNAME: process.env.WEBMENTION_HOSTNAME || ''
+    ENABLE: process.env.NEXT_PUBLIC_WEBMENTION_ENABLE || false,
+    AUTH: process.env.NEXT_PUBLIC_WEBMENTION_AUTH || '',
+    HOSTNAME: process.env.NEXT_PUBLIC_WEBMENTION_HOSTNAME || ''
   },
 
   // <---- 评论插件
