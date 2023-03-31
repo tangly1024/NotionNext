@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 /**
  * 评论插件
@@ -142,8 +143,11 @@ const WebMentionBlock = ({ frontMatter }) => {
   const tweet = `${frontMatter.title} by @siygle ${url}`
 
   return (
-    <div className='post-footer'>
-      <div className='post-footer-intro'>
+    <div className='webmention-block'>
+      <h1 className='webmention-header'>
+        powered by WebMention
+      </h1>
+      <div className='webmention-block-intro'>
         This post is using{' '}
         <a target="_blank" rel='noreferrer' href="https://webmention.io">
           WebMention.io

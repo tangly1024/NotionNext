@@ -225,10 +225,17 @@ nav {
 }
 
 /* Webmention style */
-.post-footer {
+.webmention-block {
   background: rgba(0, 116, 222, .2);
   padding: 1rem 2rem;
   border-radius: 5px;
+}
+
+.webmention-header {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: .5rem;
 }
 
 .webmention {
