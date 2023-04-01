@@ -23,10 +23,15 @@ export const MenuListSide = (props) => {
   if (BLOG.CUSTOM_MENU) {
     links = customMenu
   }
+
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (
         <nav>
-            {/* {links.map(link => <MenuItemNormal key={link.id} link={link} />)} */}
-            {links?.map(link => <MenuItemCollapse key={link.id} link={link} />)}
+            {/* {links.map(link => <MenuItemNormal key={link?.id} link={link} />)} */}
+            {links?.map(link => <MenuItemCollapse key={link?.id} link={link} />)}
         </nav>
   )
 }

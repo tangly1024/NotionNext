@@ -37,6 +37,10 @@ export default function TopNavBar(props) {
     links = customMenu
   }
 
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (
       <div id='top-nav' className={'sticky top-0 lg:relative w-full z-40 ' + className}>
 
@@ -62,7 +66,7 @@ export default function TopNavBar(props) {
 
                 {/* 桌面端顶部菜单 */}
                 <div className='hidden md:flex'>
-                    {links && links?.map(link => <MenuItemDrop key={link.id} link={link}/>)}
+                    {links && links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
                 </div>
             </div>
         </div>

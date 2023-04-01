@@ -26,18 +26,17 @@ export default function ArticleDetail(props) {
   const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
   return (
-      <div id="container"
-            data-aos="fade-down"
-            data-aos-duration="300"
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"
-
+        <div id="container"
             className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
             <div itemScope itemType="https://schema.org/Movie"
+                data-aos="fade-down"
+                data-aos-duration="300"
+                data-aos-once="true"
+                data-aos-anchor-placement="top-bottom"
                 className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
             >
 
-                {showArticleInfo && <header className='animate__slideInDown animate__animated'>
+                {showArticleInfo && <header>
                     {/* 头图 */}
                     {CONFIG_NEXT.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.page_cover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
@@ -79,7 +78,7 @@ export default function ArticleDetail(props) {
                 </header>}
 
                 {/* Notion内容主体 */}
-                <article id='notion-article' className='px-1'>
+                <article id='notion-article' className='px-1 max-w-3xl mx-auto'>
                     {post && (<NotionPage post={post} />)}
                 </article>
 

@@ -23,9 +23,14 @@ export const MenuListTop = (props) => {
   if (BLOG.CUSTOM_MENU) {
     links = customMenu
   }
+
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (
     <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
-      {links.map(link => <MenuItemDrop key={link.id} link={link}/>)}
+      {links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
     </nav>
   )
 }

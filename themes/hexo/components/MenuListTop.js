@@ -25,9 +25,13 @@ export const MenuListTop = (props) => {
     links = customMenu
   }
 
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (<>
         <nav id='nav-mobile' className='leading-8 justify-center font-light w-full flex'>
-            {links?.map(link => link && link.show && <MenuItemDrop key={link.id} link={link} />)}
+            {links?.map(link => link && link.show && <MenuItemDrop key={link?.id} link={link} />)}
         </nav>
     </>)
 }

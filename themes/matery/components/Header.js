@@ -102,7 +102,7 @@ const Header = props => {
             </div>
 
             <div id='header-cover' style={{ backgroundImage: `url('${siteInfo.pageCover}')` }}
-                className={`w-full h-screen bg-cover ${CONFIG_MATERY.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`}/>
+                className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG_MATERY.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`}/>
 
         </header>
   )
