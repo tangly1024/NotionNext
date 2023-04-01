@@ -28,7 +28,6 @@ const WebmentionCount = ({ target }) => {
   useEffect(() => {
     async function getCounts() {
       const responseCounts = await fetchCounts(target)
-      console.log(responseCounts)
       setCounts(responseCounts)
     }
     getCounts()
@@ -140,7 +139,6 @@ const WebMentionBlock = ({ frontMatter }) => {
   const router = useRouter()
   const url = `https://${BLOG.COMMENT_WEBMENTION.HOSTNAME}${router.asPath}`
   const tweet = `${frontMatter.title} by @${BLOG.COMMENT_WEBMENTION.TWITTER_USERNAME} ${url}`
-  console.log('ini', url, tweet, router.asPath)
 
   return (
     <div className='webmention-block'>
