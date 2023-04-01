@@ -95,7 +95,7 @@ const WebmentionReplies = ({ target }) => {
     ...new Map(mentions.map((item) => [item.author.url, item])).values()
   ].sort((a, b) => new Date(a['wm-received']) - new Date(b['wm-received']))
 
-  const replies = distinctMentions.filter(
+  const replies = mentions.filter(
     (mention) => 'in-reply-to' in mention && 'content' in mention
   )
 
