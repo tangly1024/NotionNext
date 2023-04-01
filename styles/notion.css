@@ -660,10 +660,6 @@ svg.notion-page-icon {
   margin-bottom: 0;
 }
 
-.notion-list-disc > ul.notion-list-disc {
-  padding-inline-start: 0em;
-}
-
 .notion-list-numbered {
   list-style-type: decimal;
   padding-inline-start: 1.6em;

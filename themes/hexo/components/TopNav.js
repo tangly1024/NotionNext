@@ -67,7 +67,7 @@ const TopNav = props => {
       nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
     }
 
-    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight * 2)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
     if (!showNav) {
       nav && nav.classList.replace('top-0', '-top-20')
       windowTop = scrollS
