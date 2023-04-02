@@ -35,12 +35,12 @@ export const MenuList = (props) => {
         <>
             {/* 大屏模式菜单 */}
             <nav id='nav' className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
-                {links.map(link => link && link.show && <MenuItemDrop key={link?.id} link={link} />)}
+                {links.map(link => link && link.show && <MenuItemDrop key={link?.to} link={link} />)}
             </nav>
 
             {/* 移动端菜单 */}
             <div id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
-                {links?.map(link => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.id} link={link} />)}
+                {links?.map(link => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.to} link={link} />)}
             </div>
         </>
   )
