@@ -5,7 +5,7 @@ const Player = () => {
   const [player, setPlayer] = React.useState()
   const ref = React.useRef(null)
 
-  const showLrc = JSON.parse(BLOG.MUSIC_PLAYER_SHOW_LRC)
+  const lrcType = JSON.parse(BLOG.MUSIC_PLAYER_LRC_TYPE)
   const playerVisible = JSON.parse(BLOG.MUSIC_PLAYER_VISIBLE)
   const autoPlay = JSON.parse(BLOG.MUSIC_PLAYER_AUTO_PLAY)
 
@@ -16,7 +16,7 @@ const Player = () => {
       setPlayer(new window.APlayer({
         container: ref.current,
         fixed: true,
-        showlrc: showLrc,
+        lrcType: lrcType,
         autoplay: autoPlay,
         order: BLOG.MUSIC_PLAYER_ORDER,
         audio: BLOG.MUSIC_PLAYER_AUDIO_LIST
