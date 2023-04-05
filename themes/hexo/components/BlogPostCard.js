@@ -31,7 +31,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
          {/* 图片封面 */}
         {showPageCover && !showPreview && post?.page_cover && (
-           <div className="h-auto md:w-5/12">
+           <div className="h-auto md:w-5/12 overflow-hidden">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     {/* <img
@@ -40,7 +40,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         loading='lazy'
                         className="w-full relative cursor-pointer object-cover duration-200 hover:scale-125 "
                     /> */}
-                    <div className='bg-center bg-cover md:h-full h-52' style={{ backgroundImage: `url('${post?.page_cover}')` }}/>
+                    <div className='bg-center bg-cover md:h-full h-52 hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.page_cover}')` }}/>
 
                     {/* <div className='relative w-full h-full'>
                     <Image
