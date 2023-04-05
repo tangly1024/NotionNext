@@ -13,7 +13,8 @@ module.exports = withBundleAnalyzer({
       'avatars.githubusercontent.com',
       'images.unsplash.com',
       'source.unsplash.com',
-      'p1.qhimg.com'
+      'p1.qhimg.com',
+      'webmention.io'
     ]
   },
   // 默认将feed重定向至 /public/rss/feed.xml
