@@ -111,7 +111,7 @@ const BLOG = {
   MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || false, // 是否使用音乐播放插件
   MUSIC_PLAYER_VISIBLE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_VISIBLE || true, // 是否在左下角显示播放和切换，如果使用播放器，打开自动播放再隐藏，就会以类似背景音乐的方式播放，无法取消和暂停
   MUSIC_PLAYER_AUTO_PLAY: process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || true, // 是否自动播放，不过自动播放时常不生效（移动设备不支持自动播放）
-  MUSIC_PLAYER_SHOW_LRC: process.env.NEXT_PUBLIC_MUSIC_PLAYER_SHOW_LRC || false, // 是否展示歌词（前提是有配置歌词路径，对 meting 无效）
+  MUSIC_PLAYER_LRC_TYPE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_LRC_TYPE || '0', // 歌词显示类型，可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）（前提是有配置歌词路径，对 meting 无效）
   MUSIC_PLAYER_CDN_URL: process.env.NEXT_PUBLIC_MUSIC_PLAYER_CDN_URL || 'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js',
   MUSIC_PLAYER_ORDER: process.env.NEXT_PUBLIC_MUSIC_PLAYER_ORDER || 'list', // 默认播放方式，顺序 list，随机 random
   MUSIC_PLAYER_AUDIO_LIST: [ // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
@@ -176,6 +176,21 @@ const BLOG = {
 
   COMMENT_WALINE_SERVER_URL: process.env.NEXT_PUBLIC_WALINE_SERVER_URL || '', // 请配置完整的Waline评论地址 例如 hhttps://preview-waline.tangly1024.com @see https://waline.js.org/guide/get-started.html
   COMMENT_WALINE_RECENT: process.env.NEXT_PUBLIC_WALINE_RECENT || false, // 最新评论
+
+  // 此评论系统基于WebMention，细节可参考https://webmention.io
+  // 它是一个基于IndieWeb理念的开放式评论系统，下方COMMENT_WEBMENTION包含的属性皆需配置：
+  // ENABLE: 是否开启
+  // AUTH: Webmention使用的IndieLogin，可使用Twitter或Github个人页面连结
+  // HOSTNAME: Webmention绑定之网域，通常即为本站网址
+  // TWITTER_USERNAME: 评论显示区域需要的资讯
+  // TOKEN: Webmention的API token
+  COMMENT_WEBMENTION: {
+    ENABLE: process.env.NEXT_PUBLIC_WEBMENTION_ENABLE || false,
+    AUTH: process.env.NEXT_PUBLIC_WEBMENTION_AUTH || '',
+    HOSTNAME: process.env.NEXT_PUBLIC_WEBMENTION_HOSTNAME || '',
+    TWITTER_USERNAME: process.env.NEXT_PUBLIC_TWITTER_USERNAME || '',
+    TOKEN: process.env.NEXT_PUBLIC_WEBMENTION_TOKEN || ''
+  },
 
   // <---- 评论插件
 
