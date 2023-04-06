@@ -87,6 +87,7 @@
 
   <td align="center"><a href="https://github.com/fighting-bug"><img src="https://avatars.githubusercontent.com/u/56441589" width="64px;"  alt="fighting-buf"/><br/><sub><b>fighting-buf</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=fighting-bug" title="fighting-buf" >🔧 🐛</a></td>
 
+  <td align="center"><a href="https://github.com/cliouo"><img src="https://avatars.githubusercontent.com/u/71540889" width="64px;"  alt="cliouo"/><br/><sub><b>cliouo</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=cliouo" title="cliouo" >🔧 🐛</a></td>
 
 </tr>
 </table>

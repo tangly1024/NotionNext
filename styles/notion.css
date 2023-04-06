@@ -1,5 +1,5 @@
 :root {
-  --fg-color: rgb(0, 0, 0); 
+  --fg-color: rgb(0, 0, 0);
   --fg-color-0: rgba(55, 53, 47, 0.09);
   --fg-color-1: rgba(55, 53, 47, 0.16);
   --fg-color-2: rgba(55, 53, 47, 0.4);
@@ -714,6 +714,7 @@ svg.notion-page-icon {
   /* height: 100%; */
   height: auto !important;
   max-height: 100%;
+  margin: auto;
 }
 
 .notion-asset-wrapper iframe {
@@ -755,7 +756,7 @@ pre[class*='language-'] {
 code[class*='language-'] {
   background: unset !important;
 }
-  
+
 .notion-code {
   padding: 30px 16px 30px 20px;
   border-bottom-right-radius: 0.5rem;
@@ -1935,7 +1936,7 @@ svg + .notion-page-title-text {
 }
 
 ::selection {
-    @apply bg-blue-500 text-gray-50 !important; 
+    @apply bg-blue-500 text-gray-50 !important;
 }
 
 .dark img{

@@ -224,7 +224,92 @@ nav {
    @apply text-blue-700
 }
 
-/* 最多显示4行文字 */
+/* Webmention style */
+.webmention-block {
+  background: rgba(0, 116, 222, .2);
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+.webmention-header {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: .5rem;
+}
+
+.webmention-block-intro a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
+.webmention {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.webmention-counts {
+  padding: 16px 0;
+  font-weight: bold;
+}
+
+.webmention-counts .count {
+  font-weight: bold;
+  margin-right: .2rem;
+}
+
+/* .webmention-counts .counts > span {
+  margin-right: .8rem;
+} */
+.webmention-counts .counts>span:not(:last-child):after {
+  content: " • ";
+}
+
+a.avatar-wrapper {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.webmention-avatars .avatar-wrapper {
+  margin-right: -8px;
+}
+
+.avatar {
+  border-radius: 50%;
+  margin: 0;
+  border: 3px solid rgba(0, 116, 222, .5);
+}
+
+.replies {
+  margin: 0;
+  padding: 0;
+}
+
+.reply {
+  list-style: none;
+  display: flex;
+  position: relative;
+  padding: 0;
+  align-items: flex-start;
+  margin-top: .6rem;
+}
+
+.reply p {
+  margin: 0;
+}
+
+.reply .text {
+  margin-left: 1rem;
+  font-size: 14px;
+}
+
+.reply-author-name {
+  font-weight: 500;
+}
+
 .p-4-lines {
   display: -webkit-box;
   -webkit-box-orient: vertical;
