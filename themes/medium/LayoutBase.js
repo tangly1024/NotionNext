@@ -38,14 +38,14 @@ const LayoutBase = props => {
             <CommonHead meta={meta} />
 
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
-
-                <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
-                    {/* 桌面端左侧菜单 */}
-                    {/* <LeftMenuBar/> */}
-
-                    <div id='container-inner' className='w-full relative z-10'>
+            
+                <div id='container-inner' className='w-full relative z-10'>
                         {/* 顶部导航栏 */}
                         <TopNavBar {...props} />
+                        
+                    <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
+                            {/* 桌面端左侧菜单 */}
+                            {/* <LeftMenuBar/> */}                    
 
                         <div id='container-inner' className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
                             {slotTop}
