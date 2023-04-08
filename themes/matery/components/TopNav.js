@@ -35,12 +35,12 @@ const TopNav = props => {
       if (navTransparent) {
         nav && nav.classList.replace('bg-indigo-700', 'bg-none')
         nav && nav.classList.replace('text-black', 'text-white')
-        nav && nav.classList.replace('drop-shadow-xl', 'shadow-none')
+        nav && nav.classList.replace('shadow-xl', 'shadow-none')
         nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
       } else {
         nav && nav.classList.replace('bg-none', 'bg-indigo-700')
         nav && nav.classList.replace('text-white', 'text-black')
-        nav && nav.classList.replace('shadow-none', 'drop-shadow-xl')
+        nav && nav.classList.replace('shadow-none', 'shadow-xl')
         nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
       }
 
@@ -129,7 +129,7 @@ const TopNav = props => {
       <div id='top-nav'>
             <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
             {/* 导航栏 */}
-            <div id='sticky-nav' className={'flex justify-center top-0 shadow-black shadow-none fixed bg-none dark:bg-hexo-black-gray text-gray-200 w-full z-30 transform transition-all duration-200'}>
+            <div id='sticky-nav' className={'flex justify-center top-0 shadow-none fixed bg-none dark:bg-hexo-black-gray text-gray-200 w-full z-30 transform transition-all duration-200'}>
                 <div className='w-full max-w-6xl flex justify-between items-center px-4 py-2'>
                     {/* 左侧功能 */}
                     <div className='justify-start items-center block lg:hidden '>
