@@ -13,7 +13,6 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover && !showPreview
   //   const delay = (index % 2) * 200
 
-  console.log(showPageCover)
   return (
 
         <div
