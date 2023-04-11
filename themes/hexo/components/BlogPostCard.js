@@ -11,7 +11,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post.page_cover = siteInfo?.pageCover
   }
   const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover && !showPreview
-  const delay = (index % 2) * 200
+  //   const delay = (index % 2) * 200
 
   console.log(showPageCover)
   return (
@@ -21,8 +21,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         >
             <div
                 data-aos="fade-up"
-                data-aos-duration="200"
-                data-aos-delay={delay}
+                data-aos-easing="ease-in-out"
+                data-aos-duration="800"
                 data-aos-once="false"
                 data-aos-anchor-placement="top-bottom"
                 id='blog-post-card'
