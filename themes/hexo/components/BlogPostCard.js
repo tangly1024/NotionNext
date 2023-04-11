@@ -10,9 +10,10 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   if (post && !post.page_cover && CONFIG_HEXO.POST_LIST_COVER_DEFAULT) {
     post.page_cover = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover
+  const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover && !showPreview
   const delay = (index % 2) * 200
 
+  console.log(showPageCover)
   return (
 
         <div
@@ -26,17 +27,17 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 data-aos-anchor-placement="top-bottom"
                 id='blog-post-card'
                 key={post.id}
-                className={`h-56 w-full flex justify-between md:flex-row flex-col-reverse ${CONFIG_HEXO.POST_LIST_IMG_CROSSOVER && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
+                className={`md:h-56 w-full flex justify-between md:flex-row flex-col-reverse ${CONFIG_HEXO.POST_LIST_IMG_CROSSOVER && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
                     overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
 
                 {/* 文字内容 */}
                 <BlogPostCardInfo index={index} post={post} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary} />
 
                 {/* 图片封面 */}
-                {showPageCover && !showPreview && post?.page_cover && (
-                    <div className="h-auto md:w-5/12 overflow-hidden">
+                {showPageCover && (
+                    <div className="md:w-5/12 overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <div className='bg-center bg-cover md:h-full hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.page_cover}')` }} />
+                            <div className='h-56 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.page_cover}')` }} />
                         </Link>
                     </div>
                 )}
