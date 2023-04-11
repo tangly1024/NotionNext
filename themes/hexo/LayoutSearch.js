@@ -38,7 +38,7 @@ export const LayoutSearch = props => {
     }, 100)
   })
   return (
-      <LayoutBase {...props} currentSearch={currentSearch}>
+      <LayoutBase {...props} currentSearch={currentSearch} className='pt-8'>
           {!currentSearch && <>
               <div className="my-6 px-2">
                   <SearchInput cRef={cRef} {...props} />
