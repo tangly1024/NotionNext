@@ -1,7 +1,7 @@
 const CONFIG_NEXT = {
 
   HOME_BANNER: false, // 首页是否显示大图及标语 [true,false]
-  HOME_BANNER_Strings: ['欢迎参观南昌大学超算队博客🎉', '我们正积极备战SC23中', 'Beat Tsinghua！！！', '能去美国就算胜利', '欢迎交流心得！！！'], // 首页大图标语文字
+  HOME_BANNER_Strings: ['欢迎参观南昌大学超算队博客🎉', '我们正积极备战SC23中', 'Beat Tsinghua！！！(能去美国就算胜利)', '欢迎交流心得！！！'], // 首页大图标语文字
 
   NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
 
