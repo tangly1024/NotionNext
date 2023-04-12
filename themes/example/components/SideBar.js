@@ -3,7 +3,7 @@ import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-// import Announcement from './Announcement'
+import Announcement from './Announcement'
 const ExampleRecentComments = dynamic(() => import('./ExampleRecentComments'))
 
 export const SideBar = (props) => {
