@@ -49,16 +49,6 @@ export const SideBar = (props) => {
                 </div>
             </aside>
 
-//             <Announcement post={notice}/>
-
-//             {BLOG.COMMENT_WALINE_SERVER_URL && BLOG.COMMENT_WALINE_RECENT && <aside className="rounded shadow overflow-hidden mb-6">
-//                 <h3 className="text-sm bg-gray-100 text-gray-700 dark:bg-hexo-black-gray dark:text-gray-200 py-3 px-4 dark:border-hexo-black-gray border-b">{locale.COMMON.RECENT_COMMENTS}</h3>
-
-//                 <div className="p-4">
-//                     <ExampleRecentComments/>
-//                 </div>
-//             </aside>}
-
             <aside className="rounded  overflow-hidden mb-6">
                 <Live2D />
             </aside>
