@@ -11,7 +11,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   if (post && !post.page_cover) {
     post.page_cover = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG_MATERY.POST_LIST_COVER && !showPreview && post?.page_cover
+  const showPageCover = CONFIG_MATERY.POST_LIST_COVER && post?.page_cover
   const delay = (index % 3) * 300
   return (
       <div
