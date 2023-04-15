@@ -24,7 +24,7 @@ const CommonHead = ({ meta, children }) => {
         content="width=device-width, initial-scale=1.0, user-scalable=no"
       />
       <meta name="robots" content="follow, index" />
-      {/* <meta name="referrer" content="never"></meta> */}
+      
       <meta charSet="UTF-8" />
       {BLOG.SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
@@ -55,7 +55,7 @@ const CommonHead = ({ meta, children }) => {
         <link href={BLOG.COMMENT_WEBMENTION.AUTH} rel="me" />
       )}
 
-      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="never" />}
+      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="no-referrer-when-downgrade" />}
       {meta?.type === 'Post' && (
         <>
           <meta
