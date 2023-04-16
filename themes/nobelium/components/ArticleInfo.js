@@ -25,7 +25,7 @@ export const ArticleInfo = (props) => {
                   alt={BLOG.author}
                   width={24}
                   height={24}
-                  src={`https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F754f6517-d954-443b-8b6d-806a23234294%2Fxingqiu-3.svg?table=collection&id=cf7f7240-e7ef-4d2c-801f-2da5f4e61cb7`}
+                  src={`https://oss.deqiang.wang/avator/xingqiu.svg`}
                   className="rounded-full"
                 />
                 <p className="ml-2 md:block">{BLOG.author}</p>
