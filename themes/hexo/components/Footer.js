@@ -29,7 +29,7 @@ const Footer = ({ title }) => {
         <br/>
         <h1>{title}</h1>
         <span className='text-xs '>Powered by <a target="_blank" rel="noopener noreferrer" href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext </a></span>
-        <span className='text-xs '>|  Built with <a target="_blank" rel="noopener noreferrer" href="https://nextjs.org/" className='underline dark:text-gray-300'>Next.js</a></span><br/>
+        <span className='text-xs '>|  Built with <a target="_blank" rel="noopener noreferrer" href="https://nextjs.org/" className='underline dark:text-gray-300'>Next.js</a>.</span><br/>
 
     </footer>
   )
