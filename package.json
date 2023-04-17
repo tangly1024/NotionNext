@@ -55,7 +55,7 @@
     "react-share": "^4.4.0",
     "react-tweet-embed": "~2.0.0",
     "smoothscroll-polyfill": "^0.4.4",
-    "twikoo": "1.6.9",
+    "twikoo": "^1.6.16",
     "typed.js": "^2.0.12",
     "use-ackee": "^3.0.0",
     "valine": "^1.4.18"
