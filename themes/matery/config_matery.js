@@ -1,14 +1,14 @@
 const CONFIG_MATERY = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['大自然空寂无人的所有宁静来到我身旁坐定', '我们的肉体只是时光，不停流逝的时光', '过去、现在和未来的区别只是一个顽固的、持续的幻觉', '大理石永久幻化成一个灵魂，孤独地航行在陌生的思想海洋'], // 首页大图标语文字
 
   HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
-  HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
+  HOME_NAV_BACKGROUND_IMG_FIXED: true, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
 
   // 菜单配置
-  MENU_CATEGORY: true, // 显示分类
-  MENU_TAG: true, // 显示标签
-  MENU_ARCHIVE: true, // 显示归档
+  MENU_CATEGORY: false, // 显示分类
+  MENU_TAG: false, // 显示标签
+  MENU_ARCHIVE: false, // 显示归档
   MENU_SEARCH: true, // 显示搜索
 
   POST_LIST_COVER: true, // 文章封面
