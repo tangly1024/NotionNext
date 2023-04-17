@@ -61,6 +61,7 @@ export default function HeaderArticle({ post, siteInfo }) {
               )}
             </div>
             {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
+              <i className='mr-1 fas fa-eye' />
               <span className="mr-2 busuanzi_value_page_pv" />
               {locale.COMMON.VIEWS}
             </div>}
