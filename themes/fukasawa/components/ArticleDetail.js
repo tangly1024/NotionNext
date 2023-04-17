@@ -62,10 +62,6 @@ export default function ArticleDetail(props) {
                   {date}
 
                 </Link>
-                //<span className='mr-2'>|</span>
-                //<span className='mx-2 text-gray-400 dark:text-gray-500'>
-                //  {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
-                //</span>
               </>)}
 
               <div className=" busuanzi_container_page_pv font-light mr-2">
