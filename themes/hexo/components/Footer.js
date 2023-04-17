@@ -28,8 +28,8 @@ const Footer = ({ title }) => {
         <i className='fas fa-users'/> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <br/>
         <h1>{title}</h1>
-        <span className='text-xs '>Powered by <a target="_blank" rel="noopener noreferrer" href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext </a></span>
-        <span className='text-xs '>|  Built with <a target="_blank" rel="noopener noreferrer" href="https://nextjs.org/" className='underline dark:text-gray-300'>Next.js</a>.</span><br/>
+        <span className='text-xs '>Powered by <a target="_blank" rel="noopener noreferrer" href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext </a>.</span>
+        <span className='text-xs '>|  Built with <a target="_blank" rel="noopener noreferrer" href="https://nextjs.org/" className='underline dark:text-gray-300'>Next.js</a>.</span></span><br/>
 
     </footer>
   )
