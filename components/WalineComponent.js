@@ -79,6 +79,7 @@ const WalineComponent = (props) => {
         serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
         lang: BLOG.lang,
         reaction: true,
+        dark: 'html.dark',
         emoji: [
           '//unpkg.com/@waline/emojis@1.1.0/qq',
           '//unpkg.com/@waline/emojis@1.1.0/bmoji',
