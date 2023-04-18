@@ -6,14 +6,14 @@ import CONFIG_HEXO from '../config_hexo'
 const MenuGroupCard = (props) => {
   const { postCount, categoryOptions, tagOptions } = props
   const { locale } = useGlobal()
-  const archiveSlot = <div className='text-center'>{postCount}</div>
-  const categorySlot = <div className='text-center'>{categoryOptions?.length}</div>
-  const tagSlot = <div className='text-center'>{tagOptions?.length}</div>
+  const archiveSlot = <div className='text-center'><i className='fas fa-file-text'/>{postCount}</div>
+  const categorySlot = <div className='text-center'><i className='fas fa-th'/>{categoryOptions?.length}</div>
+  const tagSlot = <div className='text-center'><i className='fas fa-tags'/>{tagOptions?.length}</div>
 
   const links = [
-    <i className='fas fa-file-text'/>{ name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG_HEXO.MENU_ARCHIVE },
-    <i className='fas fa-th'/>{ name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: CONFIG_HEXO.MENU_CATEGORY },
-    <i className='fas fa-tags'/>{ name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG_HEXO.MENU_TAG }
+    { name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG_HEXO.MENU_ARCHIVE },
+    { name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: CONFIG_HEXO.MENU_CATEGORY },
+    { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG_HEXO.MENU_TAG }
   ]
 
   return (
