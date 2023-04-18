@@ -142,6 +142,13 @@
     <a href="https://github.com/sudeakq" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/102792219" width="64px;"  alt="Sude Akgün"/><br/><sub><b>Sude Akgün</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=sudeakq" title="sudeakq" >🔧 🐛</a>
   </td>
 
+  <td align="center">
+    <a href="https://github.com/fgprodigal" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/769910" width="64px;"  alt="Ray"/><br/><sub><b>Ray</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=fgprodigal" title="Ray" >🔧 🐛</a>
+  </td>
+
+  <td align="center">
+    <a href="https://github.com/hongzzz" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/25585061" width="64px;"  alt="Hongzzz"/><br/><sub><b>Hongzzz</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=hongzzz" title="hongzzz" >🔧 🐛</a>
+  </td>
 </tr>
 </table>
 

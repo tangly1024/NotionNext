@@ -114,25 +114,31 @@ export async function getStaticProps({ params: { slug } }) {
   }
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalNotionData({ from })
+  // 在列表内查找文章
   props.post = props.allPages.find((p) => {
     return p.slug === fullSlug || p.id === idToUuid(fullSlug)
   })
 
-  if (!props.post) {
+  // 处理非列表内文章的内信息
+  if (!props?.post) {
     const pageId = slug.slice(-1)[0]
-    if (pageId.length < 32) {
-      return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
-    }
-    const post = await getNotion(pageId)
-    if (post) {
+    if (pageId.length >= 32) {
+      const post = await getNotion(pageId)
       props.post = post
-    } else {
-      return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
     }
-  } else {
-    props.post.blockMap = await getPostBlocks(props.post.id, 'slug')
   }
 
+  // 无法获取文章
+  if (!props?.post) {
+    return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
+  }
+
+  // 文章内容加载
+  if (!props?.posts?.blockMap) {
+    props.post.blockMap = await getPostBlocks(props.post.id, from)
+  }
+
+  // 推荐关联文章处理
   const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)

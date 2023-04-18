@@ -181,20 +181,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-
-/* waline评论插件夜间适配 */
-.wl-panel{
-  @apply dark:bg-black dark:border-gray-800
-}
-
-.wl-input,.wl-editor{
-  @apply dark:focus-within:bg-gray-900 dark:text-gray-200
-}
-
-.wl-meta > span {
-  @apply dark:bg-gray-800 !important
-}
-
 /* 固定两行 */
 .text-line-2 {
     overflow : hidden;
