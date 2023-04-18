@@ -17,6 +17,7 @@ const CommonHead = ({ meta, children }) => {
 
   return (
     <Head>
+    <meta name="baidu-site-verification" content="code-l2mvxW6guC" />
       <title>{title}</title>
       <meta name="theme-color" content={BLOG.BACKGROUND_DARK} />
       <meta
