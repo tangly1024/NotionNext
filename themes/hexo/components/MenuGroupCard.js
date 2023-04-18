@@ -11,9 +11,9 @@ const MenuGroupCard = (props) => {
   const tagSlot = <div className='text-center'>{tagOptions?.length}</div>
 
   const links = [
-    { name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG_HEXO.MENU_ARCHIVE },
-    { name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: CONFIG_HEXO.MENU_CATEGORY },
-    { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG_HEXO.MENU_TAG }
+    <i className='fas fa-file-text'/>{ name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG_HEXO.MENU_ARCHIVE },
+    <i className='fas fa-th'/>{ name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: CONFIG_HEXO.MENU_CATEGORY },
+    <i className='fas fa-tags'/>{ name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG_HEXO.MENU_TAG }
   ]
 
   return (
