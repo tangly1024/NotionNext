@@ -19,7 +19,7 @@ export async function getStaticProps() {
   props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
 
   const meta = {
-    title: `${siteInfo?.title} | ${siteInfo?.description}`,
+    title: `${siteInfo?.title}`,
     description: siteInfo?.description,
     image: siteInfo?.pageCover,
     slug: '',
