@@ -60,7 +60,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                     >
                         <div>
                             <div className='text-line-2'>{post.title}</div>
-                            <div className="text-gray-500">{post.lastEditedTime}</div>
+                            <div className="text-gray-500">{post.createdTime}</div>
                         </div>
                     </div>
 

@@ -18,7 +18,7 @@ const Footer = ({ title }) => {
     >
       {/* <DarkModeButton/> */}
 
-      <i className='fas fa-copyright' /> {`${copyrightDate}`} <span> 💖 <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a>.<br/>
+      <i className='fas fa-copyright' /> {`${copyrightDate}`} <span> 💖 <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{title}</a><br/>
 
       {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br/></>}
 
@@ -27,9 +27,8 @@ const Footer = ({ title }) => {
       <span className='pl-2 hidden busuanzi_container_site_uv'>
         <i className='fas fa-users'/> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <br/>
-        <h1>{title}</h1>
-        <span className='text-xs '>Powered by <a target="_blank" rel="noopener noreferrer" href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext </a>.</span>
-        <span className='text-xs '>|  Built with <a target="_blank" rel="noopener noreferrer" href="https://nextjs.org/" className='underline dark:text-gray-300'>Next.js</a>.</span></span><br/>
+        <span className='text-xs '>⚡由 <a target="_blank" rel="noopener noreferrer" href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext </a>强力驱动</span>
+        <span className='text-xs '>		|	🛠基于 <a target="_blank" rel="noopener noreferrer" href="https://nextjs.org/" className='underline dark:text-gray-300'>Next.js </a> 构建</span></span><br/>
 
     </footer>
   )
