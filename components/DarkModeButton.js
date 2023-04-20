@@ -11,6 +11,8 @@ const DarkModeButton = (props) => {
     const htmlElement = document.getElementsByTagName('html')[0]
     htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
     htmlElement.classList?.add(newStatus ? 'dark' : 'light')
+    var vid = document.getElementsByClassName("aplayer-play")[0];
+    vid.click()
   }
 
   return <div className={'dark:text-gray-200 z-10 duration-200 text-xl py-2 ' + props.className}>
