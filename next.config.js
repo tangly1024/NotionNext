@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer({
   images: {
     // 图片压缩
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/avif', 'image/webp','gh','npm'],
     // 允许next/image加载的图片 域名
     domains: [
       'gravatar.com',
@@ -13,6 +13,7 @@ module.exports = withBundleAnalyzer({
       'avatars.githubusercontent.com',
       'images.unsplash.com',
       'source.unsplash.com',
+      'cdn.staticaly.com',
       'gcore.jsdelivr.net',
       'p1.qhimg.com',
       'webmention.io'
