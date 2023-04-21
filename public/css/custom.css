@@ -168,7 +168,7 @@ footer:before {
 }
 /*背景颜色渐变*/
 #wrapper{
-  background: -webkit-linear-gradient(0deg, #ffd7e4 0%, #c8f1ff 100%);
+  background: -webkit-linear-gradient(0deg, #ffd7e4 0%, #c8f1ff 100%)
 }
 .dark #wrapper{
   background: none;
