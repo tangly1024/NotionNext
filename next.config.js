@@ -13,6 +13,8 @@ module.exports = withBundleAnalyzer({
       'avatars.githubusercontent.com',
       'images.unsplash.com',
       'source.unsplash.com',
+      'cdn.staticaly.com',
+      'gcore.jsdelivr.net',
       'p1.qhimg.com',
       'webmention.io'
     ]
