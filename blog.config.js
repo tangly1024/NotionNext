@@ -159,7 +159,7 @@ const BLOG = {
     {
       name: '假如爱有天意',
       artist: '韩成民',
-      url: 'https://music.163.com/song?id=37722564',
+      url: 'http://music.163.com/song/media/outer/url?id=37722564.mp3',
       cover:
         'https://p2.music.126.net/QSBagdifLsR2otikVKA4uQ==/3405187514417851.jpg'
     },
