@@ -23,6 +23,7 @@
     "@giscus/react": "^2.2.6",
     "@next/bundle-analyzer": "^12.1.1",
     "@popperjs/core": "^2.9.3",
+    "@vercel/analytics": "^1.0.0",
     "animate.css": "^4.1.1",
     "animejs": "^3.2.1",
     "aos": "^3.0.0-beta.6",
