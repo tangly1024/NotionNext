@@ -1,2 +1,5 @@
 /* 静态文件导入 自定义样式*/
 
+#theme-fukasawa .sideLeft hr{
+    opacity: .04;
+}
