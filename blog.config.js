@@ -66,7 +66,7 @@ const BLOG = {
     '"Segoe UI Symbol"',
     '"Apple Color Emoji"'
   ],
-  FONT_AWESOME: '/css/all.min.css', // font-awesome 字体图标地址
+  FONT_AWESOME: 'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css', // font-awesome 字体图标地址
 
   // 自定义外部脚本，外部样式
   CUSTOM_EXTERNAL_JS: [''], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
