@@ -45,3 +45,7 @@ yarn-error.log*
 /public/robots.txt
 /public/sitemap.xml
 /public/rss/*
+
+# keyconfig
+.env.local
+/blog.config.js
