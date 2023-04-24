@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import BlogListPage from './components/BlogListPage'
 import BlogListScroll from './components/BlogListScroll'
+import TagItemMini from './components/TagItemMini'
 import LayoutBase from './LayoutBase'
 
 export const LayoutTag = (props) => {

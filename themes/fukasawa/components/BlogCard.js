@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
+import TagItemMini from './TagItemMini'
 import React from 'react'
 import CONFIG_FUKA from '../config_fuka'
 
@@ -28,10 +29,31 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
             </Link>
 
             {(!showPreview || showSummary) && (
-                <p className="mt-4 mb-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7 overflow-hidden">
+                <p className="mt-1 mb-1 text-gray-700 dark:text-gray-300 text-sm font-light leading-7 overflow-hidden">
                 {post.summary}
                 </p>
             )}
+            
+                {/* 分类标签 */}
+                <div className="mt-1 text-gray-400 justify-between flex">
+                    <Link
+                        href={`/category/${post.category}`}
+                        passHref
+                        className="cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform">
+            
+                        <i className="mr-1 far fa-folder" />
+                        {post.category}
+            
+                    </Link>
+                    <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
+                        <div>
+                            {' '}
+                            {post.tagItems.map(tag => (
+                                <TagItemMini key={tag.name} tag={tag} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {showPageCover && (
