@@ -28,8 +28,14 @@
 
 ## 我要如何开始？
 
-只需几分钟即可搭建您的个人站点，查看教程 [教程说明](https://tangly1024.com/article/notion-next) 
+只需几分钟即可搭建您的个人站点：
 
+- [快速部署教程 - 多种方案可供选择](https://tangly1024.com/article/notion-next) 
+
+- [个性配置手册 - 如何配置功能插件](https://tangly1024.com/article/notion-next-guide) 
+
+- [二次开发指引 - 如何进行本地开发](https://tangly1024.com/article/how-to-develop-with-notion-next)
+ 
 
 ## 致谢
 感谢Craig Hart发起的Nobelium项目
