@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.12.4",
+  "version": "3.13.4",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -41,6 +41,7 @@
     "next": "^13.1.1",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
+    "nprogress": "^0.2.0",
     "preact": "^10.5.15",
     "prism-themes": "1.9.0",
     "qrcode.react": "^1.0.1",
@@ -54,7 +55,7 @@
     "react-share": "^4.4.0",
     "react-tweet-embed": "~2.0.0",
     "smoothscroll-polyfill": "^0.4.4",
-    "twikoo": "1.6.9",
+    "twikoo": "^1.6.16",
     "typed.js": "^2.0.12",
     "use-ackee": "^3.0.0",
     "valine": "^1.4.18"

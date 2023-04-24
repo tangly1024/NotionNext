@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import { useEffect } from 'react'
 
 /**
  * 侧边栏抽屉面板，可以从侧面拉出
@@ -8,7 +8,7 @@ import React from 'react'
  */
 const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
   const router = useRouter()
-  React.useEffect(() => {
+  useEffect(() => {
     const sideBarDrawerRouteListener = () => {
       switchSideDrawerVisible(false)
     }
@@ -37,8 +37,8 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
     }
   }
 
-  return <div id='sidebar-wrapper' className={' block md:hidden ' + className }>
-    <div id='sidebar-drawer' className={`${isOpen ? 'ml-0 w-56' : '-ml-60 max-w-side'} bg-white dark:bg-gray-900 shadow-black shadow-lg flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-30`}>
+  return <div id='sidebar-wrapper' className={' block md:hidden top-0 ' + className }>
+    <div id="sidebar-drawer" className={`${isOpen ? 'ml-0 w-60 visible' : '-ml-60 max-w-side invisible'} bg-white dark:bg-gray-900 shadow-black shadow-lg flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-30`}>
       {children}
     </div>
 

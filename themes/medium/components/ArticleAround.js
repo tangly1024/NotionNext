@@ -28,5 +28,5 @@ export default function ArticleAround ({ prev, next }) {
 
       </Link>
     </section>
-  );
+  )
 }

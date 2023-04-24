@@ -9,7 +9,7 @@ import TagItemMini from './TagItemMini'
  * @returns
  */
 export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
-  return <div className={`h-56 flex flex-col justify-between lg:p-6 p-4 md:max-h-60 ${showPageCover ? 'md:w-7/12 w-full ' : 'w-full'}`}>
+  return <div className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full h-56 md:max-h-60 ' : 'w-full '}`}>
 
        <div>
          {/* 标题 */}

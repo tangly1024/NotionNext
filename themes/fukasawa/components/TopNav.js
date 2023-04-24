@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Collapse from '@/components/Collapse'
-import GroupMenu from './GroupMenu'
+import { MenuList } from './MenuList'
 import Logo from './Logo'
 import SearchInput from './SearchInput'
 
@@ -11,6 +11,7 @@ import SearchInput from './SearchInput'
  */
 const TopNav = props => {
   const [isOpen, changeShow] = useState(false)
+  const collapseRef = useRef(null)
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
@@ -20,9 +21,9 @@ const TopNav = props => {
 
     {/* 导航栏 */}
     <div id='sticky-nav' className={'relative w-full top-0 z-20 transform duration-500 bg-white dark:bg-black'}>
-      <Collapse type='vertical' isOpen={isOpen}>
+      <Collapse type='vertical' isOpen={isOpen} collapseRef={collapseRef}>
         <div className='py-1 px-5'>
-          <GroupMenu {...props} />
+          <MenuList {...props} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />
           <SearchInput {...props} />
         </div>
       </Collapse>
