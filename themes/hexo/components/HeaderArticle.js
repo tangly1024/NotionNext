@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import TagItemMini from './TagItemMini'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/formatDate'
 import BLOG from '@/blog.config'
@@ -9,7 +10,7 @@ export default function HeaderArticle({ post, siteInfo }) {
   if (!post) {
     return <></>
   }
-  const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("${siteInfo?.pageCover}")`
+  const headerImage = post?.page_cover ? `url("${post.page_cover}&w=1600")` : `url("${siteInfo?.pageCover}&w=1600")`
 
   const date = formatDate(
     post?.date?.start_date || post?.createdTime,
@@ -31,11 +32,11 @@ export default function HeaderArticle({ post, siteInfo }) {
 
         <div className='mt-24'>
           {/* 文章Title */}
-          <div className="font-bold text-xl shadow-text flex justify-center text-center text-white dark:text-white ">
+          <div className="font-bold text-4xl shadow-text-md flex justify-center text-center text-white dark:text-white ">
             {post.title}
           </div>
 
-          <section className="flex-wrap shadow-text flex text-sm justify-center mt-2 text-white dark:text-gray-400 font-light leading-8">
+          <section className="flex-wrap shadow-text-md flex text-sm justify-center mt-2 text-white dark:text-gray-400 font-light leading-8">
             <div className='dark:text-gray-200'>
               {post.category && <>
                 <Link href={`/category/${post.category}`} passHref legacyBehavior>
@@ -46,7 +47,7 @@ export default function HeaderArticle({ post, siteInfo }) {
                 </Link>
               </>}
             </div>
-            <div className='flex justify-center'>
+            <div className='flex justify-center dark:text-gray-200'>
               {post?.type !== 'Page' && (
                 <>
                   <Link
@@ -63,11 +64,22 @@ export default function HeaderArticle({ post, siteInfo }) {
                 {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
               </div>
             </div>
+            
             {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
               {locale.COMMON.VIEWS}
             </div>}
           </section>
+          
+            <div className='my-3'>
+                {post.tagItems && (
+                    <div className="flex justify-center flex-nowrap overflow-x-auto">
+                        {post.tagItems.map(tag => (
+                            <TagItemMini key={tag.name} tag={tag} />
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
       </header>
     </div>
