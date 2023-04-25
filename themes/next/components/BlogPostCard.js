@@ -60,7 +60,7 @@ const BlogPostCard = ({ post, showSummary }) => {
             <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
               <div>
                 {' '}
-                {post.tagItems.map(tag => (
+                {post.tagItems?.map(tag => (
                   <TagItemMini key={tag.name} tag={tag} />
                 ))}
               </div>
