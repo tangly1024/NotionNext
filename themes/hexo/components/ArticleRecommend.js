@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CONFIG_HEXO from '../config_hexo'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
+import TagItemMini from './TagItemMini'
 
 /**
  * 关联推荐文章
@@ -20,7 +21,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   }
 
   return (
-    <div className="p-2">
+    <div className="pt-8">
       <div className=" mb-2 px-1 flex flex-nowrap justify-between">
         <div className='dark:text-gray-300'>
           <i className="mr-2 fas fa-thumbs-up" />
@@ -46,12 +47,16 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                 style={{ backgroundImage: headerImage }}
               >
                 <div className="flex items-center justify-center bg-black bg-opacity-60 hover:bg-opacity-10 w-full h-full duration-300 ">
-                  <div className=" text-sm  text-white text-center shadow-text">
-                    <div>
-                      <i className="fas fa-calendar-alt mr-1" />
-                      {post.date?.start_date}
+                  <div className=" text-md text-white text-center shadow-text">
+                    <div className="px-4 font-normal hover:underline">{post.title}</div>
+                    <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
+                        <div>
+                            {' '}
+                            {post.tagItems.map(tag => (
+                                <div className='font-light'>{selected && <i className='mr-1 fa-tag'/>} {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
+                            ))}
+                        </div>
                     </div>
-                    <div className="hover:underline">{post.title}</div>
                   </div>
                 </div>
               </div>

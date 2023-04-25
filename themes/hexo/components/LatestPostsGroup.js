@@ -37,9 +37,9 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                     title={post.title}
                     href={`${BLOG.SUB_PATH}/${post.slug}`}
                     passHref
-                    className={'my-2 flex'}>
+                    className={'my-3 flex'}>
 
-                    <div className="w-20 h-16 overflow-hidden relative">
+                    <div className="w-20 h-14 overflow-hidden relative">
                           {/* <Image
                             src={headerImage}
                             fill
@@ -49,7 +49,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                             quality={10}
                             alt={post.title} /> */}
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={headerImage} className='object-cover w-full h-full'/>
+                            <img src={`${headerImage}&w=120`} className='object-cover w-full h-full'/>
                     </div>
                     <div
                         className={
