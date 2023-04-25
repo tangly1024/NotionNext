@@ -33,7 +33,7 @@ const FacebookPage = dynamic(
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, floatSlot, meta, siteInfo, showTag } = props
+  const { children, headerSlot, floatSlot, meta, siteInfo } = props
   const [showFloatButton, switchShow] = useState(false)
   // const [percent, changePercent] = useState(0) // 页面阅读百分比
   const rightAreaSlot = (

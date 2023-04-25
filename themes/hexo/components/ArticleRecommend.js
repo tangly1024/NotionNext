@@ -47,16 +47,12 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                 style={{ backgroundImage: headerImage }}
               >
                 <div className="flex items-center justify-center bg-black bg-opacity-60 hover:bg-opacity-10 w-full h-full duration-300 ">
-                  <div className=" text-md text-white text-center shadow-text">
-                    <div className="px-4 font-normal hover:underline">{post.title}</div>
-                    <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
-                        <div>
-                            {' '}
-                            {post.tagItems.map(tag => (
-                                <div className='font-light'>{selected && <i className='mr-1 fa-tag'/>} {tag.name + (tag.count ? `(${tag.count})` : '')} </div>
-                            ))}
-                        </div>
+                  <div className=" text-sm  text-white text-center shadow-text">
+                    <div>
+                      <i className="fas fa-calendar-alt mr-1" />
+                      {post.date?.start_date}
                     </div>
+                    <div className="">{post.title}</div>
                   </div>
                 </div>
               </div>
