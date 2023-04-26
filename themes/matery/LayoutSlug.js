@@ -10,6 +10,7 @@ import { ArticleInfo } from './components/ArticleInfo'
 import Catalog from './components/Catalog'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import throttle from 'lodash.throttle'
+import ShareBar from '@/components/ShareBar'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
@@ -87,7 +88,8 @@ export const LayoutSlug = props => {
                             </article>
 
                             <hr className='border-dashed' />
-
+                            {/* 分享 */}
+                            <ShareBar post={post} />
                             {/* 评论互动 */}
                             <div className="overflow-x-auto dark:bg-hexo-black-gray px-3">
                                 <Comment frontMatter={post} />

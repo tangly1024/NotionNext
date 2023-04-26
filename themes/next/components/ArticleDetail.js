@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import BlogAround from './BlogAround'
 import Comment from '@/components/Comment'
 import RecommendPosts from './RecommendPosts'
-import ShareBar from './ShareBar'
+import ShareBar from '@/components/ShareBar'
 import TagItem from './TagItem'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
@@ -100,6 +100,9 @@ export default function ArticleDetail(props) {
                     {/* 推荐文章 */}
                     {post.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}
 
+                    {/* 分享 */}
+                    <ShareBar post={post} />
+
                     <section className="flex justify-between">
                         {/* 分类 */}
                         {post.category && <>
@@ -124,7 +127,6 @@ export default function ArticleDetail(props) {
                                         ))}
                                     </div>
                                 )}
-                                <ShareBar post={post} />
                             </>
                         )}
                     </section>

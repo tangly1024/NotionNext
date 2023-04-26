@@ -4,6 +4,7 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleInfo } from './components/ArticleInfo'
 import Comment from '@/components/Comment'
 import ArticleAround from './components/ArticleAround'
+import ShareBar from '@/components/ShareBar'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword, prev, next } = props
@@ -23,6 +24,8 @@ export const LayoutSlug = props => {
                         <ArticleInfo post={post} />
                         <NotionPage post={post} />
                         {post.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+                        {/* 分享 */}
+                        <ShareBar post={post} />
                         <Comment frontMatter={post}/>
                     </>}
                 </div>}

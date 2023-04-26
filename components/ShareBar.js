@@ -5,15 +5,16 @@ import { createPopper } from '@popperjs/core'
 import copy from 'copy-to-clipboard'
 import QRCode from 'qrcode.react'
 import { useGlobal } from '@/lib/global'
-import CONFIG_NEXT from '../config_next'
 
 const ShareBar = ({ post }) => {
   const router = useRouter()
   const [qrCodeShow, setQrCodeShow] = React.useState(false)
   const { locale } = useGlobal()
-  if (!CONFIG_NEXT.ARTICLE_SHARE) {
+
+  if (!JSON.parse(BLOG.POST_SHARE_BAR_ENABLE) || !post || post?.type !== 'Post') {
     return <></>
   }
+
   const shareUrl = BLOG.LINK + router.asPath
 
   // 二维码悬浮
@@ -35,26 +36,25 @@ const ShareBar = ({ post }) => {
     alert(locale.COMMON.URL_COPIED)
   }
 
-  return <>
-    <div
+  return <div id='share-bar'
       className='py-2 text-gray-500 text-center space-x-2 flex my-1 dark:text-gray-200 overflow-visible'>
       <div className='hidden md:block text-gray-800 dark:text-gray-300 mr-2 my-2 whitespace-nowrap'>{locale.COMMON.SHARE}:</div>
-      <div className='text-3xl cursor-pointer'>
+      <div className='text-3xl cursor-pointer w-6'>
         <a className='text-blue-700' href={`https://www.facebook.com/sharer.php?u=${shareUrl}`} >
           <i className='fab fa-facebook-square'/>
         </a>
       </div>
-      <div className='text-3xl cursor-pointer'>
+      <div className='text-3xl cursor-pointer w-6'>
         <a className='text-blue-400' target='_blank' rel='noreferrer' href={`https://twitter.com/intent/tweet?title=${post.title}&url${shareUrl}`} >
           <i className='fab fa-twitter-square'/>
         </a>
       </div>
-      <div className='text-3xl cursor-pointer'>
+      <div className='text-3xl cursor-pointer w-6'>
         <a className='text-blue-500' href={`https://telegram.me/share/url?url=${shareUrl}&text=${post.title}`} >
         <i className='fab fa-telegram'/>
         </a>
       </div>
-      <div className='cursor-pointer text-2xl'>
+      <div className='cursor-pointer text-2xl w-6'>
         <a className='text-green-600' ref={btnRef} onMouseEnter={openPopover} onMouseLeave={closePopover}>
           <i className='fab fa-weixin'/>
           <div ref={popoverRef} className={(qrCodeShow ? 'opacity-100 ' : 'invisible opacity-0') + ' transition-all duration-200 text-center py-2'}>
@@ -67,22 +67,21 @@ const ShareBar = ({ post }) => {
           </div>
         </a>
       </div>
-      <div className='cursor-pointer text-2xl'>
+      <div className='cursor-pointer text-2xl w-6'>
         <a className='text-red-600' target='_blank' rel='noreferrer' href={`https://service.weibo.com/share/share.php?url=${shareUrl}&title=${post.title}`} >
           <i className='fab fa-weibo'/>
         </a>
       </div>
-      <div className='cursor-pointer text-2xl'>
+      <div className='cursor-pointer text-2xl w-6'>
         <a className='text-blue-400' target='_blank' rel='noreferrer' href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${post.title}&desc=${post.summary}`} >
           <i className='fab fa-qq'/>
         </a>
       </div>
-      <div className='cursor-pointer text-2xl'>
+      <div className='cursor-pointer text-2xl w-6'>
         <a className='text-yellow-600' onClick={copyUrl} >
           <i className='fas fa-link'/>
         </a>
       </div>
     </div>
-  </>
 }
 export default ShareBar

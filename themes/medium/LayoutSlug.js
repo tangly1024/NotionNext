@@ -13,6 +13,7 @@ import ArticleAround from './components/ArticleAround'
 import TocDrawer from './components/TocDrawer'
 import CategoryItem from './components/CategoryItem'
 import TagItemMini from './components/TagItemMini'
+import ShareBar from '@/components/ShareBar'
 
 export const LayoutSlug = props => {
   const { post, prev, next, siteInfo, lock, validPassword } = props
@@ -92,6 +93,8 @@ export const LayoutSlug = props => {
                         </div>
                     </div>
                     {post.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+                     {/* 分享 */}
+                     <ShareBar post={post} />
                     <Comment frontMatter={post} />
                 </section>
 
