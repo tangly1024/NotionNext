@@ -40,7 +40,10 @@
 - [个性配置手册 - 如何配置功能插件](https://tangly1024.com/article/notion-next-guide) 
 
 - [二次开发指引 - 如何进行本地开发](https://tangly1024.com/article/how-to-develop-with-notion-next)
- 
+
+- [更新操作指南 - 获取最新升级补丁](https://tangly1024.com/article/how-to-update-notionnext)
+
+- [历史版本汇总 - 查询版本功能特性](https://tangly1024.com/article/notion-next-changelogs)
 
 ## 致谢
 感谢Craig Hart发起的Nobelium项目

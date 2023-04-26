@@ -35,12 +35,15 @@ Live Demo：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) �
 
 It only takes a few minutes to set up your personal site:
 
-- [快速部署教程 - 多种方案可供选择](https://tangly1024.com/article/notion-next) 
+- [Quick Deployment Tutorial - Multiple Options Available](https://tangly1024.com/article/notion-next) 
 
-- [个性配置手册 - 如何配置功能插件](https://tangly1024.com/article/notion-next-guide) 
+- [Customization Guide - How to Configure Feature Plugins](https://tangly1024.com/article/notion-next-guide) 
 
-- [二次开发指引 - 如何进行本地开发](https://tangly1024.com/article/how-to-develop-with-notion-next)
+- [Development Guide - How to Conduct Local Development](https://tangly1024.com/article/how-to-develop-with-notion-next)
  
+- [Update Guide - How to Get the Latest Upgrade Patch](https://tangly1024.com/article/how-to-update-notionnext)
+
+- [Version History - Check Feature Highlights for Each Version](https://tangly1024.com/article/notion-next-changelogs)
 
 ## Acknowledgements
 
