@@ -160,6 +160,11 @@
   <td align="center">
     <a href="https://github.com/hongzzz" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/25585061" width="64px;"  alt="Hongzzz"/><br/><sub><b>Hongzzz</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=hongzzz" title="hongzzz" >🔧 🐛</a>
   </td>
+
+  <td align="center">
+    <a href="https://github.com/RedhairHambagu" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/129669334" width="64px;"  alt="RedhairHambagu"/><br/><sub><b>RedhairHambagu</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=RedhairHambagu" title="RedhairHambagu" >🔧 🐛</a>
+  </td>
+
 </tr>
 </table>
 
