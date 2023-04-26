@@ -16,7 +16,7 @@
 </p>
 
 
-[中文README](./README.md) | README in English
+[中文文档](./README.md) | README in English
 
 <hr/>
 
