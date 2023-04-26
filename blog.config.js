@@ -109,6 +109,12 @@ const BLOG = {
   POSTS_PER_PAGE: 12, // post counts per page
   POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
+  // 公众号引流
+  POST_OPENWRITE_ENABLE: true, //  https://openwrite.cn/guide/readmore/readmore.html#%E4%BA%8C%E3%80%81%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8
+  POST_OPENWRITE_NAME: '', // 公众号名
+  POST_OPENWRITE_QRCODE: '', // 公众号二维码
+  POST_OPENWRITE_KEYWORD: '', // 回复关键词
+
   PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
 

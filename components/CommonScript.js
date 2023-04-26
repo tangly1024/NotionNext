@@ -35,6 +35,8 @@ const CommonScript = () => {
 
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
 
+    {BLOG.POST_OPENWRITE_ENABLE && <script defer src='https://readmore.openwrite.cn/js/readmore.js' />}
+
     {BLOG.COMMENT_TIDIO_ID && <script async src={`//code.tidio.co/${BLOG.COMMENT_TIDIO_ID}.js`} />}
 
     {/* gitter聊天室 */}
