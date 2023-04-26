@@ -13,6 +13,7 @@ import ArticleAround from './components/ArticleAround'
 import TocDrawer from './components/TocDrawer'
 import CategoryItem from './components/CategoryItem'
 import TagItemMini from './components/TagItemMini'
+import ShareBar from '@/components/ShareBar'
 
 export const LayoutSlug = props => {
   const { post, prev, next, siteInfo, lock, validPassword } = props
@@ -85,12 +86,17 @@ export const LayoutSlug = props => {
                 </section>
 
                 <section>
+
+                    {/* 分享 */}
+                    <ShareBar post={post} />
+                    {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
                         {CONFIG_MEDIUM.POST_DETAIL_CATEGORY && post.category && <CategoryItem category={post.category} />}
                         <div>
                             {CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
+
                     {post.type === 'Post' && <ArticleAround prev={prev} next={next} />}
                     <Comment frontMatter={post} />
                 </section>
