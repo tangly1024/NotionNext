@@ -23,9 +23,9 @@ export const LayoutSlug = props => {
                     {post && <>
                         <ArticleInfo post={post} />
                         <NotionPage post={post} />
-                        {post.type === 'Post' && <ArticleAround prev={prev} next={next} />}
                         {/* 分享 */}
                         <ShareBar post={post} />
+                        {post.type === 'Post' && <ArticleAround prev={prev} next={next} />}
                         <Comment frontMatter={post}/>
                     </>}
                 </div>}

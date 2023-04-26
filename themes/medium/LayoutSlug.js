@@ -86,15 +86,18 @@ export const LayoutSlug = props => {
                 </section>
 
                 <section>
+
+                    {/* 分享 */}
+                    <ShareBar post={post} />
+                    {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
                         {CONFIG_MEDIUM.POST_DETAIL_CATEGORY && post.category && <CategoryItem category={post.category} />}
                         <div>
                             {CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
+
                     {post.type === 'Post' && <ArticleAround prev={prev} next={next} />}
-                     {/* 分享 */}
-                     <ShareBar post={post} />
                     <Comment frontMatter={post} />
                 </section>
 

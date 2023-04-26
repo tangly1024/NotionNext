@@ -94,14 +94,15 @@ export default function ArticleDetail(props) {
                 </section>
 
                 {showArticleInfo && <>
+
+                    {/* 分享 */}
+                    <ShareBar post={post} />
+
                     {/* 版权声明 */}
                     {post.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} />}
 
                     {/* 推荐文章 */}
                     {post.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}
-
-                    {/* 分享 */}
-                    <ShareBar post={post} />
 
                     <section className="flex justify-between">
                         {/* 分类 */}

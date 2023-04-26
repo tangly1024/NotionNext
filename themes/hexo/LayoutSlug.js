@@ -69,6 +69,8 @@ export const LayoutSlug = props => {
                 data-ad-slot="3806269138" />
             </section>
 
+            {/* 分享 */}
+            <ShareBar post={post} />
             {post.type === 'Post' && <ArticleCopyright {...props} /> }
             {post.type === 'Post' && <ArticleRecommend {...props} /> }
             {post.type === 'Post' && <ArticleAdjacent {...props} /> }
@@ -76,9 +78,6 @@ export const LayoutSlug = props => {
           </article>
 
           <hr className='border-dashed' />
-
-          {/* 分享 */}
-          <ShareBar post={post} />
 
           {/* 评论互动 */}
           <div className="duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3">

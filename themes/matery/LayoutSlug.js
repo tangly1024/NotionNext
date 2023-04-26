@@ -81,15 +81,15 @@ export const LayoutSlug = props => {
                                         data-ad-client="ca-pub-2708419466378217"
                                         data-ad-slot="3806269138" />
                                 </section>
-
+                                {/* 分享 */}
+                                <ShareBar post={post} />
                                 {/* 文章版权说明 */}
                                 {post.type === 'Post' && <ArticleCopyright {...props} />}
 
                             </article>
 
                             <hr className='border-dashed' />
-                            {/* 分享 */}
-                            <ShareBar post={post} />
+
                             {/* 评论互动 */}
                             <div className="overflow-x-auto dark:bg-hexo-black-gray px-3">
                                 <Comment frontMatter={post} />
