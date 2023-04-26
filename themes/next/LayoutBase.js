@@ -3,6 +3,7 @@ import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Footer from './components/Footer'
 import JumpToBottomButton from './components/JumpToBottomButton'
 import JumpToTopButton from './components/JumpToTopButton'
+import RewardaButton from './components/RewardaButton'
 import LoadingCover from './components/LoadingCover'
 import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
@@ -81,6 +82,7 @@ const LayoutBase = (props) => {
         <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
           <JumpToTopButton percent={percent}/>
           <JumpToBottomButton />
+          <RewardaButton/>
           <FloatDarkModeButton/>
           {floatSlot}
         </div>
