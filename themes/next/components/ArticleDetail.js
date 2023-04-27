@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import BlogAround from './BlogAround'
 import Comment from '@/components/Comment'
 import RecommendPosts from './RecommendPosts'
-import ShareBar from './ShareBar'
+import ShareBar from '@/components/ShareBar'
 import TagItem from './TagItem'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
@@ -94,6 +94,10 @@ export default function ArticleDetail(props) {
                 </section>
 
                 {showArticleInfo && <>
+
+                    {/* 分享 */}
+                    <ShareBar post={post} />
+
                     {/* 版权声明 */}
                     {post.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} />}
 
@@ -124,7 +128,6 @@ export default function ArticleDetail(props) {
                                         ))}
                                     </div>
                                 )}
-                                <ShareBar post={post} />
                             </>
                         )}
                     </section>
