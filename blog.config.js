@@ -162,7 +162,8 @@ const BLOG = {
       url: 'http://music.163.com/song/media/outer/url?id=37722564.mp3',
       cover:
         'https://p2.music.126.net/QSBagdifLsR2otikVKA4uQ==/3405187514417851.jpg'
-      
+    },
+    {
       name: '借',
       artist: '毛不易',
       url: 'http://music.163.com/song/media/outer/url?id=569214250.mp3',
