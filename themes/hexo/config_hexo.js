@@ -12,7 +12,7 @@ const CONFIG_HEXO = {
   MENU_ARCHIVE: true, // 显示归档
   MENU_SEARCH: true, // 显示搜索
 
-  POST_LIST_COVER: true, // 列表显示文章封面
+  POST_LIST_COVER: false, // 列表显示文章封面
   POST_LIST_COVER_HOVER_ENLARGE: false, // 列表鼠标悬停放大
 
   POST_LIST_COVER_DEFAULT: true, // 封面为空时用站点背景做默认封面
@@ -24,7 +24,7 @@ const CONFIG_HEXO = {
   ARTICLE_COPYRIGHT: true, // 显示文章版权声明
   ARTICLE_RECOMMEND: false, // 文章关联推荐
 
-  WIDGET_LATEST_POSTS: true, // 显示最新文章卡
+  WIDGET_LATEST_POSTS: false, // 显示最新文章卡
   WIDGET_ANALYTICS: false, // 显示统计卡
   WIDGET_TO_TOP: true,
   WIDGET_TO_COMMENT: true, // 跳到评论区
