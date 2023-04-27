@@ -60,9 +60,9 @@ footer {
 }
 footer:before {
     background-color: rgba(0, 0, 0, 0);
-    /* 黑夜模式适配 */
-.dark footer {
-  background:   #191919ee;
+}
+.dark footer{
+  background: none;
 }
 
 
