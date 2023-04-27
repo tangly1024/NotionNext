@@ -63,7 +63,7 @@ footer:before {
 }
 /* 黑夜模式适配 */
 .dark footer {
-  background:  #191919ee;
+  background:  none;
 
 /* 首页黑夜霓虹灯 */
 .text-4xl,
