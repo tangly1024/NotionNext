@@ -62,8 +62,8 @@ footer:before {
     background-color: rgba(0, 0, 0, 0);
 }
 /* 黑夜模式适配 */
-.dark footer {
-  background:  none;
+/*.dark footer {
+  background:  none;*/
 
 /* 首页黑夜霓虹灯 */
 .text-4xl,
