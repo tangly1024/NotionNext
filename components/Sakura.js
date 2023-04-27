@@ -20,7 +20,7 @@ export const Sakura = () => {
  * 创建樱花雨
  * @param config
  */
-function createSakura() {
+function light() {
   var stop, staticx
   var img = new Image()
   img.src =
