@@ -13,7 +13,7 @@ const CONFIG_HEXO = {
   MENU_SEARCH: true, // 显示搜索
 
   POST_LIST_COVER: true, // 列表显示文章封面
-  POST_LIST_COVER_HOVER_ENLARGE: false, // 列表鼠标悬停放大
+  POST_LIST_COVER_HOVER_ENLARGE: true, // 列表鼠标悬停放大
 
   POST_LIST_COVER_DEFAULT: true, // 封面为空时用站点背景做默认封面
   POST_LIST_SUMMARY: true, // 文章摘要
