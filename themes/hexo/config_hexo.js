@@ -2,7 +2,7 @@ const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: false,
   HOME_BANNER_GREETINGS: ['Hi，我是Matrix Core', '欢迎来到我的星球🚀'], // 首页大图标语文字
 
-  HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
+  HOME_NAV_BUTTONS: false, // 首页是否显示分类大图标按钮
   HOME_NAV_BACKGROUND_IMG_FIXED: true, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
 
   // 菜单配置
