@@ -170,6 +170,181 @@ const BLOG = {
       cover:
         'http://p1.music.126.net/vmCcDvD1H04e9gm97xsCqg==/109951163350929740.jpg?param=130y130'
     },
+    {
+      name: '棠梨煎雪',
+      artist: '银临',
+      url: 'http://music.163.com/song/media/outer/url?id=28188427.mp3',
+      cover:
+        'http://p1.music.126.net/LBnYDAUED2mD1veBvBnC8g==/5859297464524710.jpg?param=130y130'
+    },
+    {
+      name: '腐草为萤',
+      artist: '银临',
+      url: 'http://music.163.com/song/media/outer/url?id=28188426.mp3',
+      cover:
+        'http://p2.music.126.net/LBnYDAUED2mD1veBvBnC8g==/5859297464524710.jpg?param=130y130'
+    },
+    {
+      name: '锦鲤抄',
+      artist: '银临',
+      url: 'http://music.163.com/song/media/outer/url?id=28188434.mp3',
+      cover:
+        'http://p2.music.126.net/LBnYDAUED2mD1veBvBnC8g==/5859297464524710.jpg?param=130y130'
+    },
+     {
+      name: '落梅笺',
+      artist: '银临',
+      url: 'http://music.163.com/song/media/outer/url?id=28188433.mp3',
+      cover:
+        'http://p2.music.126.net/LBnYDAUED2mD1veBvBnC8g==/5859297464524710.jpg?param=130y130'
+    },
+    {
+      name: '杏花弦外雨',
+      artist: 'CRITTY/司夏/潇梦临/若紫鸢',
+      url: 'http://music.163.com/song/media/outer/url?id=483005942.mp3',
+      cover:
+        'http://p2.music.126.net/CWl_esXutkHVL0Uy_KT5tQ==/109951162943224422.jpg?param=130y130'
+    },
+     {
+      name: '我的一个道姑朋友',
+      artist: '双笙',
+      url: 'http://music.163.com/song/media/outer/url?id=1367452194.mp3',
+      cover:
+        'http://p2.music.126.net/_SPItojIVnmpsNsgz8LlMw==/109951164096961308.jpg?param=130y130'
+    },
+    {
+      name: '乌苏里船歌',
+      artist: '郭颂',
+      url: 'http://music.163.com/song/media/outer/url?id=5279402.mp3',
+      cover:
+        'http://p1.music.126.net/4Umg_LL58wPXlrCjNXE3OA==/109951167981094031.jpg?param=130y130'
+    },
+    {
+      name: '瑶山夜歌',
+      artist: '北京国际儿童合唱团/瑞鸣音乐',
+      url: 'http://music.163.com/song/media/outer/url?id=5248327.mp3',
+      cover:
+        'http://p1.music.126.net/s-PNw0zO4_gBD0Tz6AfQtA==/18586144557135655.jpg?param=130y130'
+    },
+    {
+      name: '过雪山草地',
+      artist: '廖昌永',
+      url: 'http://music.163.com/song/media/outer/url?id=117916.mp3',
+      cover:
+        'http://p1.music.126.net/kb2TGJZeuIG7FLN0WTcT9A==/65970697678827.jpg?param=130y130'
+    },
+     {
+      name: '莫斯科郊外的晚上',
+      artist: '中央乐团合唱队',
+      url: 'http://music.163.com/song/media/outer/url?id=5280398.mp3',
+      cover:
+        'http://p1.music.126.net/0MP53oO0EJhzfKxBiy9mew==/131941395349913.jpg?param=130y130'
+    },
+     {
+      name: '弹起我心爱的土琵琶',
+      artist: '刘歌群/上海合唱团',
+      url: 'http://music.163.com/song/media/outer/url?id=5262952.mp3',
+      cover:
+        'http://p2.music.126.net/NS1dtePZp2BqQxHIspPq7g==/105553116283734.jpg?param=130y130'
+    },
+     {
+      name: '《夜色钢琴曲》假如爱有天意·赵海洋',
+      artist: '赵海洋',
+      url: 'http://music.163.com/song/media/outer/url?id=468403470.mp3',
+      cover:
+        'http://p2.music.126.net/-qjRsESn7bSKQKMM2XlgCw==/109951167062369748.jpg?param=130y130'
+    },
+    {
+      name: '岳阳楼记',
+      artist: '奇然/沈谧仁',
+      url: 'http://music.163.com/song/media/outer/url?id=2034532166.mp3',
+      cover:
+        'http://p2.music.126.net/-g97hZQXNrCAGPdIRaygkQ==/109951168505114488.jpg?param=130y130'
+    },
+    {
+      name: '唱支山歌给党听',
+      artist: '群星',
+      url: 'http://music.163.com/song/media/outer/url?id=5234193.mp3',
+      cover:
+        'http://p1.music.126.net/L66wSX7kJaMLJ0oNT3L9MQ==/38482906984304.jpg?param=130y130'
+    },
+     {
+      name: '东方红',
+      artist: '群星',
+      url: 'http://music.163.com/song/media/outer/url?id=1307601266.mp3',
+      cover:
+        'http://p1.music.126.net/0dz3mZMjkch3QAF4TnM1Ww==/109951168406811238.jpg?param=130y130'
+    },
+    {
+      name: '牧马城市',
+      artist: '小石头和孩子们',
+      url: 'http://music.163.com/song/media/outer/url?id=1999346255.mp3',
+      cover:
+        'http://p1.music.126.net/bTiKNkw2tuBotlptZ56HTA==/109951167910051217.jpg?param=130y130'
+    },
+    {
+      name: '千千阙歌',
+      artist: '陈慧娴',
+      url: 'http://music.163.com/song/media/outer/url?id=212233.mp3',
+      cover:
+        'http://p2.music.126.net/tzmGFZ0-DPOulXS97H5rmA==/18712588395102549.jpg?param=130y130'
+    },
+     {
+      name: '笑看風雲',
+      artist: '群星',
+      url: 'http://music.163.com/song/media/outer/url?id=1477530893.mp3',
+      cover:
+        'http://p2.music.126.net/PzAsHnOhUq8CtT_5orT5Hg==/109951165303047734.jpg?param=130y130'
+    },
+    {
+      name: '铁血丹心',
+      artist: '罗文/甄妮',
+      url: 'http://music.163.com/song/media/outer/url?id=439100721.mp3',
+      cover:
+        'http://p2.music.126.net/BE2zFO789Mg5f2VKEA-8MA==/18812643952485629.jpg?param=130y130'
+    },
+    {
+      name: '沧海一声笑',
+      artist: '许冠杰',
+      url: 'http://music.163.com/song/media/outer/url?id=170749.mp3',
+      cover:
+        'http://p1.music.126.net/myqxbSG7NOZOUGMjgpYzZg==/109951164241266763.jpg?param=130y130'
+    },
+     {
+      name: '神话·情话',
+      artist: '周华健/齐豫',
+      url: 'http://music.163.com/song/media/outer/url?id=186596.mp3',
+      cover:
+        'http://p1.music.126.net/07oExbcDVpGTbU-U0m4diQ==/109951163219237717.jpg?param=130y130'
+    },
+    {
+      name: '刀剑如梦',
+      artist: '周华健',
+      url: 'http://music.163.com/song/media/outer/url?id=27591634.mp3',
+      cover:
+        'http://p1.music.126.net/DwXLqEV1amLHJK9DRp8G5g==/109951165825718569.jpg?param=130y130'
+    },
+    {
+      name: '霸王别姬',
+      artist: '屠洪刚',
+      url: 'http://music.163.com/song/media/outer/url?id=1298390900.mp3',
+      cover:
+        'http://p2.music.126.net/9hBRnP9Myh0t8ZPwwq_d4Q==/109951168030532943.jpg?param=130y130'
+    },
+    {
+      name: '精忠报国(Live)',
+      artist: '屠洪刚',
+      url: 'http://music.163.com/song/media/outer/url?id=1457756795.mp3',
+      cover:
+        'http://p1.music.126.net/uITVeg8uSBHrDNpW9LGpQQ==/109951165085449172.jpg?param=130y130'
+    },
+    {
+      name: '英雄赞歌',
+      artist: '群星',
+      url: 'http://music.163.com/song/media/outer/url?id=5234263.mp3',
+      cover:
+        'http://p1.music.126.net/L66wSX7kJaMLJ0oNT3L9MQ==/38482906984304.jpg?param=130y130'
+    },
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
