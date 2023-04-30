@@ -87,6 +87,7 @@ const NavBar = props => {
     { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_NOBELIUM.MENU_ARCHIVE },
     { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NOBELIUM.MENU_CATEGORY },
     { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NOBELIUM.MENU_TAG },
+    { icon: 'fas fa-link', name: "友链", to: BLOG.path || '/links', show: true },
     { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_NOBELIUM.MENU_SEARCH }
   ]
   if (customNav) {
