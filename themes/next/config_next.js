@@ -1,6 +1,6 @@
 const CONFIG_NEXT = {
 
-  HOME_BANNER: true, // 首页是否显示大图及标语 [true,false]
+  HOME_BANNER: false, // 首页是否显示大图及标语 [true,false]
   HOME_BANNER_Strings: ['Hi，我是Matrix Core,欢迎来到我的星球🚀', '期待留下你的建议，将会持续改进😊'], // 首页大图标语文字
 
   NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
