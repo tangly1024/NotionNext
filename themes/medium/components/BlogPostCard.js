@@ -25,7 +25,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                     href={`${BLOG.SUB_PATH}/${post.slug}`}
                     passHref
                     className={
-                        'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
+                        'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-rose-400 dark:hover:text-rose-400'
                     }>
                     <div>
                         {CONFIG_MEDIUM.POST_LIST_COVER && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
