@@ -29,6 +29,7 @@ export const MenuList = ({ customNav, customMenu }) => {
   })
 
   let links = [
+    { icon: 'fas fa-home', name: locale.NAV.SEARCH, to: '/', show: CONFIG_SIMPLE.MENU_HOME },
     { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_SIMPLE.MENU_SEARCH },
     { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_SIMPLE.MENU_ARCHIVE },
     { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_SIMPLE.MENU_CATEGORY },
