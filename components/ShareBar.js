@@ -12,7 +12,8 @@ const ShareBar = ({ post }) => {
 
   const shareUrl = BLOG.LINK + router.asPath
 
-  return <div className='py-1 flex overflow-x-auto justify-end'>
+  return <div className='m-1 overflow-x-auto'>
+        <div className='flex w-full md:justify-end'>
         <ShareButtons shareUrl={shareUrl} title={post.title} image={post.pageCover} body={
             post.title +
             ' | ' +
@@ -22,6 +23,7 @@ const ShareBar = ({ post }) => {
             ' ' +
             post.summary
         } />
+        </div>
     </div>
 }
 export default ShareBar
