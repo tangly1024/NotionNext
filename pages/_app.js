@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 
 import 'animate.css'
 import '@/styles/globals.css'
+import '@/styles/nprogress.css'
 
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'

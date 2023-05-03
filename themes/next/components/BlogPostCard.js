@@ -60,7 +60,7 @@ const BlogPostCard = ({ post, showSummary }) => {
             <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
               <div>
                 {' '}
-                {post.tagItems.map(tag => (
+                {post.tagItems?.map(tag => (
                   <TagItemMini key={tag.name} tag={tag} />
                 ))}
               </div>
@@ -75,7 +75,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           {/* 搜索结果 */}
           {post.results && (
-            <p className="mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+            <p className="p-4-lines mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
               {post.results.map(r => (
                 <span key={r}>{r}</span>
               ))}
