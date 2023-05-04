@@ -16,11 +16,14 @@ const JumpToTopButton = ({ showPercent = true, percent }) => {
   if (!CONFIG_MATERY.WIDGET_TO_TOP) {
     return <></>
   }
-  return (<div className=' drop-shadow-md space-x-1 items-center justify-center transform hover:scale-105 duration-200 px-3 py-2 text-center text-white bg-indigo-700 dark:bg-hexo-black-gray rounded-full'
-         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
-        <div title={locale.POST.TOP} ><i className='fas fa-arrow-up text-2xl rounded-full' /></div>
-        {showPercent && (<div className='text-md hidden lg:block'>{percent}</div>)}
-    </div>)
+
+  return <div data-aos="fade-left"
+        data-aos-duration="300"
+        data-aos-anchor-placement="top-center"
+        className={'justify-center items-center text-center'} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
+        <i id="darkModeButton" title={locale.POST.TOP} className={`fas fa-arrow-up transform hover:scale-105 duration-200 text-white
+        bg-indigo-700 w-10 h-10 rounded-full dark:bg-black cursor-pointer py-2.5`} />
+    </div>
 }
 
 export default JumpToTopButton
