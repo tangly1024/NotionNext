@@ -273,14 +273,14 @@ const BLOG = {
       artist: '四季音色',
       url: 'http://music.163.com/song/media/outer/url?id=410715788.mp3',
       cover:
-        'http://p2.music.126.net/_Q1FXjhmTGxCt43IFZEmAQ==/17911044416668448.jpg?param=130y130‘
+        'http://p1.music.126.net/_Q1FXjhmTGxCt43IFZEmAQ==/17911044416668448.jpg?param=130y130'
     },
       {
       name: '海风',
       artist: '四季音色',
       url: 'http://music.163.com/song/media/outer/url?id=415807032.mp3',
       cover:
-        'http://p1.music.126.net/vVChT7FznNS8wzc2ekTV_A==/109951162821588597.jpg?param=130y130‘
+        'http://p1.music.126.net/vVChT7FznNS8wzc2ekTV_A==/109951162821588597.jpg?param=130y130'
     },
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
