@@ -254,12 +254,33 @@ const BLOG = {
       cover:
         'http://p2.music.126.net/2VW7YM7You-iOyl4_smA0Q==/109951165875618375.jpg?param=130y130'
     },
-    {
-      name: 'Last Reunion',
-      artist: 'Peter Roe',
-      url: 'http://music.163.com/song/media/outer/url?id=1304860054.mp3',
+     {
+      name: '花落幕夕',
+      artist: '四季音色',
+      url: 'http://music.163.com/song/media/outer/url?id=12028059.mp3',
       cover:
-        'http://p2.music.126.net/dpXiPBgvDjTL0-4iiD4-QQ==/109951163511419229.jpg?param=130y130'
+        'http://p2.music.126.net/aOuUQubgWdFDHG8sQg_GEA==/18001204370066089.jpg?param=130y130'
+    },
+    {
+      name: '花开朝露',
+      artist: '四季音色',
+      url: 'http://music.163.com/song/media/outer/url?id=412493365.mp3',
+      cover:
+        'http://p2.music.126.net/aOuUQubgWdFDHG8sQg_GEA==/18001204370066089.jpg?param=130y130'
+    },
+      {
+      name: '轻风',
+      artist: '四季音色',
+      url: 'http://music.163.com/song/media/outer/url?id=410715788.mp3',
+      cover:
+        'http://p2.music.126.net/_Q1FXjhmTGxCt43IFZEmAQ==/17911044416668448.jpg?param=130y130‘
+    },
+      {
+      name: '海风',
+      artist: '四季音色',
+      url: 'http://music.163.com/song/media/outer/url?id=415807032.mp3',
+      cover:
+        'http://p1.music.126.net/vVChT7FznNS8wzc2ekTV_A==/109951162821588597.jpg?param=130y130‘
     },
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
