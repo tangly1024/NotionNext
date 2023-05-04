@@ -219,6 +219,48 @@ const BLOG = {
       cover:
         'http://p2.music.126.net/-qjRsESn7bSKQKMM2XlgCw==/109951167062369748.jpg?param=130y130'
     },
+     {
+      name: 'Heartbeats',
+      artist: 'Amy Deasismont',
+      url: 'http://music.163.com/song/media/outer/url?id=2175282.mp3',
+      cover:
+        'http://p1.music.126.net/r4pXn-2i0SzS-WvzOsGDwQ==/109951165771560548.jpg?param=130y130'
+    },
+       {
+      name: 'What Are Words',
+      artist: 'Chris Medina',
+      url: 'http://music.163.com/song/media/outer/url?id=1210496.mp3',
+      cover:
+        'http://p2.music.126.net/9EiWsQpbjAmTajM2t8yBtg==/884007348775999.jpg?param=130y130'
+    },
+     {
+      name: 'Illusionary Daytime',
+      artist: 'Shirfine',
+      url: 'http://music.163.com/song/media/outer/url?id=28907016.mp3',
+      cover:
+        'http://p2.music.126.net/8xNVCemkSNQptEyNw1PHKg==/8914840278033758.jpg?param=130y130'
+    },
+     {
+      name: 'Wake (Studio)',
+      artist: 'Hillsong Young & Free',
+      url: 'http://music.163.com/song/media/outer/url?id=33051312.mp3',
+      cover:
+        'http://p1.music.126.net/ROu52DfZhbUtYQTt_X8vpg==/109951167557295220.jpg?param=130y130'
+    },
+     {
+      name: 'Eutopia',
+      artist: 'Yooh',
+      url: 'http://music.163.com/song/media/outer/url?id=29129889.mp3',
+      cover:
+        'http://p2.music.126.net/2VW7YM7You-iOyl4_smA0Q==/109951165875618375.jpg?param=130y130'
+    },
+    {
+      name: 'Last Reunion',
+      artist: 'Peter Roe',
+      url: 'http://music.163.com/song/media/outer/url?id=1304860054.mp3',
+      cover:
+        'http://p2.music.126.net/dpXiPBgvDjTL0-4iiD4-QQ==/109951163511419229.jpg?param=130y130'
+    },
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
