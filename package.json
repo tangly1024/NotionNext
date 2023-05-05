@@ -63,13 +63,6 @@
   "devDependencies": {
     "@waline/client": "^2.5.1",
     "autoprefixer": "^10.4.13",
-    "eslint": "^7.26.0",
-    "eslint-config-next": "^13.1.1",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.23.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.23.2",
     "next-sitemap": "^1.6.203",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4",
