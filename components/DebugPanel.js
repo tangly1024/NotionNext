@@ -58,7 +58,7 @@ export function DebugPanel() {
             <div>
                 <div
                     style={{ writingMode: 'vertical-lr' }}
-                    className={`bg-black text-xs text-white shadow-2xl p-1.5 rounded-l-xl cursor-pointer ${show ? 'right-96' : 'right-0'} fixed bottom-56 duration-200 z-50`}
+                    className={`bg-black text-xs text-white shadow-2xl p-1.5 rounded-l-xl cursor-pointer ${show ? 'right-96' : 'right-0'} fixed bottom-72 duration-200 z-50`}
                     onClick={toggleShow}
                 >
                     {show
