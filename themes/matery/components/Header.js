@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG_MATERY from '../config_matery'
 import throttle from 'lodash.throttle'
+import { useGlobal } from '@/lib/global'
 
 let wrapperTop = 0
 let windowTop = 0
@@ -17,6 +18,8 @@ const throttleMs = 200
 const Header = props => {
   const [typed, changeType] = useState()
   const { siteInfo } = props
+  const { locale } = useGlobal()
+
   useEffect(() => {
     scrollTrigger()
     updateHeaderHeight()
@@ -96,8 +99,8 @@ const Header = props => {
                     <span id='typed' />
                 </div>
                 <div onClick={() => { window.scrollTo({ top: wrapperTop, behavior: 'smooth' }) }}
-                    className="mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl">
-                    <i className='animate-bounce fas fa-angle-double-down' /> <span>开始阅读</span>
+                    className="mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40">
+                    <i className='animate-bounce fas fa-angle-double-down' /> <span>{locale.COMMON.START_READING}</span>
                 </div>
             </div>
 

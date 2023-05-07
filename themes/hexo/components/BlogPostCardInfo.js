@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import NotionPage from '@/components/NotionPage'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 /**
  * 博客列表的文字内容
@@ -26,17 +27,19 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
         {/* 日期 */}
         <div
             className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'
-                } flex-wrap dark:text-gray-500 text-gray-400 hover:text-indigo-700 dark:hover:text-indigo-400`}
+                } flex-wrap dark:text-gray-500 text-gray-400 `}
         >
             <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref
-                className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
+                className="font-light cursor-pointer text-sm leading-4 mr-3 hover:text-indigo-700 dark:hover:text-indigo-400">
 
                 <i className="far fa-calendar-alt mr-1" />
                 {post.date?.start_date || post.lastEditedTime}
 
             </Link>
+
+            <TwikooCommentCount className='text-sm hover:text-indigo-700 dark:hover:text-indigo-400' post={post}/>
         </div>
 
           {/* 摘要 */}
