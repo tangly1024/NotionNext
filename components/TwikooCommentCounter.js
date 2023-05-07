@@ -1,4 +1,5 @@
 import BLOG from '@/blog.config'
+import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -10,7 +11,10 @@ import { useEffect } from 'react'
  */
 
 const TwikooCommentCounter = (props) => {
-  const loadTwikoo = async (posts) => {
+  let commentsData = []
+  const { theme } = useGlobal()
+
+  const fetchTwikooData = async (posts) => {
     posts.forEach(post => {
       post.slug = post.slug.startsWith('/') ? post.slug : `/${post.slug}`
     })
@@ -23,22 +27,9 @@ const TwikooCommentCounter = (props) => {
         urls: posts.map(post => post.slug), // 不包含协议、域名、参数的文章路径列表，必传参数
         includeReply: true // 评论数是否包括回复，默认：false
       }).then(function (res) {
-        console.log(res)
-        posts.forEach(post => {
-          const matchingRes = res.find(r => r.url === post.slug)
-          if (matchingRes) {
-            // 修改评论数量div
-            const textElements = document.querySelectorAll(`.comment-count-text-${post.id}`)
-            textElements.forEach(element => {
-              element.innerHTML = matchingRes.count
-            })
-            // 取消隐藏
-            const wrapperElements = document.querySelectorAll(`.comment-count-wrapper-${post.id}`)
-            wrapperElements.forEach(element => {
-              element.classList.remove('hidden')
-            })
-          }
-        })
+        console.log('查询', res)
+        commentsData = res
+        updateCommentCount()
       }).catch(function (err) {
         // 发生错误
         console.error(err)
@@ -48,13 +39,41 @@ const TwikooCommentCounter = (props) => {
     }
   }
 
+  const updateCommentCount = () => {
+    if (commentsData.length === 0) {
+      return
+    }
+    props.posts.forEach(post => {
+      const matchingRes = commentsData.find(r => r.url === post.slug)
+      if (matchingRes) {
+        // 修改评论数量div
+        const textElements = document.querySelectorAll(`.comment-count-text-${post.id}`)
+        textElements.forEach(element => {
+          element.innerHTML = matchingRes.count
+        })
+        // 取消隐藏
+        const wrapperElements = document.querySelectorAll(`.comment-count-wrapper-${post.id}`)
+        wrapperElements.forEach(element => {
+          element.classList.remove('hidden')
+        })
+      }
+    })
+  }
   const router = useRouter()
 
   useEffect(() => {
+    console.log('路由触发评论计数')
     if (props?.posts && props?.posts?.length > 0) {
-      loadTwikoo(props.posts)
+      fetchTwikooData(props.posts)
     }
-  }, [router.events])
+    //   }, [router.events])
+  })
+
+  // 监控主题变化时的的评论数
+  useEffect(() => {
+    console.log('主题触发评论计数', commentsData)
+    updateCommentCount()
+  }, [theme])
   return null
 }
 
