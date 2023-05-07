@@ -8,7 +8,7 @@ import TagItemMini from './TagItemMini'
 import CONFIG_NEXT from '../config_next'
 import NotionPage from '@/components/NotionPage'
 import NotionIcon from '@/components/NotionIcon'
-import TwikooCommentCount from '@/components/TwikooCommenCount'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()

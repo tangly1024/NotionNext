@@ -66,8 +66,7 @@ const TwikooCommentCounter = (props) => {
     if (props?.posts && props?.posts?.length > 0) {
       fetchTwikooData(props.posts)
     }
-    //   }, [router.events])
-  })
+  }, [router.events])
 
   // 监控主题变化时的的评论数
   useEffect(() => {

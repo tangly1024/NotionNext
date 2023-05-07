@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import CONFIG_EXAMPLE from '../config_example'
 import Link from 'next/link'
-import TwikooCommentCount from '@/components/TwikooCommenCount'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post }) => {
   const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER

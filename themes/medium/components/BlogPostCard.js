@@ -6,7 +6,7 @@ import React from 'react'
 import CONFIG_MEDIUM from '../config_medium'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
-import TwikooCommentCount from '@/components/TwikooCommenCount'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MEDIUM.POST_LIST_PREVIEW && post.blockMap

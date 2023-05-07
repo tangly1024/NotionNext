@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import NotionPage from '@/components/NotionPage'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
-import TwikooCommentCount from '@/components/TwikooCommenCount'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 /**
  * 博客列表的文字内容

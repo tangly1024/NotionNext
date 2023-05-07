@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG_MATERY from '../config_matery'
-import TwikooCommentCount from '@/components/TwikooCommenCount'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {

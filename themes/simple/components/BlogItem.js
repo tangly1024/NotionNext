@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 import CONFIG_SIMPLE from '../config_simple'
-import TwikooCommentCount from '@/components/TwikooCommenCount'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 export const BlogItem = props => {
   const { post } = props
