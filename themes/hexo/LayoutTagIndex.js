@@ -7,7 +7,7 @@ export const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-    <LayoutBase {...props}>
+    <LayoutBase {...props} className='mt-8'>
       <Card className='w-full'>
         <div className="dark:text-gray-200 mb-5 ml-4">
           <i className="mr-4 fas fa-tag" />

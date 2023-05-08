@@ -26,6 +26,7 @@ import smoothscroll from 'smoothscroll-polyfill'
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
 import { isMobile } from '@/lib/utils'
+import TwikooCommentCounter from '@/components/TwikooCommentCounter'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -53,6 +54,7 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
         {JSON.parse(BLOG.NEST) && <Nest />}
         {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
+        {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && <TwikooCommentCounter {...pageProps}/>}
         {JSON.parse(BLOG.RIBBON) && <Ribbon />}
         <ExternalScript/>
     </>
