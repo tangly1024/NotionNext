@@ -8,8 +8,7 @@ import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
-import PropTypes from 'prop-types'
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CONFIG_NEXT from './config_next'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
@@ -22,12 +21,13 @@ import BLOG from '@/blog.config'
 const LayoutBase = (props) => {
   const { children, headerSlot, meta, sideBarSlot, floatSlot, rightAreaSlot, siteInfo } = props
   const { onLoading } = useGlobal()
-  const targetRef = React.useRef(null)
-  const floatButtonGroup = React.useRef(null)
+  const targetRef = useRef(null)
+  const floatButtonGroup = useRef(null)
   const leftAreaSlot = <Live2D/>
 
-  const [show, switchShow] = React.useState(false)
-  const [percent, changePercent] = React.useState(0) // 页面阅读百分比
+  const [showRightFloat, switchShow] = useState(false)
+  const [percent, changePercent] = useState(0) // 页面阅读百分比
+
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
     const clientHeight = targetRef?.clientHeight
@@ -37,13 +37,13 @@ const LayoutBase = (props) => {
     if (per > 100) per = 100
     const shouldShow = scrollY > 100 && per > 0
 
-    if (shouldShow !== show) {
+    if (shouldShow !== showRightFloat) {
       switchShow(shouldShow)
     }
     changePercent(per)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     // facebook messenger 插件需要调整右下角悬浮按钮的高度
     const fb = document.getElementsByClassName('fb-customerchat')
     if (fb.length === 0) {
@@ -54,7 +54,7 @@ const LayoutBase = (props) => {
 
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
-  }, [show])
+  }, [showRightFloat])
 
   return (<div id='theme-next'>
 
@@ -78,7 +78,7 @@ const LayoutBase = (props) => {
 
       {/* 右下角悬浮 */}
       <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
-        <div className={(show ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
+        <div className={(showRightFloat ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
           <JumpToTopButton percent={percent}/>
           <JumpToBottomButton />
           <FloatDarkModeButton/>
@@ -89,10 +89,6 @@ const LayoutBase = (props) => {
       <Footer title={siteInfo?.title}/>
     </div>
   )
-}
-
-LayoutBase.propTypes = {
-  children: PropTypes.node
 }
 
 export default LayoutBase

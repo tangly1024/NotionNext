@@ -5,12 +5,22 @@ import * as ThemeMap from '@/themes'
 import { useGlobal } from '@/lib/global'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
+
+/**
+ * 首页布局
+ * @param {*} props
+ * @returns
+ */
 const Index = props => {
   const { theme } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
   return <ThemeComponents.LayoutIndex {...props} />
 }
 
+/**
+ * SSG 获取数据
+ * @returns
+ */
 export async function getStaticProps() {
   const from = 'index'
   const props = await getGlobalNotionData({ from })

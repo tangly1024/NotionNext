@@ -919,6 +919,7 @@ code[class*='language-'] {
   font-size: 14px;
   line-height: 1.4;
   color: var(--fg-color-3);
+  @apply dark:text-gray-300
 }
 
 .notion-callout {
