@@ -167,9 +167,32 @@ footer:before {
   }
 }
 /*背景颜色渐变*/
+/*
 #wrapper{
   background: -webkit-linear-gradient(0deg, #ffd7e4 0%, #c8f1ff 100%)
 }
+*/
+#wrapper{
+  background: linear-gradient(
+  100deg,
+  hsl(229deg 100% 77%) 0%,
+  hsl(239deg 93% 80%) 15%,
+  hsl(251deg 85% 79%) 22%,
+  hsl(262deg 77% 78%) 28%,
+  hsl(273deg 69% 77%) 33%,
+  hsl(285deg 61% 76%) 37%,
+  hsl(297deg 54% 75%) 42%,
+  hsl(308deg 58% 76%) 46%,
+  hsl(318deg 67% 78%) 50%,
+  hsl(325deg 76% 79%) 54%,
+  hsl(331deg 83% 81%) 58%,
+  hsl(337deg 89% 82%) 63%,
+  hsl(342deg 94% 83%) 67%,
+  hsl(347deg 98% 84%) 72%,
+  hsl(352deg 100% 85%) 78%,
+  hsl(357deg 100% 86%) 85%,
+  hsl(2deg 100% 87%) 100%
+  )}
 .dark #wrapper{
   background: none;
 }
