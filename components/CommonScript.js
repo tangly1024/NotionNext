@@ -1,5 +1,4 @@
 import BLOG from '@/blog.config'
-import { Analytics } from '@vercel/analytics/react'
 
 /**
  * 第三方代码 统计脚本
@@ -8,8 +7,6 @@ import { Analytics } from '@vercel/analytics/react'
  */
 const CommonScript = () => {
   return (<>
-    {BLOG.ANALYTICS_VERCEL && <Analytics />}
-
     {BLOG.COMMENT_DAO_VOICE_ID && (<>
       {/* DaoVoice 反馈 */}
       <script async dangerouslySetInnerHTML={{
