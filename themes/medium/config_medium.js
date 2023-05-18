@@ -9,13 +9,13 @@ const CONFIG_MEDIUM = {
   POST_LIST_TAG: true, // 列表显示文章标签
 
   POST_DETAIL_CATEGORY: false, // 文章显示分类
-  POST_DETAIL_TAG: true, // 文章显示标签
+  POST_DETAIL_TAG: false, // 文章显示标签
 
   // 菜单
   MENU_CATEGORY: false, // 显示分类
   MENU_TAG: true, // 显示标签
   MENU_ARCHIVE: true, // 显示归档
-  MENU_SEARCH: true, // 显示搜索
+  MENU_SEARCH: false, // 显示搜索
 
   // Widget
   WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
