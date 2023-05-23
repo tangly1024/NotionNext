@@ -34,7 +34,12 @@ export const MenuList = (props) => {
   return (
         <>
             {/* 大屏模式菜单 */}
-            <nav id='nav' className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
+            <nav id='nav' data-aos="fade-down"
+                data-aos-duration="500"
+                data-aos-delay="400"
+                data-aos-once="true"
+                data-aos-anchor-placement="top-bottom"
+                className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
                 {links.map(link => link && link.show && <MenuItemDrop key={link?.to} link={link} />)}
             </nav>
 
