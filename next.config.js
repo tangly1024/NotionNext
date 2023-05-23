@@ -16,6 +16,7 @@ module.exports = withBundleAnalyzer({
       'cdn.staticaly.com',
       'gcore.jsdelivr.net',
       'p1.qhimg.com',
+      'tuchuang.voooe.cn',
       'webmention.io'
     ]
   },
