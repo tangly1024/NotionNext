@@ -2,7 +2,6 @@ import Link from 'next/link'
 import CONFIG_HEXO from '../config_hexo'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import TagItemMini from './TagItemMini'
 
 /**
  * 关联推荐文章
