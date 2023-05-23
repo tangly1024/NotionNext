@@ -23,6 +23,10 @@ const BlogPostCard = ({ post, showSummary }) => {
           <Link
             href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
+            data-aos="fade-down"
+            data-aos-duration="500"
+            data-aos-once="true"
+            data-aos-anchor-placement="top-bottom"
             className={`cursor-pointer hover:underline text-3xl ${showPreview ? 'text-center' : ''
               } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
 
@@ -30,10 +34,13 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           </Link>
 
-          <div
-            className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'
-              } flex-wrap dark:text-gray-500 text-gray-400 `}
-          >
+          <div data-aos="fade-down"
+                data-aos-duration="500"
+                data-aos-delay="100"
+                data-aos-once="true"
+                data-aos-anchor-placement="top-bottom"
+                className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 `}>
+
             <div>
               {post.category && (
                 <>
@@ -57,6 +64,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                 </Link>
             </div>
             <TwikooCommentCount post={post} className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-sm'/>
+
             <div className="hover:text-blue-500 dark:hover:text-blue-400  md:flex-nowrap flex-wrap md:justify-start inline-block">
                 {post.tagItems?.map(tag => (
                   <TagItemMini key={tag.name} tag={tag} />
@@ -65,7 +73,12 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
 
           {(!showPreview || showSummary) && !post.results && (
-            <p className="mt-4 mb-24 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+            <p data-aos="fade-down"
+                data-aos-duration="500"
+                data-aos-delay="100"
+                data-aos-once="true"
+                data-aos-anchor-placement="top-bottom"
+                className="mt-4 mb-12 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
               {post.summary}
             </p>
           )}
@@ -80,7 +93,11 @@ const BlogPostCard = ({ post, showSummary }) => {
           )}
 
           {showPreview && post?.blockMap && (
-            <div className="overflow-ellipsis truncate">
+            <div data-aos="fade-down"
+            data-aos-duration="500"
+            data-aos-delay="100"
+            data-aos-once="true"
+            data-aos-anchor-placement="top-bottom"className="overflow-ellipsis truncate">
               <NotionPage post={post} />
             </div>
           )}
