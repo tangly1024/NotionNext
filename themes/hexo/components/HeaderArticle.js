@@ -41,7 +41,7 @@ export default function HeaderArticle({ post, siteInfo }) {
                 </Link>
               </>}
             </div>
-        
+
           {/* 文章Title */}
           <div className="leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white">
             <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />{post.title}
@@ -66,13 +66,13 @@ export default function HeaderArticle({ post, siteInfo }) {
                 {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
               </div>
             </div>
-            
+
             {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
               {locale.COMMON.VIEWS}
             </div>}
           </section>
-          
+
             <div className='mt-4 mb-1'>
                 {post.tagItems && (
                     <div className="flex justify-center flex-nowrap overflow-x-auto">

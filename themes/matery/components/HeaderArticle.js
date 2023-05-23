@@ -16,12 +16,14 @@ export default function HeaderArticle({ post, siteInfo }) {
                 alt={title}
                 className="opacity-50 dark:opacity-40 h-full w-full object-cover"
             /> */}
-             <Image alt={title} src={headerImage} fill
-                    style={{ objectFit: 'cover' }}
-                    className='opacity-50'
-                    placeholder='blur'
-                    blurDataURL='/bg_image.jpg' />
-            <span className='absolute text-white p-6 text-3xl shadow-text'>{title}</span>
+            <Image alt={title} src={headerImage} fill
+                style={{ objectFit: 'cover' }}
+                className='opacity-50'
+                placeholder='blur'
+                blurDataURL='/bg_image.jpg' />
+            <div className="leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white">
+                {title}
+            </div>
         </div>
   )
 }
