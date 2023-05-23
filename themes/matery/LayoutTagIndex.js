@@ -1,6 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import HeaderArticle from './components/HeaderArticle'
 import TagItemMiddle from './components/TagItemMiddle'
+import TagItemMini from './components/TagItemMini'
 import LayoutBase from './LayoutBase'
 
 export const LayoutTagIndex = props => {
