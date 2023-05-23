@@ -22,10 +22,12 @@ import { StarrySky } from '@/components/StarrySky'
 import MusicPlayer from '@/components/MusicPlayer'
 import ExternalScript from '@/components/ExternalScript'
 import smoothscroll from 'smoothscroll-polyfill'
+import { Analytics } from '@vercel/analytics/react'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
 import { isMobile } from '@/lib/utils'
+import TwikooCommentCounter from '@/components/TwikooCommentCounter'
 
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
@@ -44,6 +46,7 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
         {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
         {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
+        {BLOG.ANALYTICS_VERCEL && <Analytics />}
         {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
         {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
         {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
@@ -53,6 +56,7 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
         {JSON.parse(BLOG.NEST) && <Nest />}
         {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
+        {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && <TwikooCommentCounter {...pageProps}/>}
         {JSON.parse(BLOG.RIBBON) && <Ribbon />}
         <ExternalScript/>
     </>

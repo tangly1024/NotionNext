@@ -1,6 +1,7 @@
 import TagItemMini from './TagItemMini'
 import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
+import ShareBar from '@/components/ShareBar'
 import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
@@ -87,6 +88,11 @@ export default function ArticleDetail(props) {
         {/* Notion文章主体 */}
         <section id='notion-article' className='px-1'>
           {post && <NotionPage post={post} />}
+        </section>
+
+        <section>
+           {/* 分享 */}
+           <ShareBar post={post} />
         </section>
 
         <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">

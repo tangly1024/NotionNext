@@ -23,8 +23,10 @@ const PrismMac = () => {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
     loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
-    loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((e) => {
-      Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+    loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
+      if (window?.Prism?.plugins?.autoloader) {
+        window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+      }
       renderPrismMac()
     })
   }

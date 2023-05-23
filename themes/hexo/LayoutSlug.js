@@ -11,6 +11,7 @@ import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
 import ArticleRecommend from './components/ArticleRecommend'
 import { isBrowser } from '@/lib/utils'
+import ShareBar from '@/components/ShareBar'
 
 export const LayoutSlug = props => {
   const { post, lock, validPassword } = props
@@ -68,6 +69,8 @@ export const LayoutSlug = props => {
                 data-ad-slot="3806269138" />
             </section>
 
+            {/* 分享 */}
+            <ShareBar post={post} />
             {post.type === 'Post' && <ArticleCopyright {...props} /> }
             {post.type === 'Post' && <ArticleRecommend {...props} /> }
             {post.type === 'Post' && <ArticleAdjacent {...props} /> }
