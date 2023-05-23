@@ -4,10 +4,11 @@ import Typed from 'typed.js'
 import CONFIG_HEXO from '../config_hexo'
 import NavButtonGroup from './NavButtonGroup'
 import throttle from 'lodash.throttle'
+import { useGlobal } from '@/lib/global'
 
 let wrapperTop = 0
 let windowTop = 0
-let autoScroll = false
+let autoScroll = true
 const enableAutoScroll = false // 是否开启自动吸附滚动
 
 /**
@@ -17,6 +18,7 @@ const enableAutoScroll = false // 是否开启自动吸附滚动
 const Header = props => {
   const [typed, changeType] = useState()
   const { siteInfo } = props
+  const { locale } = useGlobal()
   useEffect(() => {
     updateHeaderHeight()
 
@@ -85,12 +87,12 @@ const Header = props => {
   return (
         <header id="header" style={{ zIndex: 1 }} className="w-full h-screen relative" >
 
-            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo.pageCover}')` }}
+            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo.pageCover}&w=1920')` }}
                 className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG_HEXO.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`}/>
 
             <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
-                <div className='text-4xl md:text-5xl shadow-text'>{siteInfo?.title}</div>
-                <div className='mt-2 h-12 items-center text-center shadow-text text-lg'>
+                <div className='font-black text-4xl md:text-5xl shadow-text'>{siteInfo?.title}</div>
+                <div className='mt-2 h-12 items-center text-center font-medium shadow-text text-lg'>
                     <span id='typed' />
                 </div>
 
@@ -103,7 +105,8 @@ const Header = props => {
                 onClick={() => { window.scrollTo({ top: wrapperTop, behavior: 'smooth' }) }}
                 className="cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white"
             >
-                <i className='animate-bounce fas fa-angle-down' />
+                <div className="opacity-70 animate-bounce text-xs">{locale.COMMON.START_READING}</div>
+                <i className='opacity-70 animate-bounce fas fa-angle-down' />
             </div>
         </header>
   )
