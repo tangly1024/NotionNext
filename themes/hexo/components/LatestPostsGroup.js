@@ -49,7 +49,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                             quality={10}
                             alt={post.title} /> */}
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={`${headerImage}&w=120`} className='object-cover w-full h-full'/>
+                            <img src={`${headerImage}`} className='object-cover w-full h-full'/>
                     </div>
                     <div
                         className={
