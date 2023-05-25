@@ -11,7 +11,7 @@ export default function HeaderArticle({ post, siteInfo }) {
   if (!post) {
     return <></>
   }
-  const headerImage = post?.page_cover ? `url("${post.page_cover}&w=1600")` : `url("${siteInfo?.pageCover}&w=1600")`
+  const headerImage = post?.page_cover ? `url("${post.page_cover}")` : `url("${siteInfo?.pageCover}")`
 
   const date = formatDate(
     post?.date?.start_date || post?.createdTime,
