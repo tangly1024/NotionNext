@@ -7,8 +7,8 @@ import React from 'react'
  * @constructor
  */
 const SocialButton = () => {
-  return <div className='w-52 justify-center flex-wrap flex'>
-    <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 text-center'>
+  return <div className='w-52 flex-wrap flex'>
+    <div className='space-x-3 text-lg text-gray-400 dark:text-gray-400'>
       {BLOG.CONTACT_GITHUB && <a target='_blank' rel='noreferrer' title={'github'} href={BLOG.CONTACT_GITHUB} >
         <i className='fab fa-github transform hover:scale-125 duration-150'/>
       </a>}
@@ -19,7 +19,7 @@ const SocialButton = () => {
         <i className='fab fa-telegram transform hover:scale-125 duration-150'/>
       </a>}
       {BLOG.CONTACT_LINKEDIN && <a target='_blank' rel='noreferrer' href={BLOG.CONTACT_LINKEDIN} title={'linkedIn'} >
-        <i className='transform hover:scale-125 duration-150 fab fa-linkedin dark:hover:text-indigo-400 hover:text-indigo-600'/>
+        <i className='fab fa-linkedin transform hover:scale-125 duration-150'/>
       </a>}
       {BLOG.CONTACT_WEIBO && <a target='_blank' rel='noreferrer' title={'weibo'} href={BLOG.CONTACT_WEIBO} >
         <i className='fab fa-weibo transform hover:scale-125 duration-150'/>
