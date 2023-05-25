@@ -8,13 +8,14 @@ import Catalog from './Catalog'
 import Announcement from './Announcement'
 import { useRouter } from 'next/router'
 import DarkModeButton from '@/components/DarkModeButton'
+import SocialButton from './SocialButton'
 
 function AsideLeft (props) {
   const { tagOptions, currentTag, categoryOptions, currentCategory, post, slot, siteInfo, notice } = props
   const router = useRouter()
   return <div className='sideLeft relative w-80 bg-white dark:bg-hexo-black-gray min-h-screen px-10 py-14 hidden lg:block z-20'>
     <Logo {...props}/>
-    
+
     <section className='siteInfo flex flex-col dark:text-gray-300 pt-8'>
       { siteInfo?.description }
     </section>
@@ -29,12 +30,11 @@ function AsideLeft (props) {
       <SearchInput {...props}/>
     </section>
 
-
     <section className='flex flex-col dark:text-gray-300'>
       <div className='w-12 my-4' />
       <Announcement post={notice}/>
     </section>
-      
+
     {router.asPath !== '/tag' && <section className='flex flex-col'>
       <div className='w-12 my-4' />
       <GroupTag tags={tagOptions} currentTag={currentTag}/>
@@ -47,6 +47,7 @@ function AsideLeft (props) {
 
     <section className='flex flex-col'>
       <div className='w-12 my-4' />
+      <SocialButton/>
       <SiteInfo/>
     </section>
 
