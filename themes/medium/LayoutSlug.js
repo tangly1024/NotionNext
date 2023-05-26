@@ -60,7 +60,7 @@ export const LayoutSlug = props => {
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={siteInfo?.icon} className='rounded-full cursor-pointer' width={22} alt={BLOG.AUTHOR} />
 
-                            <div className="mr-3 ml-2 my-auto text-green-500 cursor-pointer">
+                            <div className="mr-3 ml-2 my-auto text-orange-400 cursor-pointer">
                                 {BLOG.AUTHOR}
                             </div>
                         </div>
