@@ -17,6 +17,7 @@ module.exports = withBundleAnalyzer({
       'gcore.jsdelivr.net',
       'p1.qhimg.com',
       'tuchuang.voooe.cn',
+      'docimg4.docs.qq.com',
       'webmention.io'
     ]
   },
