@@ -11,6 +11,7 @@ import BLOG from '@/blog.config'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import throttle from 'lodash.throttle'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import SocialButton from './components/SocialButton'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -71,6 +72,7 @@ const LayoutBase = props => {
             <div className="bottom-40 right-2 fixed justify-end space-y-2 z-20">
                 <FloatDarkModeButton />
                 <JumpToTopButton />
+                <SocialButton/>
                 {/* 可扩展的右下角悬浮 */}
                 {props.floatRightBottom}
             </div>

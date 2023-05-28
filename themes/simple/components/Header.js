@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 import CONFIG_SIMPLE from '../config_simple'
+import SocialButton from './SocialButton'
 // import CONFIG_SIMPLE from '../config_simple'
 
 /**
@@ -24,13 +25,16 @@ export const Header = (props) => {
                             <img src={avatar} className='rounded-full' width={160} alt={BLOG.AUTHOR} />
                         </div>
 
-                        <div>
-                            <div className='text-3xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
-                            <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center' dangerouslySetInnerHTML={{ __html: CONFIG_SIMPLE.LOGO_DESCRIPTION }}/>
+                        <div className='flex-col flex justify-center'>
+                            <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
+                            <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center' dangerouslySetInnerHTML={{ __html: CONFIG_SIMPLE.LOGO_DESCRIPTION }} />
                         </div>
-                   </div>
+                    </div>
                 </Link>
 
+                <div className='flex justify-center'>
+                <SocialButton />
+                </div>
                 <div className='text-xs mt-4 text-gray-500 dark:text-gray-300'>{siteInfo?.description}</div>
             </div>
         </header>

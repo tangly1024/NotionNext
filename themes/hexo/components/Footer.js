@@ -26,12 +26,10 @@ const Footer = ({ title }) => {
             <i className='fas fa-eye'/><span className='px-1 busuanzi_value_site_pv'> </span>  </span>
       <span className='pl-2 hidden busuanzi_container_site_uv'>
         <i className='fas fa-users'/> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
-        <br/>
-        <h1>{title}</h1>
+        <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} | {BLOG.BIO}</h1>
         <a href="https://icp.gov.moe/?keyword=20225199" target="_blank">萌ICP备20225199号</a>
         <br />
-        <span className='text-xs '>Powered by <a href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>.</span></span><br/>
-
+        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>.</p></span><br/>
     </footer>
   )
 }

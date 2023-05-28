@@ -26,14 +26,10 @@ const SideAreaLeft = props => {
   return <aside id='left' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'ml-4' : 'mr-4') + ' hidden lg:block flex-col w-60 z-20 relative'}>
 
         <section
-            data-aos="fade-down"
-            data-aos-duration="300"
-            data-aos-once="false"
-            data-aos-anchor-placement="top-bottom"
             className='w-60'>
             {/* 菜单 */}
             <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-hexo-black-gray hover:shadow-xl duration-200'>
-                <Logo {...props} className='h-32' />
+                <Logo className='h-32' {...props} />
                 <div className='pt-2 px-2 font-sans'>
                     <MenuList allowCollapse={true} {...props} />
                 </div>

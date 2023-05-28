@@ -20,7 +20,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   }
 
   return (
-    <div className="p-2">
+    <div className="pt-8">
       <div className=" mb-2 px-1 flex flex-nowrap justify-between">
         <div className='dark:text-gray-300'>
           <i className="mr-2 fas fa-thumbs-up" />
@@ -51,7 +51,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                       <i className="fas fa-calendar-alt mr-1" />
                       {post.date?.start_date}
                     </div>
-                    <div className="hover:underline">{post.title}</div>
+                    <div className="">{post.title}</div>
                   </div>
                 </div>
               </div>

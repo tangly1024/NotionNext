@@ -11,7 +11,7 @@ export default function ArticleAdjacent ({ prev, next }) {
     return <></>
   }
   return (
-    <section className='text-gray-800 items-center text-xs md:text-sm flex justify-between m-1 '>
+    <section className='pt-8 text-gray-800 items-center text-xs md:text-sm flex justify-between m-1 '>
       <Link
         href={`/${prev.slug}`}
         passHref
