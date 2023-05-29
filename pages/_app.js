@@ -1,6 +1,7 @@
 import BLOG from 'blog.config'
 import React, { useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import { Analytics } from '@vercel/analytics/react'
 
 import 'animate.css'
 import '@/styles/globals.css'
@@ -60,6 +61,7 @@ const MyApp = ({ Component, pageProps }) => {
         {JSON.parse(BLOG.RIBBON) && <Ribbon />}
         <ExternalScript/>
     </>
+  )
 
   useEffect(() => {
     AOS.init()
@@ -69,10 +71,11 @@ const MyApp = ({ Component, pageProps }) => {
   }, [])
 
   return (
-        <GlobalContextProvider>
-            <Component {...pageProps} />
-            {externalPlugins}
-        </GlobalContextProvider>
+    <GlobalContextProvider>
+      <Component {...pageProps} />
+      {externalPlugins}
+      <Analytics />
+    </GlobalContextProvider>
   )
 }
 
