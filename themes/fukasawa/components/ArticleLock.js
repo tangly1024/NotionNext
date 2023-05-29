@@ -30,6 +30,11 @@ export const ArticleLock = props => {
           <div className="flex mx-4">
             <input
               id="password" type='password'
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  submitPassword()
+                }
+              }}
               className="outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-gray-100 dark:bg-gray-500"
             ></input>
             <div
