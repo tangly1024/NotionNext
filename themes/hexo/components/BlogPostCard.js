@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import React from 'react'
 import CONFIG_HEXO from '../config_hexo'
@@ -35,7 +34,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className="md:w-5/12 overflow-hidden">
-                        <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                        <Link href={`${post.slug}`} passHref legacyBehavior>
                             <div className='h-56 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.page_cover}')` }} />
                         </Link>
                     </div>

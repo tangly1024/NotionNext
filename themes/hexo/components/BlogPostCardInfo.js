@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import NotionPage from '@/components/NotionPage'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
@@ -11,11 +10,10 @@ import TwikooCommentCount from '@/components/TwikooCommentCount'
  */
 export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
   return <div className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full h-56 md:max-h-60 ' : 'w-full '}`}>
-
        <div>
          {/* 标题 */}
          <Link
-            href={`${BLOG.SUB_PATH}/${post.slug}`}
+            href={`${post.slug}`}
             passHref
             className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
                 } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>

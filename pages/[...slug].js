@@ -3,13 +3,13 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import * as ThemeMap from '@/themes'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
-import Router from 'next/router'
-import { isBrowser } from '@/lib/utils'
+import Router, { useRouter } from 'next/router'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import md5 from 'js-md5'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
@@ -20,13 +20,17 @@ const Slug = props => {
   const { theme, changeLoadingState } = useGlobal()
   const ThemeComponents = ThemeMap[theme]
   const { post, siteInfo } = props
-  const router = Router.useRouter()
+  const router = useRouter()
 
   // 文章锁🔐
-  const [lock, setLock] = React.useState(post?.password && post?.password !== '')
+  const [lock, setLock] = useState(post?.password && post?.password !== '')
 
-  React.useEffect(() => {
-    changeLoadingState(false)
+  useEffect(() => {
+    if (post) {
+      changeLoadingState(false)
+    } else {
+      changeLoadingState(true)
+    }
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
@@ -42,7 +46,7 @@ const Slug = props => {
   if (!post) {
     setTimeout(() => {
       if (isBrowser()) {
-        const article = document.getElementById('container')
+        const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/404').then(() => {
             console.warn('找不到页面', router.asPath)
