@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Tabs from '@/components/Tabs'
-import React from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 const WalineComponent = dynamic(
@@ -57,7 +57,7 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
 const Comment = ({ frontMatter }) => {
   const router = useRouter()
 
-  React.useEffect(() => {
+  useEffect(() => {
     // 跳转到评论区
     setTimeout(() => {
       if (window.location.href.indexOf('target=comment') > -1) {
