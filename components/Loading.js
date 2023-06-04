@@ -7,7 +7,7 @@ const Loading = (props) => {
   const { current } = props
 
   return <>
-  {current || <div className="w-screen h-screen flex justify-center items-center">
+  {current || <div className="w-screen h-screen flex justify-center items-center bg-white dark:bg-black">
           <h1>Loading... <i className='ml-2 fas fa-spinner animate-spin' /></h1>
       </div>}
   </>
