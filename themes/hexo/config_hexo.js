@@ -1,6 +1,6 @@
 const CONFIG_HEXO = {
   HOME_BANNER_ENABLE: true,
-  HOME_BANNER_GREETINGS: ['Hi，我曾经是一名生命医科领域的学生','Hi，我现在是一名跨学科信息学领域的研究者', 'Hi，我是一个心理健康领域的互联网创业者', 'Hi，我即将成为一名咨询打工人', '欢迎来到我的世界🌏'], // 首页大图标语文字
+  HOME_BANNER_GREETINGS: ['Hi，我曾经是一名生命医科领域的学生','Hi，我现在是一名跨学科信息学领域的研究者', 'Hi，我同时也是一名心理健康领域的互联网创业者', 'Hi，我即将成为一名咨询业界的打工人', '欢迎来到我的世界🌏'], // 首页大图标语文字
 
   HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
   HOME_NAV_BACKGROUND_IMG_FIXED: true, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
