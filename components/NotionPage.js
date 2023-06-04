@@ -13,7 +13,7 @@ const Equation = dynamic(() =>
     // 化学方程式
     await import('@/lib/mhchem')
     return m.Equation
-  })
+  }), { ssr: false }
 )
 const Pdf = dynamic(
   () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),

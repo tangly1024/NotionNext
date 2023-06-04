@@ -64,8 +64,11 @@ const renderMermaid = async() => {
       }
     }
     if (needLoad) {
-      const asyncMermaid = await import('mermaid')
-      asyncMermaid.default.contentLoaded()
+    //   const asyncMermaid = await import('mermaid')
+      const url = await loadExternalResource(BLOG.MERMAID_CDN, 'js')
+      const mermaid = window.mermaid
+      console.log('mermaid加载成功', url, mermaid)
+      mermaid.contentLoaded()
     }
   }
 }

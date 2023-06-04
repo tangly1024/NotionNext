@@ -5,6 +5,7 @@ import CONFIG_HEXO from '../config_hexo'
 import NavButtonGroup from './NavButtonGroup'
 import throttle from 'lodash.throttle'
 import { useGlobal } from '@/lib/global'
+import BLOG from '@/blog.config'
 
 let wrapperTop = 0
 let windowTop = 0
@@ -25,7 +26,7 @@ const Header = props => {
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
-          strings: CONFIG_HEXO.HOME_BANNER_GREETINGS,
+          strings: BLOG.GREETING_WORDS.split(','),
           typeSpeed: 200,
           backSpeed: 100,
           backDelay: 400,
