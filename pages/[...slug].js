@@ -2,14 +2,15 @@ import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import md5 from 'js-md5'
+import dynamic from 'next/dynamic'
+import Loading from '@/components/Loading'
 
 /**
  * 根据notion的slug访问页面
@@ -18,14 +19,14 @@ import md5 from 'js-md5'
  */
 const Slug = props => {
   const { theme, changeLoadingState } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
   const { post, siteInfo } = props
-  const router = Router.useRouter()
+  const router = useRouter()
 
   // 文章锁🔐
-  const [lock, setLock] = React.useState(post?.password && post?.password !== '')
+  const [lock, setLock] = useState(post?.password && post?.password !== '')
+  const LayoutSlug = dynamic(() => import(`@/themes/${theme}/LayoutSlug`).then(async (m) => { return m.LayoutSlug }), { ssr: false, loading: () => <Loading /> })
 
-  React.useEffect(() => {
+  useEffect(() => {
     changeLoadingState(false)
     if (post?.password && post?.password !== '') {
       setLock(true)
@@ -37,6 +38,9 @@ const Slug = props => {
 
       setLock(false)
     }
+    router.events.on('routeChangeComplete', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
   }, [post])
 
   if (!post) {
@@ -51,7 +55,8 @@ const Slug = props => {
       }
     }, 8 * 1000) // 404时长 8秒
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE }
-    return <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
+
+    return <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   }
 
   /**
@@ -80,12 +85,8 @@ const Slug = props => {
     tags: post?.tags
   }
 
-  Router.events.on('routeChangeComplete', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  })
-
   return (
-    <ThemeComponents.LayoutSlug {...props} showArticleInfo={true} meta={meta} />
+    <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   )
 }
 

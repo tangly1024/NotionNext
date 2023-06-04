@@ -1,7 +1,7 @@
 import { useGlobal } from '@/lib/global'
-import { ALL_THEME } from '@/themes'
 import React from 'react'
 import { Draggable } from './Draggable'
+import { ALL_THEME } from '@/lib/theme'
 /**
  *
  * @returns 主题切换

@@ -1,8 +1,9 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import dynamic from 'next/dynamic'
+import Loading from '@/components/Loading'
 
 /**
  * 标签首页
@@ -11,7 +12,6 @@ import BLOG from '@/blog.config'
  */
 const TagIndex = props => {
   const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
   const { locale } = useGlobal()
   const { siteInfo } = props
   const meta = {
@@ -21,7 +21,8 @@ const TagIndex = props => {
     slug: 'tag',
     type: 'website'
   }
-  return <ThemeComponents.LayoutTagIndex {...props} meta={meta} />
+  const LayoutTagIndex = dynamic(() => import(`@/themes/${theme}/LayoutTagIndex`).then(async (m) => { return m.LayoutTagIndex }), { ssr: false, loading: () => <Loading /> })
+  return <LayoutTagIndex {...props} meta={meta} />
 }
 
 export async function getStaticProps() {

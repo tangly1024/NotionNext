@@ -2,12 +2,12 @@ import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
+import dynamic from 'next/dynamic'
+import Loading from '@/components/Loading'
 
 const Page = props => {
   const { theme } = useGlobal()
   const { siteInfo } = props
-  const ThemeComponents = ThemeMap[theme]
   if (!siteInfo) {
     return <></>
   }
@@ -18,7 +18,9 @@ const Page = props => {
     slug: 'page/' + props.page,
     type: 'website'
   }
-  return <ThemeComponents.LayoutPage {...props} meta={meta} />
+
+  const LayoutPage = dynamic(() => import(`@/themes/${theme}/LayoutPage`).then(async (m) => { return m.LayoutPage }), { ssr: false, loading: () => <Loading /> })
+  return <LayoutPage {...props} meta={meta} />
 }
 
 export async function getStaticPaths() {

@@ -9,12 +9,10 @@ export default function Live2D() {
 
   useEffect(() => {
     if (BLOG.WIDGET_PET) {
-      //   setLive2DLoaded(true)
-      //   console.log('加载宠物挂件')
       Promise.all([
         loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
       ]).then((e) => {
-        if (window?.loadlive2d) {
+        if (typeof window?.loadlive2d !== 'undefined') {
           // https://github.com/xiazeyu/live2d-widget-models
           loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
         }

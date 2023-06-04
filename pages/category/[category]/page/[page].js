@@ -1,8 +1,9 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
+import dynamic from 'next/dynamic'
 import BLOG from '@/blog.config'
+import Loading from '@/components/Loading'
 
 /**
  * 分类页
@@ -11,11 +12,11 @@ import BLOG from '@/blog.config'
  */
 export default function Category(props) {
   const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
   const { siteInfo, posts } = props
   const { locale } = useGlobal()
   if (!posts) {
-    return <ThemeComponents.Layout404 {...props} />
+    const Layout404 = dynamic(() => import(`@/themes/${theme}/Layout404`).then(async (m) => { return m.Layout404 }), { ssr: false, loading: () => <Loading /> })
+    return <Layout404 {...props} />
   }
   const meta = {
     title: `${props.category} | ${locale.COMMON.CATEGORY} | ${
@@ -26,7 +27,9 @@ export default function Category(props) {
     image: siteInfo?.pageCover,
     type: 'website'
   }
-  return <ThemeComponents.LayoutCategory {...props} meta={meta} />
+
+  const LayoutCategory = dynamic(() => import(`@/themes/${theme}/LayoutCategory`).then(async (m) => { return m.LayoutCategory }), { ssr: false, loading: () => <Loading /> })
+  return <LayoutCategory {...props} meta={meta} />
 }
 
 export async function getStaticProps({ params: { category, page } }) {

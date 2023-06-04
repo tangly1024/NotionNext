@@ -1,10 +1,11 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import * as ThemeMap from '@/themes'
 import { useGlobal } from '@/lib/global'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
+import dynamic from 'next/dynamic'
+import Loading from '@/components/Loading'
 
 /**
  * 首页布局
@@ -13,8 +14,10 @@ import { generateRobotsTxt } from '@/lib/robots.txt'
  */
 const Index = props => {
   const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
-  return <ThemeComponents.LayoutIndex {...props} />
+  const LayoutIndex = dynamic(() => import(`@/themes/${theme}/LayoutIndex`)
+    .then(async (m) => { return m.LayoutIndex }), { ssr: false, loading: () => <Loading /> }
+  )
+  return <LayoutIndex {...props} />
 }
 
 /**

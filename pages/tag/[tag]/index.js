@@ -1,16 +1,17 @@
 import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import dynamic from 'next/dynamic'
+import Loading from '@/components/Loading'
 
 const Tag = props => {
   const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
   const { locale } = useGlobal()
   const { tag, siteInfo, posts } = props
 
   if (!posts) {
-    return <ThemeComponents.Layout404 {...props} />
+    const Layout404 = dynamic(() => import(`@/themes/${theme}/Layout404`).then(async (m) => { return m.Layout404 }), { ssr: false, loading: () => <Loading /> })
+    return <Layout404 {...props}/>
   }
 
   const meta = {
@@ -20,7 +21,8 @@ const Tag = props => {
     slug: 'tag/' + tag,
     type: 'website'
   }
-  return <ThemeComponents.LayoutTag {...props} meta={meta} />
+  const LayoutTagIndex = dynamic(() => import(`@/themes/${theme}/LayoutTagIndex`).then(async (m) => { return m.LayoutTagIndex }), { ssr: false, loading: () => <Loading /> })
+  return <LayoutTagIndex {...props} meta={meta} />
 }
 
 export async function getStaticProps({ params: { tag } }) {
