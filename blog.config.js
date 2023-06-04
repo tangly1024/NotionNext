@@ -16,7 +16,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '故人', // 您的昵称
   BIO: process.env.NEXT_PUBLIC_BIO || '一个天资比较愚钝，但是肯处处留心，时刻谨慎，往往会幸运的吧，战胜爱幻想的人', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://blog.vvvv.gay', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://88lin.eu.org', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Notion, 故人,Blog', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'mail@guren88@888.com', // 邮箱
