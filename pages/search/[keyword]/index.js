@@ -17,7 +17,7 @@ const Index = props => {
   }
   const { theme } = useGlobal()
 
-  const LayoutSearch = dynamic(() => import(`@/themes/${theme}/LayoutSearch`).then(async (m) => { return m.LayoutSearch }), { ssr: true, loading: () => <Loading /> })
+  const LayoutSearch = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutSearch }), { ssr: true, loading: () => <Loading /> })
   return <LayoutSearch {...props} currentSearch={keyword} meta={meta} />
 }
 

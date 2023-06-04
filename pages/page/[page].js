@@ -19,7 +19,7 @@ const Page = props => {
     type: 'website'
   }
 
-  const LayoutPage = dynamic(() => import(`@/themes/${theme}/LayoutPage`).then(async (m) => { return m.LayoutPage }), { ssr: true, loading: () => <Loading /> })
+  const LayoutPage = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutPage }), { ssr: true, loading: () => <Loading /> })
   return <LayoutPage {...props} meta={meta} />
 }
 

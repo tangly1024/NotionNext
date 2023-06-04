@@ -10,7 +10,7 @@ const Tag = props => {
   const { tag, siteInfo, posts } = props
 
   if (!posts) {
-    const Layout404 = dynamic(() => import(`@/themes/${theme}/Layout404`).then(async (m) => { return m.Layout404 }), { ssr: true, loading: () => <Loading /> })
+    const Layout404 = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.Layout404 }), { ssr: true, loading: () => <Loading /> })
     return <Layout404 {...props}/>
   }
 
@@ -21,7 +21,7 @@ const Tag = props => {
     slug: 'tag/' + tag,
     type: 'website'
   }
-  const LayoutTag = dynamic(() => import(`@/themes/${theme}/LayoutTag`).then(async (m) => { return m.LayoutTag }), { ssr: true, loading: () => <Loading /> })
+  const LayoutTag = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutTag }), { ssr: true, loading: () => <Loading /> })
   return <LayoutTag {...props} meta={meta} />
 }
 

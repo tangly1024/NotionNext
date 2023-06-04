@@ -6,19 +6,24 @@ import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/Loading'
+import { memorize } from '@/lib/utils'
 
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
-const Index = props => {
+const Index = memorize(props => {
   const { theme } = useGlobal()
-  const LayoutIndex = dynamic(() => import(`@/themes/${theme}`)
-    .then(async (m) => { return m.LayoutIndex }), { ssr: true, loading: () => <Loading /> }
+  const LayoutIndex = dynamic(
+    () =>
+      import(`@/themes/${theme}`).then((m) => {
+        return m.LayoutIndex
+      }),
+    { ssr: true, loading: () => <Loading /> }
   )
   return <LayoutIndex {...props} />
-}
+})
 
 /**
  * SSG 获取数据

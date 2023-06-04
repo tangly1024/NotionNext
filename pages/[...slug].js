@@ -5,7 +5,7 @@ import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
-import { isBrowser } from '@/lib/utils'
+import { isBrowser, memorize } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import md5 from 'js-md5'
@@ -17,7 +17,7 @@ import Loading from '@/components/Loading'
  * @param {*} props
  * @returns
  */
-const Slug = props => {
+const Slug = memorize(props => {
   const { theme, changeLoadingState } = useGlobal()
   const { post, siteInfo } = props
   const router = useRouter()
@@ -60,9 +60,9 @@ const Slug = props => {
   }
 
   /**
-   * 验证文章密码
-   * @param {*} result
-   */
+     * 验证文章密码
+     * @param {*} result
+     */
   const validPassword = passInput => {
     const encrypt = md5(post.slug + passInput)
 
@@ -86,9 +86,9 @@ const Slug = props => {
   }
 
   return (
-    <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
+      <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   )
-}
+})
 
 export async function getStaticPaths() {
   if (!BLOG.isProd) {

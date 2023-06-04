@@ -20,7 +20,7 @@ export default function Category(props) {
     slug: 'category',
     type: 'website'
   }
-  const LayoutCategoryIndex = dynamic(() => import(`@/themes/${theme}/LayoutCategoryIndex`).then(async (m) => { return m.LayoutCategoryIndex }), { ssr: false })
+  const LayoutCategoryIndex = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutCategoryIndex }), { ssr: false })
   return <LayoutCategoryIndex {...props} meta={meta} />
 }
 
