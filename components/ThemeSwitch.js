@@ -6,7 +6,7 @@ import { Draggable } from './Draggable'
  *
  * @returns 主题切换
  */
-export function ThemeSwitch() {
+const ThemeSwitch = () => {
   const { theme, changeTheme } = useGlobal()
 
   const onSelectChange = (e) => {
@@ -30,3 +30,5 @@ export function ThemeSwitch() {
     </>
   )
 }
+
+export default ThemeSwitch

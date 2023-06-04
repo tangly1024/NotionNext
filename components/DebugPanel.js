@@ -8,7 +8,7 @@ import { useGlobal } from '@/lib/global'
  *
  * @returns 调试面板
  */
-export function DebugPanel() {
+const DebugPanel = () => {
   const [show, setShow] = useState(false)
   const { theme, changeTheme, switchTheme, locale } = useGlobal()
   const [siteConfig, updateSiteConfig] = useState({})
@@ -128,3 +128,4 @@ export function DebugPanel() {
         </>
   )
 }
+export default DebugPanel
