@@ -16,7 +16,7 @@ const ArchiveIndex = props => {
     type: 'website'
   }
 
-  const LayoutArchive = dynamic(() => import(`@/themes/${theme}/LayoutArchive`).then(async (m) => { return m.LayoutArchive }), { ssr: false, loading: () => <Loading /> })
+  const LayoutArchive = dynamic(() => import(`@/themes/${theme}/LayoutArchive`).then(async (m) => { return m.LayoutArchive }), { ssr: true, loading: () => <Loading /> })
   return <LayoutArchive {...props} meta={meta} />
 }
 

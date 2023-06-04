@@ -14,7 +14,11 @@ export default function Live2D() {
       ]).then((e) => {
         if (typeof window?.loadlive2d !== 'undefined') {
           // https://github.com/xiazeyu/live2d-widget-models
-          loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
+          try {
+            loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
+          } catch (error) {
+
+          }
         }
       })
     }

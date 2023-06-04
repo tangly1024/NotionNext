@@ -14,8 +14,8 @@ import Loading from '@/components/Loading'
  */
 const Index = props => {
   const { theme } = useGlobal()
-  const LayoutIndex = dynamic(() => import(`@/themes/${theme}/LayoutIndex`)
-    .then(async (m) => { return m.LayoutIndex }), { ssr: false, loading: () => <Loading /> }
+  const LayoutIndex = dynamic(() => import(`@/themes/${theme}`)
+    .then(async (m) => { return m.LayoutIndex }), { ssr: true, loading: () => <Loading /> }
   )
   return <LayoutIndex {...props} />
 }

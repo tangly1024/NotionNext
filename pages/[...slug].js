@@ -24,7 +24,7 @@ const Slug = props => {
 
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
-  const LayoutSlug = dynamic(() => import(`@/themes/${theme}/LayoutSlug`).then(async (m) => { return m.LayoutSlug }), { ssr: false, loading: () => <Loading /> })
+  const LayoutSlug = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutSlug }), { ssr: true, loading: () => <Loading /> })
 
   useEffect(() => {
     changeLoadingState(false)

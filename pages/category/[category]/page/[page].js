@@ -15,7 +15,7 @@ export default function Category(props) {
   const { siteInfo, posts } = props
   const { locale } = useGlobal()
   if (!posts) {
-    const Layout404 = dynamic(() => import(`@/themes/${theme}/Layout404`).then(async (m) => { return m.Layout404 }), { ssr: false, loading: () => <Loading /> })
+    const Layout404 = dynamic(() => import(`@/themes/${theme}/Layout404`).then(async (m) => { return m.Layout404 }), { ssr: true, loading: () => <Loading /> })
     return <Layout404 {...props} />
   }
   const meta = {
@@ -28,7 +28,7 @@ export default function Category(props) {
     type: 'website'
   }
 
-  const LayoutCategory = dynamic(() => import(`@/themes/${theme}/LayoutCategory`).then(async (m) => { return m.LayoutCategory }), { ssr: false, loading: () => <Loading /> })
+  const LayoutCategory = dynamic(() => import(`@/themes/${theme}/LayoutCategory`).then(async (m) => { return m.LayoutCategory }), { ssr: true, loading: () => <Loading /> })
   return <LayoutCategory {...props} meta={meta} />
 }
 

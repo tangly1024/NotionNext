@@ -21,7 +21,7 @@ const TagIndex = props => {
     slug: 'tag',
     type: 'website'
   }
-  const LayoutTagIndex = dynamic(() => import(`@/themes/${theme}/LayoutTagIndex`).then(async (m) => { return m.LayoutTagIndex }), { ssr: false, loading: () => <Loading /> })
+  const LayoutTagIndex = dynamic(() => import(`@/themes/${theme}/LayoutTagIndex`).then(async (m) => { return m.LayoutTagIndex }), { ssr: true, loading: () => <Loading /> })
   return <LayoutTagIndex {...props} meta={meta} />
 }
 

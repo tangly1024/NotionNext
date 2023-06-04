@@ -25,7 +25,7 @@ const PrismMac = () => {
       }
       loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
       loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
-        console.log('渲染公式图表')
+        // console.log('渲染公式图表')
         if (window?.Prism?.plugins?.autoloader) {
           window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
         }

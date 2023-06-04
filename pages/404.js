@@ -11,7 +11,7 @@ import Loading from '@/components/Loading'
 const NoFound = props => {
   const { theme, siteInfo } = useGlobal()
   const meta = { title: `${props?.siteInfo?.title} | 页面找不到啦`, image: siteInfo?.pageCover }
-  const Layout404 = dynamic(() => import(`@/themes/${theme}/Layout404`).then(async (m) => { return m.Layout404 }), { ssr: false, loading: () => <Loading /> })
+  const Layout404 = dynamic(() => import(`@/themes/${theme}/Layout404`).then(async (m) => { return m.Layout404 }), { ssr: true, loading: () => <Loading /> })
   return <Layout404 {...props} meta={meta}/>
 }
 
