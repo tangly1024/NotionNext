@@ -62,7 +62,7 @@ const TwikooCommentCounter = (props) => {
   const router = useRouter()
 
   useEffect(() => {
-    console.log('路由触发评论计数')
+    // console.log('路由触发评论计数')
     if (props?.posts && props?.posts?.length > 0) {
       fetchTwikooData(props.posts)
     }
@@ -70,7 +70,7 @@ const TwikooCommentCounter = (props) => {
 
   // 监控主题变化时的的评论数
   useEffect(() => {
-    console.log('主题触发评论计数', commentsData)
+    // console.log('主题触发评论计数', commentsData)
     updateCommentCount()
   }, [theme])
   return null
