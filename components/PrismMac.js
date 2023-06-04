@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Prism from 'prismjs'
 // 所有语言的prismjs 使用autoloader引入
 // import 'prismjs/plugins/autoloader/prism-autoloader'
@@ -18,20 +18,20 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
  * @returns
  */
 const PrismMac = () => {
-  if (isBrowser()) {
-    if (BLOG.CODE_MAC_BAR) {
-      loadExternalResource('/css/prism-mac-style.css', 'css')
-    }
-    loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
-    loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
-      if (window?.Prism?.plugins?.autoloader) {
-        window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+  useEffect(() => {
+    if (isBrowser()) {
+      if (BLOG.CODE_MAC_BAR) {
+        loadExternalResource('/css/prism-mac-style.css', 'css')
       }
-      renderPrismMac()
-    })
-  }
-
-  React.useEffect(() => {
+      loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
+      loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
+        console.log('渲染公式图表')
+        if (window?.Prism?.plugins?.autoloader) {
+          window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+        }
+        renderPrismMac()
+      })
+    }
     renderMermaid()
   }, [])
   return <></>
