@@ -18,7 +18,7 @@ import Loading from '@/components/Loading'
  * @returns
  */
 const Slug = memorize(props => {
-  const { theme, changeLoadingState } = useGlobal()
+  const { theme, setOnLoading } = useGlobal()
   const { post, siteInfo } = props
   const router = useRouter()
 
@@ -27,7 +27,7 @@ const Slug = memorize(props => {
   const LayoutSlug = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutSlug }), { ssr: true, loading: () => <Loading /> })
 
   useEffect(() => {
-    changeLoadingState(false)
+    setOnLoading(false)
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
