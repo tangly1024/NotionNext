@@ -11,12 +11,14 @@ const Loading = (props) => {
   useEffect(() => {
     // 返回一个函数，在组件销毁时设置 onReading 为 false
     return () => {
-      setOnReading(false)
+      setTimeout(() => {
+        setOnReading(false)
+      }, 500)
     }
   }, [theme])
 
-  return <div className="w-screen h-screen flex justify-center items-center dark:bg-black text-black dark:text-white">
-        <h1 className="text-2xl"><i className='mr-5 fas fa-spinner animate-spin' />Loading...</h1>
+  return <div className="w-screen h-screen flex justify-center items-center bg-black">
+        <h1 className="text-2xl"><i className='mr-5 fas fa-spinner animate-spin' /></h1>
     </div>
 }
 export default Loading

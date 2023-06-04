@@ -26,6 +26,19 @@ const Slug = memorize(props => {
   const [lock, setLock] = useState(post?.password && post?.password !== '')
   const LayoutSlug = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutSlug }), { ssr: true, loading: () => <Loading /> })
 
+  /**
+     * 验证文章密码
+     * @param {*} result
+     */
+  const validPassword = passInput => {
+    const encrypt = md5(post.slug + passInput)
+    if (passInput && encrypt === post.password) {
+      setLock(false)
+      return true
+    }
+    return false
+  }
+
   useEffect(() => {
     setOnLoading(false)
     if (post?.password && post?.password !== '') {
@@ -35,7 +48,6 @@ const Slug = memorize(props => {
         post.content = Object.keys(post.blockMap.block).filter(key => post.blockMap.block[key]?.value?.parent_id === post.id)
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
-
       setLock(false)
     }
     router.events.on('routeChangeComplete', () => {
@@ -57,20 +69,6 @@ const Slug = memorize(props => {
     const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE }
 
     return <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
-  }
-
-  /**
-     * 验证文章密码
-     * @param {*} result
-     */
-  const validPassword = passInput => {
-    const encrypt = md5(post.slug + passInput)
-
-    if (passInput && encrypt === post.password) {
-      setLock(false)
-      return true
-    }
-    return false
   }
 
   props = { ...props, lock, setLock, validPassword }
