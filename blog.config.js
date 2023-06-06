@@ -309,7 +309,7 @@ const BLOG = {
     icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon'
   },
 
-  // RSS
+  // RSS //set
   ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
 
   // 作废配置
