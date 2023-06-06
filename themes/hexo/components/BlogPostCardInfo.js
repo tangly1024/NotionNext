@@ -13,7 +13,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
        <div>
          {/* 标题 */}
          <Link
-            href={`${post.slug}`}
+            href={`/${post.slug}`}
             passHref
             className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
                 } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
