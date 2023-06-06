@@ -35,12 +35,14 @@ const BLOG = {
     // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
     'https://fonts.googleapis.com/css?family=Bitter&display=swap',
     'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
+    'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
     'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
   ],
   FONT_SANS: [
     // 无衬线字体 例如'LXGW WenKai'
     'Bitter',
     '"PingFang SC"',
+    '"LXGW WenKai"',
     '-apple-system',
     'BlinkMacSystemFont',
     '"Hiragino Sans GB"',
@@ -60,6 +62,7 @@ const BLOG = {
   FONT_SERIF: [
     // 衬线字体 例如'LXGW WenKai'
     'Bitter',
+    '"LXGW WenKai"',
     '"Noto Serif SC"',
     'SimSun',
     '"Times New Roman"',
