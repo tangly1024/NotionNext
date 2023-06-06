@@ -5,7 +5,7 @@ import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
-import { isBrowser, memorize } from '@/lib/utils'
+import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import md5 from 'js-md5'
@@ -17,7 +17,7 @@ import Loading from '@/components/Loading'
  * @param {*} props
  * @returns
  */
-const Slug = memorize(props => {
+const Slug = props => {
   const { theme, setOnLoading } = useGlobal()
   const { post, siteInfo } = props
   const router = useRouter()
@@ -41,6 +41,7 @@ const Slug = memorize(props => {
 
   useEffect(() => {
     setOnLoading(false)
+
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
@@ -58,7 +59,7 @@ const Slug = memorize(props => {
   if (!post) {
     setTimeout(() => {
       if (isBrowser()) {
-        const article = document.getElementById('container')
+        const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/404').then(() => {
             console.warn('找不到页面', router.asPath)
@@ -86,7 +87,7 @@ const Slug = memorize(props => {
   return (
       <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
   )
-})
+}
 
 export async function getStaticPaths() {
   if (!BLOG.isProd) {
