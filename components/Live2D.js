@@ -26,7 +26,7 @@ export default function Live2D() {
     return <></>
   }
 
-  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='啦啦啦，学习累了就休息一下吧！' title='啦啦啦，学习累了就休息一下吧！' />
+  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='喵呜，风雨如晦，鸡鸣不已。既见君子，云胡不喜？' title='喵呜，风雨如晦，鸡鸣不已。既见君子，云胡不喜？' />
 }
 
 /**
