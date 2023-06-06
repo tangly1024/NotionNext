@@ -5,25 +5,38 @@ import { useGlobal } from '@/lib/global'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import dynamic from 'next/dynamic'
-import Loading from '@/components/Loading'
-import { memorize } from '@/lib/utils'
+import { useEffect, useState } from 'react'
+
+/**
+ * 懒加载默认主题
+ */
+const DefaultLayoutIndex = dynamic(() => import(`@/themes/${BLOG.THEME}`).then(async (m) => {
+  return m.LayoutIndex
+}), { ssr: true })
 
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
-const Index = memorize(props => {
-  const { theme } = useGlobal()
-  const LayoutIndex = dynamic(
-    () =>
-      import(`@/themes/${theme}`).then((m) => {
+const Index = props => {
+  // 动态切换主题
+  const { theme, setOnReading } = useGlobal()
+  const [LayoutIndex, setLayoutIndex] = useState(DefaultLayoutIndex)
+
+  useEffect(() => {
+    const loadLayout = async () => {
+      const NewLayoutIndex = dynamic(() => import(`@/themes/${theme}`).then(async (m) => {
+        setOnReading(false)
         return m.LayoutIndex
-      }),
-    { ssr: true, loading: () => <Loading /> }
-  )
+      }), { ssr: true })
+      setLayoutIndex(NewLayoutIndex)
+    }
+    loadLayout()
+  }, [theme])
+
   return <LayoutIndex {...props} />
-})
+}
 
 /**
  * SSG 获取数据

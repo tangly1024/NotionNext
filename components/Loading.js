@@ -18,7 +18,7 @@ const Loading = (props) => {
   }, [theme])
 
   return <div className="w-screen h-screen flex justify-center items-center bg-black">
-        <h1 className="text-2xl"><i className='mr-5 fas fa-spinner animate-spin' /></h1>
+       <i className='mr-5 fas fa-spinner animate-spin text-2xl' />
     </div>
 }
 export default Loading
