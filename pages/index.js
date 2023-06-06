@@ -5,7 +5,8 @@ import { useGlobal } from '@/lib/global'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import Loading from '@/components/Loading'
 
 /**
  * 懒加载默认主题
@@ -26,16 +27,26 @@ const Index = props => {
 
   useEffect(() => {
     const loadLayout = async () => {
-      const NewLayoutIndex = dynamic(() => import(`@/themes/${theme}`).then(async (m) => {
-        setOnReading(false)
-        return m.LayoutIndex
-      }), { ssr: true })
-      setLayoutIndex(NewLayoutIndex)
+      try {
+        const NewLayoutIndex = await dynamic(() => import(`@/themes/${theme}`).then(async (m) => {
+          setOnReading(false)
+          return m.LayoutIndex
+        }))
+
+        setLayoutIndex(NewLayoutIndex)
+      } catch (error) {
+        console.error('Error while loading layout:', error)
+      }
     }
+
     loadLayout()
   }, [theme])
 
-  return <LayoutIndex {...props} />
+  return (
+      <Suspense fallback={<Loading/>}>
+        <LayoutIndex {...props} />
+      </Suspense>
+  )
 }
 
 /**
