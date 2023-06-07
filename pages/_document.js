@@ -2,6 +2,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import BLOG from '@/blog.config'
 import CommonScript from '@/components/CommonScript'
+import Loading from '@/components/Loading'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -11,17 +12,18 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG}>
-        <Head>
-          <link rel='icon' href='/favicon.ico' />
-          <CommonScript />
-        </Head>
+            <Html lang={BLOG.LANG}>
+                <Head>
+                    <link rel='icon' href='/favicon.ico' />
+                    <CommonScript />
+                </Head>
 
-        <body className={`${BLOG.FONT_STYLE} font-light bg-day dark:bg-night`}>
-            <Main />
-            <NextScript />
-        </body>
-      </Html>
+                <body className={`${BLOG.FONT_STYLE} font-light bg-day dark:bg-night`}>
+                    <Main />
+                    <NextScript />
+                </body>
+                <Loading />
+            </Html>
     )
   }
 }
