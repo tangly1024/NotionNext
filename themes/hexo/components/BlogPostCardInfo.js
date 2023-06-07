@@ -2,6 +2,7 @@ import NotionPage from '@/components/NotionPage'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
+import BLOG from '@/blog.config'
 
 /**
  * 博客列表的文字内容
@@ -13,7 +14,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
        <div>
          {/* 标题 */}
          <Link
-            href={`/${post.slug}`}
+            href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
             className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
                 } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
