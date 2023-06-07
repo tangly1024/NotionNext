@@ -26,8 +26,7 @@ const Index = props => {
     const loadLayout = async () => {
       setLayoutIndex(dynamic(() => import(`@/themes/${theme}/LayoutIndex`)))
     }
-    console.log(loadLayout)
-    // loadLayout()
+    loadLayout()
   }, [theme])
 
   return <Suspense fallback={<Loading/>}>
