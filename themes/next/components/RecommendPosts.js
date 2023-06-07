@@ -16,7 +16,7 @@ const RecommendPosts = ({ recommendPosts }) => {
     <div className="pt-2 border pl-4 py-2 my-4 dark:text-gray-300 ">
        <div className="mb-2 font-bold text-lg">{locale.COMMON.RELATE_POSTS} :</div>
         <ul className="font-light text-sm">
-          {recommendposts?.map(post => (
+          {recommendPosts.map(post => (
             <li className="py-1" key={post.id}>
               <Link href={`/${post.slug}`} className="cursor-pointer hover:underline">
 
@@ -27,6 +27,6 @@ const RecommendPosts = ({ recommendPosts }) => {
           ))}
         </ul>
     </div>
-  );
+  )
 }
 export default RecommendPosts

@@ -42,7 +42,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
           ))}
         </ul>
       </div>
-    );
+    )
   }
 }
 
