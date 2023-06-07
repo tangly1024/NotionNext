@@ -25,7 +25,7 @@ const LatestPostsGroup = ({ latestPosts }) => {
         {locale.COMMON.LATEST_POSTS}
       </div>
     </div>
-    {latestPosts.map(post => {
+    {latestposts?.map(post => {
       const selected = currentPath === `${BLOG.SUB_PATH}/${post.slug}`
       return (
         (<Link
