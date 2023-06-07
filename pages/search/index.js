@@ -3,10 +3,26 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
+import { Suspense, useEffect, useState } from 'react'
 import Loading from '@/components/Loading'
+/**
+ * 加载默认主题
+ */
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutSearch`), { ssr: true })
 
 const Search = props => {
   const { posts, siteInfo } = props
+  const { theme } = useGlobal()
+  const [Layout, setLayout] = useState(DefaultLayout)
+
+  // 切换主题
+  useEffect(() => {
+    const loadLayout = async () => {
+      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutSearch`)))
+    }
+    loadLayout()
+  }, [theme])
+
   const router = useRouter()
   let filteredPosts
   const keyword = getSearchKey(router)
@@ -32,10 +48,11 @@ const Search = props => {
     type: 'website'
   }
 
-  const { theme } = useGlobal()
+  props = { ...props, meta, posts: { filteredPosts } }
 
-  const LayoutSearch = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutSearch }), { ssr: true, loading: () => <Loading /> })
-  return <LayoutSearch {...props} posts={filteredPosts} currentSearch={keyword} meta={meta} />
+  return <Suspense fallback={<Loading/>}>
+    <Layout {...props} />
+  </Suspense>
 }
 
 /**

@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
 import { isBrowser } from '@/lib/utils'
@@ -13,6 +13,11 @@ import dynamic from 'next/dynamic'
 import Loading from '@/components/Loading'
 
 /**
+ * 懒加载默认主题
+ */
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutSlug`), { ssr: true })
+
+/**
  * 根据notion的slug访问页面
  * @param {*} props
  * @returns
@@ -21,10 +26,18 @@ const Slug = props => {
   const { theme, setOnLoading } = useGlobal()
   const { post, siteInfo } = props
   const router = useRouter()
+  const [Layout, setLayout] = useState(DefaultLayout)
+
+  // 切换主题
+  useEffect(() => {
+    const loadLayout = async () => {
+      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutSlug`)))
+    }
+    loadLayout()
+  }, [theme])
 
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
-  const LayoutSlug = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutSlug }), { ssr: true, loading: () => <Loading /> })
 
   /**
      * 验证文章密码
@@ -39,9 +52,24 @@ const Slug = props => {
     return false
   }
 
+  // 文章加载
   useEffect(() => {
     setOnLoading(false)
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser()) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, 8 * 1000) // 404时长 8秒
+    }
 
+    // 文章加密
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
@@ -56,37 +84,20 @@ const Slug = props => {
     })
   }, [post])
 
-  if (!post) {
-    setTimeout(() => {
-      if (isBrowser()) {
-        const article = document.getElementById('notion-article')
-        if (!article) {
-          router.push('/404').then(() => {
-            console.warn('找不到页面', router.asPath)
-          })
-        }
-      }
-    }, 8 * 1000) // 404时长 8秒
-    const meta = { title: `${props?.siteInfo?.title || BLOG.TITLE} | loading`, image: siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE }
-
-    return <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
-  }
-
-  props = { ...props, lock, setLock, validPassword }
-
   const meta = {
-    title: `${post?.title} | ${siteInfo?.title}`,
+    title: post ? `${post?.title} | ${siteInfo?.title}` : `${props?.siteInfo?.title || BLOG.TITLE} | loading`,
     description: post?.summary,
     type: post?.type,
     slug: post?.slug,
-    image: post?.page_cover,
+    image: post?.page_cover || (siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE),
     category: post?.category?.[0],
     tags: post?.tags
   }
+  props = { ...props, lock, meta, setLock, validPassword }
 
-  return (
-      <LayoutSlug {...props} showArticleInfo={true} meta={meta} />
-  )
+  return <Suspense fallback={<Loading />}>
+        <Layout {...props} />
+    </Suspense>
 }
 
 export async function getStaticPaths() {

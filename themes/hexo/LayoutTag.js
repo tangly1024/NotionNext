@@ -30,3 +30,5 @@ export const LayoutTag = (props) => {
         </LayoutBase>
   )
 }
+
+export default LayoutTag

@@ -6,9 +6,10 @@ import { useEffect } from 'react'
 
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal()
+  const showPet = JSON.parse(BLOG.WIDGET_PET)
 
   useEffect(() => {
-    if (BLOG.WIDGET_PET) {
+    if (showPet) {
       Promise.all([
         loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
       ]).then((e) => {
@@ -17,7 +18,7 @@ export default function Live2D() {
           try {
             loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
           } catch (error) {
-
+            console.error('读取PET模型', error)
           }
         }
       })
@@ -30,7 +31,7 @@ export default function Live2D() {
     }
   }
 
-  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
+  if (!showPet) {
     return <></>
   }
 

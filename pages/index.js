@@ -11,9 +11,7 @@ import Loading from '@/components/Loading'
 /**
  * 懒加载默认主题
  */
-const DefaultLayoutIndex = dynamic(() => import(`@/themes/${BLOG.THEME}`).then(async (m) => {
-  return m.LayoutIndex
-}), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutIndex`), { ssr: true })
 
 /**
  * 首页布局
@@ -22,31 +20,19 @@ const DefaultLayoutIndex = dynamic(() => import(`@/themes/${BLOG.THEME}`).then(a
  */
 const Index = props => {
   // 动态切换主题
-  const { theme, setOnReading } = useGlobal()
-  const [LayoutIndex, setLayoutIndex] = useState(DefaultLayoutIndex)
-
+  const { theme } = useGlobal()
+  const [Layout, setLayoutIndex] = useState(DefaultLayout)
   useEffect(() => {
     const loadLayout = async () => {
-      try {
-        const NewLayoutIndex = await dynamic(() => import(`@/themes/${theme}`).then(async (m) => {
-          setOnReading(false)
-          return m.LayoutIndex
-        }))
-
-        setLayoutIndex(NewLayoutIndex)
-      } catch (error) {
-        console.error('Error while loading layout:', error)
-      }
+      setLayoutIndex(dynamic(() => import(`@/themes/${theme}/LayoutIndex`)))
     }
-
-    loadLayout()
+    console.log(loadLayout)
+    // loadLayout()
   }, [theme])
 
-  return (
-      <Suspense fallback={<Loading/>}>
-        <LayoutIndex {...props} />
-      </Suspense>
-  )
+  return <Suspense fallback={<Loading/>}>
+    <Layout {...props} />
+  </Suspense>
 }
 
 /**

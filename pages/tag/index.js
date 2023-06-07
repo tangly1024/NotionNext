@@ -1,9 +1,13 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import React from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/Loading'
+/**
+ * 默认主题
+ */
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutTagIndex`), { ssr: true })
 
 /**
  * 标签首页
@@ -11,9 +15,18 @@ import Loading from '@/components/Loading'
  * @returns
  */
 const TagIndex = props => {
-  const { theme } = useGlobal()
   const { locale } = useGlobal()
   const { siteInfo } = props
+  const { theme } = useGlobal()
+  const [Layout, setLayout] = useState(DefaultLayout)
+  // 切换主题
+  useEffect(() => {
+    const loadLayout = async () => {
+      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutTagIndex`)))
+    }
+    loadLayout()
+  }, [theme])
+
   const meta = {
     title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
     description: siteInfo?.description,
@@ -21,8 +34,11 @@ const TagIndex = props => {
     slug: 'tag',
     type: 'website'
   }
-  const LayoutTagIndex = dynamic(() => import(`@/themes/${theme}`).then(async (m) => { return m.LayoutTagIndex }), { ssr: true, loading: () => <Loading /> })
-  return <LayoutTagIndex {...props} meta={meta} />
+  props = { ...props, meta }
+
+  return <Suspense fallback={<Loading/>}>
+    <Layout {...props} />
+  </Suspense>
 }
 
 export async function getStaticProps() {
