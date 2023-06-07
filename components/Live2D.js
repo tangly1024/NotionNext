@@ -6,17 +6,20 @@ import { useEffect } from 'react'
 
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal()
+  const showPet = JSON.parse(BLOG.WIDGET_PET)
 
   useEffect(() => {
-    if (BLOG.WIDGET_PET) {
-      //   setLive2DLoaded(true)
-      //   console.log('加载宠物挂件')
+    if (showPet) {
       Promise.all([
         loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
       ]).then((e) => {
-        if (window?.loadlive2d) {
+        if (typeof window?.loadlive2d !== 'undefined') {
           // https://github.com/xiazeyu/live2d-widget-models
-          loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
+          try {
+            loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
+          } catch (error) {
+            console.error('读取PET模型', error)
+          }
         }
       })
     }
@@ -28,7 +31,7 @@ export default function Live2D() {
     }
   }
 
-  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
+  if (!showPet) {
     return <></>
   }
 

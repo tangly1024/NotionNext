@@ -13,3 +13,5 @@ export const LayoutIndex = props => {
     </LayoutBase>
   )
 }
+
+export default LayoutIndex

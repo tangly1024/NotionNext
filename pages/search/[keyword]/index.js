@@ -1,12 +1,28 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import dynamic from 'next/dynamic'
+import { Suspense, useEffect, useState } from 'react'
+import Loading from '@/components/Loading'
+
+/**
+ * 加载默认主题
+ */
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutSearch`), { ssr: true })
 
 const Index = props => {
   const { keyword, siteInfo } = props
-  const { locale } = useGlobal()
+  const { locale, theme } = useGlobal()
+  const [Layout, setLayout] = useState(DefaultLayout)
+  // 切换主题
+  useEffect(() => {
+    const loadLayout = async () => {
+      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutSearch`)))
+    }
+    loadLayout()
+  }, [theme])
+
   const meta = {
     title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
     description: siteInfo?.title,
@@ -14,15 +30,12 @@ const Index = props => {
     slug: 'search/' + (keyword || ''),
     type: 'website'
   }
-  const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
-  return (
-    <ThemeComponents.LayoutSearch
-      {...props}
-      meta={meta}
-      currentSearch={keyword}
-    />
-  )
+
+  props = { ...props, meta }
+
+  return <Suspense fallback={<Loading/>}>
+    <Layout {...props} />
+  </Suspense>
 }
 
 /**
