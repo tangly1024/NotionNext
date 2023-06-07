@@ -126,7 +126,7 @@ export async function getStaticProps({ params: { slug } }) {
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalNotionData({ from })
   // 在列表内查找文章
-  props.post = props.allPages.find((p) => {
+  props.post = props?.allPages?.find((p) => {
     return p.slug === fullSlug || p.id === idToUuid(fullSlug)
   })
 
