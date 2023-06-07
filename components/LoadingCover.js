@@ -6,8 +6,9 @@
 const LoadingCover = (props) => {
   const { onReading } = props
 
-  return <div className={`${onReading ? 'opacity-90' : 'opacity-0'} transition-all fixed top-0 left-0 pointer-events-none duration-1000 z-50 shadow-inner w-screen h-screen flex justify-center items-center bg-gray-400 dark:bg-black text-white shadow-text`}>
-        <i className='text-2xl mr-5 fas fa-spinner animate-spin' />
+  return <div className={`${onReading ? 'opacity-30' : 'opacity-0'}  bg-black text-white shadow-text w-screen h-screen flex justify-center items-center
+                            transition-all fixed top-0 left-0 pointer-events-none duration-1000 z-50 shadow-inner`}>
+        <i className='text-3xl mr-5 fas fa-spinner animate-spin' />
     </div>
 }
 export default LoadingCover
