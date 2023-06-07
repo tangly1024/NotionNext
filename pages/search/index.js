@@ -1,22 +1,39 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import dynamic from 'next/dynamic'
+import { Suspense, useEffect, useState } from 'react'
+import Loading from '@/components/Loading'
+/**
+ * 加载默认主题
+ */
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutSearch`), { ssr: true })
 
 const Search = props => {
   const { posts, siteInfo } = props
+  const { theme } = useGlobal()
+  const [Layout, setLayout] = useState(DefaultLayout)
+
+  // 切换主题
+  useEffect(() => {
+    const loadLayout = async () => {
+      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutSearch`)))
+    }
+    loadLayout()
+  }, [theme])
+
   const router = useRouter()
   let filteredPosts
-  const searchKey = getSearchKey(router)
+  const keyword = getSearchKey(router)
   // 静态过滤
-  if (searchKey) {
+  if (keyword) {
     filteredPosts = posts.filter(post => {
       const tagContent = post.tags ? post.tags.join(' ') : ''
       const categoryContent = post.category ? post.category.join(' ') : ''
       const searchContent =
-        post.title + post.summary + tagContent + categoryContent
-      return searchContent.toLowerCase().includes(searchKey.toLowerCase())
+                post.title + post.summary + tagContent + categoryContent
+      return searchContent.toLowerCase().includes(keyword.toLowerCase())
     })
   } else {
     filteredPosts = []
@@ -24,26 +41,18 @@ const Search = props => {
 
   const { locale } = useGlobal()
   const meta = {
-    title: `${searchKey || ''}${searchKey ? ' | ' : ''}${locale.NAV.SEARCH} | ${
-      siteInfo?.title
-    }`,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
     description: siteInfo?.description,
     image: siteInfo?.pageCover,
     slug: 'search',
     type: 'website'
   }
 
-  const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
+  props = { ...props, meta, posts: { filteredPosts } }
 
-  return (
-    <ThemeComponents.LayoutSearch
-      {...props}
-      posts={filteredPosts}
-      currentSearch={searchKey}
-      meta={meta}
-    />
-  )
+  return <Suspense fallback={<Loading/>}>
+    <Layout {...props} />
+  </Suspense>
 }
 
 /**

@@ -20,9 +20,10 @@ import NotionIcon from '@/components/NotionIcon'
  * @returns
  */
 export default function ArticleDetail(props) {
-  const { post, recommendPosts, prev, next, showArticleInfo } = props
+  const { post, recommendPosts, prev, next } = props
   const url = BLOG.LINK + useRouter().asPath
   const { locale } = useGlobal()
+  const showArticleInfo = CONFIG_NEXT.ARTICLE_INFO
   const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
   return (

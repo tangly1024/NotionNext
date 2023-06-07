@@ -18,7 +18,10 @@ export const LayoutIndex = (props) => {
   >
     {BLOG.POST_LIST_STYLE !== 'page'
       ? <BlogPostListScroll {...props} showSummary={true} />
-      : <BlogPostListPage {...props} />
+      : <BlogPostListPage
+export default LayoutIndex{...props} />
     }
   </LayoutBase>
 }
+
+export default LayoutIndex
