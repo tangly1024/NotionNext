@@ -34,11 +34,18 @@ const BLOG = {
 
   // 网站字体
   FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
-  FONT_URL: [
-    // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
-    'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
+  FONT_URL: [// 字体CSS
+    'https://fonts.googleapis.com/css?family=Bitter&display=swap', // Bitter 用作英文数字的字体
+    'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'
+  ],
+  FONT_SANS: [// 无衬线字体
+    'Bitter', '"LXGW WenKai"','"PingFang SC"', '-apple-system', 'BlinkMacSystemFont', '"Hiragino Sans GB"',
+    '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Segoe UI"', '"Noto Sans SC"', 'HarmonyOS_Regular',
+    '"Microsoft YaHei"', '"Helvetica Neue"', 'Helvetica', '"Source Han Sans SC"',
+    'Arial', 'sans-serif', '"Apple Color Emoji"'],
+  FONT_SERIF: [// 衬线字体 
+    'Bitter', '"LXGW WenKai"','"Noto Serif SC"', 'SimSun', '"Times New Roman"', 'Times', 'serif',
+    '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Apple Color Emoji"'],
   ],
   FONT_SANS: [
     // 无衬线字体 例如'LXGW WenKai'
@@ -120,7 +127,7 @@ const BLOG = {
   POST_PREVIEW_LINES: 12, // 预览博客行数
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
   POSTS_PER_PAGE: 12, // post counts per page
-  POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
+  POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'date', // 排序方式 'date'按时间,'notion'由notion控制
 
   PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
