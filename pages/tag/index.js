@@ -4,10 +4,11 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/Loading'
+const layout = 'LayoutTagIndex'
 /**
  * 默认主题
  */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutTagIndex`), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 /**
  * 标签首页
@@ -22,7 +23,8 @@ const TagIndex = props => {
   // 切换主题
   useEffect(() => {
     const loadLayout = async () => {
-      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutTagIndex`)))
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
     }
     loadLayout()
   }, [theme])

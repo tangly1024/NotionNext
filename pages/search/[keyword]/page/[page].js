@@ -6,10 +6,11 @@ import BLOG from '@/blog.config'
 import { Suspense, useEffect, useState } from 'react'
 import Loading from '@/components/Loading'
 
+const layout = 'LayoutSearch'
 /**
  * 加载默认主题
  */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutSearch`), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 const Index = props => {
   const { keyword, siteInfo } = props
@@ -18,10 +19,12 @@ const Index = props => {
   // 切换主题
   useEffect(() => {
     const loadLayout = async () => {
-      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutSearch`)))
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
     }
     loadLayout()
   }, [theme])
+
   const meta = {
     title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
     description: siteInfo?.title,

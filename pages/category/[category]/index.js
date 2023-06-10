@@ -3,13 +3,13 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
 import BLOG from '@/blog.config'
-
 import Loading from '@/components/Loading'
 
+const layout = 'LayoutCategory'
 /**
  * 加载默认主题
  */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutCategory`), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 /**
  * 分类页
@@ -20,10 +20,12 @@ export default function Category(props) {
   const { siteInfo } = props
   const { locale, theme } = useGlobal()
   const [Layout, setLayout] = useState(DefaultLayout)
+
   // 切换主题
   useEffect(() => {
     const loadLayout = async () => {
-      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutCategory`)))
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
     }
     loadLayout()
   }, [theme])
