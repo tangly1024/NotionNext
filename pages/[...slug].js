@@ -12,10 +12,12 @@ import md5 from 'js-md5'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/Loading'
 
+const layout = 'LayoutSlug'
+
 /**
  * 懒加载默认主题
  */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutSlug`), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 /**
  * 根据notion的slug访问页面
@@ -31,7 +33,8 @@ const Slug = props => {
   // 切换主题
   useEffect(() => {
     const loadLayout = async () => {
-      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutSlug`)))
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
     }
     loadLayout()
   }, [theme])

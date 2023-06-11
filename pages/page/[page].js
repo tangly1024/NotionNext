@@ -5,10 +5,13 @@ import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useState } from 'react'
 import Loading from '@/components/Loading'
+
+const layout = 'LayoutPage'
+
 /**
  * 加载默认主题
  */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutPage`), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 /**
  * 文章列表分页
@@ -22,7 +25,8 @@ const Page = props => {
   // 切换主题
   useEffect(() => {
     const loadLayout = async () => {
-      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutPage`)))
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
     }
     loadLayout()
   }, [theme])
@@ -37,9 +41,9 @@ const Page = props => {
 
   props = { ...props, meta }
 
-  return <Suspense fallback={<Loading/>}>
-    <Layout {...props} />
-  </Suspense>
+  return <Suspense fallback={<Loading />}>
+        <Layout {...props} />
+    </Suspense>
 }
 
 export async function getStaticPaths() {

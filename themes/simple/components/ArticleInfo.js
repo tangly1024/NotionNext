@@ -14,8 +14,7 @@ export const ArticleInfo = (props) => {
         <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
             <div>
                 <h2
-                    id='blog-item-title'
-                    className="mb-5 font-bold text-black text-xl md:text-2xl no-underline">
+                    className="blog-item-title mb-5 font-bold text-black text-xl md:text-2xl no-underline">
                     {post.title}
                 </h2>
 

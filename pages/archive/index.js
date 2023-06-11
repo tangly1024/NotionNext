@@ -3,13 +3,14 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
 import BLOG from '@/blog.config'
-
 import Loading from '@/components/Loading'
+
+const layout = 'LayoutArchive'
 
 /**
  * 加载默认主题
  */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutArchive`), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 const ArchiveIndex = props => {
   const { siteInfo } = props
@@ -18,7 +19,8 @@ const ArchiveIndex = props => {
   // 切换主题
   useEffect(() => {
     const loadLayout = async () => {
-      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutArchive`)))
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
     }
     loadLayout()
   }, [theme])
