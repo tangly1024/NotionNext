@@ -9,7 +9,7 @@ export const BlogItem = props => {
   return <div key={post.id} className="mb-10 pb-12 border-b dark:border-gray-800" >
         {/* 文章标题 */}
 
-        <h2 className="mb-5 ">
+        <h2 className="mb-2">
             <Link
                 href={`/${post.slug}`}
                 className="blog-item-title font-bold text-black text-2xl no-underline hover:underline">
@@ -19,18 +19,21 @@ export const BlogItem = props => {
 
         {/* 文章信息 */}
 
-        <div className="mb-4 text-md space-x-2 text-gray-700 dark:text-gray-300 flex-wrap flex">
-            <span>  <i className="fa-regular fa-user"></i> <a href={CONFIG_SIMPLE.AUTHOR_LINK}>{BLOG.AUTHOR}</a></span>
-            <span>
-                <Link href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}>
-                    <i className="fa-regular fa-clock" /> {post.date?.start_date || post.createdTime}
-                </Link>
-            </span>
-            <span>   <TwikooCommentCount post={post} /></span>
+        <div className="mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6">
+            <div className='space-x-2'>
+                <span>  <a href={CONFIG_SIMPLE.AUTHOR_LINK} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {BLOG.AUTHOR}</a></span>
+                <span>
+                    <Link className='p-1 hover:text-red-400 transition-all duration-200' href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}>
+                        <i className="fa-regular fa-clock" /> {post.date?.start_date || post.createdTime}
+                    </Link>
+                </span>
+                <span><TwikooCommentCount post={post} /></span>
+            </div>
 
-            {post.category && <span>   <i className="fa-regular fa-folder"></i> <a href={`/category/${post.category}`} className="hover:text-red-400 transition-all duration-200">{post.category}</a></span>}
-            {post.tags && post.tags?.length > 0 && post.tags.map(t => <span key={t}> / <Link href={`/tag/${t}`}><span className=' hover:text-red-400 transition-all duration-200'>{t}</span></Link></span>)}
-
+            <div>
+                {post.category && <Link href={`/category/${post.category}`} className='p-1'> <span className="hover:text-red-400 transition-all duration-200"><i className="fa-regular fa-folder mr-0.5"/>{post.category}</span></Link>}
+                {post.tags && post.tags?.length > 0 && post.tags.map(t => <Link key={t} href={`/tag/${t}`} className=' hover:text-red-400 transition-all duration-200'><span > /{t}</span></Link>)}
+            </div>
         </div>
 
         <div className="text-gray-700 dark:text-gray-300 leading-normal mb-6">
