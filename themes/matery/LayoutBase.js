@@ -12,6 +12,7 @@ import FloatDarkModeButton from './components/FloatDarkModeButton'
 import throttle from 'lodash.throttle'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import SocialButton from './components/SocialButton'
+import CONFIG_MATERY from './config_matery'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -41,6 +42,7 @@ const LayoutBase = props => {
   if (isBrowser()) {
     loadExternalResource('/css/theme-matery.css', 'css')
   }
+const fixStyleObject = !CONFIG_MATERY.HOME_BANNER_ENABLE ? { paddingTop: '4rem' } : {}
 
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
@@ -51,7 +53,7 @@ const LayoutBase = props => {
 
             {headerSlot}
 
-            <main id="wrapper" className="flex-1 w-full py-8 md:px-8 lg:px-24 relative">
+            <main id="wrapper" className="flex-1 w-full py-8 md:px-8 lg:px-24 relative"> style={fixStyleObject}>
                 {/* 嵌入区域 */}
                                <div id="container-slot" className={`w-full max-w-6xl ${props?.post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                    {props.containerSlot}
