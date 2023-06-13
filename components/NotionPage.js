@@ -2,11 +2,17 @@ import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
 // import mediumZoom from '@fisch0920/medium-zoom'
 import React, { useEffect } from 'react'
-import { Code } from 'react-notion-x/build/third-party/code'
+// import { Code } from 'react-notion-x/build/third-party/code'
 import TweetEmbed from 'react-tweet-embed'
 
 import 'katex/dist/katex.min.css'
 import { mapImgUrl } from '@/lib/notion/mapImage'
+
+const Code = dynamic(() =>
+  import('react-notion-x/build/third-party/code').then(async (m) => {
+    return m.Code
+  }), { ssr: false }
+)
 
 const Equation = dynamic(() =>
   import('@/components/Equation').then(async (m) => {
