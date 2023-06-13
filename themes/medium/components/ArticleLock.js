@@ -1,4 +1,5 @@
 import { useGlobal } from '@/lib/global'
+import { useEffect, useRef } from 'react'
 
 /**
  * 加密文章校验组件
@@ -22,6 +23,12 @@ export const ArticleLock = props => {
     }
   }
 
+  const passwordInputRef = useRef(null)
+  useEffect(() => {
+    // 选中密码输入框并将其聚焦
+    passwordInputRef.current.focus()
+  }, [])
+
   return <div id='container' className='w-full flex justify-center items-center h-96 '>
     <div className='text-center space-y-3'>
       <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
@@ -32,6 +39,7 @@ export const ArticleLock = props => {
                 submitPassword()
               }
             }}
+            ref={passwordInputRef} // 绑定ref到passwordInputRef变量
             className='outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-gray-100 dark:bg-gray-500'>
         </input>
         <div onClick={submitPassword} className="px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 bg-green-500 hover:bg-green-400 text-white rounded-r duration-300" >
