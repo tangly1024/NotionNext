@@ -27,6 +27,6 @@ const RecommendPosts = ({ recommendPosts }) => {
           ))}
         </ul>
     </div>
-  );
+  )
 }
 export default RecommendPosts

@@ -32,7 +32,8 @@ const CONFIG_NEXT = {
 
   ARTICLE_SHARE: process.env.NEXT_PUBLIC_ARTICLE_SHARE || true, // 文章分享功能
   ARTICLE_RELATE_POSTS: true, // 相关文章推荐
-  ARTICLE_COPYRIGHT: true // 文章版权声明
+  ARTICLE_COPYRIGHT: true, // 文章版权声明
+  ARTICLE_INFO: true // 显示文章信息
 
 }
 

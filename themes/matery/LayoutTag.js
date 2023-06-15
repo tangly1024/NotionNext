@@ -6,7 +6,6 @@ import React from 'react'
 import HeaderArticle from './components/HeaderArticle'
 import { useGlobal } from '@/lib/global'
 import TagItemMiddle from './components/TagItemMiddle'
-import TagItemMini from './components/TagItemMini'
 
 export const LayoutTag = (props) => {
   const { tagOptions, tag } = props
@@ -41,3 +40,5 @@ export const LayoutTag = (props) => {
 
     </LayoutBase>
 }
+
+export default LayoutTag
