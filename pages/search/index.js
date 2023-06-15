@@ -49,7 +49,7 @@ const Search = props => {
     type: 'website'
   }
 
-  props = { ...props, meta, posts: { filteredPosts } }
+  props = { ...props, meta, posts: filteredPosts }
 
   return <Suspense fallback={<Loading />}>
         <Layout {...props} />
