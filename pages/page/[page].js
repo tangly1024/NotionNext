@@ -2,23 +2,48 @@ import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
+import dynamic from 'next/dynamic'
+import { Suspense, useEffect, useState } from 'react'
+import Loading from '@/components/Loading'
 
+const layout = 'LayoutPage'
+
+/**
+ * 加载默认主题
+ */
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+
+/**
+ * 文章列表分页
+ * @param {*} props
+ * @returns
+ */
 const Page = props => {
   const { theme } = useGlobal()
   const { siteInfo } = props
-  const ThemeComponents = ThemeMap[theme]
-  if (!siteInfo) {
-    return <></>
-  }
+  const [Layout, setLayout] = useState(DefaultLayout)
+  // 切换主题
+  useEffect(() => {
+    const loadLayout = async () => {
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
+    }
+    loadLayout()
+  }, [theme])
+
   const meta = {
-    title: `${props.page} | Page | ${siteInfo?.title}`,
+    title: `${props?.page} | Page | ${siteInfo?.title}`,
     description: siteInfo?.description,
     image: siteInfo?.pageCover,
     slug: 'page/' + props.page,
     type: 'website'
   }
-  return <ThemeComponents.LayoutPage {...props} meta={meta} />
+
+  props = { ...props, meta }
+
+  return <Suspense fallback={<Loading />}>
+        <Layout {...props} />
+    </Suspense>
 }
 
 export async function getStaticPaths() {

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useEffect } from 'react'
 const id = 'canvasNestCreated'
-export const Nest = () => {
+const Nest = () => {
   const destroyNest = ()=>{
       const nest = document.getElementById(id)
       if(nest && nest.parentNode){
@@ -15,6 +15,8 @@ export const Nest = () => {
   }, [])
   return <></>
 }
+
+export default Nest
 
 /**
  * 创建连接点

@@ -342,3 +342,19 @@ a.avatar-wrapper {
       column-gap: .5rem;
     }
   }
+
+.notion-external-title {
+  @apply dark:text-white !important;
+}
+
+.notion-external-subtitle {
+  @apply dark:text-gray-400 !important;
+}
+
+.notion-external-block {
+  @apply dark:border-gray-200 !important;
+}
+
+.notion-external-image > svg > g > path{
+  @apply dark:fill-gray-200 !important;
+}

@@ -7,9 +7,9 @@ export default function HeaderArticle({ post, siteInfo }) {
         <div
             data-aos="fade-down"
             data-aos-duration="300"
-            data-aos-once="false"
+            data-aos-once="true"
             data-aos-anchor-placement="top-center"
-            id='header' className="flex h-96 justify-center align-middle items-center w-full relative duration-200 bg-black">
+            id='header' className="flex h-96 justify-center align-middle items-center w-full relative bg-black">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             {/* <img
                 src={headerImage}

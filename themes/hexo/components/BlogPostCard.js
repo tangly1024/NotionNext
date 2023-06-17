@@ -1,8 +1,8 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import React from 'react'
 import CONFIG_HEXO from '../config_hexo'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
+import BLOG from '@/blog.config'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {

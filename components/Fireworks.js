@@ -2,16 +2,17 @@
  * https://codepen.io/juliangarnier/pen/gmOwJX
  * custom by hexo-theme-yun @YunYouJun
  */
-import React from 'react'
+import { useEffect } from 'react'
 import anime from 'animejs'
 import BLOG from 'blog.config'
 
-export const Fireworks = () => {
-  React.useEffect(() => {
+const Fireworks = () => {
+  useEffect(() => {
     createFireworks({})
   }, [])
   return <canvas id='fireworks' className='fireworks'></canvas>
 }
+export default Fireworks
 
 /**
    * 创建烟花

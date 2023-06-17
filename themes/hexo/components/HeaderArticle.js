@@ -21,7 +21,11 @@ export default function HeaderArticle({ post, siteInfo }) {
   return (
     <div
       id="header"
-      className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat animate__animated animate__fadeIn z-10"
+      data-aos="fade-down"
+      data-aos-duration="300"
+      data-aos-once="true"
+      data-aos-anchor-placement="top-bottom"
+      className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10"
       style={{ backgroundImage: headerImage }}
     >
       <header id='article-header-cover'

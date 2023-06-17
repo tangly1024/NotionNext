@@ -26,12 +26,12 @@ export const BlogListPage = props => {
             <div className="flex justify-between text-xs">
                 <Link
                     href={{ pathname: currentPage - 1 === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}
-                    className={`${showPrev ? 'text-blue-400 border-b border-blue-400 visible ' : ' invisible bg-gray pointer-events-none '} no-underline pb-1 px-3`}>
+                    className={`${showPrev ? 'text-blue-600 border-b border-blue-400 visible ' : ' invisible bg-gray pointer-events-none '} no-underline pb-1 px-3`}>
                     NEWER POSTS <i className="fa-solid fa-arrow-left"></i>
                 </Link>
                 <Link
                     href={{ pathname: `${pagePrefix}/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}
-                    className={`${showNext ? 'text-blue-400 border-b border-blue-400 visible' : ' invisible bg-gray pointer-events-none '} no-underline pb-1 px-3`}>
+                    className={`${showNext ? 'text-blue-600 border-b border-blue-400 visible' : ' invisible bg-gray pointer-events-none '} no-underline pb-1 px-3`}>
                     OLDER POSTS <i className="fa-solid fa-arrow-right"></i>
                 </Link>
             </div>
