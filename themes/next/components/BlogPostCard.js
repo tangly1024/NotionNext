@@ -114,12 +114,12 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {CONFIG_NEXT.POST_LIST_COVER && post?.page_cover && (
+        {CONFIG_NEXT.POST_LIST_COVER && post?.pageCoverThumbnail && (
           <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"
-                src={post?.page_cover}
+                src={post?.pageCoverThumbnail}
                 alt={post.title}
                 layout="fill"
                 objectFit="cover"
