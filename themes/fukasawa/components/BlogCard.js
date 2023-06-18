@@ -7,10 +7,10 @@ import CONFIG_FUKA from '../config_fuka'
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
   // matery 主题默认强制显示图片
-  if (post && !post.page_cover) {
-    post.page_cover = siteInfo?.pageCover
+  if (post && !post.pageCover) {
+    post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.page_cover
+  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.pageCoverThumbnail
 
   return (
     <div data-aos="fade-up" data-aos-duration="500" data-aos-once="true"
@@ -33,17 +33,17 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                 {post.summary}
                 </p>
             )}
-            
+
                 {/* 分类标签 */}
                 <div className="mt-1 text-gray-400 justify-between flex">
                     <Link
                         href={`/category/${post.category}`}
                         passHref
                         className="cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform">
-            
+
                         <i className="mr-1 far fa-folder" />
                         {post.category}
-            
+
                     </Link>
                     <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
                         <div>
@@ -61,11 +61,11 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                 <div className="h-40 w-full relative duration-200 cursor-pointer transform overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    src={post?.page_cover}
+                    src={post?.pageCoverThumbnail}
                     alt={post.title}
                     className="w-full hover:scale-125 transform duration-500"
                 ></img>
-                {/* <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
+                {/* <Image className='hover:scale-105 transform duration-500' src={post?.pageCover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
                 </div>
             </Link>
             )}
