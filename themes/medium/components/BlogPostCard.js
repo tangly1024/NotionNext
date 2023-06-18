@@ -6,6 +6,7 @@ import React from 'react'
 import CONFIG_MEDIUM from '../config_medium'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG_MEDIUM.POST_LIST_PREVIEW && post.blockMap
@@ -30,7 +31,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                     <div>
                         {CONFIG_MEDIUM.POST_LIST_COVER && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={post.page_cover} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
+                            <img src={post.pageCoverThumbnail} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
                         </div>}
                         {post.title}
                     </div>
@@ -43,13 +44,9 @@ const BlogPostCard = ({ post, showSummary }) => {
                     }
                 >
                     <div className="text-sm py-1">{post.date?.start_date}</div>
-                    {CONFIG_MEDIUM.POST_LIST_CATEGORY && (
-                        <CategoryItem category={post.category} />
-                    )}
-                    {CONFIG_MEDIUM.POST_LIST_TAG &&
-                        post?.tagItems?.map(tag => (
-                            <TagItemMini key={tag.name} tag={tag} />
-                        ))}
+                    {CONFIG_MEDIUM.POST_LIST_CATEGORY && <CategoryItem category={post.category} />}
+                    {CONFIG_MEDIUM.POST_LIST_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                    <TwikooCommentCount post={post} className='hover:underline'/>
                 </div>
 
                 <div className="flex"></div>

@@ -1,17 +1,29 @@
 import { useGlobal } from '@/lib/global'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import dynamic from 'next/dynamic'
+import { Suspense, useEffect, useState } from 'react'
+import Loading from '@/components/Loading'
+const layout = 'LayoutTag'
+/**
+ * 加载默认主题
+ */
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 const Tag = props => {
   const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
   const { locale } = useGlobal()
-  const { tag, siteInfo, posts } = props
+  const { tag, siteInfo } = props
+  const [Layout, setLayout] = useState(DefaultLayout)
 
-  if (!posts) {
-    return <ThemeComponents.Layout404 {...props} />
-  }
+  // 切换主题
+  useEffect(() => {
+    const loadLayout = async () => {
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
+    }
+    loadLayout()
+  }, [theme])
 
   const meta = {
     title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
@@ -20,7 +32,11 @@ const Tag = props => {
     slug: 'tag/' + tag,
     type: 'website'
   }
-  return <ThemeComponents.LayoutTag {...props} meta={meta} />
+  props = { ...props, meta }
+
+  return <Suspense fallback={<Loading/>}>
+    <Layout {...props} />
+  </Suspense>
 }
 
 export async function getStaticProps({ params: { tag } }) {

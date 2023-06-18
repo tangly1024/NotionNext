@@ -24,6 +24,9 @@ const SocialButton = () => {
       {BLOG.CONTACT_WEIBO && <a target='_blank' rel='noreferrer' title={'weibo'} href={BLOG.CONTACT_WEIBO} >
         <i className='fab fa-weibo transform hover:scale-125 duration-150'/>
       </a>}
+      {BLOG.CONTACT_INSTAGRAM && <a target='_blank' rel='noreferrer' title={'instagram'} href={BLOG.CONTACT_INSTAGRAM} >
+        <i className='fab fa-instagram transform hover:scale-125 duration-150'/>
+      </a>}
       {BLOG.CONTACT_EMAIL && <a target='_blank' rel='noreferrer' title={'email'} href={`mailto:${BLOG.CONTACT_EMAIL}`} >
         <i className='fas fa-envelope transform hover:scale-125 duration-150'/>
       </a>}
