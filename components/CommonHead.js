@@ -51,7 +51,7 @@ const CommonHead = ({ meta, children }) => {
         <link href={BLOG.COMMENT_WEBMENTION.AUTH} rel="me" />
       )}
 
-      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="no-referrer-when-downgrade" />}
+      {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="no-referrer" />}
       {meta?.type === 'Post' && (
         <>
           <meta
