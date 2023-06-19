@@ -4,11 +4,11 @@ import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import { Suspense, useEffect, useState } from 'react'
 import Loading from '@/components/Loading'
-
+const layout = 'LayoutTag'
 /**
  * 加载默认主题
  */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/LayoutTag`), { ssr: true })
+const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 const Tag = props => {
   const { theme } = useGlobal()
@@ -19,7 +19,8 @@ const Tag = props => {
   // 切换主题
   useEffect(() => {
     const loadLayout = async () => {
-      setLayout(dynamic(() => import(`@/themes/${theme}/LayoutTag`)))
+      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
+      setLayout(newLayout)
     }
     loadLayout()
   }, [theme])
