@@ -1,18 +1,18 @@
 import BLOG from '@/blog.config'
-import * as ThemeMap from '@/themes'
 import { useEffect, useState } from 'react'
 import Select from './Select'
-import { ALL_THEME } from '@/themes'
 import { useGlobal } from '@/lib/global'
+import { ALL_THEME } from '@/lib/theme'
+
 /**
  *
  * @returns 调试面板
  */
-export function DebugPanel() {
+const DebugPanel = () => {
   const [show, setShow] = useState(false)
-  const { theme, changeTheme, switchTheme, locale } = useGlobal()
+  const { changeTheme, switchTheme, locale } = useGlobal()
   const [siteConfig, updateSiteConfig] = useState({})
-  const [themeConfig, updateThemeConfig] = useState({})
+  //   const [themeConfig, updateThemeConfig] = useState({})
   const [debugTheme, updateDebugTheme] = useState(BLOG.THEME)
 
   // 主题下拉框
@@ -21,7 +21,7 @@ export function DebugPanel() {
   useEffect(() => {
     changeTheme(BLOG.THEME)
     updateSiteConfig(Object.assign({}, BLOG))
-    updateThemeConfig(Object.assign({}, ThemeMap[BLOG.THEME].THEME_CONFIG))
+    // updateThemeConfig(Object.assign({}, ThemeMap[BLOG.THEME].THEME_CONFIG))
   }, [])
 
   function toggleShow() {
@@ -30,13 +30,13 @@ export function DebugPanel() {
 
   function handleChangeDebugTheme() {
     const newTheme = switchTheme()
-    updateThemeConfig(Object.assign({}, ThemeMap[newTheme].THEME_CONFIG))
+    // updateThemeConfig(Object.assign({}, ThemeMap[newTheme].THEME_CONFIG))
     updateDebugTheme(newTheme)
   }
 
   function handleUpdateDebugTheme(e) {
     changeTheme(e)
-    updateThemeConfig(Object.assign({}, ThemeMap[theme].THEME_CONFIG))
+    // updateThemeConfig(Object.assign({}, ThemeMap[theme].THEME_CONFIG))
     updateDebugTheme(e)
   }
 
@@ -90,7 +90,7 @@ export function DebugPanel() {
                 </div>
 
                 <div>
-                    <div>
+                    {/* <div>
                         <div className="font-bold w-18 border-b my-2">
                             主题配置{`config_${debugTheme}.js`}:
                         </div>
@@ -106,7 +106,7 @@ export function DebugPanel() {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div> */}
                     <div className="font-bold w-18 border-b my-2">
                         站点配置[blog.config.js]
                     </div>
@@ -128,3 +128,4 @@ export function DebugPanel() {
         </>
   )
 }
+export default DebugPanel

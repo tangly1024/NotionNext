@@ -36,3 +36,5 @@ export const LayoutCategory = props => {
         </LayoutBase>
   )
 }
+
+export default LayoutCategory

@@ -27,3 +27,5 @@ export const LayoutTagIndex = (props) => {
             </div>   </LayoutBase>
   )
 }
+
+export default LayoutTagIndex
