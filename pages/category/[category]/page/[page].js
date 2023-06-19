@@ -1,16 +1,7 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import React, { Suspense, useEffect, useState } from 'react'
+import React from 'react'
 import { useGlobal } from '@/lib/global'
-import dynamic from 'next/dynamic'
 import BLOG from '@/blog.config'
-import Loading from '@/components/Loading'
-
-const layout = 'LayoutCategory'
-
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
 
 /**
  * 分类页
@@ -18,18 +9,8 @@ const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), 
  * @returns
  */
 export default function Category(props) {
-  const { theme } = useGlobal()
-  const { siteInfo } = props
+  const { siteInfo, Layout } = props
   const { locale } = useGlobal()
-  const [Layout, setLayout] = useState(DefaultLayout)
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
 
   const meta = {
     title: `${props.category} | ${locale.COMMON.CATEGORY} | ${
@@ -43,9 +24,7 @@ export default function Category(props) {
 
   props = { ...props, meta }
 
-  return <Suspense fallback={<Loading/>}>
-    <Layout {...props} />
-  </Suspense>
+  return <Layout {...props} />
 }
 
 export async function getStaticProps({ params: { category, page } }) {
