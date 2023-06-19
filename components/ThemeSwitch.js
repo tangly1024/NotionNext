@@ -15,7 +15,9 @@ const ThemeSwitch = () => {
   // 例如 http://localhost?theme=hexo 跳转到 http://localhost?theme=newTheme
   const onSelectChange = (e) => {
     const newTheme = e.target.value
-    const query = { ...router.query, theme: newTheme }
+    const query = router.query
+    query.theme = newTheme
+    console.log('切换主题', newTheme)
     router.push({ pathname: router.pathname, query })
   }
 
