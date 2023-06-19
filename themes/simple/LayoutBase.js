@@ -11,6 +11,7 @@ import { TopBar } from './components/TopBar'
 import CONFIG_SIMPLE from './config_simple'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -61,6 +62,8 @@ const LayoutBase = props => {
             <div className='fixed right-4 bottom-4 z-20'>
                 <JumpToTopButton />
             </div>
+
+            <AdSlot type='native'/>
 
             <Footer {...props} />
 

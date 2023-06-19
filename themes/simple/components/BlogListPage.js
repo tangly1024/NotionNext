@@ -3,6 +3,7 @@ import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { BlogItem } from './BlogItem'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
@@ -18,6 +19,7 @@ export const BlogListPage = props => {
       <div className="w-full md:pr-8 mb-12">
 
             <div id="container">
+                <AdSlot type='flow'/>
                 {posts?.map(p => (
                     <BlogItem key={p.id} post={p}/>
                 ))}

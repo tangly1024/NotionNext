@@ -7,6 +7,7 @@ import TweetEmbed from 'react-tweet-embed'
 
 import 'katex/dist/katex.min.css'
 import { mapImgUrl } from '@/lib/notion/mapImage'
+import { AdSlot } from './GoogleAdsense'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then(async (m) => {
@@ -78,6 +79,8 @@ const NotionPage = ({ post, className }) => {
       }} />
 
       <PrismMac />
+
+      <AdSlot type={'in-article'}/>
 
   </div>
 }
