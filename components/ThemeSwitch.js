@@ -1,16 +1,23 @@
 import { useGlobal } from '@/lib/global'
 import React from 'react'
 import { Draggable } from './Draggable'
-import { ALL_THEME } from '@/lib/theme'
+import { ALL_THEME } from '@/themes/theme'
+import { useRouter } from 'next/router'
 /**
  *
  * @returns 主题切换
  */
 const ThemeSwitch = () => {
-  const { theme, changeTheme } = useGlobal()
+  const { theme } = useGlobal()
+  const router = useRouter()
 
+  // 修改当前路径url中的 theme 参数
+  // 例如 http://localhost?theme=hexo 跳转到 http://localhost?theme=newTheme
   const onSelectChange = (e) => {
-    changeTheme(e.target.value)
+    const newTheme = e.target.value
+    const query = router.query
+    query.theme = newTheme
+    router.push({ pathname: router.pathname, query })
   }
 
   return (<>
