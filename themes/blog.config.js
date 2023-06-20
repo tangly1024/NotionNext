@@ -158,9 +158,9 @@ const BLOG = {
     {
       name: '向云端',
       artist: '小霞 / 海洋Bo',
-      url: 'https://music.163.com/song?id=2049512697&userid=3718701034',
+      url: 'https://music.163.com/#/song?id=2049512697&from=qr',
       cover:
-          'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+          'http://p2.music.126.net/TmOHxaGnFNlwNX8aPz66oA==/109951168638913915.jpg?param=130y130'
     },
     {
       name: '王都グランセル',
