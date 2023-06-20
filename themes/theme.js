@@ -23,7 +23,7 @@ export const getLayoutByTheme = (router) => {
   if (theme !== BLOG.THEME) {
     return dynamic(() => import(`@/themes/${theme}/${layout}`), { ssr: true })
   } else {
-    console.log('静态主题', layout)
+    // console.log('静态主题', layout)
     return ThemeComponents[layout]
   }
 }
