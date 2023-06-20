@@ -2,6 +2,8 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 分类首页
@@ -10,7 +12,10 @@ import BLOG from '@/blog.config'
  */
 export default function Category(props) {
   const { locale } = useGlobal()
-  const { siteInfo, Layout } = props
+  const { siteInfo } = props
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
     title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,

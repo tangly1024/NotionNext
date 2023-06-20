@@ -2,10 +2,14 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
+import { getLayoutByTheme } from '@/themes/theme'
 
 const Search = props => {
-  const { posts, siteInfo, Layout } = props
+  const { posts, siteInfo } = props
   const { locale } = useGlobal()
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   const router = useRouter()
   const keyword = getSearchKey(router)

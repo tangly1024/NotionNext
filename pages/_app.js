@@ -19,8 +19,6 @@ import dynamic from 'next/dynamic'
 
 // 自定义样式css和js引入
 import ExternalScript from '@/components/ExternalScript'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/lib/theme'
 
 // 各种扩展插件 动画等
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'))
@@ -33,12 +31,9 @@ const MyApp = ({ Component, pageProps }) => {
     }
   }, [])
 
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
-
   return (
         <GlobalContextProvider>
-            <Component {...pageProps} Layout={Layout} />
+            <Component {...pageProps}/>
             <ExternalPlugins {...pageProps} />
             <ExternalScript />
         </GlobalContextProvider>

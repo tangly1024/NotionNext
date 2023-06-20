@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { useEffect, useState } from 'react'
 import Select from './Select'
 import { useGlobal } from '@/lib/global'
-import { ALL_THEME } from '@/lib/theme'
+import { ALL_THEME } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
 /**
@@ -32,7 +32,7 @@ const DebugPanel = () => {
   }
 
   function handleUpdateDebugTheme(newTheme) {
-    console.log('触发切换主题', newTheme)
+    console.log('切换主题', newTheme)
     const query = { ...router.query, theme: newTheme }
     router.push({ pathname: router.pathname, query })
   }

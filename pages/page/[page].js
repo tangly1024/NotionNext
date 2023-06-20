@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 文章列表分页
@@ -8,7 +10,11 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
  * @returns
  */
 const Page = props => {
-  const { siteInfo, Layout } = props
+  const { siteInfo } = props
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+
   const meta = {
     title: `${props?.page} | Page | ${siteInfo?.title}`,
     description: siteInfo?.description,

@@ -1,14 +1,14 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
 import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import md5 from 'js-md5'
-import Loading from '@/components/Loading'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 根据notion的slug访问页面
@@ -16,8 +16,11 @@ import Loading from '@/components/Loading'
  * @returns
  */
 const Slug = props => {
-  const { post, siteInfo, Layout } = props
+  const { post, siteInfo } = props
   const router = useRouter()
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
@@ -77,9 +80,7 @@ const Slug = props => {
   }
   props = { ...props, lock, meta, setLock, validPassword }
 
-  return <Suspense fallback={<Loading />}>
-        <Layout {...props} />
-    </Suspense>
+  return <Layout {...props} />
 }
 
 export async function getStaticPaths() {

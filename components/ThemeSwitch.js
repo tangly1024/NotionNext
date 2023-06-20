@@ -1,7 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import React from 'react'
 import { Draggable } from './Draggable'
-import { ALL_THEME } from '@/lib/theme'
+import { ALL_THEME } from '@/themes/theme'
 import { useRouter } from 'next/router'
 /**
  *
@@ -17,7 +17,6 @@ const ThemeSwitch = () => {
     const newTheme = e.target.value
     const query = router.query
     query.theme = newTheme
-    console.log('切换主题', newTheme)
     router.push({ pathname: router.pathname, query })
   }
 

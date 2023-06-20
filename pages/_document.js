@@ -2,7 +2,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import BLOG from '@/blog.config'
 import CommonScript from '@/components/CommonScript'
-import Loading from '@/components/Loading'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -22,7 +21,6 @@ class MyDocument extends Document {
                     <Main />
                     <NextScript />
                 </body>
-                <Loading />
             </Html>
     )
   }

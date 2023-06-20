@@ -1,32 +1,31 @@
 import cookie from 'react-cookies'
 import BLOG from '@/blog.config'
-import { getQueryParam, getQueryVariable } from './utils'
+import { getQueryParam, getQueryVariable } from '../lib/utils'
 import dynamic from 'next/dynamic'
-
+// 使用 __THEME__ 变量来动态导入主题组件
+import * as ThemeComponents from '@theme-components'
 /**
  * 所有主题枚举
  */
 export const ALL_THEME = [
-  'hexo',
-  'matery',
-  'next',
-  'medium',
-  'fukasawa',
-  'nobelium',
-  'example',
-  'simple'
+  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple'
 ]
 
 /**
  * 加载主题文件
+ * 如果是
  * @param {*} router
  * @returns
  */
 export const getLayoutByTheme = (router) => {
   const theme = getQueryParam(router.asPath, 'theme') || BLOG.THEME
   const layout = getLayoutNameByPath(router.pathname)
-  console.log('加载组件', theme, layout)
-  return dynamic(() => import(`@/themes/${theme}/${layout}`), { ssr: true })
+  if (theme !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${theme}/${layout}`), { ssr: true })
+  } else {
+    console.log('静态主题', layout)
+    return ThemeComponents[layout]
+  }
 }
 
 /**

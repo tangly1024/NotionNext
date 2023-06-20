@@ -4,13 +4,17 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
+
 const Index = props => {
-  const { Layout } = props
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
   return <Layout {...props} />
 }
 
