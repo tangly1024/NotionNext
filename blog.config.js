@@ -171,7 +171,7 @@ const BLOG = {
     {
       name: '向云端',
       artist: '小霞 / 海洋Bo',
-      url: 'https://music.163.com/outchain/player?type=2&id=2049512697&auto=1&height=66',
+      url: 'https://music.163.com/song/media/outer/url?id=2049512697.mp3',
       cover:
           'http://p2.music.126.net/TmOHxaGnFNlwNX8aPz66oA==/109951168638913915.jpg?param=130y130'
     }
