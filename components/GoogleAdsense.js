@@ -61,7 +61,7 @@ const AdSlot = ({ type = 'show' }) => {
   // 原生广告
   if (type === 'native') {
     return <ins className="adsbygoogle"
-            style={{ display: 'block' }}
+            style={{ display: 'block', textAlign: 'center' }}
             data-ad-format="autorelaxed"
             data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
             data-ad-slot="4980048999"></ins>
