@@ -51,6 +51,7 @@ const LayoutBase = props => {
             <div id='container-wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'}>
                 <div id='container-inner ' className='w-full flex-grow'>
                     {onLoading ? LoadingCover : children}
+                    <AdSlot type='native'/>
                 </div>
 
                 <div id='right-sidebar' className="hidden xl:block flex-none sticky top-8 w-96 border-l dark:border-gray-800 pl-12 border-gray-100">
@@ -62,8 +63,6 @@ const LayoutBase = props => {
             <div className='fixed right-4 bottom-4 z-20'>
                 <JumpToTopButton />
             </div>
-
-            <AdSlot type='native'/>
 
             <Footer {...props} />
 

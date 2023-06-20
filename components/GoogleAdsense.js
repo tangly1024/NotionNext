@@ -45,7 +45,7 @@ const AdSlot = ({ type = 'show' }) => {
             data-ad-layout="in-article"
             data-ad-format="fluid"
             data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
-            data-ad-slot="3806269138"></ins>
+            data-ad-slot="3806269138" data-adtest="on"></ins>
   }
 
   //   信息流广告
@@ -55,7 +55,7 @@ const AdSlot = ({ type = 'show' }) => {
             data-ad-layout-key="-5j+cz+30-f7+bf"
             style={{ display: 'block' }}
             data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
-            data-ad-slot="1510444138"></ins>
+            data-ad-slot="1510444138" data-adtest="on"></ins>
   }
 
   // 原生广告
@@ -64,7 +64,7 @@ const AdSlot = ({ type = 'show' }) => {
             style={{ display: 'block', textAlign: 'center' }}
             data-ad-format="autorelaxed"
             data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
-            data-ad-slot="4980048999"></ins>
+            data-ad-slot="4980048999" data-adtest="on"></ins>
   }
 
   //  展示广告
@@ -73,7 +73,7 @@ const AdSlot = ({ type = 'show' }) => {
         data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
         data-ad-slot="8807314373"
         data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
+        data-full-width-responsive="true" data-adtest="on"></ins>
 }
 
 export { AdSlot }

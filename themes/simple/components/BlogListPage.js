@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { BlogItem } from './BlogItem'
 import { AdSlot } from '@/components/GoogleAdsense'
+import { Fragment } from 'react'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
@@ -16,16 +17,17 @@ export const BlogListPage = props => {
   const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
-      <div className="w-full md:pr-8 mb-12">
+        <div className="w-full md:pr-8 mb-12">
 
             <div id="container">
-                <AdSlot type='flow'/>
-                {posts?.map(p => (
-                    <BlogItem key={p.id} post={p}/>
-                ))}
+                {posts?.map((p, index) => (<>
+                        {(index + 1) % 3 === 0 && <AdSlot type='flow' />}
+                        <BlogItem key={p.id} post={p} />
+                </>))}
+
             </div>
 
-            <div className="flex justify-between text-xs">
+            <div className="flex justify-between text-xs mt-1">
                 <Link
                     href={{ pathname: currentPage - 1 === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}
                     className={`${showPrev ? 'text-blue-600 border-b border-blue-400 visible ' : ' invisible bg-gray pointer-events-none '} no-underline pb-1 px-3`}>

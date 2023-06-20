@@ -29,5 +29,6 @@
 #theme-simple .menu-link:hover {
     background-size: 100% 2px;
     color: #dd3333;
+    cursor: pointer;
 }
 
