@@ -11,17 +11,17 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG}>
-        <Head>
-          <link rel='icon' href='/favicon.ico' />
-          <CommonScript />
-        </Head>
+            <Html lang={BLOG.LANG}>
+                <Head>
+                    <link rel='icon' href='/favicon.ico' />
+                    <CommonScript />
+                </Head>
 
-        <body className={`${BLOG.FONT_STYLE} font-light bg-day dark:bg-night`}>
-            <Main />
-            <NextScript />
-        </body>
-      </Html>
+                <body className={`${BLOG.FONT_STYLE} font-light bg-day dark:bg-night`}>
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
     )
   }
 }

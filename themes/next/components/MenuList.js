@@ -11,10 +11,10 @@ export const MenuList = (props) => {
   const archiveSlot = <div className='bg-gray-300 dark:bg-gray-500 rounded-md text-gray-50 px-1 text-xs'>{postCount}</div>
 
   const defaultLinks = [
-    { icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NEXT.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE }
+    { id: 1, icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
+    { id: 2, icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NEXT.MENU_CATEGORY },
+    { id: 3, icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
+    { id: 4, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE }
   ]
 
   let links = [].concat(defaultLinks)
@@ -34,13 +34,18 @@ export const MenuList = (props) => {
   return (
         <>
             {/* 大屏模式菜单 */}
-            <nav id='nav' className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
-                {links.map(link => link && link.show && <MenuItemDrop key={link?.to} link={link} />)}
+            <nav id='nav' data-aos="fade-down"
+                data-aos-duration="500"
+                data-aos-delay="400"
+                data-aos-once="true"
+                data-aos-anchor-placement="top-bottom"
+                className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
+                {links.map(link => link && link.show && <MenuItemDrop key={link?.id} link={link} />)}
             </nav>
 
             {/* 移动端菜单 */}
             <div id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
-                {links?.map(link => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.to} link={link} />)}
+                {links?.map(link => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.id} link={link} />)}
             </div>
         </>
   )

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useEffect } from 'react'
 const id = 'canvas_sakura'
-export const Sakura = () => {
+const Sakura = () => {
   const destroySakura = ()=>{
     const sakura = document.getElementById(id)
     if(sakura && sakura.parentNode){
@@ -15,6 +15,8 @@ export const Sakura = () => {
   }, [])
   return <></>
 }
+
+export default Sakura
 
 /**
  * 创建樱花雨

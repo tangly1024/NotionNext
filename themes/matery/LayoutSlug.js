@@ -74,16 +74,6 @@ export const LayoutSlug = props => {
                                 {post && <NotionPage post={post} />}
                             </section>
 
-                            <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
-                                {/* 文章内嵌广告 */}
-                                <ins className="adsbygoogle"
-                                    style={{ display: 'block', textAlign: 'center' }}
-                                    data-adtest="on"
-                                    data-ad-layout="in-article"
-                                    data-ad-format="fluid"
-                                    data-ad-client="ca-pub-2708419466378217"
-                                    data-ad-slot="3806269138" />
-                            </section>
                             {/* 分享 */}
                             <ShareBar post={post} />
                             {/* 文章版权说明 */}
@@ -128,3 +118,5 @@ export const LayoutSlug = props => {
     </LayoutBase>
   )
 }
+
+export default LayoutSlug

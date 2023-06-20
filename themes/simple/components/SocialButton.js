@@ -8,7 +8,7 @@ import React from 'react'
  */
 const SocialButton = () => {
   return <div className='w-52 justify-center flex-wrap flex'>
-    <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 text-center'>
+    <div className='space-x-3 md:text-xl text-3xl text-gray-600 dark:text-gray-400 text-center'>
       {BLOG.CONTACT_GITHUB && <a target='_blank' rel='noreferrer' title={'github'} href={BLOG.CONTACT_GITHUB} >
         <i className='fab fa-github transform hover:scale-125 duration-150'/>
       </a>}
@@ -19,10 +19,13 @@ const SocialButton = () => {
         <i className='fab fa-telegram transform hover:scale-125 duration-150'/>
       </a>}
       {BLOG.CONTACT_LINKEDIN && <a target='_blank' rel='noreferrer' href={BLOG.CONTACT_LINKEDIN} title={'linkedIn'} >
-        <i className='transform hover:scale-125 duration-150 fab fa-linkedin dark:hover:text-indigo-400 hover:text-indigo-600'/>
+      <i className='fab fa-linkedin transform hover:scale-125 duration-150'/>
       </a>}
       {BLOG.CONTACT_WEIBO && <a target='_blank' rel='noreferrer' title={'weibo'} href={BLOG.CONTACT_WEIBO} >
         <i className='fab fa-weibo transform hover:scale-125 duration-150'/>
+      </a>}
+      {BLOG.CONTACT_INSTAGRAM && <a target='_blank' rel='noreferrer' title={'instagram'} href={BLOG.CONTACT_INSTAGRAM} >
+        <i className='fab fa-instagram transform hover:scale-125 duration-150'/>
       </a>}
       {BLOG.CONTACT_EMAIL && <a target='_blank' rel='noreferrer' title={'email'} href={`mailto:${BLOG.CONTACT_EMAIL}`} >
         <i className='fas fa-envelope transform hover:scale-125 duration-150'/>
