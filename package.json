@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "3.13.3",
+  "version": "3.13.6",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "@giscus/react": "^2.2.6",
     "@next/bundle-analyzer": "^12.1.1",
-    "@popperjs/core": "^2.9.3",
+    "@vercel/analytics": "^1.0.0",
     "animate.css": "^4.1.1",
     "animejs": "^3.2.1",
     "aos": "^3.0.0-beta.6",
@@ -38,7 +38,7 @@
     "memory-cache": "^0.2.0",
     "mermaid": "9.2.2",
     "mongodb": "^4.6.0",
-    "next": "^13.1.1",
+    "next": "13.3.1",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
     "nprogress": "^0.2.0",
@@ -52,10 +52,9 @@
     "react-facebook": "^8.1.4",
     "react-messenger-customer-chat": "^0.8.0",
     "react-notion-x": "6.16.0",
-    "react-share": "^4.4.0",
+    "react-share": "^4.4.1",
     "react-tweet-embed": "~2.0.0",
     "smoothscroll-polyfill": "^0.4.4",
-    "twikoo": "1.6.9",
     "typed.js": "^2.0.12",
     "use-ackee": "^3.0.0",
     "valine": "^1.4.18"
