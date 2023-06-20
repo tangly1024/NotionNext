@@ -17,22 +17,19 @@ export const LayoutSlug = props => {
 
             <div id="notion-article" className="px-2 xl:max-w-4xl 2xl:max-w-6xl ">
 
-                    <ArticleInfo post={post} />
+                <ArticleInfo post={post} />
 
-                    <div className="max-h-44 my-1" >
-                        <AdSlot type={'in-article'} />
-                    </div>
+                <AdSlot type={'in-article'} />
 
-                   {!lock && <NotionPage post={post} />}
+                {!lock && <NotionPage post={post} />}
 
-                    <ShareBar post={post} />
+                <ShareBar post={post} />
 
-                    <div className="max-h-44 my-1" >
-                        <AdSlot type={'in-article'} />
-                    </div>
+                <AdSlot type={'in-article'} />
 
-                    {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
-                    <Comment frontMatter={post} />
+                {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+
+                <Comment frontMatter={post} />
 
             </div>
 
