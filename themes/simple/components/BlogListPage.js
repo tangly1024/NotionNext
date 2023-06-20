@@ -20,7 +20,8 @@ export const BlogListPage = props => {
 
             <div id="container">
                 {posts?.map((p, index) => (<div key={p.id}>
-                        {(index + 1) % 3 === 0 && <AdSlot type='flow' />}
+                        {(index + 1) % 3 === 0 && <AdSlot type='in-article' />}
+                        { (index + 1) === 4 && <AdSlot type='flow'/>}
                         <BlogItem post={p} />
                 </div>))}
 
