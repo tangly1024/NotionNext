@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { BlogItem } from './BlogItem'
 import { AdSlot } from '@/components/GoogleAdsense'
-import { Fragment } from 'react'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
@@ -20,10 +19,11 @@ export const BlogListPage = props => {
         <div className="w-full md:pr-8 mb-12">
 
             <div id="container">
-                {posts?.map((p, index) => (<>
-                        {(index + 1) % 3 === 0 && <AdSlot type='flow' />}
-                        <BlogItem key={p.id} post={p} />
-                </>))}
+                {posts?.map((p, index) => (<div key={p.id}>
+                        {(index + 1) % 3 === 0 && <AdSlot type='in-article' />}
+                        { (index + 1) === 4 && <AdSlot type='flow'/>}
+                        <BlogItem post={p} />
+                </div>))}
 
             </div>
 

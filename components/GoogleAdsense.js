@@ -4,28 +4,31 @@ import { useEffect } from 'react'
 
 export default function GoogleAdsense() {
   const initGoogleAdsense = () => {
-    const ads = document.getElementsByClassName('adsbygoogle').length
-    const newAdsCount = ads
-    if (newAdsCount > 0) {
-      for (let i = 0; i <= newAdsCount; i++) {
-        try {
-          // eslint-disable-next-line no-undef
-          (adsbygoogle = window.adsbygoogle || []).push({})
-        } catch (e) {
+    setTimeout(() => {
+      const ads = document.getElementsByClassName('adsbygoogle')
+      const adsbygoogle = window.adsbygoogle
+      if (ads.length > 0) {
+        for (let i = 0; i <= ads.length; i++) {
+          try {
+            adsbygoogle.push(ads[i])
+            console.log('adsbygoogle', i, ads[i], adsbygoogle)
+          } catch (e) {
 
+          }
         }
       }
-    }
+    }, 100)
   }
 
   const router = useRouter()
+
   useEffect(() => {
-    initGoogleAdsense()
     router.events.on('routeChangeComplete', initGoogleAdsense)
     return () => {
       router.events.off('routeChangeComplete', initGoogleAdsense)
     }
-  }, [router.events])
+  }, [router])
+
   return null
 }
 
@@ -33,6 +36,7 @@ export default function GoogleAdsense() {
  * 文章内嵌广告单元
  * 请在GoogleAdsense后台配置创建对应广告，并且获取相应代码
  * 修改下面广告单元中的 data-ad-slot data-ad-format data-ad-layout-key(如果有)
+ * 添加 可以在本地调试
  */
 const AdSlot = ({ type = 'show' }) => {
   if (!BLOG.ADSENSE_GOOGLE_ID) {
