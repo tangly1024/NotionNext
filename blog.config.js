@@ -171,16 +171,9 @@ const BLOG = {
     {
       name: '向云端',
       artist: '小霞 / 海洋Bo',
-      url: 'https://m701.music.126.net/20230620122753/43a4ccaff2af5ddb4fece4ac996efee2/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/28133411020/b5d7/3857/ac5c/1274e257b2e91849e3290c8b53709ba5.m4a',
+      url: 'https://m704.music.126.net/20230620133332/3c4df2987dc264fc2c941f30e6f83fc8/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/28133411020/b5d7/3857/ac5c/1274e257b2e91849e3290c8b53709ba5.m4a?authSecret=00000188d73459c51c3a0aaba3611070.m4a',
       cover:
           'http://p2.music.126.net/TmOHxaGnFNlwNX8aPz66oA==/109951168638913915.jpg?param=130y130'
-    },
-    {
-      name: '王都グランセル',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
-      cover:
-          'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
