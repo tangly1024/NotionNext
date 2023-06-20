@@ -11,7 +11,7 @@ export const BlogItem = props => {
 
         <h2 className="mb-2">
             <Link
-                href={`${post.slug}`}
+                href={`${BLOG.SUB_PATH}/${post.slug}`}
                 className="blog-item-title font-bold text-black text-2xl no-underline hover:underline">
                 {post.title}
             </Link>
@@ -42,7 +42,7 @@ export const BlogItem = props => {
         </div>
 
         <div className='block'>
-            <Link href={`${post.slug}`} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+            <Link href={`${BLOG.SUB_PATH}/${post.slug}`} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
                 Continue Reading <i className="fa-solid fa-angle-right align-middle"></i>
             </Link>
         </div>
