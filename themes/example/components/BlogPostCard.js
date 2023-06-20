@@ -41,7 +41,7 @@ const BlogPostCard = ({ post }) => {
         {showPageCover && (
             <div className="md:w-5/12 w-full overflow-hidden p-1">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                    <div className='h-44 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.page_cover}')` }} />
+                    <div className='h-44 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
                 </Link>
             </div>
         )}
