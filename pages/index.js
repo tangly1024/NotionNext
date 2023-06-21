@@ -1,41 +1,21 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { useGlobal } from '@/lib/global'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useState } from 'react'
-import Loading from '@/components/Loading'
 
-const layout = 'LayoutIndex'
-
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
-
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
-const Index = props => {
-  // 动态切换主题
-  const { theme } = useGlobal()
-  const [Layout, setLayout] = useState(DefaultLayout)
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
 
-  return <Suspense fallback={<Loading />}>
-        <Layout {...props} />
-    </Suspense>
+const Index = props => {
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+  return <Layout {...props} />
 }
 
 /**

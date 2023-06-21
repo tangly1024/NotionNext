@@ -2,30 +2,17 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
-import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useState } from 'react'
-import Loading from '@/components/Loading'
-const layout = 'LayoutSearch'
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+import { getLayoutByTheme } from '@/themes/theme'
 
 const Search = props => {
   const { posts, siteInfo } = props
-  const { theme, locale } = useGlobal()
-  const [Layout, setLayout] = useState(DefaultLayout)
+  const { locale } = useGlobal()
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+
   const router = useRouter()
   const keyword = getSearchKey(router)
-
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
 
   let filteredPosts
   // 静态过滤
@@ -51,9 +38,7 @@ const Search = props => {
 
   props = { ...props, meta, posts: filteredPosts }
 
-  return <Suspense fallback={<Loading />}>
-        <Layout {...props} />
-    </Suspense>
+  return <Layout {...props} />
 }
 
 /**
