@@ -11,6 +11,7 @@ import { TopBar } from './components/TopBar'
 import CONFIG_SIMPLE from './config_simple'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -50,6 +51,7 @@ const LayoutBase = props => {
             <div id='container-wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'}>
                 <div id='container-inner ' className='w-full flex-grow'>
                     {onLoading ? LoadingCover : children}
+                    <AdSlot type='native'/>
                 </div>
 
                 <div id='right-sidebar' className="hidden xl:block flex-none sticky top-8 w-96 border-l dark:border-gray-800 pl-12 border-gray-100">

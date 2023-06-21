@@ -1,23 +1,14 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { useGlobal } from '@/lib/global'
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
 import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import md5 from 'js-md5'
-import dynamic from 'next/dynamic'
-import Loading from '@/components/Loading'
-
-const layout = 'LayoutSlug'
-
-/**
- * 懒加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 根据notion的slug访问页面
@@ -25,19 +16,11 @@ const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), 
  * @returns
  */
 const Slug = props => {
-  const { theme, setOnLoading } = useGlobal()
   const { post, siteInfo } = props
   const router = useRouter()
-  const [Layout, setLayout] = useState(DefaultLayout)
 
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
@@ -57,7 +40,6 @@ const Slug = props => {
 
   // 文章加载
   useEffect(() => {
-    setOnLoading(false)
     // 404
     if (!post) {
       setTimeout(() => {
@@ -92,15 +74,13 @@ const Slug = props => {
     description: post?.summary,
     type: post?.type,
     slug: post?.slug,
-    image: post?.page_cover || (siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE),
+    image: post?.pageCoverThumbnail || (siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE),
     category: post?.category?.[0],
     tags: post?.tags
   }
   props = { ...props, lock, meta, setLock, validPassword }
 
-  return <Suspense fallback={<Loading />}>
-        <Layout {...props} />
-    </Suspense>
+  return <Layout {...props} />
 }
 
 export async function getStaticPaths() {
