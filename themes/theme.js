@@ -1,6 +1,6 @@
 import cookie from 'react-cookies'
 import BLOG from '@/blog.config'
-import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
+import { getQueryParam, getQueryVariable } from '../lib/utils'
 import dynamic from 'next/dynamic'
 // 使用 __THEME__ 变量来动态导入主题组件
 import * as ThemeComponents from '@theme-components'
@@ -21,14 +21,6 @@ export const getLayoutByTheme = (router) => {
   const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
   const layout = getLayoutNameByPath(router.pathname)
   if (themeQuery !== BLOG.THEME) {
-    setTimeout(() => {
-      if (isBrowser()) {
-        const element = document?.getElementById('theme-' + themeQuery)
-        element?.scrollIntoView({
-          behavior: 'smooth'
-        })
-      }
-    }, 500)
     return dynamic(() => import(`@/themes/${themeQuery}/${layout}`), { ssr: true })
   } else {
     return ThemeComponents[layout]
