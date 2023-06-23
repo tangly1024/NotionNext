@@ -38,6 +38,8 @@ const LayoutBase = props => {
             <CommonHead meta={meta} />
 
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+                {/* 顶部导航栏 */}
+                <TopNavBar {...props} />
 
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
 
@@ -56,11 +58,9 @@ const LayoutBase = props => {
                         </div>
                     </div>
 
-                    <div id='container-inner' className='w-full relative z-10'>
-                        {/* 顶部导航栏 */}
-                        <TopNavBar {...props} />
+                    <div id='center-wrapper' className='w-full relative z-10 pt-12'>
 
-                        <div id='container-inner' className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
+                        <div id='container-inner' className='w-full px-7 max-w-5xl justify-center mx-auto min-h-screen'>
                             {slotTop}
 
                             {onLoading ? LoadingCover : children}
@@ -78,6 +78,21 @@ const LayoutBase = props => {
 
                         {/* 底部 */}
                         <Footer title={siteInfo?.title} />
+                    </div>
+
+                    {/* 左侧推拉抽屉 */}
+                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
+                        <div className='py-14 px-6 sticky top-0'>
+                            <Tabs>
+                                {slotLeft}
+                                <div key={locale.NAV.ABOUT}>
+                                    {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
+                                    {showInfoCard && <InfoCard {...props} />}
+                                    {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
+                                </div>
+                            </Tabs>
+                            <Live2D />
+                        </div>
                     </div>
 
                 </main>

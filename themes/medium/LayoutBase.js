@@ -21,7 +21,7 @@ const ThemeGlobalMedium = createContext()
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotLeft, slotTop, siteInfo } = props
+  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -43,7 +43,7 @@ const LayoutBase = props => {
                     {/* 桌面端左侧菜单 */}
                     {/* <LeftMenuBar/> */}
 
-                    <div id='container-inner' className='w-full relative z-10'>
+                    <div id='container-wrapper' className='w-full relative z-10'>
                         {/* 顶部导航栏 */}
                         <TopNavBar {...props} />
 
@@ -71,7 +71,7 @@ const LayoutBase = props => {
                     <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
                         <div className='py-14 px-6 sticky top-0'>
                             <Tabs>
-                                {slotLeft}
+                                {slotRight}
                                 <div key={locale.NAV.ABOUT}>
                                     {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
                                     {showInfoCard && <InfoCard {...props} />}
