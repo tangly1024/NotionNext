@@ -32,7 +32,9 @@ const PrismMac = () => {
         renderPrismMac()
       })
     }
-    renderMermaid()
+    setTimeout(() => {
+      renderMermaid()
+    }, 500)
   }, [])
   return <></>
 }
