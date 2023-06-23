@@ -30,9 +30,9 @@ const PrismMac = () => {
           window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
         }
         renderPrismMac()
+        renderMermaid()
       })
     }
-    renderMermaid()
   }, [])
   return <></>
 }
@@ -41,36 +41,36 @@ const PrismMac = () => {
  * 将mermaid语言 渲染成图片
  */
 const renderMermaid = async() => {
-  //   支持 Mermaid
-  const mermaidPres = document.querySelectorAll('pre.notion-code.language-mermaid')
-  if (mermaidPres) {
-    for (const e of mermaidPres) {
-      const chart = e.querySelector('code').textContent
-      if (chart && !e.querySelector('.mermaid')) {
-        const m = document.createElement('div')
-        m.className = 'mermaid'
-        m.innerHTML = chart
-        e.appendChild(m)
-      }
-    }
-  }
+  const observer = new MutationObserver(async mutationsList => {
+    for (const m of mutationsList) {
+      if (m.target.className === 'notion-code language-mermaid') {
+        const chart = m.target.querySelector('code').textContent
+        if (chart && !m.target.querySelector('.mermaid')) {
+          const mermaidChart = document.createElement('div')
+          mermaidChart.className = 'mermaid'
+          mermaidChart.innerHTML = chart
+          m.target.appendChild(mermaidChart)
+        }
 
-  const mermaidsSvg = document.querySelectorAll('.mermaid')
-  if (mermaidsSvg) {
-    let needLoad = false
-    for (const e of mermaidsSvg) {
-      if (e?.firstChild?.nodeName !== 'svg') {
-        needLoad = true
+        const mermaidsSvg = document.querySelectorAll('.mermaid')
+        if (mermaidsSvg) {
+          let needLoad = false
+          for (const e of mermaidsSvg) {
+            if (e?.firstChild?.nodeName !== 'svg') {
+              needLoad = true
+            }
+          }
+          if (needLoad) {
+            const url = await loadExternalResource(BLOG.MERMAID_CDN, 'js')
+            const mermaid = window.mermaid
+            console.log('mermaid加载成功', url, mermaid)
+            mermaid.contentLoaded()
+          }
+        }
       }
     }
-    if (needLoad) {
-    //   const asyncMermaid = await import('mermaid')
-      const url = await loadExternalResource(BLOG.MERMAID_CDN, 'js')
-      const mermaid = window.mermaid
-      console.log('mermaid加载成功', url, mermaid)
-      mermaid.contentLoaded()
-    }
-  }
+  })
+  observer.observe(document.querySelector('#container'), { attributes: true, subtree: true })
 }
 
 function renderPrismMac() {
