@@ -15,7 +15,7 @@ export const BlogListPage = props => {
 
   const showPrev = currentPage > 1
   const showNext = page < totalPage
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER
 
