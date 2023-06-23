@@ -1,11 +1,11 @@
-import BLOG from '@/blog.config'
-import BlogPostListPage from './components/BlogPostListPage'
-import BlogPostListScroll from './components/BlogPostListScroll'
 import LayoutBase from './LayoutBase'
+import Announcement from './components/Announcement'
+import ArticleInfo from './components/ArticleInfo'
 
 export const LayoutIndex = (props) => {
   return <LayoutBase {...props}>
-    {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+    {/* gitbook主题首页只显示公告 */}
+    <Announcement {...props}/>
   </LayoutBase>
 }
 

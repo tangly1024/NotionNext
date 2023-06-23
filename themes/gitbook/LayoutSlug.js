@@ -15,7 +15,7 @@ import CategoryItem from './components/CategoryItem'
 import TagItemMini from './components/TagItemMini'
 import ShareBar from '@/components/ShareBar'
 
-export const LayoutSlug = props => {
+export const LayoutSlug = (props) => {
   const { post, prev, next, siteInfo, lock, validPassword } = props
   const { locale } = useGlobal()
 
@@ -23,20 +23,15 @@ export const LayoutSlug = props => {
     post?.date?.start_date || post?.createdTime,
     locale.LOCALE
   )
+
+  const slotRight = post?.toc && post?.toc?.length > 3 && <Catalog toc={post.toc} />
+  console.log(slotRight, post, 'jhhh')
+
   if (!post) {
-    return <LayoutBase {...props} showInfoCard={true}
-        />
+    return <LayoutBase {...props}/>
   }
-
-  const slotLeft = post?.toc && post?.toc?.length > 3 && (
-        <div key={locale.COMMON.TABLE_OF_CONTENTS} >
-            <Catalog toc={post.toc} />
-            {/* <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' /> */}
-        </div>
-  )
-
   return (
-        <LayoutBase showInfoCard={true} slotLeft={slotLeft} {...props} >
+        <LayoutBase slogRight={slotRight} {...props} >
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 

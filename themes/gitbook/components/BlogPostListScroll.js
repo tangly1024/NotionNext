@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
-import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -17,7 +16,8 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
   const [page, updatePage] = useState(1)
   let filteredPosts = Object.assign(posts)
-  const searchKey = getSearchKey()
+  const router = useRouter()
+  const searchKey = getSearchKey(router)
   if (searchKey) {
     filteredPosts = posts.filter(post => {
       const tagContent = post.tags ? post.tags.join(' ') : ''
@@ -56,7 +56,6 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   })
 
   const targetRef = useRef(null)
-  const { locale } = useGlobal()
 
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
@@ -70,13 +69,6 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
         ))}
       </div>
 
-      <div>
-        <div onClick={() => {
-          handleGetMore()
-        }}
-          className='w-full my-4 py-4 text-center cursor-pointer dark:text-gray-200'
-        > {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`} </div>
-      </div>
     </div>
   }
 }
@@ -95,8 +87,7 @@ const getPostByPage = function (page, totalPosts, postsPerPage) {
   )
 }
 
-function getSearchKey() {
-  const router = useRouter()
+function getSearchKey(router) {
   if (router.query && router.query.s) {
     return router.query.s
   }

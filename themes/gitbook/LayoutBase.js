@@ -12,6 +12,8 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
+import BlogPostListScroll from './components/BlogPostListScroll'
+import ArticleInfo from './components/ArticleInfo'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -21,7 +23,7 @@ const ThemeGlobalMedium = createContext()
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotLeft, slotTop, siteInfo } = props
+  const { children, meta, posts, post, showInfoCard = true, slotLeft, slotRight, slotTop, siteInfo } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -45,22 +47,20 @@ const LayoutBase = props => {
 
                     {/* 左侧推拉抽屉 */}
                     <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
-                        <div className='py-14 px-6 sticky top-0'>
-                            <Tabs>
-                                {slotLeft}
-                                <div key={locale.NAV.ABOUT}>
-                                    {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
-                                    {showInfoCard && <InfoCard {...props} />}
-                                    {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
-                                </div>
-                            </Tabs>
-                            <Live2D />
+                        <div className='py-14 px-6 sticky top-0 overflow-y-scroll h-screen'>
+                            {slotLeft}
+
+                            {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
+
+                            {/* 所有文章列表 */}
+                            <BlogPostListScroll posts={posts} />
+
                         </div>
                     </div>
 
-                    <div id='center-wrapper' className='w-full relative z-10 pt-12'>
+                    <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-12 min-h-screen'>
 
-                        <div id='container-inner' className='w-full px-7 max-w-5xl justify-center mx-auto min-h-screen'>
+                        <div id='container-inner' className='w-full px-7 max-w-5xl justify-center mx-auto'>
                             {slotTop}
 
                             {onLoading ? LoadingCover : children}
@@ -80,17 +80,15 @@ const LayoutBase = props => {
                         <Footer title={siteInfo?.title} />
                     </div>
 
-                    {/* 左侧推拉抽屉 */}
-                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
+                    {/*  右侧侧推拉抽屉 */}
+                    <div className={`hidden xl:block dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
                         <div className='py-14 px-6 sticky top-0'>
-                            <Tabs>
-                                {slotLeft}
-                                <div key={locale.NAV.ABOUT}>
-                                    {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
-                                    {showInfoCard && <InfoCard {...props} />}
-                                    {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
-                                </div>
-                            </Tabs>
+                            {slotRight}
+                            <ArticleInfo post={props?.post ? props.post : props.notice }/>
+                            <div className='pt-12'>
+                                <InfoCard {...props} />
+                                {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
+                            </div>
                             <Live2D />
                         </div>
                     </div>
