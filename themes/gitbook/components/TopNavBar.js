@@ -6,6 +6,7 @@ import { useGlobal } from '@/lib/global'
 import CONFIG_MEDIUM from '../config_medium'
 import BLOG from '@/blog.config'
 import { MenuItemDrop } from './MenuItemDrop'
+import DarkModeButton from '@/components/DarkModeButton'
 
 /**
  * 顶部导航栏 + 菜单
@@ -67,6 +68,7 @@ export default function TopNavBar(props) {
                 {/* 桌面端顶部菜单 */}
                 <div className='hidden md:flex'>
                     {links && links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
+                    <DarkModeButton className='text-sm flex items-center h-full' />
                 </div>
             </div>
         </div>

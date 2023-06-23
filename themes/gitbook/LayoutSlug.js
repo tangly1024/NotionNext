@@ -1,11 +1,6 @@
 import LayoutBase from './LayoutBase'
-import { useGlobal } from '@/lib/global'
 import React from 'react'
-import Catalog from './components/Catalog'
 import { ArticleLock } from './components/ArticleLock'
-import formatDate from '@/lib/formatDate'
-import BLOG from '@/blog.config'
-import Link from 'next/link'
 import NotionPage from '@/components/NotionPage'
 import CONFIG_MEDIUM from './config_medium'
 import Comment from '@/components/Comment'
@@ -16,22 +11,14 @@ import TagItemMini from './components/TagItemMini'
 import ShareBar from '@/components/ShareBar'
 
 export const LayoutSlug = (props) => {
-  const { post, prev, next, siteInfo, lock, validPassword } = props
-  const { locale } = useGlobal()
-
-  const date = formatDate(
-    post?.date?.start_date || post?.createdTime,
-    locale.LOCALE
-  )
-
-  const slotRight = post?.toc && post?.toc?.length > 3 && <Catalog toc={post.toc} />
-  console.log(slotRight, post, 'jhhh')
+  const { post, prev, next, lock, validPassword } = props
 
   if (!post) {
     return <LayoutBase {...props}/>
   }
+
   return (
-        <LayoutBase slogRight={slotRight} {...props} >
+        <LayoutBase {...props} >
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -40,30 +27,8 @@ export const LayoutSlug = (props) => {
                 {/* title */}
                 <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
 
-                {/* meta */}
-                <section className="py-2 items-center text-sm  px-1">
-                    <div className='flex flex-wrap text-gray-500 py-1 dark:text-gray-600'>
-                        <span className='whitespace-nowrap'> <i className='far fa-calendar mr-2' />{date}</span>
-                        <span className='mx-1'>|</span>
-                        <span className='whitespace-nowrap mr-2'><i className='far fa-calendar-check mr-2' />{post.lastEditedTime}</span>
-                        <div className="hidden busuanzi_container_page_pv font-light mr-2 whitespace-nowrap">
-                            <i className="mr-1 fas fa-eye" /><span className="busuanzi_value_page_pv" />
-                        </div>
-                    </div>
-                    <Link href="/about" passHref legacyBehavior>
-                        <div className='flex pt-2'>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={siteInfo?.icon} className='rounded-full cursor-pointer' width={22} alt={BLOG.AUTHOR} />
-
-                            <div className="mr-3 ml-2 my-auto text-green-500 cursor-pointer">
-                                {BLOG.AUTHOR}
-                            </div>
-                        </div>
-                    </Link>
-                </section>
-
                 {/* Notion文章主体 */}
-                <section id="notion-article" className="px-1 max-w-4xl">
+                <section id="notion-article" className="px-1">
                     {post && (<NotionPage post={post} />)}
                 </section>
 
@@ -73,13 +38,13 @@ export const LayoutSlug = (props) => {
                     <ShareBar post={post} />
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG_MEDIUM.POST_DETAIL_CATEGORY && post.category && <CategoryItem category={post.category} />}
+                        {CONFIG_MEDIUM.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
                         <div>
                             {CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 
-                    {post.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+                    {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
                     <Comment frontMatter={post} />
                 </section>
 

@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
+import { useMediumGlobal } from '../LayoutBase'
 let lock = false
 
-const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
-  const [onLoading, setLoadingState] = useState(false)
-  const router = useRouter()
+const SearchInput = ({ currentSearch, cRef, className }) => {
   const searchInputRef = useRef()
+  const { setFilterPosts, allNavPages } = useMediumGlobal()
+
   useImperativeHandle(cRef, () => {
     return {
       focus: () => {
@@ -15,15 +15,43 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
   })
 
   const handleSearch = () => {
-    const key = searchInputRef.current.value
-
-    if (key && key !== '') {
-      setLoadingState(true)
-      location.href = '/search/' + key
+    let keyword = searchInputRef.current.value
+    const filterPosts = []
+    if (keyword) {
+      keyword = keyword.trim()
     } else {
-      router.push({ pathname: '/' }).then(r => {
-      })
+      setFilterPosts(allNavPages)
     }
+    for (const post of allNavPages) {
+      const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
+      const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
+      const articleInfo = post.title + post.summary + tagContent + categoryContent
+      let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
+      const indexContent = [post.summary]
+      // console.log('全文搜索缓存', cacheKey, page != null)
+      post.results = []
+      let hitCount = 0
+      for (const i in indexContent) {
+        const c = indexContent[i]
+        if (!c) {
+          continue
+        }
+        const index = c.toLowerCase().indexOf(keyword.toLowerCase())
+        if (index > -1) {
+          hit = true
+          hitCount += 1
+          post.results.push(c)
+        } else {
+          if ((post.results.length - 1) / hitCount < 3 || i === 0) {
+            post.results.push(c)
+          }
+        }
+      }
+      if (hit) {
+        filterPosts.push(post)
+      }
+    }
+    setFilterPosts(filterPosts)
   }
   const handleKeyUp = (e) => {
     if (e.keyCode === 13) { // 回车
@@ -72,7 +100,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
 
     <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
       onClick={handleSearch}>
-        <i className={`hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'} `} />
+        <i className={'hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas fa-search'} />
     </div>
 
     {(showClean &&

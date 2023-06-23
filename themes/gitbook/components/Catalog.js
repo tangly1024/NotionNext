@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import Progress from './Progress'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 目录导航组件
@@ -9,11 +9,9 @@ import Progress from './Progress'
  * @returns {JSX.Element}
  * @constructor
  */
-const Catalog = ({ toc }) => {
+const Catalog = ({ post }) => {
   const tocIds = []
-
-  // 目录自动滚动
-  const tRef = useRef(null)
+  const toc = post?.toc
   // 同步选中目录事件
   const [activeSection, setActiveSection] = useState(null)
 
@@ -24,7 +22,7 @@ const Catalog = ({ toc }) => {
     return () => {
       window.removeEventListener('scroll', actionSectionScrollSpy)
     }
-  }, [])
+  }, [post])
 
   const throttleMs = 200
   const actionSectionScrollSpy = useCallback(throttle(() => {
@@ -51,19 +49,18 @@ const Catalog = ({ toc }) => {
     }
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
-    tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
+    if (isBrowser()) {
+      document?.getElementById('toc-wrapper')?.scrollTo({ top: 28 * index, behavior: 'smooth' })
+    }
   }, throttleMs))
 
   // 无目录就直接返回空
   if (!toc || toc.length < 1) {
-    return <></>
+    return null
   }
 
-  return <div className='px-3'>
-    <div className='w-full mt-2 mb-4'>
-      <Progress />
-    </div>
-    <div className='overflow-y-auto max-h-96 overscroll-none scroll-hidden' ref={tRef}>
+  return <>
+    <div id='toc-wrapper' className='overflow-y-auto max-h-96 overscroll-none scroll-hidden'>
       <nav className='h-full  text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
@@ -76,7 +73,7 @@ const Catalog = ({ toc }) => {
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
               <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-green-500 underline'}`}
+                className={`${activeSection === id && ' font-bold text-gray-500 underline'}`}
               >
                 {tocItem.text}
               </span>
@@ -85,7 +82,7 @@ const Catalog = ({ toc }) => {
         })}
       </nav>
     </div>
-  </div>
+  </>
 }
 
 export default Catalog

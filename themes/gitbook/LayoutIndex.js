@@ -1,6 +1,5 @@
 import LayoutBase from './LayoutBase'
 import Announcement from './components/Announcement'
-import ArticleInfo from './components/ArticleInfo'
 
 export const LayoutIndex = (props) => {
   return <LayoutBase {...props}>

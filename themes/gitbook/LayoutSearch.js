@@ -30,7 +30,7 @@ export const LayoutSearch = (props) => {
       }
     },
     100)
-  })
+  }, [currentSearch])
   return <LayoutBase {...props}>
 
     <div className='py-12'>
