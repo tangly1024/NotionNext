@@ -40,8 +40,21 @@ const LayoutBase = props => {
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
 
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
-                    {/* 桌面端左侧菜单 */}
-                    {/* <LeftMenuBar/> */}
+
+                    {/* 左侧推拉抽屉 */}
+                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
+                        <div className='py-14 px-6 sticky top-0'>
+                            <Tabs>
+                                {slotLeft}
+                                <div key={locale.NAV.ABOUT}>
+                                    {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
+                                    {showInfoCard && <InfoCard {...props} />}
+                                    {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
+                                </div>
+                            </Tabs>
+                            <Live2D />
+                        </div>
+                    </div>
 
                     <div id='container-inner' className='w-full relative z-10'>
                         {/* 顶部导航栏 */}
@@ -67,20 +80,6 @@ const LayoutBase = props => {
                         <Footer title={siteInfo?.title} />
                     </div>
 
-                    {/* 桌面端右侧 */}
-                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
-                        <div className='py-14 px-6 sticky top-0'>
-                            <Tabs>
-                                {slotLeft}
-                                <div key={locale.NAV.ABOUT}>
-                                    {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
-                                    {showInfoCard && <InfoCard {...props} />}
-                                    {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
-                                </div>
-                            </Tabs>
-                            <Live2D />
-                        </div>
-                    </div>
                 </main>
 
                 {/* 移动端底部导航栏 */}
