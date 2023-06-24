@@ -14,11 +14,11 @@ const TocDrawer = ({ post, cRef }) => {
     changeTocVisible(!tocVisible)
   }
   return <>
-    <div id='medium-toc-float' className='fixed top-0 right-0 z-40'>
+    <div id='gitbook-toc-float' className='fixed top-0 right-0 z-40'>
       {/* 侧边菜单 */}
       <div
         className={(tocVisible ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') +
-        ' overflow-y-hidden shadow-card w-60 duration-200 fixed right-1 bottom-16 rounded py-2 bg-white dark:bg-gray-600'}>
+        ' overflow-y-hidden shadow-card w-60 duration-200 fixed right-1 bottom-16 rounded py-2 bg-white dark:bg-gray-900'}>
           {post && <>
            <div className='dark:text-gray-400 text-gray-600 h-56 p-3'>
              <Catalog post={post}/>

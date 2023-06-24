@@ -10,7 +10,7 @@ export default function FloatTocButton () {
   return (
     <div
       onClick={toggleToc}
-      className={ 'text-black dark:border-gray-500 flex justify-center items-center dark:text-gray-200 py-2 px-2'
+      className={ 'text-black flex justify-center items-center dark:text-gray-200 dark:bg-hexo-black-gray py-2 px-2'
       }
     >
       <a
