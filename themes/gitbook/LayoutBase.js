@@ -16,6 +16,7 @@ import Catalog from './components/Catalog'
 import { useRouter } from 'next/router'
 import Announcement from './components/Announcement'
 import PageNavDrawer from './components/PageNavDrawer'
+import FloatTocButton from './components/FloatTocButton'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -31,6 +32,8 @@ const LayoutBase = (props) => {
   const [filterPosts, setFilterPosts] = useState(allNavPages)
   const { onLoading } = useGlobal()
   const router = useRouter()
+
+  const showTocButton = post?.toc?.length > 1
 
   useEffect(() => {
     setFilterPosts(allNavPages)
@@ -108,6 +111,10 @@ const LayoutBase = (props) => {
                     </div>
 
                 </main>
+
+                {showTocButton && !tocVisible && <div className='fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b rounded'>
+                    <FloatTocButton {...props}/>
+                </div>}
 
                 <PageNavDrawer {...props}/>
 

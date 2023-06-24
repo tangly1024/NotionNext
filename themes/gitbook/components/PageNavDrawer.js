@@ -18,7 +18,7 @@ const PageNavDrawer = ({ post, cRef }) => {
         <div id='gitbook-left-float' className='fixed top-0 left-0 z-40'>
             {/* 侧边菜单 */}
             <div
-                className={(pageNavVisible ? 'animate__slideInLeft ' : ' -ml-72 animate__slideOutLeft') +
+                className={(pageNavVisible ? 'animate__slideInLeft ' : '-ml-80 animate__slideOutLeft') +
                     ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 bottom-16 rounded py-2 bg-white dark:bg-gray-600'}>
                 <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
                     {/* 所有文章列表 */}
