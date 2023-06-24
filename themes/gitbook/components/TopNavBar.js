@@ -38,10 +38,6 @@ export default function TopNavBar(props) {
     links = customMenu
   }
 
-  if (!links || links.length === 0) {
-    return null
-  }
-
   return (
         <div id='top-nav' className={'fixed top-0 w-full z-40 ' + className}>
 
