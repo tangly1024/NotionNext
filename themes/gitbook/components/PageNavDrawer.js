@@ -1,4 +1,3 @@
-import Catalog from './Catalog'
 import { useMediumGlobal } from '../LayoutBase'
 import BlogPostListScroll from './BlogPostListScroll'
 
