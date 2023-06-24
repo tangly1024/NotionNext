@@ -50,7 +50,6 @@ const Catalog = ({ post }) => {
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
     if (isBrowser() && tocIds?.length > 0) {
-      console.log(28 * index, index, currentSectionId)
       for (const tocWrapper of document?.getElementsByClassName('toc-wrapper')) {
         tocWrapper?.scrollTo({ top: 28 * index, behavior: 'smooth' })
       }

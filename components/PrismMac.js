@@ -12,12 +12,14 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 // mermaid图
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { useRouter } from 'next/router'
 
 /**
  * @author https://github.com/txs/
  * @returns
  */
 const PrismMac = () => {
+  const router = useRouter()
   useEffect(() => {
     if (isBrowser()) {
       if (BLOG.CODE_MAC_BAR) {
@@ -33,7 +35,7 @@ const PrismMac = () => {
         renderMermaid()
       })
     }
-  }, [])
+  }, [router.events])
   return <></>
 }
 
@@ -70,8 +72,8 @@ const renderMermaid = async() => {
       }
     }
   })
-  if (document.querySelector('#notion-article')) {
-    observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
+  if (document.querySelector('#container-inner')) {
+    observer.observe(document.querySelector('#container-inner'), { attributes: true, subtree: true })
   }
 }
 
