@@ -15,7 +15,7 @@ export default function FloatTocButton () {
     >
       <a
         id="darkModeButton"
-        className={'fa-list-ol hover:cursor-pointer fas hover:scale-150 transform duration-200'}
+        className={'fa-list-ol cursor-pointer fas hover:scale-150 transform duration-200'}
       />
     </div>
   )
