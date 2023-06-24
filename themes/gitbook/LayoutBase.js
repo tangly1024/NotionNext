@@ -15,6 +15,7 @@ import ArticleInfo from './components/ArticleInfo'
 import Catalog from './components/Catalog'
 import { useRouter } from 'next/router'
 import Announcement from './components/Announcement'
+import PageNavDrawer from './components/PageNavDrawer'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -26,6 +27,7 @@ const ThemeGlobalMedium = createContext()
 const LayoutBase = (props) => {
   const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop, siteInfo } = props
   const [tocVisible, changeTocVisible] = useState(false)
+  const [pageNavVisible, changePageNavVisible] = useState(false)
   const [filterPosts, setFilterPosts] = useState(allNavPages)
   const { onLoading } = useGlobal()
   const router = useRouter()
@@ -41,7 +43,7 @@ const LayoutBase = (props) => {
     </div>
 
   return (
-        <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible, filterPosts, setFilterPosts, allNavPages }}>
+        <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible, filterPosts, setFilterPosts, allNavPages, pageNavVisible, changePageNavVisible }}>
             <CommonHead meta={meta} />
 
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
@@ -106,6 +108,8 @@ const LayoutBase = (props) => {
                     </div>
 
                 </main>
+
+                <PageNavDrawer {...props}/>
 
                 {/* 移动端底部导航栏 */}
                 <BottomMenuBar {...props} className='block md:hidden' />
