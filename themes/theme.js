@@ -8,7 +8,7 @@ import * as ThemeComponents from '@theme-components'
  * 所有主题枚举
  */
 export const ALL_THEME = [
-  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple'
+  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple', 'gitbook'
 ]
 
 /**
