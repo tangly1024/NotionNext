@@ -5,7 +5,9 @@ import React from 'react'
 
 export const Draggable = (props) => {
   const { children } = props
-  let currentObj, offsetX, offsetY// 初始化变量，定义备用变量
+  const draggableRef = React.useRef(null)
+  const rafRef = React.useRef(null)
+  let currentObj, offsetX, offsetY
 
   React.useEffect(() => {
     const draggableElements = document.getElementsByClassName('draggable')
@@ -63,20 +65,24 @@ export const Draggable = (props) => {
 
     function move(event) { // 鼠标移动处理函数
       event = e(event)
-      if (currentObj) {
-        const left = event.mx - offsetX// 定义拖动元素的x轴距离
-        const top = event.my - offsetY// 定义拖动元素的y轴距离
-        currentObj.style.left = left + 'px'// 定义拖动元素的x轴距离
-        currentObj.style.top = top + 'px'// 定义拖动元素的y轴距离
-        checkInWindow()
-      }
+      rafRef.current = requestAnimationFrame(() => updatePosition(event))
     }
 
-    function stop(event) { // 松开鼠标处理函数
+    const stop = (event) => {
       event = e(event)
-      //   释放所有操作对象
-      document.documentElement.style.overflow = 'auto' // 解除页面滚动限制
+      document.documentElement.style.overflow = 'auto'
+      cancelAnimationFrame(rafRef.current)
       currentObj = document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
+    }
+
+    const updatePosition = (event) => {
+      if (currentObj) {
+        const left = event.mx - offsetX
+        const top = event.my - offsetY
+        currentObj.style.left = left + 'px'
+        currentObj.style.top = top + 'px'
+        checkInWindow()
+      }
     }
 
     /**
@@ -126,11 +132,12 @@ export const Draggable = (props) => {
     return () => {
       return () => {
         window.removeEventListener('resize', checkInWindow)
+        cancelAnimationFrame(rafRef.current)
       }
     }
   }, [])
 
-  return <div className='draggable cursor-move'>
+  return <div className='draggable cursor-move select-none' ref={draggableRef}>
      {children}
   </div>
 }
