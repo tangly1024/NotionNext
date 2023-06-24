@@ -70,7 +70,7 @@ const renderMermaid = async() => {
       }
     }
   })
-  observer.observe(document.querySelector('#container'), { attributes: true, subtree: true })
+  observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
 }
 
 function renderPrismMac() {
