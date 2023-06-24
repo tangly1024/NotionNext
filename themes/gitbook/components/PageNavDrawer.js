@@ -14,7 +14,6 @@ const PageNavDrawer = ({ post, cRef }) => {
     changePageNavVisible(!pageNavVisible)
   }
 
-  console.log('page', pageNavVisible)
   return <>
         <div id='gitbook-left-float' className='fixed top-0 left-0 z-40'>
             {/* 侧边菜单 */}

@@ -43,7 +43,7 @@ export default function TopNavBar(props) {
   }
 
   return (
-      <div id='top-nav' className={'fixed top-0 w-full z-40 ' + className}>
+        <div id='top-nav' className={'fixed top-0 w-full z-40 ' + className}>
 
             {/* 移动端折叠菜单 */}
             <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
@@ -60,6 +60,8 @@ export default function TopNavBar(props) {
 
                 {/* 折叠按钮、仅移动端显示 */}
                 <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
+                    <DarkModeButton className='text-sm flex items-center h-full' />
+
                     <div onClick={toggleMenuOpen} className='cursor-pointer'>
                         {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
                     </div>
@@ -67,7 +69,7 @@ export default function TopNavBar(props) {
 
                 {/* 桌面端顶部菜单 */}
                 <div className='hidden md:flex'>
-                    {links && links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
+                    {links && links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
                     <DarkModeButton className='text-sm flex items-center h-full' />
                 </div>
             </div>

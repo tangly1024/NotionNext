@@ -13,7 +13,7 @@ export const LayoutIndex = (props) => {
   // 直接显示指定页面
   useEffect(() => {
     router.push(CONFIG_GITBOOK.INDEX_PAGE).then(() => {
-      console.log('跳转到指定首页', CONFIG_GITBOOK.INDEX_PAGE)
+    //   console.log('跳转到指定首页', CONFIG_GITBOOK.INDEX_PAGE)
       setTimeout(() => {
         if (isBrowser()) {
           const article = document.getElementById('notion-article')
