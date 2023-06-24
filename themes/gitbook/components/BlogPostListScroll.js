@@ -18,9 +18,16 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   } else {
     return <div id='container' ref={targetRef} className='w-full'>
             {/* 文章列表 */}
-            {filteredPosts?.map(post => (
-                <BlogPostCard key={post.id} post={post} showSummary={true} />
-            ))}
+            {filteredPosts?.map(group => {
+              if (group.category) {
+                return <>
+                        <div className='text-md font-sans ' key={group.category}>{group.category}</div>
+                        {group.items?.map(post => (<div key={post.id} className='pl-6 border-l'><BlogPostCard className='text-sm' post={post} /></div>))}
+                    </>
+              } else {
+                return <> {group.items?.map(post => (<BlogPostCard key={post.id} post={post} className='text-md' />))}</>
+              }
+            })}
         </div>
   }
 }
