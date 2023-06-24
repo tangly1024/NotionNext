@@ -49,8 +49,11 @@ const Catalog = ({ post }) => {
     }
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
-    if (isBrowser()) {
-      document?.getElementById('toc-wrapper')?.scrollTo({ top: 28 * index, behavior: 'smooth' })
+    if (isBrowser() && tocIds?.length > 0) {
+      console.log(28 * index, index, currentSectionId)
+      for (const tocWrapper of document?.getElementsByClassName('toc-wrapper')) {
+        tocWrapper?.scrollTo({ top: 28 * index, behavior: 'smooth' })
+      }
     }
   }, throttleMs))
 
@@ -60,7 +63,7 @@ const Catalog = ({ post }) => {
   }
 
   return <>
-    <div id='toc-wrapper' className='max-h-96 scroll-hidden'>
+    <div id='toc-wrapper' className='toc-wrapper overflow-y-auto max-h-96 overscroll-none scroll-hidden'>
       <nav className='h-full  text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
