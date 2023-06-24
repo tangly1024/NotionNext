@@ -1,5 +1,6 @@
 import { useImperativeHandle, useRef, useState } from 'react'
 import { useMediumGlobal } from '../LayoutBase'
+import { deepClone } from '@/lib/utils'
 let lock = false
 
 const SearchInput = ({ currentSearch, cRef, className }) => {
@@ -22,35 +23,23 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
     } else {
       setFilterPosts(allNavPages)
     }
-    for (const post of allNavPages) {
-      const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
-      const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
-      const articleInfo = post.title + post.summary + tagContent + categoryContent
-      let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
-      const indexContent = [post.summary]
-      // console.log('全文搜索缓存', cacheKey, page != null)
-      post.results = []
-      let hitCount = 0
-      for (const i in indexContent) {
-        const c = indexContent[i]
-        if (!c) {
-          continue
-        }
-        const index = c.toLowerCase().indexOf(keyword.toLowerCase())
-        if (index > -1) {
-          hit = true
-          hitCount += 1
-          post.results.push(c)
-        } else {
-          if ((post.results.length - 1) / hitCount < 3 || i === 0) {
-            post.results.push(c)
-          }
+    const filterAllNavPages = deepClone(allNavPages)
+    for (const filterGroup of filterAllNavPages) {
+      for (let i = filterGroup.items.length - 1; i >= 0; i--) {
+        const post = filterGroup.items[i]
+        const articleInfo = post.title + ''
+        const hit = articleInfo.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+        if (!hit) {
+          // 删除
+          filterGroup.items.splice(i, 1)
         }
       }
-      if (hit) {
-        filterPosts.push(post)
+      if (filterGroup.items && filterGroup.items.length > 0) {
+        filterPosts.push(filterGroup)
       }
     }
+
+    // 更新完
     setFilterPosts(filterPosts)
   }
   const handleKeyUp = (e) => {
@@ -62,6 +51,7 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
   }
   const cleanSearch = () => {
     searchInputRef.current.value = ''
+    handleSearch()
   }
 
   const [showClean, setShowClean] = useState(false)
