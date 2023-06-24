@@ -1,15 +1,15 @@
-import React from 'react'
+import { useRef, useEffect } from 'react'
 /**
  * 可拖拽组件
  */
 
 export const Draggable = (props) => {
   const { children } = props
-  const draggableRef = React.useRef(null)
-  const rafRef = React.useRef(null)
+  const draggableRef = useRef(null)
+  const rafRef = useRef(null)
   let currentObj, offsetX, offsetY
 
-  React.useEffect(() => {
+  useEffect(() => {
     const draggableElements = document.getElementsByClassName('draggable')
 
     // 标准化鼠标事件对象
@@ -51,6 +51,7 @@ export const Draggable = (props) => {
       }
       if (currentObj) {
         if (event.type === 'touchstart') {
+          event.preventDefault() // 阻止默认的滚动行为
           document.documentElement.style.overflow = 'hidden' // 防止页面一起滚动
         }
         offsetX = event.mx - currentObj.offsetLeft
@@ -70,7 +71,7 @@ export const Draggable = (props) => {
 
     const stop = (event) => {
       event = e(event)
-      document.documentElement.style.overflow = 'auto'
+      document.documentElement.style.overflow = 'auto' // 恢复默认的滚动行为
       cancelAnimationFrame(rafRef.current)
       currentObj = document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
     }
