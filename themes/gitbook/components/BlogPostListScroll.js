@@ -18,14 +18,14 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   } else {
     return <div id='container' ref={targetRef} className='w-full'>
             {/* 文章列表 */}
-            {filteredPosts?.map(group => {
+            {filteredPosts?.map((group, index) => {
               if (group.category) {
-                return <>
+                return <div key={index}>
                         <div className='text-md font-sans ' key={group.category}>{group.category}</div>
                         {group.items?.map(post => (<div key={post.id} className='pl-6 border-l'><BlogPostCard className='text-sm' post={post} /></div>))}
-                    </>
+                    </div>
               } else {
-                return <> {group.items?.map(post => (<BlogPostCard key={post.id} post={post} className='text-md' />))}</>
+                return <div key={index}> {group.items?.map(post => (<BlogPostCard key={post.id} post={post} className='text-md' />))}</div>
               }
             })}
         </div>
