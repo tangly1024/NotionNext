@@ -3,7 +3,7 @@ import { useState, createContext, useContext, useEffect } from 'react'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import RevolverMaps from './components/RevolverMaps'
-import CONFIG_MEDIUM from './config_medium'
+import CONFIG_GITBOOK from './config_gitbook'
 import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
 import BottomMenuBar from './components/BottomMenuBar'
@@ -14,6 +14,7 @@ import BlogPostListScroll from './components/BlogPostListScroll'
 import ArticleInfo from './components/ArticleInfo'
 import Catalog from './components/Catalog'
 import { useRouter } from 'next/router'
+import Announcement from './components/Announcement'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -50,7 +51,7 @@ const LayoutBase = (props) => {
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
-                    <div style={{ width: '32rem' }} className={`font-sans hidden xl:block border-r dark:border-transparent relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
+                    <div style={{ width: '32rem' }} className={'font-sans hidden xl:block border-r dark:border-transparent relative z-10 '}>
                         <div className='py-14 px-6 sticky top-0 overflow-y-scroll h-screen'>
                             {slotLeft}
 
@@ -85,18 +86,20 @@ const LayoutBase = (props) => {
                     </div>
 
                     {/*  右侧侧推拉抽屉 */}
-                    <div style={{ width: '32rem' }} className={`hidden xl:block dark:border-transparent relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
+                    <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
                         <div className='py-14 px-6 sticky top-0'>
-                            <ArticleInfo post={props?.post ? props.post : props.notice} />
+                            <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
                             <div className='pt-6'>
                                 <Catalog {...props} />
                                 {slotRight}
                                 {router.route === '/' && <>
                                     <InfoCard {...props} />
-                                    {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
+                                    {CONFIG_GITBOOK.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
                                     <Live2D />
                                 </>}
+                                {/* gitbook主题首页只显示公告 */}
+                                <Announcement {...props} />
                             </div>
 
                         </div>

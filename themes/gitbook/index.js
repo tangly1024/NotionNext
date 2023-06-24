@@ -1,4 +1,4 @@
-import CONFIG_MEDIUM from './config_medium'
+import CONFIG_GITBOOK from './config_gitbook'
 import { LayoutIndex } from './LayoutIndex'
 import { LayoutSearch } from './LayoutSearch'
 import { LayoutArchive } from './LayoutArchive'
@@ -11,7 +11,7 @@ import { LayoutTag } from './LayoutTag'
 import { LayoutTagIndex } from './LayoutTagIndex'
 
 export {
-  CONFIG_MEDIUM as THEME_CONFIG,
+  CONFIG_GITBOOK as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

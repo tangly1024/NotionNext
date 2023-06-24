@@ -8,6 +8,7 @@ import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
@@ -37,18 +38,18 @@ const Slug = props => {
   // 文章加载
   useEffect(() => {
     // 404
-    //   if (!post) {
-    //     setTimeout(() => {
-    //       if (isBrowser()) {
-    //         const article = document.getElementById('notion-article')
-    //         if (!article) {
-    //           router.push('/404').then(() => {
-    //             console.warn('找不到页面', router.asPath)
-    //           })
-    //         }
-    //       }
-    //     }, 8 * 1000) // 404时长 8秒
-    //   }
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser()) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, 5 * 1000) // 404时长 8秒
+    }
 
     // 文章加密
     if (post?.password && post?.password !== '') {
@@ -121,6 +122,7 @@ export async function getStaticProps({ params: { slug } }) {
 
   // 无法获取文章
   if (!props?.post) {
+    props.post = null
     return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
   }
 

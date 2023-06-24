@@ -2,7 +2,7 @@ import LayoutBase from './LayoutBase'
 import React from 'react'
 import { ArticleLock } from './components/ArticleLock'
 import NotionPage from '@/components/NotionPage'
-import CONFIG_MEDIUM from './config_medium'
+import CONFIG_GITBOOK from './config_gitbook'
 import Comment from '@/components/Comment'
 import ArticleAround from './components/ArticleAround'
 import TocDrawer from './components/TocDrawer'
@@ -12,10 +12,6 @@ import ShareBar from '@/components/ShareBar'
 
 export const LayoutSlug = (props) => {
   const { post, prev, next, lock, validPassword } = props
-
-  if (!post) {
-    return <LayoutBase {...props}/>
-  }
 
   return (
         <LayoutBase {...props} >
@@ -28,9 +24,9 @@ export const LayoutSlug = (props) => {
                 <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
 
                 {/* Notion文章主体 */}
-                <section id="notion-article" className="px-1">
-                    {post && (<NotionPage post={post} />)}
-                </section>
+                {post && (<section id="notion-article" className="px-1">
+                   <NotionPage post={post} />
+                </section>)}
 
                 <section>
 
@@ -38,9 +34,9 @@ export const LayoutSlug = (props) => {
                     <ShareBar post={post} />
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG_MEDIUM.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
+                        {CONFIG_GITBOOK.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
                         <div>
-                            {CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {CONFIG_GITBOOK.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 

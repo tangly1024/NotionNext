@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import React from 'react'
-import CONFIG_MEDIUM from '../config_medium'
+import CONFIG_GITBOOK from '../config_gitbook'
 
 /**
  * 跳转到网页顶部
@@ -12,7 +12,7 @@ import CONFIG_MEDIUM from '../config_medium'
  */
 const JumpToTopButton = ({ showPercent = false, percent, className }) => {
   const { locale } = useGlobal()
-  if (!CONFIG_MEDIUM.WIDGET_TO_TOP) {
+  if (!CONFIG_GITBOOK.WIDGET_TO_TOP) {
     return <></>
   }
   return (<div className={'flex space-x-1 items-center cursor-pointer w-full justify-center ' + className } onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >

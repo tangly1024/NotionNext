@@ -1,6 +1,6 @@
 import React from 'react'
 import { useGlobal } from '@/lib/global'
-import CONFIG_MEDIUM from '../config_medium'
+import CONFIG_GITBOOK from '../config_gitbook'
 import BLOG from '@/blog.config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
@@ -10,10 +10,10 @@ export const MenuBarMobile = (props) => {
 
   let links = [
     // { name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_MEDIUM.MENU_CATEGORY },
-    { name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_MEDIUM.MENU_TAG },
-    { name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_MEDIUM.MENU_ARCHIVE }
-    // { name: locale.NAV.SEARCH, to: '/search', show: CONFIG_MEDIUM.MENU_SEARCH }
+    { name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_GITBOOK.MENU_CATEGORY },
+    { name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_GITBOOK.MENU_TAG },
+    { name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_GITBOOK.MENU_ARCHIVE }
+    // { name: locale.NAV.SEARCH, to: '/search', show: CONFIG_GITBOOK.MENU_SEARCH }
   ]
 
   if (customNav) {
