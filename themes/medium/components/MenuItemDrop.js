@@ -17,7 +17,7 @@ export const MenuItemDrop = ({ link }) => {
   return <li className='cursor-pointer list-none items-center flex mx-2' onMouseOver={() => changeShow(true)} onMouseOut={() => changeShow(false)} >
 
         {hasSubMenu &&
-            <div className={'px-1 h-full whitespace-nowrap duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
+            <div className={'px-3 h-full whitespace-nowrap duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
                 (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
                 <div>
                     {link?.icon && <i className={link?.icon} />} {link?.name}
@@ -27,7 +27,7 @@ export const MenuItemDrop = ({ link }) => {
         }
 
         {!hasSubMenu &&
-            <div className={'px-1 h-full whitespace-nowrap duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
+            <div className={'px-3 h-full whitespace-nowrap duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
                 (selected ? 'bg-green-600 text-white hover:text-white' : 'hover:text-green-600')}>
                 <Link href={link?.to}>
                     {link?.icon && <i className={link?.icon} />} {link?.name}

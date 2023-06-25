@@ -39,10 +39,10 @@ export default function ArticleDetail(props) {
 
                 {showArticleInfo && <header>
                     {/* 头图 */}
-                    {CONFIG_NEXT.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.page_cover && (
+                    {CONFIG_NEXT.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.pageCover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img alt={post.title} src={post?.page_cover} className='object-center w-full' />
+                            <img alt={post.title} src={post?.pageCover} className='object-center w-full' />
                         </div>
                     )}
 
@@ -82,17 +82,6 @@ export default function ArticleDetail(props) {
                 <article id='notion-article' className='px-1 max-w-3xl mx-auto'>
                     {post && (<NotionPage post={post} />)}
                 </article>
-
-                <section className="px-1 py-2 my-1 text-sm font-light overflow-auto text-gray-600  dark:text-gray-400">
-                    {/* 文章内嵌广告 */}
-                    <ins className="adsbygoogle"
-                        style={{ display: 'block', textAlign: 'center' }}
-                        data-adtest="on"
-                        data-ad-layout="in-article"
-                        data-ad-format="fluid"
-                        data-ad-client="ca-pub-2708419466378217"
-                        data-ad-slot="3806269138" />
-                </section>
 
                 {showArticleInfo && <>
 

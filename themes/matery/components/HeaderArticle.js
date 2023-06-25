@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 export default function HeaderArticle({ post, siteInfo }) {
-  const headerImage = post?.page_cover ? post?.page_cover : siteInfo?.pageCover
+  const headerImage = post?.pageCoverThumbnail ? post?.pageCoverThumbnail : siteInfo?.pageCover
   const title = post?.title
   return (
         <div
