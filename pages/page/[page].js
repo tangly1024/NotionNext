@@ -1,17 +1,8 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { useGlobal } from '@/lib/global'
-import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useState } from 'react'
-import Loading from '@/components/Loading'
-
-const layout = 'LayoutPage'
-
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 文章列表分页
@@ -19,17 +10,10 @@ const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), 
  * @returns
  */
 const Page = props => {
-  const { theme } = useGlobal()
   const { siteInfo } = props
-  const [Layout, setLayout] = useState(DefaultLayout)
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
     title: `${props?.page} | Page | ${siteInfo?.title}`,
@@ -41,9 +25,7 @@ const Page = props => {
 
   props = { ...props, meta }
 
-  return <Suspense fallback={<Loading />}>
-        <Layout {...props} />
-    </Suspense>
+  return <Layout {...props} />
 }
 
 export async function getStaticPaths() {

@@ -1142,7 +1142,6 @@ code[class*='language-'] {
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @apply text-blue-600 dark:text-blue-200
 }
 
 .notion-table-of-contents-item:hover {
