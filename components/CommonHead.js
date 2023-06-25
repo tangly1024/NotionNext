@@ -19,6 +19,7 @@ const CommonHead = ({ meta, children }) => {
     <Head>
       <title>{title}</title>
       <meta name="theme-color" content={BLOG.BACKGROUND_DARK} />
+      <meta name="google-site-verification" content="f21m5B2lX4aBe6rnY4HIAfSFrt0WeFKqAMdwMcLTCrM" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"/>
       <meta name="robots" content="follow, index" />
       <meta charSet="UTF-8" />
