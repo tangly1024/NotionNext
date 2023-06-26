@@ -4,11 +4,11 @@ import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
-import { isBrowser } from '@/lib/utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
-import md5 from 'js-md5'
 import { getLayoutByTheme } from '@/themes/theme'
+import md5 from 'js-md5'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
@@ -19,16 +19,13 @@ const Slug = props => {
   const { post, siteInfo } = props
   const router = useRouter()
 
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
-
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
 
   /**
-     * 验证文章密码
-     * @param {*} result
-     */
+   * 验证文章密码
+   * @param {*} result
+  */
   const validPassword = passInput => {
     const encrypt = md5(post.slug + passInput)
     if (passInput && encrypt === post.password) {
@@ -51,18 +48,18 @@ const Slug = props => {
             })
           }
         }
-      }, 8 * 1000) // 404时长 8秒
+      }, 5 * 1000) // 404时长 8秒
     }
 
     // 文章加密
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
+      setLock(false)
       if (!lock && post?.blockMap?.block) {
         post.content = Object.keys(post.blockMap.block).filter(key => post.blockMap.block[key]?.value?.parent_id === post.id)
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
-      setLock(false)
     }
     router.events.on('routeChangeComplete', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -79,7 +76,8 @@ const Slug = props => {
     tags: post?.tags
   }
   props = { ...props, lock, meta, setLock, validPassword }
-
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
   return <Layout {...props} />
 }
 
@@ -124,6 +122,7 @@ export async function getStaticProps({ params: { slug } }) {
 
   // 无法获取文章
   if (!props?.post) {
+    props.post = null
     return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
   }
 
