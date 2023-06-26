@@ -112,7 +112,7 @@ const LayoutBase = (props) => {
 
                 </main>
 
-                {showTocButton && !tocVisible && <div className='fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
+                {showTocButton && !tocVisible && <div className='md:hidden fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
                     <FloatTocButton {...props}/>
                 </div>}
 
