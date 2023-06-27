@@ -43,14 +43,14 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && !post.results && (
-            <p className="two-line-clamp replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
+            <p className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
                 {post.summary}
             </p>
           )}
 
         {/* 搜索结果 */}
         {post.results && (
-            <p className="two-line-clamp mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+            <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
                 {post.results.map(r => (
                     <span key={r}>{r}</span>
                 ))}

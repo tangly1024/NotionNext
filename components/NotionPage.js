@@ -31,7 +31,7 @@ const Pdf = dynamic(
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
-  ssr: true
+  ssr: false
 })
 
 const Collection = dynamic(() =>
@@ -77,7 +77,7 @@ const NotionPage = ({ post, className }) => {
         Tweet
       }} />
 
-      <PrismMac />
+      <PrismMac/>
 
   </div>
 }

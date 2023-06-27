@@ -1,4 +1,4 @@
-import CONFIG_GITBOOK from './config_gitbook'
+import CONFIG_MATERY from './config_matery'
 import LayoutIndex from './LayoutIndex'
 import LayoutSearch from './LayoutSearch'
 import LayoutArchive from './LayoutArchive'
@@ -11,7 +11,7 @@ import LayoutTag from './LayoutTag'
 import LayoutTagIndex from './LayoutTagIndex'
 
 export {
-  CONFIG_GITBOOK as THEME_CONFIG,
+  CONFIG_MATERY as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
