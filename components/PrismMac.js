@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react'
+'use client'
+
+import { useEffect } from 'react'
 import Prism from 'prismjs'
 // 所有语言的prismjs 使用autoloader引入
 // import 'prismjs/plugins/autoloader/prism-autoloader'
@@ -12,7 +14,7 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 // mermaid图
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 /**
  * @author https://github.com/txs/
@@ -27,7 +29,6 @@ const PrismMac = () => {
       }
       loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
       loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
-        // console.log('渲染公式图表')
         if (window?.Prism?.plugins?.autoloader) {
           window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
         }
@@ -63,10 +64,11 @@ const renderMermaid = async() => {
             }
           }
           if (needLoad) {
-            const url = await loadExternalResource(BLOG.MERMAID_CDN, 'js')
-            const mermaid = window.mermaid
-            console.log('mermaid加载成功', url, mermaid)
-            mermaid.contentLoaded()
+            loadExternalResource(BLOG.MERMAID_CDN, 'js').then(url => {
+              // console.log('mermaid加载成功', url, mermaid)
+              const mermaid = window.mermaid
+              mermaid.contentLoaded()
+            })
           }
         }
       }

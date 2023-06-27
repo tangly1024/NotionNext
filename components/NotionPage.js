@@ -77,7 +77,7 @@ const NotionPage = ({ post, className }) => {
         Tweet
       }} />
 
-      <PrismMac />
+      <PrismMac/>
 
   </div>
 }
