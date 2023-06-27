@@ -10,7 +10,7 @@ export default function WordCount() {
   })
 
   return <div id='wordCountWrapper' className='flex justify-center my-auto font-light'>
-    <i className='mr-1 fas fa-file-word my-auto' /> <span className='hidden md:block'>word count </span> <strong id='wordCount'> 0</strong> &nbsp;|&nbsp; <i className='mr-1 fas fa-clock my-auto' /> <span className='hidden md:block'>reading time ≈ </span> <strong id='readTime'>0</strong> minute
+    <i className='mr-1 fas fa-file-word my-auto' /> <span className='hidden md:block'>word count&nbsp;</span> <strong id='wordCount'> 0</strong> &nbsp;|&nbsp; <i className='mr-1 fas fa-clock my-auto' /> <span className='hidden md:block'>reading time ≈&nbsp;</span> <strong id='readTime'>0</strong>&nbsp;minute
   </div>
 }
 
