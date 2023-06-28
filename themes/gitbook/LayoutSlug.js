@@ -9,6 +9,7 @@ import TocDrawer from './components/TocDrawer'
 import CategoryItem from './components/CategoryItem'
 import TagItemMini from './components/TagItemMini'
 import ShareBar from '@/components/ShareBar'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 export const LayoutSlug = (props) => {
   const { post, prev, next, lock, validPassword } = props
@@ -41,6 +42,9 @@ export const LayoutSlug = (props) => {
                     </div>
 
                     {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+
+                    <AdSlot/>
+
                     <Comment frontMatter={post} />
                 </section>
 

@@ -16,10 +16,10 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
          <Link
             href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
-            className={`replace cursor-pointer hover:underline text-2xl ${showPreview ? 'text-center' : ''
+            className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''
                 } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
 
-            {post.title}
+            <span className='menu-link '>{post.title}</span>
 
         </Link>
 
@@ -31,7 +31,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
             <Link
                 href={`/category/${post.category}`}
                 passHref
-                className="cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform">
+                className="cursor-pointer font-light text-sm menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform">
 
                 <i className="mr-1 far fa-folder" />
                 {post.category}
@@ -72,7 +72,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
             <Link
                 href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
                 passHref
-                className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
+                className="font-light menu-link cursor-pointer text-sm leading-4 mr-3">
 
                 <i className="far fa-calendar-alt mr-1" />
                 {post.date?.start_date || post.lastEditedTime}
