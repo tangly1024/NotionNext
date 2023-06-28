@@ -31,7 +31,7 @@ const Pdf = dynamic(
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
-  ssr: false
+  ssr: true
 })
 
 const Collection = dynamic(() =>
@@ -77,7 +77,7 @@ const NotionPage = ({ post, className }) => {
         Tweet
       }} />
 
-      <PrismMac/>
+      <PrismMac />
 
   </div>
 }
@@ -91,5 +91,23 @@ const mapPageUrl = id => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
   return '/' + id.replace(/-/g, '')
 }
+
+// function getMediumZoomMargin() {
+//   const width = window.innerWidth
+
+//   if (width < 500) {
+//     return 8
+//   } else if (width < 800) {
+//     return 20
+//   } else if (width < 1280) {
+//     return 30
+//   } else if (width < 1600) {
+//     return 40
+//   } else if (width < 1920) {
+//     return 48
+//   } else {
+//     return 72
+//   }
+// }
 
 export default NotionPage
