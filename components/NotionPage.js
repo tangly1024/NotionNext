@@ -47,16 +47,8 @@ const Tweet = ({ id }) => {
 }
 
 const NotionPage = ({ post, className }) => {
-  // 滚动到评论区
   useEffect(() => {
-    setTimeout(() => {
-      if (window.location.hash) {
-        const tocNode = document.getElementById(window.location.hash.substring(1))
-        if (tocNode && tocNode?.className?.indexOf('notion') > -1) {
-          tocNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
-        }
-      }
-    }, 180)
+    autoScrollToTarget()
   }, [])
 
   if (!post || !post.blockMap) {
@@ -80,6 +72,22 @@ const NotionPage = ({ post, className }) => {
       <PrismMac/>
 
   </div>
+}
+
+/**
+ * 根据url参数自动滚动到指定区域
+ */
+const autoScrollToTarget = () => {
+  setTimeout(() => {
+    // 跳转到指定标题
+    const needToJumpToTitle = window.location.hash
+    if (needToJumpToTitle) {
+      const tocNode = document.getElementById(window.location.hash.substring(1))
+      if (tocNode && tocNode?.className?.indexOf('notion') > -1) {
+        tocNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
+      }
+    }
+  }, 180)
 }
 
 /**

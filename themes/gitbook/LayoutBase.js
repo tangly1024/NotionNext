@@ -17,6 +17,7 @@ import { useRouter } from 'next/router'
 import Announcement from './components/Announcement'
 import PageNavDrawer from './components/PageNavDrawer'
 import FloatTocButton from './components/FloatTocButton'
+import { AdSlot } from '@/components/GoogleAdsense'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -65,6 +66,8 @@ const LayoutBase = (props) => {
                             {/* 所有文章列表 */}
                             <BlogPostListScroll posts={filterPosts} />
 
+                            <AdSlot />
+
                         </div>
                     </div>
 
@@ -73,7 +76,11 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
 
+                            <AdSlot type='in-article' />
+
                             {onLoading ? LoadingCover : children}
+
+                            <AdSlot type='in-article' />
 
                             {/* 回顶按钮 */}
                             <div
@@ -88,6 +95,10 @@ const LayoutBase = (props) => {
 
                         {/* 底部 */}
                         <Footer title={siteInfo?.title} />
+
+                        <div className='text-center'>
+                            <AdSlot type='native' />
+                        </div>
                     </div>
 
                     {/*  右侧侧推拉抽屉 */}
@@ -95,7 +106,7 @@ const LayoutBase = (props) => {
                         <div className='py-14 px-6 sticky top-0'>
                             <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                            <div className='pt-6'>
+                            <div className='py-6'>
                                 <Catalog {...props} />
                                 {slotRight}
                                 {router.route === '/' && <>
@@ -107,16 +118,18 @@ const LayoutBase = (props) => {
                                 <Announcement {...props} />
                             </div>
 
+                            <AdSlot />
+
                         </div>
                     </div>
 
                 </main>
 
                 {showTocButton && !tocVisible && <div className='md:hidden fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
-                    <FloatTocButton {...props}/>
+                    <FloatTocButton {...props} />
                 </div>}
 
-                <PageNavDrawer {...props}/>
+                <PageNavDrawer {...props} />
 
                 {/* 移动端底部导航栏 */}
                 <BottomMenuBar {...props} className='block md:hidden' />
