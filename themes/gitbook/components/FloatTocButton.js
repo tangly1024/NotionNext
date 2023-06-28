@@ -1,7 +1,7 @@
-import { useMediumGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '../LayoutBase'
 
 export default function FloatTocButton () {
-  const { tocVisible, changeTocVisible } = useMediumGlobal()
+  const { tocVisible, changeTocVisible } = useGitBookGlobal()
 
   const toggleToc = () => {
     changeTocVisible(!tocVisible)

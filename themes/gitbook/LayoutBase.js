@@ -6,7 +6,6 @@ import RevolverMaps from './components/RevolverMaps'
 import CONFIG_GITBOOK from './config_gitbook'
 import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
-import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
@@ -17,6 +16,7 @@ import { useRouter } from 'next/router'
 import Announcement from './components/Announcement'
 import PageNavDrawer from './components/PageNavDrawer'
 import FloatTocButton from './components/FloatTocButton'
+import JumpToTopButton from './components/JumpToTopButton'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -76,14 +76,7 @@ const LayoutBase = (props) => {
                             {onLoading ? LoadingCover : children}
 
                             {/* 回顶按钮 */}
-                            <div
-                                data-aos="fade-up"
-                                data-aos-duration="300"
-                                data-aos-once="false"
-                                data-aos-anchor-placement="top-center"
-                                className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20 '>
-                                <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border bg-white dark:bg-black dark:border-gray-800' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
-                            </div>
+                            <JumpToTopButton />
                         </div>
 
                         {/* 底部 */}
@@ -113,17 +106,17 @@ const LayoutBase = (props) => {
                 </main>
 
                 {showTocButton && !tocVisible && <div className='md:hidden fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
-                    <FloatTocButton {...props}/>
+                    <FloatTocButton {...props} />
                 </div>}
 
-                <PageNavDrawer {...props}/>
+                <PageNavDrawer {...props} />
 
                 {/* 移动端底部导航栏 */}
-                <BottomMenuBar {...props} className='block md:hidden' />
+                {/* <BottomMenuBar {...props} className='block md:hidden' /> */}
             </div>
         </ThemeGlobalMedium.Provider>
   )
 }
 
 export default LayoutBase
-export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
+export const useGitBookGlobal = () => useContext(ThemeGlobalMedium)

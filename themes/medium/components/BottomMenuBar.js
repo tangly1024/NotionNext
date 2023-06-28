@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
-import { useMediumGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '../LayoutBase'
 import JumpToTopButton from './JumpToTopButton'
 
 export default function BottomMenuBar ({ post, className }) {
-  const { tocVisible, changeTocVisible } = useMediumGlobal()
+  const { tocVisible, changeTocVisible } = useGitBookGlobal()
   const showTocBotton = post?.toc?.length > 0
 
   const toggleToc = () => {

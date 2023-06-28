@@ -1,5 +1,5 @@
 import Catalog from './Catalog'
-import { useMediumGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '../LayoutBase'
 
 /**
  * 悬浮抽屉目录
@@ -9,7 +9,7 @@ import { useMediumGlobal } from '../LayoutBase'
  * @constructor
  */
 const TocDrawer = ({ post, cRef }) => {
-  const { tocVisible, changeTocVisible } = useMediumGlobal()
+  const { tocVisible, changeTocVisible } = useGitBookGlobal()
   const switchVisible = () => {
     changeTocVisible(!tocVisible)
   }
@@ -18,7 +18,7 @@ const TocDrawer = ({ post, cRef }) => {
       {/* 侧边菜单 */}
       <div
         className={(tocVisible ? 'animate__slideInRight ' : ' -mr-72 animate__slideOutRight') +
-        ' overflow-y-hidden shadow-card w-60 duration-200 fixed right-1 bottom-16 rounded py-2 bg-white dark:bg-gray-900'}>
+        ' overflow-y-hidden shadow-card w-60 duration-200 fixed right-1 bottom-16 rounded py-2 bg-white dark:bg-hexo-black-gray'}>
           {post && <>
            <div className='dark:text-gray-400 text-gray-600 h-96 p-3'>
              <Catalog post={post}/>
