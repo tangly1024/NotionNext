@@ -1294,6 +1294,8 @@ code[class*='language-'] {
   transition: background 20ms ease-in 0s;
   color: inherit;
   text-decoration: none;
+  
+  @apply dark:stroke-slate-200
 }
 
 .notion-file-link:hover {
@@ -1328,10 +1330,12 @@ code[class*='language-'] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--fg-color-3);
+  /* color: var(--fg-color-3); */
   font-size: 12px;
   line-height: 16px;
   margin-left: 6px;
+
+  @apply dark:text-gray-400 !important
 }
 
 .notion-audio {
