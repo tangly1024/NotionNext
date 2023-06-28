@@ -12,7 +12,7 @@ export const BlogItem = props => {
         <h2 className="mb-2">
             <Link
                 href={`${BLOG.SUB_PATH}/${post.slug}`}
-                className="blog-item-title font-bold text-black text-2xl no-underline hover:underline">
+                className="blog-item-title font-bold text-black text-2xl menu-link">
                 {post.title}
             </Link>
         </h2>
