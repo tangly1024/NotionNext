@@ -1,5 +1,5 @@
 import { useGitBookGlobal } from '../LayoutBase'
-import BlogPostListScroll from './BlogPostListScroll'
+import NavPostList from './NavPostList'
 
 /**
  * 悬浮抽屉 页面内导航
@@ -22,7 +22,7 @@ const PageNavDrawer = ({ post, cRef }) => {
                     ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 top-16 rounded py-2 bg-white dark:bg-gray-600'}>
                 <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
                     {/* 所有文章列表 */}
-                    <BlogPostListScroll posts={filterPosts} />
+                    <NavPostList posts={filterPosts} />
                 </div>
             </div>
         </div>

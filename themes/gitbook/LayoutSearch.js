@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { isBrowser } from '@/lib/utils'
 import BLOG from '@/blog.config'
 import Mark from 'mark.js'
-import BlogPostListScroll from './components/BlogPostListScroll'
+import NavPostList from './components/NavPostList'
 import BlogPostListPage from './components/BlogPostListPage'
 import { useRouter } from 'next/router'
 
@@ -45,7 +45,7 @@ export const LayoutSearch = (props) => {
     </div>
 
     {currentSearch && <div>
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <NavPostList {...props} />}
     </div>}
   </LayoutBase>
 }
