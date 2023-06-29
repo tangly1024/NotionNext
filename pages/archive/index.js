@@ -34,8 +34,8 @@ export async function getStaticProps() {
   const postsSortByDate = Object.create(props.posts)
 
   postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.date?.start_date || a.createdTime)
-    const dateB = new Date(b?.date?.start_date || b.createdTime)
+    const dateA = new Date(a?.publishTime || a.createdTime)
+    const dateB = new Date(b?.publishTime || b.createdTime)
     return dateB - dateA
   })
 
