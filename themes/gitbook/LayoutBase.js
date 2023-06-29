@@ -9,7 +9,7 @@ import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
-import BlogPostListScroll from './components/BlogPostListScroll'
+import NavPostList from './components/NavPostList'
 import ArticleInfo from './components/ArticleInfo'
 import Catalog from './components/Catalog'
 import { useRouter } from 'next/router'
@@ -61,10 +61,10 @@ const LayoutBase = (props) => {
                         <div className='py-14 px-6 sticky top-0 overflow-y-scroll h-screen'>
                             {slotLeft}
 
-                            <SearchInput className='my-3' />
+                            <SearchInput className='my-3 rounded-md' />
 
                             {/* 所有文章列表 */}
-                            <BlogPostListScroll posts={filterPosts} />
+                            <NavPostList posts={filterPosts} />
 
                             <AdSlot />
 
