@@ -1,13 +1,17 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 const ArchiveIndex = props => {
-  const { theme, locale } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
   const { siteInfo } = props
+  const { locale } = useGlobal()
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+
   const meta = {
     title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
     description: siteInfo?.description,
@@ -16,7 +20,9 @@ const ArchiveIndex = props => {
     type: 'website'
   }
 
-  return <ThemeComponents.LayoutArchive {...props} meta={meta} />
+  props = { ...props, meta }
+
+  return <Layout {...props} />
 }
 
 export async function getStaticProps() {
@@ -28,8 +34,8 @@ export async function getStaticProps() {
   const postsSortByDate = Object.create(props.posts)
 
   postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.date?.start_date || a.createdTime)
-    const dateB = new Date(b?.date?.start_date || b.createdTime)
+    const dateA = new Date(a?.publishTime || a.createdTime)
+    const dateB = new Date(b?.publishTime || b.createdTime)
     return dateB - dateA
   })
 

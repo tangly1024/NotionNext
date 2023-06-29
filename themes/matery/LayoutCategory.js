@@ -15,7 +15,7 @@ export const LayoutCategory = props => {
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
 
                     <div className='flex justify-center flex-wrap'>
-                        {categoryOptions.map(e => {
+                        {categoryOptions?.map(e => {
                           const selected = e.name === category
                           return (
                               <Link key={e.name} href={`/category/${e.name}`} passHref legacyBehavior>
@@ -36,3 +36,5 @@ export const LayoutCategory = props => {
         </LayoutBase>
   )
 }
+
+export default LayoutCategory

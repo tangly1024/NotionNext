@@ -29,7 +29,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
         {latestPosts.map(post => {
           const selected = currentPath === `${BLOG.SUB_PATH}/${post.slug}`
 
-          const headerImage = post?.page_cover ? post.page_cover : siteInfo?.pageCover
+          const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover
 
           return (
             (<Link
@@ -37,9 +37,9 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                     title={post.title}
                     href={`${BLOG.SUB_PATH}/${post.slug}`}
                     passHref
-                    className={'my-2 flex'}>
+                    className={'my-3 flex'}>
 
-                    <div className="w-20 h-16 overflow-hidden relative">
+                    <div className="w-20 h-14 overflow-hidden relative">
                           {/* <Image
                             src={headerImage}
                             fill
@@ -49,7 +49,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                             quality={10}
                             alt={post.title} /> */}
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={headerImage} className='object-cover w-full h-full'/>
+                            <img src={`${headerImage}`} className='object-cover w-full h-full'/>
                     </div>
                     <div
                         className={
@@ -59,7 +59,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                         }
                     >
                         <div>
-                            <div className='text-line-2'>{post.title}</div>
+                            <div className='line-clamp-2 menu-link'>{post.title}</div>
                             <div className="text-gray-500">{post.lastEditedTime}</div>
                         </div>
                     </div>

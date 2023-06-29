@@ -1,22 +1,22 @@
 import { getGlobalNotionData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 分类页
  * @param {*} props
  * @returns
  */
+
 export default function Category(props) {
-  const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
-  const { siteInfo, posts } = props
+  const { siteInfo } = props
   const { locale } = useGlobal()
-  if (!posts) {
-    return <ThemeComponents.Layout404 {...props} />
-  }
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+
   const meta = {
     title: `${props.category} | ${locale.COMMON.CATEGORY} | ${
       siteInfo?.title || ''
@@ -26,7 +26,10 @@ export default function Category(props) {
     image: siteInfo?.pageCover,
     type: 'website'
   }
-  return <ThemeComponents.LayoutCategory {...props} meta={meta} />
+
+  props = { ...props, meta }
+
+  return <Layout {...props} />
 }
 
 export async function getStaticProps({ params: { category, page } }) {

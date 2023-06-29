@@ -13,7 +13,7 @@ const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix =  router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
     <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
@@ -47,7 +47,7 @@ const PaginationSimple = ({ page, showNext }) => {
         {locale.PAGINATION.NEXT}→
       </Link>
     </div>
-  );
+  )
 }
 
 export default PaginationSimple

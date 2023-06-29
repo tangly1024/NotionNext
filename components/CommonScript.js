@@ -1,5 +1,4 @@
 import BLOG from '@/blog.config'
-import { Analytics } from '@vercel/analytics/react'
 
 /**
  * 第三方代码 统计脚本
@@ -8,8 +7,6 @@ import { Analytics } from '@vercel/analytics/react'
  */
 const CommonScript = () => {
   return (<>
-    {BLOG.ANALYTICS_VERCEL && <Analytics />}
-
     {BLOG.COMMENT_DAO_VOICE_ID && (<>
       {/* DaoVoice 反馈 */}
       <script async dangerouslySetInnerHTML={{
@@ -29,7 +26,7 @@ const CommonScript = () => {
       />
     </>)}
 
-    {/* GoogleAdsense */}
+    {/* GoogleAdsense 本地开发请加入 data-adbreak-test="on" */}
     {BLOG.ADSENSE_GOOGLE_ID && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`}
      crossOrigin="anonymous" />}
 

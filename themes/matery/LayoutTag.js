@@ -23,7 +23,7 @@ export const LayoutTag = (props) => {
                 </div>
 
                 <div id="tags-list" className="duration-200 flex flex-wrap justify-center pb-12">
-                    {tagOptions.map(e => {
+                    {tagOptions?.map(e => {
                       const selected = tag === e.name
                       return (
                             <div key={e.id} className="p-2">
@@ -40,3 +40,5 @@ export const LayoutTag = (props) => {
 
     </LayoutBase>
 }
+
+export default LayoutTag

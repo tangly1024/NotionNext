@@ -181,16 +181,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-/* 固定两行 */
-.text-line-2 {
-    overflow : hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	word-wrap: break-word;
-	word-break: break-all;
-}
 
 .nobelium{
     @apply flex flex-col justify-between
@@ -201,8 +191,8 @@ nav {
 }
 
 .next #announcement-content *{
- font-size:12px !important;
- line-height:1.5 !important;
+ font-size:13px !important;
+ line-height:1.7 !important;
 }
 
 /* twikoo 评论区超链接样式 */
@@ -310,4 +300,51 @@ a.avatar-wrapper {
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* fukasawa的首页响应式分栏 */
+#theme-fukasawa .grid-item {
+    height: auto;
+    break-inside: avoid-column;
+    margin-bottom: .5rem;
+  }
+  
+  /* 大屏幕（宽度≥1024px）下显示3列 */
+  @media (min-width: 1024px) {
+    #theme-fukasawa .grid-container {
+      column-count: 3;
+      column-gap: .5rem;
+    }
+  }
+  
+  /* 小屏幕（宽度≥640px）下显示2列 */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    #theme-fukasawa .grid-container {
+      column-count: 2;
+      column-gap: .5rem;
+    }
+  }
+  
+  /* 移动端（宽度<640px）下显示1列 */
+  @media (max-width: 639px) {
+    #theme-fukasawa .grid-container {
+      column-count: 1;
+      column-gap: .5rem;
+    }
+  }
+
+.notion-external-title {
+  @apply dark:text-white !important;
+}
+
+.notion-external-subtitle {
+  @apply dark:text-gray-400 !important;
+}
+
+.notion-external-block {
+  @apply dark:border-gray-200 !important;
+}
+
+.notion-external-image > svg > g > path{
+  @apply dark:fill-gray-200 !important;
 }

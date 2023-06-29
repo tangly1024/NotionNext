@@ -1,27 +1,26 @@
 import BLOG from '@/blog.config'
-import * as ThemeMap from '@/themes'
 import { useEffect, useState } from 'react'
 import Select from './Select'
-import { ALL_THEME } from '@/themes'
 import { useGlobal } from '@/lib/global'
+import { ALL_THEME } from '@/themes/theme'
+import { useRouter } from 'next/router'
+
 /**
  *
  * @returns 调试面板
  */
-export function DebugPanel() {
+const DebugPanel = () => {
   const [show, setShow] = useState(false)
-  const { theme, changeTheme, switchTheme, locale } = useGlobal()
+  const { theme, switchTheme, locale } = useGlobal()
+  const router = useRouter()
   const [siteConfig, updateSiteConfig] = useState({})
-  const [themeConfig, updateThemeConfig] = useState({})
-  const [debugTheme, updateDebugTheme] = useState(BLOG.THEME)
 
   // 主题下拉框
   const themeOptions = ALL_THEME.map(t => ({ value: t, text: t }))
 
   useEffect(() => {
-    changeTheme(BLOG.THEME)
     updateSiteConfig(Object.assign({}, BLOG))
-    updateThemeConfig(Object.assign({}, ThemeMap[BLOG.THEME].THEME_CONFIG))
+    // updateThemeConfig(Object.assign({}, ThemeMap[BLOG.THEME].THEME_CONFIG))
   }, [])
 
   function toggleShow() {
@@ -29,15 +28,13 @@ export function DebugPanel() {
   }
 
   function handleChangeDebugTheme() {
-    const newTheme = switchTheme()
-    updateThemeConfig(Object.assign({}, ThemeMap[newTheme].THEME_CONFIG))
-    updateDebugTheme(newTheme)
+    switchTheme()
   }
 
-  function handleUpdateDebugTheme(e) {
-    changeTheme(e)
-    updateThemeConfig(Object.assign({}, ThemeMap[theme].THEME_CONFIG))
-    updateDebugTheme(e)
+  function handleUpdateDebugTheme(newTheme) {
+    console.log('切换主题', newTheme)
+    const query = { ...router.query, theme: newTheme }
+    router.push({ pathname: router.pathname, query })
   }
 
   function filterResult(text) {
@@ -75,7 +72,7 @@ export function DebugPanel() {
                     <div className='flex'>
                         <Select
                             label={locale.COMMON.THEME_SWITCH}
-                            value={debugTheme}
+                            value={theme}
                             options={themeOptions}
                             onChange={handleUpdateDebugTheme}
                         />
@@ -90,7 +87,7 @@ export function DebugPanel() {
                 </div>
 
                 <div>
-                    <div>
+                    {/* <div>
                         <div className="font-bold w-18 border-b my-2">
                             主题配置{`config_${debugTheme}.js`}:
                         </div>
@@ -106,7 +103,7 @@ export function DebugPanel() {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div> */}
                     <div className="font-bold w-18 border-b my-2">
                         站点配置[blog.config.js]
                     </div>
@@ -128,3 +125,4 @@ export function DebugPanel() {
         </>
   )
 }
+export default DebugPanel
