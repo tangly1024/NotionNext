@@ -19,13 +19,13 @@ export const LayoutSlug = props => {
                 {lock && <ArticleLock validPassword={validPassword} />}
 
                 {!lock && <div id="notion-article" className="px-2">
-                    {post && <>
+                    <>
                         <ArticleInfo post={post} />
                         <NotionPage post={post} />
                         <ShareBar post={post} />
                         <Comment frontMatter={post}/>
                         <ArticleFooter />
-                    </>}
+                    </>
                 </div>}
 
         </LayoutBase>

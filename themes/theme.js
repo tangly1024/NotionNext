@@ -8,7 +8,7 @@ import * as ThemeComponents from '@theme-components'
  * 所有主题枚举
  */
 export const ALL_THEME = [
-  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple'
+  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple', 'gitbook'
 ]
 
 /**
@@ -18,12 +18,11 @@ export const ALL_THEME = [
  * @returns
  */
 export const getLayoutByTheme = (router) => {
-  const theme = getQueryParam(router.asPath, 'theme') || BLOG.THEME
+  const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
   const layout = getLayoutNameByPath(router.pathname)
-  if (theme !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${theme}/${layout}`), { ssr: true })
+  if (themeQuery !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${themeQuery}/${layout}`), { ssr: true })
   } else {
-    // console.log('静态主题', layout)
     return ThemeComponents[layout]
   }
 }
