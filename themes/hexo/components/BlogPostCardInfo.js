@@ -24,7 +24,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
         </Link>
 
         {/* 分类 */}
-        <div
+        { post?.category && <div
             className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'
                 } flex-wrap dark:text-gray-500 text-gray-400 `}
         >
@@ -39,7 +39,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
             </Link>
 
             <TwikooCommentCount className='text-sm hover:text-indigo-700 dark:hover:text-indigo-400' post={post}/>
-        </div>
+        </div>}
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && !post.results && (
@@ -70,12 +70,12 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
          <div className="text-gray-400 justify-between flex">
             {/* 日期 */}
             <Link
-                href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                 passHref
                 className="font-light menu-link cursor-pointer text-sm leading-4 mr-3">
 
                 <i className="far fa-calendar-alt mr-1" />
-                {post.date?.start_date || post.lastEditedTime}
+                {post?.publishTime || post.lastEditedTime}
 
             </Link>
 

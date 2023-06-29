@@ -57,7 +57,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         <div className='text-gray-800 justify-between flex my-2  dark:text-gray-300'>
                             <div>
                                 <Link
-                                    href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                                     passHref
                                     className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
 

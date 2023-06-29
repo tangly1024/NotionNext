@@ -23,7 +23,7 @@ export const BlogItem = props => {
             <div className='space-x-2'>
                 <span>  <a href={CONFIG_SIMPLE.AUTHOR_LINK} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {BLOG.AUTHOR}</a></span>
                 <span>
-                    <Link className='p-1 hover:text-red-400 transition-all duration-200' href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}>
+                    <Link className='p-1 hover:text-red-400 transition-all duration-200' href={`/archive#${post?.publishTime?.substr(0, 7)}`}>
                         <i className="fa-regular fa-clock" /> {post.date?.start_date || post.createdTime}
                     </Link>
                 </span>
