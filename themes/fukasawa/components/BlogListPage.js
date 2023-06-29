@@ -1,5 +1,5 @@
 import BLOG from '@/blog.config'
-import { deepClone } from '@/lib/utils'
+import { deepClone, isBrowser } from '@/lib/utils'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import PaginationSimple from './PaginationSimple'
@@ -65,13 +65,21 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   }
 }
 
+/**
+ * 计算文章列数
+ * @returns
+ */
 const calculateColumns = () => {
-  if (window.innerWidth >= 1024) {
+  if (!isBrowser()) {
     return 3
-  } else if (window.innerWidth >= 640) {
-    return 2
   } else {
-    return 1
+    if (window.innerWidth >= 1024) {
+      return 3
+    } else if (window.innerWidth >= 640) {
+      return 2
+    } else {
+      return 1
+    }
   }
 }
 
