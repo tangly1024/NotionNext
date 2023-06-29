@@ -1,4 +1,4 @@
-import { useMediumGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '../LayoutBase'
 import BlogPostListScroll from './BlogPostListScroll'
 
 /**
@@ -9,7 +9,7 @@ import BlogPostListScroll from './BlogPostListScroll'
  * @constructor
  */
 const PageNavDrawer = ({ post, cRef }) => {
-  const { pageNavVisible, changePageNavVisible, filterPosts } = useMediumGlobal()
+  const { pageNavVisible, changePageNavVisible, filterPosts } = useGitBookGlobal()
   const switchVisible = () => {
     changePageNavVisible(!pageNavVisible)
   }
@@ -19,7 +19,7 @@ const PageNavDrawer = ({ post, cRef }) => {
             {/* 侧边菜单 */}
             <div
                 className={(pageNavVisible ? 'animate__slideInLeft ' : '-ml-80 animate__slideOutLeft') +
-                    ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 bottom-16 rounded py-2 bg-white dark:bg-gray-600'}>
+                    ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 top-16 rounded py-2 bg-white dark:bg-gray-600'}>
                 <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
                     {/* 所有文章列表 */}
                     <BlogPostListScroll posts={filterPosts} />

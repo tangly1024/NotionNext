@@ -1,11 +1,11 @@
 import { useImperativeHandle, useRef, useState } from 'react'
-import { useMediumGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '../LayoutBase'
 import { deepClone } from '@/lib/utils'
 let lock = false
 
 const SearchInput = ({ currentSearch, cRef, className }) => {
   const searchInputRef = useRef()
-  const { setFilterPosts, allNavPages } = useMediumGlobal()
+  const { setFilterPosts, allNavPages } = useGitBookGlobal()
 
   useImperativeHandle(cRef, () => {
     return {
