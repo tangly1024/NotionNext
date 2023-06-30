@@ -20,7 +20,7 @@ export const LayoutSlug = props => {
   const { locale } = useGlobal()
 
   const date = formatDate(
-    post?.publishTime || post?.createdTime,
+    post?.publishTime,
     locale.LOCALE
   )
   if (!post) {
