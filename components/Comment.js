@@ -82,7 +82,7 @@ const Comment = ({ frontMatter }) => {
             </div>)}
 
             {BLOG.COMMENT_VALINE_APP_ID && (<div key='Valine' name='reply'>
-                <ValineComponent path={frontMatter.id} />
+                <ValineComponent path={frontMatter.slug} />
             </div>)}
 
             {BLOG.COMMENT_GISCUS_REPO && (

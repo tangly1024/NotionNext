@@ -3,8 +3,6 @@ import Link from 'next/link'
 import CONFIG_NEXT from '../config_next'
 
 export default function ArticleCopyright ({ author, url }) {
-  return <></>
-
   if (!CONFIG_NEXT.ARTICLE_COPYRIGHT) {
     return <></>
   }
