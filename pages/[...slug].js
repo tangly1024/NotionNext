@@ -61,9 +61,6 @@ const Slug = props => {
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
     }
-    router.events.on('routeChangeComplete', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    })
   }, [post])
 
   const meta = {
