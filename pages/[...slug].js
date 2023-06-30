@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
@@ -87,7 +87,7 @@ export async function getStaticPaths() {
   }
 
   const from = 'slug-paths'
-  const { allPages } = await getGlobalNotionData({ from })
+  const { allPages } = await getGlobalData({ from })
   return {
     paths: allPages?.map(row => ({ params: { slug: [row.slug] } })),
     fallback: true
@@ -102,7 +102,7 @@ export async function getStaticProps({ params: { slug } }) {
     }
   }
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
   // 在列表内查找文章
   props.post = props?.allPages?.find((p) => {
     return p.slug === fullSlug || p.id === idToUuid(fullSlug)
