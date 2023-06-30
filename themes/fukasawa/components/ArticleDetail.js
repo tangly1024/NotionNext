@@ -19,7 +19,7 @@ export default function ArticleDetail(props) {
   if (!post) {
     return <></>
   }
-  const date = formatDate(post?.publishTime || post?.createdTime, locale.LOCALE)
+  const date = formatDate(post?.publishTime, locale.LOCALE)
   return (
     <div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
       {post?.type && !post?.type !== 'Page' && post?.pageCover && (
