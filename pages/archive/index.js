@@ -4,6 +4,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { formatDateFmt } from '@/lib/formatDate'
 
 const ArchiveIndex = props => {
   const { siteInfo } = props
@@ -34,15 +35,13 @@ export async function getStaticProps() {
   const postsSortByDate = Object.create(props.posts)
 
   postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.publishTime || a.createdTime)
-    const dateB = new Date(b?.publishTime || b.createdTime)
-    return dateB - dateA
+    return b?.sortDate - a?.sortDate
   })
 
   const archivePosts = {}
 
   postsSortByDate.forEach(post => {
-    const date = post.date?.start_date?.slice(0, 7) || post.createdTime
+    const date = formatDateFmt(post.sortDate, 'yyyy-MM')
     if (archivePosts[date]) {
       archivePosts[date].push(post)
     } else {
