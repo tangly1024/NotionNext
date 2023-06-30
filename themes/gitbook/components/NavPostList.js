@@ -36,7 +36,7 @@ const NavPostList = (props) => {
   if (!filteredPosts || filteredPosts.length === 0) {
     return <NavPostListEmpty currentSearch={currentSearch} />
   } else {
-    return <div className='w-full'>
+    return <div className='w-full flex-grow'>
             {/* 文章列表 */}
             {filteredPosts?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
         </div>
