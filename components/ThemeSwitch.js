@@ -1,7 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import React from 'react'
 import { Draggable } from './Draggable'
-import { ALL_THEME } from '@/themes/theme'
+import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
 /**
  *
@@ -27,7 +27,7 @@ const ThemeSwitch = () => {
                     <i className='fas fa-arrows cursor-move px-2' />
                     {/* <div className='uppercase font-sans whitespace-nowrap cursor-pointer ' onClick={switchTheme}> {theme}</div> */}
                     <select value={theme} onChange={onSelectChange} name="cars" className='text-white bg-black uppercase cursor-pointer'>
-                        {ALL_THEME.map(t => {
+                        {THEMES.map(t => {
                           return <option key={t} value={t}>{t}</option>
                         })}
                     </select>

@@ -2,15 +2,10 @@ import cookie from 'react-cookies'
 import BLOG from '@/blog.config'
 import { getQueryParam, getQueryVariable } from '../lib/utils'
 import dynamic from 'next/dynamic'
-// 使用 __THEME__ 变量来动态导入主题组件
+import getConfig from 'next/config'
 import * as ThemeComponents from '@theme-components'
-/**
- * 所有主题枚举
- */
-export const ALL_THEME = [
-  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple', 'gitbook'
-]
-
+// 所有主题在next.config.js中扫描
+export const { THEMES = [] } = getConfig().publicRuntimeConfig
 /**
  * 加载主题文件
  * 如果是
