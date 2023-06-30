@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import CONFIG_HEXO from '../config_hexo'
 
 export default function ArticleCopyright () {
+  return <></>
+
   if (!CONFIG_HEXO.ARTICLE_COPYRIGHT) {
     return <></>
   }

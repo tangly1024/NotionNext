@@ -6,7 +6,7 @@ import ShareButtons from './ShareButtons'
 const ShareBar = ({ post }) => {
   const router = useRouter()
 
-  if (!JSON.parse(BLOG.POST_SHARE_BAR_ENABLE) || !post || post?.type !== 'Post') {
+  if (!BLOG.POST_SHARE_BAR_ENABLE || !post || post?.type !== 'Post') {
     return <></>
   }
 
