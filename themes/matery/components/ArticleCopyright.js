@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import CONFIG_MATERY from '../config_matery'
 
 export default function ArticleCopyright () {
+  return <></>
+
   const router = useRouter()
   const [path, setPath] = useState(BLOG.LINK + router.asPath)
   useEffect(() => {
