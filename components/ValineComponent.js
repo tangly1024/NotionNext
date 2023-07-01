@@ -14,7 +14,7 @@ const ValineComponent = ({ path }) => {
         lang: BLOG.LANG, // 用于手动设定评论区语言，支持的语言列表 https://github.com/imaegoo/twikoo/blob/main/src/client/utils/i18n/index.js
         appId: BLOG.COMMENT_VALINE_APP_ID,
         appKey: BLOG.COMMENT_VALINE_APP_KEY,
-        avatar: '',
+        avatar: 'mp',
         path,
         recordIP: true,
         placeholder: BLOG.COMMENT_VALINE_PLACEHOLDER,
