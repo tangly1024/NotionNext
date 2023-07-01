@@ -6,17 +6,18 @@ import RevolverMaps from './components/RevolverMaps'
 import CONFIG_GITBOOK from './config_gitbook'
 import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
-import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
-import BlogPostListScroll from './components/BlogPostListScroll'
+import NavPostList from './components/NavPostList'
 import ArticleInfo from './components/ArticleInfo'
 import Catalog from './components/Catalog'
 import { useRouter } from 'next/router'
 import Announcement from './components/Announcement'
 import PageNavDrawer from './components/PageNavDrawer'
 import FloatTocButton from './components/FloatTocButton'
+import { AdSlot } from '@/components/GoogleAdsense'
+import JumpToTopButton from './components/JumpToTopButton'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -26,7 +27,7 @@ const ThemeGlobalMedium = createContext()
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop, siteInfo } = props
+  const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
   const [filterPosts, setFilterPosts] = useState(allNavPages)
@@ -57,15 +58,19 @@ const LayoutBase = (props) => {
 
                     {/* 左侧推拉抽屉 */}
                     <div style={{ width: '32rem' }} className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
-                        <div className='py-14 px-6 sticky top-0 overflow-y-scroll h-screen'>
+                        <div className='pt-14 pb-4 px-6 sticky top-0 overflow-y-scroll h-screen flex flex-col justify-between'>
                             {slotLeft}
 
-                            <SearchInput className='my-3' />
+                            <SearchInput className='my-3 rounded-md' />
 
                             {/* 所有文章列表 */}
-                            <BlogPostListScroll posts={filterPosts} />
+                            <NavPostList posts={filterPosts} />
 
+                            <div className='mt-2'>
+                                <Footer {...props} />
+                            </div>
                         </div>
+
                     </div>
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-12 min-h-screen'>
@@ -73,21 +78,23 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
 
+                            <AdSlot type='in-article' />
+
                             {onLoading ? LoadingCover : children}
 
+                            <AdSlot type='in-article' />
+
                             {/* 回顶按钮 */}
-                            <div
-                                data-aos="fade-up"
-                                data-aos-duration="300"
-                                data-aos-once="false"
-                                data-aos-anchor-placement="top-center"
-                                className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20 '>
-                                <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border bg-white dark:bg-black dark:border-gray-800' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
-                            </div>
+                            <JumpToTopButton />
                         </div>
 
                         {/* 底部 */}
-                        <Footer title={siteInfo?.title} />
+                        <div className='md:hidden'>
+                          <Footer {...props}/>
+                        </div>
+                        <div className='text-center'>
+                            <AdSlot type='native' />
+                        </div>
                     </div>
 
                     {/*  右侧侧推拉抽屉 */}
@@ -95,7 +102,7 @@ const LayoutBase = (props) => {
                         <div className='py-14 px-6 sticky top-0'>
                             <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                            <div className='pt-6'>
+                            <div className='py-6'>
                                 <Catalog {...props} />
                                 {slotRight}
                                 {router.route === '/' && <>
@@ -107,23 +114,25 @@ const LayoutBase = (props) => {
                                 <Announcement {...props} />
                             </div>
 
+                            <Live2D />
+
                         </div>
                     </div>
 
                 </main>
 
-                {showTocButton && !tocVisible && <div className='fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
-                    <FloatTocButton {...props}/>
+                {showTocButton && !tocVisible && <div className='md:hidden fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
+                    <FloatTocButton {...props} />
                 </div>}
 
-                <PageNavDrawer {...props}/>
+                <PageNavDrawer {...props} />
 
                 {/* 移动端底部导航栏 */}
-                <BottomMenuBar {...props} className='block md:hidden' />
+                {/* <BottomMenuBar {...props} className='block md:hidden' /> */}
             </div>
         </ThemeGlobalMedium.Provider>
   )
 }
 
 export default LayoutBase
-export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
+export const useGitBookGlobal = () => useContext(ThemeGlobalMedium)

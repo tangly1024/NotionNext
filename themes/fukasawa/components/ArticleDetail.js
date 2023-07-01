@@ -19,7 +19,7 @@ export default function ArticleDetail(props) {
   if (!post) {
     return <></>
   }
-  const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
+  const date = formatDate(post?.publishTime, locale.LOCALE)
   return (
     <div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
       {post?.type && !post?.type !== 'Page' && post?.pageCover && (
@@ -57,7 +57,7 @@ export default function ArticleDetail(props) {
 
               {post?.type !== 'Page' && (<>
                 <Link
-                  href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                  href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                   passHref
                   className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
 

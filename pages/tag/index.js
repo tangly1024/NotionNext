@@ -1,4 +1,4 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
@@ -30,7 +30,7 @@ const TagIndex = props => {
 
 export async function getStaticProps() {
   const from = 'tag-index-props'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
   delete props.allPages
   return {
     props,

@@ -181,16 +181,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-/* 固定两行 */
-.text-line-2 {
-    overflow : hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	word-wrap: break-word;
-	word-break: break-all;
-}
 
 .nobelium{
     @apply flex flex-col justify-between

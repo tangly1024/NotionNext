@@ -14,7 +14,7 @@ export default function HeaderArticle({ post, siteInfo }) {
   const headerImage = post?.pageCover ? `url("${post.pageCover}")` : `url("${siteInfo?.pageCover}")`
 
   const date = formatDate(
-    post?.date?.start_date || post?.createdTime,
+    post?.publishTime,
     locale.LOCALE
   )
 
@@ -57,7 +57,7 @@ export default function HeaderArticle({ post, siteInfo }) {
               {post?.type !== 'Page' && (
                 <>
                   <Link
-                    href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                     passHref
                     className="pl-1 mr-2 cursor-pointer hover:underline">
 

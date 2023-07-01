@@ -1,11 +1,11 @@
 import { useImperativeHandle, useRef, useState } from 'react'
-import { useMediumGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '../LayoutBase'
 import { deepClone } from '@/lib/utils'
 let lock = false
 
 const SearchInput = ({ currentSearch, cRef, className }) => {
   const searchInputRef = useRef()
-  const { setFilterPosts, allNavPages } = useMediumGlobal()
+  const { setFilterPosts, allNavPages } = useGitBookGlobal()
 
   useImperativeHandle(cRef, () => {
     return {
@@ -75,11 +75,11 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
     lock = false
   }
 
-  return <div className={'flex w-full bg-gray-100 ' + className}>
+  return <div className={'flex w-full'}>
     <input
       ref={searchInputRef}
       type='text'
-      className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+      className={`${className} outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white`}
       onKeyUp={handleKeyUp}
       onCompositionStart={lockSearchInput}
       onCompositionUpdate={lockSearchInput}
@@ -88,7 +88,7 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
       defaultValue={currentSearch}
     />
 
-    <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
+    <div className='flex -ml-8 cursor-pointer float-right items-center justify-center py-2'
       onClick={handleSearch}>
         <i className={'hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas fa-search'} />
     </div>

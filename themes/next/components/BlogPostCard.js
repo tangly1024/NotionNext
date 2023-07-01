@@ -57,7 +57,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                 </>
               )}
                 <Link
-                    href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                     passHref
                     className="hover:text-blue-500 dark:hover:text-blue-400 font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
                     {post.date?.start_date}
