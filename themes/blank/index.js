@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 /**
  * 这是一个空白主题，方便您用作创建新主题时的模板，从而开发出您自己喜欢的主题
@@ -5,7 +6,6 @@
  * 2. 内容大部分是在此文件中写死，notion数据从props参数中传进来
  * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
  */
-/* eslint-disable*/
 import BLOG from '@/blog.config'
 import DarkModeButton from '@/components/DarkModeButton'
 import NotionPage from '@/components/NotionPage'
@@ -17,7 +17,6 @@ import { useState } from 'react'
  */
 const THEME_CONFIG = { THEME: 'blank' }
 
-
 /**
  * 布局框架
  * 作为一个基础框架使用，定义了整个主题每个页面必备的顶部导航栏和页脚
@@ -26,8 +25,8 @@ const THEME_CONFIG = { THEME: 'blank' }
  * @returns
  */
 const LayoutBase = (props) => {
-    const { siteInfo, children } = props
-    return <div id='theme-blank' className="flex flex-col justify-between bg-white">
+  const { siteInfo, children } = props
+  return <div id='theme-blank' className="flex flex-col justify-between bg-white">
         {/* 顶部导航栏 */}
         <NavBar siteInfo={siteInfo} />
 
@@ -41,27 +40,19 @@ const LayoutBase = (props) => {
     </div>
 }
 
-
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
 const LayoutIndex = (props) => {
-    const { siteInfo } = props
-    return (
+  const { siteInfo } = props
+  return (
         <LayoutBase {...props}>
-            <ProductInfo />
-            <Features />
-            <BandeauInfo />
             <CTA siteInfo={siteInfo} />
-            <PriceCardOne />
-            <PriceCardMulti />
-            <Teams />
             <PostList {...props} />
-            <FAQ />
         </LayoutBase>
-    )
+  )
 }
 
 /**
@@ -70,8 +61,9 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutSlug = (props) => <LayoutBase {...props}>
-    <div className='p-12'>
-        <NotionPage {...props} /></div>
+    <div className='p-12 max-w-screen-xl justify-center mx-auto'>
+        <NotionPage {...props} />
+    </div>
     <PostList {...props} />
 </LayoutBase>
 
@@ -86,86 +78,11 @@ const LayoutTag = (props) => <LayoutBase {...props}><CTA /></LayoutBase>
 const LayoutTagIndex = (props) => <LayoutBase {...props}><CTA /></LayoutBase>
 
 /**
- * 问题留言区域
- * @param {*} props
- * @returns
- */
-const FAQ = (props) => {
-    return <div className="max-w-screen-xl p-8 mx-auto">
-        <h2 className="mb-12 text-3xl font-extrabold leading-9 text-gray-900 border-b-2 border-gray-100">
-            FAQs
-        </h2>
-        <ul className="flex flex-wrap items-start gap-8">
-            <li className="w-2/5">
-                <p className="text-lg font-medium leading-6 text-gray-900">
-                    What is a home energy rating?
-                </p>
-                <p className="mt-2">
-                    <p className="text-base leading-6 text-gray-500">
-                        A home energy rating is an estimated calculation into a homes potential energy usage, which will determine the amount of heating and cooling required to make its occupants comfortable. It produces a star rating dependant on the amount of heating and cooling loads which will be required, from 0 to 10 stars.
-                    </p>
-                </p>
-            </li>
-            <li className="w-2/5">
-                <p className="text-lg font-medium leading-6 text-gray-900">
-                    Why do I need a 6 Star energy rating?
-                </p>
-                <p className="mt-2">
-                    <p className="text-base leading-6 text-gray-500">
-                        In most Australian states the government requires that all new homes and apartments (along with certain types of building extensions) built since 2010 be energy rated and achieve a minimum of 6 Stars.
-                    </p>
-                </p>
-            </li>
-            <li className="w-2/5">
-                <p className="text-lg font-medium leading-6 text-gray-900">
-                    What is the general cost of an energy rating?
-                </p>
-                <p className="mt-2">
-                    <p className="text-base leading-6 text-gray-500">
-                        Simple energy rating prices vary greatly on the size and type of building, generally an energy rating will cost somewhere between $130 to $700+.
-                    </p>
-                </p>
-            </li>
-            <li className="w-2/5">
-                <p className="text-lg font-medium leading-6 text-gray-900">
-                    What information do I need to supply for an energy rating to be completed??
-                </p>
-                <p className="mt-2">
-                    <p className="text-base leading-6 text-gray-500">
-                        The information required to complete a full and comprehensive energy report are the following final working drawings: Site Plan, Floor Plan, Elevations, Sections, Lighting layout and window schedule (including sizes of the existing windows).
-                    </p>
-                </p>
-            </li>
-            <li className="w-2/5">
-                <p className="text-lg font-medium leading-6 text-gray-900">
-                    Does building an extension need an energy rating?
-                </p>
-                <p className="mt-2">
-                    <p className="text-base leading-6 text-gray-500">
-                        Depended on the size of the extension you are building there is a chance that it too will need to be energy rated. It&#x27;s always best to check first before going ahead with construction.
-                    </p>
-                </p>
-            </li>
-            <li className="w-2/5">
-                <p className="text-lg font-medium leading-6 text-gray-900">
-                    What is the general cost of an energy rating?
-                </p>
-                <p className="mt-2">
-                    <p className="text-base leading-6 text-gray-500">
-                        Depended on the size of the extension you are building there is a chance that it too will need to be energy rated. It&#x27;s always best to check first before going ahead with construction.
-                    </p>
-                </p>
-            </li>
-        </ul>
-    </div>
-}
-
-/**
  * 文章列表
  */
 const PostList = (props) => {
-    const { latestPosts } = props
-    return <div className="max-w-screen-xl p-8 mx-auto bg-white">
+  const { latestPosts } = props
+  return <div className="max-w-screen-xl p-8 mx-auto bg-white">
         <div className="flex items-end justify-between mb-12 header">
             <div className="title">
                 <p className="mb-4 text-4xl font-bold text-gray-800">
@@ -195,7 +112,7 @@ const PostList = (props) => {
                             <div className="flex flex-wrap items-center mt-4 justify-starts">
 
                                 {post.tags?.map(t => {
-                                    return <div key={t} className="text-xs mr-2 py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
+                                  return <div key={t} className="text-xs mr-2 py-1.5 px-4 text-gray-600 bg-blue-100 rounded-2xl">
                                         #{t}
                                     </div>
                                 })}
@@ -210,545 +127,16 @@ const PostList = (props) => {
 }
 
 /**
- * 产品大图
- */
-const ProductInfo = () => {
-    return <div class="relative z-20 flex items-center overflow-hidden bg-white dark:bg-gray-800">
-        <div class="container relative flex px-6 py-16 mx-auto">
-            <div class="relative z-20 flex flex-col sm:w-2/3 lg:w-2/5">
-                <span class="w-20 h-2 mb-12 bg-gray-800 dark:bg-white">
-                </span>
-                <h1 class="flex flex-col text-6xl font-black leading-none text-gray-800 uppercase font-bebas-neue sm:text-8xl dark:text-white">
-                    Be on
-                    <span class="text-5xl sm:text-7xl">
-                        Time
-                    </span>
-                </h1>
-                <p class="text-sm text-gray-700 sm:text-base dark:text-white pr-5">
-                    这是一个空主题，很多数据在页面中写死，您可以在代码的 /themes/blank 中个性化您的页面
-                </p>
-                <div class="flex mt-8">
-                    <a href="#" class="px-4 py-2 mr-4 text-white uppercase bg-pink-500 border-2 border-transparent rounded-lg text-md hover:bg-pink-400">
-                        Get started
-                    </a>
-                    <a href="#" class="px-4 py-2 text-pink-500 uppercase bg-transparent border-2 border-pink-500 rounded-lg dark:text-white hover:bg-pink-500 hover:text-white text-md">
-                        Read more
-                    </a>
-                </div>
-            </div>
-            <div class="relative hidden sm:block sm:w-1/3 lg:w-3/5">
-                <img src={BLOG.HOME_BANNER_IMAGE} className="h-full m-auto" />
-            </div>
-        </div>
-    </div>
-
-}
-
-/**
- * 多张对比的价格卡
- */
-const PriceCardMulti = () => {
-    return <div class="relative z-20 flex items-center overflow-hidden bg-white dark:bg-gray-800">
-        <div class="container relative flex space-x-10 justify-center px-6 py-16 mx-auto">
-
-            <div class="w-64 p-4 bg-white shadow-lg rounded-2xl dark:bg-gray-800">
-                <p class="mb-4 text-xl font-medium text-gray-800 dark:text-gray-50">
-                    Entreprise
-                </p>
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">
-                    $0
-                    <span class="text-sm text-gray-300">
-                        / month
-                    </span>
-                </p>
-                <p class="mt-4 text-xs text-gray-600 dark:text-gray-100">
-                    For most businesses that want to optimize web queries.
-                </p>
-                <ul class="w-full mt-6 mb-6 text-sm text-gray-600 dark:text-gray-100">
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        All illimited components
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Own custom Tailwind styles
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Unlimited Templates
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Free premium dashboard
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Best ranking
-                    </li>
-                    <li class="mb-3 flex items-center opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                            <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Prenium svg
-                    </li>
-                    <li class="mb-3 flex items-center opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                            <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        My wife
-                    </li>
-                </ul>
-                <button type="button" class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                    Choose plan
-                </button>
-            </div>
-
-
-
-            <div class="w-64 p-4 bg-white shadow-lg rounded-2xl dark:bg-gray-800">
-                <p class="text-3xl font-bold text-black dark:text-white">
-                    Essential
-                </p>
-                <p class="mb-4 text-sm text-gray-500 dark:text-gray-300">
-                    For the basics tailwind
-                </p>
-                <p class="text-3xl font-bold text-black dark:text-white">
-                    $99
-                </p>
-                <p class="mb-4 text-sm text-gray-500 dark:text-gray-300">
-                    Per agent per month
-                </p>
-                <button type="button" class="w-56 px-3 py-3 m-auto text-sm text-black bg-white border border-black rounded-lg shadow hover:bg-black hover:text-white dark:hover-text-gray-900 dark:hover:bg-gray-100 ">
-                    Request demo
-                </button>
-                <ul class="w-full mt-6 mb-6 text-sm text-black dark:text-white">
-                    <li class="flex items-center mb-3">
-                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 1792 1792">
-                            <path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        All illimited components Tailwind
-                    </li>
-                    <li class="flex items-center mb-3">
-                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 1792 1792">
-                            <path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Own analitycs templates
-                    </li>
-                    <li class="flex items-center mb-3">
-                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 1792 1792">
-                            <path d="M1152 896q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-256-544q-148 0-273 73t-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273-73-273-198-198-273-73zm768 544q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        24/24 support link
-                    </li>
-                </ul>
-                <span class="block w-56 h-1 my-2 bg-gray-100 rounded-lg">
-                </span>
-                <ul class="w-full mt-6 mb-6 text-sm text-black dark:text-white">
-                    <li class="flex items-center mb-3 space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z">
-                            </path>
-                        </svg>
-                        <div>
-                            All free dashboard
-                            <a href="#" class="font-semibold text-red-500">
-                                free plan
-                            </a>
-                        </div>
-                    </li>
-                    <li class="flex items-center mb-3 space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z">
-                            </path>
-                        </svg>
-                        <div>
-                            Best ranking
-                        </div>
-                    </li>
-                    <li class="flex items-center mb-3 space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#10b981" viewBox="0 0 1792 1792">
-                            <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z">
-                            </path>
-                        </svg>
-                        <div>
-                            Chocolate and meel
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-
-            <div class="w-64 p-4 bg-indigo-500 shadow-lg rounded-2xl dark:bg-gray-800">
-                <div class="flex items-center justify-between text-white">
-                    <p class="mb-4 text-4xl font-medium">
-                        Pro
-                    </p>
-                    <p class="flex flex-col text-3xl font-bold">
-                        $99
-                        <span class="text-sm font-thin text-right">
-                            month
-                        </span>
-                    </p>
-                </div>
-                <p class="mt-4 text-white text-md">
-                    Plan include :
-                </p>
-                <ul class="w-full mt-6 mb-6 text-sm text-white">
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="white" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        All illimited components
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="white" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Own custom Tailwind styles
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="white" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Unlimited Templates
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="white" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Free premium dashboard
-                    </li>
-                    <li class="mb-3 flex items-center ">
-                        <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="white" viewBox="0 0 1792 1792">
-                            <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Best ranking
-                    </li>
-                    <li class="mb-3 flex items-center opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" class="w-6 h-6 mr-2" fill="white" viewBox="0 0 1792 1792">
-                            <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        Prenium svg
-                    </li>
-                    <li class="mb-3 flex items-center opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" class="w-6 h-6 mr-2" fill="white" viewBox="0 0 1792 1792">
-                            <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                            </path>
-                        </svg>
-                        My wife
-                    </li>
-                </ul>
-                <button type="button" class="w-full px-3 py-3 text-sm text-indigo-500 bg-white rounded-lg shadow hover:bg-gray-100 ">
-                    Choose plan
-                </button>
-            </div>
-
-
-
-
-        </div>
-    </div>
-}
-
-
-/**
- * 价格卡 单个
- * @returns 
- */
-const PriceCardOne = () => {
-    return <div class="relative max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
-        <div class="max-w-lg mx-auto overflow-hidden rounded-lg shadow-lg pricing-box lg:max-w-none lg:flex">
-            <div class="px-6 py-8 bg-white dark:bg-gray-800 lg:flex-shrink-1 lg:p-12">
-                <h3 class="text-2xl font-extrabold leading-8 text-gray-900 sm:text-3xl sm:leading-9 dark:text-white">
-                    Zero Commission
-                </h3>
-                <p class="mt-6 text-base leading-6 text-gray-500 dark:text-gray-200">
-                    Start selling online for free with all the features you need to launch your local delivery and pick-up service, nothing more. We don&#x27;t charge commission or monthly fees, keep all your margin.
-                </p>
-                <div class="mt-8">
-                    <div class="flex items-center">
-                        <h4 class="flex-shrink-0 pr-4 text-sm font-semibold leading-5 tracking-wider text-indigo-600 uppercase bg-white dark:bg-gray-800">
-                            What&#x27;s included
-                        </h4>
-                        <div class="flex-1 border-t-2 border-gray-200">
-                        </div>
-                    </div>
-                    <ul class="mt-8 lg:grid lg:grid-cols-2 lg:col-gap-8 lg:row-gap-5">
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                All illimited components
-                            </p>
-                        </li>
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                Own custom Tailwind styles
-                            </p>
-                        </li>
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                Unlimited Templates
-                            </p>
-                        </li>
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                Free premium dashboard
-                            </p>
-                        </li>
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                Best ranking
-                            </p>
-                        </li>
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                Prenium svg
-                            </p>
-                        </li>
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" width="6" height="6" stroke="currentColor" fill="#10b981" viewBox="0 0 1792 1792">
-                                    <path d="M1412 734q0-28-18-46l-91-90q-19-19-45-19t-45 19l-408 407-226-226q-19-19-45-19t-45 19l-91 90q-18 18-18 46 0 27 18 45l362 362q19 19 45 19 27 0 46-19l543-543q18-18 18-45zm252 162q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                My wife
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="mt-8">
-                    <div class="flex items-center">
-                        <h4 class="flex-shrink-0 pr-4 text-sm font-semibold leading-5 tracking-wider text-indigo-600 uppercase bg-white dark:bg-gray-800">
-                            &amp; What&#x27;s not
-                        </h4>
-                    </div>
-                    <ul class="mt-8 lg:grid lg:grid-cols-2 lg:col-gap-8 lg:row-gap-5">
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                                    <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                No Contracts. No monthly, setup, or additional payment processor fees
-                            </p>
-                        </li>
-                        <li class="flex items-start lg:col-span-1">
-                            <div class="flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" class="w-6 h-6 mr-2" fill="red" viewBox="0 0 1792 1792">
-                                    <path d="M1277 1122q0-26-19-45l-181-181 181-181q19-19 19-45 0-27-19-46l-90-90q-19-19-46-19-26 0-45 19l-181 181-181-181q-19-19-45-19-27 0-46 19l-90 90q-19 19-19 46 0 26 19 45l181 181-181 181q-19 19-19 45 0 27 19 46l90 90q19 19 46 19 26 0 45-19l181-181 181 181q19 19 45 19 27 0 46-19l90-90q19-19 19-46zm387-226q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="ml-3 text-sm leading-5 text-gray-700 dark:text-gray-200">
-                                No 2-week on-boarding, it takes 20 minutes!
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="px-6 py-8 text-center bg-gray-50 dark:bg-gray-700 lg:flex-shrink-0 lg:flex lg:flex-col lg:justify-center lg:p-12">
-                <p class="text-lg font-bold leading-6 text-gray-900 dark:text-white">
-                    Free
-                </p>
-                <div class="flex items-center justify-center mt-4 text-5xl font-extrabold leading-none text-gray-900 dark:text-white">
-                    <span>
-                        $0/mo
-                    </span>
-                </div>
-                <p class="mt-4 text-sm leading-5">
-                    <span class="block font-medium text-gray-500 dark:text-gray-400">
-                        Card payments:
-                    </span>
-                    <span class="inline-block font-medium text-gray-500  dark:text-gray-400">
-                        2.9% + 20p per transaction
-                    </span>
-                </p>
-                <div class="mt-6">
-                    <div class="rounded-md shadow">
-                        <button type="button" class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                            Create your store
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-}
-
-/**
- * 一个网页抹胸信息
- * @returns 
- */
-const BandeauInfo = () => {
-
-    return <section class="max-w-screen-xl px-4 py-12 mx-auto bg-green-500 dark:bg-gray-800 sm:py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-extrabold leading-9 text-white sm:text-4xl sm:leading-10">
-                Used by leading architects, home builders renovators.
-            </h2>
-            <p class="mt-3 text-base leading-7 text-white sm:mt-4">
-                Feel confident in choosing the best energy assessor for your energy rating.
-            </p>
-        </div>
-        <div class="mt-10 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-3 sm:gap-8">
-            <div>
-                <p class="text-5xl font-extrabold leading-none text-white">
-                    119
-                </p>
-                <p class="mt-2 text-base font-medium leading-6 text-white">
-                    Energy raters
-                </p>
-            </div>
-            <div class="mt-10 sm:mt-0">
-                <p class="text-5xl font-extrabold leading-none text-white">
-                    6
-                </p>
-                <p class="mt-2 text-base font-medium leading-6 text-white">
-                    Quotes on average
-                </p>
-            </div>
-            <div class="mt-10 sm:mt-0">
-                <p class="text-5xl font-extrabold leading-none text-white">
-                    24 hours
-                </p>
-                <p class="mt-2 text-base font-medium leading-6 text-white">
-                    Average turnaround
-                </p>
-            </div>
-        </div>
-        <div class="flex p-4 mx-auto mt-4 w-52">
-            <button type="button" class="w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in shadow-md bg-gradient-to-r from-green-400 to-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 ">
-                Buy the kit
-            </button>
-        </div>
-    </section>
-
-}
-
-
-/**
- * 团队介绍
- * @returns 
- */
-const Teams = () => {
-
-    return <div className="gap-8 py-12 md:flex max-w-screen-lg px-4 mx-auto text-gray-400 sm:px-6 md:px-8 dark:text-gray-300">
-
-        <div class="mb-8 text-center md:w-1/2 md:mb-0">
-            <img class="w-48 h-48 mx-auto -mb-24 rounded-full" src='https://www.tailwind-kit.com/images/person/1.jpg' alt="Avatar Jacky" />
-            <div class="px-8 pt-32 pb-10 text-gray-400 bg-white rounded-lg shadow-lg">
-                <h3 class="mb-3 text-xl text-gray-800 font-title">
-                    Jacky Pout
-                </h3>
-                <p class="font-body">
-                    FullStack Engineer
-                </p>
-                <p class="mb-4 text-sm font-body">
-                    He love caramel and he hate PHP
-                </p>
-                <a class="text-blue-500 font-body hover:text-gray-800" href="#">
-                    Jacky@poute.com
-                </a>
-            </div>
-        </div>
-        <div class="text-center md:w-1/2">
-            <img class="w-48 h-48 mx-auto -mb-24 rounded-full" src='https://www.tailwind-kit.com/images/person/4.jpg' alt="Avatar Damien Marley" />
-            <div class="px-8 pt-32 pb-10 text-gray-400 bg-white rounded-lg shadow-lg">
-                <h3 class="mb-3 text-xl text-gray-800 font-title">
-                    Damien Marley
-                </h3>
-                <p class="font-body">
-                    CEO
-                </p>
-                <p class="mb-4 text-sm font-body">
-                    He&#x27;s fun and listen everyday Bob Marley
-                </p>
-                <a class="text-blue-500 font-body hover:text-gray-800" href="mailto:dino@siete.pm">
-                    Damien@marley.com
-                </a>
-            </div>
-        </div>
-    </div>
-
-}
-
-/**
 * 导航栏
 * @param {*} param0
 * @returns
 */
 const NavBar = ({ siteInfo }) => {
-    const [showMenu, setShowMenu] = useState(false)
-    const toggleMenu = () => {
-        setShowMenu(!showMenu)
-    }
-    return <div>
+  const [showMenu, setShowMenu] = useState(false)
+  const toggleMenu = () => {
+    setShowMenu(!showMenu)
+  }
+  return <div>
         <nav className="bg-white dark:bg-gray-800  shadow ">
             <div className="px-8 mx-auto max-w-7xl">
                 <div className="flex items-center justify-between h-16">
@@ -757,7 +145,7 @@ const NavBar = ({ siteInfo }) => {
                         <a className="flex-shrink-0" href="/">
                             <img className="w-8 h-8" src="/favicon.svg" alt="NotionNext" />
                         </a>
-                        <div className={`hidden  md:block`}>
+                        <div className={'hidden  md:block'}>
                             <div className="flex items-baseline ml-10 space-x-4">
                                 <a className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium" href="/#">
                                     Home
@@ -858,89 +246,11 @@ const NavBar = ({ siteInfo }) => {
 }
 
 /**
- * 特性介绍
- */
-const Features = () => {
-    return <section>
-        <div class="container p-4 mx-auto bg-white max-w-7xl sm:p-6 lg:p-8 dark:bg-gray-800">
-            <div class="flex flex-wrap -mx-8">
-                <div class="w-full px-8 lg:w-1/2">
-                    <div class="pb-12 mb-12 border-b lg:mb-0 lg:pb-0 lg:border-b-0">
-                        <h2 class="mb-4 text-3xl font-bold lg:text-4xl font-heading dark:text-white">
-                            Sed ac magna sit amet risus tristique interdum, at vel velit in hac habitasse platea dictumst.
-                        </h2>
-                        <p class="mb-8 leading-loose text-gray-500 dark:text-gray-300">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, quam nec venenatis lobortis, mi risus tempus nulla, sed porttitor est nibh at nulla. Praesent placerat enim ut ex tincidunt vehicula. Fusce sit amet dui tellus.
-                        </p>
-                        <div class="w-full md:w-1/3">
-                            <button type="button" class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                See more
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full px-8 lg:w-1/2">
-                    <ul class="space-y-12">
-                        <li class="flex -mx-4">
-                            <div class="px-4">
-                                <span class="flex items-center justify-center w-16 h-16 mx-auto text-2xl font-bold text-blue-600 rounded-full font-heading bg-blue-50">
-                                    1
-                                </span>
-                            </div>
-                            <div class="px-4">
-                                <h3 class="my-4 text-xl font-semibold dark:text-white">
-                                    Responsive Elements
-                                </h3>
-                                <p class="leading-loose text-gray-500 dark:text-gray-300">
-                                    All elements are responsive and provide the best display in all screen size. It&#x27;s magic !
-                                </p>
-                            </div>
-                        </li>
-                        <li class="flex -mx-4">
-                            <div class="px-4">
-                                <span class="flex items-center justify-center w-16 h-16 mx-auto text-2xl font-bold text-blue-600 rounded-full font-heading bg-blue-50">
-                                    2
-                                </span>
-                            </div>
-                            <div class="px-4">
-                                <h3 class="my-4 text-xl font-semibold dark:text-white">
-                                    Flexible Team
-                                </h3>
-                                <p class="leading-loose text-gray-500 dark:text-gray-300">
-                                    Flexibility is the key. All team is available 24/24 and joinable every day on our hotline.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="flex -mx-4">
-                            <div class="px-4">
-                                <span class="flex items-center justify-center w-16 h-16 mx-auto text-2xl font-bold text-blue-600 rounded-full font-heading bg-blue-50">
-                                    3
-                                </span>
-                            </div>
-                            <div class="px-4">
-                                <h3 class="my-4 text-xl font-semibold dark:text-white">
-                                    Ecologic Software
-                                </h3>
-                                <p class="leading-loose text-gray-500 dark:text-gray-300">
-                                    Our Software are ecologic and responsable. Green is not just a color, it&#x27;s a way of life.
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-}
-
-/**
  * 页脚
  * @param {*} param0
  */
 const Footer = ({ siteInfo }) => {
-    return <footer className="bg-white dark:bg-gray-800 pt-4 pb-8 xl:pt-8">
+  return <footer className="bg-white dark:bg-gray-800 pt-4 pb-8 xl:pt-8">
         <div className='py-5'>
             <DarkModeButton />
         </div>
@@ -1089,42 +399,40 @@ const Footer = ({ siteInfo }) => {
 * @returns
 */
 const CTA = ({ siteInfo }) => {
-    return <div class="relative z-20 flex items-center bg-white dark:bg-gray-800 h-screen">
-        <div class="container relative flex flex-col items-center justify-between px-6 py-8 mx-auto">
-            <div class="flex flex-col">
-                <h1 class="w-full text-4xl font-light text-center text-gray-800 uppercase sm:text-5xl dark:text-white">
+  return <div className="relative z-20 flex items-center bg-white dark:bg-gray-800 h-screen">
+        <div className="container relative flex flex-col items-center justify-between px-6 py-8 mx-auto">
+            <div className="flex flex-col">
+                <h1 className="w-full text-4xl font-light text-center text-gray-800 uppercase sm:text-5xl dark:text-white">
                     The React Framework for Production
                 </h1>
-                <h2 class="w-full max-w-2xl py-8 mx-auto text-xl font-light text-center text-gray-500 dark:text-white">
+                <h2 className="w-full max-w-2xl py-8 mx-auto text-xl font-light text-center text-gray-500 dark:text-white">
                     Next.js gives you the best developer experience with all the features you need for production: hybrid static &amp; server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.
                 </h2>
-                <div class="flex items-center justify-center mt-4">
-                    <a href="#" class="px-4 py-2 mr-4 text-white uppercase bg-gray-800 border-2 border-transparent text-md hover:bg-gray-900">
+                <h3 className="w-full max-w-2xl py-8 mx-auto text-xl font-light text-center text-gray-500 dark:text-white">
+                    BLANK仅作为演示参考主题，便于开发着创建NotionNext主题
+                </h3>
+                <div className="flex items-center justify-center mt-4">
+                    <a href="#" className="px-4 py-2 mr-4 text-white uppercase bg-gray-800 border-2 border-transparent text-md hover:bg-gray-900">
                         Get started
                     </a>
-                    <a href="#" class="px-4 py-2 text-gray-800 uppercase bg-transparent border-2 border-gray-800 dark:text-white hover:bg-gray-800 hover:text-white text-md">
+                    <a href="#" className="px-4 py-2 text-gray-800 uppercase bg-transparent border-2 border-gray-800 dark:text-white hover:bg-gray-800 hover:text-white text-md">
                         Documentation
                     </a>
                 </div>
             </div>
-            <div class="relative block w-full mx-auto mt-6 md:mt-0">
-                <img src="/images/object/12.svg" class="max-w-xs m-auto md:max-w-2xl" />
-            </div>
         </div>
     </div>
-
-
 }
 export {
-    THEME_CONFIG,
-    LayoutIndex,
-    LayoutSearch,
-    LayoutArchive,
-    LayoutSlug,
-    Layout404,
-    LayoutCategory,
-    LayoutCategoryIndex,
-    LayoutPage,
-    LayoutTag,
-    LayoutTagIndex
+  THEME_CONFIG,
+  LayoutIndex,
+  LayoutSearch,
+  LayoutArchive,
+  LayoutSlug,
+  Layout404,
+  LayoutCategory,
+  LayoutCategoryIndex,
+  LayoutPage,
+  LayoutTag,
+  LayoutTagIndex
 }
