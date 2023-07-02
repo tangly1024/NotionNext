@@ -1,12 +1,3 @@
-import NavBar from './components/NavBar'
-import Hero from './components/Hero'
-import Footer from './components/Footer'
-import Divider from './components/Divider'
-import HeroWithFigure from './components/HeroWithFigure'
-import HeroWithForm from './components/HeroWithForm'
-import HeroWithImage from './components/HeroWithImage'
-import Carousel from './components/Carousel'
-import ChatBubble from './components/ChatBubble'
 
 /**
  * 这是一个空白主题的示例
@@ -19,24 +10,26 @@ const THEME_CONFIG = { THEME: 'blank' }
  */
 const LayoutBase = (props) => {
   const { children } = props
-  console.log('children', children)
-  return <div id='theme-blank'>
-        <NavBar />
-        {children}
-        <Footer />
+  return <div id='theme-blank' className="flex flex-col justify-between">
+        <div id='nav-bar' className="w-full h-12 bg-white text-center fixed top-0 flex justify-between px-12">
+            <div id='logo' className="my-auto">Logo</div>
+            <div id='menu' className="my-auto">Menu</div>
+        </div>
+        <div id='content-wrapper'>
+            {children}
+        </div>
+
     </div>
 }
 
+/**
+ * 首页布局
+ * @param {*} props
+ * @returns
+ */
 const LayoutIndex = (props) => {
-  console.log('首页')
   return <LayoutBase {...props}>
-        <Hero />
-        <HeroWithFigure />
-        <HeroWithImage />
-        <Carousel/>
-        <ChatBubble/>
-        <HeroWithForm />
-        <Divider />
+        <div id='hero' className="flex justify-center items-center  h-screen">hero-page</div>
     </LayoutBase>
 }
 const LayoutSearch = () => <></>
