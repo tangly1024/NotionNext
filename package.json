@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@giscus/react": "^2.2.6",
+    "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
     "@vercel/analytics": "^1.0.0",
     "animate.css": "^4.1.1",

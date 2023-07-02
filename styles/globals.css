@@ -333,18 +333,17 @@ a.avatar-wrapper {
     }
   }
 
-.notion-external-title {
-  @apply dark:text-white !important;
+
+/* Buttons */
+.btn,
+.btn-sm {
+    @apply font-medium inline-flex items-center justify-center border border-transparent rounded leading-snug transition duration-150 ease-in-out;
 }
 
-.notion-external-subtitle {
-  @apply dark:text-gray-400 !important;
+.btn {
+    @apply px-8 py-3 shadow-lg;
 }
 
-.notion-external-block {
-  @apply dark:border-gray-200 !important;
-}
-
-.notion-external-image > svg > g > path{
-  @apply dark:fill-gray-200 !important;
+.btn-sm {
+    @apply px-4 py-2 shadow;
 }
