@@ -31,8 +31,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-                <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">用网站来展示品牌</h4>
+                <p className="text-gray-600 text-center">比起线下渠道、一个域名和网站更有说服力</p>
               </div>
 
               {/* 2nd item */}
@@ -47,8 +47,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-                <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">SEO带来更多流量</h4>
+                <p className="text-gray-600 text-center">通过搜索引擎，精准定位您的受众</p>
               </div>
 
               {/* 3rd item */}
@@ -64,8 +64,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-                <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">网站的性能很重要</h4>
+                <p className="text-gray-600 text-center">更快的响应，更好的用户体验</p>
               </div>
 
               {/* 4th item */}
@@ -81,8 +81,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-                <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">打造您的个人品牌</h4>
+                <p className="text-gray-600 text-center">继马斯克、乔布斯之后，您将是下一个传奇</p>
               </div>
 
               {/* 5th item */}
@@ -97,8 +97,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-                <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">写作能力是核心技能</h4>
+                <p className="text-gray-600 text-center">比起只输入知识，更重要的是反思和输出</p>
               </div>
 
               {/* 6th item */}
@@ -112,8 +112,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Headless CMS</h4>
-                <p className="text-gray-600 text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">开始写博客吧</h4>
+                <p className="text-gray-600 text-center">NotionNext，助您轻松开始写作</p>
               </div>
 
             </div>
