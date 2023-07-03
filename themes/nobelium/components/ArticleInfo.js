@@ -34,7 +34,7 @@ export const ArticleInfo = (props) => {
             </div>
             <div className="mr-2 mb-4 md:ml-0">
               {formatDate(
-                post?.date?.start_date || post.createdTime,
+                post?.publishTime || post.createdTime,
                 BLOG.LANG
               )}
             </div>

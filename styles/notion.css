@@ -603,6 +603,7 @@ summary > .notion-h {
   margin: 2px 4px 0 2px;
   fill: var(--fg-color-6);
   color: var(--fg-color-icon);
+  @apply dark:fill-gray-200
 }
 
 img.notion-page-icon,
@@ -1781,6 +1782,7 @@ svg + .notion-page-title-text {
   /* fill: var(--fg-color); */
   fill: rgba(55, 53, 47);
   margin-right: 6px;
+  @apply dark:fill-gray-200
 }
 
 .notion-collection-view-type-title {
@@ -1788,6 +1790,7 @@ svg + .notion-page-title-text {
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--fg-color);
+  @apply dark:text-gray-200
 }
 
 .notion-table {
@@ -1871,8 +1874,12 @@ svg + .notion-page-title-text {
   min-height: 14px;
   fill: var(--fg-color-2);
   margin-right: 6px;
-  @apply dark:text-gray-200
+  @apply dark:text-gray-200 dark:fill-gray-200
 
+}
+
+.notion-collection-view-tabs-content-item-active {
+    @apply dark:border-gray-300
 }
 
 .notion-collection-column-title-body {

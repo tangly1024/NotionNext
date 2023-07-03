@@ -12,7 +12,7 @@ const BlogPost = ({ post }) => {
             {post.title}
           </h2>
           <time className="flex-shrink-0 text-gray-600 dark:text-gray-400">
-            {formatDate(post?.date?.start_date || post.createdTime, BLOG.LANG)}
+            {formatDate(post?.publishTime || post.createdTime, BLOG.LANG)}
           </time>
         </header>
         <main>

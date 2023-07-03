@@ -76,5 +76,8 @@ module.exports = withBundleAnalyzer({
     config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', THEME)
 
     return config
+  },
+  experimental: {
+    scrollRestoration: true
   }
 })
