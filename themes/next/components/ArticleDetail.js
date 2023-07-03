@@ -92,8 +92,8 @@ export default function ArticleDetail(props) {
                     <section className="flex justify-between">
                         {/* 原链接 */}
                         {post.url && <>
-                            <div>
-                                <span className="mb-2 font-bold text-lg">{locale.COMMON.ORIGINAL_URL} :</span>
+                            <div className="pt-6">
+                                <span className="mb-2 font-bold text-lg">{locale.COMMON.ORIGINAL_URL} : </span>
                                 <Link href={`${post.url}`} className="cursor-pointer hover:underline">
 
                                     {post.url}
