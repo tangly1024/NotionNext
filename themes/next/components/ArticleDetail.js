@@ -19,12 +19,12 @@ import NotionIcon from '@/components/NotionIcon'
  * @returns
  */
 export default function ArticleDetail(props) {
-  const { post, recommendPosts, prev, next } = props
-  const url = BLOG.LINK + useRouter().asPath
-  const { locale } = useGlobal()
-  const showArticleInfo = CONFIG_NEXT.ARTICLE_INFO
+    const { post, recommendPosts, prev, next } = props
+    const url = BLOG.LINK + useRouter().asPath
+    const { locale } = useGlobal()
+    const showArticleInfo = CONFIG_NEXT.ARTICLE_INFO
 
-  return (
+    return (
         <div id="container"
             className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
             <div itemScope itemType="https://schema.org/Movie"
@@ -89,6 +89,20 @@ export default function ArticleDetail(props) {
                     {/* 版权声明 */}
                     {post.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} />}
 
+                    <section className="flex justify-between">
+                        {/* 原链接 */}
+                        {post.url && <>
+                            <div>
+                                <span className="mb-2 font-bold text-lg">{locale.COMMON.ORIGINAL_URL} :</span>
+                                <Link href={`${post.url}`} className="cursor-pointer hover:underline">
+
+                                    {post.url}
+
+                                </Link>
+                            </div>
+                        </>}
+                    </section>
+
                     {/* 推荐文章 */}
                     {post.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}
 
@@ -129,5 +143,5 @@ export default function ArticleDetail(props) {
             </div>
 
         </div>
-  )
+    )
 }
