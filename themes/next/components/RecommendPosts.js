@@ -13,8 +13,17 @@ const RecommendPosts = ({ recommendPosts }) => {
   const { locale } = useGlobal()
 
   return (
-    <div className="pt-2 border pl-4 py-2 my-4 dark:text-gray-300 ">
-       <div className="mb-2 font-bold text-lg">{locale.COMMON.RELATE_POSTS} :</div>
+    <div>
+      <div>
+        <span className="mb-2 font-bold text-lg">{locale.COMMON.ORIGINAL_URL} :</span>
+        <Link href={`${post.url}`} className="cursor-pointer hover:underline">
+
+          {post.url}
+
+        </Link>
+      </div>
+      <div className="pt-2 border pl-4 py-2 my-4 dark:text-gray-300 ">
+        <div className="mb-2 font-bold text-lg">{locale.COMMON.RELATE_POSTS} :</div>
         <ul className="font-light text-sm">
           {recommendPosts.map(post => (
             <li className="py-1" key={post.id}>
@@ -26,6 +35,7 @@ const RecommendPosts = ({ recommendPosts }) => {
             </li>
           ))}
         </ul>
+      </div>
     </div>
   )
 }
