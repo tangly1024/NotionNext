@@ -39,7 +39,7 @@ export const LayoutSlug = props => {
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
-            {!lock && <div id='container'>
+            {!lock && <div id='article-wrapper'>
 
                 {/* title */}
                 <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
@@ -67,7 +67,7 @@ export const LayoutSlug = props => {
                 </section>
 
                 {/* Notion文章主体 */}
-                <section id="notion-article" className="px-1 max-w-4xl">
+                <section className="px-1 max-w-4xl">
                     {post && (<NotionPage post={post} />)}
                 </section>
 

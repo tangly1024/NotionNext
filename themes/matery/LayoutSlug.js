@@ -54,7 +54,7 @@ export const LayoutSlug = props => {
             <div className="-mt-32 transition-all duration-300 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
-                {!lock && <div id="container" className="overflow-x-auto md:w-full px-3 ">
+                {!lock && <div id="article-wrapper" className="overflow-x-auto md:w-full px-3 ">
                     {post?.type && post?.type === 'Post' && <>
                         <div
                             data-aos="fade-down"
@@ -70,7 +70,7 @@ export const LayoutSlug = props => {
                     <div className='lg:px-10 subpixel-antialiased'>
                         <article itemScope >
                             {/* Notion文章主体 */}
-                            <section id='notion-article' className='justify-center mx-auto max-w-2xl lg:max-w-full'>
+                            <section className='justify-center mx-auto max-w-2xl lg:max-w-full'>
                                 {post && <NotionPage post={post} />}
                             </section>
 

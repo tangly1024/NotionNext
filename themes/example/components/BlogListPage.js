@@ -22,7 +22,7 @@ export const BlogListPage = props => {
   return (
         <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'}} mb-12`}>
 
-            <div id="container">
+            <div id="posts-wrapper">
                 {posts?.map(post => (
                     <BlogPostCard key={post.id} post = {post}/>
                 ))}

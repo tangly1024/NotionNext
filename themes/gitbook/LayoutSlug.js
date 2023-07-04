@@ -25,7 +25,7 @@ export const LayoutSlug = (props) => {
                 <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
 
                 {/* Notion文章主体 */}
-                {post && (<section id="notion-article" className="px-1">
+                {post && (<section id="article-wrapper" className="px-1">
                     <NotionPage post={post} />
                 </section>)}
 

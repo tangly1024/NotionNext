@@ -31,7 +31,7 @@ export default function Features() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">探索解决方案</h1>
-            <p className="text-xl text-gray-600">个人或小企业有什么方法可以快速搭建自己的站点，塑造一个品牌展示中心？<br/>以前，它是<strong className='font-bold'>繁重</strong>的Wordpress，它是操作<strong className='font-bold'>复杂</strong>的Hexo，它是一个<strong className='font-bold'>昂贵</strong>的研发外包团队；但现在，您只要一个笔记软件、Notion就够了</p>
+            <p className="text-xl text-gray-600">如何搭建自己的门户网站，塑造一个品牌展示中心？<br/>以前，它是系统<strong className='font-bold'>繁重</strong>的Wordpress，它是操作<strong className='font-bold'>复杂</strong>的Hexo，它是一个<strong className='font-bold'>昂贵</strong>的研发外包团队；但现在，您只要一个笔记软件、Notion就够了</p>
           </div>
 
           {/* Section content */}

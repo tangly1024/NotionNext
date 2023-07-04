@@ -89,7 +89,7 @@ export const LayoutSearch = props => {
           </>}
 
           {currentSearch && <>
-              <div id="container">
+              <div id="posts-wrapper">
                   {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
               </div>
           </>}

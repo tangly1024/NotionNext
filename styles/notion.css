@@ -2043,3 +2043,6 @@ code.language-mermaid {
   @apply dark:fill-gray-200 !important;
 }
 
+.notion-external-image {
+  @apply w-6 h-6 mx-3 my-2 !important;
+}

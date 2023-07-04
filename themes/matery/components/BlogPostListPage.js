@@ -18,7 +18,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return <BlogPostListEmpty />
   } else {
     return (
-      <div id="container" className='w-full'>
+      <div className='w-full'>
         <div className='pt-6'></div>
         {/* 文章列表 */}
         <div className="pt-4 flex flex-wrap pb-12" >

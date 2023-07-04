@@ -13,7 +13,7 @@ export const LayoutSearch = (props) => {
   const currentSearch = keyword || router?.query?.s
   useEffect(() => {
     setTimeout(() => {
-      const container = isBrowser() && document.getElementById('container')
+      const container = isBrowser() && document.getElementById('posts-wrapper')
       if (container && container.innerHTML) {
         const re = new RegExp(currentSearch, 'gim')
         const instance = new Mark(container)

@@ -52,7 +52,7 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return (
       <div>
         {/* 文章列表 */}
-        <div id="container" className='grid-container'>
+        <div id="posts-wrapper" className='grid-container'>
           {filterPosts?.map(post => (
             <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>
               <BlogCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />

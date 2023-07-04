@@ -25,7 +25,7 @@ export default function ArticleDetail(props) {
   const showArticleInfo = CONFIG_NEXT.ARTICLE_INFO
 
   return (
-        <div id="container"
+        <div id="article-wrapper"
             className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
             <div itemScope itemType="https://schema.org/Movie"
                 data-aos="fade-down"
@@ -77,7 +77,7 @@ export default function ArticleDetail(props) {
                 </header>}
 
                 {/* Notion内容主体 */}
-                <article id='notion-article' className='px-1 max-w-3xl mx-auto'>
+                <article className='px-1 max-w-3xl mx-auto'>
                     {post && (<NotionPage post={post} />)}
                 </article>
 

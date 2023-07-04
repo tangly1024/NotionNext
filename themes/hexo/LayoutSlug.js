@@ -26,7 +26,7 @@ export const LayoutSlug = props => {
     ></LayoutBase>
   }
 
-  const targetRef = isBrowser() ? document.getElementById('container') : null
+  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
 
   const floatSlot = <>
     {post?.toc?.length > 1 && <div className="block lg:hidden">
@@ -50,11 +50,11 @@ export const LayoutSlug = props => {
       <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && <div id="container" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
+        {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
           <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
             {/* Notion文章主体 */}
-            <section id='notion-article' className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
+            <section className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
               {post && <NotionPage post={post} />}
             </section>
 

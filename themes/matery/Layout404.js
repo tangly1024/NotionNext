@@ -7,7 +7,7 @@ export const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      const article = typeof document !== 'undefined' && document.getElementById('container')
+      const article = typeof document !== 'undefined' && document.getElementById('notion-article')
       if (!article) {
         router.push('/').then(() => {
           // console.log('找不到页面', router.asPath)

@@ -8,7 +8,7 @@ export const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      const article = isBrowser() && document.getElementById('container')
+      const article = isBrowser() && document.getElementById('article-wrapper')
       if (!article) {
         router.push('/').then(() => {
           // console.log('找不到页面', router.asPath)

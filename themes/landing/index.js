@@ -28,7 +28,7 @@ const THEME_CONFIG = { THEME: 'landing' }
  * @returns
  */
 const LayoutBase = (props) => {
-    const { siteInfo, children } = props
+    const {  children } = props
     return <div id='theme-blank' className="flex flex-col justify-between bg-white">
         {/* 顶部导航栏 */}
         <Header />
@@ -50,7 +50,6 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
-    const { siteInfo } = props
     return (
         <LayoutBase {...props}>
             <Hero />
@@ -68,7 +67,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutSlug = (props) => <LayoutBase {...props}>
-    <div className='p-12'>
+    <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
         <NotionPage {...props} />
     </div>
 </LayoutBase>

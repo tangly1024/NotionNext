@@ -12,7 +12,7 @@ import { isBrowser } from '@/lib/utils'
 export const LayoutSlug = (props) => {
   const { post, latestPosts, lock, validPassword } = props
   const drawerRight = useRef(null)
-  const targetRef = isBrowser() ? document.getElementById('container') : null
+  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
   const floatSlot = post?.toc?.length > 1
     ? <div className='block lg:hidden'><TocDrawerButton onClick={() => {
       drawerRight?.current?.handleSwitchVisible()

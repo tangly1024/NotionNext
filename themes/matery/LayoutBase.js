@@ -54,7 +54,7 @@ const LayoutBase = props => {
 
             <main id="wrapper" className={`${CONFIG_MATERY.HOME_BANNER_ENABLE ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
                 {/* 嵌入区域 */}
-                               <div id="container-slot" className={`w-full max-w-6xl ${props?.post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
+                <div id="container-slot" className={`w-full max-w-6xl ${props?.post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                    {props.containerSlot}
                 </div>
 

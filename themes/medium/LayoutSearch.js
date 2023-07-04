@@ -19,7 +19,7 @@ export const LayoutSearch = (props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      const container = isBrowser() && document.getElementById('container')
+      const container = isBrowser() && document.getElementById('posts-wrapper')
       if (container && container.innerHTML) {
         const re = new RegExp(currentSearch, 'gim')
         const instance = new Mark(container)
