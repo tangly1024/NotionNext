@@ -9,10 +9,10 @@ import BLOG from '@/blog.config'
 let wrapperTop = 0
 
 /**
- *
- * @returns 头图
+ * 顶部全屏大图
+ * @returns
  */
-const Header = props => {
+const Hero = props => {
   const [typed, changeType] = useState()
   const { siteInfo } = props
   const { locale } = useGlobal()
@@ -79,4 +79,4 @@ const Header = props => {
   )
 }
 
-export default Header
+export default Hero

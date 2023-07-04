@@ -10,8 +10,22 @@ import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Announcement from './Announcement'
 import { useGlobal } from '@/lib/global'
+import Live2D from '@/components/Live2D'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
+const FaceBookPage = dynamic(
+  () => {
+    let facebook = <></>
+    try {
+      facebook = import('@/components/FacebookPage')
+    } catch (err) {
+      console.error(err)
+    }
+    return facebook
+  },
+  { ssr: false }
+)
+
 /**
  * Hexo主题右侧栏
  * @param {*} props
@@ -20,7 +34,7 @@ const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
 export default function SideRight(props) {
   const {
     post, currentCategory, categories, latestPosts, tags,
-    currentTag, showCategory, showTag, slot, notice
+    currentTag, showCategory, showTag, rightAreaSlot, notice
   } = props
 
   const { locale } = useGlobal()
@@ -57,7 +71,10 @@ export default function SideRight(props) {
         {post && post.toc && post.toc.length > 1 && <Card>
           <Catalog toc={post.toc} />
         </Card>}
-        {slot}
+
+        {rightAreaSlot}
+        <FaceBookPage/>
+        <Live2D />
       </div>
 
     </div>
