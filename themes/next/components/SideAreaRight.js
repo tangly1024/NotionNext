@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Announcement from './Announcement'
+import LatestPostsGroup from './LatestPostsGroup'
 const NextRecentComments = dynamic(() => import('./NextRecentComments'))
 
 /**
@@ -22,7 +23,7 @@ const NextRecentComments = dynamic(() => import('./NextRecentComments'))
  * @constructor
  */
 const SideAreaRight = (props) => {
-  const { tagOptions, currentTag, slot, categoryOptions, currentCategory, notice } = props
+  const { tagOptions, currentTag, slot, categoryOptions, currentCategory, notice, latestPosts } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const announcementVisible = notice && Object.keys(notice).length > 0
@@ -48,6 +49,7 @@ const SideAreaRight = (props) => {
                 <Announcement post={notice} />
             </Card>}
 
+            {CONFIG_NEXT.RIGHT_LATEST_POSTS && <Card><LatestPostsGroup latestPosts={latestPosts} /></Card>}
             {slot}
 
             {/* 分类  */}

@@ -9,6 +9,7 @@ import Logo from './Logo'
 import Card from './Card'
 import CONFIG_NEXT from '../config_next'
 import BLOG from '@/blog.config'
+import Live2D from '@/components/Live2D'
 
 /**
  * 侧边平铺
@@ -66,9 +67,10 @@ const SideAreaLeft = props => {
                 </Tabs>
             </Card>
 
-            {slot && <div className='flex justify-center'>
+            <div className='flex justify-center'>
                 {slot}
-            </div>}
+                <Live2D />
+            </div>
         </div>
 
     </aside>
