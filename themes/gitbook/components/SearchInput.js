@@ -1,6 +1,6 @@
 import { useImperativeHandle, useRef, useState } from 'react'
-import { useGitBookGlobal } from '../LayoutBase'
 import { deepClone } from '@/lib/utils'
+import { useGitBookGlobal } from '@/themes/gitbook'
 let lock = false
 
 const SearchInput = ({ currentSearch, cRef, className }) => {

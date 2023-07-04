@@ -86,4 +86,4 @@ const LayoutBase = props => {
 }
 
 export default LayoutBase
-export const useGitBookGlobal = () => useContext(ThemeGlobalMedium)
+export const useMediumGlobal = () => useContext(ThemeGlobalMedium)

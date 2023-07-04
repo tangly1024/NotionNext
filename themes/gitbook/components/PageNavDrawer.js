@@ -1,4 +1,4 @@
-import { useGitBookGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '@/themes/gitbook'
 import NavPostList from './NavPostList'
 
 /**

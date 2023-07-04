@@ -1,5 +1,5 @@
+import { useGitBookGlobal } from '@/themes/gitbook'
 import Catalog from './Catalog'
-import { useGitBookGlobal } from '../LayoutBase'
 
 /**
  * 悬浮抽屉目录
