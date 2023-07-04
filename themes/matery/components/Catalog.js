@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
@@ -13,7 +13,7 @@ import { useGlobal } from '@/lib/global'
 const Catalog = ({ toc }) => {
   const { locale } = useGlobal()
   // 监听滚动事件
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
     actionSectionScrollSpy()
     return () => {

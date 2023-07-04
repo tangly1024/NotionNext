@@ -11,7 +11,7 @@ let wrapperTop = 0
  *
  * @returns 头图
  */
-const Header = props => {
+const Hero = props => {
   const [typed, changeType] = useState()
   const { siteInfo } = props
   const { locale } = useGlobal()
@@ -71,4 +71,4 @@ const Header = props => {
   )
 }
 
-export default Header
+export default Hero
