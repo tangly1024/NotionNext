@@ -11,12 +11,12 @@ export const ArticleInfo = (props) => {
             <div>
                 {post?.type !== 'Page' && <>
                     <Link
-                        href={`/category/${post.category}`}
+                        href={`/category/${post?.category}`}
                         passHref
                         className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
 
                         <i className="mr-1 fas fa-folder-open" />
-                        {post.category}
+                        {post?.category}
 
                     </Link>
                     <span className='mr-2'>|</span>
@@ -33,7 +33,7 @@ export const ArticleInfo = (props) => {
                     </Link>
                     <span className='mr-2'>|</span>
                     <span className='mx-2 text-gray-400 dark:text-gray-500'>
-                        {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
+                        {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedTime}
                     </span>
                     <span className='mr-2'>|</span>
                     <span className="hidden busuanzi_container_page_pv font-light mr-2">

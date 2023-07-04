@@ -23,7 +23,7 @@ export const getLayoutByTheme = (router) => {
 }
 
 /**
- * 路径 对应的Layout名称
+ * 根据路径 获取对应的layout
  * @param {*} path
  * @returns
  */
@@ -31,30 +31,24 @@ export const getLayoutNameByPath = (path) => {
   switch (path) {
     case '/':
       return 'LayoutIndex'
-    case '/page/[page]':
-      return 'LayoutPage'
     case '/archive':
       return 'LayoutArchive'
+    case '/page/[page]':
+    case '/category/[category]':
+    case '/category/[category]/page/[page]':
+    case '/tag/[tag]':
+    case '/tag/[tag]/page/[page]':
+      return 'LayoutPostList'
     case '/search':
-      return 'LayoutSearch'
     case '/search/[keyword]':
-      return 'LayoutSearch'
     case '/search/[keyword]/page/[page]':
       return 'LayoutSearch'
     case '/404':
       return 'Layout404'
     case '/tag':
       return 'LayoutTagIndex'
-    case '/tag/[tag]':
-      return 'LayoutTag'
-    case '/tag/[tag]/page/[page]':
-      return 'LayoutTag'
     case '/category':
       return 'LayoutCategoryIndex'
-    case '/category/[category]':
-      return 'LayoutCategory'
-    case '/category/[category]/page/[page]':
-      return 'LayoutCategory'
     default:
       return 'LayoutSlug'
   }

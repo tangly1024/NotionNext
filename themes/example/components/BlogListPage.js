@@ -20,7 +20,7 @@ export const BlogListPage = props => {
   const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER
 
   return (
-        <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'}} mb-12`}>
+        <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'} mb-12`}>
 
             <div id="posts-wrapper">
                 {posts?.map(post => (
