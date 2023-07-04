@@ -1,4 +1,5 @@
-import BLOG, { LINK } from '@/blog.config'
+import BLOG from '@/blog.config'
+import Link from 'next/link'
 
 /**
  * 按照日期将文章分组
@@ -20,17 +21,12 @@ export default function BlogListGroupByDate({ archiveTitle, archivePosts }) {
             >
                 <div id={post?.publishTime}>
                     <span className="text-gray-400">
-                        {post.date?.start_date}
+                        {post?.publishTime}
                     </span>{' '}
                     &nbsp;
-                    <LINK
-                        href={`${BLOG.SUB_PATH}/${post.slug}`}
-                        passHref
-                        className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
-
+                    <Link href={`${BLOG.SUB_PATH}/${post.slug}`} className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
                         {post.title}
-
-                    </LINK>
+                    </Link>
                 </div>
             </li>
         ))}

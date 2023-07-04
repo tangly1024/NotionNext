@@ -16,7 +16,7 @@ export const getLayoutByTheme = (router) => {
   const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
   const layout = getLayoutNameByPath(router.pathname)
   if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}/${layout}`), { ssr: true })
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
   } else {
     return ThemeComponents[layout]
   }

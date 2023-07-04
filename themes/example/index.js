@@ -40,6 +40,7 @@ const LayoutBase = props => {
 
   return (
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
+            {/* 网页SEO信息 */}
             <CommonHead meta={meta} />
 
             {/* 页头 */}
@@ -97,6 +98,7 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   const { category, tag } = props
+  // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
   let slotTop = null
   if (category) {
     slotTop = <div className='pb-12'><i className="mr-1 fas fa-folder-open" />{category}</div>
