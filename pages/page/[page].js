@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 
@@ -30,7 +30,7 @@ const Page = props => {
 
 export async function getStaticPaths() {
   const from = 'page-paths'
-  const { postCount } = await getGlobalNotionData({ from })
+  const { postCount } = await getGlobalData({ from })
   const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
   return {
     // remove first page, we 're not gonna handle that.
@@ -43,7 +43,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { page } }) {
   const from = `page-${page}`
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
   const { allPages } = props
   const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   // 处理分页

@@ -1,10 +1,11 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import React, { useEffect } from 'react'
+import { getGlobalData } from '@/lib/notion/getNotionData'
+import { useEffect } from 'react'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 import { isBrowser } from '@/lib/utils'
+import { formatDateFmt } from '@/lib/formatDate'
 
 const ArchiveIndex = props => {
   const { siteInfo } = props
@@ -41,7 +42,7 @@ const ArchiveIndex = props => {
 }
 
 export async function getStaticProps() {
-  const props = await getGlobalNotionData({ from: 'archive-index' })
+  const props = await getGlobalData({ from: 'archive-index' })
   // 处理分页
   props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
   delete props.allPages
@@ -49,15 +50,13 @@ export async function getStaticProps() {
   const postsSortByDate = Object.create(props.posts)
 
   postsSortByDate.sort((a, b) => {
-    const dateA = new Date(a?.publishTime || a.createdTime)
-    const dateB = new Date(b?.publishTime || b.createdTime)
-    return dateB - dateA
+    return b?.publishDate - a?.publishDate
   })
 
   const archivePosts = {}
 
   postsSortByDate.forEach(post => {
-    const date = post.date?.start_date?.slice(0, 7) || post.createdTime
+    const date = formatDateFmt(post.publishDate, 'yyyy-MM')
     if (archivePosts[date]) {
       archivePosts[date].push(post)
     } else {

@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
@@ -30,7 +30,7 @@ const Tag = props => {
 
 export async function getStaticProps({ params: { tag } }) {
   const from = 'tag-props'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
 
   // 过滤状态
   props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag))
@@ -68,7 +68,7 @@ function getTagNames(tags) {
 
 export async function getStaticPaths() {
   const from = 'tag-static-path'
-  const { tagOptions } = await getGlobalNotionData({ from })
+  const { tagOptions } = await getGlobalData({ from })
   const tagNames = getTagNames(tagOptions)
 
   return {

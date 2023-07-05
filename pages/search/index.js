@@ -1,4 +1,4 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
@@ -45,7 +45,7 @@ const Search = props => {
  * 浏览器前端搜索
  */
 export async function getStaticProps() {
-  const props = await getGlobalNotionData({
+  const props = await getGlobalData({
     from: 'search-props',
     pageType: ['Post']
   })
