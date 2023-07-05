@@ -5,7 +5,7 @@ const BLOG = {
       process.env.NOTION_PAGE_ID || '02ab3b8678004aa69e9e415905ef32a5',
   PSEUDO_STATIC: false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 5, // 更新内容缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
-  THEME: process.env.NEXT_PUBLIC_THEME || 'hexo', // 主题， 支持 ['next','hexo',"fukasawa','medium','example','matery','gitbook','simple'] @see https://preview.tangly1024.com
+  THEME: process.env.NEXT_PUBLIC_THEME || 'next', // 主题， 支持 ['next','hexo',"fukasawa','medium','example','matery','gitbook','simple'] @see https://preview.tangly1024.com
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: 2021, // e.g if leave this empty, current year will be used.
@@ -13,7 +13,7 @@ const BLOG = {
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
-  GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || 'Hi，我是一个程序员, Hi，我是一个打工人,Hi，我是一个干饭人,欢迎来到我的博客🎉',
+  //GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || 'Hi，我是一个程序员, Hi，我是一个打工人,Hi，我是一个干饭人,欢迎来到我的博客🎉',
 
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || false, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
 
@@ -24,7 +24,7 @@ const BLOG = {
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || '', // 邮箱地址 例如mail@tangly1024.com
   CONTACT_WEIBO: process.env.NEXT_PUBLIC_CONTACT_WEIBO || '', // 你的微博个人主页
-  CONTACT_TWITTER: process.env.NEXT_PUBLIC_CONTACT_TWITTER || '', // 你的twitter个人主页
+  CONTACT_TWITTER: process.env.NEXT_PUBLIC_CONTACT_TWITTER || 'https://twitter.com/JackieWuu9527', // 你的twitter个人主页
   CONTACT_GITHUB: process.env.NEXT_PUBLIC_CONTACT_GITHUB || '', // 你的github个人主页 例如 https://github.com/tangly1024
   CONTACT_TELEGRAM: process.env.NEXT_PUBLIC_CONTACT_TELEGRAM || '', // 你的telegram 地址 例如 https://t.me/tangly_1024
   CONTACT_LINKEDIN: process.env.NEXT_PUBLIC_CONTACT_LINKEDIN || '', // 你的linkedIn 首页
@@ -32,47 +32,48 @@ const BLOG = {
 
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
 
-  // 网站字体
-  FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
-  FONT_URL: [
-    // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
-    'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
-  ],
-  FONT_SANS: [
-    // 无衬线字体 例如'LXGW WenKai'
-    'Bitter',
-    '"PingFang SC"',
-    '-apple-system',
-    'BlinkMacSystemFont',
-    '"Hiragino Sans GB"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-    '"Segoe UI"',
-    '"Noto Sans SC"',
-    'HarmonyOS_Regular',
-    '"Microsoft YaHei"',
-    '"Helvetica Neue"',
-    'Helvetica',
-    '"Source Han Sans SC"',
-    'Arial',
-    'sans-serif',
-    '"Apple Color Emoji"'
-  ],
-  FONT_SERIF: [
-    // 衬线字体 例如'LXGW WenKai'
-    'Bitter',
-    '"Noto Serif SC"',
-    'SimSun',
-    '"Times New Roman"',
-    'Times',
-    'serif',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-    '"Apple Color Emoji"'
-  ],
-  FONT_AWESOME: process.env.NEXT_PUBLIC_FONT_AWESOME_PATH || '/css/all.min.css', // font-awesome 字体图标地址、默认读取本地; 可选 https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
+    // 网站字体
+    FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-serif', // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
+    FONT_URL: [
+        // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
+        // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css'
+        'https://fonts.googleapis.com/css?family=Bitter&display=swap',
+        'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400&display=swap',
+        'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400&display=swap'
+    ],
+    FONT_SANS: [
+        // 无衬线字体 例如'LXGW WenKai'
+        '"Noto Sans SC"',
+        'Bitter',
+        '"PingFang SC"',
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Hiragino Sans GB"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+        '"Segoe UI"',
+        'HarmonyOS_Regular',
+        '"Microsoft YaHei"',
+        '"Helvetica Neue"',
+        'Helvetica',
+        '"Source Han Sans SC"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"'
+    ],
+    FONT_SERIF: [
+        // 衬线字体 例如'LXGW WenKai'
+        '"Noto Serif SC"',
+        'Bitter',
+        'SimSun',
+        '"Times New Roman"',
+        'Times',
+        'serif',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+        '"Apple Color Emoji"'
+    ],
+    FONT_AWESOME: process.env.NEXT_PUBLIC_FONT_AWESOME_PATH || '/css/all.min.css', // font-awesome 字体图标地址、默认读取本地; 可选 https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
 
   // 自定义外部脚本，外部样式
   CUSTOM_EXTERNAL_JS: [''], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
@@ -115,7 +116,7 @@ const BLOG = {
   // 支援類似 WP 可自訂文章連結格式的功能：https://wordpress.org/documentation/article/customize-permalinks/，目前只先實作 %year%/%month%/%day%
   // 例：如想連結改成前綴 article + 時間戳記，可變更為： 'article/%year%/%month%/%day%'
 
-  POST_LIST_STYLE: process.env.NEXT_PUBLIC_PPOST_LIST_STYLE || 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
+    POST_LIST_STYLE: process.env.NEXT_PUBLIC_PPOST_LIST_STYLE || 'scroll', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
   POST_PREVIEW_LINES: 12, // 预览博客行数
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
@@ -139,7 +140,7 @@ const BLOG = {
   SAKURA: process.env.NEXT_PUBLIC_SAKURA || false, // 开关
 
   // 漂浮线段特效
-  NEST: process.env.NEXT_PUBLIC_NEST || false, // 开关
+  NEST: process.env.NEXT_PUBLIC_NEST || true, // 开关
 
   // 动态彩带特效
   FLUTTERINGRIBBON: process.env.NEXT_PUBLIC_FLUTTERINGRIBBON || false, // 开关
@@ -150,11 +151,11 @@ const BLOG = {
   STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
   // 悬浮挂件
-  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
+  WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || false, // 是否显示宠物挂件
   WIDGET_PET_LINK:
       process.env.NEXT_PUBLIC_WIDGET_PET_LINK ||
       'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
-  WIDGET_PET_SWITCH_THEME: process.env.NEXT_PUBLIC_WIDGET_PET_SWITCH_THEME || true, // 点击宠物挂件切换博客主题
+  WIDGET_PET_SWITCH_THEME: process.env.NEXT_PUBLIC_WIDGET_PET_SWITCH_THEME || false, // 点击宠物挂件切换博客主题
 
   // 音乐播放插件
   MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || false, // 是否使用音乐播放插件
@@ -195,7 +196,7 @@ const BLOG = {
 
   // twikoo
   COMMENT_TWIKOO_ENV_ID: process.env.NEXT_PUBLIC_COMMENT_ENV_ID || '', // TWIKOO后端地址 腾讯云环境填envId；Vercel环境填域名，教程：https://tangly1024.com/article/notionnext-twikoo
-  COMMENT_TWIKOO_COUNT_ENABLE: process.env.NEXT_PUBLIC_COMMENT_TWIKOO_COUNT_ENABLE || false, // 博客列表是否显示评论数
+  COMMENT_TWIKOO_COUNT_ENABLE: process.env.NEXT_PUBLIC_COMMENT_TWIKOO_COUNT_ENABLE || true, // 博客列表是否显示评论数
   COMMENT_TWIKOO_CDN_URL: process.env.NEXT_PUBLIC_COMMENT_TWIKOO_CDN_URL || 'https://cdn.staticfile.org/twikoo/1.6.16/twikoo.all.min.js', // twikoo客户端cdn
 
   // utterance
