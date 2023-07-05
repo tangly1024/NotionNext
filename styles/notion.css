@@ -2046,3 +2046,18 @@ code.language-mermaid {
 .notion-external-image {
   @apply w-6 h-6 mx-3 my-2 !important;
 }
+
+/* 表格 #f5f6f8*/
+.notion-simple-table-row {
+}
+
+/* 表格头 */
+.notion-simple-table tr:first-child td{
+  background-color: #f5f6f8 !important;
+  @apply text-center font-bold !important;
+
+}
+
+.notion-simple-table td{
+  border: 1px solid var(#eee) !important
+}
