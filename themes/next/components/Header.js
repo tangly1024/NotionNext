@@ -110,7 +110,6 @@ export default function Header(props) {
       >
         <i className='animate-bounce fas fa-angle-down' />
       </div>
-	  <meta name="baidu-site-verification" content="codeva-Zl8Xej1uwM" />
     </header>
   )
 }
