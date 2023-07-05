@@ -1,6 +1,6 @@
 'use client'
 
-import CONFIG_FUKA from './config_fuka'
+import FUKA_CONFIG from './config_fuka'
 import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
@@ -16,9 +16,13 @@ import ArticleDetail from './components/ArticleDetail'
 import { ArticleLock } from './components/ArticleLock'
 import TagItemMini from './components/TagItemMini'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import Mark from 'mark.js'
 import Link from 'next/link'
+
+// 主题全局状态
+const ThemeGlobalFukasawa = createContext()
+export const useFukasawaGlobal = () => useContext(ThemeGlobalFukasawa)
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -38,37 +42,59 @@ const LayoutBase = (props) => {
   const { children, headerSlot, meta } = props
   const leftAreaSlot = <Live2D />
   const { onLoading } = useGlobal()
+  // 侧边栏折叠从 本地存储中获取 open 状态的初始值
+
+  const [open, setOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('fukasawa-sidebarOpen') === 'true' || FUKA_CONFIG.SIDEBAR_COLLAPSE_DEFAULT
+    }
+    return FUKA_CONFIG.SIDEBAR_COLLAPSE_DEFAULT
+  })
+  const memoizedOpen = useMemo(() => open, [])
+
+  console.log('base', FUKA_CONFIG.SIDEBAR_COLLAPSE_DEFAULT, open, memoizedOpen)
 
   if (isBrowser()) {
     loadExternalResource('/css/theme-fukasawa.css', 'css')
   }
 
+  // 在组件卸载时保存 open 状态到本地存储中
+  useEffect(() => {
+    if (isBrowser()) {
+      localStorage.setItem('fukasawa-sidebarOpen', open)
+    }
+  }, [open])
+
   return (
-        <div id='theme-fukasawa'>
-            <CommonHead meta={meta} />
-            <TopNav {...props} />
+        <ThemeGlobalFukasawa.Provider value={{ open, setOpen }}>
 
-            <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
-                {/* 侧边抽屉 */}
-                <AsideLeft {...props} slot={leftAreaSlot} />
+            <div id='theme-fukasawa'>
+                <CommonHead meta={meta} />
+                <TopNav {...props} />
 
-                <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
-                    <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
-                        <div> {headerSlot} </div>
-                        <div> {onLoading ? <LoadingCover /> : children} </div>
-                    </div>
-                </main>
+                <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
+                    {/* 侧边抽屉 */}
+                    <AsideLeft {...props} slot={leftAreaSlot} />
+
+                    <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
+                        <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
+                            <div> {headerSlot} </div>
+                            <div> {onLoading ? <LoadingCover /> : children} </div>
+                        </div>
+                    </main>
+
+                </div>
 
             </div>
-
-        </div>)
+        </ThemeGlobalFukasawa.Provider>
+  )
 }
 
 /**
  * 首页
  * @param {*} props notion数据
- * @returns 首页就是一个博客列表
- */
+            * @returns 首页就是一个博客列表
+            */
 const LayoutIndex = (props) => {
   return <LayoutPostList {...props} />
 }
@@ -76,7 +102,7 @@ const LayoutIndex = (props) => {
 /**
  * 博客列表
  * @param {*} props
- */
+            */
 const LayoutPostList = (props) => {
   return <LayoutBase {...props}>
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
@@ -86,8 +112,8 @@ const LayoutPostList = (props) => {
 /**
  * 文章详情
  * @param {*} props
- * @returns
- */
+            * @returns
+            */
 const LayoutSlug = (props) => {
   const { lock, validPassword } = props
   return (
@@ -140,8 +166,8 @@ const LayoutArchive = (props) => {
 /**
  * 404
  * @param {*} props
- * @returns
- */
+            * @returns
+            */
 const Layout404 = props => {
   return <LayoutBase {...props}>404</LayoutBase>
 }
@@ -149,8 +175,8 @@ const Layout404 = props => {
 /**
  * 分类列表
  * @param {*} props
- * @returns
- */
+            * @returns
+            */
 const LayoutCategoryIndex = (props) => {
   const { locale } = useGlobal()
   const { categoryOptions } = props
@@ -184,8 +210,8 @@ const LayoutCategoryIndex = (props) => {
 /**
  * 标签列表
  * @param {*} props
- * @returns
- */
+            * @returns
+            */
 const LayoutTagIndex = (props) => {
   const { locale } = useGlobal()
   const { tagOptions } = props
@@ -206,7 +232,7 @@ const LayoutTagIndex = (props) => {
 }
 
 export {
-  CONFIG_FUKA as THEME_CONFIG,
+  FUKA_CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

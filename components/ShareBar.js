@@ -14,15 +14,15 @@ const ShareBar = ({ post }) => {
 
   return <div className='m-1 overflow-x-auto'>
         <div className='flex w-full md:justify-end'>
-        <ShareButtons shareUrl={shareUrl} title={post.title} image={post.pageCover} body={
-            post.title +
-            ' | ' +
-            BLOG.TITLE +
-            ' ' +
-            shareUrl +
-            ' ' +
-            post.summary
-        } />
+            <ShareButtons shareUrl={shareUrl} title={post.title} image={post.pageCover} body={
+                post?.title +
+                ' | ' +
+                BLOG.TITLE +
+                ' ' +
+                shareUrl +
+                ' ' +
+                post?.summary
+            } />
         </div>
     </div>
 }

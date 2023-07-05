@@ -9,12 +9,12 @@ import Announcement from './Announcement'
 import { useRouter } from 'next/router'
 import DarkModeButton from '@/components/DarkModeButton'
 import SocialButton from './SocialButton'
-import { useState } from 'react'
+import { useFukasawaGlobal } from '..'
 
 function AsideLeft(props) {
   const { tagOptions, currentTag, categoryOptions, currentCategory, post, slot, siteInfo, notice } = props
   const router = useRouter()
-  const [open, setOpen] = useState(true)
+  const { open, setOpen } = useFukasawaGlobal()
   // 折叠侧边栏
   const toggleOpen = () => {
     setOpen(!open)

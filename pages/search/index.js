@@ -4,6 +4,11 @@ import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import { getLayoutByTheme } from '@/themes/theme'
 
+/**
+ * 搜索路由
+ * @param {*} props
+ * @returns
+ */
 const Search = props => {
   const { posts, siteInfo } = props
   const { locale } = useGlobal()
