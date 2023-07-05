@@ -101,8 +101,7 @@ const LayoutIndex = (props) => {
  */
 const LayoutPostList = (props) => {
   return (
-        <LayoutBase {...props} >
-            <BlogListBar {...props} />
+        <LayoutBase {...props} containerSlot={<BlogListBar {...props} />}>
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
         </LayoutBase>
   )

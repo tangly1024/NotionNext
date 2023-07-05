@@ -1,7 +1,7 @@
 
-import SearchInput from './components/SearchInput'
-import TagItemMini from './components/TagItemMini'
-import Card from './components/Card'
+import SearchInput from './SearchInput'
+import TagItemMini from './TagItemMini'
+import Card from './Card'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import { useGlobal } from '@/lib/global'

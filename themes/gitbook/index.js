@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState, createContext, useContext } from 'react'
 import { isBrowser } from '@/lib/utils'
 import CommonHead from '@/components/CommonHead'
-
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import RevolverMaps from './components/RevolverMaps'
@@ -41,7 +40,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop, siteInfo } = props
+  const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const { onLoading } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -71,8 +70,10 @@ const LayoutBase = (props) => {
                             <SearchInput className='my-3 rounded-md' />
                             {/* 所有文章列表 */}
                             <NavPostList posts={filterPosts} />
-                            <AdSlot />
-                        </div>
+
+                            <div className='mt-2'>
+                                <Footer {...props} />
+                            </div>                        </div>
                     </div>
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-12 min-h-screen'>
@@ -87,7 +88,9 @@ const LayoutBase = (props) => {
                         </div>
 
                         {/* 底部 */}
-                        <Footer title={siteInfo?.title} />
+                        <div className='md:hidden'>
+                          <Footer {...props}/>
+                        </div>
                         <div className='text-center'>
                             <AdSlot type='native' />
                         </div>
@@ -110,7 +113,7 @@ const LayoutBase = (props) => {
                                 <Announcement {...props} />
                             </div>
 
-                            <AdSlot />
+                            <Live2D />
 
                         </div>
                     </div>
@@ -124,6 +127,10 @@ const LayoutBase = (props) => {
 
                 {/* 移动端导航抽屉 */}
                 <PageNavDrawer {...props} />
+
+                {/* 移动端底部导航栏 */}
+                {/* <BottomMenuBar {...props} className='block md:hidden' /> */}
+
             </div>
         </ThemeGlobalGitbook.Provider>
   )

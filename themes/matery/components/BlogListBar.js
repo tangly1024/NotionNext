@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
-import TagItemMiddle from './components/TagItemMiddle'
+import TagItemMiddle from './TagItemMiddle'
 
 export default function BlogListBar(props) {
   const { category, categoryOptions, tag, tagOptions } = props
@@ -8,8 +8,7 @@ export default function BlogListBar(props) {
 
   if (category) {
     return (
-            <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
-
+            <div className="drop-shadow-xl w-full mt-14 lg:mt-6 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
                 <div className='flex justify-center flex-wrap'>
                     {categoryOptions?.map(e => {
                       const selected = e.name === category
@@ -27,12 +26,10 @@ export default function BlogListBar(props) {
 
     )
   } else if (tag) {
-    return <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
-
+    return <div className="drop-shadow-xl w-full mt-14 lg:mt-6 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
             <div className="dark:text-gray-200 py-5 text-center  text-2xl">
                 <i className="fas fa-tags" />  {locale.COMMON.TAGS}
             </div>
-
             <div id="tags-list" className="duration-200 flex flex-wrap justify-center pb-12">
                 {tagOptions?.map(e => {
                   const selected = tag === e.name

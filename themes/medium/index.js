@@ -313,6 +313,7 @@ const LayoutTagIndex = props => {
 export {
   CONFIG_MEDIUM as THEME_CONFIG,
   LayoutIndex,
+  LayoutPostList,
   LayoutSearch,
   LayoutArchive,
   LayoutSlug,
