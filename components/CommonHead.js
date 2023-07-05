@@ -18,7 +18,6 @@ const CommonHead = ({ meta, children }) => {
   return (
     <Head>
       <title>{title}</title>
-	  <meta name="baidu-site-verification" content="codeva-Zl8Xej1uwM" />
       <meta name="theme-color" content={BLOG.BACKGROUND_DARK} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"/>
       <meta name="robots" content="follow, index" />
@@ -65,6 +64,7 @@ const CommonHead = ({ meta, children }) => {
         </>
       )}
       {children}
+	  <meta name="baidu-site-verification" content="codeva-Zl8Xej1uwM" />
     </Head>
   )
 }
