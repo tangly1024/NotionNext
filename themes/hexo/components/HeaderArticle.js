@@ -21,18 +21,10 @@ export default function HeaderArticle({ post, siteInfo }) {
   return (
     <div
       id="header"
-      data-aos="fade-down"
-      data-aos-duration="300"
-      data-aos-once="true"
-      data-aos-anchor-placement="top-bottom"
       className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10"
       style={{ backgroundImage: headerImage }}
     >
       <header id='article-header-cover'
-            data-aos="fade-down"
-            data-aos-duration="300"
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"
             className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center ">
 
         <div className='mt-10'>

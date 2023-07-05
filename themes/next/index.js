@@ -5,7 +5,6 @@ import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Footer from './components/Footer'
 import JumpToBottomButton from './components/JumpToBottomButton'
 import JumpToTopButton from './components/JumpToTopButton'
-import LoadingCover from './components/LoadingCover'
 import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
@@ -27,6 +26,7 @@ import { useRouter } from 'next/router'
 import ArticleDetail from './components/ArticleDetail'
 import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
+import { Transition } from '@headlessui/react'
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -88,7 +88,19 @@ const LayoutBase = (props) => {
 
                 {/* 中央内容 */}
                 <section id='container-inner' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
-                    {onLoading ? <LoadingCover /> : <> {children}</>}
+                    <Transition
+                        show={!onLoading}
+                        appear={true}
+                        enter="transition ease-in-out duration-700 transform order-first"
+                        enterFrom="opacity-0 translate-y-16"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in-out duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 -translate-y-16"
+                        unmount={false}
+                    >
+                        {children}
+                    </Transition>
                 </section>
 
                 {/* 右侧栏样式 */}

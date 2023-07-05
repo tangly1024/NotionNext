@@ -1,14 +1,11 @@
 import CONFIG_SIMPLE from './config_simple'
-
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
-
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Mark from 'mark.js'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BlogArchiveItem from './components/BlogArchiveItem'
-
 import { ArticleLock } from './components/ArticleLock'
 import NotionPage from '@/components/NotionPage'
 import { ArticleInfo } from './components/ArticleInfo'
@@ -27,6 +24,7 @@ import JumpToTopButton from './components/JumpToTopButton'
 import { Footer } from './components/Footer'
 import { useGlobal } from '@/lib/global'
 import SearchInput from './components/SearchInput'
+import { Transition } from '@headlessui/react'
 
 /**
  * 基础布局
@@ -37,15 +35,6 @@ import SearchInput from './components/SearchInput'
 const LayoutBase = props => {
   const { children, meta, slotTop } = props
   const { onLoading } = useGlobal()
-
-  /**
-   * 路由跳转时的遮罩
-   */
-  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
-        <div className='w-full h-96 flex justify-center items-center'>
-            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
-        </div>
-    </div>
 
   if (isBrowser()) {
     loadExternalResource('/css/theme-simple.css', 'css')
@@ -64,9 +53,22 @@ const LayoutBase = props => {
 
             {/* 主体 */}
             <div id='container-wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'}>
-                <div id='container-inner ' className='w-full flex-grow'>
-                    {slotTop}
-                    {onLoading ? LoadingCover : children}
+                <div id='container-inner ' className='w-full flex-grow min-h-fit'>
+                    <Transition
+                        show={!onLoading}
+                        appear={true}
+                        enter="transition ease-in-out duration-700 transform order-first"
+                        enterFrom="opacity-0 translate-y-16"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in-out duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 -translate-y-16"
+                        unmount={false}
+                    >
+                        {slotTop}
+
+                        {children}
+                    </Transition>
                     <AdSlot type='native' />
                 </div>
 

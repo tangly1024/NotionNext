@@ -44,7 +44,7 @@ const Nav = props => {
             <div className="flex items-center">
                 <Link href="/" aria-label={BLOG.title}>
 
-                    <div className="h-6">
+                    <div className="h-6 w-6">
                         {/* <SvgIcon/> */}
                         {CONFIG_NOBELIUM.NAV_NOTION_ICON
                         /* eslint-disable-next-line @next/next/no-img-element */

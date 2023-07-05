@@ -8,7 +8,6 @@ import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
-import LoadingCover from './components/LoadingCover'
 import BlogListPage from './components/BlogListPage'
 import BlogListScroll from './components/BlogListScroll'
 import BlogArchiveItem from './components/BlogPostArchive'
@@ -16,9 +15,10 @@ import ArticleDetail from './components/ArticleDetail'
 import { ArticleLock } from './components/ArticleLock'
 import TagItemMini from './components/TagItemMini'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import Mark from 'mark.js'
 import Link from 'next/link'
+import { Transition } from '@headlessui/react'
 
 // 主题全局状态
 const ThemeGlobalFukasawa = createContext()
@@ -42,21 +42,14 @@ const LayoutBase = (props) => {
   const { children, headerSlot, meta } = props
   const leftAreaSlot = <Live2D />
   const { onLoading } = useGlobal()
-  // 侧边栏折叠从 本地存储中获取 open 状态的初始值
 
+  // 侧边栏折叠从 本地存储中获取 open 状态的初始值
   const [open, setOpen] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebarOpen') === 'true' || FUKA_CONFIG.SIDEBAR_COLLAPSE_DEFAULT
+      return localStorage.getItem('fukasawa-sidebarOpen') === 'true' || FUKA_CONFIG.SIDEBAR_OPEN_SATUS_DEFAULT
     }
-    return FUKA_CONFIG.SIDEBAR_COLLAPSE_DEFAULT
+    return FUKA_CONFIG.SIDEBAR_OPEN_SATUS_DEFAULT
   })
-  const memoizedOpen = useMemo(() => open, [])
-
-  console.log('base', FUKA_CONFIG.SIDEBAR_COLLAPSE_DEFAULT, open, memoizedOpen)
-
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-fukasawa.css', 'css')
-  }
 
   // 在组件卸载时保存 open 状态到本地存储中
   useEffect(() => {
@@ -64,6 +57,18 @@ const LayoutBase = (props) => {
       localStorage.setItem('fukasawa-sidebarOpen', open)
     }
   }, [open])
+
+  // 增加一个状态以触发 Transition 组件的动画
+  const [showTransition, setShowTransition] = useState(true)
+  useEffect(() => {
+    // 当 location 或 children 发生变化时，触发动画
+    setShowTransition(false)
+    setTimeout(() => setShowTransition(true), 5)
+  }, [onLoading])
+
+  if (isBrowser()) {
+    loadExternalResource('/css/theme-fukasawa.css', 'css')
+  }
 
   return (
         <ThemeGlobalFukasawa.Provider value={{ open, setOpen }}>
@@ -78,8 +83,23 @@ const LayoutBase = (props) => {
 
                     <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
                         <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
-                            <div> {headerSlot} </div>
-                            <div> {onLoading ? <LoadingCover /> : children} </div>
+
+                            <Transition
+                                show={showTransition}
+                                appear={true}
+                                className="w-full"
+                                enter="transition ease-in-out duration-700 transform order-first"
+                                enterFrom="opacity-0 translate-y-16"
+                                enterTo="opacity-100 translate-y-0"
+                                leave="transition ease-in-out duration-300 transform"
+                                leaveFrom="opacity-100 translate-y-0"
+                                leaveTo="opacity-0 -translate-y-16"
+                                unmount={false}
+                            >
+                                <div> {headerSlot} </div>
+                                <div> {children} </div>
+
+                            </Transition>
                         </div>
                     </main>
 

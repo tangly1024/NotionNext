@@ -286,7 +286,7 @@ a.avatar-wrapper {
   font-weight: 500;
 }
 
-.p-4-lines {
+.line-clamp-4 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
@@ -294,13 +294,20 @@ a.avatar-wrapper {
   text-overflow: ellipsis;
 }
 
-.p-3-lines {
+.line-clamp-3 {
+  overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-  text-overflow: ellipsis;
+ -webkit-line-clamp: 3;
 }
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 
 /* fukasawa的首页响应式分栏 */
 #theme-fukasawa .grid-item {

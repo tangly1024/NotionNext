@@ -15,7 +15,6 @@ import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
 import Announcement from './components/Announcement'
 import JumpToTopButton from './components/JumpToTopButton'
-import LoadingCover from './components/LoadingCover'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Catalog from './components/Catalog'
@@ -34,6 +33,7 @@ import CategoryItem from './components/CategoryItem'
 import TagItemMini from './components/TagItemMini'
 import ShareBar from '@/components/ShareBar'
 import Link from 'next/link'
+import { Transition } from '@headlessui/react'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -69,9 +69,20 @@ const LayoutBase = props => {
                         <TopNavBar {...props} />
 
                         <div id='container-inner' className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
-                            {slotTop}
-
-                            {onLoading ? <LoadingCover /> : children}
+                            <Transition
+                                show={!onLoading}
+                                appear={true}
+                                enter="transition ease-in-out duration-700 transform order-first"
+                                enterFrom="opacity-0 translate-y-16"
+                                enterTo="opacity-100 translate-y-0"
+                                leave="transition ease-in-out duration-300 transform"
+                                leaveFrom="opacity-100 translate-y-0"
+                                leaveTo="opacity-0 -translate-y-16"
+                                unmount={false}
+                            >
+                                {slotTop}
+                                {children}
+                            </Transition>
 
                             <JumpToTopButton />
                         </div>

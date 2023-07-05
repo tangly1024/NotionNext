@@ -19,7 +19,6 @@ import PageNavDrawer from './components/PageNavDrawer'
 import FloatTocButton from './components/FloatTocButton'
 import { AdSlot } from '@/components/GoogleAdsense'
 import JumpToTopButton from './components/JumpToTopButton'
-import LoadingCover from './components/LoadingCover'
 import ShareBar from '@/components/ShareBar'
 import CategoryItem from './components/CategoryItem'
 import TagItemMini from './components/TagItemMini'
@@ -28,6 +27,7 @@ import Comment from '@/components/Comment'
 import TocDrawer from './components/TocDrawer'
 import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
+import { Transition } from '@headlessui/react'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -81,7 +81,20 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
                             <AdSlot type='in-article' />
-                            {onLoading ? <LoadingCover /> : children}
+                            <Transition
+                                show={!onLoading}
+                                appear={true}
+                                enter="transition ease-in-out duration-700 transform order-first"
+                                enterFrom="opacity-0 translate-y-16"
+                                enterTo="opacity-100 translate-y-0"
+                                leave="transition ease-in-out duration-300 transform"
+                                leaveFrom="opacity-100 translate-y-0"
+                                leaveTo="opacity-0 -translate-y-16"
+                                unmount={false}
+                            >
+                                {children}
+                            </Transition>
+
                             <AdSlot type='in-article' />
                             {/* 回顶按钮 */}
                             <JumpToTopButton />
@@ -89,7 +102,7 @@ const LayoutBase = (props) => {
 
                         {/* 底部 */}
                         <div className='md:hidden'>
-                          <Footer {...props}/>
+                            <Footer {...props} />
                         </div>
                         <div className='text-center'>
                             <AdSlot type='native' />
@@ -144,22 +157,21 @@ const LayoutBase = (props) => {
  */
 const LayoutIndex = (props) => {
   const router = useRouter()
-  useEffect(() => {
-    router.push(CONFIG_GITBOOK.INDEX_PAGE).then(() => {
-      // console.log('跳转到指定首页', CONFIG_GITBOOK.INDEX_PAGE)
-      setTimeout(() => {
-        if (isBrowser()) {
-          const article = document.getElementById('notion-article')
-          if (!article) {
-            console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG_GITBOOK.INDEX_PAGE)
-            const containerInner = document.getElementById('container-inner')
-            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${CONFIG_GITBOOK.INDEX_PAGE}的文章</div></blockquote>`
-            containerInner?.insertAdjacentHTML('afterbegin', newHTML)
-          }
+  router.push(CONFIG_GITBOOK.INDEX_PAGE).then(() => {
+    // console.log('跳转到指定首页', CONFIG_GITBOOK.INDEX_PAGE)
+    setTimeout(() => {
+      if (isBrowser()) {
+        const article = document.getElementById('notion-article')
+        if (!article) {
+          console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG_GITBOOK.INDEX_PAGE)
+          const containerInner = document.getElementById('container-inner')
+          const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${CONFIG_GITBOOK.INDEX_PAGE}的文章</div></blockquote>`
+          containerInner?.insertAdjacentHTML('afterbegin', newHTML)
         }
-      }, 7 * 1000)
-    })
-  }, [])
+      }
+    }, 7 * 1000)
+  })
+
   return <LayoutBase {...props}></LayoutBase>
 }
 

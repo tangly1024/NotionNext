@@ -18,16 +18,15 @@ import Mark from 'mark.js'
 import { deepClone, isBrowser } from '@/lib/utils'
 import SearchNavBar from './components/SearchNavBar'
 import BlogArchiveItem from './components/BlogArchiveItem'
-
 import { ArticleLock } from './components/ArticleLock'
 import NotionPage from '@/components/NotionPage'
 import { ArticleInfo } from './components/ArticleInfo'
 import Comment from '@/components/Comment'
 import { ArticleFooter } from './components/ArticleFooter'
 import ShareBar from '@/components/ShareBar'
-
 import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
+import { Transition } from '@headlessui/react'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -41,11 +40,6 @@ const LayoutBase = props => {
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
 
-  const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
-        <div className='w-full h-screen flex justify-center items-center'>
-            <i className="fa-solid fa-spinner text-2xl text-black dark:text-white animate-spin">  </i>
-        </div>
-    </div>
   return (
         <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
             {/* SEO相关 */}
@@ -56,10 +50,22 @@ const LayoutBase = props => {
 
             {/* 主区 */}
             <main id='out-wrapper' className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'}`}>
-                {/* 顶部插槽 */}
-                {topSlot}
 
-                {onLoading ? LoadingCover : children}
+                <Transition
+                    show={!onLoading}
+                    appear={true}
+                    enter="transition ease-in-out duration-700 transform order-first"
+                    enterFrom="opacity-0 translate-y-16"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease-in-out duration-300 transform"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 -translate-y-16"
+                    unmount={false}
+                >
+                    {/* 顶部插槽 */}
+                    {topSlot}
+                    {children}
+                </Transition>
 
             </main>
 
@@ -114,7 +120,7 @@ const LayoutPostList = props => {
 
   return (
         <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts}/> : <BlogListScroll {...props} posts={filteredBlogPosts}/>}
+            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
         </LayoutBase>
   )
 }

@@ -21,11 +21,11 @@ import ShareBar from '@/components/ShareBar'
 import SearchInput from './components/SearchInput'
 import Mark from 'mark.js'
 import { isBrowser } from '@/lib/utils'
-import LoadingCover from './components/LoadingCover'
 import BlogListGroupByDate from './components/BlogListGroupByDate'
 import CategoryItem from './components/CategoryItem'
 import TagItem from './components/TagItem'
 import { useRouter } from 'next/router'
+import { Transition } from '@headlessui/react'
 
 /**
  * 基础布局框架
@@ -37,6 +37,14 @@ import { useRouter } from 'next/router'
 const LayoutBase = props => {
   const { children, meta, slotTop } = props
   const { onLoading } = useGlobal()
+
+  // 增加一个状态以触发 Transition 组件的动画
+  //   const [showTransition, setShowTransition] = useState(true)
+  //   useEffect(() => {
+  //     // 当 location 或 children 发生变化时，触发动画
+  //     setShowTransition(false)
+  //     setTimeout(() => setShowTransition(true), 5)
+  //   }, [onLoading])
 
   return (
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
@@ -59,9 +67,21 @@ const LayoutBase = props => {
 
                     {/* 内容 */}
                     <div className='w-full max-w-3xl xl:px-14 lg:px-4 '>
-                        {/* 嵌入模块 */}
-                        {slotTop}
-                        {onLoading ? <LoadingCover /> : children}
+                        <Transition
+                            show={!onLoading}
+                            appear={true}
+                            enter="transition ease-in-out duration-700 transform order-first"
+                            enterFrom="opacity-0 translate-y-16"
+                            enterTo="opacity-100 translate-y-0"
+                            leave="transition ease-in-out duration-300 transform"
+                            leaveFrom="opacity-100 translate-y-0"
+                            leaveTo="opacity-0 -translate-y-16"
+                            unmount={false}
+                        >
+                            {/* 嵌入模块 */}
+                            {slotTop}
+                            {children}
+                        </Transition>
                     </div>
 
                     {/* 侧边栏 */}

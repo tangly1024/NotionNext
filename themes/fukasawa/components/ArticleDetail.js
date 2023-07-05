@@ -28,11 +28,10 @@ export default function ArticleDetail(props) {
           <img alt={post.title} src={post?.pageCover} className='object-center w-full' />
         </div>
       )}
-      <article itemScope itemType="https://schema.org/Movie"
-        className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
-      >
 
-        <header className='animate__slideInDown animate__animated'>
+      <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-32  dark:border-gray-700 bg-white dark:bg-hexo-black-gray" >
+
+        <header>
 
           {/* 文章Title */}
           <div className="font-bold text-4xl text-black dark:text-white">
@@ -41,7 +40,6 @@ export default function ArticleDetail(props) {
 
           <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
             <div>
-
               {post?.category && (<>
                   <Link
                     href={`/category/${post.category}`}

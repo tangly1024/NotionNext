@@ -2,7 +2,6 @@ import CONFIG_MATERY from './config_matery'
 import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import Live2D from '@/components/Live2D'
-import LoadingCover from './components/LoadingCover'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
@@ -31,6 +30,7 @@ import BlogPostArchive from './components/BlogPostArchive'
 import Card from './components/Card'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import BlogListBar from './components/BlogListBar'
+import { Transition } from '@headlessui/react'
 
 /**
  * 基础布局
@@ -56,7 +56,19 @@ const LayoutBase = props => {
             <TopNav {...props} />
 
             {/* 顶部嵌入 */}
-            {headerSlot}
+            <Transition
+                show={!onLoading}
+                appear={true}
+                enter="transition ease-in-out duration-700 transform order-first"
+                enterFrom="opacity-0 -translate-y-16"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-16"
+                unmount={false}
+            >
+                {headerSlot}
+            </Transition>
 
             <main id="wrapper" className={`${CONFIG_MATERY.HOME_BANNER_ENABLE ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
                 {/* 嵌入区域 */}
@@ -64,8 +76,21 @@ const LayoutBase = props => {
                     {containerSlot}
                 </div>
 
-                <div id="container-inner" className="w-full max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center relative z-10">
-                    {onLoading ? <LoadingCover /> : children}
+                <div id="container-inner" className="w-full min-h-fit max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center relative z-10">
+                    <Transition
+                        show={!onLoading}
+                        appear={true}
+                        enter="transition ease-in-out duration-700 transform order-first"
+                        enterFrom="opacity-0 translate-y-16"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in-out duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 -translate-y-16"
+                        unmount={false}
+                    >
+                        {children}
+                    </Transition>
+
                 </div>
 
             </main>

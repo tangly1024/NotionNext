@@ -37,7 +37,7 @@ const TopNav = props => {
 
         {/* 右侧功能 */}
         <div className='mr-1 flex justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
-          <div onClick={toggleMenuOpen} className='cursor-pointer'>
+          <div onClick={toggleMenuOpen} className='cursor-pointer text-lg p-2'>
             {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
           </div>
         </div>
