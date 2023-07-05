@@ -44,19 +44,19 @@ const LayoutBase = (props) => {
   const { onLoading } = useGlobal()
 
   // 侧边栏折叠从 本地存储中获取 open 状态的初始值
-  const [open, setOpen] = useState(() => {
+  const [isCollapsed, setIsCollapse] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebarOpen') === 'true' || FUKA_CONFIG.SIDEBAR_OPEN_SATUS_DEFAULT
+      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || FUKA_CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
     }
-    return FUKA_CONFIG.SIDEBAR_OPEN_SATUS_DEFAULT
+    return FUKA_CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
   })
 
   // 在组件卸载时保存 open 状态到本地存储中
   useEffect(() => {
     if (isBrowser()) {
-      localStorage.setItem('fukasawa-sidebarOpen', open)
+      localStorage.setItem('fukasawa-sidebar-collapse', isCollapsed)
     }
-  }, [open])
+  }, [isCollapsed])
 
   // 增加一个状态以触发 Transition 组件的动画
   const [showTransition, setShowTransition] = useState(true)
@@ -71,7 +71,7 @@ const LayoutBase = (props) => {
   }
 
   return (
-        <ThemeGlobalFukasawa.Provider value={{ open, setOpen }}>
+        <ThemeGlobalFukasawa.Provider value={{ isCollapsed, setIsCollapse }}>
 
             <div id='theme-fukasawa'>
                 <CommonHead meta={meta} />

@@ -10,7 +10,8 @@ const FUKA_CONFIG = {
   MENU_ARCHIVE: true, // 显示归档
   MENU_SEARCH: false, // 显示搜索
 
-  SIDEBAR_OPEN_SATUS_DEFAULT: true // 侧边栏默认开启
+  SIDEBAR_COLLAPSE_BUTTON: true, // 侧边栏折叠按钮
+  SIDEBAR_COLLAPSE_SATUS_DEFAULT: false // 侧边栏默认折叠收起
 
 }
 export default FUKA_CONFIG

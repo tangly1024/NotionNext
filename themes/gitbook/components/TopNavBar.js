@@ -49,7 +49,7 @@ export default function TopNavBar(props) {
             </Collapse>
 
             {/* 导航栏菜单 */}
-            <div className='flex w-full h-14 shadow bg-white dark:bg-hexo-black-gray px-7 items-between'>
+            <div className='flex w-full h-14 shadow glassmorphism bg-white dark:bg-hexo-black-gray px-7 items-between'>
 
                 {/* 左侧图标Logo */}
                 <LogoBar {...props} />

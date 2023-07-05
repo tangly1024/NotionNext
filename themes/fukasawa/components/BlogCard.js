@@ -37,17 +37,14 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 文字部分 */}
                 <div className="flex flex-col w-full">
-                    <Link
-                        href={`${BLOG.SUB_PATH}/${post.slug}`}
-                        passHref
-                        className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'
-                            } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
+                    <Link passHref href={`${BLOG.SUB_PATH}/${post.slug}`}
+                         className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
                     >
                         {post.title}
                     </Link>
 
                     {(!showPreview || showSummary) && (
-                        <p className="my-1 line-clamp-3 text-gray-700 dark:text-gray-300 text-sm font-light leading-5">
+                        <p className="my-2 tracking-wide line-clamp-3 text-gray-700 dark:text-gray-300 text-sm font-light leading-5">
                             {post.summary}
                         </p>
                     )}

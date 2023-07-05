@@ -237,7 +237,7 @@ const LayoutSlug = props => {
                             <ShareBar post={post} />
 
                             {/* 版权说明 */}
-                            {post.type === 'Post' && <ArticleCopyright {...props} />}
+                            {post?.type === 'Post' && <ArticleCopyright {...props} />}
 
                         </article>
 
@@ -253,7 +253,7 @@ const LayoutSlug = props => {
             </div>
 
             {/* 底部文章推荐 */}
-            {post.type === 'Post' && <ArticleAdjacent {...props} />}
+            {post?.type === 'Post' && <ArticleAdjacent {...props} />}
 
             {/* 底部公告 */}
             <Announcement {...props} />
