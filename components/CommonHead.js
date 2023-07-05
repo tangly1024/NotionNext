@@ -64,7 +64,6 @@ const CommonHead = ({ meta, children }) => {
         </>
       )}
       {children}
-	  <meta name="baidu-site-verification" content="codeva-Zl8Xej1uwM" />
     </Head>
   )
 }
