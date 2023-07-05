@@ -27,7 +27,7 @@ const ThemeGlobalMedium = createContext()
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop, siteInfo } = props
+  const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
   const [filterPosts, setFilterPosts] = useState(allNavPages)
@@ -58,7 +58,7 @@ const LayoutBase = (props) => {
 
                     {/* 左侧推拉抽屉 */}
                     <div style={{ width: '32rem' }} className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
-                        <div className='py-14 px-6 sticky top-0 overflow-y-scroll h-screen'>
+                        <div className='pt-14 pb-4 px-6 sticky top-0 overflow-y-scroll h-screen flex flex-col justify-between'>
                             {slotLeft}
 
                             <SearchInput className='my-3 rounded-md' />
@@ -66,9 +66,11 @@ const LayoutBase = (props) => {
                             {/* 所有文章列表 */}
                             <NavPostList posts={filterPosts} />
 
-                            <AdSlot />
-
+                            <div className='mt-2'>
+                                <Footer {...props} />
+                            </div>
                         </div>
+
                     </div>
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-12 min-h-screen'>
@@ -87,8 +89,9 @@ const LayoutBase = (props) => {
                         </div>
 
                         {/* 底部 */}
-                        <Footer title={siteInfo?.title} />
-
+                        <div className='md:hidden'>
+                          <Footer {...props}/>
+                        </div>
                         <div className='text-center'>
                             <AdSlot type='native' />
                         </div>
@@ -111,7 +114,7 @@ const LayoutBase = (props) => {
                                 <Announcement {...props} />
                             </div>
 
-                            <AdSlot />
+                            <Live2D />
 
                         </div>
                     </div>

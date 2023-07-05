@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 
@@ -24,7 +24,7 @@ const Index = props => {
  */
 export async function getStaticProps() {
   const from = 'index'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
 
   const { siteInfo } = props
   props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')

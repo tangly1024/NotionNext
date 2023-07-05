@@ -8,7 +8,7 @@ export const ArticleInfo = (props) => {
   const { post } = props
 
   const { locale } = useGlobal()
-  const date = formatDate(post?.publishTime || post?.createdTime, locale.LOCALE)
+  const date = formatDate(post?.publishTime, locale.LOCALE)
 
   return (
       <section className='mb-3 dark:text-gray-200'>
