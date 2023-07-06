@@ -2,6 +2,8 @@
 // import Image from 'next/image'
 // import TestimonialImage from '@/public/images/testimonial.jpg'
 
+import CONFIG from '../config'
+
 export default function Testimonials() {
   return (
         <section className="relative">
@@ -28,8 +30,8 @@ export default function Testimonials() {
 
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                        <h2 className="h2 mb-4">近4000个网站的支持、浏览量突破 100,000,000+ </h2>
-                        <p className="text-xl text-gray-600" data-aos="zoom-y-out">网站内容涵盖地产、教育、建筑、医学、机械、IT、电子、软件、自媒体、数位游民、短视频、电商、学生、摄影爱好者、旅行爱好者等等各行各业</p>
+                        <h2 className="h2 mb-4">{CONFIG.TESTIMONIALS_HEADER}</h2>
+                        <p className="text-xl text-gray-600" data-aos="zoom-y-out">{CONFIG.TESTIMONIALS_P}</p>
                     </div>
 
                     {/* Testimonials */}
@@ -42,14 +44,14 @@ export default function Testimonials() {
                                     <svg className="absolute top-0 right-0 -mt-3 -mr-8 w-16 h-16 fill-current text-blue-500" viewBox="0 0 64 64" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M37.89 58.338c-2.648-5.63-3.572-10.045-2.774-13.249.8-3.203 8.711-13.383 23.737-30.538l2.135.532c-6.552 10.033-10.532 17.87-11.939 23.515-.583 2.34.22 6.158 2.41 11.457l-13.57 8.283zm-26.963-6.56c-2.648-5.63-3.572-10.046-2.773-13.25.799-3.203 8.71-13.382 23.736-30.538l2.136.533c-6.552 10.032-10.532 17.87-11.94 23.515-.583 2.339.22 6.158 2.41 11.456l-13.57 8.283z" />
                                     </svg>
-                                    <img className="relative rounded-full w-20 h-20 object-cover" src='https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=400' alt="Testimonial 01" />
+                                    <img className="relative rounded-full w-20 h-20 object-cover" src={CONFIG.TESTIMONIALS_AVATAR} alt="Testimonial 01" />
                                 </div>
                                 <blockquote className="text-xl font-medium mb-4">
-                                    “ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化成都远不如这个方法，已经用起来了！ “
+                                    {CONFIG.TESTIMONIALS_WORD}
                                 </blockquote>
-                                <cite className="block font-bold text-lg not-italic mb-1">Ryan_G</cite>
+                                <cite className="block font-bold text-lg not-italic mb-1">{CONFIG.TESTIMONIALS_NICKNAME}</cite>
                                 <div className="text-gray-600">
-                                    <span>Master of Ryan`Log</span> <a className="text-blue-600 hover:underline" href="https://blog.gaoran.xyz/">@Gaoran</a>
+                                    <span>{CONFIG.TESTIMONIALS_ID}</span> <a className="text-blue-600 hover:underline" href={CONFIG.TESTIMONIALS_SOCIAL_URL}>{CONFIG.TESTIMONIALS_SOCIAL_NAME}</a>
                                 </div>
                             </div>
 

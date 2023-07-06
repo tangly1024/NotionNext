@@ -3,6 +3,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
+import CONFIG from '../config'
 // import FeaturesElement from '@/public/images/features-element.png'
 
 export default function Features() {
@@ -30,8 +31,8 @@ export default function Features() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h2 mb-4">探索解决方案</h1>
-            <p className="text-xl text-gray-600 leading-relaxed">如何搭建自己的门户网站，塑造一个品牌展示中心？<br/>曾经，它是系统<strong className='font-bold text-red-500'>繁重</strong>的Wordpress、是操作<strong className='font-bold  text-red-500'>复杂</strong>的Hexo、是<strong className='font-bold text-red-500'>昂贵</strong>且<strong className='font-bold text-red-500'>不稳定</strong>的技术团队;<br/>现在，您只要一个笔记软件Notion，就够了</p>
+            <h1 className="h2 mb-4">{CONFIG.FEATURES_HEADER_1}</h1>
+            <p className="text-xl text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: CONFIG.FEATURES_HEADER_1_P }}></p>
           </div>
 
           {/* Section content */}
@@ -40,8 +41,8 @@ export default function Features() {
             {/* Content */}
             <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
               <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                <h3 className="h3 mb-3">Notion+NextJs组合方案</h3>
-                <p className="text-xl text-gray-600">Notion作为CMS管理您的站点配置和网页数据，NextJs作为渲染博客的脚本，借助第三方的Vercel等托管平台提供网络服务。</p>
+                <h3 className="h3 mb-3">{CONFIG.FEATURES_HEADER_2}</h3>
+                <p className="text-xl text-gray-600">{CONFIG.FEATURES_HEADER_2_P}</p>
               </div>
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
@@ -51,8 +52,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(1) }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">简单快速的系统</div>
-                    <div className="text-gray-600">在Notion中写下一篇文章，内容立刻在您的网站首页中呈现给互联网</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_CARD_1_TITLE}</div>
+                    <div className="text-gray-600">{CONFIG.FEATURES_CARD_1_P}</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -66,8 +67,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(2) }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">高效传播的媒介</div>
-                    <div className="text-gray-600">优质的SEO、快速的响应速度，让您的产品和宣传触达到更多的受众</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_CARD_2_TITLE}</div>
+                    <div className="text-gray-600">{CONFIG.FEATURES_CARD_2_P}</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -81,8 +82,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(3) }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">人性化的定制工具</div>
-                    <div className="text-gray-600">多款主题供您挑选，可以搭建各种不同风格和作用的网站，更多的主题正在陆续加入中。</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_CARD_3_TITLE}</div>
+                    <div className="text-gray-600">{CONFIG.FEATURES_CARD_3_P}</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">

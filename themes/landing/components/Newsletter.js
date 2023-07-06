@@ -1,5 +1,6 @@
 import { subscribeToNewsletter } from '@/lib/mailchimp'
 import { useEffect, useRef, useState } from 'react'
+import CONFIG from '../config'
 
 export default function Newsletter() {
   const formRef = useRef()
@@ -19,11 +20,15 @@ export default function Newsletter() {
           // 在此处添加订阅失败后的操作
         })
     }
-    form.addEventListener('submit', handleSubmit)
+    form?.addEventListener('submit', handleSubmit)
     return () => {
       form.removeEventListener('submit', handleSubmit)
     }
   }, [subscribeToNewsletter])
+
+  if (!CONFIG.NEWSLETTER) {
+    return <></>
+  }
 
   return (
         <section>

@@ -1,3 +1,5 @@
+import CONFIG from '../config'
+
 export default function FeaturesBlocks() {
   return (
       <section className="relative">
@@ -11,8 +13,8 @@ export default function FeaturesBlocks() {
 
             {/* Section header */}
             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-              <h2 className="h2 mb-4">解决方案</h2>
-              <p className="text-xl text-gray-600">人人自媒体的时代，一个网站将帮您链接更多的人，带给你无限的机会和客户。<br/>您还在等什么呢？</p>
+              <h2 className="h2 mb-4">{CONFIG.FEATURES_BLOCK_HEADER}</h2>
+              <p className="text-xl text-gray-600" dangerouslySetInnerHTML={{ __html: CONFIG.FEATURES_BLOCK_P }}></p>
             </div>
 
             {/* Items */}
@@ -31,8 +33,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">用网站来展示品牌</h4>
-                <p className="text-gray-600 text-center">比起线下渠道、一个域名和网站更有说服力</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_1_TITLE}</h4>
+                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_1_P}</p>
               </div>
 
               {/* 2nd item */}
@@ -47,8 +49,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">SEO带来更多流量</h4>
-                <p className="text-gray-600 text-center">通过搜索引擎，精准定位您的受众</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_2_TITLE}</h4>
+                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_2_P}</p>
               </div>
 
               {/* 3rd item */}
@@ -64,8 +66,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">网站的性能很重要</h4>
-                <p className="text-gray-600 text-center">更快的响应，更好的用户体验</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_3_TITLE}</h4>
+                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_3_P}</p>
               </div>
 
               {/* 4th item */}
@@ -81,8 +83,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">打造您的个人品牌</h4>
-                <p className="text-gray-600 text-center">继马斯克、乔布斯之后，您将是下一个传奇</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_4_TITLE}</h4>
+                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_4_P}</p>
               </div>
 
               {/* 5th item */}
@@ -97,8 +99,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">写作能力是核心技能</h4>
-                <p className="text-gray-600 text-center">比起只输入知识，更重要的是反思和输出</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_5_TITLE}</h4>
+                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_5_P}</p>
               </div>
 
               {/* 6th item */}
@@ -112,8 +114,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">开始写博客吧</h4>
-                <p className="text-gray-600 text-center">NotionNext，助您轻松开始写作</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_6_TITLE}</h4>
+                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_6_P}</p>
               </div>
 
             </div>
