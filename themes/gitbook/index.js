@@ -1,4 +1,4 @@
-import CONFIG_GITBOOK from './config_gitbook'
+import CONFIG from './config'
 import { useRouter } from 'next/router'
 import { useEffect, useState, createContext, useContext } from 'react'
 import { isBrowser } from '@/lib/utils'
@@ -119,7 +119,7 @@ const LayoutBase = (props) => {
                                 {slotRight}
                                 {router.route === '/' && <>
                                     <InfoCard {...props} />
-                                    {CONFIG_GITBOOK.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
+                                    {CONFIG.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
                                     <Live2D />
                                 </>}
                                 {/* gitbook主题首页只显示公告 */}
@@ -157,15 +157,15 @@ const LayoutBase = (props) => {
  */
 const LayoutIndex = (props) => {
   const router = useRouter()
-  router.push(CONFIG_GITBOOK.INDEX_PAGE).then(() => {
-    // console.log('跳转到指定首页', CONFIG_GITBOOK.INDEX_PAGE)
+  router.push(CONFIG.INDEX_PAGE).then(() => {
+    // console.log('跳转到指定首页', CONFIG.INDEX_PAGE)
     setTimeout(() => {
       if (isBrowser()) {
         const article = document.getElementById('notion-article')
         if (!article) {
-          console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG_GITBOOK.INDEX_PAGE)
+          console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG.INDEX_PAGE)
           const containerInner = document.getElementById('container-inner')
-          const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${CONFIG_GITBOOK.INDEX_PAGE}的文章</div></blockquote>`
+          const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${CONFIG.INDEX_PAGE}的文章</div></blockquote>`
           containerInner?.insertAdjacentHTML('afterbegin', newHTML)
         }
       }
@@ -214,9 +214,9 @@ const LayoutSlug = (props) => {
                     <ShareBar post={post} />
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG_GITBOOK.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
+                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
                         <div>
-                            {CONFIG_GITBOOK.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 
@@ -277,7 +277,7 @@ const LayoutTagIndex = (props) => {
 }
 
 export {
-  CONFIG_GITBOOK as THEME_CONFIG,
+  CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

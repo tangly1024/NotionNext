@@ -1,10 +1,10 @@
 import BLOG from '@/blog.config'
-import CONFIG_EXAMPLE from '../config_example'
+import CONFIG from '../config'
 import Link from 'next/link'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post }) => {
-  const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER && post?.pageCoverThumbnail
+  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
 
   return <article className={`${showPageCover ? 'flex md:flex-row flex-col-reverse' : ''} replace mb-12 `}>
         <div className={`${showPageCover ? 'md:w-7/12' : ''}`}>

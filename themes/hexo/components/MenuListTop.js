@@ -1,6 +1,6 @@
 import React from 'react'
 import { useGlobal } from '@/lib/global'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import { MenuItemDrop } from './MenuItemDrop'
 
@@ -9,11 +9,11 @@ export const MenuListTop = (props) => {
   const { locale } = useGlobal()
 
   let links = [
-    { id: 1, icon: 'fa-solid fa-house', name: locale.NAV.INDEX, to: '/', show: CONFIG_HEXO.MENU_INDEX },
-    { id: 2, icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_HEXO.MENU_SEARCH },
-    { id: 3, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_HEXO.MENU_ARCHIVE }
-    // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_HEXO.MENU_CATEGORY },
-    // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_HEXO.MENU_TAG }
+    { id: 1, icon: 'fa-solid fa-house', name: locale.NAV.INDEX, to: '/', show: CONFIG.MENU_INDEX },
+    { id: 2, icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG.MENU_SEARCH },
+    { id: 3, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG.MENU_ARCHIVE }
+    // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
+    // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG }
   ]
 
   if (customNav) {

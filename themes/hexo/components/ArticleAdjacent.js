@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
 
 /**
  * 上一篇，下一篇文章
@@ -7,7 +7,7 @@ import CONFIG_HEXO from '../config_hexo'
  * @returns
  */
 export default function ArticleAdjacent ({ prev, next }) {
-  if (!prev || !next || !CONFIG_HEXO.ARTICLE_ADJACENT) {
+  if (!prev || !next || !CONFIG.ARTICLE_ADJACENT) {
     return <></>
   }
   return (
@@ -29,5 +29,5 @@ export default function ArticleAdjacent ({ prev, next }) {
 
       </Link>
     </section>
-  );
+  )
 }

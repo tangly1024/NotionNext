@@ -1,4 +1,4 @@
-const FUKA_CONFIG = {
+const CONFIG = {
 
   POST_LIST_COVER: true, // 文章列表显示图片封面
   POST_LIST_COVER_FORCE: false, // 即使没有封面也将站点背景图设置为封面
@@ -14,4 +14,4 @@ const FUKA_CONFIG = {
   SIDEBAR_COLLAPSE_SATUS_DEFAULT: false // 侧边栏默认折叠收起
 
 }
-export default FUKA_CONFIG
+export default CONFIG

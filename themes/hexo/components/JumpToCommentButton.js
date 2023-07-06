@@ -1,5 +1,5 @@
 import React from 'react'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
 
 /**
  * 跳转到评论区
@@ -7,7 +7,7 @@ import CONFIG_HEXO from '../config_hexo'
  * @constructor
  */
 const JumpToCommentButton = () => {
-  if (!CONFIG_HEXO.WIDGET_TO_COMMENT) {
+  if (!CONFIG.WIDGET_TO_COMMENT) {
     return <></>
   }
 

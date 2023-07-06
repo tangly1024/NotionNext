@@ -1,6 +1,6 @@
 'use client'
 
-import FUKA_CONFIG from './config_fuka'
+import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
@@ -46,9 +46,9 @@ const LayoutBase = (props) => {
   // 侧边栏折叠从 本地存储中获取 open 状态的初始值
   const [isCollapsed, setIsCollapse] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || FUKA_CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
+      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
     }
-    return FUKA_CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
+    return CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
   })
 
   // 在组件卸载时保存 open 状态到本地存储中
@@ -252,7 +252,7 @@ const LayoutTagIndex = (props) => {
 }
 
 export {
-  FUKA_CONFIG as THEME_CONFIG,
+  CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

@@ -1,4 +1,7 @@
-const CONFIG_EXAMPLE = {
+/**
+ * 主题配置文件
+ */
+const CONFIG = {
   // 菜单配置
   MENU_CATEGORY: true, // 显示分类
   MENU_TAG: true, // 显示标签
@@ -8,4 +11,4 @@ const CONFIG_EXAMPLE = {
   POST_LIST_COVER: true // 列表显示文章封面
 
 }
-export default CONFIG_EXAMPLE
+export default CONFIG

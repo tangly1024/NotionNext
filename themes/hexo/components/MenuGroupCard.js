@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
 
 const MenuGroupCard = (props) => {
   const { postCount, categoryOptions, tagOptions } = props
@@ -11,9 +11,9 @@ const MenuGroupCard = (props) => {
   const tagSlot = <div className='text-center'>{tagOptions?.length}</div>
 
   const links = [
-    { name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG_HEXO.MENU_ARCHIVE },
-    { name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: CONFIG_HEXO.MENU_CATEGORY },
-    { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG_HEXO.MENU_TAG }
+    { name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG.MENU_ARCHIVE },
+    { name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: CONFIG.MENU_CATEGORY },
+    { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG.MENU_TAG }
   ]
 
   return (

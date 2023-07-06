@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import CONFIG_FUKA from '../config_fuka'
+import CONFIG_FUKA from '../config'
 import BLOG from '@/blog.config'
 import { MenuItemDrop } from './MenuItemDrop'
 import { MenuItemCollapse } from './MenuItemCollapse'

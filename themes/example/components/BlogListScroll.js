@@ -3,7 +3,7 @@ import { useGlobal } from '@/lib/global'
 import React, { useEffect } from 'react'
 import throttle from 'lodash.throttle'
 import BlogPostCard from './BlogPostCard'
-import CONFIG_EXAMPLE from '../config_example'
+import CONFIG from '../config'
 
 export const BlogListScroll = props => {
   const { posts } = props
@@ -35,7 +35,7 @@ export const BlogListScroll = props => {
       handleGetMore()
     }
   }, 500))
-  const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER
+  const showPageCover = CONFIG.POST_LIST_COVER
 
   useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)

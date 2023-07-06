@@ -1,7 +1,7 @@
 'use client'
 
 import BLOG from '@/blog.config'
-import CONFIG_EXAMPLE from './config_example'
+import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import { useEffect } from 'react'
 import { Header } from './components/Header'
@@ -244,7 +244,7 @@ const LayoutTagIndex = (props) => {
 }
 
 export {
-  CONFIG_EXAMPLE as THEME_CONFIG,
+  CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

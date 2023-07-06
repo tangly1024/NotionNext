@@ -3,7 +3,7 @@ import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
 import { getListByPage } from '@/lib/utils'
 
 /**
@@ -13,7 +13,7 @@ import { getListByPage } from '@/lib/utils'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_HEXO.POST_LIST_SUMMARY, siteInfo }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY, siteInfo }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
   const [page, updatePage] = React.useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)

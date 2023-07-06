@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import React from 'react'
-import CONFIG_FUKA from '../config_fuka'
+import CONFIG_FUKA from '../config'
 
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
