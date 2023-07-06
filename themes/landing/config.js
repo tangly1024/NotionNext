@@ -50,6 +50,6 @@ const CONFIG = {
   TESTIMONIALS_SOCIAL_URL: 'https://blog.gaoran.xyz/',
   TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化成都远不如这个方法，已经用起来了！ “',
 
-  NEWSLETTER: false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
+  NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG

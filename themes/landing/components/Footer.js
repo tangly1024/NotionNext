@@ -114,7 +114,7 @@ export default function Footer() {
                     </div>
 
                     {/* 开启邮件收集 */}
-                    {CONFIG.NEWSLETTER && <>
+                    {JSON.parse(CONFIG.NEWSLETTER) && <>
                         {/* 5th block */}
                         <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
                             <h6 className="text-gray-800 font-medium mb-2">Subscribe</h6>

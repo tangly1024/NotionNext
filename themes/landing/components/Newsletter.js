@@ -26,7 +26,7 @@ export default function Newsletter() {
     }
   }, [subscribeToNewsletter])
 
-  if (!CONFIG.NEWSLETTER) {
+  if (!JSON.parse(CONFIG.NEWSLETTER)) {
     return <></>
   }
 
