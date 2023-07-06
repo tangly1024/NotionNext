@@ -28,8 +28,8 @@ export default function Testimonials() {
 
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                        <h2 className="h2 mb-4">已经被全世界超过3000个网站所使用</h2>
-                        <p className="text-xl text-gray-600" data-aos="zoom-y-out">网站的内容涵盖各行各业，地产、教育、建筑、医学、机械、IT、电子、软件、自媒体、数位游民、短视频、电商、学生、摄影爱好者、旅行爱好者等等</p>
+                        <h2 className="h2 mb-4">网站数突破3000、浏览量突破 100,000,000+ </h2>
+                        <p className="text-xl text-gray-600" data-aos="zoom-y-out">网站内容涵盖地产、教育、建筑、医学、机械、IT、电子、软件、自媒体、数位游民、短视频、电商、学生、摄影爱好者、旅行爱好者等等各行各业</p>
                     </div>
 
                     {/* Testimonials */}

@@ -12,7 +12,7 @@ export default function FeaturesBlocks() {
             {/* Section header */}
             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
               <h2 className="h2 mb-4">解决方案</h2>
-              <p className="text-xl text-gray-600">无感知地建站，时事传播资讯，尽可能链接更多的人</p>
+              <p className="text-xl text-gray-600">人人自媒体的时代，一个网站将帮您链接更多的人，带给你无限的机会和客户。<br/>您还在等什么呢？</p>
             </div>
 
             {/* Items */}

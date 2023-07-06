@@ -31,7 +31,7 @@ export default function Features() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">探索解决方案</h1>
-            <p className="text-xl text-gray-600">如何搭建自己的门户网站，塑造一个品牌展示中心？<br/>以前，它是系统<strong className='font-bold'>繁重</strong>的Wordpress，它是操作<strong className='font-bold'>复杂</strong>的Hexo，它是一个<strong className='font-bold'>昂贵</strong>的研发外包团队；但现在，您只要一个笔记软件、Notion就够了</p>
+            <p className="text-xl text-gray-600 leading-relaxed">如何搭建自己的门户网站，塑造一个品牌展示中心？<br/>曾经，它是系统<strong className='font-bold text-red-500'>繁重</strong>的Wordpress;<br/>它是操作<strong className='font-bold  text-red-500'>复杂</strong>的Hexo;<br/>它是一个<strong className='font-bold text-red-500'>昂贵</strong>的研发团队;<br/>现在，您只要一个笔记软件Notion，就够了</p>
           </div>
 
           {/* Section content */}
@@ -82,7 +82,7 @@ export default function Features() {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">人性化的定制工具</div>
-                    <div className="text-gray-600">多款主题供您挑选，可以搭建各种不同风格和作用的网站，未来还会有更多的主题加入。</div>
+                    <div className="text-gray-600">多款主题供您挑选，可以搭建各种不同风格和作用的网站，更多的主题正在陆续加入中。</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">

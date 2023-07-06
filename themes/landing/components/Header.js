@@ -36,7 +36,7 @@ export default function Header() {
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
                 <Link href="https://github.com/tangly1024/NotionNext" target='_blank' className="font-medium hover:font-bold text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">
-                    <i className='fab fa-github mr-1'></i><div>Github开源</div>
+                    <i className='fab fa-github mr-1'></i><div>开源仓库</div>
                 </Link>
               </li>
               <li>
