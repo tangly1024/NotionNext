@@ -13,7 +13,6 @@ const PaginationSimple = ({ page, totalPage }) => {
   const currentPage = +page
   const showNext = currentPage < totalPage
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
-  console.log(currentPage, showNext)
   return (
     <div className="my-10 mx-6 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
       <Link
