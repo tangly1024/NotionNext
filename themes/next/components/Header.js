@@ -1,7 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
 
 let wrapperTop = 0
 let windowTop = 0
@@ -18,7 +18,7 @@ export default function Header(props) {
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
-          strings: CONFIG_NEXT.HOME_BANNER_Strings,
+          strings: CONFIG.HOME_BANNER_Strings,
           typeSpeed: 200,
           backSpeed: 100,
           backDelay: 400,

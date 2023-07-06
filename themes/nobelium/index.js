@@ -1,4 +1,4 @@
-import CONFIG_NOBELIUM from './config_nobelium'
+import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import React, { useEffect, useState } from 'react'
 import Nav from './components/Nav'
@@ -264,7 +264,7 @@ const LayoutTagIndex = (props) => {
 }
 
 export {
-  CONFIG_NOBELIUM as THEME_CONFIG,
+  CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

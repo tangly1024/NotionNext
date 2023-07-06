@@ -1,4 +1,4 @@
-const CONFIG_NOBELIUM = {
+const CONFIG = {
 
   // 菜单配置
   MENU_CATEGORY: false, // 显示分类
@@ -10,4 +10,4 @@ const CONFIG_NOBELIUM = {
   NAV_NOTION_ICON: true // 是否读取Notion图标作为站点头像
 
 }
-export default CONFIG_NOBELIUM
+export default CONFIG

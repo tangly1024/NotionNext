@@ -1,4 +1,4 @@
-const CONFIG_MEDIUM = {
+const CONFIG = {
 
   // Style
   RIGHT_PANEL_DARK: process.env.NEXT_PUBLIC_MEDIUM_RIGHT_DARK || false, // 右侧面板深色模式
@@ -21,4 +21,4 @@ const CONFIG_MEDIUM = {
   WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
   WIDGET_TO_TOP: true // 跳回顶部
 }
-export default CONFIG_MEDIUM
+export default CONFIG

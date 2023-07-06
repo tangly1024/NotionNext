@@ -1,13 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
 
 /**
  * 展示文章推荐
  */
 const RecommendPosts = ({ recommendPosts }) => {
-  if (!CONFIG_NEXT.ARTICLE_RELATE_POSTS || !recommendPosts || recommendPosts.length < 1) {
+  if (!CONFIG.ARTICLE_RELATE_POSTS || !recommendPosts || recommendPosts.length < 1) {
     return <></>
   }
   const { locale } = useGlobal()

@@ -7,7 +7,7 @@ import React from 'react'
 import Tabs from '@/components/Tabs'
 import Logo from './Logo'
 import Card from './Card'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import Live2D from '@/components/Live2D'
 
@@ -34,7 +34,7 @@ const SideAreaLeft = props => {
                 <div className='pt-2 px-2 font-sans'>
                     <MenuList allowCollapse={true} {...props} />
                 </div>
-                {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
+                {CONFIG.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
                     <SearchInput {...props} />
                 </div>}
 

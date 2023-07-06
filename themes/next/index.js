@@ -1,4 +1,4 @@
-import CONFIG_NEXT from './config_next'
+import CONFIG from './config'
 
 import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
@@ -87,7 +87,7 @@ const LayoutBase = (props) => {
                 <SideAreaLeft targetRef={targetRef} {...props} />
 
                 {/* 中央内容 */}
-                <section id='container-inner' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
+                <section id='container-inner' className={`${CONFIG.NAV_TYPE !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
                     <Transition
                         show={!onLoading}
                         appear={true}
@@ -104,7 +104,7 @@ const LayoutBase = (props) => {
                 </section>
 
                 {/* 右侧栏样式 */}
-                {CONFIG_NEXT.RIGHT_BAR && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
+                {CONFIG.RIGHT_BAR && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
             </main>
 
             {/* 右下角悬浮 */}
@@ -130,7 +130,7 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList headerSlot={CONFIG_NEXT.HOME_BANNER && <Header {...props} />} {...props} />
+  return <LayoutPostList headerSlot={CONFIG.HOME_BANNER && <Header {...props} />} {...props} />
 }
 
 /**
@@ -328,7 +328,7 @@ const LayoutTagIndex = (props) => {
 }
 
 export {
-  CONFIG_NEXT as THEME_CONFIG,
+  CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

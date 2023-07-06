@@ -5,14 +5,14 @@ import Link from 'next/link'
 import React from 'react'
 import Card from './Card'
 import TagItemMini from './TagItemMini'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
 import NotionPage from '@/components/NotionPage'
 import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
-  const showPreview = CONFIG_NEXT.POST_LIST_PREVIEW && post.blockMap
+  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
   return (
     <Card className="w-full">
       <div
@@ -114,7 +114,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {CONFIG_NEXT.POST_LIST_COVER && post?.pageCoverThumbnail && (
+        {CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && (
           <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image

@@ -1,4 +1,4 @@
-import CONFIG_MEDIUM from './config_medium'
+import CONFIG from './config'
 
 import CommonHead from '@/components/CommonHead'
 import { useState, createContext, useContext, useEffect } from 'react'
@@ -92,14 +92,14 @@ const LayoutBase = props => {
                     </div>
 
                     {/* 桌面端右侧 */}
-                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG_MEDIUM.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
+                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
                         <div className='py-14 px-6 sticky top-0'>
                             <Tabs>
                                 {slotRight}
                                 <div key={locale.NAV.ABOUT}>
                                     {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
                                     {showInfoCard && <InfoCard {...props} />}
-                                    {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
+                                    {CONFIG.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
                                 </div>
                             </Tabs>
                             <Announcement post={notice} />
@@ -168,9 +168,9 @@ const LayoutSlug = props => {
                     <ShareBar post={post} />
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG_MEDIUM.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post?.category} />}
+                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post?.category} />}
                         <div>
-                            {CONFIG_MEDIUM.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
                     {/* 上一篇下一篇文章 */}
@@ -322,7 +322,7 @@ const LayoutTagIndex = props => {
 }
 
 export {
-  CONFIG_MEDIUM as THEME_CONFIG,
+  CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

@@ -22,7 +22,7 @@ export default function Newsletter() {
     }
     form?.addEventListener('submit', handleSubmit)
     return () => {
-      form.removeEventListener('submit', handleSubmit)
+      form?.removeEventListener('submit', handleSubmit)
     }
   }, [subscribeToNewsletter])
 

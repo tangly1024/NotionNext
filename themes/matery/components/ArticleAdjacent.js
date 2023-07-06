@@ -1,4 +1,4 @@
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 
 /**
@@ -7,7 +7,7 @@ import BlogPostCard from './BlogPostCard'
  * @returns
  */
 export default function ArticleAdjacent ({ prev, next, siteInfo }) {
-  if (!prev || !next || !CONFIG_MATERY.ARTICLE_ADJACENT) {
+  if (!prev || !next || !CONFIG.ARTICLE_ADJACENT) {
     return <></>
   }
   return <section className='flex flex-col justify-between  p-3 text-gray-800 items-center text-xs md:text-sm md:flex-row md:gap-2 '>

@@ -1,4 +1,4 @@
-import CONFIG_SIMPLE from './config_simple'
+import CONFIG from './config'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import { useRouter } from 'next/router'
@@ -43,7 +43,7 @@ const LayoutBase = props => {
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
             <CommonHead meta={meta} />
 
-            {CONFIG_SIMPLE.TOP_BAR && <TopBar {...props} />}
+            {CONFIG.TOP_BAR && <TopBar {...props} />}
 
             {/* 顶部LOGO */}
             <Header {...props} />
@@ -262,7 +262,7 @@ const LayoutTagIndex = (props) => {
 }
 
 export {
-  CONFIG_SIMPLE as THEME_CONFIG,
+  CONFIG as THEME_CONFIG,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

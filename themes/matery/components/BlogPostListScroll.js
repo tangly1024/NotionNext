@@ -3,7 +3,7 @@ import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import React, { useCallback } from 'react'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
 import { getListByPage } from '@/lib/utils'
 import throttle from 'lodash.throttle'
 
@@ -14,7 +14,7 @@ import throttle from 'lodash.throttle'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MATERY.POST_LIST_SUMMARY, siteInfo }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY, siteInfo }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
   const [page, updatePage] = React.useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)

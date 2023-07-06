@@ -1,7 +1,7 @@
 // import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 
@@ -65,7 +65,7 @@ const Hero = props => {
             </div>
 
             <div id='header-cover' style={{ backgroundImage: `url('${siteInfo.pageCover}')` }}
-                className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG_MATERY.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`} />
+                className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`} />
 
         </header>
   )
