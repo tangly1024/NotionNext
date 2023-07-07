@@ -1,14 +1,21 @@
 const CONFIG = {
 
+  HEADER_BUTTON_1_TITLE: 'Github开源',
+  HEDEAR_BUTTON_1_URL: 'https://github.com/tangly1024/NotionNext',
+
+  HEADER_BUTTON_2_TITLE: '作者博客',
+  HEDEAR_BUTTON_2_URL: 'https://blog.tangly1024.com/',
+
   // 首页大图英雄板块
-  HERO_HEADER_1: 'NotionNext',
-  HERO_P_1: '只需一个Notion笔记，建站竟然如此简单！',
+  HERO_TITLE_1: 'NotionNext',
+  HERO_P_1: '快速搭建网站、轻松塑造个人品牌！',
   HERO_BUTTON_1_TEXT: '开始体验',
   HERO_BUTTON_1_LINK: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
   HERO_BUTTON_2_TEXT: '了解更多',
   HERO_BUTTON_2_LINK: 'https://docs.tangly1024.com/about',
   HERO_VIDEO_IMAGE: '/images/home.png',
-  HERO_VIDEO_URL: '/videos/video.mp4',
+  //   HERO_VIDEO_URL: '/videos/video.mp4',
+  HERO_VIDEO_IFRAME: '//player.bilibili.com/player.html?aid=913088616&bvid=BV1fM4y1L7Qi&cid=1187218697&page=1&&high_quality=1',
   HERO_VIDEO_TIPS: 'Watch the full video (2 min)',
 
   // 特性介绍
