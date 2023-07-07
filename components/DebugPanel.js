@@ -16,7 +16,7 @@ const DebugPanel = () => {
   const [siteConfig, updateSiteConfig] = useState({})
 
   // 主题下拉框
-  const themeOptions = THEMES.map(t => ({ value: t, text: t }))
+  const themeOptions = THEMES?.map(t => ({ value: t, text: t }))
 
   useEffect(() => {
     updateSiteConfig(Object.assign({}, BLOG))
