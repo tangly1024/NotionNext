@@ -18,7 +18,8 @@ function scanSubdirectories(directory) {
     const fullPath = path.join(directory, file)
     const stats = fs.statSync(fullPath)
 
-    if (stats.isDirectory()) {
+    // landing主题比较特殊，不在可切换的主题中显示
+    if (stats.isDirectory() && file !== 'landing') {
       subdirectories.push(file)
     }
   })
