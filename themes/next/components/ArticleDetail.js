@@ -4,7 +4,6 @@ import Comment from '@/components/Comment'
 import RecommendPosts from './RecommendPosts'
 import ShareBar from '@/components/ShareBar'
 import TagItem from './TagItem'
-import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -24,7 +23,6 @@ export default function ArticleDetail(props) {
   const url = BLOG.LINK + useRouter().asPath
   const { locale } = useGlobal()
   const showArticleInfo = CONFIG_NEXT.ARTICLE_INFO
-  const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
   return (
         <div id="container"
@@ -56,11 +54,11 @@ export default function ArticleDetail(props) {
                         <div className='flex flex-wrap justify-center'>
                             {post?.type !== 'Page' && (<>
                                 <Link
-                                    href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                                     passHref
                                     legacyBehavior>
                                     <div className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
-                                        <i className='far fa-calendar mr-1' /> {date}
+                                        <i className='far fa-calendar mr-1' /> {post?.publishTime}
                                     </div>
                                 </Link>
                                 <span className='mr-2'> | <i className='far fa-calendar-check mr-2' />{post.lastEditedTime} </span>

@@ -39,7 +39,12 @@ const SocialButton = () => {
             {BLOG.ENABLE_RSS && <a target='_blank' rel='noreferrer' title={'RSS'} href={'/feed'} >
                 <i className='transform hover:scale-125 duration-150 fas fa-rss ' />
             </a>}
-
+            {BLOG.CONTACT_BILIBILI && <a target='_blank' rel='noreferrer' title={'bilibili'} href={BLOG.CONTACT_BILIBILI} >
+                <i className='fab fa-bilibili transform hover:scale-125 duration-150'/>
+            </a>}
+            {BLOG.CONTACT_YOUTUBE && <a target='_blank' rel='noreferrer' title={'youtube'} href={BLOG.CONTACT_YOUTUBE} >
+                <i className='fab fa-youtube transform hover:scale-125 duration-150'/>
+            </a>}
             <i onClick={toggleShow} className='transform hover:scale-125 duration-150 fas fa-close ' />
 
         </>}

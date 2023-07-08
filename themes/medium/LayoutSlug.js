@@ -20,16 +20,15 @@ export const LayoutSlug = props => {
   const { locale } = useGlobal()
 
   const date = formatDate(
-    post?.date?.start_date || post?.createdTime,
+    post?.publishTime,
     locale.LOCALE
   )
   if (!post) {
-    return <LayoutBase {...props} showInfoCard={true}
-        />
+    return <LayoutBase {...props} showInfoCard={true} />
   }
 
-  const slotRight = post?.toc && post?.toc?.length > 3 && (
-        <div key={locale.COMMON.TABLE_OF_CONTENTS} >
+  const slotRight = post?.toc && post?.toc?.length >= 3 && (
+      <div key={locale.COMMON.TABLE_OF_CONTENTS} >
             <Catalog toc={post.toc} />
             {/* <JumpToTopButton className='text-gray-400 hover:text-green-500 hover:bg-gray-100 py-1 duration-200' /> */}
         </div>
