@@ -29,7 +29,7 @@ const THEME_CONFIG = { THEME: 'landing' }
  */
 const LayoutBase = (props) => {
     const {  children } = props
-    return <div id='theme-blank' className="flex flex-col justify-between bg-white">
+    return <div id='theme-blank' className="overflow-hidden flex flex-col justify-between bg-white">
         {/* 顶部导航栏 */}
         <Header />
 
