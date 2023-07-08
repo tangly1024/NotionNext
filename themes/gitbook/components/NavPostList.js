@@ -1,6 +1,7 @@
 import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
+import { useGitBookGlobal } from '..'
 
 /**
  * 博客列表滚动分页
@@ -10,8 +11,8 @@ import NavPostItem from './NavPostItem'
  * @constructor
  */
 const NavPostList = (props) => {
-  const { posts = [], currentSearch } = props
-  const filteredPosts = Object.assign(posts)
+  const { filteredPosts } = useGitBookGlobal()
+
   const router = useRouter()
   let selectedSth = false
 
@@ -34,7 +35,7 @@ const NavPostList = (props) => {
   }
 
   if (!filteredPosts || filteredPosts.length === 0) {
-    return <NavPostListEmpty currentSearch={currentSearch} />
+    return <NavPostListEmpty />
   } else {
     return <div id='posts-wrapper' className='w-full flex-grow'>
             {/* 文章列表 */}

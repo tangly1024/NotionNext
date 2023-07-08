@@ -8,8 +8,8 @@ import NavPostList from './NavPostList'
  * @returns {JSX.Element}
  * @constructor
  */
-const PageNavDrawer = ({ post, cRef }) => {
-  const { pageNavVisible, changePageNavVisible, filterPosts } = useGitBookGlobal()
+const PageNavDrawer = (props) => {
+  const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
   const switchVisible = () => {
     changePageNavVisible(!pageNavVisible)
   }
@@ -22,7 +22,7 @@ const PageNavDrawer = ({ post, cRef }) => {
                     ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 top-16 rounded py-2 bg-white dark:bg-gray-600'}>
                 <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
                     {/* 所有文章列表 */}
-                    <NavPostList posts={filterPosts} />
+                    <NavPostList />
                 </div>
             </div>
         </div>

@@ -47,16 +47,16 @@ const LayoutBase = (props) => {
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
-  const [filterPosts, setFilterPosts] = useState(allNavPages)
+  const [filteredPosts, setFilteredPosts] = useState(allNavPages)
 
   const showTocButton = post?.toc?.length > 1
 
   useEffect(() => {
-    setFilterPosts(allNavPages)
+    setFilteredPosts(allNavPages)
   }, [post])
 
   return (
-        <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filterPosts, setFilterPosts, allNavPages, pageNavVisible, changePageNavVisible }}>
+        <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredPosts, setFilteredPosts, allNavPages, pageNavVisible, changePageNavVisible }}>
             <CommonHead meta={meta} />
 
             <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
@@ -71,11 +71,12 @@ const LayoutBase = (props) => {
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
                             {/* 所有文章列表 */}
-                            <NavPostList posts={filterPosts} />
+                            <NavPostList />
 
                             <div className='mt-2'>
                                 <Footer {...props} />
-                            </div>                        </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-12 min-h-screen'>
@@ -159,20 +160,22 @@ const LayoutBase = (props) => {
  */
 const LayoutIndex = (props) => {
   const router = useRouter()
-  router.push(CONFIG.INDEX_PAGE).then(() => {
-    // console.log('跳转到指定首页', CONFIG.INDEX_PAGE)
-    setTimeout(() => {
-      if (isBrowser()) {
-        const article = document.getElementById('notion-article')
-        if (!article) {
-          console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG.INDEX_PAGE)
-          const containerInner = document.getElementById('container-inner')
-          const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${CONFIG.INDEX_PAGE}的文章</div></blockquote>`
-          containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+  useEffect(() => {
+    router.push(CONFIG.INDEX_PAGE).then(() => {
+      // console.log('跳转到指定首页', CONFIG.INDEX_PAGE)
+      setTimeout(() => {
+        if (isBrowser()) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG.INDEX_PAGE)
+            const containerInner = document.getElementById('container-inner')
+            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${CONFIG.INDEX_PAGE}的文章</div></blockquote>`
+            containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+          }
         }
-      }
-    }, 7 * 1000)
-  })
+      }, 7 * 1000)
+    })
+  }, [])
 
   return <LayoutBase {...props}></LayoutBase>
 }
