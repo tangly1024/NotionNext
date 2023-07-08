@@ -28,7 +28,6 @@ const Slug = props => {
   */
   const validPassword = passInput => {
     const encrypt = md5(post.slug + passInput)
-    console.log('passInput', passInput, post.slug)
     if (passInput && encrypt === post.password) {
       setLock(false)
       return true
