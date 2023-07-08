@@ -71,10 +71,10 @@ const LayoutBase = (props) => {
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
                             {/* 所有文章列表 */}
-                            <NavPostList />
+                            <NavPostList filteredPosts={filteredPosts} />
 
                             <div className='mt-2'>
-                                <Footer {...props} />
+                                <Footer {...props}/>
                             </div>
                         </div>
                     </div>
@@ -84,6 +84,7 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
                             <AdSlot type='in-article' />
+
                             <Transition
                                 show={!onLoading}
                                 appear={true}
@@ -142,7 +143,7 @@ const LayoutBase = (props) => {
                 </div>}
 
                 {/* 移动端导航抽屉 */}
-                <PageNavDrawer {...props} />
+                <PageNavDrawer {...props} filteredPosts={filteredPosts} />
 
                 {/* 移动端底部导航栏 */}
                 {/* <BottomMenuBar {...props} className='block md:hidden' /> */}
@@ -177,7 +178,7 @@ const LayoutIndex = (props) => {
     })
   }, [])
 
-  return <LayoutBase {...props}></LayoutBase>
+  return <LayoutBase {...props}/>
 }
 
 /**
@@ -187,7 +188,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  return <LayoutBase {...props}/>
 }
 
 /**

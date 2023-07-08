@@ -1,7 +1,6 @@
 import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
-import { useGitBookGlobal } from '..'
 
 /**
  * 博客列表滚动分页
@@ -11,13 +10,13 @@ import { useGitBookGlobal } from '..'
  * @constructor
  */
 const NavPostList = (props) => {
-  const { filteredPosts } = useGitBookGlobal()
+  const { filteredPosts } = props
 
   const router = useRouter()
   let selectedSth = false
 
   // 处理是否选中
-  filteredPosts.map((group) => {
+  filteredPosts?.map((group) => {
     let groupSelected = false
     for (const post of group?.items) {
       if (router.asPath.split('?')[0] === '/' + post.slug) {
