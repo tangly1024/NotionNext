@@ -1,3 +1,5 @@
+'use client'
+
 import CONFIG from './config'
 import { useRouter } from 'next/router'
 import { useEffect, useState, createContext, useContext } from 'react'
