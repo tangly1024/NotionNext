@@ -30,14 +30,14 @@ const LayoutBase = (props) => {
   const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
-  const [filterPosts, setFilterPosts] = useState(allNavPages)
+  const [filteredPostGroups, setFilteredPostGroups] = useState(allNavPages)
   const { onLoading } = useGlobal()
   const router = useRouter()
 
   const showTocButton = post?.toc?.length > 1
 
   useEffect(() => {
-    setFilterPosts(allNavPages)
+    setFilteredPostGroups(allNavPages)
   }, [post])
 
   const LoadingCover = <div id='cover-loading' className={`${onLoading ? 'z-50 opacity-50' : '-z-10 opacity-0'} pointer-events-none transition-all duration-300`}>
@@ -47,10 +47,10 @@ const LayoutBase = (props) => {
     </div>
 
   return (
-        <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible, filterPosts, setFilterPosts, allNavPages, pageNavVisible, changePageNavVisible }}>
-            <CommonHead meta={meta} />
+        <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible, filteredPostGroups, setFilteredPostGroups, allNavPages, pageNavVisible, changePageNavVisible }}>
 
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+                <CommonHead meta={meta} />
                 {/* 顶部导航栏 */}
                 <TopNavBar {...props} />
 
@@ -64,7 +64,7 @@ const LayoutBase = (props) => {
                             <SearchInput className='my-3 rounded-md' />
 
                             {/* 所有文章列表 */}
-                            <NavPostList posts={filterPosts} />
+                            <NavPostList {...props} filteredPostGroups={filteredPostGroups} />
 
                             <div className='mt-2'>
                                 <Footer {...props} />
@@ -90,7 +90,7 @@ const LayoutBase = (props) => {
 
                         {/* 底部 */}
                         <div className='md:hidden'>
-                          <Footer {...props}/>
+                            <Footer {...props} />
                         </div>
                         <div className='text-center'>
                             <AdSlot type='native' />

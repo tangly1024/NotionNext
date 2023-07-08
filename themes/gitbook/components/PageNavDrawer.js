@@ -8,7 +8,7 @@ import NavPostList from './NavPostList'
  * @returns {JSX.Element}
  * @constructor
  */
-const PageNavDrawer = ({ post, cRef }) => {
+const PageNavDrawer = (props) => {
   const { pageNavVisible, changePageNavVisible, filterPosts } = useGitBookGlobal()
   const switchVisible = () => {
     changePageNavVisible(!pageNavVisible)
