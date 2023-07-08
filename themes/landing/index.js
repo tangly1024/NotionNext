@@ -76,10 +76,8 @@ const LayoutSlug = (props) => <LayoutBase {...props}>
 const LayoutSearch = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 const LayoutArchive = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 const Layout404 = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const LayoutCategory = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 const LayoutCategoryIndex = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const LayoutPage = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const LayoutTag = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
+const LayoutPostList = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 const LayoutTagIndex = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 
 export {
@@ -89,9 +87,7 @@ export {
     LayoutArchive,
     LayoutSlug,
     Layout404,
-    LayoutCategory,
+    LayoutPostList,
     LayoutCategoryIndex,
-    LayoutPage,
-    LayoutTag,
     LayoutTagIndex
 }
