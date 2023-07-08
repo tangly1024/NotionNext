@@ -27,8 +27,7 @@ export const LayoutIndex = (props) => {
       }, 7 * 1000)
     })
   }, [])
-  return <LayoutBase {...props}>
-  </LayoutBase>
+  return <LayoutBase {...props}/>
 }
 
 export default LayoutIndex
