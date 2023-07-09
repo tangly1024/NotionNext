@@ -18,7 +18,7 @@ const NavPostItem = (props) => {
   }
 
   if (group?.category) {
-    return <div>
+    return <>
             <div
                 onClick={toggleOpenSubMenu}
                 className='flex justify-between text-sm font-sans cursor-pointer p-2 hover:bg-gray-50 rounded-md dark:hover:bg-gray-600' key={group?.category}>
@@ -30,13 +30,13 @@ const NavPostItem = (props) => {
                     <BlogPostCard className='text-sm ml-3' post={post} /></div>))
                 }
             </Collapse>
-        </div>
+        </>
   } else {
-    return <div>
-            {group?.items?.map(post => (<div key={post.id} className='ml-3 border-l'>
-                <BlogPostCard className='text-sm ml-3' post={post} /></div>))
+    return <>
+            {group?.items?.map(post => (<div key={post.id} >
+                <BlogPostCard className='text-sm py-2' post={post} /></div>))
             }
-        </div>
+        </>
   }
 }
 
