@@ -96,7 +96,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug } }) {
   let fullSlug = slug.join('/')
-  if (BLOG.PSEUDO_STATIC) {
+  if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
     }

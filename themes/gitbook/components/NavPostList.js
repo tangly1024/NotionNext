@@ -1,6 +1,7 @@
 import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
+import { deepClone } from '@/lib/utils'
 
 /**
  * 博客列表滚动分页
@@ -10,13 +11,12 @@ import NavPostItem from './NavPostItem'
  * @constructor
  */
 const NavPostList = (props) => {
-  const { posts = [], currentSearch } = props
-  const filteredPosts = Object.assign(posts)
+  const { filteredPostGroups } = props
   const router = useRouter()
   let selectedSth = false
 
   // 处理是否选中
-  filteredPosts.map((group) => {
+  filteredPostGroups?.map((group) => {
     let groupSelected = false
     for (const post of group?.items) {
       if (router.asPath.split('?')[0] === '/' + post.slug) {
@@ -29,16 +29,16 @@ const NavPostList = (props) => {
   })
 
   // 如果都没有选中默认打开第一个
-  if (!selectedSth && filteredPosts && filteredPosts.length > 0) {
-    filteredPosts[0].selected = true
+  if (!selectedSth && filteredPostGroups && filteredPostGroups.length > 0) {
+    filteredPostGroups[0].selected = true
   }
 
-  if (!filteredPosts || filteredPosts.length === 0) {
-    return <NavPostListEmpty currentSearch={currentSearch} />
+  if (!filteredPostGroups || filteredPostGroups.length === 0) {
+    return <NavPostListEmpty />
   } else {
     return <div className='w-full flex-grow'>
             {/* 文章列表 */}
-            {filteredPosts?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
+            {filteredPostGroups?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
         </div>
   }
 }

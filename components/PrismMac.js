@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation'
 const PrismMac = () => {
   const router = useRouter()
   useEffect(() => {
-    if (BLOG.CODE_MAC_BAR) {
+    if (JSON.parse(BLOG.CODE_MAC_BAR)) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
     loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
