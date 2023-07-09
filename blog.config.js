@@ -44,7 +44,6 @@ const BLOG = {
   ],
   FONT_SANS: [
     // 无衬线字体 例如'LXGW WenKai'
-    'Bitter',
     '"PingFang SC"',
     '-apple-system',
     'BlinkMacSystemFont',
