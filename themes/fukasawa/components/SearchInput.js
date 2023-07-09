@@ -1,9 +1,11 @@
+import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 
 const SearchInput = (props) => {
   const { keyword, cRef } = props
   const [onLoading, setLoadingState] = useState(false)
+  const { locale } = useGlobal()
   const router = useRouter()
   const searchInputRef = useRef()
   useImperativeHandle(cRef, () => {
@@ -54,6 +56,8 @@ const SearchInput = (props) => {
     <input
       ref={searchInputRef}
       type='text'
+      placeholder={locale.SEARCH.ARTICLES}
+      aria-label="Search"
       className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white'}
       onKeyUp={handleKeyUp}
       defaultValue={keyword || ''}

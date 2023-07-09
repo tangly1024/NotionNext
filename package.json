@@ -54,7 +54,6 @@
     "react-notion-x": "6.16.0",
     "react-share": "^4.4.1",
     "react-tweet-embed": "~2.0.0",
-    "smoothscroll-polyfill": "^0.4.4",
     "typed.js": "^2.0.12",
     "use-ackee": "^3.0.0"
   },

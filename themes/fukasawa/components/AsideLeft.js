@@ -59,7 +59,7 @@ function AsideLeft(props) {
             {isCollapsed ? <i className="fa-solid fa-indent text-xl"></i> : <i className='fas fa-bars text-xl'></i>}
         </div>}
 
-        <div className={`h-full ${isCollapsed ? 'hidden' : 'px-10'}`}>
+        <div className={`h-full ${isCollapsed ? 'hidden' : 'px-8'}`}>
 
             <Logo {...props} />
 

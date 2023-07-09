@@ -4,7 +4,6 @@ import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
-import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
@@ -12,13 +11,16 @@ import BlogListPage from './components/BlogListPage'
 import BlogListScroll from './components/BlogListScroll'
 import BlogArchiveItem from './components/BlogPostArchive'
 import ArticleDetail from './components/ArticleDetail'
-import { ArticleLock } from './components/ArticleLock'
+import ArticleLock from './components/ArticleLock'
 import TagItemMini from './components/TagItemMini'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
-import Mark from 'mark.js'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
+import dynamic from 'next/dynamic'
+
+const Live2D = dynamic(() => import('@/components/Live2D'))
+const Mark = dynamic(() => import('mark.js'))
 
 // 主题全局状态
 const ThemeGlobalFukasawa = createContext()

@@ -28,7 +28,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={post?.pageCoverThumbnail}
-                                alt={post.title}
+                                alt={post?.title || BLOG.TITLE}
                                 className="object-cover w-full h-full hover:scale-125 transform duration-500"
                             ></img>
                         </Link>
@@ -44,13 +44,13 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                     </Link>
 
                     {(!showPreview || showSummary) && (
-                        <p className="my-2 tracking-wide line-clamp-3 text-gray-700 dark:text-gray-300 text-sm font-light leading-5">
+                        <p className="my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6">
                             {post.summary}
                         </p>
                     )}
 
                     {/* 分类标签 */}
-                    <div className="mt-auto text-gray-400 justify-between flex">
+                    <div className="mt-auto justify-between flex">
                         {post.category && <Link
                             href={`/category/${post.category}`}
                             passHref

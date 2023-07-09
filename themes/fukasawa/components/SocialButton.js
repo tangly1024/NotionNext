@@ -8,7 +8,7 @@ import React from 'react'
  */
 const SocialButton = () => {
   return <div className='w-52 flex-wrap flex'>
-    <div className='space-x-3 text-lg text-gray-400 dark:text-gray-400'>
+    <div className='space-x-3 text-lg text-gray-500 dark:text-gray-400'>
       {BLOG.CONTACT_GITHUB && <a target='_blank' rel='noreferrer' title={'github'} href={BLOG.CONTACT_GITHUB} >
         <i className='fab fa-github transform hover:scale-125 duration-150'/>
       </a>}
