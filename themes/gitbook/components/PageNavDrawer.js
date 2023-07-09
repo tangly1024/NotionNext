@@ -10,7 +10,7 @@ import NavPostList from './NavPostList'
  */
 const PageNavDrawer = (props) => {
   const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
-  const { filteredPosts } = props
+  const { filteredPostGroups } = props
   const switchVisible = () => {
     changePageNavVisible(!pageNavVisible)
   }
@@ -23,7 +23,7 @@ const PageNavDrawer = (props) => {
                     ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 top-16 rounded py-2 bg-white dark:bg-gray-600'}>
                 <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
                     {/* 所有文章列表 */}
-                    <NavPostList filteredPosts={filteredPosts} />
+                    <NavPostList filteredPostGroups={filteredPostGroups} />
                 </div>
             </div>
         </div>

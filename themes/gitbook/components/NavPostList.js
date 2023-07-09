@@ -15,7 +15,7 @@ const NavPostList = (props) => {
   let selectedSth = false
 
   // 处理是否选中
-  filteredPostGroups.map((group) => {
+  filteredPostGroups?.map((group) => {
     let groupSelected = false
     for (const post of group?.items) {
       if (router.asPath.split('?')[0] === '/' + post.slug) {
@@ -28,7 +28,7 @@ const NavPostList = (props) => {
   })
 
   // 如果都没有选中默认打开第一个
-  if (!selectedSth && filteredPostGroups && filteredPostGroups.length > 0) {
+  if (!selectedSth && filteredPostGroups && filteredPostGroups?.length > 0) {
     filteredPostGroups[0].selected = true
   }
 
