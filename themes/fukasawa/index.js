@@ -146,7 +146,7 @@ const LayoutSlug = (props) => {
 /**
  * 搜索页
  */
-const LayoutSearch = (props) => {
+const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   useEffect(() => {
@@ -162,7 +162,7 @@ const LayoutSearch = (props) => {
       }
     }, 300)
   }, [router])
-  return <LayoutPostList />
+  return <LayoutPostList {...props}/>
 }
 
 /**
