@@ -64,7 +64,7 @@ const Hero = props => {
                 </div>
             </div>
 
-            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo.pageCover}')` }}
+            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo?.pageCover}')` }}
                 className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`} />
 
         </header>
