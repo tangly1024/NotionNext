@@ -184,6 +184,9 @@
     <a href="https://github.com/kitety" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/22906933" width="64px;"  alt="kitety"/><br/><sub><b>kitety</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=kitety" title="kitety" >🔧 🐛</a>
   </td>
 
+ <td align="center">
+    <a href="https://github.com/jxpeng98" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/83734772" width="64px;"  alt=" Jiaxin Peng"/><br/><sub><b> Jiaxin Peng</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=jxpeng98" title="jxpeng98" >🔧 🐛</a>
+  </td>
 
 </tr>
 </table>
