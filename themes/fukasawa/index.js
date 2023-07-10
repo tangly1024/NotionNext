@@ -18,6 +18,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 const Mark = dynamic(() => import('mark.js'))
@@ -69,6 +70,7 @@ const LayoutBase = (props) => {
 
             <div id='theme-fukasawa'>
                 <CommonHead meta={meta} />
+
                 <TopNav {...props} />
 
                 <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
@@ -77,7 +79,6 @@ const LayoutBase = (props) => {
 
                     <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
                         <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
-
                             <Transition
                                 show={!onLoading}
                                 appear={true}
@@ -94,6 +95,11 @@ const LayoutBase = (props) => {
                                 <div> {children} </div>
 
                             </Transition>
+
+                            <div className='mt-2'>
+                              <AdSlot type='native' />
+                            </div>
+
                         </div>
                     </main>
 
@@ -156,7 +162,7 @@ const LayoutSearch = props => {
       }
     }, 300)
   }, [router])
-  return <LayoutPostList {...props}/>
+  return <LayoutPostList {...props} />
 }
 
 /**

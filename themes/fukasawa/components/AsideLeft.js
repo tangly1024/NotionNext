@@ -11,6 +11,7 @@ import DarkModeButton from '@/components/DarkModeButton'
 import SocialButton from './SocialButton'
 import { useFukasawaGlobal } from '..'
 import CONFIG from '@/themes/fukasawa/config'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 // import { debounce } from 'lodash'
 // import { useEffect } from 'react'
@@ -53,7 +54,7 @@ function AsideLeft(props) {
   //     }
   //   }, [])
 
-  return <div className={`sideLeft relative ${isCollapsed ? 'w-0' : 'w-80'} ease-in-out duration-150 transition-all bg-white dark:bg-hexo-black-gray min-h-screen hidden lg:block z-20`}>
+  return <div className={`sideLeft relative ${isCollapsed ? 'w-0' : 'w-80'} duration-150 transition-all bg-white dark:bg-hexo-black-gray min-h-screen hidden lg:block z-20`}>
         {/* 折叠按钮 */}
         {CONFIG.SIDEBAR_COLLAPSE_BUTTON && <div className={`${isCollapsed ? '' : 'ml-80'} hidden lg:block sticky top-0 mx-2 cursor-pointer hover:scale-110 duration-150 px-3 py-2`} onClick={toggleOpen}>
             {isCollapsed ? <i className="fa-solid fa-indent text-xl"></i> : <i className='fas fa-bars text-xl'></i>}
@@ -80,6 +81,10 @@ function AsideLeft(props) {
             <section className='flex flex-col dark:text-gray-300'>
                 <div className='w-12 my-4' />
                 <Announcement post={notice} />
+            </section>
+
+            <section>
+                 <AdSlot type='in-article'/>
             </section>
 
             {router.asPath !== '/tag' && <section className='flex flex-col'>

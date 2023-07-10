@@ -5,6 +5,7 @@ import ShareBar from '@/components/ShareBar'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import ArticleAround from './ArticleAround'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  *
@@ -78,6 +79,8 @@ export default function ArticleDetail(props) {
             </div>
 
           </section>
+
+          <AdSlot type='in-article'/>
 
         </header>
 
