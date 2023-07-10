@@ -199,15 +199,6 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const drawerRight = useRef(null)
 
-  if (!post) {
-    return <LayoutBase
-            {...props}
-            showTag={false}
-            showCategory={false}
-            headerSlot={<HeaderArticle {...props} />}
-        ></LayoutBase>
-  }
-
   const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
 
   const floatSlot = <>

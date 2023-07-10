@@ -33,10 +33,7 @@ export const ArticleInfo = (props) => {
               <span className="block">&nbsp;/&nbsp;</span>
             </div>
             <div className="mr-2 mb-4 md:ml-0">
-              {formatDate(
-                post?.publishTime || post?.createdTime,
-                BLOG.LANG
-              )}
+              {post?.publishTime}
             </div>
             {post.tags && (
               <div className="flex flex-nowrap max-w-full overflow-x-auto article-tags">

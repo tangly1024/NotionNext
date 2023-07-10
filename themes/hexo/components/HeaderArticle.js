@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import { useGlobal } from '@/lib/global'
-import formatDate from '@/lib/formatDate'
 import BLOG from '@/blog.config'
 import NotionIcon from '@/components/NotionIcon'
 
@@ -12,11 +11,6 @@ export default function HeaderArticle({ post, siteInfo }) {
     return <></>
   }
   const headerImage = post?.pageCover ? `url("${post.pageCover}")` : `url("${siteInfo?.pageCover}")`
-
-  const date = formatDate(
-    post?.publishTime,
-    locale.LOCALE
-  )
 
   return (
     <div
@@ -53,7 +47,7 @@ export default function HeaderArticle({ post, siteInfo }) {
                     passHref
                     className="pl-1 mr-2 cursor-pointer hover:underline">
 
-                    {locale.COMMON.POST_TIME}:{date}
+                    {locale.COMMON.POST_TIME}:{post?.publishTime}
 
                   </Link>
                 </>

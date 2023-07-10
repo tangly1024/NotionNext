@@ -2,7 +2,6 @@ import TagItemMini from './TagItemMini'
 import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
-import formatDate from '@/lib/formatDate'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import ArticleAround from './ArticleAround'
@@ -19,7 +18,6 @@ export default function ArticleDetail(props) {
   if (!post) {
     return <></>
   }
-  const date = formatDate(post?.publishTime, locale.LOCALE)
   return (
     <div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
       {post?.type && !post?.type !== 'Page' && post?.pageCover && (
@@ -59,7 +57,7 @@ export default function ArticleDetail(props) {
                   passHref
                   className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
 
-                  {date}
+                  {post?.publishTime}
 
                 </Link>
                 <span className='mr-2'>|</span>
