@@ -66,16 +66,17 @@ const LayoutBase = (props) => {
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
-                    <div style={{ width: '32rem' }} className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
-                        <div className='py-14 px-6 sticky top-0 overflow-y-scroll h-screen'>
+                    <div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
+                        <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
                             {/* 所有文章列表 */}
                             <NavPostList filteredPostGroups={filteredPostGroups} />
 
-                            <div className='mt-2'>
-                                <Footer {...props}/>
-                            </div>
+                        </div>
+
+                        <div className='w-72 fixed left-0 bottom-0 z-20 bg-white'>
+                            <Footer {...props}/>
                         </div>
                     </div>
 

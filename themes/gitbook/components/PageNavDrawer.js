@@ -16,7 +16,7 @@ const PageNavDrawer = (props) => {
   }
 
   return <>
-        <div id='gitbook-left-float' className='fixed top-0 left-0 z-40'>
+        <div id='gitbook-left-float' className='fixed top-0 left-0 z-40 md:hidden'>
             {/* 侧边菜单 */}
             <div
                 className={(pageNavVisible ? 'animate__slideInLeft ' : '-ml-80 animate__slideOutLeft') +
