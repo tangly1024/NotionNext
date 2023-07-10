@@ -60,14 +60,6 @@ const LayoutBase = (props) => {
     }
   }, [isCollapsed])
 
-  // 增加一个状态以触发 Transition 组件的动画
-  const [showTransition, setShowTransition] = useState(true)
-  useEffect(() => {
-    // 当 location 或 children 发生变化时，触发动画
-    setShowTransition(false)
-    setTimeout(() => setShowTransition(true), 5)
-  }, [onLoading])
-
   if (isBrowser()) {
     loadExternalResource('/css/theme-fukasawa.css', 'css')
   }
@@ -87,7 +79,7 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
 
                             <Transition
-                                show={showTransition}
+                                show={!onLoading}
                                 appear={true}
                                 className="w-full"
                                 enter="transition ease-in-out duration-700 transform order-first"
