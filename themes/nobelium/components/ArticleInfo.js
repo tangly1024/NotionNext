@@ -1,5 +1,4 @@
 
-import formatDate from '@/lib/formatDate'
 import Image from 'next/image'
 import BLOG from '@/blog.config'
 import TagItem from './TagItem'
