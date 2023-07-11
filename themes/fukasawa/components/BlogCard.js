@@ -55,7 +55,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                         {post.category && <Link
                             href={`/category/${post.category}`}
                             passHref
-                            className="cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform"
+                            className="cursor-pointer dark:text-gray-300 font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform"
                         >
                             <i className="mr-1 far fa-folder" />
                             {post.category}
