@@ -147,7 +147,7 @@ const LayoutSearch = props => {
     }, 100)
   }, [router.events])
 
-  return <LayoutPostList {...props} slotTop={<SearchNavBar {...props} />} />
+  return <LayoutPostList {...props} topSlot={<SearchNavBar {...props} />} />
 }
 
 /**

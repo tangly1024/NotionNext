@@ -7,11 +7,13 @@ import Tags from './Tags'
  * @returns
  */
 export default function SearchNavBar(props) {
-  return (<>
-    <div className='pb-12'>
-        <SearchInput {...props} />
-    </div>
+  return (
+        <div className='max-w-7xl w-full mx-auto'>
+            <div className='py-12'>
+                <SearchInput {...props} />
+            </div>
 
-    <Tags {...props}/>
-    </>)
+            <Tags {...props} />
+        </div>
+  )
 }
