@@ -12,7 +12,6 @@ export default function SearchNavBar(props) {
             <div className='py-12'>
                 <SearchInput {...props} />
             </div>
-
             <Tags {...props} />
         </div>
   )

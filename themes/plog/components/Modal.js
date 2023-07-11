@@ -52,7 +52,7 @@ export default function Modal(props) {
 
   return (
         <Transition.Root show={showModal} as={Fragment}>
-            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={handleClose}>
+            <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={handleClose}>
                 {/* 遮罩 */}
                 <Transition.Child
                     as={Fragment}
@@ -66,7 +66,7 @@ export default function Modal(props) {
                     <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className="fixed inset-0 glassmorphism transition-opacity" />
                 </Transition.Child>
 
-                <div className="fixed inset-0 z-10 overflow-y-auto">
+                <div className="fixed inset-0 z-30 overflow-y-auto">
                     <div className="flex min-h-full justify-center p-4 text-center items-center">
                         <Transition.Child
                             as={Fragment}
