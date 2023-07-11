@@ -4,6 +4,7 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import BlogPost from './BlogPost'
+import { useEffect, useRef } from 'react'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
@@ -16,12 +17,33 @@ export const BlogListPage = props => {
   const showNext = page < totalPage
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
+  const blogPostRefs = useRef([])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.toggle('visible')
+        }
+      })
+    }, {
+      threshold: 0.1 // 调整阈值以达到最佳效果
+    })
+
+    blogPostRefs.current.forEach(ref => {
+      observer.observe(ref)
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
   return (
       <div className="w-full">
 
             <div id="posts-wrapper" className='grid lg:grid-cols-3 grid-cols-1 md:grid-cols-2'>
-                {posts?.map(post => (
-                   <BlogPost key={post.id} post={post} {...props}/>
+                {posts?.map((post, index) => (
+                   <BlogPost index={index} key={post.id} className="blog-post" post={post} {...props} ref={el => blogPostRefs.current.push(el)}/>
                 ))}
             </div>
 

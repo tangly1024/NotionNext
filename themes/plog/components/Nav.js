@@ -8,9 +8,9 @@ import { MenuItemDrop } from './MenuItemDrop'
 import Collapse from '@/components/Collapse'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
-const Nav = props => {
+const Header = props => {
   const { navBarTitle, fullWidth, siteInfo } = props
-  return <div className='md:hidden fixed top-0 w-full'>
+  return <div className='md:hidden fixed top-0 w-full z-20'>
         <div id="sticky-nav"
             className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8  glassmorphism ${!fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
                 }`} >
@@ -90,4 +90,4 @@ const NavBar = props => {
   )
 }
 
-export default Nav
+export default Header

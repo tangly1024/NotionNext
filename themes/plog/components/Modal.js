@@ -90,11 +90,11 @@ export default function Modal(props) {
                                 {!loading && (<>
                                     <div className='absolute bottom-0 left-0 m-4 z-20'>
                                         <div className='flex'>
-                                            <h2 style={{ textShadow: '0.1em 0.1em 0.2em black' }} className='text-5xl text-white mb-4 px-2 py-1 rounded-lg'>{modalContent?.title}</h2>
+                                            <h2 style={{ textShadow: '0.1em 0.1em 0.2em black' }} className='text-2xl md:text-5xl text-white mb-4 px-2 py-1 rounded-lg'>{modalContent?.title}</h2>
                                         </div>
 
                                         <Link href={`${BLOG.SUB_PATH}/${modalContent.slug}`}>
-                                            <div style={{ textShadow: '0.1em 0.1em 0.2em black' }} className={'cursor-pointer text-gray-50 rounded-lg p-2'}>
+                                            <div style={{ textShadow: '0.1em 0.1em 0.2em black' }} className={'line-clamp-3 md:line-clamp-none overflow-hidden cursor-pointer text-gray-50 rounded-lg m-2'}>
                                                 {modalContent?.summary}
                                             </div>
                                         </Link>

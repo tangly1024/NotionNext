@@ -1,7 +1,7 @@
 import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import Nav from './components/Nav'
+import Header from './components/Nav'
 import { useGlobal } from '@/lib/global'
 
 import BLOG from '@/blog.config'
@@ -65,7 +65,7 @@ const LayoutBase = props => {
             <CommonHead meta={meta} />
 
             {/* 移动端顶部导航栏 */}
-            <Nav {...props} />
+            <Header {...props} />
 
             {/* 主区 */}
             <main id='out-wrapper' className={'relative m-auto flex-grow w-full transition-all pb-16'}>
@@ -179,7 +179,7 @@ const LayoutSlug = props => {
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
-            {!lock && <div id="article-wrapper" className="px-2 max-w-6xl mx-auto">
+            {!lock && <div id="article-wrapper" className="px-2 my-16 max-w-6xl mx-auto">
                 <>
                     <ArticleInfo post={post} />
                     <NotionPage post={post} />

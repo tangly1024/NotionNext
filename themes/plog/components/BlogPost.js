@@ -1,6 +1,7 @@
 import { compressImage } from '@/lib/notion/mapImage'
 import Link from 'next/link'
 import { usePlogGlobal } from '..'
+import { isMobile } from '@/lib/utils'
 
 /**
  * 博客照片卡牌
@@ -8,16 +9,24 @@ import { usePlogGlobal } from '..'
  * @returns
  */
 const BlogPost = (props) => {
-  const { post, siteInfo } = props
+  const { post, index, siteInfo } = props
   const pageThumbnail = compressImage(post?.pageCoverThumbnail || siteInfo?.pageCover, 800, 80)
   const { setModalContent, setShowModal } = usePlogGlobal()
   const handleClick = () => {
     setShowModal(true)
     setModalContent(post)
   }
+
+  // 实现动画 一个接一个出现
+  let delay = index * 100
+  if (isMobile()) {
+    delay = 0
+  }
+
   return (
         <article
             onClick={handleClick}
+            data-aos-delay={`${delay}`}
             data-aos="fade-up"
             data-aos-duration="500"
             data-aos-once="true"
