@@ -179,9 +179,6 @@
   color: var(--select-color-2) !important;
 }
 
-.notion-simple-table {
-  @apply whitespace-nowrap overflow-x-auto block
-}
 
 .notion-app {
   position: relative;
@@ -1939,7 +1936,7 @@ svg + .notion-page-title-text {
 }
 
 .notion-simple-table  {
- width: 100% !important;
+  @apply whitespace-nowrap overflow-x-auto block w-full border-0 !important;
 }
 
 .notion-asset-wrapper-pdf > div {
@@ -2045,8 +2042,8 @@ code.language-mermaid {
 
 /* 表格头 */
 .notion-simple-table tr:first-child td{
-  background-color: #f5f6f8 !important;
-  @apply text-center font-bold !important;
+  background-color: #f5f6f8;
+  @apply text-center font-bold dark:bg-gray-800 !important;
 
 }
 
