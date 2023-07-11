@@ -110,7 +110,7 @@ const LayoutPostList = props => {
   let filteredBlogPosts = []
   if (filterKey && posts) {
     filteredBlogPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
       const searchContent = post.title + post.summary + tagContent
       return searchContent.toLowerCase().includes(filterKey.toLowerCase())
     })

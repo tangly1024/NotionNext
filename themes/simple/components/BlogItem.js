@@ -32,7 +32,7 @@ export const BlogItem = props => {
 
             <div>
                 {post.category && <Link href={`/category/${post.category}`} className='p-1'> <span className="hover:text-red-400 transition-all duration-200"><i className="fa-regular fa-folder mr-0.5"/>{post.category}</span></Link>}
-                {post.tags && post.tags?.length > 0 && post.tags.map(t => <Link key={t} href={`/tag/${t}`} className=' hover:text-red-400 transition-all duration-200'><span > /{t}</span></Link>)}
+                {post?.tags && post?.tags?.length > 0 && post?.tags.map(t => <Link key={t} href={`/tag/${t}`} className=' hover:text-red-400 transition-all duration-200'><span > /{t}</span></Link>)}
             </div>
         </div>
 

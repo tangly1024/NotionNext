@@ -21,7 +21,7 @@ export const ArticleInfo = (props) => {
                         <span> <i className="fa-regular fa-user"></i> <a href={CONFIG.AUTHOR_LINK}>{BLOG.AUTHOR}</a></span>
                         <span> - <i className="fa-regular fa-clock"></i> {post?.publishTime}</span>
                         {post?.category && <span> - <i className="fa-regular fa-folder"></i> <a href={`/category/${post?.category}`} className="hover:text-red-400 transition-all duration-200">{post?.category}</a></span>}
-                        {post?.tags && post.tags?.length > 0 && post?.tags.map(t => <span key={t}> / <Link href={`/tag/${t}`}><span className=' hover:text-red-400 transition-all duration-200'>{t}</span></Link></span>)}
+                        {post?.tags && post?.tags?.length > 0 && post?.tags.map(t => <span key={t}> / <Link href={`/tag/${t}`}><span className=' hover:text-red-400 transition-all duration-200'>{t}</span></Link></span>)}
                     </div>
                 </>)}
 

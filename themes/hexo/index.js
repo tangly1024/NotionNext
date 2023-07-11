@@ -227,7 +227,7 @@ const LayoutSlug = props => {
 
                         {/* 分享 */}
                         <ShareBar post={post} />
-                        {post.type === 'Post' && <>
+                        {post?.type === 'Post' && <>
                             <ArticleCopyright {...props} />
                             <ArticleRecommend {...props} />
                             <ArticleAdjacent {...props} />
