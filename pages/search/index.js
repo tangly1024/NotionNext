@@ -23,7 +23,7 @@ const Search = props => {
   // 静态过滤
   if (keyword) {
     filteredPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
       const categoryContent = post.category ? post.category.join(' ') : ''
       const searchContent =
                 post.title + post.summary + tagContent + categoryContent
