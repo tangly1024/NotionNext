@@ -6,8 +6,10 @@ const Logo = props => {
   const { siteInfo } = props
   return (
     <Link href='/' passHref legacyBehavior>
-      <div className='flex flex-col justify-center items-center cursor-pointer space-y-3'>
-        <div className='font-medium text-lg p-1.5 rounded dark:border-white menu-link transform duration-200'> {siteInfo?.title || BLOG.TITLE}</div>
+      <div className='flex justify-center items-center cursor-pointer'>
+        {/*  eslint-disable-next-line @next/next/no-img-element */}
+        <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} className='mr-2 hidden md:block' />
+        <div className='font-medium text-lg my-auto rounded dark:border-white transform duration-200'> {siteInfo?.title || BLOG.TITLE}</div>
       </div>
     </Link>
   )

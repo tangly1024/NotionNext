@@ -4,7 +4,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import NotionIcon from '@/components/NotionIcon'
 
-export default function HeaderArticle({ post, siteInfo }) {
+export default function PostHeader({ post, siteInfo }) {
   const { locale } = useGlobal()
 
   if (!post) {

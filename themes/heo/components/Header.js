@@ -1,82 +1,82 @@
-// import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import Typed from 'typed.js'
-import CONFIG from '../config'
-import NavButtonGroup from './NavButtonGroup'
-import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import Logo from './Logo'
+import SearchDrawer from './SearchDrawer'
 
-let wrapperTop = 0
+import { MenuListTop } from './MenuListTop'
+import throttle from 'lodash.throttle'
+import SideBar from './SideBar'
+import SideBarDrawer from './SideBarDrawer'
 
 /**
- * 顶部全屏大图
+ * 顶部导航
+ * @param {*} param0
  * @returns
  */
-const Hero = props => {
-  const [typed, changeType] = useState()
-  const { siteInfo } = props
-  const { locale } = useGlobal()
-  const scrollToWrapper = () => {
-    window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+const Header = props => {
+  const searchDrawer = useRef()
+
+  const [isOpen, changeShow] = useState(false)
+  const [headerBgShow, setHeaderBgShow] = useState(false)
+
+  const toggleMenuOpen = () => {
+    changeShow(!isOpen)
   }
+
+  const toggleSideBarClose = () => {
+    changeShow(false)
+  }
+
+  // 监听滚动
   useEffect(() => {
-    updateHeaderHeight()
-
-    if (!typed && window && document.getElementById('typed')) {
-      changeType(
-        new Typed('#typed', {
-          strings: BLOG.GREETING_WORDS.split(','),
-          typeSpeed: 200,
-          backSpeed: 100,
-          backDelay: 400,
-          showCursor: true,
-          smartBackspace: true
-        })
-      )
-    }
-
-    window.addEventListener('resize', updateHeaderHeight)
+    scrollTrigger()
+    window.addEventListener('scroll', scrollTrigger)
     return () => {
-      window.removeEventListener('resize', updateHeaderHeight)
+      window.removeEventListener('scroll', scrollTrigger)
     }
-  })
+  }, [])
 
-  function updateHeaderHeight() {
-    requestAnimationFrame(() => {
-      const wrapperElement = document.getElementById('wrapper')
-      wrapperTop = wrapperElement?.offsetTop
-    })
-  }
+  const throttleMs = 200
 
-  return (
-        <header
-            id="header" style={{ zIndex: 1 }}
-            className="w-full h-screen relative bg-black"
-        >
+  /**
+     * 根据滚动条，切换导航栏样式
+     */
+  const scrollTrigger = useCallback(throttle(() => {
+    const scrollS = window.scrollY
+    const header = document.querySelector('#header')
 
-            <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
-                {/* 站点标题 */}
-                <div className='font-black text-4xl md:text-5xl shadow-text'>{siteInfo?.title}</div>
-                {/* 站点欢迎语 */}
-                <div className='mt-2 h-12 items-center text-center font-medium shadow-text text-lg'>
-                    <span id='typed' />
+    // 导航栏设置 白色背景
+    if (header && scrollS > 60) {
+      setHeaderBgShow(true)
+    } else {
+      setHeaderBgShow(false)
+    }
+  }, throttleMs))
+
+  return (<div id='header' className='z-40'>
+        <SearchDrawer cRef={searchDrawer} />
+
+        {/* 导航栏 */}
+        <div id='sticky-nav' className={`${headerBgShow ? 'bg-white border-b' : 'bg-none'} top-0 duration-300 transition-all fixed  text-black w-full z-20 transform`}>
+            <div className='w-full max-w-7xl mx-auto flex justify-between items-center py-2 px-5'>
+                <div className='flex'>
+                    <Logo {...props} />
                 </div>
 
-                {/* 首页导航大按钮 */}
-                {CONFIG.HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
-
-                {/* 滚动按钮 */}
-                <div onClick={scrollToWrapper} className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white">
-                    <div className="opacity-70 animate-bounce text-xs">{locale.COMMON.START_READING}</div>
-                    <i className='opacity-70 animate-bounce fas fa-angle-down' />
+                {/* 右侧功能 */}
+                <div className='mr-1 justify-end items-center '>
+                    <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
+                    <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
+                        {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo?.pageCover}')` }}
-                className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`} />
-
-        </header>
-  )
+        {/* 折叠侧边栏 */}
+        <SideBarDrawer isOpen={isOpen} onClose={toggleSideBarClose}>
+            <SideBar {...props} />
+        </SideBarDrawer>
+    </div>)
 }
 
-export default Hero
+export default Header

@@ -1,6 +1,9 @@
 import Image from 'next/image'
 
-export default function HeaderArticle({ post, siteInfo }) {
+/**
+ * 文章背景图
+ */
+export default function PostHeader({ post, siteInfo }) {
   const headerImage = post?.pageCoverThumbnail ? post?.pageCoverThumbnail : siteInfo?.pageCover
   const title = post?.title
   return (

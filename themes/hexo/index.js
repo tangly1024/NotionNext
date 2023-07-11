@@ -10,7 +10,7 @@ import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
-import Hero from './components/Header'
+import Hero from './components/Hero'
 import { useRouter } from 'next/router'
 import Mark from 'mark.js'
 import Card from './components/Card'
@@ -18,7 +18,7 @@ import RightFloatArea from './components/RightFloatArea'
 import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
-import HeaderArticle from './components/HeaderArticle'
+import PostHeader from './components/PostHeader'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
@@ -213,7 +213,7 @@ const LayoutSlug = props => {
     </>
 
   return (
-        <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
+        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 

@@ -4,21 +4,20 @@ import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
-import TopNav from './components/TopNav'
+import Header from './components/Header'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
-import Hero from './components/Header'
+import Hero from './components/Hero'
 import { useRouter } from 'next/router'
 import Mark from 'mark.js'
 import Card from './components/Card'
-import RightFloatArea from './components/RightFloatArea'
 import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
-import HeaderArticle from './components/HeaderArticle'
+import PostHeader from './components/PostHeader'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
@@ -30,7 +29,7 @@ import ArticleRecommend from './components/ArticleRecommend'
 import ShareBar from '@/components/ShareBar'
 import TagItemMini from './components/TagItemMini'
 import Link from 'next/link'
-import SlotBar from './components/SlotBar'
+import CategoryBar from './components/CategoryBar'
 import { Transition } from '@headlessui/react'
 
 /**
@@ -40,7 +39,7 @@ import { Transition } from '@headlessui/react'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, floatSlot, slotTop, meta, siteInfo, className } = props
+  const { children, headerSlot, slotTop, meta, siteInfo, className } = props
   const { onLoading } = useGlobal()
 
   // 加载主题样式
@@ -49,14 +48,14 @@ const LayoutBase = props => {
   }
 
   return (
-        <div id='theme-hexo'>
+        <div id='theme-heo' className='bg-[#f7f9fe]'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
 
             {/* 顶部导航 */}
-            <TopNav {...props} />
+            <Header {...props} />
 
-            {/* 顶部嵌入 */}
+            {/* 顶部嵌入 首页放hero，文章页放大图 */}
             <Transition
                 show={!onLoading}
                 appear={true}
@@ -72,9 +71,9 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
+            <main id="wrapper-outer" className={'w-full max-w-7xl mx-auto min-h-screen relative px-5'}>
                 <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-                    <div className={`${className || ''} w-full max-w-4xl h-full `}>
+                    <div className={`${className || ''} w-full  h-full`}>
 
                         <Transition
                             show={!onLoading}
@@ -99,9 +98,6 @@ const LayoutBase = props => {
                 </div>
             </main>
 
-            {/* 悬浮菜单 */}
-            <RightFloatArea floatSlot={floatSlot} />
-
             {/* 页脚 */}
             <Footer title={siteInfo?.title || BLOG.TITLE} />
         </div>
@@ -116,7 +112,7 @@ const LayoutBase = props => {
  */
 const LayoutIndex = (props) => {
   const headerSlot = CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />
-  return <LayoutPostList {...props} headerSlot={headerSlot} className='pt-8' />
+  return <LayoutPostList {...props} headerSlot={headerSlot}/>
 }
 
 /**
@@ -125,8 +121,8 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} className='pt-8'>
-        <SlotBar {...props} />
+  return <LayoutBase {...props}>
+        <CategoryBar {...props} />
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </LayoutBase>
 }
@@ -213,7 +209,7 @@ const LayoutSlug = props => {
     </>
 
   return (
-        <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
+        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
