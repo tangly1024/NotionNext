@@ -5,6 +5,7 @@ import CONFIG from '../config'
 import { SvgIcon } from './SvgIcon'
 import { MenuItemDrop } from './MenuItemDrop'
 import FullScreenButton from '@/components/FullScreenButton'
+import InformationButton from './InformationButton'
 
 /**
  * 桌面端底部导航
@@ -15,7 +16,7 @@ const BottomNav = props => {
   const { navBarTitle, siteInfo } = props
 
   return <>
-        <div id="bottom-nav" style={{ backgroundColor: '#00000063' }} className={'px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'}>
+        <div id="bottom-nav" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className={'z-20 px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'}>
             <div className="flex items-center">
                 <Link href="/" aria-label={BLOG.title}>
                     <div className="h-6 w-6">
@@ -28,17 +29,20 @@ const BottomNav = props => {
                 </Link>
                 {navBarTitle
                   ? (
-                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {navBarTitle}
-                        </p>
+                        <Link href="/" aria-label={BLOG.title}>
+                            <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+                                {navBarTitle}
+                            </p>
+                        </Link>
                     )
                   : (
                         <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {siteInfo?.title}
+                            <Link href="/" aria-label={BLOG.title}> {siteInfo?.title}</Link>
                             {' '}<span className="font-normal text-sm text-gray-00 dark:text-gray-400">{siteInfo?.description}</span>
                         </p>
                     )}
             </div>
+            {/* 右下角菜单栏 */}
             <MenuList {...props} />
         </div>
     </>
@@ -78,7 +82,10 @@ const MenuList = props => {
             <ul className="hidden md:flex flex-row">
                 {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
                 <li className='my-auto px-2'>
-                    <FullScreenButton/>
+                    <FullScreenButton />
+                </li>
+                <li className='my-auto px-2'>
+                    <InformationButton/>
                 </li>
             </ul>
         </div>

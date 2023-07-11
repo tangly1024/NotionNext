@@ -68,7 +68,7 @@ const LayoutBase = props => {
             <Nav {...props} />
 
             {/* 主区 */}
-            <main id='out-wrapper' className={'relative m-auto flex-grow w-full transition-all pb-12'}>
+            <main id='out-wrapper' className={'relative m-auto flex-grow w-full transition-all pb-16'}>
 
                 <Transition
                     show={!onLoading}
@@ -179,7 +179,7 @@ const LayoutSlug = props => {
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
-            {!lock && <div id="article-wrapper" className="px-2">
+            {!lock && <div id="article-wrapper" className="px-2 max-w-6xl mx-auto">
                 <>
                     <ArticleInfo post={post} />
                     <NotionPage post={post} />
