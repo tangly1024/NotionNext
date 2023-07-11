@@ -15,8 +15,9 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
   return (
         <div
             data-aos="fade-up"
-            data-aos-duration="500"
+            data-aos-duration="600"
             data-aos-once="true"
+            data-aos-anchor-placement="top-bottom"
             style={{ maxHeight: '60rem' }}
             className="w-full lg:max-w-sm p-3 shadow mb-4 mx-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg duration-200"
         >
