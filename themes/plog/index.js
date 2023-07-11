@@ -1,6 +1,6 @@
 import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
-import React, { useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import Nav from './components/Nav'
 import { useGlobal } from '@/lib/global'
 
@@ -24,6 +24,11 @@ import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import BottomNav from './components/BottomNav'
 import { saveDarkModeToCookies } from '@/themes/theme'
+import Modal from './components/Modal'
+
+// 主题全局状态
+const ThemeGlobalPlog = createContext()
+export const usePlogGlobal = () => useContext(ThemeGlobalPlog)
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -34,6 +39,8 @@ import { saveDarkModeToCookies } from '@/themes/theme'
 const LayoutBase = props => {
   const { children, meta, topSlot } = props
   const { onLoading, updateDarkMode } = useGlobal()
+  const [showModal, setShowModal] = useState(false)
+  const [modalContent, setModalContent] = useState(null)
 
   // 用户手动设置主题
   const setDarkMode = () => {
@@ -52,6 +59,7 @@ const LayoutBase = props => {
   }, [])
 
   return (
+    <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
         <div id='theme-plog' className='plog relative dark:text-gray-300 w-full bg-black min-h-screen'>
             {/* SEO相关 */}
             <CommonHead meta={meta} />
@@ -60,7 +68,7 @@ const LayoutBase = props => {
             <Nav {...props} />
 
             {/* 主区 */}
-            <main id='out-wrapper' className={'relative m-auto flex-grow w-full transition-all '}>
+            <main id='out-wrapper' className={'relative m-auto flex-grow w-full transition-all pb-12'}>
 
                 <Transition
                     show={!onLoading}
@@ -80,9 +88,13 @@ const LayoutBase = props => {
 
             </main>
 
+            {/* 弹出框 */}
+            <Modal {...props}/>
+
             {/* 桌面端底部导航栏 */}
             <BottomNav {...props} />
         </div>
+        </ThemeGlobalPlog.Provider >
   )
 }
 

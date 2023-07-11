@@ -1950,14 +1950,6 @@ svg + .notion-page-title-text {
     @apply bg-blue-500 text-gray-50 !important;
 }
 
-.dark img{
-    @apply opacity-80
-}
-
-.dark #live2d {
-    @apply opacity-80
-}
-
 /* https://github.com/kchen0x */
 .notion-quote {
   display: block;

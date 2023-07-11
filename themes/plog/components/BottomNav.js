@@ -15,7 +15,7 @@ const BottomNav = props => {
   const { navBarTitle, siteInfo } = props
 
   return <>
-        <div id="bottom-nav" className={'px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'}>
+        <div id="bottom-nav" style={{ backgroundColor: '#00000063' }} className={'px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'}>
             <div className="flex items-center">
                 <Link href="/" aria-label={BLOG.title}>
                     <div className="h-6 w-6">
