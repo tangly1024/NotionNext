@@ -15,6 +15,7 @@ import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 
 /**
+ * 代码美化相关
  * @author https://github.com/txs/
  * @returns
  */
@@ -31,9 +32,57 @@ const PrismMac = () => {
       }
       renderPrismMac()
       renderMermaid()
+      renderCollapseCode()
     })
   }, [router])
   return <></>
+}
+
+/**
+ * 将代码块转为可折叠对象
+ */
+const renderCollapseCode = () => {
+  if (!JSON.parse(BLOG.CODE_COLLAPSE)) {
+    return
+  }
+  const codeBlocks = document.querySelectorAll('.code-toolbar')
+  for (const codeBlock of codeBlocks) {
+    // 判断当前元素是否被包裹
+    if (codeBlock.closest('.collapse-wrapper')) {
+      continue // 如果被包裹了，跳过当前循环
+    }
+
+    const code = codeBlock.querySelector('code')
+    const language = code.getAttribute('class').match(/language-(\w+)/)[1]
+
+    const collapseWrapper = document.createElement('div')
+    collapseWrapper.className = 'collapse-wrapper w-full py-2'
+    const panelWrapper = document.createElement('div')
+    panelWrapper.className = 'border rounded-md border-indigo-500'
+
+    const header = document.createElement('div')
+    header.className = 'flex justify-between items-center px-4 py-2 cursor-pointer select-none'
+    header.innerHTML = `<h3 class="text-lg font-medium">${language}</h3><svg class="transition-all duration-200 w-5 h-5 transform rotate-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd"/></svg>`
+
+    const panel = document.createElement('div')
+    panel.className = 'invisible h-0 transition-transform duration-200 border-t border-gray-300'
+
+    panelWrapper.appendChild(header)
+    panelWrapper.appendChild(panel)
+    collapseWrapper.appendChild(panelWrapper)
+
+    codeBlock.parentNode.insertBefore(collapseWrapper, codeBlock)
+    panel.appendChild(codeBlock)
+
+    header.addEventListener('click', () => {
+      panel.classList.toggle('invisible')
+      panel.classList.toggle('h-0')
+      panel.classList.toggle('h-auto')
+      header.querySelector('svg').classList.toggle('rotate-180')
+      panelWrapper.classList.toggle('border-gray-300')
+      panelWrapper.classList.toggle('border-indigo-500')
+    })
+  }
 }
 
 /**
