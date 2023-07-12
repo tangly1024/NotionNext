@@ -124,6 +124,11 @@ const BLOG = {
   POSTS_PER_PAGE: 12, // post counts per page
   POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
+  ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID || null, // 在这里查看 https://dashboard.algolia.com/account/api-keys/
+  ALGOLIA_APP_KEY: process.env.ALGOLIA_APP_KEY || null, // 管理后台的KEY，不会暴露给前端，在这里查看 https://dashboard.algolia.com/account/api-keys/
+  ALGOLIA_APP_SEARCH_KEY: process.env.ALGOLIA_APP_SEARCH_KEY || null, // 客户端搜索用的KEY
+  ALGOLIA_INDEX: process.env.ALGOLIA_INDEX || null, // 在Algolia中创建一个index用作数据库
+
   PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
   PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
 

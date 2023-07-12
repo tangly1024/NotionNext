@@ -9,6 +9,7 @@ import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { isBrowser } from '@/lib/utils'
+import { uploadDataToAlgolia } from '@/lib/algolia'
 
 /**
  * 根据notion的slug访问页面
@@ -126,6 +127,10 @@ export async function getStaticProps({ params: { slug } }) {
   // 文章内容加载
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
+  }
+
+  if (BLOG.ALGOLIA_APP_ID && BLOG.ALGOLIA_APP_KEY) {
+    uploadDataToAlgolia(props?.post)
   }
 
   // 推荐关联文章处理
