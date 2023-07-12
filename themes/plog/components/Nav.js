@@ -9,37 +9,30 @@ import Collapse from '@/components/Collapse'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
 const Header = props => {
-  const { navBarTitle, fullWidth, siteInfo } = props
+  const { fullWidth, siteInfo } = props
+
+  const title = siteInfo?.title
+
   return <div className='md:hidden fixed top-0 w-full z-20'>
         <div id="sticky-nav"
             className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8  glassmorphism ${!fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
                 }`} >
-            <div className="flex items-center">
-                <Link href="/" aria-label={BLOG.title}>
+                <Link href="/" aria-label={BLOG.title} className="flex items-center">
+                    <>
+                        <div className="h-6 w-6">
+                            {/* <SvgIcon/> */}
+                            {CONFIG.NAV_NOTION_ICON
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                              ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
+                              : <SvgIcon />}
 
-                    <div className="h-6 w-6">
-                        {/* <SvgIcon/> */}
-                        {CONFIG.NAV_NOTION_ICON
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                          ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
-                          : <SvgIcon />}
-
-                    </div>
-
+                        </div>
+                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+                            {title}  {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
+                        </p>
+                    </>
                 </Link>
-                {navBarTitle
-                  ? (
-                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {navBarTitle}
-                        </p>
-                    )
-                  : (
-                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {siteInfo?.title}
-                            {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
-                        </p>
-                    )}
-            </div>
+
             <NavBar {...props} />
         </div>
     </div>
@@ -82,7 +75,7 @@ const NavBar = props => {
             <div className='md:hidden'><i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 block md:hidden'></i>
                 <Collapse collapseRef={collapseRef} isOpen={isOpen} type='vertical' className='fixed top-16 right-6'>
                     <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
-                        {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
+                        {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />)}
                     </div>
                 </Collapse>
             </div>
