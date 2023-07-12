@@ -5,5 +5,5 @@
  * @returns
  */
 export default function CategoryBar(props) {
-  return <div id='category-list' className="h-24 w-full bg-pink-100"></div>
+  return <div id='category-list' className="h-20 w-full bg-pink-100"></div>
 }

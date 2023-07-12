@@ -23,20 +23,20 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 // data-aos-anchor-placement="top-bottom"
                 id='blog-post-card'
                 key={post.id}
-                className={`w-full justify-between flex flex-col-reverse lg:h-96  ${CONFIG.POST_LIST_IMG_CROSSOVER && index % 2 === 1 ? '' : ''}
+                className={`w-full justify-between flex flex-col lg:h-96  ${CONFIG.POST_LIST_IMG_CROSSOVER && index % 2 === 1 ? '' : ''}
                     overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
-
-                {/* 文字内容 */}
-                <BlogPostCardInfo index={index} post={post} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary} />
 
                 {/* 图片封面 */}
                 {showPageCover && (
-                    <div className="md:w-5/12 lg:w-full overflow-hidden">
+                    <div className="flex-1 md:w-5/12 lg:w-full overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                             <div className='h-56 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
                         </Link>
                     </div>
                 )}
+
+                {/* 文字区块 */}
+                <BlogPostCardInfo index={index} post={post} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary} />
 
             </div>
 

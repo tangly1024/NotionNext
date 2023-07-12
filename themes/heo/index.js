@@ -71,7 +71,7 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper-outer" className={'w-full max-w-7xl mx-auto min-h-screen relative px-5'}>
+            <main id="wrapper-outer" className={'w-full max-w-[88rem] mx-auto min-h-screen relative px-5'}>
                 <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
                     <div className={`${className || ''} w-full  h-full`}>
 
