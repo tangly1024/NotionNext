@@ -25,6 +25,7 @@ import { Footer } from './components/Footer'
 import { useGlobal } from '@/lib/global'
 import SearchInput from './components/SearchInput'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局
@@ -42,6 +43,7 @@ const LayoutBase = props => {
   return (
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
             <CommonHead meta={meta} />
+            <Style/>
 
             {CONFIG.TOP_BAR && <TopBar {...props} />}
 

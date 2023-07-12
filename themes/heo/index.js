@@ -31,6 +31,7 @@ import TagItemMini from './components/TagItemMini'
 import Link from 'next/link'
 import CategoryBar from './components/CategoryBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -51,6 +52,7 @@ const LayoutBase = props => {
         <div id='theme-heo' className='bg-[#f7f9fe]'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
+            <Style/>
 
             {/* 顶部导航 */}
             <Header {...props} />
@@ -71,7 +73,7 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper-outer" className={'w-full max-w-[88rem] mx-auto min-h-screen relative px-5'}>
+            <main id="wrapper-outer" className={'w-full max-w-[88rem] mx-auto min-h-screen relative p-5'}>
                 <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
                     <div className={`${className || ''} w-full  h-full`}>
 

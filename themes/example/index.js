@@ -26,6 +26,7 @@ import CategoryItem from './components/CategoryItem'
 import TagItem from './components/TagItem'
 import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局框架
@@ -50,6 +51,7 @@ const LayoutBase = props => {
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
             {/* 网页SEO信息 */}
             <CommonHead meta={meta} />
+            <Style/>
 
             {/* 页头 */}
             <Header {...props} />

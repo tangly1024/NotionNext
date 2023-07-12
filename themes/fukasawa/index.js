@@ -5,7 +5,7 @@ import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { isBrowser } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
 import BlogListPage from './components/BlogListPage'
 import BlogListScroll from './components/BlogListScroll'
@@ -19,6 +19,7 @@ import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import { AdSlot } from '@/components/GoogleAdsense'
+import { Style } from './style'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 const Mark = dynamic(() => import('mark.js'))
@@ -61,15 +62,12 @@ const LayoutBase = (props) => {
     }
   }, [isCollapsed])
 
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-fukasawa.css', 'css')
-  }
-
   return (
         <ThemeGlobalFukasawa.Provider value={{ isCollapsed, setIsCollapse }}>
 
             <div id='theme-fukasawa'>
                 <CommonHead meta={meta} />
+                <Style/>
 
                 <TopNav {...props} />
 

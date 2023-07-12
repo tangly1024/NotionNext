@@ -25,6 +25,7 @@ import { Transition } from '@headlessui/react'
 import BottomNav from './components/BottomNav'
 import { saveDarkModeToCookies } from '@/themes/theme'
 import Modal from './components/Modal'
+import { Style } from './style'
 
 // 主题全局状态
 const ThemeGlobalPlog = createContext()
@@ -63,6 +64,7 @@ const LayoutBase = props => {
         <div id='theme-plog' className='plog relative dark:text-gray-300 w-full bg-black min-h-screen'>
             {/* SEO相关 */}
             <CommonHead meta={meta} />
+            <Style/>
 
             {/* 移动端顶部导航栏 */}
             <Header {...props} />

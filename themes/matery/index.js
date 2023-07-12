@@ -4,7 +4,6 @@ import TopNav from './components/TopNav'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
 import Footer from './components/Footer'
 import { useEffect } from 'react'
 import RightFloatButtons from './components/RightFloatButtons'
@@ -31,6 +30,7 @@ import Card from './components/Card'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局
@@ -43,14 +43,11 @@ const LayoutBase = props => {
   const { children, headerSlot, meta, siteInfo, containerSlot, post } = props
   const { onLoading } = useGlobal()
 
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-matery.css', 'css')
-  }
-
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
             {/* SEO相关 */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
+            <Style/>
 
             {/* 顶部导航栏 */}
             <TopNav {...props} />

@@ -30,6 +30,7 @@ import TocDrawer from './components/TocDrawer'
 import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -58,6 +59,7 @@ const LayoutBase = (props) => {
   return (
         <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredPostGroups, setFilteredPostGroups, allNavPages, pageNavVisible, changePageNavVisible }}>
             <CommonHead meta={meta} />
+            <Style/>
 
             <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
                 {/* 顶部导航栏 */}

@@ -5,5 +5,15 @@
  * @returns
  */
 export default function CategoryBar(props) {
-  return <div id='category-list' className="h-20 w-full bg-pink-100"></div>
+  const { categoryOptions } = props
+  console.log(categoryOptions)
+  return <div id='category-bar' className="h-14 mb-2 w-full bg-white border flex py-2 px-4 justify-center items-center rounded-xl">
+    {categoryOptions?.map(c => {
+      return (
+            <div key={c.id}>
+                {c.name}
+            </div>
+      )
+    })}
+  </div>
 }

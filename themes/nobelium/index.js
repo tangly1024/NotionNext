@@ -27,6 +27,7 @@ import ShareBar from '@/components/ShareBar'
 import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -44,6 +45,7 @@ const LayoutBase = props => {
         <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
             {/* SEO相关 */}
             <CommonHead meta={meta} />
+            <Style/>
 
             {/* 顶部导航栏 */}
             <Nav {...props} />

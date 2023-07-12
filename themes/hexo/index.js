@@ -7,7 +7,7 @@ import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { isBrowser } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
@@ -32,6 +32,7 @@ import TagItemMini from './components/TagItemMini'
 import Link from 'next/link'
 import SlotBar from './components/SlotBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -43,16 +44,11 @@ const LayoutBase = props => {
   const { children, headerSlot, floatSlot, slotTop, meta, siteInfo, className } = props
   const { onLoading } = useGlobal()
 
-  // 加载主题样式
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-hexo.css', 'css')
-  }
-
   return (
         <div id='theme-hexo'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
-
+            <Style/>
             {/* 顶部导航 */}
             <TopNav {...props} />
 
