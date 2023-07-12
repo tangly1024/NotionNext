@@ -68,7 +68,7 @@ const LayoutBase = props => {
             <Header {...props} />
 
             {/* 主区 */}
-            <main id='out-wrapper' className={'relative m-auto flex-grow w-full transition-all pb-16'}>
+            <main id='out-wrapper' className={'relative m-auto flex-grow w-full transition-all pb-16 pt-16 md:pt-0'}>
 
                 <Transition
                     show={!onLoading}
