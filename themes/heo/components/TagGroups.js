@@ -1,4 +1,4 @@
-import TagItemMini from './TagItemMini'
+import Link from 'next/link'
 
 /**
  * 标签组
@@ -10,17 +10,22 @@ import TagItemMini from './TagItemMini'
 const TagGroups = ({ tags, currentTag }) => {
   if (!tags) return <></>
   return (
-    <div id='tags-group' className='dark:border-gray-600 space-y-2'>
-      <div className='font-light text-xs ml-2 mb-2'><i className='mr-1 fas fa-tag' />标签</div>
-      <div className='px-4'>
-      {
-        tags.map(tag => {
-          const selected = tag.name === currentTag
-          return <TagItemMini key={tag.name} tag={tag} selected={selected} />
-        })
-      }
-      </div>
-    </div>
+        <div id='tags-group' className='dark:border-gray-600 space-y-2'>
+            {
+                tags.map(tag => {
+                  return <>
+                        <Link passHref
+                            key={tag}
+                            href={`/tag/${encodeURIComponent(tag.name)}`}
+                            className={'cursor-pointer inline-block  whitespace-nowrap '}>
+                            <div className='flex items-center hover:bg-blue-600 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all'>
+                                <div className='text-lg'>{tag.name} </div>{tag.count ? <sup className='relative ml-1'>{tag.count}</sup> : <></>}
+                            </div>
+
+                        </Link></>
+                })
+            }
+        </div>
   )
 }
 

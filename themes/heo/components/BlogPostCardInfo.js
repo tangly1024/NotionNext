@@ -1,7 +1,5 @@
-import NotionPage from '@/components/NotionPage'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
-import TwikooCommentCount from '@/components/TwikooCommentCount'
 import BLOG from '@/blog.config'
 
 /**
@@ -10,74 +8,43 @@ import BLOG from '@/blog.config'
  * @returns
  */
 export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
-  return <div className={`flex flex-1 flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-60' : 'w-full'}`}>
-       <div>
-         {/* 标题 */}
-         <Link
-            href={`${BLOG.SUB_PATH}/${post.slug}`}
-            passHref
-            className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''
-                } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
+  return <div className={'flex flex-col justify-between lg:p-6 p-4 w-full'}>
 
-            <span className='menu-link '>{post.title}</span>
+        <div>
 
-        </Link>
+            {/* 分类 */}
+            {post?.category && <div className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 `}>
+                <Link passHref href={`/category/${post.category}`}
+                    className="cursor-pointer font-light text-xs menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform">
+                    {post.category}
+                </Link>
+            </div>}
 
-        {/* 分类 */}
-        { post?.category && <div
-            className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'
-                } flex-wrap dark:text-gray-500 text-gray-400 `}
-        >
+            {/* 标题 */}
             <Link
-                href={`/category/${post.category}`}
+                href={`${BLOG.SUB_PATH}/${post.slug}`}
                 passHref
-                className="cursor-pointer font-light text-sm menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform">
+                className={'line-clamp-2 replace cursor-pointer text-2xl font-extrabold leading-tight text-black dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400'}>
 
-                <i className="mr-1 far fa-folder" />
-                {post.category}
+                <span className='menu-link '>{post.title}</span>
 
             </Link>
 
-            <TwikooCommentCount className='text-sm hover:text-indigo-700 dark:hover:text-indigo-400' post={post}/>
-        </div>}
+            {/* 摘要 */}
+            {(!showPreview || showSummary) && !post.results && (
+                <p className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight">
+                    {post.summary}
+                </p>
+            )}
 
-          {/* 摘要 */}
-          {(!showPreview || showSummary) && !post.results && (
-            <p className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
-                {post.summary}
-            </p>
-          )}
-
-        {/* 搜索结果 */}
-        {post.results && (
-            <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                {post.results.map(r => (
-                    <span key={r}>{r}</span>
-                ))}
-            </p>
-        )}
-        {/* 预览 */}
-        {showPreview && (
-            <div className="overflow-ellipsis truncate">
-                <NotionPage post={post} />
-            </div>
-        )}
-
-       </div>
-
-       <div>
-         {/* 日期标签 */}
-         <div className="text-gray-400 justify-between flex">
-            {/* 日期 */}
-            <Link
-                href={`/archive#${post?.publishTime?.substr(0, 7)}`}
-                passHref
-                className="font-light menu-link cursor-pointer text-sm leading-4 mr-3">
-
-                <i className="far fa-calendar-alt mr-1" />
-                {post?.publishTime || post.lastEditedTime}
-
-            </Link>
+            {/* 搜索结果 */}
+            {post.results && (
+                <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+                    {post.results.map(r => (
+                        <span key={r}>{r}</span>
+                    ))}
+                </p>
+            )}
 
             <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
                 <div>
@@ -88,6 +55,6 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
                 </div>
             </div>
         </div>
-       </div>
-       </div>
+
+    </div>
 }

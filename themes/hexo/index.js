@@ -49,6 +49,7 @@ const LayoutBase = props => {
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
             <Style/>
+
             {/* 顶部导航 */}
             <TopNav {...props} />
 

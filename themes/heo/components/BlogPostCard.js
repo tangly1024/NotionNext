@@ -8,23 +8,14 @@ import BLOG from '@/blog.config'
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
   if (post && !post.pageCoverThumbnail && CONFIG.POST_LIST_COVER_DEFAULT) {
-    post.pageCover = siteInfo?.pageCoverThumbnail
+    post.pageCoverThumbnail = siteInfo?.pageCover
   }
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
-  //   const delay = (index % 2) * 200
-
+  console.log(post, post.pageCoverThumbnail)
   return (
         <div className={`${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
-            <div
-                // data-aos="fade-up"
-                // data-aos-easing="ease-in-out"
-                // data-aos-duration="800"
-                // data-aos-once="false"
-                // data-aos-anchor-placement="top-bottom"
-                id='blog-post-card'
-                key={post.id}
-                className={`w-full justify-between flex flex-col lg:h-96  ${CONFIG.POST_LIST_IMG_CROSSOVER && index % 2 === 1 ? '' : ''}
-                    overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
+            <div className={`w-full border justify-between flex flex-col lg:h-96 
+                    overflow-hidden  rounded-xl bg-white `}>
 
                 {/* 图片封面 */}
                 {showPageCover && (

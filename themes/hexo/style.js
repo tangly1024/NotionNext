@@ -5,7 +5,7 @@
  * @returns
  */
 const Style = () => {
-  return (<style jsx>{`
+  return (<style jsx global>{`
   
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
@@ -38,6 +38,30 @@ const Style = () => {
         opacity: 0;
     }
 
+    // 选中字体颜色
+    ::selection {
+        background: rgba(45, 170, 219, 0.3);
+    }
+
+    // 自定义滚动条
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #49b1f5;
+    }
+
+    * {
+        scrollbar-width:thin;
+        scrollbar-color: #49b1f5 transparent
+    }
+    
 
   `}</style>)
 }

@@ -1943,10 +1943,6 @@ svg + .notion-page-title-text {
     display: block !important;
 }
 
-::selection {
-    @apply bg-blue-500 text-gray-50 !important;
-}
-
 /* https://github.com/kchen0x */
 .notion-quote {
   display: block;

@@ -17,29 +17,28 @@ const MenuGroupCard = (props) => {
   ]
 
   return (
-    <nav id='nav' className='leading-8 flex justify-center  dark:text-gray-200 w-full'>
-        {links.map(link => {
-          if (link.show) {
-            return (
-              <Link
-                key={`${link.to}`}
-                title={link.to}
-                href={link.to}
-                target={link.to.indexOf('http') === 0 ? '_blank' : '_self'}
-                className={'py-1.5 my-1 px-2 duration-300 text-base justify-center items-center cursor-pointer'}>
+        <nav id='nav' className='dark:text-gray-200 w-full px-5'>
+            {links.map((link, index) => {
+              if (link.show) {
+                return (
+                        <div key={index} className=''>
+                            <Link title={link.to}
+                                href={link.to}
+                                target={link.to.indexOf('http') === 0 ? '_blank' : '_self'}
+                                className={'w-full flex items-center justify-between py-1 hover:scale-105 duration-200 transform dark:hover:text-indigo-400 hover:text-indigo-600 px-2 cursor-pointer'}>
+                                <>
+                                    <div>{link.name} :</div>
+                                    <div className='font-semibold'>{link.slot}</div>
+                                </>
+                            </Link>
+                        </div>
 
-                <div className='w-full items-center justify-center hover:scale-105 duration-200 transform dark:hover:text-indigo-400 hover:text-indigo-600'>
-                  <div className='text-center'>{link.name}</div>
-                  <div className='text-center font-semibold'>{link.slot}</div>
-                </div>
-
-              </Link>
-            )
-          } else {
-            return null
-          }
-        })}
-      </nav>
+                )
+              } else {
+                return null
+              }
+            })}
+        </nav>
   )
 }
 export default MenuGroupCard

@@ -11,6 +11,22 @@ const Style = () => {
       text-color: red;
     }
 
+    // 公告栏中的字体固定白色
+    #announcement-content .notion{
+        color: white;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(60, 60, 67, 0.4);
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
   `}</style>
 }
 
