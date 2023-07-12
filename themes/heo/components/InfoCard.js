@@ -36,13 +36,21 @@ export function InfoCard(props) {
                     <div className='bg-indigo-400 p-2 rounded-full hover:bg-white hover:text-black transition-colors duration-200'><Link href='/about'><GlobeAlt className={'w-6 h-6'} /></Link></div>
                     <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center hover:bg-white hover:text-black transition-colors duration-200'><Link href='https://github.com/tangly1024/NotionNext'><i className='fab fa-github text-xl'></i></Link></div>
                 </div>
-                <Link href='/about'>
-                    <div className='flex items-center hover:bg-white hover:text-black transition-colors duration-200 bg-indigo-400 py-2 px-3 rounded-full space-x-1'>
-                        <ArrowRightCircle className={'w-6 h-6 stroke-indigo-400 fill-white'} />
-                        <div className='font-bold'>了解更多</div>
-                    </div>
-                </Link>
+                <MoreButton />
             </div>
         </Card>
   )
+}
+
+/**
+ * 了解更多按鈕
+ * @returns
+ */
+function MoreButton() {
+  return <Link href='/about'>
+        <div className={'group bg-indigo-400  hover:bg-white hover:text-black flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'}>
+            <ArrowRightCircle className={'group-hover:stroke-black w-6 h-6 transition-all duration-100'} />
+            <div className='font-bold'>了解更多</div>
+        </div>
+    </Link>
 }

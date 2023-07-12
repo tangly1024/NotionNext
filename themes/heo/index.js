@@ -113,8 +113,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  const headerSlot = CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />
-  return <LayoutPostList {...props} headerSlot={headerSlot}/>
+  return <LayoutPostList {...props}/>
 }
 
 /**
@@ -123,7 +122,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props}>
+  return <LayoutBase {...props} headerSlot={<Hero {...props} />}>
         <CategoryBar {...props} />
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </LayoutBase>

@@ -13,10 +13,14 @@ export default function FlipCard(props) {
   }
 
   return (
-      <div className={`flip-card ${isFlipped ? 'flipped' : ''}`} >
-        <div className={`flip-card-front ${props.className || ''}`} onMouseEnter={handleCardFlip}>{props.frontContent}</div>
-        <div className={`flip-card-back ${props.className || ''}`} onMouseLeave={handleCardFlip}>{props.backContent}</div>
-        <style jsx>{`
+        <div className={`flip-card ${isFlipped ? 'flipped' : ''}`} >
+            <div className={`flip-card-front ${props.className || ''}`} onMouseEnter={handleCardFlip}>
+                {props.frontContent}
+            </div>
+            <div className={`flip-card-back ${props.className || ''}`} onMouseOut={handleCardFlip}>
+                {props.backContent}
+            </div>
+            <style jsx>{`
           .flip-card {
             width: auto;
             height: auto;
@@ -49,6 +53,6 @@ export default function FlipCard(props) {
             transform: rotateY(180deg);
           }
         `}</style>
-      </div>
+        </div>
   )
 }
