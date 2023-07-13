@@ -7,6 +7,7 @@ import Live2D from '@/components/Live2D'
 import MenuGroupCard from './MenuGroupCard'
 import FlipCard from '@/components/FlipCard'
 import Link from 'next/link'
+import { AnalyticsCard } from './AnalyticsCard'
 
 const FaceBookPage = dynamic(
   () => {
@@ -63,6 +64,7 @@ export default function SideRight(props) {
                 <TagGroups tags={tagOptions} currentTag={currentTag} />
                 <hr className='mx-1 flex border-dashed relative my-2'/>
                 <MenuGroupCard {...props} />
+                <AnalyticsCard {...props} />
             </Card>
 
             <div className='sticky top-20'>

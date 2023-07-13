@@ -1,7 +1,15 @@
 const CONFIG = {
   HOME_BANNER_ENABLE: true,
-  // 3.14.1以后的版本中，欢迎语在blog.config.js中配置，用英文逗号','隔开多个。
-  HOME_BANNER_GREETINGS: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
+  // 欢迎语
+  INFOCARD_GREETINGS: [
+    '你好！我是',
+    '🔍 分享与热心帮助',
+    '🤝 专修交互与设计',
+    '🏃 脚踏实地行动派',
+    '🏠 智能家居小能手',
+    '🤖️ 数码科技爱好者',
+    '🧱 团队小组发动机'
+  ],
 
   HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
   // 已知未修复bug, 在移动端开启true后会加载不出图片； 暂时建议设置为false。

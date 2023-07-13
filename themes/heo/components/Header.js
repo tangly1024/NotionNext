@@ -45,7 +45,7 @@ const Header = props => {
   return (<>
         {/* 头条 */}
         <nav id='header' className={`${headerBgShow ? 'bg-white border-b' : 'bg-none'} h-16 flex justify-center items-center top-0 duration-300 transition-all sticky text-black w-full z-20 transform`}>
-            <div className='w-full max-w-[88rem] mx-auto flex justify-between items-center px-5'>
+            <div className='w-full max-w-[86rem] mx-auto flex justify-between items-center px-5'>
                 <div className='flex'>
                     <Logo {...props} />
                 </div>

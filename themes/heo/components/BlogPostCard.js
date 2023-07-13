@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
 import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import TagItemMini from './TagItemMini'
@@ -7,20 +6,19 @@ import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
-  const [onHover, setOnHover] = useState(false)
   if (post && !post.pageCoverThumbnail && CONFIG.POST_LIST_COVER_DEFAULT) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   return (
         <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
-            <div onMouseEnter={() => setOnHover(true)} onMouseLeave={() => setOnHover(false)} className={'w-full hover:border-indigo-600 duration-300 transition-colors border justify-between flex flex-col lg:h-96 overflow-hidden  rounded-xl bg-white '}>
+            <div className={'group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between flex flex-col lg:h-96 overflow-hidden  rounded-xl bg-white '}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className="flex-1 h-60 md:w-5/12 lg:w-full overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <div className={`h-60 bg-center bg-cover ${onHover ? 'scale-105 brightness-75' : ''} transition-all duration-300`} style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
+                            <div className={'h-60 bg-center bg-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'} style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
                         </Link>
                     </div>
                 )}
@@ -41,7 +39,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         <Link
                             href={`${BLOG.SUB_PATH}/${post.slug}`}
                             passHref
-                            className={`${onHover ? 'text-indigo-700 dark:text-indigo-400' : ' text-black dark:text-gray-100'} line-clamp-2 replace cursor-pointer text-2xl font-extrabold leading-tight`}>
+                            className={' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 line-clamp-2 replace cursor-pointer text-2xl font-extrabold leading-tight'}>
 
                             <span className='menu-link '>{post.title}</span>
 

@@ -27,11 +27,12 @@ import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
 import ArticleRecommend from './components/ArticleRecommend'
 import ShareBar from '@/components/ShareBar'
-import TagItemMini from './components/TagItemMini'
 import Link from 'next/link'
 import CategoryBar from './components/CategoryBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import { NoticeBar } from './components/NoticeBar'
+import { HashTag } from '@/components/HeroIcons'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -40,7 +41,7 @@ import { Style } from './style'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, slotTop, meta, siteInfo, className } = props
+  const { children, headerSlot, slotTop, slotRight, meta, siteInfo } = props
   const { onLoading } = useGlobal()
 
   // 加载主题样式
@@ -49,10 +50,10 @@ const LayoutBase = props => {
   }
 
   return (
-        <div id='theme-heo' className='bg-[#f7f9fe]'>
+        <div id='theme-heo' className='bg-[#f7f9fe] h-full min-h-screen flex flex-col'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
-            <Style/>
+            <Style />
 
             {/* 顶部导航 */}
             <Header {...props} />
@@ -73,30 +74,41 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper-outer" className={'w-full max-w-[88rem] mx-auto min-h-screen relative p-5'}>
-                <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-                    <div className={`${className || ''} w-full  h-full`}>
+            <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative p-5'}>
+                <div id="container-inner" className={' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
 
-                        <Transition
-                            show={!onLoading}
-                            appear={true}
-                            enter="transition ease-in-out duration-700 transform order-first"
-                            enterFrom="opacity-0 translate-y-16"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease-in-out duration-300 transform"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 -translate-y-16"
-                            unmount={false}
-                        >
-                            {/* 主区上部嵌入 */}
-                            {slotTop}
+                    <Transition
+                        show={!onLoading}
+                        appear={true}
+                        enter="transition ease-in-out duration-700 transform order-first"
+                        enterFrom="opacity-0 translate-y-16"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in-out duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 -translate-y-16"
+                        unmount={false}
+                    >
+                        {/* 主区上部嵌入 */}
+                        {slotTop}
 
-                            {children}
-                        </Transition>
-                    </div>
+                        {children}
+                    </Transition>
 
-                    {/* 右侧栏 */}
-                    <SideRight {...props} />
+                    <Transition
+                        show={!onLoading}
+                        appear={true}
+                        enter="transition ease-in-out duration-700 transform order-first"
+                        enterFrom="opacity-0 translate-y-16"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in-out duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 -translate-y-16"
+                        unmount={false}
+                    >
+                        {/* 主区快右侧 */}
+                        {slotRight}
+
+                    </Transition>
                 </div>
             </main>
 
@@ -113,7 +125,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props}/>
+  return <LayoutPostList {...props} />
 }
 
 /**
@@ -122,9 +134,24 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} headerSlot={<Hero {...props} />}>
+  // 博客列表上方嵌入一个 通知横幅和英雄块
+  const headerSlot = <>
+        {/* 通知横幅 */}
+        <NoticeBar />
+        <Hero {...props} />
+    </>
+
+  // 右侧栏
+  const slotRight = <SideRight {...props} />
+
+  return <LayoutBase {...props} headerSlot={headerSlot} slotRight={slotRight}>
+
+       {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+
+        {BLOG.POST_LIST_STYLE === 'page'
+          ? <BlogPostListPage {...props} />
+          : <BlogPostListScroll {...props} />}
     </LayoutBase>
 }
 
@@ -295,22 +322,24 @@ const LayoutCategoryIndex = props => {
   const { locale } = useGlobal()
   return (
         <LayoutBase {...props} className='mt-8'>
-            <Card className="w-full min-h-screen">
-                <div className="dark:text-gray-200 mb-5 mx-3">
-                    <i className="mr-4 fas fa-th" />  {locale.COMMON.CATEGORY}:
-                </div>
-                <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-                    {categoryOptions.map(category => {
-                      return (
-                            <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
-                                <div className={' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'}>
-                                    <i className="mr-4 fas fa-folder" />  {category.name}({category.count})
+            <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
+                {locale.COMMON.CATEGORY}
+            </div>
+            <div id="category-list" className="duration-200 flex flex-wrap space-x-5 m-10 justify-center">
+                {categoryOptions.map(category => {
+                  return (
+                        <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
+                            <div className={'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'}>
+                                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
+                                {category.name}
+                                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
+                                    {category.count}
                                 </div>
-                            </Link>
-                      )
-                    })}
-                </div>
-            </Card>
+                            </div>
+                        </Link>
+                  )
+                })}
+            </div>
         </LayoutBase>
   )
 }
@@ -325,16 +354,24 @@ const LayoutTagIndex = props => {
   const { locale } = useGlobal()
   return (
         <LayoutBase {...props} className='mt-8'>
-            <Card className='w-full'>
-                <div className="dark:text-gray-200 mb-5 ml-4">
-                    <i className="mr-4 fas fa-tag" /> {locale.COMMON.TAGS}:
-                </div>
-                <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
-                    {tagOptions.map(tag => <div key={tag.name} className="p-2">
-                        <TagItemMini key={tag.name} tag={tag} />
-                    </div>)}
-                </div>
-            </Card>
+            <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
+                {locale.COMMON.TAGS}
+            </div>
+            <div id="tag-list" className="duration-200 flex flex-wrap space-x-5 m-10 justify-center">
+                {tagOptions.map(tag => {
+                  return (
+                        <Link key={tag.name} href={`/tag/${tag.name}`} passHref legacyBehavior>
+                            <div className={'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'}>
+                                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
+                                {tag.name}
+                                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
+                                    {tag.count}
+                                </div>
+                            </div>
+                        </Link>
+                  )
+                })}
+            </div>
         </LayoutBase>
   )
 }

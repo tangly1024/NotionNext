@@ -1,6 +1,8 @@
 import BLOG from '@/blog.config'
 import { ArrowRightCircle, GlobeAlt } from '@/components/HeroIcons'
 import Link from 'next/link'
+import { useState } from 'react'
+import CONFIG from '../config'
 import Announcement from './Announcement'
 import Card from './Card'
 
@@ -14,9 +16,7 @@ export function InfoCard(props) {
   return (
         <Card className='bg-[#4f65f0] text-white flex flex-col w-72'>
             <div className='flex justify-between'>
-
-                <div className='py-1 px-2 bg-indigo-500 text-sm rounded-lg hover:bg-indigo-50 hover:text-indigo-950 duration-200 transition-colors'>你好！我是</div>
-
+                <GreetingsWords />
                 <div className='justify-center items-center flex dark:text-gray-100 transform duration-200 cursor-pointer'>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={siteInfo?.icon} className='rounded-full' width={28} alt={BLOG.AUTHOR} />
@@ -40,6 +40,23 @@ export function InfoCard(props) {
             </div>
         </Card>
   )
+}
+
+/**
+ * 欢迎语
+ */
+function GreetingsWords() {
+  const greetings = CONFIG.INFOCARD_GREETINGS
+  const [greeting, setGreeting] = useState(greetings[0])
+  // 每次点击，随机获取greetings中的一个
+  const handleChangeGreeting = () => {
+    const randomIndex = Math.floor(Math.random() * greetings.length)
+    setGreeting(greetings[randomIndex])
+  }
+
+  return <div onClick={handleChangeGreeting} className=' select-none cursor-pointer py-1 px-2 bg-indigo-400 text-sm rounded-lg hover:bg-indigo-50 hover:text-indigo-950 duration-200 transition-colors'>
+    {greeting}
+  </div>
 }
 
 /**
