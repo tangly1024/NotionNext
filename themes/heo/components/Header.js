@@ -28,8 +28,8 @@ const Header = props => {
   const throttleMs = 200
 
   /**
-         * 根据滚动条，切换导航栏样式
-         */
+  * 根据滚动条，切换导航栏样式
+  */
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
     const header = document.querySelector('#header')
@@ -44,8 +44,8 @@ const Header = props => {
 
   return (<>
         {/* 头条 */}
-        <nav id='header' className={`${headerBgShow ? 'bg-white border-b' : 'bg-none'} h-16 flex justify-center items-center top-0 duration-300 transition-all sticky text-black w-full z-20 transform`}>
-            <div className='w-full max-w-[86rem] mx-auto flex justify-between items-center px-5'>
+        <nav id='header' className={`${headerBgShow ? 'bg-white border-b' : 'bg-none'} h-16 flex justify-center items-center fixed top-0 duration-300 transition-all text-black w-full z-20 transform`}>
+            <div className='w-full max-w-[86rem] mx-auto flex justify-between items-center px-8'>
                 <div className='flex'>
                     <Logo {...props} />
                 </div>

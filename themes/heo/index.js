@@ -50,7 +50,7 @@ const LayoutBase = props => {
   }
 
   return (
-        <div id='theme-heo' className='bg-[#f7f9fe] h-full min-h-screen flex flex-col'>
+        <div id='theme-heo' className='bg-[#f7f9fe] h-full min-h-screen flex flex-col overflow-hidden'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
             <Style />
@@ -69,13 +69,15 @@ const LayoutBase = props => {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-16"
                 unmount={false}
+                className='mt-20'
             >
                 {headerSlot}
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative p-5'}>
-                <div id="container-inner" className={' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
+            <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative px-5'}>
+
+                <div id="container-inner" className={'w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
 
                     <Transition
                         show={!onLoading}

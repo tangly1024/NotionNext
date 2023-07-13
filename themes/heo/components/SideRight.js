@@ -35,7 +35,7 @@ export default function SideRight(props) {
 
   console.log('props', props)
   return (
-        <div id='sideRight' className='w-72 space-y-4'>
+        <div id='sideRight' className='hidden xl:block w-72 space-y-4'>
 
             <InfoCard {...props} className='w-72' />
 

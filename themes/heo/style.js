@@ -32,6 +32,14 @@ const Style = () => {
         mask-image: linear-gradient(to top, transparent 5%, black 70%);      
     }
 
+    .recent-top-post-group::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .scroll-hidden::-webkit-scrollbar {
+        display: none;
+    }
+
   `}</style>
 }
 

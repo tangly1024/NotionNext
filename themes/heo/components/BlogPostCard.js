@@ -12,11 +12,11 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   return (
         <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
-            <div className={'group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between flex flex-col lg:h-96 overflow-hidden  rounded-xl bg-white '}>
+            <div className={'flex mb-4 flex-col h-[23rem] md:h-52 lg:flex-row 2xl:h-96 2xl:flex-col group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between overflow-hidden  rounded-xl bg-white '}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
-                    <div className="flex-1 h-60 md:w-5/12 lg:w-full overflow-hidden">
+                    <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                             <div className={'h-60 bg-center bg-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'} style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
                         </Link>
@@ -24,11 +24,10 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 )}
 
                 {/* 文字区块 */}
-                {/* <BlogPostCardInfo index={index} post={post} onHover={onHover} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary} /> */}
-                <div className={'flex flex-col justify-between lg:p-6 p-4 w-full'}>
+                <div className={'flex p-6 flex-col justify-between h-40 md:h-full w-full md:w-7/12 2xl:w-full'}>
                     <div>
                         {/* 分类 */}
-                        {post?.category && <div className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-600 `}>
+                        {post?.category && <div className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
                             <Link passHref href={`/category/${post.category}`}
                                 className="cursor-pointer text-xs font-normal menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform">
                                 {post.category}
@@ -42,32 +41,31 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             className={' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 line-clamp-2 replace cursor-pointer text-2xl font-extrabold leading-tight'}>
 
                             <span className='menu-link '>{post.title}</span>
-
                         </Link>
+                    </div>
 
-                        {/* 摘要 */}
-                        {(!showPreview || showSummary) && !post.results && (
-                            <p className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight">
-                                {post.summary}
-                            </p>
-                        )}
+                    {/* 摘要 */}
+                    {(!showPreview || showSummary) && !post.results && (
+                        <p className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight">
+                            {post.summary}
+                        </p>
+                    )}
 
-                        {/* 搜索结果 */}
-                        {post.results && (
-                            <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                                {post.results.map(r => (
-                                    <span key={r}>{r}</span>
-                                ))}
-                            </p>
-                        )}
+                    {/* 搜索结果 */}
+                    {post.results && (
+                        <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+                            {post.results.map(r => (
+                                <span key={r}>{r}</span>
+                            ))}
+                        </p>
+                    )}
 
-                        <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
-                            <div>
-                                {' '}
-                                {post.tagItems?.map(tag => (
-                                    <TagItemMini key={tag.name} tag={tag} />
-                                ))}
-                            </div>
+                    <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
+                        <div>
+                            {' '}
+                            {post.tagItems?.map(tag => (
+                                <TagItemMini key={tag.name} tag={tag} />
+                            ))}
                         </div>
                     </div>
 
