@@ -2,11 +2,11 @@
   /* background-color: #f6f6f6; */
 }
 
-#theme-simple #blog-item-title {
+#theme-simple .blog-item-title {
   color: #276077;
 }
 
-.dark #theme-simple #blog-item-title {
+.dark #theme-simple .blog-item-title {
   color: #d1d5db;
 }
 
@@ -29,5 +29,6 @@
 #theme-simple .menu-link:hover {
     background-size: 100% 2px;
     color: #dd3333;
+    cursor: pointer;
 }
 

@@ -36,7 +36,7 @@
   --notion-yellow_background: rgb(251, 243, 219);
   --notion-orange_background: rgb(250, 235, 221);
   --notion-brown_background: rgb(233, 229, 227);
-  --notion-gray_background: rgb(235, 236, 237);
+  --notion-gray_background: rgb(241 241 239);
   --notion-green_background: rgb(219, 237, 219);
   --notion-default_background: rgba(227, 226, 224);
 
@@ -48,7 +48,7 @@
   --notion-yellow_background_co: rgba(251, 243, 219, 0.3);
   --notion-orange_background_co: rgba(250, 235, 221, 0.3);
   --notion-brown_background_co: rgba(233, 229, 227, 0.3);
-  --notion-gray_background_co: rgba(235, 236, 237, 0.3);
+  --notion-gray_background_co: rgba(241, 241, 239, 0.3);
   --notion-green_background_co: rgba(219, 237, 219, 0.3);
   --notion-default_background_co: rgba(227, 226, 224, 0.3);
 
@@ -603,6 +603,7 @@ summary > .notion-h {
   margin: 2px 4px 0 2px;
   fill: var(--fg-color-6);
   color: var(--fg-color-icon);
+  @apply dark:fill-gray-200
 }
 
 img.notion-page-icon,
@@ -767,7 +768,7 @@ code[class*='language-'] {
   overflow: auto;
   font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
-  @apply w-full mb-4 dark:bg-black;
+  @apply w-full mb-0 dark:bg-black !important;
 }
 
 .notion-column {
@@ -1121,11 +1122,10 @@ code[class*='language-'] {
 .notion-table-of-contents {
   width: 100%;
   margin: 4px 0;
-  @apply bg-gray-50 dark:bg-black p-2
+  @apply bg-gray-50 dark:bg-gray-900 p-2
 }
 
 .notion-table-of-contents-item {
-  /* color: inherit; */
   text-decoration: none;
   user-select: none;
   transition: background 20ms ease-in 0s;
@@ -1141,8 +1141,8 @@ code[class*='language-'] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  @apply dark:text-white
 
-  @apply text-blue-600 dark:text-blue-200
 }
 
 .notion-table-of-contents-item:hover {
@@ -1295,6 +1295,8 @@ code[class*='language-'] {
   transition: background 20ms ease-in 0s;
   color: inherit;
   text-decoration: none;
+  
+  @apply dark:stroke-slate-200
 }
 
 .notion-file-link:hover {
@@ -1329,10 +1331,12 @@ code[class*='language-'] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--fg-color-3);
+  /* color: var(--fg-color-3); */
   font-size: 12px;
   line-height: 16px;
   margin-left: 6px;
+
+  @apply dark:text-gray-400 !important
 }
 
 .notion-audio {
@@ -1778,6 +1782,7 @@ svg + .notion-page-title-text {
   /* fill: var(--fg-color); */
   fill: rgba(55, 53, 47);
   margin-right: 6px;
+  @apply dark:fill-gray-200
 }
 
 .notion-collection-view-type-title {
@@ -1785,6 +1790,7 @@ svg + .notion-page-title-text {
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--fg-color);
+  @apply dark:text-gray-200
 }
 
 .notion-table {
@@ -1868,8 +1874,12 @@ svg + .notion-page-title-text {
   min-height: 14px;
   fill: var(--fg-color-2);
   margin-right: 6px;
-  @apply dark:text-gray-200
+  @apply dark:text-gray-200 dark:fill-gray-200
 
+}
+
+.notion-collection-view-tabs-content-item-active {
+    @apply dark:border-gray-300
 }
 
 .notion-collection-column-title-body {
@@ -2006,7 +2016,7 @@ code.language-mermaid {
 }
 
 .code-toolbar{
-  @apply w-full shadow-md;
+  @apply w-full shadow-md pb-0;
 }
 
 .mermaid > svg {
@@ -2015,11 +2025,4 @@ code.language-mermaid {
 
 .notion-equation-inline .katex-display {
   margin: 0 0 !important;
-}
-
-.two-line-clamp {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
 }

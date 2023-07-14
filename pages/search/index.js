@@ -1,56 +1,51 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import { getLayoutByTheme } from '@/themes/theme'
 
 const Search = props => {
   const { posts, siteInfo } = props
+  const { locale } = useGlobal()
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+
   const router = useRouter()
+  const keyword = getSearchKey(router)
+
   let filteredPosts
-  const searchKey = getSearchKey(router)
   // 静态过滤
-  if (searchKey) {
+  if (keyword) {
     filteredPosts = posts.filter(post => {
       const tagContent = post.tags ? post.tags.join(' ') : ''
       const categoryContent = post.category ? post.category.join(' ') : ''
       const searchContent =
-        post.title + post.summary + tagContent + categoryContent
-      return searchContent.toLowerCase().includes(searchKey.toLowerCase())
+                post.title + post.summary + tagContent + categoryContent
+      return searchContent.toLowerCase().includes(keyword.toLowerCase())
     })
   } else {
     filteredPosts = []
   }
 
-  const { locale } = useGlobal()
   const meta = {
-    title: `${searchKey || ''}${searchKey ? ' | ' : ''}${locale.NAV.SEARCH} | ${
-      siteInfo?.title
-    }`,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
     description: siteInfo?.description,
     image: siteInfo?.pageCover,
     slug: 'search',
     type: 'website'
   }
 
-  const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
+  props = { ...props, meta, posts: filteredPosts }
 
-  return (
-    <ThemeComponents.LayoutSearch
-      {...props}
-      posts={filteredPosts}
-      currentSearch={searchKey}
-      meta={meta}
-    />
-  )
+  return <Layout {...props} />
 }
 
 /**
  * 浏览器前端搜索
  */
 export async function getStaticProps() {
-  const props = await getGlobalNotionData({
+  const props = await getGlobalData({
     from: 'search-props',
     pageType: ['Post']
   })

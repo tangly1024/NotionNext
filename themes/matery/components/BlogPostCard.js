@@ -9,10 +9,10 @@ import TwikooCommentCount from '@/components/TwikooCommentCount'
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_MATERY.POST_LIST_PREVIEW && post.blockMap
   // matery 主题默认强制显示图片
-  if (post && !post.page_cover) {
-    post.page_cover = siteInfo?.pageCover
+  if (post && !post.pageCoverThumbnail) {
+    post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG_MATERY.POST_LIST_COVER && post?.page_cover
+  const showPageCover = CONFIG_MATERY.POST_LIST_COVER && post?.pageCoverThumbnail
   const delay = (index % 3) * 300
   return (
         <div
@@ -33,7 +33,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             className="flex flex-grow w-full relative duration-200 bg-black rounded-t-md  cursor-pointer transform overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src={post?.page_cover}
+                                src={post?.pageCoverThumbnail}
                                 alt={post.title}
                                 className="opacity-50 h-full w-full hover:scale-125 rounded-t-md  transform object-cover duration-500"
                             />
@@ -57,7 +57,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         <div className='text-gray-800 justify-between flex my-2  dark:text-gray-300'>
                             <div>
                                 <Link
-                                    href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                                     passHref
                                     className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
 

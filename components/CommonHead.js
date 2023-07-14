@@ -19,10 +19,7 @@ const CommonHead = ({ meta, children }) => {
     <Head>
       <title>{title}</title>
       <meta name="theme-color" content={BLOG.BACKGROUND_DARK} />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no"
-      />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"/>
       <meta name="robots" content="follow, index" />
       <meta charSet="UTF-8" />
       {BLOG.SEO_GOOGLE_SITE_VERIFICATION && (
@@ -59,7 +56,7 @@ const CommonHead = ({ meta, children }) => {
         <>
           <meta
             property="article:published_time"
-            content={meta.date || meta.createdTime}
+            content={meta.publishTime}
           />
           <meta property="article:author" content={BLOG.AUTHOR} />
           <meta property="article:section" content={category} />

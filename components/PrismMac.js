@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import Prism from 'prismjs'
 // 所有语言的prismjs 使用autoloader引入
 // import 'prismjs/plugins/autoloader/prism-autoloader'
@@ -11,15 +11,17 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { loadExternalResource } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 /**
  * @author https://github.com/txs/
  * @returns
  */
 const PrismMac = () => {
-  if (isBrowser()) {
-    if (BLOG.CODE_MAC_BAR) {
+  const router = useRouter()
+  useEffect(() => {
+    if (JSON.parse(BLOG.CODE_MAC_BAR)) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
     loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
@@ -28,12 +30,9 @@ const PrismMac = () => {
         window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
       }
       renderPrismMac()
+      renderMermaid()
     })
-  }
-
-  React.useEffect(() => {
-    renderMermaid()
-  }, [])
+  }, [router])
   return <></>
 }
 
@@ -41,32 +40,38 @@ const PrismMac = () => {
  * 将mermaid语言 渲染成图片
  */
 const renderMermaid = async() => {
-  //   支持 Mermaid
-  const mermaidPres = document.querySelectorAll('pre.notion-code.language-mermaid')
-  if (mermaidPres) {
-    for (const e of mermaidPres) {
-      const chart = e.querySelector('code').textContent
-      if (chart && !e.querySelector('.mermaid')) {
-        const m = document.createElement('div')
-        m.className = 'mermaid'
-        m.innerHTML = chart
-        e.appendChild(m)
-      }
-    }
-  }
+  const observer = new MutationObserver(async mutationsList => {
+    for (const m of mutationsList) {
+      if (m.target.className === 'notion-code language-mermaid') {
+        const chart = m.target.querySelector('code').textContent
+        if (chart && !m.target.querySelector('.mermaid')) {
+          const mermaidChart = document.createElement('div')
+          mermaidChart.className = 'mermaid'
+          mermaidChart.innerHTML = chart
+          m.target.appendChild(mermaidChart)
+        }
 
-  const mermaidsSvg = document.querySelectorAll('.mermaid')
-  if (mermaidsSvg) {
-    let needLoad = false
-    for (const e of mermaidsSvg) {
-      if (e?.firstChild?.nodeName !== 'svg') {
-        needLoad = true
+        const mermaidsSvg = document.querySelectorAll('.mermaid')
+        if (mermaidsSvg) {
+          let needLoad = false
+          for (const e of mermaidsSvg) {
+            if (e?.firstChild?.nodeName !== 'svg') {
+              needLoad = true
+            }
+          }
+          if (needLoad) {
+            loadExternalResource(BLOG.MERMAID_CDN, 'js').then(url => {
+              // console.log('mermaid加载成功', url, mermaid)
+              const mermaid = window.mermaid
+              mermaid.contentLoaded()
+            })
+          }
+        }
       }
     }
-    if (needLoad) {
-      const asyncMermaid = await import('mermaid')
-      asyncMermaid.default.contentLoaded()
-    }
+  })
+  if (document.querySelector('#container-inner')) {
+    observer.observe(document.querySelector('#container-inner'), { attributes: true, subtree: true })
   }
 }
 

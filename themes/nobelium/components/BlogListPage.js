@@ -14,7 +14,7 @@ export const BlogListPage = props => {
 
   const showPrev = currentPage > 1
   const showNext = page < totalPage
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
       <div className="w-full md:pr-12 mb-12">
@@ -46,5 +46,5 @@ export const BlogListPage = props => {
                 </Link>
             </div>
         </div>
-  );
+  )
 }

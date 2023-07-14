@@ -12,6 +12,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import CONFIG_HEXO from './config_hexo'
 
 const FacebookPage = dynamic(
   () => {
@@ -65,6 +66,7 @@ const LayoutBase = props => {
   if (isBrowser()) {
     loadExternalResource('/css/theme-hexo.css', 'css')
   }
+
   return (
     <div id='theme-hexo'>
       <CommonHead meta={meta} siteInfo={siteInfo}/>
@@ -73,7 +75,7 @@ const LayoutBase = props => {
 
       {headerSlot}
 
-      <main id="wrapper" className="bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative">
+      <main id="wrapper" className={`${CONFIG_HEXO.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
         <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
           <div className={'w-full max-w-4xl h-full ' + props.className}>
             {onLoading ? <LoadingCover /> : children}

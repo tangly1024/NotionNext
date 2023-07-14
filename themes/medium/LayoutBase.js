@@ -12,6 +12,8 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
 import BLOG from '@/blog.config'
+import Announcement from './components/Announcement'
+import JumpToTopButton from './components/JumpToTopButton'
 const ThemeGlobalMedium = createContext()
 
 /**
@@ -21,7 +23,7 @@ const ThemeGlobalMedium = createContext()
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo } = props
+  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo, notice } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -43,7 +45,7 @@ const LayoutBase = props => {
                     {/* 桌面端左侧菜单 */}
                     {/* <LeftMenuBar/> */}
 
-                    <div id='container-inner' className='w-full relative z-10'>
+                    <div id='container-wrapper' className='w-full relative z-10'>
                         {/* 顶部导航栏 */}
                         <TopNavBar {...props} />
 
@@ -52,15 +54,7 @@ const LayoutBase = props => {
 
                             {onLoading ? LoadingCover : children}
 
-                            {/* 回顶按钮 */}
-                            <div
-                                data-aos="fade-up"
-                                data-aos-duration="300"
-                                data-aos-once="false"
-                                data-aos-anchor-placement="top-center"
-                                className='fixed xl:right-80 right-2 mr-10 bottom-24 hidden lg:block z-20'>
-                                <i className='fas fa-chevron-up cursor-pointer p-2 rounded-full border' onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
-                            </div>
+                            <JumpToTopButton />
                         </div>
 
                         {/* 底部 */}
@@ -78,6 +72,7 @@ const LayoutBase = props => {
                                     {CONFIG_MEDIUM.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
                                 </div>
                             </Tabs>
+                            <Announcement post={notice} />
                             <Live2D />
                         </div>
                     </div>
@@ -91,4 +86,4 @@ const LayoutBase = props => {
 }
 
 export default LayoutBase
-export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
+export const useGitBookGlobal = () => useContext(ThemeGlobalMedium)

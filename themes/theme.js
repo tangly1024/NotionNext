@@ -1,7 +1,69 @@
 import cookie from 'react-cookies'
 import BLOG from '@/blog.config'
-import { ALL_THEME } from '@/themes'
-import { isBrowser, getQueryVariable } from './utils'
+import { getQueryParam, getQueryVariable } from '../lib/utils'
+import dynamic from 'next/dynamic'
+// 使用 __THEME__ 变量来动态导入主题组件
+import * as ThemeComponents from '@theme-components'
+/**
+ * 所有主题枚举
+ */
+export const ALL_THEME = [
+  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple', 'gitbook'
+]
+
+/**
+ * 加载主题文件
+ * 如果是
+ * @param {*} router
+ * @returns
+ */
+export const getLayoutByTheme = (router) => {
+  const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
+  const layout = getLayoutNameByPath(router.pathname)
+  if (themeQuery !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${themeQuery}/${layout}`), { ssr: true })
+  } else {
+    return ThemeComponents[layout]
+  }
+}
+
+/**
+ * 路径 对应的Layout名称
+ * @param {*} path
+ * @returns
+ */
+export const getLayoutNameByPath = (path) => {
+  switch (path) {
+    case '/':
+      return 'LayoutIndex'
+    case '/page/[page]':
+      return 'LayoutPage'
+    case '/archive':
+      return 'LayoutArchive'
+    case '/search':
+      return 'LayoutSearch'
+    case '/search/[keyword]':
+      return 'LayoutSearch'
+    case '/search/[keyword]/page/[page]':
+      return 'LayoutSearch'
+    case '/404':
+      return 'Layout404'
+    case '/tag':
+      return 'LayoutTagIndex'
+    case '/tag/[tag]':
+      return 'LayoutTag'
+    case '/tag/[tag]/page/[page]':
+      return 'LayoutTag'
+    case '/category':
+      return 'LayoutCategoryIndex'
+    case '/category/[category]':
+      return 'LayoutCategory'
+    case '/category/[category]/page/[page]':
+      return 'LayoutCategory'
+    default:
+      return 'LayoutSlug'
+  }
+}
 
 /**
  * 初始化主题 , 优先级 query > cookies > systemPrefer
@@ -19,24 +81,6 @@ export const initDarkMode = (isDarkMode, updateDarkMode) => {
   updateDarkMode(isDarkMode)
   saveDarkModeToCookies(isDarkMode)
   document.getElementsByTagName('html')[0].setAttribute('class', isDarkMode ? 'dark' : 'light')
-}
-
-/**
- * 初始化主题， 优先级 query > cookies > blog.config.js
- * @param {*} theme
- * @param {*} changeTheme
- */
-export const initTheme = (theme, changeTheme) => {
-  if (isBrowser()) {
-    // const queryTheme = getQueryVariable('theme') || loadThemeFromCookies() || BLOG.THEME
-    const queryTheme = getQueryVariable('theme') || BLOG.THEME
-    let currentTheme = theme
-    if (queryTheme !== theme && ALL_THEME.indexOf(queryTheme) > -1) {
-      currentTheme = queryTheme
-    }
-    changeTheme(currentTheme)
-    saveThemeToCookies(currentTheme)
-  }
 }
 
 /**

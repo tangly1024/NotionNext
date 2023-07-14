@@ -6,3 +6,5 @@ export const LayoutPage = (props) => {
       <BlogPostListPage {...props}/>
   </LayoutBase>
 }
+
+export default LayoutPage

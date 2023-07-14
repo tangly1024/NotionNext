@@ -28,3 +28,5 @@ export const LayoutArchive = (props) => {
       </div>
   </LayoutBase>
 }
+
+export default LayoutArchive

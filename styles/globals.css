@@ -181,16 +181,6 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-/* 固定两行 */
-.text-line-2 {
-    overflow : hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	word-wrap: break-word;
-	word-break: break-all;
-}
 
 .nobelium{
     @apply flex flex-col justify-between
@@ -201,8 +191,8 @@ nav {
 }
 
 .next #announcement-content *{
- font-size:12px !important;
- line-height:1.5 !important;
+ font-size:13px !important;
+ line-height:1.7 !important;
 }
 
 /* twikoo 评论区超链接样式 */
@@ -342,3 +332,19 @@ a.avatar-wrapper {
       column-gap: .5rem;
     }
   }
+
+.notion-external-title {
+  @apply dark:text-white !important;
+}
+
+.notion-external-subtitle {
+  @apply dark:text-gray-400 !important;
+}
+
+.notion-external-block {
+  @apply dark:border-gray-200 !important;
+}
+
+.notion-external-image > svg > g > path{
+  @apply dark:fill-gray-200 !important;
+}

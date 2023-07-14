@@ -84,7 +84,7 @@ const Collapse = props => {
   }, [props.isOpen])
 
   return (
-        <div ref={ref} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={'overflow-hidden duration-200 ' + props.className}>
+        <div ref={ref} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={`${props.className} overflow-hidden duration-200 `}>
             {props.children}
         </div>
   )

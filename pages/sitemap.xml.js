@@ -1,10 +1,10 @@
 // pages/sitemap.xml.js
 import { getServerSideSitemap } from 'next-sitemap'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
 
 export const getServerSideProps = async (ctx) => {
-  const { allPages } = await getGlobalNotionData({ from: 'rss' })
+  const { allPages } = await getGlobalData({ from: 'rss' })
   const defaultFields = [
     {
       loc: `${BLOG.LINK}`,
@@ -41,7 +41,7 @@ export const getServerSideProps = async (ctx) => {
   const postFields = allPages?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)?.map(post => {
     return {
       loc: `${BLOG.LINK}/${post.slug}`,
-      lastmod: new Date(post?.date?.start_date || post?.createdTime).toISOString().split('T')[0],
+      lastmod: new Date(post?.publishTime).toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }

@@ -8,7 +8,7 @@ import Mark from 'mark.js'
 import LayoutBase from './LayoutBase'
 import { isBrowser } from '@/lib/utils'
 
-export const LayoutSearch = props => {
+const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
 
@@ -52,3 +52,5 @@ export const LayoutSearch = props => {
 
     </LayoutBase>
 }
+
+export default LayoutSearch

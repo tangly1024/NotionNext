@@ -1,12 +1,10 @@
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
-import formatDate from '@/lib/formatDate'
 
 export const ArticleInfo = (props) => {
   const { post } = props
 
   const { locale } = useGlobal()
-  const date = formatDate(post?.date?.start_date || post?.createdTime, locale.LOCALE)
 
   return (
       <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
@@ -26,11 +24,11 @@ export const ArticleInfo = (props) => {
 
                 {post?.type !== 'Page' && (<>
                     <Link
-                        href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                        href={`/archive#${post?.publishTime?.substr(0, 7)}`}
                         passHref
                         className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
 
-                        {date}
+                        {post?.publishTime}
 
                     </Link>
                     <span className='mr-2'>|</span>

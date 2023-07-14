@@ -23,26 +23,6 @@ const Twikoo = ({ isDarkMode }) => {
         // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
         // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
       })
-
-      twikoo.getCommentsCount({
-        envId: BLOG.COMMENT_TWIKOO_ENV_ID, // 环境 ID
-        // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，如果您的环境地域不是上海，需传此参数
-        urls: [ // 不包含协议、域名、参数的文章路径列表，必传参数
-          '/article/notion-next',
-          '/article/notion-next-guide'
-        ],
-        includeReply: false // 评论数是否包括回复，默认：false
-      }).then(function (res) {
-        console.log(res)
-        // 返回示例: [
-        //   { url: '/2020/10/post-1.html', count: 10 },
-        //   { url: '/2020/11/post-2.html', count: 0 },
-        //   { url: '/2020/12/post-3.html', count: 20 }
-        // ]
-      }).catch(function (err) {
-        // 发生错误
-        console.error(err)
-      })
     } catch (error) {
       console.error('twikoo 加载失败', error)
     }

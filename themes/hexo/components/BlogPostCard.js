@@ -1,16 +1,16 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import React from 'react'
 import CONFIG_HEXO from '../config_hexo'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
+import BLOG from '@/blog.config'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_HEXO.POST_LIST_PREVIEW && post.blockMap
-  if (post && !post.page_cover && CONFIG_HEXO.POST_LIST_COVER_DEFAULT) {
-    post.page_cover = siteInfo?.pageCover
+  if (post && !post.pageCoverThumbnail && CONFIG_HEXO.POST_LIST_COVER_DEFAULT) {
+    post.pageCover = siteInfo?.pageCoverThumbnail
   }
-  const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.page_cover && !showPreview
+  const showPageCover = CONFIG_HEXO.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   //   const delay = (index % 2) * 200
 
   return (
@@ -36,7 +36,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {showPageCover && (
                     <div className="md:w-5/12 overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <div className='h-56 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.page_cover}')` }} />
+                            <div className='h-56 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
                         </Link>
                     </div>
                 )}

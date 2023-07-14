@@ -25,7 +25,6 @@ const SideBar = (props) => {
                     <MenuGroupCard {...props} />
                 </div>
             </div>
-            <hr className=' border-dashed'/>
             <MenuListSide {...props} />
         </div>
   )
