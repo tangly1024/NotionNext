@@ -11,6 +11,7 @@ import throttle from 'lodash.throttle'
 const Header = props => {
   const [isOpen, changeShow] = useState(false)
   const [headerBgShow, setHeaderBgShow] = useState(false)
+  const [whiteTitle, setWhiteTitle] = useState(false)
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
@@ -33,18 +34,23 @@ const Header = props => {
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
     const header = document.querySelector('#header')
+    const postHeader = document.querySelector('#post-bg')
 
     // 导航栏设置 白色背景
     if (header && scrollS > 60) {
       setHeaderBgShow(true)
+      setWhiteTitle(false)
     } else {
+      if (postHeader) {
+        setWhiteTitle(true)
+      }
       setHeaderBgShow(false)
     }
   }, throttleMs))
 
   return (<>
         {/* 头条 */}
-        <nav id='header' className={`${headerBgShow ? 'bg-white border-b' : 'bg-none'} h-16 flex justify-center items-center fixed top-0 duration-150 transition-all text-black w-full z-20 transform`}>
+        <nav id='header' className={`${headerBgShow ? 'bg-white' : 'bg-none'} ${whiteTitle ? 'text-white' : 'text-black'} h-16 flex justify-center items-center fixed top-0 duration-150 transition-all  w-full z-20 transform`}>
             <div className='w-full max-w-[86rem] mx-auto flex justify-between items-center px-8'>
                 <div className='flex'>
                     <Logo {...props} />

@@ -18,9 +18,7 @@ import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
 import PostHeader from './components/PostHeader'
-import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
-import TocDrawerButton from './components/TocDrawerButton'
 import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
@@ -69,7 +67,6 @@ const LayoutBase = props => {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-16"
                 unmount={false}
-                className='mt-20'
             >
                 {headerSlot}
             </Transition>
@@ -226,20 +223,10 @@ const LayoutSlug = props => {
   const drawerRight = useRef(null)
 
   const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
-
-  const floatSlot = <>
-        {post?.toc?.length > 1 && <div className="block lg:hidden">
-            <TocDrawerButton
-                onClick={() => {
-                  drawerRight?.current?.handleSwitchVisible()
-                }}
-            />
-        </div>}
-        <JumpToCommentButton />
-    </>
-
+  // 右侧栏
+  const slotRight = <SideRight {...props} />
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
+        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} slotRight={slotRight}>
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
