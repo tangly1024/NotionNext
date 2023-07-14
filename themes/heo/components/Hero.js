@@ -1,7 +1,7 @@
 // import Image from 'next/image'
 
 import BLOG from '@/blog.config'
-import { PlusSmall } from '@/components/HeroIcons'
+import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
@@ -19,7 +19,7 @@ const Hero = props => {
         <div id="hero-wrapper" className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
             <hero id="hero" style={{ zIndex: 1 }} className="recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3" >
                 {/* 左侧banner组 */}
-                <BannerGroup />
+                <BannerGroup {...props} />
 
                 {/* 右侧置顶文章组 */}
                 <TopGroup {...props} />
@@ -32,12 +32,12 @@ const Hero = props => {
  * 英雄区左侧banner组
  * @returns
  */
-function BannerGroup() {
+function BannerGroup(props) {
   return (
         // 左侧英雄区
         <div id='bannerGroup' className='flex flex-col justify-between flex-1 mr-2 max-w-[42rem]'>
             {/* 动图 */}
-            <Banner />
+            <Banner {...props} />
             {/* 导航分类 */}
             <GroupMenu />
         </div>
@@ -48,8 +48,17 @@ function BannerGroup() {
  * 英雄区左上角banner动图
  * @returns
  */
-function Banner() {
-  return <div id='banners' className="h-full bg-white rounded-xl border mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
+function Banner(props) {
+  const router = useRouter()
+  const { latestPosts } = props
+  // 跳转到任意文章
+  function handleClickBanner() {
+    const randomIndex = Math.floor(Math.random() * latestPosts.length)
+    const randomPost = latestPosts[randomIndex]
+    router.push(randomPost.slug)
+  }
+
+  return <div id='banners' onClick={handleClickBanner} className="group h-full bg-white rounded-xl border mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
 
         <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
             <div className='text-4xl font-bold mb-3'>分享写作<br />与商业思维</div>
@@ -58,6 +67,15 @@ function Banner() {
 
         {/* 斜向滚动的图标 */}
         <TagsGroupBar />
+
+        {/* 遮罩 */}
+        <div id='banner-cover' style={{ backdropFilter: 'blur(15px)' }} className={'opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'}>
+            <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
+                <div className='text-7xl text-white font-extrabold'>随便逛逛</div>
+                <div className='-ml-3 text-gray-300'><ArrowSmallRight className={'w-24 h-24 stroke-2'} /></div>
+            </div>
+        </div>
+
     </div>
 }
 
@@ -158,8 +176,8 @@ function TodayCard({ cRef }) {
   const [isCoverUp, setIsCoverUp] = useState(true)
 
   /**
-         * 外部可以调用此方法
-         */
+               * 外部可以调用此方法
+               */
   useImperativeHandle(cRef, () => {
     return {
       coverUp: () => {
@@ -169,18 +187,18 @@ function TodayCard({ cRef }) {
   })
 
   /**
-         * 点击更多
-         * @param {*} e
-         */
+               * 点击更多
+               * @param {*} e
+               */
   function handleClickMore(e) {
     e.stopPropagation()
     setIsCoverUp(false)
   }
 
   /**
-       * 点击卡片跳转的链接
-       * @param {*} e
-       */
+             * 点击卡片跳转的链接
+             * @param {*} e
+             */
   function handleCardClick(e) {
     router.push('https://tangly1024.com')
   }
