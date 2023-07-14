@@ -61,7 +61,7 @@ function Banner(props) {
   return <div id='banners' onClick={handleClickBanner} className="group h-full bg-white rounded-xl border mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
 
         <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
-            <div className='text-4xl font-bold mb-3'>分享写作<br />与商业思维</div>
+            <div className='text-4xl font-bold mb-3'>分享编程<br />与思维认知</div>
             <div className='text-xs text-gray-600'>TANGLY1024.COM</div>
         </div>
 

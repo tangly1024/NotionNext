@@ -12,7 +12,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   return (
         <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
-            <div className={'flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between overflow-hidden  rounded-xl bg-white '}>
+            <div className={'cursor-pointer flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between overflow-hidden  rounded-xl bg-white '}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
