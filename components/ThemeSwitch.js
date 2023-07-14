@@ -23,7 +23,7 @@ const ThemeSwitch = () => {
 
   return (<>
         <Draggable>
-            <div id="draggableBox" style={{ left: '10px', top: '85vh' }} className="fixed dark:text-white bg-gray-50 dark:bg-black z-50 border dark:border-gray-800 rounded-lg shadow-card">
+            <div id="draggableBox" style={{ left: '10px', top: '85vh' }} className="fixed dark:text-white bg-gray-50 dark:bg-black z-50 border dark:border-gray-800 rounded-xl shadow-card">
                 <div className="py-2 flex items-center text-sm px-2">
                     <DarkModeButton className='mr-1'/>
                     <select value={theme} onChange={onSelectChange} name="cars" className=' outline-none dark:text-white bg-gray-50 dark:bg-black uppercase cursor-pointer'>

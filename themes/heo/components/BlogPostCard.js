@@ -12,7 +12,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   return (
         <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
-            <div className={'flex mb-4 flex-col h-[23rem] md:h-52 lg:flex-row 2xl:h-96 2xl:flex-col group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between overflow-hidden  rounded-xl bg-white '}>
+            <div className={'flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between overflow-hidden  rounded-xl bg-white '}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
@@ -24,7 +24,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 )}
 
                 {/* 文字区块 */}
-                <div className={'flex p-6 flex-col justify-between h-40 md:h-full w-full md:w-7/12 2xl:w-full'}>
+                <div className={'flex p-6 2xl:p-4 flex-col justify-between h-40 md:h-full 2xl:h-40 w-full md:w-7/12 2xl:w-full'}>
                     <div>
                         {/* 分类 */}
                         {post?.category && <div className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
@@ -46,7 +46,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
                     {/* 摘要 */}
                     {(!showPreview || showSummary) && !post.results && (
-                        <p className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight">
+                        <p className="line-clamp-2 replace my-3 2xl:my-1 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight">
                             {post.summary}
                         </p>
                     )}

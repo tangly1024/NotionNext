@@ -5,6 +5,7 @@ import { PlusSmall } from '@/components/HeroIcons'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
+import CONFIG from '../config'
 
 /**
  * 顶部英雄区
@@ -15,8 +16,8 @@ import { useImperativeHandle, useRef, useState } from 'react'
  */
 const Hero = props => {
   return (
-        <div id="hero-wrapper" className='w-full overflow-hidden select-none px-5 mb-4'>
-            <hero id="hero" style={{ zIndex: 1 }} className="rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3" >
+        <div id="hero-wrapper" className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
+            <hero id="hero" style={{ zIndex: 1 }} className="recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3" >
                 {/* 左侧banner组 */}
                 <BannerGroup />
 
@@ -34,7 +35,7 @@ const Hero = props => {
 function BannerGroup() {
   return (
         // 左侧英雄区
-        <div id='hero-left-wrapper' className='flex flex-col flex-1 mr-2 max-w-[37rem]'>
+        <div id='bannerGroup' className='flex flex-col justify-between flex-1 mr-2 max-w-[42rem]'>
             {/* 动图 */}
             <Banner />
             {/* 导航分类 */}
@@ -48,7 +49,44 @@ function BannerGroup() {
  * @returns
  */
 function Banner() {
-  return <div className="h-full bg-white rounded-xl border mb-3 hidden xl:block"></div>
+  return <div id='banners' className="h-full bg-white rounded-xl border mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
+
+        <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
+            <div className='text-4xl font-bold mb-3'>分享写作<br />与商业思维</div>
+            <div className='text-xs text-gray-600'>TANGLY1024.COM</div>
+        </div>
+
+        {/* 斜向滚动的图标 */}
+        <TagsGroupBar />
+    </div>
+}
+
+/**
+ * 图标滚动标签组
+ * 英雄区左上角banner条中斜向滚动的图标
+ */
+function TagsGroupBar() {
+  const groupIcons = CONFIG.GROUP_ICONS.concat(CONFIG.GROUP_ICONS)
+  return (
+        <div className="tags-group-all flex -rotate-[30deg]">
+            <div className="tags-group-wrapper flex flex-nowrap absolute top-16">
+                {groupIcons?.map(g => {
+                  return (<>
+                        <div className="tags-group-icon-pair ml-6 select-none">
+                            <div style={{ background: g.color_1 }} className={'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={g.img_1} title={g.title_1} className='w-2/3' />
+                            </div>
+                            <div style={{ background: g.color_2 }} className={'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={g.img_2} title={g.title_2} className='w-2/3' />
+                            </div>
+                        </div>
+                    </>)
+                })}
+            </div>
+        </div>
+  )
 }
 
 /**
@@ -58,20 +96,20 @@ function Banner() {
 function GroupMenu() {
   return (
         <div className="h-[165px] select-none  xl:h-20 flex flex-col w-48 justify-between xl:space-y-0 xl:flex-row xl:w-full xl:flex-nowrap xl:space-x-3">
-            <Link href="/tag/必看精选" className="bg-blue-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-300 ease-in-out">
+            <Link href="/tag/必看精选" className="bg-blue-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative">
                     必看精选
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
             </Link>
-            <Link href="/tag/热门文章" className="bg-orange-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-300 ease-in-out">
+            <Link href="/tag/热门文章" className="bg-orange-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative">
                     热门文章
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
             </Link>
             {/* 第三个标签在小屏上不显示 */}
-            <Link href="/tag/实用教程" className="bg-emerald-500 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-300 ease-in-out">
+            <Link href="/tag/实用教程" className="bg-emerald-500 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative">
                     实用教程
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
@@ -120,8 +158,8 @@ function TodayCard({ cRef }) {
   const [isCoverUp, setIsCoverUp] = useState(true)
 
   /**
- * 外部可以调用此方法
- */
+         * 外部可以调用此方法
+         */
   useImperativeHandle(cRef, () => {
     return {
       coverUp: () => {
@@ -131,28 +169,28 @@ function TodayCard({ cRef }) {
   })
 
   /**
- * 点击更多
- * @param {*} e
- */
+         * 点击更多
+         * @param {*} e
+         */
   function handleClickMore(e) {
     e.stopPropagation()
     setIsCoverUp(false)
   }
 
   /**
-    * 点击卡片跳转的链接
-    * @param {*} e
-    */
+       * 点击卡片跳转的链接
+       * @param {*} e
+       */
   function handleCardClick(e) {
     router.push('https://tangly1024.com')
   }
 
   return <div id='today-card' className={`${isCoverUp ? ' ' : 'pointer-events-none'} overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
-        <div id='card-body' onClick={handleCardClick} className={`${isCoverUp ? 'opacity-100 cursor-pointer' : 'opacity-0 transform scale-110 pointer-events-none'} shadow transition-all duration-150today-card h-full bg-[#0E57D5] rounded-xl relative overflow-hidden flex items-end`}>
+        <div id='card-body' onClick={handleCardClick} className={`${isCoverUp ? 'opacity-100 cursor-pointer' : 'opacity-0 transform scale-110 pointer-events-none'} shadow transition-all duration-200 today-card h-full bg-[#0E57D5] rounded-xl relative overflow-hidden flex items-end`}>
             <div id='today-card-info' className='z-10 flex justify-between w-full relative text-white p-10 items-end'>
                 <div className='flex flex-col'>
-                    <div className='text-sm font-light'>新版上线</div>
-                    <div className='text-3xl font-extrabold'>NotionNext4.0 轻松定制主题</div>
+                    <div className='text-xs font-light'>新版上线</div>
+                    <div className='text-3xl font-bold'>NotionNext4.0 轻松定制主题</div>
                 </div>
                 <div onClick={handleClickMore} className={`'${isCoverUp ? '' : 'hidden pointer-events-none '} cursor-zoom-in flex items-center px-3 h-10 justify-center bg-[#425aef] hover:bg-[#4259efcb] transition-colors duration-100 rounded-3xl`}>
                     <PlusSmall className={'w-6 h-6 mr-2 bg-white rounded-full stroke-indigo-400'} />
