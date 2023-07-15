@@ -6,11 +6,13 @@
  */
 const Style = () => {
   return <style jsx global>{`
-    
-    .test {
-      text-color: red;
+    // 底色
+    body{
+        background-color: #eeedee;
     }
-
+    .dark body{
+        background-color: black;
+    }
     
     /* fukasawa的首页响应式分栏 */
     #theme-fukasawa .grid-item {

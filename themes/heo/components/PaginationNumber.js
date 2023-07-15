@@ -27,10 +27,12 @@ const PaginationNumber = ({ page, totalPage }) => {
   }
 
   /**
-   * 调到指定页
-   */
+     * 调到指定页
+     */
   const jumpToPage = () => {
-    router.push(value === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${value}`)
+    if (value) {
+      router.push(value === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${value}`)
+    }
   }
 
   return (

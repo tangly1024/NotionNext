@@ -10,7 +10,7 @@ import throttle from 'lodash.throttle'
  */
 const Header = props => {
   const [isOpen, changeShow] = useState(false)
-  const [headerBgShow, setHeaderBgShow] = useState(false)
+  const [fixedNav, setHeaderBgShow] = useState(false)
   const [whiteTitle, setWhiteTitle] = useState(false)
 
   const toggleMenuOpen = () => {
@@ -29,15 +29,15 @@ const Header = props => {
   const throttleMs = 200
 
   /**
-  * 根据滚动条，切换导航栏样式
-  */
+    * 根据滚动条，切换导航栏样式
+    */
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
     const header = document.querySelector('#header')
     const postHeader = document.querySelector('#post-bg')
 
     // 导航栏设置 白色背景
-    if (header && scrollS > 60) {
+    if (header && scrollS > 0) {
       setHeaderBgShow(true)
       setWhiteTitle(false)
     } else {
@@ -50,21 +50,23 @@ const Header = props => {
 
   return (<>
         {/* 头条 */}
-        <nav id='header' className={`${headerBgShow ? 'bg-white' : 'bg-none'} ${whiteTitle ? 'text-white' : 'text-black'} h-16 flex justify-center items-center fixed top-0 duration-150 transition-all  w-full z-20 transform`}>
-            <div className='w-full max-w-[86rem] mx-auto flex justify-between items-center px-8'>
-                <div className='flex'>
-                    <Logo {...props} />
-                </div>
+        <header id='header' className={' h-16 w-full z-20 '}>
+            <nav className={`${fixedNav ? 'fixed bg-white' : 'relative bg-none'} ${whiteTitle ? 'text-white' : 'text-black'}  h-16 top-0 w-full`}>
+                <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-8'>
+                    <div className='flex'>
+                        <Logo {...props} />
+                    </div>
 
-                {/* 右侧功能 */}
-                <div className='mr-1 justify-end items-center '>
-                    <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
-                    <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
-                        {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                    {/* 右侧功能 */}
+                    <div className='mr-1 justify-end items-center '>
+                        <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
+                        <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
+                            {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </header>
     </>)
 }
 

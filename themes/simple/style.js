@@ -7,6 +7,11 @@
 const Style = () => {
   return <style jsx global>{`
     
+  // 底色
+  .dark body{
+      background-color: black;
+  }
+  
   #theme-simple #announcement-content {
     /* background-color: #f6f6f6; */
   }

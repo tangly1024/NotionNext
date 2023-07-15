@@ -124,7 +124,14 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} />
+  // 博客列表上方嵌入一个 通知横幅和英雄块
+  const headerSlot = <>
+  {/* 通知横幅 */}
+  <NoticeBar />
+  <Hero {...props} />
+</>
+
+  return <LayoutPostList {...props} headerSlot={headerSlot} />
 }
 
 /**
@@ -133,18 +140,10 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  // 博客列表上方嵌入一个 通知横幅和英雄块
-  const headerSlot = <div className='mt-20'>
-        {/* 通知横幅 */}
-        <NoticeBar />
-        <Hero {...props} />
-    </div>
-
   // 右侧栏
   const slotRight = <SideRight {...props} />
 
-  return <LayoutBase {...props} headerSlot={headerSlot} slotRight={slotRight}>
-
+  return <LayoutBase {...props} slotRight={slotRight}>
        {/* 文章分类条 */}
         <CategoryBar {...props} />
 

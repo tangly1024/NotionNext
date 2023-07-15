@@ -6,9 +6,9 @@
  */
 const Style = () => {
   return <style jsx global>{`
-    
-    .test {
-      text-color: red;
+    // 底色
+    .dark body{
+        background-color: black;
     }
 
   `}</style>

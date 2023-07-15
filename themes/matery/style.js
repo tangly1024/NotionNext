@@ -6,9 +6,12 @@
  */
 const Style = () => {
   return <style jsx global>{`
-    
-    .test {
-      text-color: red;
+    // 底色
+    body{
+        background-color: #f5f5f5
+    }
+    .dark body{
+        background-color: black;
     }
 
     /* 设置了从上到下的渐变黑色 */

@@ -6,8 +6,8 @@
  */
 const Style = () => {
   return <style jsx global>{`
-    .test {
-      text-color: red;
+    body {
+        background-color:  #f7f9fe;
     }
 
     // 公告栏中的字体固定白色
