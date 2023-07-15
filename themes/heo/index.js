@@ -4,7 +4,7 @@ import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
-import Header from './components/Header'
+import NavBar from './components/NavBar'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
@@ -53,23 +53,8 @@ const LayoutBase = props => {
             <CommonHead meta={meta} siteInfo={siteInfo} />
             <Style />
 
-            {/* 顶部导航 */}
-            <Header {...props} />
-
-            {/* 顶部嵌入 首页放hero，文章页放大图 */}
-            <Transition
-                show={!onLoading}
-                appear={true}
-                enter="transition ease-in-out duration-700 transform order-first"
-                enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-16"
-                unmount={false}
-            >
-                {headerSlot}
-            </Transition>
+            {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
+            {headerSlot}
 
             {/* 主区块 */}
             <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative px-5'}>
@@ -124,12 +109,13 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  // 博客列表上方嵌入一个 通知横幅和英雄块
-  const headerSlot = <>
-  {/* 通知横幅 */}
-  <NoticeBar />
-  <Hero {...props} />
-</>
+  const headerSlot = <header>
+        {/* 顶部导航 */}
+        <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
+        {/* 通知横幅 */}
+        <NoticeBar />
+        <Hero {...props} />
+    </header>
 
   return <LayoutPostList {...props} headerSlot={headerSlot} />
 }
@@ -144,7 +130,7 @@ const LayoutPostList = (props) => {
   const slotRight = <SideRight {...props} />
 
   return <LayoutBase {...props} slotRight={slotRight}>
-       {/* 文章分类条 */}
+        {/* 文章分类条 */}
         <CategoryBar {...props} />
 
         {BLOG.POST_LIST_STYLE === 'page'
@@ -224,8 +210,14 @@ const LayoutSlug = props => {
   const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
   // 右侧栏
   const slotRight = <SideRight {...props} />
+  const headerSlot = <header>
+        {/* 顶部导航 */}
+        <div id='nav-bar-wrapper'><NavBar {...props} /></div>
+        <PostHeader {...props} />
+    </header>
+
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} slotRight={slotRight}>
+        <LayoutBase {...props} headerSlot={headerSlot} showCategory={false} showTag={false} slotRight={slotRight}>
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -308,8 +300,13 @@ const Layout404 = props => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
+  const headerSlot = <header>
+        {/* 顶部导航 */}
+        <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
+    </header>
+
   return (
-        <LayoutBase {...props} className='mt-8'>
+        <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
             <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
                 {locale.COMMON.CATEGORY}
             </div>

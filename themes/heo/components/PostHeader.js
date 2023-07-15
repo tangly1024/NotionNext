@@ -17,15 +17,15 @@ export default function PostHeader({ post, siteInfo }) {
   return (
         <div id="post-bg" className="w-full h-[30rem] relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10">
 
-            <header id='article-header-cover' style={{ backdropFilter: 'blur(15px)' }} className="bg-[#0060e0] absolute top-0 w-full h-full py-10 flex justify-center items-center ">
+            <div id='article-header-cover' style={{ backdropFilter: 'blur(15px)' }} className="bg-[#0060e0] absolute top-0 w-full h-full py-10 flex justify-center items-center ">
 
                 <div id='post-cover-wrapper' style={{ filter: 'blur(15px)' }} className='opacity-50 rotate-12 translate-x-12 -mr-60'>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img id='post-cover' style={{ boxShadow: 'box-shadow:110px -130px 300px 60px #4d240c inset' }} className='w-full h-full object-cover opacity-80 min-w-[50vw] min-h-[20rem]' src={headerImage}/>
                 </div>
 
-                <div id='post-info' className='absolute z-10 flex flex-col'>
-                    <div className='mb-3 flex justify-center'>
+                <div id='post-info' className='absolute z-10 flex flex-col w-full max-w-[86rem] px-5'>
+                    <div className='mb-3 flex justify-start'>
                         {post.category && <>
                             <Link href={`/category/${post.category}`} passHref legacyBehavior>
                                 <div className="cursor-pointer px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium hover:underline duration-200 shadow-text-md text-white">
@@ -36,11 +36,11 @@ export default function PostHeader({ post, siteInfo }) {
                     </div>
 
                     {/* 文章Title */}
-                    <div className="leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white">
-                        <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />{post.title}
+                    <div className="max-w-5xl font-bold xs:text-4xl sm:text-4xl md:text-4xl md:leading-snug shadow-text-md flex justify-start text-white">
+                        <span><NotionIcon icon={post.pageIcon} className='text-4xl mx-1' /></span>{post.title}
                     </div>
 
-                    <section className="flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white dark:text-gray-400 font-light leading-8">
+                    <section className="flex-wrap shadow-text-md flex text-sm justify-start mt-4 text-white dark:text-gray-400 font-light leading-8">
 
                         <div className='flex justify-center dark:text-gray-200 text-opacity-70'>
                             {post?.type !== 'Page' && (
@@ -79,7 +79,7 @@ export default function PostHeader({ post, siteInfo }) {
 
                 <WavesArea />
 
-            </header>
+            </div>
         </div>
   )
 }

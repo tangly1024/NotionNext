@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
+import { useGlobal } from '@/lib/global'
+import { Transition } from '@headlessui/react'
 
 /**
  * 顶部英雄区
@@ -15,15 +17,28 @@ import CONFIG from '../config'
  * @returns
  */
 const Hero = props => {
+  const { onLoading } = useGlobal()
   return (
         <div id="hero-wrapper" className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
-            <hero id="hero" style={{ zIndex: 1 }} className="recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3" >
-                {/* 左侧banner组 */}
-                <BannerGroup {...props} />
+            <Transition
+                show={!onLoading}
+                appear={true}
+                enter="transition ease-in-out duration-700 transform order-first"
+                enterFrom="opacity-0 -translate-y-16"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-16"
+                unmount={false}
+            >
+                <hero id="hero" style={{ zIndex: 1 }} className="recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3" >
+                    {/* 左侧banner组 */}
+                    <BannerGroup {...props} />
 
-                {/* 右侧置顶文章组 */}
-                <TopGroup {...props} />
-            </hero>
+                    {/* 右侧置顶文章组 */}
+                    <TopGroup {...props} />
+                </hero>
+            </Transition>
         </div>
   )
 }
@@ -186,8 +201,8 @@ function TodayCard({ cRef }) {
   const [isCoverUp, setIsCoverUp] = useState(true)
 
   /**
-                   * 外部可以调用此方法
-                   */
+                     * 外部可以调用此方法
+                     */
   useImperativeHandle(cRef, () => {
     return {
       coverUp: () => {
@@ -197,18 +212,18 @@ function TodayCard({ cRef }) {
   })
 
   /**
-                   * 点击更多
-                   * @param {*} e
-                   */
+                     * 点击更多
+                     * @param {*} e
+                     */
   function handleClickMore(e) {
     e.stopPropagation()
     setIsCoverUp(false)
   }
 
   /**
-                 * 点击卡片跳转的链接
-                 * @param {*} e
-                 */
+                   * 点击卡片跳转的链接
+                   * @param {*} e
+                   */
   function handleCardClick(e) {
     router.push('https://tangly1024.com')
   }
