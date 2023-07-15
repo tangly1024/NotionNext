@@ -12,7 +12,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   return (
         <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
-            <div className={'cursor-pointer flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full hover:border-indigo-600 duration-300 transition-colors border justify-between overflow-hidden  rounded-xl bg-white '}>
+            <div className={'bg-white dark:bg-[#1e1e1e] cursor-pointer flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full  dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl  '}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
@@ -24,12 +24,12 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 )}
 
                 {/* 文字区块 */}
-                <div className={'flex p-6 2xl:p-4 flex-col justify-between h-40 md:h-full 2xl:h-40 w-full md:w-7/12 2xl:w-full'}>
+                <div className={'flex p-6 2xl:p-4 flex-col justify-between h-48 md:h-full 2xl:h-48 w-full md:w-7/12 2xl:w-full'}>
                     <div>
                         {/* 分类 */}
                         {post?.category && <div className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
                             <Link passHref href={`/category/${post.category}`}
-                                className="cursor-pointer text-xs font-normal menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform">
+                                className="cursor-pointer text-xs font-normal menu-link hover:text-indigo-700  dark:text-gray-600 transform">
                                 {post.category}
                             </Link>
                         </div>}
@@ -38,8 +38,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         <Link
                             href={`${BLOG.SUB_PATH}/${post.slug}`}
                             passHref
-                            className={' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 line-clamp-2 replace cursor-pointer text-2xl font-extrabold leading-tight'}>
-
+                            className={' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 dark:group-hover:text-yellow-600 line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'}>
                             <span className='menu-link '>{post.title}</span>
                         </Link>
                     </div>

@@ -73,18 +73,18 @@ function Banner(props) {
     router.push(randomPost.slug)
   }
 
-  return <div id='banners' onClick={handleClickBanner} className="group h-full bg-white rounded-xl border mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
+  return <div id='banners' onClick={handleClickBanner} className="group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
 
         <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
-            <div className='text-4xl font-bold mb-3'>分享编程<br />与思维认知</div>
-            <div className='text-xs text-gray-600'>TANGLY1024.COM</div>
+            <div className='text-4xl font-bold mb-3  dark:text-white'>分享编程<br />与思维认知</div>
+            <div className='text-xs text-gray-600  dark:text-gray-200'>TANGLY1024.COM</div>
         </div>
 
         {/* 斜向滚动的图标 */}
         <TagsGroupBar />
 
         {/* 遮罩 */}
-        <div id='banner-cover' style={{ backdropFilter: 'blur(15px)' }} className={'opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'}>
+        <div id='banner-cover' style={{ backdropFilter: 'blur(15px)' }} className={'opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] dark:bg-[#dca846] dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'}>
             <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
                 <div className='text-7xl text-white font-extrabold'>随便逛逛</div>
                 <div className='-ml-3 text-gray-300'><ArrowSmallRight className={'w-24 h-24 stroke-2'} /></div>
@@ -212,9 +212,9 @@ function TodayCard({ cRef }) {
   })
 
   /**
-                     * 点击更多
-                     * @param {*} e
-                     */
+     * 点击更多
+     * @param {*} e
+     */
   function handleClickMore(e) {
     e.stopPropagation()
     setIsCoverUp(false)

@@ -58,7 +58,7 @@ const NavBar = props => {
 
   return (<>
         {/* 头条 */}
-        <nav id='nav' className={`${fixedNav ? 'fixed' : 'relative bg-none'} ${textWhite ? 'text-white ' : 'text-black'}  ${navBgWhite ? 'bg-white' : 'bg-none'} z-20 h-16 top-0 w-full`}>
+        <nav id='nav' className={`${fixedNav ? 'fixed' : 'relative bg-none'} ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  ${navBgWhite ? 'bg-white dark:bg-[#18171d]' : 'bg-none'} z-20 h-16 top-0 w-full`}>
             <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-8'>
                 <div className='flex'>
                     <Logo {...props} />

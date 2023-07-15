@@ -10,7 +10,7 @@ import Link from 'next/link'
 const TagGroups = ({ tags, currentTag }) => {
   if (!tags) return <></>
   return (
-        <div id='tags-group' className='dark:border-gray-600 space-y-2'>
+        <div id='tags-group' className='dark:border-gray-700 space-y-2'>
             {
                 tags.map(tag => {
                   return <>

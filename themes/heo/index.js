@@ -49,7 +49,7 @@ const LayoutBase = props => {
   }
 
   return (
-        <div id='theme-heo' className='bg-[#f7f9fe] h-full min-h-screen flex flex-col overflow-hidden'>
+        <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col overflow-hidden'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
             <Style />
@@ -118,7 +118,14 @@ const LayoutIndex = (props) => {
         <Hero {...props} />
     </header>
 
-  return <LayoutPostList {...props} headerSlot={headerSlot} />
+  // 右侧栏 用户信息+标签列表
+  const slotRight = <SideRight {...props} />
+
+  return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
+        {/* 文章分类条 */}
+        <CategoryBar {...props} />
+        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+    </LayoutBase>
 }
 
 /**
@@ -301,7 +308,7 @@ const Layout404 = props => {
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img className="error-img h-60 md:h-full p-4" src={'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'}></img>
 
-                           {/* 右侧文字 */}
+                            {/* 右侧文字 */}
                             <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>
                                 <h1 className='error-title font-extrabold md:text-9xl text-7xl'>404</h1>
                                 <div>请尝试站内搜索寻找文章</div>

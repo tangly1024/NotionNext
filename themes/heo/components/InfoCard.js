@@ -14,7 +14,7 @@ import Card from './Card'
 export function InfoCard(props) {
   const { siteInfo, notice } = props
   return (
-        <Card className='bg-[#4f65f0] text-white flex flex-col w-72'>
+        <Card className='bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col w-72'>
             <div className='flex justify-between'>
                 <GreetingsWords />
                 <div className='justify-center items-center flex dark:text-gray-100 transform duration-200 cursor-pointer'>

@@ -6,7 +6,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
     return <></>
   }
   return <>
-    <div id='category-list' className='dark:border-gray-600 flex flex-wrap  mx-4'>
+    <div id='category-list' className='dark:border-gray-700 flex flex-wrap  mx-4'>
       {categories.map(category => {
         const selected = currentCategory === category.name
         return (
@@ -22,10 +22,10 @@ const CategoryGroup = ({ currentCategory, categories }) => {
             <div> <i className={`mr-2 fas ${selected ? 'fa-folder-open' : 'fa-folder'}`} />{category.name}({category.count})</div>
 
           </Link>
-        );
+        )
       })}
     </div>
-  </>;
+  </>
 }
 
 export default CategoryGroup
