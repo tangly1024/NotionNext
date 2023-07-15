@@ -4,7 +4,6 @@ import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import dynamic from 'next/dynamic'
 import Live2D from '@/components/Live2D'
-import MenuGroupCard from './MenuGroupCard'
 import FlipCard from '@/components/FlipCard'
 import Link from 'next/link'
 import { AnalyticsCard } from './AnalyticsCard'
@@ -63,7 +62,6 @@ export default function SideRight(props) {
             <Card className={'sticky top-20 bg-white'}>
                 <TagGroups tags={tagOptions} currentTag={currentTag} />
                 <hr className='mx-1 flex border-dashed relative my-2'/>
-                <MenuGroupCard {...props} />
                 <AnalyticsCard {...props} />
             </Card>
 

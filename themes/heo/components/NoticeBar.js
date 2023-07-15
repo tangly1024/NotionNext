@@ -1,18 +1,37 @@
 
 import { ArrowRightCircle } from '@/components/HeroIcons'
-import Link from 'next/link'
+import CONFIG from '../config'
+import Swipe from './Swipe'
 
 /**
  * 通知横幅
  */
 export function NoticeBar() {
+  const notices = CONFIG.NOTICE_BAR
+
+  if (!notices || notices?.length === 0) {
+    return <></>
+  }
+
   return (
-          <notice className="max-w-[86rem] w-full mx-auto flex h-12 mb-4 px-5 font-bold">
-              <Link href='https://tangly1024.com' className="bg-white hover:border-indigo-600 duration-200 hover:shadow-md transition-all rounded-xl border w-full h-full flex items-center justify-between px-5">
-                  <span className='whitespace-nowrap'>此刻</span>
-                  <div className="w-full h-full hover:text-indigo-600 flex justify-center items-center">欢迎来到我的博客</div>
-                  <div><ArrowRightCircle className={'w-5 h-5'} /></div>
-              </Link>
-          </notice>
+        <notice className="max-w-[86rem] w-full mx-auto flex h-12 mb-4 px-5 font-bold">
+            <div className="group cursor-pointer bg-white hover:border-indigo-600 duration-200 hover:shadow-md transition-all rounded-xl border w-full h-full flex items-center justify-between px-5">
+                <span className='whitespace-nowrap'>此刻</span>
+                <div className="w-full h-full hover:text-indigo-600 flex justify-center items-center">
+                    <Swipe items={notices} />
+                </div>
+                <div><ArrowRightCircle className={'w-5 h-5'} /></div>
+            </div>
+        </notice>
   )
 }
+
+/**
+ *  {notices?.map((n, index) => {
+              return <Link key={index} href={n.url} className="bg-white hover:border-indigo-600 duration-200 hover:shadow-md transition-all rounded-xl border w-full h-full flex items-center justify-between px-5">
+                    <span className='whitespace-nowrap'>{n.category}</span>
+                    <div className="w-full h-full hover:text-indigo-600 flex justify-center items-center">{n.title}</div>
+                    <div><ArrowRightCircle className={'w-5 h-5'} /></div>
+                </Link>
+            })}
+ */

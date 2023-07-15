@@ -134,11 +134,11 @@ const LayoutIndex = (props) => {
  */
 const LayoutPostList = (props) => {
   // 博客列表上方嵌入一个 通知横幅和英雄块
-  const headerSlot = <>
+  const headerSlot = <div className='mt-20'>
         {/* 通知横幅 */}
         <NoticeBar />
         <Hero {...props} />
-    </>
+    </div>
 
   // 右侧栏
   const slotRight = <SideRight {...props} />

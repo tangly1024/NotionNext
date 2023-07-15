@@ -1,6 +1,15 @@
 const CONFIG = {
   HOME_BANNER_ENABLE: true,
-  // 欢迎语
+
+  SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+
+  // 首页顶部通知条滚动内容，如不需要可以留空 []
+  NOTICE_BAR: [
+    { url: 'https://blog.tangly1024.com', title: '欢迎来到我的博客' },
+    { url: 'https://docs.tangly1024.com', title: '访问文档中心获取更多帮助' }
+  ],
+
+  // 个人资料卡牌欢迎语
   INFOCARD_GREETINGS: [
     '你好！我是',
     '🔍 分享与热心帮助',
