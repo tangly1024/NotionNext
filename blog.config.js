@@ -291,7 +291,7 @@ const BLOG = {
   // <---- 站点统计
 
   // 谷歌广告
-  ADSENSE_GOOGLE_ID: process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_ID || '', // 谷歌广告ID e.g ca-pub-xxxxxxxxxxxxxxxx
+  ADSENSE_GOOGLE_ID: process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_ID || 'ca-pub-4820812869251361', // 谷歌广告ID e.g ca-pub-xxxxxxxxxxxxxxxx
 
   // 自定义配置notion数据库字段名
   NOTION_PROPERTY_NAME: {
