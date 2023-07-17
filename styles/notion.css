@@ -443,6 +443,7 @@ summary > .notion-h {
 
 .notion-h:hover .notion-hash-link {
   opacity: 1;
+  @apply dark:fill-gray-200
 }
 
 .notion-hash-link {
@@ -1941,10 +1942,6 @@ svg + .notion-page-title-text {
 
 .notion-asset-wrapper-pdf > div {
     display: block !important;
-}
-
-::selection {
-    @apply bg-blue-500 text-gray-50 !important;
 }
 
 /* https://github.com/kchen0x */

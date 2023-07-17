@@ -27,6 +27,7 @@ import ArticleDetail from './components/ArticleDetail'
 import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -73,6 +74,8 @@ const LayoutBase = (props) => {
         <div id='theme-next'>
             {/* SEO相关 */}
             <CommonHead meta={meta} />
+            <Style/>
+
             {/* 移动端顶部导航栏 */}
             <TopNav {...props} />
 

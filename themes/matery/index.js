@@ -4,7 +4,6 @@ import TopNav from './components/TopNav'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
 import Footer from './components/Footer'
 import { useEffect } from 'react'
 import RightFloatButtons from './components/RightFloatButtons'
@@ -17,7 +16,7 @@ import Hero from './components/Hero'
 import Announcement from './components/Announcement'
 import CatalogWrapper from './components/CatalogWrapper'
 import TagItemMiddle from './components/TagItemMiddle'
-import HeaderArticle from './components/HeaderArticle'
+import PostHeader from './components/PostHeader'
 import Link from 'next/link'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import Comment from '@/components/Comment'
@@ -31,6 +30,7 @@ import Card from './components/Card'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
 
 /**
  * 基础布局
@@ -43,14 +43,11 @@ const LayoutBase = props => {
   const { children, headerSlot, meta, siteInfo, containerSlot, post } = props
   const { onLoading } = useGlobal()
 
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-matery.css', 'css')
-  }
-
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
             {/* SEO相关 */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
+            <Style/>
 
             {/* 顶部导航栏 */}
             <TopNav {...props} />
@@ -177,7 +174,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
+  return <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
         <Card className='w-full -mt-32'>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
                 {Object.keys(archivePosts).map(archiveTitle => (
@@ -200,7 +197,7 @@ const LayoutArchive = (props) => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
-  return (<LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
+  return (<LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
 
         <div id='inner-wrapper' className={'w-full lg:max-w-3xl 2xl:max-w-4xl'} >
 
@@ -310,7 +307,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
 
   return (
-        <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
+        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
 
             <div id='inner-wrapper' className='w-full'>
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300">
@@ -340,7 +337,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} >
+        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
             <div id='inner-wrapper' className='w-full drop-shadow-xl'>
 
                 <div className="-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">

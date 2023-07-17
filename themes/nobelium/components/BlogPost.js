@@ -23,7 +23,7 @@ const BlogPost = ({ post }) => {
       </article>
 
     </Link>)
-  );
+  )
 }
 
 export default BlogPost
