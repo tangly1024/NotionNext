@@ -6,6 +6,7 @@ import throttle from 'lodash.throttle'
 import RandomPostButton from './RandomPostButton'
 import SearchButton from './SearchButton'
 import SlideOver from './SlideOver'
+import ReadingProgress from './ReadingProgress'
 /**
  * 顶部导航
  * @param {*} param0
@@ -75,6 +76,8 @@ const NavBar = props => {
                 <div className='flex justify-center items-center space-x-1'>
                     <RandomPostButton {...props} />
                     <SearchButton />
+                    <ReadingProgress/>
+
                     {/* 移动端菜单按钮 */}
                     <div onClick={toggleMenuOpen} className='flex lg:hidden w-8 justify-center items-center h-8 cursor-pointer'>
                         <i className='fas fa-bars' />
