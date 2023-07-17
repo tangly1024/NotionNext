@@ -11,18 +11,19 @@ export const MenuItemDrop = ({ link }) => {
 
   return <div onMouseOver={() => changeShow(true)} onMouseOut={() => changeShow(false)} >
 
+        {/* 不含子菜单 */}
         {!hasSubMenu &&
             <Link
                 href={link?.to}
-                className="font-sans menu-link pl-2 pr-4  no-underline tracking-widest pb-1">
-                {link?.icon && <i className={link?.icon}/>} {link?.name}
+                className="font-sans hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest">
+                {link?.icon && <i className={link?.icon} />} {link?.name}
                 {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
             </Link>}
 
+        {/* 含子菜单的按钮 */}
         {hasSubMenu && <>
-            <div className='cursor-pointer font-sans menu-link pl-2 pr-4  no-underline tracking-widest pb-1'>
-                {link?.icon && <i className={link?.icon}/>} {link?.name}
-                <i className={`px-2 fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i>
+            <div className='cursor-pointer font-sans hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
+                {link?.icon && <i className={link?.icon} />} {link?.name}
             </div>
         </>}
 

@@ -17,13 +17,13 @@ export default function FlipCard(props) {
             <div className={`flip-card-front ${props.className || ''}`} onMouseEnter={handleCardFlip}>
                 {props.frontContent}
             </div>
-            <div className={`flip-card-back ${props.className || ''}`} onMouseOut={handleCardFlip}>
+            <div className={`flip-card-back ${props.className || ''}`} onMouseLeave={handleCardFlip}>
                 {props.backContent}
             </div>
             <style jsx>{`
           .flip-card {
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
             display: inline-block;
             position: relative;
             transform-style: preserve-3d;
@@ -41,12 +41,10 @@ export default function FlipCard(props) {
           .flip-card-front {
             z-index: 2;
             transform: rotateY(0);
-            background-color: #f1f1f1;
           }
           
           .flip-card-back {
             transform: rotateY(180deg);
-            background-color: #888;
           }
           
           .flip-card.flipped {

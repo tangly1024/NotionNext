@@ -4,9 +4,9 @@ import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import dynamic from 'next/dynamic'
 import Live2D from '@/components/Live2D'
-import FlipCard from '@/components/FlipCard'
-import Link from 'next/link'
 import { AnalyticsCard } from './AnalyticsCard'
+import TouchMeCard from './TouchMeCard'
+import LatestPostsGroupMini from './LatestPostsGroupMini'
 
 const FaceBookPage = dynamic(
   () => {
@@ -32,47 +32,37 @@ export default function SideRight(props) {
     currentTag, rightAreaSlot
   } = props
 
-  console.log('props', props)
   return (
-        <div id='sideRight' className='hidden xl:block w-72 space-y-4'>
+        <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
 
             <InfoCard {...props} className='w-72' />
 
-            <div className={'relative h-28 border rounded-xl lg:p-6 p-4 bg-[#4f65f0] text-white flex flex-col'}>
+            <div className='sticky top-20 space-y-4'>
+                {post && post.toc && post.toc.length > 0 && (
+                    <Card className='bg-white dark:bg-[#1e1e1e]'>
+                        <Catalog toc={post.toc} />
+                    </Card>
+                )}
 
-                <FlipCard
-                    className='cursor-pointer'
-                    frontContent={
-                        <div>
-                            <h2 className='font-[1000] text-3xl'>交流频道</h2>
-                            <h3 className='pt-2'>加入我们的社群讨论分享</h3>
-                            <div className='absolute left-0 top-0 w-full h-full' style={{ background: 'url(https://bu.dusays.com/2023/05/16/64633c4cd36a9.png) center center no-repeat' }}></div>
-                        </div>}
+                {/* 联系交流群 */}
+                <TouchMeCard />
 
-                    backContent={<div className='font-[1000] text-xl'>
-                        <Link href='https://docs.tangly1024.com/article/how-to-question'>
-                            点击查看联系方式
-                        </Link>
-                    </div>}
-                />
-
-            </div>
-
-            {/* 标签和成绩 */}
-            <Card className={'sticky top-20 bg-white'}>
-                <TagGroups tags={tagOptions} currentTag={currentTag} />
-                <hr className='mx-1 flex border-dashed relative my-2'/>
-                <AnalyticsCard {...props} />
-            </Card>
-
-            <div className='sticky top-20'>
-                {post && post.toc && post.toc.length > 1 && <Card>
-                    <Catalog toc={post.toc} />
-                </Card>}
+                {/* 最新文章列表 */}
+                <div className={'border dark:border-gray-700 rounded-xl lg:p-6 p-4 hidden lg:block bg-white'}>
+                    <LatestPostsGroupMini {...props} />
+                </div>
 
                 {rightAreaSlot}
+
                 <FaceBookPage />
                 <Live2D />
+
+                {/* 标签和成绩 */}
+                <Card className={'bg-white dark:bg-[#1e1e1e] dark:text-white'}>
+                    <TagGroups tags={tagOptions} currentTag={currentTag} />
+                    <hr className='mx-1 flex border-dashed relative my-4' />
+                    <AnalyticsCard {...props} />
+                </Card>
             </div>
 
         </div>

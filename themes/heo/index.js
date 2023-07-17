@@ -1,7 +1,7 @@
 import CONFIG from './config'
 
 import CommonHead from '@/components/CommonHead'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import NavBar from './components/NavBar'
@@ -13,12 +13,10 @@ import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
 import { useRouter } from 'next/router'
 import Mark from 'mark.js'
-import Card from './components/Card'
 import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
 import PostHeader from './components/PostHeader'
-import TocDrawer from './components/TocDrawer'
 import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
@@ -49,7 +47,7 @@ const LayoutBase = props => {
   }
 
   return (
-        <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col overflow-hidden'>
+        <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
             <Style />
@@ -67,10 +65,11 @@ const LayoutBase = props => {
                         appear={true}
                         enter="transition ease-in-out duration-700 transform order-first"
                         enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100 translate-y-0"
+                        enterTo="opacity-100"
                         leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100 translate-y-0"
+                        leaveFrom="opacity-100"
                         leaveTo="opacity-0 -translate-y-16"
+                        className='w-full h-auto'
                         unmount={false}
                     >
                         {/* 主区上部嵌入 */}
@@ -157,6 +156,11 @@ const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   const currentSearch = keyword || router?.query?.s
+  const headerSlot = <header className='post-bg'>
+        {/* 顶部导航 */}
+        <div id='nav-bar-wrapper'><NavBar {...props} /></div>
+        <PostHeader {...props} />
+    </header>
 
   useEffect(() => {
     setTimeout(() => {
@@ -177,7 +181,7 @@ const LayoutSearch = props => {
   })
 
   return (
-        <LayoutBase {...props} currentSearch={currentSearch} className='pt-8'>
+        <LayoutBase {...props} currentSearch={currentSearch} headerSlot={headerSlot}>
             {!currentSearch
               ? <SearchNav {...props} />
               : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
@@ -192,9 +196,22 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props} className='pt-8'>
-        <Card className='w-full'>
-            <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
+
+  // 右侧栏
+  const slotRight = <SideRight {...props} />
+  const headerSlot = <header>
+        {/* 顶部导航 */}
+        <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
+    </header>
+
+  // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
+
+  return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
+        <div className='p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
+            {/* 文章分类条 */}
+            <CategoryBar {...props} border={false} />
+
+            <div className='px-3'>
                 {Object.keys(archivePosts).map(archiveTitle => (
                     <BlogPostArchive
                         key={archiveTitle}
@@ -203,7 +220,7 @@ const LayoutArchive = (props) => {
                     />
                 ))}
             </div>
-        </Card>
+        </div>
     </LayoutBase>
 }
 
@@ -214,12 +231,11 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const drawerRight = useRef(null)
+  const { locale } = useGlobal()
 
-  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
   // 右侧栏
   const slotRight = <SideRight {...props} />
-  const headerSlot = <header>
+  const headerSlot = <header className='post-bg'>
         {/* 顶部导航 */}
         <div id='nav-bar-wrapper'><NavBar {...props} /></div>
         <PostHeader {...props} />
@@ -227,7 +243,7 @@ const LayoutSlug = props => {
 
   return (
         <LayoutBase {...props} headerSlot={headerSlot} showCategory={false} showTag={false} slotRight={slotRight}>
-            <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
+            <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
@@ -241,8 +257,12 @@ const LayoutSlug = props => {
                         {/* 分享 */}
                         <ShareBar post={post} />
                         {post?.type === 'Post' && <>
+
+                            {/* 版权 */}
                             <ArticleCopyright {...props} />
+                            {/* 文章推荐 */}
                             <ArticleRecommend {...props} />
+                            {/* 上一篇\下一篇文章 */}
                             <ArticleAdjacent {...props} />
                         </>}
 
@@ -251,14 +271,11 @@ const LayoutSlug = props => {
                     <div className='pt-4 border-dashed'></div>
 
                     {/* 评论互动 */}
-                    <div className="duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3">
-                        <Comment frontMatter={post} />
+                    <div className="duration-200 overflow-x-auto px-3">
+                        <div className='text-2xl dark:text-white'><i className='fas fa-comment mr-1' />{locale.COMMON.COMMENTS}</div>
+                        <Comment frontMatter={post} className='' />
                     </div>
                 </div>}
-            </div>
-
-            <div className='block lg:hidden'>
-                <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
             </div>
 
         </LayoutBase>
@@ -274,7 +291,7 @@ const Layout404 = props => {
   const { meta, siteInfo } = props
   const { onLoading } = useGlobal()
   return (
-        <div id='theme-heo' className='bg-[#f7f9fe] h-full min-h-screen flex flex-col overflow-hidden'>
+        <div id='theme-heo' className='bg-[#f7f9fe] h-full min-h-screen flex flex-col'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
             <Style />

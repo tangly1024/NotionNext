@@ -23,9 +23,8 @@ export default function SearchNav(props) {
     <div className="my-6 px-2">
         <SearchInput cRef={cRef} {...props} />
         {/* 分类 */}
-        <Card className="w-full mt-4">
-            <div className="dark:text-gray-200 mb-5 mx-3">
-                <i className="mr-4 fas fa-th" />
+        <Card className="w-full mt-4 bg-white dark:bg-[#1a191d]">
+            <div className="dark:text-gray-200 mb-5 mx-3 text-3xl">
                 {locale.COMMON.CATEGORY}:
             </div>
             <div id="category-list" className="duration-200 flex flex-wrap mx-8">
@@ -38,7 +37,7 @@ export default function SearchNav(props) {
                           legacyBehavior>
                           <div
                               className={
-                                  ' duration-300 dark:hover:text-white rounded-lg px-5 cursor-pointer py-2 hover:bg-indigo-400 hover:text-white'
+                                  ' duration-300 dark:hover:text-white dark:text-gray-200 rounded-2xl px-3 cursor-pointer py-1 hover:bg-indigo-600 dark:hover:bg-yellow-600 hover:text-white'
                               }
                           >
                               <i className="mr-4 fas fa-folder" />
@@ -50,9 +49,8 @@ export default function SearchNav(props) {
             </div>
         </Card>
         {/* 标签 */}
-        <Card className="w-full mt-4">
-            <div className="dark:text-gray-200 mb-5 ml-4">
-                <i className="mr-4 fas fa-tag" />
+        <Card className="w-full mt-4 bg-white dark:bg-[#1a191d]">
+            <div className="dark:text-gray-200 mb-5 ml-4 text-3xl">
                 {locale.COMMON.TAGS}:
             </div>
             <div id="tags-list" className="duration-200 flex flex-wrap ml-8">

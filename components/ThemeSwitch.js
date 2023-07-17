@@ -23,15 +23,15 @@ const ThemeSwitch = () => {
 
   return (<>
         <Draggable>
-            <div id="draggableBox" style={{ left: '10px', top: '85vh' }} className="fixed dark:text-white bg-gray-50 dark:bg-black z-50 border dark:border-gray-800 rounded-xl shadow-card">
-                <div className="py-2 flex items-center text-sm px-2">
-                    <DarkModeButton className='mr-1'/>
-                    <select value={theme} onChange={onSelectChange} name="cars" className=' outline-none dark:text-white bg-gray-50 dark:bg-black uppercase cursor-pointer'>
+            <div id="draggableBox" style={{ left: '10px', top: '85vh' }} className="fixed dark:text-white bg-gray-50 dark:bg-black z-50 border dark:border-gray-800 rounded-2xl shadow-card">
+                <div className="p-3 flex items-center text-sm">
+                    <DarkModeButton className='mr-2'/>
+                    <select value={theme} onChange={onSelectChange} name="cars" className='appearance-none outline-none dark:text-white bg-gray-50 dark:bg-black uppercase cursor-pointer'>
                         {THEMES?.map(t => {
                           return <option key={t} value={t}>{t}</option>
                         })}
                     </select>
-                    <i className='fas fa-palette pl-1' />
+                    <i class="fa-solid fa-paintbrush pl-2"></i>
                 </div>
             </div>
         </Draggable>

@@ -177,11 +177,14 @@ function TopGroup(props) {
             <div id='top-group' className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3'>
                 {latestPosts?.map(p => {
                   return <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={p.id}>
-                        <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white rounded-xl'>
+                        <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
                             {/* eslint-disable-next-line */}
                             <img className='h-24 object-cover' src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
-                            <div className='group-hover:text-indigo-600 line-clamp-2 overflow-hidden m-2 font-semibold'>{p?.title}</div>
-                            <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>荐</div>
+                            <div className='group-hover:text-indigo-600 group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>{p?.title}</div>
+                            {/* hover 悬浮的 ‘荐’ 字 */}
+                            <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
+                                荐
+                            </div>
                         </div>
                     </Link>
                 })}

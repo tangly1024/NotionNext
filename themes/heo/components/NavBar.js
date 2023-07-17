@@ -1,21 +1,24 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Logo from './Logo'
 
 import { MenuListTop } from './MenuListTop'
 import throttle from 'lodash.throttle'
+import RandomPostButton from './RandomPostButton'
+import SearchButton from './SearchButton'
+import SlideOver from './SlideOver'
 /**
  * 顶部导航
  * @param {*} param0
  * @returns
  */
 const NavBar = props => {
-  const [isOpen, changeShow] = useState(false)
   const [fixedNav, setFixedNav] = useState(false)
   const [textWhite, setTextWhite] = useState(false)
   const [navBgWhite, setBgWhite] = useState(false)
+  const slideOverRef = useRef()
 
   const toggleMenuOpen = () => {
-    changeShow(!isOpen)
+    slideOverRef?.current?.toggleSlideOvers()
   }
 
   // 监听滚动
@@ -41,36 +44,45 @@ const NavBar = props => {
       setBgWhite(false)
 
       // 文章详情页特殊处理
-      const postHeader = document.querySelector('#post-bg')
-      if (postHeader) {
+      if (document.querySelector('#post-bg')) {
         setFixedNav(true)
         setTextWhite(true)
         setBgWhite(false)
       }
-      return
+    } else {
+      // 向下滚动后的导航样式
+      setFixedNav(true)
+      setTextWhite(false)
+      setBgWhite(true)
     }
-
-    // 向下滚动后的导航样式
-    setFixedNav(true)
-    setTextWhite(false)
-    setBgWhite(true)
   }, throttleMs))
 
   return (<>
-        {/* 头条 */}
+        {/* 顶部导航菜单栏 */}
         <nav id='nav' className={`${fixedNav ? 'fixed' : 'relative bg-none'} ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  ${navBgWhite ? 'bg-white dark:bg-[#18171d]' : 'bg-none'} z-20 h-16 top-0 w-full`}>
             <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-8'>
+                {/* 左侧logo */}
                 <div className='flex'>
                     <Logo {...props} />
                 </div>
 
-                {/* 右侧功能 */}
-                <div className='mr-1 justify-end items-center '>
+                {/* 中间菜单 */}
+                <div className='mr-1 justify-end items-center hidden lg:block'>
                     <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
-                    <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
-                        {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                </div>
+
+                {/* 右侧固定 */}
+                <div className='flex justify-center items-center space-x-1'>
+                    <RandomPostButton {...props} />
+                    <SearchButton />
+                    {/* 移动端菜单按钮 */}
+                    <div onClick={toggleMenuOpen} className='flex lg:hidden w-8 justify-center items-center h-8 cursor-pointer'>
+                        <i className='fas fa-bars' />
                     </div>
                 </div>
+
+                {/* 右边侧拉抽屉 */}
+                <SlideOver cRef={slideOverRef} {...props}/>
             </div>
         </nav>
     </>)

@@ -90,7 +90,7 @@ const LayoutBase = props => {
 
             </main>
 
-            {/* 弹出框 */}
+            {/* 弹出框 - 用于放大显示首页图片等作用 */}
             <Modal {...props}/>
 
             {/* 桌面端底部导航栏 */}
