@@ -36,7 +36,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   }
 
   return (
-        <div className="mt-10 mb-5 flex justify-between items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2">
+        <div className="mt-10 mb-5 flex justify-between items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2 overflow-x-auto">
             {/* 上一页 */}
             <Link
                 href={{
@@ -104,7 +104,7 @@ function getPageElement(page, currentPage, pagePrefix) {
             className={
                 (selected
                   ? 'bg-indigo-600 dark:bg-yellow-600 text-white '
-                  : 'dark:bg-[#1e1e1e]') +
+                  : 'dark:bg-[#1e1e1e] bg-white') +
                 ' hover:border-indigo-600 dark:hover:bg-yellow-600 dark:border-gray-600 px-4 border py-2 rounded-lg drop-shadow-sm duration-200 transition-colors'
             }>
 
