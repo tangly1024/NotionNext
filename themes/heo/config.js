@@ -5,11 +5,22 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
-    { url: 'https://blog.tangly1024.com', title: '欢迎来到我的博客' },
-    { url: 'https://docs.tangly1024.com', title: '访问文档中心获取更多帮助' }
+    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
+    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
   ],
 
-  // 个人资料卡牌欢迎语
+  // 英雄区(首页顶部大卡)
+  HERO_TITLE_1: '分享编程',
+  HERO_TITLE_2: '与思维认知',
+  HERO_TITLE_3: 'TANGLY1024.COM',
+  HERO_TITLE_4: '新版上线',
+  HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
+  // 英雄区显示三个置顶分类
+  HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
+  HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
+  HERO_CATEGORY_3: { title: '使用教程', url: '/tag/实用教程' },
+
+  // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
     '你好！我是',
     '🔍 分享与热心帮助',
@@ -80,10 +91,7 @@ const CONFIG = {
     }
   ],
 
-  HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
-  // 已知未修复bug, 在移动端开启true后会加载不出图片； 暂时建议设置为false。
-  HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂动； false则随鼠标滚动 ;
-
+  // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
   MENU_INDEX: true, // 显示首页
   MENU_CATEGORY: true, // 显示分类

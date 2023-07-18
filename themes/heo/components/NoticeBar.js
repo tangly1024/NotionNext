@@ -25,13 +25,3 @@ export function NoticeBar() {
         </notice>
   )
 }
-
-/**
- *  {notices?.map((n, index) => {
-              return <Link key={index} href={n.url} className="bg-white hover:border-indigo-600 duration-200 hover:shadow-md transition-all rounded-xl border w-full h-full flex items-center justify-between px-5">
-                    <span className='whitespace-nowrap'>{n.category}</span>
-                    <div className="w-full h-full hover:text-indigo-600 flex justify-center items-center">{n.title}</div>
-                    <div><ArrowRightCircle className={'w-5 h-5'} /></div>
-                </Link>
-            })}
- */

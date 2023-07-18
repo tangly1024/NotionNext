@@ -36,35 +36,35 @@ export function Swipe({ items }) {
                 </div>
             ))}
             <style jsx>{`
-      .slide-in {
-        animation-name: slide-in;
-        animation-duration: 0.5s;
-        animation-fill-mode: forwards;
-      }
-      
-      .slide-out {
-        animation-name: slide-out;
-        animation-duration: 0.5s;
-        animation-fill-mode: forwards;
-      }
-      
-      @keyframes slide-in {
-        from {
-          transform: translateY(100%);
-        }
-        to {
-          transform: translateY(0);
-        }
-      }
-      
-      @keyframes slide-out {
-        from {
-          transform: translateY(0);
-        }
-        to {
-          transform: translateY(-100%);
-        }
-      }
+            .slide-in {
+                animation-name: slide-in;
+                animation-duration: 0.5s;
+                animation-fill-mode: forwards;
+            }
+            
+            .slide-out {
+                animation-name: slide-out;
+                animation-duration: 0.5s;
+                animation-fill-mode: forwards;
+            }
+            
+            @keyframes slide-in {
+                from {
+                transform: translateY(100%);
+                }
+                to {
+                transform: translateY(0);
+                }
+            }
+            
+            @keyframes slide-out {
+                from {
+                transform: translateY(0);
+                }
+                to {
+                transform: translateY(-100%);
+                }
+            }
       `}</style>
         </div>
   )
