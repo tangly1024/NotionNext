@@ -31,6 +31,7 @@ import { NoticeBar } from './components/NoticeBar'
 import { HashTag } from '@/components/HeroIcons'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import FloatTocButton from './components/FloatTocButton'
+import CustomContextMenu from './components/CustomContextMenu'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -96,6 +97,9 @@ const LayoutBase = props => {
                     </Transition>
                 </div>
             </main>
+
+            {/* 自定义右键菜单 */}
+            <CustomContextMenu {...props}/>
 
             {/* 页脚 */}
             <Footer title={siteInfo?.title || BLOG.TITLE} />
@@ -400,7 +404,7 @@ const LayoutTagIndex = props => {
             <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
                 {locale.COMMON.TAGS}
             </div>
-            <div id="tag-list" className="duration-200 flex flex-wrap space-x-5 m-10 justify-center">
+            <div id="tag-list" className="duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center">
                 {tagOptions.map(tag => {
                   return (
                         <Link key={tag.name} href={`/tag/${tag.name}`} passHref legacyBehavior>
