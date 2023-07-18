@@ -17,7 +17,6 @@ export const MenuItemDrop = ({ link }) => {
                 href={link?.to}
                 className="font-sans hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest">
                 {link?.icon && <i className={link?.icon} />} {link?.name}
-                {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
             </Link>}
 
         {/* 含子菜单的按钮 */}

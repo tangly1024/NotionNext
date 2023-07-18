@@ -88,7 +88,9 @@ const PaginationNumber = ({ page, totalPage }) => {
             </Link>
         </div>
 
-        <div className='w-full flex flex-row'>
+        {/* 移动端分页 */}
+
+        <div className='lg:hidden w-full flex flex-row'>
             {/* 上一页 */}
             <Link
                 href={{

@@ -4,9 +4,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import DarkModeButton from '@/components/DarkModeButton'
 import Link from 'next/link'
 import TagGroups from './TagGroups'
+import { MenuListSide } from './MenuListSide'
 
 /**
  * 侧边抽屉
+ * 移动端的菜单在这里
  */
 export default function SlideOver(props) {
   const { cRef, tagOptions } = props
@@ -88,6 +90,8 @@ export default function SlideOver(props) {
                                                     <Button title={'主页'} url={'/'} />
                                                     <Button title={'关于'} url={'/about'} />
                                                 </div>
+                                                {/* 用户自定义菜单 */}
+                                                <MenuListSide {...props}/>
                                             </section>
 
                                             <section className='space-y-2 flex flex-col'>
