@@ -1,5 +1,5 @@
 
-import { Fragment, useImperativeHandle, useState } from 'react'
+import { Fragment, useImperativeHandle, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import DarkModeButton from '@/components/DarkModeButton'
 import Link from 'next/link'
@@ -13,8 +13,8 @@ export default function SlideOver(props) {
   const [open, setOpen] = useState(false)
 
   /**
-              * 函数组件暴露方法useImperativeHandle
-              */
+                    * 函数组件暴露方法useImperativeHandle
+                    */
   useImperativeHandle(cRef, () => ({
     toggleSlideOvers: toggleSlideOvers
   }))
@@ -77,25 +77,22 @@ export default function SlideOver(props) {
 
                                             <section className='space-y-2 flex flex-col'>
                                                 <div>功能</div>
-                                                <div className={'flex justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white dark:bg-[#ff953e]  rounded-lg'}> <DarkModeButton /> 显示模式</div>
+                                                {/* 切换深色模式 */}
+                                                <DarkModeBlockButton />
                                             </section>
 
                                             <section className='space-y-2 flex flex-col'>
                                                 <div>博客</div>
-
+                                                {/* 导航按钮 */}
                                                 <div className='gap-2 grid grid-cols-2'>
-                                                    <Link href='/' className={'flex cursor-pointer justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white hover:bg-blue-600 dark:bg-[#1e1e1e] rounded-lg'}>
-                                                        主页
-                                                    </Link>
-                                                    <Link href='/about' className={'flex cursor-pointer justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white hover:bg-blue-600 dark:bg-[#1e1e1e] rounded-lg'}>
-                                                        关于
-                                                    </Link>
+                                                    <Button title={'主页'} url={'/'} />
+                                                    <Button title={'关于'} url={'/about'} />
                                                 </div>
                                             </section>
 
                                             <section className='space-y-2 flex flex-col'>
                                                 <div>标签</div>
-                                                <TagGroups tags={tagOptions}/>
+                                                <TagGroups tags={tagOptions} />
                                             </section>
 
                                         </div>
@@ -108,4 +105,26 @@ export default function SlideOver(props) {
             </Dialog>
         </Transition.Root>
   )
+}
+
+/**
+ * 一个包含图标的按钮
+ */
+function DarkModeBlockButton() {
+  const darkModeRef = useRef()
+  function handleChangeDarkMode() {
+    darkModeRef?.current?.handleChangeDarkMode()
+  }
+  return <button onClick={handleChangeDarkMode} className={'group duration-200 hover:text-white hover:shadow-md hover:bg-blue-600 flex justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white dark:bg-[#ff953e]  rounded-lg'}>
+        <DarkModeButton cRef={darkModeRef} className='group-hover:text-white' /> 显示模式
+    </button>
+}
+
+/**
+ * 一个简单的按钮
+ */
+function Button({ title, url }) {
+  return <Link href={url} className={'duration-200 hover:text-white hover:shadow-md flex cursor-pointer justify-between items-center px-2 py-2 border dark:border-gray-600 bg-white hover:bg-blue-600 dark:bg-[#1e1e1e] rounded-lg'}>
+        {title}
+    </Link>
 }

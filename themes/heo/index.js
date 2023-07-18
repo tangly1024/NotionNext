@@ -30,6 +30,7 @@ import { Style } from './style'
 import { NoticeBar } from './components/NoticeBar'
 import { HashTag } from '@/components/HeroIcons'
 import LatestPostsGroup from './components/LatestPostsGroup'
+import FloatTocButton from './components/FloatTocButton'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -56,7 +57,7 @@ const LayoutBase = props => {
             {headerSlot}
 
             {/* 主区块 */}
-            <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative px-5'}>
+            <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative md:px-5'}>
 
                 <div id="container-inner" className={'w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
 
@@ -243,14 +244,14 @@ const LayoutSlug = props => {
 
   return (
         <LayoutBase {...props} headerSlot={headerSlot} showCategory={false} showTag={false} slotRight={slotRight}>
-            <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article">
+            <div className="w-full max-w-5xl lg:hover:shadow lg:border rounded-t-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
                     <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
                         {/* Notion文章主体 */}
-                        <section className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
+                        <section className='px-5 justify-center mx-auto'>
                             {post && <NotionPage post={post} />}
                         </section>
 
@@ -277,6 +278,7 @@ const LayoutSlug = props => {
                     </div>
                 </div>}
             </div>
+            <FloatTocButton {...props}/>
 
         </LayoutBase>
   )

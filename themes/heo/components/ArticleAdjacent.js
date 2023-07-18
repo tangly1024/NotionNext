@@ -67,10 +67,10 @@ export default function ArticleAdjacent({ prev, next }) {
 
             {/* 桌面端 */}
 
-            <div id='pc-next-post' className={`hidden md:block fixed right-4 bottom-4 duration-200 transition-all ${isScrollEnd ? 'mb-0 opacity-100' : '-mb-24 opacity-0'}`}>
+            <div id='pc-next-post' className={`hidden md:block fixed z-20 right-4 bottom-4 duration-200 transition-all ${isScrollEnd ? 'mb-0 opacity-100' : '-mb-24 opacity-0'}`}>
                 <Link
                     href={`/${next.slug}`}
-                    className='cursor-pointer duration transition-all w-52 h-24 dark:bg-[#1e1e1e] border dark:border-gray-600 p-3 bg-white hover:text-white hover:bg-gray-400 rounded-lg flex flex-col justify-between'
+                    className='cursor-pointer duration transition-all h-24 dark:bg-[#1e1e1e] border dark:border-gray-600 p-3 bg-white dark:text-gray-300 dark:hover:text-yellow-600 hover:text-white hover:bg-gray-400 rounded-lg flex flex-col justify-between'
                 >
                     <div className='text-xs'>下一篇</div>
                     <hr />
