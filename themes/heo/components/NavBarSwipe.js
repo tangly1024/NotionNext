@@ -58,7 +58,7 @@ export default function NavSwipe(props) {
   }, [])
 
   return (
-    <div className="h-full relative w-full overflow-hidden">
+    <div className="hidden lg:block h-full relative w-full overflow-hidden">
       {items.map((item, index) => (
         <div
           key={index}
@@ -85,7 +85,7 @@ export default function NavSwipe(props) {
 
         @keyframes slide-in {
           from {
-            transform: translateY(${activeIndex === 0 ? '100%' : '-100%'});
+            transform: translateY(${activeIndex === 1 ? '100%' : '-100%'});
           }
           to {
             transform: translateY(0);
@@ -97,7 +97,7 @@ export default function NavSwipe(props) {
             transform: translateY(0);
           }
           to {
-            transform: translateY(${activeIndex === 0 ? '-100%' : '100%'});
+            transform: translateY(${activeIndex === 1 ? '-100%' : '100%'});
           }
         }
       `}</style>
