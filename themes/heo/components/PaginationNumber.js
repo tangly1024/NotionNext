@@ -16,6 +16,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   const { locale } = useGlobal()
   const currentPage = +page
   const showNext = page < totalPage
+  const showPrev = currentPage !== 1
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
@@ -27,16 +28,18 @@ const PaginationNumber = ({ page, totalPage }) => {
   }
 
   /**
-     * 调到指定页
-     */
+           * 调到指定页
+           */
   const jumpToPage = () => {
     if (value) {
       router.push(value === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${value}`)
     }
   }
 
-  return (
-        <div className="mt-10 mb-5 flex justify-between items-end font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2 overflow-x-auto">
+  return (<>
+
+        {/* pc端分页按钮 */}
+        <div className="hidden lg:flex justify-between items-end mt-10 mb-5 font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2 overflow-x-auto">
             {/* 上一页 */}
             <Link
                 href={{
@@ -84,7 +87,33 @@ const PaginationNumber = ({ page, totalPage }) => {
                 </div>
             </Link>
         </div>
-  )
+
+        <div className='w-full flex flex-row'>
+            {/* 上一页 */}
+            <Link
+                href={{
+                  pathname: currentPage === 2 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`,
+                  query: router.query.s ? { s: router.query.s } : {}
+                }}
+                rel="prev"
+                className={`${showPrev ? 'block' : 'hidden'} relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
+                {locale.PAGINATION.PREV}
+            </Link>
+
+            {showPrev && showNext && <div className='w-12'></div>}
+
+            {/* 下一页 */}
+            <Link
+                href={{
+                  pathname: `${pagePrefix}/page/${currentPage + 1}`,
+                  query: router.query.s ? { s: router.query.s } : {}
+                }}
+                rel="next"
+                className={`${+showNext ? 'block' : 'hidden'} relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
+                {locale.PAGINATION.NEXT}
+            </Link>
+        </div>
+    </>)
 }
 
 /**
