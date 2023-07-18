@@ -19,7 +19,7 @@ export default function TouchMeCard() {
                         <div className='absolute left-0 top-0 w-full h-full' style={{ background: 'url(https://bu.dusays.com/2023/05/16/64633c4cd36a9.png) center center no-repeat' }}></div>
                     </div>}
                 backContent={<div className='font-[1000] text-xl h-full'>
-                    <Link href='https://docs.tangly1024.com/article/how-to-question'>
+                    <Link href='http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=EGWu5kXI3C9fDtG3ccVaUb4tMHHOhV8j&authKey=AYjQHOzFoIrLUjl9ymEEtEAqNZf4%2FisKeVOTnl8ZX%2FITAmGG9KgWI%2B7oPlGowUZ5&noverify=0&group_code=826833331'>
                         点击加入社群
                     </Link>
                 </div>}
