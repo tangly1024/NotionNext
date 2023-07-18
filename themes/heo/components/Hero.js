@@ -76,8 +76,8 @@ function Banner(props) {
   return <div id='banners' onClick={handleClickBanner} className="group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
 
         <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
-            <div className='text-4xl font-bold mb-3  dark:text-white'>分享编程<br />与思维认知</div>
-            <div className='text-xs text-gray-600  dark:text-gray-200'>TANGLY1024.COM</div>
+            <div className='text-4xl font-bold mb-3  dark:text-white'>{CONFIG.HERO_TITLE_1}<br/>{CONFIG.HERO_TITLE_2}</div>
+            <div className='text-xs text-gray-600  dark:text-gray-200'>{CONFIG.HERO_TITLE_3}</div>
         </div>
 
         {/* 斜向滚动的图标 */}
@@ -123,24 +123,24 @@ function TagsGroupBar() {
 }
 
 /**
- * 英雄区左下角3个分类按钮
+ * 英雄区左下角3个指定分类按钮
  * @returns
  */
 function GroupMenu() {
   return (
         <div className="h-[165px] select-none  xl:h-20 flex flex-col w-48 justify-between xl:space-y-0 xl:flex-row xl:w-full xl:flex-nowrap xl:space-x-3">
-            <Link href="/tag/必看精选" className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
+            <Link href={CONFIG.HERO_CATEGORY_1?.url} className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative -mt-2">
-                    必看精选
+                    {CONFIG.HERO_CATEGORY_1?.title}
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
                 <div className='absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
                     <i class="fa-solid fa-star text-4xl"></i>
                 </div>
             </Link>
-            <Link href="/tag/热门文章" className="group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
+            <Link href={CONFIG.HERO_CATEGORY_2?.url} className="group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative -mt-2">
-                    热门文章
+                {CONFIG.HERO_CATEGORY_2?.title}
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
                 <div className='absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -148,9 +148,9 @@ function GroupMenu() {
                 </div>
             </Link>
             {/* 第三个标签在小屏上不显示 */}
-            <Link href="/tag/实用教程" className="group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
+            <Link href={CONFIG.HERO_CATEGORY_3?.url} className="group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative -mt-2">
-                    实用教程
+                {CONFIG.HERO_CATEGORY_3?.title}
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
                 <div className='absolute right-6 duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -204,8 +204,8 @@ function TodayCard({ cRef }) {
   const [isCoverUp, setIsCoverUp] = useState(true)
 
   /**
-                     * 外部可以调用此方法
-                     */
+     * 外部可以调用此方法
+     */
   useImperativeHandle(cRef, () => {
     return {
       coverUp: () => {
@@ -224,9 +224,9 @@ function TodayCard({ cRef }) {
   }
 
   /**
-                   * 点击卡片跳转的链接
-                   * @param {*} e
-                   */
+     * 点击卡片跳转的链接
+     * @param {*} e
+     */
   function handleCardClick(e) {
     router.push('https://tangly1024.com')
   }
@@ -235,8 +235,8 @@ function TodayCard({ cRef }) {
         <div id='card-body' onClick={handleCardClick} className={`${isCoverUp ? 'opacity-100 cursor-pointer' : 'opacity-0 transform scale-110 pointer-events-none'} shadow transition-all duration-200 today-card h-full bg-[#0E57D5] rounded-xl relative overflow-hidden flex items-end`}>
             <div id='today-card-info' className='z-10 flex justify-between w-full relative text-white p-10 items-end'>
                 <div className='flex flex-col'>
-                    <div className='text-xs font-light'>新版上线</div>
-                    <div className='text-3xl font-bold'>NotionNext4.0 轻松定制主题</div>
+                    <div className='text-xs font-light'>{CONFIG.HERO_TITLE_4}</div>
+                    <div className='text-3xl font-bold'>{CONFIG.HERO_TITLE_5}</div>
                 </div>
                 <div onClick={handleClickMore} className={`'${isCoverUp ? '' : 'hidden pointer-events-none '} flex items-center px-3 h-10 justify-center bg-[#425aef] hover:bg-[#4259efcb] transition-colors duration-100 rounded-3xl`}>
                     <PlusSmall className={'w-6 h-6 mr-2 bg-white rounded-full stroke-indigo-400'} />
