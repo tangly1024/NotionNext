@@ -54,6 +54,11 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
   ssr: false
 })
 
+/**
+ * 评论组件
+ * @param {*} param0
+ * @returns
+ */
 const Comment = ({ frontMatter, className }) => {
   const router = useRouter()
 
@@ -70,7 +75,7 @@ const Comment = ({ frontMatter, className }) => {
   }
 
   return (
-    <div id='comment' className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
+    <div key={frontMatter?.id} id='comment' className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
         <Tabs>
 
             {BLOG.COMMENT_TWIKOO_ENV_ID && (<div key='Twikoo'>
