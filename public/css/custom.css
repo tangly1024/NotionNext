@@ -301,35 +301,3 @@ footer:before {
 .dark #announcement-wrapper {
   background:  #191919ee;
 }
-/* 头像呼吸灯 */
-.light .rounded-full {
-  animation: huxi_light 3s ease-in-out infinite;
-}
-.dark .rounded-full {
-  animation: huxi_dark 3s ease-in-out infinite;
-}
-@keyframes huxi_dark {
-  0% {
-    box-shadow: 0px 0px 1px 1px #b7eaff;
-  }
-  50% {
-    box-shadow: 0px 0px 5px 5px #f1c4f9;
-  }
-  100% {
-    box-shadow: 0px 0px 1px 1px #ff5c5c;
-  }
-}
-@keyframes huxi_light {
-  0% {
-    box-shadow: 0px 0px 1px 1px #e9f5fa;
-  }
-  50% {
-    box-shadow: 0px 0px 5px 5px #e9f5fa;
-  }
-  100% {
-    box-shadow: 0px 0px 1px 1px #e9f5fa;
-  }
-}
-#theme-fukasawa .sideLeft hr{
-    opacity: .04;
-}
