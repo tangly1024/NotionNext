@@ -12,8 +12,8 @@ export default function SlideOvers({ children, cRef }) {
   const [open, setOpen] = useState(false)
   const slideOversRef = useRef({})
   /**
-         * 函数组件暴露方法
-         */
+  * 函数组件暴露方法
+  */
   useImperativeHandle(cRef, () => ({
     toggleSlideOvers: toggleSlideOvers
   }))
