@@ -29,15 +29,15 @@ export default function PostHeader({ post, siteInfo }) {
             <div style={{ backdropFilter: 'blur(15px)' }} className={'bg-[#0060e0] absolute top-0 w-full h-full py-10 flex justify-center items-center'}>
 
                 {/* 文章背景图 */}
-                <div id='post-cover-wrapper' style={{ filter: 'blur(15px)' }} className='coverdiv translate-x-96 loaded opacity-50 rotate-12'>
+                <div id='post-cover-wrapper' style={{ filter: 'blur(15px)' }} className='coverdiv lg:translate-x-96 opacity-50 lg:rotate-12'>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img id='post-cover' className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]' src={headerImage} />
                 </div>
 
                 {/* 文章文字描述 */}
-                <div id='post-info' className='absolute top-48 z-10 flex flex-col -mt-12 w-full max-w-[86rem] px-5'>
+                <div id='post-info' className='absolute top-48 z-10 flex flex-col space-y-4 lg:-mt-12 w-full max-w-[86rem] px-5'>
                     {/* 分类+标签 */}
-                    <div className='mb-4 flex justify-center md:justify-start items-center'>
+                    <div className='flex justify-center md:justify-start items-center'>
                         {post.category && <>
                             <Link href={`/category/${post.category}`} className='mr-4' passHref legacyBehavior>
                                 <div className="cursor-pointer font-sm font-bold px-3 py-1 rounded-lg bg-blue-500 hover:bg-white text-white hover:text-blue-500 duration-200 ">
@@ -63,7 +63,7 @@ export default function PostHeader({ post, siteInfo }) {
                     </div>
 
                     {/* 文章Title */}
-                    <div className="max-w-5xl my-4 font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white">
+                    <div className="max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white">
                         <NotionIcon icon={post.pageIcon} />{post.title}
                     </div>
 
