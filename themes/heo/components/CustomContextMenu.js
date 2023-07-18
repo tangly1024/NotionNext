@@ -105,17 +105,17 @@ export default function CustomContextMenu(props) {
                 {/* 跳转导航按钮 */}
                 <div className='w-full px-2'>
 
-                    <div title={'随机前往一篇文章'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all' onClick={handleJumpToRandomPost}>
+                    <div onClick={handleJumpToRandomPost} title={'随机前往一篇文章'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-podcast mr-2" />
                         <div className='whitespace-nowrap'> 随便逛逛</div>
                     </div>
 
-                    <Link href='/category' title={'博客分类'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all' onClick={handleJumpToRandomPost}>
+                    <Link href='/category' title={'博客分类'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i class="fa-solid fa-square-minus mr-2" />
                         <div className='whitespace-nowrap'> 博客分类</div>
                     </Link>
 
-                    <Link href='/tag' title={'文章标签'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all' onClick={handleJumpToRandomPost}>
+                    <Link href='/tag' title={'文章标签'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i class="fa-solid fa-tag mr-2" />
                         <div className='whitespace-nowrap'> 文章标签</div>
                     </Link>
