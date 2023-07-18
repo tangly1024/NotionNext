@@ -18,7 +18,7 @@ export default function FloatTocButton(props) {
     return <></>
   }
 
-  return (<div className='fixed right-4 bottom-24'>
+  return (<div className='fixed lg:hidden right-4 bottom-24'>
         {/* 按钮 */}
         <div onClick={toggleToc} className={'select-none hover:scale-110 transform duration-200 text-black dark:text-gray-200 w-10 h-10 rounded-full bg-white drop-shadow-lg flex justify-center items-center dark:bg-hexo-black-gray py-2 px-2'}>
             <button id="toc-button" className={'fa-list-ol cursor-pointer fas'} />
