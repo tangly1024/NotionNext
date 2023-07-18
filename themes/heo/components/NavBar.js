@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Logo from './Logo'
-
-import { MenuListTop } from './MenuListTop'
 import throttle from 'lodash.throttle'
 import RandomPostButton from './RandomPostButton'
 import SearchButton from './SearchButton'
 import SlideOver from './SlideOver'
 import ReadingProgress from './ReadingProgress'
+import NavBarSwipe from './NavBarSwipe'
 /**
  * 顶部导航
  * @param {*} param0
@@ -68,9 +67,7 @@ const NavBar = props => {
                 </div>
 
                 {/* 中间菜单 */}
-                <div className='mr-1 justify-end items-center hidden lg:block'>
-                    <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
-                </div>
+                <NavBarSwipe {...props}/>
 
                 {/* 右侧固定 */}
                 <div className='flex justify-center items-center space-x-1'>

@@ -39,7 +39,7 @@ import FloatTocButton from './components/FloatTocButton'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, slotTop, slotRight, meta, siteInfo } = props
+  const { children, headerSlot, slotTop, slotRight, meta, siteInfo, className } = props
   const { onLoading } = useGlobal()
 
   // 加载主题样式
@@ -70,7 +70,7 @@ const LayoutBase = props => {
                         leave="transition ease-in-out duration-300 transform"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0 -translate-y-16"
-                        className='w-full h-auto'
+                        className={`w-full h-auto px-5 lg:px-0 ${className || ''}`}
                         unmount={false}
                     >
                         {/* 主区上部嵌入 */}
