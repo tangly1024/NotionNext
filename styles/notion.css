@@ -179,9 +179,6 @@
   color: var(--select-color-2) !important;
 }
 
-.notion-simple-table {
-  @apply whitespace-nowrap overflow-x-auto block
-}
 
 .notion-app {
   position: relative;
@@ -446,6 +443,7 @@ summary > .notion-h {
 
 .notion-h:hover .notion-hash-link {
   opacity: 1;
+  @apply dark:fill-gray-200
 }
 
 .notion-hash-link {
@@ -1939,23 +1937,11 @@ svg + .notion-page-title-text {
 }
 
 .notion-simple-table  {
- width: 100% !important;
+  @apply whitespace-nowrap overflow-x-auto block w-full border-0 !important;
 }
 
 .notion-asset-wrapper-pdf > div {
     display: block !important;
-}
-
-::selection {
-    @apply bg-blue-500 text-gray-50 !important;
-}
-
-.dark img{
-    @apply opacity-80
-}
-
-.dark #live2d {
-    @apply opacity-80
 }
 
 /* https://github.com/kchen0x */
@@ -2025,4 +2011,39 @@ code.language-mermaid {
 
 .notion-equation-inline .katex-display {
   margin: 0 0 !important;
+}
+
+.notion-external-title {
+  @apply dark:text-white !important;
+}
+
+.notion-external-subtitle {
+  @apply dark:text-gray-400 !important;
+}
+
+.notion-external-block {
+  @apply dark:border-gray-200 !important;
+}
+
+.notion-external-image > svg > g > path{
+  @apply dark:fill-gray-200 !important;
+}
+
+.notion-external-image {
+  @apply w-6 h-6 mx-3 my-2 !important;
+}
+
+/* 表格 #f5f6f8*/
+.notion-simple-table-row {
+}
+
+/* 表格头 */
+.notion-simple-table tr:first-child td{
+  background-color: #f5f6f8;
+  @apply text-center font-bold dark:bg-gray-800 !important;
+
+}
+
+.notion-simple-table td{
+  border: 1px solid var(#eee) !important
 }

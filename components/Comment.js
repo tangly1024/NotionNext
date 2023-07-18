@@ -54,7 +54,7 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
   ssr: false
 })
 
-const Comment = ({ frontMatter }) => {
+const Comment = ({ frontMatter, className }) => {
   const router = useRouter()
 
   if (isBrowser() && ('giscus' in router.query || router.query.target === 'comment')) {
@@ -70,7 +70,7 @@ const Comment = ({ frontMatter }) => {
   }
 
   return (
-    <div id='comment' className='comment mt-5 text-gray-800 dark:text-gray-300'>
+    <div id='comment' className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
         <Tabs>
 
             {BLOG.COMMENT_TWIKOO_ENV_ID && (<div key='Twikoo'>

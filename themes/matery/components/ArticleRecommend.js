@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 
@@ -12,7 +12,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   const { locale } = useGlobal()
 
   if (
-    !CONFIG_MATERY.ARTICLE_RECOMMEND ||
+    !CONFIG.ARTICLE_RECOMMEND ||
     !recommendPosts ||
     recommendPosts.length === 0
   ) {

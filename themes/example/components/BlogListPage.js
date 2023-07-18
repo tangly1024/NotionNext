@@ -3,7 +3,7 @@ import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import CONFIG_EXAMPLE from '../config_example'
+import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 
 export const BlogListPage = props => {
@@ -17,12 +17,12 @@ export const BlogListPage = props => {
   const showNext = page < totalPage
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
-  const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER
+  const showPageCover = CONFIG.POST_LIST_COVER
 
   return (
-        <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'}} mb-12`}>
+        <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'} mb-12`}>
 
-            <div id="container">
+            <div id="posts-wrapper">
                 {posts?.map(post => (
                     <BlogPostCard key={post.id} post = {post}/>
                 ))}

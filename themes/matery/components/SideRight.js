@@ -5,7 +5,7 @@ import TagGroups from './TagGroups'
 import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import { AnalyticsCard } from './AnalyticsCard'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 
@@ -24,7 +24,7 @@ export default function SideRight(props) {
   return (
     <div className={'space-y-4 lg:w-80 lg:pt-0 px-2 pt-4'}>
       <InfoCard {...props} />
-      {CONFIG_MATERY.WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
+      {CONFIG.WIDGET_ANALYTICS && <AnalyticsCard {...props} />}
 
       {showCategory && (
         <Card>
@@ -42,7 +42,7 @@ export default function SideRight(props) {
           <TagGroups tags={tags} currentTag={currentTag} />
         </Card>
       )}
-      {CONFIG_MATERY.WIDGET_LATEST_POSTS && latestPosts && latestPosts.length > 0 && <Card>
+      {CONFIG.WIDGET_LATEST_POSTS && latestPosts && latestPosts.length > 0 && <Card>
         <LatestPostsGroup {...props} />
       </Card>}
 
