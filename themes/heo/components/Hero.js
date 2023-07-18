@@ -228,7 +228,7 @@ function TodayCard({ cRef }) {
      * @param {*} e
      */
   function handleCardClick(e) {
-    router.push('https://tangly1024.com')
+    router.push('https://88lin.eu.org')
   }
 
   return <div id='today-card' className={`${isCoverUp ? ' ' : 'pointer-events-none'} overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
