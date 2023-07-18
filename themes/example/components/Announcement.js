@@ -5,7 +5,7 @@ const NotionPage = dynamic(() => import('@/components/NotionPage'))
 
 const Announcement = ({ post, className }) => {
   const { locale } = useGlobal()
-  if (!post) {
+  if (!post || Object.keys(post).length === 0) {
     return <></>
   }
   return <aside className="rounded shadow overflow-hidden mb-6">

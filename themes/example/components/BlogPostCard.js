@@ -1,18 +1,18 @@
 import BLOG from '@/blog.config'
-import CONFIG_EXAMPLE from '../config_example'
+import CONFIG from '../config'
 import Link from 'next/link'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post }) => {
-  const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER
+  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
 
-  return <article className={`mb-12 ${showPageCover ? 'flex md:flex-row flex-col-reverse' : ''}`}>
+  return <article className={`${showPageCover ? 'flex md:flex-row flex-col-reverse' : ''} replace mb-12 `}>
         <div className={`${showPageCover ? 'md:w-7/12' : ''}`}>
             <h2 className="mb-4">
                 <Link
                     href={`/${post.slug}`}
                     className="text-black dark:text-gray-100 text-xl md:text-2xl no-underline hover:underline">
-                    {post.title}
+                    {post?.title}
                 </Link>
             </h2>
 
@@ -25,14 +25,14 @@ const BlogPostCard = ({ post }) => {
                 {/* <a href="#" className="text-gray-700">2 Comments</a> */}
             </div>
 
-            <p className="text-gray-700 dark:text-gray-400 leading-normal p-3-lines">
+            {!post.results && <p className="line-clamp-3 text-gray-700 dark:text-gray-400 leading-normal">
                 {post.summary}
-            </p>
+            </p>}
             {/* 搜索结果 */}
             {post.results && (
-                <p className="p-4-lines mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                    {post.results.map(r => (
-                        <span key={r}>{r}</span>
+                <p className="line-clamp-3 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+                    {post.results.map((r, index) => (
+                        <span key={index}>{r}</span>
                     ))}
                 </p>
             )}

@@ -1,7 +1,6 @@
 import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
-import { deepClone } from '@/lib/utils'
 
 /**
  * 博客列表滚动分页
@@ -29,14 +28,14 @@ const NavPostList = (props) => {
   })
 
   // 如果都没有选中默认打开第一个
-  if (!selectedSth && filteredPostGroups && filteredPostGroups.length > 0) {
+  if (!selectedSth && filteredPostGroups && filteredPostGroups?.length > 0) {
     filteredPostGroups[0].selected = true
   }
 
   if (!filteredPostGroups || filteredPostGroups.length === 0) {
     return <NavPostListEmpty />
   } else {
-    return <div className='w-full flex-grow'>
+    return <div id='posts-wrapper' className='w-full flex-grow'>
             {/* 文章列表 */}
             {filteredPostGroups?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
         </div>
