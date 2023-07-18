@@ -1,5 +1,6 @@
 import BLOG from 'blog.config'
 import dynamic from 'next/dynamic'
+import ChatBase from './ChatBase'
 
 // import TwikooCommentCounter from '@/components/TwikooCommentCounter'
 // import { DebugPanel } from '@/components/DebugPanel'
@@ -53,6 +54,7 @@ const ExternalPlugin = (props) => {
           {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
           {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && <TwikooCommentCounter {...props}/>}
           {JSON.parse(BLOG.RIBBON) && <Ribbon />}
+          {BLOG.CHATBASE_ID && <ChatBase />}
           <VConsole/>
       </>
 }
