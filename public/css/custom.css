@@ -59,7 +59,7 @@ footer:before {
 }
 
 /* 侧边栏个人信息卡片动态渐变色 */
-div.bg-white{
+1.bg-white{
   background: linear-gradient(
     -45deg,
     #e8d8b9,
@@ -108,6 +108,6 @@ div.bg-white{
   }
 }
 /* 黑夜模式适配 */
-.dark div.bg-white {
+1.dark div.bg-white {
   background:  #191919ee;
 }
