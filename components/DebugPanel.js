@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { useEffect, useState } from 'react'
 import Select from './Select'
 import { useGlobal } from '@/lib/global'
-import { ALL_THEME } from '@/themes/theme'
+import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
 /**
@@ -16,7 +16,7 @@ const DebugPanel = () => {
   const [siteConfig, updateSiteConfig] = useState({})
 
   // 主题下拉框
-  const themeOptions = ALL_THEME.map(t => ({ value: t, text: t }))
+  const themeOptions = THEMES?.map(t => ({ value: t, text: t }))
 
   useEffect(() => {
     updateSiteConfig(Object.assign({}, BLOG))

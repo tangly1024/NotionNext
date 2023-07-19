@@ -92,7 +92,7 @@ const BLOG = {
 
     // PrismJs 代码相关
     PRISM_JS_AUTO_LOADER:
-        'https://raw.githubusercontent.com/PrismJS/prism-themes/master/themes/prism-nord.css',
+        'https://github.com/PrismJS/prism-themes/blob/master/themes/prism-nord.css',
     PRISM_JS_PATH: 'https://npm.elemecdn.com/prismjs@1.29.0/components/',
     PRISM_THEME_PATH:
         'https://raw.githubusercontent.com/PrismJS/prism-themes/master/themes/prism-dracula.css', // 代码样式主题 更多参考 https://github.com/PrismJS/prism-themes
