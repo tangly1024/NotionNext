@@ -20,7 +20,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   const searchKey = getSearchKey()
   if (searchKey) {
     filteredPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
       const searchContent = post.title + post.summary + tagContent
       return searchContent.toLowerCase().includes(searchKey.toLowerCase())
     })
@@ -61,7 +61,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
   } else {
-    return <div id='container' ref={targetRef} className='w-full'>
+    return <div id='posts-wrapper' ref={targetRef} className='w-full'>
 
       {/* 文章列表 */}
       <div className='space-y-1 lg:space-y-4'>

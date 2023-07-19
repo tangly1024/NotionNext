@@ -1,12 +1,14 @@
 import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
-// import mediumZoom from '@fisch0920/medium-zoom'
-import React, { useEffect } from 'react'
+import mediumZoom from '@fisch0920/medium-zoom'
+import React, { useEffect, useRef } from 'react'
 // import { Code } from 'react-notion-x/build/third-party/code'
 import TweetEmbed from 'react-tweet-embed'
 
 import 'katex/dist/katex.min.css'
 import { mapImgUrl } from '@/lib/notion/mapImage'
+import BLOG from '@/blog.config'
+import { isBrowser } from '@/lib/utils'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then(async (m) => {
@@ -21,6 +23,7 @@ const Equation = dynamic(() =>
     return m.Equation
   }), { ssr: false }
 )
+
 const Pdf = dynamic(
   () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
   {
@@ -51,11 +54,39 @@ const NotionPage = ({ post, className }) => {
     autoScrollToTarget()
   }, [])
 
+  const zoom = typeof window !== 'undefined' && mediumZoom({
+    container: '.notion-viewport',
+    background: 'rgba(0, 0, 0, 0.2)',
+    margin: getMediumZoomMargin()
+  })
+  const zoomRef = useRef(zoom ? zoom.clone() : null)
+
+  useEffect(() => {
+    // 将相册gallery下的图片加入放大功能
+    if (JSON.parse(BLOG.POST_DISABLE_GALLERY_CLICK)) {
+      setTimeout(() => {
+        if (isBrowser()) {
+          const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
+          if (imgList && zoomRef.current) {
+            for (let i = 0; i < imgList.length; i++) {
+              (zoomRef.current).attach(imgList[i])
+            }
+          }
+
+          const cards = document.getElementsByClassName('notion-collection-card')
+          for (const e of cards) {
+            e.removeAttribute('href')
+          }
+        }
+      }, 800)
+    }
+  }, [])
+
   if (!post || !post.blockMap) {
     return <>{post?.summary || ''}</>
   }
 
-  return <div id='container' className={`mx-auto ${className}`}>
+  return <div id='notion-article' className={`mx-auto ${className || ''}`}>
     <NotionRenderer
       recordMap={post.blockMap}
       mapPageUrl={mapPageUrl}
@@ -100,4 +131,25 @@ const mapPageUrl = id => {
   return '/' + id.replace(/-/g, '')
 }
 
+/**
+ * 缩放
+ * @returns
+ */
+function getMediumZoomMargin() {
+  const width = window.innerWidth
+
+  if (width < 500) {
+    return 8
+  } else if (width < 800) {
+    return 20
+  } else if (width < 1280) {
+    return 30
+  } else if (width < 1600) {
+    return 40
+  } else if (width < 1920) {
+    return 48
+  } else {
+    return 72
+  }
+}
 export default NotionPage

@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
-import CONFIG_SIMPLE from '../config_simple'
+import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 export const BlogItem = props => {
@@ -21,7 +21,7 @@ export const BlogItem = props => {
 
         <div className="mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6">
             <div className='space-x-2'>
-                <span>  <a href={CONFIG_SIMPLE.AUTHOR_LINK} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {BLOG.AUTHOR}</a></span>
+                <span>  <a href={CONFIG.AUTHOR_LINK} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {BLOG.AUTHOR}</a></span>
                 <span>
                     <Link className='p-1 hover:text-red-400 transition-all duration-200' href={`/archive#${post?.publishTime?.substr(0, 7)}`}>
                         <i className="fa-regular fa-clock" /> {post.date?.start_date || post.createdTime}
@@ -32,7 +32,7 @@ export const BlogItem = props => {
 
             <div>
                 {post.category && <Link href={`/category/${post.category}`} className='p-1'> <span className="hover:text-red-400 transition-all duration-200"><i className="fa-regular fa-folder mr-0.5"/>{post.category}</span></Link>}
-                {post.tags && post.tags?.length > 0 && post.tags.map(t => <Link key={t} href={`/tag/${t}`} className=' hover:text-red-400 transition-all duration-200'><span > /{t}</span></Link>)}
+                {post?.tags && post?.tags?.length > 0 && post?.tags.map(t => <Link key={t} href={`/tag/${t}`} className=' hover:text-red-400 transition-all duration-200'><span > /{t}</span></Link>)}
             </div>
         </div>
 

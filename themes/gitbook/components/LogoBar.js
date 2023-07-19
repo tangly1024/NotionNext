@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
+import { useGitBookGlobal } from '@/themes/gitbook'
 import Link from 'next/link'
-import { useGitBookGlobal } from '../LayoutBase'
 
 /**
  * Logo区域

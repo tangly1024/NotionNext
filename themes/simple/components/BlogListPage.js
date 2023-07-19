@@ -18,7 +18,7 @@ export const BlogListPage = props => {
   return (
         <div className="w-full md:pr-8 mb-12">
 
-            <div id="container">
+            <div id="posts-wrapper">
                 {posts?.map((p, index) => (<div key={p.id}>
                         {(index + 1) % 3 === 0 && <AdSlot type='in-article' />}
                         { (index + 1) === 4 && <AdSlot type='flow'/>}
