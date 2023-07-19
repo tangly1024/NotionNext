@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import Progress from './Progress'
 import { useGlobal } from '@/lib/global'
 
 /**
@@ -63,9 +62,6 @@ const Catalog = ({ toc }) => {
 
   return <div className='px-3 py-1 dark:text-white text-black'>
     <div className='w-full'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
-    <div className='w-full py-3'>
-      <Progress />
-    </div>
     <div className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden' ref={tRef}>
       <nav className='h-full'>
         {toc.map((tocItem) => {

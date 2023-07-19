@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState, useRef } from 'react'
 import { useGlobal } from '@/lib/global'
-import { saveDarkModeToCookies } from '@/themes/theme'
+import { saveDarkModeToCookies, THEMES } from '@/themes/theme'
 
 /**
  * 自定义右键菜单
@@ -74,6 +74,16 @@ export default function CustomContextMenu(props) {
     setShow(false)
   }
 
+  /**
+  * 切换主题
+  */
+  function handeChangeTheme() {
+    const randomTheme = THEMES[Math.floor(Math.random() * THEMES.length)] // 从THEMES数组中 随机取一个主题
+    const query = router.query
+    query.theme = randomTheme
+    router.push({ pathname: router.pathname, query })
+  }
+
   function handleChangeDarkMode() {
     const newStatus = !isDarkMode
     saveDarkModeToCookies(newStatus)
@@ -111,12 +121,12 @@ export default function CustomContextMenu(props) {
                     </div>
 
                     <Link href='/category' title={'博客分类'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
-                        <i class="fa-solid fa-square-minus mr-2" />
+                        <i className="fa-solid fa-square-minus mr-2" />
                         <div className='whitespace-nowrap'> 博客分类</div>
                     </Link>
 
                     <Link href='/tag' title={'文章标签'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
-                        <i class="fa-solid fa-tag mr-2" />
+                        <i className="fa-solid fa-tag mr-2" />
                         <div className='whitespace-nowrap'> 文章标签</div>
                     </Link>
 
@@ -128,18 +138,21 @@ export default function CustomContextMenu(props) {
                 <div className='w-full px-2'>
 
                     <div onClick={handleCopyLink} title={'复制地址'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
-                        <i class="fa-solid fa-arrow-up-right-from-square mr-2" />
+                        <i className="fa-solid fa-arrow-up-right-from-square mr-2" />
                         <div className='whitespace-nowrap'> 复制地址</div>
                     </div>
 
                     <div onClick={handleChangeDarkMode} title={'深色模式'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
-                        <i class="fa-regular fa-moon mr-2" />
-                        <div className='whitespace-nowrap'> 深色模式</div>
+                        {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
+                        <div className='whitespace-nowrap'> {isDarkMode ? '浅色模式' : '深色模式'}</div>
                     </div>
-
+                    <div onClick={handeChangeTheme} title={'切换主题'} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                        <i className="fa-solid fa-palette mr-2" />
+                        <div className='whitespace-nowrap'> 切换主题</div>
+                    </div>
                 </div>
 
             </div>
-        </div>
+        </div >
   )
 }
