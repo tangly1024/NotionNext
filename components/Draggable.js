@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 /**
  * 可拖拽组件
  */
@@ -7,6 +7,7 @@ export const Draggable = (props) => {
   const { children } = props
   const draggableRef = useRef(null)
   const rafRef = useRef(null)
+  const [moving, setMoving] = useState(false)
   let currentObj, offsetX, offsetY
 
   useEffect(() => {
@@ -54,6 +55,8 @@ export const Draggable = (props) => {
           event.preventDefault() // 阻止默认的滚动行为
           document.documentElement.style.overflow = 'hidden' // 防止页面一起滚动
         }
+
+        setMoving(true)
         offsetX = event.mx - currentObj.offsetLeft
         offsetY = event.my - currentObj.offsetTop
 
@@ -73,6 +76,7 @@ export const Draggable = (props) => {
       event = e(event)
       document.documentElement.style.overflow = 'auto' // 恢复默认的滚动行为
       cancelAnimationFrame(rafRef.current)
+      setMoving(false)
       currentObj = document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
     }
 
@@ -138,7 +142,7 @@ export const Draggable = (props) => {
     }
   }, [])
 
-  return <div className='draggable cursor-move select-none' ref={draggableRef}>
+  return <div className={`draggable ${moving ? 'cursor-grabbing' : 'cursor-grab'} select-none`} ref={draggableRef}>
      {children}
   </div>
 }

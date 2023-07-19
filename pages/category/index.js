@@ -1,4 +1,4 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
@@ -30,7 +30,7 @@ export default function Category(props) {
 }
 
 export async function getStaticProps() {
-  const props = await getGlobalNotionData({ from: 'category-index-props' })
+  const props = await getGlobalData({ from: 'category-index-props' })
   delete props.allPages
   return {
     props,

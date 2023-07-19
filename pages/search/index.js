@@ -1,9 +1,14 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import { getLayoutByTheme } from '@/themes/theme'
 
+/**
+ * 搜索路由
+ * @param {*} props
+ * @returns
+ */
 const Search = props => {
   const { posts, siteInfo } = props
   const { locale } = useGlobal()
@@ -18,7 +23,7 @@ const Search = props => {
   // 静态过滤
   if (keyword) {
     filteredPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
       const categoryContent = post.category ? post.category.join(' ') : ''
       const searchContent =
                 post.title + post.summary + tagContent + categoryContent
@@ -45,7 +50,7 @@ const Search = props => {
  * 浏览器前端搜索
  */
 export async function getStaticProps() {
-  const props = await getGlobalNotionData({
+  const props = await getGlobalData({
     from: 'search-props',
     pageType: ['Post']
   })
