@@ -31,7 +31,6 @@ import { NoticeBar } from './components/NoticeBar'
 import { HashTag } from '@/components/HeroIcons'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import FloatTocButton from './components/FloatTocButton'
-import CustomContextMenu from './components/CustomContextMenu'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -71,7 +70,7 @@ const LayoutBase = props => {
                         leave="transition ease-in-out duration-300 transform"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0 -translate-y-16"
-                        className={`w-full h-auto px-5 lg:px-0 ${className || ''}`}
+                        className={`w-full h-auto ${className || ''}`}
                         unmount={false}
                     >
                         {/* 主区上部嵌入 */}
@@ -98,9 +97,6 @@ const LayoutBase = props => {
                 </div>
             </main>
 
-            {/* 自定义右键菜单 */}
-            <CustomContextMenu {...props}/>
-
             {/* 页脚 */}
             <Footer title={siteInfo?.title || BLOG.TITLE} />
         </div>
@@ -126,9 +122,11 @@ const LayoutIndex = (props) => {
   const slotRight = <SideRight {...props} />
 
   return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
-        {/* 文章分类条 */}
-        <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        <div id='post-outer-wrapper' className='px-5 lg:px-0'>
+            {/* 文章分类条 */}
+            <CategoryBar {...props} />
+            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        </div>
     </LayoutBase>
 }
 
@@ -146,9 +144,11 @@ const LayoutPostList = (props) => {
     </header>
 
   return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
-        {/* 文章分类条 */}
-        <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        <div id='post-outer-wrapper' className='px-5  lg:px-0'>
+            {/* 文章分类条 */}
+            <CategoryBar {...props} />
+            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        </div>
     </LayoutBase>
 }
 
@@ -187,9 +187,11 @@ const LayoutSearch = props => {
 
   return (
         <LayoutBase {...props} currentSearch={currentSearch} headerSlot={headerSlot}>
-            {!currentSearch
-              ? <SearchNav {...props} />
-              : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
+            <div id='post-outer-wrapper' className='px-5  lg:px-0'>
+                {!currentSearch
+                  ? <SearchNav {...props} />
+                  : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
+            </div>
         </LayoutBase>
   )
 }
@@ -261,7 +263,7 @@ const LayoutSlug = props => {
 
                         {/* 分享 */}
                         <ShareBar post={post} />
-                        {post?.type === 'Post' && <>
+                        {post?.type === 'Post' && <div className='px-5'>
 
                             {/* 版权 */}
                             <ArticleCopyright {...props} />
@@ -269,20 +271,20 @@ const LayoutSlug = props => {
                             <ArticleRecommend {...props} />
                             {/* 上一篇\下一篇文章 */}
                             <ArticleAdjacent {...props} />
-                        </>}
+                        </div>}
 
                     </article>
 
-                    <div className='pt-4 border-dashed'></div>
+                    <hr className='my-4 border-dashed' />
 
                     {/* 评论互动 */}
-                    <div className="duration-200 overflow-x-auto px-3">
+                    <div className="duration-200 overflow-x-auto px-5">
                         <div className='text-2xl dark:text-white'><i className='fas fa-comment mr-1' />{locale.COMMON.COMMENTS}</div>
                         <Comment frontMatter={post} className='' />
                     </div>
                 </div>}
             </div>
-            <FloatTocButton {...props}/>
+            <FloatTocButton {...props} />
 
         </LayoutBase>
   )
@@ -326,7 +328,7 @@ const Layout404 = props => {
                     >
 
                         {/* 404卡牌 */}
-                        <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white border rounded-2xl'>
+                        <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white border rounded-3xl'>
                             {/* 左侧动图 */}
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img className="error-img h-60 md:h-full p-4" src={'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'}></img>
@@ -350,8 +352,6 @@ const Layout404 = props => {
                 </div>
             </main>
 
-            {/* 自定义右键菜单 */}
-            <CustomContextMenu {...props}/>
         </div>
   )
 }
@@ -371,23 +371,25 @@ const LayoutCategoryIndex = props => {
 
   return (
         <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
-            <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
-                {locale.COMMON.CATEGORY}
-            </div>
-            <div id="category-list" className="duration-200 flex flex-wrap space-x-5 m-10 justify-center">
-                {categoryOptions.map(category => {
-                  return (
-                        <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
-                            <div className={'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'}>
-                                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
-                                {category.name}
-                                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
-                                    {category.count}
+            <div id='category-outer-wrapper' className='px-5 lg:px-0'>
+                <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
+                    {locale.COMMON.CATEGORY}
+                </div>
+                <div id="category-list" className="duration-200 flex flex-wrap m-10 justify-center">
+                    {categoryOptions.map(category => {
+                      return (
+                            <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
+                                <div className={'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'}>
+                                    <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
+                                    {category.name}
+                                    <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
+                                        {category.count}
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                  )
-                })}
+                            </Link>
+                      )
+                    })}
+                </div>
             </div>
         </LayoutBase>
   )
@@ -401,25 +403,31 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
+  const headerSlot = <header>
+  {/* 顶部导航 */}
+  <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
+</header>
   return (
-        <LayoutBase {...props} className='mt-8'>
-            <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
-                {locale.COMMON.TAGS}
-            </div>
-            <div id="tag-list" className="duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center">
-                {tagOptions.map(tag => {
-                  return (
-                        <Link key={tag.name} href={`/tag/${tag.name}`} passHref legacyBehavior>
-                            <div className={'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'}>
-                                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
-                                {tag.name}
-                                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
-                                    {tag.count}
+        <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
+            <div id='tag-outer-wrapper' className='px-5  lg:px-0'>
+                <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
+                    {locale.COMMON.TAGS}
+                </div>
+                <div id="tag-list" className="duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center">
+                    {tagOptions.map(tag => {
+                      return (
+                            <Link key={tag.name} href={`/tag/${tag.name}`} passHref legacyBehavior>
+                                <div className={'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'}>
+                                    <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
+                                    {tag.name}
+                                    <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
+                                        {tag.count}
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                  )
-                })}
+                            </Link>
+                      )
+                    })}
+                </div>
             </div>
         </LayoutBase>
   )

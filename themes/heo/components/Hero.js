@@ -2,12 +2,11 @@
 
 import BLOG from '@/blog.config'
 import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
-import { useGlobal } from '@/lib/global'
-import { Transition } from '@headlessui/react'
 
 /**
  * 顶部英雄区
@@ -17,28 +16,18 @@ import { Transition } from '@headlessui/react'
  * @returns
  */
 const Hero = props => {
-  const { onLoading } = useGlobal()
   return (
         <div id="hero-wrapper" className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
-            <Transition
-                show={!onLoading}
-                appear={true}
-                enter="transition ease-in-out duration-700 transform order-first"
-                enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-16"
-                unmount={false}
-            >
-                <hero id="hero" style={{ zIndex: 1 }} className="recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3" >
-                    {/* 左侧banner组 */}
-                    <BannerGroup {...props} />
 
-                    {/* 右侧置顶文章组 */}
-                    <TopGroup {...props} />
-                </hero>
-            </Transition>
+            <hero id="hero" style={{ zIndex: 1 }} className={'animate__animated animate__fadeIn animate__fast recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3'} >
+
+                {/* 左侧banner组 */}
+                <BannerGroup {...props} />
+
+                {/* 右侧置顶文章组 */}
+                <TopGroup {...props} />
+
+            </hero>
         </div>
   )
 }
@@ -76,7 +65,7 @@ function Banner(props) {
   return <div id='banners' onClick={handleClickBanner} className="group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
 
         <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
-            <div className='text-4xl font-bold mb-3  dark:text-white'>{CONFIG.HERO_TITLE_1}<br/>{CONFIG.HERO_TITLE_2}</div>
+            <div className='text-4xl font-bold mb-3  dark:text-white'>{CONFIG.HERO_TITLE_1}<br />{CONFIG.HERO_TITLE_2}</div>
             <div className='text-xs text-gray-600  dark:text-gray-200'>{CONFIG.HERO_TITLE_3}</div>
         </div>
 
@@ -103,19 +92,17 @@ function TagsGroupBar() {
   return (
         <div className="tags-group-all flex -rotate-[30deg]">
             <div className="tags-group-wrapper flex flex-nowrap absolute top-16">
-                {groupIcons?.map(g => {
-                  return (<>
-                        <div className="tags-group-icon-pair ml-6 select-none">
-                            <div style={{ background: g.color_1 }} className={'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={g.img_1} title={g.title_1} className='w-2/3' />
-                            </div>
-                            <div style={{ background: g.color_2 }} className={'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={g.img_2} title={g.title_2} className='w-2/3' />
-                            </div>
+                {groupIcons?.map((g, index) => {
+                  return (<div key={index} className="tags-group-icon-pair ml-6 select-none">
+                        <div style={{ background: g.color_1 }} className={'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={g.img_1} title={g.title_1} className='w-2/3' />
                         </div>
-                    </>)
+                        <div style={{ background: g.color_2 }} className={'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={g.img_2} title={g.title_2} className='w-2/3' />
+                        </div>
+                    </div>)
                 })}
             </div>
         </div>
@@ -135,26 +122,26 @@ function GroupMenu() {
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
                 <div className='absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
-                    <i class="fa-solid fa-star text-4xl"></i>
+                    <i className="fa-solid fa-star text-4xl"></i>
                 </div>
             </Link>
             <Link href={CONFIG.HERO_CATEGORY_2?.url} className="group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative -mt-2">
-                {CONFIG.HERO_CATEGORY_2?.title}
+                    {CONFIG.HERO_CATEGORY_2?.title}
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
                 <div className='absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
-                    <i class="fa-solid fa-fire-flame-curved text-4xl"></i>
+                    <i className="fa-solid fa-fire-flame-curved text-4xl"></i>
                 </div>
             </Link>
             {/* 第三个标签在小屏上不显示 */}
             <Link href={CONFIG.HERO_CATEGORY_3?.url} className="group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
                 <div className="font-bold text-lg pl-5 relative -mt-2">
-                {CONFIG.HERO_CATEGORY_3?.title}
+                    {CONFIG.HERO_CATEGORY_3?.title}
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
                 <div className='absolute right-6 duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
-                    <i class="fa-solid fa-book-bookmark text-4xl "></i>
+                    <i className="fa-solid fa-book-bookmark text-4xl "></i>
                 </div>
 
             </Link>
@@ -174,7 +161,7 @@ function TopGroup(props) {
   return (
         <div id='hero-right-wrapper' onMouseLeave={handleMouseLeave} className='flex-1 relative w-full'>
             {/* 制定最新文章 */}
-            <div id='top-group' className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3'>
+            <div id='top-group' className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
                 {latestPosts?.map(p => {
                   return <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={p.id}>
                         <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
@@ -204,8 +191,8 @@ function TodayCard({ cRef }) {
   const [isCoverUp, setIsCoverUp] = useState(true)
 
   /**
-     * 外部可以调用此方法
-     */
+       * 外部可以调用此方法
+       */
   useImperativeHandle(cRef, () => {
     return {
       coverUp: () => {
@@ -215,9 +202,9 @@ function TodayCard({ cRef }) {
   })
 
   /**
-     * 点击更多
-     * @param {*} e
-     */
+       * 点击更多
+       * @param {*} e
+       */
   function handleClickMore(e) {
     e.stopPropagation()
     setIsCoverUp(false)
@@ -228,7 +215,7 @@ function TodayCard({ cRef }) {
      * @param {*} e
      */
   function handleCardClick(e) {
-    router.push('https://tangly1024.com')
+    router.push(CONFIG.HERO_TITLE_LINK)
   }
 
   return <div id='today-card' className={`${isCoverUp ? ' ' : 'pointer-events-none'} overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
