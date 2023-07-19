@@ -2047,3 +2047,8 @@ code.language-mermaid {
 .notion-simple-table td{
   border: 1px solid var(#eee) !important
 }
+
+/* 竖屏视频高度bug */
+figure.notion-asset-wrapper.notion-asset-wrapper-video>div {
+    height: 100% !important;
+}
