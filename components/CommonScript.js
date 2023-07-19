@@ -7,6 +7,18 @@ import BLOG from '@/blog.config'
  */
 const CommonScript = () => {
   return (<>
+
+    {BLOG.CHATBASE_ID && (<>
+        <script id={BLOG.CHATBASE_ID} src="https://www.chatbase.co/embed.min.js" defer/>
+        <script async dangerouslySetInnerHTML={{
+          __html: `
+             window.chatbaseConfig = {
+                chatbotId: "${BLOG.CHATBASE_ID}",
+            }
+        `
+        }}/>
+    </>)}
+
     {BLOG.COMMENT_DAO_VOICE_ID && (<>
       {/* DaoVoice 反馈 */}
       <script async dangerouslySetInnerHTML={{
@@ -26,7 +38,7 @@ const CommonScript = () => {
       />
     </>)}
 
-    {/* GoogleAdsense */}
+    {/* GoogleAdsense 本地开发请加入 data-adbreak-test="on" */}
     {BLOG.ADSENSE_GOOGLE_ID && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`}
      crossOrigin="anonymous" />}
 

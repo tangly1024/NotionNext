@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 
@@ -12,7 +12,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   const { locale } = useGlobal()
 
   if (
-    !CONFIG_MATERY.ARTICLE_RECOMMEND ||
+    !CONFIG.ARTICLE_RECOMMEND ||
     !recommendPosts ||
     recommendPosts.length === 0
   ) {
@@ -29,8 +29,8 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {recommendPosts.map(post => {
-          const headerImage = post?.page_cover
-            ? `url("${post.page_cover}")`
+          const headerImage = post?.pageCoverThumbnail
+            ? `url("${post.pageCoverThumbnail}")`
             : `url("${siteInfo?.pageCover}")`
 
           return (

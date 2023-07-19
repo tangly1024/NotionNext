@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
@@ -14,11 +13,12 @@ const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
+  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+
   return (
     <div
         data-aos="fade-down"
-        data-aos-duration="600"
-        data-aos-easing="ease-in-out"
+        data-aos-duration="300"
         data-aos-once="false"
         data-aos-anchor-placement="top-bottom"
         className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
@@ -26,8 +26,8 @@ const PaginationSimple = ({ page, showNext }) => {
         href={{
           pathname:
             currentPage - 1 === 1
-              ? `${BLOG.SUB_PATH || '/'}`
-              : `/page/${currentPage - 1}`,
+              ? `${pagePrefix}/`
+              : `${pagePrefix}/page/${currentPage - 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
@@ -58,7 +58,7 @@ const PaginationSimple = ({ page, showNext }) => {
         </button>
       </Link>
     </div>
-  );
+  )
 }
 
 export default PaginationSimple

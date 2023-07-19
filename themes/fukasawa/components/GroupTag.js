@@ -12,7 +12,7 @@ function GroupTag ({ tags, currentTag }) {
   return (
     <div id='tags-group' className='dark:border-gray-600 w-66 space-y-2'>
       {
-        tags.map(tag => {
+        tags?.slice(0, 20)?.map(tag => {
           const selected = tag.name === currentTag
           return <TagItemMini key={tag.name} tag={tag} selected={selected} />
         })

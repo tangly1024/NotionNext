@@ -19,10 +19,7 @@ const CommonHead = ({ meta, children }) => {
     <Head>
       <title>{title}</title>
       <meta name="theme-color" content={BLOG.BACKGROUND_DARK} />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no"
-      />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"/>
       <meta name="robots" content="follow, index" />
       <meta charSet="UTF-8" />
       {BLOG.SEO_GOOGLE_SITE_VERIFICATION && (
@@ -44,12 +41,22 @@ const CommonHead = ({ meta, children }) => {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:title" content={title} />
 
+      {BLOG.COMMENT_WEBMENTION.ENABLE && (
+        <>
+          <link rel="webmention" href={`https://webmention.io/${BLOG.COMMENT_WEBMENTION.HOSTNAME}/webmention`} />
+          <link rel="pingback" href={`https://webmention.io/${BLOG.COMMENT_WEBMENTION.HOSTNAME}/xmlrpc`} />
+        </>
+      )}
+      {BLOG.COMMENT_WEBMENTION.ENABLE && BLOG.COMMENT_WEBMENTION.AUTH !== '' && (
+        <link href={BLOG.COMMENT_WEBMENTION.AUTH} rel="me" />
+      )}
+
       {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <meta name="referrer" content="no-referrer-when-downgrade" />}
       {meta?.type === 'Post' && (
         <>
           <meta
             property="article:published_time"
-            content={meta.date || meta.createdTime}
+            content={meta.publishTime}
           />
           <meta property="article:author" content={BLOG.AUTHOR} />
           <meta property="article:section" content={category} />
