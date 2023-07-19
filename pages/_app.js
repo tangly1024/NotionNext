@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-// import 'animate.css'
+import 'animate.css'
 import '@/styles/globals.css'
 import '@/styles/nprogress.css'
 import '@/styles/utility-patterns.css'

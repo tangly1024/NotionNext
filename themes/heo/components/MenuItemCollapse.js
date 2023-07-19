@@ -26,7 +26,7 @@ export const MenuItemCollapse = ({ link }) => {
   }
 
   return <>
-        <div className='w-full px-2 py-3 border rounded-xl text-left dark:bg-hexo-black-gray' onClick={toggleShow} >
+        <div className='select-none w-full px-2 py-2 border rounded-xl text-left dark:bg-hexo-black-gray' onClick={toggleShow} >
             {!hasSubMenu && <Link
                 href={link?.to}
                 className="font-extralight  flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
@@ -36,7 +36,7 @@ export const MenuItemCollapse = ({ link }) => {
                 onClick={hasSubMenu ? toggleOpenSubMenu : null}
                 className="font-extralight flex items-center justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest pb-1">
                 <span className='transition-all items-center duration-200'>{link?.icon && <i className={link.icon + ' mr-4'} />}{link?.name}</span>
-                <i className={`px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''} text-gray-400`}></i>
+                <i className={`select-none px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''} text-gray-400`}></i>
             </div>}
         </div>
 

@@ -15,6 +15,8 @@ const CONFIG = {
   HERO_TITLE_3: '88LIN.EU.COM',
   HERO_TITLE_4: '新版上线',
   HERO_TITLE_5: '生活明朗 万物可爱',
+  HERO_TITLE_LINK: 'https://88lin.eu.org',
+
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
   HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
