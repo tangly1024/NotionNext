@@ -211,11 +211,11 @@ function TodayCard({ cRef }) {
   }
 
   /**
-       * 点击卡片跳转的链接
-       * @param {*} e
-       */
+     * 点击卡片跳转的链接
+     * @param {*} e
+     */
   function handleCardClick(e) {
-    router.push('https://tangly1024.com')
+    router.push(CONFIG.HERO_TITLE_LINK)
   }
 
   return <div id='today-card' className={`${isCoverUp ? ' ' : 'pointer-events-none'} overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
