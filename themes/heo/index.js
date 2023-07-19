@@ -403,8 +403,12 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
+  const headerSlot = <header>
+  {/* 顶部导航 */}
+  <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
+</header>
   return (
-        <LayoutBase {...props} className='mt-8'>
+        <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
             <div id='tag-outer-wrapper' className='px-5  lg:px-0'>
                 <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
                     {locale.COMMON.TAGS}
