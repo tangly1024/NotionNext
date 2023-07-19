@@ -20,7 +20,7 @@ const CONFIG = {
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
   HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
-  HERO_CATEGORY_3: { title: '使用教程', url: '/tag/实用教程' },
+  HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
