@@ -28,7 +28,6 @@ const Catalog = ({ toc }) => {
   const [activeSection, setActiveSection] = useState(null)
 
   const actionSectionScrollSpy = useCallback(throttle(() => {
-    console.log('目录')
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
