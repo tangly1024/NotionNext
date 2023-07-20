@@ -186,7 +186,7 @@ const fixCodeLineStyle = () => {
   setTimeout(() => {
     const preCodes = document.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {
-      console.log('code', preCode)
+    //   console.log('code', preCode)
       Prism.plugins.lineNumbers.resize(preCode)
     }
   }, 10)
