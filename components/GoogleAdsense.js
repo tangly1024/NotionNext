@@ -1,4 +1,5 @@
 import BLOG from '@/blog.config'
+import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
@@ -8,20 +9,27 @@ import { useEffect } from 'react'
  */
 export default function GoogleAdsense() {
   const initGoogleAdsense = () => {
-    setTimeout(() => {
-      const ads = document.getElementsByClassName('adsbygoogle')
-      const adsbygoogle = window.adsbygoogle
-      if (ads.length > 0) {
-        for (let i = 0; i <= ads.length; i++) {
-          try {
-            adsbygoogle.push(ads[i])
-            console.log('adsbygoogle', i, ads[i], adsbygoogle)
-          } catch (e) {
+    // GoogleAdsense 本地开发请加入 data-adbreak-test="on"
+    // {BLOG.ADSENSE_GOOGLE_ID && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`}
+    //  crossOrigin="anonymous" />}
 
+    loadExternalResource(`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`, 'js').then(url => {
+      setTimeout(() => {
+        const ads = document.getElementsByClassName('adsbygoogle')
+        const adsbygoogle = window.adsbygoogle
+        console.log('google-ads', adsbygoogle)
+        if (ads.length > 0) {
+          for (let i = 0; i <= ads.length; i++) {
+            try {
+              adsbygoogle.push(ads[i])
+              console.log('adsbygoogle', i, ads[i], adsbygoogle)
+            } catch (e) {
+
+            }
           }
         }
-      }
-    }, 100)
+      }, 100)
+    })
   }
 
   const router = useRouter()

@@ -41,7 +41,7 @@ export default function CategoryBar(props) {
             {scrollRight ? <ChevronDoubleLeft className={'w-5 h-5'} /> : <ChevronDoubleRight className={'w-5 h-5'} /> }
             </div>
             <Link href='/category' className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600'>
-                {locale.COMMON.MORE}
+                {locale.MENU.CATEGORY}
             </Link>
         </div>
     </div>
