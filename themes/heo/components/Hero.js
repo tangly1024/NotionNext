@@ -19,7 +19,7 @@ const Hero = props => {
   return (
         <div id="hero-wrapper" className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
 
-            <hero id="hero" style={{ zIndex: 1 }} className={'animate__animated animate__fadeIn animate__fast recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3'} >
+            <div id="hero" style={{ zIndex: 1 }} className={'animate__animated animate__fadeIn animate__fast recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3'} >
 
                 {/* 左侧banner组 */}
                 <BannerGroup {...props} />
@@ -27,7 +27,7 @@ const Hero = props => {
                 {/* 右侧置顶文章组 */}
                 <TopGroup {...props} />
 
-            </hero>
+            </div>
         </div>
   )
 }
@@ -162,11 +162,11 @@ function TopGroup(props) {
         <div id='hero-right-wrapper' onMouseLeave={handleMouseLeave} className='flex-1 relative w-full'>
             {/* 制定最新文章 */}
             <div id='top-group' className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
-                {latestPosts?.map(p => {
-                  return <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={p.id}>
+                {latestPosts?.map((p, index) => {
+                  return <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={index}>
                         <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
                             {/* eslint-disable-next-line */}
-                            <img className='h-24 object-cover' src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
+                            <img className='h-24 object-cover' alt={p?.title} src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
                             <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>{p?.title}</div>
                             {/* hover 悬浮的 ‘荐’ 字 */}
                             <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>

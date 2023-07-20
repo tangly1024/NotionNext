@@ -1,6 +1,7 @@
 import React from 'react'
 import BLOG from '@/blog.config'
 import SocialButton from './SocialButton'
+import { AdSlot } from '@/components/GoogleAdsense'
 // import DarkModeButton from '@/components/DarkModeButton'
 
 const Footer = ({ title }) => {
@@ -28,13 +29,14 @@ const Footer = ({ title }) => {
                 <SocialButton />
             </div>
 
+            <AdSlot type='native'/>
             <br />
 
             {/* 底部页面信息 */}
             <div id='footer-bottom' className='w-full h-20 flex flex-col p-3 lg:flex-row justify-between px-6 items-center bg-[#f1f3f7] dark:bg-[#30343f]'>
 
                 <div id='footer-bottom-left'>
-                    <i className='fas fa-copyright' /> {`${copyrightDate}`} <i className='mx-1 animate-pulse fas fa-heart' /> <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a>.
+                   NotionNext {BLOG.VERSION} <i className='fas fa-copyright' /> {`${copyrightDate}`} <i className='mx-1 animate-pulse fas fa-heart' /> <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a>.
                 </div>
 
             <div id='footer-bottom-right'>
