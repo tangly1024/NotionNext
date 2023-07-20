@@ -46,7 +46,7 @@ export function InfoCard(props) {
                         <Link href='/about'><GlobeAlt className={'w-6 h-6'} /></Link>
                     </div>
                     <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-                        <Link href='https://github.com/tangly1024/NotionNext'><i className='fab fa-github text-xl' />
+                        <Link href={CONFIG.INFO_CARD_URL}><i className='fab fa-github text-xl' />
                         </Link>
                     </div>
                 </div>
