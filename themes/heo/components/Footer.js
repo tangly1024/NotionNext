@@ -37,10 +37,6 @@ const Footer = ({ title }) => {
                     <i className='fas fa-copyright' /> {`${copyrightDate}`} <i className='mx-1 animate-pulse fas fa-heart' /> <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a>.
                 </div>
 
-                {BLOG.BEI_AN && (<div id='footer-bottom-center'>
-                    <a href="https://beian.miit.gov.cn/" className="text-black dark:text-gray-200 no-underline hover:underline ml-4">{BLOG.BEI_AN} </a>
-                </div>)}
-
             <div id='footer-bottom-right'>
                 {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a></>}
 
