@@ -63,7 +63,7 @@ const BLOG = {
   ],
   FONT_SERIF: [
     // 衬线字体 例如'LXGW WenKai'
-    'Georgia'
+    'Georgia',
     'Bitter',
     '"Noto Serif SC"',
     'SimSun',
