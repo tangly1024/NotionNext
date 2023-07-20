@@ -1,9 +1,7 @@
 import CONFIG from './config'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Mark from 'mark.js'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import { ArticleLock } from './components/ArticleLock'
@@ -26,6 +24,7 @@ import { useGlobal } from '@/lib/global'
 import SearchInput from './components/SearchInput'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局
@@ -120,20 +119,19 @@ const LayoutPostList = props => {
  */
 const LayoutSearch = props => {
   const { keyword } = props
-  const router = useRouter()
+
   useEffect(() => {
-    setTimeout(() => {
-      const container = isBrowser() && document.getElementById('posts-wrapper')
-      if (container && container.innerHTML) {
-        const re = new RegExp(keyword, 'gim')
-        const instance = new Mark(container)
-        instance.markRegExp(re, {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
-        })
-      }
-    }, 100)
-  }, [router])
+        }
+      })
+    }
+  }, [])
 
   return <LayoutPostList {...props} slotTop={<SearchInput {...props} />} />
 }

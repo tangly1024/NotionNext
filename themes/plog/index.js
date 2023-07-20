@@ -7,10 +7,6 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
-
-import { useRouter } from 'next/router'
-
-import Mark from 'mark.js'
 import { isBrowser } from '@/lib/utils'
 import SearchNavBar from './components/SearchNavBar'
 import BlogArchiveItem from './components/BlogArchiveItem'
@@ -26,6 +22,7 @@ import BottomNav from './components/BottomNav'
 import { saveDarkModeToCookies } from '@/themes/theme'
 import Modal from './components/Modal'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 // 主题全局状态
 const ThemeGlobalPlog = createContext()
@@ -133,21 +130,19 @@ const LayoutPostList = props => {
  */
 const LayoutSearch = props => {
   const { keyword } = props
-  const router = useRouter()
 
   useEffect(() => {
-    setTimeout(() => {
-      const container = isBrowser() && document.getElementById('posts-wrapper')
-      if (container && container.innerHTML) {
-        const re = new RegExp(keyword, 'gim')
-        const instance = new Mark(container)
-        instance.markRegExp(re, {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
-        })
-      }
-    }, 100)
-  }, [router.events])
+        }
+      })
+    }
+  }, [])
 
   return <LayoutPostList {...props} topSlot={<SearchNavBar {...props} />} />
 }

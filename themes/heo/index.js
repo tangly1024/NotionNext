@@ -7,12 +7,10 @@ import SideRight from './components/SideRight'
 import NavBar from './components/NavBar'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
 import { useRouter } from 'next/router'
-import Mark from 'mark.js'
 import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
@@ -31,6 +29,7 @@ import { NoticeBar } from './components/NoticeBar'
 import { HashTag } from '@/components/HeroIcons'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import FloatTocButton from './components/FloatTocButton'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -41,11 +40,6 @@ import FloatTocButton from './components/FloatTocButton'
 const LayoutBase = props => {
   const { children, headerSlot, slotTop, slotRight, meta, siteInfo, className } = props
   const { onLoading } = useGlobal()
-
-  // 加载主题样式
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-hexo.css', 'css')
-  }
 
   return (
         <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col'>
@@ -168,23 +162,20 @@ const LayoutSearch = props => {
     </header>
 
   useEffect(() => {
-    setTimeout(() => {
-      if (currentSearch) {
-        const targets = document.getElementsByClassName('replace')
-        for (const container of targets) {
-          if (container && container.innerHTML) {
-            const re = new RegExp(currentSearch, 'gim')
-            const instance = new Mark(container)
-            instance.markRegExp(re, {
-              element: 'span',
-              className: 'text-red-500 border-b border-dashed'
-            })
+    // 高亮搜索结果
+    if (currentSearch) {
+      setTimeout(() => {
+        replaceSearchResult({
+          doms: document.getElementsByClassName('replace'),
+          search: currentSearch,
+          target: {
+            element: 'span',
+            className: 'text-red-500 border-b border-dashed'
           }
-        }
-      }
-    }, 100)
-  })
-
+        })
+      }, 100)
+    }
+  }, [])
   return (
         <LayoutBase {...props} currentSearch={currentSearch} headerSlot={headerSlot}>
             <div id='post-outer-wrapper' className='px-5  lg:px-0'>

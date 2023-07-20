@@ -12,7 +12,6 @@ import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
 import { useRouter } from 'next/router'
-import Mark from 'mark.js'
 import Card from './components/Card'
 import RightFloatArea from './components/RightFloatArea'
 import SearchNav from './components/SearchNav'
@@ -33,6 +32,7 @@ import Link from 'next/link'
 import SlotBar from './components/SlotBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -139,21 +139,16 @@ const LayoutSearch = props => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    setTimeout(() => {
-      if (currentSearch) {
-        const targets = document.getElementsByClassName('replace')
-        for (const container of targets) {
-          if (container && container.innerHTML) {
-            const re = new RegExp(currentSearch, 'gim')
-            const instance = new Mark(container)
-            instance.markRegExp(re, {
-              element: 'span',
-              className: 'text-red-500 border-b border-dashed'
-            })
-          }
+    if (currentSearch) {
+      replaceSearchResult({
+        doms: document.getElementsByClassName('replace'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
         }
-      }
-    }, 100)
+      })
+    }
   })
 
   return (
