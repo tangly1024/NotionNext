@@ -48,9 +48,9 @@ export default function PostHeader({ post, siteInfo }) {
 
                         {post.tagItems && (
                             <div className="hidden md:flex justify-center flex-nowrap overflow-x-auto">
-                                {post.tagItems.map(tag => (
+                                {post.tagItems.map((tag, index) => (
                                     <Link
-                                        key={tag}
+                                        key={index}
                                         href={`/tag/${encodeURIComponent(tag.name)}`}
                                         passHref
                                         className={'cursor-pointer inline-block text-gray-50 hover:text-white duration-200 py-0.5 px-1 whitespace-nowrap '}>
