@@ -296,6 +296,9 @@ const BLOG = {
   SEO_GOOGLE_SITE_VERIFICATION:
       process.env.NEXT_PUBLIC_SEO_GOOGLE_SITE_VERIFICATION || '', // Remove the value or replace it with your own google site verification code
 
+  SEO_BAIDU_SITE_VERIFICATION:
+      process.env.NEXT_PUBLIC_SEO_BAIDU_SITE_VERIFICATION || '', // Remove the value or replace it with your own google site verification code
+
   // <---- 站点统计
 
   // 谷歌广告
