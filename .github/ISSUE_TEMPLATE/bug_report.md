@@ -28,6 +28,7 @@ assignees: tangly1024
 - 操作系统: [例如. iOS, Android, macOS, windows]
 - 浏览器 [例如. chrome, safari, firefox]
 - NotionNext版本 [e.g. 3.13.6]
+- 主题 [例如. hexo]
 
 **补充说明**
 与问题相关的其它说明

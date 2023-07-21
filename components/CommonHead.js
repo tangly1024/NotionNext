@@ -28,6 +28,7 @@ const CommonHead = ({ meta, children }) => {
           content={BLOG.SEO_GOOGLE_SITE_VERIFICATION}
         />
       )}
+      {BLOG.SEO_BAIDU_SITE_VERIFICATION && (<meta name="baidu-site-verification" content={BLOG.SEO_BAIDU_SITE_VERIFICATION} />)}
       <meta name="keywords" content={keywords} />
       <meta name="description" content={description} />
       <meta property="og:locale" content={lang} />
@@ -56,7 +57,7 @@ const CommonHead = ({ meta, children }) => {
         <>
           <meta
             property="article:published_time"
-            content={meta.date || meta.createdTime}
+            content={meta.publishTime}
           />
           <meta property="article:author" content={BLOG.AUTHOR} />
           <meta property="article:section" content={category} />

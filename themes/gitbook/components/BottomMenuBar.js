@@ -1,9 +1,9 @@
+import { useGitBookGlobal } from '@/themes/gitbook'
 import React from 'react'
-import { useMediumGlobal } from '../LayoutBase'
 import JumpToTopButton from './JumpToTopButton'
 
 export default function BottomMenuBar({ post, className }) {
-  const { pageNavVisible, changePageNavVisible } = useMediumGlobal()
+  const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
 
   const togglePageNavVisible = () => {
     changePageNavVisible(!pageNavVisible)
