@@ -38,10 +38,6 @@ const CommonScript = () => {
       />
     </>)}
 
-    {/* GoogleAdsense 本地开发请加入 data-adbreak-test="on" */}
-    {BLOG.ADSENSE_GOOGLE_ID && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`}
-     crossOrigin="anonymous" />}
-
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
 
     {BLOG.COMMENT_TIDIO_ID && <script async src={`//code.tidio.co/${BLOG.COMMENT_TIDIO_ID}.js`} />}

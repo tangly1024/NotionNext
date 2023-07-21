@@ -11,7 +11,6 @@ import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useRef, useState } from 'react'
 import BLOG from '@/blog.config'
-import Header from './components/Header'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
@@ -133,7 +132,7 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList headerSlot={CONFIG.HOME_BANNER && <Header {...props} />} {...props} />
+  return <LayoutPostList {...props} />
 }
 
 /**

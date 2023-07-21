@@ -7,6 +7,7 @@ import { SvgIcon } from './SvgIcon'
 import { MenuItemDrop } from './MenuItemDrop'
 import Collapse from '@/components/Collapse'
 import { MenuItemCollapse } from './MenuItemCollapse'
+import LazyImage from '@/components/LazyImage'
 
 const Header = props => {
   const { fullWidth, siteInfo } = props
@@ -22,8 +23,7 @@ const Header = props => {
                         <div className="h-6 w-6">
                             {/* <SvgIcon/> */}
                             {CONFIG.NAV_NOTION_ICON
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                              ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
+                              ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
                               : <SvgIcon />}
 
                         </div>

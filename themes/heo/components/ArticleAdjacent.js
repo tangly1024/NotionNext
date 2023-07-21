@@ -16,7 +16,6 @@ export default function ArticleAdjacent({ prev, next }) {
 
     const handleIntersect = (entries) => {
       entries.forEach((entry) => {
-        console.log(entry.isIntersecting)
         if (entry.isIntersecting) {
           setIsScrollEnd(true)
         } else {
