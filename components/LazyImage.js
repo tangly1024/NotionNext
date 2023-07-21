@@ -1,18 +1,19 @@
+import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 
 /**
  * 默认懒加载占位图
  */
 const loadingSVG = (
-  <svg
-    width="100"
-    height="100"
-    viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="#ccc"
-  >
-    <circle cx="50" cy="50" r="42" strokeWidth="8" />
-  </svg>
+    <svg
+        width="100"
+        height="100"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="#ccc"
+    >
+        <circle cx="50" cy="50" r="42" strokeWidth="8" />
+    </svg>
 )
 
 /**
@@ -41,17 +42,6 @@ export default function LazyImage({
       onLoad() // 触发传递的onLoad回调函数
     }
   }
-
-  // 预加载图片
-  useEffect(() => {
-    if (priority) {
-      const link = document.createElement('link')
-      link.rel = 'preload'
-      link.as = 'image'
-      link.href = src
-      document.head.appendChild(link)
-    }
-  }, [priority, src])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -103,8 +93,12 @@ export default function LazyImage({
   if (style) {
     imgProps.style = style
   }
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img {...imgProps} />
-  )
+  return (<>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img {...imgProps} />
+        {/* 预加载 */}
+        {priority && <Head>
+            <link rel='preload' as='image' src={src} />
+        </Head>}
+    </>)
 }

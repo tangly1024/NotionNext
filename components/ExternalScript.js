@@ -10,7 +10,6 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
 const ExternalScript = () => {
   if (isBrowser()) {
     // 静态导入本地自定义样式
-    loadExternalResource(BLOG.FONT_AWESOME, 'css')
     loadExternalResource('/css/custom.css', 'css')
     loadExternalResource('/js/custom.js', 'js')
 
@@ -29,10 +28,6 @@ const ExternalScript = () => {
         loadExternalResource(url, 'css')
       }
     }
-    // 渲染所有字体
-    BLOG.FONT_URL?.forEach(e => {
-      loadExternalResource(e, 'font')
-    })
   }
   return null
 }
