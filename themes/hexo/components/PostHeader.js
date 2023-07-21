@@ -3,6 +3,7 @@ import TagItemMini from './TagItemMini'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/LazyImage'
 
 export default function PostHeader({ post, siteInfo }) {
   const { locale } = useGlobal()
@@ -10,14 +11,12 @@ export default function PostHeader({ post, siteInfo }) {
   if (!post) {
     return <></>
   }
-  const headerImage = post?.pageCover ? `url("${post.pageCover}")` : `url("${siteInfo?.pageCover}")`
+  const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
 
   return (
-    <div
-      id="header"
-      className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10"
-      style={{ backgroundImage: headerImage }}
-    >
+    <div id="header" className="w-full h-96 relative md:flex-shrink-0 z-10" >
+      <LazyImage priority={true} src={headerImage} className='w-full h-full object-cover object-center absolute top-0'/>
+
       <header id='article-header-cover'
             className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center ">
 

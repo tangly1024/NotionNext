@@ -1,13 +1,14 @@
+'use client'
+
 import BLOG from '@/blog.config'
-import { loadExternalResource } from '@/lib/utils'
-import { useEffect } from 'react'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 /**
  * 自定义引入外部JS 和 CSS
  * @returns
  */
 const ExternalScript = () => {
-  useEffect(() => {
+  if (isBrowser()) {
     // 静态导入本地自定义样式
     loadExternalResource(BLOG.FONT_AWESOME, 'css')
     loadExternalResource('/css/custom.css', 'css')
@@ -30,10 +31,9 @@ const ExternalScript = () => {
     }
     // 渲染所有字体
     BLOG.FONT_URL?.forEach(e => {
-      loadExternalResource(e, 'css')
+      loadExternalResource(e, 'font')
     })
-  }, [])
-
+  }
   return null
 }
 
