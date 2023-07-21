@@ -16,7 +16,6 @@ import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
 import { isBrowser } from '@/lib/utils'
-import Mark from 'mark.js'
 import TocDrawerButton from './components/TocDrawerButton'
 import TocDrawer from './components/TocDrawer'
 import { ArticleLock } from './components/ArticleLock'
@@ -28,6 +27,7 @@ import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -161,17 +161,20 @@ const LayoutPostList = (props) => {
 const LayoutSearch = (props) => {
   const { locale } = useGlobal()
   const { posts, keyword } = props
-  setTimeout(() => {
-    const container = isBrowser() && document.getElementById('posts-wrapper')
-    if (container && container.innerHTML) {
-      const re = new RegExp(keyword, 'gim')
-      const instance = new Mark(container)
-      instance.markRegExp(re, {
-        element: 'span',
-        className: 'text-red-500 border-b border-dashed'
+
+  useEffect(() => {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
       })
     }
-  }, 200)
+  }, [])
+
   return (
         <LayoutBase {...props} >
             <StickyBar>

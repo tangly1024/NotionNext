@@ -5,9 +5,9 @@ import React, { useEffect, useRef } from 'react'
 // import { Code } from 'react-notion-x/build/third-party/code'
 import TweetEmbed from 'react-tweet-embed'
 
+import BLOG from '@/blog.config'
 import 'katex/dist/katex.min.css'
 import { mapImgUrl } from '@/lib/notion/mapImage'
-import BLOG from '@/blog.config'
 import { isBrowser } from '@/lib/utils'
 
 const Code = dynamic(() =>

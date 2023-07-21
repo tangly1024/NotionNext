@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import TagItemMini from './TagItemMini'
+import LazyImage from '@/components/LazyImage'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
@@ -12,13 +13,14 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   return (
         <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
-            <div className={'bg-white dark:bg-[#1e1e1e] cursor-pointer flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full  dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl  '}>
+
+            <div className={'animate__animated animate__fadeIn animate__fast border bg-white dark:bg-[#1e1e1e] cursor-pointer flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <div className={'h-60 bg-center bg-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'} style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
+                            <LazyImage src={post?.pageCoverThumbnail} alt={post?.title} className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'/>
                         </Link>
                     </div>
                 )}
@@ -53,8 +55,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                     {/* 搜索结果 */}
                     {post.results && (
                         <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                            {post.results.map(r => (
-                                <span key={r}>{r}</span>
+                            {post.results.map((r, index) => (
+                                <span key={index}>{r}</span>
                             ))}
                         </p>
                     )}

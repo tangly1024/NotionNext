@@ -8,7 +8,6 @@ import Footer from './components/Footer'
 import { useEffect } from 'react'
 import RightFloatButtons from './components/RightFloatButtons'
 import { useRouter } from 'next/router'
-import Mark from 'mark.js'
 import SearchNave from './components/SearchNav'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -31,6 +30,7 @@ import JumpToCommentButton from './components/JumpToCommentButton'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局
@@ -140,21 +140,16 @@ const LayoutSearch = props => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    setTimeout(() => {
-      if (currentSearch) {
-        const targets = document.getElementsByClassName('replace')
-        for (const container of targets) {
-          if (container && container.innerHTML) {
-            const re = new RegExp(currentSearch, 'gim')
-            const instance = new Mark(container)
-            instance.markRegExp(re, {
-              element: 'span',
-              className: 'text-red-500 border-b border-dashed'
-            })
-          }
+    if (currentSearch) {
+      replaceSearchResult({
+        doms: document.getElementsByClassName('replace'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
         }
-      }
-    }, 100)
+      })
+    }
   })
   return (
         <LayoutBase {...props} currentSearch={currentSearch}>

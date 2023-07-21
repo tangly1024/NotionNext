@@ -1,7 +1,6 @@
-import React, { useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import Progress from './Progress'
 import { useGlobal } from '@/lib/global'
 
 /**
@@ -13,7 +12,7 @@ import { useGlobal } from '@/lib/global'
 const Catalog = ({ toc }) => {
   const { locale } = useGlobal()
   // 监听滚动事件
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
     actionSectionScrollSpy()
     return () => {
@@ -26,10 +25,9 @@ const Catalog = ({ toc }) => {
   const tocIds = []
 
   // 同步选中目录事件
-  const [activeSection, setActiveSection] = React.useState(null)
+  const [activeSection, setActiveSection] = useState(null)
 
-  const throttleMs = 200
-  const actionSectionScrollSpy = React.useCallback(throttle(() => {
+  const actionSectionScrollSpy = useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection
@@ -54,7 +52,7 @@ const Catalog = ({ toc }) => {
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
     tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
-  }, throttleMs))
+  }, 200))
 
   // 无目录就直接返回空
   if (!toc || toc.length < 1) {
@@ -63,9 +61,6 @@ const Catalog = ({ toc }) => {
 
   return <div className='px-3 py-1 dark:text-white text-black'>
     <div className='w-full'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
-    <div className='w-full py-3'>
-      <Progress />
-    </div>
     <div className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden' ref={tRef}>
       <nav className='h-full'>
         {toc.map((tocItem) => {
