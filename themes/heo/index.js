@@ -40,7 +40,6 @@ import LazyImage from '@/components/LazyImage'
  */
 const LayoutBase = props => {
   const { children, headerSlot, slotTop, slotRight, meta, siteInfo, className } = props
-  const { onLoading } = useGlobal()
 
   return (
         <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col'>
@@ -55,40 +54,17 @@ const LayoutBase = props => {
             <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative md:px-5'}>
 
                 <div id="container-inner" className={'w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-
-                    <Transition
-                        show={!onLoading}
-                        appear={true}
-                        enter="transition ease-in-out duration-700 transform order-first"
-                        enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100"
-                        leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0 -translate-y-16"
-                        className={`w-full h-auto ${className || ''}`}
-                        unmount={false}
-                    >
+                    <div className={`w-full h-auto ${className || ''}`}>
                         {/* 主区上部嵌入 */}
                         {slotTop}
-
                         {children}
-                    </Transition>
+                    </div>
 
-                    <Transition
-                        show={!onLoading}
-                        appear={true}
-                        enter="transition ease-in-out duration-700 transform order-first"
-                        enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 -translate-y-16"
-                        unmount={false}
-                    >
+                    <div>
                         {/* 主区快右侧 */}
                         {slotRight}
+                    </div>
 
-                    </Transition>
                 </div>
             </main>
 
@@ -234,7 +210,12 @@ const LayoutSlug = props => {
 
   // 右侧栏
   const slotRight = <SideRight {...props} />
-  const headerSlot = <header className='post-bg'>
+  const headerSlot = <header
+        data-aos="fade-up"
+        data-aos-duration="300"
+        data-aos-once="false"
+        data-aos-anchor-placement="top-bottom"
+        className='post-bg'>
         {/* 顶部导航 */}
         <div id='nav-bar-wrapper'><NavBar {...props} /></div>
         <PostHeader {...props} />
@@ -247,7 +228,12 @@ const LayoutSlug = props => {
 
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
-                    <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
+                    <article
+                        data-aos="fade-up"
+                        data-aos-duration="300"
+                        data-aos-once="false"
+                        data-aos-anchor-placement="top-bottom"
+                         itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
                         {/* Notion文章主体 */}
                         <section className='px-5 justify-center mx-auto'>
                             {post && <NotionPage post={post} />}
@@ -395,9 +381,9 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   const headerSlot = <header>
-  {/* 顶部导航 */}
-  <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
-</header>
+        {/* 顶部导航 */}
+        <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
+    </header>
   return (
         <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
             <div id='tag-outer-wrapper' className='px-5  lg:px-0'>

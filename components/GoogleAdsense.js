@@ -34,7 +34,10 @@ export default function GoogleAdsense() {
 
   const router = useRouter()
   useEffect(() => {
-    initGoogleAdsense()
+    // 延迟3秒加载
+    setTimeout(() => {
+      initGoogleAdsense()
+    }, 3000)
   }, [router])
 
   return null
