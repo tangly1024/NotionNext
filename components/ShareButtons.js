@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import copy from 'copy-to-clipboard'
-import QRCode from 'qrcode.react'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import {
@@ -48,6 +48,13 @@ import {
   HatenaShareButton,
   HatenaIcon
 } from 'react-share'
+
+const QRCode = dynamic(
+  () => {
+    return import('qrcode.react')
+  },
+  { ssr: false }
+)
 
 /**
  * @author https://github.com/txs

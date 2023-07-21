@@ -2,7 +2,7 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import TagItemMini from './TagItemMini'
-// import Image from 'next/image'
+import LazyImage from '@/components/LazyImage'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
@@ -19,7 +19,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {showPageCover && (
                     <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <div className={'h-60 bg-center bg-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'} style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
+                            <LazyImage priority={index === 0} src={post?.pageCoverThumbnail} alt={post?.title} className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'/>
                         </Link>
                     </div>
                 )}
@@ -54,8 +54,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                     {/* 搜索结果 */}
                     {post.results && (
                         <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                            {post.results.map(r => (
-                                <span key={r}>{r}</span>
+                            {post.results.map((r, index) => (
+                                <span key={index}>{r}</span>
                             ))}
                         </p>
                     )}

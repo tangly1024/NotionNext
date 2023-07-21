@@ -119,13 +119,13 @@ const renderMermaid = async() => {
       }
     }
   })
-  if (document.querySelector('#container-inner')) {
-    observer.observe(document.querySelector('#container-inner'), { attributes: true, subtree: true })
+  if (document.querySelector('#notion-article')) {
+    observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
   }
 }
 
 function renderPrismMac() {
-  const container = document?.getElementById('container-inner')
+  const container = document?.getElementById('notion-article')
 
   // Add line numbers
   if (BLOG.CODE_LINE_NUMBERS === 'true') {
@@ -182,11 +182,11 @@ const fixCodeLineStyle = () => {
       }
     }
   })
-  observer.observe(document.querySelector('#container'), { attributes: true, subtree: true })
+  observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
   setTimeout(() => {
     const preCodes = document.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {
-      console.log('code', preCode)
+    //   console.log('code', preCode)
       Prism.plugins.lineNumbers.resize(preCode)
     }
   }, 10)

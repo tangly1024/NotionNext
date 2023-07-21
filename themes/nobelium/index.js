@@ -1,3 +1,4 @@
+import BLOG from '@/blog.config'
 import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import React, { useEffect, useState } from 'react'
@@ -6,15 +7,9 @@ import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
-
-import BLOG from '@/blog.config'
 import Announcement from './components/Announcement'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
-
-import { useRouter } from 'next/router'
-
-import Mark from 'mark.js'
 import { deepClone, isBrowser } from '@/lib/utils'
 import SearchNavBar from './components/SearchNavBar'
 import BlogArchiveItem from './components/BlogArchiveItem'
@@ -28,6 +23,7 @@ import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -135,22 +131,18 @@ const LayoutPostList = props => {
  */
 const LayoutSearch = props => {
   const { keyword } = props
-  const router = useRouter()
-
   useEffect(() => {
-    setTimeout(() => {
-      const container = isBrowser() && document.getElementById('posts-wrapper')
-      if (container && container.innerHTML) {
-        const re = new RegExp(keyword, 'gim')
-        const instance = new Mark(container)
-        instance.markRegExp(re, {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
-        })
-      }
-    }, 100)
-  }, [router.events])
-
+        }
+      })
+    }
+  }, [])
   return <LayoutPostList {...props} slotTop={<SearchNavBar {...props} />} />
 }
 

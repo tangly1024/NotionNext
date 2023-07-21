@@ -22,7 +22,6 @@ import { ArticleLock } from './components/ArticleLock'
 import TagGroups from './components/TagGroups'
 import CategoryGroup from './components/CategoryGroup'
 import { isBrowser } from '@/lib/utils'
-import Mark from 'mark.js'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostBar from './components/BlogPostBar'
 import NotionPage from '@/components/NotionPage'
@@ -35,6 +34,7 @@ import ShareBar from '@/components/ShareBar'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -202,18 +202,18 @@ const LayoutSearch = (props) => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    setTimeout(() => {
-      const container = isBrowser() && document.getElementById('posts-wrapper')
-      if (container && container.innerHTML) {
-        const re = new RegExp(currentSearch, 'gim')
-        const instance = new Mark(container)
-        instance.markRegExp(re, {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
-        })
-      }
-    }, 100)
-  })
+        }
+      })
+    }
+  }, [])
+
   return <LayoutBase {...props}>
 
         {/* 搜索导航栏 */}

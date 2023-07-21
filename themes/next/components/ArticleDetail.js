@@ -12,6 +12,7 @@ import WordCount from './WordCount'
 import NotionPage from '@/components/NotionPage'
 import CONFIG from '../config'
 import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/LazyImage'
 
 /**
  *
@@ -39,8 +40,7 @@ export default function ArticleDetail(props) {
                     {/* 头图 */}
                     {CONFIG.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.pageCover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img alt={post.title} src={post?.pageCover} className='object-center w-full' />
+                            <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />
                         </div>
                     )}
 

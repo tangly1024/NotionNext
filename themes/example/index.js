@@ -19,7 +19,7 @@ import NotionPage from '@/components/NotionPage'
 import Comment from '@/components/Comment'
 import ShareBar from '@/components/ShareBar'
 import SearchInput from './components/SearchInput'
-import Mark from 'mark.js'
+import replaceSearchResult from '@/components/Mark'
 import { isBrowser } from '@/lib/utils'
 import BlogListGroupByDate from './components/BlogListGroupByDate'
 import CategoryItem from './components/CategoryItem'
@@ -175,21 +175,20 @@ const LayoutSearch = props => {
   const slotTop = <div className='pb-12'><SearchInput {...props} /></div>
   const router = useRouter()
   useEffect(() => {
-    setTimeout(() => {
-      if (isBrowser()) {
-        // 高亮搜索到的结果
-        const container = document.getElementById('posts-wrapper')
-        console.log('container', container, keyword)
-        if (keyword && container) {
-          const re = new RegExp(keyword, 'gim')
-          const instance = new Mark(container)
-          instance.markRegExp(re, {
+    if (isBrowser()) {
+      // 高亮搜索到的结果
+      const container = document.getElementById('posts-wrapper')
+      if (keyword && container) {
+        replaceSearchResult({
+          doms: container,
+          search: keyword,
+          target: {
             element: 'span',
             className: 'text-red-500 border-b border-dashed'
-          })
-        }
+          }
+        })
       }
-    }, 500)
+    }
   }, [router])
 
   return <LayoutPostList slotTop={slotTop} {...props} />
