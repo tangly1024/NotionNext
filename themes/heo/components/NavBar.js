@@ -146,7 +146,7 @@ const NavBar = props => {
                 <div className='flex flex-shrink-0 justify-center items-center space-x-1'>
                     <RandomPostButton {...props} />
                     <SearchButton />
-                    <DarkModeButton />
+                    {!BLOG.THEME_SWITCH && <DarkModeButton {...props} />}
                     <ReadingProgress />
 
                     {/* 移动端菜单按钮 */}
