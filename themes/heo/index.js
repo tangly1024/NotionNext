@@ -30,6 +30,7 @@ import { HashTag } from '@/components/HeroIcons'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import FloatTocButton from './components/FloatTocButton'
 import replaceSearchResult from '@/components/Mark'
+import LazyImage from '@/components/LazyImage'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -321,8 +322,7 @@ const Layout404 = props => {
                         {/* 404卡牌 */}
                         <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white border rounded-3xl'>
                             {/* 左侧动图 */}
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img className="error-img h-60 md:h-full p-4" src={'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'}></img>
+                            <LazyImage className="error-img h-60 md:h-full p-4" src={'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'}></LazyImage>
 
                             {/* 右侧文字 */}
                             <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>

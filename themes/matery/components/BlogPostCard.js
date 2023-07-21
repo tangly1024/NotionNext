@@ -4,6 +4,7 @@ import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
+import LazyImage from '@/components/LazyImage'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
@@ -32,7 +33,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         <div
                             className="flex flex-grow w-full relative duration-200 bg-black rounded-t-md  cursor-pointer transform overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                            <LazyImage
                                 src={post?.pageCoverThumbnail}
                                 alt={post.title}
                                 className="opacity-50 h-full w-full hover:scale-125 rounded-t-md  transform object-cover duration-500"

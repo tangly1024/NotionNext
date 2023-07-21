@@ -2,6 +2,7 @@
 
 import BLOG from '@/blog.config'
 import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
+import LazyImage from '@/components/LazyImage'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -62,7 +63,7 @@ function Banner(props) {
     router.push(randomPost.slug)
   }
 
-  return <div id='banners' onClick={handleClickBanner} className="group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative hidden xl:flex xl:flex-col overflow-hidden">
+  return <div id='banners' onClick={handleClickBanner} className="hidden xl:flex xl:flex-col  group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative overflow-hidden">
 
         <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
             <div className='text-4xl font-bold mb-3  dark:text-white'>{CONFIG.HERO_TITLE_1}<br />{CONFIG.HERO_TITLE_2}</div>
@@ -89,18 +90,17 @@ function Banner(props) {
  */
 function TagsGroupBar() {
   const groupIcons = CONFIG.GROUP_ICONS.concat(CONFIG.GROUP_ICONS)
+
   return (
-        <div className="tags-group-all flex -rotate-[30deg]">
+        <div className="tags-group-all flex -rotate-[30deg] ">
             <div className="tags-group-wrapper flex flex-nowrap absolute top-16">
                 {groupIcons?.map((g, index) => {
                   return (<div key={index} className="tags-group-icon-pair ml-6 select-none">
                         <div style={{ background: g.color_1 }} className={'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={g.img_1} title={g.title_1} className='w-2/3' />
+                            <LazyImage src={g.img_1} title={g.title_1} className='w-2/3 hidden xl:block' />
                         </div>
                         <div style={{ background: g.color_2 }} className={'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={g.img_2} title={g.title_2} className='w-2/3' />
+                            <LazyImage src={g.img_2} title={g.title_2} className='w-2/3 hidden xl:block' />
                         </div>
                     </div>)
                 })}
@@ -165,8 +165,7 @@ function TopGroup(props) {
                 {latestPosts?.map((p, index) => {
                   return <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={index}>
                         <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
-                            {/* eslint-disable-next-line */}
-                            <img className='h-24 object-cover' alt={p?.title} src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
+                            <LazyImage className='h-24 object-cover' alt={p?.title} src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
                             <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>{p?.title}</div>
                             {/* hover 悬浮的 ‘荐’ 字 */}
                             <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>

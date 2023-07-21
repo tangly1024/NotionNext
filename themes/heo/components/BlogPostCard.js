@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import TagItemMini from './TagItemMini'
+import LazyImage from '@/components/LazyImage'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
@@ -19,7 +20,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {showPageCover && (
                     <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <div className={'h-60 bg-center bg-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'} style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
+                            <LazyImage src={post?.pageCoverThumbnail} alt={post?.title} className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'/>
                         </Link>
                     </div>
                 )}

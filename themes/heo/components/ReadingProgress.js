@@ -13,7 +13,7 @@ export default function ReadingProgress() {
     const clientHeight = document.documentElement.clientHeight
     const scrollY = window.scrollY || window.pageYOffset
 
-    const percent = Math.floor((scrollY / (scrollHeight - clientHeight)) * 100)
+    const percent = Math.floor((scrollY / (scrollHeight - clientHeight - 20)) * 100)
     setScrollPercentage(percent)
   }
 
