@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 
 /**
@@ -5,13 +6,13 @@ import React, { useEffect, useRef, useState } from 'react'
  */
 const loadingSVG = (
     <svg
-      width="100"
-      height="100"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#ccc"
+        width="100"
+        height="100"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="#ccc"
     >
-      <circle cx="50" cy="50" r="42" strokeWidth="8" />
+        <circle cx="50" cy="50" r="42" strokeWidth="8" />
     </svg>
 )
 
@@ -20,7 +21,18 @@ const loadingSVG = (
  * @param {*} param0
  * @returns
  */
-export default function LazyImage({ id, src, alt, placeholderSrc = loadingSVG, className, width, height, onLoad, style }) {
+export default function LazyImage({
+  priority,
+  id,
+  src,
+  alt,
+  placeholderSrc = loadingSVG,
+  className,
+  width,
+  height,
+  onLoad,
+  style
+}) {
   const imageRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
 
@@ -81,8 +93,12 @@ export default function LazyImage({ id, src, alt, placeholderSrc = loadingSVG, c
   if (style) {
     imgProps.style = style
   }
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img {...imgProps} />
-  )
+  return (<>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img {...imgProps} />
+        {/* 预加载 */}
+        {priority && <Head>
+            <link rel='preload' as='image' src={src} />
+        </Head>}
+    </>)
 }
