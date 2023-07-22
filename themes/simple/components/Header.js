@@ -1,4 +1,5 @@
 import BLOG from '@/blog.config'
+import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
 import CONFIG from '../config'
 import SocialButton from './SocialButton'
@@ -17,12 +18,9 @@ export const Header = (props) => {
             <div className="float-none inline-block py-12">
                 <Link href='/'>
                     {/* 可使用一张单图作为logo */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    {/* <img className='max-h-48 hover:opacity-60 duration-200 transition-all cursor-pointer' src={CONFIG.LOGO_IMG}/> */}
                     <div className='flex space-x-6'>
                         <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer'>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={avatar} className='rounded-full' width={130} height={130} alt={BLOG.AUTHOR} />
+                            <LazyImage src={avatar} className='rounded-full' width={130} height={130} alt={BLOG.AUTHOR} />
                         </div>
 
                         <div className='flex-col flex justify-center'>

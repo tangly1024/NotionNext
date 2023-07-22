@@ -98,7 +98,7 @@ const PaginationNumber = ({ page, totalPage }) => {
                   query: router.query.s ? { s: router.query.s } : {}
                 }}
                 rel="prev"
-                className={`${showPrev ? 'block' : 'hidden'} relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
+                className={`${showPrev ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
                 {locale.PAGINATION.PREV}
             </Link>
 
@@ -111,7 +111,7 @@ const PaginationNumber = ({ page, totalPage }) => {
                   query: router.query.s ? { s: router.query.s } : {}
                 }}
                 rel="next"
-                className={`${+showNext ? 'block' : 'hidden'} relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
+                className={`${+showNext ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
                 {locale.PAGINATION.NEXT}
             </Link>
         </div>

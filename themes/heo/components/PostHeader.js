@@ -4,6 +4,7 @@ import NotionIcon from '@/components/NotionIcon'
 import WavesArea from './WavesArea'
 import { HashTag } from '@/components/HeroIcons'
 import WordCount from '@/components/WordCount'
+import LazyImage from '@/components/LazyImage'
 
 export default function PostHeader({ post, siteInfo }) {
   if (!post) {
@@ -30,8 +31,7 @@ export default function PostHeader({ post, siteInfo }) {
 
                 {/* 文章背景图 */}
                 <div id='post-cover-wrapper' style={{ filter: 'blur(15px)' }} className='coverdiv lg:translate-x-96 opacity-50 lg:rotate-12'>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img id='post-cover' className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]' src={headerImage} />
+                    <LazyImage id='post-cover' className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]' src={headerImage} />
                 </div>
 
                 {/* 文章文字描述 */}
