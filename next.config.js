@@ -98,6 +98,13 @@ module.exports = withBundleAnalyzer({
   experimental: {
     scrollRestoration: true
   },
+  //   exportPathMap: (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
+  //     const pathMap = { ...defaultPathMap }
+  //     // 忽略/sitemap.xml页面的导出
+  //     pathMap['/sitemap.xml'] = { page: false }
+
+  //     return pathMap
+  //   },
   publicRuntimeConfig: { // 这里的配置既可以服务端获取到，也可以在浏览器端获取到
     NODE_ENV_API: process.env.NODE_ENV_API || 'prod',
     THEMES: themes
