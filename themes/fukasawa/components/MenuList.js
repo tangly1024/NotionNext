@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import CONFIG_FUKA from '../config_fuka'
+import CONFIG_FUKA from '../config'
 import BLOG from '@/blog.config'
 import { MenuItemDrop } from './MenuItemDrop'
 import { MenuItemCollapse } from './MenuItemCollapse'
@@ -30,12 +30,12 @@ export const MenuList = (props) => {
   }
 
   return (<>
-        <nav id='nav-pc' className='hidden md:block font-sans text-sm z-10'>
-            {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
-        </nav>
-        <nav id='nav-mobile' className='block md:hidden font-sans text-sm z-10 pb-1'>
-            {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={props.onHeightChange}/>)}
-        </nav>
+        <menu id='nav-pc' className='hidden md:block font-sans text-sm z-10'>
+            {links?.map((link, index) => <MenuItemDrop key={index} link={link} />)}
+        </menu>
+        <menu id='nav-mobile' className='block md:hidden font-sans text-sm z-10 pb-1'>
+            {links?.map((link, index) => <MenuItemCollapse key={index} link={link} onHeightChange={props.onHeightChange}/>)}
+        </menu>
     </>
 
   )

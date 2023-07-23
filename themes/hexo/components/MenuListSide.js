@@ -2,17 +2,17 @@ import React from 'react'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { MenuItemCollapse } from './MenuItemCollapse'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
 
 export const MenuListSide = (props) => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
   let links = [
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_HEXO.MENU_ARCHIVE },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_HEXO.MENU_SEARCH },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_HEXO.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_HEXO.MENU_TAG }
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG.MENU_ARCHIVE },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG.MENU_SEARCH },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG }
   ]
 
   if (customNav) {
