@@ -48,7 +48,11 @@ const CommonHead = ({ meta, children }) => {
                 <link rel="stylesheet" href={BLOG.FONT_AWESOME} crossOrigin="anonymous" referrerpolicy="no-referrer" />
             </>}
             {BLOG.FONT_URL?.map((fontUrl, index) => {
-              return <link key={index} rel='preload' href={fontUrl} as='font' type='font/woff2' />
+              if (fontUrl.endsWith('.css')) {
+                return <link key={index} rel="stylesheet" href={fontUrl} />
+              } else {
+                return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
+              }
             })}
 
             {BLOG.COMMENT_WEBMENTION.ENABLE && (
