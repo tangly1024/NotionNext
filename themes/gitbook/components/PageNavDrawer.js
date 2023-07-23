@@ -1,4 +1,4 @@
-import { useGitBookGlobal } from '../LayoutBase'
+import { useGitBookGlobal } from '@/themes/gitbook'
 import NavPostList from './NavPostList'
 
 /**
@@ -9,20 +9,21 @@ import NavPostList from './NavPostList'
  * @constructor
  */
 const PageNavDrawer = (props) => {
-  const { pageNavVisible, changePageNavVisible, filterPosts } = useGitBookGlobal()
+  const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
+  const { filteredPostGroups } = props
   const switchVisible = () => {
     changePageNavVisible(!pageNavVisible)
   }
 
   return <>
-        <div id='gitbook-left-float' className='fixed top-0 left-0 z-40'>
+        <div id='gitbook-left-float' className='fixed top-0 left-0 z-40 md:hidden'>
             {/* 侧边菜单 */}
             <div
                 className={(pageNavVisible ? 'animate__slideInLeft ' : '-ml-80 animate__slideOutLeft') +
                     ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 top-16 rounded py-2 bg-white dark:bg-gray-600'}>
                 <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
                     {/* 所有文章列表 */}
-                    <NavPostList posts={filterPosts} />
+                    <NavPostList filteredPostGroups={filteredPostGroups} />
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
 
 /**
  * 跳转到网页顶部
@@ -37,7 +37,7 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     window.scrollTo({ top: targetRef.clientHeight, behavior: 'smooth' })
   }
 
-  if (!CONFIG_NEXT.WIDGET_TO_BOTTOM) {
+  if (!CONFIG.WIDGET_TO_BOTTOM) {
     return <></>
   }
 

@@ -3,13 +3,14 @@ import NotionPage from '@/components/NotionPage'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import React from 'react'
-import CONFIG_MEDIUM from '../config_medium'
+import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
+import LazyImage from '@/components/LazyImage'
 
 const BlogPostCard = ({ post, showSummary }) => {
-  const showPreview = CONFIG_MEDIUM.POST_LIST_PREVIEW && post.blockMap
+  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
   const { locale } = useGlobal()
   return (
         <div
@@ -29,9 +30,8 @@ const BlogPostCard = ({ post, showSummary }) => {
                         'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
                     }>
                     <div>
-                        {CONFIG_MEDIUM.POST_LIST_COVER && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={post.pageCoverThumbnail} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
+                        {CONFIG.POST_LIST_COVER && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
+                            <LazyImage src={post.pageCoverThumbnail} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
                         </div>}
                         {post.title}
                     </div>
@@ -44,8 +44,8 @@ const BlogPostCard = ({ post, showSummary }) => {
                     }
                 >
                     <div className="text-sm py-1">{post.date?.start_date}</div>
-                    {CONFIG_MEDIUM.POST_LIST_CATEGORY && <CategoryItem category={post.category} />}
-                    {CONFIG_MEDIUM.POST_LIST_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                    {CONFIG.POST_LIST_CATEGORY && <CategoryItem category={post.category} />}
+                    {CONFIG.POST_LIST_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                     <TwikooCommentCount post={post} className='hover:underline'/>
                 </div>
 

@@ -1,5 +1,5 @@
+import { useGitBookGlobal } from '@/themes/gitbook'
 import React from 'react'
-import { useGitBookGlobal } from '../LayoutBase'
 import JumpToTopButton from './JumpToTopButton'
 
 export default function BottomMenuBar({ post, className }) {
