@@ -1393,6 +1393,10 @@ code[class*='language-'] {
   white-space: normal;
 }
 
+.katex-display>.katex>.katex-html>.tag {
+    position: inherit !important;
+}
+
 .notion-page-title {
   display: inline-flex;
   max-width: 100%;
