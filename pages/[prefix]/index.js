@@ -96,7 +96,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix } }) {
-  //   let fullSlug = slug.join('/')
   let fullSlug = prefix
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
@@ -161,7 +160,7 @@ export async function getStaticProps({ params: { prefix } }) {
  * @param {*} count
  * @returns
  */
-function getRecommendPost(post, allPosts, count = 6) {
+export function getRecommendPost(post, allPosts, count = 6) {
   let recommendPosts = []
   const postIds = []
   const currentTags = post?.tags || []
