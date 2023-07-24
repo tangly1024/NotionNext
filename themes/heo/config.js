@@ -6,20 +6,23 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
     { title: '使用Notion搭建个人博客', url: 'https://www.chawfoo.com/article/blog1' },
+    { title: 'AI-入门经验分享', url: 'https://www.chawfoo.com/article/ai1' },
+    { title: 'Steam转区指南（2022）', url: 'https://www.chawfoo.com/article/Steam2022' },
+    
   ],
 
   // 英雄区(首页顶部大卡)
   HERO_TITLE_1: '分享设计',
   HERO_TITLE_2: '与思维认知',
-  HERO_TITLE_3: 'chawfoo.com',
+  HERO_TITLE_3: 'CHAWFOO.COM',
   HERO_TITLE_4: 'AIGC初体验',
   HERO_TITLE_5: '可能是一个新时代的开端',
   HERO_TITLE_LINK: 'https://www.chawfoo.com/article/design3',
 
   // 英雄区显示三个置顶分类
-  HERO_CATEGORY_1: { title: '技术分享', url: '/tag/技术分享' },
-  HERO_CATEGORY_2: { title: 'Design', url: '/tag/Design' },
-  HERO_CATEGORY_3: { title: '诗歌鉴赏', url: '/tag/诗歌鉴赏' },
+  HERO_CATEGORY_1: { title: '技术分享', url: '/category/技术分享' },
+  HERO_CATEGORY_2: { title: 'Design', url: '/category/Design' },
+  HERO_CATEGORY_3: { title: '诗歌鉴赏', url: '/category/诗歌鉴赏' },
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
