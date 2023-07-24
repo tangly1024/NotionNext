@@ -13,15 +13,20 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   return (
         <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
 
-            <div className={'animate__animated animate__fadeIn animate__fast border bg-white dark:bg-[#1e1e1e] cursor-pointer flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'}>
+            <div
+                data-aos="fade-up"
+                data-aos-duration="200"
+                data-aos-once="false"
+                data-aos-anchor-placement="top-bottom"
+                className={'border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
-                    <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
-                        <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <LazyImage priority={index === 0} src={post?.pageCoverThumbnail} alt={post?.title} className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'/>
-                        </Link>
-                    </div>
+                    <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                        <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
+                            <LazyImage priority={index === 0} src={post?.pageCoverThumbnail} alt={post?.title} className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300' />
+                        </div>
+                    </Link>
                 )}
 
                 {/* 文字区块 */}

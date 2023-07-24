@@ -3,6 +3,7 @@ import Logo from './Logo'
 import throttle from 'lodash.throttle'
 import RandomPostButton from './RandomPostButton'
 import SearchButton from './SearchButton'
+import DarkModeButton from './DarkModeButton'
 import SlideOver from './SlideOver'
 import ReadingProgress from './ReadingProgress'
 import { MenuListTop } from './MenuListTop'
@@ -145,6 +146,7 @@ const NavBar = props => {
                 <div className='flex flex-shrink-0 justify-center items-center space-x-1'>
                     <RandomPostButton {...props} />
                     <SearchButton />
+                    {!JSON.parse(BLOG.THEME_SWITCH) && <DarkModeButton {...props} />}
                     <ReadingProgress />
 
                     {/* 移动端菜单按钮 */}

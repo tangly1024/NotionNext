@@ -3,7 +3,6 @@
 import BLOG from '@/blog.config'
 import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
-
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
@@ -97,10 +96,10 @@ function TagsGroupBar() {
                 {groupIcons?.map((g, index) => {
                   return (<div key={index} className="tags-group-icon-pair ml-6 select-none">
                         <div style={{ background: g.color_1 }} className={'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
-                            <LazyImage src={g.img_1} title={g.title_1} className='w-2/3 hidden xl:block' />
+                            <LazyImage priority={true} src={g.img_1} title={g.title_1} className='w-2/3 hidden xl:block' />
                         </div>
                         <div style={{ background: g.color_2 }} className={'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'}>
-                            <LazyImage src={g.img_2} title={g.title_2} className='w-2/3 hidden xl:block' />
+                            <LazyImage priority={true} src={g.img_2} title={g.title_2} className='w-2/3 hidden xl:block' />
                         </div>
                     </div>)
                 })}
@@ -160,12 +159,12 @@ function TopGroup(props) {
   }
   return (
         <div id='hero-right-wrapper' onMouseLeave={handleMouseLeave} className='flex-1 relative w-full'>
-            {/* 制定最新文章 */}
+            {/* 置顶最新文章 */}
             <div id='top-group' className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
                 {latestPosts?.map((p, index) => {
                   return <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={index}>
                         <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
-                            <LazyImage className='h-24 object-cover' alt={p?.title} src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
+                            <LazyImage priority={index === 0} className='h-24 object-cover' alt={p?.title} src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
                             <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>{p?.title}</div>
                             {/* hover 悬浮的 ‘荐’ 字 */}
                             <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
