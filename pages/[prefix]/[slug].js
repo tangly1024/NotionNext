@@ -3,7 +3,7 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
-import Slug from '.'
+import Slug, { getRecommendPost } from '.'
 
 /**
  * 根据notion的slug访问页面
@@ -82,41 +82,6 @@ export async function getStaticProps({ params: { prefix, slug } }) {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
-}
-
-/**
- * 获取文章的关联推荐文章列表，目前根据标签关联性筛选
- * @param post
- * @param {*} allPosts
- * @param {*} count
- * @returns
- */
-function getRecommendPost(post, allPosts, count = 6) {
-  let recommendPosts = []
-  const postIds = []
-  const currentTags = post?.tags || []
-  for (let i = 0; i < allPosts.length; i++) {
-    const p = allPosts[i]
-    if (p.id === post.id || p.type.indexOf('Post') < 0) {
-      continue
-    }
-
-    for (let j = 0; j < currentTags.length; j++) {
-      const t = currentTags[j]
-      if (postIds.indexOf(p.id) > -1) {
-        continue
-      }
-      if (p.tags && p.tags.indexOf(t) > -1) {
-        recommendPosts.push(p)
-        postIds.push(p.id)
-      }
-    }
-  }
-
-  if (recommendPosts.length > count) {
-    recommendPosts = recommendPosts.slice(0, count)
-  }
-  return recommendPosts
 }
 
 export default PrefixSlug
