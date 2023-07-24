@@ -7,18 +7,17 @@ import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { isBrowser } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
-import Hero from './components/Header'
+import Hero from './components/Hero'
 import { useRouter } from 'next/router'
-import Mark from 'mark.js'
 import Card from './components/Card'
 import RightFloatArea from './components/RightFloatArea'
 import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
-import HeaderArticle from './components/HeaderArticle'
+import PostHeader from './components/PostHeader'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
@@ -32,6 +31,8 @@ import TagItemMini from './components/TagItemMini'
 import Link from 'next/link'
 import SlotBar from './components/SlotBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -43,15 +44,11 @@ const LayoutBase = props => {
   const { children, headerSlot, floatSlot, slotTop, meta, siteInfo, className } = props
   const { onLoading } = useGlobal()
 
-  // 加载主题样式
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-hexo.css', 'css')
-  }
-
   return (
         <div id='theme-hexo'>
             {/* 网页SEO */}
             <CommonHead meta={meta} siteInfo={siteInfo} />
+            <Style/>
 
             {/* 顶部导航 */}
             <TopNav {...props} />
@@ -62,9 +59,9 @@ const LayoutBase = props => {
                 appear={true}
                 enter="transition ease-in-out duration-700 transform order-first"
                 enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100 translate-y-0"
+                enterTo="opacity-100"
                 leave="transition ease-in-out duration-300 transform"
-                leaveFrom="opacity-100 translate-y-0"
+                leaveFrom="opacity-100"
                 leaveTo="opacity-0 translate-y-16"
                 unmount={false}
             >
@@ -142,21 +139,16 @@ const LayoutSearch = props => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    setTimeout(() => {
-      if (currentSearch) {
-        const targets = document.getElementsByClassName('replace')
-        for (const container of targets) {
-          if (container && container.innerHTML) {
-            const re = new RegExp(currentSearch, 'gim')
-            const instance = new Mark(container)
-            instance.markRegExp(re, {
-              element: 'span',
-              className: 'text-red-500 border-b border-dashed'
-            })
-          }
+    if (currentSearch) {
+      replaceSearchResult({
+        doms: document.getElementsByClassName('replace'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
         }
-      }
-    }, 100)
+      })
+    }
   })
 
   return (
@@ -213,7 +205,7 @@ const LayoutSlug = props => {
     </>
 
   return (
-        <LayoutBase {...props} headerSlot={<HeaderArticle {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
+        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 

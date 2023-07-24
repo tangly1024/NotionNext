@@ -4,6 +4,7 @@ import Typed from 'typed.js'
 import CONFIG from '../config'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
+import LazyImage from '@/components/LazyImage'
 
 let wrapperTop = 0
 
@@ -64,8 +65,8 @@ const Hero = props => {
                 </div>
             </div>
 
-            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo?.pageCover}')` }}
-                className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`} />
+            <LazyImage priority={true} id='header-cover'src={siteInfo?.pageCover}
+                className={`header-cover object-center w-full h-screen object-cover ${CONFIG.HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`} />
 
         </header>
   )

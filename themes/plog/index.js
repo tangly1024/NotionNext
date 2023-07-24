@@ -7,10 +7,6 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
-
-import { useRouter } from 'next/router'
-
-import Mark from 'mark.js'
 import { isBrowser } from '@/lib/utils'
 import SearchNavBar from './components/SearchNavBar'
 import BlogArchiveItem from './components/BlogArchiveItem'
@@ -25,6 +21,8 @@ import { Transition } from '@headlessui/react'
 import BottomNav from './components/BottomNav'
 import { saveDarkModeToCookies } from '@/themes/theme'
 import Modal from './components/Modal'
+import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 // 主题全局状态
 const ThemeGlobalPlog = createContext()
@@ -63,6 +61,7 @@ const LayoutBase = props => {
         <div id='theme-plog' className='plog relative dark:text-gray-300 w-full bg-black min-h-screen'>
             {/* SEO相关 */}
             <CommonHead meta={meta} />
+            <Style/>
 
             {/* 移动端顶部导航栏 */}
             <Header {...props} />
@@ -88,7 +87,7 @@ const LayoutBase = props => {
 
             </main>
 
-            {/* 弹出框 */}
+            {/* 弹出框 - 用于放大显示首页图片等作用 */}
             <Modal {...props}/>
 
             {/* 桌面端底部导航栏 */}
@@ -131,21 +130,19 @@ const LayoutPostList = props => {
  */
 const LayoutSearch = props => {
   const { keyword } = props
-  const router = useRouter()
 
   useEffect(() => {
-    setTimeout(() => {
-      const container = isBrowser() && document.getElementById('posts-wrapper')
-      if (container && container.innerHTML) {
-        const re = new RegExp(keyword, 'gim')
-        const instance = new Mark(container)
-        instance.markRegExp(re, {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
-        })
-      }
-    }, 100)
-  }, [router.events])
+        }
+      })
+    }
+  }, [])
 
   return <LayoutPostList {...props} topSlot={<SearchNavBar {...props} />} />
 }

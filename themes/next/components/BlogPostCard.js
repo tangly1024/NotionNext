@@ -86,8 +86,8 @@ const BlogPostCard = ({ post, showSummary }) => {
           {/* 搜索结果 */}
           {post.results && (
             <p className="line-clamp-4 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-              {post.results.map(r => (
-                <span key={r}>{r}</span>
+              {post.results.map((r, index) => (
+                <span key={index}>{r}</span>
               ))}
             </p>
           )}

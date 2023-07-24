@@ -1,4 +1,5 @@
 import { subscribeToNewsletter } from '@/lib/mailchimp'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import Logo from './Logo'
@@ -43,7 +44,7 @@ export default function Footer() {
                             <Logo />
                         </div>
                         <div className="text-sm text-gray-600">
-                            <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">服务条款</a> · <a href="#0" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">隐私政策</a>
+                            <Link href="/terms-of-use" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">服务条款</Link> · <Link href="/privacy-policy" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">隐私政策</Link>
                         </div>
                     </div>
 

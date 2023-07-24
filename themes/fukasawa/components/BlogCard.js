@@ -3,6 +3,7 @@ import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import React from 'react'
 import CONFIG_FUKA from '../config'
+import LazyImage from '@/components/LazyImage'
 
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
@@ -26,12 +27,11 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                 {showPageCover && (
                     <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                            <LazyImage
                                 src={post?.pageCoverThumbnail}
                                 alt={post?.title || BLOG.TITLE}
                                 className="object-cover w-full h-full hover:scale-125 transform duration-500"
-                            ></img>
+                            />
                         </Link>
                     </div>
                 )}

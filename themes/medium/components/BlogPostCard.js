@@ -7,6 +7,7 @@ import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
+import LazyImage from '@/components/LazyImage'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
@@ -30,8 +31,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                     }>
                     <div>
                         {CONFIG.POST_LIST_COVER && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={post.pageCoverThumbnail} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
+                            <LazyImage src={post.pageCoverThumbnail} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
                         </div>}
                         {post.title}
                     </div>

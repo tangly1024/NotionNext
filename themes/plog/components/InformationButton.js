@@ -9,7 +9,6 @@ import { useRef } from 'react'
 export default function InformationButton() {
   const slideOversRef = useRef({})
   const toggleCollapsed = () => {
-    console.log(slideOversRef)
     slideOversRef.current.toggleSlideOvers()
   }
 

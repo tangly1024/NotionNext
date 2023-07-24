@@ -443,6 +443,7 @@ summary > .notion-h {
 
 .notion-h:hover .notion-hash-link {
   opacity: 1;
+  @apply dark:fill-gray-200
 }
 
 .notion-hash-link {
@@ -1392,6 +1393,10 @@ code[class*='language-'] {
   white-space: normal;
 }
 
+.katex-display>.katex>.katex-html>.tag {
+    position: inherit !important;
+}
+
 .notion-page-title {
   display: inline-flex;
   max-width: 100%;
@@ -1943,10 +1948,6 @@ svg + .notion-page-title-text {
     display: block !important;
 }
 
-::selection {
-    @apply bg-blue-500 text-gray-50 !important;
-}
-
 /* https://github.com/kchen0x */
 .notion-quote {
   display: block;
@@ -2049,4 +2050,9 @@ code.language-mermaid {
 
 .notion-simple-table td{
   border: 1px solid var(#eee) !important
+}
+
+/* 竖屏视频高度bug */
+figure.notion-asset-wrapper.notion-asset-wrapper-video>div {
+    height: 100% !important;
 }
