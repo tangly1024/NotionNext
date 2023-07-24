@@ -16,6 +16,7 @@ export default function LazyImage({
   className,
   width,
   height,
+  title,
   onLoad,
   style
 }) {
@@ -64,6 +65,10 @@ export default function LazyImage({
 
   if (id) {
     imgProps.id = id
+  }
+
+  if (title) {
+    imgProps.title = title
   }
 
   if (width && width !== 'auto') {
