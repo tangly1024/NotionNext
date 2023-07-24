@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import React from 'react'
+import React, { useState } from 'react'
 import { Draggable } from './Draggable'
 import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
@@ -11,14 +11,18 @@ import DarkModeButton from './DarkModeButton'
 const ThemeSwitch = () => {
   const { theme } = useGlobal()
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   // 修改当前路径url中的 theme 参数
   // 例如 http://localhost?theme=hexo 跳转到 http://localhost?theme=newTheme
   const onSelectChange = (e) => {
+    setIsLoading(true)
     const newTheme = e.target.value
     const query = router.query
     query.theme = newTheme
-    router.push({ pathname: router.pathname, query })
+    router.push({ pathname: router.pathname, query }).then(() => {
+      setIsLoading(false)
+    })
   }
 
   return (<>
@@ -35,6 +39,11 @@ const ThemeSwitch = () => {
                     </div>
                     <i className="fa-solid fa-palette pl-2"></i>
                 </div>
+            </div>
+            {/* 切换主题加载时的全屏遮罩 */}
+            <div className={`${isLoading ? 'opacity-50 ' : 'opacity-0'} w-screen h-screen bg-black text-white shadow-text flex justify-center items-center
+                              transition-all fixed top-0 left-0 pointer-events-none duration-1000 z-50 shadow-inner`}>
+                <i className='text-3xl mr-5 fas fa-spinner animate-spin' />
             </div>
         </Draggable>
     </>
