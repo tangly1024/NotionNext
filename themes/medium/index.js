@@ -35,6 +35,7 @@ import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import ArticleInfo from './components/ArticleInfo'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -160,6 +161,9 @@ const LayoutSlug = props => {
             {lock && <ArticleLock validPassword={validPassword} />}
 
             {!lock && <div id='article-wrapper'>
+
+                {/* 文章信息 */}
+                <ArticleInfo {...props}/>
 
                 {/* Notion文章主体 */}
                 <section className="px-1 max-w-4xl">
