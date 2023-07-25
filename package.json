@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.0.3",
+  "version": "4.0.5",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -25,6 +25,7 @@
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
     "@vercel/analytics": "^1.0.0",
+    "algoliasearch": "^4.18.0",
     "animejs": "^3.2.1",
     "aos": "^3.0.0-beta.6",
     "axios": ">=0.21.1",
