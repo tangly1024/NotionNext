@@ -25,6 +25,7 @@
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
     "@vercel/analytics": "^1.0.0",
+    "algoliasearch": "^4.18.0",
     "animejs": "^3.2.1",
     "aos": "^3.0.0-beta.6",
     "axios": ">=0.21.1",
