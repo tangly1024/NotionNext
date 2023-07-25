@@ -46,7 +46,7 @@ export default function PostHeader({ post, siteInfo }) {
                     passHref
                     className="pl-1 mr-2 cursor-pointer hover:underline">
 
-                    {locale.COMMON.POST_TIME}:{post?.publishTime}
+                    {locale.COMMON.POST_TIME}: {post?.publishTime}
 
                   </Link>
                 </>
