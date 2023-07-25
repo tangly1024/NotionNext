@@ -176,19 +176,12 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '风を共に舞う気持ち',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731419.mp3',
+      name: 'Where Did U Go',
+      artist: 'Where Did U Go',
+      url: 'https://music.163.com/song?id=234064&userid=1570385385',
       cover:
-          'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
-    },
-    {
-      name: '王都グランセル',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
-      cover:
-          'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
-    }
+          'https://pic.rmb.bdstatic.com/bjh/686dd453b90d23c339dc087f9181c84a.jpeg'
+    }, 
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
