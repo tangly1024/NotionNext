@@ -21,19 +21,65 @@ import { useRouter } from 'next/navigation'
 const PrismMac = () => {
   const router = useRouter()
   useEffect(() => {
-    if (JSON.parse(BLOG.CODE_MAC_BAR)) {
-      loadExternalResource('/css/prism-mac-style.css', 'css')
-    }
-    loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
-    loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
-      if (window?.Prism?.plugins?.autoloader) {
-        window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+    const handleDarkModeChange = () => {
+      // 加载prism样式
+      loadPrismThemeCSS()
+      if (JSON.parse(BLOG.CODE_MAC_BAR)) {
+        loadExternalResource('/css/prism-mac-style.css', 'css')
       }
-      renderPrismMac()
-      renderMermaid()
-    })
+      loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
+        if (window?.Prism?.plugins?.autoloader) {
+          window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+        }
+        renderPrismMac()
+        renderMermaid()
+      })
+    }
+    handleDarkModeChange()
+
+    const handleDarkModeToggle = () => {
+      const currentTheme = document.documentElement.className
+      handleDarkModeChange()
+      document.documentElement.className = currentTheme === 'light' ? 'dark' : 'light'
+    }
+
+    const darkModeSwitchButton = document.getElementById('darkModeButton')
+    darkModeSwitchButton.addEventListener('click', handleDarkModeToggle)
+
+    return () => {
+      darkModeSwitchButton.removeEventListener('click', handleDarkModeToggle)
+    }
   }, [router])
   return <></>
+}
+
+/**
+ * 加载样式
+ */
+const loadPrismThemeCSS = () => {
+  let PRISM_THEME
+  let PRISM_PREVIOUS
+  const themeClass = document.documentElement.className
+  if (BLOG.PRISM_THEME_SWITCH) {
+    if (themeClass === 'dark') {
+      PRISM_THEME = BLOG.PRISM_THEME_DARK_PATH
+      PRISM_PREVIOUS = BLOG.PRISM_THEME_LIGHT_PATH
+      const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
+      if (previousTheme) {
+        previousTheme.parentNode.removeChild(previousTheme)
+      }
+    } else {
+      PRISM_THEME = BLOG.PRISM_THEME_LIGHT_PATH
+      PRISM_PREVIOUS = BLOG.PRISM_THEME_DARK_PATH
+      const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
+      if (previousTheme) {
+        previousTheme.parentNode.removeChild(previousTheme)
+      }
+    }
+    loadExternalResource(PRISM_THEME, 'css')
+  } else {
+    loadExternalResource(BLOG.PRISM_THEME_PREFIX_PATH, 'css')
+  }
 }
 
 /**
