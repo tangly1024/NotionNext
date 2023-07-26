@@ -158,7 +158,7 @@ function renderPrismMac() {
   const container = document?.getElementById('notion-article')
 
   // Add line numbers
-  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+  if (JSON.parse(BLOG.CODE_LINE_NUMBERS)) {
     const codeBlocks = container?.getElementsByTagName('pre')
     if (codeBlocks) {
       Array.from(codeBlocks).forEach(item => {
@@ -192,7 +192,7 @@ function renderPrismMac() {
   }
 
   // 折叠代码行号bug
-  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+  if (JSON.parse(BLOG.CODE_LINE_NUMBERS)) {
     fixCodeLineStyle()
   }
 }
