@@ -12,6 +12,7 @@ import WordCount from './WordCount'
 import NotionPage from '@/components/NotionPage'
 import CONFIG from '../config'
 import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/LazyImage'
 
 /**
  *
@@ -39,8 +40,7 @@ export default function ArticleDetail(props) {
                     {/* 头图 */}
                     {CONFIG.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.pageCover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img alt={post.title} src={post?.pageCover} className='object-center w-full' />
+                            <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />
                         </div>
                     )}
 
@@ -87,10 +87,10 @@ export default function ArticleDetail(props) {
                     <ShareBar post={post} />
 
                     {/* 版权声明 */}
-                    {post.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} />}
+                    {post?.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} />}
 
                     {/* 推荐文章 */}
-                    {post.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}
+                    {post?.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}
 
                     <section className="flex justify-between">
                         {/* 分类 */}
@@ -104,7 +104,7 @@ export default function ArticleDetail(props) {
                         </>}
 
                         {/* 标签列表 */}
-                        {post.type === 'Post' && (
+                        {post?.type === 'Post' && (
                             <>
                                 {post.tagItems && (
                                     <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
@@ -119,7 +119,7 @@ export default function ArticleDetail(props) {
                             </>
                         )}
                     </section>
-                    {post.type === 'Post' && <BlogAround prev={prev} next={next} />}
+                    {post?.type === 'Post' && <BlogAround prev={prev} next={next} />}
                 </>}
 
                 {/* 评论互动 */}

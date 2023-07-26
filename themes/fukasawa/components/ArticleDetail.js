@@ -6,6 +6,7 @@ import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import ArticleAround from './ArticleAround'
 import { AdSlot } from '@/components/GoogleAdsense'
+import LazyImage from '@/components/LazyImage'
 
 /**
  *
@@ -23,8 +24,7 @@ export default function ArticleDetail(props) {
     <div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
       {post?.type && !post?.type !== 'Page' && post?.pageCover && (
         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt={post.title} src={post?.pageCover} className='object-center w-full' />
+          <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />
         </div>
       )}
 
@@ -96,7 +96,7 @@ export default function ArticleDetail(props) {
 
       </article>
 
-      {post.type === 'Post' && <ArticleAround prev={prev} next={next} /> }
+      {post?.type === 'Post' && <ArticleAround prev={prev} next={next} /> }
 
       {/* 评论互动 */}
       <div className="duration-200 shadow py-6 px-12 w-screen md:w-full overflow-x-auto dark:border-gray-700 bg-white dark:bg-hexo-black-gray">

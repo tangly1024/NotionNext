@@ -8,7 +8,7 @@ const CONFIG = {
 
   // 首页大图英雄板块
   HERO_TITLE_1: 'NotionNext',
-  HERO_P_1: '快速搭建独立站、轻松放大您的品牌价值！',
+  HERO_P_1: '快速搭建独立站、轻松放大品牌价值！',
   HERO_BUTTON_1_TEXT: '开始体验',
   HERO_BUTTON_1_LINK: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
   HERO_BUTTON_2_TEXT: '了解更多',
@@ -55,7 +55,7 @@ const CONFIG = {
   TESTIMONIALS_ID: 'Ryan`Log 站长',
   TESTIMONIALS_SOCIAL_NAME: '@Gaoran',
   TESTIMONIALS_SOCIAL_URL: 'https://blog.gaoran.xyz/',
-  TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化成都远不如这个方法，已经用起来了！ “',
+  TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ “',
 
   NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }

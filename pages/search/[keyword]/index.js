@@ -117,20 +117,11 @@ async function filterByMemCache(allPosts, keyword) {
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
     const page = await getDataFromCache(cacheKey, true)
-    const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
+    const tagContent = post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
     const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
-    let indexContent = [post.summary]
-    // 防止搜到加密文章的内容
-    if (page && page.block && !post.password) {
-      const contentIds = Object.keys(page.block)
-      contentIds.forEach(id => {
-        const properties = page?.block[id]?.value?.properties
-        indexContent = appendText(indexContent, properties, 'title')
-        indexContent = appendText(indexContent, properties, 'caption')
-      })
-    }
+    const indexContent = getPageContentText(post, page)
     // console.log('全文搜索缓存', cacheKey, page != null)
     post.results = []
     let hitCount = 0
@@ -155,6 +146,20 @@ async function filterByMemCache(allPosts, keyword) {
     }
   }
   return filterPosts
+}
+
+export function getPageContentText(post, pageBlockMap) {
+  let indexContent = []
+  // 防止搜到加密文章的内容
+  if (pageBlockMap && pageBlockMap.block && !post.password) {
+    const contentIds = Object.keys(pageBlockMap.block)
+    contentIds.forEach(id => {
+      const properties = pageBlockMap?.block[id]?.value?.properties
+      indexContent = appendText(indexContent, properties, 'title')
+      indexContent = appendText(indexContent, properties, 'caption')
+    })
+  }
+  return indexContent.join('')
 }
 
 export default Index

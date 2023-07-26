@@ -57,7 +57,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.PO
     return <div id='container' ref={targetRef} className='w-full'>
 
       {/* 文章列表 */}
-      <div className='flex flex-wrap space-y-1 lg:space-y-4 px-2'>
+      <div className="space-y-6 px-2">
         {postsToShow.map(post => (
           <BlogPostCard key={post.id} post={post} showSummary={showSummary} siteInfo={siteInfo}/>
         ))}

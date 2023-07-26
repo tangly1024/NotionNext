@@ -11,12 +11,10 @@ import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useRef, useState } from 'react'
 import BLOG from '@/blog.config'
-import Header from './components/Header'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
 import { isBrowser } from '@/lib/utils'
-import Mark from 'mark.js'
 import TocDrawerButton from './components/TocDrawerButton'
 import TocDrawer from './components/TocDrawer'
 import { ArticleLock } from './components/ArticleLock'
@@ -27,6 +25,8 @@ import ArticleDetail from './components/ArticleDetail'
 import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
+import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -73,6 +73,8 @@ const LayoutBase = (props) => {
         <div id='theme-next'>
             {/* SEO相关 */}
             <CommonHead meta={meta} />
+            <Style/>
+
             {/* 移动端顶部导航栏 */}
             <TopNav {...props} />
 
@@ -93,9 +95,9 @@ const LayoutBase = (props) => {
                         appear={true}
                         enter="transition ease-in-out duration-700 transform order-first"
                         enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100 translate-y-0"
+                        enterTo="opacity-100"
                         leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100 translate-y-0"
+                        leaveFrom="opacity-100"
                         leaveTo="opacity-0 -translate-y-16"
                         unmount={false}
                     >
@@ -130,7 +132,7 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList headerSlot={CONFIG.HOME_BANNER && <Header {...props} />} {...props} />
+  return <LayoutPostList {...props} />
 }
 
 /**
@@ -158,17 +160,20 @@ const LayoutPostList = (props) => {
 const LayoutSearch = (props) => {
   const { locale } = useGlobal()
   const { posts, keyword } = props
-  setTimeout(() => {
-    const container = isBrowser() && document.getElementById('posts-wrapper')
-    if (container && container.innerHTML) {
-      const re = new RegExp(keyword, 'gim')
-      const instance = new Mark(container)
-      instance.markRegExp(re, {
-        element: 'span',
-        className: 'text-red-500 border-b border-dashed'
+
+  useEffect(() => {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
       })
     }
-  }, 200)
+  }, [])
+
   return (
         <LayoutBase {...props} >
             <StickyBar>

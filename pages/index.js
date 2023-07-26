@@ -6,6 +6,8 @@ import { generateRobotsTxt } from '@/lib/robots.txt'
 
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { generateAlgoliaSearch } from '@/lib/algolia'
+
 /**
  * 首页布局
  * @param {*} props
@@ -59,6 +61,11 @@ export async function getStaticProps() {
   // 生成Feed订阅
   if (JSON.parse(BLOG.ENABLE_RSS)) {
     generateRss(props?.latestPosts || [])
+  }
+
+  // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
+  if (BLOG.ALGOLIA_APP_ID && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)) {
+    generateAlgoliaSearch({ allPages: props.allPages })
   }
 
   delete props.allPages
