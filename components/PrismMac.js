@@ -60,7 +60,7 @@ const loadPrismThemeCSS = () => {
   let PRISM_THEME
   let PRISM_PREVIOUS
   const themeClass = document.documentElement.className
-  if (BLOG.PRISM_THEME_SWITCH) {
+  if (JSON.parse(BLOG.PRISM_THEME_SWITCH)) {
     if (themeClass === 'dark') {
       PRISM_THEME = BLOG.PRISM_THEME_DARK_PATH
       PRISM_PREVIOUS = BLOG.PRISM_THEME_LIGHT_PATH
