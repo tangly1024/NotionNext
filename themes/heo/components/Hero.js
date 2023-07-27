@@ -55,11 +55,13 @@ function BannerGroup(props) {
 function Banner(props) {
   const router = useRouter()
   const { latestPosts } = props
-  // 跳转到任意文章
+  /**
+   * 随机跳转文章
+   */
   function handleClickBanner() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(randomPost.slug)
+    router.push(`${BLOG.SUB_PATH}/${randomPost?.slug}`)
   }
 
   return <div id='banners' onClick={handleClickBanner} className="hidden xl:flex xl:flex-col group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative overflow-hidden">
