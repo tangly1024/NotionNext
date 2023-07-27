@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import TagItemMiddle from './TagItemMiddle'
 import WordCount from './WordCount'
+import { formatDateFmt } from '@/lib/formatDate'
 
 export const ArticleInfo = (props) => {
   const { post } = props
@@ -23,7 +24,7 @@ export const ArticleInfo = (props) => {
             <div className='flex flex-wrap gap-3 mt-5 text-sm'>
                 {post?.type !== 'Page' && (<>
                     <Link
-                        href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                        href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                         passHref
                         className="cursor-pointer whitespace-nowrap">
 
