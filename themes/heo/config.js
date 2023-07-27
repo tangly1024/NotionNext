@@ -1,5 +1,5 @@
 const CONFIG = {
-  HOME_BANNER_ENABLE: true,
+  HOME_BANNER_ENABLE: true, 
 
   SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
 
