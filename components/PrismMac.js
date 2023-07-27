@@ -13,6 +13,7 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import BLOG from '@/blog.config'
 import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 代码美化相关
@@ -21,24 +22,54 @@ import { useRouter } from 'next/navigation'
  */
 const PrismMac = () => {
   const router = useRouter()
+  const { isDarkMode } = useGlobal()
+
   useEffect(() => {
     if (JSON.parse(BLOG.CODE_MAC_BAR)) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
-    loadExternalResource(BLOG.PRISM_THEME_PATH, 'css')
+    // 加载prism样式
+    loadPrismThemeCSS(isDarkMode)
+    // 折叠代码
     loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
       if (window?.Prism?.plugins?.autoloader) {
         window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
       }
+
       renderPrismMac()
       renderMermaid()
       renderCollapseCode()
     })
-  }, [router])
+  }, [router, isDarkMode])
+
   return <></>
 }
 
 /**
+ * 加载样式
+ */
+const loadPrismThemeCSS = (isDarkMode) => {
+  let PRISM_THEME
+  let PRISM_PREVIOUS
+  if (JSON.parse(BLOG.PRISM_THEME_SWITCH)) {
+    if (isDarkMode) {
+      PRISM_THEME = BLOG.PRISM_THEME_DARK_PATH
+      PRISM_PREVIOUS = BLOG.PRISM_THEME_LIGHT_PATH
+    } else {
+      PRISM_THEME = BLOG.PRISM_THEME_LIGHT_PATH
+      PRISM_PREVIOUS = BLOG.PRISM_THEME_DARK_PATH
+    }
+    const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
+    if (previousTheme) {
+      previousTheme.parentNode.removeChild(previousTheme)
+    }
+    loadExternalResource(PRISM_THEME, 'css')
+  } else {
+    loadExternalResource(BLOG.PRISM_THEME_PREFIX_PATH, 'css')
+  }
+}
+
+/*
  * 将代码块转为可折叠对象
  */
 const renderCollapseCode = () => {
@@ -58,7 +89,7 @@ const renderCollapseCode = () => {
     const collapseWrapper = document.createElement('div')
     collapseWrapper.className = 'collapse-wrapper w-full py-2'
     const panelWrapper = document.createElement('div')
-    panelWrapper.className = 'border rounded-md border-indigo-500'
+    panelWrapper.className = 'border dark:border-gray-600 rounded-md hover:border-indigo-500 duration-200 transition-colors'
 
     const header = document.createElement('div')
     header.className = 'flex justify-between items-center px-4 py-2 cursor-pointer select-none'
@@ -80,7 +111,6 @@ const renderCollapseCode = () => {
       panel.classList.toggle('h-auto')
       header.querySelector('svg').classList.toggle('rotate-180')
       panelWrapper.classList.toggle('border-gray-300')
-      panelWrapper.classList.toggle('border-indigo-500')
     })
   }
 }
@@ -128,7 +158,7 @@ function renderPrismMac() {
   const container = document?.getElementById('notion-article')
 
   // Add line numbers
-  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+  if (JSON.parse(BLOG.CODE_LINE_NUMBERS)) {
     const codeBlocks = container?.getElementsByTagName('pre')
     if (codeBlocks) {
       Array.from(codeBlocks).forEach(item => {
@@ -162,7 +192,7 @@ function renderPrismMac() {
   }
 
   // 折叠代码行号bug
-  if (BLOG.CODE_LINE_NUMBERS === 'true') {
+  if (JSON.parse(BLOG.CODE_LINE_NUMBERS)) {
     fixCodeLineStyle()
   }
 }

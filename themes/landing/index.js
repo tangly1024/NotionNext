@@ -14,6 +14,7 @@ import Features from './components/Features'
 import FeaturesBlocks from './components/FeaturesBlocks'
 import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
+import CommonHead from '@/components/CommonHead'
 
 /**
  * 这是个配置文件，可以方便在此统一配置信息
@@ -28,8 +29,13 @@ const THEME_CONFIG = { THEME: 'landing' }
  * @returns
  */
 const LayoutBase = (props) => {
-    const {  children } = props
+    const { meta, siteInfo, children } = props
+
     return <div id='theme-blank' className="overflow-hidden flex flex-col justify-between bg-white">
+        
+        {/* 网页SEO */}
+        <CommonHead meta={meta} siteInfo={siteInfo} />
+
         {/* 顶部导航栏 */}
         <Header />
 
