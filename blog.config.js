@@ -372,6 +372,11 @@ const BLOG = {
   ENABLE_CACHE: process.env.ENABLE_CACHE || false, // 开启缓存会将Notion数据缓存在内存中，通常在开发调试中使用，正式部署开启此功能意义不大。
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   VERSION: process.env.NEXT_PUBLIC_VERSION // 版本号
+
+  //   ********挂件组件相关********
+// Chatbase
+CHATBASE_ID: process.env.NEXT_PUBLIC_CHATBASE_ID || null, // 是否显示chatbase机器人 https://www.chatbase.co/
+  
 }
 
 module.exports = BLOG
