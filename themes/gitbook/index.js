@@ -72,8 +72,10 @@ const LayoutBase = (props) => {
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
-                            {/* 所有文章列表 */}
-                            <NavPostList filteredPostGroups={filteredPostGroups} />
+                            <div className='mb-20'>
+                                {/* 所有文章列表 */}
+                                <NavPostList filteredPostGroups={filteredPostGroups} />
+                            </div>
 
                         </div>
 
