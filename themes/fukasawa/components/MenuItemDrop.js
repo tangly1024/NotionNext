@@ -22,9 +22,9 @@ export const MenuItemDrop = ({ link }) => {
             </div>}
 
         {/* 子菜单 */}
-        {hasSubMenu && <ul className={`${show ? 'visible opacity-100 left-52' : 'invisible opacity-0 left-40'} py-1 absolute right-0 top-0 w-full border-gray-100  bg-white  dark:bg-black dark:border-gray-800 transition-all duration-300 drop-shadow-lg `}>
-            {link?.subMenus?.map(sLink => {
-              return <li key={sLink.id}>
+        {hasSubMenu && <ul className={`${show ? 'visible opacity-100 left-52' : 'invisible opacity-0 left-40'} z-20 py-1 absolute right-0 top-0 w-full border-gray-100  bg-white  dark:bg-black dark:border-gray-800 transition-all duration-300 drop-shadow-lg `}>
+            {link?.subMenus?.map((sLink, index) => {
+              return <li key={index}>
                     <Link href={sLink.to} className='my-auto py-1 px-2 items-center justify-start flex text-gray-500 dark:text-gray-300 hover:text-black  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 dark:border-gray-800 '>
                         {sLink.icon && <i className={`${sLink.icon} w-4 text-center `} />}
                         <div className={'ml-2 whitespace-nowrap'}>{sLink.name}</div>

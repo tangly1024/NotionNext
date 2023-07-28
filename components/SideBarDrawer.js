@@ -29,11 +29,11 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
     const sideBarDrawerBackground = window.document.getElementById('sidebar-drawer-background')
 
     if (showStatus) {
-      sideBarDrawer.classList.replace('-ml-60', 'ml-0')
-      sideBarDrawerBackground.classList.replace('hidden', 'block')
+      sideBarDrawer?.classList.replace('-ml-60', 'ml-0')
+      sideBarDrawerBackground?.classList.replace('hidden', 'block')
     } else {
-      sideBarDrawer.classList.replace('ml-0', '-ml-60')
-      sideBarDrawerBackground.classList.replace('block', 'hidden')
+      sideBarDrawer?.classList.replace('ml-0', '-ml-60')
+      sideBarDrawerBackground?.classList.replace('block', 'hidden')
     }
   }
 

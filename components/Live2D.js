@@ -2,48 +2,42 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
-import React from 'react'
+import { useEffect } from 'react'
 
 export default function Live2D() {
-  const { switchTheme } = useGlobal()
+  const { theme, switchTheme } = useGlobal()
+  const showPet = JSON.parse(BLOG.WIDGET_PET)
 
-  React.useEffect(() => {
-    if (BLOG.WIDGET_PET) {
-      window.addEventListener('scroll', initLive2D)
-      return () => {
-        window.removeEventListener('scroll', initLive2D)
-      }
+  useEffect(() => {
+    if (showPet) {
+      Promise.all([
+        loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
+      ]).then((e) => {
+        if (typeof window?.loadlive2d !== 'undefined') {
+          // https://github.com/xiazeyu/live2d-widget-models
+          try {
+            loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
+          } catch (error) {
+            console.error('读取PET模型', error)
+          }
+        }
+      })
     }
-  }, [])
+  }, [theme])
 
   function handleClick() {
-    if (BLOG.WIDGET_PET_SWITCH_THEME) {
+    if (JSON.parse(BLOG.WIDGET_PET_SWITCH_THEME)) {
       switchTheme()
     }
   }
 
-  if (!BLOG.WIDGET_PET || !JSON.parse(BLOG.WIDGET_PET)) {
+  if (!showPet) {
     return <></>
   }
 
-  return <canvas id="live2d" className='cursor-pointer' width="280" height="250" onClick={handleClick} alt='切换主题' title='切换主题' />
-}
-
-/**
- * 加载宠物
- */
-function initLive2D() {
-  window.removeEventListener('scroll', initLive2D)
-  setTimeout(() => {
-    // 加载 waifu.css live2d.min.js waifu-tips.js
-    // if (screen.width >= 768) {
-    Promise.all([
-      // loadExternalResource('https://cdn.zhangxinxu.com/sp/demo/live2d/live2d/js/live2d.js', 'js')
-      loadExternalResource('https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
-    ]).then((e) => {
-      // https://github.com/xiazeyu/live2d-widget-models
-      loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
-    })
-    // }
-  }, 300)
+  return <canvas id="live2d" width="280" height="250" onClick={handleClick}
+        className="cursor-grab"
+        onMouseDown={(e) => e.target.classList.add('cursor-grabbing')}
+        onMouseUp={(e) => e.target.classList.remove('cursor-grabbing')}
+    />
 }
