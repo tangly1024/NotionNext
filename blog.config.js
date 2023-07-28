@@ -18,9 +18,9 @@ const BLOG = {
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || false, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '王大可', // 您的昵称 例如 tangly1024
-  BIO: process.env.NEXT_PUBLIC_BIO || '心理学的博主', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://tangly1024.com', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '王大可, 博客', // 网站关键词 英文逗号隔开
+  BIO: process.env.NEXT_PUBLIC_BIO || '心理学博主', // 作者简介
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://home-five-vert.vercel.app', // 网站地址
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '王大可,博客', // 网站关键词 英文逗号隔开
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'germanyqi@yahoo.com', // 邮箱地址 例如mail@tangly1024.com
   CONTACT_WEIBO: process.env.NEXT_PUBLIC_CONTACT_WEIBO || '', // 你的微博个人主页
@@ -119,11 +119,11 @@ const BLOG = {
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
   POST_PREVIEW_LINES: 12, // 预览博客行数
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
-  POSTS_PER_PAGE: 12, // post counts per page
+  POSTS_PER_PAGE: 9, // post counts per page
   POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
   PREVIEW_CATEGORY_COUNT: 9, // 首页最多展示的分类数量，0为不限制
-  PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
+  PREVIEW_TAG_COUNT: 9, // 首页最多展示的标签数量，0为不限制
 
   // 鼠标点击烟花特效
   FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || false, // 开关
