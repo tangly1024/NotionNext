@@ -68,7 +68,7 @@ const Hero = props => {
 
                 {/* 滚动按钮 */}
                 <div onClick={scrollToWrapper} className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white">
-                    <div className="opacity-70 animate-bounce text-xs">{locale.COMMON.START_READING}</div>
+                    <div className="opacity-70 animate-bounce text-xs">{CONFIG.SHOW_START_READING && locale.COMMON.START_READING}</div>
                     <i className='opacity-70 animate-bounce fas fa-angle-down' />
                 </div>
             </div>
