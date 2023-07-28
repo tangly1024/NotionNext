@@ -746,6 +746,8 @@ svg.notion-page-icon {
 
 .notion .notion-code {
   font-size: 85%;
+  margin-top: 0;
+  margin-bottom: 0.5em;
 }
 
 pre[class*='language-'] {
@@ -1391,6 +1393,10 @@ code[class*='language-'] {
 
 .notion-frame .katex > .katex-html {
   white-space: normal;
+}
+
+.katex-display>.katex>.katex-html>.tag {
+    position: inherit !important;
 }
 
 .notion-page-title {

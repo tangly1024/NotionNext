@@ -4,6 +4,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
 
 export default function PostHeader({ post, siteInfo }) {
   const { locale } = useGlobal()
@@ -42,11 +43,11 @@ export default function PostHeader({ post, siteInfo }) {
               {post?.type !== 'Page' && (
                 <>
                   <Link
-                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                     passHref
                     className="pl-1 mr-2 cursor-pointer hover:underline">
 
-                    {locale.COMMON.POST_TIME}:{post?.publishTime}
+                    {locale.COMMON.POST_TIME}: {post?.publishTime}
 
                   </Link>
                 </>
@@ -56,7 +57,7 @@ export default function PostHeader({ post, siteInfo }) {
               </div>
             </div>
 
-            {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
+            {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
               {locale.COMMON.VIEWS}
             </div>}

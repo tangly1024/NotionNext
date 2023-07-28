@@ -5,6 +5,7 @@ import WavesArea from './WavesArea'
 import { HashTag } from '@/components/HeroIcons'
 import WordCount from '@/components/WordCount'
 import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
 
 export default function PostHeader({ post, siteInfo }) {
   if (!post) {
@@ -75,17 +76,21 @@ export default function PostHeader({ post, siteInfo }) {
                             {post?.type !== 'Page' && (
                                 <>
                                     <Link
-                                        href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                                        href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                                         passHref
                                         className="pl-1 mr-2 cursor-pointer hover:underline">
-                                        <i className="fa-solid fa-calendar-days"></i> {post?.publishTime}
+                                        <i className="fa-regular fa-calendar"></i> {post?.publishTime}
                                     </Link>
                                 </>
                             )}
 
+                            <div className="pl-1 mr-2">
+                              <i className="fa-regular fa-calendar-check"></i> {post.lastEditedTime}
+                            </div>
+
                         </div>
 
-                        {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
+                        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
                             <i className="fa-solid fa-fire-flame-curved"></i> <span className="mr-2 busuanzi_value_page_pv" />
                         </div>}
                     </section>
