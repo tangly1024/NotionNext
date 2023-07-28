@@ -61,7 +61,7 @@ const Hero = props => {
                 {/* 滚动按钮 */}
                 <div onClick={() => { window.scrollTo({ top: wrapperTop, behavior: 'smooth' }) }}
                     className="mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40">
-                    <i className='animate-bounce fas fa-angle-double-down' /> <span>{locale.COMMON.START_READING}</span>
+                    <i className='animate-bounce fas fa-angle-double-down' /> <span>{CONFIG.SHOW_START_READING && locale.COMMON.START_READING}</span>
                 </div>
             </div>
 
