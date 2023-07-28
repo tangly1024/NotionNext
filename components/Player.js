@@ -1,9 +1,9 @@
-import React from 'react'
 import BLOG from '@/blog.config'
+import { useEffect, useRef, useState } from 'react'
 
 const Player = () => {
-  const [player, setPlayer] = React.useState()
-  const ref = React.useRef(null)
+  const [player, setPlayer] = useState()
+  const ref = useRef(null)
 
   const lrcType = JSON.parse(BLOG.MUSIC_PLAYER_LRC_TYPE)
   const playerVisible = JSON.parse(BLOG.MUSIC_PLAYER_VISIBLE)
@@ -11,7 +11,7 @@ const Player = () => {
 
   const meting = JSON.parse(BLOG.MUSIC_PLAYER_METING)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!meting && window.APlayer) {
       setPlayer(new window.APlayer({
         container: ref.current,

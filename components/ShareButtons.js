@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import copy from 'copy-to-clipboard'
-import QRCode from 'qrcode.react'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import {
@@ -48,6 +48,13 @@ import {
   HatenaShareButton,
   HatenaIcon
 } from 'react-share'
+
+const QRCode = dynamic(
+  () => {
+    return import('qrcode.react')
+  },
+  { ssr: false }
+)
 
 /**
  * @author https://github.com/txs
@@ -334,9 +341,9 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
               }
               if (singleService === 'qq') {
                 return <button key={singleService} className='cursor-pointer bg-blue-600 text-white rounded-full mx-1'>
-                        <div target='_blank' rel='noreferrer' href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${title}&desc=${body}`} >
+                        <a target='_blank' rel='noreferrer' href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${title}&desc=${body}`} >
                             <i className='fab fa-qq w-8' />
-                        </div>
+                        </a>
                     </button>
               }
               if (singleService === 'wechat') {

@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import React from 'react'
 import throttle from 'lodash.throttle'
+import { deepClone } from '@/lib/utils'
 
 export const BlogListScroll = props => {
   const { posts } = props
@@ -11,8 +12,8 @@ export const BlogListScroll = props => {
   const [page, updatePage] = React.useState(1)
 
   let hasMore = false
-  const postsToShow = posts
-    ? Object.assign(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
+  const postsToShow = posts && Array.isArray(posts)
+    ? deepClone(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
     : []
 
   if (posts) {
@@ -44,7 +45,7 @@ export const BlogListScroll = props => {
   })
 
   return (
-      <div id="container" className="w-full md:pr-12 mb-12" ref={targetRef}>
+      <div id="posts-wrapper" className="w-full md:pr-12 mb-12" ref={targetRef}>
               {postsToShow.map(p => (
                   <article key={p.id} className="mb-12" >
                       <h2 className="mb-4">
@@ -78,5 +79,5 @@ export const BlogListScroll = props => {
               </div>
 
           </div>
-  );
+  )
 }

@@ -1,5 +1,4 @@
 import BLOG from '@/blog.config'
-import { Analytics } from '@vercel/analytics/react'
 
 /**
  * 第三方代码 统计脚本
@@ -8,7 +7,17 @@ import { Analytics } from '@vercel/analytics/react'
  */
 const CommonScript = () => {
   return (<>
-    {BLOG.ANALYTICS_VERCEL && <Analytics />}
+
+    {BLOG.CHATBASE_ID && (<>
+        <script id={BLOG.CHATBASE_ID} src="https://www.chatbase.co/embed.min.js" defer/>
+        <script async dangerouslySetInnerHTML={{
+          __html: `
+             window.chatbaseConfig = {
+                chatbotId: "${BLOG.CHATBASE_ID}",
+            }
+        `
+        }}/>
+    </>)}
 
     {BLOG.COMMENT_DAO_VOICE_ID && (<>
       {/* DaoVoice 反馈 */}
@@ -28,10 +37,6 @@ const CommonScript = () => {
       }}
       />
     </>)}
-
-    {/* GoogleAdsense */}
-    {BLOG.ADSENSE_GOOGLE_ID && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`}
-     crossOrigin="anonymous" />}
 
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
 
