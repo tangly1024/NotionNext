@@ -1,0 +1,11 @@
+<svg width="82px"  height="82px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-radio">
+    <circle cx="28" cy="75" r="11" ng-attr-fill="{{config.c1}}" fill="#51cacc">
+      <animate attributeName="fill-opacity" calcMode="linear" values="0;1;1" keyTimes="0;0.2;1" dur="1" begin="0s" repeatCount="indefinite"></animate>
+    </circle>
+    <path d="M28 47A28 28 0 0 1 56 75" fill="none" ng-attr-stroke="{{config.c2}}" stroke-width="10" stroke="#9df871">
+      <animate attributeName="stroke-opacity" calcMode="linear" values="0;1;1" keyTimes="0;0.2;1" dur="1" begin="0.1s" repeatCount="indefinite"></animate>
+    </path>
+    <path d="M28 25A50 50 0 0 1 78 75" fill="none" ng-attr-stroke="{{config.c3}}" stroke-width="10" stroke="#e0ff77">
+      <animate attributeName="stroke-opacity" calcMode="linear" values="0;1;1" keyTimes="0;0.2;1" dur="1" begin="0.2s" repeatCount="indefinite"></animate>
+    </path>
+  </svg>
