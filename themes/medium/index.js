@@ -1,6 +1,5 @@
 import CONFIG from './config'
 
-import CommonHead from '@/components/CommonHead'
 import { useState, createContext, useContext, useEffect } from 'react'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
@@ -48,7 +47,7 @@ export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo, notice } = props
+  const { children, showInfoCard = true, slotRight, slotTop, siteInfo, notice } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -56,8 +55,6 @@ const LayoutBase = props => {
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
-            {/* SEO相关 */}
-            <CommonHead meta={meta} />
             {/* CSS样式 */}
             <Style/>
 

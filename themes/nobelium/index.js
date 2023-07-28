@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import React, { useEffect, useState } from 'react'
 import Nav from './components/Nav'
 import { Footer } from './components/Footer'
@@ -32,7 +31,7 @@ import replaceSearchResult from '@/components/Mark'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, post, topSlot } = props
+  const { children, post, topSlot } = props
 
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
@@ -40,7 +39,6 @@ const LayoutBase = props => {
   return (
         <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
             {/* SEO相关 */}
-            <CommonHead meta={meta} />
             <Style/>
 
             {/* 顶部导航栏 */}

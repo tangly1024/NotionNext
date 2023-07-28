@@ -1,6 +1,4 @@
 import CONFIG from './config'
-
-import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Footer from './components/Footer'
 import JumpToBottomButton from './components/JumpToBottomButton'
@@ -34,7 +32,7 @@ import replaceSearchResult from '@/components/Mark'
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, meta, floatSlot, rightAreaSlot, siteInfo } = props
+  const { children, headerSlot, floatSlot, rightAreaSlot, siteInfo } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
@@ -71,8 +69,6 @@ const LayoutBase = (props) => {
 
   return (
         <div id='theme-next'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta} />
             <Style/>
 
             {/* 移动端顶部导航栏 */}

@@ -1,7 +1,6 @@
 'use client'
 
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
 import BLOG from '@/blog.config'
@@ -43,7 +42,7 @@ export const useFukasawaGlobal = () => useContext(ThemeGlobalFukasawa)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, meta } = props
+  const { children, headerSlot } = props
   const leftAreaSlot = <Live2D />
   const { onLoading } = useGlobal()
 
@@ -66,7 +65,6 @@ const LayoutBase = (props) => {
         <ThemeGlobalFukasawa.Provider value={{ isCollapsed, setIsCollapse }}>
 
             <div id='theme-fukasawa'>
-                <CommonHead meta={meta} />
                 <Style/>
 
                 <TopNav {...props} />

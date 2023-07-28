@@ -2,7 +2,6 @@
 
 import BLOG from '@/blog.config'
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import { useEffect } from 'react'
 import { Header } from './components/Header'
 import { Nav } from './components/Nav'
@@ -36,7 +35,7 @@ import { Style } from './style'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, slotTop } = props
+  const { children, slotTop } = props
   const { onLoading } = useGlobal()
 
   // 增加一个状态以触发 Transition 组件的动画
@@ -49,8 +48,6 @@ const LayoutBase = props => {
 
   return (
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
-            {/* 网页SEO信息 */}
-            <CommonHead meta={meta} />
             <Style/>
 
             {/* 页头 */}

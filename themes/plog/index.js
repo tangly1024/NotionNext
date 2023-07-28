@@ -1,6 +1,5 @@
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import Header from './components/Nav'
 import { useGlobal } from '@/lib/global'
 
@@ -35,7 +34,7 @@ export const usePlogGlobal = () => useContext(ThemeGlobalPlog)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, topSlot } = props
+  const { children, topSlot } = props
   const { onLoading, updateDarkMode } = useGlobal()
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState(null)
@@ -59,8 +58,6 @@ const LayoutBase = props => {
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
         <div id='theme-plog' className='plog relative dark:text-gray-300 w-full bg-black min-h-screen'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta} />
             <Style/>
 
             {/* 移动端顶部导航栏 */}

@@ -61,7 +61,6 @@ export const getLayoutNameByPath = (path) => {
  * @description 读取cookie中存的用户主题
  */
 export const initDarkMode = (updateDarkMode) => {
-  console.log('检查深色模式')
   // 查看用户设备浏览器是否深色模型
   let newDarkMode = isPreferDark()
 

@@ -4,7 +4,6 @@ import CONFIG from './config'
 import { useRouter } from 'next/router'
 import { useEffect, useState, createContext, useContext } from 'react'
 import { isBrowser } from '@/lib/utils'
-import CommonHead from '@/components/CommonHead'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import RevolverMaps from './components/RevolverMaps'
@@ -43,7 +42,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, meta, post, allNavPages, slotLeft, slotRight, slotTop } = props
+  const { children, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const { onLoading } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -58,7 +57,6 @@ const LayoutBase = (props) => {
 
   return (
         <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredPostGroups, setFilteredPostGroups, allNavPages, pageNavVisible, changePageNavVisible }}>
-            <CommonHead meta={meta} />
             <Style/>
 
             <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
