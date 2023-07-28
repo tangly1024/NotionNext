@@ -5,17 +5,17 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到我的博客', url: 'https://ahxin.cn/about' },
+    { title: '', url: '' }
   ],
 
   // 英雄区(首页顶部大卡)
-  HERO_TITLE_1: '分享编程',
-  HERO_TITLE_2: '与思维认知',
-  HERO_TITLE_3: 'TANGLY1024.COM',
-  HERO_TITLE_4: '新版上线',
-  HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HERO_TITLE_LINK: 'https://tangly1024.com',
+  HERO_TITLE_1: '分享生活',
+  HERO_TITLE_2: '与设计',
+  HERO_TITLE_3: 'AHXIN.CN',
+  HERO_TITLE_4: '我是',
+  HERO_TITLE_5: 'AHXIN',
+  HERO_TITLE_LINK: 'https://ahxin.cn/about',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
@@ -32,7 +32,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
+  INFO_CARD_URL: 'https://ahxin.cn', // 个人资料底部按钮链接
 
   // 用户技能图标
   GROUP_ICONS: [
@@ -94,7 +94,7 @@ const CONFIG = {
     }
   ],
 
-  SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
+  SOCIAL_CARD: false, // 是否显示右侧，点击加入社群按钮
   SOCIAL_CARD_TITLE_1: '交流频道',
   SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   SOCIAL_CARD_TITLE_3: '点击加入社群',
