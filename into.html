@@ -1,28 +1,11 @@
-<meta name="viewport" content="width=device-width">
-<style>
-html{
-  background: #CCC;
-}
-html .sakana-box{
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  
-  transform-origin: 100% 100%; /* 从右下开始变换 */
-}
-</style>
-
-<div class="sakana-box"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/sakana@1.0.8"></script>
-<script>
-// 取消静音
-Sakana.setMute(false);
-
-// 启动
-Sakana.init({
-  el:         '.sakana-box',     // 启动元素 node 或 选择器
-  scale:      .5,                // 缩放倍数
-  canSwitchCharacter: true,      // 允许换角色
-});
-</script>
+<div id="sakana-widget"></div>  
+<script>  
+  function initSakanaWidget() {  
+    new SakanaWidget().mount('#sakana-widget');  
+  }  
+</script>  
+<script  
+  async  
+  onload="initSakanaWidget()"  
+  src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.1/lib/sakana.min.js"  
+></script>
