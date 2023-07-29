@@ -95,8 +95,10 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params: { prefix } }) {
-  let fullSlug = prefix
+export async function getStaticProps(p) {
+  const { params } = p
+  console.log('getStaticProps', p)
+  let fullSlug = params.prefix
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -111,7 +113,7 @@ export async function getStaticProps({ params: { prefix } }) {
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
-    const pageId = prefix.slice(-1)[0]
+    const pageId = params.PSEUDO_STATICprefix.slice(-1)[0]
     if (pageId.length >= 32) {
       const post = await getNotion(pageId)
       props.post = post
@@ -129,8 +131,8 @@ export async function getStaticProps({ params: { prefix } }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
-  // 生成全文索引
-  if (BLOG.ALGOLIA_APP_ID && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA) && process.env.npm_lifecycle_event === 'build') {
+  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
+  if (BLOG.ALGOLIA_APP_ID) {
     uploadDataToAlgolia(props?.post)
   }
 

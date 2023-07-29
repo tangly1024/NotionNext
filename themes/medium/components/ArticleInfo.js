@@ -17,9 +17,9 @@ export default function ArticleInfo(props) {
         {/* meta */}
         <section className="py-2 items-center text-sm  px-1">
             <div className='flex flex-wrap text-gray-500 py-1 dark:text-gray-600'>
-                <span className='whitespace-nowrap'> <i className='far fa-calendar mr-2' />{post?.publishTime}</span>
+                <span className='whitespace-nowrap'> <i className='far fa-calendar mr-2' />{post?.publishDay}</span>
                 <span className='mx-1'>|</span>
-                <span className='whitespace-nowrap mr-2'><i className='far fa-calendar-check mr-2' />{post?.lastEditedTime}</span>
+                <span className='whitespace-nowrap mr-2'><i className='far fa-calendar-check mr-2' />{post?.lastEditedDay}</span>
                 <div className="hidden busuanzi_container_page_pv font-light mr-2 whitespace-nowrap">
                     <i className="mr-1 fas fa-eye" /><span className="busuanzi_value_page_pv" />
                 </div>
