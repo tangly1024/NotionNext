@@ -129,7 +129,8 @@ export async function getStaticProps({ params: { prefix } }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
-  if (BLOG.ALGOLIA_APP_ID && BLOG.ALGOLIA_APP_KEY) {
+  // 生成全文索引
+  if (BLOG.ALGOLIA_APP_ID && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA) && process.env.npm_lifecycle_event === 'build') {
     uploadDataToAlgolia(props?.post)
   }
 
