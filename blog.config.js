@@ -200,8 +200,8 @@ const BLOG = {
   COMMENT_TWIKOO_CDN_URL: process.env.NEXT_PUBLIC_COMMENT_TWIKOO_CDN_URL || 'https://cdn.staticfile.org/twikoo/1.6.16/twikoo.all.min.js', // twikoo客户端cdn
 
   // utterance
-  COMMENT_UTTERRANCES_REPO:
-      process.env.NEXT_PUBLIC_COMMENT_UTTERRANCES_REPO || 'xiaojian186/NotionNext', // 你的代码仓库名， 例如我是 'tangly1024/NotionNext'； 更多文档参考 https://utteranc.es/
+  // COMMENT_UTTERRANCES_REPO:
+  //     process.env.NEXT_PUBLIC_COMMENT_UTTERRANCES_REPO || 'xiaojian186/NotionNext', // 你的代码仓库名， 例如我是 'tangly1024/NotionNext'； 更多文档参考 https://utteranc.es/
 
   // giscus @see https://giscus.app/
   // COMMENT_GISCUS_REPO: process.env.NEXT_PUBLIC_COMMENT_GISCUS_REPO || 'xiaojian186/NotionNext', // 你的Github仓库名 e.g 'tangly1024/NotionNext'
