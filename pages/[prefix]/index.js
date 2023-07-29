@@ -95,10 +95,8 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps(p) {
-  const { params } = p
-  console.log('getStaticProps', p)
-  let fullSlug = params.prefix
+export async function getStaticProps({ params: { prefix } }) {
+  let fullSlug = prefix
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -113,7 +111,7 @@ export async function getStaticProps(p) {
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
-    const pageId = params.PSEUDO_STATICprefix.slice(-1)[0]
+    const pageId = prefix.slice(-1)[0]
     if (pageId.length >= 32) {
       const post = await getNotion(pageId)
       props.post = post

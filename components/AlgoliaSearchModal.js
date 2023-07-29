@@ -109,7 +109,7 @@ export default function AlgoliaSearchModal({ cRef }) {
 
                 <div className='flex justify-between items-center'>
                     <div className='text-2xl text-blue-600 font-bold'>搜索</div>
-                    <div><i class="text-gray-600 fa-solid fa-xmark p-1 cursor-pointer hover:text-blue-600" onClick={closeModal} ></i></div>
+                    <div><i className="text-gray-600 fa-solid fa-xmark p-1 cursor-pointer hover:text-blue-600" onClick={closeModal} ></i></div>
                 </div>
 
                 <input type="text" placeholder="在这里输入搜索关键词..." onChange={(e) => handleInputChange(e)}
