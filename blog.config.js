@@ -291,7 +291,7 @@ const BLOG = {
   // TWITTER_USERNAME: 评论显示区域需要的资讯
   // TOKEN: Webmention的API token
   COMMENT_WEBMENTION: {
-    ENABLE: process.env.NEXT_PUBLIC_WEBMENTION_ENABLE || true,
+    ENABLE: process.env.NEXT_PUBLIC_WEBMENTION_ENABLE || false,
     AUTH: process.env.NEXT_PUBLIC_WEBMENTION_AUTH || 'https://github.com/orsrva',
     HOSTNAME: process.env.NEXT_PUBLIC_WEBMENTION_HOSTNAME || 'www.orys.link',
     TWITTER_USERNAME: process.env.NEXT_PUBLIC_TWITTER_USERNAME || '',
