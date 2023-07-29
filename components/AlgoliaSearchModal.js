@@ -148,7 +148,7 @@ export default function AlgoliaSearchModal({ cRef }) {
 function TagGroups(props) {
   const { tagOptions } = useGlobal()
   //  获取tagOptions数组前十个
-  const firstTenTags = tagOptions.slice(0, 10)
+  const firstTenTags = tagOptions?.slice(0, 10)
 
   return <div id='tags-group' className='dark:border-gray-700 space-y-2'>
             {
