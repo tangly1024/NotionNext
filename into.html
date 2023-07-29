@@ -1,0 +1,23 @@
+<div id="sakana-widget" style="position:fixed;right:0px;bottom:0px;"></div>  
+<script>  
+  function initSakanaWidget() {  
+  
+  
+const demo = SakanaWidget.getCharacter('chisato');  
+demo.initialState = {  
+  ...demo.initialState,  
+  i: 0.001,  
+  d: 1,  
+  autoFit:true,  
+  
+};  
+demo.image = `https://i.postimg.cc/2ycr2syr/a2b6abdb85498f51d159c2c65cb11535.jpg`;  
+SakanaWidget.registerCharacter('demo', demo);  
+new SakanaWidget({ character: 'demo' }).mount('#sakana-widget');  
+  }  
+</script>  
+<script  
+  async  
+  onload="initSakanaWidget()"  
+  src="https://cdn.jsdelivr.net/npm/sakana-widget@2.3.1/lib/sakana.min.js"  
+></script>
