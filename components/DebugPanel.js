@@ -32,7 +32,6 @@ const DebugPanel = () => {
   }
 
   function handleUpdateDebugTheme(newTheme) {
-    console.log('切换主题', newTheme)
     const query = { ...router.query, theme: newTheme }
     router.push({ pathname: router.pathname, query })
   }

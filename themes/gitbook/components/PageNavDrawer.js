@@ -10,7 +10,21 @@ import NavPostList from './NavPostList'
  */
 const PageNavDrawer = (props) => {
   const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
-  const { filteredPostGroups } = props
+  const { filteredNavPages } = props
+
+  const groupedArray = filteredNavPages?.reduce((groups, item) => {
+    const categoryName = item?.category ? item?.category : '' // 将category转换为字符串
+    const lastGroup = groups[groups.length - 1] // 获取最后一个分组
+
+    if (!lastGroup || lastGroup?.category !== categoryName) { // 如果当前元素的category与上一个元素不同，则创建新分组
+      groups.push({ category: categoryName, items: [] })
+    }
+
+    groups[groups.length - 1].items.push(item) // 将元素加入对应的分组
+
+    return groups
+  }, [])
+
   const switchVisible = () => {
     changePageNavVisible(!pageNavVisible)
   }
@@ -23,7 +37,7 @@ const PageNavDrawer = (props) => {
                     ' overflow-y-hidden shadow-card w-72 duration-200 fixed left-1 top-16 rounded py-2 bg-white dark:bg-gray-600'}>
                 <div className='dark:text-gray-400 text-gray-600 h-96 overflow-y-scroll p-3'>
                     {/* 所有文章列表 */}
-                    <NavPostList filteredPostGroups={filteredPostGroups} />
+                    <NavPostList groupedArray={groupedArray} />
                 </div>
             </div>
         </div>

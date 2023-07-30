@@ -62,7 +62,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                                     className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
 
                                     <i className="far fa-clock mr-1" />
-                                    {post.date?.start_date || post.lastEditedTime}
+                                    {post.date?.start_date || post.lastEditedDay}
 
                                 </Link>
                                 <TwikooCommentCount post={post} className='hover:underline cursor-pointer text-sm'/>
