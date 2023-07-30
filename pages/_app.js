@@ -17,8 +17,6 @@ import dynamic from 'next/dynamic'
 
 // 自定义样式css和js引入
 import ExternalScript from '@/components/ExternalScript'
-import CommonHead from '@/components/CommonHead'
-
 // 各种扩展插件 动画等
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'))
 
@@ -26,11 +24,9 @@ const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
     AOS.init()
   }, [])
-  const { meta } = pageProps
 
   return (
         <GlobalContextProvider {...pageProps}>
-            <CommonHead meta={meta}/>
             <ExternalScript />
             <Component {...pageProps} />
             <ExternalPlugins {...pageProps} />

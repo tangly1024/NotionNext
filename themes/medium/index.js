@@ -35,6 +35,7 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import ArticleInfo from './components/ArticleInfo'
+import CommonHead from '@/components/CommonHead'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -47,7 +48,7 @@ export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, showInfoCard = true, slotRight, slotTop, siteInfo, notice } = props
+  const { children, showInfoCard = true, slotRight, slotTop, siteInfo, notice, meta } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -55,6 +56,8 @@ const LayoutBase = props => {
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
+            {/* SEO相关 */}
+            <CommonHead meta={meta}/>
             {/* CSS样式 */}
             <Style/>
 

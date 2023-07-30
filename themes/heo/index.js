@@ -39,10 +39,12 @@ import LazyImage from '@/components/LazyImage'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, slotTop, slotRight, siteInfo, className } = props
+  const { children, headerSlot, slotTop, slotRight, siteInfo, className, meta } = props
 
   return (
         <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col'>
+            {/* SEO信息 */}
+            <CommonHead meta={meta}/>
             <Style />
 
             {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}

@@ -23,6 +23,7 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -31,13 +32,15 @@ import replaceSearchResult from '@/components/Mark'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, post, topSlot } = props
+  const { children, post, topSlot, meta } = props
 
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
 
   return (
         <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
+            {/* SEO相关 */}
+            <CommonHead meta={meta}/>
             {/* SEO相关 */}
             <Style/>
 
