@@ -81,7 +81,6 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  console.log('首页', props)
   const headerSlot = <header>
         {/* 顶部导航 */}
         <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>

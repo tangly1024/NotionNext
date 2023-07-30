@@ -154,16 +154,34 @@ function GroupMenu() {
  * 置顶文章区域
  */
 function TopGroup(props) {
-  const { latestPosts, siteInfo } = props
+  const { latestPosts, allNavPages, siteInfo } = props
   const todayCardRef = useRef()
   function handleMouseLeave() {
     todayCardRef.current.coverUp()
   }
+
+  let topPosts = []
+  // 默认展示最近更新
+  if (!CONFIG.HERO_RECOMMEND_POST_TAG || CONFIG.HERO_RECOMMEND_POST_TAG === '') {
+    topPosts = latestPosts
+  } else {
+    // 展示特定标签文章
+    for (const post of allNavPages) {
+      if (topPosts.length === 6) {
+        break
+      }
+      // 查找标签
+      if (post.tags.indexOf(CONFIG.HERO_RECOMMEND_POST_TAG) >= 0) {
+        topPosts.push(post)
+      }
+    }
+  }
+  console.log('top', topPosts)
   return (
         <div id='hero-right-wrapper' onMouseLeave={handleMouseLeave} className='flex-1 relative w-full'>
-            {/* 置顶最新文章 */}
+            {/* 置顶推荐文章 */}
             <div id='top-group' className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
-                {latestPosts?.map((p, index) => {
+                {topPosts?.map((p, index) => {
                   return <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={index}>
                         <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
                             <LazyImage priority={index === 0} className='h-24 object-cover' alt={p?.title} src={p?.pageCoverThumbnail || siteInfo?.pageCover} />
