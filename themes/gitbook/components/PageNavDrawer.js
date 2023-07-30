@@ -12,7 +12,7 @@ const PageNavDrawer = (props) => {
   const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
   const { filteredNavPages } = props
 
-  const groupedArray = filteredNavPages.reduce((groups, item) => {
+  const groupedArray = filteredNavPages?.reduce((groups, item) => {
     const categoryName = item?.category ? item?.category : '' // 将category转换为字符串
     const lastGroup = groups[groups.length - 1] // 获取最后一个分组
 
