@@ -4,6 +4,7 @@ import { getGlobalData } from '@/lib/notion/getNotionData'
 import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import Slug, { getRecommendPost } from '.'
+import { uploadDataToAlgolia } from '@/lib/algolia'
 
 /**
  * 根据notion的slug访问页面
@@ -63,9 +64,13 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
+  // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
+  if (BLOG.ALGOLIA_APP_ID) {
+    uploadDataToAlgolia(props?.post)
+  }
 
   // 推荐关联文章处理
-  const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]

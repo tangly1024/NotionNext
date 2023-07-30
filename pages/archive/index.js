@@ -44,7 +44,7 @@ const ArchiveIndex = props => {
 export async function getStaticProps() {
   const props = await getGlobalData({ from: 'archive-index' })
   // 处理分页
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)
