@@ -1,12 +1,12 @@
 const CONFIG = {
   HOME_BANNER_ENABLE: true,
 
-  SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+  SITE_CREATE_TIME: '2020-08-21', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
     { title: '欢迎来到我的博客', url: 'https://66619.eu.org' },
-    { title: '【最近更新】关于Blind-Aihelper的一切', url: '/blind-helper-everything' },
+    { title: '【最近更新】关于Blind-Helper的一切', url: '/article/blind-helper-everything' },
     { title: '我好想看到小可爱给我的blog留个言，戳我直达~', url: '/message' }
   ],
 
@@ -16,7 +16,7 @@ const CONFIG = {
   HERO_TITLE_3: '619的blog',
   HERO_TITLE_4: '最近更新',
   HERO_TITLE_5: 'Blind-Helper的一切',
-  HERO_TITLE_LINK: 'https://66619.eu.org/blind-helper-everything',
+  HERO_TITLE_LINK: 'https://66619.eu.org/article/blind-helper-everything',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '学习思考', url: '/category/学习思考' },
@@ -99,10 +99,10 @@ const CONFIG = {
   ],
 
   SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
-  SOCIAL_CARD_TITLE_1: '想与我交流交流？',
+  SOCIAL_CARD_TITLE_1: '想找我完？',
   SOCIAL_CARD_TITLE_2: '直接来本站留言版找我玩叭~',
   SOCIAL_CARD_TITLE_3: '戳我直达☞',
-  SOCIAL_CARD_URL: 'https://66619.eu.org/message',
+  SOCIAL_CARD_URL: '/message',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
