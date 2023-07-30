@@ -26,7 +26,7 @@ export async function getStaticProps() {
   const props = await getGlobalData({ from })
 
   const { siteInfo } = props
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
 
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
