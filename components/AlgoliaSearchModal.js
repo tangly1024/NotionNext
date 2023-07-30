@@ -132,7 +132,7 @@ export default function AlgoliaSearchModal({ cRef }) {
 
                 <Pagination totalPage={totalPage} page={page} switchPage={switchPage}/>
                 <div>{totalHit > 0 && <div>共搜索到 {totalHit} 条结果，用时 {useTime} 毫秒</div> }</div>
-                <div className='text-gray-600 mt-2'><span><i class="fa-brands fa-algolia"></i> Algolia 提供搜索服务</span> </div>
+                <div className='text-gray-600 mt-2'><span><i className="fa-brands fa-algolia"></i> Algolia 提供搜索服务</span> </div>
             </div>
 
             {/* 遮罩 */}
