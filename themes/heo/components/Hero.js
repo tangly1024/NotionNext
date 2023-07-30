@@ -171,7 +171,7 @@ function TopGroup(props) {
         break
       }
       // 查找标签
-      if (post.tags.indexOf(CONFIG.HERO_RECOMMEND_POST_TAG) >= 0) {
+      if (post?.tags?.indexOf(CONFIG.HERO_RECOMMEND_POST_TAG) >= 0) {
         topPosts.push(post)
       }
     }
