@@ -3,7 +3,6 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 
@@ -12,7 +11,6 @@ import { getLayoutByTheme } from '@/themes/theme'
  * @param {*} props
  * @returns
  */
-
 const Index = props => {
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme(useRouter())

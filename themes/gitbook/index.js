@@ -30,6 +30,7 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import CommonHead from '@/components/CommonHead'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -42,21 +43,23 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, post, allNavPages, slotLeft, slotRight, slotTop } = props
+  const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
   const { onLoading } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
-  const [filteredPostGroups, setFilteredPostGroups] = useState(allNavPages)
+  const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
 
   const showTocButton = post?.toc?.length > 1
 
   useEffect(() => {
-    setFilteredPostGroups(allNavPages)
+    console.log('更新导航', allNavPages)
+    setFilteredNavPages(allNavPages)
   }, [post])
 
   return (
-        <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredPostGroups, setFilteredPostGroups, allNavPages, pageNavVisible, changePageNavVisible }}>
+        <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
+            <CommonHead meta={meta}/>
             <Style/>
 
             <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
@@ -72,7 +75,7 @@ const LayoutBase = (props) => {
                             <SearchInput className='my-3 rounded-md' />
                             <div className='mb-20'>
                                 {/* 所有文章列表 */}
-                                <NavPostList filteredPostGroups={filteredPostGroups} />
+                                <NavPostList filteredNavPages={filteredNavPages} />
                             </div>
 
                         </div>
@@ -146,7 +149,7 @@ const LayoutBase = (props) => {
                 </div>}
 
                 {/* 移动端导航抽屉 */}
-                <PageNavDrawer {...props} filteredPostGroups={filteredPostGroups} />
+                <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
 
                 {/* 移动端底部导航栏 */}
                 {/* <BottomMenuBar {...props} className='block md:hidden' /> */}

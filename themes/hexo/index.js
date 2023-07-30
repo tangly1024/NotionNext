@@ -47,7 +47,7 @@ const LayoutBase = props => {
   return (
         <div id='theme-hexo'>
             {/* 网页SEO */}
-            <CommonHead meta={meta} siteInfo={siteInfo} />
+            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 顶部导航 */}
