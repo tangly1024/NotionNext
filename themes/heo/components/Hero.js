@@ -19,7 +19,7 @@ const Hero = props => {
   return (
         <div id="hero-wrapper" className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
 
-            <div id="hero" style={{ zIndex: 1 }} className={'animate__animated animate__fadeIn animate__fast recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative space-x-3'} >
+            <div id="hero" style={{ zIndex: 1 }} className={'animate__animated animate__fadeIn animate__fast recent-post-top rounded-[12px] xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex xl:space-x-3 relative'} >
 
                 {/* 左侧banner组 */}
                 <BannerGroup {...props} />
@@ -116,22 +116,22 @@ function TagsGroupBar() {
  */
 function GroupMenu() {
   return (
-        <div className="h-[165px] select-none  xl:h-20 flex flex-col w-48 justify-between xl:space-y-0 xl:flex-row xl:w-full xl:flex-nowrap xl:space-x-3">
+        <div className="h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3">
             <Link href={CONFIG.HERO_CATEGORY_1?.url} className="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
-                <div className="font-bold text-lg pl-5 relative -mt-2">
+                <div className="font-bold lg:text-lg  pl-5 relative -mt-2">
                     {CONFIG.HERO_CATEGORY_1?.title}
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
-                <div className='absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
+                <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
                     <i className="fa-solid fa-star text-4xl"></i>
                 </div>
             </Link>
             <Link href={CONFIG.HERO_CATEGORY_2?.url} className="group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in">
-                <div className="font-bold text-lg pl-5 relative -mt-2">
+                <div className="font-bold lg:text-lg pl-5 relative -mt-2">
                     {CONFIG.HERO_CATEGORY_2?.title}
                     <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
                 </div>
-                <div className='absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
+                <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
                     <i className="fa-solid fa-fire-flame-curved text-4xl"></i>
                 </div>
             </Link>
@@ -176,7 +176,6 @@ function TopGroup(props) {
       }
     }
   }
-  console.log('top', topPosts)
   return (
         <div id='hero-right-wrapper' onMouseLeave={handleMouseLeave} className='flex-1 relative w-full'>
             {/* 置顶推荐文章 */}
