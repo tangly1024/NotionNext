@@ -1,7 +1,6 @@
 'use client'
 
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
 import BLOG from '@/blog.config'
@@ -21,6 +20,7 @@ import dynamic from 'next/dynamic'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 
@@ -66,7 +66,8 @@ const LayoutBase = (props) => {
         <ThemeGlobalFukasawa.Provider value={{ isCollapsed, setIsCollapse }}>
 
             <div id='theme-fukasawa'>
-                <CommonHead meta={meta} />
+                {/* SEO信息 */}
+                <CommonHead meta={meta}/>
                 <Style/>
 
                 <TopNav {...props} />

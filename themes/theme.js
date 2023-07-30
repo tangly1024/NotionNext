@@ -60,16 +60,25 @@ export const getLayoutNameByPath = (path) => {
  * @param updateDarkMode 更改主题ChangeState函数
  * @description 读取cookie中存的用户主题
  */
-export const initDarkMode = (isDarkMode, updateDarkMode) => {
+export const initDarkMode = (updateDarkMode) => {
+  // 查看用户设备浏览器是否深色模型
+  let newDarkMode = isPreferDark()
+
+  // 查看cookie中是否用户强制设置深色模式
+  const cookieDarkMode = loadDarkModeFromCookies()
+  if (cookieDarkMode) {
+    newDarkMode = JSON.parse(cookieDarkMode)
+  }
+
+  // url查询条件中是否深色模式
   const queryMode = getQueryVariable('mode')
   if (queryMode) {
-    isDarkMode = queryMode === 'dark'
-  } else if (!isDarkMode) {
-    isDarkMode = isPreferDark()
+    newDarkMode = queryMode === 'dark'
   }
-  updateDarkMode(isDarkMode)
-  saveDarkModeToCookies(isDarkMode)
-  document.getElementsByTagName('html')[0].setAttribute('class', isDarkMode ? 'dark' : 'light')
+
+  updateDarkMode(newDarkMode)
+  saveDarkModeToCookies(newDarkMode)
+  document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'light')
 }
 
 /**
