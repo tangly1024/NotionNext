@@ -6,7 +6,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
     { title: '欢迎来到我的博客', url: 'https://66619.eu.org' },
-    { title: '【最近更新】关于Blind-Aihelper的一切', url: '/blind-helper-everything' }
+    { title: '【最近更新】关于Blind-Aihelper的一切', url: '/blind-helper-everything' },
     { title: '我好想看到小可爱给我的blog留个言，戳我直达~', url: '/message' }
   ],
 
