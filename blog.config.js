@@ -292,8 +292,8 @@ const BLOG = {
   // TOKEN: Webmention的API token
   COMMENT_WEBMENTION: {
     ENABLE: process.env.NEXT_PUBLIC_WEBMENTION_ENABLE || false,
-    AUTH: process.env.NEXT_PUBLIC_WEBMENTION_AUTH || 'https://github.com/orsrva',
-    HOSTNAME: process.env.NEXT_PUBLIC_WEBMENTION_HOSTNAME || 'www.orys.link',
+    AUTH: process.env.NEXT_PUBLIC_WEBMENTION_AUTH || '',
+    HOSTNAME: process.env.NEXT_PUBLIC_WEBMENTION_HOSTNAME || '',
     TWITTER_USERNAME: process.env.NEXT_PUBLIC_TWITTER_USERNAME || '',
     TOKEN: process.env.NEXT_PUBLIC_WEBMENTION_TOKEN || ''
   },
