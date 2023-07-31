@@ -76,7 +76,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
                 className="font-light menu-link cursor-pointer text-sm leading-4 mr-3">
 
                 <i className="far fa-calendar-alt mr-1" />
-                {post?.publishTime || post.lastEditedTime}
+                {post?.publishDay || post.lastEditedDay}
 
             </Link>
 

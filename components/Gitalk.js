@@ -16,10 +16,8 @@ const Gitalk = ({ frontMatter }) => {
   //     distractionFreeMode: JSON.parse(BLOG.COMMENT_GITALK_DISTRACTION_FREE_MODE)
   //   }} />
   const loadGitalk = async() => {
-    const css = await loadExternalResource(BLOG.COMMENT_GITALK_CSS_CDN_URL, 'css')
-    const js = await loadExternalResource(BLOG.COMMENT_GITALK_JS_CDN_URL, 'js')
-
-    console.log('gitalk 加载成功', css, js)
+    await loadExternalResource(BLOG.COMMENT_GITALK_CSS_CDN_URL, 'css')
+    await loadExternalResource(BLOG.COMMENT_GITALK_JS_CDN_URL, 'js')
     const Gitalk = window.Gitalk
 
     const gitalk = new Gitalk({

@@ -140,8 +140,8 @@ const renderMermaid = async() => {
           }
           if (needLoad) {
             loadExternalResource(BLOG.MERMAID_CDN, 'js').then(url => {
-              // console.log('mermaid加载成功', url, mermaid)
               const mermaid = window.mermaid
+              console.log('mermaid加载成功', url, mermaid)
               mermaid.contentLoaded()
             })
           }
@@ -216,7 +216,6 @@ const fixCodeLineStyle = () => {
   setTimeout(() => {
     const preCodes = document.querySelectorAll('pre.notion-code')
     for (const preCode of preCodes) {
-    //   console.log('code', preCode)
       Prism.plugins.lineNumbers.resize(preCode)
     }
   }, 10)
