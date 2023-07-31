@@ -39,12 +39,12 @@ import LazyImage from '@/components/LazyImage'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, slotTop, slotRight, meta, siteInfo, className } = props
+  const { children, headerSlot, slotTop, slotRight, siteInfo, className, meta } = props
 
   return (
         <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col'>
-            {/* 网页SEO */}
-            <CommonHead meta={meta} siteInfo={siteInfo} />
+            {/* SEO信息 */}
+            <CommonHead meta={meta}/>
             <Style />
 
             {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -93,7 +93,7 @@ const LayoutIndex = (props) => {
   const slotRight = <SideRight {...props} />
 
   return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
-        <div id='post-outer-wrapper' className='px-5 lg:px-0'>
+        <div id='post-outer-wrapper' className='px-5 md:px-0'>
             {/* 文章分类条 */}
             <CategoryBar {...props} />
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
@@ -115,7 +115,7 @@ const LayoutPostList = (props) => {
     </header>
 
   return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
-        <div id='post-outer-wrapper' className='px-5  lg:px-0'>
+        <div id='post-outer-wrapper' className='px-5  md:px-0'>
             {/* 文章分类条 */}
             <CategoryBar {...props} />
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
@@ -155,7 +155,7 @@ const LayoutSearch = props => {
   }, [])
   return (
         <LayoutBase {...props} currentSearch={currentSearch} headerSlot={headerSlot}>
-            <div id='post-outer-wrapper' className='px-5  lg:px-0'>
+            <div id='post-outer-wrapper' className='px-5  md:px-0'>
                 {!currentSearch
                   ? <SearchNav {...props} />
                   : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
@@ -348,7 +348,7 @@ const LayoutCategoryIndex = props => {
 
   return (
         <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
-            <div id='category-outer-wrapper' className='px-5 lg:px-0'>
+            <div id='category-outer-wrapper' className='px-5 md:px-0'>
                 <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
                     {locale.COMMON.CATEGORY}
                 </div>
@@ -386,7 +386,7 @@ const LayoutTagIndex = props => {
     </header>
   return (
         <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
-            <div id='tag-outer-wrapper' className='px-5  lg:px-0'>
+            <div id='tag-outer-wrapper' className='px-5  md:px-0'>
                 <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
                     {locale.COMMON.TAGS}
                 </div>

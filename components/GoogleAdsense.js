@@ -17,7 +17,6 @@ export default function GoogleAdsense() {
       setTimeout(() => {
         const ads = document.getElementsByClassName('adsbygoogle')
         const adsbygoogle = window.adsbygoogle
-        console.log('google-ads', adsbygoogle)
         if (ads.length > 0) {
           for (let i = 0; i <= ads.length; i++) {
             try {

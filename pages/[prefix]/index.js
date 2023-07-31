@@ -129,12 +129,13 @@ export async function getStaticProps({ params: { prefix } }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
-  if (BLOG.ALGOLIA_APP_ID && BLOG.ALGOLIA_APP_KEY) {
+  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
+  if (BLOG.ALGOLIA_APP_ID) {
     uploadDataToAlgolia(props?.post)
   }
 
   // 推荐关联文章处理
-  const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
