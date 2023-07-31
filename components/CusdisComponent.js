@@ -1,5 +1,4 @@
 import { useGlobal } from '@/lib/global'
-import { ReactCusdis } from 'react-cusdis'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -28,7 +27,7 @@ const CusdisComponent = ({ frontMatter }) => {
     }
   })
 
-  return <ReactCusdis
+  return <div
     lang={locale.LOCALE.toLowerCase()}
     attrs={{
       host: BLOG.COMMENT_CUSDIS_HOST,
