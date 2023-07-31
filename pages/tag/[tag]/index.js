@@ -33,7 +33,7 @@ export async function getStaticProps({ params: { tag } }) {
   const props = await getGlobalData({ from })
 
   // 过滤状态
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
 
   // 处理文章页数
   props.postCount = props.posts.length

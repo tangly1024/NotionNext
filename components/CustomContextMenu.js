@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState, useRef } from 'react'
 import { useGlobal } from '@/lib/global'
 import { saveDarkModeToCookies, THEMES } from '@/themes/theme'
+import BLOG from '@/blog.config'
 
 /**
  * 自定义右键菜单
@@ -17,10 +18,13 @@ export default function CustomContextMenu(props) {
 
   const { latestPosts } = props
   const router = useRouter()
+  /**
+   * 随机跳转文章
+   */
   function handleJumpToRandomPost() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(randomPost.slug)
+    router.push(`${BLOG.SUB_PATH}/${randomPost?.slug}`)
   }
 
   useEffect(() => {

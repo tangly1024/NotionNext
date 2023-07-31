@@ -27,7 +27,6 @@ const TwikooCommentCounter = (props) => {
         urls: posts?.map(post => post.slug), // 不包含协议、域名、参数的文章路径列表，必传参数
         includeReply: true // 评论数是否包括回复，默认：false
       }).then(function (res) {
-        // console.log('查询', res)
         commentsData = res
         updateCommentCount()
       }).catch(function (err) {

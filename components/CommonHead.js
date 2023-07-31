@@ -58,7 +58,7 @@ const CommonHead = ({ meta, children }) => {
                 <>
                     <meta
                         property="article:published_time"
-                        content={meta.publishTime}
+                        content={meta.publishDay}
                     />
                     <meta property="article:author" content={BLOG.AUTHOR} />
                     <meta property="article:section" content={category} />

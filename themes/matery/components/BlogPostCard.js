@@ -5,6 +5,7 @@ import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
@@ -56,12 +57,12 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         <div className='text-gray-800 justify-between flex my-2  dark:text-gray-300'>
                             <div>
                                 <Link
-                                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                                     passHref
                                     className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
 
                                     <i className="far fa-clock mr-1" />
-                                    {post.date?.start_date || post.lastEditedTime}
+                                    {post.date?.start_date || post.lastEditedDay}
 
                                 </Link>
                                 <TwikooCommentCount post={post} className='hover:underline cursor-pointer text-sm'/>

@@ -3,7 +3,8 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
-import Slug from '.'
+import Slug, { getRecommendPost } from '.'
+import { uploadDataToAlgolia } from '@/lib/algolia'
 
 /**
  * 根据notion的slug访问页面
@@ -25,7 +26,7 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') > 0).map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } })),
+    paths: allPages?.filter(row => row.slug.indexOf('/') > 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } })),
     fallback: true
   }
 }
@@ -63,9 +64,13 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
+  // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
+  if (BLOG.ALGOLIA_APP_ID) {
+    uploadDataToAlgolia(props?.post)
+  }
 
   // 推荐关联文章处理
-  const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
@@ -82,41 +87,6 @@ export async function getStaticProps({ params: { prefix, slug } }) {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
-}
-
-/**
- * 获取文章的关联推荐文章列表，目前根据标签关联性筛选
- * @param post
- * @param {*} allPosts
- * @param {*} count
- * @returns
- */
-function getRecommendPost(post, allPosts, count = 6) {
-  let recommendPosts = []
-  const postIds = []
-  const currentTags = post?.tags || []
-  for (let i = 0; i < allPosts.length; i++) {
-    const p = allPosts[i]
-    if (p.id === post.id || p.type.indexOf('Post') < 0) {
-      continue
-    }
-
-    for (let j = 0; j < currentTags.length; j++) {
-      const t = currentTags[j]
-      if (postIds.indexOf(p.id) > -1) {
-        continue
-      }
-      if (p.tags && p.tags.indexOf(t) > -1) {
-        recommendPosts.push(p)
-        postIds.push(p.id)
-      }
-    }
-  }
-
-  if (recommendPosts.length > count) {
-    recommendPosts = recommendPosts.slice(0, count)
-  }
-  return recommendPosts
 }
 
 export default PrefixSlug
