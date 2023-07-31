@@ -53,7 +53,6 @@ const LayoutBase = (props) => {
   const showTocButton = post?.toc?.length > 1
 
   useEffect(() => {
-    console.log('更新导航', allNavPages)
     setFilteredNavPages(allNavPages)
   }, [post])
 
