@@ -345,3 +345,4 @@ export {
   LayoutPostList,
   LayoutTagIndex
 }
+<script src="https://files.cnblogs.com/files/quaint/sakuraPlus.js"></script>
