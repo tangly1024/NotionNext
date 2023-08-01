@@ -6,11 +6,3 @@
 .fa-info:before {
     content: "\f05a";
 }
-<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
-<div id="fireworks"></div>
-<script>
-  // 创建一个Fireworks对象，传入div元素的id
-  const fireworks = new Fireworks("fireworks");
-  // 调用start方法来开始烟花动画
-  fireworks.start();
-</script>
