@@ -28,7 +28,6 @@ class MyDocument extends Document {
                       return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
                     }
                   })}
-                  <script src="/cursor.js"></script>
                 </Head>
 
                 <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
