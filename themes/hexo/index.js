@@ -1,5 +1,6 @@
 import CONFIG from './config'
-
+import React from 'react';
+import heartIconStyles from './style';
 import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
@@ -342,6 +343,12 @@ const App = () => {
 };
 
 export default App;
+
+const HeartIconStyle = () => (
+  <style jsx>{heartIconStyles}</style>
+);
+
+export { HeartIconStyle };
 
 export {
   CONFIG as THEME_CONFIG,
