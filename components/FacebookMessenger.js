@@ -23,6 +23,9 @@ class MessengerCustomerChat extends Component {
     }
   }
 
+  /**
+   * 初始化
+   */
   componentDidMount() {
     this.setFbAsyncInit()
     this.reloadSDKAsynchronously()
@@ -56,6 +59,9 @@ class MessengerCustomerChat extends Component {
     }
   }
 
+  /**
+   * 初始化
+   */
   setFbAsyncInit() {
     const { appId, autoLogAppEvents, xfbml, version } = this.props
 
