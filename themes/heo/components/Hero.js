@@ -160,22 +160,9 @@ function TopGroup(props) {
     todayCardRef.current.coverUp()
   }
 
-  let topPosts = []
-  // 默认展示最近更新
-  if (!CONFIG.HERO_RECOMMEND_POST_TAG || CONFIG.HERO_RECOMMEND_POST_TAG === '') {
-    topPosts = latestPosts
-  } else {
-    // 展示特定标签文章
-    for (const post of allNavPages) {
-      if (topPosts.length === 6) {
-        break
-      }
-      // 查找标签
-      if (post?.tags?.indexOf(CONFIG.HERO_RECOMMEND_POST_TAG) >= 0) {
-        topPosts.push(post)
-      }
-    }
-  }
+  // 获取置顶推荐文章
+  const topPosts = getTopPosts({ latestPosts, allNavPages })
+
   return (
         <div id='hero-right-wrapper' onMouseLeave={handleMouseLeave} className='flex-1 relative w-full'>
             {/* 置顶推荐文章 */}
@@ -196,6 +183,42 @@ function TopGroup(props) {
             <TodayCard cRef={todayCardRef} />
         </div>
   )
+}
+
+/**
+ * 获取推荐置顶文章
+ */
+function getTopPosts({ latestPosts, allNavPages }) {
+  // 默认展示最近更新
+  if (!CONFIG.HERO_RECOMMEND_POST_TAG || CONFIG.HERO_RECOMMEND_POST_TAG === '') {
+    return latestPosts
+  }
+
+  // 显示包含‘推荐’标签的文章
+  let sortPosts = []
+
+  // 排序方式
+  if (JSON.parse(CONFIG.HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME)) {
+    sortPosts = Object.create(allNavPages).sort((a, b) => {
+      const dateA = new Date(a?.lastEditedDate)
+      const dateB = new Date(b?.lastEditedDate)
+      return dateB - dateA
+    })
+  } else {
+    sortPosts = Object.create(allNavPages)
+  }
+
+  const topPosts = []
+  for (const post of sortPosts) {
+    if (topPosts.length === 6) {
+      break
+    }
+    // 查找标签
+    if (post?.tags?.indexOf(CONFIG.HERO_RECOMMEND_POST_TAG) >= 0) {
+      topPosts.push(post)
+    }
+  }
+  return topPosts
 }
 
 /**

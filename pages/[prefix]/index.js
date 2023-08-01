@@ -90,7 +90,7 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') < 0).map(row => ({ params: { prefix: row.slug } })),
+    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
     fallback: true
   }
 }
