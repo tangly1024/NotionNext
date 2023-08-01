@@ -3,15 +3,14 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
-
 const Index = props => {
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme(useRouter())
@@ -27,7 +26,7 @@ export async function getStaticProps() {
   const props = await getGlobalData({ from })
 
   const { siteInfo } = props
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
 
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
@@ -60,6 +59,8 @@ export async function getStaticProps() {
   if (JSON.parse(BLOG.ENABLE_RSS)) {
     generateRss(props?.latestPosts || [])
   }
+
+  // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
   delete props.allPages
 

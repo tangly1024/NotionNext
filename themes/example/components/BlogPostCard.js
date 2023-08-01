@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import CONFIG from '../config'
 import Link from 'next/link'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
+import LazyImage from '@/components/LazyImage'
 
 const BlogPostCard = ({ post }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
@@ -41,7 +42,7 @@ const BlogPostCard = ({ post }) => {
         {showPageCover && (
             <div className="md:w-5/12 w-full overflow-hidden p-1">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                    <div className='h-44 bg-center bg-cover hover:scale-110 duration-200' style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
+                    <LazyImage src={post?.pageCoverThumbnail} className='h-44 bg-center bg-cover hover:scale-110 duration-200' />
                 </Link>
             </div>
         )}

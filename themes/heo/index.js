@@ -7,12 +7,10 @@ import SideRight from './components/SideRight'
 import NavBar from './components/NavBar'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
 import { useRouter } from 'next/router'
-import Mark from 'mark.js'
 import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
@@ -31,6 +29,8 @@ import { NoticeBar } from './components/NoticeBar'
 import { HashTag } from '@/components/HeroIcons'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import FloatTocButton from './components/FloatTocButton'
+import replaceSearchResult from '@/components/Mark'
+import LazyImage from '@/components/LazyImage'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -39,18 +39,12 @@ import FloatTocButton from './components/FloatTocButton'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, slotTop, slotRight, meta, siteInfo, className } = props
-  const { onLoading } = useGlobal()
-
-  // 加载主题样式
-  if (isBrowser()) {
-    loadExternalResource('/css/theme-hexo.css', 'css')
-  }
+  const { children, headerSlot, slotTop, slotRight, siteInfo, className, meta } = props
 
   return (
         <div id='theme-heo' className='bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col'>
-            {/* 网页SEO */}
-            <CommonHead meta={meta} siteInfo={siteInfo} />
+            {/* SEO信息 */}
+            <CommonHead meta={meta}/>
             <Style />
 
             {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -60,40 +54,17 @@ const LayoutBase = props => {
             <main id="wrapper-outer" className={'flex-grow w-full max-w-[86rem] mx-auto relative md:px-5'}>
 
                 <div id="container-inner" className={'w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-
-                    <Transition
-                        show={!onLoading}
-                        appear={true}
-                        enter="transition ease-in-out duration-700 transform order-first"
-                        enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100"
-                        leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0 -translate-y-16"
-                        className={`w-full h-auto ${className || ''}`}
-                        unmount={false}
-                    >
+                    <div className={`w-full h-auto ${className || ''}`}>
                         {/* 主区上部嵌入 */}
                         {slotTop}
-
                         {children}
-                    </Transition>
+                    </div>
 
-                    <Transition
-                        show={!onLoading}
-                        appear={true}
-                        enter="transition ease-in-out duration-700 transform order-first"
-                        enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 -translate-y-16"
-                        unmount={false}
-                    >
+                    <div>
                         {/* 主区快右侧 */}
                         {slotRight}
+                    </div>
 
-                    </Transition>
                 </div>
             </main>
 
@@ -122,7 +93,7 @@ const LayoutIndex = (props) => {
   const slotRight = <SideRight {...props} />
 
   return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
-        <div id='post-outer-wrapper' className='px-5 lg:px-0'>
+        <div id='post-outer-wrapper' className='px-5 md:px-0'>
             {/* 文章分类条 */}
             <CategoryBar {...props} />
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
@@ -144,7 +115,7 @@ const LayoutPostList = (props) => {
     </header>
 
   return <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
-        <div id='post-outer-wrapper' className='px-5  lg:px-0'>
+        <div id='post-outer-wrapper' className='px-5  md:px-0'>
             {/* 文章分类条 */}
             <CategoryBar {...props} />
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
@@ -168,26 +139,23 @@ const LayoutSearch = props => {
     </header>
 
   useEffect(() => {
-    setTimeout(() => {
-      if (currentSearch) {
-        const targets = document.getElementsByClassName('replace')
-        for (const container of targets) {
-          if (container && container.innerHTML) {
-            const re = new RegExp(currentSearch, 'gim')
-            const instance = new Mark(container)
-            instance.markRegExp(re, {
-              element: 'span',
-              className: 'text-red-500 border-b border-dashed'
-            })
+    // 高亮搜索结果
+    if (currentSearch) {
+      setTimeout(() => {
+        replaceSearchResult({
+          doms: document.getElementsByClassName('replace'),
+          search: currentSearch,
+          target: {
+            element: 'span',
+            className: 'text-red-500 border-b border-dashed'
           }
-        }
-      }
-    }, 100)
-  })
-
+        })
+      }, 100)
+    }
+  }, [])
   return (
         <LayoutBase {...props} currentSearch={currentSearch} headerSlot={headerSlot}>
-            <div id='post-outer-wrapper' className='px-5  lg:px-0'>
+            <div id='post-outer-wrapper' className='px-5  md:px-0'>
                 {!currentSearch
                   ? <SearchNav {...props} />
                   : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
@@ -242,7 +210,12 @@ const LayoutSlug = props => {
 
   // 右侧栏
   const slotRight = <SideRight {...props} />
-  const headerSlot = <header className='post-bg'>
+  const headerSlot = <header
+        data-aos="fade-up"
+        data-aos-duration="300"
+        data-aos-once="false"
+        data-aos-anchor-placement="top-bottom"
+        className='post-bg'>
         {/* 顶部导航 */}
         <div id='nav-bar-wrapper'><NavBar {...props} /></div>
         <PostHeader {...props} />
@@ -255,7 +228,12 @@ const LayoutSlug = props => {
 
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
-                    <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
+                    <article
+                        data-aos="fade-up"
+                        data-aos-duration="300"
+                        data-aos-once="false"
+                        data-aos-anchor-placement="top-bottom"
+                         itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
                         {/* Notion文章主体 */}
                         <section className='px-5 justify-center mx-auto'>
                             {post && <NotionPage post={post} />}
@@ -330,8 +308,7 @@ const Layout404 = props => {
                         {/* 404卡牌 */}
                         <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white border rounded-3xl'>
                             {/* 左侧动图 */}
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img className="error-img h-60 md:h-full p-4" src={'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'}></img>
+                            <LazyImage className="error-img h-60 md:h-full p-4" src={'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'}></LazyImage>
 
                             {/* 右侧文字 */}
                             <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>
@@ -371,7 +348,7 @@ const LayoutCategoryIndex = props => {
 
   return (
         <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
-            <div id='category-outer-wrapper' className='px-5 lg:px-0'>
+            <div id='category-outer-wrapper' className='px-5 md:px-0'>
                 <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
                     {locale.COMMON.CATEGORY}
                 </div>
@@ -404,12 +381,12 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   const headerSlot = <header>
-  {/* 顶部导航 */}
-  <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
-</header>
+        {/* 顶部导航 */}
+        <div id='nav-bar-wrapper' className='h-16'><NavBar {...props} /></div>
+    </header>
   return (
         <LayoutBase {...props} className='mt-8' headerSlot={headerSlot}>
-            <div id='tag-outer-wrapper' className='px-5  lg:px-0'>
+            <div id='tag-outer-wrapper' className='px-5  md:px-0'>
                 <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
                     {locale.COMMON.TAGS}
                 </div>

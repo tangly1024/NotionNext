@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import { ArrowRightCircle, GlobeAlt } from '@/components/HeroIcons'
+import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -25,8 +26,7 @@ export function InfoCard(props) {
                 {/* 问候语 */}
                 <GreetingsWords />
                 <div className={`${isSlugPage ? 'absolute right-0 -mt-8 -mr-5 hover:opacity-0 hover:scale-150 blur' : 'cursor-pointer'} justify-center items-center flex dark:text-gray-100 transform transitaion-all duration-200`}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={siteInfo?.icon} className='rounded-full' width={isSlugPage ? 100 : 28} alt={BLOG.AUTHOR} />
+                    <LazyImage src={siteInfo?.icon} className='rounded-full' width={isSlugPage ? 100 : 28} alt={BLOG.AUTHOR} />
                 </div>
             </div>
 
@@ -46,7 +46,7 @@ export function InfoCard(props) {
                         <Link href='/about'><GlobeAlt className={'w-6 h-6'} /></Link>
                     </div>
                     <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-                        <Link href='https://github.com/tangly1024/NotionNext'><i className='fab fa-github text-xl' />
+                        <Link href={CONFIG.INFO_CARD_URL}><i className='fab fa-github text-xl' />
                         </Link>
                     </div>
                 </div>

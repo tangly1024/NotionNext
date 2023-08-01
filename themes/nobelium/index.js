@@ -1,20 +1,14 @@
+import BLOG from '@/blog.config'
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import React, { useEffect, useState } from 'react'
 import Nav from './components/Nav'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
-
-import BLOG from '@/blog.config'
 import Announcement from './components/Announcement'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
-
-import { useRouter } from 'next/router'
-
-import Mark from 'mark.js'
 import { deepClone, isBrowser } from '@/lib/utils'
 import SearchNavBar from './components/SearchNavBar'
 import BlogArchiveItem from './components/BlogArchiveItem'
@@ -28,6 +22,8 @@ import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -36,7 +32,7 @@ import { Style } from './style'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, post, topSlot } = props
+  const { children, post, topSlot, meta } = props
 
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
@@ -44,7 +40,8 @@ const LayoutBase = props => {
   return (
         <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
             {/* SEO相关 */}
-            <CommonHead meta={meta} />
+            <CommonHead meta={meta}/>
+            {/* SEO相关 */}
             <Style/>
 
             {/* 顶部导航栏 */}
@@ -105,7 +102,7 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { posts } = props
+  const { posts, topSlot } = props
 
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -122,6 +119,7 @@ const LayoutPostList = props => {
 
   return (
         <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
+            {topSlot}
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
         </LayoutBase>
   )
@@ -135,22 +133,18 @@ const LayoutPostList = props => {
  */
 const LayoutSearch = props => {
   const { keyword } = props
-  const router = useRouter()
-
   useEffect(() => {
-    setTimeout(() => {
-      const container = isBrowser() && document.getElementById('posts-wrapper')
-      if (container && container.innerHTML) {
-        const re = new RegExp(keyword, 'gim')
-        const instance = new Mark(container)
-        instance.markRegExp(re, {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
-        })
-      }
-    }, 100)
-  }, [router.events])
-
+        }
+      })
+    }
+  }, [])
   return <LayoutPostList {...props} slotTop={<SearchNavBar {...props} />} />
 }
 

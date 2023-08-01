@@ -22,6 +22,10 @@ const CONFIG = {
   HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
   HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
 
+  // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
+  HERO_RECOMMEND_POST_TAG: '推荐',
+  HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: false, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
+
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
     '你好！我是',
@@ -32,6 +36,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
+  INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
 
   // 用户技能图标
   GROUP_ICONS: [
@@ -92,6 +97,12 @@ const CONFIG = {
       color_2: '#1f1f1f'
     }
   ],
+
+  SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
+  SOCIAL_CARD_TITLE_1: '交流频道',
+  SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
+  SOCIAL_CARD_TITLE_3: '点击加入社群',
+  SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/how-to-question',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置

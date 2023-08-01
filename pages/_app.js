@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import 'animate.css'
+import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
 import '@/styles/nprogress.css'
 import '@/styles/utility-patterns.css'
@@ -17,7 +17,6 @@ import dynamic from 'next/dynamic'
 
 // 自定义样式css和js引入
 import ExternalScript from '@/components/ExternalScript'
-
 // 各种扩展插件 动画等
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'))
 
@@ -27,10 +26,10 @@ const MyApp = ({ Component, pageProps }) => {
   }, [])
 
   return (
-        <GlobalContextProvider>
-            <Component {...pageProps}/>
-            <ExternalPlugins {...pageProps} />
+        <GlobalContextProvider {...pageProps}>
             <ExternalScript />
+            <Component {...pageProps} />
+            <ExternalPlugins {...pageProps} />
         </GlobalContextProvider>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
 import BLOG from '@/blog.config'
@@ -20,9 +19,10 @@ import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
-const Mark = dynamic(() => import('mark.js'))
 
 // 主题全局状态
 const ThemeGlobalFukasawa = createContext()
@@ -66,7 +66,8 @@ const LayoutBase = (props) => {
         <ThemeGlobalFukasawa.Provider value={{ isCollapsed, setIsCollapse }}>
 
             <div id='theme-fukasawa'>
-                <CommonHead meta={meta} />
+                {/* SEO信息 */}
+                <CommonHead meta={meta}/>
                 <Style/>
 
                 <TopNav {...props} />
@@ -148,17 +149,16 @@ const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   useEffect(() => {
-    setTimeout(() => {
-      const container = isBrowser() && document.getElementById('posts-wrapper')
-      if (container && container.innerHTML) {
-        const re = new RegExp(keyword, 'gim')
-        const instance = new Mark(container)
-        instance.markRegExp(re, {
+    if (isBrowser()) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
           element: 'span',
           className: 'text-red-500 border-b border-dashed'
-        })
-      }
-    }, 300)
+        }
+      })
+    }
   }, [router])
   return <LayoutPostList {...props} />
 }

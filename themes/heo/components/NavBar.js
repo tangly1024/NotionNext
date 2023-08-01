@@ -3,6 +3,7 @@ import Logo from './Logo'
 import throttle from 'lodash.throttle'
 import RandomPostButton from './RandomPostButton'
 import SearchButton from './SearchButton'
+import DarkModeButton from './DarkModeButton'
 import SlideOver from './SlideOver'
 import ReadingProgress from './ReadingProgress'
 import { MenuListTop } from './MenuListTop'
@@ -26,23 +27,11 @@ const NavBar = props => {
     slideOverRef?.current?.toggleSlideOvers()
   }
 
-  // 监听滚动
-  useEffect(() => {
-    scrollTrigger()
-    window.addEventListener('scroll', scrollTrigger)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-    }
-  }, [])
-
-  const throttleMs = 200
-
   /**
        * 根据滚动条，切换导航栏样式
        */
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
-
     // 导航栏设置 白色背景
     if (scrollS <= 0) {
       setFixedNav(false)
@@ -60,7 +49,16 @@ const NavBar = props => {
       setTextWhite(false)
       setBgWhite(true)
     }
-  }, throttleMs))
+  }, 200))
+
+  // 监听滚动
+  useEffect(() => {
+    scrollTrigger()
+    window.addEventListener('scroll', scrollTrigger)
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+    }
+  }, [])
 
   // 监听导航栏显示文字
   useEffect(() => {
@@ -141,13 +139,14 @@ const NavBar = props => {
                 {/* 中间菜单 */}
                 <div id='nav-bar-swipe' className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full relative w-full ${activeIndex === 0 ? 'fade-in-down' : 'fade-in-up'}`}>
                     {activeIndex === 0 && <MenuListTop {...props} />}
-                    {activeIndex === 1 && <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>{BLOG.AUTHOR || BLOG.TITLE} | {BLOG.BIO}</h1>}
+                    {activeIndex === 1 && <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>{BLOG.AUTHOR || BLOG.TITLE} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1>}
                 </div>
 
                 {/* 右侧固定 */}
-                <div className='flex flex-shrink-0 justify-center items-center space-x-1'>
+                <div className='flex flex-shrink-0 justify-center items-center'>
                     <RandomPostButton {...props} />
-                    <SearchButton />
+                    <SearchButton {...props}/>
+                    {!JSON.parse(BLOG.THEME_SWITCH) && <div className='hidden md:block'><DarkModeButton {...props} /></div>}
                     <ReadingProgress />
 
                     {/* 移动端菜单按钮 */}
