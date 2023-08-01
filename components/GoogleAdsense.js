@@ -21,7 +21,7 @@ export default function GoogleAdsense() {
           for (let i = 0; i <= ads.length; i++) {
             try {
               adsbygoogle.push(ads[i])
-              console.log('adsbygoogle', i, ads[i], adsbygoogle)
+            //   console.log('adsbygoogle', i, ads[i], adsbygoogle)
             } catch (e) {
 
             }
