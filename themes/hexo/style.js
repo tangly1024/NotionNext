@@ -73,31 +73,4 @@ const Style = () => {
   `}</style>)
 }
 
-// style.js
-
-import css from 'styled-jsx/css';
-
-const heartIconStyles = css`
-  /* 心形图标的样式 */
-  .heart-icon {
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    opacity: 0;
-  }
-
-  /* 心形图标的动画效果 */
-  @keyframes showHeart {
-    0% { opacity: 0; transform: scale(0); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0; transform: scale(1); }
-  }
-`;
-
-export default heartIconStyles;
-
 export { Style }
