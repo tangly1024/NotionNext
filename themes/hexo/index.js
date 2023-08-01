@@ -191,7 +191,7 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const drawerRight = useRef(null)
 
-  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
+  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
 
   const floatSlot = <>
         {post?.toc?.length > 1 && <div className="block lg:hidden">
@@ -254,7 +254,7 @@ const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      if (isBrowser()) {
+      if (isBrowser) {
         const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/').then(() => {

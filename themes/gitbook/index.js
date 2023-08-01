@@ -170,7 +170,7 @@ const LayoutIndex = (props) => {
     router.push(CONFIG.INDEX_PAGE).then(() => {
       // console.log('跳转到指定首页', CONFIG.INDEX_PAGE)
       setTimeout(() => {
-        if (isBrowser()) {
+        if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
             console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG.INDEX_PAGE)

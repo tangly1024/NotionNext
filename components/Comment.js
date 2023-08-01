@@ -62,7 +62,7 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
 const Comment = ({ frontMatter, className }) => {
   const router = useRouter()
 
-  if (isBrowser() && ('giscus' in router.query || router.query.target === 'comment')) {
+  if (isBrowser && ('giscus' in router.query || router.query.target === 'comment')) {
     setTimeout(() => {
       const url = router.asPath.replace('?target=comment', '')
       history.replaceState({}, '', url)

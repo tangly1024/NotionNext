@@ -41,7 +41,7 @@ const Slug = props => {
     // 404
     if (!post) {
       setTimeout(() => {
-        if (isBrowser()) {
+        if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
             router.push('/404').then(() => {

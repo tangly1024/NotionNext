@@ -65,7 +65,7 @@ const NotionPage = ({ post, className }) => {
     // 将相册gallery下的图片加入放大功能
     if (JSON.parse(BLOG.POST_DISABLE_GALLERY_CLICK)) {
       setTimeout(() => {
-        if (isBrowser()) {
+        if (isBrowser) {
           const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
           if (imgList && zoomRef.current) {
             for (let i = 0; i < imgList.length; i++) {

@@ -13,8 +13,7 @@ import { useEffect } from 'react'
 const Twikoo = ({ isDarkMode }) => {
   const loadTwikoo = async () => {
     try {
-      const url = await loadExternalResource(BLOG.COMMENT_TWIKOO_CDN_URL, 'js')
-      console.log('twikoo 加载成功', url)
+      await loadExternalResource(BLOG.COMMENT_TWIKOO_CDN_URL, 'js')
       const twikoo = window.twikoo
       twikoo.init({
         envId: BLOG.COMMENT_TWIKOO_ENV_ID, // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）

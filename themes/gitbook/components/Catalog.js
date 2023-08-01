@@ -49,7 +49,7 @@ const Catalog = ({ post }) => {
     }
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
-    if (isBrowser() && tocIds?.length > 0) {
+    if (isBrowser && tocIds?.length > 0) {
       for (const tocWrapper of document?.getElementsByClassName('toc-wrapper')) {
         tocWrapper?.scrollTo({ top: 28 * index, behavior: 'smooth' })
       }
