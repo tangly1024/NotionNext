@@ -13,6 +13,12 @@ const Style = () => {
     .dark body{
         background-color: black;
     }
+    // 文本不可选取
+    .forbid-copy {
+        user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
     
     /* fukasawa的首页响应式分栏 */
     #theme-fukasawa .grid-item {

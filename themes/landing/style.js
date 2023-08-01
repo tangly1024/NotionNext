@@ -10,6 +10,12 @@ const Style = () => {
     .test {
       text-color: red;
     }
+    // 文本不可选取
+    .forbid-copy {
+        user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
 
   `}</style>
 }
