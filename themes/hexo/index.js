@@ -333,6 +333,15 @@ const LayoutTagIndex = props => {
         </LayoutBase>
   )
 }
+const App = () => {
+  return (
+    <div>
+      <div id="heart-icon"></div>
+    </div>
+  );
+};
+
+export default App;
 
 export {
   CONFIG as THEME_CONFIG,
