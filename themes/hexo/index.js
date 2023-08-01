@@ -1,6 +1,6 @@
 import CONFIG from './config'
-import React from 'react';
-import heartIconStyles from './style';
+
+
 import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
@@ -334,21 +334,61 @@ const LayoutTagIndex = props => {
         </LayoutBase>
   )
 }
+// index.js
+
+import React, { useEffect } from 'react';
+import heartIconStyles from './style';
+
 const App = () => {
+  useEffect(() => {
+    // 监听整个页面的点击事件
+    document.body.addEventListener('click', handleHeartClick);
+
+    // 在组件卸载时移除点击事件监听
+    return () => {
+      document.body.removeEventListener('click', handleHeartClick);
+    };
+  }, []);
+
+  const handleHeartClick = (event) => {
+    // 获取点击位置坐标
+    const x = event.clientX;
+    const y = event.clientY;
+
+    // 创建心形图标元素
+    const heartIcon = document.createElement('div');
+    heartIcon.classList.add('heart-icon');
+
+    // 设置心形图标的位置
+    heartIcon.style.top = `${y}px`;
+    heartIcon.style.left = `${x}px`;
+
+    // 添加动画效果
+    heartIcon.style.animation = 'showHeart 1s ease';
+
+    // 将心形图标添加到页面中
+    document.body.appendChild(heartIcon);
+
+    // 动画结束后移除心形图标
+    heartIcon.addEventListener('animationend', () => {
+      heartIcon.remove();
+    });
+  };
+
   return (
     <div>
-      <div id="heart-icon"></div>
+      {/* 添加一个用于显示心形图标的容器 */}
+      <div id="heart-container"></div>
     </div>
   );
 };
 
-export default App;
-
+// 应用CSS样式
 const HeartIconStyle = () => (
   <style jsx>{heartIconStyles}</style>
 );
 
-export { HeartIconStyle };
+export { App, HeartIconStyle };
 
 export {
   CONFIG as THEME_CONFIG,
