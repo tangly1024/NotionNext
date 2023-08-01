@@ -42,7 +42,7 @@ export const getServerSideProps = async (ctx) => {
     const slugWithoutLeadingSlash = post?.slug.startsWith('/') ? post?.slug?.slice(1) : post.slug
     return {
       loc: `${BLOG.LINK}/${slugWithoutLeadingSlash}`,
-      lastmod: new Date(post?.publishTime).toISOString().split('T')[0],
+      lastmod: new Date(post?.publishDay).toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }
