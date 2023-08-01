@@ -6,85 +6,11 @@
 .fa-info:before {
     content: "\f05a";
 }
-<style>
-  body {
-    background: url(https://i.imgur.com/9X0Y6lT.jpg) no-repeat center center fixed;
-    background-size: cover;
-  }
-  .sakura {
-    position: absolute;
-    top: -70px;
-    z-index: 1000;
-    width: 15px;
-    height: 15px;
-    -webkit-animation: fall 10s linear infinite;
-    -moz-animation: fall 10s linear infinite;
-    -ms-animation: fall 10s linear infinite;
-    -o-animation: fall 10s linear infinite;
-    animation: fall 10s linear infinite;
-  }
-  .sakura img {
-    width: 100%;
-    height: 100%;
-  }
-  @-webkit-keyframes fall {
-    to {
-      -webkit-transform: translateX(1000px) rotate(360deg);
-      opacity: 0;
-    }
-  }
-  @-moz-keyframes fall {
-    to {
-      -moz-transform: translateX(1000px) rotate(360deg);
-      opacity: 0;
-    }
-  }
-  @-ms-keyframes fall {
-    to {
-      -ms-transform: translateX(1000px) rotate(360deg);
-      opacity: 0;
-    }
-  }
-  @-o-keyframes fall {
-    to {
-      -o-transform: translateX(1000px) rotate(360deg);
-      opacity: 0;
-    }
-  }
-  @keyframes fall {
-    to {
-      transform: translateX(1000px) rotate(360deg);
-      opacity: 0;
-    }
-  }
-</style>
-<div class="sakura">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:1s;-moz-animation-delay:1s;-ms-animation-delay:1s;-o-animation-delay:1s;animation-delay:1s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:2s;-moz-animation-delay:2s;-ms-animation-delay:2s;-o-animation-delay:2s;animation-delay:2s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:3s;-moz-animation-delay:3s;-ms-animation-delay:3s;-o-animation-delay:3s;animation-delay:3s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:4s;-moz-animation-delay:4s;-ms-animation-delay:4s;-o-animation-delay:4s;animation-delay:4s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:5s;-moz-animation-delay:5s;-ms-animation-delay:5s;-o-animation-delay:5s;animation-delay:5s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:6s;-moz-animation-delay:6s;-ms-animation-delay:6s;-o-animation-delay:6s;animation-delay:6s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:7s;-moz-animation-delay:7s;-ms-animation-delay:7s;-o-animation-delay:7s;animation-delay:7s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:8s;-moz-animation-delay:8s;-ms-animation-delay:8s;-o-animation-delay:8s;animation-delay:8s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
-<div class="sakura" style="-webkit-animation-delay:9s;-moz-animation-delay:9s;-ms-animation-delay:9s;-o-animation-delay:9s;animation-delay:9s;">
-<img src="https://i.imgur.com/4H8bqDM.png" alt="Sakura">
-</div>
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
+<div id="fireworks"></div>
+<script>
+  // 创建一个Fireworks对象，传入div元素的id
+  const fireworks = new Fireworks("fireworks");
+  // 调用start方法来开始烟花动画
+  fireworks.start();
+</script>
