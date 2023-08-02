@@ -8,7 +8,7 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
  * @returns
  */
 const ExternalScript = () => {
-  if (isBrowser()) {
+  if (isBrowser) {
     // 静态导入本地自定义样式
     loadExternalResource('/css/custom.css', 'css')
     loadExternalResource('/js/custom.js', 'js')

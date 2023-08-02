@@ -57,7 +57,7 @@ const LayoutBase = (props) => {
 
   // 在组件卸载时保存 open 状态到本地存储中
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       localStorage.setItem('fukasawa-sidebar-collapse', isCollapsed)
     }
   }, [isCollapsed])
@@ -149,7 +149,7 @@ const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,

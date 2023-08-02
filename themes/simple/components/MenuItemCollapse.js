@@ -29,7 +29,7 @@ export const MenuItemCollapse = (props) => {
   return <>
         <div className='w-full px-8 py-3 text-left border-b dark:bg-hexo-black-gray dark:border-black' onClick={toggleShow} >
             {!hasSubMenu && <Link
-                href={link?.to}
+                href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
                 className="font-extralight items-center flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
                 <span className='text-blue-400 hover:text-red-400 transition-all items-center duration-200'>{link?.icon && <span className='mr-2'><i className={link.icon}/></span>}{link?.name}</span>
             </Link>}
@@ -45,7 +45,7 @@ export const MenuItemCollapse = (props) => {
         {hasSubMenu && <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
             {link.subMenus.map(sLink => {
               return <div key={sLink.id} className='font-extralight dark:bg-black text-left px-10 justify-start text-blue-400 bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
-                    <Link href={sLink.to}>
+                    <Link href={sLink.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
                         <span className='ml-4 text-xs'>{sLink?.icon && <span className='mr-2 w-4'><i className={sLink.icon}/></span>}{sLink.title}</span>
                     </Link>
                 </div>

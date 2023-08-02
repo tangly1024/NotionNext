@@ -47,7 +47,7 @@ const CONFIG = {
   FEATURES_BLOCK_6_P: 'NotionNext，助您轻松开始写作',
 
   // 感言
-  TESTIMONIALS_HEADER: '已搭建近4000个网站、浏览量突破 100,000,000+',
+  TESTIMONIALS_HEADER: '已搭建超4000个网站、浏览量突破 100,000,000+',
   TESTIMONIALS_P: '网站内容涵盖地产、教育、建筑、医学、机械、IT、电子、软件、自媒体、数位游民、短视频、电商、学生、摄影爱好者、旅行爱好者等等各行各业',
 
   TESTIMONIALS_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
