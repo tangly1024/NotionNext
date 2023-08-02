@@ -11,12 +11,6 @@ const Style = () => {
     .dark body{
         background-color: black;
     }
-    // 文本不可选取
-    .forbid-copy {
-        user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
 
   `}</style>
 }

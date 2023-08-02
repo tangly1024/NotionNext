@@ -10,12 +10,6 @@ const Style = () => {
         background-color:  #f7f9fe;
         overflow-x: hidden;
     }
-    // 文本不可选取
-    .forbid-copy {
-        user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
 
     // 公告栏中的字体固定白色
     #theme-heo #announcement-content .notion{

@@ -30,6 +30,7 @@ const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), { ssr:
 const Messenger = dynamic(() => import('@/components/FacebookMessenger'), { ssr: false })
 const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const CustomContextMenu = dynamic(() => import('@/components/CustomContextMenu'), { ssr: false })
+const DisableCopy = dynamic(() => import('@/components/DisableCopy'), { ssr: false })
 
 /**
  * 各种第三方组件
@@ -55,6 +56,7 @@ const ExternalPlugin = (props) => {
           {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && <TwikooCommentCounter {...props}/>}
           {JSON.parse(BLOG.RIBBON) && <Ribbon />}
           {JSON.parse(BLOG.CUSTOM_RIGHT_CLICK_CONTEXT_MENU) && <CustomContextMenu {...props} />}
+          {!JSON.parse(BLOG.CAN_COPY) && <DisableCopy/>}
           <VConsole/>
       </>
 }
