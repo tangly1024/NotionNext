@@ -44,9 +44,10 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && !post.results && (
-            <p className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
+            <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref className="line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7">
                 {post.summary}
-            </p>
+            </Link>
+
           )}
 
         {/* 搜索结果 */}
