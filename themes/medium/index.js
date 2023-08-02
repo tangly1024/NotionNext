@@ -1,6 +1,5 @@
 import CONFIG from './config'
 
-import CommonHead from '@/components/CommonHead'
 import { useState, createContext, useContext, useEffect } from 'react'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
@@ -36,6 +35,7 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import ArticleInfo from './components/ArticleInfo'
+import CommonHead from '@/components/CommonHead'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -48,7 +48,7 @@ export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, showInfoCard = true, slotRight, slotTop, siteInfo, notice } = props
+  const { children, showInfoCard = true, slotRight, slotTop, siteInfo, notice, meta } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -57,7 +57,7 @@ const LayoutBase = props => {
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
             {/* SEO相关 */}
-            <CommonHead meta={meta} />
+            <CommonHead meta={meta}/>
             {/* CSS样式 */}
             <Style/>
 
@@ -206,7 +206,7 @@ const LayoutSearch = (props) => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,

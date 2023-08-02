@@ -12,7 +12,6 @@ import ArticleAround from './components/ArticleAround'
 import ShareBar from '@/components/ShareBar'
 import { AdSlot } from '@/components/GoogleAdsense'
 import Link from 'next/link'
-import CommonHead from '@/components/CommonHead'
 import { TopBar } from './components/TopBar'
 import { Header } from './components/Header'
 import { NavBar } from './components/NavBar'
@@ -25,6 +24,7 @@ import SearchInput from './components/SearchInput'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
 
 /**
  * 基础布局
@@ -33,15 +33,16 @@ import replaceSearchResult from '@/components/Mark'
  * @returns
  */
 const LayoutBase = props => {
-  const { children, meta, slotTop } = props
+  const { children, slotTop, meta } = props
   const { onLoading } = useGlobal()
 
-  if (isBrowser()) {
+  if (isBrowser) {
     loadExternalResource('/css/theme-simple.css', 'css')
   }
   return (
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
-            <CommonHead meta={meta} />
+            {/* SEO相关 */}
+            <CommonHead meta={meta}/>
             <Style/>
 
             {CONFIG.TOP_BAR && <TopBar {...props} />}
@@ -121,7 +122,7 @@ const LayoutSearch = props => {
   const { keyword } = props
 
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,

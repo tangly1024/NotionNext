@@ -47,7 +47,7 @@ const LayoutBase = props => {
   return (
         <div id='theme-hexo'>
             {/* 网页SEO */}
-            <CommonHead meta={meta} siteInfo={siteInfo} />
+            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 顶部导航 */}
@@ -71,7 +71,7 @@ const LayoutBase = props => {
             {/* 主区块 */}
             <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
                 <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-                    <div className={`${className || ''} w-full max-w-4xl h-full `}>
+                    <div className={`${className || ''} w-full max-w-4xl h-full overflow-hidden`}>
 
                         <Transition
                             show={!onLoading}
@@ -191,7 +191,7 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const drawerRight = useRef(null)
 
-  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
+  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
 
   const floatSlot = <>
         {post?.toc?.length > 1 && <div className="block lg:hidden">
@@ -254,7 +254,7 @@ const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      if (isBrowser()) {
+      if (isBrowser) {
         const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/').then(() => {

@@ -84,12 +84,12 @@ const NavBar = props => {
       }
     }
 
-    if (isBrowser()) {
+    if (isBrowser) {
       window.addEventListener('scroll', handleScroll)
     }
 
     return () => {
-      if (isBrowser()) {
+      if (isBrowser) {
         window.removeEventListener('scroll', handleScroll)
       }
     }
@@ -143,9 +143,9 @@ const NavBar = props => {
                 </div>
 
                 {/* 右侧固定 */}
-                <div className='flex flex-shrink-0 justify-center items-center space-x-1'>
+                <div className='flex flex-shrink-0 justify-center items-center'>
                     <RandomPostButton {...props} />
-                    <SearchButton />
+                    <SearchButton {...props}/>
                     {!JSON.parse(BLOG.THEME_SWITCH) && <div className='hidden md:block'><DarkModeButton {...props} /></div>}
                     <ReadingProgress />
 
