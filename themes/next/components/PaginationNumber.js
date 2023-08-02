@@ -36,7 +36,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             <div
                 rel="prev"
                 className={`${currentPage === 1 ? 'invisible' : 'block'
-                    } border-white dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}
+                    } border-t-2 border-white dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-400 w-6 text-center cursor-pointer duration-200 hover:font-bold`}
             >
                 <i className="fas fa-angle-left" />
             </div>
@@ -55,7 +55,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             <div
                 rel="next"
                 className={`${+showNext ? 'block' : 'invisible'
-                    } border-t-2 border-white dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}
+                    } border-t-2 border-white dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-400 w-6 text-center cursor-pointer duration-500 hover:font-bold`}
             >
                 <i className="fas fa-angle-right" />
             </div>

@@ -31,6 +31,9 @@ import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import CommonHead from '@/components/CommonHead'
+import BlogArchiveItem from './components/BlogArchiveItem'
+import BlogPostListPage from './components/BlogPostListPage'
+import Link from 'next/link'
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -53,7 +56,6 @@ const LayoutBase = (props) => {
   const showTocButton = post?.toc?.length > 1
 
   useEffect(() => {
-    console.log('更新导航', allNavPages)
     setFilteredNavPages(allNavPages)
   }, [post])
 
@@ -171,7 +173,7 @@ const LayoutIndex = (props) => {
     router.push(CONFIG.INDEX_PAGE).then(() => {
       // console.log('跳转到指定首页', CONFIG.INDEX_PAGE)
       setTimeout(() => {
-        if (isBrowser()) {
+        if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
             console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG.INDEX_PAGE)
@@ -194,7 +196,9 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} />
+  return <LayoutBase {...props} >
+            <div className='mt-10'><BlogPostListPage {...props} /></div>
+    </LayoutBase>
 }
 
 /**
@@ -253,13 +257,19 @@ const LayoutSearch = (props) => {
 }
 
 /**
- * 没有归档
+ * 归档页面基本不会用到
  * 全靠页面导航
  * @param {*} props
  * @returns
  */
 const LayoutArchive = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  const { archivePosts } = props
+
+  return <LayoutBase {...props}>
+        <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
+            {Object.keys(archivePosts)?.map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
+        </div>
+  </LayoutBase>
 }
 
 /**
@@ -275,14 +285,57 @@ const Layout404 = props => {
  * 分类列表
  */
 const LayoutCategoryIndex = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  const { categoryOptions } = props
+  const { locale } = useGlobal()
+  return <LayoutBase {...props}>
+     <div className='bg-white dark:bg-gray-700 py-10'>
+                <div className='dark:text-gray-200 mb-5'>
+                    <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
+                </div>
+                <div id='category-list' className='duration-200 flex flex-wrap'>
+                    {categoryOptions?.map(category => {
+                      return (
+                            <Link
+                                key={category.name}
+                                href={`/category/${category.name}`}
+                                passHref
+                                legacyBehavior>
+                                <div
+                                    className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
+                                    <i className='mr-4 fas fa-folder' />{category.name}({category.count})
+                                </div>
+                            </Link>
+                      )
+                    })}
+                </div>
+            </div>
+  </LayoutBase>
 }
 
 /**
  * 标签列表
  */
 const LayoutTagIndex = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  const { tagOptions } = props
+  const { locale } = useGlobal()
+
+  return <LayoutBase {...props}>
+     <div className="bg-white dark:bg-gray-700 py-10">
+                <div className="dark:text-gray-200 mb-5">
+                    <i className="mr-4 fas fa-tag" />
+                    {locale.COMMON.TAGS}:
+                </div>
+                <div id="tags-list" className="duration-200 flex flex-wrap">
+                    {tagOptions?.map(tag => {
+                      return (
+                            <div key={tag.name} className="p-2">
+                                <TagItemMini key={tag.name} tag={tag} />
+                            </div>
+                      )
+                    })}
+                </div>
+            </div>
+  </LayoutBase>
 }
 
 export {

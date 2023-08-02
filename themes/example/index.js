@@ -177,7 +177,7 @@ const LayoutSearch = props => {
   const slotTop = <div className='pb-12'><SearchInput {...props} /></div>
   const router = useRouter()
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       // 高亮搜索到的结果
       const container = document.getElementById('posts-wrapper')
       if (keyword && container) {
