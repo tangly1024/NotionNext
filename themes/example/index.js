@@ -2,7 +2,6 @@
 
 import BLOG from '@/blog.config'
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import { useEffect } from 'react'
 import { Header } from './components/Header'
 import { Nav } from './components/Nav'
@@ -27,6 +26,7 @@ import TagItem from './components/TagItem'
 import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import CommonHead from '@/components/CommonHead'
 
 /**
  * 基础布局框架
@@ -36,7 +36,7 @@ import { Style } from './style'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta, slotTop } = props
+  const { children, slotTop, meta } = props
   const { onLoading } = useGlobal()
 
   // 增加一个状态以触发 Transition 组件的动画
@@ -49,8 +49,10 @@ const LayoutBase = props => {
 
   return (
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
-            {/* 网页SEO信息 */}
-            <CommonHead meta={meta} />
+
+            {/* SEO信息 */}
+            <CommonHead meta={meta}/>
+
             <Style/>
 
             {/* 页头 */}
@@ -175,7 +177,7 @@ const LayoutSearch = props => {
   const slotTop = <div className='pb-12'><SearchInput {...props} /></div>
   const router = useRouter()
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       // 高亮搜索到的结果
       const container = document.getElementById('posts-wrapper')
       if (keyword && container) {

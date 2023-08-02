@@ -55,7 +55,7 @@ export async function getStaticProps() {
     pageType: ['Post']
   })
   const { allPages } = props
-  props.posts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   return {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
