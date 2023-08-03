@@ -8,8 +8,8 @@ const CONFIG = {
   ],
 
   // 英雄区(首页顶部大卡)
-  HERO_TITLE_1: 'Random',
-  HERO_TITLE_2: 'Post',
+  HERO_TITLE_1: 'My',
+  HERO_TITLE_2: 'Skills',
   HERO_TITLE_3: '',
   HERO_TITLE_4: 'Misc.',
   HERO_TITLE_5: 'Gallery',
