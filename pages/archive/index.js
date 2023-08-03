@@ -15,7 +15,7 @@ const ArchiveIndex = props => {
   const Layout = getLayoutByTheme(useRouter())
 
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       const anchor = window.location.hash
       if (anchor) {
         setTimeout(() => {

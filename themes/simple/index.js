@@ -36,7 +36,7 @@ const LayoutBase = props => {
   const { children, slotTop, meta } = props
   const { onLoading } = useGlobal()
 
-  if (isBrowser()) {
+  if (isBrowser) {
     loadExternalResource('/css/theme-simple.css', 'css')
   }
   return (
@@ -122,7 +122,7 @@ const LayoutSearch = props => {
   const { keyword } = props
 
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,

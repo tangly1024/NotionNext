@@ -134,7 +134,7 @@ const LayoutPostList = props => {
 const LayoutSearch = props => {
   const { keyword } = props
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,
