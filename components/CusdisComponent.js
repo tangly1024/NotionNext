@@ -13,7 +13,7 @@ const CusdisComponent = ({ frontMatter }) => {
   useEffect(() => {
     loadExternalResource(BLOG.COMMENT_CUSDIS_SCRIPT_SRC, 'js').then(url => {
       const CUSDIS = window.CUSDIS
-      CUSDIS.initial()
+      CUSDIS?.initial()
     })
   }, [isDarkMode])
 
