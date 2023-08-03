@@ -50,18 +50,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                     </div>
 
                     {/* 摘要 */}
-                    {(!showPreview || showSummary) && !post.results && (
+                    {(!showPreview || showSummary) && (
                         <p className="line-clamp-2 replace my-3 2xl:my-1 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight">
                             {post.summary}
-                        </p>
-                    )}
-
-                    {/* 搜索结果 */}
-                    {post.results && (
-                        <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                            {post.results.map((r, index) => (
-                                <span key={index}>{r}</span>
-                            ))}
                         </p>
                     )}
 
