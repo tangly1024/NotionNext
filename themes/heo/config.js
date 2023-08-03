@@ -9,11 +9,11 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HERO_TITLE_1: 'Random',
-  HERO_TITLE_2: 'Blog post',
+  HERO_TITLE_2: 'Post',
   HERO_TITLE_3: '',
-  HERO_TITLE_4: 'About',
-  HERO_TITLE_5: '',
-  HERO_TITLE_LINK: 'https://tangly1024.com',
+  HERO_TITLE_4: 'Misc.',
+  HERO_TITLE_5: 'Gallery',
+  HERO_TITLE_LINK: 'https://www.petergam.top/article/gallery.html',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: 'Research', url: '/tag/Research' },
@@ -28,7 +28,7 @@ const CONFIG = {
   INFOCARD_GREETINGS: [
     'Hi！I am',
   ],
-  INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
+  INFO_CARD_URL: 'https://github.com/MrPeterJin', // 个人资料底部按钮链接
 
   // 用户技能图标
   GROUP_ICONS: [
