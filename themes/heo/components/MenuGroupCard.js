@@ -24,7 +24,7 @@ const MenuGroupCard = (props) => {
                         <div key={index} className=''>
                             <Link title={link.to}
                                 href={link.to}
-                                target={link.to.indexOf('http') === 0 ? '_blank' : '_self'}
+                                target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
                                 className={'w-full flex items-center justify-between py-1 hover:scale-105 duration-200 transform dark:hover:text-indigo-400 hover:text-indigo-600 px-2 cursor-pointer'}>
                                 <>
                                     <div>{link.name} :</div>

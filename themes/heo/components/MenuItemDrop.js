@@ -14,6 +14,7 @@ export const MenuItemDrop = ({ link }) => {
         {/* 不含子菜单 */}
         {!hasSubMenu &&
             <Link
+                target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
                 href={link?.to}
                 className="font-sans hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest">
                 {link?.icon && <i className={link?.icon} />} {link?.name}
@@ -30,7 +31,7 @@ export const MenuItemDrop = ({ link }) => {
         {hasSubMenu && <ul style={{ backdropFilter: 'blur(3px)' }} className={`${show ? 'visible opacity-100 top-14' : 'invisible opacity-0 top-20'} drop-shadow-md overflow-hidden rounded-xl bg-white transition-all duration-300 z-20 absolute`}>
             {link.subMenus.map((sLink, index) => {
               return <li key={index} className='cursor-pointer hover:bg-blue-600 hover:text-white text-gray-900  tracking-widest transition-all duration-200 dark:border-gray-700  py-1 pr-6 pl-3'>
-                    <Link href={sLink.to}>
+                    <Link href={sLink.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
                         <span className='text-sm text-nowrap font-extralight'>{link?.icon && <i className={sLink?.icon} > &nbsp; </i>}{sLink.title}</span>
                     </Link>
                 </li>

@@ -8,6 +8,7 @@ export default function Messenger() {
     pageId={BLOG.FACEBOOK_PAGE_ID}
     appId={BLOG.FACEBOOK_APP_ID}
     language={BLOG.LANG.replace('-', '_')}
+    shouldShowDialog={true}
   />
 }
 
