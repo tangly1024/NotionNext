@@ -55,6 +55,13 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
 })
 
 /**
+ * 是否有评论
+ */
+export const commentEnable = BLOG.COMMENT_TWIKOO_ENV_ID || BLOG.COMMENT_WALINE_SERVER_URL || BLOG.COMMENT_VALINE_APP_ID ||
+BLOG.COMMENT_GISCUS_REPO || BLOG.COMMENT_CUSDIS_APP_ID || BLOG.COMMENT_UTTERRANCES_REPO ||
+ BLOG.COMMENT_GITALK_CLIENT_ID || BLOG.COMMENT_WEBMENTION.ENABLE
+
+/**
  * 评论组件
  * @param {*} param0
  * @returns
