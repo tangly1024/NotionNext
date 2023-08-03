@@ -158,7 +158,9 @@ const LayoutSearch = props => {
             <div id='post-outer-wrapper' className='px-5  md:px-0'>
                 {!currentSearch
                   ? <SearchNav {...props} />
-                  : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
+                  : <div id="posts-wrapper">
+                        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+                    </div>}
             </div>
         </LayoutBase>
   )
