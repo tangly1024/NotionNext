@@ -100,7 +100,7 @@ const CONFIG = {
 
   SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
   SOCIAL_CARD_TITLE_1: '想找我玩？',
-  SOCIAL_CARD_TITLE_2: '直接来本站留言版找我玩叭~',
+  SOCIAL_CARD_TITLE_2: '直接来本站留言板找我玩叭~',
   SOCIAL_CARD_TITLE_3: '戳我直达☞',
   SOCIAL_CARD_URL: '/message',
 
@@ -113,7 +113,7 @@ const CONFIG = {
   MENU_SEARCH: true, // 显示搜索
 
   POST_LIST_COVER: true, // 列表显示文章封面
-  POST_LIST_COVER_HOVER_ENLARGE: false, // 列表鼠标悬停放大
+  POST_LIST_COVER_HOVER_ENLARGE: true, // 列表鼠标悬停放大
 
   POST_LIST_COVER_DEFAULT: true, // 封面为空时用站点背景做默认封面
   POST_LIST_SUMMARY: true, // 文章摘要
