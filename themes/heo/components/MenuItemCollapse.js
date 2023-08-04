@@ -29,12 +29,12 @@ export const MenuItemCollapse = ({ link }) => {
         <div className='select-none w-full px-2 py-2 border rounded-xl text-left dark:bg-hexo-black-gray' onClick={toggleShow} >
             {!hasSubMenu && <Link
                 href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
-                className="font-extralight  flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
+                className="font-extralight  flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest">
                 <span className=' transition-all items-center duration-200'>{link?.icon && <i className={link.icon + ' mr-4'} />}{link?.name}</span>
             </Link>}
             {hasSubMenu && <div
                 onClick={hasSubMenu ? toggleOpenSubMenu : null}
-                className="font-extralight flex items-center justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest pb-1">
+                className="font-extralight flex items-center justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest">
                 <span className='transition-all items-center duration-200'>{link?.icon && <i className={link.icon + ' mr-4'} />}{link?.name}</span>
                 <i className={`select-none px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''} text-gray-400`}></i>
             </div>}
