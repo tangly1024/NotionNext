@@ -6,7 +6,6 @@ const ValineComponent = ({ path }) => {
   const loadValine = async () => {
     try {
       await loadExternalResource(BLOG.COMMENT_VALINE_CDN, 'js')
-      //   console.log('valine 加载成功', url)
       const Valine = window.Valine
       // eslint-disable-next-line no-unused-vars
       const valine = new Valine({

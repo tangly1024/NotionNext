@@ -161,7 +161,7 @@ const LayoutSearch = (props) => {
   const { posts, keyword } = props
 
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,
@@ -201,7 +201,7 @@ const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      const article = isBrowser() && document.getElementById('article-wrapper')
+      const article = isBrowser && document.getElementById('article-wrapper')
       if (!article) {
         router.push('/').then(() => {
           // console.log('找不到页面', router.asPath)
@@ -253,7 +253,7 @@ const LayoutArchive = (props) => {
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
   const drawerRight = useRef(null)
-  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
+  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
   const floatSlot = <div className='block lg:hidden'>
         <TocDrawerButton onClick={() => {
           drawerRight?.current?.handleSwitchVisible()

@@ -263,3 +263,9 @@ a.avatar-wrapper {
 .reply-author-name {
   font-weight: 500;
 }
+
+.forbid-copy {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
