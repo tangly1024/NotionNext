@@ -14,5 +14,5 @@ if __name__ == '__main__':
     big = re.findall('<loc>(.*?)</loc>', result.content.decode('utf-8'), re.S)
     for i in big:
         # print(i)
-        op_xml_txt = open('xml.txt', 'a')
+        op_xml_txt = open('urls.txt', 'a')
         op_xml_txt.write('%s\n' % i)
