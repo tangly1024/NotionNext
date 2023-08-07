@@ -9,7 +9,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='parse sitemap')
     parser.add_argument('url', help='The url of your website')
     args = parser.parse_args()
-    url = f'{args.url}/sitemap.xml'
+    url = f'https://{args.url}/sitemap.xml'
     result = requests.get(url)
     big = re.findall('<loc>(.*?)</loc>', result.content.decode('utf-8'), re.S)
     for i in big:
