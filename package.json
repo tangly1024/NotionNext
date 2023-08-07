@@ -19,7 +19,7 @@
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "export": "next build && next-sitemap --config next-sitemap.config.js && next export",
     "bundle-report": "ANALYZE=true yarn build",
-    "baidupush": "bash baidupush.sh 'www.ghlerrix.cn'"
+    "baidupush": "bash baidupush.sh"
   },
   "dependencies": {
     "@giscus/react": "^2.2.6",
