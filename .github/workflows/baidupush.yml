@@ -1,16 +1,16 @@
 ## 利用GitHub Actions每天定时给百度推送链接，提高收录率 ##
 
-name: baiduPush
+name: baidupush
 
 # 两种触发方式：一、push代码，二、每天国际标准时间23点（北京时间+8即早上7点）运行
 on:
   push:
-  # schedule:
-  #   - cron: '0 23 * * *' # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#scheduled-events-schedule
+  schedule:
+    - cron: '0 23 * * *' # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#scheduled-events-schedule
 
 # on:
-  schedule:
-    - cron: '*/5 * * * *' # 每5分钟一次，测试用
+  # schedule:
+  #   - cron: '*/5 * * * *' # 每5分钟一次，测试用
 
 jobs:
   bot:
@@ -28,5 +28,5 @@ jobs:
       - name: install requests
         run: pip install requests
 
-      - name: parse sitemap
+      - name: baidupush
         run: npm run baidupush
