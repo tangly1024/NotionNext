@@ -25,5 +25,8 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: install requests
+        run: pip install requests
+
       - name: parse sitemap
         run: python baidupush.py
