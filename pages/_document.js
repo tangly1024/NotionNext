@@ -28,10 +28,6 @@ class MyDocument extends Document {
                       return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
                     }
                   })}
-                  <!-- 添加网站简介 -->
-                  <meta name="description" content="Hate_fish🐟的鱼缸，不定期更新各种内容">
-                  <!-- 添加网站图标 -->
-                  <link rel="icon" href="/public/favicon.ico">
                 </Head>
 
                 <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
