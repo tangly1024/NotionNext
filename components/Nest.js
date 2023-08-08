@@ -82,7 +82,7 @@ function createNest() {
       return {
         z: n(t, 'zIndex', 0),
         o: n(t, 'opacity', 0.7),
-        c: n(t, 'color', '0,0,0'),
+        c: n(t, 'color', '242,194,237'),
         n: n(t, 'count', 99)
       }
     })(),
