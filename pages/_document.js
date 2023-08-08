@@ -28,8 +28,7 @@ class MyDocument extends Document {
                       return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
                     }
                   })}
-                  <meta name="description" content="这是一个关于编程教程的博客，分享各种编程语言和技术的学习心得和经验">
-                  <link rel="icon" href="/favicon.ico">
+                  <link rel="icon" href="/public/favicon.ico">
                 </Head>
 
                 <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
