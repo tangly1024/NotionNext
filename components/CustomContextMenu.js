@@ -108,10 +108,10 @@ export default function CustomContextMenu(props) {
             <div className='rounded-xl w-52 dark:hover:border-yellow-600 bg-white dark:bg-[#040404] dark:text-gray-200 dark:border-gray-600 p-3 border drop-shadow-lg flex-col duration-300 transition-colors'>
                 {/* 顶部导航按钮 */}
                 <div className='flex justify-between'>
-                    <i onClick={handleBack} className="hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-left"></i>
-                    <i onClick={handleForward} className="hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-right"></i>
-                    <i onClick={handleRefresh} className="hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-rotate-right"></i>
-                    <i onClick={handleScrollTop} className="hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-up"></i>
+                    <i onClick={handleBack} className="hover:bg-blue-200 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-left"></i>
+                    <i onClick={handleForward} className="hover:bg-blue-200 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-right"></i>
+                    <i onClick={handleRefresh} className="hover:bg-blue-200 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-rotate-right"></i>
+                    <i onClick={handleScrollTop} className="hover:bg-blue-200 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-up"></i>
                 </div>
 
                 <hr className='my-2 border-dashed' />
@@ -119,17 +119,17 @@ export default function CustomContextMenu(props) {
                 {/* 跳转导航按钮 */}
                 <div className='w-full px-2'>
 
-                    <div onClick={handleJumpToRandomPost} title={locale.MENU.WALK_AROUND} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    <div onClick={handleJumpToRandomPost} title={locale.MENU.WALK_AROUND} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-200 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-podcast mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.WALK_AROUND}</div>
                     </div>
 
-                    <Link href='/category' title={locale.MENU.CATEGORY} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    <Link href='/category' title={locale.MENU.CATEGORY} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-200 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-square-minus mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.CATEGORY}</div>
                     </Link>
 
-                    <Link href='/tag' title={locale.MENU.TAGS} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    <Link href='/tag' title={locale.MENU.TAGS} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-200 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-tag mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.TAGS}</div>
                     </Link>
@@ -141,16 +141,16 @@ export default function CustomContextMenu(props) {
                 {/* 功能按钮 */}
                 <div className='w-full px-2'>
 
-                    <div onClick={handleCopyLink} title={locale.MENU.COPY_URL} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    <div onClick={handleCopyLink} title={locale.MENU.COPY_URL} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-200 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-arrow-up-right-from-square mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.COPY_URL}</div>
                     </div>
 
-                    <div onClick={handleChangeDarkMode} title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    <div onClick={handleChangeDarkMode} title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-200 hover:text-white rounded-lg duration-200 transition-all'>
                         {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
                         <div className='whitespace-nowrap'> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
                     </div>
-                    <div onClick={handeChangeTheme} title={locale.MENU.THEME_SWITCH} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    <div onClick={handeChangeTheme} title={locale.MENU.THEME_SWITCH} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-200 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-palette mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.THEME_SWITCH}</div>
                     </div>
