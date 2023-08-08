@@ -8,3 +8,5 @@ document.addEventListener('visibilitychange', function () {
         document.title = 'Hate_fish🐟的鱼缸';
     }
 });
+<script src="https://cdn.jsdelivr.net/gh/fz6m/Private-web@1.2/js/custom/click.min.js"></script>
+
