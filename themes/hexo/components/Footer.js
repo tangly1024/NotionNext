@@ -14,7 +14,7 @@ const Footer = ({ title }) => {
 
   return (
     <footer
-      className='relative z-10 dark:bg-black flex-shrink-0 bg-gray-100 justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm p-6'
+      className='relative z-10 dark:bg-black flex-shrink-0 bg-neutral-100 justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm p-6'
     >
       {/* <DarkModeButton/> */}
 
