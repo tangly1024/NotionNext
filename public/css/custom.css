@@ -3,7 +3,7 @@
 :root {
   --bg-white-opacity: rgba(255, 255, 255, 0.5);
   --bg-light-pink-opacity: rgba(255,240,245,0.5);
-  --bg-white-dim: rgba(255,255,255,0.8)
+  --bg-white-dim: rgba(255,255,255,0.8);
 }
 #theme-fukasawa .sideLeft hr{
     opacity: .04;
