@@ -14,7 +14,6 @@ class MyDocument extends Document {
             <Html lang={BLOG.LANG}>
                 <Head>
                 <link rel='icon' href= {`${BLOG.BLOG_FAVICON}`} />
-                <meta name="description" content="恨鱼🐟的鱼缸，一个博客，不定期更新各种内容">
                   <CommonScript />
                   {/* 预加载字体 */}
                   {BLOG.FONT_AWESOME && <>
@@ -29,6 +28,10 @@ class MyDocument extends Document {
                       return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
                     }
                   })}
+                  <!-- 添加网站简介 -->
+                  <meta name="description" content="Hate_fish🐟的鱼缸，不定期更新各种内容">
+                  <!-- 添加网站图标 -->
+                  <link rel="icon" href="/public/favicon.ico">
                 </Head>
 
                 <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
