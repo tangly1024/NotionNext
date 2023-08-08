@@ -2,7 +2,9 @@
 // pages/_app.js
 document.addEventListener('visibilitychange', function () {
     if (document.visibilityState == 'hidden') {
-        normal_title = document.title;
         document.title = 'QAQ别走好吗...';
-    } else document.title = normal_title;
+    } 
+    else {
+        document.title = '恨鱼🐟的鱼缸';
+    }
 });
