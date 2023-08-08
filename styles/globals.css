@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  --scrollbarBG: #ffffff00;
-  --thumbBG: #b8b8b8;
-}
-body::-webkit-scrollbar {
-  width: 5px;
-}
-body {
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-body::-webkit-scrollbar-track {
-  background: var(--scrollbarBG);
-}
-body::-webkit-scrollbar-thumb {
-  background-color: var(--thumbBG);
-}
-
-::selection {
-  background: rgba(45, 170, 219, 0.3);
-}
-
 .wrapper {
   min-height: 100vh;
   display: flex;
@@ -122,10 +100,6 @@ nav {
   width: 0 !important;
 }
 
-.notion-collection {
-  @apply max-w-0;
-}
-
 .glassmorphism {
   background: hsla(0, 0%, 100%, 0.05);
   -webkit-backdrop-filter: blur(10px);
@@ -179,44 +153,6 @@ nav {
   vertical-align: baseline;
   height: 1.25em;
   margin: -0.125em 0.25em;
-}
-
-
-/* waline评论插件夜间适配 */
-.wl-panel{
-  @apply dark:bg-black dark:border-gray-800
-}
-
-.wl-input,.wl-editor{
-  @apply dark:focus-within:bg-gray-900 dark:text-gray-200
-}
-
-.wl-meta > span {
-  @apply dark:bg-gray-800 !important
-}
-
-/* 固定两行 */
-.text-line-2 {
-    overflow : hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	word-wrap: break-word;
-	word-break: break-all;
-}
-
-.nobelium{
-    @apply flex flex-col justify-between
-}
-
-.nobelium .notion-code{
-    /* @apply max-w-2xl; */
-}
-
-.next #announcement-content *{
- font-size:12px !important;
- line-height:1.5 !important;
 }
 
 /* twikoo 评论区超链接样式 */
@@ -310,10 +246,8 @@ a.avatar-wrapper {
   font-weight: 500;
 }
 
-.p-4-lines {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.forbid-copy {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }

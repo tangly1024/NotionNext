@@ -7,8 +7,9 @@ import React from 'react'
 import Tabs from '@/components/Tabs'
 import Logo from './Logo'
 import Card from './Card'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
 import BLOG from '@/blog.config'
+import Live2D from '@/components/Live2D'
 
 /**
  * 侧边平铺
@@ -26,18 +27,14 @@ const SideAreaLeft = props => {
   return <aside id='left' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'ml-4' : 'mr-4') + ' hidden lg:block flex-col w-60 z-20 relative'}>
 
         <section
-            data-aos="fade-down"
-            data-aos-duration="300"
-            data-aos-once="false"
-            data-aos-anchor-placement="top-bottom"
             className='w-60'>
             {/* 菜单 */}
             <section className='shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-hexo-black-gray hover:shadow-xl duration-200'>
-                <Logo {...props} className='h-32' />
+                <Logo className='h-32' {...props} />
                 <div className='pt-2 px-2 font-sans'>
                     <MenuList allowCollapse={true} {...props} />
                 </div>
-                {CONFIG_NEXT.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
+                {CONFIG.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
                     <SearchInput {...props} />
                 </div>}
 
@@ -70,9 +67,10 @@ const SideAreaLeft = props => {
                 </Tabs>
             </Card>
 
-            {slot && <div className='flex justify-center'>
+            <div className='flex justify-center'>
                 {slot}
-            </div>}
+                <Live2D />
+            </div>
         </div>
 
     </aside>

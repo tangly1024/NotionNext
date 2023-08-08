@@ -36,7 +36,7 @@
   --notion-yellow_background: rgb(251, 243, 219);
   --notion-orange_background: rgb(250, 235, 221);
   --notion-brown_background: rgb(233, 229, 227);
-  --notion-gray_background: rgb(235, 236, 237);
+  --notion-gray_background: rgb(241 241 239);
   --notion-green_background: rgb(219, 237, 219);
   --notion-default_background: rgba(227, 226, 224);
 
@@ -48,7 +48,7 @@
   --notion-yellow_background_co: rgba(251, 243, 219, 0.3);
   --notion-orange_background_co: rgba(250, 235, 221, 0.3);
   --notion-brown_background_co: rgba(233, 229, 227, 0.3);
-  --notion-gray_background_co: rgba(235, 236, 237, 0.3);
+  --notion-gray_background_co: rgba(241, 241, 239, 0.3);
   --notion-green_background_co: rgba(219, 237, 219, 0.3);
   --notion-default_background_co: rgba(227, 226, 224, 0.3);
 
@@ -179,9 +179,6 @@
   color: var(--select-color-2) !important;
 }
 
-.notion-simple-table {
-  @apply whitespace-nowrap overflow-x-auto block
-}
 
 .notion-app {
   position: relative;
@@ -446,6 +443,7 @@ summary > .notion-h {
 
 .notion-h:hover .notion-hash-link {
   opacity: 1;
+  @apply dark:fill-gray-200
 }
 
 .notion-hash-link {
@@ -603,6 +601,7 @@ summary > .notion-h {
   margin: 2px 4px 0 2px;
   fill: var(--fg-color-6);
   color: var(--fg-color-icon);
+  @apply dark:fill-gray-200
 }
 
 img.notion-page-icon,
@@ -747,6 +746,8 @@ svg.notion-page-icon {
 
 .notion .notion-code {
   font-size: 85%;
+  margin-top: 0;
+  margin-bottom: 0.5em;
 }
 
 pre[class*='language-'] {
@@ -767,7 +768,7 @@ code[class*='language-'] {
   overflow: auto;
   font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
     monospace;
-  @apply w-full mb-4 dark:bg-black;
+  @apply w-full mb-0 dark:bg-black !important;
 }
 
 .notion-column {
@@ -919,6 +920,7 @@ code[class*='language-'] {
   font-size: 14px;
   line-height: 1.4;
   color: var(--fg-color-3);
+  @apply dark:text-gray-300
 }
 
 .notion-callout {
@@ -1120,11 +1122,10 @@ code[class*='language-'] {
 .notion-table-of-contents {
   width: 100%;
   margin: 4px 0;
-  @apply bg-gray-50 dark:bg-black p-2
+  @apply bg-gray-50 dark:bg-gray-900 p-2
 }
 
 .notion-table-of-contents-item {
-  /* color: inherit; */
   text-decoration: none;
   user-select: none;
   transition: background 20ms ease-in 0s;
@@ -1140,8 +1141,8 @@ code[class*='language-'] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  @apply dark:text-white
 
-  @apply text-blue-600 dark:text-blue-200
 }
 
 .notion-table-of-contents-item:hover {
@@ -1294,6 +1295,8 @@ code[class*='language-'] {
   transition: background 20ms ease-in 0s;
   color: inherit;
   text-decoration: none;
+  
+  @apply dark:stroke-slate-200
 }
 
 .notion-file-link:hover {
@@ -1328,10 +1331,12 @@ code[class*='language-'] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--fg-color-3);
+  /* color: var(--fg-color-3); */
   font-size: 12px;
   line-height: 16px;
   margin-left: 6px;
+
+  @apply dark:text-gray-400 !important
 }
 
 .notion-audio {
@@ -1390,6 +1395,10 @@ code[class*='language-'] {
   white-space: normal;
 }
 
+.katex-display>.katex>.katex-html>.tag {
+    position: inherit !important;
+}
+
 .notion-page-title {
   display: inline-flex;
   max-width: 100%;
@@ -1408,6 +1417,10 @@ code[class*='language-'] {
   flex-shrink: 0;
   margin-left: 2px;
   margin-right: 6px;
+}
+
+.notion-collection {
+  @apply max-w-0;
 }
 
 .notion-collection-card{
@@ -1777,6 +1790,7 @@ svg + .notion-page-title-text {
   /* fill: var(--fg-color); */
   fill: rgba(55, 53, 47);
   margin-right: 6px;
+  @apply dark:fill-gray-200
 }
 
 .notion-collection-view-type-title {
@@ -1784,6 +1798,7 @@ svg + .notion-page-title-text {
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--fg-color);
+  @apply dark:text-gray-200
 }
 
 .notion-table {
@@ -1867,8 +1882,12 @@ svg + .notion-page-title-text {
   min-height: 14px;
   fill: var(--fg-color-2);
   margin-right: 6px;
-  @apply dark:text-gray-200
+  @apply dark:text-gray-200 dark:fill-gray-200
 
+}
+
+.notion-collection-view-tabs-content-item-active {
+    @apply dark:border-gray-300
 }
 
 .notion-collection-column-title-body {
@@ -1928,23 +1947,11 @@ svg + .notion-page-title-text {
 }
 
 .notion-simple-table  {
- width: 100% !important;
+  @apply whitespace-nowrap overflow-x-auto block w-full border-0 !important;
 }
 
 .notion-asset-wrapper-pdf > div {
     display: block !important;
-}
-
-::selection {
-    @apply bg-blue-500 text-gray-50 !important;
-}
-
-.dark img{
-    @apply opacity-80
-}
-
-.dark #live2d {
-    @apply opacity-80
 }
 
 /* https://github.com/kchen0x */
@@ -2005,7 +2012,7 @@ code.language-mermaid {
 }
 
 .code-toolbar{
-  @apply w-full shadow-md;
+  @apply w-full shadow-md pb-0;
 }
 
 .mermaid > svg {
@@ -2016,9 +2023,42 @@ code.language-mermaid {
   margin: 0 0 !important;
 }
 
-.two-line-clamp {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+.notion-external-title {
+  @apply dark:text-white !important;
+}
+
+.notion-external-subtitle {
+  @apply dark:text-gray-400 !important;
+}
+
+.notion-external-block {
+  @apply dark:border-gray-200 !important;
+}
+
+.notion-external-image > svg > g > path{
+  @apply dark:fill-gray-200 !important;
+}
+
+.notion-external-image {
+  @apply w-6 h-6 mx-3 my-2 !important;
+}
+
+/* 表格 #f5f6f8*/
+.notion-simple-table-row {
+}
+
+/* 表格头 */
+.notion-simple-table tr:first-child td{
+  background-color: #f5f6f8;
+  @apply text-center font-bold dark:bg-gray-800 !important;
+
+}
+
+.notion-simple-table td{
+  border: 1px solid var(#eee) !important
+}
+
+/* 竖屏视频高度bug */
+figure.notion-asset-wrapper.notion-asset-wrapper-video>div {
+    height: 100% !important;
 }
