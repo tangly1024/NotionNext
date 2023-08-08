@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  // other variables
+  --card-bg-color: rgba(255, 255, 255, 0.5);
+}
+
 .wrapper {
   min-height: 100vh;
   display: flex;
