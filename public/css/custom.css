@@ -13,3 +13,8 @@
 .fa-info:before {
     content: "\f05a";
 }
+body {
+cursor: url(https://cdn.jsdelivr.net/gh/fz6m/Private-web@1.5/image/cursor/normal.cur), default;
+}
+a:hover{cursor:url(https://cdn.jsdelivr.net/gh/fz6m/Private-web@1.5/image/cursor/ayuda.cur) 15 15, pointer;}	
+body{ cursor: url(https://files-cdn.cnblogs.com/files/zouwangblog/cursor.ico),auto;}
