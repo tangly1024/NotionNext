@@ -28,7 +28,6 @@ class MyDocument extends Document {
                       return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
                     }
                   })}
-                  <link rel="icon" href="/public/favicon.ico">
                 </Head>
 
                 <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
