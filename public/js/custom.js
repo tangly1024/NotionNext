@@ -4,7 +4,7 @@ var OriginTitile=document.title;
 var jiao;
 document.addEventListener('visibilitychange', function () {
     if (document.visibilityState == 'hidden') {
-        document.title = '(つェ⊂)誒呀，網站崩潰了';
+        document.title = '(つェ⊂)诶呀，网站崩溃了;
         clearTimeout(jiao);
     } 
     else {
