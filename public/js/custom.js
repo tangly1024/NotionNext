@@ -14,3 +14,4 @@ document.addEventListener('visibilitychange', function () {
         },4000);
     }
 });
+<script src="https://cdn.jsdelivr.net/gh/fz6m/Private-web@1.2/js/custom/click.min.js"></script>
