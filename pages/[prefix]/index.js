@@ -41,7 +41,7 @@ const Slug = props => {
     // 404
     if (!post) {
       setTimeout(() => {
-        if (isBrowser()) {
+        if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
             router.push('/404').then(() => {
@@ -90,7 +90,7 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') < 0).map(row => ({ params: { prefix: row.slug } })),
+    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
     fallback: true
   }
 }
@@ -111,13 +111,12 @@ export async function getStaticProps({ params: { prefix } }) {
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
-    const pageId = prefix.slice(-1)[0]
+    const pageId = prefix
     if (pageId.length >= 32) {
       const post = await getNotion(pageId)
       props.post = post
     }
   }
-
   // 无法获取文章
   if (!props?.post) {
     props.post = null

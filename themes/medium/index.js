@@ -206,7 +206,7 @@ const LayoutSearch = (props) => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,
