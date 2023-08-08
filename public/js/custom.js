@@ -5,6 +5,6 @@ document.addEventListener('visibilitychange', function () {
         document.title = 'QAQ别走好吗...';
     } 
     else {
-        document.title = '恨鱼🐟的鱼缸';
+        document.title = 'Hate_fish🐟的鱼缸';
     }
 });
