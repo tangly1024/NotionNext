@@ -25,7 +25,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 data-aos-anchor-placement="top-bottom"
                 id='blog-post-card'
                 className={`group md:h-56 w-full flex justify-between md:flex-row flex-col-reverse ${CONFIG.POST_LIST_IMG_CROSSOVER && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
-                    overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
+                    overflow-hidden border dark:border-black rounded-xl bg-white-opacity dark:bg-hexo-black-gray`}>
 
                 {/* 文字内容 */}
                 <BlogPostCardInfo index={index} post={post} showPageCover={showPageCover} showPreview={showPreview} showSummary={showSummary} />
