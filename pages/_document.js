@@ -14,6 +14,7 @@ class MyDocument extends Document {
             <Html lang={BLOG.LANG}>
                 <Head>
                 <link rel='icon' href= {`${BLOG.BLOG_FAVICON}`} />
+                <meta name="description" content="恨鱼🐟的鱼缸，一个博客，不定期更新各种内容">
                   <CommonScript />
                   {/* 预加载字体 */}
                   {BLOG.FONT_AWESOME && <>
