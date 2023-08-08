@@ -77,7 +77,7 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
  * @returns
  */
 const calculateColumns = () => {
-  if (!isBrowser()) {
+  if (!isBrowser) {
     return 3
   } else {
     if (window.innerWidth >= 1024) {
