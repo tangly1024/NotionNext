@@ -1,17 +1,8 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import { useGlobal } from '@/lib/global'
-import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useState } from 'react'
-import Loading from '@/components/Loading'
-
-const layout = 'LayoutPage'
-
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+import { getGlobalData } from '@/lib/notion/getNotionData'
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 文章列表分页
@@ -19,17 +10,10 @@ const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), 
  * @returns
  */
 const Page = props => {
-  const { theme } = useGlobal()
   const { siteInfo } = props
-  const [Layout, setLayout] = useState(DefaultLayout)
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
     title: `${props?.page} | Page | ${siteInfo?.title}`,
@@ -41,14 +25,12 @@ const Page = props => {
 
   props = { ...props, meta }
 
-  return <Suspense fallback={<Loading />}>
-        <Layout {...props} />
-    </Suspense>
+  return <Layout {...props} />
 }
 
 export async function getStaticPaths() {
   const from = 'page-paths'
-  const { postCount } = await getGlobalNotionData({ from })
+  const { postCount } = await getGlobalData({ from })
   const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
   return {
     // remove first page, we 're not gonna handle that.
@@ -61,9 +43,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { page } }) {
   const from = `page-${page}`
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
   const { allPages } = props
-  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   // 处理分页
   props.posts = allPosts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
   props.page = page

@@ -1,29 +1,15 @@
 import { useGlobal } from '@/lib/global'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
-import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useState } from 'react'
-import Loading from '@/components/Loading'
-
-const layout = 'LayoutTag'
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 const Tag = props => {
-  const { theme } = useGlobal()
   const { locale } = useGlobal()
   const { tag, siteInfo } = props
-  const [Layout, setLayout] = useState(DefaultLayout)
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
     title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
@@ -34,16 +20,14 @@ const Tag = props => {
   }
   props = { ...props, meta }
 
-  return <Suspense fallback={<Loading/>}>
-    <Layout {...props} />
-  </Suspense>
+  return <Layout {...props} />
 }
 
 export async function getStaticProps({ params: { tag, page } }) {
   const from = 'tag-page-props'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
   // 过滤状态、标签
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag))
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
   // 处理文章数
   props.postCount = props.posts.length
   // 处理分页
@@ -60,11 +44,11 @@ export async function getStaticProps({ params: { tag, page } }) {
 
 export async function getStaticPaths() {
   const from = 'tag-page-static-path'
-  const { tagOptions, allPages } = await getGlobalNotionData({ from })
+  const { tagOptions, allPages } = await getGlobalData({ from })
   const paths = []
   tagOptions?.forEach(tag => {
     // 过滤状态类型
-    const tagPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag.name))
+    const tagPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag.name))
     // 处理文章页数
     const postCount = tagPosts.length
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)

@@ -1,35 +1,21 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import React, { Suspense, useEffect, useState } from 'react'
+import { getGlobalData } from '@/lib/notion/getNotionData'
+import React from 'react'
 import { useGlobal } from '@/lib/global'
-import dynamic from 'next/dynamic'
 import BLOG from '@/blog.config'
-import Loading from '@/components/Loading'
-
-const layout = 'LayoutCategory'
-
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 分类页
  * @param {*} props
  * @returns
  */
+
 export default function Category(props) {
-  const { theme } = useGlobal()
   const { siteInfo } = props
   const { locale } = useGlobal()
-  const [Layout, setLayout] = useState(DefaultLayout)
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
     title: `${props.category} | ${locale.COMMON.CATEGORY} | ${
@@ -43,17 +29,15 @@ export default function Category(props) {
 
   props = { ...props, meta }
 
-  return <Suspense fallback={<Loading/>}>
-    <Layout {...props} />
-  </Suspense>
+  return <Layout {...props} />
 }
 
 export async function getStaticProps({ params: { category, page } }) {
   const from = 'category-page-props'
-  let props = await getGlobalNotionData({ from })
+  let props = await getGlobalData({ from })
 
   // 过滤状态类型
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category))
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category))
   // 处理文章页数
   props.postCount = props.posts.length
   // 处理分页
@@ -72,12 +56,12 @@ export async function getStaticProps({ params: { category, page } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions, allPages } = await getGlobalNotionData({ from })
+  const { categoryOptions, allPages } = await getGlobalData({ from })
   const paths = []
 
   categoryOptions?.forEach(category => {
     // 过滤状态类型
-    const categoryPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category.name))
+    const categoryPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category.name))
     // 处理文章页数
     const postCount = categoryPosts.length
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)

@@ -1,29 +1,16 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
-import dynamic from 'next/dynamic'
 import BLOG from '@/blog.config'
-import { Suspense, useEffect, useState } from 'react'
-import Loading from '@/components/Loading'
-
-const layout = 'LayoutSearch'
-/**
- * 加载默认主题
- */
-const DefaultLayout = dynamic(() => import(`@/themes/${BLOG.THEME}/${layout}`), { ssr: true })
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 const Index = props => {
   const { keyword, siteInfo } = props
-  const { locale, theme } = useGlobal()
-  const [Layout, setLayout] = useState(DefaultLayout)
-  // 切换主题
-  useEffect(() => {
-    const loadLayout = async () => {
-      const newLayout = await dynamic(() => import(`@/themes/${theme}/${layout}`))
-      setLayout(newLayout)
-    }
-    loadLayout()
-  }, [theme])
+  const { locale } = useGlobal()
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
     title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
@@ -35,9 +22,7 @@ const Index = props => {
 
   props = { ...props, meta, currentSearch: keyword }
 
-  return <Suspense fallback={<Loading/>}>
-    <Layout {...props} />
-  </Suspense>
+  return <Layout {...props} />
 }
 
 /**
@@ -46,12 +31,12 @@ const Index = props => {
  * @returns
  */
 export async function getStaticProps({ params: { keyword, page } }) {
-  const props = await getGlobalNotionData({
+  const props = await getGlobalData({
     from: 'search-props',
     pageType: ['Post']
   })
   const { allPages } = props
-  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
   // 处理分页
@@ -130,7 +115,7 @@ async function filterByMemCache(allPosts, keyword) {
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
     const page = await getDataFromCache(cacheKey, true)
-    const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
+    const tagContent = post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
     const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.indexOf(keyword) > -1
