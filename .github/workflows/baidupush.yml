@@ -7,6 +7,13 @@ on:
   push:
   schedule:
     - cron: '0 23 * * *' # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#scheduled-events-schedule
+  workflow_dispatch:
+    inputs:
+      unconditional-invoking:
+        description: 'baidupush unconditionally'
+        type: boolean
+        required: true
+        default: true
 
 # on:
   # schedule:
