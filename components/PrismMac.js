@@ -140,9 +140,10 @@ const renderMermaid = async() => {
           }
           if (needLoad) {
             loadExternalResource(BLOG.MERMAID_CDN, 'js').then(url => {
-              const mermaid = window.mermaid
-              console.log('mermaid加载成功', url, mermaid)
-              mermaid.contentLoaded()
+              setTimeout(() => {
+                const mermaid = window.mermaid
+                mermaid?.contentLoaded()
+              }, 100)
             })
           }
         }

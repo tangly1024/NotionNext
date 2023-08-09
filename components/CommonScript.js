@@ -38,7 +38,11 @@ const CommonScript = () => {
       />
     </>)}
 
-    {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src='https://cusdis.com/js/widget/lang/zh-cn.js' />}
+    {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src={`https://cusdis.com/js/widget/lang/${BLOG.LANG.toLowerCase()}.js`} />}
+
+    {BLOG.COMMENT_TWIKOO_ENV_ID && <script defer src={BLOG.COMMENT_TWIKOO_CDN_URL}/> }
+
+    {BLOG.COMMENT_ARTALK_SERVER && <script defer src={BLOG.COMMENT_ARTALK_JS}/> }
 
     {BLOG.COMMENT_TIDIO_ID && <script async src={`//code.tidio.co/${BLOG.COMMENT_TIDIO_ID}.js`} />}
 
@@ -56,12 +60,12 @@ const CommonScript = () => {
 
     {/* 代码统计 */}
     {/* ackee统计脚本 */}
-    {BLOG.ANALYTICS_ACKEE_TRACKER && (
+    {/* {BLOG.ANALYTICS_ACKEE_TRACKER && (
       <script async src={BLOG.ANALYTICS_ACKEE_TRACKER}
               data-ackee-server={BLOG.ANALYTICS_ACKEE_DATA_SERVER}
               data-ackee-domain-id={BLOG.ANALYTICS_ACKEE_DOMAIN_ID}
       />
-    )}
+    )} */}
 
     {/* 百度统计 */}
     {BLOG.ANALYTICS_BAIDU_ID && (

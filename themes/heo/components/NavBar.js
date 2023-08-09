@@ -84,12 +84,12 @@ const NavBar = props => {
       }
     }
 
-    if (isBrowser()) {
+    if (isBrowser) {
       window.addEventListener('scroll', handleScroll)
     }
 
     return () => {
-      if (isBrowser()) {
+      if (isBrowser) {
         window.removeEventListener('scroll', handleScroll)
       }
     }
