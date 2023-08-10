@@ -1,4 +1,6 @@
 
+'use client'
+
 /**
  * 这是一个空白主题，方便您用作创建新主题时的模板，从而开发出您自己喜欢的主题
  * 1. 禁用了代码质量检查功能，提高了代码的宽容度；您可以使用标准的html写法
@@ -18,6 +20,7 @@ import CommonHead from '@/components/CommonHead'
 import { useRouter } from 'next/router'
 import CONFIG from './config'
 import Loading from '@/components/Loading'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 这是个配置文件，可以方便在此统一配置信息
@@ -76,12 +79,10 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutSlug = (props) => {
-
     // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
     const router = useRouter()
-    if (JSON.parse(CONFIG.POST_REDIRECT_ENABLE) && router.route == '/[prefix]/[slug]') {
+    if (JSON.parse(CONFIG.POST_REDIRECT_ENABLE) && isBrowser && router.route == '/[prefix]/[slug]') {
         const redirectUrl = CONFIG.POST_REDIRECT_URL + router.asPath.replace('?theme=landing', '')
-        console.log('重定向到博客域名', redirectUrl)
         router.push(redirectUrl)
         return  <div id='theme-landing'><Loading /></div>
     }
