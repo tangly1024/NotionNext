@@ -2,6 +2,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 })
 
+function shouldRewrite(path) {
+  // Add any conditions here for paths that should NOT be rewritten
+  return path !== 'baidu_verify_codeva-zN00IC9104';
+}
+
+
 module.exports = withBundleAnalyzer({
   images: {
     // 图片压缩
@@ -31,12 +37,7 @@ module.exports = withBundleAnalyzer({
     return [
       {
         source: '/:path*.html',
-        destination: ({ path }) => {
-          if (path === 'baidu_verify_codeva-zN00IC9104') {
-            return '/baidu_verify_codeva-zN00IC9104.html'; // Keep the original URL
-          }
-          return `/${path}`;
-        }
+        destination: '/:path*'
       }
     ]
   },
