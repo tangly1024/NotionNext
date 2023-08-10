@@ -10,12 +10,12 @@ const CONFIG = {
   ],
 
   // 英雄区(首页顶部大卡)
-  HERO_TITLE_1: '分享编程',
-  HERO_TITLE_2: '与思维认知',
-  HERO_TITLE_3: 'TANGLY1024.COM',
-  HERO_TITLE_4: '新版上线',
-  HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HERO_TITLE_LINK: 'https://tangly1024.com',
+  HERO_TITLE_1: '个人记录',
+  HERO_TITLE_2: '与知识分享',
+  HERO_TITLE_3: 'www.liash.link',
+  HERO_TITLE_4: '欢迎光临',
+  HERO_TITLE_5: 'LIASH 知识搬运工',
+  HERO_TITLE_LINK: 'https://liash.link',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
