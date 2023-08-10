@@ -1419,6 +1419,10 @@ code[class*='language-'] {
   margin-right: 6px;
 }
 
+.notion-collection {
+  @apply max-w-0;
+}
+
 .notion-collection-card{
   /* cursor: default !important; */
 }
