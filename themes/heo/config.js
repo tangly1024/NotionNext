@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://kzurl15.cn/2QvHL' },
-    { title: '访问文档中心获取更多帮助', url: 'https://kzurl15.cn/2QvHL' }
+    { title: '欢迎来到我的小站', url: 'https://kzurl15.cn/2QvHL' },
+    { title: '欢迎大家关注我的公众号：嗨省点', url: 'https://kzurl15.cn/2QvHL' }
   ],
 
   // 英雄区(首页顶部大卡)
@@ -29,12 +29,12 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
     '你好！我是',
-    '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
-    '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
+    '🤝 干饭睡觉小能手',
     '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    '🔍 分享与热心帮助',
+    '🏃 脚踏实地不动派',
+    '🏠 智能家居小能手',
+    '🧱 天天折腾小废物'
   ],
   INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
 
