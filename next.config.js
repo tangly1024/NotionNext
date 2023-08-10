@@ -31,7 +31,12 @@ module.exports = withBundleAnalyzer({
     return [
       {
         source: '/:path*.html',
-        destination: '/:path*'
+        destination: ({ path }) => {
+          if (path === 'baidu_verify_codeva-zN00IC9104') {
+            return '/baidu_verify_codeva-zN00IC9104.html'; // Keep the original URL
+          }
+          return `/${path}`;
+        }
       }
     ]
   },
