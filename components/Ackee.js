@@ -57,7 +57,7 @@ const handleAckee = async function(pathname, environment, options = {}) {
   await loadExternalResource(BLOG.ANALYTICS_ACKEE_TRACKER, 'js')
   const ackeeTracker = window.ackeeTracker
 
-  const instance = ackeeTracker.create(environment.server, options)
+  const instance = ackeeTracker?.create(environment.server, options)
 
   if (instance == null) {
     console.warn('Skipped record creation because useAckee has been called in a non-browser environment')
@@ -73,7 +73,7 @@ const handleAckee = async function(pathname, environment, options = {}) {
     return
   }
 
-  const attributes = ackeeTracker.attributes(options.detailed)
+  const attributes = ackeeTracker?.attributes(options.detailed)
   const url = new URL(pathname, location)
 
   return instance.record(environment.domainId, {
