@@ -15,6 +15,9 @@ import FeaturesBlocks from './components/FeaturesBlocks'
 import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
 import CommonHead from '@/components/CommonHead'
+import { useRouter } from 'next/router'
+import CONFIG from './config'
+import Loading from '@/components/Loading'
 
 /**
  * 这是个配置文件，可以方便在此统一配置信息
@@ -31,8 +34,8 @@ const THEME_CONFIG = { THEME: 'landing' }
 const LayoutBase = (props) => {
     const { meta, siteInfo, children } = props
 
-    return <div id='theme-blank' className="overflow-hidden flex flex-col justify-between bg-white">
-        
+    return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white">
+
         {/* 网页SEO */}
         <CommonHead meta={meta} siteInfo={siteInfo} />
 
@@ -72,11 +75,26 @@ const LayoutIndex = (props) => {
  * @param {*} props
  * @returns
  */
-const LayoutSlug = (props) => <LayoutBase {...props}>
-    <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
-        <NotionPage {...props} />
-    </div>
-</LayoutBase>
+const LayoutSlug = (props) => {
+
+    // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
+    const router = useRouter()
+    if (JSON.parse(CONFIG.POST_REDIRECT_ENABLE) && router.route == '/[prefix]/[slug]') {
+        const redirectUrl = CONFIG.POST_REDIRECT_URL + router.asPath.replace('?theme=landing', '')
+        console.log('重定向到博客域名', redirectUrl)
+        router.push(redirectUrl)
+        return  <div id='theme-landing'><Loading /></div>
+    }
+
+    return <LayoutBase {...props}>
+
+        <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
+            <NotionPage {...props} />
+        </div>
+    </LayoutBase>
+
+
+}
 
 // 其他布局暂时留空
 const LayoutSearch = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
