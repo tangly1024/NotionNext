@@ -13,7 +13,7 @@ const CONFIG = {
   HERO_TITLE_1: '分享编程',
   HERO_TITLE_2: '与思维认知',
   HERO_TITLE_3: 'happwang.xyz',
-  HERO_TITLE_4: '新版上线',
+  HERO_TITLE_4: '商业认知',
   HERO_TITLE_5: '应届生如何包装',
   HERO_TITLE_LINK: 'https://www.bilibili.com/video/BV1bj411z7e2/?spm_id_from=444.41.list.card_archive.click&vd_source=4342bb094f13a206a999742f8b3f88e7',
 
@@ -29,12 +29,11 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
     '你好！我是',
-    '🔍 分享与热心帮助',
     '🤝 专修历史与金融',
-    '🏃 脚踏实地行动派',
+    '🏃 户外运动爱好者',
     '🏠 斯多葛派主义者',
-    '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    '🤖️ 数码科爱好者'
+
   ],
   INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
 
