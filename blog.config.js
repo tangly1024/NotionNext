@@ -13,12 +13,12 @@ const BLOG = {
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
-  GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || 'Hi，ICers,欢迎来到我的博客🎉',
+  GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || 'Hi，前辈朋友们,Hi，IC人,欢迎来到我的博客🎉',
 
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || true, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || ' F.f.', // 您的昵称 例如 tangly1024
-  BIO: process.env.NEXT_PUBLIC_BIO || 'Firefly,努力奋斗!', // 作者简介
+  BIO: process.env.NEXT_PUBLIC_BIO || '努力，奋斗!', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://icers.vercel.app', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'IC, blog', // 网站关键词 英文逗号隔开
 
@@ -83,7 +83,7 @@ const BLOG = {
   FONT_AWESOME: process.env.NEXT_PUBLIC_FONT_AWESOME_PATH || 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', // font-awesome 字体图标地址; 可选 /css/all.min.css ， https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
 
   // END ************网站字体*****************
-  CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
+  CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || false, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU: process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU || true, // 自定义右键菜单，覆盖系统菜单
 
   // 自定义外部脚本，外部样式
@@ -156,7 +156,7 @@ const BLOG = {
 
   //   ********动态特效相关********
   // 鼠标点击烟花特效
-  FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || false, // 开关
+  FIREWORKS: process.env.NEXT_PUBLIC_FIREWORKS || true, // 开关
   // 烟花色彩，感谢 https://github.com/Vixcity 提交的色彩
   FIREWORKS_COLOR: [
     '255, 20, 97',
