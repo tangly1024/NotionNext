@@ -102,7 +102,7 @@ export default function AlgoliaSearchModal({ cRef }) {
   }
 
   return (
-        <div id='search-wrapper' className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'} fixed h-screen w-screen left-0 top-0 mt-12 flex items-start justify-center`}>
+        <div id='search-wrapper' className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'} z-30 fixed h-screen w-screen left-0 top-0 mt-12 flex items-start justify-center`}>
 
             {/* 模态框 */}
             <div className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'} flex flex-col justify-between w-full min-h-[10rem] max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
