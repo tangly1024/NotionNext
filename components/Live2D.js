@@ -11,7 +11,7 @@ export default function Live2D() {
   useEffect(() => {
     if (showPet) {
       Promise.all([
-        loadExternalResource('ttps://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js', 'js')
+        loadExternalResource('https://cdn.jsdelivr.net/npm/live2d-widget-model-chitose/assets/chitose.model.json', 'js')
       ]).then((e) => {
         if (typeof window?.loadlive2d !== 'undefined') {
           // https://github.com/xiazeyu/live2d-widget-models
