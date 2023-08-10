@@ -78,7 +78,7 @@ function GreetingsWords() {
  * @returns
  */
 function MoreButton() {
-  return <Link href='https://www.liash.link/about'>
+  return <Link href='/about'>
         <div className={'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'}>
             <ArrowRightCircle className={'group-hover:stroke-black dark:group-hover:stroke-white w-6 h-6 transition-all duration-100'} />
             <div className='font-bold'>了解更多</div>
