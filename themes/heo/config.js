@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
-    { title: '欢迎来到我的小站', url: 'https://kzurl15.cn/2QvHL' },
-    { title: '欢迎大家关注我的公众号：嗨省点', url: 'https://kzurl15.cn/2QvHL' }
+    { title: '欢迎来到我的小站', url: 'https://kzurl15.cn/2QvHL'},
+    { title: '欢迎大家关注我的公众号：嗨省点', url: 'https://kzurl15.cn/2QvHL'}
   ],
 
   // 英雄区(首页顶部大卡)
