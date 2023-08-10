@@ -123,11 +123,14 @@ const LayoutIndex = props => {
 const LayoutPostList = props => {
   const { category, tag } = props
   // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
+  // 如果是搜索，则列表顶部嵌入 搜索框
   let slotTop = null
   if (category) {
     slotTop = <div className='pb-12'><i className="mr-1 fas fa-folder-open" />{category}</div>
   } else if (tag) {
     slotTop = <div className='pb-12'>#{tag}</div>
+  } else if (props.slotTop) {
+    slotTop = props.slotTop
   }
   return (
         <LayoutBase {...props} slotTop={slotTop}>
