@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import Tabs from '@/components/Tabs'
 import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
+import Artalk from './Artalk'
 
 const WalineComponent = dynamic(
   () => {
@@ -66,7 +67,7 @@ BLOG.COMMENT_GISCUS_REPO || BLOG.COMMENT_CUSDIS_APP_ID || BLOG.COMMENT_UTTERRANC
  * @param {*} param0
  * @returns
  */
-const Comment = ({ frontMatter, className }) => {
+const Comment = ({ siteInfo, frontMatter, className }) => {
   const router = useRouter()
 
   if (isBrowser && ('giscus' in router.query || router.query.target === 'comment')) {
@@ -84,6 +85,9 @@ const Comment = ({ frontMatter, className }) => {
   return (
     <div key={frontMatter?.id} id='comment' className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
         <Tabs>
+             {BLOG.COMMENT_ARTALK_SERVER && (<div key='Artalk'>
+                <Artalk siteInfo={siteInfo} />
+            </div>)}
 
             {BLOG.COMMENT_TWIKOO_ENV_ID && (<div key='Twikoo'>
                 <TwikooCompenent />
