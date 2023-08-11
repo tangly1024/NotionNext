@@ -32,7 +32,7 @@ const CONFIG = {
     '🤝 专修历史与金融',
     '🏃 户外运动爱好者',
     '🏠 斯多葛派主义者',
-    '🤖️ 数码科爱好者'
+    '🤖️ 数码科技爱好者'
 
   ],
   INFO_CARD_URL: 'https://github.com/happywang2333/NotionNext', // 个人资料底部按钮链接
