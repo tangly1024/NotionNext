@@ -14,7 +14,7 @@ const CONFIG = {
   HERO_TITLE_2: '与知识分享',
   HERO_TITLE_3: 'www.liash.link',
   HERO_TITLE_4: '欢迎光临',
-  HERO_TITLE_5: 'LIASH 知识搬运工',
+  HERO_TITLE_5: 'LIASH 知识分享站',
   HERO_TITLE_LINK: 'https://kzurl15.cn/2QvHL',
 
   // 英雄区显示三个置顶分类
