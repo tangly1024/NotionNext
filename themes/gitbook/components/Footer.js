@@ -24,7 +24,7 @@ const Footer = ({ siteInfo }) => {
 
             <div className='text-xs font-serif'>Powered By <a href='https://github.com/tangly1024/NotionNext' className='underline text-gray-500 dark:text-gray-300'>NotionNext</a></div>
 
-            {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br /></>}
+            {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://icp.gov.moe/?keyword=20236972' className='mr-2'>{BLOG.BEI_AN}</a><br /></>}
 
             <span className='hidden busuanzi_container_site_pv'>
                 <i className='fas fa-eye' /><span className='px-1 busuanzi_value_site_pv'> </span>  </span>
