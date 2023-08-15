@@ -22,7 +22,7 @@ class MyDocument extends Document {
                   </>}
 
                   {BLOG.FONT_URL?.map((fontUrl, index) => {
-                    if (fontUrl.endsWith('.css')) {
+                    if (fontUrl.indexOf('css') > 0) {
                       return <link key={index} rel="stylesheet" href={fontUrl} />
                     } else {
                       return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
