@@ -15,44 +15,54 @@ document.addEventListener('visibilitychange', function () {
     }
 });
 
-/**
- * 封装文字弹出的函数
- * @param {*} arr
- * @param {*} options
- * @returns
- */
-const fnTextPopup = function (arr, options) {
-  // arr参数是必须的
-  if (!arr || !arr.length) {
-    return
-  }
-  // 主逻辑
-  let index = 0
-  document.documentElement.addEventListener('click', function (event) {
-    const x = event.pageX; const y = event.pageY
-    const eleText = document.createElement('span')
-    // 随机颜色
-    eleText.style.color = 'rgb(' + 255 * Math.random() + ',' + 255 * Math.random() + ',' + 255 * Math.random() + ')'
-    // 动画样式
-    eleText.className = 'text-popup'
-    this.appendChild(eleText)
-    if (arr[index]) {
-      eleText.innerHTML = arr[index]
-    } else {
-      index = 0
-      eleText.innerHTML = arr[0]
-    }
-    // 动画结束后删除自己
-    eleText.addEventListener('animationend', function () {
-      eleText.parentNode.removeChild(eleText)
-    })
-    // 位置
-    eleText.style.left = (x - eleText.clientWidth / 2) + 'px'
-    eleText.style.top = (y - eleText.clientHeight) + 'px'
-    // index递增
-    index++
-  })
+onload=function(){
+    var click_cnt=0;
+    html=document.getElementsByTagName("html")[0];
+    $body=document.getElementsByTagName("body")[0];
+    $html.onclick=function(e){
+        var $elem=document.createElement("b"),$elem.style.color="#FFC0CB",$elem.style.zIndex=9999,$elem.style.position="absolute",$elem.style.select="none";
+        var x=e.pageX,y=e.pageY;
+        switch($elem.style.left=x-10+"px",$elem.style.top=y-20+"px",clearInterval(anim),++click_cnt){
+            case 10:$elem.innerText="OωO";
+                break;
+            case 20:$elem.innerText="(๑•́ ∀ •̀๑)";
+                break;
+            case 30:
+                $elem.innerText="(๑•́ ₃ •̀๑)";
+                break;
+            case 40:
+                $elem.innerText="(๑•̀_•́๑)";
+                break;
+            case 50:
+                $elem.innerText="（￣へ￣）";
+                break;
+            case 60:
+                $elem.innerText="(╯°口°)╯(┴—┴";
+                break;
+            case 70:
+                $elem.innerText="૮( ᵒ̌皿ᵒ̌ )ა";
+                break;
+            case 80:
+                $elem.innerText="╮(｡>口<｡)╭";
+                break;
+            case 90:
+                $elem.innerText="( ง ᵒ̌皿ᵒ̌)ง⁼³₌₃";
+                break;
+            case 100:
+            case 101:
+            case 102:
+            case 103:
+            case 104:
+            case 105:
+                $elem.innerText="(ꐦ°᷄д°᷅)";
+                break;
+            default:
+                $elem.innerText="🌸"}$elem.style.fontSize=10*Math.random()+8+"px";
+    var increase=0,anim;
+    setTimeout((function(){
+        anim=setInterval((function(){
+            150==++increase&&(clearInterval(anim),$body.removeChild($elem)),$elem.style.top=y-20-increase+"px",$elem.style.opacity=(150-increase)/120
+        }),8)
+    }),70),$body.appendChild($elem)
 }
-
-// 执行，传入文字内容
-fnTextPopup(['❤富强❤', '❤民主❤', '❤文明❤', '❤和谐❤', '❤自由❤', '❤平等❤', '❤公正❤', '❤法治❤', '❤爱国❤', '❤敬业❤', '❤诚信❤', '❤友善❤'])
+};
