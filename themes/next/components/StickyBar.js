@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle'
 import { useCallback, useEffect } from 'react'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
 
 let windowTop = 0
 
@@ -13,7 +13,7 @@ let windowTop = 0
 const StickyBar = ({ children }) => {
   // 滚动页面时导航条样式调整
   const scrollTrigger = useCallback(throttle(() => {
-    if (CONFIG_NEXT.NAV_TYPE === 'normal') {
+    if (CONFIG.NAV_TYPE === 'normal') {
       return
     }
     const scrollS = window.scrollY
