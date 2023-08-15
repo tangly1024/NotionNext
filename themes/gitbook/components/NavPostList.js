@@ -31,9 +31,6 @@ const NavPostList = (props) => {
         groups.push({ category: categoryName, items: [] })
       }
     }
-
-    groups[groups.length - 1].items.push(item) // 将元素加入对应的分组
-
     return groups
   }, [])
 
