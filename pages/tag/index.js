@@ -1,8 +1,8 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import React from 'react'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 标签首页
@@ -10,10 +10,12 @@ import BLOG from '@/blog.config'
  * @returns
  */
 const TagIndex = props => {
-  const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
   const { locale } = useGlobal()
   const { siteInfo } = props
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+
   const meta = {
     title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
     description: siteInfo?.description,
@@ -21,12 +23,14 @@ const TagIndex = props => {
     slug: 'tag',
     type: 'website'
   }
-  return <ThemeComponents.LayoutTagIndex {...props} meta={meta} />
+  props = { ...props, meta }
+
+  return <Layout {...props} />
 }
 
 export async function getStaticProps() {
   const from = 'tag-index-props'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
   delete props.allPages
   return {
     props,

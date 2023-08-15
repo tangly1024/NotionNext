@@ -1,11 +1,22 @@
 /* eslint-disable */
-import React from 'react'
+import { useEffect } from 'react'
+const id = 'canvasNestCreated'
+const Nest = () => {
+  const destroyNest = ()=>{
+      const nest = document.getElementById(id)
+      if(nest && nest.parentNode){
+        nest.parentNode.removeChild(nest)
+      }
+  }
 
-export const Nest = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     createNest()
+    return () => destroyNest()
   }, [])
+  return <></>
 }
+
+export default Nest
 
 /**
  * 创建连接点
@@ -65,7 +76,7 @@ function createNest() {
       m(o)
   }
   var i = document.createElement('canvas')
-  i.id = 'canvasNestCreated'
+  i.id = id
   var a = (function () {
       const t = e
       return {

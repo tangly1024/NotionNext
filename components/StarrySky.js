@@ -1,17 +1,18 @@
 /* eslint-disable */
 import React from 'react'
 
-export const StarrySky = () => {
+const StarrySky = () => {
   React.useEffect(() => {
     dark()
   }, [])
   return (
     <div className="relative">
-      <canvas id="starry-sky-vixcity" className="fixed pointer-events-none"></canvas>
+      <canvas id="starry-sky-vixcity" style={{zIndex:1}} className="top-0 fixed pointer-events-none"></canvas>
     </div>
   )
 }
 
+export default StarrySky
 /**
  * 创建星空雨
  * @param config
