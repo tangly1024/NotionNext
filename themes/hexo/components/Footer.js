@@ -21,9 +21,23 @@ const Footer = ({ title }) => {
       <i className='fas fa-copyright' /> {`${copyrightDate}`} <span><i className='mx-1 animate-pulse fas fa-heart'/> <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a>.<br/>
 
       {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br/></>}
-      <a href="https://icp.gov.moe/?keyword=20230968" target="_blank">萌ICP备20230968号</a>  
+  
+      <span className='hidden busuanzi_container_site_pv'>
+        <img src="https://icp.gov.moe/favicon.ico" alt="https://icp.gov.moe" width="13" height="13"/>
+        <a href="https://icp.gov.moe" target="_blank">萌ICP备</a>
+        <a href="https://icp.gov.moe/?keyword=20230968" target="_blank">萌ICP备20230968号</a>  
+      </span>
 
-
+      <span className='hidden busuanzi_container_site_pv'>
+        document.write("<b>ORFW已稳定运行</b><font color=red>");
+        var urodz= new Date("7/28/2021");
+        var now = new Date();    
+        var ile = now.getTime() - urodz.getTime();
+        var dni = Math.floor(ile / (1000 * 60 * 60 * 24));
+        document.write(dni);
+        document.write("</font>天！");
+      </span>
+  
       <span className='hidden busuanzi_container_site_pv'>
             <i className='fas fa-eye'/><span className='px-1 busuanzi_value_site_pv'> </span>  </span>
       <span className='pl-2 hidden busuanzi_container_site_uv'>
