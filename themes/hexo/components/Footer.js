@@ -25,13 +25,13 @@ const Footer = ({ title }) => {
       <span className='hidden busuanzi_container_site_pv'>
             <i className='fas fa-eye'/><span className='px-1 busuanzi_value_site_pv'> </span>  </span>
 
-       <span className='busuanzi_container_site_pv'>
+       <span className='busuanzi_container_site_pv' style="display: inline;">
         <img src="https://icp.gov.moe/favicon.ico" alt="https://icp.gov.moe" width="13" height="13"/>
         <a href="https://icp.gov.moe" target="_blank">萌ICP备</a>
         <a href="https://icp.gov.moe/?keyword=20230968" target="_blank">萌ICP备20230968号</a>  
       </span>
 
-      <span className='busuanzi_container_site_pv'>
+      <span className='busuanzi_container_site_pv' style="display: inline;">
         document.write("<b>本站已平稳运行</b><font color=red>");
         var urodz= new Date("7/28/2021");
         var now = new Date();    
