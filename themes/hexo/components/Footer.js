@@ -29,7 +29,7 @@ const Footer = ({ title }) => {
       </span>
 
       <span className='hidden busuanzi_container_site_pv'>
-        document.write("<b>ORFW已稳定运行</b><font color=red>");
+        document.write("<b>本站已平稳运行</b><font color=red>");
         var urodz= new Date("7/28/2021");
         var now = new Date();    
         var ile = now.getTime() - urodz.getTime();
