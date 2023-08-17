@@ -55,7 +55,7 @@ const BlogListScroll = props => {
     return <BlogPostListEmpty />
   } else {
     return (
-            <div id="container" ref={targetRef} className='grid-container' >
+            <div id="posts-wrapper" ref={targetRef} className='grid-container' >
                 {/* 文章列表 */}
                     {postsToShow?.map(post => (
             <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>

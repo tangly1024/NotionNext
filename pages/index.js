@@ -1,22 +1,32 @@
 import BLOG from '@/blog.config'
 import { getPostBlocks } from '@/lib/notion'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import * as ThemeMap from '@/themes'
-import { useGlobal } from '@/lib/global'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
+import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
+
+/**
+ * 首页布局
+ * @param {*} props
+ * @returns
+ */
 const Index = props => {
-  const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
-  return <ThemeComponents.LayoutIndex {...props} />
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme(useRouter())
+  return <Layout {...props} />
 }
 
+/**
+ * SSG 获取数据
+ * @returns
+ */
 export async function getStaticProps() {
   const from = 'index'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
 
   const { siteInfo } = props
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
 
   const meta = {
     title: `${siteInfo?.title} | ${siteInfo?.description}`,
@@ -49,6 +59,8 @@ export async function getStaticProps() {
   if (JSON.parse(BLOG.ENABLE_RSS)) {
     generateRss(props?.latestPosts || [])
   }
+
+  // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
   delete props.allPages
 
