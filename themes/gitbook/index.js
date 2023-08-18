@@ -94,7 +94,7 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
                             <AdSlot type='in-article' />
-                            <WWAds className='w-full'/>
+                            <WWAds className='w-full' orientation='horizontal'/>
 
                             <Transition
                                 show={!onLoading}
@@ -112,7 +112,7 @@ const LayoutBase = (props) => {
 
                             {/* Google广告 */}
                             <AdSlot type='in-article' />
-                            <WWAds className='w-full'/>
+                            <WWAds className='w-full' orientation='horizontal'/>
 
                             {/* 回顶按钮 */}
                             <JumpToTopButton />
@@ -243,7 +243,7 @@ const LayoutSlug = (props) => {
                     {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
 
                     <AdSlot />
-                    <WWAds className='w-full'/>
+                    <WWAds className='w-full' orientation='horizontal'/>
 
                     <Comment frontMatter={post} />
                 </section>)}
