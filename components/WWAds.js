@@ -8,11 +8,11 @@ import BLOG from '@/blog.config'
  * @returns {JSX.Element | null} - 返回渲染的 JSX 元素或 null
  */
 export default function WWAds({ orientation = 'vertical', sticky = false, className }) {
-  if (!JSON.parse(BLOG.AD_WWADS_ENABLE)) {
+  if (!JSON.parse(BLOG.AD_WWADS_ID)) {
     return null
   }
 
   return (
-    <div className={`wwads-cn ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'} ${sticky ? 'wwads-sticky' : ''} z-30 ${className || ''}`} data-id="265"></div>
+    <div className={`wwads-cn ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'} ${sticky ? 'wwads-sticky' : ''} z-30 ${className || ''}`} data-id={BLOG.AD_WWADS_ID}></div>
   )
 }
