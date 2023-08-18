@@ -27,7 +27,7 @@ const Footer = ({ title }) => {
       <span className='pl-2 hidden busuanzi_container_site_uv'>
         <i className='fas fa-users'/> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1>
-        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于tangly1024大佬开发的NotionNext搭建的鱼缸🐟 {BLOG.VERSION}</a>.</p></span><br/>
+        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于tangly1024大佬开发的<a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {BLOG.VERSION}搭建的鱼缸🐟</a>.</p></span><br/>
 
     </footer>
   )
