@@ -89,11 +89,10 @@ const LayoutBase = (props) => {
                         </div>
                     </div>
 
-                    <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-12 min-h-screen'>
+                    <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
 
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
-                            <AdSlot type='in-article' />
                             <WWAds className='w-full' orientation='horizontal'/>
 
                             <Transition
@@ -134,7 +133,6 @@ const LayoutBase = (props) => {
 
                             <div className='py-4'>
                                 <Catalog {...props} />
-                                <WWAds/>
                                 {slotRight}
                                 {router.route === '/' && <>
                                     <InfoCard {...props} />
@@ -145,6 +143,7 @@ const LayoutBase = (props) => {
                                 <Announcement {...props} />
                             </div>
 
+                            <AdSlot type='in-article' />
                             <Live2D />
 
                         </div>
