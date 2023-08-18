@@ -5,7 +5,7 @@ const CONFIG = {
 
   NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
 
-  POST_LIST_COVER: false, // 文章列表显示封面图
+  POST_LIST_COVER: true, // 文章列表显示封面图
   POST_LIST_PREVIEW: true, // 显示文章预览
   POST_LIST_SUMMARY: false, // 显示用户自定义摘要，有预览时优先只展示预览
 
