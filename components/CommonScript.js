@@ -38,6 +38,8 @@ const CommonScript = () => {
       />
     </>)}
 
+    {BLOG.AD_WWADS_ID && <script type="text/javascript" charSet="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>}
+
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src={`https://cusdis.com/js/widget/lang/${BLOG.LANG.toLowerCase()}.js`} />}
 
     {BLOG.COMMENT_TWIKOO_ENV_ID && <script defer src={BLOG.COMMENT_TWIKOO_CDN_URL}/> }

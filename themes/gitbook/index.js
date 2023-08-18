@@ -34,6 +34,8 @@ import CommonHead from '@/components/CommonHead'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostListPage from './components/BlogPostListPage'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
 const ThemeGlobalGitbook = createContext()
@@ -92,6 +94,7 @@ const LayoutBase = (props) => {
                         <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
                             <AdSlot type='in-article' />
+                            <WWAds className='w-full' orientation='horizontal'/>
 
                             <Transition
                                 show={!onLoading}
@@ -107,7 +110,10 @@ const LayoutBase = (props) => {
                                 {children}
                             </Transition>
 
+                            {/* Google广告 */}
                             <AdSlot type='in-article' />
+                            <WWAds className='w-full' orientation='horizontal'/>
+
                             {/* 回顶按钮 */}
                             <JumpToTopButton />
                         </div>
@@ -126,8 +132,9 @@ const LayoutBase = (props) => {
                         <div className='py-14 px-6 sticky top-0'>
                             <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                            <div className='py-6'>
+                            <div className='py-4'>
                                 <Catalog {...props} />
+                                <WWAds/>
                                 {slotRight}
                                 {router.route === '/' && <>
                                     <InfoCard {...props} />
@@ -236,6 +243,7 @@ const LayoutSlug = (props) => {
                     {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
 
                     <AdSlot />
+                    <WWAds className='w-full' orientation='horizontal'/>
 
                     <Comment frontMatter={post} />
                 </section>)}
