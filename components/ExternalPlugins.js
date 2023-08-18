@@ -32,7 +32,7 @@ const Messenger = dynamic(() => import('@/components/FacebookMessenger'), { ssr:
 const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const CustomContextMenu = dynamic(() => import('@/components/CustomContextMenu'), { ssr: false })
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), { ssr: false })
-
+const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr: false })
 /**
  * 各种第三方组件
  * @param {*} props
@@ -59,6 +59,7 @@ const ExternalPlugin = (props) => {
           {JSON.parse(BLOG.CUSTOM_RIGHT_CLICK_CONTEXT_MENU) && <CustomContextMenu {...props} />}
           {!JSON.parse(BLOG.CAN_COPY) && <DisableCopy/>}
           {JSON.parse(BLOG.WEB_WHIZ_ENABLED) && <WebWhiz/>}
+          {JSON.parse(BLOG.AD_WWADS_BLOCK_DETECT) && <AdBlockDetect/>}
           <VConsole/>
       </>
 }
