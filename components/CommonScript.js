@@ -38,7 +38,7 @@ const CommonScript = () => {
       />
     </>)}
 
-    {BLOG.AD_WWADS_ENABLE && <script defer type="text/javascript" src="https://cdn.wwads.cn/js/makemoney.js"/>}
+    {BLOG.AD_WWADS_ENABLE && <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>}
 
     {BLOG.COMMENT_CUSDIS_APP_ID && <script defer src={`https://cusdis.com/js/widget/lang/${BLOG.LANG.toLowerCase()}.js`} />}
 
