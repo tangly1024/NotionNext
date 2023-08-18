@@ -121,9 +121,6 @@ const LayoutBase = (props) => {
                         <div className='md:hidden'>
                             <Footer {...props} />
                         </div>
-                        <div className='text-center'>
-                            <AdSlot type='native' />
-                        </div>
                     </div>
 
                     {/*  右侧侧推拉抽屉 */}
