@@ -26,7 +26,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             query: router.query.s ? { s: router.query.s } : {}
           }}
           rel="prev"
-          className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
+          className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-pink-100 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
 
           <i className="fas fa-angle-left" />
 
@@ -60,7 +60,7 @@ function getPageElement(page, currentPage, pagePrefix) {
           (page + '' === currentPage + ''
             ? 'font-bold bg-indigo-400 dark:bg-indigo-500 text-white '
             : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
-          ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
+          ' border-white dark:border-pink-100 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
       }>
 
       {page}
