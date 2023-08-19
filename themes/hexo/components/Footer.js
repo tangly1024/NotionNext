@@ -95,6 +95,7 @@ const Footer = ({ title }) => {
             <i className='fas fa-clock' />
             {runTime()}
           </span>
+          <br/>
         </div>
       </div>
     </footer>
