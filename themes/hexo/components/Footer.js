@@ -20,33 +20,44 @@ const Footer = ({ title }) => {
 
       {/* 将页脚分为四个区域，使用flex布局 */}
       <div className='flex flex-row justify-around'>
-        {/* 第一个区域，显示原来处在中间的东西 */}
+        {/* 第一个区域，显示原来处在中间的东西和备案信息 */}
         <div className='flex flex-col items-center'>
           {/* 使用h6格式标题，标题名为1 */}
           <h6>1</h6>
           {/* 将原来处在中间的东西改到第一个区域 */}
           <div className='flex flex-col items-center'>
-            <i className='fas fa-copyright' /> {`${copyrightDate}`} 
-            <span>
-              <i className='mx-1 animate-pulse fas fa-heart'/> 
-              <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a>.
-              <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1>
-              <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于<a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {BLOG.VERSION}搭建</a>.</p>
-            </span>
-            <br/>
+            {/* 显示备案信息 */}
+            {BLOG.BEI_AN && 
+              <div>
+                <i className='fas fa-shield-alt' /> 
+                <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a>
+              </div>
+            }
+            {/* 显示版权信息和作者信息 */}
+            <div>
+              <i className='fas fa-copyright' /> 
+              {`${copyrightDate}`} 
+              <span>
+                <i className='mx-1 animate-pulse fas fa-heart'/> 
+                <a href={BLOG.LINK} className='underline font-bold  dark:text-gray-300 '>{BLOG.AUTHOR}</a>.
+                <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1>
+                <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于<a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {BLOG.VERSION}搭建</a>.</p>
+              </span>
+              <br/>
+            </div>
           </div>
         </div>
 
-        {/* 第二个区域，显示备案信息 */}
-        {BLOG.BEI_AN && 
+        {/* 第二个区域，随便设置一个内容 */}
+        <div className='flex flex-col items-center'>
+          {/* 使用h6格式标题，标题名为2 */}
+          <h6>2</h6>
+          {/* 随便设置一个内容，例如显示当前时间 */}
           <div>
-            {/* 使用h6格式标题，标题名为2 */}
-            <h6>2</h6>
-            <i className='fas fa-shield-alt' /> 
-            <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a>
-            <h2 className='text-xs pt-4 text-light-400 dark:text-gray-400'>测试</h2>
+            <i className='fas fa-clock' />
+            {`当前时间是 ${d.toLocaleString()}`}
           </div>
-        }
+        </div>
 
         {/* 第三个区域，显示网站访问量 */}
         <div className='busuanzi_container_site_pv'>
