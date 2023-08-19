@@ -38,7 +38,7 @@ const Footer = ({ title }) => {
       <div className='flex flex-row justify-around'>
         {/* 第一个区域，显示原来处在中间的东西和备案信息 */}
         <div className='flex flex-col items-center'>
-          {/* 使用h6格式标题，标题名为1 */}
+          {/* 使用h6格式标题，标题名为杂项 */}
           <h6>杂项</h6>
           {/* 将原来处在中间的东西改到第一个区域 */}
           <div className='flex flex-col items-center'>
@@ -64,28 +64,26 @@ const Footer = ({ title }) => {
 
         {/* 第二个区域，随便设置一个内容 */}
         <div className='flex flex-col items-center'>
-          {/* 使用h6格式标题，标题名为2、 */}
-          <h6>2</h6>
-          {/* 随便设置一个内容，例如显示当前时间 */}
-          <div>
-            <i className='fas fa-clock' />
-            {`当前时间是 ${d.toLocaleString()}`}
-          </div>
+          {/* 使用h6格式标题，标题名为导航 */}
+          <h6>导航</h6>
+          {/* 随便设置一个内容 */}
+          <a href='https://www.github.com/zilingheimei' className='underline dark:text-gray-300'>Github</a>
+          <a href='https://icloud.zilingheimei.icu' className='underline dark:text-gray-300'>自建网盘</a>
         </div>
 
         {/* 第三个区域，*/}
         <div className='busuanzi_container_site_pv'>
-          {/* 使用h6格式标题，标题名为3 */}
-          <h6>3</h6>
-          
+          {/* 使用h6格式标题，标题名为资源 */}
+          <h6>资源</h6>
+          <h6>敬请期待</h6>
         </div>
 
         {/* 第四个区域，显示网站用户数 显示网站访问量 */}
         <div className='pl-2 busuanzi_container_site_uv'>
-          {/* 使用h6格式标题，标题名为4 */}
+          {/* 使用h6格式标题，标题名为关于 */}
           <h6>关于</h6>
           <i className='fas fa-users'/> 
-          <span className='px-1 busuanzi_value_site_uv'> </span> <br/>
+          <span className='px-1 busuanzi_value_site_uv'> </span> 
           <i className='fas fa-eye'/>
           <span className='px-1 busuanzi_value_site_pv'> </span>  <br/>
           {/* 调用网站运行时间函数，并显示结果 */}
