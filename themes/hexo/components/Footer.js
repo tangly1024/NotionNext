@@ -16,7 +16,7 @@ const Footer = ({ title }) => {
     // 定义当前时间
     var d = new Date();
     // 定义网站创建时间，可以自己修改
-    var X = new Date ("12/4/2018 00:00:00"); 
+    var X = new Date ("7/28/2023 00:00:00"); 
     // 计算网站运行时间
     var T=(d.getTime()-X.getTime());
     var M=24*60*60*1000;
