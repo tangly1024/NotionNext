@@ -67,10 +67,14 @@ const Footer = ({ title }) => {
           {/* 使用h6格式标题，标题名为导航 */}
           <h6>导航</h6>
           {/* 随便设置一个内容 */}
-          <i className='mx-1 animate-pulse fab fa-github' />
+          <div>
+            <i className='mx-1 animate-pulse fab fa-github' />
             <a href='https://www.github.com/zilingheimei' className='underline dark:text-gray-300'>Github</a>
-          <i className='mx-1 animate-pulse fas fa-cloud' />
+          </div>
+          <div>
+            <i className='mx-1 animate-pulse fas fa-cloud' />
             <a href='https://icloud.zilingheimei.icu' className='underline dark:text-gray-300'>自建网盘</a>
+          </div>
         </div>
 
         {/* 第三个区域，*/}
