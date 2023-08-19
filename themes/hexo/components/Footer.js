@@ -23,7 +23,7 @@ const Footer = ({ title }) => {
         {/* 第一个区域，显示原来处在中间的东西和备案信息 */}
         <div className='flex flex-col items-center'>
           {/* 使用h6格式标题，标题名为1 */}
-          <h6>1</h6>
+          <h6>杂项</h6>
           {/* 将原来处在中间的东西改到第一个区域 */}
           <div className='flex flex-col items-center'>
             {/* 显示备案信息 */}
@@ -59,20 +59,21 @@ const Footer = ({ title }) => {
           </div>
         </div>
 
-        {/* 第三个区域，显示网站访问量 */}
+        {/* 第三个区域，*/}
         <div className='busuanzi_container_site_pv'>
           {/* 使用h6格式标题，标题名为3 */}
           <h6>3</h6>
-          <i className='fas fa-eye'/>
-          <span className='px-1 busuanzi_value_site_pv'> </span>  
+          
         </div>
 
-        {/* 第四个区域，显示网站用户数 */}
+        {/* 第四个区域，显示网站用户数 显示网站访问量 */}
         <div className='pl-2 busuanzi_container_site_uv'>
           {/* 使用h6格式标题，标题名为4 */}
-          <h6>4</h6>
+          <h6>关于</h6>
           <i className='fas fa-users'/> 
           <span className='px-1 busuanzi_value_site_uv'> </span> 
+          <i className='fas fa-eye'/>
+          <span className='px-1 busuanzi_value_site_pv'> </span>  
         </div>
       </div>
     </footer>
