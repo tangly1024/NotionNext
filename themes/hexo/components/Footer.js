@@ -85,9 +85,9 @@ const Footer = ({ title }) => {
           {/* 使用h6格式标题，标题名为4 */}
           <h6>关于</h6>
           <i className='fas fa-users'/> 
-          <span className='px-1 busuanzi_value_site_uv'> </span> 
+          <span className='px-1 busuanzi_value_site_uv'> </span> <br/>
           <i className='fas fa-eye'/>
-          <span className='px-1 busuanzi_value_site_pv'> </span>  
+          <span className='px-1 busuanzi_value_site_pv'> </span>  <br/>
           {/* 调用网站运行时间函数，并显示结果 */}
           <i className='fas fa-clock' />
           {runTime()}
