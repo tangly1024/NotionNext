@@ -10,7 +10,23 @@ const Footer = ({ title }) => {
       return BLOG.SINCE + '-' + currentYear
     }
     return currentYear
-  })()
+  })() 
+  // 封装网站运行时间函数
+  const runTime = (function() {
+    // 定义当前时间
+    var d = new Date();
+    // 定义网站创建时间，可以自己修改
+    var X = new Date ("12/4/2018 00:00:00"); 
+    // 计算网站运行时间
+    var T=(d.getTime()-X.getTime());
+    var M=24*60*60*1000;
+    var a=T/M;
+    var A=Math.floor(a);
+    // 返回网站运行时间字符串
+    return "本站已经运行 "+A+" 天了！"
+  })
+
+ 
 
   return (
     <footer
@@ -74,6 +90,9 @@ const Footer = ({ title }) => {
           <span className='px-1 busuanzi_value_site_uv'> </span> 
           <i className='fas fa-eye'/>
           <span className='px-1 busuanzi_value_site_pv'> </span>  
+          {/* 调用网站运行时间函数，并显示结果 */}
+          <i className='fas fa-clock' />
+          {runTime()}
         </div>
       </div>
     </footer>
