@@ -39,9 +39,9 @@ const Footer = ({ title }) => {
               {`${copyrightDate}`} 
               <span>
                 <i className='mx-1 animate-pulse fas fa-heart'/> 
-                <a href={BLOG.LINK} className='underline dark:text-gray-500 '>{BLOG.AUTHOR}</a>.
+                <a href={BLOG.LINK} className='dark:text-indigo-300 '>{BLOG.AUTHOR}</a>.
                 <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1>
-                <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于<a href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext {BLOG.VERSION}搭建</a>.</p>
+                <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于<a href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>搭建.</p>
               </span>
               <br/>
             </div>
