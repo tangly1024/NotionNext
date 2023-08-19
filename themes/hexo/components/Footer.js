@@ -55,7 +55,7 @@ const Footer = ({ title }) => {
             <i className='fas fa-copyright' /> 
             {`${copyrightDate}`} 
             <i className='mx-1 animate-pulse fas fa-heart'/> 
-            <a href={BLOG.LINK} className='dark:text-gray-400 '>{BLOG.AUTHOR}</a>.
+            <a href={BLOG.LINK} className='dark:text-gray-400 '>{BLOG.AUTHOR}</a>
             <p className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</p>
             <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于<a href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>搭建.</p>
             <br/>
@@ -67,10 +67,10 @@ const Footer = ({ title }) => {
           {/* 使用h6格式标题，标题名为导航 */}
           <h6>导航</h6>
           {/* 随便设置一个内容 */}
-          <i className='mx-1 animate-pulse fab fa-github' />.
-          <a href='https://www.github.com/zilingheimei' className='underline dark:text-gray-300'>Github</a>
-          <i className='mx-1 animate-pulse fas fa-cloud' />.
-          <a href='https://icloud.zilingheimei.icu' className='underline dark:text-gray-300'>自建网盘</a>
+          <i className='mx-1 animate-pulse fab fa-github' />
+            <a href='https://www.github.com/zilingheimei' className='underline dark:text-gray-300'>Github</a>
+          <i className='mx-1 animate-pulse fas fa-cloud' />
+            <a href='https://icloud.zilingheimei.icu' className='underline dark:text-gray-300'>自建网盘</a>
         </div>
 
         {/* 第三个区域，*/}
