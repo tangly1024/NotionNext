@@ -56,7 +56,7 @@ const Footer = ({ title }) => {
             {`${copyrightDate}`} 
             <i className='mx-1 animate-pulse fas fa-heart'/> 
             <a href={BLOG.LINK} className='dark:text-gray-400 '>{BLOG.AUTHOR}</a>.
-            <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1>
+            <p className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {BLOG.BIO && <>|</>} {BLOG.BIO}</p>
             <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>基于<a href='https://github.com/tangly1024/NotionNext' className='underline dark:text-gray-300'>NotionNext {BLOG.VERSION}</a>搭建.</p>
             <br/>
           </div>
@@ -91,7 +91,7 @@ const Footer = ({ title }) => {
           {/* 调用网站运行时间函数，并显示结果 */}
           <i className='fas fa-clock' />
           {runTime()}
-
+          <br/>
         </div>
       </div>
     </footer>
