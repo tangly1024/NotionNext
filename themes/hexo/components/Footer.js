@@ -86,18 +86,13 @@ const Footer = ({ title }) => {
         <div className='pl-2 busuanzi_container_site_uv'>
           {/* 使用h6格式标题，标题名为4 */}
           <h6>关于</h6>
-          <div style='display:flex'>
-            <i className='fas fa-users'></i>
-            <span className='px-1 busuanzi_value_site_uv'></span>
-          </div>
-          <div style='display:flex'>
-            <i className='fas fa-eye'></i>
-            <span className='px-1 busuanzi_value_site_pv'></span>
-          </div>
-          <div style='display:flex'>
-            <i className='fas fa-clock'></i>
-            {runTime()}
-          </div>
+          <i className='fas fa-users'/> 
+          <span className='px-1 busuanzi_value_site_uv'> </span> 
+          <i className='fas fa-eye'/>
+          <span className='px-1 busuanzi_value_site_pv'> </span>  
+          {/* 调用网站运行时间函数，并显示结果 */}
+          <i className='fas fa-clock' />
+          {runTime()}
 
         </div>
       </div>
