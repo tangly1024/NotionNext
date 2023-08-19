@@ -44,6 +44,7 @@ const Footer = ({ title }) => {
             <h6>2</h6>
             <i className='fas fa-shield-alt' /> 
             <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a>
+            <h2 className='text-xs pt-4 text-light-400 dark:text-gray-400'>测试</h2>
           </div>
         }
 
