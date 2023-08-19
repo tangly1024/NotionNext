@@ -67,9 +67,9 @@ const Footer = ({ title }) => {
           {/* 使用h6格式标题，标题名为导航 */}
           <h6>导航</h6>
           {/* 随便设置一个内容 */}
-          <i className='fab fa-github' /> 
+          <i className='mx-1 animate-pulse fab fa-github' />.
           <a href='https://www.github.com/zilingheimei' className='underline dark:text-gray-300'>Github</a>
-          <i className='fab fa-cloud' /> 
+          <i className='mx-1 animate-pulse fas fa-cloud' />.
           <a href='https://icloud.zilingheimei.icu' className='underline dark:text-gray-300'>自建网盘</a>
         </div>
 
