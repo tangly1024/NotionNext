@@ -10,8 +10,8 @@ export function AnalyticsCard (props) {
       <div className='inline'>
         <div className='flex justify-between'>
           <i className='fas fa-box-archive' /> 
-          <div>文章数:</div>
-          <div>{postCount}</div>
+          <p>文章数:</p>
+          <p>{postCount}</p>
         </div>
       </div>
       <div className='hidden busuanzi_container_page_pv ml-2'>
@@ -23,7 +23,7 @@ export function AnalyticsCard (props) {
       </div>
       <div className='hidden busuanzi_container_site_uv ml-2'>
         <div className='flex justify-between'>
-          <i className='fas fa-box-users' /> 
+          <i className='fas fa-users' /> 
           <div>访客数:</div>
           <div className='busuanzi_value_site_uv' />
         </div>
