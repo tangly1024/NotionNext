@@ -10,8 +10,8 @@ export function AnalyticsCard (props) {
       <div className='inline'>
         <div className='flex justify-between'>
           <i className='fas fa-box-archive' /> 
-          <p>文章数:</p>
-          <p>{postCount}</p>
+          <div>文章数:</div>
+          <div>{postCount}</div>
         </div>
       </div>
       <div className='hidden busuanzi_container_page_pv ml-2'>
