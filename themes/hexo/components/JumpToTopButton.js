@@ -17,7 +17,7 @@ const JumpToTopButton = ({ showPercent = true, percent }) => {
     return <></>
   }
   return (<div className='space-x-1 items-center justify-center transform hover:scale-105 duration-200 w-7 h-auto pb-1 text-center' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
-        <div title={locale.POST.TOP} ><i className='fas fa-arrow-up text-xs' /></div>
+        <div title={locale.POST.TOP} ><i className='fas fa-rocket text-xs' /></div>
         {showPercent && (<div className='text-xs hidden lg:block'>{percent}</div>)}
     </div>)
 }
