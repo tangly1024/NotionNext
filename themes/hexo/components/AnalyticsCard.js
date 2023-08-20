@@ -9,18 +9,21 @@ export function AnalyticsCard (props) {
     <div className='text-xs  font-light justify-center mx-7'>
       <div className='inline'>
         <div className='flex justify-between'>
+          <i className='fas fa-box-archive' /> 
           <div>文章数:</div>
           <div>{postCount}</div>
         </div>
       </div>
       <div className='hidden busuanzi_container_page_pv ml-2'>
         <div className='flex justify-between'>
+          <i className='fas fa-eye' /> 
           <div>访问量:</div>
           <div className='busuanzi_value_page_pv' />
         </div>
       </div>
       <div className='hidden busuanzi_container_site_uv ml-2'>
         <div className='flex justify-between'>
+          <i className='fas fa-box-users' /> 
           <div>访客数:</div>
           <div className='busuanzi_value_site_uv' />
         </div>
