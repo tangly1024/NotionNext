@@ -29,6 +29,7 @@ const CommonHead = ({ meta, children }) => {
                 />
             )}
             {BLOG.SEO_BAIDU_SITE_VERIFICATION && (<meta name="baidu-site-verification" content={BLOG.SEO_BAIDU_SITE_VERIFICATION} />)}
+            <meta name="baidu-site-verification" content="codeva-Rxm8dqvcwg" />
             <meta name="keywords" content={keywords} />
             <meta name="description" content={description} />
             <meta property="og:locale" content={lang} />
