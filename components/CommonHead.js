@@ -28,7 +28,7 @@ const CommonHead = ({ meta, children }) => {
                     content={BLOG.SEO_GOOGLE_SITE_VERIFICATION}
                 />
             )}
-            {BLOG.SEO_BAIDU_SITE_VERIFICATION && (<meta name="baidu-site-verification" content="codeva-Rxm8dqvcwg" />)}
+            {BLOG.SEO_BAIDU_SITE_VERIFICATION && (<meta name="baidu-site-verification" content={BLOG.SEO_BAIDU_SITE_VERIFICATION} />)}
             <meta name="keywords" content={keywords} />
             <meta name="description" content={description} />
             <meta property="og:locale" content={lang} />
