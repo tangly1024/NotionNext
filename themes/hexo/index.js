@@ -33,6 +33,7 @@ import SlotBar from './components/SlotBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
