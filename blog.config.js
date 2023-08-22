@@ -204,9 +204,9 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '那个男孩',
+      name: '就让这大雨全都落下',
       artist: '汪苏泷',
-      url: 'https://t4.kugou.com/song.html?id=dI65l08BeV2',
+      url: 'https://t3.kugou.com/song.html?id=dIg5Xf8BeV2',
       cover:
             'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
     },
