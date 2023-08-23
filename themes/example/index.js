@@ -129,7 +129,7 @@ const LayoutPostList = props => {
     slotTop = <div className='pb-12'><i className="mr-1 fas fa-folder-open" />{category}</div>
   } else if (tag) {
     slotTop = <div className='pb-12'>#{tag}</div>
-  }else if(props.slotTop){
+  } else if (props.slotTop) {
     slotTop = props.slotTop
   }
   return (
