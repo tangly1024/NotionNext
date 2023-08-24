@@ -36,7 +36,7 @@ jobs:
         run: pip install requests
 
       - name: baiduPush
-        run: python pushUrl.py ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKEN }}
+        run: python pushUrl.py --url ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKEN }}
 
       - name: bingPush
-        run: python pushUrl.py ${{ secrets.URL }} --bing_api_key ${{ secrets.BING_API_KEY }}
+        run: python pushUrl.py --url ${{ secrets.URL }} --bing_api_key ${{ secrets.BING_API_KEY }}
