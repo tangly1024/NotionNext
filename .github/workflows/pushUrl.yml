@@ -1,16 +1,16 @@
 ## 利用GitHub Actions每天定时给百度推送链接，提高收录率 ##
 
-name: baidupush
+name: pushUrl
 
 # 两种触发方式：一、push代码，二、每天国际标准时间23点（北京时间+8即早上7点）运行
 on:
-  # push:
+  push:
   schedule:
     - cron: '0 23 * * *' # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#scheduled-events-schedule
   workflow_dispatch:
     inputs:
       unconditional-invoking:
-        description: 'baidupush unconditionally'
+        description: 'push url unconditionally'
         type: boolean
         required: true
         default: true
@@ -35,5 +35,8 @@ jobs:
       - name: install requests
         run: pip install requests
 
-      - name: baidupush
-        run: npm run baidupush
+      - name: baiduPush
+        run: python pushUrl.py ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKEN }}
+
+      - name: bingPush
+        run: python pushUrl.py ${{ secrets.URL }} --bing_api_key ${{ secrets.BING_API_KEY }}
