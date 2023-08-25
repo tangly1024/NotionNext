@@ -15,6 +15,10 @@ const Style = () => {
         background-color: black;
     }
 
+    .article-padding {
+      padding: 40px;
+    }
+
   `}</style>
 }
 
