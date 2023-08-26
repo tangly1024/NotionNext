@@ -9,11 +9,18 @@ ssl._create_default_https_context = ssl._create_unverified_context
 def parse_stiemap(site):
     site = f'{site}/sitemap.xml'
     print('解析站点地图中，请稍后……')
-    result = requests.get(site)
-    big = re.findall('<loc>(.*?)</loc>', result.content.decode('utf-8'), re.S)
-    print('当前已有url:')
-    print(list(big))
-    return list(big)
+    try:
+        result = requests.get(site)
+        big = re.findall('<loc>(.*?)</loc>', result.content.decode('utf-8'), re.S)
+        print('当前已有url:')
+        print(list(big))
+        return list(big)
+    except:
+        print('请检查你的url是否有误。')
+        print('正确的应是完整的域名，包含https://，且不包含‘sitemap.xml’, 如下所示：')
+        print('正确的示例: https://ghlcode.cn')
+        print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
+
 
 
 def push_to_bing(site, urls, api_key):
@@ -62,16 +69,17 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.url:
         urls = parse_stiemap(args.url)
-        if args.bing_api_key:
-            push_to_bing(args.url, urls, args.bing_api_key)
-        else:
-            print('未配置 Bing API Key')
-            print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
-        if args.baidu_token:
-            push_to_baidu(args.url, urls, args.baidu_token)
-        else:
-            print('未配置 Baidu Token')
-            print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
+        if urls is not None:
+            if args.bing_api_key:
+                push_to_bing(args.url, urls, args.bing_api_key)
+            else:
+                print('未配置 Bing API Key')
+                print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
+            if args.baidu_token:
+                push_to_baidu(args.url, urls, args.baidu_token)
+            else:
+                print('未配置 Baidu Token')
+                print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
     else:
         print('请前往 Github Action Secrets 配置 URL')
         print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
