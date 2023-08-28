@@ -7,9 +7,9 @@ const CONFIG = {
 
   POST_LIST_COVER: false, // 文章列表显示封面图
   POST_LIST_PREVIEW: true, // 显示文章预览
-  POST_LIST_SUMMARY: false, // 显示用户自定义摘要，有预览时优先只展示预览
+  POST_LIST_SUMMARY: true, // 显示用户自定义摘要，有预览时优先只展示预览
 
-  POST_HEADER_IMAGE_VISIBLE: false, // 文章详情页是否显示封面图
+  POST_HEADER_IMAGE_VISIBLE: true, // 文章详情页是否显示封面图
 
   // 右侧组件
   RIGHT_BAR: true, // 是否显示右侧栏
@@ -22,7 +22,7 @@ const CONFIG = {
   MENU_HOME: true, // 显示首页
   MENU_CATEGORY: true, // 显示分类
   MENU_TAG: true, // 显示标签
-  MENU_ARCHIVE: true, // 显示归档
+  MENU_ARCHIVE: false, // 显示归档
   MENU_SEARCH: true, // 显示搜索
 
   WIDGET_TO_TOP: true, // 是否显示回顶
