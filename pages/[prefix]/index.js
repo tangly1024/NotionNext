@@ -9,6 +9,7 @@ import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { isBrowser } from '@/lib/utils'
+import { uploadDataToAlgolia } from '@/lib/algolia'
 
 /**
  * 根据notion的slug访问页面
@@ -40,7 +41,7 @@ const Slug = props => {
     // 404
     if (!post) {
       setTimeout(() => {
-        if (isBrowser()) {
+        if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
             router.push('/404').then(() => {
@@ -89,13 +90,13 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
   return {
-    paths: allPages?.map(row => ({ params: { slug: [row.slug] } })),
+    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
     fallback: true
   }
 }
 
-export async function getStaticProps({ params: { slug } }) {
-  let fullSlug = slug.join('/')
+export async function getStaticProps({ params: { prefix } }) {
+  let fullSlug = prefix
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -110,13 +111,12 @@ export async function getStaticProps({ params: { slug } }) {
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
-    const pageId = slug.slice(-1)[0]
+    const pageId = prefix
     if (pageId.length >= 32) {
       const post = await getNotion(pageId)
       props.post = post
     }
   }
-
   // 无法获取文章
   if (!props?.post) {
     props.post = null
@@ -128,8 +128,13 @@ export async function getStaticProps({ params: { slug } }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
+  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
+  if (BLOG.ALGOLIA_APP_ID) {
+    uploadDataToAlgolia(props?.post)
+  }
+
   // 推荐关联文章处理
-  const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
@@ -155,7 +160,7 @@ export async function getStaticProps({ params: { slug } }) {
  * @param {*} count
  * @returns
  */
-function getRecommendPost(post, allPosts, count = 6) {
+export function getRecommendPost(post, allPosts, count = 6) {
   let recommendPosts = []
   const postIds = []
   const currentTags = post?.tags || []

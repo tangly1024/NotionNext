@@ -1,4 +1,6 @@
 
+'use client'
+
 /**
  * 这是一个空白主题，方便您用作创建新主题时的模板，从而开发出您自己喜欢的主题
  * 1. 禁用了代码质量检查功能，提高了代码的宽容度；您可以使用标准的html写法
@@ -14,6 +16,11 @@ import Features from './components/Features'
 import FeaturesBlocks from './components/FeaturesBlocks'
 import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
+import CommonHead from '@/components/CommonHead'
+import { useRouter } from 'next/router'
+import CONFIG from './config'
+import Loading from '@/components/Loading'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 这是个配置文件，可以方便在此统一配置信息
@@ -28,8 +35,13 @@ const THEME_CONFIG = { THEME: 'landing' }
  * @returns
  */
 const LayoutBase = (props) => {
-    const {  children } = props
-    return <div id='theme-blank' className="overflow-hidden flex flex-col justify-between bg-white">
+    const { meta, siteInfo, children } = props
+
+    return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white">
+
+        {/* 网页SEO */}
+        <CommonHead meta={meta} siteInfo={siteInfo} />
+
         {/* 顶部导航栏 */}
         <Header />
 
@@ -66,11 +78,24 @@ const LayoutIndex = (props) => {
  * @param {*} props
  * @returns
  */
-const LayoutSlug = (props) => <LayoutBase {...props}>
-    <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
-        <NotionPage {...props} />
-    </div>
-</LayoutBase>
+const LayoutSlug = (props) => {
+    // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
+    const router = useRouter()
+    if (JSON.parse(CONFIG.POST_REDIRECT_ENABLE) && isBrowser && router.route == '/[prefix]/[slug]') {
+        const redirectUrl = CONFIG.POST_REDIRECT_URL + router.asPath.replace('?theme=landing', '')
+        router.push(redirectUrl)
+        return  <div id='theme-landing'><Loading /></div>
+    }
+
+    return <LayoutBase {...props}>
+
+        <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
+            <NotionPage {...props} />
+        </div>
+    </LayoutBase>
+
+
+}
 
 // 其他布局暂时留空
 const LayoutSearch = (props) => <LayoutBase {...props}><Hero /></LayoutBase>

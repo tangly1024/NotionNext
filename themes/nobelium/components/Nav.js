@@ -7,6 +7,9 @@ import { SvgIcon } from './SvgIcon'
 import { MenuItemDrop } from './MenuItemDrop'
 import Collapse from '@/components/Collapse'
 import { MenuItemCollapse } from './MenuItemCollapse'
+import LazyImage from '@/components/LazyImage'
+import RandomPostButton from './RandomPostButton'
+import SearchButton from './SearchButton'
 
 const Nav = props => {
   const { navBarTitle, fullWidth, siteInfo } = props
@@ -27,11 +30,9 @@ const Nav = props => {
   useEffect(() => {
     const obvserver = new window.IntersectionObserver(handler)
     obvserver.observe(sentinalRef.current)
-    // Don't touch this, I have no idea how it works XD
-    // return () => {
-    //   if (sentinalRef.current) obvserver.unobserve(sentinalRef.current)
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      if (sentinalRef.current) obvserver.unobserve(sentinalRef.current)
+    }
   }, [sentinalRef])
   return <>
         <div className="observer-element h-4 md:h-12" ref={sentinalRef}></div>
@@ -47,8 +48,7 @@ const Nav = props => {
                     <div className="h-6 w-6">
                         {/* <SvgIcon/> */}
                         {CONFIG.NAV_NOTION_ICON
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                          ? <img src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
+                          ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
                           : <SvgIcon />}
 
                     </div>
@@ -102,19 +102,30 @@ const NavBar = props => {
   }
 
   return (
-        <div className="flex-shrink-0">
-            <ul className=" hidden md:flex flex-row">
+        <div className="flex-shrink-0 flex">
+            <ul className="hidden md:flex flex-row">
                 {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
             </ul>
-            <div className='md:hidden'><i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 block md:hidden'></i>
+            <div className='md:hidden'>
                 <Collapse collapseRef={collapseRef} isOpen={isOpen} type='vertical' className='fixed top-16 right-6'>
                     <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
                         {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
                     </div>
                 </Collapse>
             </div>
+
+            {JSON.parse(CONFIG.MENU_RANDOM_POST) && <RandomPostButton {...props} />}
+            {JSON.parse(CONFIG.MENU_SEARCH_BUTTON) && <SearchButton {...props}/>}
+            <i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 flex justify-center items-center md:hidden'></i>
         </div>
   )
 }
 
 export default Nav
+
+/**
+ *
+                    {!JSON.parse(BLOG.THEME_SWITCH) && <div className='hidden md:block'><DarkModeButton {...props} /></div>}
+                    <ReadingProgress />
+
+ */

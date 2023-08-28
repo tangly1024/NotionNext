@@ -1,4 +1,5 @@
 import BLOG from '@/blog.config'
+import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
@@ -8,25 +9,29 @@ import { useEffect } from 'react'
  */
 export default function GoogleAdsense() {
   const initGoogleAdsense = () => {
-    setTimeout(() => {
-      const ads = document.getElementsByClassName('adsbygoogle')
-      const adsbygoogle = window.adsbygoogle
-      if (ads.length > 0) {
-        for (let i = 0; i <= ads.length; i++) {
-          try {
-            adsbygoogle.push(ads[i])
-            console.log('adsbygoogle', i, ads[i], adsbygoogle)
-          } catch (e) {
+    loadExternalResource(`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${BLOG.ADSENSE_GOOGLE_ID}`, 'js').then(url => {
+      setTimeout(() => {
+        const ads = document.getElementsByClassName('adsbygoogle')
+        const adsbygoogle = window.adsbygoogle
+        if (ads.length > 0) {
+          for (let i = 0; i <= ads.length; i++) {
+            try {
+              adsbygoogle.push(ads[i])
+            } catch (e) {
 
+            }
           }
         }
-      }
-    }, 100)
+      }, 100)
+    })
   }
 
   const router = useRouter()
   useEffect(() => {
-    initGoogleAdsense()
+    // 延迟3秒加载
+    setTimeout(() => {
+      initGoogleAdsense()
+    }, 3000)
   }, [router])
 
   return null
@@ -50,7 +55,7 @@ const AdSlot = ({ type = 'show' }) => {
             data-ad-format="fluid"
             data-adtest={BLOG.ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
             data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
-            data-ad-slot="3806269138"></ins>
+            data-ad-slot={BLOG.ADSENSE_GOOGLE_SLOT_IN_ARTICLE}></ins>
   }
 
   // 信息流广告
@@ -61,7 +66,7 @@ const AdSlot = ({ type = 'show' }) => {
             style={{ display: 'block' }}
             data-adtest={BLOG.ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
             data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
-            data-ad-slot="1510444138"></ins>
+            data-ad-slot={BLOG.ADSENSE_GOOGLE_SLOT_FLOW}></ins>
   }
 
   // 原生广告
@@ -71,7 +76,7 @@ const AdSlot = ({ type = 'show' }) => {
             data-ad-format="autorelaxed"
             data-adtest={BLOG.ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
             data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
-            data-ad-slot="4980048999"></ins>
+            data-ad-slot={BLOG.ADSENSE_GOOGLE_SLOT_NATIVE}></ins>
   }
 
   //  展示广告
@@ -79,7 +84,7 @@ const AdSlot = ({ type = 'show' }) => {
         style={{ display: 'block' }}
         data-ad-client={BLOG.ADSENSE_GOOGLE_ID}
         data-adtest={BLOG.ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
-        data-ad-slot="8807314373"
+        data-ad-slot={BLOG.ADSENSE_GOOGLE_SLOT_AUTO}
         data-ad-format="auto"
         data-full-width-responsive="true"></ins>
 }

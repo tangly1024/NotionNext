@@ -4,6 +4,8 @@ import NotionIcon from '@/components/NotionIcon'
 import WavesArea from './WavesArea'
 import { HashTag } from '@/components/HeroIcons'
 import WordCount from '@/components/WordCount'
+import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
 
 export default function PostHeader({ post, siteInfo }) {
   if (!post) {
@@ -30,8 +32,7 @@ export default function PostHeader({ post, siteInfo }) {
 
                 {/* 文章背景图 */}
                 <div id='post-cover-wrapper' style={{ filter: 'blur(15px)' }} className='coverdiv lg:translate-x-96 opacity-50 lg:rotate-12'>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img id='post-cover' className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]' src={headerImage} />
+                    <LazyImage id='post-cover' className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]' src={headerImage} />
                 </div>
 
                 {/* 文章文字描述 */}
@@ -48,9 +49,9 @@ export default function PostHeader({ post, siteInfo }) {
 
                         {post.tagItems && (
                             <div className="hidden md:flex justify-center flex-nowrap overflow-x-auto">
-                                {post.tagItems.map(tag => (
+                                {post.tagItems.map((tag, index) => (
                                     <Link
-                                        key={tag}
+                                        key={index}
                                         href={`/tag/${encodeURIComponent(tag.name)}`}
                                         passHref
                                         className={'cursor-pointer inline-block text-gray-50 hover:text-white duration-200 py-0.5 px-1 whitespace-nowrap '}>
@@ -75,17 +76,21 @@ export default function PostHeader({ post, siteInfo }) {
                             {post?.type !== 'Page' && (
                                 <>
                                     <Link
-                                        href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                                        href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                                         passHref
                                         className="pl-1 mr-2 cursor-pointer hover:underline">
-                                        <i className="fa-solid fa-calendar-days"></i> {post?.publishTime}
+                                        <i className="fa-regular fa-calendar"></i> {post?.publishDay}
                                     </Link>
                                 </>
                             )}
 
+                            <div className="pl-1 mr-2">
+                              <i className="fa-regular fa-calendar-check"></i> {post.lastEditedDay}
+                            </div>
+
                         </div>
 
-                        {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
+                        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
                             <i className="fa-solid fa-fire-flame-curved"></i> <span className="mr-2 busuanzi_value_page_pv" />
                         </div>}
                     </section>

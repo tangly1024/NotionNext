@@ -1,6 +1,7 @@
 import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
+import CONFIG from '../config'
 
 /**
  * 博客列表滚动分页
@@ -10,12 +11,31 @@ import NavPostItem from './NavPostItem'
  * @constructor
  */
 const NavPostList = (props) => {
-  const { filteredPostGroups } = props
+  const { filteredNavPages } = props
   const router = useRouter()
   let selectedSth = false
+  const groupedArray = filteredNavPages?.reduce((groups, item) => {
+    const categoryName = item?.category ? item?.category : '' // 将category转换为字符串
+
+    let existingGroup = null
+    // 开启自动分组排序
+    if (JSON.parse(CONFIG.AUTO_SORT)) {
+      existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
+    } else {
+      existingGroup = groups[groups.length - 1] // 获取最后一个分组
+    }
+
+    // 添加数据
+    if (existingGroup && existingGroup.category === categoryName) {
+      existingGroup.items.push(item)
+    } else {
+      groups.push({ category: categoryName, items: [item] })
+    }
+    return groups
+  }, [])
 
   // 处理是否选中
-  filteredPostGroups?.map((group) => {
+  groupedArray?.map((group) => {
     let groupSelected = false
     for (const post of group?.items) {
       if (router.asPath.split('?')[0] === '/' + post.slug) {
@@ -28,16 +48,16 @@ const NavPostList = (props) => {
   })
 
   // 如果都没有选中默认打开第一个
-  if (!selectedSth && filteredPostGroups && filteredPostGroups?.length > 0) {
-    filteredPostGroups[0].selected = true
+  if (!selectedSth && groupedArray && groupedArray?.length > 0) {
+    groupedArray[0].selected = true
   }
 
-  if (!filteredPostGroups || filteredPostGroups.length === 0) {
+  if (!groupedArray || groupedArray.length === 0) {
     return <NavPostListEmpty />
   } else {
     return <div id='posts-wrapper' className='w-full flex-grow'>
             {/* 文章列表 */}
-            {filteredPostGroups?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
+            {groupedArray?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
         </div>
   }
 }

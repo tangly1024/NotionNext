@@ -3,6 +3,7 @@ import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import BLOG from '@/blog.config'
+import { formatDateFmt } from '@/lib/formatDate'
 
 /**
  * 博客列表的文字内容
@@ -51,9 +52,9 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
         {/* 搜索结果 */}
         {post.results && (
             <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                {post.results.map(r => (
-                    <span key={r}>{r}</span>
-                ))}
+                    {post.results.map((r, index) => (
+                        <span key={index}>{r}</span>
+                    ))}
             </p>
         )}
         {/* 预览 */}
@@ -70,12 +71,12 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
          <div className="text-gray-400 justify-between flex">
             {/* 日期 */}
             <Link
-                href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                 passHref
                 className="font-light menu-link cursor-pointer text-sm leading-4 mr-3">
 
                 <i className="far fa-calendar-alt mr-1" />
-                {post?.publishTime || post.lastEditedTime}
+                {post?.publishDay || post.lastEditedDay}
 
             </Link>
 

@@ -10,7 +10,7 @@ const Progress = ({ targetRef, showPercent = true }) => {
   const currentRef = targetRef?.current || targetRef
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
-    const target = currentRef || (isBrowser() && document.getElementById('posts-wrapper'))
+    const target = currentRef || (isBrowser && document.getElementById('posts-wrapper'))
     if (target) {
       const clientHeight = target.clientHeight
       const scrollY = window.pageYOffset

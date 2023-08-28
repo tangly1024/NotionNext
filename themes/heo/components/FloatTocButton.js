@@ -28,8 +28,7 @@ export default function FloatTocButton(props) {
         <div className='fixed top-0 right-0 z-40 '>
             {/* 侧边菜单 */}
             <div
-                className={`${tocVisible ? 'shadow-card ' : ' -mr-72  opacity-0'} 
-                 w-60 duration-200 fixed right-4 bottom-12 rounded-xl py-2 bg-white dark:bg-gray-900'`}>
+                className={`${tocVisible ? 'shadow-card ' : ' -mr-72  opacity-0'} dark:bg-black w-60 duration-200 fixed right-4 bottom-12 rounded-xl py-2 bg-white dark:bg-gray-900'`}>
                 {post && <>
                     <div className='dark:text-gray-400 text-gray-600'>
                         <Catalog toc={post.toc} />
