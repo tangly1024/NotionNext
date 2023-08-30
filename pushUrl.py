@@ -1,9 +1,16 @@
+import random
 import re
 import ssl
+import time
+
 import requests
 import argparse
 
 ssl._create_default_https_context = ssl._create_unverified_context
+
+
+# 每日推送限额，可根据实际情况修改
+QUOTA = 100
 
 
 def parse_stiemap(site):
@@ -67,14 +74,25 @@ if __name__ == '__main__':
     parser.add_argument('--bing_api_key', type=str, default=None, help='your bing api key')
     parser.add_argument('--baidu_token', type=str, default=None, help='Your baidu push token')
     args = parser.parse_args()
+
+    # 获取当前的时间戳作为随机种子
+    current_timestamp = int(time.time())
+    random.seed(current_timestamp)
+
     if args.url:
+        # 解析urls
         urls = parse_stiemap(args.url)
         if urls is not None:
+            # 判断当前urls数量是否超过额度，若超过则取当日最大值，默认为100，可根据实际情况修改
+            if len(urls) > QUOTA:
+                urls = random.sample(urls, QUOTA)
+            # 推送bing
             if args.bing_api_key:
                 push_to_bing(args.url, urls, args.bing_api_key)
             else:
                 print('未配置 Bing API Key')
                 print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
+            # 推送百度
             if args.baidu_token:
                 push_to_baidu(args.url, urls, args.baidu_token)
             else:
