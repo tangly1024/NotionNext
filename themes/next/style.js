@@ -14,6 +14,10 @@ const Style = () => {
     .dark body{
         background-color: black;
     }
+    #announcement-content #notion-article {
+      text-align: start;
+      font-size: 6px;
+    }
 
   `}</style>
 }
