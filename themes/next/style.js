@@ -17,10 +17,11 @@ const Style = () => {
     #announcement-content #notion-article{
       text-align: start;
     }
-    #announcement-content #notion-article .notion {
+/*
+#announcement-content #notion-article .notion {
  font-size: 6px;
 }
-
+*/
   `}</style>
 }
 
