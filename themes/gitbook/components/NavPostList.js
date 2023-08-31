@@ -1,6 +1,7 @@
 import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
+import CONFIG from '../config'
 
 /**
  * 博客列表滚动分页
@@ -15,14 +16,21 @@ const NavPostList = (props) => {
   let selectedSth = false
   const groupedArray = filteredNavPages?.reduce((groups, item) => {
     const categoryName = item?.category ? item?.category : '' // 将category转换为字符串
-    const lastGroup = groups[groups.length - 1] // 获取最后一个分组
 
-    if (!lastGroup || lastGroup?.category !== categoryName) { // 如果当前元素的category与上一个元素不同，则创建新分组
-      groups.push({ category: categoryName, items: [] })
+    let existingGroup = null
+    // 开启自动分组排序
+    if (JSON.parse(CONFIG.AUTO_SORT)) {
+      existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
+    } else {
+      existingGroup = groups[groups.length - 1] // 获取最后一个分组
     }
 
-    groups[groups.length - 1].items.push(item) // 将元素加入对应的分组
-
+    // 添加数据
+    if (existingGroup && existingGroup.category === categoryName) {
+      existingGroup.items.push(item)
+    } else {
+      groups.push({ category: categoryName, items: [item] })
+    }
     return groups
   }, [])
 
