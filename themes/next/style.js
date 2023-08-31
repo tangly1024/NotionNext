@@ -16,8 +16,10 @@ const Style = () => {
     }
     #announcement-content #notion-article{
       text-align: start;
-      font-size: 5px;
     }
+    #announcement-content #notion-article .notion {
+ font-size: 5px;
+}
 
   `}</style>
 }
