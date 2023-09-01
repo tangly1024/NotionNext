@@ -63,7 +63,7 @@ const BlogListScroll = props => {
                         </div>
                     ))}
 
-                <div className="w-full my-4 py-4 text-center cursor-pointer "
+                <div className="w-full my-4 py-4 text-center cursor-pointer " style="color: lightgrey;font-size: 23px;font-weight: bold;"
                     onClick={handleGetMore}>
                     {' '}
                     {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
