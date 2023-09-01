@@ -1,6 +1,6 @@
 const CONFIG = {
 
-  POST_LIST_COVER: true, // 文章列表显示图片封面
+  POST_LIST_COVER: false, // 文章列表显示图片封面
   POST_LIST_COVER_FORCE: false, // 即使没有封面也将站点背景图设置为封面
   POST_LIST_PREVIEW: false, // 显示文章预览
 
