@@ -1,16 +1,19 @@
 /* 静态文件导入 自定义样式*/
 
-#theme-fukasawa .sideLeft hr{
+html.dark #theme-fukasawa .sideLeft hr{
     opacity: .04;
 }
-#theme-fukasawa .sideLeft{
+html.dark #theme-fukasawa .sideLeft{
     position:fixed !important;
 }
-#theme-fukasawa .sideLeft i{
+html.dark #theme-fukasawa .sideLeft i{
     color:#efefef;
 }
-#theme-fukasawa #posts-wrapper .more{
+html.dark #theme-fukasawa #posts-wrapper .more{
     color:#efefef;
+}
+
+#theme-fukasawa #posts-wrapper .more{
     font-size:1.5em;
     font-weight:bold;
 }
