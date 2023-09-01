@@ -4,8 +4,15 @@
     opacity: .04;
 }
 #theme-fukasawa .sideLeft{
-    position:fixed;
+    position:fixed !important;
 }
+#theme-fukasawa .sideLeft i{
+    color:#efefef;
+}
+#theme-fukasawa #posts-wrapper .more{
+    color:#efefef;
+}
+
 .fa-info:before {
     content: "\f05a";
 }
