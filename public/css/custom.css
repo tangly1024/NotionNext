@@ -3,6 +3,9 @@
 #theme-fukasawa .sideLeft hr{
     opacity: .04;
 }
+#theme-fukasawa .sideLeft{
+    position:fixed;
+}
 .fa-info:before {
     content: "\f05a";
 }
