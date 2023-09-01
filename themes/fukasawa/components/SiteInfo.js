@@ -23,8 +23,9 @@ function SiteInfo ({ title }) {
             <br />
            {/* 
            <span className='text-xs font-serif'> Powered by <a href='#' className='underline'>NotionNext {BLOG.VERSION}</a></span><br /></span> 
-            */}
+            
             <h1>{title}</h1>
+            */}
         </footer>
   )
 }
