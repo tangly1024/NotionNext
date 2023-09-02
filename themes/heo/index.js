@@ -31,6 +31,8 @@ import LatestPostsGroup from './components/LatestPostsGroup'
 import FloatTocButton from './components/FloatTocButton'
 import replaceSearchResult from '@/components/Mark'
 import LazyImage from '@/components/LazyImage'
+import WWAds from '@/components/WWAds'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -87,6 +89,9 @@ const LayoutIndex = (props) => {
         {/* 通知横幅 */}
         <NoticeBar />
         <Hero {...props} />
+        <div className='max-w-[86rem] mx-auto px-3'>
+          <WWAds className='w-full' orientation='horizontal' />
+        </div>
     </header>
 
   // 右侧栏 用户信息+标签列表
@@ -226,6 +231,7 @@ const LayoutSlug = props => {
   return (
         <LayoutBase {...props} headerSlot={headerSlot} showCategory={false} showTag={false} slotRight={slotRight}>
             <div className="w-full max-w-5xl lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article">
+
                 {lock && <ArticleLock validPassword={validPassword} />}
 
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
@@ -238,7 +244,9 @@ const LayoutSlug = props => {
                         itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
                         {/* Notion文章主体 */}
                         <section className='px-5 justify-center mx-auto'>
+                            <WWAds orientation='horizontal' className='w-full'/>
                             {post && <NotionPage post={post} />}
+                            <WWAds orientation='horizontal' className='w-full'/>
                         </section>
 
                         {/* 分享 */}
@@ -256,12 +264,16 @@ const LayoutSlug = props => {
                     </article>
 
                     <div className={`${commentEnable && post ? '' : 'hidden'}`}>
+
                         <hr className='my-4 border-dashed' />
 
                         {/* 评论互动 */}
                         <div className="duration-200 overflow-x-auto px-5">
                             <div className='text-2xl dark:text-white'><i className='fas fa-comment mr-1' />{locale.COMMON.COMMENTS}</div>
                             <Comment frontMatter={post} className='' />
+                            <div className='py-2'>
+                             <AdSlot/>
+                            </div>
                         </div>
 
                     </div>

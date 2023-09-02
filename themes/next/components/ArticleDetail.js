@@ -34,7 +34,7 @@ export default function ArticleDetail(props) {
                 data-aos-duration="300"
                 data-aos-once="true"
                 data-aos-anchor-placement="top-bottom"
-                className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
+                className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray article-padding"
             >
 
                 {showArticleInfo && <header>
@@ -78,7 +78,7 @@ export default function ArticleDetail(props) {
                 </header>}
 
                 {/* Notion内容主体 */}
-                <article className='px-1 max-w-3xl mx-auto'>
+                <article className='mx-auto'>
                     {post && (<NotionPage post={post} />)}
                 </article>
 
