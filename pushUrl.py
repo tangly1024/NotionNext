@@ -15,7 +15,6 @@ QUOTA = 100
 
 def parse_stiemap(site):
     site = f'{site}/sitemap.xml'
-    print('解析站点地图中，请稍后……')
     try:
         result = requests.get(site)
         big = re.findall('<loc>(.*?)</loc>', result.content.decode('utf-8'), re.S)
@@ -86,9 +85,11 @@ if __name__ == '__main__':
                 urls = random.sample(urls, QUOTA)
             # 推送bing
             if args.bing_api_key:
+                print('正在推送至必应，请稍后……')
                 push_to_bing(args.url, urls, args.bing_api_key)
             # 推送百度
             if args.baidu_token:
+                print('正在推送至百度，请稍后……')
                 push_to_baidu(args.url, urls, args.baidu_token)
     else:
         print('请前往 Github Action Secrets 配置 URL')
