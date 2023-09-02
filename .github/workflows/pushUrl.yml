@@ -37,12 +37,19 @@ jobs:
 
       - name: Check if Secret exists
         env:
-          URL_SECRET: ${{ secrets.URL }}
+          URL: ${{ secrets.URLs }}
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKENs }}
+          BING_API_KEY: ${{ secrets.BING_API_KEYs }}
         run: |
-          if [ -n "$URL_SECRET" ]; then
-            echo "Secret URL_SECRET exists."
-            python pushUrl.py --url ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKENs }} --bing_api_key ${{ secrets.BING_API_KEYs }}
+          if [ -n "$URL" ]; then
+            if [ -n "$BAIDU_TOKEN" ]; then
+              python pushUrl.py --url ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKENs }}
+            fi
+            if [ -n "$BAIDU_TOKEN" ]; then
+              python pushUrl.py --url ${{ secrets.URL }} --bing_api_key ${{ secrets.BING_API_KEYs }}
+            fi
           else
-            echo "Secret URL_SECRET does not exist."
+            echo "请前往 Github Action Secrets 配置 URL:"
+            echo "详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9"
           fi
       
