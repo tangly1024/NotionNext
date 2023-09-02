@@ -70,7 +70,7 @@ def push_to_baidu(site, urls, token):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='parse sitemap')
-    parser.add_argument('--url', type=str, help='The url of your website')
+    parser.add_argument('--url', type=str, default=None, help='The url of your website')
     parser.add_argument('--bing_api_key', type=str, default=None, help='your bing api key')
     parser.add_argument('--baidu_token', type=str, default=None, help='Your baidu push token')
     args = parser.parse_args()
