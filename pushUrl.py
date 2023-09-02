@@ -15,12 +15,9 @@ QUOTA = 100
 
 def parse_stiemap(site):
     site = f'{site}/sitemap.xml'
-    print('解析站点地图中，请稍后……')
     try:
         result = requests.get(site)
         big = re.findall('<loc>(.*?)</loc>', result.content.decode('utf-8'), re.S)
-        print('当前已有url:')
-        print(list(big))
         return list(big)
     except:
         print('请检查你的url是否有误。')
@@ -70,7 +67,7 @@ def push_to_baidu(site, urls, token):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='parse sitemap')
-    parser.add_argument('--url', type=str, help='The url of your website')
+    parser.add_argument('--url', type=str, default=None, help='The url of your website')
     parser.add_argument('--bing_api_key', type=str, default=None, help='your bing api key')
     parser.add_argument('--baidu_token', type=str, default=None, help='Your baidu push token')
     args = parser.parse_args()
@@ -88,16 +85,12 @@ if __name__ == '__main__':
                 urls = random.sample(urls, QUOTA)
             # 推送bing
             if args.bing_api_key:
+                print('正在推送至必应，请稍后……')
                 push_to_bing(args.url, urls, args.bing_api_key)
-            else:
-                print('未配置 Bing API Key')
-                print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
             # 推送百度
             if args.baidu_token:
+                print('正在推送至百度，请稍后……')
                 push_to_baidu(args.url, urls, args.baidu_token)
-            else:
-                print('未配置 Baidu Token')
-                print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
     else:
         print('请前往 Github Action Secrets 配置 URL')
         print('详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9')
