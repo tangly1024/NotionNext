@@ -36,4 +36,18 @@ jobs:
         run: pip install requests
 
       - name: Push
-        run: python pushUrl.py --url ${{ secrets.URLs }} --baidu_token ${{ secrets.BAIDU_TOKEN }} --bing_api_key ${{ secrets.BING_API_KEY }}
+        run:
+          if [ -n "${{ secrets.URLs }}" ]; then
+            if [ -n "${{ secrets.BAIDU_TOKEN }}" ]; then
+              python pushUrl.py --url ${{ secrets.URLs }} --baidu_token ${{ secrets.BAIDU_TOKEN }}
+            else
+              echo "Secret BAIDU_TOKEN does not exist."
+            fi
+            if [ -n "${{ secrets.BING_API_KEY }}" ]; then
+              python pushUrl.py --url ${{ secrets.URLs }} --bing_api_key ${{ secrets.BING_API_KEY }}
+            else
+              echo "Secret BING_API_KEY does not exist."
+            fi  
+          else
+            echo "Secret URLs does not exist."
+          fi
