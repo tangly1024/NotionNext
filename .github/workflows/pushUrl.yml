@@ -38,7 +38,7 @@ jobs:
       - name: Push
         env:
           URL: ${{ secrets.URL }}
-          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKENs }}
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
           BING_API_KEY: ${{ secrets.BING_API_KEYs }}
         run: |
           if [ -n "$URL" ]; then
@@ -46,16 +46,16 @@ jobs:
               python pushUrl.py --url ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKENs }}
             else
               echo "请前往 Github Action Secrets 配置 BAIDU_TOKEN:"
-              echo "详情参见: 'https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+              echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
             fi
             if [ -n "$BAIDU_TOKEN" ]; then
               python pushUrl.py --url ${{ secrets.URL }} --bing_api_key ${{ secrets.BING_API_KEYs }}
             else
               echo "请前往 Github Action Secrets 配置 BING_API_KEY:"
-              echo "详情参见: 'https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+              echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
             fi
           else
             echo "请前往 Github Action Secrets 配置 URL:"
-            echo "详情参见: 'https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+            echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
           fi
       
