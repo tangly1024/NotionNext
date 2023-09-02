@@ -19,8 +19,6 @@ def parse_stiemap(site):
     try:
         result = requests.get(site)
         big = re.findall('<loc>(.*?)</loc>', result.content.decode('utf-8'), re.S)
-        print('当前已有url:')
-        print(list(big))
         return list(big)
     except:
         print('请检查你的url是否有误。')
