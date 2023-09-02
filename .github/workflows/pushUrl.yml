@@ -37,10 +37,11 @@ jobs:
 
       - name: Check if Secret exists
         env:
-          URL_SECRET: ${{ secrets.URLs }}
+          URL_SECRET: ${{ secrets.URL }}
         run: |
           if [ -n "$URL_SECRET" ]; then
             echo "Secret URL_SECRET exists."
+            python pushUrl.py --url ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKENs }} --bing_api_key ${{ secrets.BING_API_KEYs }}
           else
             echo "Secret URL_SECRET does not exist."
           fi
