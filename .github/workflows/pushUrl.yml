@@ -35,9 +35,9 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Check if Secret exists
+      - name: Push
         env:
-          URL: ${{ secrets.URLs }}
+          URL: ${{ secrets.URL }}
           BAIDU_TOKEN: ${{ secrets.BAIDU_TOKENs }}
           BING_API_KEY: ${{ secrets.BING_API_KEYs }}
         run: |
@@ -50,6 +50,6 @@ jobs:
             fi
           else
             echo "请前往 Github Action Secrets 配置 URL:"
-            echo "详情参见: https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9"
+            echo "详情参见: 'https://ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
           fi
       
