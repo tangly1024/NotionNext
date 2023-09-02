@@ -32,11 +32,8 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: install requests
+      - name: Install requests
         run: pip install requests
 
-      - name: baiduPush
-        run: python pushUrl.py ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKEN }}
-
-      - name: bingPush
-        run: python pushUrl.py ${{ secrets.URL }} --bing_api_key ${{ secrets.BING_API_KEY }}
+      - name: Push
+        run: python pushUrl.py --url ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKEN }} --bing_api_key ${{ secrets.BING_API_KEY }}
