@@ -38,7 +38,7 @@ jobs:
       - name: Push
         env:
           URL: ${{ secrets.URL }}
-          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKENs }}
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
           BING_API_KEY: ${{ secrets.BING_API_KEY }}
         run: |
           if [ -n "$URL" ]; then
