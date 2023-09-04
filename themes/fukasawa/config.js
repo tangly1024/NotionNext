@@ -6,7 +6,7 @@ const CONFIG = {
   RANDAM_THUMBNAIL: () => {
     var randomNum = Math.floor(Math.random() * 10) + 1;
     // 拼接图片路径
-    var imagePath = "/images/random/" + randomNum + ".jpg";
+    var imagePath = "/images/random/" + randomNum + ".png";
     return imagePath
   },
   // 菜单
