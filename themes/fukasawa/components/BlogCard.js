@@ -6,14 +6,15 @@ import CONFIG_FUKA from '../config'
 import LazyImage from '@/components/LazyImage'
 
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
-  // fukasawa 强制显示图片
-  if (CONFIG_FUKA.POST_LIST_COVER_FORCE && post && !post.pageCover) {
-    post.pageCoverThumbnail = siteInfo?.pageCover
-  }
-  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.pageCoverThumbnail
+    const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
+    // fukasawa 强制显示图片
+    if (CONFIG_FUKA.POST_LIST_COVER_FORCE && post && !post.pageCover) {
+        //post.pageCoverThumbnail = siteInfo?.pageCover
+        post.pageCoverThumbnail = CONFIG_FUKA.RANDAM_THUMBNAIL
+    }
+    const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.pageCoverThumbnail
 
-  return (
+    return (
         <div
             data-aos="fade-up"
             data-aos-duration="600"
@@ -39,7 +40,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                 {/* 文字部分 */}
                 <div className="flex flex-col w-full">
                     <Link passHref href={`${BLOG.SUB_PATH}/${post.slug}`}
-                         className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
+                        className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
                     >
                         {post.title}
                     </Link>
@@ -72,7 +73,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default BlogCard

@@ -1,9 +1,14 @@
 const CONFIG = {
 
   POST_LIST_COVER: true, // 文章列表显示图片封面
-  POST_LIST_COVER_FORCE: false, // 即使没有封面也将站点背景图设置为封面
+  POST_LIST_COVER_FORCE: true, // 即使没有封面也将站点背景图设置为封面
   POST_LIST_PREVIEW: true, // 显示文章预览
-
+  RANDAM_THUMBNAIL: () => {
+    var randomNum = Math.floor(Math.random() * 10) + 1;
+    // 拼接图片路径
+    var imagePath = "/images/random/" + randomNum + ".jpg";
+    return imagePath
+  },
   // 菜单
   MENU_CATEGORY: true, // 显示分类
   MENU_TAG: true, // 显示标签
