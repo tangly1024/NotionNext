@@ -10,7 +10,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
     // fukasawa 强制显示图片
     if (CONFIG_FUKA.POST_LIST_COVER_FORCE && post && !post.pageCover) {
         //post.pageCoverThumbnail = siteInfo?.pageCover
-        post.pageCoverThumbnail = CONFIG_FUKA.RANDAM_THUMBNAIL
+        post.pageCoverThumbnail = CONFIG_FUKA.RANDAM_THUMBNAIL()
     }
     const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.pageCoverThumbnail
 
