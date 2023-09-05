@@ -32,11 +32,30 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: install requests
+      - name: Install requests
         run: pip install requests
 
-      - name: baiduPush
-        run: python pushUrl.py ${{ secrets.URL }} --baidu_token ${{ secrets.BAIDU_TOKEN }}
-
-      - name: bingPush
-        run: python pushUrl.py ${{ secrets.URL }} --bing_api_key ${{ secrets.BING_API_KEY }}
+      - name: Push
+        env:
+          URL: ${{ secrets.URL }}
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
+          BING_API_KEY: ${{ secrets.BING_API_KEY }}
+        run: |
+          if [ -n "$URL" ]; then
+            if [ -n "$BAIDU_TOKEN" ]; then
+              python pushUrl.py --url $URL --baidu_token $BAIDU_TOKEN
+            else
+              echo "请前往 Github Action Secrets 配置 BAIDU_TOKEN:"
+              echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+            fi
+            if [ -n "$BING_API_KEY" ]; then
+              python pushUrl.py --url $URL --bing_api_key $BING_API_KEY
+            else
+              echo "请前往 Github Action Secrets 配置 BING_API_KEY:"
+              echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+            fi
+          else
+            echo "请前往 Github Action Secrets 配置 URL:"
+            echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+          fi
+      
