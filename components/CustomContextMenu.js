@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { useGlobal } from '@/lib/global'
 import { saveDarkModeToCookies, THEMES } from '@/themes/theme'
+import BLOG from '@/blog.config'
+import useWindowSize from '@/hooks/useWindowSize'
 
 /**
  * 自定义右键菜单
@@ -14,19 +16,33 @@ export default function CustomContextMenu(props) {
   const [show, setShow] = useState(false)
   const { isDarkMode, updateDarkMode, locale } = useGlobal()
   const menuRef = useRef(null)
+  const windowSize = useWindowSize()
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
 
   const { latestPosts } = props
   const router = useRouter()
+  /**
+   * 随机跳转文章
+   */
   function handleJumpToRandomPost() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(randomPost.slug)
+    router.push(`${BLOG.SUB_PATH}/${randomPost?.slug}`)
   }
+
+  useLayoutEffect(() => {
+    setWidth(menuRef.current.offsetWidth)
+    setHeight(menuRef.current.offsetHeight)
+  }, [])
 
   useEffect(() => {
     const handleContextMenu = (event) => {
       event.preventDefault()
-      setPosition({ y: `${event.clientY}px`, x: `${event.clientX}px` })
+      // 计算点击位置加菜单宽高是否超出屏幕，如果超出则贴边弹出
+      const x = (event.clientX < windowSize.width - width) ? event.clientX : windowSize.width - width
+      const y = (event.clientY < windowSize.height - height) ? event.clientY : windowSize.height - height
+      setPosition({ y: `${y}px`, x: `${x}px` })
       setShow(true)
     }
 
@@ -43,7 +59,7 @@ export default function CustomContextMenu(props) {
       window.removeEventListener('contextmenu', handleContextMenu)
       window.removeEventListener('click', handleClick)
     }
-  }, [])
+  }, [windowSize])
 
   function handleBack() {
     window.history.back()

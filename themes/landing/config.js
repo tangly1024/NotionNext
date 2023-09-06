@@ -47,7 +47,7 @@ const CONFIG = {
   FEATURES_BLOCK_6_P: 'NotionNext，助您轻松开始写作',
 
   // 感言
-  TESTIMONIALS_HEADER: '已搭建近4000个网站、浏览量突破 100,000,000+',
+  TESTIMONIALS_HEADER: '已搭建超4000个网站、浏览量突破 100,000,000+',
   TESTIMONIALS_P: '网站内容涵盖地产、教育、建筑、医学、机械、IT、电子、软件、自媒体、数位游民、短视频、电商、学生、摄影爱好者、旅行爱好者等等各行各业',
 
   TESTIMONIALS_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
@@ -55,7 +55,10 @@ const CONFIG = {
   TESTIMONIALS_ID: 'Ryan`Log 站长',
   TESTIMONIALS_SOCIAL_NAME: '@Gaoran',
   TESTIMONIALS_SOCIAL_URL: 'https://blog.gaoran.xyz/',
-  TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化成都远不如这个方法，已经用起来了！ “',
+  TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ “',
+
+  POST_REDIRECT_ENABLE: process.env.NEXT_PUBLIC_POST_REDIRECT_ENABLE || false, // 是否开启文章地址重定向 ； 用于迁移旧网站域名
+  POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://blog.tangly1024.com', // 重定向网站地址
 
   NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }

@@ -10,7 +10,6 @@ import { isBrowser } from '@/lib/utils'
  * @constructor
  */
 const Catalog = ({ post }) => {
-  const tocIds = []
   const toc = post?.toc
   // 同步选中目录事件
   const [activeSection, setActiveSection] = useState(null)
@@ -28,7 +27,7 @@ const Catalog = ({ post }) => {
   const actionSectionScrollSpy = useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
-    let currentSectionId = activeSection
+    let currentSectionId = null
     for (let i = 0; i < sections.length; ++i) {
       const section = sections[i]
       if (!section || !(section instanceof Element)) continue
@@ -48,8 +47,9 @@ const Catalog = ({ post }) => {
       break
     }
     setActiveSection(currentSectionId)
+    const tocIds = post?.toc?.map((t) => uuidToId(t.id)) || []
     const index = tocIds.indexOf(currentSectionId) || 0
-    if (isBrowser() && tocIds?.length > 0) {
+    if (isBrowser && tocIds?.length > 0) {
       for (const tocWrapper of document?.getElementsByClassName('toc-wrapper')) {
         tocWrapper?.scrollTo({ top: 28 * index, behavior: 'smooth' })
       }
@@ -62,11 +62,10 @@ const Catalog = ({ post }) => {
   }
 
   return <>
-    <div id='toc-wrapper' className='toc-wrapper overflow-y-auto max-h-96 overscroll-none scroll-hidden'>
+    <div id='toc-wrapper' className='toc-wrapper overflow-y-auto my-2 max-h-80 overscroll-none scroll-hidden'>
       <nav className='h-full  text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
-          tocIds.push(id)
           return (
             <a
               key={id}

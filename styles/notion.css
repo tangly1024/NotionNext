@@ -746,6 +746,8 @@ svg.notion-page-icon {
 
 .notion .notion-code {
   font-size: 85%;
+  margin-top: 0;
+  margin-bottom: 0.5em;
 }
 
 pre[class*='language-'] {
@@ -1393,6 +1395,10 @@ code[class*='language-'] {
   white-space: normal;
 }
 
+.katex-display>.katex>.katex-html>.tag {
+    position: inherit !important;
+}
+
 .notion-page-title {
   display: inline-flex;
   max-width: 100%;
@@ -1411,6 +1417,10 @@ code[class*='language-'] {
   flex-shrink: 0;
   margin-left: 2px;
   margin-right: 6px;
+}
+
+.notion-collection {
+  @apply max-w-0;
 }
 
 .notion-collection-card{

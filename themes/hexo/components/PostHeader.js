@@ -3,6 +3,8 @@ import TagItemMini from './TagItemMini'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
 
 export default function PostHeader({ post, siteInfo }) {
   const { locale } = useGlobal()
@@ -10,14 +12,12 @@ export default function PostHeader({ post, siteInfo }) {
   if (!post) {
     return <></>
   }
-  const headerImage = post?.pageCover ? `url("${post.pageCover}")` : `url("${siteInfo?.pageCover}")`
+  const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
 
   return (
-    <div
-      id="header"
-      className="w-full h-96 relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10"
-      style={{ backgroundImage: headerImage }}
-    >
+    <div id="header" className="w-full h-96 relative md:flex-shrink-0 z-10" >
+      <LazyImage priority={true} src={headerImage} className='w-full h-full object-cover object-center absolute top-0'/>
+
       <header id='article-header-cover'
             className="bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center ">
 
@@ -43,21 +43,21 @@ export default function PostHeader({ post, siteInfo }) {
               {post?.type !== 'Page' && (
                 <>
                   <Link
-                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                     passHref
                     className="pl-1 mr-2 cursor-pointer hover:underline">
 
-                    {locale.COMMON.POST_TIME}:{post?.publishTime}
+                    {locale.COMMON.POST_TIME}: {post?.publishDay}
 
                   </Link>
                 </>
               )}
               <div className="pl-1 mr-2">
-                {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
+                {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}
               </div>
             </div>
 
-            {BLOG.ANALYTICS_BUSUANZI_ENABLE && <div className="busuanzi_container_page_pv font-light mr-2">
+            {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
               {locale.COMMON.VIEWS}
             </div>}
