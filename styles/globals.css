@@ -100,10 +100,6 @@ nav {
   width: 0 !important;
 }
 
-.notion-collection {
-  @apply max-w-0;
-}
-
 .glassmorphism {
   background: hsla(0, 0%, 100%, 0.05);
   -webkit-backdrop-filter: blur(10px);
@@ -157,20 +153,6 @@ nav {
   vertical-align: baseline;
   height: 1.25em;
   margin: -0.125em 0.25em;
-}
-
-
-.nobelium{
-    @apply flex flex-col justify-between
-}
-
-.nobelium .notion-code{
-    /* @apply max-w-2xl; */
-}
-
-.next #announcement-content *{
- font-size:13px !important;
- line-height:1.7 !important;
 }
 
 /* twikoo 评论区超链接样式 */
