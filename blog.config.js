@@ -20,7 +20,7 @@ const BLOG = {
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Ah新', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '恭喜你在这里看到了一只新🐽', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://ahxin.cn', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'ah新的博客,我是ah新呀,方岸新,方岸新的个人网站,方岸新的个人博客,阿新的个人博客,AHXIN,阿新的个人网站,ah新的个人网站,不知所措的新哥', // 网站关键词 英文逗号隔开
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'ah新的博客,我是ah新呀,方岸新,方岸新的个人网站,方岸新的个人博客,阿新的个人博客,AHXIN,阿新的个人网站,ah新的个人网站,不知所措的新哥,ahxin', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'ahxin188@qq.com', // 邮箱地址 例如mail@tangly1024.com
