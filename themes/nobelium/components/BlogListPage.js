@@ -13,11 +13,11 @@ export const BlogListPage = props => {
   const currentPage = +page
 
   const showPrev = currentPage > 1
-  const showNext = page < totalPage
+  const showNext = currentPage < totalPage && posts?.length > 0
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
-      <div className="w-full md:pr-12 mb-12">
+      <div className="w-full md:pr-12 my-6">
 
             <div id="posts-wrapper">
                 {posts?.map(post => (
