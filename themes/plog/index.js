@@ -18,7 +18,6 @@ import ShareBar from '@/components/ShareBar'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import BottomNav from './components/BottomNav'
-import { saveDarkModeToCookies } from '@/themes/theme'
 import Modal from './components/Modal'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
@@ -36,29 +35,13 @@ export const usePlogGlobal = () => useContext(ThemeGlobalPlog)
  */
 const LayoutBase = props => {
   const { children, topSlot, meta } = props
-  const { onLoading, updateDarkMode } = useGlobal()
+  const { onLoading } = useGlobal()
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState(null)
 
-  // 用户手动设置主题
-  const setDarkMode = () => {
-    saveDarkModeToCookies(true)
-    updateDarkMode(true)
-    const htmlElement = document.getElementsByTagName('html')[0]
-    htmlElement.classList?.remove('light')
-    htmlElement.classList?.add('dark')
-  }
-
-  // plog主题默认 深色模式
-  useEffect(() => {
-    setTimeout(() => {
-      setDarkMode()
-    }, 100)
-  }, [])
-
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
-        <div id='theme-plog' className='plog relative dark:text-gray-300 w-full bg-black min-h-screen'>
+        <div id='theme-plog' className='plog relative dark:text-gray-300 w-full dark:bg-black min-h-screen'>
             {/* SEO相关 */}
             <CommonHead meta={meta}/>
             <Style/>
