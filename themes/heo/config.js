@@ -8,8 +8,8 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HERO_TITLE_1: 'miniprogram',
-  HERO_TITLE_2: 'linux',
-  HERO_TITLE_3: ';ython',
+  HERO_TITLE_2: 'python',
+  HERO_TITLE_3: ' ',
   HERO_TITLE_4: ' ',
   HERO_TITLE_5: ' ',
   HERO_TITLE_LINK: 'https://spade.eu.org',
