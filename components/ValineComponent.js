@@ -5,8 +5,7 @@ import { useEffect } from 'react'
 const ValineComponent = ({ path }) => {
   const loadValine = async () => {
     try {
-      const url = await loadExternalResource(BLOG.COMMENT_VALINE_CDN, 'js')
-      console.log('valine 加载成功', url)
+      await loadExternalResource(BLOG.COMMENT_VALINE_CDN, 'js')
       const Valine = window.Valine
       // eslint-disable-next-line no-unused-vars
       const valine = new Valine({
@@ -21,7 +20,6 @@ const ValineComponent = ({ path }) => {
         serverURLs: BLOG.COMMENT_VALINE_SERVER_URLS,
         visitor: true
       })
-      console.log('初始化valine成功')
     } catch (error) {
       console.error('twikoo 加载失败', error)
     }

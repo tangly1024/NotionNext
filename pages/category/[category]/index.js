@@ -1,4 +1,4 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
@@ -34,10 +34,10 @@ export default function Category(props) {
 
 export async function getStaticProps({ params: { category } }) {
   const from = 'category-props'
-  let props = await getGlobalNotionData({ from })
+  let props = await getGlobalData({ from })
 
   // 过滤状态
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   // 处理过滤
   props.posts = props.posts.filter(post => post && post.category && post.category.includes(category))
   // 处理文章页数
@@ -61,7 +61,7 @@ export async function getStaticProps({ params: { category } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions } = await getGlobalNotionData({ from })
+  const { categoryOptions } = await getGlobalData({ from })
   return {
     paths: Object.keys(categoryOptions).map(category => ({
       params: { category: categoryOptions[category]?.name }

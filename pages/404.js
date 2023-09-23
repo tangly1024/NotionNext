@@ -1,4 +1,4 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
@@ -21,7 +21,7 @@ const NoFound = props => {
 }
 
 export async function getStaticProps () {
-  const props = (await getGlobalNotionData({ from: '404' })) || {}
+  const props = (await getGlobalData({ from: '404' })) || {}
   return { props }
 }
 

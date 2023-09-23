@@ -4,9 +4,8 @@ import { useImperativeHandle, useRef, useState } from 'react'
 
 let lock = false
 
-const SearchInput = ({ currentTag, currentSearch, cRef }) => {
+const SearchInput = ({ currentTag, keyword, cRef }) => {
   const { locale } = useGlobal()
-  // const [searchKey, setSearchKey] = useState(currentSearch || '')
   const [onLoading, setLoadingState] = useState(false)
   const router = useRouter()
   const searchInputRef = useRef()
@@ -77,7 +76,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
             onCompositionUpdate={lockSearchInput}
             onCompositionEnd={unLockSearchInput}
             onChange={e => updateSearchKey(e.target.value)}
-            defaultValue={currentSearch || ''}
+            defaultValue={keyword || ''}
         />
 
         <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'

@@ -13,12 +13,12 @@ export const BlogListPage = props => {
 
   const showPrev = currentPage > 1
   const showNext = page < totalPage
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
         <div className="w-full md:pr-8 mb-12">
 
-            <div id="container">
+            <div id="posts-wrapper">
                 {posts?.map((p, index) => (<div key={p.id}>
                         {(index + 1) % 3 === 0 && <AdSlot type='in-article' />}
                         { (index + 1) === 4 && <AdSlot type='flow'/>}

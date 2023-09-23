@@ -2,15 +2,10 @@ import cookie from 'react-cookies'
 import BLOG from '@/blog.config'
 import { getQueryParam, getQueryVariable } from '../lib/utils'
 import dynamic from 'next/dynamic'
-// 使用 __THEME__ 变量来动态导入主题组件
+import getConfig from 'next/config'
 import * as ThemeComponents from '@theme-components'
-/**
- * 所有主题枚举
- */
-export const ALL_THEME = [
-  'hexo', 'matery', 'next', 'medium', 'fukasawa', 'nobelium', 'example', 'simple'
-]
-
+// 所有主题在next.config.js中扫描
+export const { THEMES = [] } = getConfig().publicRuntimeConfig
 /**
  * 加载主题文件
  * 如果是
@@ -18,18 +13,17 @@ export const ALL_THEME = [
  * @returns
  */
 export const getLayoutByTheme = (router) => {
-  const theme = getQueryParam(router.asPath, 'theme') || BLOG.THEME
+  const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
   const layout = getLayoutNameByPath(router.pathname)
-  if (theme !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${theme}/${layout}`), { ssr: true })
+  if (themeQuery !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
   } else {
-    // console.log('静态主题', layout)
     return ThemeComponents[layout]
   }
 }
 
 /**
- * 路径 对应的Layout名称
+ * 根据路径 获取对应的layout
  * @param {*} path
  * @returns
  */
@@ -37,30 +31,24 @@ export const getLayoutNameByPath = (path) => {
   switch (path) {
     case '/':
       return 'LayoutIndex'
-    case '/page/[page]':
-      return 'LayoutPage'
     case '/archive':
       return 'LayoutArchive'
+    case '/page/[page]':
+    case '/category/[category]':
+    case '/category/[category]/page/[page]':
+    case '/tag/[tag]':
+    case '/tag/[tag]/page/[page]':
+      return 'LayoutPostList'
     case '/search':
-      return 'LayoutSearch'
     case '/search/[keyword]':
-      return 'LayoutSearch'
     case '/search/[keyword]/page/[page]':
       return 'LayoutSearch'
     case '/404':
       return 'Layout404'
     case '/tag':
       return 'LayoutTagIndex'
-    case '/tag/[tag]':
-      return 'LayoutTag'
-    case '/tag/[tag]/page/[page]':
-      return 'LayoutTag'
     case '/category':
       return 'LayoutCategoryIndex'
-    case '/category/[category]':
-      return 'LayoutCategory'
-    case '/category/[category]/page/[page]':
-      return 'LayoutCategory'
     default:
       return 'LayoutSlug'
   }
@@ -72,16 +60,25 @@ export const getLayoutNameByPath = (path) => {
  * @param updateDarkMode 更改主题ChangeState函数
  * @description 读取cookie中存的用户主题
  */
-export const initDarkMode = (isDarkMode, updateDarkMode) => {
+export const initDarkMode = (updateDarkMode) => {
+  // 查看用户设备浏览器是否深色模型
+  let newDarkMode = isPreferDark()
+
+  // 查看cookie中是否用户强制设置深色模式
+  const cookieDarkMode = loadDarkModeFromCookies()
+  if (cookieDarkMode) {
+    newDarkMode = JSON.parse(cookieDarkMode)
+  }
+
+  // url查询条件中是否深色模式
   const queryMode = getQueryVariable('mode')
   if (queryMode) {
-    isDarkMode = queryMode === 'dark'
-  } else if (!isDarkMode) {
-    isDarkMode = isPreferDark()
+    newDarkMode = queryMode === 'dark'
   }
-  updateDarkMode(isDarkMode)
-  saveDarkModeToCookies(isDarkMode)
-  document.getElementsByTagName('html')[0].setAttribute('class', isDarkMode ? 'dark' : 'light')
+
+  updateDarkMode(newDarkMode)
+  saveDarkModeToCookies(newDarkMode)
+  document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'light')
 }
 
 /**
