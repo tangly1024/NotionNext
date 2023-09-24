@@ -13,7 +13,7 @@ import LogoBar from './LogoBar'
  */
 const BottomNav = props => {
   return <>
-        <div id="bottom-nav" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className={'z-20 px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'}>
+        <div id="bottom-nav" className={'dark:bg-black dark:bg-opacity-50z-20 px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'}>
             {/* 左侧logo文字栏 */}
             <LogoBar {...props}/>
             {/* 右下角菜单栏 */}
