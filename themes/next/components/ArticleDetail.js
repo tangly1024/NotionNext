@@ -12,6 +12,8 @@ import WordCount from './WordCount'
 import NotionPage from '@/components/NotionPage'
 import CONFIG from '../config'
 import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
 
 /**
  *
@@ -32,15 +34,14 @@ export default function ArticleDetail(props) {
                 data-aos-duration="300"
                 data-aos-once="true"
                 data-aos-anchor-placement="top-bottom"
-                className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray"
+                className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray article-padding"
             >
 
                 {showArticleInfo && <header>
                     {/* 头图 */}
                     {CONFIG.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.pageCover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img alt={post.title} src={post?.pageCover} className='object-center w-full' />
+                            <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />
                         </div>
                     )}
 
@@ -54,14 +55,14 @@ export default function ArticleDetail(props) {
                         <div className='flex flex-wrap justify-center'>
                             {post?.type !== 'Page' && (<>
                                 <Link
-                                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                                     passHref
                                     legacyBehavior>
                                     <div className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
-                                        <i className='far fa-calendar mr-1' /> {post?.publishTime}
+                                        <i className='far fa-calendar mr-1' /> {post?.publishDay}
                                     </div>
                                 </Link>
-                                <span className='mr-2'> | <i className='far fa-calendar-check mr-2' />{post.lastEditedTime} </span>
+                                <span className='mr-2'> | <i className='far fa-calendar-check mr-2' />{post.lastEditedDay} </span>
 
                                 <div className="hidden busuanzi_container_page_pv font-light mr-2">
                                     <i className='mr-1 fas fa-eye' />
@@ -77,7 +78,7 @@ export default function ArticleDetail(props) {
                 </header>}
 
                 {/* Notion内容主体 */}
-                <article className='px-1 max-w-3xl mx-auto'>
+                <article className='mx-auto'>
                     {post && (<NotionPage post={post} />)}
                 </article>
 

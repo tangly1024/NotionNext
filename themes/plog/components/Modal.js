@@ -4,6 +4,7 @@ import { usePlogGlobal } from '..'
 import { ArrowPath, ChevronLeft, ChevronRight } from '@/components/HeroIcons'
 import Link from 'next/link'
 import BLOG from '@/blog.config'
+import LazyImage from '@/components/LazyImage'
 
 /**
  * 弹出框
@@ -31,23 +32,23 @@ export default function Modal(props) {
 
   // 修改当前显示的遮罩内容
   function prev() {
+    setLoading(true)
     const index = posts.findIndex(post => post.slug === modalContent.slug)
     if (index === 0) {
       setModalContent(posts[posts.length - 1])
     } else {
       setModalContent(posts[index - 1])
     }
-    setLoading(true)
   }
   // 下一个
   const next = () => {
+    setLoading(true)
     const index = posts.findIndex(post => post.slug === modalContent.slug)
     if (index === posts.length - 1) {
       setModalContent(posts[0])
     } else {
       setModalContent(posts[index + 1])
     }
-    setLoading(true)
   }
 
   return (
@@ -84,8 +85,7 @@ export default function Modal(props) {
                                 </div>
 
                                 {/* 添加onLoad事件处理函数 */}
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={img} ref={imgRef} className={`w-full max-w-7xl max-h-[90vh] shadow-xl ${!loading ? ' animate__animated animate__fadeIn' : ''}`} onLoad={handleImageLoad} style={{ display: loading ? 'none' : 'block' }} />
+                                <LazyImage onLoad={handleImageLoad} src={img} ref={imgRef} style={{ display: loading ? 'none' : 'block' }} className={`w-full max-w-7xl max-h-[90vh] shadow-xl ${!loading ? ' animate__animated animate__fadeIn' : ''}`} />
 
                                 {!loading && (<>
                                     <div className='absolute bottom-0 left-0 m-4 z-20'>

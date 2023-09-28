@@ -18,15 +18,16 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return <BlogPostListEmpty />
   } else {
     return (
-      <div id="container" className='w-full'>
-        {/* 文章列表 */}
-        <div className="2xl:grid 2xl:grid-cols-2 grid-cols-1 gap-5">
-          {posts?.map(post => (
-            <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo}/>
-          ))}
-        </div>
-        {showPagination && <PaginationNumber page={page} totalPage={totalPage} />}
-      </div>
+            <div id="container" className='w-full'>
+                    {/* 文章列表 */}
+                    <div className="2xl:grid 2xl:grid-cols-2 grid-cols-1 gap-5">
+                        {posts?.map(post => (
+                            <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
+                        ))}
+                    </div>
+
+                    {showPagination && <PaginationNumber page={page} totalPage={totalPage} />}
+            </div>
     )
   }
 }

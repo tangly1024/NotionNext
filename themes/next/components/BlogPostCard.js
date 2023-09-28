@@ -9,6 +9,7 @@ import CONFIG from '../config'
 import NotionPage from '@/components/NotionPage'
 import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
+import { formatDateFmt } from '@/lib/formatDate'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
@@ -27,10 +28,10 @@ const BlogPostCard = ({ post, showSummary }) => {
             data-aos-duration="500"
             data-aos-once="true"
             data-aos-anchor-placement="top-bottom"
-            className={`cursor-pointer hover:underline text-3xl ${showPreview ? 'text-center' : ''
+            className={`cursor-pointer text-3xl ${showPreview ? 'text-center' : ''
               } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
 
-            <NotionIcon icon={post.pageIcon} /> {post.title}
+            <NotionIcon icon={post.pageIcon} /> <span className='menu-link'>{post.title}</span>
 
           </Link>
 
@@ -47,20 +48,20 @@ const BlogPostCard = ({ post, showSummary }) => {
                   <Link
                     href={`/category/${post.category}`}
                     passHref
-                    className="hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-sm hover:underline transform">
+                    className="hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-sm transform">
 
                     <i className="mr-1 fas fa-folder" />
-                    {post.category}
+                    <span className='menu-link'>{post.category}</span>
 
                   </Link>
                   <span className="mx-2">|</span>
                 </>
               )}
                 <Link
-                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                     passHref
-                    className="hover:text-blue-500 dark:hover:text-blue-400 font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
-                    {post.date?.start_date}
+                    className="hover:text-blue-500 dark:hover:text-blue-400 font-light cursor-pointer text-sm leading-4 mr-3">
+                    <span className='menu-link'>{post.date?.start_date}</span>
                 </Link>
             </div>
             <TwikooCommentCount post={post} className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-sm'/>
@@ -86,8 +87,8 @@ const BlogPostCard = ({ post, showSummary }) => {
           {/* 搜索结果 */}
           {post.results && (
             <p className="line-clamp-4 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-              {post.results.map(r => (
-                <span key={r}>{r}</span>
+              {post.results.map((r, index) => (
+                <span key={index}>{r}</span>
               ))}
             </p>
           )}

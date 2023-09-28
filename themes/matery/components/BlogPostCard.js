@@ -4,6 +4,8 @@ import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
+import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
@@ -21,23 +23,21 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             data-aos-delay={delay}
             data-aos-once="true"
             data-aos-anchor-placement="top-bottom"
-            className="w-full mb-4 overflow-auto shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
+            className="w-full mb-4 overflow-hidden shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
             {/* 固定高度 ，空白用图片拉升填充 */}
-            <div className="flex flex-col h-80 justify-between">
+            <div className="group flex flex-col h-80 justify-between">
 
                 {/* 头部图片 填充卡片 */}
                 {showPageCover && (
                     <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                        <div
-                            className="flex flex-grow w-full relative duration-200 bg-black rounded-t-md  cursor-pointer transform overflow-hidden">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                        <div className="flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden">
+                            <LazyImage
                                 src={post?.pageCoverThumbnail}
                                 alt={post.title}
-                                className="opacity-50 h-full w-full hover:scale-125 rounded-t-md  transform object-cover duration-500"
+                                className="h-full w-full group-hover:scale-125 group-hover:brightness-50 brightness-90 rounded-t-md transform object-cover duration-500"
                             />
-                            <span className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full' > {post.title}</span>
+                            <div className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full shadow-text'>{post.title}</div>
                         </div>
                     </Link>
                 )}
@@ -57,12 +57,12 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                         <div className='text-gray-800 justify-between flex my-2  dark:text-gray-300'>
                             <div>
                                 <Link
-                                    href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                                     passHref
                                     className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
 
                                     <i className="far fa-clock mr-1" />
-                                    {post.date?.start_date || post.lastEditedTime}
+                                    {post.date?.start_date || post.lastEditedDay}
 
                                 </Link>
                                 <TwikooCommentCount post={post} className='hover:underline cursor-pointer text-sm'/>

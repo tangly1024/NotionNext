@@ -39,9 +39,10 @@ export const getServerSideProps = async (ctx) => {
     }
   ]
   const postFields = allPages?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)?.map(post => {
+    const slugWithoutLeadingSlash = post?.slug.startsWith('/') ? post?.slug?.slice(1) : post.slug
     return {
-      loc: `${BLOG.LINK}/${post.slug}`,
-      lastmod: new Date(post?.publishTime).toISOString().split('T')[0],
+      loc: `${BLOG.LINK}/${slugWithoutLeadingSlash}`,
+      lastmod: new Date(post?.publishDay).toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     }

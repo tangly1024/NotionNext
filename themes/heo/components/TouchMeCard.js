@@ -22,11 +22,11 @@ export default function TouchMeCard() {
                         <h3 className='pt-2'>{CONFIG.SOCIAL_CARD_TITLE_2}</h3>
                         <div className='absolute left-0 top-0 w-full h-full' style={{ background: 'url(https://bu.dusays.com/2023/05/16/64633c4cd36a9.png) center center no-repeat' }}></div>
                     </div>}
-                backContent={<div className='font-[1000] text-xl h-full'>
-                    <Link href={CONFIG.SOCIAL_CARD_URL}>
+                backContent={<Link href={CONFIG.SOCIAL_CARD_URL}>
+                    <div className='font-[1000] text-xl h-full'>
                         {CONFIG.SOCIAL_CARD_TITLE_3}
-                    </Link>
-                </div>}
+                    </div>
+                </Link>}
             />
 
         </div>
