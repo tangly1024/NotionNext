@@ -13,6 +13,6 @@ export default function WWAds({ orientation = 'vertical', sticky = false, classN
   }
 
   return (
-    <div className={`wwads-cn ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'} ${sticky ? 'wwads-sticky' : ''} z-30 ${className || ''}`} data-id={BLOG.AD_WWADS_ID}></div>
+    <div className={`wwads-cn ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'} ${sticky ? 'wwads-sticky' : ''} z-10 ${className || ''}`} data-id={BLOG.AD_WWADS_ID}></div>
   )
 }

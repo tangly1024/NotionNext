@@ -62,7 +62,7 @@ const SideAreaRight = (props) => {
                             passHref
                             className='text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
 
-                            {locale.COMMON.MORE} <i className='fas fa-angle-right' />
+                            {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
 
                         </Link>
                     </div>
