@@ -10,9 +10,9 @@ const CONFIG = {
   ],
 
   // 英雄区(首页顶部大卡)
-  HERO_TITLE_1: '分享直播',
-  HERO_TITLE_2: '与内容创作',
-  HERO_TITLE_3: 'Bimu.tv',
+  HERO_TITLE_1: 'Bimu.tv',
+  HERO_TITLE_4: '你可能喜欢',
+  HERO_TITLE_5: '频道的精华内容',
   HERO_TITLE_LINK: 'http://bimu.live/',
 
   // 英雄区显示三个置顶分类
