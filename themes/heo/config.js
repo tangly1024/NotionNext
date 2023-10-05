@@ -12,7 +12,6 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HERO_TITLE_1: '来啦？',
   HERO_TITLE_2: '请上座',
-  HERO_TITLE_3: 'Bimu.tv',
   HERO_TITLE_4: '你可能喜欢',
   HERO_TITLE_5: '频道的精华内容',
   HERO_TITLE_LINK: 'http://bimu.live/',
@@ -28,14 +27,14 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
-    '你好！比木です',
+    '你好！可以鼠标点我',
     '🔍 分享内容创作相关',
     '🤝 涉及游戏、软硬件',
     '🏃 也是1名游戏玩家',
     '🏠 但不玩恐怖游戏（•̀ᴗ•́）',
-    '🧱 数码、科技、美食'
+    '🧱 数码、科技、美食、动漫均喜欢'
   ],
-  INFO_CARD_URL: 'https://bimu.tv/', // 个人资料底部按钮链接
+  INFO_CARD_URL: 'http://bimu.live', // 个人资料底部按钮链接
 
   // 用户技能图标
   GROUP_ICONS: [
