@@ -14,7 +14,7 @@ const CONFIG = {
   HERO_TITLE_2: '请上座',
   HERO_TITLE_4: '你可能喜欢',
   HERO_TITLE_5: '频道的精华内容',
-  HERO_TITLE_LINK: 'http://bimu.live/',
+  HERO_TITLE_LINK: '',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '0基础入门', url: '/tag/0基础入门' },
@@ -27,12 +27,12 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   INFOCARD_GREETINGS: [
-    '你好！可以鼠标点我',
+    '鼠标点我试试',
     '🔍 分享内容创作相关',
     '🤝 涉及游戏、软硬件',
-    '🏃 也是1名游戏玩家',
+    '🏃 我也是1名游戏玩家',
     '🏠 但不玩恐怖游戏（•̀ᴗ•́）',
-    '🧱 数码、科技、美食、动漫均喜欢'
+    '🧱 数码、美食、动漫均喜欢'
   ],
   INFO_CARD_URL: 'http://bimu.live', // 个人资料底部按钮链接
 
