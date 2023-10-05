@@ -12,7 +12,7 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HERO_TITLE_1: '分享直播',
   HERO_TITLE_2: '与内容创作',
-  HERO_TITLE_2: 'Bimu.tv',
+  HERO_TITLE_3: 'Bimu.tv',
   HERO_TITLE_LINK: 'http://bimu.live/',
 
   // 英雄区显示三个置顶分类
@@ -95,11 +95,11 @@ const CONFIG = {
     }
   ],
 
-  SOCIAL_CARD: false, // 是否显示右侧，点击加入社群按钮
+  SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
   SOCIAL_CARD_TITLE_1: '交流频道',
   SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   SOCIAL_CARD_TITLE_3: '点击加入社群',
-  SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/how-to-question',
+  SOCIAL_CARD_URL: 'https://discord.com/',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
