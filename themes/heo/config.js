@@ -10,10 +10,10 @@ const CONFIG = {
   ],
 
   // 英雄区(首页顶部大卡)
-  HERO_TITLE_1: '最【细】的直播教程',
-  HERO_TITLE_2: '最【干】的直播技巧',
-  HERO_TITLE_3: 'Bimu.tv',
-  HERO_TITLE_LINK: 'https://bimu.live/',
+  HERO_TITLE_1: '分享直播',
+  HERO_TITLE_2: '与内容创作',
+  HERO_TITLE_2: 'Bimu.tv',
+  HERO_TITLE_LINK: 'http://bimu.live/',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '0基础入门', url: '/tag/0基础入门' },
