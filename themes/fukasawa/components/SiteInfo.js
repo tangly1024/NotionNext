@@ -42,7 +42,7 @@ function SiteInfo ({ title }) {
             <br />
            <span className='text-xs font-serif'> Powered by NotionNext {BLOG.VERSION}</span><br /></span>          
             <h1>{title}</h1>
-             <span id="cdn">{`${cdnInfo}`}</span>
+             <span id="cdn">当前CDN节点:{`${cdnInfo}`}</span>
         </footer>
   )
 }
