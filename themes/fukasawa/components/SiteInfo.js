@@ -42,7 +42,7 @@ const getCDNinfo = (async () => {
             <br />
            <span className='text-xs font-serif'> Powered by NotionNext {BLOG.VERSION}</span><br /></span>          
             <h1>{title}</h1>
-             <span id="cdn">getCDNinfo()</span>
+             <span id="cdn">getCDNinfo</span>
         </footer>
   )
 }
