@@ -1,4 +1,6 @@
 import BLOG from '@/blog.config'
+import axios from 'axios';
+
 
 function SiteInfo ({ title }) {
   const d = new Date()
@@ -9,6 +11,22 @@ function SiteInfo ({ title }) {
     }
     return currentYear
   })()
+    const getCDNinfo = () => {
+        axios.get("/cdn-cgi/trace")
+        .then(res => {
+            let areas = "Antananarivo, Madagascar ".split(";");
+            let area = res.data.split("colo=")[1].split("\n")[0];
+            for (var i = 0; i < areas.length; i++) {
+                if (areas[i].indexOf(area) != -1) {
+                    document.getElementById("cdn").innerHTML = areas[i];
+                    break;
+                }
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
 
   return (
         <footer
@@ -23,7 +41,7 @@ function SiteInfo ({ title }) {
             <br />
            <span className='text-xs font-serif'> Powered by NotionNext {BLOG.VERSION}</span><br /></span>          
             <h1>{title}</h1>
-            
+             <span id="cdn">unknown</span>
         </footer>
   )
 }
