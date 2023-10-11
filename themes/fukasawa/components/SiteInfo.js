@@ -41,7 +41,7 @@ function SiteInfo ({ title }) {
             <span className='pl-2 hidden busuanzi_container_site_uv'> <i className='fas fa-users' /> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
             <br />      
             <span id="cf_cdn">当前CDN节点:unknown</span>  <br />
-            <span id="user_ip">访客IP:unknown</span>
+            <span id="user_ip">访客IP:unknown</span> <br />
             <span className='text-xs font-serif'> Powered by NotionNext {BLOG.VERSION}</span><br /></span>    
             <h1>{title}</h1>
             
