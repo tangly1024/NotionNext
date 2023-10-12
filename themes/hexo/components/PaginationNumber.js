@@ -26,7 +26,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             query: router.query.s ? { s: router.query.s } : {}
           }}
           rel="prev"
-          className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 border-white dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
+          className={`${currentPage === 1 ? 'invisible' : 'block'} pb-0.5 w-6 text-center cursor-pointer duration-200  hover:font-bold`}>
 
           <i className="fas fa-angle-left" />
 
@@ -41,7 +41,7 @@ const PaginationNumber = ({ page, totalPage }) => {
             query: router.query.s ? { s: router.query.s } : {}
           }}
           rel="next"
-          className={`${+showNext ? 'block' : 'invisible'} pb-0.5 border-b border-indigo-300 dark:border-indigo-700 hover:border-indigo-400 dark:hover:border-indigo-400 w-6 text-center cursor-pointer duration-500  hover:font-bold`}>
+          className={`${+showNext ? 'block' : 'invisible'} pb-0.5 w-6 text-center cursor-pointer duration-500  hover:font-bold`}>
 
           <i className="fas fa-angle-right" />
 
@@ -59,8 +59,8 @@ function getPageElement(page, currentPage, pagePrefix) {
       className={
           (page + '' === currentPage + ''
             ? 'font-bold theme-bg-color dark:theme-bg-color text-white '
-            : 'border-b duration-500 border-indigo-300 hover:border-indigo-400 ') +
-          ' border-white dark:border-indigo-700 dark:hover:border-indigo-400 cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
+            : 'duration-500 ') +
+          ' cursor-pointer pb-0.5 w-6 text-center font-light hover:font-bold'
       }>
 
       {page}
