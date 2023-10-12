@@ -18,7 +18,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
             href={`${BLOG.SUB_PATH}/${post.slug}`}
             passHref
             className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''
-                } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
+                } leading-tight font-normal text-gray-600 dark:text-gray-100`}>
 
             <span className='menu-link '>{post.title}</span>
 
@@ -32,14 +32,14 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
             <Link
                 href={`/category/${post.category}`}
                 passHref
-                className="cursor-pointer font-light text-sm menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform">
+                className="cursor-pointer font-light text-sm menu-link transform">
 
                 <i className="mr-1 far fa-folder" />
                 {post.category}
 
             </Link>
 
-            <TwikooCommentCount className='text-sm hover:text-indigo-700 dark:hover:text-indigo-400' post={post}/>
+            <TwikooCommentCount className='text-sm' post={post}/>
         </div>}
 
           {/* 摘要 */}

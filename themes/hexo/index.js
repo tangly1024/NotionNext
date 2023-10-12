@@ -298,7 +298,7 @@ const LayoutCategoryIndex = props => {
                     {categoryOptions.map(category => {
                       return (
                             <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
-                                <div className={' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'}>
+                                <div className={' duration-300 dark:hover:text-white px-5 cursor-pointer py-2'}>
                                     <i className="mr-4 fas fa-folder" />  {category.name}({category.count})
                                 </div>
                             </Link>

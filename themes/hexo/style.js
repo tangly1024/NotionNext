@@ -13,6 +13,18 @@ const Style = () => {
     .dark body{
         background-color: black;
     }
+    .theme-color {
+      color: #9EB384;
+    }
+    .theme-bg-color {
+      background: #9EB384;
+    }
+    .theme-bg:hover {
+      background: #9EB384;
+    }
+    .theme-hexo-color:hover {
+      color: #9EB384;
+    }
   
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
