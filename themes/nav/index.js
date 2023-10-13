@@ -72,63 +72,65 @@ const LayoutBase = (props) => {
   return (
         <ThemeGlobalNav.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible, categoryOptions }}>
             <CommonHead meta={meta}/>
-            <script>
-              // Stack - 自动将数据库卡片视图下的卡片链接替换为网址
-              // 获取所有的notion-collection-card元素
-              document.addEventListener("DOMContentLoaded", function() {
-                console.log("DOM content loaded!");
-                updateHref();
-              });
-                
-              // 创建一个MutationObserver对象，用于监听body元素的变化
-              let observer = new MutationObserver(function(mutations) {
-                // 遍历每个变化记录
-                for (let mutation of mutations) {
-                  // 如果变化类型是子节点变化
-                  if (mutation.type === "childList") {
-                    // 调用一个函数，用于更新notion-collection-card元素的href属性
+            <Head>
+                <script>
+                  // Stack - 自动将数据库卡片视图下的卡片链接替换为网址
+                  // 获取所有的notion-collection-card元素
+                  document.addEventListener("DOMContentLoaded", function() {
+                    console.log("DOM content loaded!");
                     updateHref();
+                  });
+                    
+                  // 创建一个MutationObserver对象，用于监听body元素的变化
+                  let observer = new MutationObserver(function(mutations) {
+                    // 遍历每个变化记录
+                    for (let mutation of mutations) {
+                      // 如果变化类型是子节点变化
+                      if (mutation.type === "childList") {
+                        // 调用一个函数，用于更新notion-collection-card元素的href属性
+                        updateHref();
+                      }
+                    }
+                  });
+    
+                  // 定义一个函数，用于更新notion-collection-card元素的href属性
+                  function updateHref() {
+                    let cards = document.querySelectorAll(".notion-collection-card");;
+                    // 遍历每个元素
+                    for (let card of cards) {
+                      // 获取该元素下的最后一个notion-property元素
+                      let lastProperty = card.querySelector(".notion-collection-card-property:last-child");
+                      // 如果该元素存在，并且包含一个网址
+                      if (lastProperty && lastProperty.textContent.startsWith("http")) {
+                        // 获取该网址
+                        let url = lastProperty.textContent;
+                        // 将该元素的href属性设置为该网址
+                        if(card.href == url) continue;
+                        card.href = url;
+                        // 将该元素的target属性设置为"_blank"，使链接在新窗口或标签页中打开
+                        card.target = "_blank";
+                      }
+                    }
                   }
-                }
-              });
-
-              // 定义一个函数，用于更新notion-collection-card元素的href属性
-              function updateHref() {
-                let cards = document.querySelectorAll(".notion-collection-card");;
-                // 遍历每个元素
-                for (let card of cards) {
-                  // 获取该元素下的最后一个notion-property元素
-                  let lastProperty = card.querySelector(".notion-collection-card-property:last-child");
-                  // 如果该元素存在，并且包含一个网址
-                  if (lastProperty && lastProperty.textContent.startsWith("http")) {
-                    // 获取该网址
-                    let url = lastProperty.textContent;
-                    // 将该元素的href属性设置为该网址
-                    if(card.href == url) continue;
-                    card.href = url;
-                    // 将该元素的target属性设置为"_blank"，使链接在新窗口或标签页中打开
-                    card.target = "_blank";
-                  }
-                }
-              }
-
-              //   console.log("load");
-              // 在页面载入时，调用一次updateHref函数，并将isLoaded设为true
-              window.addEventListener("load", function() {
-                console.log("window load");
-                updateHref();
-              });
-
-              // 在页面大小改变时，调用一次updateHref函数
-              // window.addEventListener("resize", updateHref);
-
-              // 开始监听body元素的变化，配置选项为子节点变化和子孙节点变化
-              observer.observe(document.body, {childList: true, subtree: true});
-
-              // 在每个变化记录之后，检查isLoaded是否为true，如果是，则执行updateHref函数
-              // observer.disconnect(); // 停止监听body元素的变化
-              // observer.observe(document.body, {childList: true, subtree: true}); // 重新开始监听body元素的变化
-            </script>
+    
+                  //   console.log("load");
+                  // 在页面载入时，调用一次updateHref函数，并将isLoaded设为true
+                  window.addEventListener("load", function() {
+                    console.log("window load");
+                    updateHref();
+                  });
+    
+                  // 在页面大小改变时，调用一次updateHref函数
+                  // window.addEventListener("resize", updateHref);
+    
+                  // 开始监听body元素的变化，配置选项为子节点变化和子孙节点变化
+                  observer.observe(document.body, {childList: true, subtree: true});
+    
+                  // 在每个变化记录之后，检查isLoaded是否为true，如果是，则执行updateHref函数
+                  // observer.disconnect(); // 停止监听body元素的变化
+                  // observer.observe(document.body, {childList: true, subtree: true}); // 重新开始监听body元素的变化
+                </script>
+            </Head>
             <Style/>
 
             <div id='theme-onenav' className=' dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300'>
