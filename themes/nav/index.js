@@ -72,7 +72,7 @@ const LayoutBase = (props) => {
   return (
         <ThemeGlobalNav.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible, categoryOptions }}>
             <CommonHead meta={meta}/>
-            <Head>
+            {/* <Head>
                 <script>
                   // Stack - 自动将数据库卡片视图下的卡片链接替换为网址
                   // 获取所有的notion-collection-card元素
@@ -130,7 +130,7 @@ const LayoutBase = (props) => {
                   // observer.disconnect(); // 停止监听body元素的变化
                   // observer.observe(document.body, {childList: true, subtree: true}); // 重新开始监听body元素的变化
                 </script>
-            </Head>
+            </Head> */}
             <Style/>
 
             <div id='theme-onenav' className=' dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300'>

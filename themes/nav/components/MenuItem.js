@@ -42,7 +42,7 @@ export const MenuItem = ({ link }) => {
                     </a>
                 </div>
                 ))
-                }git fetch origin
+                }
             </Collapse>
         </>
 
