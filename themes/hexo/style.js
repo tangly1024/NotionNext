@@ -25,11 +25,12 @@ const Style = () => {
     .theme-hexo-color:hover {
       color: #9EB384;
     }
-    .theme-border-color {
+    .theme-border-left:hover {
       border-left: 2px solid #9EB384;
     }
-    .theme-border:hover {
-      border-left: 2px solid #9EB384;
+    .theme-bg-font:hover {
+      color: #fff;
+      background: #9EB384;
     }
   
     /*  菜单下划线动画 */
