@@ -14,33 +14,34 @@ const Style = () => {
         background-color: black;
     }
     .theme-color {
-      color: #9EB384;
+      color: #96B6C5;
     }
     .theme-bg-color {
-      background: #9EB384;
+      background: #96B6C5;
     }
     .theme-bg:hover {
-      background: #9EB384;
+      background: #96B6C5;
     }
     .theme-hexo-color:hover {
-      color: #9EB384;
+      color: #96B6C5;
     }
     .theme-border-left:hover {
-      border-left: 2px solid #9EB384;
+      border-left: 2px solid #96B6C5;
     }
     .theme-bg-font:hover {
       color: #fff;
-      background: #9EB384;
+      background: #96B6C5;
     }
     .copyright-border-left {
-      border-left: 2px solid #9EB384;
+      border-left: 2px solid #96B6C5;
     }
   
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
         text-decoration: none;
         {/* background-image: linear-gradient(#928CEE, #928CEE); */}
-        background-image: linear-gradient(#9EB384, #9EB384);
+        {/* background-image: linear-gradient(#87CBB9, #87CBB9); */}
+        background-image: linear-gradient(#96B6C5, #96B6C5);
         background-repeat: no-repeat;
         background-position: bottom center;
         background-size: 0 2px;
@@ -50,7 +51,8 @@ const Style = () => {
     #theme-hexo .menu-link:hover {
         background-size: 100% 2px;
         {/* color: #928CEE; */}
-        color: #9EB384;
+        {/* color: #87CBB9; */}
+        color: #96B6C5;
     }
 
     /* 设置了从上到下的渐变黑色 */
