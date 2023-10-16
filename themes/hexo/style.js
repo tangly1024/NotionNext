@@ -32,6 +32,9 @@ const Style = () => {
       color: #fff;
       background: #9EB384;
     }
+    .copyright-border-left {
+      border-left: 2px solid #9EB384;
+    }
   
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
