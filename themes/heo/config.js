@@ -41,11 +41,11 @@ const CONFIG = {
   // 用户技能图标
   GROUP_ICONS: [
     {
-      title_1: 'Topaz Video AI',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172305344.webp',
-      color_1: '#989bf8',
-      title_2: 'Topaz Photo AI',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172214642.webp',
+      title_1: 'Topaz Photo AI',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172313255.webp',
+      color_1: '#352981',
+      title_2: 'Topaz Video AI',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172318703.webp',
       color_2: '#352981'
     },
     {
