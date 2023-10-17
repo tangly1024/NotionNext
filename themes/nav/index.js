@@ -297,7 +297,7 @@ const LayoutPostListIndex = props => {
  * @returns 此主题首页就是列表
  */
 const LayoutIndexNew = props => {
-  return <LayoutPostList props={customMenu, filteredNavPages} />
+  return <LayoutPostList props={[customMenu, filteredNavPages]} />
 }
 
 /**
