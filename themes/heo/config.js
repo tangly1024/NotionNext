@@ -84,9 +84,9 @@ const CONFIG = {
       title_1: 'runway',
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180051124.webp',
       color_1: '#000000',
-      title_2: 'HTML',
-      img_2: '/images/heo/202372b4d760fd8a497d442140c295655426070302.webp',
-      color_2: '#e9572b'
+      title_2: 'claude',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180113691.webp',
+      color_2: '#d09b74'
     },
     {
       title_1: 'Git',
