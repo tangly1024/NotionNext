@@ -190,9 +190,9 @@ const LayoutBase = (props) => {
                         </div>
                     </div>
 
-                    <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-16 md:pt-5 pb-8 min-h-screen overflow-y-auto'>
+                    <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-20 md:pt-5 pb-8 min-h-screen overflow-y-auto'>
 
-                        <div id='container-inner' className='w-full px-6 max-w-8xl justify-center mx-auto'>
+                        <div id='container-inner' className='w-full px-6 pb-6 md:pb-20 max-w-8xl justify-center mx-auto'>
                             {slotTop}
                             <WWAds className='w-full' orientation='horizontal'/>
 
