@@ -1,7 +1,7 @@
 import CONFIG from './config'
 
 import CommonHead from '@/components/CommonHead'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import NavBar from './components/NavBar'
@@ -123,11 +123,13 @@ const LayoutIndex = props => {
       <div id="post-outer-wrapper" className="px-5 md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page' ? (
+        {BLOG.POST_LIST_STYLE === 'page'
+          ? (
           <BlogPostListPage {...props} />
-        ) : (
+            )
+          : (
           <BlogPostListScroll {...props} />
-        )}
+            )}
       </div>
     </LayoutBase>
   )
@@ -155,11 +157,13 @@ const LayoutPostList = props => {
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page' ? (
+        {BLOG.POST_LIST_STYLE === 'page'
+          ? (
           <BlogPostListPage {...props} />
-        ) : (
+            )
+          : (
           <BlogPostListScroll {...props} />
-        )}
+            )}
       </div>
     </LayoutBase>
   )
@@ -206,17 +210,21 @@ const LayoutSearch = props => {
       headerSlot={headerSlot}
     >
       <div id="post-outer-wrapper" className="px-5  md:px-0">
-        {!currentSearch ? (
+        {!currentSearch
+          ? (
           <SearchNav {...props} />
-        ) : (
+            )
+          : (
           <div id="posts-wrapper">
-            {BLOG.POST_LIST_STYLE === 'page' ? (
+            {BLOG.POST_LIST_STYLE === 'page'
+              ? (
               <BlogPostListPage {...props} />
-            ) : (
+                )
+              : (
               <BlogPostListScroll {...props} />
-            )}
+                )}
           </div>
-        )}
+            )}
       </div>
     </LayoutBase>
   )
@@ -272,6 +280,13 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const { locale } = useGlobal()
 
+  const [hasCode, setHasCode] = useState(false)
+
+  useEffect(() => {
+    const hasCode = document.querySelectorAll('[class^="language-"]').length > 0
+    setHasCode(hasCode)
+  }, [])
+
   // 右侧栏
   const slotRight = <SideRight {...props} />
   const headerSlot = (
@@ -298,7 +313,7 @@ const LayoutSlug = props => {
       showTag={false}
       slotRight={slotRight}
     >
-      <div className="w-full max-w-5xl lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article">
+      <div className={`w-full xl:max-w-5xl ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
         {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && (
