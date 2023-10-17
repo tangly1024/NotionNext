@@ -58,7 +58,7 @@ const CONFIG = {
     },
     {
       title_1: 'civitai',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172351889.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180005155.webp',
       color_1: '#ffffff',
       title_2: 'heygen',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172351906.webp',
