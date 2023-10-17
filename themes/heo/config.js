@@ -68,9 +68,9 @@ const CONFIG = {
       title_1: 'leonardo',
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180024344.webp',
       color_1: '#ffffff',
-      title_2: 'Principle',
-      img_2: '/images/heo/2023f76570d2770c8e84801f7e107cd911b5073202.webp',
-      color_2: '#8f55ba'
+      title_2: 'luminar',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180029940.webp',
+      color_2: '#a3ddef'
     },
     {
       title_1: 'illustrator',
