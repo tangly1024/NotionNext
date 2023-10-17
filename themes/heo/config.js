@@ -51,7 +51,7 @@ const CONFIG = {
     {
       title_1: 'chatgpt',
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172343788.webp',
-      color_1: '#57b6e6',
+      color_1: '#ffffff',
       title_2: 'Photoshop',
       img_2: '/images/heo/2023e4058a91608ea41751c4f102b131f267075902.webp',
       color_2: '#4082c3'
