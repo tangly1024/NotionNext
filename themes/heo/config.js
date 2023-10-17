@@ -74,7 +74,7 @@ const CONFIG = {
     },
     {
       title_1: 'poe',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180034170.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180143697.webp',
       color_1: '#9e42ec',
       title_2: 'midjourny',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180045847.webp',
