@@ -46,7 +46,7 @@ const CONFIG = {
       color_1: '#989bf8',
       title_2: 'Topaz Photo AI',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172214642.webp',
-      color_2: '#ffffff'
+      color_2: '#352981'
     },
     {
       title_1: 'Docker',
