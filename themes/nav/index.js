@@ -150,9 +150,9 @@ const LayoutBase = (props) => {
                           <LogoBar {...props} />
                         </div>
                     {/* 左侧推拉抽屉 */}
-                    <div className={'font-sans hidden md:block dark:border-transparent relative z-10 pb-24 ml-4 h-screen'}>
+                    <div className={'font-sans hidden md:block dark:border-transparent relative z-10 ml-4 h- max-h-full pb-44'}>
 
-                        <div className='main-menu w-48 mt-20 pl-9 pr-7 pb-5 sticky pt-1 top-0 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
+                        <div className='main-menu z-20 w-48 mt-20 pl-9 pr-7 pb-5 sticky pt-1 top-0 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
                             {slotLeft}
                             <div className='grid pt-2'>
                                 {/* 所有文章列表 */}
@@ -185,7 +185,7 @@ const LayoutBase = (props) => {
 
                         </div>
 
-                        <div className='w-56 fixed left-0 bottom-0 z-20'>
+                        <div className='w-56 fixed left-0 bottom-0 z-0'>
                             <Footer {...props} />
                         </div>
                     </div>
