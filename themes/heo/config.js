@@ -10,9 +10,9 @@ const CONFIG = {
   ],
 
   // 英雄区(首页顶部大卡)
-  HERO_TITLE_1: '分享编程',
-  HERO_TITLE_2: '与思维认知',
-  HERO_TITLE_3: 'TANGLY1024.COM',
+  HERO_TITLE_1: '分享AIGC',
+  HERO_TITLE_2: '与实用技巧',
+  HERO_TITLE_3: 'ai-hd.com',
   HERO_TITLE_4: '新版上线',
   HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
   HERO_TITLE_LINK: 'https://tangly1024.com',
