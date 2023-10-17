@@ -49,8 +49,8 @@ const CONFIG = {
       color_2: '#6869a9'
     },
     {
-      title_1: 'Docker',
-      img_1: '/images/heo/20231108a540b2862d26f8850172e4ea58ed075102.webp',
+      title_1: 'chatgpt',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172343788.webp',
       color_1: '#57b6e6',
       title_2: 'Photoshop',
       img_2: '/images/heo/2023e4058a91608ea41751c4f102b131f267075902.webp',
