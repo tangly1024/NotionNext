@@ -75,7 +75,7 @@ const CONFIG = {
     {
       title_1: 'poe',
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180034170.webp',
-      color_1: '#81acd4',
+      color_1: '#dc52ff',
       title_2: 'CSS3',
       img_2: '/images/heo/20237c548846044a20dad68a13c0f0e1502f074602.webp',
       color_2: '#2c51db'
