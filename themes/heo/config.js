@@ -14,7 +14,7 @@ const CONFIG = {
   HERO_TITLE_2: '与实用技巧',
   HERO_TITLE_3: 'Ai-HD.COM',
   HERO_TITLE_4: '新版上线',
-  HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
+  HERO_TITLE_5: '欢迎关注，交流学习',
   HERO_TITLE_LINK: 'https://www.ai-hd.com/',
 
   // 英雄区显示三个置顶分类
