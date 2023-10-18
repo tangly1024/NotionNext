@@ -74,7 +74,7 @@ const CONFIG = {
     },
     {
       title_1: 'Wonder Studio',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310182310564.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310182317846.webp',
       color_1: '#ffffff',
       title_2: 'midjourny',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/midjourney_2.webp',
