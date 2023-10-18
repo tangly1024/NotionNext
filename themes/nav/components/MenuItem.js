@@ -36,7 +36,8 @@ export const MenuItem = ({ link }) => {
                     </div>
                 </>)
               : (
-                    <Link href={link?.to} className='dark:text-neutral-400 dark:hover:text-white font-bold w-full display-block'>
+                // link?.to
+                    <Link href={'#' + link?.title} className='dark:text-neutral-400 dark:hover:text-white font-bold w-full display-block'>
                         {link?.icon && <i className={`text-base ${link?.icon}`} />}{link?.title}
                     </Link>
                 )
@@ -50,7 +51,7 @@ export const MenuItem = ({ link }) => {
                 {
                     link?.subMenus?.map((sLink, index) => (
                         <div key={index} className='nav-submenu'>
-                            <a href={sLink?.to}>
+                            <a href={'#' + sLink?.title}>
                                 <span className='dark:text-neutral-400 text-gray-500 hover:text-black dark:hover:text-white text-xs font-bold'><i className={`text-xs mr-1 ${sLink?.icon ? sLink?.icon : 'fas fa-hashtag'}`} />{sLink.title}</span>
                             </a>
                         </div>
