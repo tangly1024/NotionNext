@@ -84,6 +84,10 @@ const Style = () => {
     .card:hover {
         box-shadow: 0 14px 25px rgba(0, 0, 0, 0.16);
     }
+    .card .stack-entry>img{
+        width:40px;
+        height:40px;
+    }
     .notion-gallery-grid {
         padding-left: 4px;
         padding-right: 4px;
