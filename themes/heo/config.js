@@ -90,7 +90,7 @@ const CONFIG = {
     },
     {
       title_1: 'pick labs',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180124614.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/pika-labs-topaz-enhance-4x.webp',
       color_1: '#ffffff',
       title_2: 'bing',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/bing.webp',
