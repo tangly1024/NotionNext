@@ -62,7 +62,7 @@ const CONFIG = {
       color_1: '#ffffff',
       title_2: 'heygen',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/heygen.webp',
-      color_2: '#161b32'
+      color_2: '#ffffff'
     },
     {
       title_1: 'leonardo',
@@ -70,7 +70,7 @@ const CONFIG = {
       color_1: '#ffffff',
       title_2: 'luminar',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Luminar.webp',
-      color_2: '#2b65b3'
+      color_2: '#8ee2fe'
     },
     {
       title_1: 'poe',
