@@ -1,5 +1,11 @@
 'use client'
 
+/**
+ * # NAV 主题说明
+ * 主题开发者 [emengweb](https://github.com/emengweb)
+ * 开启方式 在blog.config.js 将主题配置为 `NAV`
+ */
+
 import CONFIG from './config'
 import { useEffect, useState, createContext, useContext } from 'react'
 import Footer from './components/Footer'
@@ -54,6 +60,7 @@ const LayoutBase = (props) => {
 
   let links = customMenu
 
+  // 默认使用自定义菜单，否则将遍历所有的category生成菜单
   if (!CONFIG.USE_CUSTOM_MENU) {
     links = categoryOptions && categoryOptions?.map(c => {
       return { id: c.name, title: `# ${c.name}`, to: `/category/${c.name}`, show: true }
@@ -79,7 +86,7 @@ const LayoutBase = (props) => {
                     {/* 左侧推拉抽屉 */}
                     <div className={'font-sans hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
 
-                        <div className='main-menu z-20 mt-20 pl-9 pr-7 pb-5 sticky pt-1 top-0 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
+                        <div className='main-menu z-20 pl-9 pr-7 pb-5 sticky pt-1 top-20 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
                            {/* 嵌入 */}
                             {slotLeft}
 

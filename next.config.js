@@ -90,13 +90,6 @@ module.exports = withBundleAnalyzer({
     //     'react-dom': 'preact/compat'
     //   })
     // }
-
-    // 排除所有后缀名为 .md 的文件的编译
-    config.module.rules.push({
-      test: /\.md$/,
-      use: 'raw-loader'
-    });
-
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', THEME)
     return config
