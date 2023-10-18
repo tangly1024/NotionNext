@@ -44,8 +44,8 @@ const CONFIG = {
       title_1: 'Topaz Photo AI',
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Topaz%20Photo%20AI.webp',
       color_1: '#9ca2fb',
-      title_2: 'Topaz Video AI',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Topaz%20Video%20AI.webp',
+      title_2: 'Gamma',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310182144601.webp',
       color_2: '#9ca2fb'
     },
     {
