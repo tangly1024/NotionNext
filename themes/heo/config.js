@@ -46,7 +46,7 @@ const CONFIG = {
       color_1: '#9ca2fb',
       title_2: 'Gamma',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310182144601.webp',
-      color_2: '#fdf6f0'
+      color_2: '#ffffff'
     },
     {
       title_1: 'chatgpt',
