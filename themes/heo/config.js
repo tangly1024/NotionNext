@@ -54,7 +54,7 @@ const CONFIG = {
       color_1: '#ffffff',
       title_2: 'Photoshop',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/ps.webp',
-      color_2: '#4082c3'
+      color_2: '#366fe0'
     },
     {
       title_1: 'civitai',
