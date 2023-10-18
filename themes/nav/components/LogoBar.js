@@ -12,6 +12,7 @@ import CONFIG from '../config'
 export default function LogoBar(props) {
   const { siteInfo } = props
   const { pageNavVisible, changePageNavVisible } = useNavGlobal()
+  // const logo = siteInfo?.icon?.replaceAll("width=400", "width=280")
 
   const togglePageNavVisible = () => {
     changePageNavVisible(!pageNavVisible)
@@ -23,7 +24,7 @@ export default function LogoBar(props) {
             </div> */}
             <div className='md:w-48'>
               <a href='/' className='grid justify-items-center text-md md:text-xl dark:text-gray-200'>
-                  <LazyImage src={siteInfo?.icon} height='44px' alt={BLOG.AUTHOR} className='md:block' placeholderSrc=''/>
+                  <LazyImage src={siteInfo?.icon?.replaceAll("width=400", "width=280")} height='44px' alt={BLOG.AUTHOR + ' - ' + BLOG.NEXT_PUBLIC_BIO} className='md:block' placeholderSrc=''/>
                   {CONFIG.SHOW_TITLE_TEXT && siteInfo?.title}
               </a>
             </div>
