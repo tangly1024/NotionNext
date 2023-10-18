@@ -73,8 +73,8 @@ const CONFIG = {
       color_2: '#ffffff'
     },
     {
-      title_1: 'd-id',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310182024312.webp',
+      title_1: 'Wonder Studio',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310182156075.webp',
       color_1: '#221e1f',
       title_2: 'midjourny',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/midjourney_2.webp',
