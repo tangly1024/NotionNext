@@ -4,6 +4,11 @@ import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
+/**
+ * 移动端菜单栏
+ * @param {*} props
+ * @returns
+ */
 export const MenuBarMobile = (props) => {
   const { customMenu, customNav } = props
   const { locale } = useGlobal()
