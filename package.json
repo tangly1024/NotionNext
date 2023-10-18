@@ -63,7 +63,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.23.2",
     "next-sitemap": "^1.6.203",
-    "postcss": "^8.4.20",
+    "postcss": "^8.4.31",
     "tailwindcss": "^3.3.2",
     "webpack-bundle-analyzer": "^4.5.0"
   },
