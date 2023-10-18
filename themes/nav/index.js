@@ -146,7 +146,7 @@ const LayoutBase = (props) => {
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-screen mx-auto'}>
 
                         {/* 左侧图标Logo */}
-                        <div className='absolute top-0 left-5 md:left-4 z-40 pt-3 md:pt-4 md:pt-0'>
+                        <div className='fixed top-0 left-5 md:left-4 z-40 pt-3 md:pt-4 md:pt-0'>
                           <LogoBar {...props} />
                         </div>
                     {/* 左侧推拉抽屉 */}
