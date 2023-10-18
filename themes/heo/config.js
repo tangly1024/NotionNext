@@ -82,7 +82,7 @@ const CONFIG = {
     },
     {
       title_1: 'runway',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180051124.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/runway.webp',
       color_1: '#000000',
       title_2: 'claude',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180113691.webp',
