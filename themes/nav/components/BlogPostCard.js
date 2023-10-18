@@ -7,7 +7,7 @@ import React from 'react'
 const BlogPostCard = ({ post, className }) => {
   const router = useRouter()
   const currentSelected = router.asPath.split('?')[0] === '/' + post.slug
-  const pageIcon = post.pageIcon.startsWith("http") ? post.pageIcon+"&width=88" : post.pageIcon
+  const pageIcon = post.pageIcon.indexOf("amazonaws.com")!=-1 ? post.pageIcon+"&width=88" : post.pageIcon
   return (
     <Link href={`${removeHttp(post.slug)}`} target={(checkRemoveHttp(post.slug) ? '_blank' : '_self')} passHref>
         <div key={post.id} className={`${className} h-full rounded-lg p-4 dark:bg-neutral-800 cursor-pointer bg-white hover:bg-white rounded-2xl dark:hover:bg-gray-800 ${currentSelected ? 'bg-green-50 text-green-500' : ''}`}>
