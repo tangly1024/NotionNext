@@ -77,7 +77,7 @@ const CONFIG = {
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180143697.webp',
       color_1: '#ffffff',
       title_2: 'midjourny',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180045847.webp',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/midjourney.webp',
       color_2: '#ffffff'
     },
     {
