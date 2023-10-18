@@ -73,9 +73,9 @@ const CONFIG = {
       color_2: '#ffffff'
     },
     {
-      title_1: 'poe',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180143697.webp',
-      color_1: '#ffffff',
+      title_1: 'd-id',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310182024312.webp',
+      color_1: '#1b1c1e',
       title_2: 'midjourny',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/midjourney_2.webp',
       color_2: '#ffffff'
