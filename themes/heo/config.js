@@ -42,15 +42,15 @@ const CONFIG = {
   GROUP_ICONS: [
     {
       title_1: 'Topaz Photo AI',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172313255.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Topaz%20Photo%20AI.webp',
       color_1: '#9ca2fb',
       title_2: 'Topaz Video AI',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172318703.webp',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Topaz%20Video%20AI.webp',
       color_2: '#9ca2fb'
     },
     {
       title_1: 'chatgpt',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180001367.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/chatgpt.webp',
       color_1: '#ffffff',
       title_2: 'Photoshop',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/ps.webp',
@@ -58,23 +58,23 @@ const CONFIG = {
     },
     {
       title_1: 'civitai',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180005155.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/civiai.webp',
       color_1: '#ffffff',
       title_2: 'heygen',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310172351906.webp',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/heygen.webp',
       color_2: '#161b32'
     },
     {
       title_1: 'leonardo',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180024344.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/leonardo.webp',
       color_1: '#ffffff',
       title_2: 'luminar',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180029940.webp',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Luminar.webp',
       color_2: '#2b65b3'
     },
     {
       title_1: 'poe',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180143697.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/poe.webp',
       color_1: '#ffffff',
       title_2: 'midjourny',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/midjourney.webp',
@@ -85,12 +85,12 @@ const CONFIG = {
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/runway.webp',
       color_1: '#ffffff',
       title_2: 'claude',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180113691.webp',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Claude.webp',
       color_2: '#d09b74'
     },
     {
       title_1: 'pick labs',
-      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/pika-labs-topaz-enhance-4x.webp',
+      img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/pika-labs.webp',
       color_1: '#ffffff',
       title_2: 'bing',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/bing.webp',
