@@ -93,7 +93,7 @@ const CONFIG = {
       img_1: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180124614.webp',
       color_1: '#ffffff',
       title_2: 'bing',
-      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/202310180130326.webp',
+      img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/bing.webp',
       color_2: '#ffffff'
     }
   ],
