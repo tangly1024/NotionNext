@@ -35,6 +35,9 @@ const Style = () => {
     .copyright-border-left {
       border-left: 2px solid #DAB88B;
     }
+    .nav-angle {
+      padding-left: 0.5rem;
+    }
   
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
@@ -87,12 +90,12 @@ const Style = () => {
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #49b1f5;
+        background-color: #DAB88B;
     }
 
     * {
         scrollbar-width:thin;
-        scrollbar-color: #49b1f5 transparent
+        scrollbar-color: #DAB88B transparent
     }
     
 

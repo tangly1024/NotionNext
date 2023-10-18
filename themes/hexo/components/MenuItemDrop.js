@@ -16,13 +16,13 @@ export const MenuItemDrop = ({ link }) => {
                 href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
                 className="font-sans menu-link pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1">
                 {link?.icon && <i className={link?.icon}/>} {link?.name}
-                {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
+                {hasSubMenu && <i className='nav-angle fa fa-angle-down'></i>}
             </Link>}
 
         {hasSubMenu && <>
             <div className='cursor-pointer font-sans menu-link pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1'>
                 {link?.icon && <i className={link?.icon}/>} {link?.name}
-                <i className={`px-2 fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i>
+                <i className={`nav-angle fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i>
             </div>
         </>}
 
