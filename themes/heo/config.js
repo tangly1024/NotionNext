@@ -70,7 +70,7 @@ const CONFIG = {
       color_1: '#ffffff',
       title_2: 'luminar',
       img_2: 'https://tupian1014-1251479570.cos.ap-shanghai.myqcloud.com/tupian/Luminar.webp',
-      color_2: '#0528e7'
+      color_2: '#ffffff'
     },
     {
       title_1: 'poe',
