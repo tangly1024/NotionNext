@@ -13,7 +13,7 @@ const CONFIG = {
   HERO_TITLE_1: '分享编程',
   HERO_TITLE_2: '与思维认知',
   HERO_TITLE_3: 'TANGLY1024.COM',
-  HERO_TITLE_4: '新版上线',
+  HERO_TITLE_4: '新文章上线',
   HERO_TITLE_5: '点击查看博主推荐内容',
   HERO_TITLE_LINK: 'https://luxiaopeng.cn/tag/%E6%8E%A8%E8%8D%90',
 
