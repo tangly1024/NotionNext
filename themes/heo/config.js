@@ -1,12 +1,12 @@
 const CONFIG = {
   HOME_BANNER_ENABLE: true,
 
-  SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+  SITE_CREATE_TIME: '2017-09-21', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到我的博客', url: 'https://www.luxiaopeng.cn' },
+    //{ title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
   ],
 
   // 英雄区(首页顶部大卡)
@@ -36,7 +36,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
+  INFO_CARD_URL: 'https://www.luxiaopeng.cn', // 个人资料底部按钮链接
 
   // 用户技能图标
   GROUP_ICONS: [
@@ -98,7 +98,7 @@ const CONFIG = {
     }
   ],
 
-  SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
+  SOCIAL_CARD: false, // 是否显示右侧，点击加入社群按钮
   SOCIAL_CARD_TITLE_1: '交流频道',
   SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   SOCIAL_CARD_TITLE_3: '点击加入社群',
