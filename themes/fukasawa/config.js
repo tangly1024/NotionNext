@@ -9,18 +9,19 @@ const CONFIG = {
     //var imagePath = "/images/random/" + randomNum + ".png";
     //return imagePath
     var urls = [
-      "https://z1.ax1x.com/2023/10/19/piiusPJ.png",
-      "https://z1.ax1x.com/2023/10/19/piiuBaF.png",
-      "https://z1.ax1x.com/2023/10/19/piiu0VU.png",
-      "https://z1.ax1x.com/2023/10/19/piiudbT.png",
-      "https://z1.ax1x.com/2023/10/19/piiuarV.png",
-      "https://z1.ax1x.com/2023/10/19/piiuD54.png",
-      "https://z1.ax1x.com/2023/10/19/piiuyG9.png",
-      "https://z1.ax1x.com/2023/10/19/piiu62R.png",
-      "https://z1.ax1x.com/2023/10/19/piiucx1.png"
+      "https://vip.helloimg.com/images/2023/10/19/o2pDng.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2pQTY.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2p7PX.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2pNqE.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2ppU9.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2pI7M.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2p8CP.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2pKt6.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2pUwn.png",
+      "https://vip.helloimg.com/images/2023/10/19/o2pghR.png"
     ];
-    
-    var randomUrl = urls[Math.floor(Math.random() * urls.length)];
+  
+    var randomUrl = urls[Math.floor(Math.random()*urls.length)];
     return randomUrl
   },
   // 菜单
