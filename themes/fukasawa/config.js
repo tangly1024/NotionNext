@@ -4,10 +4,24 @@ const CONFIG = {
   POST_LIST_COVER_FORCE: true, // 即使没有封面也将站点背景图设置为封面
   POST_LIST_PREVIEW: true, // 显示文章预览
   RANDAM_THUMBNAIL: () => {
-    var randomNum = Math.floor(Math.random() * 10) + 1;
+    //var randomNum = Math.floor(Math.random() * 10) + 1;
     // 拼接图片路径
-    var imagePath = "/images/random/" + randomNum + ".png";
-    return imagePath
+    //var imagePath = "/images/random/" + randomNum + ".png";
+    //return imagePath
+    var urls = [
+      "https://z1.ax1x.com/2023/10/19/piiusPJ.png",
+      "https://z1.ax1x.com/2023/10/19/piiuBaF.png",
+      "https://z1.ax1x.com/2023/10/19/piiu0VU.png",
+      "https://z1.ax1x.com/2023/10/19/piiudbT.png",
+      "https://z1.ax1x.com/2023/10/19/piiuarV.png",
+      "https://z1.ax1x.com/2023/10/19/piiuD54.png",
+      "https://z1.ax1x.com/2023/10/19/piiuyG9.png",
+      "https://z1.ax1x.com/2023/10/19/piiu62R.png",
+      "https://z1.ax1x.com/2023/10/19/piiucx1.png"
+    ];
+    
+    var randomUrl = urls[Math.floor(Math.random() * urls.length)];
+    return randomUrl
   },
   // 菜单
   MENU_CATEGORY: true, // 显示分类
