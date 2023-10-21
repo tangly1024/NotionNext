@@ -3,7 +3,7 @@ import BLOG from '@/blog.config'
 import { getQueryParam, getQueryVariable } from '../lib/utils'
 import dynamic from 'next/dynamic'
 import getConfig from 'next/config'
-import * as ThemeComponents from '@theme-components'
+import * as ThemeComponents from './index'
 // 所有主题在next.config.js中扫描
 export const { THEMES = [] } = getConfig().publicRuntimeConfig
 
@@ -15,11 +15,7 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  */
 export const getGlobalLayoutByTheme = (themeQuery) => {
     const layout = getLayoutNameByPath(-1)
-    if (themeQuery !== BLOG.THEME) {
-      return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
-    } else {
-      return ThemeComponents[layout]
-    }
+    return ThemeComponents[themeQuery.toUpperCase()][layout]
   }
 
 /**
@@ -31,11 +27,7 @@ export const getGlobalLayoutByTheme = (themeQuery) => {
 export const getLayoutByTheme = (router) => {
   const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
   const layout = getLayoutNameByPath(router.pathname)
-  if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
-  } else {
-    return ThemeComponents[layout]
-  }
+  return ThemeComponents[themeQuery.toUpperCase()][layout]
 }
 
 /**
