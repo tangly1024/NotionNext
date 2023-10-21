@@ -126,7 +126,7 @@ const LayoutIndex = props => {
   const slotRight = <SideRight {...props} />
 
   return (
-    <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
+    <div {...props} slotRight={slotRight} headerSlot={headerSlot}>
       <div id="post-outer-wrapper" className="px-5 md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
@@ -138,7 +138,7 @@ const LayoutIndex = props => {
           <BlogPostListScroll {...props} />
             )}
       </div>
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -160,7 +160,7 @@ const LayoutPostList = props => {
   )
 
   return (
-    <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
+    <div {...props} slotRight={slotRight} headerSlot={headerSlot}>
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
@@ -172,7 +172,7 @@ const LayoutPostList = props => {
           <BlogPostListScroll {...props} />
             )}
       </div>
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -211,7 +211,7 @@ const LayoutSearch = props => {
     }
   }, [])
   return (
-    <LayoutBase
+    <div
       {...props}
       currentSearch={currentSearch}
       headerSlot={headerSlot}
@@ -233,7 +233,7 @@ const LayoutSearch = props => {
           </div>
             )}
       </div>
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -259,7 +259,7 @@ const LayoutArchive = props => {
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
 
   return (
-    <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
+    <div {...props} slotRight={slotRight} headerSlot={headerSlot}>
       <div className="p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]">
         {/* 文章分类条 */}
         <CategoryBar {...props} border={false} />
@@ -274,7 +274,7 @@ const LayoutArchive = props => {
           ))}
         </div>
       </div>
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -313,7 +313,7 @@ const LayoutSlug = props => {
   )
 
   return (
-    <LayoutBase
+    <div
       {...props}
       headerSlot={headerSlot}
       showCategory={false}
@@ -377,7 +377,7 @@ const LayoutSlug = props => {
         )}
       </div>
       <FloatTocButton {...props} />
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -474,7 +474,7 @@ const LayoutCategoryIndex = props => {
   )
 
   return (
-    <LayoutBase {...props} className="mt-8" headerSlot={headerSlot}>
+    <div {...props} className="mt-8" headerSlot={headerSlot}>
       <div id="category-outer-wrapper" className="px-5 md:px-0">
         <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
           {locale.COMMON.CATEGORY}
@@ -507,7 +507,7 @@ const LayoutCategoryIndex = props => {
           })}
         </div>
       </div>
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -528,7 +528,7 @@ const LayoutTagIndex = props => {
     </header>
   )
   return (
-    <LayoutBase {...props} className="mt-8" headerSlot={headerSlot}>
+    <div {...props} className="mt-8" headerSlot={headerSlot}>
       <div id="tag-outer-wrapper" className="px-5  md:px-0">
         <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
           {locale.COMMON.TAGS}
@@ -561,12 +561,13 @@ const LayoutTagIndex = props => {
           })}
         </div>
       </div>
-    </LayoutBase>
+    </div>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

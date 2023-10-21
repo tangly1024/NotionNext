@@ -14,11 +14,33 @@ import 'aos/dist/aos.css' // You can also use <link> for styles
 import dynamic from 'next/dynamic'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BLOG from '@/blog.config'
-
+import { getGlobalLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
+import { useCallback, useMemo } from 'react'
+import { getQueryParam } from '../lib/utils'
 // 各种扩展插件 动画等
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'))
 
 const MyApp = ({ Component, pageProps }) => {
+  /**
+   * 首页布局
+   * @param {*} props
+   * @returns
+   */
+  const route = useRouter()
+  const queryParam = useMemo(() => {
+    return getQueryParam(route.asPath, 'theme') || BLOG.THEME
+  }, [route])
+
+  const GLayout = useCallback(
+    props => {
+      // 根据页面路径加载不同Layout文件
+      const Layout = getGlobalLayoutByTheme(queryParam)
+      return <Layout {...props} />
+    },
+    [queryParam.asPath]
+  )
+
   // 自定义样式css和js引入
   if (isBrowser) {
     // 初始化AOS动画
@@ -48,10 +70,12 @@ const MyApp = ({ Component, pageProps }) => {
   }
 
   return (
-        <GlobalContextProvider {...pageProps}>
-            <Component {...pageProps} />
-            <ExternalPlugins {...pageProps} />
-        </GlobalContextProvider>
+    <GlobalContextProvider {...pageProps}>
+      <GLayout {...pageProps}>
+        <Component {...pageProps} />
+      </GLayout>
+      <ExternalPlugins {...pageProps} />
+    </GlobalContextProvider>
   )
 }
 

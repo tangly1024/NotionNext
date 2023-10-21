@@ -99,9 +99,9 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -138,11 +138,11 @@ const LayoutSearch = props => {
 const LayoutArchive = props => {
   const { archivePosts } = props
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
             <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
                 {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -155,7 +155,7 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -169,7 +169,7 @@ const LayoutSlug = props => {
                 </>
             </div>}
 
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -179,9 +179,9 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
-  return <LayoutBase {...props}>
+  return <div {...props}>
         404 Not found.
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -193,7 +193,7 @@ const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
 
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
             <div id='category-list' className='duration-200 flex flex-wrap'>
                 {categoryOptions?.map(category => {
                   return (
@@ -210,7 +210,7 @@ const LayoutCategoryIndex = (props) => {
                   )
                 })}
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -222,7 +222,7 @@ const LayoutCategoryIndex = (props) => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
             <div>
                 <div id='tags-list' className='duration-200 flex flex-wrap'>
                     {tagOptions.map(tag => {
@@ -237,12 +237,13 @@ const LayoutTagIndex = (props) => {
                     })}
                 </div>
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

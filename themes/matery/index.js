@@ -123,9 +123,9 @@ const LayoutIndex = (props) => {
  */
 const LayoutPostList = (props) => {
   return (
-        <LayoutBase {...props} containerSlot={<BlogListBar {...props} />}>
+        <div {...props} containerSlot={<BlogListBar {...props} />}>
             {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -152,13 +152,13 @@ const LayoutSearch = props => {
     }
   })
   return (
-        <LayoutBase {...props} currentSearch={currentSearch}>
+        <div {...props} currentSearch={currentSearch}>
             {!currentSearch
               ? <SearchNave {...props} />
               : <div id="posts-wrapper">
                     {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
                 </div>}
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -169,7 +169,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+  return <div {...props} headerSlot={<PostHeader {...props} />} >
         <Card className='w-full -mt-32'>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
                 {Object.keys(archivePosts).map(archiveTitle => (
@@ -181,7 +181,7 @@ const LayoutArchive = (props) => {
                 ))}
             </div>
         </Card>
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -192,7 +192,7 @@ const LayoutArchive = (props) => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
-  return (<LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
+  return (<div {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
 
         <div id='inner-wrapper' className={'w-full lg:max-w-3xl 2xl:max-w-4xl'} >
 
@@ -255,7 +255,7 @@ const LayoutSlug = props => {
 
         </div>
 
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -278,7 +278,7 @@ const Layout404 = props => {
     }, 3000)
   })
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
             <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
                 <div className="dark:text-gray-200">
                     <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
@@ -289,7 +289,7 @@ const Layout404 = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -302,7 +302,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
 
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+        <div {...props} headerSlot={<PostHeader {...props} />} >
 
             <div id='inner-wrapper' className='w-full'>
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300">
@@ -319,7 +319,7 @@ const LayoutCategoryIndex = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -332,7 +332,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+        <div {...props} headerSlot={<PostHeader {...props} />} >
             <div id='inner-wrapper' className='w-full drop-shadow-xl'>
 
                 <div className="-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
@@ -352,12 +352,13 @@ const LayoutTagIndex = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

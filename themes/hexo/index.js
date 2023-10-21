@@ -122,10 +122,10 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} className='pt-8'>
+  return <div {...props} className='pt-8'>
         <SlotBar {...props} />
         {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -152,11 +152,11 @@ const LayoutSearch = props => {
   })
 
   return (
-        <LayoutBase {...props} currentSearch={currentSearch} className='pt-8'>
+        <div {...props} currentSearch={currentSearch} className='pt-8'>
             {!currentSearch
               ? <SearchNav {...props} />
               : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -167,7 +167,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props} className='pt-8'>
+  return <div {...props} className='pt-8'>
         <Card className='w-full'>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
                 {Object.keys(archivePosts).map(archiveTitle => (
@@ -179,7 +179,7 @@ const LayoutArchive = (props) => {
                 ))}
             </div>
         </Card>
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -205,7 +205,7 @@ const LayoutSlug = props => {
     </>
 
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
+        <div {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -240,7 +240,7 @@ const LayoutSlug = props => {
                 <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
             </div>
 
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -265,7 +265,7 @@ const Layout404 = props => {
     }, 3000)
   })
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
             <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
                 <div className="dark:text-gray-200">
                     <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
@@ -276,7 +276,7 @@ const Layout404 = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -289,7 +289,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} className='mt-8'>
+        <div {...props} className='mt-8'>
             <Card className="w-full min-h-screen">
                 <div className="dark:text-gray-200 mb-5 mx-3">
                     <i className="mr-4 fas fa-th" />  {locale.COMMON.CATEGORY}:
@@ -306,7 +306,7 @@ const LayoutCategoryIndex = props => {
                     })}
                 </div>
             </Card>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -319,7 +319,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} className='mt-8'>
+        <div {...props} className='mt-8'>
             <Card className='w-full'>
                 <div className="dark:text-gray-200 mb-5 ml-4">
                     <i className="mr-4 fas fa-tag" /> {locale.COMMON.TAGS}:
@@ -330,12 +330,13 @@ const LayoutTagIndex = props => {
                     </div>)}
                 </div>
             </Card>
-        </LayoutBase>
+        </div>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
