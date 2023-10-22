@@ -1,18 +1,27 @@
 const CONFIG = {
 
   HEADER_BUTTON_1_TITLE: 'Github开源',
-  HEDEAR_BUTTON_1_URL: 'https://github.com/tangly1024/NotionNext',
+  HEDEAR_BUTTON_1_URL: 'https://github.com/LearnPrompt',
 
-  HEADER_BUTTON_2_TITLE: '作者博客',
+  HEADER_BUTTON_2_TITLE: 'Button 2',
   HEDEAR_BUTTON_2_URL: 'https://blog.tangly1024.com/',
 
+  HEADER_BUTTON_3_TITLE: 'Button 3',
+  HEDEAR_BUTTON_3_URL: 'https://blog.tangly1024.com/',
+
+  HEADER_BUTTON_4_TITLE: 'Button 4',
+  HEDEAR_BUTTON_4_URL: 'https://blog.tangly1024.com/',
+
+  HEADER_BUTTON_5_TITLE: '关于我们',
+  HEDEAR_BUTTON_5_URL: 'https://blog.tangly1024.com/',
+
   // 首页大图英雄板块
-  HERO_TITLE_1: 'NotionNext',
-  HERO_P_1: '快速搭建独立站、轻松放大品牌价值！',
+  HERO_TITLE_1: 'Learn Prompt',
+  HERO_P_1: 'Hi，我们是AI沃茨团队,欢迎来到 Learn Prompt 学习AI🎉',
   HERO_BUTTON_1_TEXT: '开始体验',
-  HERO_BUTTON_1_LINK: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
+  HERO_BUTTON_1_LINK: 'http://localhost:3000/about?theme=gitbook',
   HERO_BUTTON_2_TEXT: '了解更多',
-  HERO_BUTTON_2_LINK: 'https://docs.tangly1024.com/about',
+  HERO_BUTTON_2_LINK: 'https://docs.tangly1024./about',
   HERO_VIDEO_IMAGE: '/images/home.png',
   //   HERO_VIDEO_URL: '/videos/video.mp4',
   HERO_VIDEO_IFRAME: '//player.bilibili.com/player.html?aid=913088616&bvid=BV1fM4y1L7Qi&cid=1187218697&page=1&&high_quality=1',
