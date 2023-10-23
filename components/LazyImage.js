@@ -60,7 +60,6 @@ export default function LazyImage({
     ref: imageRef,
     src: imageLoaded ? src : placeholderSrc,
     alt: alt,
-    style: src ? style : { height: '0px', ...style },
     onLoad: handleImageLoad
   }
 
