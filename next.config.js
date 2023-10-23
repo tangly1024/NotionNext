@@ -90,7 +90,6 @@ module.exports = withBundleAnalyzer({
     //     'react-dom': 'preact/compat'
     //   })
     // }
-
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', THEME)
     return config
