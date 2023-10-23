@@ -1,18 +1,18 @@
 // 这里编写自定义js脚本；将被静态引入到页面中
-// 获取需要添加动画的元素
-var element = document.getElementById("myElement");
-
-// 设置初始状态
-element.style.opacity = 0;
-element.style.position = "absolute";
-element.style.left = "50%";
-element.style.top = "50%";
-element.style.transform = "translate(-50%, -50%)";
-
-// 延迟一定时间后执行动画
-setTimeout(function() {
-  // 添加飞入动画
-  element.style.transition = "all 1s ease-in-out";
-  element.style.opacity = 1;
-  element.style.transform = "translate(-50%, -50%) scale(1)";
-}, 2000); // 延迟2秒后开始执行动画
+document.addEventListener('click', function(event) {
+  var shootingStar = document.createElement('div');
+  shootingStar.style.position = 'absolute';
+  shootingStar.style.top = '0';
+  shootingStar.style.left = '50%';
+  shootingStar.style.width = '5px';
+  shootingStar.style.height = '5px';
+  shootingStar.style.backgroundColor = '#fff';
+  shootingStar.style.borderRadius = '50%';
+  shootingStar.style.animation = 'shooting-star 2s infinite';
+  document.body.appendChild(shootingStar);
+  var delay = Math.random() * 2000;
+  setTimeout(function() {
+    shootingStar.style.left = (event.clientX - shootingStar.offsetWidth / 2) + 'px';
+    shootingStar.style.top = (event.clientY - shootingStar.offsetHeight / 2) + 'px';
+  }, delay);
+});
