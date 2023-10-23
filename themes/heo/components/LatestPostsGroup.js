@@ -32,7 +32,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
 
                     <div
                         className={
-                            ' font-bold  overflow-x-hidden hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
+                            ' font-bold  overflow-x-hidden dark:text-white hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
                             ' hover:text-indigo-400 cursor-pointer'
                         }
                     >
