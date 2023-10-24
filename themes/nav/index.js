@@ -86,7 +86,7 @@ const LayoutBase = (props) => {
                     {/* 左侧推拉抽屉 */}
                     <div className={'font-sans hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
 
-                        <div className='main-menu z-20 pl-9 pr-7 pb-5 sticky pt-1 top-20 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
+                        <div className='mt-20 main-menu z-20 pl-9 pr-7 pb-5 sticky pt-1 top-20 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
                            {/* 嵌入 */}
                             {slotLeft}
 
