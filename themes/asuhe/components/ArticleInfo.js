@@ -1,5 +1,5 @@
 import BLOG from '@/blog.config'
-import LazyImage from '@/components/LazyImage'
+import LazyImage from './LazyImage'
 import Link from 'next/link'
 
 /**

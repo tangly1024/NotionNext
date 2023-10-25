@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
-import { useMediumGlobal } from '@/themes/medium'
+import { useAsuheGlobal } from '@/themes/asuhe'
 import JumpToTopButton from './JumpToTopButton'
 
 export default function BottomMenuBar ({ post, className }) {
-  const { tocVisible, changeTocVisible } = useMediumGlobal() || {}
+  const { tocVisible, changeTocVisible } = useAsuheGlobal()
   const showTocBotton = post?.toc?.length > 0
 
   const toggleToc = () => {

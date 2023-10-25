@@ -38,8 +38,8 @@ import ArticleInfo from './components/ArticleInfo'
 import CommonHead from '@/components/CommonHead'
 
 // 主题全局状态
-const ThemeGlobalMedium = createContext()
-export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
+const ThemeGlobalAsuhe = createContext()
+export const useAsuheGlobal = () => useContext(ThemeGlobalAsuhe)
 
 /**
  * 基础布局
@@ -55,13 +55,13 @@ const LayoutBase = props => {
   const { onLoading } = useGlobal()
 
   return (
-        <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
+        <ThemeGlobalAsuhe.Provider value={{ tocVisible, changeTocVisible }}>
             {/* SEO相关 */}
             <CommonHead meta={meta}/>
             {/* CSS样式 */}
             <Style/>
 
-            <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-asuhe' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
 
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
                     {/* 桌面端左侧菜单 */}
@@ -116,7 +116,7 @@ const LayoutBase = props => {
                 {/* 移动端底部导航栏 */}
                 <BottomMenuBar {...props} className='block md:hidden' />
             </div>
-        </ThemeGlobalMedium.Provider>
+        </ThemeGlobalAsuhe.Provider>
   )
 }
 

@@ -1,5 +1,5 @@
 import Catalog from './Catalog'
-import { useMediumGlobal } from '@/themes/medium'
+import { useAsuheGlobal } from '@/themes/asuhe'
 
 /**
  * 悬浮抽屉目录
@@ -9,7 +9,7 @@ import { useMediumGlobal } from '@/themes/medium'
  * @constructor
  */
 const TocDrawer = ({ post, cRef }) => {
-  const { tocVisible, changeTocVisible } = useMediumGlobal()
+  const { tocVisible, changeTocVisible } = useAsuheGlobal()
   const switchVisible = () => {
     changeTocVisible(!tocVisible)
   }
