@@ -14,6 +14,7 @@ const CONFIG = {
   HERO_TITLE_3: 'ALPHACHAT.FUN',
   HERO_TITLE_4: 'AIGC研究',
   HERO_TITLE_5: 'Midjourney & Stable Diffusion',
+  HERO_TITLE_6: 'ChatGPT',
   HERO_TITLE_LINK: 'https://alphachat.fun',
 
   // 英雄区显示三个置顶分类
@@ -35,7 +36,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
+  INFO_CARD_URL: 'https://alphachat.fun', // 个人资料底部按钮链接
 
   // 用户技能图标
   GROUP_ICONS: [
