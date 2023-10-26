@@ -6,7 +6,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
     { title: '访问我的YouTube频道', url: 'https://www.youtube.com/@Bimuakung' },   
-    { title: '如显示空白，请按Ctrl+F5 强制刷新', url: '' },
+    { title: '如显示空白，请按Ctrl+F5 强制刷新', url: 'https://bimu.live/' },
     { title: '访问我的Bilibili频道', url: 'https://space.bilibili.com/38343840' }
   ],
 
