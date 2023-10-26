@@ -19,7 +19,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '比木です', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '一个看直播、玩直播、现居日本的肥宅。博客分享内容创作的方法，涉及游戏直播相关的软件教学、硬件评测', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'http://bimu.live/', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://bimu.live/', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '比木,Bimu.tv,Bimu.live,Bimu,Bimuakung,直播控,OBS教程,直播教学,手游投屏', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
@@ -35,7 +35,7 @@ const BLOG = {
 
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
 
-  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://pic.imgdb.cn/item/651e4689c458853aef1a7d0f.webp', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://pic.imgdb.cn/item/653a3360c458853aefa2b2a0.png', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
 
   // START ************网站字体*****************
 
