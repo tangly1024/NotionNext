@@ -61,7 +61,7 @@ const LayoutBase = props => {
             {/* CSS样式 */}
             <Style/>
 
-            <div id='theme-asuhe' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-asuhe' className='bg-asuhe-light dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
 
                 <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
                     {/* 桌面端左侧菜单 */}
@@ -88,7 +88,6 @@ const LayoutBase = props => {
                                 {slotTop}
                                 {children}
                             </Transition>
-
                             <JumpToTopButton />
                         </div>
 

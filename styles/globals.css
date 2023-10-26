@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("./waves.css");
+
 .wrapper {
   min-height: 100vh;
   display: flex;

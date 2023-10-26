@@ -1,0 +1,54 @@
+:root {
+  --waves-color-1: #E3FDFD;
+  --waves-color-2: #CBF1F5;
+  --waves-color-3: #A6E3E9;
+  --waves-color-4: #71C9CE;
+
+}
+
+.waves {
+  width: 100%;
+  height: 10vh;
+  margin-bottom: -.6875rem;
+  min-height: 3.125rem;
+  max-height: 9.375rem;
+  position:relative;
+}
+/* Animation */
+.parallax>use {
+  animation: wave 25s cubic-bezier(.55, .5, .45, .5) infinite;
+}
+
+.parallax>use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+  fill: var(--waves-color-4);
+}
+
+.parallax>use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+  fill: var(--waves-color-3);
+}
+
+.parallax>use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+  fill: var(--waves-color-2);
+}
+
+.parallax>use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+  fill: var(--waves-color-1);
+}
+
+@keyframes wave {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}    

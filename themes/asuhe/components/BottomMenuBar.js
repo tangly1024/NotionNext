@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useAsuheGlobal } from '@/themes/asuhe'
 import JumpToTopButton from './JumpToTopButton'
+import DarkModeButton from '@/components/DarkModeButton'
 
 export default function BottomMenuBar ({ post, className }) {
   const { tocVisible, changeTocVisible } = useAsuheGlobal()
@@ -12,7 +13,7 @@ export default function BottomMenuBar ({ post, className }) {
   }
 
   return (
-    <div className={'sticky z-10 bottom-0 w-full h-12 bg-white dark:bg-hexo-black-gray ' + className}>
+    <div className={'sticky z-10 bottom-0 w-full h-12 bg-asuhe-light dark:bg-hexo-black-gray ' + className}>
       <div className='flex justify-between h-full shadow-card'>
         <Link href='/search' passHref legacyBehavior>
           <div className='flex w-full items-center justify-center cursor-pointer'>
@@ -20,6 +21,7 @@ export default function BottomMenuBar ({ post, className }) {
           </div>
         </Link>
         <div className='flex w-full items-center justify-center cursor-pointer'>
+          <DarkModeButton />
           <JumpToTopButton/>
         </div>
         {showTocBotton && <div onClick={toggleToc} className='flex w-full items-center justify-center cursor-pointer'>
