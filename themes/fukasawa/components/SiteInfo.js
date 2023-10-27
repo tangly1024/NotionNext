@@ -41,9 +41,8 @@ function SiteInfo({ title }) {
       const { ip, country } = response.data;
       document.getElementById("user_ip").innerHTML = "访客IP:" + ip;
       document.getElementById("cf_cdn").innerHTML = "当前CDN节点:" + 'Hong Kong';
-
     }
-    catch { err } {
+    catch (err) {
       console.log(err)
     }
   })()
