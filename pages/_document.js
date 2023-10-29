@@ -28,6 +28,7 @@ class MyDocument extends Document {
                       return <link key={index} rel="preload" href={fontUrl} as="font" type="font/woff2" />
                     }
                   })}
+                  <script async src="https://analytics.miaoosi.com/script.js" data-website-id="c0e95e0d-4731-4351-9dec-133805972532"></script>
                 </Head>
 
                 <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
