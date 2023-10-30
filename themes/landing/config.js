@@ -22,7 +22,7 @@ const CONFIG = {
   FEATURES_HEADER_1: '探索的过程',
   FEATURES_HEADER_1_P: "如何搭建自己的门户网站，塑造一个品牌展示中心？<br/>曾经，它是系统<strong class='font-bold text-red-500'>繁重</strong>的Wordpress、是操作<strong class='font-bold  text-red-500'>复杂</strong>的Hexo、是<strong class='font-bold text-red-500'>昂贵</strong>且<strong class='font-bold text-red-500'>不稳定</strong>的技术团队;<br/>现在，只要一个Notion笔记就够了",
   FEATURES_HEADER_2: 'Notion+NextJs组合方案',
-  FEATURES_HEADER_2_P: 'Notion作为CMS管理您的站点配置和网页数据，NextJs作为渲染博客的脚本，借助第三方的Vercel等托管平台提供网络服务。',
+  FEATURES_HEADER_2_P: '在Notion笔记中管理文章数据，NextJs将其渲染成网页排版，通过Vercel等第三方平台将您的网站发布到全球。',
   FEATURES_CARD_1_TITLE: '简单快速的系统',
   FEATURES_CARD_1_P: '在Notion中写下一篇文章，内容立刻在您的网站首页中呈现给互联网',
   FEATURES_CARD_2_TITLE: '高效传播的媒介',
@@ -47,7 +47,7 @@ const CONFIG = {
   FEATURES_BLOCK_6_P: 'NotionNext，助您轻松开始写作',
 
   // 感言
-  TESTIMONIALS_HEADER: '已搭建超4000个网站、浏览量突破 100,000,000+',
+  TESTIMONIALS_HEADER: '已搭建超5300个网站、总浏览量突破100,000,000+',
   TESTIMONIALS_P: '网站内容涵盖地产、教育、建筑、医学、机械、IT、电子、软件、自媒体、数位游民、短视频、电商、学生、摄影爱好者、旅行爱好者等等各行各业',
 
   TESTIMONIALS_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
