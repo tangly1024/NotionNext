@@ -24,6 +24,17 @@ export async function getStaticProps(req) {
   const { locale } = req
   const from = 'index'
   const props = await getGlobalData({ from, locale })
+
+  // - Load Index Page from Notion (by Hanezu)
+
+  // Import getNotion is not possible so I use dynamic import
+  const getNotion = await import('@/lib/notion/getNotion').then(module => module.getNotion);
+
+  // Show index page
+  const indexPost = props.allPages.find(page => page.slug === 'index')
+  // neeed to remove all '-' in the id
+  props.post = await getNotion(indexPost.id.replace(/-/g, ''))
+
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',
     12,

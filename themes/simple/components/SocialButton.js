@@ -7,7 +7,7 @@ import { siteConfig } from '@/lib/config'
  */
 const SocialButton = () => {
   return (
-    <div className='w-52 justify-center flex-wrap flex my-2'>
+    <div className='w-58 justify-center flex-wrap flex my-2'>
       <div className='space-x-5 md:text-xl text-3xl text-gray-600 dark:text-gray-400 text-center'>
         {siteConfig('CONTACT_GITHUB') && (
           <a
@@ -97,6 +97,15 @@ const SocialButton = () => {
             title={'youtube'}
             href={siteConfig('CONTACT_YOUTUBE')}>
             <i className='fab fa-youtube transform hover:scale-125 duration-150' />
+          </a>
+        )}
+        {siteConfig('CONTACT_GOOGLE_SCOLAR') && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            title={'google scholar'}
+            href={siteConfig('CONTACT_GOOGLE_SCOLAR')}>
+            <i className='fas fa-graduation-cap transform hover:scale-125 duration-150' />
           </a>
         )}
       </div>

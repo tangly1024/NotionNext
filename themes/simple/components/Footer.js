@@ -1,6 +1,7 @@
 import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 页脚

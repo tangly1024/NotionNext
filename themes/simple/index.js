@@ -134,12 +134,29 @@ const LayoutBase = props => {
 }
 
 /**
- * 博客首页
- * 首页就是列表
+ * 博客首页，读取Notion中slug=index的页面
  * @param {*} props
  * @returns
  */
 const LayoutIndex = props => {
+  const { post } = props
+  const { fullWidth } = useGlobal()
+
+  return (
+    <>
+      <div id="article-wrapper" className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+        <NotionPage post={post} />
+      </div>
+    </>
+  )
+}
+
+/**
+ * 博客列表（元首页）
+ * @param {*} props
+ * @returns
+ */
+const LayoutArticle = props => {
   return <LayoutPostList {...props} />
 }
 /**

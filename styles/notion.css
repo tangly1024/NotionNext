@@ -1673,7 +1673,7 @@ code[class*='language-'] {
 .notion-text,
 .notion-quote,
 .notion-h-title {
-  @apply leading-8;
+  @apply leading-5;
   @apply p-0;
   @apply my-3;
 }
@@ -2049,7 +2049,7 @@ code.language-mermaid {
 }
 
 .notion-external-image {
-  @apply w-6 h-6 mx-3 my-2 !important;
+  @apply w-6 h-6 mx-1 mb-1 !important;
 }
 
 /* 表格 #f5f6f8*/
