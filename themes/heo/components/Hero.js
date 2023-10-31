@@ -378,8 +378,7 @@ function TodayCard({ cRef }) {
             isCoverUp ? '' : ' pointer-events-none'
           } cursor-pointer today-card-cover absolute w-full h-full top-0`}
           style={{
-            background:
-              "url('https://bu.dusays.com/2023/03/12/640dcd3a1b146.png') no-repeat center /cover"
+            background: `url('${CONFIG.HERO_RECOMMEND_COVER}') no-repeat center /cover`
           }}
         ></div>
       </div>
