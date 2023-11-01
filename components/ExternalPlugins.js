@@ -2,17 +2,6 @@ import BLOG from 'blog.config'
 import dynamic from 'next/dynamic'
 import WebWhiz from './Webwhiz'
 
-// import TwikooCommentCounter from '@/components/TwikooCommentCounter'
-// import { DebugPanel } from '@/components/DebugPanel'
-// import { ThemeSwitch } from '@/components/ThemeSwitch'
-// import { Fireworks } from '@/components/Fireworks'
-// import { Nest } from '@/components/Nest'
-// import { FlutteringRibbon } from '@/components/FlutteringRibbon'
-// import { Ribbon } from '@/components/Ribbon'
-// import { Sakura } from '@/components/Sakura'
-// import { StarrySky } from '@/components/StarrySky'
-// import { Analytics } from '@vercel/analytics/react'
-
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false })
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false })
 const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), { ssr: false })
@@ -33,8 +22,9 @@ const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const CustomContextMenu = dynamic(() => import('@/components/CustomContextMenu'), { ssr: false })
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), { ssr: false })
 const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr: false })
+
 /**
- * 各种第三方组件
+ * 各种插件脚本
  * @param {*} props
  * @returns
  */
