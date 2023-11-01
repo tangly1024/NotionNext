@@ -3,6 +3,7 @@ import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 const Tag = props => {
   const { locale } = useGlobal()
@@ -12,8 +13,8 @@ const Tag = props => {
   const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${tag} | ${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
+    description: siteConfig('HOME_BANNER_IMAGE'),
     image: siteInfo?.pageCover,
     slug: 'tag/' + tag,
     type: 'website'

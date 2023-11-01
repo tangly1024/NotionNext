@@ -1,4 +1,5 @@
 import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 
 function SiteInfo ({ title }) {
   const d = new Date()
@@ -14,7 +15,7 @@ function SiteInfo ({ title }) {
         <footer
             className='relative leading-6 justify-start w-full text-gray-600 dark:text-gray-300 text-xs font-sans'
         >
-            <span> © {`${copyrightDate}`} <span> <a href={BLOG.LINK}> <i className='mx-1 animate-pulse fas fa-heart'/> {BLOG.AUTHOR}</a>. <br /></span>
+            <span> © {`${copyrightDate}`} <span> <a href={BLOG.LINK}> <i className='mx-1 animate-pulse fas fa-heart'/> {siteConfig('AUTHOR')}</a>. <br /></span>
 
             {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br/></>}
 

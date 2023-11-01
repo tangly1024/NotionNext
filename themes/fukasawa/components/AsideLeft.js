@@ -12,9 +12,7 @@ import SocialButton from './SocialButton'
 import { useFukasawaGlobal } from '..'
 import CONFIG from '@/themes/fukasawa/config'
 import { AdSlot } from '@/components/GoogleAdsense'
-
-// import { debounce } from 'lodash'
-// import { useEffect } from 'react'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 侧边栏
@@ -22,7 +20,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
  * @returns
  */
 function AsideLeft(props) {
-  const { tagOptions, currentTag, categoryOptions, currentCategory, post, slot, siteInfo, notice } = props
+  const { tagOptions, currentTag, categoryOptions, currentCategory, post, slot, notice } = props
   const router = useRouter()
   const { isCollapsed, setIsCollapse } = useFukasawaGlobal()
   // 折叠侧边栏
@@ -65,7 +63,7 @@ function AsideLeft(props) {
             <Logo {...props} />
 
             <section className='siteInfo flex flex-col dark:text-gray-300 pt-8'>
-                {siteInfo?.description}
+                {siteConfig('HOME_BANNER_IMAGE')}
             </section>
 
             <section className='flex flex-col text-gray-600'>

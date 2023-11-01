@@ -14,6 +14,7 @@ import CONFIG from '../config'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 /**
  *
@@ -88,7 +89,7 @@ export default function ArticleDetail(props) {
                     <ShareBar post={post} />
 
                     {/* 版权声明 */}
-                    {post?.type === 'Post' && <ArticleCopyright author={BLOG.AUTHOR} url={url} />}
+                    {post?.type === 'Post' && <ArticleCopyright author={siteConfig('AUTHOR')} url={url} />}
 
                     {/* 推荐文章 */}
                     {post?.type === 'Post' && <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />}

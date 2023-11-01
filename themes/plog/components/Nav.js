@@ -8,11 +8,12 @@ import { MenuItemDrop } from './MenuItemDrop'
 import Collapse from '@/components/Collapse'
 import { MenuItemCollapse } from './MenuItemCollapse'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 
 const Header = props => {
   const { fullWidth, siteInfo } = props
 
-  const title = siteInfo?.title
+  const title = siteConfig('TITLE')
 
   return <div className='md:hidden fixed top-0 w-full z-20'>
         <div id="sticky-nav"
@@ -23,12 +24,12 @@ const Header = props => {
                         <div className="h-6 w-6">
                             {/* <SvgIcon/> */}
                             {CONFIG.NAV_NOTION_ICON
-                              ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
+                              ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={siteConfig('AUTHOR')} />
                               : <SvgIcon />}
 
                         </div>
                         <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {title}  {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
+                            {title}  {/* ,{' '}<span className="font-normal">{siteConfig('HOME_BANNER_IMAGE')}</span> */}
                         </p>
                     </>
                 </Link>

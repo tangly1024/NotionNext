@@ -86,7 +86,7 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
     <div key={frontMatter?.id} id='comment' className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
         <Tabs>
              {BLOG.COMMENT_ARTALK_SERVER && (<div key='Artalk'>
-                <Artalk siteInfo={siteInfo} />
+                <Artalk />
             </div>)}
 
             {BLOG.COMMENT_TWIKOO_ENV_ID && (<div key='Twikoo'>

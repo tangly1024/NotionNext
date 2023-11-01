@@ -26,6 +26,7 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -33,7 +34,7 @@ import CommonHead from '@/components/CommonHead'
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, floatSlot, rightAreaSlot, siteInfo, meta } = props
+  const { children, headerSlot, floatSlot, rightAreaSlot, meta } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
@@ -119,7 +120,7 @@ const LayoutBase = (props) => {
             </div>
 
             {/* 页脚 */}
-            <Footer title={siteInfo?.title} />
+            <Footer title={siteConfig('TITLE')} />
         </div>
   )
 }

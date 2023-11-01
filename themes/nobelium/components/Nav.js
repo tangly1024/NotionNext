@@ -10,6 +10,7 @@ import { MenuItemCollapse } from './MenuItemCollapse'
 import LazyImage from '@/components/LazyImage'
 import RandomPostButton from './RandomPostButton'
 import SearchButton from './SearchButton'
+import { siteConfig } from '@/lib/config'
 
 const Nav = props => {
   const { navBarTitle, fullWidth, siteInfo } = props
@@ -48,7 +49,7 @@ const Nav = props => {
                     <div className="h-6 w-6">
                         {/* <SvgIcon/> */}
                         {CONFIG.NAV_NOTION_ICON
-                          ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={BLOG.AUTHOR} />
+                          ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={siteConfig('AUTHOR')} />
                           : <SvgIcon />}
 
                     </div>
@@ -62,8 +63,8 @@ const Nav = props => {
                     )
                   : (
                         <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                            {siteInfo?.title}
-                            {/* ,{' '}<span className="font-normal">{siteInfo?.description}</span> */}
+                            {siteConfig('TITLE')}
+                            {/* ,{' '}<span className="font-normal">{siteConfig('HOME_BANNER_IMAGE')}</span> */}
                         </p>
                     )}
             </div>

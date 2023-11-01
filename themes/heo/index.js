@@ -40,6 +40,7 @@ import replaceSearchResult from '@/components/Mark'
 import LazyImage from '@/components/LazyImage'
 import WWAds from '@/components/WWAds'
 import { AdSlot } from '@/components/GoogleAdsense'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -53,7 +54,6 @@ const LayoutBase = props => {
     headerSlot,
     slotTop,
     slotRight,
-    siteInfo,
     className,
     meta
   } = props
@@ -95,7 +95,7 @@ const LayoutBase = props => {
       </main>
 
       {/* 页脚 */}
-      <Footer title={siteInfo?.title || BLOG.TITLE} />
+      <Footer title={siteConfig('TITLE')} />
     </div>
   )
 }

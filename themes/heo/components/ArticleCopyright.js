@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function ArticleCopyright () {
   const router = useRouter()
@@ -24,7 +25,7 @@ export default function ArticleCopyright () {
         <li>
           <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
           <Link href={'/about'} className="hover:underline">
-            {BLOG.AUTHOR}
+            {siteConfig('AUTHOR')}
           </Link>
         </li>
         <li>
