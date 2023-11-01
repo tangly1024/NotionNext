@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 标签首页
@@ -17,8 +18,8 @@ const TagIndex = props => {
   const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
-    title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
+    description: siteConfig('HOME_BANNER_IMAGE'),
     image: siteInfo?.pageCover,
     slug: 'tag',
     type: 'website'

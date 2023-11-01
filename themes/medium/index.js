@@ -36,6 +36,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import ArticleInfo from './components/ArticleInfo'
 import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -48,7 +49,7 @@ export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, showInfoCard = true, slotRight, slotTop, siteInfo, notice, meta } = props
+  const { children, showInfoCard = true, slotRight, slotTop, notice, meta } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -93,7 +94,7 @@ const LayoutBase = props => {
                         </div>
 
                         {/* 底部 */}
-                        <Footer title={siteInfo?.title} />
+                        <Footer title={siteConfig('TITLE')} />
                     </div>
 
                     {/* 桌面端右侧 */}

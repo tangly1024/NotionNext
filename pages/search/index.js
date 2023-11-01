@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 搜索路由
@@ -34,8 +35,8 @@ const Search = props => {
   }
 
   const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
+    description: siteConfig('HOME_BANNER_IMAGE'),
     image: siteInfo?.pageCover,
     slug: 'search',
     type: 'website'

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 export const BlogItem = props => {
   const { post } = props
@@ -22,7 +23,7 @@ export const BlogItem = props => {
 
         <div className="mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6">
             <div className='space-x-2'>
-                <span>  <a href={CONFIG.AUTHOR_LINK} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {BLOG.AUTHOR}</a></span>
+                <span>  <a href={CONFIG.AUTHOR_LINK} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {siteConfig('AUTHOR')}</a></span>
                 <span>
                     <Link className='p-1 hover:text-red-400 transition-all duration-200' href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}>
                         <i className="fa-regular fa-clock" /> {post.date?.start_date || post.createdTime}

@@ -31,6 +31,7 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局
@@ -101,7 +102,7 @@ const LayoutBase = props => {
             <RightFloatButtons {...props} />
 
             {/* 页脚 */}
-            <Footer title={siteInfo?.title || BLOG.TITLE} />
+            <Footer title={siteConfig('TITLE')} />
         </div>
   )
 }

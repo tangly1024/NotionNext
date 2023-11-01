@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import React from 'react'
 import throttle from 'lodash.throttle'
+import { siteConfig } from '@/lib/config'
 
 export const BlogListScroll = props => {
   const { posts } = props
@@ -56,7 +57,7 @@ export const BlogListScroll = props => {
                       </h2>
 
                       <div className="mb-4 text-sm text-gray-700">
-                          by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
+                          by <a href="#" className="text-gray-700">{siteConfig('AUTHOR')}</a> on {p.date?.start_date || p.createdTime}
                           <span className="font-bold mx-1"> | </span>
                           <a href="#" className="text-gray-700">{p.category}</a>
                           <span className="font-bold mx-1"> | </span>

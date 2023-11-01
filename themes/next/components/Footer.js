@@ -1,4 +1,4 @@
-import React from 'react'
+import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import DarkModeButton from '@/components/DarkModeButton'
 
@@ -20,7 +20,7 @@ const Footer = ({ title }) => {
             <span>
                 <DarkModeButton />
 
-                <i className='fas fa-copyright' /> {`${copyrightDate}`} <span className='mx-1 animate-pulse'><i className='fas fa-heart' /></span> <a href={BLOG.LINK} className='underline font-bold '>{BLOG.AUTHOR}</a>.<br />
+                <i className='fas fa-copyright' /> {`${copyrightDate}`} <span className='mx-1 animate-pulse'><i className='fas fa-heart' /></span> <a href={BLOG.LINK} className='underline font-bold '>{siteConfig('AUTHOR')}</a>.<br />
 
                 {BLOG.BEI_AN && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{BLOG.BEI_AN}</a><br /></>}
 

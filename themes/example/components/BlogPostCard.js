@@ -3,6 +3,7 @@ import CONFIG from '../config'
 import Link from 'next/link'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 
 const BlogPostCard = ({ post }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
@@ -18,7 +19,7 @@ const BlogPostCard = ({ post }) => {
             </h2>
 
             <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
-                by <a href="#" className="text-gray-700 dark:text-gray-300">{BLOG.AUTHOR}</a> on {post.date?.start_date || post.createdTime}
+                by <a href="#" className="text-gray-700 dark:text-gray-300">{siteConfig('AUTHOR')}</a> on {post.date?.start_date || post.createdTime}
                 <TwikooCommentCount post={post} className='pl-1'/>
                 <span className="font-bold mx-1"> | </span>
                 <a href={`/category${post.category}`} className="text-gray-700 dark:text-gray-300 hover:underline">{post.category}</a>

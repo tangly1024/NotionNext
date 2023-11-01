@@ -3,6 +3,7 @@ import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
 import CONFIG from '../config'
 import { SvgIcon } from './SvgIcon'
+import { siteConfig } from '@/lib/config'
 
 /**
  * logo文字栏
@@ -16,7 +17,7 @@ export default function LogoBar(props) {
     <Link href="/" aria-label={BLOG.title}>
         <div className="h-6 w-6">
             {CONFIG.NAV_NOTION_ICON
-              ? <LazyImage src={siteInfo?.icon} className='rounded-full' width={24} height={24} alt={BLOG.AUTHOR} />
+              ? <LazyImage src={siteInfo?.icon} className='rounded-full' width={24} height={24} alt={siteConfig('AUTHOR')} />
               : <SvgIcon />}
         </div>
     </Link>
@@ -30,8 +31,8 @@ export default function LogoBar(props) {
         )
       : (
             <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
-                <Link href="/" aria-label={BLOG.title}> {siteInfo?.title}</Link>
-                {' '}<span className="font-normal text-sm text-gray-00 dark:text-gray-400">{siteInfo?.description}</span>
+                <Link href="/" aria-label={BLOG.title}> {siteConfig('TITLE')}</Link>
+                {' '}<span className="font-normal text-sm text-gray-00 dark:text-gray-400">{siteConfig('HOME_BANNER_IMAGE')}</span>
             </p>
         )}
 </div>

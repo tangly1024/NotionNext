@@ -3,6 +3,7 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 文章列表分页
@@ -16,8 +17,8 @@ const Page = props => {
   const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
-    title: `${props?.page} | Page | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${props?.page} | Page | ${siteConfig('TITLE')}`,
+    description: siteConfig('HOME_BANNER_IMAGE'),
     image: siteInfo?.pageCover,
     slug: 'page/' + props.page,
     type: 'website'

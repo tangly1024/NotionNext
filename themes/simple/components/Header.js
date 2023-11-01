@@ -3,7 +3,7 @@ import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
 import CONFIG from '../config'
 import SocialButton from './SocialButton'
-// import CONFIG from '../config_simple'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 网站顶部
@@ -20,11 +20,11 @@ export const Header = (props) => {
                     {/* 可使用一张单图作为logo */}
                     <div className='flex space-x-6'>
                         <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer'>
-                            <LazyImage src={avatar} className='rounded-full' width={130} height={130} alt={BLOG.AUTHOR} />
+                            <LazyImage src={avatar} className='rounded-full' width={130} height={130} alt={siteConfig('AUTHOR')} />
                         </div>
 
                         <div className='flex-col flex justify-center'>
-                            <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{BLOG.AUTHOR}</div>
+                            <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>{siteConfig('AUTHOR')}</div>
                             <div className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center' dangerouslySetInnerHTML={{ __html: CONFIG.LOGO_DESCRIPTION }} />
                         </div>
                     </div>
@@ -33,7 +33,7 @@ export const Header = (props) => {
                 <div className='flex justify-center'>
                 <SocialButton />
                 </div>
-                <div className='text-xs mt-4 text-gray-500 dark:text-gray-300'>{siteInfo?.description}</div>
+                <div className='text-xs mt-4 text-gray-500 dark:text-gray-300'>{siteConfig('HOME_BANNER_IMAGE')}</div>
             </div>
         </header>
   )
