@@ -45,7 +45,7 @@ const ThemeSwitch = () => {
 
                 {/* 翻译按钮 */}
                 <div className="text-sm flex items-center group-hover:w-32 transition-all duration-200">
-                    <i class="fa-solid fa-language w-5" />
+                    <i className="fa-solid fa-language w-5" />
                     <div className='w-0 group-hover:w-24 transition-all duration-200 overflow-hidden'>
                         <select value={lang} onChange={onLangSelectChange} name="themes" className='pl-1 bg-gray-50 dark:bg-black appearance-none outline-none dark:text-white uppercase cursor-pointer'>
                             {Object.keys(LANGS)?.map(t => {
