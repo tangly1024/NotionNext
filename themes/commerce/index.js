@@ -4,7 +4,6 @@ import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
-import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
@@ -33,6 +32,7 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
+import TopNavBar from './components/TopNavBar'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -45,13 +45,13 @@ const LayoutBase = props => {
   const { onLoading } = useGlobal()
 
   return (
-        <div id='theme-hexo'>
+        <div id='theme-commerce'>
             {/* 网页SEO */}
             <CommonHead meta={meta}/>
             <Style/>
 
             {/* 顶部导航 */}
-            <TopNav {...props} />
+            <TopNavBar {...props} />
 
             {/* 顶部嵌入 */}
             <Transition
@@ -298,7 +298,7 @@ const LayoutCategoryIndex = props => {
                     {categoryOptions.map(category => {
                       return (
                             <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
-                                <div className={' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'}>
+                                <div className={' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-red-400'}>
                                     <i className="mr-4 fas fa-folder" />  {category.name}({category.count})
                                 </div>
                             </Link>
