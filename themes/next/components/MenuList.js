@@ -40,12 +40,12 @@ export const MenuList = (props) => {
                 data-aos-once="true"
                 data-aos-anchor-placement="top-bottom"
                 className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
-                {links.map(link => link && link.show && <MenuItemDrop key={link?.id} link={link} />)}
+                {links.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
             </nav>
 
             {/* 移动端菜单 */}
             <div id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
-                {links?.map(link => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.id} link={link} />)}
+                {links?.map((link, index) => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={index} link={link} />)}
             </div>
         </>
   )

@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { loadExternalResource } from '@/lib/utils'
 
 const CusdisComponent = ({ frontMatter }) => {
-  const { locale } = useGlobal()
+  const { lang } = useGlobal()
   const router = useRouter()
   const { isDarkMode } = useGlobal()
 
@@ -18,7 +18,7 @@ const CusdisComponent = ({ frontMatter }) => {
   }, [isDarkMode])
 
   return <div id="cusdis_thread"
-        lang={locale.LOCALE.toLowerCase()}
+        lang={lang.toLowerCase()}
         data-host={BLOG.COMMENT_CUSDIS_HOST}
         data-app-id={BLOG.COMMENT_CUSDIS_APP_ID}
         data-page-id={frontMatter.id}
