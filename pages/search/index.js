@@ -15,7 +15,7 @@ const Search = props => {
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const router = useRouter()
   const keyword = getSearchKey(router)

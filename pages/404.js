@@ -14,7 +14,7 @@ const NoFound = props => {
   props = { ...props, meta }
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   return <Layout {...props} />
 }

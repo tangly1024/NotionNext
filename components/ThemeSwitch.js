@@ -1,9 +1,10 @@
 import { useGlobal } from '@/lib/global'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Draggable } from './Draggable'
 import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import DarkModeButton from './DarkModeButton'
+import { getQueryParam } from '@/lib/utils'
 /**
  *
  * @returns 主题切换
@@ -11,6 +12,7 @@ import DarkModeButton from './DarkModeButton'
 const ThemeSwitch = () => {
   const { theme } = useGlobal()
   const router = useRouter()
+  const currentTheme = getQueryParam(router.asPath, 'theme') || theme
   const [isLoading, setIsLoading] = useState(false)
 
   // 修改当前路径url中的 theme 参数
@@ -31,13 +33,13 @@ const ThemeSwitch = () => {
                 <div className="p-3 w-full flex items-center text-sm group duration-200 transition-all">
                     <DarkModeButton className='mr-2' />
                     <div className='w-0 group-hover:w-20 transition-all duration-200 overflow-hidden'>
-                        <select value={theme} onChange={onSelectChange} name="themes" className='appearance-none outline-none dark:text-white bg-gray-50 dark:bg-black uppercase cursor-pointer'>
+                        <select value={currentTheme} onChange={onSelectChange} name="themes" className='appearance-none outline-none dark:text-white bg-gray-50 dark:bg-black uppercase cursor-pointer'>
                             {THEMES?.map(t => {
                               return <option key={t} value={t}>{t}</option>
                             })}
                         </select>
                     </div>
-                    <i className="fa-solid fa-palette pl-2"></i>
+                    <i className="fa-solid fa-palette pl-2"/>
                 </div>
             </div>
             {/* 切换主题加载时的全屏遮罩 */}

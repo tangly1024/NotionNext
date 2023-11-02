@@ -41,9 +41,9 @@ const BlogPostCard = ({ post }) => {
         </div>
         {/* 图片封面 */}
         {showPageCover && (
-            <div className="md:w-5/12 w-full overflow-hidden p-1">
+            <div className="md:w-5/12 w-full h-44 overflow-hidden p-1">
                 <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                    <LazyImage src={post?.pageCoverThumbnail} className='h-44 bg-center bg-cover hover:scale-110 duration-200' />
+                    <LazyImage src={post?.pageCoverThumbnail} className='w-full bg-cover hover:scale-110 duration-200' />
                 </Link>
             </div>
         )}

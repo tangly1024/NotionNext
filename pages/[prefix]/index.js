@@ -67,7 +67,7 @@ const Slug = props => {
   }, [post])
 
   const meta = {
-    title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `${props?.siteConfig('TITLE') || BLOG.TITLE} | loading`,
+    title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `${siteConfig('TITLE')} | loading`,
     description: post?.summary,
     type: post?.type,
     slug: post?.slug,
@@ -77,7 +77,7 @@ const Slug = props => {
   }
   props = { ...props, lock, meta, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
   return <Layout {...props} />
 }
 

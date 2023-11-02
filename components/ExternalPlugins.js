@@ -1,4 +1,4 @@
-import BLOG from 'blog.config'
+import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
 import WebWhiz from './Webwhiz'
 
@@ -30,26 +30,26 @@ const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr:
  */
 const ExternalPlugin = (props) => {
   return <>
-          {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
-          {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
-          {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
-          {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
-          {BLOG.ANALYTICS_VERCEL && <Analytics />}
-          {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
-          {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-          {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
-          {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
-          {JSON.parse(BLOG.SAKURA) && <Sakura />}
-          {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
-          {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
-          {JSON.parse(BLOG.NEST) && <Nest />}
-          {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
-          {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && <TwikooCommentCounter {...props}/>}
-          {JSON.parse(BLOG.RIBBON) && <Ribbon />}
-          {JSON.parse(BLOG.CUSTOM_RIGHT_CLICK_CONTEXT_MENU) && <CustomContextMenu {...props} />}
-          {!JSON.parse(BLOG.CAN_COPY) && <DisableCopy/>}
-          {JSON.parse(BLOG.WEB_WHIZ_ENABLED) && <WebWhiz/>}
-          {JSON.parse(BLOG.AD_WWADS_BLOCK_DETECT) && <AdBlockDetect/>}
+          {JSON.parse(siteConfig('THEME_SWITCH')) && <ThemeSwitch />}
+          {JSON.parse(siteConfig('DEBUG')) && <DebugPanel />}
+          {siteConfig('ANALYTICS_ACKEE_TRACKER') && <Ackee />}
+          {siteConfig('ANALYTICS_GOOGLE_ID') && <Gtag />}
+          {siteConfig('ANALYTICS_VERCEL') && <Analytics />}
+          {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && <Busuanzi />}
+          {siteConfig('ADSENSE_GOOGLE_ID') && <GoogleAdsense />}
+          {siteConfig('FACEBOOK_APP_ID') && siteConfig('FACEBOOK_PAGE_ID') && <Messenger />}
+          {JSON.parse(siteConfig('FIREWORKS')) && <Fireworks />}
+          {JSON.parse(siteConfig('SAKURA')) && <Sakura />}
+          {JSON.parse(siteConfig('STARRY_SKY')) && <StarrySky />}
+          {JSON.parse(siteConfig('MUSIC_PLAYER')) && <MusicPlayer />}
+          {JSON.parse(siteConfig('NEST')) && <Nest />}
+          {JSON.parse(siteConfig('FLUTTERINGRIBBON')) && <FlutteringRibbon />}
+          {JSON.parse(siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')) && <TwikooCommentCounter {...props}/>}
+          {JSON.parse(siteConfig('RIBBON')) && <Ribbon />}
+          {JSON.parse(siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU')) && <CustomContextMenu {...props} />}
+          {!JSON.parse(siteConfig('CAN_COPY')) && <DisableCopy/>}
+          {JSON.parse(siteConfig('WEB_WHIZ_ENABLED')) && <WebWhiz/>}
+          {JSON.parse(siteConfig('AD_WWADS_BLOCK_DETECT')) && <AdBlockDetect/>}
           <VConsole/>
       </>
 }

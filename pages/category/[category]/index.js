@@ -16,7 +16,7 @@ export default function Category(props) {
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const meta = {
     title: `${props.category} | ${locale.COMMON.CATEGORY} | ${

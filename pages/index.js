@@ -3,9 +3,9 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router'
 
 /**
  * 首页布局
@@ -14,7 +14,7 @@ import { siteConfig } from '@/lib/config'
  */
 const Index = props => {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const meta = {
     title: `${siteConfig('TITLE')} | ${siteConfig('BIO')}`,
