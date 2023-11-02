@@ -4,7 +4,6 @@ import Typed from 'typed.js'
 import CONFIG from '../config'
 import NavButtonGroup from './NavButtonGroup'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 
@@ -21,13 +20,14 @@ const Hero = props => {
   const scrollToWrapper = () => {
     window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
   }
+  const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',')
   useEffect(() => {
     updateHeaderHeight()
 
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
-          strings: BLOG.GREETING_WORDS.split(','),
+          strings: GREETING_WORDS,
           typeSpeed: 200,
           backSpeed: 100,
           backDelay: 400,
