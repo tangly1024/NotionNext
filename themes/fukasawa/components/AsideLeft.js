@@ -63,7 +63,7 @@ function AsideLeft(props) {
             <Logo {...props} />
 
             <section className='siteInfo flex flex-col dark:text-gray-300 pt-8'>
-                {siteConfig('HOME_BANNER_IMAGE')}
+                {siteConfig('DESCRIPTION')}
             </section>
 
             <section className='flex flex-col text-gray-600'>

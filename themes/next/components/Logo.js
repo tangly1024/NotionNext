@@ -17,7 +17,7 @@ const Logo = props => {
                     data-aos-delay="300"
                     data-aos-once="true"
                     data-aos-anchor-placement="top-bottom"
-                    className='text-sm text-gray-300 font-light text-center'> {siteConfig('HOME_BANNER_IMAGE')}</div>
+                    className='text-sm text-gray-300 font-light text-center'> {siteConfig('DESCRIPTION')}</div>
             </div>
         </Link>
   )

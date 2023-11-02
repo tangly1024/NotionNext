@@ -12,13 +12,13 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  * @param {*} router
  * @returns
  */
-export const getLayoutByTheme = (router) => {
-  const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
-  const layout = getLayoutNameByPath(router.pathname)
+export const getLayoutByTheme = ({ router, theme }) => {
+  const themeQuery = getQueryParam(router.asPath, 'theme') || theme
+  const layoutName = getLayoutNameByPath(router.pathname)
   if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layoutName]), { ssr: true })
   } else {
-    return ThemeComponents[layout]
+    return ThemeComponents[layoutName]
   }
 }
 
