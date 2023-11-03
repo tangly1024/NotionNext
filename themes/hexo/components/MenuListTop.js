@@ -20,6 +20,12 @@ export const MenuListTop = (props) => {
     links = links.concat(customNav)
   }
 
+  for (let i = 0; i < links.length; i++) {
+    if (links[i].id !== i) {
+      links[i].id = i
+    }
+  }
+
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
   if (BLOG.CUSTOM_MENU) {
     links = customMenu
