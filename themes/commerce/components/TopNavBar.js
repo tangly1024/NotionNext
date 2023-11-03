@@ -17,7 +17,6 @@ export default function TopNavBar(props) {
   const { customNav, customMenu } = props
   const [isOpen, changeShow] = useState(false)
   const collapseRef = useRef(null)
-  let windowTop = 0
 
   const { locale } = useGlobal()
 
@@ -43,19 +42,17 @@ export default function TopNavBar(props) {
     }
   }, [])
 
-  const throttleMs = 200
+  const throttleMs = 150
 
   const scrollTrigger = throttle(() => {
     const scrollS = window.scrollY
-    const nav = document.querySelector('#navbar')
+    const nav = document.querySelector('#top-navbar')
 
-    const narrowNav = scrollS >= windowTop || scrollS > 200
+    const narrowNav = scrollS > 50
     if (narrowNav) {
-      nav && nav.classList.replace('h-24', 'h-16')
-      windowTop = scrollS
+      nav && nav.classList.replace('h-24', 'h-14')
     } else {
-      nav && nav.classList.replace('h-16', 'h-24')
-      windowTop = scrollS
+      nav && nav.classList.replace('h-14', 'h-24')
     }
   }, throttleMs)
 
@@ -68,34 +65,32 @@ export default function TopNavBar(props) {
     return null
   }
 
-  return (
-      <div id='top-nav' className={'sticky top-0 w-full z-40 '}>
+  return <div id='top-navbar-wrapper' className={'sticky top-0 w-full z-40 shadow bg-white dark:bg-hexo-black-gray '}>
 
-            {/* 移动端折叠菜单 */}
-            <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
-                <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
-                    <MenuBarMobile {...props} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />
-                </div>
-            </Collapse>
+        {/* 移动端折叠菜单 */}
+        <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
+            <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
+                <MenuBarMobile {...props} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />
+            </div>
+        </Collapse>
 
-            {/* 导航栏菜单 */}
-            <div id="navbar" className='flex w-full h-24 transition-all duration-200 shadow bg-white dark:bg-hexo-black-gray px-7 items-between'>
+        {/* 导航栏菜单内容 */}
+        <div id="top-navbar" className='flex w-full mx-auto max-w-screen-xl h-24 transition-all duration-200 items-between'>
 
-                {/* 左侧图标Logo */}
-                <LogoBar {...props} />
+            {/* 左侧图标Logo */}
+            <LogoBar {...props} />
 
-                {/* 移动端折叠按钮 */}
-                <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
-                    <div onClick={toggleMenuOpen} className='cursor-pointer'>
-                        {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
-                    </div>
-                </div>
-
-                {/* 桌面端顶部菜单 */}
-                <div className='hidden md:flex items-center'>
-                    {links && links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
+            {/* 移动端折叠按钮 */}
+            <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
+                <div onClick={toggleMenuOpen} className='cursor-pointer'>
+                    {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
                 </div>
             </div>
+
+            {/* 桌面端顶部菜单 */}
+            <div className='hidden md:flex items-center'>
+                {links && links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
+            </div>
         </div>
-  )
+    </div>
 }

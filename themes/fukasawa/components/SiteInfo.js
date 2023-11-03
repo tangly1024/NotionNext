@@ -4,12 +4,8 @@ import { siteConfig } from '@/lib/config'
 function SiteInfo ({ title }) {
   const d = new Date()
   const currentYear = d.getFullYear()
-  const copyrightDate = (function() {
-    if (Number.isInteger(BLOG.SINCE) && BLOG.SINCE < currentYear) {
-      return BLOG.SINCE + '-' + currentYear
-    }
-    return currentYear
-  })()
+  const since = siteConfig('SINCE')
+  const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
 
   return (
         <footer

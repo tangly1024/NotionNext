@@ -44,7 +44,6 @@ const MyApp = ({ Component, pageProps }) => {
         loadExternalResource(url, 'css')
       }
     }
-    checkThemeDOM()
   }
 
   return (
@@ -53,20 +52,6 @@ const MyApp = ({ Component, pageProps }) => {
             <ExternalPlugins {...pageProps} />
         </GlobalContextProvider>
   )
-}
-
-/**
- * 切换主题时的特殊处理
- */
-const checkThemeDOM = () => {
-  const elements = document.querySelectorAll('[id^="theme-"]')
-  if (elements?.length > 1) {
-    elements[elements.length - 1].scrollIntoView()
-    // 删除前面的元素，只保留最后一个元素
-    for (let i = 0; i < elements.length - 1; i++) {
-      elements[i].parentNode.removeChild(elements[i])
-    }
-  }
 }
 
 export default MyApp

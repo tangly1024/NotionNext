@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { siteConfig } from '@/lib/config'
+// import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage';
 
 /**
@@ -14,7 +14,7 @@ export default function LogoBar (props) {
           <Link href='/' className='text-md md:text-xl dark:text-gray-200 r'>
             <LazyImage className='h-12 mr-3' src={siteInfo?.icon}/>
           </Link>
-          <div>{siteConfig('TITLE')}</div>
+          {/* <div>{siteConfig('TITLE')}</div> */}
     </div>
   );
 }

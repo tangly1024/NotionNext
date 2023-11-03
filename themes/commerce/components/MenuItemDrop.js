@@ -16,14 +16,14 @@ export const MenuItemDrop = ({ link }) => {
         {!hasSubMenu &&
             <Link
                 href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
-                className={`${selected && 'border-b-2 border-[#D2232A]'} h-full flex whitespace-nowrap items-center font-sans menu-link pl-2 pr-4  dark:text-gray-200 no-underline tracking-widest pb-1`}>
-                {link?.icon && <i className={link?.icon}/>} {link?.name}
+                className={`${selected && 'border-b-2 border-[#D2232A]'} h-full flex space-x-1 whitespace-nowrap items-center font-sans menu-link pl-2 pr-4  dark:text-gray-200 no-underline tracking-widest pb-1`}>
+                {link?.icon && <i className={link?.icon}/>} <div>{link?.name}</div>
                 {/* {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>} */}
             </Link>}
 
         {hasSubMenu && <>
-            <div className='h-full flex whitespace-nowrap items-center cursor-pointer font-sans menu-link pl-2 pr-4  dark:text-gray-200 no-underline tracking-widest pb-1'>
-                {link?.icon && <i className={link?.icon}/>} {link?.name}
+            <div className='h-full flex space-x-1 whitespace-nowrap items-center cursor-pointer font-sans menu-link pl-2 pr-4  dark:text-gray-200 no-underline tracking-widest pb-1'>
+                {link?.icon && <i className={link?.icon}/>} <div>{link?.name}</div>
                 {/* <i className={`px-2 fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i> */}
             </div>
         </>}

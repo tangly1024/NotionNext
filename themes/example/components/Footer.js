@@ -5,12 +5,8 @@ import { siteConfig } from '@/lib/config'
 export const Footer = (props) => {
   const d = new Date()
   const currentYear = d.getFullYear()
-  const copyrightDate = (function() {
-    if (Number.isInteger(BLOG.SINCE) && BLOG.SINCE < currentYear) {
-      return BLOG.SINCE + '-' + currentYear
-    }
-    return currentYear
-  })()
+  const since = siteConfig('SINCE')
+  const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
 
   return <footer className="z-10 relative w-full bg-white px-6 border-t dark:border-hexo-black-gray dark:bg-hexo-black-gray ">
         <DarkModeButton className='text-center pt-4'/>

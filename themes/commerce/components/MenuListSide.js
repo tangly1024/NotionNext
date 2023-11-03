@@ -18,7 +18,7 @@ export const MenuListSide = (props) => {
   if (customNav) {
     links = customNav.concat(links)
   }
-  
+
   for (let i = 0; i < links.length; i++) {
     if (links[i].id !== i) {
       links[i].id = i

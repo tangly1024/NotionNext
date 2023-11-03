@@ -3,9 +3,9 @@ import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
-import SideRight from './components/SideRight'
+// import SideRight from './components/SideRight'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
+import { isBrowser, scanAndConvertToLinks } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
@@ -41,14 +41,19 @@ import TopNavBar from './components/TopNavBar'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, floatSlot, slotTop, meta, className } = props
+  const { children, headerSlot, floatSlot, slotTop, slotRight, meta, className } = props
   const { onLoading } = useGlobal()
+
+  // 查找页面上的 链接，并便成为可点击
+  useEffect(() => {
+    scanAndConvertToLinks(document.getElementById('theme-commerce'))
+  })
 
   return (
         <div id='theme-commerce'>
             {/* 网页SEO */}
-            <CommonHead meta={meta}/>
-            <Style/>
+            <CommonHead meta={meta} />
+            <Style />
 
             {/* 顶部导航 */}
             <TopNavBar {...props} />
@@ -69,9 +74,9 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
+            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 relative`}>
                 <div id="container-inner" className={(siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-                    <div className={`${className || ''} w-full max-w-4xl h-full overflow-hidden`}>
+                    <div className={`${className || ''} w-full h-full max-w-screen-xl overflow-hidden`}>
 
                         <Transition
                             show={!onLoading}
@@ -91,8 +96,8 @@ const LayoutBase = props => {
                         </Transition>
                     </div>
 
-                    {/* 右侧栏 */}
-                    <SideRight {...props} />
+                    {slotRight}
+
                 </div>
             </main>
 
@@ -100,7 +105,7 @@ const LayoutBase = props => {
             <RightFloatArea floatSlot={floatSlot} />
 
             {/* 页脚 */}
-            <Footer title={siteConfig('TITLE') || siteConfig('TITLE')} />
+            <Footer {...props} />
         </div>
   )
 }
@@ -112,8 +117,30 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
+  // 首页Banner条
   const headerSlot = CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />
-  return <LayoutPostList {...props} headerSlot={headerSlot} className='pt-8' />
+  const { notice } = props
+  return <LayoutBase headerSlot={headerSlot} {...props}>
+
+        {/* 产品中心 */}
+        <div className='w-full my-4'>
+            <div className='w-full text-center text-4xl font-bold'>{siteConfig('TEXT_HOME_PRODUCT_CENTER', 'Product Center')}</div>
+
+            <div className='flex'>
+                <div className='hidden md:block w-72 border'> 左侧导航</div>
+                <div className='w-full border'>右侧产品列表</div>
+            </div>
+        </div>
+
+        {/* 企业介绍  + 联系 */}
+        {notice && <div className='w-full my-4'>
+            <div className='w-full text-center text-4xl font-bold'>{siteConfig('TEXT_HOME_ABOUT_US', notice.title)}</div>
+            <NotionPage post={notice} />
+        </div>}
+
+        {/* 铺开导航菜单 */}
+
+    </LayoutBase>
 }
 
 /**
