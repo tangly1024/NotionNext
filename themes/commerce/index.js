@@ -3,7 +3,6 @@ import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
-// import SideRight from './components/SideRight'
 import { useGlobal } from '@/lib/global'
 import { isBrowser, scanAndConvertToLinks } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
@@ -16,9 +15,7 @@ import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
 import PostHeader from './components/PostHeader'
-import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
-import TocDrawerButton from './components/TocDrawerButton'
 import NotionPage from '@/components/NotionPage'
 import TagItemMini from './components/TagItemMini'
 import Link from 'next/link'
@@ -215,16 +212,17 @@ const LayoutSlug = props => {
   const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
   const headerImage = post?.pageCover ? post.pageCover : siteConfig('HOME_BANNER_IMAGE')
 
-  const floatSlot = <>
-        {post?.toc?.length > 1 && <div className="block lg:hidden">
-            <TocDrawerButton
-                onClick={() => {
-                  drawerRight?.current?.handleSwitchVisible()
-                }}
-            />
-        </div>}
-        <JumpToCommentButton />
-    </>
+  //   const floatSlot = <>
+  //         {post?.toc?.length > 1 && <div className="block lg:hidden">
+  //             <TocDrawerButton
+  //                 onClick={() => {
+  //                   drawerRight?.current?.handleSwitchVisible()
+  //                 }}
+  //             />
+  //         </div>}
+  //         <JumpToCommentButton />
+  //     </>
+  const floatSlot = <></>
 
   return (
         <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
@@ -234,7 +232,9 @@ const LayoutSlug = props => {
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
                     {/* 预览区块 */}
-                    <div className='flex md:flex-row flex-col w-full justify-between py-4' >
+
+                    {post?.type === 'Post' && (
+                        <div className='flex md:flex-row flex-col w-full justify-between py-4' >
 
                         <div id='left-img' className='w-1/2 flex justify-center items-center border'>
                             <LazyImage src={headerImage} className='m-auto w-full h-auto aspect-square object-cover object-center' />
@@ -245,6 +245,7 @@ const LayoutSlug = props => {
                             <div>{post?.summary}</div>
                         </div>
                     </div>
+                    )}
 
                     <hr className='border-2 border-[#D2232A]' />
 

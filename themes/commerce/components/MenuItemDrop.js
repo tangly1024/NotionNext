@@ -5,7 +5,7 @@ import { useState } from 'react'
 export const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
-  const selected = useRouter().asPath === link.to
+  const selected = useRouter().asPath === link?.to
 
   if (!link || !link.show) {
     return null
