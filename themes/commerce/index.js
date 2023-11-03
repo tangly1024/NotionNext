@@ -30,6 +30,7 @@ import { siteConfig } from '@/lib/config'
 import TopNavBar from './components/TopNavBar'
 import ProductCenter from './components/ProductCenter'
 import LazyImage from '@/components/LazyImage'
+import ProductCategories from './components/ProductCategories'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -139,9 +140,12 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} className='pt-8'>
-        <SlotBar {...props} />
-        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+  const slotRight = <ProductCategories {...props}/>
+  return <LayoutBase {...props} slotRight={slotRight}>
+        <div className='bg-white border-[#D2232A] p-4'>
+            <SlotBar {...props} />
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        </div>
     </LayoutBase>
 }
 
@@ -242,7 +246,7 @@ const LayoutSlug = props => {
                         </div>
                     </div>
 
-                    <hr className='border-2 border-[#D2232A]'/>
+                    <hr className='border-2 border-[#D2232A]' />
 
                     <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
 

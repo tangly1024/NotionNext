@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
 import ProductCard from './ProductCard'
+import ProductCategories from './ProductCategories'
 
 /**
  * 产品中心
@@ -8,7 +8,7 @@ import ProductCard from './ProductCard'
  * @returns
  */
 export default function ProductCenter(props) {
-  const { categoryOptions, allNavPages } = props
+  const { allNavPages } = props
   const posts = allNavPages.slice(0, parseInt(siteConfig('COMMERCE_HOME_POSTS_COUNT', 9)))
 
   return <div className='w-full my-4 mx-4'>
@@ -17,26 +17,7 @@ export default function ProductCenter(props) {
 
         <div className='flex'>
 
-            <div className='hidden md:block w-72 mx-2'>
-                {/* 分类菜单  */}
-                <div className='bg-white  p-4'>
-                    <div className='font-bold text-lg mb-4 border-b-2 py-2 border-[#D2232A]'>{siteConfig('COMMERCE_TEXT_MENU_GROUP', 'Product Categories')}</div>
-                    <nav id='home-nav-button' className={'flex flex-col space-y-2 text-start'}>
-                        {categoryOptions.map(category => {
-                          return (
-                                <Link
-                                    key={`${category.name}`}
-                                    title={`${category.name}`}
-                                    href={`/category/${category.name}`}
-                                    className='hover:text-[#D2232A]'
-                                    passHref>
-                                    {category.name}
-                                </Link>
-                          )
-                        })}
-                    </nav>
-                </div>
-            </div>
+            <ProductCategories {...props} />
 
             <div className='w-full p-4 mx-2'>
                 {/* 文章列表 */}
