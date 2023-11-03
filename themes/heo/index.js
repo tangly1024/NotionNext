@@ -483,7 +483,7 @@ const LayoutCategoryIndex = props => {
           id="category-list"
           className="duration-200 flex flex-wrap m-10 justify-center"
         >
-          {categoryOptions.map(category => {
+          {categoryOptions?.map(category => {
             return (
               <Link
                 key={category.name}

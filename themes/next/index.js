@@ -292,7 +292,7 @@ const LayoutCategoryIndex = (props) => {
                     <i className='mr-4 fas faTh' />{locale.COMMON.CATEGORY}:
                 </div>
                 <div id='category-list' className='duration-200 flex flex-wrap'>
-                    {categoryOptions.map(category => {
+                    {categoryOptions?.map(category => {
                       return (
                             <Link
                                 key={category.name}
