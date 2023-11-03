@@ -14,7 +14,7 @@ const NavPostList = (props) => {
     return <NavPostListEmpty />
   } else {
     return <div id='category-list' className='dark:border-gray-700 flex flex-wrap  mx-4'>
-            {categoryOptions.map(category => {
+            {categoryOptions?.map(category => {
               // const selected = currentCategory === category.name
               const selected = false
               return (

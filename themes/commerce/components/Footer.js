@@ -66,7 +66,7 @@ const Footer = (props) => {
             </div>
 
             {/* 底部版权相关 */}
-            <div id='footer-copyright-wrapper' className='flex-col md:flex justify-between border-t border-gray-600 pt-8'>
+            <div id='footer-copyright-wrapper' className='flex flex-col md:flex-row justify-between border-t border-gray-600 pt-8'>
                 <div className='text-start space-y-1'>
 
                     {/* 网站所有者 */}

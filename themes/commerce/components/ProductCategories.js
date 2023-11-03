@@ -9,7 +9,7 @@ export default function ProductCategories(props) {
         <div className='bg-white  p-4'>
             <div className='font-bold text-lg mb-4 border-b-2 py-2 border-[#D2232A]'>{siteConfig('COMMERCE_TEXT_MENU_GROUP', 'Product Categories')}</div>
             <nav id='home-nav-button' className={'flex flex-col space-y-2 text-start'}>
-                {categoryOptions.map(category => {
+                {categoryOptions?.map(category => {
                   return (
                         <Link
                             key={`${category.name}`}
