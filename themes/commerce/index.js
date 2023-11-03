@@ -19,12 +19,7 @@ import PostHeader from './components/PostHeader'
 import JumpToCommentButton from './components/JumpToCommentButton'
 import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
-import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
-import ArticleAdjacent from './components/ArticleAdjacent'
-import ArticleCopyright from './components/ArticleCopyright'
-import ArticleRecommend from './components/ArticleRecommend'
-import ShareBar from '@/components/ShareBar'
 import TagItemMini from './components/TagItemMini'
 import Link from 'next/link'
 import SlotBar from './components/SlotBar'
@@ -34,6 +29,7 @@ import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import TopNavBar from './components/TopNavBar'
 import ProductCenter from './components/ProductCenter'
+import LazyImage from '@/components/LazyImage'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -51,7 +47,7 @@ const LayoutBase = props => {
   })
 
   return (
-        <div id='theme-commerce'>
+        <div id='theme-commerce' className='flex flex-col min-h-screen justify-between'>
             {/* 网页SEO */}
             <CommonHead meta={meta} />
             <Style />
@@ -124,7 +120,7 @@ const LayoutIndex = (props) => {
   return <LayoutBase headerSlot={headerSlot} {...props}>
 
         {/* 产品中心 */}
-        <ProductCenter {...props}/>
+        <ProductCenter {...props} />
 
         {/* 企业介绍  + 联系 */}
         {notice && <div className='w-full my-4 mx-4'>
@@ -213,6 +209,7 @@ const LayoutSlug = props => {
   const drawerRight = useRef(null)
 
   const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
+  const headerImage = post?.pageCover ? post.pageCover : siteConfig('HOME_BANNER_IMAGE')
 
   const floatSlot = <>
         {post?.toc?.length > 1 && <div className="block lg:hidden">
@@ -227,33 +224,35 @@ const LayoutSlug = props => {
 
   return (
         <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
-            <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
+            <div className="w-full max-w-screen-xl mx-auto lg:hover:shadow lg:border lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
+                    {/* 预览区块 */}
+                    <div className='flex md:flex-row flex-col w-full justify-between py-4' >
+
+                        <div id='left-img' className='w-1/2 flex justify-center items-center border'>
+                            <LazyImage src={headerImage} className='m-auto w-full h-auto aspect-square object-cover object-center' />
+                        </div>
+
+                        <div id='info-right' className='w-1/2 p-4'>
+                            <div>{post?.title}</div>
+                            <div>{post?.summary}</div>
+                        </div>
+                    </div>
+
+                    <hr className='border-2 border-[#D2232A]'/>
+
                     <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
+
                         {/* Notion文章主体 */}
                         <section className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
                             {post && <NotionPage post={post} />}
                         </section>
 
-                        {/* 分享 */}
-                        <ShareBar post={post} />
-                        {post?.type === 'Post' && <>
-                            <ArticleCopyright {...props} />
-                            <ArticleRecommend {...props} />
-                            <ArticleAdjacent {...props} />
-                        </>}
-
                     </article>
 
-                    <div className='pt-4 border-dashed'></div>
-
-                    {/* 评论互动 */}
-                    <div className="duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3">
-                        <Comment frontMatter={post} />
-                    </div>
                 </div>}
             </div>
 

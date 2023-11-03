@@ -1,5 +1,5 @@
 import BLOG from '@/blog.config'
-import BlogPostCard from './BlogPostCard'
+import ProductCard from './ProductCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import React from 'react'
@@ -59,7 +59,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.PO
       {/* 文章列表 */}
       <div className="space-y-6 px-2">
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post} showSummary={showSummary} siteInfo={siteInfo}/>
+          <ProductCard key={post.id} post={post} showSummary={showSummary} siteInfo={siteInfo}/>
         ))}
       </div>
 

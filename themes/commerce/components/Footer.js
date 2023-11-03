@@ -14,7 +14,7 @@ const Footer = (props) => {
   const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
   const { categoryOptions, customMenu } = props
 
-  return <footer id="footer-wrapper" className='relative  bg-[#2A2A2A] justify-center m-auto w-full leading-6 text-gray-300 text-sm p-10'>
+  return <footer id="footer-wrapper" className='relative bg-[#2A2A2A] justify-center w-full leading-6 text-gray-300 text-sm p-10'>
 
         <div id='footer-container' className='w-full mx-auto max-w-screen-xl'>
 
@@ -23,7 +23,7 @@ const Footer = (props) => {
 
                     {/* 分类菜单  */}
                     <div>
-                        <div className='font-bold mb-4 text-white'>{siteConfig('COMMERCE_TEXT_MENU_GROUP', 'Product Center')}</div>
+                        <div className='font-bold mb-4 text-white'>{siteConfig('COMMERCE_TEXT_FOOTER_MENU_1', 'Product Center')}</div>
                         <nav id='home-nav-button' className={'flex flex-col space-y-2 text-start'}>
                             {categoryOptions.map(category => {
                               return (
@@ -41,7 +41,7 @@ const Footer = (props) => {
 
                     {/* 系统菜单  */}
                     <div>
-                        <div className='font-bold mb-4 text-white'>{siteConfig('COMMERCE_TEXT_MENU_TITLE', 'About US')}</div>
+                        <div className='font-bold mb-4 text-white'>{siteConfig('COMMERCE_TEXT_FOOTER_MENU_2', 'About US')}</div>
                         <nav id='home-nav-button' className={'flex flex-col space-y-2 text-start'}>
                             {customMenu.map(menu => {
                               return (
@@ -59,9 +59,9 @@ const Footer = (props) => {
 
                 </div>
 
-                {siteConfig('COMMERCE_TEXT_SHOP_LINKS') && <div className='border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left max-w-md'>
-                    <div className='font-bold text-white'>{siteConfig('COMMERCE_TEXT_SHOP_TITLE')}</div>
-                    <div>{siteConfig('COMMERCE_TEXT_SHOP_LINKS')}</div>
+                {siteConfig('COMMERCE_TEXT_FOOTER_LINKS') && <div className='md:border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left max-w-md'>
+                    <div className='font-bold text-white'>{siteConfig('COMMERCE_TEXT_FOOTER_TITLE', 'Contact US')}</div>
+                    <div>{siteConfig('COMMERCE_TEXT_FOOTER_LINKS')}</div>
                 </div>}
             </div>
 
