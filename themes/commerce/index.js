@@ -54,19 +54,9 @@ const LayoutBase = props => {
             <TopNavBar {...props} />
 
             {/* 顶部嵌入 */}
-            <Transition
-                show={!onLoading}
-                appear={true}
-                enter="transition ease-in-out duration-700 transform order-first"
-                enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0 translate-y-16"
-                unmount={false}
-            >
+            <div>
                 {headerSlot}
-            </Transition>
+            </div>
 
             {/* 主区块 */}
             <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 relative`}>
@@ -113,7 +103,7 @@ const LayoutBase = props => {
  */
 const LayoutIndex = (props) => {
   // 首页Banner条
-  const headerSlot = CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />
+  const headerSlot = JSON.parse(siteConfig('COMMERCE_HOME_BANNER_ENABLE', true)) ? <Hero {...props} /> : <></>
   const { notice } = props
   return <LayoutBase headerSlot={headerSlot} {...props}>
 
@@ -137,7 +127,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  const slotRight = <ProductCategories {...props}/>
+  const slotRight = <ProductCategories {...props} />
   return <LayoutBase {...props} slotRight={slotRight}>
         <div className='bg-white border-[#D2232A] p-4'>
             <SlotBar {...props} />
@@ -236,15 +226,15 @@ const LayoutSlug = props => {
                     {post?.type === 'Post' && (
                         <div className='flex md:flex-row flex-col w-full justify-between py-4' >
 
-                        <div id='left-img' className='w-1/2 flex justify-center items-center border'>
-                            <LazyImage src={headerImage} className='m-auto w-full h-auto aspect-square object-cover object-center' />
-                        </div>
+                            <div id='left-img' className='w-1/2 flex justify-center items-center border'>
+                                <LazyImage src={headerImage} className='m-auto w-full h-auto aspect-square object-cover object-center' />
+                            </div>
 
-                        <div id='info-right' className='w-1/2 p-4'>
-                            <div>{post?.title}</div>
-                            <div>{post?.summary}</div>
+                            <div id='info-right' className='w-1/2 p-4'>
+                                <div>{post?.title}</div>
+                                <div>{post?.summary}</div>
+                            </div>
                         </div>
-                    </div>
                     )}
 
                     <hr className='border-2 border-[#D2232A]' />
