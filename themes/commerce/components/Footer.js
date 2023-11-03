@@ -25,7 +25,7 @@ const Footer = (props) => {
                     <div>
                         <div className='font-bold mb-4 text-white'>{siteConfig('COMMERCE_TEXT_FOOTER_MENU_1', 'Product Center')}</div>
                         <nav id='home-nav-button' className={'flex flex-col space-y-2 text-start'}>
-                            {categoryOptions.map(category => {
+                            {categoryOptions?.map(category => {
                               return (
                                     <Link
                                         key={`${category.name}`}
@@ -43,7 +43,7 @@ const Footer = (props) => {
                     <div>
                         <div className='font-bold mb-4 text-white'>{siteConfig('COMMERCE_TEXT_FOOTER_MENU_2', 'About US')}</div>
                         <nav id='home-nav-button' className={'flex flex-col space-y-2 text-start'}>
-                            {customMenu.map(menu => {
+                            {customMenu?.map(menu => {
                               return (
                                     <Link
                                         key={`${menu.name}`}
