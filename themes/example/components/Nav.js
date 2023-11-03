@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { MenuItemDrop } from './MenuItemDrop'
@@ -24,7 +24,7 @@ export const Nav = (props) => {
   }
 
   // 如果 开启自定义菜单，则不再使用 Page生成菜单。
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 

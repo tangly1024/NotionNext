@@ -5,6 +5,7 @@ import { MenuItemDrop } from './MenuItemDrop'
 import FullScreenButton from '@/components/FullScreenButton'
 import InformationButton from './InformationButton'
 import LogoBar from './LogoBar'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 桌面端底部导航
@@ -43,7 +44,7 @@ const MenuList = props => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 

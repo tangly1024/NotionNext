@@ -14,12 +14,12 @@ const Footer = (props) => {
   const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
   const { categoryOptions, customMenu } = props
 
-  return <footer id="footer-wrapper" className='relative  bg-[#2A2A2A] justify-center text-center m-auto w-full leading-6 text-gray-300 text-sm p-10'>
+  return <footer id="footer-wrapper" className='relative  bg-[#2A2A2A] justify-center m-auto w-full leading-6 text-gray-300 text-sm p-10'>
 
         <div id='footer-container' className='w-full mx-auto max-w-screen-xl'>
 
             <div className='flex'>
-                <div className='flex flex-grow my-6 space-x-20 text-lg'>
+                <div className='hidden md:flex flex-grow my-6 space-x-20 text-lg  '>
 
                     {/* 分类菜单  */}
                     <div>
@@ -66,7 +66,7 @@ const Footer = (props) => {
             </div>
 
             {/* 底部版权相关 */}
-            <div id='footer-copyright-wrapper' className='flex justify-between border-t border-gray-600 pt-8'>
+            <div id='footer-copyright-wrapper' className='flex-col md:flex justify-between border-t border-gray-600 pt-8'>
                 <div className='text-start space-y-1'>
 
                     {/* 网站所有者 */}
@@ -85,7 +85,7 @@ const Footer = (props) => {
                 </div>
 
                 {/* 右边公司名字 */}
-                <div className='text-right'>
+                <div className='md:text-right'>
                     <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{siteConfig('TITLE')} {siteConfig('BIO')}</h1>
                     <h2> {siteConfig('DESCRIPTION')}</h2>
                     {/* 可选备案信息 */}

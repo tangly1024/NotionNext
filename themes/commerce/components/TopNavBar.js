@@ -67,21 +67,14 @@ export default function TopNavBar(props) {
 
   return <div id='top-navbar-wrapper' className={'sticky top-0 w-full z-40 shadow bg-white dark:bg-hexo-black-gray '}>
 
-        {/* 移动端折叠菜单 */}
-        <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
-            <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
-                <MenuBarMobile {...props} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />
-            </div>
-        </Collapse>
-
         {/* 导航栏菜单内容 */}
-        <div id="top-navbar" className='flex w-full mx-auto max-w-screen-xl h-24 transition-all duration-200 items-between'>
+        <div id="top-navbar" className='px-4 flex w-full mx-auto max-w-screen-xl h-24 transition-all duration-200 items-between'>
 
             {/* 左侧图标Logo */}
             <LogoBar {...props} />
 
             {/* 移动端折叠按钮 */}
-            <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
+            <div className='mr-1 flex md:hidden justify-end items-center text-lg space-x-4 font-serif dark:text-gray-200'>
                 <div onClick={toggleMenuOpen} className='cursor-pointer'>
                     {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
                 </div>
@@ -92,5 +85,12 @@ export default function TopNavBar(props) {
                 {links && links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
             </div>
         </div>
+
+          {/* 移动端折叠菜单 */}
+          <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
+            <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
+                <MenuBarMobile {...props} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} />
+            </div>
+        </Collapse>
     </div>
 }

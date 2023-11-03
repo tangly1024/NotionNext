@@ -1,4 +1,3 @@
-import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { MenuItemDrop } from './MenuItemDrop'

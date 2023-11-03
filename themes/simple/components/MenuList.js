@@ -1,5 +1,5 @@
-import BLOG from '@/blog.config'
 import Collapse from '@/components/Collapse'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -40,7 +40,7 @@ export const MenuList = ({ customNav, customMenu }) => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 

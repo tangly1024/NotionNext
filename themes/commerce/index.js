@@ -33,6 +33,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import TopNavBar from './components/TopNavBar'
+import ProductCenter from './components/ProductCenter'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -123,17 +124,10 @@ const LayoutIndex = (props) => {
   return <LayoutBase headerSlot={headerSlot} {...props}>
 
         {/* 产品中心 */}
-        <div className='w-full my-4'>
-            <div className='w-full text-center text-4xl font-bold'>{siteConfig('TEXT_HOME_PRODUCT_CENTER', 'Product Center')}</div>
-
-            <div className='flex'>
-                <div className='hidden md:block w-72 border'> 左侧导航</div>
-                <div className='w-full border'>右侧产品列表</div>
-            </div>
-        </div>
+        <ProductCenter {...props}/>
 
         {/* 企业介绍  + 联系 */}
-        {notice && <div className='w-full my-4'>
+        {notice && <div className='w-full my-4 mx-4'>
             <div className='w-full text-center text-4xl font-bold'>{siteConfig('TEXT_HOME_ABOUT_US', notice.title)}</div>
             <NotionPage post={notice} />
         </div>}

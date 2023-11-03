@@ -1,7 +1,6 @@
-import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { MenuItemDrop } from './MenuItemDrop'
 
 export const MenuListTop = (props) => {
@@ -19,7 +18,7 @@ export const MenuListTop = (props) => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 

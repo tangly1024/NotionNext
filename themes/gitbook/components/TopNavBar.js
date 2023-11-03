@@ -4,7 +4,7 @@ import Collapse from '@/components/Collapse'
 import { MenuBarMobile } from './MenuBarMobile'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { MenuItemDrop } from './MenuItemDrop'
 import DarkModeButton from '@/components/DarkModeButton'
 
@@ -34,7 +34,7 @@ export default function TopNavBar(props) {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 

@@ -1,8 +1,7 @@
-import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
 import { MenuItemCollapse } from './MenuItemCollapse'
+import { siteConfig } from '@/lib/config'
 
 export const MenuBarMobile = (props) => {
   const { customMenu, customNav } = props
@@ -21,7 +20,7 @@ export const MenuBarMobile = (props) => {
   }
 
   // 如果 开启自定义菜单，则不再使用 Page生成菜单。
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 
@@ -31,9 +30,7 @@ export const MenuBarMobile = (props) => {
 
   return (
     <nav id='nav' className=' text-md'>
-        {/* {links.map(link => <NormalMenu key={link?.id} link={link}/>)} */}
         {links?.map(link => <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.id} link={link}/>)}
-
     </nav>
   )
 }

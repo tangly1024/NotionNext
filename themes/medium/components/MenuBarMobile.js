@@ -1,7 +1,6 @@
-import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
 export const MenuBarMobile = (props) => {
@@ -21,7 +20,7 @@ export const MenuBarMobile = (props) => {
   }
 
   // 如果 开启自定义菜单，则不再使用 Page生成菜单。
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 
