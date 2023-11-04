@@ -16,6 +16,12 @@ const MenuGroupCard = (props) => {
     { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG.MENU_TAG }
   ]
 
+  for (let i = 0; i < links.length; i++) {
+    if (links[i].id !== i) {
+      links[i].id = i
+    }
+  }
+
   return (
     <nav id='nav' className='leading-8 flex justify-center  dark:text-gray-200 w-full'>
         {links.map(link => {

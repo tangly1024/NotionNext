@@ -253,7 +253,7 @@ function TopGroup(props) {
           )
         })}
       </div>
-      <TodayCard cRef={todayCardRef} />
+      <TodayCard cRef={todayCardRef} siteInfo={siteInfo}/>
     </div>
   )
 }
@@ -301,7 +301,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
  * 英雄区右侧，今日卡牌
  * @returns
  */
-function TodayCard({ cRef }) {
+function TodayCard({ cRef, siteInfo }) {
   const router = useRouter()
   // 卡牌是否盖住下层
   const [isCoverUp, setIsCoverUp] = useState(true)
@@ -378,8 +378,7 @@ function TodayCard({ cRef }) {
             isCoverUp ? '' : ' pointer-events-none'
           } cursor-pointer today-card-cover absolute w-full h-full top-0`}
           style={{
-            background:
-              "url('https://bu.dusays.com/2023/03/12/640dcd3a1b146.png') no-repeat center /cover"
+            background: `url('${siteInfo?.pageCover}') no-repeat center /cover`
           }}
         ></div>
       </div>
