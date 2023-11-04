@@ -110,9 +110,9 @@ const LayoutIndex = (props) => {
         {/* 产品中心 */}
         <ProductCenter {...props} />
 
-        {/* 企业介绍  + 联系 */}
+        {/* 首页企业/品牌介绍 */}
         {notice && <div className='w-full my-4 mx-4'>
-            <div className='w-full text-center text-4xl font-bold'>{siteConfig('TEXT_HOME_ABOUT_US', notice.title)}</div>
+            <div className='w-full text-center text-4xl font-bold pt-12'>{siteConfig('TEXT_HOME_ABOUT_US', notice.title)}</div>
             <NotionPage post={notice} />
         </div>}
 

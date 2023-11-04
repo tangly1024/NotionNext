@@ -59,7 +59,7 @@ const Footer = (props) => {
 
                 </div>
 
-                {siteConfig('COMMERCE_TEXT_FOOTER_LINKS') && <div className='md:border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left max-w-md'>
+                {siteConfig('COMMERCE_TEXT_FOOTER_LINKS') && <div className='md:border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left flex-grow'>
                     <div className='font-bold text-white'>{siteConfig('COMMERCE_TEXT_FOOTER_TITLE', 'Contact US')}</div>
                     <div>{siteConfig('COMMERCE_TEXT_FOOTER_LINKS')}</div>
                 </div>}
