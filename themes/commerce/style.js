@@ -16,7 +16,7 @@ const Style = () => {
 
     // 产品介绍区域字体放大
     #brand-introduction .notion {
-        font-size: 1.3rem !important;
+        font-size: 1.5rem !important;
     }
   
     /*  菜单下划线动画 */
