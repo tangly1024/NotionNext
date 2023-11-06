@@ -1,6 +1,5 @@
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import React from 'react'
 import Card from './Card'
 import CategoryGroup from './CategoryGroup'
 import TagGroups from './TagGroups'

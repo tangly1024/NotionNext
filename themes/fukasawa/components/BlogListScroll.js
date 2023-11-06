@@ -1,5 +1,5 @@
 import BLOG from '@/blog.config'
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import { useGlobal } from '@/lib/global'
@@ -15,9 +15,9 @@ import { useGlobal } from '@/lib/global'
 const BlogListScroll = props => {
   const { posts = [], siteInfo } = props
   const { locale } = useGlobal()
-  const targetRef = React.useRef(null)
+  const targetRef = useRef(null)
 
-  const [page, updatePage] = React.useState(1)
+  const [page, updatePage] = useState(1)
 
   let hasMore = false
   const postsToShow = posts
@@ -44,7 +44,7 @@ const BlogListScroll = props => {
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)

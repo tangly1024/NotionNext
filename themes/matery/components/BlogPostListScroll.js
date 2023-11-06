@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
-import React, { useCallback } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import { getListByPage } from '@/lib/utils'
 import throttle from 'lodash.throttle'
@@ -16,9 +16,18 @@ import throttle from 'lodash.throttle'
  */
 const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY, siteInfo }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
-  const [page, updatePage] = React.useState(1)
+  const [page, updatePage] = useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
+  // 监听滚动
+  useEffect(() => {
+    window.addEventListener('scroll', scrollTrigger)
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+    }
+  })
 
+  const targetRef = useRef(null)
+  const { locale } = useGlobal()
   let hasMore = false
   if (posts) {
     const totalCount = posts.length
@@ -40,16 +49,6 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.PO
       }
     })
   }, throttleMs))
-  // 监听滚动
-  React.useEffect(() => {
-    window.addEventListener('scroll', scrollTrigger)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-    }
-  })
-
-  const targetRef = React.useRef(null)
-  const { locale } = useGlobal()
 
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />

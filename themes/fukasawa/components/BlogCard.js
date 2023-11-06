@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
-import React from 'react'
 import CONFIG_FUKA from '../config'
 import LazyImage from '@/components/LazyImage'
 

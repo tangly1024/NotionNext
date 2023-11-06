@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
 import Router from 'next/router'
-import React from 'react'
 import SocialButton from './SocialButton'
 import { siteConfig } from '@/lib/config'
 

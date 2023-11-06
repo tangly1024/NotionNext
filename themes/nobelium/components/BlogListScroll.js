@@ -4,13 +4,13 @@ import Link from 'next/link'
 import throttle from 'lodash.throttle'
 import { deepClone } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export const BlogListScroll = props => {
   const { posts } = props
   const { locale } = useGlobal()
 
-  const [page, updatePage] = React.useState(1)
+  const [page, updatePage] = useState(1)
 
   let hasMore = false
   const postsToShow = posts && Array.isArray(posts)
@@ -26,10 +26,10 @@ export const BlogListScroll = props => {
     updatePage(page + 1)
   }
 
-  const targetRef = React.useRef(null)
+  const targetRef = useRef(null)
 
   // 监听滚动自动分页加载
-  const scrollTrigger = React.useCallback(throttle(() => {
+  const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY + window.outerHeight
     const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
     if (scrollS > clientHeight + 100) {

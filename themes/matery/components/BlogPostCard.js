@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
-import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'

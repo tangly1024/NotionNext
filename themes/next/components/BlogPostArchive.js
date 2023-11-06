@@ -1,6 +1,6 @@
-import React from 'react'
 import Link from 'next/link'
 import BLOG from '@/blog.config'
+
 /**
  * 博客归档列表
  * @param posts 所有文章

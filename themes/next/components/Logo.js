@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 import { siteConfig } from '@/lib/config'
 
 const Logo = props => {

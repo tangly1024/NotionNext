@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
 
 const BlogPostCard = ({ post, className }) => {
   const router = useRouter()

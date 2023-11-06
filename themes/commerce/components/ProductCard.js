@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 import CONFIG from '../config'
 import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'

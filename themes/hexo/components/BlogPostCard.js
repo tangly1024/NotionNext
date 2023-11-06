@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 import CONFIG from '../config'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
 import BLOG from '@/blog.config'

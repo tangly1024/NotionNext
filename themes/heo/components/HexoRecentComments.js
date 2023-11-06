@@ -1,9 +1,9 @@
-import React from 'react'
 import BLOG from '@/blog.config'
 import Card from '@/themes/hexo/components/Card'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { RecentComments } from '@waline/client'
+import { useEffect, useState } from 'react'
 
 /**
  * @see https://waline.js.org/guide/get-started.html
@@ -11,10 +11,10 @@ import { RecentComments } from '@waline/client'
  * @returns
  */
 const HexoRecentComments = (props) => {
-  const [comments, updateComments] = React.useState([])
+  const [comments, updateComments] = useState([])
   const { locale } = useGlobal()
-  const [onLoading, changeLoading] = React.useState(true)
-  React.useEffect(() => {
+  const [onLoading, changeLoading] = useState(true)
+  useEffect(() => {
     RecentComments({
       serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
       count: 5

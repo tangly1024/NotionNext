@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import CONFIG from './config'
-import React, { createContext, useEffect, useState, useContext, useRef } from 'react'
+import { createContext, useEffect, useState, useContext, useRef } from 'react'
 import Nav from './components/Nav'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'

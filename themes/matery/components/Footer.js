@@ -1,4 +1,3 @@
-import React from 'react'
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 

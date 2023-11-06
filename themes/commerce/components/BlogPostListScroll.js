@@ -2,9 +2,9 @@ import BLOG from '@/blog.config'
 import ProductCard from './ProductCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
-import React from 'react'
 import CONFIG from '../config'
 import { getListByPage } from '@/lib/utils'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * 博客列表滚动分页
@@ -15,7 +15,7 @@ import { getListByPage } from '@/lib/utils'
  */
 const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY, siteInfo }) => {
   const postsPerPage = BLOG.POSTS_PER_PAGE
-  const [page, updatePage] = React.useState(1)
+  const [page, updatePage] = useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
 
   let hasMore = false
@@ -41,14 +41,14 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.PO
   }
 
   // 监听滚动
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
   })
 
-  const targetRef = React.useRef(null)
+  const targetRef = useRef(null)
   const { locale } = useGlobal()
 
   if (!postsToShow || postsToShow.length === 0) {
