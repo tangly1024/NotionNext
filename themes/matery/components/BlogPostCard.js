@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
@@ -29,7 +29,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 头部图片 填充卡片 */}
                 {showPageCover && (
-                    <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                    <Link href={`${siteConfig('SUB_PATH')}/${post.slug}`} passHref legacyBehavior>
                         <div className="flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden">
                             <LazyImage
                                 src={post?.pageCoverThumbnail}

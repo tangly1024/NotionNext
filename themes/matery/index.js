@@ -3,7 +3,6 @@ import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import Footer from './components/Footer'
 import { useEffect } from 'react'
 import RightFloatButtons from './components/RightFloatButtons'
@@ -125,7 +124,7 @@ const LayoutIndex = (props) => {
 const LayoutPostList = (props) => {
   return (
         <LayoutBase {...props} containerSlot={<BlogListBar {...props} />}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
         </LayoutBase>
   )
 }
@@ -157,7 +156,7 @@ const LayoutSearch = props => {
             {!currentSearch
               ? <SearchNave {...props} />
               : <div id="posts-wrapper">
-                    {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+                    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
                 </div>}
         </LayoutBase>
   )

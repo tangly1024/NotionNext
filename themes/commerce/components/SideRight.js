@@ -6,7 +6,7 @@ import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import { AnalyticsCard } from './AnalyticsCard'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
 import Announcement from './Announcement'
 import { useGlobal } from '@/lib/global'
@@ -65,7 +65,7 @@ export default function SideRight(props) {
 
       <Announcement post={notice}/>
 
-      {BLOG.COMMENT_WALINE_SERVER_URL && BLOG.COMMENT_WALINE_RECENT && <HexoRecentComments/>}
+      {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments/>}
 
       <div className='sticky top-20'>
         {post && post.toc && post.toc.length > 1 && <Card>

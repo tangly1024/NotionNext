@@ -1,8 +1,7 @@
 // import Image from 'next/image'
-
-import BLOG from '@/blog.config'
 import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
@@ -70,7 +69,7 @@ function Banner(props) {
   function handleClickBanner() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(`${BLOG.SUB_PATH}/${randomPost?.slug}`)
+    router.push(`${siteConfig('SUB_PATH')}/${randomPost?.slug}`)
   }
 
   return (
@@ -233,7 +232,7 @@ function TopGroup(props) {
       >
         {topPosts?.map((p, index) => {
           return (
-            <Link href={`${BLOG.SUB_PATH}/${p?.slug}`} key={index}>
+            <Link href={`${siteConfig('SUB_PATH')}/${p?.slug}`} key={index}>
               <div className="cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl">
                 <LazyImage
                   priority={index === 0}

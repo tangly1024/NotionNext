@@ -8,7 +8,6 @@ import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useRef, useState } from 'react'
-import BLOG from '@/blog.config'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
@@ -84,7 +83,7 @@ const LayoutBase = (props) => {
             <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block' />
 
             {/* 主区 */}
-            <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' next relative flex justify-center flex-1 pb-12'}>
+            <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' next relative flex justify-center flex-1 pb-12'}>
                 {/* 左侧栏样式 */}
                 <SideAreaLeft targetRef={targetRef} {...props} />
 
@@ -145,7 +144,7 @@ const LayoutPostList = (props) => {
 
         <BlogListBar {...props} />
 
-        {BLOG.POST_LIST_STYLE !== 'page'
+        {siteConfig('POST_LIST_STYLE') !== 'page'
           ? <BlogPostListScroll {...props} showSummary={true} />
           : <BlogPostListPage {...props} />
         }
@@ -183,7 +182,7 @@ const LayoutSearch = (props) => {
                 </div>
             </StickyBar>
             <div className="md:mt-5">
-                {BLOG.POST_LIST_STYLE !== 'page'
+                {siteConfig('POST_LIST_STYLE') !== 'page'
                   ? <BlogPostListScroll {...props} showSummary={true} />
                   : <BlogPostListPage {...props} />
                 }

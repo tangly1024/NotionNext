@@ -11,7 +11,6 @@ import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
 import Live2D from '@/components/Live2D'
-import BLOG from '@/blog.config'
 import NavPostList from './components/NavPostList'
 import ArticleInfo from './components/ArticleInfo'
 import Catalog from './components/Catalog'
@@ -35,6 +34,7 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostListPage from './components/BlogPostListPage'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { siteConfig } from '@/lib/config'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -70,7 +70,7 @@ const LayoutBase = (props) => {
                 {/* 顶部导航栏 */}
                 <TopNavBar {...props} />
 
-                <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
+                <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
                     <div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
 // import Image from 'next/image'
 
@@ -19,7 +19,7 @@ const ProductCard = ({ index, post, siteInfo }) => {
             <div key={post.id} className={'group flex flex-col space-y-2 justify-between  border dark:border-black bg-white dark:bg-hexo-black-gray'}>
 
                 {/* 图片封面 */}
-                <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                <Link href={`${siteConfig('SUB_PATH')}/${post.slug}`} passHref legacyBehavior>
                     <div className="overflow-hidden m-2">
                         <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-auto aspect-square w-full object-cover object-center group-hover:scale-110 duration-500' />
                     </div>

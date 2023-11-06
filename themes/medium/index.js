@@ -1,5 +1,4 @@
 import CONFIG from './config'
-
 import { useState, createContext, useContext, useEffect } from 'react'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
@@ -11,7 +10,6 @@ import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
-import BLOG from '@/blog.config'
 import Announcement from './components/Announcement'
 import JumpToTopButton from './components/JumpToTopButton'
 import BlogPostListPage from './components/BlogPostListPage'
@@ -64,7 +62,7 @@ const LayoutBase = props => {
 
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
 
-                <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
+                <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
                     {/* 桌面端左侧菜单 */}
                     {/* <LeftMenuBar/> */}
 
@@ -138,7 +136,7 @@ const LayoutIndex = (props) => {
 const LayoutPostList = (props) => {
   const slotTop = <BlogPostBar {...props} />
   return <LayoutBase {...props} slotTop={slotTop}>
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </LayoutBase>
 }
 
@@ -233,7 +231,7 @@ const LayoutSearch = (props) => {
 
         {/* 文章列表 */}
         {currentSearch && <div>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
         </div>}
     </LayoutBase>
 }

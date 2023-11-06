@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import BlogAround from './BlogAround'
 import Comment from '@/components/Comment'
 import RecommendPosts from './RecommendPosts'
@@ -23,7 +22,7 @@ import { siteConfig } from '@/lib/config'
  */
 export default function ArticleDetail(props) {
   const { post, recommendPosts, prev, next } = props
-  const url = BLOG.LINK + useRouter().asPath
+  const url = siteConfig('LINK') + useRouter().asPath
   const { locale } = useGlobal()
   const showArticleInfo = CONFIG.ARTICLE_INFO
 

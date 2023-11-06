@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
 import CONFIG from '../config'
@@ -11,7 +10,7 @@ import { siteConfig } from '@/lib/config'
  */
 export const Header = (props) => {
   const { siteInfo } = props
-  const avatar = siteInfo?.icon || BLOG.AVATAR
+  const avatar = siteInfo?.icon || siteConfig('AVATAR')
 
   return (
         <header className="text-center justify-between items-center px-6 bg-white h-80 dark:bg-black relative z-10">

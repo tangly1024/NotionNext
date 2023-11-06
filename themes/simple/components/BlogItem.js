@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
@@ -13,7 +12,7 @@ export const BlogItem = props => {
 
         <h2 className="mb-2">
             <Link
-                href={`${BLOG.SUB_PATH}/${post.slug}`}
+                href={`${siteConfig('SUB_PATH')}/${post.slug}`}
                 className="blog-item-title font-bold text-black text-2xl menu-link">
                 {post.title}
             </Link>
@@ -44,7 +43,7 @@ export const BlogItem = props => {
         </div>
 
         <div className='block'>
-            <Link href={`${BLOG.SUB_PATH}/${post.slug}`} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+            <Link href={`${siteConfig('SUB_PATH')}/${post.slug}`} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
                 Continue Reading <i className="fa-solid fa-angle-right align-middle"></i>
             </Link>
         </div>

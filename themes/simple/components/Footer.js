@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
 
@@ -16,10 +15,10 @@ export const Footer = (props) => {
             <div className="md:p-0 text-center md:text-right text-xs">
                 {/* 右侧链接 */}
                 {/* <a href="#" className="text-black no-underline hover:underline">Privacy Policy</a> */}
-                {BLOG.BEI_AN && (<a href="https://beian.miit.gov.cn/" className="text-black dark:text-gray-200 no-underline hover:underline ml-4">{BLOG.BEI_AN} </a>)}
+                {siteConfig('BEI_AN') && (<a href="https://beian.miit.gov.cn/" className="text-black dark:text-gray-200 no-underline hover:underline ml-4">{siteConfig('BEI_AN')} </a>)}
                 <span className='no-underline ml-4'>
                     Powered by
-                    <a href="https://github.com/tangly1024/NotionNext" className=' hover:underline'> NotionNext {BLOG.VERSION}  </a>
+                    <a href="https://github.com/tangly1024/NotionNext" className=' hover:underline'> NotionNext {siteConfig('VERSION')}  </a>
                 </span>
             </div>
         </div>

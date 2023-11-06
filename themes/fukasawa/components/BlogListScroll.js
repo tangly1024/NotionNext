@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useEffect, useRef, useState } from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
@@ -21,12 +21,12 @@ const BlogListScroll = props => {
 
   let hasMore = false
   const postsToShow = posts
-    ? Object.assign(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
+    ? Object.assign(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page)
     : []
 
   if (posts) {
     const totalCount = posts.length
-    hasMore = page * BLOG.POSTS_PER_PAGE < totalCount
+    hasMore = page * parseInt(siteConfig('POSTS_PER_PAGE')) < totalCount
   }
   const handleGetMore = () => {
     if (!hasMore) return

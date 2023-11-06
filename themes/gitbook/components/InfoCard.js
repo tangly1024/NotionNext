@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
 import Router from 'next/router'
 import SocialButton from './SocialButton'
@@ -12,7 +11,7 @@ const InfoCard = (props) => {
             <LazyImage src={siteInfo?.icon} className='rounded-full' width={120} alt={siteConfig('AUTHOR')}/>
          </div>
         <div className='text-xl py-2 hover:scale-105 transform duration-200 flex justify-center dark:text-gray-300'>{siteConfig('AUTHOR')}</div>
-        <div className='font-light text-gray-600 mb-2 hover:scale-105 transform duration-200 flex justify-center dark:text-gray-400'>{BLOG.BIO}</div>
+        <div className='font-light text-gray-600 mb-2 hover:scale-105 transform duration-200 flex justify-center dark:text-gray-400'>{siteConfig('BIO')}</div>
         <SocialButton/>
     </div>
   </div>

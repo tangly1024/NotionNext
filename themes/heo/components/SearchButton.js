@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
@@ -14,7 +14,7 @@ export default function SearchButton(props) {
   const searchModal = useRef(null)
 
   function handleSearch() {
-    if (BLOG.ALGOLIA_APP_ID) {
+    if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal.current.openSearch()
     } else {
       router.push('/search')

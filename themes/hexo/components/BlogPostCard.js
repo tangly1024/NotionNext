@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import CONFIG from '../config'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
 // import Image from 'next/image'
 
@@ -32,7 +32,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className="md:w-5/12 overflow-hidden">
-                        <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                        <Link href={`${siteConfig('SUB_PATH')}/${post.slug}`} passHref legacyBehavior>
                         <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-56 w-full object-cover object-center group-hover:scale-110 duration-500' />
                         </Link>
                     </div>

@@ -1,9 +1,8 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 import Link from 'next/link'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
-import { siteConfig } from '@/lib/config'
 
 const BlogPostCard = ({ post }) => {
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
@@ -42,7 +41,7 @@ const BlogPostCard = ({ post }) => {
         {/* 图片封面 */}
         {showPageCover && (
             <div className="md:w-5/12 w-full h-44 overflow-hidden p-1">
-                <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                <Link href={`${siteConfig('SUB_PATH')}/${post.slug}`} passHref legacyBehavior>
                     <LazyImage src={post?.pageCoverThumbnail} className='w-full bg-cover hover:scale-110 duration-200' />
                 </Link>
             </div>

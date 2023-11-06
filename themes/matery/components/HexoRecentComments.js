@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import Card from '@/themes/hexo/components/Card'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ const HexoRecentComments = (props) => {
   const [onLoading, changeLoading] = useState(true)
   useEffect(() => {
     RecentComments({
-      serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
+      serverURL: siteConfig('COMMENT_WALINE_SERVER_URL'),
       count: 5
     }).then(({ comments }) => {
       changeLoading(false)

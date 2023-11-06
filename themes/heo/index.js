@@ -13,7 +13,6 @@ import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import NavBar from './components/NavBar'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
@@ -130,7 +129,7 @@ const LayoutIndex = props => {
       <div id="post-outer-wrapper" className="px-5 md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page'
+        {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
           <BlogPostListPage {...props} />
             )
@@ -164,7 +163,7 @@ const LayoutPostList = props => {
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page'
+        {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
           <BlogPostListPage {...props} />
             )
@@ -223,7 +222,7 @@ const LayoutSearch = props => {
             )
           : (
           <div id="posts-wrapper">
-            {BLOG.POST_LIST_STYLE === 'page'
+            {siteConfig('POST_LIST_STYLE') === 'page'
               ? (
               <BlogPostListPage {...props} />
                 )

@@ -5,10 +5,10 @@ import CategoryGroup from './CategoryGroup'
 import TagGroups from './TagGroups'
 import CONFIG from '../config'
 import { useRouter } from 'next/router'
-import BLOG from '@/blog.config'
 import dynamic from 'next/dynamic'
 import Announcement from './Announcement'
 import LatestPostsGroup from './LatestPostsGroup'
+import { siteConfig } from '@/lib/config'
 const NextRecentComments = dynamic(() => import('./NextRecentComments'))
 
 /**
@@ -27,7 +27,7 @@ const SideAreaRight = (props) => {
   const router = useRouter()
   const announcementVisible = notice && Object.keys(notice).length > 0
 
-  return (<aside id='right' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'mr-4' : 'ml-4') + ' space-y-4 hidden xl:block flex-col w-60 relative z-10'}>
+  return (<aside id='right' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'mr-4' : 'ml-4') + ' space-y-4 hidden xl:block flex-col w-60 relative z-10'}>
 
         {CONFIG.RIGHT_AD && <Card className='mb-2'>
             {/* 展示广告  */}
@@ -92,7 +92,7 @@ const SideAreaRight = (props) => {
                 </Card>
             )}
 
-            {BLOG.COMMENT_WALINE_SERVER_URL && BLOG.COMMENT_WALINE_RECENT && <Card>
+            {siteConfig('COMMENT_WALINE_SERVER_URL') && siteConfig('COMMENT_WALINE_RECENT') && <Card>
                 <div className="text-sm pb-1 px-2 flex flex-nowrap justify-between font-light dark:text-gray-200">
                     <div className="text-gray-600 dark:text-gray-200">
                         <i className="mr-2 fas fa-tag" />

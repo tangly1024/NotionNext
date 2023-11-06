@@ -3,7 +3,6 @@
 import CONFIG from './config'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
-import BLOG from '@/blog.config'
 import { isBrowser } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
 import BlogListPage from './components/BlogListPage'
@@ -21,6 +20,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 
@@ -72,7 +72,7 @@ const LayoutBase = (props) => {
 
                 <TopNav {...props} />
 
-                <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
+                <div className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' flex'}>
                     {/* 侧边抽屉 */}
                     <AsideLeft {...props} slot={leftAreaSlot} />
 
@@ -124,7 +124,7 @@ const LayoutIndex = (props) => {
             */
 const LayoutPostList = (props) => {
   return <LayoutBase {...props}>
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
     </LayoutBase>
 }
 

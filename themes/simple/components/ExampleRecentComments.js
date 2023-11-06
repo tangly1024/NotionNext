@@ -1,7 +1,7 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import { RecentComments } from '@waline/client'
 import { useEffect, useState } from 'react'
+import { siteConfig } from '@/lib/config'
 
 /**
  * @see https://waline.js.org/guide/get-started.html
@@ -13,7 +13,7 @@ const ExampleRecentComments = (props) => {
   const [onLoading, changeLoading] = useState(true)
   useEffect(() => {
     RecentComments({
-      serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
+      serverURL: siteConfig('COMMENT_WALINE_SERVER_URL'),
       count: 5
     }).then(({ comments }) => {
       changeLoading(false)

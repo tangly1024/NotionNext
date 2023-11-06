@@ -1,10 +1,10 @@
-import BLOG from '@/blog.config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 博客列表滚动分页
@@ -14,7 +14,7 @@ import CONFIG from '../config'
  * @constructor
  */
 const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY }) => {
-  const postsPerPage = BLOG.POSTS_PER_PAGE
+  const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, postsPerPage)
 
