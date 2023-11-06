@@ -13,6 +13,11 @@ const Style = () => {
     .dark body{
         background-color: black;
     }
+
+    // 产品介绍区域字体放大
+    #brand-introduction .notion {
+        font-size: 1.3rem !important;
+    }
   
     /*  菜单下划线动画 */
     #theme-commerce .menu-link {
@@ -61,12 +66,12 @@ const Style = () => {
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #49b1f5;
+        background-color: #D2232A;
     }
 
     * {
         scrollbar-width:thin;
-        scrollbar-color: #49b1f5 transparent
+        scrollbar-color: #D2232A transparent
     }
     
 

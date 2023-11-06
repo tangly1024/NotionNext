@@ -56,12 +56,33 @@ const Footer = (props) => {
                             })}
                         </nav>
                     </div>
-
                 </div>
 
                 {siteConfig('COMMERCE_TEXT_FOOTER_LINKS') && <div className='md:border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left flex-grow'>
-                    <div className='font-bold text-white'>{siteConfig('COMMERCE_TEXT_FOOTER_TITLE', 'Contact US')}</div>
-                    <div>{siteConfig('COMMERCE_TEXT_FOOTER_LINKS')}</div>
+                    <div className='font-bold text-l text-white mb-6'>{siteConfig('COMMERCE_TEXT_FOOTER_TITLE', 'Contact US')}</div>
+                    <div className='space-y-4'>
+                        <div className='flex space-x-4 text-2xl'>
+                            {JSON.parse(siteConfig('COMMERCE_CONTACT_WHATSAPP_SHOW'), true) && <div>
+                                {<a target='_blank' rel='noreferrer' href={siteConfig('CONTACT_WHATSAPP', '#')} title={'telegram'} >
+                                    <i className='transform hover:scale-125 duration-150 fa-brands fa-whatsapp dark:hover:text-red-400 hover:text-red-600' />
+                                </a>}
+                            </div>
+                            }
+
+                            {JSON.parse(siteConfig('COMMERCE_CONTACT_TELEGRAM_SHOW', true)) && <div>
+                                {<a target='_blank' rel='noreferrer' href={siteConfig('CONTACT_TELEGRAM', '#')} title={'telegram'} >
+                                    <i className='transform hover:scale-125 duration-150 fab fa-telegram dark:hover:text-red-400 hover:text-red-600' />
+                                </a>}
+                            </div>}
+
+                        </div>
+                        <div className='text-lg'> {siteConfig('CONTACT_EMAIL') && <a target='_blank' rel='noreferrer' title={'email'} href={`mailto:${siteConfig('CONTACT_EMAIL')}`} >
+                            <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-red-400 hover:text-red-600' /> {siteConfig('CONTACT_EMAIL')}
+                        </a>}</div>
+                        <div className='text-lg'> {siteConfig('CONTACT_PHONE') && <div>
+                            <i className='transform hover:scale-125 duration-150 fas fa-user dark:hover:text-red-400 hover:text-red-600' />  {siteConfig('CONTACT_PHONE')}
+                        </div>}</div>
+                    </div>
                 </div>}
             </div>
 

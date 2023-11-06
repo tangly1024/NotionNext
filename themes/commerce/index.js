@@ -111,9 +111,9 @@ const LayoutIndex = (props) => {
         <ProductCenter {...props} />
 
         {/* 首页企业/品牌介绍 */}
-        {notice && <div className='w-full my-4 mx-4'>
+        {notice && <div id='brand-introduction' className='w-full my-4 mx-4'>
             <div className='w-full text-center text-4xl font-bold pt-12'>{siteConfig('TEXT_HOME_ABOUT_US', notice.title)}</div>
-            <NotionPage post={notice} />
+            <NotionPage post={notice} className='text-2xl text-justify'/>
         </div>}
 
         {/* 铺开导航菜单 */}
