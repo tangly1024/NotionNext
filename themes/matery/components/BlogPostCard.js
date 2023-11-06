@@ -29,7 +29,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 头部图片 填充卡片 */}
                 {showPageCover && (
-                    <Link href={`${siteConfig('SUB_PATH')}/${post.slug}`} passHref legacyBehavior>
+                    <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
                         <div className="flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden">
                             <LazyImage
                                 src={post?.pageCoverThumbnail}

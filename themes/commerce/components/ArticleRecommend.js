@@ -38,7 +38,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                     (<Link
                             key={post.id}
                             title={post.title}
-                            href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+                            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                             passHref
                             className="flex h-40 cursor-pointer overflow-hidden">
 

@@ -15,7 +15,7 @@ export default function RandomPostButton(props) {
   function handleClick() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(`${siteConfig('SUB_PATH')}/${randomPost?.slug}`)
+    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
 
   return (

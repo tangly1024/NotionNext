@@ -22,7 +22,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           return (
             (<Link key={post.id} passHref
                     title={post.title}
-                    href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+                    href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
 
                     className={'my-3 flex flex-col w-full'}>
 
