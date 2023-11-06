@@ -8,7 +8,6 @@ export default function PostHeader({ post, siteInfo }) {
   }
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
   const title = post?.title
-  console.log('标题', title)
   return (
     <div id="header" className="w-full h-96 relative md:flex-shrink-0 z-10" >
       <LazyImage priority={true} src={headerImage} className='w-full h-full object-cover object-center absolute top-0' />
