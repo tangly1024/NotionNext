@@ -12,7 +12,7 @@ import { siteConfig } from '@/lib/config'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
-  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
+  const showPreview = siteConfig('NEXT_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   return (
     <Card className="w-full">
       <div
@@ -114,7 +114,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && (
+        {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && (
           <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image

@@ -1,16 +1,16 @@
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
-import CONFIG_FUKA from '../config'
+import CONFIG from '../config'
 import LazyImage from '@/components/LazyImage'
 
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
+  const showPreview = siteConfig('FUKASAWA_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   // fukasawa 强制显示图片
-  if (CONFIG_FUKA.POST_LIST_COVER_FORCE && post && !post.pageCover) {
+  if (siteConfig('FUKASAWA_POST_LIST_COVER_FORCE', null, CONFIG) && post && !post.pageCover) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.pageCoverThumbnail
+  const showPageCover = siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
 
   return (
         <div

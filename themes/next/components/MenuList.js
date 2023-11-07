@@ -11,9 +11,9 @@ export const MenuList = (props) => {
 
   const defaultLinks = [
     { id: 1, icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { id: 2, icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
-    { id: 3, icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG },
-    { id: 4, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG.MENU_ARCHIVE }
+    { id: 2, icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('NEXT_MENU_CATEGORY', null, CONFIG) },
+    { id: 3, icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('NEXT_MENU_TAG', null, CONFIG) },
+    { id: 4, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: siteConfig('NEXT_MENU_ARCHIVE', null, CONFIG) }
   ]
 
   let links = [].concat(defaultLinks)

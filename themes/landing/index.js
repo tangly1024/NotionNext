@@ -81,8 +81,8 @@ const LayoutIndex = (props) => {
 const LayoutSlug = (props) => {
     // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
     const router = useRouter()
-    if (JSON.parse(CONFIG.POST_REDIRECT_ENABLE) && isBrowser && router.route == '/[prefix]/[slug]') {
-        const redirectUrl = CONFIG.POST_REDIRECT_URL + router.asPath.replace('?theme=landing', '')
+    if (JSON.parse(siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG)) && isBrowser && router.route == '/[prefix]/[slug]') {
+        const redirectUrl = siteConfig('LANDING_POST_REDIRECT_URL', null, CONFIG) + router.asPath.replace('?theme=landing', '')
         router.push(redirectUrl)
         return  <div id='theme-landing'><Loading /></div>
     }

@@ -61,7 +61,7 @@ const LayoutBase = (props) => {
   let links = customMenu
 
   // 默认使用自定义菜单，否则将遍历所有的category生成菜单
-  if (!CONFIG.USE_CUSTOM_MENU) {
+  if (!siteConfig('NAV_USE_CUSTOM_MENU', null, CONFIG)) {
     links = categoryOptions && categoryOptions?.map(c => {
       return { id: c.name, title: `# ${c.name}`, to: `/category/${c.name}`, show: true }
     })
@@ -227,9 +227,9 @@ const LayoutSlug = (props) => {
                     {/* <ShareBar post={post} /> */}
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
+                        {siteConfig('POST_DETAIL_CATEGORY', null, CONFIG) && post?.category && <CategoryItem category={post.category} />}
                         <div>
-                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {siteConfig('POST_DETAIL_TAG', null, CONFIG) && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 

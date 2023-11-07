@@ -50,9 +50,9 @@ const LayoutBase = (props) => {
   // 侧边栏折叠从 本地存储中获取 open 状态的初始值
   const [isCollapsed, setIsCollapse] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
+      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
     }
-    return CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
+    return siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
   })
 
   // 在组件卸载时保存 open 状态到本地存储中

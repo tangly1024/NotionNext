@@ -33,7 +33,7 @@ const SideAreaLeft = props => {
                 <div className='pt-2 px-2 font-sans'>
                     <MenuList allowCollapse={true} {...props} />
                 </div>
-                {CONFIG.MENU_SEARCH && <div className='px-2 pt-2 font-sans'>
+                {siteConfig('NEXT_MENU_SEARCH', null, CONFIG) && <div className='px-2 pt-2 font-sans'>
                     <SearchInput {...props} />
                 </div>}
 

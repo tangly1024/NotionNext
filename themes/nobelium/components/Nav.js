@@ -47,7 +47,7 @@ const Nav = props => {
 
                     <div className="h-6 w-6">
                         {/* <SvgIcon/> */}
-                        {CONFIG.NAV_NOTION_ICON
+                        {siteConfig('NOBELIUM_NAV_NOTION_ICON', null, CONFIG)
                           ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={siteConfig('AUTHOR')} />
                           : <SvgIcon />}
 
@@ -82,11 +82,11 @@ const NavBar = props => {
 
   const { locale } = useGlobal()
   let links = [
-    { id: 2, name: locale.NAV.RSS, to: '/feed', show: siteConfig('ENABLE_RSS') && CONFIG.MENU_RSS, target: '_blank' },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG.MENU_SEARCH },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG.MENU_ARCHIVE },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG }
+    { id: 2, name: locale.NAV.RSS, to: '/feed', show: siteConfig('ENABLE_RSS') && siteConfig('NOBELIUM_MENU_RSS', null, CONFIG), target: '_blank' },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('NOBELIUM_MENU_SEARCH', null, CONFIG) },
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('NOBELIUM_MENU_ARCHIVE', null, CONFIG) },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('NOBELIUM_MENU_CATEGORY', null, CONFIG) },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('NOBELIUM_MENU_TAG', null, CONFIG) }
   ]
   if (customNav) {
     links = links.concat(customNav)
@@ -114,8 +114,8 @@ const NavBar = props => {
                 </Collapse>
             </div>
 
-            {JSON.parse(CONFIG.MENU_RANDOM_POST) && <RandomPostButton {...props} />}
-            {JSON.parse(CONFIG.MENU_SEARCH_BUTTON) && <SearchButton {...props}/>}
+            {JSON.parse(siteConfig('NOBELIUM_MENU_RANDOM_POST', null, CONFIG)) && <RandomPostButton {...props} />}
+            {JSON.parse(siteConfig('NOBELIUM_MENU_SEARCH_BUTTON', null, CONFIG)) && <SearchButton {...props}/>}
             <i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 flex justify-center items-center md:hidden'></i>
         </div>
   )

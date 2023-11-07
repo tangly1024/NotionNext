@@ -13,7 +13,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   const { locale } = useGlobal()
 
   if (
-    !CONFIG.ARTICLE_RECOMMEND ||
+    !siteConfig('HEXO_ARTICLE_RECOMMEND', null, CONFIG) ||
         !recommendPosts ||
         recommendPosts.length === 0
   ) {

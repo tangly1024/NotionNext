@@ -24,7 +24,7 @@ export default function ArticleDetail(props) {
   const { post, recommendPosts, prev, next } = props
   const url = siteConfig('LINK') + useRouter().asPath
   const { locale } = useGlobal()
-  const showArticleInfo = CONFIG.ARTICLE_INFO
+  const showArticleInfo = siteConfig('NEXT_ARTICLE_INFO', null, CONFIG)
 
   return (
         <div id="article-wrapper"
@@ -39,7 +39,7 @@ export default function ArticleDetail(props) {
 
                 {showArticleInfo && <header>
                     {/* 头图 */}
-                    {CONFIG.POST_HEADER_IMAGE_VISIBLE && post?.type && !post?.type !== 'Page' && post?.pageCover && (
+                    {siteConfig('NEXT_POST_HEADER_IMAGE_VISIBLE', null, CONFIG) && post?.type && !post?.type !== 'Page' && post?.pageCover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
                             <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />
                         </div>

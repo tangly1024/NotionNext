@@ -88,7 +88,7 @@ const LayoutBase = (props) => {
                 <SideAreaLeft targetRef={targetRef} {...props} />
 
                 {/* 中央内容 */}
-                <section id='container-inner' className={`${CONFIG.NAV_TYPE !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
+                <section id='container-inner' className={`${siteConfig('NEXT_NAV_TYPE', null, CONFIG) !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
                     <Transition
                         show={!onLoading}
                         appear={true}
@@ -105,7 +105,7 @@ const LayoutBase = (props) => {
                 </section>
 
                 {/* 右侧栏样式 */}
-                {CONFIG.RIGHT_BAR && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
+                {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
             </main>
 
             {/* 右下角悬浮 */}

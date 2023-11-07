@@ -14,7 +14,7 @@ import throttle from 'lodash.throttle'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY, siteInfo }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = siteConfig('MATERY_POST_LIST_SUMMARY', null, CONFIG), siteInfo }) => {
   const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
   const [page, updatePage] = useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)

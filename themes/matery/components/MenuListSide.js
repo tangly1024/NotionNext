@@ -8,10 +8,10 @@ export const MenuListSide = (props) => {
   const { locale } = useGlobal()
 
   let links = [
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG.MENU_ARCHIVE },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG.MENU_SEARCH },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG }
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('MATERY_MENU_ARCHIVE', null, CONFIG) },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('MATERY_MENU_SEARCH', null, CONFIG) },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('MATERY_MENU_CATEGORY', null, CONFIG) },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('MATERY_MENU_TAG', null, CONFIG) }
   ]
 
   if (customNav) {

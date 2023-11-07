@@ -17,7 +17,7 @@ export const BlogListPage = props => {
   const showNext = page < totalPage
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
-  const showPageCover = CONFIG.POST_LIST_COVER
+  const showPageCover = siteConfig('EXAMPLE_POST_LIST_COVER', null, CONFIG)
 
   return (
         <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'} mb-12`}>

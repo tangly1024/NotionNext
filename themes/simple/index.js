@@ -45,7 +45,7 @@ const LayoutBase = props => {
             <CommonHead meta={meta}/>
             <Style/>
 
-            {CONFIG.TOP_BAR && <TopBar {...props} />}
+            {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
 
             {/* 顶部LOGO */}
             <Header {...props} />
