@@ -113,7 +113,7 @@ const LayoutIndex = (props) => {
         {/* 首页企业/品牌介绍 */}
         {notice && <div id='brand-introduction' className='w-full my-4 mx-4'>
             <div className='w-full text-center text-4xl font-bold pt-12'>{siteConfig('TEXT_HOME_ABOUT_US', notice.title)}</div>
-            <NotionPage post={notice} className='text-2xl text-justify'/>
+            <NotionPage post={notice} className='text-2xl text-justify' />
         </div>}
 
         {/* 铺开导航菜单 */}
@@ -201,21 +201,11 @@ const LayoutSlug = props => {
 
   const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
   const headerImage = post?.pageCover ? post.pageCover : siteConfig('HOME_BANNER_IMAGE')
-
-  //   const floatSlot = <>
-  //         {post?.toc?.length > 1 && <div className="block lg:hidden">
-  //             <TocDrawerButton
-  //                 onClick={() => {
-  //                   drawerRight?.current?.handleSwitchVisible()
-  //                 }}
-  //             />
-  //         </div>}
-  //         <JumpToCommentButton />
-  //     </>
   const floatSlot = <></>
+  const headerSlot = <PostHeader {...props} />
 
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
+        <LayoutBase {...props} headerSlot={headerSlot} showCategory={false} showTag={false} floatSlot={floatSlot} >
             <div className="w-full max-w-screen-xl mx-auto lg:hover:shadow lg:border lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 

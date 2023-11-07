@@ -2,7 +2,7 @@ import { siteConfig } from '@/lib/config'
 import Head from 'next/head'
 
 const CommonHead = ({ meta, children }) => {
-  let url = siteConfig('PATH')?.length ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH')}` : siteConfig('LINK')
+  let url = siteConfig('PATH')?.length ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH','')}` : siteConfig('LINK')
   let image
   if (meta) {
     url = `${url}/${meta.slug}`

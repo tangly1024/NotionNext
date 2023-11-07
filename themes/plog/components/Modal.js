@@ -93,7 +93,7 @@ export default function Modal(props) {
                                             <h2 style={{ textShadow: '0.1em 0.1em 0.2em black' }} className='text-2xl md:text-5xl text-white mb-4 px-2 py-1 rounded-lg'>{modalContent?.title}</h2>
                                         </div>
 
-                                        <Link href={`${siteConfig('SUB_PATH')}/${modalContent.slug}`}>
+                                        <Link href={`${siteConfig('SUB_PATH', '')}/${modalContent.slug}`}>
                                             <div style={{ textShadow: '0.1em 0.1em 0.2em black' }} className={'line-clamp-3 md:line-clamp-none overflow-hidden cursor-pointer text-gray-50 rounded-lg m-2'}>
                                                 {modalContent?.summary}
                                             </div>

@@ -23,7 +23,7 @@ export default function BlogArchiveItem({ archiveTitle, archivePosts }) {
                             </span>{' '}
                             &nbsp;
 
-                            <Link passHref href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+                            <Link passHref href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                                 className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
                                 {post.title}
                             </Link>

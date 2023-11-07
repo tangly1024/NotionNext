@@ -21,7 +21,7 @@ const BlogPostCard = ({ post, showSummary }) => {
       >
         <div className="lg:p-8 p-4 flex flex-col w-full">
           <Link
-            href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
             passHref
             data-aos="fade-down"
             data-aos-duration="500"
@@ -104,7 +104,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           <div className="text-right border-t pt-8 border-dashed">
             <Link
-              href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+              href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
               className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
 
               {locale.COMMON.ARTICLE_DETAIL}
@@ -115,7 +115,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         </div>
 
         {CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && (
-          <Link href={`${siteConfig('SUB_PATH')}/${post.slug}`} passHref legacyBehavior>
+          <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"

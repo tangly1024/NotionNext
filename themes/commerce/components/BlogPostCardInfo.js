@@ -15,7 +15,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
        <div>
          {/* 标题 */}
          <Link
-            href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
             passHref
             className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''
                 } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-red-700 dark:hover:text-red-400`}>

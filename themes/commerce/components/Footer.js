@@ -57,7 +57,7 @@ const Footer = (props) => {
                     </div>
                 </div>
 
-                {siteConfig('COMMERCE_TEXT_FOOTER_LINKS') && <div className='md:border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left flex-grow'>
+                {JSON.parse(siteConfig('COMMERCE_TEXT_FOOTER_LINKS', true)) && <div className='md:border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left flex-grow'>
                     <div className='font-bold text-l text-white mb-6'>{siteConfig('COMMERCE_TEXT_FOOTER_TITLE', 'Contact US')}</div>
                     <div className='space-y-4'>
                         <div className='flex space-x-4 text-2xl'>

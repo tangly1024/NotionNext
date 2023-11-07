@@ -69,7 +69,7 @@ function Banner(props) {
   function handleClickBanner() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(`${siteConfig('SUB_PATH')}/${randomPost?.slug}`)
+    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
 
   return (
@@ -232,7 +232,7 @@ function TopGroup(props) {
       >
         {topPosts?.map((p, index) => {
           return (
-            <Link href={`${siteConfig('SUB_PATH')}/${p?.slug}`} key={index}>
+            <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
               <div className="cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl">
                 <LazyImage
                   priority={index === 0}

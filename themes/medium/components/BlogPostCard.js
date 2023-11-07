@@ -23,7 +23,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
             <div className="lg:py-8 py-4 flex flex-col w-full">
                 <Link
-                    href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+                    href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                     passHref
                     className={
                         'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
@@ -62,7 +62,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                         <div className="pointer-events-none border-t pt-8 border-dashed">
                             <div className="w-full justify-start flex">
                                 <Link
-                                    href={`${siteConfig('SUB_PATH')}/${post.slug}`}
+                                    href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                                     passHref
                                     className="hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-green-500 cursor-pointer">
 
