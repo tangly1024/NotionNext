@@ -9,7 +9,7 @@ import LazyImage from '@/components/LazyImage'
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
   if (post && !post.pageCoverThumbnail && CONFIG.POST_LIST_COVER_DEFAULT) {
-    post.pageCover = siteInfo?.pageCoverThumbnail
+    post.pageCoverThumbnail = siteInfo?.pageCover
   }
   const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
   //   const delay = (index % 2) * 200

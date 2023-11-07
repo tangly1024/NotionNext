@@ -31,7 +31,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                     }>
                     <div>
                         {CONFIG.POST_LIST_COVER && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
-                            <LazyImage src={post.pageCoverThumbnail} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
+                            <LazyImage src={post.pageCoverThumbnail} style={post.pageCoverThumbnail ? {} : { height: '0px' }} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
                         </div>}
                         {post.title}
                     </div>
