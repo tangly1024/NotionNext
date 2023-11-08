@@ -1,4 +1,3 @@
-import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Giscus from '@giscus/react'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { siteConfig } from '@/lib/config'
 
 /**
@@ -8,11 +7,13 @@ import { siteConfig } from '@/lib/config'
  * @returns {JSX.Element | null} - 返回渲染的 JSX 元素或 null
  */
 export default function WWAds({ orientation = 'vertical', sticky = false, className }) {
-  if (!JSON.parse(siteConfig('AD_WWADS_ID'))) {
+  const adWWADSId = siteConfig('AD_WWADS_ID')
+
+  if (!adWWADSId) {
     return null
   }
 
-  return (
-    <div className={`wwads-cn ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'} ${sticky ? 'wwads-sticky' : ''} z-10 ${className || ''}`} data-id={siteConfig('AD_WWADS_ID')}></div>
-  )
+  return <div data-id={adWWADSId} className={`wwads-cn 
+            ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'}
+            ${sticky ? 'wwads-sticky' : ''} z-10 ${className || ''}`} />
 }

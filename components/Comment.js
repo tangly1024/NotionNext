@@ -63,6 +63,7 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
 const Comment = ({ siteInfo, frontMatter, className }) => {
   const router = useRouter()
 
+  // 当连接中有特殊参数时跳转到评论区
   if (isBrowser && ('giscus' in router.query || router.query.target === 'comment')) {
     setTimeout(() => {
       const url = router.asPath.replace('?target=comment', '')
