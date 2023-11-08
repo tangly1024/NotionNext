@@ -2,7 +2,7 @@ import { siteConfig } from '@/lib/config'
 import Head from 'next/head'
 
 const CommonHead = ({ meta, children }) => {
-  let url = siteConfig('PATH')?.length ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH','')}` : siteConfig('LINK')
+  let url = siteConfig('PATH')?.length ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}` : siteConfig('LINK')
   let image
   if (meta) {
     url = `${url}/${meta.slug}`
@@ -13,7 +13,7 @@ const CommonHead = ({ meta, children }) => {
   const type = meta?.type || 'website'
   const keywords = meta?.tags || siteConfig('KEYWORDS')
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
-  const category = meta?.category || siteConfig('KEYWORDS') || '軟體科技' // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
+  const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
 
   return (
         <Head>
@@ -42,15 +42,15 @@ const CommonHead = ({ meta, children }) => {
             <meta name="twitter:description" content={description} />
             <meta name="twitter:title" content={title} />
 
-            {siteConfig('COMMENT_WEBMENTION').ENABLE && (
+            {siteConfig('COMMENT_WEBMENTION_ENABLE') && (
                 <>
-                    <link rel="webmention" href={`https://webmention.io/${siteConfig('COMMENT_WEBMENTION').HOSTNAME}/webmention`} />
-                    <link rel="pingback" href={`https://webmention.io/${siteConfig('COMMENT_WEBMENTION').HOSTNAME}/xmlrpc`} />
+                    <link rel="webmention" href={`https://webmention.io/${siteConfig('COMMENT_WEBMENTION_HOSTNAME')}/webmention`} />
+                    <link rel="pingback" href={`https://webmention.io/${siteConfig('COMMENT_WEBMENTION_HOSTNAME')}/xmlrpc`} />
                 </>
             )}
 
-            {siteConfig('COMMENT_WEBMENTION').ENABLE && siteConfig('COMMENT_WEBMENTION').AUTH !== '' && (
-                <link href={siteConfig('COMMENT_WEBMENTION').AUTH} rel="me" />
+            {siteConfig('COMMENT_WEBMENTION_ENABLE') && siteConfig('COMMENT_WEBMENTION_AUTH') !== '' && (
+                <link href={siteConfig('COMMENT_WEBMENTION_AUTH')} rel="me" />
             )}
 
             {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && <meta name="referrer" content="no-referrer-when-downgrade" />}

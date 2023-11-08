@@ -60,7 +60,7 @@ const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
  */
 export const commentEnable = BLOG.COMMENT_TWIKOO_ENV_ID || BLOG.COMMENT_WALINE_SERVER_URL || BLOG.COMMENT_VALINE_APP_ID ||
 BLOG.COMMENT_GISCUS_REPO || BLOG.COMMENT_CUSDIS_APP_ID || BLOG.COMMENT_UTTERRANCES_REPO ||
- BLOG.COMMENT_GITALK_CLIENT_ID || BLOG.COMMENT_WEBMENTION.ENABLE
+ BLOG.COMMENT_GITALK_CLIENT_ID || BLOG.COMMENT_WEBMENTION_ENABLE
 
 /**
  * 评论组件
@@ -119,7 +119,7 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
                 <GitalkComponent frontMatter={frontMatter} />
             </div>)}
 
-            {BLOG.COMMENT_WEBMENTION.ENABLE && (<div key='WebMention'>
+            {BLOG.COMMENT_WEBMENTION_ENABLE && (<div key='WebMention'>
                 <WebMentionComponent frontMatter={frontMatter} className="px-2" />
             </div>)}
         </Tabs>
