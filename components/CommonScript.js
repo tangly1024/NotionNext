@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 
 /**
- * 第三方代码 统计脚本
+ * 统计脚本
  * @returns {JSX.Element}
  * @constructor
  */
@@ -60,15 +60,6 @@ const CommonScript = () => {
       }}/>
     </>)}
 
-    {/* 代码统计 */}
-    {/* ackee统计脚本 */}
-    {/* {BLOG.ANALYTICS_ACKEE_TRACKER && (
-      <script async src={BLOG.ANALYTICS_ACKEE_TRACKER}
-              data-ackee-server={BLOG.ANALYTICS_ACKEE_DATA_SERVER}
-              data-ackee-domain-id={BLOG.ANALYTICS_ACKEE_DOMAIN_ID}
-      />
-    )} */}
-
     {/* 百度统计 */}
     {BLOG.ANALYTICS_BAIDU_ID && (
       <script async
@@ -116,9 +107,6 @@ const CommonScript = () => {
       />
     </>)}
 
-    {/* 引入音乐播放 */}
-    {JSON.parse(BLOG.MUSIC_PLAYER) && <script async src={BLOG.MUSIC_PLAYER_CDN_URL} />}
-    {JSON.parse(BLOG.MUSIC_PLAYER) && JSON.parse(BLOG.MUSIC_PLAYER_METING) && <script async src="https://cdnjs.cloudflare.com/ajax/libs/meting/2.0.1/Meting.min.js" />}
   </>)
 }
 

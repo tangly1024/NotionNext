@@ -1,17 +1,18 @@
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { loadExternalResource } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
 
 const CusdisComponent = ({ frontMatter }) => {
   const { lang } = useGlobal()
   const router = useRouter()
   const { isDarkMode } = useGlobal()
+  const src = siteConfig('COMMENT_CUSDIS_SCRIPT_SRC')
 
   //   处理cusdis主题
   useEffect(() => {
-    loadExternalResource(BLOG.COMMENT_CUSDIS_SCRIPT_SRC, 'js').then(url => {
+    loadExternalResource(src, 'js').then(url => {
       const CUSDIS = window.CUSDIS
       CUSDIS?.initial()
     })
@@ -19,10 +20,10 @@ const CusdisComponent = ({ frontMatter }) => {
 
   return <div id="cusdis_thread"
         lang={lang.toLowerCase()}
-        data-host={BLOG.COMMENT_CUSDIS_HOST}
-        data-app-id={BLOG.COMMENT_CUSDIS_APP_ID}
+        data-host={siteConfig('COMMENT_CUSDIS_HOST')}
+        data-app-id={siteConfig('COMMENT_CUSDIS_APP_ID')}
         data-page-id={frontMatter.id}
-        data-page-url={BLOG.LINK + router.asPath}
+        data-page-url={siteConfig('LINK') + router.asPath}
         data-page-title={frontMatter.title}
         data-theme={isDarkMode ? 'dark' : 'light'}
     ></div>

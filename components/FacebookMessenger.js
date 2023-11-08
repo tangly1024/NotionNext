@@ -1,12 +1,12 @@
-import BLOG from '@/blog.config'
 import { Component } from 'react'
 import PropTypes from 'prop-types'
+import { siteConfig } from '@/lib/config'
 
 export default function Messenger() {
   return <MessengerCustomerChat
-    pageId={BLOG.FACEBOOK_PAGE_ID}
-    appId={BLOG.FACEBOOK_APP_ID}
-    language={BLOG.LANG.replace('-', '_')}
+    pageId={siteConfig('FACEBOOK_PAGE_ID')}
+    appId={siteConfig('FACEBOOK_APP_ID')}
+    language={siteConfig('LANG').replace('-', '_')}
     shouldShowDialog={true}
   />
 }

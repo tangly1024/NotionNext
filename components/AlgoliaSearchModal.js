@@ -1,10 +1,10 @@
 import { useState, useImperativeHandle, useRef } from 'react'
-import BLOG from '@/blog.config'
 import algoliasearch from 'algoliasearch'
 import replaceSearchResult from '@/components/Mark'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash/throttle'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 结合 Algolia 实现的弹出式搜索框
@@ -31,8 +31,8 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
   })
 
-  const client = algoliasearch(BLOG.ALGOLIA_APP_ID, BLOG.ALGOLIA_SEARCH_ONLY_APP_KEY)
-  const index = client.initIndex(BLOG.ALGOLIA_INDEX)
+  const client = algoliasearch(siteConfig('ALGOLIA_APP_ID'), siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY'))
+  const index = client.initIndex(siteConfig('ALGOLIA_INDEX'))
 
   /**
    * 搜索
@@ -97,7 +97,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     setIsModalOpen(false)
   }
 
-  if (!BLOG.ALGOLIA_APP_ID) {
+  if (!siteConfig('ALGOLIA_APP_ID')) {
     return <></>
   }
 
@@ -123,7 +123,7 @@ export default function AlgoliaSearchModal({ cRef }) {
                 <ul>
                     {searchResults.map((result) => (
                         <li key={result.objectID} className="replace my-2">
-                            <a href={`${BLOG.SUB_PATH}/${result.slug}`} className="font-bold hover:text-blue-600 text-black dark:text-gray-200">
+                            <a href={`${siteConfig('SUB_PATH')}/${result.slug}`} className="font-bold hover:text-blue-600 text-black dark:text-gray-200">
                                 {result.title}
                             </a>
                         </li>
