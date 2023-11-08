@@ -1,7 +1,6 @@
 'use strict'
 
 import { useEffect } from 'react'
-import BLOG from '@/blog.config'
 import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { siteConfig } from '@/lib/config'
