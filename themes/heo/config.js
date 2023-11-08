@@ -14,8 +14,8 @@ const CONFIG = {
   HERO_TITLE_2: '与思维认知',
   HERO_TITLE_3: 'happwang.xyz',
   HERO_TITLE_4: '商业认知',
-  HERO_TITLE_5: '应届生如何包装',
-  HERO_TITLE_LINK: 'https://www.bilibili.com/video/BV1bj411z7e2/?spm_id_from=444.41.list.card_archive.click&vd_source=4342bb094f13a206a999742f8b3f88e7',
+  HERO_TITLE_5: '真正决定你收入水平的，不是工作能力，而是工作格局',
+  HERO_TITLE_LINK: 'https://mp.weixin.qq.com/s/OWBjLCGwY3nO8RZumLYJyA',
 
   // 英雄区显示三个置顶分类
   HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
