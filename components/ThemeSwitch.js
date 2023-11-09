@@ -38,9 +38,9 @@ const ThemeSwitch = () => {
         <Draggable>
             <div id="draggableBox" style={{ left: '0px', top: '80vh' }} className="fixed group space-y-2 overflow-hidden z-50 p-3 flex flex-col items-start dark:text-white bg-gray-50 dark:bg-black rounded-xl shadow-lg border dark:border-gray-800">
                 {/* 深色按钮 */}
-                <div className="text-sm flex items-center group-hover:w-32 transition-all duration-200">
+                <div className="text-sm flex items-center w-0 group-hover:w-32 transition-all duration-200">
                     <DarkModeButton />
-                    <div onClick={toggleDarkMode} className='cursor-pointer w-0 group-hover:w-24 transition-all duration-200 overflow-hidden whitespace-nowrap pl-1'>{isDarkMode ? locale.MENU.DARK_MODE : locale.MENU.LIGHT_MODE}</div>
+                    <div onClick={toggleDarkMode} className='cursor-pointer w-0 group-hover:w-24 transition-all duration-200 overflow-hidden whitespace-nowrap pl-1 h-auto'>{isDarkMode ? locale.MENU.DARK_MODE : locale.MENU.LIGHT_MODE}</div>
                 </div>
 
                 {/* 翻译按钮 */}
