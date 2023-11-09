@@ -17,7 +17,7 @@ const Index = props => {
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const meta = {
-    title: `${siteConfig('TITLE')} | ${siteConfig('BIO')}`,
+    title: `${siteConfig('TITLE')} | ${siteConfig('DESCRIPTION')}`,
     description: siteConfig('DESCRIPTION'),
     image: siteConfig('HOME_BANNER_IMAGE'),
     slug: '',
