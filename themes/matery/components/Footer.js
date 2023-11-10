@@ -28,7 +28,7 @@ const Footer = ({ title }) => {
         <i className='fas fa-users'/> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <br/>
         <h1>{title}</h1>
-        <span className='text-xs '>Powered by <a href='' className='underline dark:text-gray-300'>QIAOMENG {BLOG.VERSION}</a>.</span></span><br/>
+        <span className='text-xs '>Powered by <a href='' className='underline dark:text-gray-300'>ZHIQIAO {BLOG.VERSION}</a>.</span></span><br/>
 
     </footer>
   )
