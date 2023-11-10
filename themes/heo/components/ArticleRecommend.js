@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 关联推荐文章
@@ -13,7 +13,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   const { locale } = useGlobal()
 
   if (
-    !CONFIG.ARTICLE_RECOMMEND ||
+    !siteConfig('HEO_ARTICLE_RECOMMEND', null, CONFIG) ||
         !recommendPosts ||
         recommendPosts.length === 0
   ) {
@@ -43,7 +43,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                     (<Link
                             key={post.id}
                             title={post.title}
-                            href={`${BLOG.SUB_PATH}/${post.slug}`}
+                            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                             passHref
                             className="flex h-40 cursor-pointer overflow-hidden rounded-2xl">
 
