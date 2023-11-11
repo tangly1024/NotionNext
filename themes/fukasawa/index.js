@@ -21,6 +21,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
+import WWAds from '@/components/WWAds'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 
@@ -124,7 +125,10 @@ const LayoutIndex = (props) => {
             */
 const LayoutPostList = (props) => {
   return <LayoutBase {...props}>
-        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+
+        <div className='w-full p-2'><WWAds className='w-full' orientation='horizontal'/></div>
+
+         {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
     </LayoutBase>
 }
 
