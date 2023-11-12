@@ -12,7 +12,7 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HERO_TITLE_1: '分享编程',
   HERO_TITLE_2: '与思维认知',
-  HERO_TITLE_3: 'Scu9277',
+  HERO_TITLE_3: '@Scu',
   HERO_TITLE_4: '新版上线',
   HERO_TITLE_5: '期待你的光临',
   HERO_TITLE_LINK: 'https://bk.aile.eu.org/',
