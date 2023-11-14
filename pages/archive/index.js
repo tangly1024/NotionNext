@@ -6,13 +6,14 @@ import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 const ArchiveIndex = props => {
   const { siteInfo } = props
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   useEffect(() => {
     if (isBrowser) {
@@ -29,8 +30,8 @@ const ArchiveIndex = props => {
   }, [])
 
   const meta = {
-    title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${locale.NAV.ARCHIVE} | ${siteConfig('TITLE')}`,
+    description: siteConfig('HOME_BANNER_IMAGE'),
     image: siteInfo?.pageCover,
     slug: 'archive',
     type: 'website'

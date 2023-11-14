@@ -1,8 +1,8 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 export const BlogItem = props => {
   const { post } = props
@@ -12,7 +12,7 @@ export const BlogItem = props => {
 
         <h2 className="mb-2">
             <Link
-                href={`${BLOG.SUB_PATH}/${post.slug}`}
+                href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                 className="blog-item-title font-bold text-black text-2xl menu-link">
                 {post.title}
             </Link>
@@ -22,7 +22,7 @@ export const BlogItem = props => {
 
         <div className="mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6">
             <div className='space-x-2'>
-                <span>  <a href={CONFIG.AUTHOR_LINK} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {BLOG.AUTHOR}</a></span>
+                <span>  <a href={siteConfig('SIMPLE_AUTHOR_LINK', null, CONFIG)} className='p-1 hover:text-red-400 transition-all duration-200'><i className="fa-regular fa-user"></i> {siteConfig('AUTHOR')}</a></span>
                 <span>
                     <Link className='p-1 hover:text-red-400 transition-all duration-200' href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}>
                         <i className="fa-regular fa-clock" /> {post.date?.start_date || post.createdTime}
@@ -43,7 +43,7 @@ export const BlogItem = props => {
         </div>
 
         <div className='block'>
-            <Link href={`${BLOG.SUB_PATH}/${post.slug}`} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+            <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
                 Continue Reading <i className="fa-solid fa-angle-right align-middle"></i>
             </Link>
         </div>
