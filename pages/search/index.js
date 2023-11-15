@@ -36,7 +36,7 @@ const Search = props => {
 
   const meta = {
     title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
-    description: siteConfig('HOME_BANNER_IMAGE'),
+    description: siteConfig('DESCRIPTION'),
     image: siteInfo?.pageCover,
     slug: 'search',
     type: 'website'

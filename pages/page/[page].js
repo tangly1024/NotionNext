@@ -18,7 +18,7 @@ const Page = props => {
 
   const meta = {
     title: `${props?.page} | Page | ${siteConfig('TITLE')}`,
-    description: siteConfig('HOME_BANNER_IMAGE'),
+    description: siteConfig('DESCRIPTION'),
     image: siteInfo?.pageCover,
     slug: 'page/' + props.page,
     type: 'website'

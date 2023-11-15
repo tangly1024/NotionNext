@@ -22,7 +22,7 @@ export default function Category(props) {
     title: `${props.category} | ${locale.COMMON.CATEGORY} | ${
       siteConfig('TITLE') || ''
     }`,
-    description: siteConfig('HOME_BANNER_IMAGE'),
+    description: siteConfig('DESCRIPTION'),
     slug: 'category/' + props.category,
     image: siteInfo?.pageCover,
     type: 'website'
