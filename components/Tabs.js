@@ -12,7 +12,7 @@ const Tabs = ({ className, children }) => {
     return <></>
   }
 
-  children = children.filter(c => c !== '')
+  children = children.filter(c => c && c !== '')
 
   let count = 0
   children.forEach(e => {
