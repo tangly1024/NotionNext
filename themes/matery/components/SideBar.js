@@ -18,7 +18,7 @@ const SideBar = (props) => {
               <div className='mx-5 pt-6 pb-2'>
                   <LazyImage src={siteInfo?.icon} className='cursor-pointer rounded-full' width={80} alt={siteConfig('AUTHOR')} />
                   <div className='text-white text-xl my-1'>{siteConfig('TITLE')}</div>
-                  <div className='text-xs my-1 text-gray-300'>{siteConfig('HOME_BANNER_IMAGE')}</div>
+                  <div className='text-xs my-1 text-gray-300'>{siteConfig('DESCRIPTION')}</div>
               </div>
           </div>
           <MenuListSide {...props} />
