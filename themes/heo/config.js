@@ -13,7 +13,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享编程',
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: 'DWKXIAOCHEN.COM',
-  HEO_HERO_TITLE_4: '欢迎光临',
+  HEO_HERO_TITLE_4: '',
   HEO_HERO_TITLE_5: '好好学习 天天向上',
   //HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
   HEO_HERO_TITLE_LINK: 'https://blog.dwkxiaochen.top',
