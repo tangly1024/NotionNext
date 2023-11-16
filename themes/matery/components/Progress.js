@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { isBrowser } from '@/lib/utils'
 
 /**
@@ -11,7 +11,7 @@ const Progress = ({ targetRef, showPercent = true }) => {
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
     requestAnimationFrame(() => {
-      const target = currentRef || (isBrowser() && document.getElementById('container'))
+      const target = currentRef || (isBrowser && document.getElementById('article-wrapper'))
       if (target) {
         const clientHeight = target.clientHeight
         const scrollY = window.pageYOffset

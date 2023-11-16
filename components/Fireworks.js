@@ -2,16 +2,23 @@
  * https://codepen.io/juliangarnier/pen/gmOwJX
  * custom by hexo-theme-yun @YunYouJun
  */
-import React from 'react'
+import { useEffect } from 'react'
 import anime from 'animejs'
-import BLOG from 'blog.config'
+import { siteConfig } from '@/lib/config'
 
-export const Fireworks = () => {
-  React.useEffect(() => {
-    createFireworks({})
+/**
+ * 鼠标点击烟花特效
+ * @returns
+ */
+const Fireworks = () => {
+  const fireworksColor = siteConfig('FIREWORKS_COLOR')
+
+  useEffect(() => {
+    createFireworks({ colors: fireworksColor })
   }, [])
   return <canvas id='fireworks' className='fireworks'></canvas>
 }
+export default Fireworks
 
 /**
    * 创建烟花
@@ -19,7 +26,7 @@ export const Fireworks = () => {
    */
 function createFireworks(config) {
   const defaultConfig = {
-    colors: BLOG.FIREWORKS_COLOR,
+    colors: config?.colors,
     numberOfParticules: 20,
     orbitRadius: {
       min: 50,

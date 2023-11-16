@@ -1,9 +1,9 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 
 /**
@@ -14,13 +14,14 @@ import { useRouter } from 'next/router'
  * @constructor
  */
 const BlogPostListScroll = ({ posts = [], currentSearch }) => {
-  const postsPerPage = BLOG.POSTS_PER_PAGE
+  const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
   const [page, updatePage] = useState(1)
+  const router = useRouter()
   let filteredPosts = Object.assign(posts)
-  const searchKey = getSearchKey()
+  const searchKey = router?.query?.s || null
   if (searchKey) {
     filteredPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
       const searchContent = post.title + post.summary + tagContent
       return searchContent.toLowerCase().includes(searchKey.toLowerCase())
     })
@@ -61,7 +62,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
   } else {
-    return <div id='container' ref={targetRef} className='w-full'>
+    return <div id='posts-wrapper' ref={targetRef} className='w-full'>
 
       {/* 文章列表 */}
       <div className='space-y-1 lg:space-y-4'>
@@ -93,14 +94,6 @@ const getPostByPage = function (page, totalPosts, postsPerPage) {
     0,
     postsPerPage * page
   )
-}
-
-function getSearchKey() {
-  const router = useRouter()
-  if (router.query && router.query.s) {
-    return router.query.s
-  }
-  return null
 }
 
 export default BlogPostListScroll

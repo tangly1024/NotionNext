@@ -26,6 +26,8 @@ module.exports = {
     }
   },
   rules: {
+    semi: 0,
+    'react/no-unknown-property': 'off', // <style jsx>
     'react/prop-types': 'off',
     'space-before-function-paren': 0,
     'react-hooks/rules-of-hooks': 'error' // Checks rules of Hooks

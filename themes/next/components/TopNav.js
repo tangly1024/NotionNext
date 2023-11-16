@@ -8,7 +8,8 @@ import Logo from './Logo'
 import { MenuList } from './MenuList'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 let windowTop = 0
 
@@ -38,12 +39,12 @@ const TopNav = (props) => {
 
   // 监听滚动
   useEffect(() => {
-    if (CONFIG_NEXT.NAV_TYPE === 'autoCollapse') {
+    if (siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse') {
       scrollTrigger()
       window.addEventListener('scroll', scrollTrigger)
     }
     return () => {
-      CONFIG_NEXT.NAV_TYPE === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
+      siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
 
@@ -91,37 +92,38 @@ const TopNav = (props) => {
         )}
     </>
 
-  return (<div id='top-nav' className='block lg:hidden'>
-        <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
+  return (
+        <div id='top-nav' className='block lg:hidden'>
+            <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
-        {/* 导航栏 */}
-        <div id='sticky-nav' className={`${CONFIG_NEXT.NAV_TYPE !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
-            <div className='w-full flex justify-between items-center p-4 bg-black dark:bg-gray-800 text-white'>
-                {/* 左侧LOGO 标题 */}
-                <div className='flex flex-none flex-grow-0'>
-                    <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
-                        {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+            {/* 导航栏 */}
+            <div id='sticky-nav' className={`${siteConfig('NEXT_NAV_TYPE', null, CONFIG) !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
+                <div className='w-full flex justify-between items-center p-4 bg-black dark:bg-gray-800 text-white'>
+                    {/* 左侧LOGO 标题 */}
+                    <div className='flex flex-none flex-grow-0'>
+                        <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
+                            {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                        </div>
+                    </div>
+
+                    <div className='flex'>
+                        <Logo {...props} />
+                    </div>
+
+                    {/* 右侧功能 */}
+                    <div className='mr-1 flex justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
+                        <div className="cursor-pointer block lg:hidden" onClick={() => { searchDrawer?.current?.show() }}>
+                            <i className="mr-2 fas fa-search" />{locale.NAV.SEARCH}
+                        </div>
                     </div>
                 </div>
 
-                <div className='flex'>
-                    <Logo {...props} />
-                </div>
-
-                {/* 右侧功能 */}
-                <div className='mr-1 flex justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
-                    <div className="cursor-pointer block lg:hidden" onClick={() => { searchDrawer?.current?.show() }}>
-                        <i className="mr-2 fas fa-search" />{locale.NAV.SEARCH}
-                    </div>
-                </div>
+                <Collapse collapseRef={collapseRef} type='vertical' isOpen={isOpen}>
+                    <MenuList onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} {...props} from='top' />
+                </Collapse>
             </div>
 
-            <Collapse collapseRef={collapseRef} type='vertical' isOpen={isOpen}>
-                <MenuList onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)} {...props} from='top' />
-            </Collapse>
-        </div>
-
-    </div>)
+        </div>)
 }
 
 export default TopNav

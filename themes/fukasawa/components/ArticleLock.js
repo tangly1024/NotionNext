@@ -1,4 +1,5 @@
 import { useGlobal } from '@/lib/global'
+import { useEffect, useRef } from 'react'
 
 /**
  * 加密文章校验组件
@@ -7,7 +8,7 @@ import { useGlobal } from '@/lib/global'
  * @param validPassword(bool) 回调函数，校验正确回调入参为true
  * @returns
  */
-export const ArticleLock = props => {
+const ArticleLock = props => {
   const { validPassword } = props
   const { locale } = useGlobal()
 
@@ -22,10 +23,16 @@ export const ArticleLock = props => {
     }
   }
 
+  const passwordInputRef = useRef(null)
+  useEffect(() => {
+    // 选中密码输入框并将其聚焦
+    passwordInputRef.current.focus()
+  }, [])
+
   return (<div id='container' className="flex justify-center">
     <div className="shadow md:hover:shadow-2xl overflow-x-auto max-w-5xl  w-screen md:w-full  py-10 px-5 lg:pt-24 md:px-24 min-h-screen dark:border-gray-700 bg-white dark:bg-gray-800 duration-200 subpixel-antialiased">
       <div className="w-full flex justify-center items-center h-96 font-sans">
-        <div className="text-center space-y-3">
+        <div className="text-center space-y-3 dark:text-gray-300 text-black">
           <div className='font-bold'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
           <div className="flex mx-4">
             <input
@@ -35,7 +42,8 @@ export const ArticleLock = props => {
                   submitPassword()
                 }
               }}
-              className="outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-gray-100 dark:bg-gray-500"
+              ref={passwordInputRef} // 绑定ref到passwordInputRef变量
+              className="outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg  font-light leading-10 bg-gray-100 dark:bg-gray-500"
             ></input>
             <div
               onClick={submitPassword}
@@ -50,3 +58,5 @@ export const ArticleLock = props => {
     </div>
   </div>)
 }
+
+export default ArticleLock
