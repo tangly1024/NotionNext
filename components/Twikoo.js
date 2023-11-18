@@ -16,7 +16,7 @@ const Twikoo = ({ isDarkMode }) => {
   const lang = siteConfig('LANG')
   useEffect(() => {
     const twikoo = window?.twikoo
-    if (typeof twikoo !== 'undefined' && twikoo) {
+    if (typeof twikoo !== 'undefined' && twikoo && typeof twikoo.init === 'function') {
       twikoo.init({
         envId: envId, // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
         el: el, // 容器元素
