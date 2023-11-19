@@ -207,11 +207,25 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '风を共に舞う気持ち',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731419.mp3',
+      name: 'Last Reunion',
+      artist: 'Peter Roe',
+      url: 'https://music.163.com/song/media/outer/url?id=1304860054.mp3',
       cover:
-            'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+            'http://p2.music.126.net/dpXiPBgvDjTL0-4iiD4-QQ==/109951163511419229.jpg?param=130y130'
+    },
+    {
+      name: 'Human Legacy',
+      artist: 'Ivan Torrent',
+      url: 'https://music.163.com/song/media/outer/url?id=27570917.mp3',
+      cover:
+            'http://p2.music.126.net/WUZX5FZKPfqFZPwnCkYglw==/5757042883102605.jpg?param=130y130'
+    },
+    {
+      name: 'Star Sky',
+      artist: 'Two Steps From Hell',
+      url: 'https://music.163.com/song/media/outer/url?id=31654478.mp3',
+      cover:
+            'http://p2.music.126.net/n41bSTrQwG_lQzkXz7cygg==/109951163892182787.jpg?param=130y130'
     },
     {
       name: '我的梦',
@@ -221,11 +235,11 @@ const BLOG = {
             'https://p1.music.126.net/-aEI_ViW_XoAwOPAPFKW1A==/109951168942226994.jpg?param=130y130'
     },
     {
-      name: '王都グランセル',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
+      name: 'Dream It Possible',
+      artist: 'Delacey-华为Mate 40 系列',
+      url: 'https://music.163.com/song/media/outer/url?id=1499246021.mp3',
       cover:
-            'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+            'https://p1.music.126.net/CFKoBho0mSfptulYqsbgcg==/109951165508765863.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
