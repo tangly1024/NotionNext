@@ -11,12 +11,11 @@ import { GlobalContextProvider } from '@/lib/global'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css' // You can also use <link> for styles
-import dynamic from 'next/dynamic'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import BLOG from '@/blog.config'
-
 // 各种扩展插件 动画等
-const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'))
+import ExternalPlugins from '@/components/ExternalPlugins'
+// const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'))
 
 const MyApp = ({ Component, pageProps }) => {
   // 自定义样式css和js引入

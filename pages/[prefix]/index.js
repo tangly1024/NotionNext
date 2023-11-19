@@ -10,6 +10,7 @@ import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { isBrowser } from '@/lib/utils'
 import { uploadDataToAlgolia } from '@/lib/algolia'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 根据notion的slug访问页面
@@ -66,7 +67,7 @@ const Slug = props => {
   }, [post])
 
   const meta = {
-    title: post ? `${post?.title} | ${siteInfo?.title}` : `${props?.siteInfo?.title || BLOG.TITLE} | loading`,
+    title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `${siteConfig('TITLE')} | loading`,
     description: post?.summary,
     type: post?.type,
     slug: post?.slug,
@@ -76,7 +77,7 @@ const Slug = props => {
   }
   props = { ...props, lock, meta, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
   return <Layout {...props} />
 }
 

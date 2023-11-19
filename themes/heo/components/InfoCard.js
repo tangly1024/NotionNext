@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { ArrowRightCircle, GlobeAlt } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
@@ -17,21 +17,21 @@ export function InfoCard(props) {
   const { siteInfo, notice } = props
   const router = useRouter()
   // 在文章详情页特殊处理
-  const isSlugPage = router.pathname === '/[...slug]'
-
+  const isSlugPage = router.pathname.indexOf('/[prefix]') === 0
+  console.log('TITLE:', siteConfig('TITLE'))
   return (
         <Card className='bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col w-72 overflow-hidden relative'>
             {/* 信息卡牌第一行 */}
             <div className='flex justify-between'>
                 {/* 问候语 */}
                 <GreetingsWords />
-                <div className={`${isSlugPage ? 'absolute right-0 -mt-8 -mr-5 hover:opacity-0 hover:scale-150 blur' : 'cursor-pointer'} justify-center items-center flex dark:text-gray-100 transform transitaion-all duration-200`}>
-                    <LazyImage src={siteInfo?.icon} className='rounded-full' width={isSlugPage ? 100 : 28} alt={BLOG.AUTHOR} />
+                <div className={`${isSlugPage ? 'absolute right-0 -mt-8 -mr-6 hover:opacity-0 hover:scale-150 blur' : 'cursor-pointer'} justify-center items-center flex dark:text-gray-100 transform transitaion-all duration-200`}>
+                    <LazyImage src={siteInfo?.icon} className='rounded-full' width={isSlugPage ? 100 : 28} alt={siteConfig('AUTHOR')} />
                 </div>
             </div>
 
             <h2 className='text-3xl font-extrabold mt-3'>
-                {BLOG.AUTHOR}
+                {siteConfig('AUTHOR')}
             </h2>
 
             {/* 公告栏 */}
@@ -46,7 +46,7 @@ export function InfoCard(props) {
                         <Link href='/about'><GlobeAlt className={'w-6 h-6'} /></Link>
                     </div>
                     <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-                        <Link href={CONFIG.INFO_CARD_URL}><i className='fab fa-github text-xl' />
+                        <Link href={siteConfig('HEO_INFO_CARD_URL', null, CONFIG)}><i className='fab fa-github text-xl' />
                         </Link>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ export function InfoCard(props) {
  * 欢迎语
  */
 function GreetingsWords() {
-  const greetings = CONFIG.INFOCARD_GREETINGS
+  const greetings = siteConfig('HEO_INFOCARD_GREETINGS', null, CONFIG)
   const [greeting, setGreeting] = useState(greetings[0])
   // 每次点击，随机获取greetings中的一个
   const handleChangeGreeting = () => {

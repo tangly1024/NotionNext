@@ -7,7 +7,6 @@
  * 2. 内容大部分是在此文件中写死，notion数据从props参数中传进来
  * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
  */
-/* eslint-disable*/
 import NotionPage from '@/components/NotionPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -21,11 +20,7 @@ import { useRouter } from 'next/router'
 import CONFIG from './config'
 import Loading from '@/components/Loading'
 import { isBrowser } from '@/lib/utils'
-
-/**
- * 这是个配置文件，可以方便在此统一配置信息
- */
-const THEME_CONFIG = { THEME: 'landing' }
+import { siteConfig } from '@/lib/config'
 
 /**
  * 布局框架
@@ -35,9 +30,9 @@ const THEME_CONFIG = { THEME: 'landing' }
  * @returns
  */
 const LayoutBase = (props) => {
-    const { meta, siteInfo, children } = props
+  const { meta, siteInfo, children } = props
 
-    return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white">
+  return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white">
 
         {/* 网页SEO */}
         <CommonHead meta={meta} siteInfo={siteInfo} />
@@ -55,14 +50,13 @@ const LayoutBase = (props) => {
     </div>
 }
 
-
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
 const LayoutIndex = (props) => {
-    return (
+  return (
         <LayoutBase {...props}>
             <Hero />
             <Features />
@@ -70,7 +64,7 @@ const LayoutIndex = (props) => {
             <Testimonials />
             <Newsletter />
         </LayoutBase>
-    )
+  )
 }
 
 /**
@@ -79,22 +73,20 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutSlug = (props) => {
-    // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
-    const router = useRouter()
-    if (JSON.parse(CONFIG.POST_REDIRECT_ENABLE) && isBrowser && router.route == '/[prefix]/[slug]') {
-        const redirectUrl = CONFIG.POST_REDIRECT_URL + router.asPath.replace('?theme=landing', '')
-        router.push(redirectUrl)
-        return  <div id='theme-landing'><Loading /></div>
-    }
+  // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
+  const router = useRouter()
+  if (JSON.parse(siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG)) && isBrowser && router.route === '/[prefix]/[slug]') {
+    const redirectUrl = siteConfig('LANDING_POST_REDIRECT_URL', null, CONFIG) + router.asPath.replace('?theme=landing', '')
+    router.push(redirectUrl)
+    return <div id='theme-landing'><Loading /></div>
+  }
 
-    return <LayoutBase {...props}>
+  return <LayoutBase {...props}>
 
         <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
             <NotionPage {...props} />
         </div>
     </LayoutBase>
-
-
 }
 
 // 其他布局暂时留空
@@ -106,13 +98,13 @@ const LayoutPostList = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 const LayoutTagIndex = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 
 export {
-    THEME_CONFIG,
-    LayoutIndex,
-    LayoutSearch,
-    LayoutArchive,
-    LayoutSlug,
-    Layout404,
-    LayoutPostList,
-    LayoutCategoryIndex,
-    LayoutTagIndex
+  CONFIG as THEME_CONFIG,
+  LayoutIndex,
+  LayoutSearch,
+  LayoutArchive,
+  LayoutSlug,
+  Layout404,
+  LayoutPostList,
+  LayoutCategoryIndex,
+  LayoutTagIndex
 }

@@ -3,7 +3,6 @@
 import CONFIG from './config'
 import TopNav from './components/TopNav'
 import AsideLeft from './components/AsideLeft'
-import BLOG from '@/blog.config'
 import { isBrowser } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
 import BlogListPage from './components/BlogListPage'
@@ -21,6 +20,8 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
+import WWAds from '@/components/WWAds'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 
@@ -50,9 +51,9 @@ const LayoutBase = (props) => {
   // 侧边栏折叠从 本地存储中获取 open 状态的初始值
   const [isCollapsed, setIsCollapse] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
+      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
     }
-    return CONFIG.SIDEBAR_COLLAPSE_SATUS_DEFAULT
+    return siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
   })
 
   // 在组件卸载时保存 open 状态到本地存储中
@@ -72,7 +73,7 @@ const LayoutBase = (props) => {
 
                 <TopNav {...props} />
 
-                <div className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' flex'}>
+                <div className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' flex'}>
                     {/* 侧边抽屉 */}
                     <AsideLeft {...props} slot={leftAreaSlot} />
 
@@ -124,7 +125,10 @@ const LayoutIndex = (props) => {
             */
 const LayoutPostList = (props) => {
   return <LayoutBase {...props}>
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+
+        <div className='w-full p-2'><WWAds className='w-full' orientation='horizontal'/></div>
+
+         {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
     </LayoutBase>
 }
 
