@@ -15,7 +15,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: 'MatrixWave',
   HEO_HERO_TITLE_4: 'MatrixWave',
   HEO_HERO_TITLE_5: '吃饱睡好,知足常乐',
-  HEO_HERO_TITLE_LINK: 'https://nex18.top',
+  HEO_HERO_TITLE_LINK: 'https://nn.nex18.top',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '资源分享', url: '/category/资源分享' },
