@@ -216,7 +216,7 @@ const BLOG = {
     {
       name: '我的梦',
       artist: '华为',
-      url: 'https://music.163.com/song?id=2085424328.mp3',
+      url: 'https://music.163.com/song/media/outer/url?id=2085424328.mp3',
       cover:
             'https://p1.music.126.net/-aEI_ViW_XoAwOPAPFKW1A==/109951168942226994.jpg?param=130y130'
     },
