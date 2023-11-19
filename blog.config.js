@@ -214,6 +214,13 @@ const BLOG = {
             'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
     },
     {
+      name: '我的梦',
+      artist: '华为',
+      url: 'https://music.163.com/#/song?id=2085424328',
+      cover:
+            'https://p1.music.126.net/-aEI_ViW_XoAwOPAPFKW1A==/109951168942226994.jpg?param=130y130'
+    },
+    {
       name: '王都グランセル',
       artist: 'Falcom Sound Team jdk',
       url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
