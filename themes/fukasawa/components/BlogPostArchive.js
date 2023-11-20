@@ -1,6 +1,6 @@
-import React from 'react'
 import Link from 'next/link'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
+
 /**
  * 博客归档
  * @param posts 所有文章
@@ -30,7 +30,7 @@ const BlogArchiveItem = ({ posts = [], archiveTitle }) => {
                 <span className="text-gray-400">{post.date?.start_date}</span>{' '}
                 &nbsp;
                 <Link
-                  href={`${BLOG.SUB_PATH}/${post.slug}`}
+                  href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                   passHref
                   className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
 

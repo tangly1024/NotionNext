@@ -1,5 +1,5 @@
-import BLOG from '@/blog.config'
 import Link from 'next/link'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 归档分组文章
@@ -25,7 +25,7 @@ export default function BlogArchiveItem({ archiveTitle, archivePosts }) {
                             </span>{' '}
                             &nbsp;
                             <Link
-                                href={`${BLOG.SUB_PATH}/${post.slug}`}
+                                href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                                 passHref
                                 className="dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600">
 
