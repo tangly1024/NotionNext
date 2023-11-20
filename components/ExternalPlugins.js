@@ -149,6 +149,24 @@ const ExternalPlugin = (props) => {
       />
     </>)}
 
+    {/* Matomo 统计 */}
+    {siteConfig('MATOMO_HOST_URL') && siteConfig('MATOMO_SITE_ID') && (
+      <script async dangerouslySetInnerHTML={{
+        __html: `
+              var _paq = window._paq = window._paq || [];
+              _paq.push(['trackPageView']);
+              _paq.push(['enableLinkTracking']);
+              (function() {
+                var u="//${siteConfig('MATOMO_HOST_URL')}/";
+                _paq.push(['setTrackerUrl', u+'matomo.php']);
+                _paq.push(['setSiteId', '${siteConfig('MATOMO_SITE_ID')}']);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+              })();
+            `
+      }}/>
+    )}
+
   </>
 }
 

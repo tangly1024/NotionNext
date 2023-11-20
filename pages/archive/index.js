@@ -31,7 +31,7 @@ const ArchiveIndex = props => {
 
   const meta = {
     title: `${locale.NAV.ARCHIVE} | ${siteConfig('TITLE')}`,
-    description: siteConfig('HOME_BANNER_IMAGE'),
+    description: siteConfig('DESCRIPTION'),
     image: siteInfo?.pageCover,
     slug: 'archive',
     type: 'website'

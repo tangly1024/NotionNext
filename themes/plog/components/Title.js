@@ -7,7 +7,7 @@ import { siteConfig } from '@/lib/config'
  */
 export const Title = (props) => {
   const { post } = props
-  const title = post?.title || siteConfig('HOME_BANNER_IMAGE')
+  const title = post?.title || siteConfig('DESCRIPTION')
   const description = post?.description || siteConfig('AUTHOR')
 
   return <div className="text-center px-6 py-12 mb-6 bg-gray-100 dark:bg-hexo-black-gray dark:border-hexo-black-gray border-b">

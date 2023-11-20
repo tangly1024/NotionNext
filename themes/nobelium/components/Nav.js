@@ -63,7 +63,7 @@ const Nav = props => {
                   : (
                         <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name whitespace-nowrap">
                             {siteConfig('TITLE')}
-                            {/* ,{' '}<span className="font-normal">{siteConfig('HOME_BANNER_IMAGE')}</span> */}
+                            {/* ,{' '}<span className="font-normal">{siteConfig('DESCRIPTION')}</span> */}
                         </p>
                     )}
             </div>
