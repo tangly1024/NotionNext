@@ -1,5 +1,4 @@
 import { useNavGlobal } from '@/themes/nav'
-import React from 'react'
 import JumpToTopButton from './JumpToTopButton'
 
 export default function BottomMenuBar({ post, className }) {

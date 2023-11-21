@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/formatDate'
 
 export const ArticleInfo = (props) => {
@@ -19,7 +19,7 @@ export const ArticleInfo = (props) => {
 
                 {post?.type !== 'Page' && (<>
                     <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
-                        <span> <i className="fa-regular fa-user"></i> <a href={CONFIG.AUTHOR_LINK}>{BLOG.AUTHOR}</a></span>
+                        <span> <i className="fa-regular fa-user"></i> <a href={siteConfig('SIMPLE_AUTHOR_LINK', null, CONFIG)}>{siteConfig('AUTHOR')}</a></span>
                         <span> - <i className="fa-regular fa-clock"></i> {post?.publishDay}</span>
                         {post?.category && <span> - <i className="fa-regular fa-folder"></i> <a href={`/category/${post?.category}`} className="hover:text-red-400 transition-all duration-200">{post?.category}</a></span>}
                         {post?.tags && post?.tags?.length > 0 && post?.tags.map(t => <span key={t}> / <Link href={`/tag/${t}`}><span className=' hover:text-red-400 transition-all duration-200'>{t}</span></Link></span>)}

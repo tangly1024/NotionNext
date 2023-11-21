@@ -2,7 +2,7 @@ import NotionPage from '@/components/NotionPage'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/formatDate'
 
 /**
@@ -15,7 +15,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
        <div>
          {/* 标题 */}
          <Link
-            href={`${BLOG.SUB_PATH}/${post.slug}`}
+            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
             passHref
             className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''
                 } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>

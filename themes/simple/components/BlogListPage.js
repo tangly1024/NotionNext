@@ -1,14 +1,14 @@
 
-import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { BlogItem } from './BlogItem'
 import { AdSlot } from '@/components/GoogleAdsense'
+import { siteConfig } from '@/lib/config'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
   const router = useRouter()
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
   const currentPage = +page
 
   const showPrev = currentPage > 1

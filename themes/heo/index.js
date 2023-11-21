@@ -13,7 +13,6 @@ import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import NavBar from './components/NavBar'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
@@ -22,7 +21,7 @@ import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
 import PostHeader from './components/PostHeader'
-import Comment, { commentEnable } from '@/components/Comment'
+import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
@@ -40,6 +39,7 @@ import replaceSearchResult from '@/components/Mark'
 import LazyImage from '@/components/LazyImage'
 import WWAds from '@/components/WWAds'
 import { AdSlot } from '@/components/GoogleAdsense'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -53,7 +53,6 @@ const LayoutBase = props => {
     headerSlot,
     slotTop,
     slotRight,
-    siteInfo,
     className,
     meta
   } = props
@@ -95,7 +94,7 @@ const LayoutBase = props => {
       </main>
 
       {/* 页脚 */}
-      <Footer title={siteInfo?.title || BLOG.TITLE} />
+      <Footer title={siteConfig('TITLE')} />
     </div>
   )
 }
@@ -130,7 +129,7 @@ const LayoutIndex = props => {
       <div id="post-outer-wrapper" className="px-5 md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page'
+        {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
           <BlogPostListPage {...props} />
             )
@@ -164,7 +163,7 @@ const LayoutPostList = props => {
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page'
+        {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
           <BlogPostListPage {...props} />
             )
@@ -223,7 +222,7 @@ const LayoutSearch = props => {
             )
           : (
           <div id="posts-wrapper">
-            {BLOG.POST_LIST_STYLE === 'page'
+            {siteConfig('POST_LIST_STYLE') === 'page'
               ? (
               <BlogPostListPage {...props} />
                 )
@@ -311,6 +310,9 @@ const LayoutSlug = props => {
       <PostHeader {...props} />
     </header>
   )
+  const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
+        siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
+        siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   return (
     <LayoutBase
@@ -483,7 +485,7 @@ const LayoutCategoryIndex = props => {
           id="category-list"
           className="duration-200 flex flex-wrap m-10 justify-center"
         >
-          {categoryOptions.map(category => {
+          {categoryOptions?.map(category => {
             return (
               <Link
                 key={category.name}
