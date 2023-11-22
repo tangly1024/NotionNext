@@ -1,12 +1,18 @@
-import CONFIG from './config'
+/**
+ *   HEO 主题说明
+ *  > 主题设计者 [张洪](https://zhheo.com/)
+ *  > 主题开发者 [tangly1024](https://github.com/tangly1024)
+ *  1. 开启方式 在blog.config.js 将主题配置为 `HEO`
+ *  2. 更多说明参考此[文档](https://docs.tangly1024.com/article/notionnext-heo)
+ */
 
+import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
 import { useEffect, useState } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import NavBar from './components/NavBar'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import Hero from './components/Hero'
@@ -15,7 +21,7 @@ import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
 import PostHeader from './components/PostHeader'
-import Comment, { commentEnable } from '@/components/Comment'
+import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
@@ -33,6 +39,7 @@ import replaceSearchResult from '@/components/Mark'
 import LazyImage from '@/components/LazyImage'
 import WWAds from '@/components/WWAds'
 import { AdSlot } from '@/components/GoogleAdsense'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -46,7 +53,6 @@ const LayoutBase = props => {
     headerSlot,
     slotTop,
     slotRight,
-    siteInfo,
     className,
     meta
   } = props
@@ -88,7 +94,7 @@ const LayoutBase = props => {
       </main>
 
       {/* 页脚 */}
-      <Footer title={siteInfo?.title || BLOG.TITLE} />
+      <Footer title={siteConfig('TITLE')} />
     </div>
   )
 }
@@ -123,7 +129,7 @@ const LayoutIndex = props => {
       <div id="post-outer-wrapper" className="px-5 md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page'
+        {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
           <BlogPostListPage {...props} />
             )
@@ -157,7 +163,7 @@ const LayoutPostList = props => {
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page'
+        {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
           <BlogPostListPage {...props} />
             )
@@ -216,7 +222,7 @@ const LayoutSearch = props => {
             )
           : (
           <div id="posts-wrapper">
-            {BLOG.POST_LIST_STYLE === 'page'
+            {siteConfig('POST_LIST_STYLE') === 'page'
               ? (
               <BlogPostListPage {...props} />
                 )
@@ -304,6 +310,9 @@ const LayoutSlug = props => {
       <PostHeader {...props} />
     </header>
   )
+  const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
+        siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
+        siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   return (
     <LayoutBase
@@ -385,7 +394,7 @@ const Layout404 = props => {
   return (
     <div
       id="theme-heo"
-      className="bg-[#f7f9fe] h-full min-h-screen flex flex-col"
+      className="bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
     >
       {/* 网页SEO */}
       <CommonHead meta={meta} siteInfo={siteInfo} />
@@ -417,7 +426,7 @@ const Layout404 = props => {
             unmount={false}
           >
             {/* 404卡牌 */}
-            <div className="error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white border rounded-3xl">
+            <div className="error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white dark:bg-[#1B1C20] border dark:border-gray-800 rounded-3xl">
               {/* 左侧动图 */}
               <LazyImage
                 className="error-img h-60 md:h-full p-4"
@@ -426,12 +435,12 @@ const Layout404 = props => {
 
               {/* 右侧文字 */}
               <div className="error-info flex-1 flex flex-col justify-center items-center space-y-4">
-                <h1 className="error-title font-extrabold md:text-9xl text-7xl">
+                <h1 className="error-title font-extrabold md:text-9xl text-7xl dark:text-white">
                   404
                 </h1>
-                <div>请尝试站内搜索寻找文章</div>
+                <div className='dark:text-white'>请尝试站内搜索寻找文章</div>
                 <Link href="/">
-                  <button className="bg-blue-500 p-2 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all">
+                  <button className="bg-blue-500 py-2 px-4 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all">
                     回到主页
                   </button>
                 </Link>
@@ -476,7 +485,7 @@ const LayoutCategoryIndex = props => {
           id="category-list"
           className="duration-200 flex flex-wrap m-10 justify-center"
         >
-          {categoryOptions.map(category => {
+          {categoryOptions?.map(category => {
             return (
               <Link
                 key={category.name}

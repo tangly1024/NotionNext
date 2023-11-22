@@ -1,8 +1,6 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import Card from './Card'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
@@ -10,10 +8,11 @@ import NotionPage from '@/components/NotionPage'
 import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
-  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
+  const showPreview = siteConfig('NEXT_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   return (
     <Card className="w-full">
       <div
@@ -22,7 +21,7 @@ const BlogPostCard = ({ post, showSummary }) => {
       >
         <div className="lg:p-8 p-4 flex flex-col w-full">
           <Link
-            href={`${BLOG.SUB_PATH}/${post.slug}`}
+            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
             passHref
             data-aos="fade-down"
             data-aos-duration="500"
@@ -105,7 +104,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           <div className="text-right border-t pt-8 border-dashed">
             <Link
-              href={`${BLOG.SUB_PATH}/${post.slug}`}
+              href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
               className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
 
               {locale.COMMON.ARTICLE_DETAIL}
@@ -115,8 +114,8 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && (
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+        {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && (
+          <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"
