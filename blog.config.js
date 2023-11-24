@@ -87,8 +87,8 @@ const BLOG = {
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU: process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU || true, // 自定义右键菜单，覆盖系统菜单
 
   // 自定义外部脚本，外部样式
-  CUSTOM_EXTERNAL_JS: ['https://api.ipify.org?format=json','https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js'], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
-  CUSTOM_EXTERNAL_CSS: ['/css/mycss.css', 'https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css'], // e.g. ['http://xx.com/style.css','http://xx.com/style.css']
+  CUSTOM_EXTERNAL_JS: ['http://pv.sohu.com/cityjson?ie=utf-8'], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
+  CUSTOM_EXTERNAL_CSS: ['/css/mycss.css'], // e.g. ['http://xx.com/style.css','http://xx.com/style.css']
 
   // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
   LAYOUT_SIDEBAR_REVERSE: false,
