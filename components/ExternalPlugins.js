@@ -11,6 +11,7 @@ const FlutteringRibbon = dynamic(() => import('@/components/FlutteringRibbon'), 
 const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false })
 const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
 const StarrySky = dynamic(() => import('@/components/StarrySky'), { ssr: false })
+const DifyChatbot = dynamic(() => import('./DifyChatbot'), { ssr: false });
 const Analytics = dynamic(() => import('@vercel/analytics/react').then(async (m) => { return m.Analytics }), { ssr: false })
 const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
@@ -41,6 +42,7 @@ const ExternalPlugin = (props) => {
     {JSON.parse(siteConfig('FIREWORKS')) && <Fireworks />}
     {JSON.parse(siteConfig('SAKURA')) && <Sakura />}
     {JSON.parse(siteConfig('STARRY_SKY')) && <StarrySky />}
+    {JSON.parse(siteConfig('DIFY_CHATBOT_ENABLED')) && <DifyChatbot />}
     {JSON.parse(siteConfig('MUSIC_PLAYER')) && <MusicPlayer />}
     {JSON.parse(siteConfig('NEST')) && <Nest />}
     {JSON.parse(siteConfig('FLUTTERINGRIBBON')) && <FlutteringRibbon />}
