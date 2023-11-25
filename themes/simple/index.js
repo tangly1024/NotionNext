@@ -25,6 +25,7 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
+import WWAds from '@/components/WWAds'
 
 /**
  * 基础布局
@@ -172,7 +173,8 @@ const LayoutSlug = props => {
                 <ArticleInfo post={post} />
 
                 {/* 广告嵌入 */}
-                <AdSlot type={'in-article'} />
+                {/* <AdSlot type={'in-article'} /> */}
+                <WWAds orientation="horizontal" className="w-full" />
 
                 {/* Notion文章主体 */}
                 {!lock && <NotionPage post={post} />}
