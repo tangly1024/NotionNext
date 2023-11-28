@@ -2,13 +2,13 @@
 const BLOG = {
   // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_PAGE_ID:
-        process.env.NOTION_PAGE_ID || 'd957864d275f4adf9945a0d0fe4aed31',
+        process.env.NOTION_PAGE_ID || '',
   PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 5, // 更新内容缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
   THEME: process.env.NEXT_PUBLIC_THEME || 'matery', // 当前主题，在themes文件夹下可找到所有支持的主题；主题名称就是文件夹名，例如 example,fukasawa,gitbook,heo,hexo,landing,matery,medium,next,nobelium,plog,simple
   THEME_SWITCH: process.env.NEXT_PUBLIC_THEME_SWITCH || false, // 是否显示切换主题按钮
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
-  SINCE: 2023, // e.g if leave this empty, current year will be used.
+  SINCE: , // e.g if leave this empty, current year will be used.(如果留空，则将使用当前年份)
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
@@ -19,7 +19,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '✨智桥•Share✨', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '爱探索，爱分享📚', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://qmshare.top/', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://qmshare.link/', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '智桥分享, 博客', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
@@ -94,10 +94,10 @@ const BLOG = {
   LAYOUT_SIDEBAR_REVERSE: false,
 
   // 一个小插件展示你的facebook fan page~ @see https://tw.andys.pro/article/add-facebook-fanpage-notionnext
-  FACEBOOK_PAGE_TITLE: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_TITLE || null, // 邊欄 Facebook Page widget 的標題欄，填''則無標題欄 e.g FACEBOOK 粉絲團'
-  FACEBOOK_PAGE: process.env.NEXT_PUBLIC_FACEBOOK_PAGE || null, // Facebook Page 的連結 e.g https://www.facebook.com/tw.andys.pro
-  FACEBOOK_PAGE_ID: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID || '', // Facebook Page ID 來啟用 messenger 聊天功能
-  FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '', // Facebook App ID 來啟用 messenger 聊天功能 获取: https://developers.facebook.com/
+  FACEBOOK_PAGE_TITLE: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_TITLE || null, // 侧栏 Facebook 页面小部件的标题栏，如果填写“”，则不会有标题栏。例如：'Facebook粉丝团'
+  FACEBOOK_PAGE: process.env.NEXT_PUBLIC_FACEBOOK_PAGE || null, // Facebook页面连接 e.g https://www.facebook.com/tw.andys.pro
+  FACEBOOK_PAGE_ID: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID || '', // 用于启用信使聊天功能的 Facebook 页面 ID
+  FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '', // Facebook App ID 启用 Messenger 聊天功能 获取: https://developers.facebook.com/
 
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
 
@@ -143,10 +143,10 @@ const BLOG = {
   POSTS_PER_PAGE: 12, // post counts per page
   POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
-  ALGOLIA_APP_ID: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || 'KX11GQFGT6', // 在这里查看 https://dashboard.algolia.com/account/api-keys/
-  ALGOLIA_ADMIN_APP_KEY: process.env.ALGOLIA_ADMIN_APP_KEY || '0031e7a6beb18f26a4d9e595d8874924', // 管理后台的KEY，不要暴露在代码中，在这里查看 https://dashboard.algolia.com/account/api-keys/
-  ALGOLIA_SEARCH_ONLY_APP_KEY: process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_APP_KEY || 'cc5cd6b792a13bf160647da698defb2a', // 客户端搜索用的KEY
-  ALGOLIA_INDEX: process.env.NEXT_PUBLIC_ALGOLIA_INDEX || 'qmdata', // 在Algolia中创建一个index用作数据库
+  ALGOLIA_APP_ID: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '', // 在这里查看 https://dashboard.algolia.com/account/api-keys/
+  ALGOLIA_ADMIN_APP_KEY: process.env.ALGOLIA_ADMIN_APP_KEY || '', // 管理后台的KEY，不要暴露在代码中，在这里查看 https://dashboard.algolia.com/account/api-keys/
+  ALGOLIA_SEARCH_ONLY_APP_KEY: process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_APP_KEY || '', // 客户端搜索用的KEY
+  ALGOLIA_INDEX: process.env.NEXT_PUBLIC_ALGOLIA_INDEX || '', // 在Algolia中创建一个index用作数据库
   ALGOLIA_RECREATE_DATA: process.env.ALGOLIA_RECREATE_DATA || process.env.npm_lifecycle_event === 'build', // 为true时重新构建索引数据; 默认在build时会构建
 
   PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
@@ -178,11 +178,11 @@ const BLOG = {
 
   //   ********挂件组件相关********
   // Chatbase 是否显示chatbase机器人 https://www.chatbase.co/
-  CHATBASE_ID: process.env.NEXT_PUBLIC_CHATBASE_ID || 'VLfeuJQUlN2nG0zXCEnZi',
+  CHATBASE_ID: process.env.NEXT_PUBLIC_CHATBASE_ID || '',
   
   // WebwhizAI 机器人 @see https://github.com/webwhiz-ai/webwhiz
-  WEB_WHIZ_ENABLED: process.env.NEXT_PUBLIC_WEB_WHIZ_ENABLED || false, // 是否显示
-  WEB_WHIZ_BASE_URL: process.env.NEXT_PUBLIC_WEB_WHIZ_BASE_URL || 'https://api.webwhiz.ai', // 可以自建服务器
+  WEB_WHIZ_ENABLED: process.env.NEXT_PUBLIC_WEB_WHIZ_ENABLED || true, // 是否显示
+  WEB_WHIZ_BASE_URL: process.env.NEXT_PUBLIC_WEB_WHIZ_BASE_URL || '', // 可以自建服务器
   WEB_WHIZ_CHAT_BOT_ID: process.env.NEXT_PUBLIC_WEB_WHIZ_CHAT_BOT_ID || null, // 在后台获取ID
 
   // 悬浮挂件
@@ -263,12 +263,12 @@ const BLOG = {
   COMMENT_GISCUS_CROSSORIGIN:
         process.env.NEXT_PUBLIC_COMMENT_GISCUS_CROSSORIGIN || 'anonymous', // 你的 Giscus 可以跨網域, 預設 'anonymous'
 
-  COMMENT_CUSDIS_APP_ID: process.env.NEXT_PUBLIC_COMMENT_CUSDIS_APP_ID || 'f0140b2e-4844-45b9-93b6-124548f51d2f', // data-app-id 36位 see https://cusdis.com/
+  COMMENT_CUSDIS_APP_ID: process.env.NEXT_PUBLIC_COMMENT_CUSDIS_APP_ID || '', // data-app-id 36位 see https://cusdis.com/
   COMMENT_CUSDIS_HOST:
-        process.env.NEXT_PUBLIC_COMMENT_CUSDIS_HOST || 'https://cusdis.com', // data-host, change this if you're using self-hosted version
+        process.env.NEXT_PUBLIC_COMMENT_CUSDIS_HOST || 'https://cusdis.com', // data-host, change this if you're using self-hosted version(数据主机，如果使用自托管版本，请更改此设置)
   COMMENT_CUSDIS_SCRIPT_SRC:
         process.env.NEXT_PUBLIC_COMMENT_CUSDIS_SCRIPT_SRC ||
-        '/js/cusdis.es.js', // change this if you're using self-hosted version
+        '/js/cusdis.es.js', // change this if you're using self-hosted version(如果您使用的是自托管版本，请更改此项)
 
   // gitalk评论插件 更多参考 https://gitalk.github.io/
   COMMENT_GITALK_REPO: process.env.NEXT_PUBLIC_COMMENT_GITALK_REPO || '', // 你的Github仓库名，例如 'NotionNext'
@@ -282,7 +282,7 @@ const BLOG = {
   COMMENT_GITALK_JS_CDN_URL: process.env.NEXT_PUBLIC_COMMENT_GITALK_JS_CDN_URL || 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', // gitalk客户端 js cdn
   COMMENT_GITALK_CSS_CDN_URL: process.env.NEXT_PUBLIC_COMMENT_GITALK_CSS_CDN_URL || 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css', // gitalk客户端 css cdn
 
-  COMMENT_GITTER_ROOM: process.env.NEXT_PUBLIC_COMMENT_GITTER_ROOM || '', // gitter聊天室 see https://gitter.im/ 不需要则留空
+  COMMENT_GITTER_ROOM: process.env.NEXT_PUBLIC_COMMENT_GITTER_ROOM || '!GhkFiVMTboSzNFlTJK:gitter.im', // gitter聊天室 see https://gitter.im/ 不需要则留空
   COMMENT_DAO_VOICE_ID: process.env.NEXT_PUBLIC_COMMENT_DAO_VOICE_ID || '', // DaoVoice http://dashboard.daovoice.io/get-started
   COMMENT_TIDIO_ID: process.env.NEXT_PUBLIC_COMMENT_TIDIO_ID || '', // [tidio_id] -> //code.tidio.co/[tidio_id].js
 
@@ -314,7 +314,7 @@ const BLOG = {
   // <---- 评论插件
 
   // ----> 站点统计
-  ANALYTICS_VERCEL: process.env.NEXT_PUBLIC_ANALYTICS_VERCEL || false, // vercel自带的统计 https://vercel.com/docs/concepts/analytics/quickstart https://github.com/tangly1024/NotionNext/issues/897
+  ANALYTICS_VERCEL: process.env.NEXT_PUBLIC_ANALYTICS_VERCEL || true, // vercel自带的统计 https://vercel.com/docs/concepts/analytics/quickstart https://github.com/tangly1024/NotionNext/issues/897
   ANALYTICS_BUSUANZI_ENABLE: process.env.NEXT_PUBLIC_ANALYTICS_BUSUANZI_ENABLE || true, // 展示网站阅读量、访问数 see http://busuanzi.ibruce.info/
   ANALYTICS_BAIDU_ID: process.env.NEXT_PUBLIC_ANALYTICS_BAIDU_ID || '', // e.g 只需要填写百度统计的id，[baidu_id] -> https://hm.baidu.com/hm.js?[baidu_id]
   ANALYTICS_CNZZ_ID: process.env.NEXT_PUBLIC_ANALYTICS_CNZZ_ID || '', // 只需要填写站长统计的id, [cnzz_id] -> https://s9.cnzz.com/z_stat.php?id=[cnzz_id]&web_id=[cnzz_id]
@@ -326,7 +326,7 @@ const BLOG = {
   ANALYTICS_ACKEE_DOMAIN_ID: process.env.NEXT_PUBLIC_ANALYTICS_ACKEE_DOMAIN_ID || '', // e.g '82e51db6-dec2-423a-b7c9-b4ff7ebb3302'
 
   SEO_GOOGLE_SITE_VERIFICATION:
-        process.env.NEXT_PUBLIC_SEO_GOOGLE_SITE_VERIFICATION || '', // Remove the value or replace it with your own google site verification code
+        process.env.NEXT_PUBLIC_SEO_GOOGLE_SITE_VERIFICATION || '', // Remove the value or replace it with your own google site verification code.(删除该值或将其替换为您自己的谷歌网站验证码
 
   SEO_BAIDU_SITE_VERIFICATION:
         process.env.NEXT_PUBLIC_SEO_BAIDU_SITE_VERIFICATION || '', // Remove the value or replace it with your own google site verification code
