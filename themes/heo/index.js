@@ -114,7 +114,7 @@ const LayoutIndex = props => {
       </div>
       {/* 通知横幅 */}
       <NoticeBar />
-      <Hero {...props} />
+      // <Hero {...props} />
       <div className="max-w-[86rem] mx-auto px-3">
         <WWAds className="w-full" orientation="horizontal" />
       </div>
