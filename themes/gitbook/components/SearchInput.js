@@ -1,11 +1,11 @@
 import { useImperativeHandle, useRef, useState } from 'react'
-import { useGitBookGlobal } from '../LayoutBase'
 import { deepClone } from '@/lib/utils'
+import { useGitBookGlobal } from '@/themes/gitbook'
 let lock = false
 
 const SearchInput = ({ currentSearch, cRef, className }) => {
   const searchInputRef = useRef()
-  const { setFilterPosts, allNavPages } = useGitBookGlobal()
+  const { setFilteredNavPages, allNavPages } = useGitBookGlobal()
 
   useImperativeHandle(cRef, () => {
     return {
@@ -17,31 +17,44 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
 
   const handleSearch = () => {
     let keyword = searchInputRef.current.value
-    const filterPosts = []
     if (keyword) {
       keyword = keyword.trim()
     } else {
-      setFilterPosts(allNavPages)
+      setFilteredNavPages(allNavPages)
     }
     const filterAllNavPages = deepClone(allNavPages)
-    for (const filterGroup of filterAllNavPages) {
-      for (let i = filterGroup.items.length - 1; i >= 0; i--) {
-        const post = filterGroup.items[i]
-        const articleInfo = post.title + ''
-        const hit = articleInfo.toLowerCase().indexOf(keyword.toLowerCase()) > -1
-        if (!hit) {
-          // 删除
-          filterGroup.items.splice(i, 1)
-        }
-      }
-      if (filterGroup.items && filterGroup.items.length > 0) {
-        filterPosts.push(filterGroup)
+    // for (const filterGroup of filterAllNavPages) {
+    //   for (let i = filterGroup.items.length - 1; i >= 0; i--) {
+    //     const post = filterGroup.items[i]
+    //     const articleInfo = post.title + ''
+    //     const hit = articleInfo.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+    //     if (!hit) {
+    //       // 删除
+    //       filterGroup.items.splice(i, 1)
+    //     }
+    //   }
+    //   if (filterGroup.items && filterGroup.items.length > 0) {
+    //     filterPosts.push(filterGroup)
+    //   }
+    // }
+    for (let i = filterAllNavPages.length - 1; i >= 0; i--) {
+      const post = filterAllNavPages[i]
+      const articleInfo = post.title + ''
+      const hit = articleInfo.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+      if (!hit) {
+        // 删除
+        filterAllNavPages.splice(i, 1)
       }
     }
 
     // 更新完
-    setFilterPosts(filterPosts)
+    setFilteredNavPages(filterAllNavPages)
   }
+
+  /**
+   * 回车键
+   * @param {*} e
+   */
   const handleKeyUp = (e) => {
     if (e.keyCode === 13) { // 回车
       handleSearch(searchInputRef.current.value)
@@ -49,6 +62,10 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
       cleanSearch()
     }
   }
+
+  /**
+   * 清理搜索
+   */
   const cleanSearch = () => {
     searchInputRef.current.value = ''
     handleSearch()

@@ -4,17 +4,18 @@ import { getDataFromCache } from '@/lib/cache/cache_manager'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 const Index = props => {
   const { keyword, siteInfo } = props
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-    description: siteInfo?.title,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
+    description: siteConfig('TITLE'),
     image: siteInfo?.pageCover,
     slug: 'search/' + (keyword || ''),
     type: 'website'
@@ -36,7 +37,7 @@ export async function getStaticProps({ params: { keyword, page } }) {
     pageType: ['Post']
   })
   const { allPages } = props
-  const allPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
   // 处理分页
@@ -115,7 +116,7 @@ async function filterByMemCache(allPosts, keyword) {
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
     const page = await getDataFromCache(cacheKey, true)
-    const tagContent = post.tags && Array.isArray(post.tags) ? post.tags.join(' ') : ''
+    const tagContent = post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
     const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.indexOf(keyword) > -1

@@ -33,7 +33,7 @@ export const MenuItemCollapse = ({ link }) => {
         <div onClick={toggleShow} className={'py-2 px-5 duration-300 text-base justify-between hover:bg-indigo-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
             (selected ? 'bg-indigo-500 text-white ' : ' text-black dark:text-white ')}>
 
-            {!hasSubMenu && <Link href={link?.to}>
+            {!hasSubMenu && <Link href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
                 <div className='my-auto items-center justify-between flex '>
                     {link.icon && <i className={`${link.icon} w-4 mr-6 text-center`} />}
                     <div >{link.name}</div>
@@ -49,9 +49,9 @@ export const MenuItemCollapse = ({ link }) => {
 
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen}>
-            {link.subMenus.map(sLink => {
-              return <div key={sLink.id} className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-indigo-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
-                    <Link href={sLink.to}>
+            {link.subMenus.map((sLink, index) => {
+              return <div key={index} className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-indigo-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
+                    <Link href={sLink.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
                         <span className='text-sm'><i className={`${sLink.icon} w-4 mr-3 text-center`} />{sLink.title}</span>
                     </Link>
                 </div>

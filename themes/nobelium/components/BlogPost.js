@@ -1,10 +1,9 @@
 import Link from 'next/link'
-import BLOG from '@/blog.config'
-import formatDate from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 const BlogPost = ({ post }) => {
   return (
-    (<Link href={`${BLOG.SUB_PATH}/${post.slug}`}>
+    (<Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}>
 
       <article key={post.id} className="mb-6 md:mb-8">
         <header className="flex flex-col justify-between md:flex-row md:items-baseline">
@@ -12,7 +11,7 @@ const BlogPost = ({ post }) => {
             {post.title}
           </h2>
           <time className="flex-shrink-0 text-gray-600 dark:text-gray-400">
-            {formatDate(post?.publishTime || post.createdTime, BLOG.LANG)}
+            {post?.publishDay}
           </time>
         </header>
         <main>
@@ -23,7 +22,7 @@ const BlogPost = ({ post }) => {
       </article>
 
     </Link>)
-  );
+  )
 }
 
 export default BlogPost

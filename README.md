@@ -29,7 +29,7 @@
 
 | Next | Medium | Hexo | Fukasawa |
 |--|--|--|--|
-| <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://tangly1024.com/?theme=fukasawa) |
+| <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
 
 ## 我要如何开始？
 
@@ -184,6 +184,9 @@
     <a href="https://github.com/kitety" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/22906933" width="64px;"  alt="kitety"/><br/><sub><b>kitety</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=kitety" title="kitety" >🔧 🐛</a>
   </td>
 
+ <td align="center">
+    <a href="https://github.com/jxpeng98" style="display:inline-block;width:80px"><img src="https://avatars.githubusercontent.com/u/83734772" width="64px;"  alt=" Jiaxin Peng"/><br/><sub><b> Jiaxin Peng</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=jxpeng98" title="jxpeng98" >🔧 🐛</a>
+  </td>
 
 </tr>
 </table>

@@ -1,21 +1,37 @@
 import { getGlobalData } from '@/lib/notion/getNotionData'
-import React from 'react'
+import { useEffect } from 'react'
 import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 const ArchiveIndex = props => {
   const { siteInfo } = props
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+
+  useEffect(() => {
+    if (isBrowser) {
+      const anchor = window.location.hash
+      if (anchor) {
+        setTimeout(() => {
+          const anchorElement = document.getElementById(anchor.substring(1))
+          if (anchorElement) {
+            anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' })
+          }
+        }, 300)
+      }
+    }
+  }, [])
 
   const meta = {
-    title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${locale.NAV.ARCHIVE} | ${siteConfig('TITLE')}`,
+    description: siteConfig('DESCRIPTION'),
     image: siteInfo?.pageCover,
     slug: 'archive',
     type: 'website'
@@ -29,7 +45,7 @@ const ArchiveIndex = props => {
 export async function getStaticProps() {
   const props = await getGlobalData({ from: 'archive-index' })
   // 处理分页
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)
