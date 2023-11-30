@@ -22,7 +22,7 @@ const CONFIG = {
   HEXO_POST_LIST_COVER_DEFAULT: true, // 封面为空时用站点背景做默认封面
   HEXO_POST_LIST_SUMMARY: true, // 文章摘要
   HEXO_POST_LIST_PREVIEW: false, // 读取文章预览
-  HEXO_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
+  HEXO_POST_LIST_IMG_CROSSOVER: false, // 博客列表图片左右交错
 
   HEXO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
   HEXO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
