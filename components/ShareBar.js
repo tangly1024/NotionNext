@@ -5,6 +5,7 @@ import ShareButtons from './ShareButtons'
 
 const ShareBar = ({ post }) => {
   const router = useRouter()
+  const title = siteConfig('TITLE')
 
   if (!JSON.parse(siteConfig('POST_SHARE_BAR_ENABLE')) || !post || post?.type !== 'Post') {
     return <></>
@@ -17,7 +18,7 @@ const ShareBar = ({ post }) => {
             <ShareButtons shareUrl={shareUrl} title={post.title} image={post.pageCover} body={
                 post?.title +
                 ' | ' +
-                siteConfig('TITLE') +
+               title +
                 ' ' +
                 shareUrl +
                 ' ' +

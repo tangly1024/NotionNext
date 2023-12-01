@@ -336,7 +336,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
               }
               if (singleService === 'qq') {
                 return <button key={singleService} className='cursor-pointer bg-blue-600 text-white rounded-full mx-1'>
-                        <a target='_blank' rel='noreferrer' href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${title}&desc=${body}`} >
+                        <a target='_blank' rel='noreferrer' aria-label="Share by QQ" href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${title}&desc=${body}`} >
                             <i className='fab fa-qq w-8' />
                         </a>
                     </button>

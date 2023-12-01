@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import { isSearchEngineBot } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import WebWhiz from './Webwhiz'
 
@@ -29,6 +30,10 @@ const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr:
  * @returns
  */
 const ExternalPlugin = (props) => {
+  if (isSearchEngineBot()) {
+    return null
+  }
+
   return <>
     {JSON.parse(siteConfig('THEME_SWITCH')) && <ThemeSwitch />}
     {JSON.parse(siteConfig('DEBUG')) && <DebugPanel />}

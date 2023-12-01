@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import Tabs from '@/components/Tabs'
-import { isBrowser } from '@/lib/utils'
+import { isBrowser, isSearchEngineBot } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import Artalk from './Artalk'
 import { siteConfig } from '@/lib/config'
@@ -72,6 +72,10 @@ const Comment = ({ siteInfo, frontMatter, className }) => {
   const COMMENT_UTTERRANCES_REPO = siteConfig('COMMENT_UTTERRANCES_REPO')
   const COMMENT_GITALK_CLIENT_ID = siteConfig('COMMENT_GITALK_CLIENT_ID')
   const COMMENT_WEBMENTION_ENABLE = siteConfig('COMMENT_WEBMENTION_ENABLE')
+
+  if (isSearchEngineBot()) {
+    return null
+  }
 
   // 当连接中有特殊参数时跳转到评论区
   if (isBrowser && ('giscus' in router.query || router.query.target === 'comment')) {
