@@ -4,7 +4,12 @@ import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/formatDate'
 
-export const ArticleInfo = (props) => {
+/**
+ * 文章描述
+ * @param {*} props
+ * @returns
+ */
+export default function ArticleInfo (props) {
   const { post } = props
 
   const { locale } = useGlobal()

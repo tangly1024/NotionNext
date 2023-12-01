@@ -6,7 +6,12 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 
-export const BlogListPage = props => {
+/**
+ * 博客列表
+ * @param {*} props
+ * @returns
+ */
+export default function BlogListPage(props) {
   const { page = 1, posts, postCount } = props
   const router = useRouter()
   const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))

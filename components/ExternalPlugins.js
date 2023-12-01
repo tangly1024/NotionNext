@@ -22,6 +22,8 @@ const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
 const CustomContextMenu = dynamic(() => import('@/components/CustomContextMenu'), { ssr: false })
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), { ssr: false })
 const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr: false })
+const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), { ssr: false })
+const AosAnimation = dynamic(() => import('@/components/AosAnimation'), { ssr: false })
 
 /**
  * 各种插件脚本
@@ -91,6 +93,8 @@ const ExternalPlugin = (props) => {
         {WEB_WHIZ_ENABLED && <WebWhiz />}
         {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
         <VConsole />
+        <LoadingProgress />
+        <AosAnimation />
 
         {CHATBASE_ID && (<>
             <script id={CHATBASE_ID} src="https://www.chatbase.co/embed.min.js" defer />

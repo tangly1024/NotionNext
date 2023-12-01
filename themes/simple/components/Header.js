@@ -9,7 +9,7 @@ import { compressImage } from '@/lib/notion/mapImage'
  * 网站顶部
  * @returns
  */
-export const Header = (props) => {
+export default function Header (props) {
   const { siteInfo } = props
   const avatar = compressImage(siteInfo?.icon || siteConfig('AVATAR'), 200)
 

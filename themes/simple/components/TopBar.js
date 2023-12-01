@@ -5,7 +5,7 @@ import { siteConfig } from '@/lib/config'
  * 网站顶部 提示栏
  * @returns
  */
-export const TopBar = (props) => {
+export default function TopBar (props) {
   const content = siteConfig('SIMPLE_TOP_BAR_CONTENT', null, CONFIG)
 
   if (content) {
