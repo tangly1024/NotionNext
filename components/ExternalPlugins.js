@@ -23,7 +23,7 @@ const CustomContextMenu = dynamic(() => import('@/components/CustomContextMenu')
 const DisableCopy = dynamic(() => import('@/components/DisableCopy'), { ssr: false })
 const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), { ssr: false })
 const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), { ssr: false })
-const AosAnimation = dynamic(() => import('@/components/AosAnimation'), { ssr: false })
+const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), { ssr: false })
 
 /**
  * 各种插件脚本
