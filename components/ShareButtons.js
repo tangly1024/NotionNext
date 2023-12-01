@@ -349,7 +349,7 @@ const ShareButtons = ({ shareUrl, title, body, image }) => {
                         <div className='absolute'>
                         <div id='pop' className={(qrCodeShow ? 'opacity-100 ' : ' invisible opacity-0') + ' z-40 absolute bottom-10 -left-10 bg-white shadow-xl transition-all duration-200 text-center'}>
                                 <div className='p-2 mt-1 w-28 h-28'>
-                                    <QrCode value={shareUrl}/>
+                                    { qrCodeShow && <QrCode value={shareUrl}/> }
                                 </div>
                                 <span className='text-black font-semibold p-1 rounded-t-lg text-sm mx-auto mb-1'>
                                     {locale.COMMON.SCAN_QR_CODE}
