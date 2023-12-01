@@ -1,7 +1,7 @@
 const CONFIG = {
   HEXO_HOME_BANNER_ENABLE: true,
   // 3.14.1以后的版本中，欢迎语在blog.config.js中配置，用英文逗号','隔开多个。
-  HEXO_HOME_BANNER_GREETINGS: [ 'Hello,I am Ayao', 'Welcome to my blog🎉'], // 首页大图标语文字
+  GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || 'Hello,I am Ayao', 'Welcome to my blog🎉', // 首页大图标语文字
 
   HEXO_HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
   // 已知未修复bug, 在移动端开启true后会加载不出图片； 暂时建议设置为false。
