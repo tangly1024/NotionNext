@@ -10,8 +10,7 @@ export const ArticleInfo = (props) => {
   const { locale } = useGlobal()
 
   return (
-        <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
-            <div>
+        <section className="mt-2 text-gray-600 dark:text-gray-400 leading-8">
                 <h2
                     className="blog-item-title mb-5 font-bold text-black text-xl md:text-2xl no-underline">
                     {post?.title}
@@ -36,7 +35,7 @@ export const ArticleInfo = (props) => {
                         </Link>
                     </span>
                     <span className='mr-2'>|</span>
-                    <span className='mx-2 text-gray-400 dark:text-gray-500'>
+                    <span className='mx-2  dark:text-gray-500'>
                         {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedDay}
                     </span>
                     <span className='mr-2'>|</span>
@@ -46,8 +45,6 @@ export const ArticleInfo = (props) => {
                         <span className="mr-2 busuanzi_value_page_pv" />
                     </span>
                 </>)}
-
-            </div>
 
         </section>
   )
