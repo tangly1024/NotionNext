@@ -2,7 +2,7 @@ import CONFIG from './config'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import { useEffect } from 'react'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { isBrowser } from '@/lib/utils'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import { ArticleLock } from './components/ArticleLock'
 import NotionPage from '@/components/NotionPage'
@@ -15,7 +15,7 @@ import Link from 'next/link'
 import { TopBar } from './components/TopBar'
 import { Header } from './components/Header'
 import { NavBar } from './components/NavBar'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { SideBar } from './components/SideBar'
 import JumpToTopButton from './components/JumpToTopButton'
 import { Footer } from './components/Footer'
@@ -25,6 +25,7 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
+import WWAds from '@/components/WWAds'
 
 /**
  * 基础布局
@@ -36,16 +37,13 @@ const LayoutBase = props => {
   const { children, slotTop, meta } = props
   const { onLoading } = useGlobal()
 
-  if (isBrowser) {
-    loadExternalResource('/css/theme-simple.css', 'css')
-  }
   return (
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
             {/* SEO相关 */}
             <CommonHead meta={meta}/>
             <Style/>
 
-            {CONFIG.TOP_BAR && <TopBar {...props} />}
+            {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
 
             {/* 顶部LOGO */}
             <Header {...props} />
@@ -54,7 +52,7 @@ const LayoutBase = props => {
             <NavBar {...props} />
 
             {/* 主体 */}
-            <div id='container-wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'}>
+            <div id='container-wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full flex-1 flex items-start max-w-9/10 mx-auto pt-12'}>
                 <div id='container-inner ' className='w-full flex-grow min-h-fit'>
                     <Transition
                         show={!onLoading}
@@ -107,7 +105,7 @@ const LayoutIndex = props => {
 const LayoutPostList = props => {
   return (
         <LayoutBase {...props}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
         </LayoutBase>
   )
 }
@@ -172,7 +170,8 @@ const LayoutSlug = props => {
                 <ArticleInfo post={post} />
 
                 {/* 广告嵌入 */}
-                <AdSlot type={'in-article'} />
+                {/* <AdSlot type={'in-article'} /> */}
+                <WWAds orientation="horizontal" className="w-full" />
 
                 {/* Notion文章主体 */}
                 {!lock && <NotionPage post={post} />}

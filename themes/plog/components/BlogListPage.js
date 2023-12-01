@@ -1,16 +1,16 @@
 
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import BlogPost from './BlogPost'
 import { useEffect, useRef } from 'react'
+import { siteConfig } from '@/lib/config'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
   const currentPage = +page
 
   const showPrev = currentPage > 1

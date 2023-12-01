@@ -3,7 +3,6 @@ import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import Footer from './components/Footer'
 import { useEffect } from 'react'
 import RightFloatButtons from './components/RightFloatButtons'
@@ -31,6 +30,7 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局
@@ -67,7 +67,7 @@ const LayoutBase = props => {
                 {headerSlot}
             </Transition>
 
-            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
+            <main id="wrapper" className={`${siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
                 {/* 嵌入区域 */}
                 <div id="container-slot" className={`w-full max-w-6xl ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                     {containerSlot}
@@ -101,7 +101,7 @@ const LayoutBase = props => {
             <RightFloatButtons {...props} />
 
             {/* 页脚 */}
-            <Footer title={siteInfo?.title || BLOG.TITLE} />
+            <Footer title={siteConfig('TITLE')} />
         </div>
   )
 }
@@ -113,7 +113,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />} />
+  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && <Hero {...props} />} />
 }
 
 /**
@@ -124,7 +124,7 @@ const LayoutIndex = (props) => {
 const LayoutPostList = (props) => {
   return (
         <LayoutBase {...props} containerSlot={<BlogListBar {...props} />}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
         </LayoutBase>
   )
 }
@@ -156,7 +156,7 @@ const LayoutSearch = props => {
             {!currentSearch
               ? <SearchNave {...props} />
               : <div id="posts-wrapper">
-                    {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+                    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
                 </div>}
         </LayoutBase>
   )
@@ -307,7 +307,7 @@ const LayoutCategoryIndex = props => {
             <div id='inner-wrapper' className='w-full'>
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300">
                     <div className='flex justify-center flex-wrap'>
-                        {categoryOptions.map(e => {
+                        {categoryOptions?.map(e => {
                           return (
                                 <Link key={e.name} href={`/category/${e.name}`} passHref legacyBehavior>
                                     <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400' >

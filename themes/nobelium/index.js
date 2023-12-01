@@ -1,6 +1,5 @@
-import BLOG from '@/blog.config'
 import CONFIG from './config'
-import React, { createContext, useEffect, useState, useContext, useRef } from 'react'
+import { createContext, useEffect, useState, useContext, useRef } from 'react'
 import Nav from './components/Nav'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
@@ -25,6 +24,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+import { siteConfig } from '@/lib/config'
 
 // 主题全局状态
 const ThemeGlobalNobelium = createContext()
@@ -132,7 +132,7 @@ const LayoutPostList = props => {
   return (
         <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
             {topSlot}
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
         </LayoutBase>
   )
 }
@@ -170,11 +170,10 @@ const LayoutSearch = props => {
   } else {
     filteredBlogPosts = deepClone(posts)
   }
-  console.log('posts', props, posts, filteredBlogPosts)
 
   return <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
     <SearchNavBar {...props} />
-    {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
+    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
   </LayoutBase>
 }
 
