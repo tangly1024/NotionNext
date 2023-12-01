@@ -51,7 +51,7 @@ export const MenuList = ({ customNav, customMenu }) => {
   return (<>
         {/* 大屏模式菜单 */}
         <div id='nav-menu-pc' className='hidden md:flex my-auto'>
-            {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
+            {links?.map((link, index) => <MenuItemDrop key={index} link={link} />)}
         </div>
         {/* 移动端小屏菜单 */}
         <div id='nav-menu-mobile' className='flex md:hidden my-auto justify-start'>
@@ -62,7 +62,7 @@ export const MenuList = ({ customNav, customMenu }) => {
 
             <Collapse collapseRef={collapseRef} className='absolute w-full top-12 left-0' isOpen={isOpen}>
                 <div id='menu-wrap' className='bg-white dark:border-hexo-black-gray border'>
-                {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
+                {links?.map((link, index) => <MenuItemCollapse key={index} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
                 </div>
             </Collapse>
         </div>
