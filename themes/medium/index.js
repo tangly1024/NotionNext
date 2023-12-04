@@ -1,5 +1,4 @@
 import CONFIG from './config'
-
 import { useState, createContext, useContext, useEffect } from 'react'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
@@ -11,7 +10,6 @@ import BottomMenuBar from './components/BottomMenuBar'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Live2D from '@/components/Live2D'
-import BLOG from '@/blog.config'
 import Announcement from './components/Announcement'
 import JumpToTopButton from './components/JumpToTopButton'
 import BlogPostListPage from './components/BlogPostListPage'
@@ -36,6 +34,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import ArticleInfo from './components/ArticleInfo'
 import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -48,7 +47,7 @@ export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, showInfoCard = true, slotRight, slotTop, siteInfo, notice, meta } = props
+  const { children, showInfoCard = true, slotRight, slotTop, notice, meta } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -63,7 +62,7 @@ const LayoutBase = props => {
 
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
 
-                <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
+                <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
                     {/* 桌面端左侧菜单 */}
                     {/* <LeftMenuBar/> */}
 
@@ -93,18 +92,18 @@ const LayoutBase = props => {
                         </div>
 
                         {/* 底部 */}
-                        <Footer title={siteInfo?.title} />
+                        <Footer title={siteConfig('TITLE')} />
                     </div>
 
                     {/* 桌面端右侧 */}
-                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${CONFIG.RIGHT_PANEL_DARK ? 'bg-hexo-black-gray dark' : ''}`}>
+                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${siteConfig('MEDIUM_RIGHT_PANEL_DARK', null, CONFIG) ? 'bg-hexo-black-gray dark' : ''}`}>
                         <div className='py-14 px-6 sticky top-0'>
                             <Tabs>
                                 {slotRight}
                                 <div key={locale.NAV.ABOUT}>
                                     {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
                                     {showInfoCard && <InfoCard {...props} />}
-                                    {CONFIG.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
+                                    {siteConfig('MEDIUM_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
                                 </div>
                             </Tabs>
                             <Announcement post={notice} />
@@ -137,7 +136,7 @@ const LayoutIndex = (props) => {
 const LayoutPostList = (props) => {
   const slotTop = <BlogPostBar {...props} />
   return <LayoutBase {...props} slotTop={slotTop}>
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </LayoutBase>
 }
 
@@ -176,9 +175,9 @@ const LayoutSlug = props => {
                     <ShareBar post={post} />
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post?.category} />}
+                        {siteConfig('MEDIUM_POST_DETAIL_CATEGORY', null, CONFIG) && post?.category && <CategoryItem category={post?.category} />}
                         <div>
-                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {siteConfig('MEDIUM_POST_DETAIL_TAG', null, CONFIG) && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
                     {/* 上一篇下一篇文章 */}
@@ -232,7 +231,7 @@ const LayoutSearch = (props) => {
 
         {/* 文章列表 */}
         {currentSearch && <div>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
         </div>}
     </LayoutBase>
 }

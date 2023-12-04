@@ -1,11 +1,11 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 import Link from 'next/link'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
 
 const BlogPostCard = ({ post }) => {
-  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
+  const showPageCover = siteConfig('EXAMPLE_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
 
   return <article className={`${showPageCover ? 'flex md:flex-row flex-col-reverse' : ''} replace mb-12 `}>
         <div className={`${showPageCover ? 'md:w-7/12' : ''}`}>
@@ -18,7 +18,7 @@ const BlogPostCard = ({ post }) => {
             </h2>
 
             <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
-                by <a href="#" className="text-gray-700 dark:text-gray-300">{BLOG.AUTHOR}</a> on {post.date?.start_date || post.createdTime}
+                by <a href="#" className="text-gray-700 dark:text-gray-300">{siteConfig('AUTHOR')}</a> on {post.date?.start_date || post.createdTime}
                 <TwikooCommentCount post={post} className='pl-1'/>
                 <span className="font-bold mx-1"> | </span>
                 <a href={`/category${post.category}`} className="text-gray-700 dark:text-gray-300 hover:underline">{post.category}</a>
@@ -40,9 +40,9 @@ const BlogPostCard = ({ post }) => {
         </div>
         {/* 图片封面 */}
         {showPageCover && (
-            <div className="md:w-5/12 w-full overflow-hidden p-1">
-                <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                    <LazyImage src={post?.pageCoverThumbnail} className='h-44 bg-center bg-cover hover:scale-110 duration-200' />
+            <div className="md:w-5/12 w-full h-44 overflow-hidden p-1">
+                <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                    <LazyImage src={post?.pageCoverThumbnail} className='w-full bg-cover hover:scale-110 duration-200' />
                 </Link>
             </div>
         )}

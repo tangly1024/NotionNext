@@ -1,4 +1,5 @@
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function FeaturesBlocks() {
   return (
@@ -13,8 +14,8 @@ export default function FeaturesBlocks() {
 
             {/* Section header */}
             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-              <h2 className="h2 mb-4">{CONFIG.FEATURES_BLOCK_HEADER}</h2>
-              <p className="text-xl text-gray-600" dangerouslySetInnerHTML={{ __html: CONFIG.FEATURES_BLOCK_P }}></p>
+              <h2 className="h2 mb-4">{siteConfig('LANDING_FEATURES_BLOCK_HEADER', null, CONFIG)}</h2>
+              <p className="text-xl text-gray-600" dangerouslySetInnerHTML={{ __html: siteConfig('LANDING_FEATURES_BLOCK_P', null, CONFIG) }}></p>
             </div>
 
             {/* Items */}
@@ -33,8 +34,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_1_TITLE}</h4>
-                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_1_P}</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{siteConfig('LANDING_FEATURES_BLOCK_1_TITLE', null, CONFIG)}</h4>
+                <p className="text-gray-600 text-center">{siteConfig('LANDING_FEATURES_BLOCK_1_P', null, CONFIG)}</p>
               </div>
 
               {/* 2nd item */}
@@ -49,8 +50,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_2_TITLE}</h4>
-                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_2_P}</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{siteConfig('LANDING_FEATURES_BLOCK_2_TITLE', null, CONFIG)}</h4>
+                <p className="text-gray-600 text-center">{siteConfig('LANDING_FEATURES_BLOCK_2_P', null, CONFIG)}</p>
               </div>
 
               {/* 3rd item */}
@@ -66,8 +67,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_3_TITLE}</h4>
-                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_3_P}</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{siteConfig('LANDING_FEATURES_BLOCK_3_TITLE', null, CONFIG)}</h4>
+                <p className="text-gray-600 text-center">{siteConfig('LANDING_FEATURES_BLOCK_3_P', null, CONFIG)}</p>
               </div>
 
               {/* 4th item */}
@@ -83,8 +84,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_4_TITLE}</h4>
-                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_4_P}</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{siteConfig('LANDING_FEATURES_BLOCK_4_TITLE', null, CONFIG)}</h4>
+                <p className="text-gray-600 text-center">{siteConfig('LANDING_FEATURES_BLOCK_4_P', null, CONFIG)}</p>
               </div>
 
               {/* 5th item */}
@@ -99,8 +100,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_5_TITLE}</h4>
-                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_5_P}</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{siteConfig('LANDING_FEATURES_BLOCK_5_TITLE', null, CONFIG)}</h4>
+                <p className="text-gray-600 text-center">{siteConfig('LANDING_FEATURES_BLOCK_5_P', null, CONFIG)}</p>
               </div>
 
               {/* 6th item */}
@@ -114,8 +115,8 @@ export default function FeaturesBlocks() {
                     </g>
                   </g>
                 </svg>
-                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{CONFIG.FEATURES_BLOCK_6_TITLE}</h4>
-                <p className="text-gray-600 text-center">{CONFIG.FEATURES_BLOCK_6_P}</p>
+                <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">{siteConfig('LANDING_FEATURES_BLOCK_6_TITLE', null, CONFIG)}</h4>
+                <p className="text-gray-600 text-center">{siteConfig('LANDING_FEATURES_BLOCK_6_P', null, CONFIG)}</p>
               </div>
 
             </div>
