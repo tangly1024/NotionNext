@@ -39,7 +39,7 @@ export const useNobeliumGlobal = () => useContext(ThemeGlobalNobelium)
 const LayoutBase = props => {
   const { children, post, topSlot, meta } = props
 
-  const fullWidth = post?.fullWidth ?? true
+  const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
   const searchModal = useRef(null)
 
