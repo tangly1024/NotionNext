@@ -11,7 +11,7 @@ const CONFIG = {
   NOBELIUM_MENU_TAG: true, // 显示标签
   NOBELIUM_MENU_ARCHIVE: false, // 显示归档
   NOBELIUM_MENU_SEARCH: true, // 显示搜索
-  NOBELIUM_MENU_RSS: false // 显示订阅
+  NOBELIUM_MENU_RSS: true // 显示订阅
 
 }
 export default CONFIG
