@@ -72,9 +72,7 @@ const Style = () => {
 
   `}</style>)
 }
-
 /* 静态文件导入 自定义样式*/
-
 #wrapper{
   width: 100%;
   height: 100%;
@@ -112,8 +110,6 @@ footer {
   );
   background-size: 25px 23px;
 }
-
-
 footer {
   background-color: rgba(0, 0, 0, 0); /* 设置背景颜色的透明度为 0，如果不生效可以去第7步页脚修改处修改 */
 }
