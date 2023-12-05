@@ -73,4 +73,49 @@ const Style = () => {
   `}</style>)
 }
 
+/* 静态文件导入 自定义样式*/
+
+#wrapper{
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent 100px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent 100px
+    );
+  background-size: 25px 23px;
+}
+
+footer {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 100px
+  ),
+  linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 100px
+  );
+  background-size: 25px 23px;
+}
+
+
+footer {
+  background-color: rgba(0, 0, 0, 0); /* 设置背景颜色的透明度为 0，如果不生效可以去第7步页脚修改处修改 */
+}
+
 export { Style }
