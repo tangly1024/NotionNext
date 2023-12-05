@@ -6,8 +6,8 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const SocialButton = () => {
-  return <div className='w-52 justify-center flex-wrap flex'>
-    <div className='space-x-3 md:text-xl text-3xl text-gray-600 dark:text-gray-400 text-center'>
+  return <div className='w-52 justify-center flex-wrap flex my-2'>
+    <div className='space-x-5 md:text-xl text-3xl text-gray-600 dark:text-gray-400 text-center'>
       {siteConfig('CONTACT_GITHUB') && <a target='_blank' rel='noreferrer' title={'github'} href={siteConfig('CONTACT_GITHUB')} >
         <i className='fab fa-github transform hover:scale-125 duration-150'/>
       </a>}

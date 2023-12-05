@@ -7,7 +7,7 @@ import { MenuList } from './MenuList'
  * @param {*} props
  * @returns
  */
-export const NavBar = (props) => {
+export default function NavBar (props) {
   const [showSearchInput, changeShowSearchInput] = useState(false)
   const router = useRouter()
 
