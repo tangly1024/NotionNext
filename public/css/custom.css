@@ -7,23 +7,3 @@
     content: "\f05a";
 }
 
-#wrapper{
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.1) 0px,
-      rgba(0, 0, 0, 0.1) 1px,
-      transparent 1px,
-      transparent 100px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.1) 0px,
-      rgba(0, 0, 0, 0.1) 1px,
-      transparent 1px,
-      transparent 100px
-    );
-  background-attachment: fixed !important;  /* 固定背景 !important将该参数的设置优先级提到最高 */
-  background-size: 25px 23px;
-}
