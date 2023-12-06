@@ -7,3 +7,69 @@
     content: "\f05a";
 }
 
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideAnimation {  /* 滑动动画1 */
+  0%, 100% {
+    bottom: 20%;
+  }
+  50% {
+    bottom: 60%;
+  }
+}
+
+#wrapper{
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent 100px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent 100px
+    );
+  position: relative; /* 设置#wrapper相对定位，以便伪元素相对于它定位 */
+  background-attachment: fixed !important;  /* 固定背景 */
+  background-size: 25px 23px;
+}
+
+#wrapper::before {
+  content: "";
+  position: fixed;
+  bottom: 20%;
+  left: 2.5%;
+  width: 80px; /* 设置图形的大小 */
+  height: 160px; /* 设置图形的大小 */
+  background: rgba(234,56,77,1); /* 设置图形的背景色为绿色 */
+  border-radius: 50px; /* 设置角为圆角 */
+  animation: slideAnimation 10s infinite ease-in-out; /* 设置图形的滑动动画 */
+  box-shadow: 0 0 10px rgba(234,56,77, 0.8); /* 设置阴影 */
+}
+
+#wrapper::after {
+  content: "";
+  position: fixed; /* 将伪元素固定定位，要配合wrapper的position: relative;使用；absolute为随内容滚动 */
+  bottom: 35%;
+  right: -100px;
+  width: 200px; /* 设置图形的大小 */
+  height: 200px; /* 设置图形的大小 */
+  background: #4B54DE; /* 设置图形的背景色为蓝色 */
+  border-radius: 15px; /* 设置角为圆角 */
+  animation: rotateAnimation 15s infinite linear; /* 设置图形的旋转动画 */
+  transform-origin: center; /* 设置旋转的中心点为图形的中心 */
+  box-shadow: 0 0 10px rgba(75,84,222, 0.8); /* 设置阴影 */
+}
