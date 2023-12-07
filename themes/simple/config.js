@@ -7,6 +7,10 @@ const CONFIG = {
 
   SIMPLE_AUTHOR_LINK: process.env.NEXT_PUBLIC_AUTHOR_LINK || '#',
 
+  SIMPLE_POST_AD_ENABLE: process.env.NEXT_PUBLIC_SIMPLE_POST_AD_ENABLE || false, // 文章列表是否插入广告
+
+  SIMPLE_POST_COVER_ENABLE: process.env.NEXT_PUBLIC_SIMPLE_POST_COVER_ENABLE || false, // 是否展示博客封面
+
   // 菜单配置
   SIMPLE_MENU_CATEGORY: true, // 显示分类
   SIMPLE_MENU_TAG: true, // 显示标签
