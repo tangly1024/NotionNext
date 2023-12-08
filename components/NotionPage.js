@@ -5,13 +5,14 @@ import 'katex/dist/katex.min.css'
 import { mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
+import { NotionRenderer } from 'react-notion-x'
 
 // Notion渲染
-const NotionRenderer = dynamic(() => import('react-notion-x').then(async (m) => {
-  return m.NotionRenderer
-}), {
-  ssr: false
-})
+// const NotionRenderer = dynamic(() => import('react-notion-x').then(async (m) => {
+//   return m.NotionRenderer
+// }), {
+//   ssr: false
+// })
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then(async (m) => {
