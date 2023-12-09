@@ -85,7 +85,8 @@ const LayoutBase = props => {
             {slotTop}
             {children}
           </div>
-
+            <AdSlot  type === 'flow' />
+  
           <div className="hidden xl:block">
             {/* 主区快右侧 */}
             {slotRight}
@@ -117,7 +118,6 @@ const LayoutIndex = props => {
       <Hero {...props} />
       <div className="max-w-[86rem] mx-auto px-3">
         <WWAds className="w-full" orientation="horizontal" />
-      <AdSlot  type === 'flow' />
       </div>
     </header>
   )
