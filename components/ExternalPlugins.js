@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
+import LA51 from './LA51'
 import WebWhiz from './Webwhiz'
 
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false })
@@ -97,14 +98,15 @@ const ExternalPlugin = (props) => {
         <VConsole />
         <LoadingProgress />
         <AosAnimation />
+        {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51/>}
 
         {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && (<>
             <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer/>
-            <script async dangerouslySetInnerHTML={{
+            {/* <script async dangerouslySetInnerHTML={{
               __html: `
                     LA.init({id:"${ANALYTICS_51LA_ID}",ck:"${ANALYTICS_51LA_CK}",hashMode:true,autoTrack:true})
                     `
-            }} />
+            }} /> */}
         </>)}
 
         {CHATBASE_ID && (<>
