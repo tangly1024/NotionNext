@@ -48,26 +48,30 @@ const AdSlot = ({ type = 'show' }) => {
     return null
   }
   // 文章内嵌广告
-  if (type === 'in-article') {
-    return <ins className="adsbygoogle"
-            style={{ display: 'block', textAlign: 'center' }}
-            data-ad-layout="in-article"
-            data-ad-format="fluid"
-            data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
-            data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
-            data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_IN_ARTICLE')}></ins>
-  }
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3369135799232293"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3369135799232293"
+     data-ad-slot="1429029523"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
   // 信息流广告
-  if (type === 'flow') {
-    return <ins className="adsbygoogle"
-            data-ad-format="fluid"
-            data-ad-layout-key="-5j+cz+30-f7+bf"
-            style={{ display: 'block' }}
-            data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
-            data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
-            data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_FLOW')}></ins>
-  }
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3369135799232293"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-fb+5w+4e-db+86"
+     data-ad-client="ca-pub-3369135799232293"
+     data-ad-slot="2494699186"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
   // 原生广告
   if (type === 'native') {
@@ -80,13 +84,15 @@ const AdSlot = ({ type = 'show' }) => {
   }
 
   //  展示广告
-  return <ins className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
-        data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
-        data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')}
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-}
-
-export { AdSlot }
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3369135799232293"
+     crossorigin="anonymous"></script>
+<!-- 广告2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3369135799232293"
+     data-ad-slot="7056760723"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
