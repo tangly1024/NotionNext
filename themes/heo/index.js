@@ -84,7 +84,6 @@ const LayoutBase = props => {
             {/* 主区上部嵌入 */}
             {slotTop}
             {children}
-            <AdSlot  type === 'flow' />
           </div>
  
           <div className="hidden xl:block">
@@ -112,6 +111,7 @@ const LayoutIndex = props => {
       {/* 顶部导航 */}
       <div id="nav-bar-wrapper" className="h-16">
         <NavBar {...props} />
+        <AdSlot  type === 'native' />
       </div>
       {/* 通知横幅 */}
       <NoticeBar />
