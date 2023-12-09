@@ -102,7 +102,7 @@ const ExternalPlugin = (props) => {
             <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer/>
             <script async dangerouslySetInnerHTML={{
               __html: `
-                    LA.init({id:"${ANALYTICS_51LA_ID}",ck:"${ANALYTICS_51LA_CK}",hashMode:true})
+                    LA.init({id:"${ANALYTICS_51LA_ID}",ck:"${ANALYTICS_51LA_CK}",hashMode:true,autoTrack:true})
                     `
             }} />
         </>)}
