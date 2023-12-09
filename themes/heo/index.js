@@ -111,7 +111,7 @@ const LayoutIndex = props => {
       {/* 顶部导航 */}
       <div id="nav-bar-wrapper" className="h-16">
         <NavBar {...props} />
-        <AdSlot  type === 'native' />
+        <AdSlot type === 'native' />
       </div>
       {/* 通知横幅 */}
       <NoticeBar />
