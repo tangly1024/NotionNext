@@ -84,9 +84,9 @@ const LayoutBase = props => {
             {/* 主区上部嵌入 */}
             {slotTop}
             {children}
-          </div>
             <AdSlot  type === 'flow' />
-  
+          </div>
+ 
           <div className="hidden xl:block">
             {/* 主区快右侧 */}
             {slotRight}
