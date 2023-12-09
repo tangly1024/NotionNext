@@ -120,7 +120,7 @@ const LayoutIndex = props => {
       </div>
     </header>
   )
-
+<AdSlot type === 'flow'/>
   // 右侧栏 用户信息+标签列表
   const slotRight = <SideRight {...props} />
 
