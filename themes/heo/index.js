@@ -117,10 +117,11 @@ const LayoutIndex = props => {
       <Hero {...props} />
       <div className="max-w-[86rem] mx-auto px-3">
         <WWAds className="w-full" orientation="horizontal" />
+      <AdSlot  type === 'flow' />
       </div>
     </header>
   )
-  <AdSlot type === 'flow' />
+  <AdSlot  type === 'flow' />
   // 右侧栏 用户信息+标签列表
   const slotRight = <SideRight {...props} />
 
