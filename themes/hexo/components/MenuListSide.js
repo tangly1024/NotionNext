@@ -35,8 +35,7 @@ export const MenuListSide = (props) => {
 
   return (
         <nav>
-            {/* {links.map(link => <MenuItemNormal key={link?.id} link={link} />)} */}
-            {links?.map(link => <MenuItemCollapse key={link?.id} link={link} />)}
+            {links?.map((link, index) => <MenuItemCollapse key={index} link={link} />)}
         </nav>
   )
 }

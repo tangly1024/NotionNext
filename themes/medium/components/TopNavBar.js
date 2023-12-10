@@ -66,7 +66,7 @@ export default function TopNavBar(props) {
 
                 {/* 桌面端顶部菜单 */}
                 <div className='hidden md:flex'>
-                    {links && links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
+                    {links && links?.map((link, index) => <MenuItemDrop key={index} link={link}/>)}
                 </div>
             </div>
         </div>
