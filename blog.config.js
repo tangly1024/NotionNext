@@ -225,6 +225,13 @@ const BLOG = {
   //           'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
   //   },
     {
+     name: '阿兹海默',
+      artist: 'Falcom Sound Team jdk',
+      url: 'https://music.163.com/song/media/outer/url?id=1980011192.mp3',
+      cover:
+            'http://p1.music.126.net/zIvV1fxinEPItgtgK9WeXQ==/109951167859739397.jpg'
+    },
+    {
       name: '王都グランセル',
       artist: 'Falcom Sound Team jdk',
       url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
@@ -232,13 +239,6 @@ const BLOG = {
             'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
     }
   ],
-  {
-      name: '阿兹海默',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=1980011192.mp3',
-      cover:
-            'http://p1.music.126.net/zIvV1fxinEPItgtgK9WeXQ==/109951167859739397.jpg'
-    },
   
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || true, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
