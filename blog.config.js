@@ -240,7 +240,7 @@ const BLOG = {
       url: 'https://music.163.com/song/media/outer/url?id=1499246021.mp3',
       cover:
             'https://p1.music.126.net/CFKoBho0mSfptulYqsbgcg==/109951165508765863.jpg?param=130y130'
-    }
+    }，
     {
       name: 'Do It（Orginal Max）',
       artist: 'DJ文樂 / 鸢北',
