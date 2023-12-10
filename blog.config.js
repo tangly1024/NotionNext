@@ -235,7 +235,7 @@ const BLOG = {
   {
       name: '阿兹海默',
       artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=1980011192',
+      url: 'https://music.163.com/song/media/outer/url?id=1980011192.mp3',
       cover:
             'http://p1.music.126.net/zIvV1fxinEPItgtgK9WeXQ==/109951167859739397.jpg'
     },
