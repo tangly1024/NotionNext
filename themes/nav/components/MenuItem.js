@@ -24,7 +24,7 @@ export const MenuItem = ({ link }) => {
         {/* 菜单 */}
         <div
             onClick={toggleOpenSubMenu}
-            className='nav-menu dark:text-neutral-400 text-gray-500 hover:text-black dark:hover:text-white text-sm text-gray w-full items-center duration-300 pt-2 font-light select-none flex justify-between cursor-pointer' key={link?.name}>
+            className='nav-menu dark:text-neutral-400 text-gray-500 hover:text-black dark:hover:text-white text-sm text-gray w-full items-center duration-300 pt-2 font-light select-none flex justify-between cursor-pointer' key={link?.to}>
 
             {link?.subMenus
               ? (<>

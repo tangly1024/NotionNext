@@ -9,12 +9,13 @@ import Link from 'next/link'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import dynamic from 'next/dynamic'
+import NotionPage from '@/components/NotionPage'
+// const NotionPage = dynamic(() => import('@/components/NotionPage'), { ssr: false });
 
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false });
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), { ssr: false });
 const ArticleLock = dynamic(() => import('./components/ArticleLock'), { ssr: false });
-const NotionPage = dynamic(() => import('@/components/NotionPage'), { ssr: false });
 const ArticleInfo = dynamic(() => import('./components/ArticleInfo'), { ssr: false });
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false });
 const ArticleAround = dynamic(() => import('./components/ArticleAround'), { ssr: false });
