@@ -224,14 +224,14 @@ const BLOG = {
   //     cover:
   //           'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
   //   },
-  //   {
-  //     name: '王都グランセル',
-  //     artist: 'Falcom Sound Team jdk',
-  //     url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
-  //     cover:
-  //           'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
-  //   }
-  // ],
+    {
+      name: '王都グランセル',
+      artist: 'Falcom Sound Team jdk',
+      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
+      cover:
+            'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+    }
+  ],
   {
       name: '阿兹海默',
       artist: 'Falcom Sound Team jdk',
