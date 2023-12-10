@@ -36,7 +36,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://github.com/niustark', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: 'https://zh.zlibrary-east.se/booklist/1384948/952f37/%E9%93%81%E7%89%9B%E7%9A%84%E4%B9%A6%E6%9E%B6.html', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
