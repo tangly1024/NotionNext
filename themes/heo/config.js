@@ -19,9 +19,9 @@ const CONFIG = {
   HEO_HERO_TITLE_LINK: 'https://docs.tangly1024.com/about',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '福利分享', url: '/tag/福利分享' },
-  HEO_HERO_CATEGORY_2: { title: '心情随笔', url: '/tag/心情随笔' },
-  HEO_HERO_CATEGORY_3: { title: '技术', url: '/tag/技术' },
+  HEO_HERO_CATEGORY_1: { title: '效率', url: '/tag/效率' },
+  HEO_HERO_CATEGORY_2: { title: '思考', url: '/tag/思考' },
+  HEO_HERO_CATEGORY_3: { title: '福利', url: '/tag/福利' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
