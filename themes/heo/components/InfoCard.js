@@ -45,7 +45,7 @@ export function InfoCard(props) {
                         <Link href='https://v.douyin.com/i8jR3AFk'><i className='fab fa-tiktok text-xl'/></Link>
                     </div>
                     <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-                        <Link href={siteConfig('HEO_INFO_CARD_URL', null, CONFIG)}><i className='fab fa-book text-xl' />
+                        <Link href={siteConfig('HEO_INFO_CARD_URL', null, CONFIG)}><i className='fas fa-book text-xl' />
                         </Link>
                     </div>
                 </div>
