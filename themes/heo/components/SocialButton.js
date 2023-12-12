@@ -41,6 +41,9 @@ const SocialButton = () => {
         {siteConfig('CONTACT_DOUYIN') && <a target='_blank' rel='noreferrer' title={'抖音'} href={siteConfig('CONTACT_DOUYIN')} >
         <i className='transform hover:scale-125 duration-150 fab fa-tiktok dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
+          {siteConfig('CONTACT_BOOK') && <a target='_blank' rel='noreferrer' title={'铁牛图书馆'} href={siteConfig('CONTACT_BOOK')} >
+        <i className='transform hover:scale-125 duration-150 fab fa-book dark:hover:text-indigo-400 hover:text-indigo-600'/>
+      </a>}
     </div>
   </div>
 }
