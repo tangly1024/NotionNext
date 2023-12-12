@@ -172,6 +172,10 @@ const BLOG = {
     '251, 243, 140'
   ],
 
+  // 选中文字截图成海报
+  POSTER_SCREENSHOT_ENABLE: process.env.NEXT_PUBLIC_POSTER_SCREENSHOT_ENABLE || false, // 选中文字截图
+  POSTER_SCREENSHOT_HTML2CANVAS_CDN_URL: process.env.NEXT_PUBLIC_POSTER_SCREENSHOT_HTML2CANVAS_CDN_URL || 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+
   // 樱花飘落特效
   SAKURA: process.env.NEXT_PUBLIC_SAKURA || false, // 开关
   // 漂浮线段特效

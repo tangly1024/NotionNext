@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
+import Html2Canvas from './Html2Canvas'
 import LA51 from './LA51'
 import WebWhiz from './Webwhiz'
 
@@ -69,12 +70,13 @@ const ExternalPlugin = (props) => {
   const MATOMO_SITE_ID = siteConfig('MATOMO_SITE_ID')
   const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID')
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
-
+  const POSTER_SCREENSHOT_ENABLE = siteConfig('POSTER_SCREENSHOT_ENABLE')
   if (DISABLE_PLUGIN) {
     return null
   }
 
   return <>
+        {POSTER_SCREENSHOT_ENABLE && <Html2Canvas {...props}/>}
         {THEME_SWITCH && <ThemeSwitch />}
         {DEBUG && <DebugPanel />}
         {ANALYTICS_ACKEE_TRACKER && <Ackee />}

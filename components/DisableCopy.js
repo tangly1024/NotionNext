@@ -7,8 +7,11 @@ import { useEffect } from 'react'
 export default function DisableCopy() {
   useEffect(() => {
     if (!JSON.parse(siteConfig('CAN_COPY'))) {
-      // 全栈添加禁止复制的样式
-      document.getElementsByTagName('html')[0].classList.add('forbid-copy')
+      // 全站添加禁止复制的样式
+      if (!siteConfig('POSTER_SCREENSHOT_ENABLE')) {
+        document.getElementsByTagName('html')[0].classList.add('forbid-copy')
+      }
+
       // 监听复制事件
       document.addEventListener('copy', function (event) {
         event.preventDefault() // 阻止默认复制行为
