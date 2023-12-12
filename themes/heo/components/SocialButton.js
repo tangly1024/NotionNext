@@ -35,7 +35,7 @@ const SocialButton = () => {
       {siteConfig('CONTACT_BILIBILI') && <a target='_blank' rel='noreferrer' title={'bilibili'} href={siteConfig('CONTACT_BILIBILI')} >
         <i className='transform hover:scale-125 duration-150 fab fa-bilibili dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
-      {siteConfig('CONTACT_YOUTUBE') && <a target='_blank' rel='noreferrer' title={'网易云音乐'} href={siteConfig('CONTACT_YOUTUBE')} >
+      {siteConfig('CONTACT_YOUTUBE') && <a target='_blank' rel='noreferrer' title={'YOUTUBE'} href={siteConfig('CONTACT_YOUTUBE')} >
         <i className='transform hover:scale-125 duration-150 fab fa-youtube dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
         {siteConfig('CONTACT_DOUYIN') && <a target='_blank' rel='noreferrer' title={'抖音'} href={siteConfig('CONTACT_DOUYIN')} >
@@ -43,6 +43,9 @@ const SocialButton = () => {
       </a>}
           {siteConfig('CONTACT_BOOK') && <a target='_blank' rel='noreferrer' title={'铁牛图书馆'} href={siteConfig('CONTACT_BOOK')} >
         <i className='transform hover:scale-125 duration-150 fab fa-book dark:hover:text-indigo-400 hover:text-indigo-600'/>
+      </a>}
+            {siteConfig('CONTACT_NETEASE') && <a target='_blank' rel='noreferrer' title={'网易云音乐'} href={siteConfig('CONTACT_NETEASE')} >
+        <i className='transform hover:scale-125 duration-150 be be-netease-cloud-music-line dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
     </div>
   </div>
