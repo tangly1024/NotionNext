@@ -38,7 +38,7 @@ const SocialButton = () => {
       {siteConfig('CONTACT_YOUTUBE') && <a target='_blank' rel='noreferrer' title={'youtube'} href={siteConfig('CONTACT_YOUTUBE')} >
         <i className='transform hover:scale-125 duration-150 fab fa-youtube dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
-        {siteConfig('CONTACT_TIKTOK') && <a target='_blank' rel='noreferrer' title={'tiktok'} href={siteConfig('CONTACT_TIKTOK')} >
+        {siteConfig('CONTACT_DOUYIN') && <a target='_blank' rel='noreferrer' title={'抖音'} href={siteConfig('CONTACT_DOUYIN')} >
         <i className='transform hover:scale-125 duration-150 fab fa-tiktok dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
     </div>
