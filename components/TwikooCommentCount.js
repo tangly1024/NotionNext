@@ -1,4 +1,4 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 // import twikoo from 'twikoo'
 
 /**
@@ -8,7 +8,7 @@ import { siteConfig } from '@/lib/config'
  */
 
 const TwikooCommentCount = ({ post, className }) => {
-  if (!JSON.parse(siteConfig('COMMENT_TWIKOO_COUNT_ENABLE'))) {
+  if (!JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE)) {
     return null
   }
   return <a href={`${post.slug}?target=comment`} className={`mx-1 hidden comment-count-wrapper-${post.id} ${className || ''}`}>

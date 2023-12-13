@@ -7,8 +7,7 @@ import { useState } from 'react'
  * @param {*} param0
  * @returns
  */
-export const MenuItemCollapse = (props) => {
-  const { link } = props
+export const MenuItemCollapse = ({ link }) => {
   const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
 
@@ -42,7 +41,7 @@ export const MenuItemCollapse = (props) => {
         </div>
 
         {/* 折叠子菜单 */}
-        {hasSubMenu && <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
+        {hasSubMenu && <Collapse isOpen={isOpen}>
             {link.subMenus.map((sLink, index) => {
               return <div key={index} className='dark:bg-black dark:text-gray-200 text-left px-10 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  py-3 pr-6'>
                     <Link href={sLink.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>

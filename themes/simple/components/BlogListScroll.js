@@ -1,38 +1,33 @@
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React from 'react'
 import throttle from 'lodash.throttle'
 import { BlogItem } from './BlogItem'
-import { siteConfig } from '@/lib/config'
 
-/**
- * 滚动博客列表
- * @param {*} props
- * @returns
- */
-export default function BlogListScroll (props) {
+export const BlogListScroll = props => {
   const { posts } = props
   const { locale } = useGlobal()
 
-  const [page, updatePage] = useState(1)
+  const [page, updatePage] = React.useState(1)
 
   let hasMore = false
   const postsToShow = posts
-    ? Object.assign(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page)
+    ? Object.assign(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
     : []
 
   if (posts) {
     const totalCount = posts.length
-    hasMore = page * parseInt(siteConfig('POSTS_PER_PAGE')) < totalCount
+    hasMore = page * BLOG.POSTS_PER_PAGE < totalCount
   }
   const handleGetMore = () => {
     if (!hasMore) return
     updatePage(page + 1)
   }
 
-  const targetRef = useRef(null)
+  const targetRef = React.useRef(null)
 
   // 监听滚动自动分页加载
-  const scrollTrigger = useCallback(throttle(() => {
+  const scrollTrigger = React.useCallback(throttle(() => {
     const scrollS = window.scrollY + window.outerHeight
     const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
     if (scrollS > clientHeight + 100) {
@@ -40,7 +35,7 @@ export default function BlogListScroll (props) {
     }
   }, 500))
 
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
 
     return () => {

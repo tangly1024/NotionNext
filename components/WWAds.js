@@ -1,4 +1,5 @@
-import { siteConfig } from '@/lib/config'
+import React from 'react'
+import BLOG from '@/blog.config'
 
 /**
  * 万维广告插件
@@ -7,13 +8,11 @@ import { siteConfig } from '@/lib/config'
  * @returns {JSX.Element | null} - 返回渲染的 JSX 元素或 null
  */
 export default function WWAds({ orientation = 'vertical', sticky = false, className }) {
-  const adWWADSId = siteConfig('AD_WWADS_ID')
-
-  if (!adWWADSId) {
+  if (!JSON.parse(BLOG.AD_WWADS_ID)) {
     return null
   }
 
-  return <div data-id={adWWADSId} className={`wwads-cn 
-            ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'}
-            ${sticky ? 'wwads-sticky' : ''} z-10 ${className || ''}`} />
+  return (
+    <div className={`wwads-cn ${orientation === 'vertical' ? 'wwads-vertical' : 'wwads-horizontal'} ${sticky ? 'wwads-sticky' : ''} z-30 ${className || ''}`} data-id={BLOG.AD_WWADS_ID}></div>
+  )
 }

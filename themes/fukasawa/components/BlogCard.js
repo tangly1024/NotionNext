@@ -1,16 +1,17 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
-import CONFIG from '../config'
+import React from 'react'
+import CONFIG_FUKA from '../config'
 import LazyImage from '@/components/LazyImage'
 
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = siteConfig('FUKASAWA_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
   // fukasawa 强制显示图片
-  if (siteConfig('FUKASAWA_POST_LIST_COVER_FORCE', null, CONFIG) && post && !post.pageCover) {
+  if (CONFIG_FUKA.POST_LIST_COVER_FORCE && post && !post.pageCover) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
+  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.pageCoverThumbnail
 
   return (
         <div
@@ -25,10 +26,10 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                 {/* 封面图 */}
                 {showPageCover && (
                     <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden">
-                        <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                        <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                             <LazyImage
                                 src={post?.pageCoverThumbnail}
-                                alt={post?.title || siteConfig('TITLE')}
+                                alt={post?.title || BLOG.TITLE}
                                 className="object-cover w-full h-full hover:scale-125 transform duration-500"
                             />
                         </Link>
@@ -37,7 +38,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 文字部分 */}
                 <div className="flex flex-col w-full">
-                    <Link passHref href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                    <Link passHref href={`${BLOG.SUB_PATH}/${post.slug}`}
                          className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
                     >
                         {post.title}
@@ -61,7 +62,8 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                         </Link>}
                         <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
                             <div>
-                                {post.tagItems?.map((tag) => (
+
+                                {post.tagItems.map((tag) => (
                                     <TagItemMini key={tag.name} tag={tag} />
                                 ))}
                             </div>

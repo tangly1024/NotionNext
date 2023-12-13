@@ -1,4 +1,4 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -26,12 +26,12 @@ const LatestPostsGroup = ({ latestPosts }) => {
       </div>
     </div>
     {latestPosts.map(post => {
-      const selected = currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
+      const selected = currentPath === `${BLOG.SUB_PATH}/${post.slug}`
       return (
         (<Link
           key={post.id}
           title={post.title}
-          href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+          href={`${BLOG.SUB_PATH}/${post.slug}`}
           passHref
           className={'my-1 flex font-light'}>
 

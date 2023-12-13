@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
+import React from 'react'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 点击召唤目录抽屉
@@ -11,7 +11,7 @@ import { siteConfig } from '@/lib/config'
  */
 const TocDrawerButton = (props) => {
   const { locale } = useGlobal()
-  if (!siteConfig('NEXT_WIDGET_TOC', null, CONFIG)) {
+  if (!CONFIG.WIDGET_TOC) {
     return <></>
   }
   if (props?.post?.toc?.length > 1) {

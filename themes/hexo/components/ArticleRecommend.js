@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import LazyImage from '@/components/LazyImage'
 
@@ -13,7 +13,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   const { locale } = useGlobal()
 
   if (
-    !siteConfig('HEXO_ARTICLE_RECOMMEND', null, CONFIG) ||
+    !CONFIG.ARTICLE_RECOMMEND ||
         !recommendPosts ||
         recommendPosts.length === 0
   ) {
@@ -38,7 +38,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                     (<Link
                             key={post.id}
                             title={post.title}
-                            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                            href={`${BLOG.SUB_PATH}/${post.slug}`}
                             passHref
                             className="flex h-40 cursor-pointer overflow-hidden">
 

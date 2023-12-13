@@ -1,24 +1,23 @@
 /* eslint-disable */
-import  { useEffect } from 'react'
+import React from 'react'
 
 const StarrySky = () => {
-  useEffect(() => {
-    renderStarrySky()
+  React.useEffect(() => {
+    dark()
   }, [])
   return (
     <div className="relative">
-      <canvas id="starry-sky-vixcity" style={{zIndex:5}} className="top-0 fixed pointer-events-none"></canvas>
+      <canvas id="starry-sky-vixcity" style={{zIndex:1}} className="top-0 fixed pointer-events-none"></canvas>
     </div>
   )
 }
 
 export default StarrySky
-
 /**
  * 创建星空雨
  * @param config
  */
-function renderStarrySky() {
+function dark() {
   window.requestAnimationFrame =
     window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
@@ -125,7 +124,7 @@ function renderStarrySky() {
       u()
     })(),
     (function t() {
-      document.getElementsByTagName('html')[0].className.indexOf('dark')>=0 && u(),
+      document.getElementsByTagName('html')[0].className == 'dark' && u(),
         window.requestAnimationFrame(t)
     })()
 }

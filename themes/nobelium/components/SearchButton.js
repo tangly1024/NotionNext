@@ -1,4 +1,4 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useNobeliumGlobal } from '..'
@@ -13,7 +13,7 @@ export default function SearchButton(props) {
   const router = useRouter()
 
   function handleSearch() {
-    if (siteConfig('ALGOLIA_APP_ID')) {
+    if (BLOG.ALGOLIA_APP_ID) {
       searchModal.current.openSearch()
     } else {
       router.push('/search')

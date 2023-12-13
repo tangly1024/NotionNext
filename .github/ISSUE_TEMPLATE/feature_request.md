@@ -1,6 +1,6 @@
 ---
 name: Feature request （新特性建议）
-about: Suggest an idea for Notion Next.
+about: Suggest an idea for Nobelium.
 title: ''
 labels: enhancement
 assignees: tangly1024

@@ -1,11 +1,6 @@
 import KaTeX from 'katex'
-import { memo, useEffect, useState } from 'react'
+import React from 'react'
 
-/**
- * 数学公式
- * @param {*} param0
- * @returns
- */
 const TeX = ({
   children,
   math,
@@ -18,9 +13,9 @@ const TeX = ({
 }) => {
   const Component = asComponent || (block ? 'div' : 'span')
   const content = (children ?? math)
-  const [state, setState] = useState({ innerHtml: '' })
+  const [state, setState] = React.useState({ innerHtml: '' })
 
-  useEffect(() => {
+  React.useEffect(() => {
     try {
       const innerHtml = KaTeX.renderToString(content, {
         displayMode: true,
@@ -55,4 +50,4 @@ const TeX = ({
   )
 }
 
-export default memo(TeX)
+export default React.memo(TeX)

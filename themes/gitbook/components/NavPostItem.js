@@ -1,5 +1,5 @@
 import BlogPostCard from './BlogPostCard'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Collapse from '@/components/Collapse'
 
 /**

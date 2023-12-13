@@ -1,17 +1,12 @@
 /* eslint-disable no-undef */
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
 
-/**
- * 网页动画
- * @returns
- */
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal()
-  const showPet = JSON.parse(siteConfig('WIDGET_PET'))
-  const petLink = siteConfig('WIDGET_PET_LINK')
+  const showPet = JSON.parse(BLOG.WIDGET_PET)
 
   useEffect(() => {
     if (showPet) {
@@ -21,7 +16,7 @@ export default function Live2D() {
         if (typeof window?.loadlive2d !== 'undefined') {
           // https://github.com/xiazeyu/live2d-widget-models
           try {
-            loadlive2d('live2d', petLink)
+            loadlive2d('live2d', BLOG.WIDGET_PET_LINK)
           } catch (error) {
             console.error('读取PET模型', error)
           }
@@ -31,7 +26,7 @@ export default function Live2D() {
   }, [theme])
 
   function handleClick() {
-    if (JSON.parse(siteConfig('WIDGET_PET_SWITCH_THEME'))) {
+    if (JSON.parse(BLOG.WIDGET_PET_SWITCH_THEME)) {
       switchTheme()
     }
   }
