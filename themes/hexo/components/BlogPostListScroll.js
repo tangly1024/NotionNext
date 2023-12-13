@@ -1,8 +1,8 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
-import { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import CONFIG from '../config'
 import { getListByPage } from '@/lib/utils'
 
@@ -13,9 +13,9 @@ import { getListByPage } from '@/lib/utils'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = siteConfig('HEXO_POST_LIST_SUMMARY', null, CONFIG), siteInfo }) => {
-  const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
-  const [page, updatePage] = useState(1)
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY, siteInfo }) => {
+  const postsPerPage = BLOG.POSTS_PER_PAGE
+  const [page, updatePage] = React.useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
 
   let hasMore = false
@@ -41,14 +41,14 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = siteConfi
   }
 
   // 监听滚动
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
   })
 
-  const targetRef = useRef(null)
+  const targetRef = React.useRef(null)
   const { locale } = useGlobal()
 
   if (!postsToShow || postsToShow.length === 0) {

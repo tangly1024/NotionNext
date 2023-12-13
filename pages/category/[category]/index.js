@@ -4,7 +4,6 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 分类页
@@ -16,13 +15,13 @@ export default function Category(props) {
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme(useRouter())
 
   const meta = {
     title: `${props.category} | ${locale.COMMON.CATEGORY} | ${
-      siteConfig('TITLE') || ''
+      siteInfo?.title || ''
     }`,
-    description: siteConfig('DESCRIPTION'),
+    description: siteInfo?.description,
     slug: 'category/' + props.category,
     image: siteInfo?.pageCover,
     type: 'website'

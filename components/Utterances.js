@@ -1,4 +1,4 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import { useEffect } from 'react'
 
 /**
@@ -11,9 +11,9 @@ import { useEffect } from 'react'
 const Utterances = ({ issueTerm, layout }) => {
   useEffect(() => {
     const theme =
-      siteConfig('APPEARANCE') === 'auto'
+      BLOG.APPEARANCE === 'auto'
         ? 'preferred-color-scheme'
-        : siteConfig('APPEARANCE') === 'light'
+        : BLOG.APPEARANCE === 'light'
           ? 'github-light'
           : 'github-dark'
     const script = document.createElement('script')
@@ -21,7 +21,7 @@ const Utterances = ({ issueTerm, layout }) => {
     script.setAttribute('src', 'https://utteranc.es/client.js')
     script.setAttribute('crossorigin', 'anonymous')
     script.setAttribute('async', true)
-    script.setAttribute('repo', siteConfig('COMMENT_UTTERRANCES_REPO'))
+    script.setAttribute('repo', BLOG.COMMENT_UTTERRANCES_REPO)
     script.setAttribute('issue-term', 'title')
     script.setAttribute('theme', theme)
     anchor.appendChild(script)

@@ -1,10 +1,9 @@
+import BLOG from '@/blog.config'
 import { useEffect, useState } from 'react'
 import Select from './Select'
 import { useGlobal } from '@/lib/global'
 import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { siteConfigMap } from '@/lib/config'
-import { getQueryParam } from '@/lib/utils'
 
 /**
  *
@@ -14,14 +13,14 @@ const DebugPanel = () => {
   const [show, setShow] = useState(false)
   const { theme, switchTheme, locale } = useGlobal()
   const router = useRouter()
-  const currentTheme = getQueryParam(router.asPath, 'theme') || theme
   const [siteConfig, updateSiteConfig] = useState({})
 
   // 主题下拉框
   const themeOptions = THEMES?.map(t => ({ value: t, text: t }))
 
   useEffect(() => {
-    updateSiteConfig(Object.assign({}, siteConfigMap()))
+    updateSiteConfig(Object.assign({}, BLOG))
+    // updateThemeConfig(Object.assign({}, ThemeMap[BLOG.THEME].THEME_CONFIG))
   }, [])
 
   function toggleShow() {
@@ -72,7 +71,7 @@ const DebugPanel = () => {
                     <div className='flex'>
                         <Select
                             label={locale.COMMON.THEME_SWITCH}
-                            value={currentTheme}
+                            value={theme}
                             options={themeOptions}
                             onChange={handleUpdateDebugTheme}
                         />

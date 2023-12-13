@@ -1,5 +1,6 @@
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import Link from 'next/link'
+import React from 'react'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
@@ -8,12 +9,12 @@ import { formatDateFmt } from '@/lib/formatDate'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = siteConfig('MATERY_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
   // matery 主题默认强制显示图片
   if (post && !post.pageCoverThumbnail) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = siteConfig('MATERY_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
+  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
   const delay = (index % 3) * 300
   return (
         <div
@@ -29,7 +30,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 头部图片 填充卡片 */}
                 {showPageCover && (
-                    <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                    <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                         <div className="flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden">
                             <LazyImage
                                 src={post?.pageCoverThumbnail}

@@ -9,7 +9,6 @@ import { MenuList } from './MenuList'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
 
 let windowTop = 0
 
@@ -39,12 +38,12 @@ const TopNav = (props) => {
 
   // 监听滚动
   useEffect(() => {
-    if (siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse') {
+    if (CONFIG.NAV_TYPE === 'autoCollapse') {
       scrollTrigger()
       window.addEventListener('scroll', scrollTrigger)
     }
     return () => {
-      siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
+      CONFIG.NAV_TYPE === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
 
@@ -97,7 +96,7 @@ const TopNav = (props) => {
             <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
             {/* 导航栏 */}
-            <div id='sticky-nav' className={`${siteConfig('NEXT_NAV_TYPE', null, CONFIG) !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
+            <div id='sticky-nav' className={`${CONFIG.NAV_TYPE !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
                 <div className='w-full flex justify-between items-center p-4 bg-black dark:bg-gray-800 text-white'>
                     {/* 左侧LOGO 标题 */}
                     <div className='flex flex-none flex-grow-0'>

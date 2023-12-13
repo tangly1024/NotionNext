@@ -3,7 +3,6 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 搜索路由
@@ -15,7 +14,7 @@ const Search = props => {
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme(useRouter())
 
   const router = useRouter()
   const keyword = getSearchKey(router)
@@ -35,8 +34,8 @@ const Search = props => {
   }
 
   const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
+    description: siteInfo?.description,
     image: siteInfo?.pageCover,
     slug: 'search',
     type: 'website'

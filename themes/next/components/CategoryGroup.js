@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import React from 'react'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
   if (!categories) return <></>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import React from 'react'
 import { useMediumGlobal } from '@/themes/medium'
 import JumpToTopButton from './JumpToTopButton'
 

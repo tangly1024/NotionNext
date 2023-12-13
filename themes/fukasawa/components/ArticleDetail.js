@@ -8,7 +8,6 @@ import ArticleAround from './ArticleAround'
 import { AdSlot } from '@/components/GoogleAdsense'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
-import WWAds from '@/components/WWAds'
 
 /**
  *
@@ -82,7 +81,8 @@ export default function ArticleDetail(props) {
 
           </section>
 
-          <WWAds className='w-full' orientation='horizontal'/>
+          <AdSlot type='in-article'/>
+
         </header>
 
         {/* Notion文章主体 */}
@@ -91,7 +91,6 @@ export default function ArticleDetail(props) {
         </section>
 
         <section>
-          <AdSlot type='in-article'/>
            {/* 分享 */}
            <ShareBar post={post} />
         </section>

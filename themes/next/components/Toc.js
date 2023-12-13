@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import Progress from './Progress'
+// import { cs } from 'react-notion-x'
 
 /**
  * 目录导航组件
@@ -11,7 +12,7 @@ import Progress from './Progress'
  */
 const Toc = ({ toc }) => {
   // 监听滚动事件
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
     actionSectionScrollSpy()
     return () => {
@@ -24,9 +25,9 @@ const Toc = ({ toc }) => {
   const tocIds = []
 
   // 同步选中目录事件
-  const [activeSection, setActiveSection] = useState(null)
+  const [activeSection, setActiveSection] = React.useState(null)
   const throttleMs = 200
-  const actionSectionScrollSpy = useCallback(throttle(() => {
+  const actionSectionScrollSpy = React.useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
     let currentSectionId = activeSection

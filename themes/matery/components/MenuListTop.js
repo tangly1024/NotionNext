@@ -1,17 +1,18 @@
+import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { MenuItemDrop } from './MenuItemDrop'
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 
 export const MenuListTop = (props) => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
   let links = [
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('MATERY_MENU_ARCHIVE', null, CONFIG) },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('MATERY_MENU_SEARCH', null, CONFIG) },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('MATERY_MENU_CATEGORY', null, CONFIG) },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('MATERY_MENU_TAG', null, CONFIG) }
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG.MENU_ARCHIVE },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG.MENU_SEARCH },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG }
   ]
 
   if (customNav) {
@@ -19,7 +20,7 @@ export const MenuListTop = (props) => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (siteConfig('CUSTOM_MENU')) {
+  if (BLOG.CUSTOM_MENU) {
     links = customMenu
   }
 
@@ -29,7 +30,7 @@ export const MenuListTop = (props) => {
 
   return (
     <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
-      {links?.map((link, index) => <MenuItemDrop key={index} link={link}/>)}
+      {links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
     </nav>
   )
 }

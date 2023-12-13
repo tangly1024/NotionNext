@@ -3,9 +3,8 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
 import { useRouter } from 'next/router'
+import { getLayoutByTheme } from '@/themes/theme'
 
 /**
  * 首页布局
@@ -14,16 +13,8 @@ import { useRouter } from 'next/router'
  */
 const Index = props => {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${siteConfig('TITLE')} | ${siteConfig('DESCRIPTION')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteConfig('HOME_BANNER_IMAGE'),
-    slug: '',
-    type: 'website'
-  }
-  return <Layout meta={meta} {...props} />
+  const Layout = getLayoutByTheme(useRouter())
+  return <Layout {...props} />
 }
 
 /**
@@ -34,8 +25,16 @@ export async function getStaticProps() {
   const from = 'index'
   const props = await getGlobalData({ from })
 
+  const { siteInfo } = props
   props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
 
+  const meta = {
+    title: `${siteInfo?.title} | ${siteInfo?.description}`,
+    description: siteInfo?.description,
+    image: siteInfo?.pageCover,
+    slug: '',
+    type: 'website'
+  }
   // 处理分页
   if (BLOG.POST_LIST_STYLE === 'scroll') {
     // 滚动列表默认给前端返回所有数据
@@ -66,7 +65,10 @@ export async function getStaticProps() {
   delete props.allPages
 
   return {
-    props,
+    props: {
+      meta,
+      ...props
+    },
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }

@@ -1,7 +1,7 @@
 import { getGlobalData } from '@/lib/notion/getNotionData'
+import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 404
@@ -9,12 +9,13 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const NoFound = props => {
-  const meta = { title: `${siteConfig('TITLE')} | 页面找不到啦`, image: siteConfig('HOME_BANNER_IMAGE') }
+  const { siteInfo } = useGlobal()
+  const meta = { title: `${props?.siteInfo?.title} | 页面找不到啦`, image: siteInfo?.pageCover }
 
   props = { ...props, meta }
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme(useRouter())
 
   return <Layout {...props} />
 }

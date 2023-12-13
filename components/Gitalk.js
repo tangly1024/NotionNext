@@ -1,39 +1,37 @@
-import { siteConfig } from '@/lib/config'
+// import 'gitalk/dist/gitalk.css'
+import BLOG from '@/blog.config'
 import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
+// import GitalkComponent from 'gitalk/dist/gitalk-component'
 
-/**
- * gitalk评论插件
- * @param {*} param0
- * @returns
- */
 const Gitalk = ({ frontMatter }) => {
-  const gitalkCSSCDN = siteConfig('COMMENT_GITALK_CSS_CDN_URL')
-  const gitalkJSCDN = siteConfig('COMMENT_GITALK_JS_CDN_URL')
-  const clientId = siteConfig('COMMENT_GITALK_CLIENT_ID')
-  const clientSecret = siteConfig('COMMENT_GITALK_CLIENT_SECRET')
-  const repo = siteConfig('COMMENT_GITALK_REPO')
-  const owner = siteConfig('COMMENT_GITALK_OWNER')
-  const admin = siteConfig('COMMENT_GITALK_ADMIN').split(',')
-  const distractionFreeMode = siteConfig('COMMENT_GITALK_DISTRACTION_FREE_MODE')
-
+  //   return <GitalkComponent options={{
+  //     id: frontMatter.id,
+  //     title: frontMatter.title,
+  //     clientID: BLOG.COMMENT_GITALK_CLIENT_ID,
+  //     clientSecret: BLOG.COMMENT_GITALK_CLIENT_SECRET,
+  //     repo: BLOG.COMMENT_GITALK_REPO,
+  //     owner: BLOG.COMMENT_GITALK_OWNER,
+  //     admin: BLOG.COMMENT_GITALK_ADMIN.split(','),
+  //     distractionFreeMode: JSON.parse(BLOG.COMMENT_GITALK_DISTRACTION_FREE_MODE)
+  //   }} />
   const loadGitalk = async() => {
-    await loadExternalResource(gitalkCSSCDN, 'css')
-    await loadExternalResource(gitalkJSCDN, 'js')
+    await loadExternalResource(BLOG.COMMENT_GITALK_CSS_CDN_URL, 'css')
+    await loadExternalResource(BLOG.COMMENT_GITALK_JS_CDN_URL, 'js')
     const Gitalk = window.Gitalk
+
     const gitalk = new Gitalk({
-      clientID: clientId,
-      clientSecret: clientSecret,
-      repo: repo,
-      owner: owner,
-      admin: admin,
+      clientID: BLOG.COMMENT_GITALK_CLIENT_ID,
+      clientSecret: BLOG.COMMENT_GITALK_CLIENT_SECRET,
+      repo: BLOG.COMMENT_GITALK_REPO,
+      owner: BLOG.COMMENT_GITALK_OWNER,
+      admin: BLOG.COMMENT_GITALK_ADMIN.split(','),
       id: frontMatter.id, // Ensure uniqueness and length less than 50
-      distractionFreeMode: distractionFreeMode // Facebook-like distraction free mode
+      distractionFreeMode: JSON.parse(BLOG.COMMENT_GITALK_DISTRACTION_FREE_MODE) // Facebook-like distraction free mode
     })
 
     gitalk.render('gitalk-container')
   }
-
   useEffect(() => {
     loadGitalk()
   }, [])
