@@ -62,6 +62,15 @@ const Style = () => {
           transform: translateX(-50%);
         }
       }
+      #footer-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        #footer-bottom-left {
+          margin-right: 20px;
+        }
+      }
     `}</style>
   )
 }
