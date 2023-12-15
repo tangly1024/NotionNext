@@ -17,6 +17,7 @@ const CommonHead = ({ meta, children }) => {
 
   return (
         <Head>
+            <meta name="baidu-site-verification" content="codeva-OBHcHjGEES" />
             <title>{title}</title>
             <meta name="theme-color" content={siteConfig('BACKGROUND_DARK')} />
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
