@@ -1,6 +1,6 @@
 import cookie from 'react-cookies'
 import BLOG from '@/blog.config'
-import { getQueryParam, getQueryVariable } from '../lib/utils'
+import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 import dynamic from 'next/dynamic'
 import getConfig from 'next/config'
 import * as ThemeComponents from '@theme-components'
@@ -12,13 +12,38 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  * @param {*} router
  * @returns
  */
-export const getLayoutByTheme = (router) => {
-  const themeQuery = getQueryParam(router.asPath, 'theme') || BLOG.THEME
-  const layout = getLayoutNameByPath(router.pathname)
+export const getLayoutByTheme = ({ router, theme }) => {
+  const themeQuery = getQueryParam(router.asPath, 'theme') || theme
+  const layoutName = getLayoutNameByPath(router.pathname)
+
   if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => {
+      setTimeout(() => {
+        checkThemeDOM()
+      }, 500);
+      return m[layoutName]
+    }), { ssr: true })
   } else {
-    return ThemeComponents[layout]
+    setTimeout(() => {
+      checkThemeDOM()
+    }, 100);
+    return ThemeComponents[layoutName]
+  }
+}
+
+/**
+ * 切换主题时的特殊处理
+ */
+const checkThemeDOM = () => {
+  if (isBrowser) {
+    const elements = document.querySelectorAll('[id^="theme-"]')
+    if (elements?.length > 1) {
+      elements[elements.length - 1].scrollIntoView()
+      // 删除前面的元素，只保留最后一个元素
+      for (let i = 0; i < elements.length - 1; i++) {
+        elements[i].parentNode.removeChild(elements[i])
+      }
+    }
   }
 }
 

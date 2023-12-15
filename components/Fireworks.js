@@ -4,11 +4,17 @@
  */
 import { useEffect } from 'react'
 import anime from 'animejs'
-import BLOG from 'blog.config'
+import { siteConfig } from '@/lib/config'
 
+/**
+ * 鼠标点击烟花特效
+ * @returns
+ */
 const Fireworks = () => {
+  const fireworksColor = siteConfig('FIREWORKS_COLOR')
+
   useEffect(() => {
-    createFireworks({})
+    createFireworks({ colors: fireworksColor })
   }, [])
   return <canvas id='fireworks' className='fireworks'></canvas>
 }
@@ -20,7 +26,7 @@ export default Fireworks
    */
 function createFireworks(config) {
   const defaultConfig = {
-    colors: BLOG.FIREWORKS_COLOR,
+    colors: config?.colors,
     numberOfParticules: 20,
     orbitRadius: {
       min: 50,

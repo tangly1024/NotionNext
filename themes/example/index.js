@@ -1,6 +1,5 @@
 'use client'
 
-import BLOG from '@/blog.config'
 import CONFIG from './config'
 import { useEffect } from 'react'
 import { Header } from './components/Header'
@@ -27,6 +26,7 @@ import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局框架
@@ -67,7 +67,7 @@ const LayoutBase = props => {
                 {/* 标题栏 */}
                 <Title {...props} />
 
-                <div id='container-wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative container mx-auto justify-center md:flex items-start py-8 px-2'}>
+                <div id='container-wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative container mx-auto justify-center md:flex items-start py-8 px-2'}>
 
                     {/* 内容 */}
                     <div className='w-full max-w-3xl xl:px-14 lg:px-4 '>
@@ -134,7 +134,7 @@ const LayoutPostList = props => {
   }
   return (
         <LayoutBase {...props} slotTop={slotTop}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
         </LayoutBase>
   )
 }
