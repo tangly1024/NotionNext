@@ -3,11 +3,12 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
-import Slug, { getRecommendPost } from '.'
+import Slug, { getRecommendPost } from '..'
 import { uploadDataToAlgolia } from '@/lib/algolia'
 
 /**
  * 根据notion的slug访问页面
+ * 解析二级目录 /article/about
  * @param {*} props
  * @returns
  */
