@@ -20,8 +20,8 @@ const CONFIG = {
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '效率', url: '/tag/效率' },
-  HEO_HERO_CATEGORY_2: { title: '电影', url: 'https://www.themoviedb.org/list/8283585' ,a target='_blank' },
-  HEO_HERO_CATEGORY_3: { title: '剧集', url: 'https://www.themoviedb.org/list/8229083' ,a target='_blank' },
+  HEO_HERO_CATEGORY_2: { title: '电影', url: 'https://www.themoviedb.org/list/8283585' , target='_blank' },
+  HEO_HERO_CATEGORY_3: { title: '剧集', url: 'https://www.themoviedb.org/list/8229083' , target='_blank' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
