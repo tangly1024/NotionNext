@@ -17,6 +17,7 @@ const CONFIG = {
   HEO_TITLE_5: '欢迎关注，交流学习',
   HEO_TITLE_LINK: 'https://www.ai-hd.com/',
 
+
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
   HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
@@ -37,6 +38,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
+  
   HEO_INFO_CARD_URL: 'https://www.ai-hd.com/', // 个人资料底部按钮链接
 
   // 用户技能图标
