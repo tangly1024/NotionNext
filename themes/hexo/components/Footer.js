@@ -13,8 +13,8 @@ const Footer = ({ title }) => {
       {/* <DarkModeButton/> */}
 
       <i className='fas fa-copyright' /> {`${copyrightDate}`} <span><i className='mx-1 animate-pulse fas fa-heart'/> <a href={siteConfig('LINK')} className='underline font-bold  dark:text-gray-300 '>{siteConfig('AUTHOR')}</a>.<br/>
-
-      {siteConfig('BEI_AN') && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{siteConfig('BEI_AN')}</a><br/></>}
+// 'https://beian.miit.gov.cn/'
+      {siteConfig('BEI_AN') && <><i className='fas fa-shield-alt' /> <a href='https://icp.gov.moe/?keyword=20230968' target="_blank"   className='mr-2'>{siteConfig('BEI_AN')}</a><br/></>}
 
       <span className='hidden busuanzi_container_site_pv'>
             <i className='fas fa-eye'/><span className='px-1 busuanzi_value_site_pv'> </span>  </span>
