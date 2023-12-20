@@ -1,5 +1,5 @@
-import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 
 /**
@@ -22,7 +22,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           return (
             (<Link key={post.id} passHref
                     title={post.title}
-                    href={`${BLOG.SUB_PATH}/${post.slug}`}
+                    href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
 
                     className={'my-3 flex flex-col w-full'}>
 
@@ -32,7 +32,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
 
                     <div
                         className={
-                            ' font-bold  overflow-x-hidden hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
+                            ' font-bold  overflow-x-hidden dark:text-white hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
                             ' hover:text-indigo-400 cursor-pointer'
                         }
                     >

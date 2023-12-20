@@ -2,8 +2,7 @@ import CONFIG from './config'
 import { createContext, useContext, useEffect, useState } from 'react'
 import Header from './components/Nav'
 import { useGlobal } from '@/lib/global'
-
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import { isBrowser } from '@/lib/utils'
@@ -18,10 +17,10 @@ import ShareBar from '@/components/ShareBar'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import BottomNav from './components/BottomNav'
-import { saveDarkModeToCookies } from '@/themes/theme'
 import Modal from './components/Modal'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
 
 // 主题全局状态
 const ThemeGlobalPlog = createContext()
@@ -34,30 +33,16 @@ export const usePlogGlobal = () => useContext(ThemeGlobalPlog)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, topSlot } = props
-  const { onLoading, updateDarkMode } = useGlobal()
+  const { children, topSlot, meta } = props
+  const { onLoading } = useGlobal()
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState(null)
 
-  // 用户手动设置主题
-  const setDarkMode = () => {
-    saveDarkModeToCookies(true)
-    updateDarkMode(true)
-    const htmlElement = document.getElementsByTagName('html')[0]
-    htmlElement.classList?.remove('light')
-    htmlElement.classList?.add('dark')
-  }
-
-  // plog主题默认 深色模式
-  useEffect(() => {
-    setTimeout(() => {
-      setDarkMode()
-    }, 100)
-  }, [])
-
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
-        <div id='theme-plog' className='plog relative dark:text-gray-300 w-full bg-black min-h-screen'>
+        <div id='theme-plog' className='plog relative dark:text-gray-300 w-full dark:bg-black min-h-screen'>
+            {/* SEO相关 */}
+            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 移动端顶部导航栏 */}
@@ -71,7 +56,7 @@ const LayoutBase = props => {
                     appear={true}
                     enter="transition ease-in-out duration-700 transform order-first"
                     enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
+                    enterTo="opacity-100"
                     leave="transition ease-in-out duration-300 transform"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 -translate-y-16"
@@ -114,7 +99,7 @@ const LayoutIndex = props => {
 const LayoutPostList = props => {
   return (
         <LayoutBase {...props}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
         </LayoutBase>
   )
 }
@@ -129,7 +114,7 @@ const LayoutSearch = props => {
   const { keyword } = props
 
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,

@@ -1,12 +1,10 @@
 import CONFIG from './config'
-
 import CommonHead from '@/components/CommonHead'
 import { useEffect, useRef } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import { isBrowser } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -33,6 +31,7 @@ import SlotBar from './components/SlotBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -41,13 +40,13 @@ import replaceSearchResult from '@/components/Mark'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, floatSlot, slotTop, meta, siteInfo, className } = props
+  const { children, headerSlot, floatSlot, slotTop, meta, className } = props
   const { onLoading } = useGlobal()
 
   return (
         <div id='theme-hexo'>
             {/* 网页SEO */}
-            <CommonHead meta={meta} siteInfo={siteInfo} />
+            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 顶部导航 */}
@@ -69,16 +68,16 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
-                <div id="container-inner" className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
-                    <div className={`${className || ''} w-full max-w-4xl h-full `}>
+            <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
+                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
+                    <div className={`${className || ''} w-full max-w-4xl h-full overflow-hidden`}>
 
                         <Transition
                             show={!onLoading}
                             appear={true}
                             enter="transition ease-in-out duration-700 transform order-first"
                             enterFrom="opacity-0 translate-y-16"
-                            enterTo="opacity-100 translate-y-0"
+                            enterTo="opacity-100"
                             leave="transition ease-in-out duration-300 transform"
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 -translate-y-16"
@@ -100,7 +99,7 @@ const LayoutBase = props => {
             <RightFloatArea floatSlot={floatSlot} />
 
             {/* 页脚 */}
-            <Footer title={siteInfo?.title || BLOG.TITLE} />
+            <Footer title={siteConfig('TITLE') } />
         </div>
   )
 }
@@ -112,7 +111,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  const headerSlot = CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />
+  const headerSlot = siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) && <Hero {...props} />
   return <LayoutPostList {...props} headerSlot={headerSlot} className='pt-8' />
 }
 
@@ -124,7 +123,7 @@ const LayoutIndex = (props) => {
 const LayoutPostList = (props) => {
   return <LayoutBase {...props} className='pt-8'>
         <SlotBar {...props} />
-        {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
     </LayoutBase>
 }
 
@@ -155,7 +154,7 @@ const LayoutSearch = props => {
         <LayoutBase {...props} currentSearch={currentSearch} className='pt-8'>
             {!currentSearch
               ? <SearchNav {...props} />
-              : <div id="posts-wrapper"> {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
+              : <div id="posts-wrapper"> {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
         </LayoutBase>
   )
 }
@@ -191,7 +190,7 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const drawerRight = useRef(null)
 
-  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
+  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
 
   const floatSlot = <>
         {post?.toc?.length > 1 && <div className="block lg:hidden">
@@ -254,7 +253,7 @@ const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      if (isBrowser()) {
+      if (isBrowser) {
         const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/').then(() => {
@@ -295,7 +294,7 @@ const LayoutCategoryIndex = props => {
                     <i className="mr-4 fas fa-th" />  {locale.COMMON.CATEGORY}:
                 </div>
                 <div id="category-list" className="duration-200 flex flex-wrap mx-8">
-                    {categoryOptions.map(category => {
+                    {categoryOptions?.map(category => {
                       return (
                             <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
                                 <div className={' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'}>

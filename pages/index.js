@@ -3,21 +3,27 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-
-import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
-import { generateAlgoliaSearch } from '@/lib/algolia'
+import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router'
 
 /**
  * 首页布局
  * @param {*} props
  * @returns
  */
-
 const Index = props => {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
-  return <Layout {...props} />
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+
+  const meta = {
+    title: `${siteConfig('TITLE')} | ${siteConfig('DESCRIPTION')}`,
+    description: siteConfig('DESCRIPTION'),
+    image: siteConfig('HOME_BANNER_IMAGE'),
+    slug: '',
+    type: 'website'
+  }
+  return <Layout meta={meta} {...props} />
 }
 
 /**
@@ -28,16 +34,8 @@ export async function getStaticProps() {
   const from = 'index'
   const props = await getGlobalData({ from })
 
-  const { siteInfo } = props
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
 
-  const meta = {
-    title: `${siteInfo?.title} | ${siteInfo?.description}`,
-    description: siteInfo?.description,
-    image: siteInfo?.pageCover,
-    slug: '',
-    type: 'website'
-  }
   // 处理分页
   if (BLOG.POST_LIST_STYLE === 'scroll') {
     // 滚动列表默认给前端返回所有数据
@@ -64,17 +62,11 @@ export async function getStaticProps() {
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
-  if (BLOG.ALGOLIA_APP_ID && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)) {
-    generateAlgoliaSearch({ allPages: props.allPages })
-  }
 
   delete props.allPages
 
   return {
-    props: {
-      meta,
-      ...props
-    },
+    props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }

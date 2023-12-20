@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
 import WavesArea from './WavesArea'
 import { HashTag } from '@/components/HeroIcons'
@@ -79,18 +79,18 @@ export default function PostHeader({ post, siteInfo }) {
                                         href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                                         passHref
                                         className="pl-1 mr-2 cursor-pointer hover:underline">
-                                        <i className="fa-regular fa-calendar"></i> {post?.publishTime}
+                                        <i className="fa-regular fa-calendar"></i> {post?.publishDay}
                                     </Link>
                                 </>
                             )}
 
                             <div className="pl-1 mr-2">
-                              <i className="fa-regular fa-calendar-check"></i> {post.lastEditedTime}
+                              <i className="fa-regular fa-calendar-check"></i> {post.lastEditedDay}
                             </div>
 
                         </div>
 
-                        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
+                        {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && <div className="busuanzi_container_page_pv font-light mr-2">
                             <i className="fa-solid fa-fire-flame-curved"></i> <span className="mr-2 busuanzi_value_page_pv" />
                         </div>}
                     </section>

@@ -8,6 +8,7 @@ import ArticleAround from './ArticleAround'
 import { AdSlot } from '@/components/GoogleAdsense'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
+import WWAds from '@/components/WWAds'
 
 /**
  *
@@ -59,12 +60,12 @@ export default function ArticleDetail(props) {
                   passHref
                   className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
 
-                  {post?.publishTime}
+                  {post?.publishDay}
 
                 </Link>
                 <span className='mr-2'>|</span>
                 <span className='mx-2 text-gray-400 dark:text-gray-500'>
-                  {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
+                  {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}
                 </span>
               </>)}
 
@@ -81,8 +82,7 @@ export default function ArticleDetail(props) {
 
           </section>
 
-          <AdSlot type='in-article'/>
-
+          <WWAds className='w-full' orientation='horizontal'/>
         </header>
 
         {/* Notion文章主体 */}
@@ -91,6 +91,7 @@ export default function ArticleDetail(props) {
         </section>
 
         <section>
+          <AdSlot type='in-article'/>
            {/* 分享 */}
            <ShareBar post={post} />
         </section>

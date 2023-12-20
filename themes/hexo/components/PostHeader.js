@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
 
 export default function PostHeader({ post, siteInfo }) {
   const { locale } = useGlobal()
@@ -47,17 +47,17 @@ export default function PostHeader({ post, siteInfo }) {
                     passHref
                     className="pl-1 mr-2 cursor-pointer hover:underline">
 
-                    {locale.COMMON.POST_TIME}: {post?.publishTime}
+                    {locale.COMMON.POST_TIME}: {post?.publishDay}
 
                   </Link>
                 </>
               )}
               <div className="pl-1 mr-2">
-                {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
+                {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}
               </div>
             </div>
 
-            {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
+            {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
               {locale.COMMON.VIEWS}
             </div>}

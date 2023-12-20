@@ -10,9 +10,11 @@ import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { isBrowser } from '@/lib/utils'
 import { uploadDataToAlgolia } from '@/lib/algolia'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 根据notion的slug访问页面
+ * 只解析一级目录例如 /about
  * @param {*} props
  * @returns
  */
@@ -41,7 +43,7 @@ const Slug = props => {
     // 404
     if (!post) {
       setTimeout(() => {
-        if (isBrowser()) {
+        if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
             router.push('/404').then(() => {
@@ -65,7 +67,7 @@ const Slug = props => {
   }, [post])
 
   const meta = {
-    title: post ? `${post?.title} | ${siteInfo?.title}` : `${props?.siteInfo?.title || BLOG.TITLE} | loading`,
+    title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `${siteConfig('TITLE')} | loading`,
     description: post?.summary,
     type: post?.type,
     slug: post?.slug,
@@ -75,7 +77,7 @@ const Slug = props => {
   }
   props = { ...props, lock, meta, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
   return <Layout {...props} />
 }
 
@@ -90,7 +92,7 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') < 0).map(row => ({ params: { prefix: row.slug } })),
+    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
     fallback: true
   }
 }
@@ -111,13 +113,12 @@ export async function getStaticProps({ params: { prefix } }) {
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
-    const pageId = prefix.slice(-1)[0]
+    const pageId = prefix
     if (pageId.length >= 32) {
       const post = await getNotion(pageId)
       props.post = post
     }
   }
-
   // 无法获取文章
   if (!props?.post) {
     props.post = null
@@ -129,12 +130,13 @@ export async function getStaticProps({ params: { prefix } }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
-  if (BLOG.ALGOLIA_APP_ID && BLOG.ALGOLIA_APP_KEY) {
+  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
+  if (BLOG.ALGOLIA_APP_ID) {
     uploadDataToAlgolia(props?.post)
   }
 
   // 推荐关联文章处理
-  const allPosts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
