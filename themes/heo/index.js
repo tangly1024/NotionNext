@@ -86,6 +86,8 @@ const LayoutBase = props => {
           </div>
         </div>
       </main>
+      {/* 广告嵌入 */}
+        <AdSlot type={'native'} />
       {/* 页脚 */}
       <Footer title={siteConfig('TITLE')} />
     </div>
@@ -238,7 +240,7 @@ const LayoutArchive = props => {
       <div id="nav-bar-wrapper" className="h-16">
         <NavBar {...props} />
       {/* 广告嵌入 */}
-        <AdSlot type={'in-article'} />
+        <AdSlot type={'flow'} />
       </div>
     </header>
   )
