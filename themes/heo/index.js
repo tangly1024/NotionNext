@@ -237,6 +237,8 @@ const LayoutArchive = props => {
       {/* 顶部导航 */}
       <div id="nav-bar-wrapper" className="h-16">
         <NavBar {...props} />
+      {/* 广告嵌入 */}
+        <AdSlot type={'in-article'} />
       </div>
     </header>
   )
