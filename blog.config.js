@@ -223,6 +223,13 @@ const BLOG = {
     {
       name: 'Star Sky',
       artist: 'Two Steps From Hell',
+      url: 'https://music.163.com/song/media/outer/url?id=1329938686.mp3',
+      cover:
+            'http://p2.music.126.net/MQ3gmAG-bv135HSC7BqeOw==/109951163705416566.jpg?param=130y130'
+    },
+    {
+      name: 'The Best Of Me',
+      artist: 'Dion Timmer / The Arcturians',
       url: 'https://music.163.com/song/media/outer/url?id=31654478.mp3',
       cover:
             'http://p2.music.126.net/n41bSTrQwG_lQzkXz7cygg==/109951163892182787.jpg?param=130y130'
