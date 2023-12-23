@@ -1,10 +1,11 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true'
-})
-
 const { THEME } = require('./blog.config')
 const fs = require('fs')
 const path = require('path')
+const BLOG = require('./blog.config')
+
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: BLOG.BUNDLE_ANALYZER
+})
 
 /**
  * 扫描指定目录下的文件夹名，用于获取当前有几个主题
