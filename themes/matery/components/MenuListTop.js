@@ -29,7 +29,7 @@ export const MenuListTop = (props) => {
 
   return (
     <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
-      {links?.map(link => <MenuItemDrop key={link?.id} link={link}/>)}
+      {links?.map((link, index) => <MenuItemDrop key={index} link={link}/>)}
     </nav>
   )
 }
