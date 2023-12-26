@@ -25,7 +25,7 @@ const Footer = ({ title }) => {
         <h1 className='text-xs pt-2 text-light-500 dark:text-gray-400'><span>本网站由<a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral'><img src='./youpai1.png' alt='又拍云'/></a>提供CDN加速</span></h1>
         <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {siteConfig('VERSION')}</a>.</p></span><br/>
         
-        
+      
     </footer>
   )
 }
