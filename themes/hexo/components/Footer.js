@@ -22,7 +22,7 @@ const Footer = ({ title }) => {
         <i className='fas fa-users'/> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}</h1>
         <h1 className='text-xs pt-2 text-light-500 dark:text-gray-400'>本网站由又拍云提供CDN加速 <a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral' className='dark:text-gray-300'>NotionNext</a>.</h1>
-        <h1 className="text-xs pt-2 text-light-500 dark:text-gray-400">本网站由&nbsp;<a href="https://www.upyun.com/?utm_source=lianmeng&amp;utm_medium=referral"><img src="./youpai.png" alt="又拍云" style="display: inline-block;"></a>&nbsp;提供CDN加速</h1>
+        <h1 className="text-xs pt-2 text-light-500 dark:text-gray-400">本网站由<a href="https://www.upyun.com/?utm_source=lianmeng&amp;utm_medium=referral"><img src="./youpai.png" alt="又拍云"></a>提供CDN加速</h1>
         <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {siteConfig('VERSION')}</a>.</p></span><br/>
         
       
