@@ -21,8 +21,11 @@ const Footer = ({ title }) => {
       <span className='pl-2 hidden busuanzi_container_site_uv'>
         <i className='fas fa-users'/> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
         <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{title} {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}</h1>
+        <!--
         <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {siteConfig('VERSION')}</a>.</p></span><br/>
-
+        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {siteConfig('VERSION')}</a>. 本网站由<a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral' className='dark:text-gray-300'>又拍云</a>提供CDN加速。</p>
+        -->
+        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>Powered by <a href='https://github.com/tangly1024/NotionNext' className='dark:text-gray-300'>NotionNext {siteConfig('VERSION')}</a>。<br/><span class="hl">&lt;/span&gt;&lt;br/&gt;</span> 本网站由<a href='https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral' className='dark:text-gray-300'>又拍云</a>提供CDN加速。</p>
     </footer>
   )
 }
