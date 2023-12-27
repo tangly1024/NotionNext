@@ -101,7 +101,7 @@ const ExternalPlugin = (props) => {
         {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51/>}
 
         {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && (<>
-            <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer/>
+            <script id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js" defer/>
             {/* <script async dangerouslySetInnerHTML={{
               __html: `
                     LA.init({id:"${ANALYTICS_51LA_ID}",ck:"${ANALYTICS_51LA_CK}",hashMode:true,autoTrack:true})
@@ -139,7 +139,7 @@ const ExternalPlugin = (props) => {
             />
         </>)}
 
-        {AD_WWADS_ID && <script type="text/javascript" charSet="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async></script>}
+        {AD_WWADS_ID && <script type="text/javascript" src="https://cdn.wwads.cn/js/makemoney.js" async></script>}
 
         {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />}
 
