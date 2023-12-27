@@ -24,11 +24,11 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                 </div>
                 <ul>
                     {posts?.map(post => {
-                      const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
-                      if (post && !post.pageCoverThumbnail && CONFIG.POST_LIST_COVER_DEFAULT) {
+                      const showPreview = siteConfig('HEO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+                      if (post && !post.pageCoverThumbnail && siteConfig('HEO_POST_LIST_COVER_DEFAULT', null, CONFIG)) {
                         post.pageCoverThumbnail = siteInfo?.pageCover
                       }
-                      const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
+                      const showPageCover = siteConfig('HEO_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && !showPreview
                       return <div key={post.id} className={'cursor-pointer flex flex-row mb-4 h-24 md:flex-row group w-full  dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden'}>
 
                             {/* 图片封面 */}

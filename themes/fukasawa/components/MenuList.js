@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import CONFIG_FUKA from '../config'
+import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { MenuItemDrop } from './MenuItemDrop'
 import { MenuItemCollapse } from './MenuItemCollapse'
@@ -10,10 +10,10 @@ export const MenuList = (props) => {
 
   let links = [
     { name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_FUKA.MENU_CATEGORY },
-    { name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_FUKA.MENU_TAG },
-    { name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_FUKA.MENU_ARCHIVE },
-    { name: locale.NAV.SEARCH, to: '/search', show: CONFIG_FUKA.MENU_SEARCH }
+    { name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('FUKASAWA_MENU_CATEGORY', null, CONFIG) },
+    { name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('FUKASAWA_MENU_TAG', null, CONFIG) },
+    { name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('FUKASAWA_MENU_ARCHIVE', null, CONFIG) },
+    { name: locale.NAV.SEARCH, to: '/search', show: siteConfig('FUKASAWA_MENU_SEARCH', null, CONFIG) }
   ]
 
   if (customNav) {

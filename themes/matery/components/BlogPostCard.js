@@ -8,12 +8,12 @@ import { formatDateFmt } from '@/lib/formatDate'
 // import Image from 'next/image'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
+  const showPreview = siteConfig('MATERY_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   // matery 主题默认强制显示图片
   if (post && !post.pageCoverThumbnail) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail
+  const showPageCover = siteConfig('MATERY_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
   const delay = (index % 3) * 300
   return (
         <div

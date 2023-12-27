@@ -21,7 +21,7 @@ import SearchNav from './components/SearchNav'
 import BlogPostArchive from './components/BlogPostArchive'
 import { ArticleLock } from './components/ArticleLock'
 import PostHeader from './components/PostHeader'
-import Comment, { commentEnable } from '@/components/Comment'
+import Comment from '@/components/Comment'
 import NotionPage from '@/components/NotionPage'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
@@ -310,6 +310,9 @@ const LayoutSlug = props => {
       <PostHeader {...props} />
     </header>
   )
+  const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
+        siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
+        siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   return (
     <LayoutBase

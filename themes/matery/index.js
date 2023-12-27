@@ -67,7 +67,7 @@ const LayoutBase = props => {
                 {headerSlot}
             </Transition>
 
-            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
+            <main id="wrapper" className={`${siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
                 {/* 嵌入区域 */}
                 <div id="container-slot" className={`w-full max-w-6xl ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                     {containerSlot}
@@ -113,7 +113,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />} />
+  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && <Hero {...props} />} />
 }
 
 /**

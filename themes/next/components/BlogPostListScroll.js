@@ -13,7 +13,7 @@ import { siteConfig } from '@/lib/config'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY }) => {
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = siteConfig('NEXT_POST_LIST_SUMMARY', null, CONFIG) }) => {
   const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, postsPerPage)

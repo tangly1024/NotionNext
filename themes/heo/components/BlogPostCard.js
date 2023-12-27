@@ -5,13 +5,13 @@ import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
-  if (post && !post.pageCoverThumbnail && CONFIG.POST_LIST_COVER_DEFAULT) {
+  const showPreview = siteConfig('HEO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  if (post && !post.pageCoverThumbnail && siteConfig('HEO_POST_LIST_COVER_DEFAULT', null, CONFIG)) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
+  const showPageCover = siteConfig('HEO_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && !showPreview
   return (
-        <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
+        <div className={` ${siteConfig('HEO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`} >
 
             <div
                 data-aos="fade-up"

@@ -14,7 +14,7 @@ export default function ArticleCopyright () {
 
   const { locale } = useGlobal()
 
-  if (!CONFIG.ARTICLE_COPYRIGHT) {
+  if (!siteConfig('HEXO_ARTICLE_COPYRIGHT', null, CONFIG)) {
     return <></>
   }
 

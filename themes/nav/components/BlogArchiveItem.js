@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 
 /**

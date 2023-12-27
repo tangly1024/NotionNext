@@ -1130,9 +1130,10 @@ code[class*='language-'] {
   transition: background 20ms ease-in 0s;
   cursor: pointer;
   width: 100%;
+  opacity: 0.9;
 
   padding: 6px 2px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.2;
   display: flex;
   align-items: center;

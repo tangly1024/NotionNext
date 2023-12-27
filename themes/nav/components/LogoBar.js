@@ -16,7 +16,7 @@ export default function LogoBar(props) {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={siteInfo?.icon?.replaceAll('width=400', 'width=280')}
                         height='44px' alt={siteConfig('AUTHOR') + ' - ' + siteConfig('NEXT_PUBLIC_BIO')} className='md:block transition-all hover:scale-110 duration-150' placeholderSrc='' />
-                    {CONFIG.SHOW_TITLE_TEXT && siteConfig('TITLE')}
+                    {siteConfig('NAV_SHOW_TITLE_TEXT', null, CONFIG) && siteConfig('TITLE')}
                 </Link>
         </div>
   )
