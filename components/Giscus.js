@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Giscus from '@giscus/react'
 
@@ -15,17 +15,17 @@ const GiscusComponent = () => {
 
   return (
     <Giscus
-      repo={BLOG.COMMENT_GISCUS_REPO}
-      repoId={BLOG.COMMENT_GISCUS_REPO_ID}
-      categoryId={BLOG.COMMENT_GISCUS_CATEGORY_ID}
-      mapping={BLOG.COMMENT_GISCUS_MAPPING}
-      reactionsEnabled={BLOG.COMMENT_GISCUS_REACTIONS_ENABLED}
-      emitMetadata={BLOG.COMMENT_GISCUS_EMIT_METADATA}
+      repo={siteConfig('COMMENT_GISCUS_REPO')}
+      repoId={siteConfig('COMMENT_GISCUS_REPO_ID')}
+      categoryId={siteConfig('COMMENT_GISCUS_CATEGORY_ID')}
+      mapping={siteConfig('COMMENT_GISCUS_MAPPING')}
+      reactionsEnabled={siteConfig('COMMENT_GISCUS_REACTIONS_ENABLED')}
+      emitMetadata={siteConfig('COMMENT_GISCUS_EMIT_METADATA')}
       theme={theme}
-      inputPosition={BLOG.COMMENT_GISCUS_INPUT_POSITION}
-      lang={BLOG.COMMENT_GISCUS_LANG}
-      loading={BLOG.COMMENT_GISCUS_LOADING}
-      crossorigin={BLOG.COMMENT_GISCUS_CROSSORIGIN}
+      inputPosition={siteConfig('COMMENT_GISCUS_INPUT_POSITION')}
+      lang={siteConfig('COMMENT_GISCUS_LANG')}
+      loading={siteConfig('COMMENT_GISCUS_LOADING')}
+      crossorigin={siteConfig('COMMENT_GISCUS_CROSSORIGIN')}
     />
   )
 }

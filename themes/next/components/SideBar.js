@@ -3,7 +3,6 @@ import InfoCard from './InfoCard'
 import TagGroups from './TagGroups'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import React from 'react'
 
 /**
  * 侧边栏

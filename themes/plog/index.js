@@ -2,8 +2,7 @@ import CONFIG from './config'
 import { createContext, useContext, useEffect, useState } from 'react'
 import Header from './components/Nav'
 import { useGlobal } from '@/lib/global'
-
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import { isBrowser } from '@/lib/utils'
@@ -100,7 +99,7 @@ const LayoutIndex = props => {
 const LayoutPostList = props => {
   return (
         <LayoutBase {...props}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
         </LayoutBase>
   )
 }
