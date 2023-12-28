@@ -9,6 +9,6 @@
 #youpailogo{
     display: inline-block;
 }
-#tin-darkModeButton,tin-JumpToCommentButton{
+#tin-darkModeButton,#tin-JumpToCommentButton{
     display: none;
 }
