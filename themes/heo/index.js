@@ -284,7 +284,7 @@ const LayoutArchive = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const { locale } = useGlobal()
+  const { locale, fullWidth } = useGlobal()
 
   const [hasCode, setHasCode] = useState(false)
 
@@ -294,7 +294,7 @@ const LayoutSlug = props => {
   }, [])
 
   // 右侧栏
-  const slotRight = <SideRight {...props} />
+  const slotRight = fullWidth ? null : <SideRight {...props} />
   const headerSlot = (
     <header
       data-aos="fade-up"
@@ -307,7 +307,7 @@ const LayoutSlug = props => {
       <div id="nav-bar-wrapper">
         <NavBar {...props} />
       </div>
-      <PostHeader {...props} />
+      {fullWidth ? null : <PostHeader {...props} />}
     </header>
   )
   const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
@@ -322,7 +322,7 @@ const LayoutSlug = props => {
       showTag={false}
       slotRight={slotRight}
     >
-      <div className={`w-full xl:max-w-5xl ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
+      <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
         {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && (
