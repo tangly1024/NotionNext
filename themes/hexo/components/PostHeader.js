@@ -12,6 +12,12 @@ export default function PostHeader({ post, siteInfo }) {
   if (!post) {
     return <></>
   }
+
+  // 文章全屏隐藏标头
+  if (post.fullWidth) {
+    return <div className='my-8'/>
+  }
+
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
 
   return (
