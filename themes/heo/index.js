@@ -59,7 +59,7 @@ const LayoutBase = props => {
 
   // 全屏模式下的最大宽度
   const { fullWidth } = useGlobal()
-  const maxWidth = fullWidth ? 'max-w-[86rem]' : 'max-w-[86rem]' // 最大宽度都是86rem，和顶部菜单栏对齐，设置成空则与网页对齐
+  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
   return (
     <div
