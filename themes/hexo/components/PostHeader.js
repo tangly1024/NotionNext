@@ -7,14 +7,14 @@ import { formatDateFmt } from '@/lib/formatDate'
 import { siteConfig } from '@/lib/config'
 
 export default function PostHeader({ post, siteInfo }) {
-  const { locale } = useGlobal()
+  const { locale, fullWidth } = useGlobal()
 
   if (!post) {
     return <></>
   }
 
   // 文章全屏隐藏标头
-  if (post.fullWidth) {
+  if (fullWidth) {
     return <div className='my-8'/>
   }
 

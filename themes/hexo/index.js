@@ -40,9 +40,8 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { post, children, headerSlot, floatSlot, slotTop, meta, className } = props
-  const { onLoading } = useGlobal()
-  const fullWidth = post?.fullWidth ?? false
+  const { children, headerSlot, floatSlot, slotTop, meta, className } = props
+  const { onLoading, fullWidth } = useGlobal()
 
   return (
         <div id='theme-hexo'>
