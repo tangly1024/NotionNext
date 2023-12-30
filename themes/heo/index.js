@@ -57,6 +57,10 @@ const LayoutBase = props => {
     meta
   } = props
 
+  // 全屏模式下的最大宽度
+  const { fullWidth } = useGlobal()
+  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+
   return (
     <div
       id="theme-heo"
@@ -72,7 +76,7 @@ const LayoutBase = props => {
       {/* 主区块 */}
       <main
         id="wrapper-outer"
-        className={'flex-grow w-full max-w-[86rem] mx-auto relative md:px-5'}
+        className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5`}
       >
         <div
           id="container-inner"
@@ -131,10 +135,10 @@ const LayoutIndex = props => {
         <CategoryBar {...props} />
         {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
-          <BlogPostListPage {...props} />
+            <BlogPostListPage {...props} />
             )
           : (
-          <BlogPostListScroll {...props} />
+            <BlogPostListScroll {...props} />
             )}
       </div>
     </LayoutBase>
@@ -165,10 +169,10 @@ const LayoutPostList = props => {
         <CategoryBar {...props} />
         {siteConfig('POST_LIST_STYLE') === 'page'
           ? (
-          <BlogPostListPage {...props} />
+            <BlogPostListPage {...props} />
             )
           : (
-          <BlogPostListScroll {...props} />
+            <BlogPostListScroll {...props} />
             )}
       </div>
     </LayoutBase>
@@ -218,18 +222,18 @@ const LayoutSearch = props => {
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {!currentSearch
           ? (
-          <SearchNav {...props} />
+            <SearchNav {...props} />
             )
           : (
-          <div id="posts-wrapper">
-            {siteConfig('POST_LIST_STYLE') === 'page'
-              ? (
-              <BlogPostListPage {...props} />
-                )
-              : (
-              <BlogPostListScroll {...props} />
-                )}
-          </div>
+            <div id="posts-wrapper">
+              {siteConfig('POST_LIST_STYLE') === 'page'
+                ? (
+                  <BlogPostListPage {...props} />
+                  )
+                : (
+                  <BlogPostListScroll {...props} />
+                  )}
+            </div>
             )}
       </div>
     </LayoutBase>
@@ -284,7 +288,7 @@ const LayoutArchive = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const { locale } = useGlobal()
+  const { locale, fullWidth } = useGlobal()
 
   const [hasCode, setHasCode] = useState(false)
 
@@ -294,7 +298,7 @@ const LayoutSlug = props => {
   }, [])
 
   // 右侧栏
-  const slotRight = <SideRight {...props} />
+  const slotRight = fullWidth ? null : <SideRight {...props} />
   const headerSlot = (
     <header
       data-aos="fade-up"
@@ -307,12 +311,12 @@ const LayoutSlug = props => {
       <div id="nav-bar-wrapper">
         <NavBar {...props} />
       </div>
-      <PostHeader {...props} />
+      {fullWidth ? null : <PostHeader {...props} />}
     </header>
   )
   const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
-        siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
-        siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
+    siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
+    siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   return (
     <LayoutBase
@@ -322,7 +326,7 @@ const LayoutSlug = props => {
       showTag={false}
       slotRight={slotRight}
     >
-      <div className={`w-full xl:max-w-5xl ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
+      <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
         {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && (
@@ -360,21 +364,23 @@ const LayoutSlug = props => {
               )}
             </article>
 
-            <div className={`${commentEnable && post ? '' : 'hidden'}`}>
-              <hr className="my-4 border-dashed" />
+            {fullWidth
+              ? null
+              : <div className={`${commentEnable && post ? '' : 'hidden'}`}>
+                <hr className="my-4 border-dashed" />
 
-              {/* 评论互动 */}
-              <div className="duration-200 overflow-x-auto px-5">
-                <div className="text-2xl dark:text-white">
-                  <i className="fas fa-comment mr-1" />
-                  {locale.COMMON.COMMENTS}
+                {/* 评论互动 */}
+                <div className="duration-200 overflow-x-auto px-5">
+                  <div className="text-2xl dark:text-white">
+                    <i className="fas fa-comment mr-1" />
+                    {locale.COMMON.COMMENTS}
+                  </div>
+                  <Comment frontMatter={post} className="" />
+                  <div className="py-2">
+                    <AdSlot />
+                  </div>
                 </div>
-                <Comment frontMatter={post} className="" />
-                <div className="py-2">
-                  <AdSlot />
-                </div>
-              </div>
-            </div>
+              </div>}
           </div>
         )}
       </div>
@@ -390,7 +396,7 @@ const LayoutSlug = props => {
  */
 const Layout404 = props => {
   const { meta, siteInfo } = props
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
   return (
     <div
       id="theme-heo"
@@ -411,7 +417,7 @@ const Layout404 = props => {
       {/* 主区块 */}
       <main
         id="wrapper-outer"
-        className={'flex-grow max-w-4xl w-screen mx-auto px-5'}
+        className={`flex-grow ${fullWidth ? '' : 'max-w-4xl'} w-screen mx-auto px-5`}
       >
         <div id="error-wrapper" className={'w-full mx-auto justify-center'}>
           <Transition
