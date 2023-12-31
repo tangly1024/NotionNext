@@ -14,7 +14,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '一尊还酹江月',
   HEO_HERO_TITLE_3: 'blog.vama.uk',
   HEO_HERO_TITLE_4: '交易实盘',
-  HEO_HERO_TITLE_5: 'My Trading Portfolio • 我的交易记',
+  HEO_HERO_TITLE_5: 'Trading Portfolio • 我的交易记',
   HEO_HERO_TITLE_LINK: 'https://blog.vama.uk',
 
   // 英雄区显示三个置顶分类
