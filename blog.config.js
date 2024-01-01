@@ -195,7 +195,7 @@ const BLOG = {
   WIDGET_PET: process.env.NEXT_PUBLIC_WIDGET_PET || true, // 是否显示宠物挂件
   WIDGET_PET_LINK:
         process.env.NEXT_PUBLIC_WIDGET_PET_LINK ||
-        'https://github.com/VamRed/NotionNext/cdn/1.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
+        'https://cdn.jsdelivr.net/gh/VamRed/ai_zzy@1/cdn/1.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
   WIDGET_PET_SWITCH_THEME: process.env.NEXT_PUBLIC_WIDGET_PET_SWITCH_THEME || false, // 点击宠物挂件切换博客主题
 
   // 音乐播放插件
@@ -211,18 +211,18 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '风を共に舞う気持ち',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731419.mp3',
+      name: 'You'd Be Stars',
+      artist: 'Sydney Rose',
+      url: 'https://github.com/VamRed/ai_zzy/assets/120654757/630e7e84-314c-4d9a-8adc-713a81008bed',
       cover:
-            'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+            'https://github.com/VamRed/ai_zzy/assets/120654757/b6adeb24-9269-466a-add8-99dcfddb12c4'
     },
     {
-      name: '王都グランセル',
-      artist: 'Falcom Sound Team jdk',
+      name: 'Fuck Being Sober',
+      artist: 'Annika Wells',
       url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
       cover:
-            'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+            'https://github.com/VamRed/ai_zzy/assets/120654757/d47c504b-93be-4865-8bf6-fe0440051052'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
