@@ -27,16 +27,6 @@ export default function ArticleCopyright () {
             {siteConfig('AUTHOR')}
           </Link>
         </li>
-        <li>
-        <strong className='mr-2'>{locale.COMMON.URL}:</strong>
-          <a className="whitespace-normal break-words hover:underline" href={path}>
-            {path}
-          </a>
-        </li>
-        <li>
-          <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
-          {locale.COMMON.COPYRIGHT_NOTICE}
-        </li>
       </ul>
     </section>
   )
