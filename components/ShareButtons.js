@@ -13,7 +13,7 @@ import {
   TelegramShareButton,
   TelegramIcon,
   WeiboShareButton,
-  WeiboIcon,
+  WeiboIcon
 } from 'react-share'
 
 const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
