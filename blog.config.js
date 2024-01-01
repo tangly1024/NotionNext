@@ -211,7 +211,7 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: 'You'd Be Stars',
+      name: 'You_d Be Stars',
       artist: 'Sydney Rose',
       url: 'https://github.com/VamRed/ai_zzy/assets/120654757/630e7e84-314c-4d9a-8adc-713a81008bed',
       cover:
