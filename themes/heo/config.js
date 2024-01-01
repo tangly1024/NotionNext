@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '🍭Hey 亲爱的', url: 'https://blog.vama.uk' },
+    { title: '🍭哈喽大家', url: 'https://blog.vama.uk' },
     { title: '好久不见~ ๑>ᴗ<๑', url: 'https://blog.vama.uk' }
   ],
 
