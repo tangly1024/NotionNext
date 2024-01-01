@@ -1,0 +1,21 @@
+{
+	"version":"Sample 1.0.0",
+  "model": "model2.moc",
+	"textures":[
+		"model.1024/texture_00.png"
+	],
+	"motions":{
+		"idle":[
+			{"file":"motions/daiji_idle_01.mtn"}
+		],
+		"":[
+			{"file":"motions/motou_01.mtn"},
+			{"file":"motions/motou_02.mtn"},
+			{"file":"motions/motou_03.mtn"}
+		]
+	},
+	"hit_areas":[    
+		{"name":"face","id":"D_REF.FACE"},
+		{"name":"body","id":"D_REF.BODY"}
+	]
+}
