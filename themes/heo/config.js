@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到虾滑主页', url: 'https://blog.tangly1024.com' },
-    { title: '去Voting板块，万一我们谈下来了呢', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到虾滑主页', url: '' },
+    { title: '去Voting板块，万一我们谈下来了呢', url: '' }
   ],
 
   // 英雄区(首页顶部大卡)
@@ -37,7 +37,7 @@ const CONFIG = {
     '🤖️ 户外活动爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
