@@ -12,7 +12,7 @@ const Tabs = ({ className, children }) => {
     return <></>
   }
 
-  children = children.filter(c => c !== '')
+  children = children.filter(c => c && c !== '')
 
   let count = 0
   children.forEach(e => {
@@ -39,7 +39,7 @@ const Tabs = ({ className, children }) => {
         <ul className='flex justify-center space-x-5 pb-4 dark:text-gray-400 text-gray-600 overflow-auto'>
             {children.map((item, index) => {
               return <li key={index}
-                    className={(currentTab === index ? 'font-black border-b-2 border-red-400 text-red-400 animate__animated animate__jello ' : 'font-extralight cursor-pointer') + ' text-sm font-sans '}
+                    className={(currentTab === index ? 'font-black border-b-2 border-red-600 text-red-600 animate__animated animate__jello ' : 'font-extralight cursor-pointer') + ' text-sm font-sans '}
                     onClick={() => {
                       tabClickHandle(index)
                     }}>
@@ -51,9 +51,8 @@ const Tabs = ({ className, children }) => {
             {children.map((item, index) => {
               return <section key={index}
                     data-aos="fade-up"
-                    data-aos-duration="600"
-                    data-aos-easing="ease-in-out"
-                    data-aos-once="false"
+                    data-aos-duration="300"
+                    data-aos-once="true"
                     data-aos-anchor-placement="top-bottom">
                     {currentTab === index && item}
                 </section>

@@ -1,4 +1,0 @@
-const CONFIG_NOBELIUM = {
-  TEST_CONFIG: 'TESET'
-}
-export default CONFIG_NOBELIUM

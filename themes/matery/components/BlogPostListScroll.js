@@ -1,11 +1,11 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
-import throttle from 'lodash.throttle'
-import React from 'react'
-import CONFIG_MATERY from '../config_matery'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import CONFIG from '../config'
 import { getListByPage } from '@/lib/utils'
+import throttle from 'lodash.throttle'
 
 /**
  * 博客列表滚动分页
@@ -14,11 +14,20 @@ import { getListByPage } from '@/lib/utils'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MATERY.POST_LIST_SUMMARY }) => {
-  const postsPerPage = BLOG.POSTS_PER_PAGE
-  const [page, updatePage] = React.useState(1)
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = siteConfig('MATERY_POST_LIST_SUMMARY', null, CONFIG), siteInfo }) => {
+  const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
+  const [page, updatePage] = useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
+  // 监听滚动
+  useEffect(() => {
+    window.addEventListener('scroll', scrollTrigger)
+    return () => {
+      window.removeEventListener('scroll', scrollTrigger)
+    }
+  })
 
+  const targetRef = useRef(null)
+  const { locale } = useGlobal()
   let hasMore = false
   if (posts) {
     const totalCount = posts.length
@@ -30,25 +39,16 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MA
     updatePage(page + 1)
   }
 
-  // 监听滚动自动分页加载
-  const scrollTrigger = React.useCallback(throttle(() => {
-    const scrollS = window.scrollY + window.outerHeight
-    const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
-    if (scrollS > clientHeight + 100) {
-      handleGetMore()
-    }
-  }, 500))
-
-  // 监听滚动
-  React.useEffect(() => {
-    window.addEventListener('scroll', scrollTrigger)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-    }
-  })
-
-  const targetRef = React.useRef(null)
-  const { locale } = useGlobal()
+  const throttleMs = 200
+  const scrollTrigger = useCallback(throttle(() => {
+    requestAnimationFrame(() => {
+      const scrollS = window.scrollY + window.outerHeight
+      const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
+      if (scrollS > clientHeight + 100) {
+        handleGetMore()
+      }
+    })
+  }, throttleMs))
 
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
@@ -56,9 +56,11 @@ const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG_MA
     return <div id='container' ref={targetRef} className='w-full'>
 
       {/* 文章列表 */}
-      <div className='flex flex-wrap space-y-1 lg:space-y-4 px-2'>
+      <div className="pt-4 flex flex-wrap pb-12" >
         {postsToShow.map(post => (
-          <BlogPostCard key={post.id} post={post} showSummary={showSummary}/>
+            <div key={post.id} className='xl:w-1/3 md:w-1/2 w-full p-4'>
+            <BlogPostCard index={posts.indexOf(post)} post={post} siteInfo={siteInfo} />
+            </div>
         ))}
       </div>
 

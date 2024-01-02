@@ -1,14 +1,14 @@
 import { useGlobal } from '@/lib/global'
-import throttle from 'lodash.throttle'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
 import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
-import MenuButtonGroupTop from './MenuButtonGroupTop'
+import { MenuListTop } from './MenuListTop'
 import SideBarDrawer from '@/components/SideBarDrawer'
 import SideBar from './SideBar'
+import throttle from 'lodash.throttle'
 
 let windowTop = 0
 
@@ -22,36 +22,38 @@ const TopNav = props => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
   const { isDarkMode } = useGlobal()
+  const throttleMs = 200
+  const scrollTrigger = useCallback(throttle(() => {
+    requestAnimationFrame(() => {
+      const scrollS = window.scrollY
+      const nav = document.querySelector('#sticky-nav')
+      const header = document.querySelector('#header')
+      const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight * 2)// 非首页无大图时影藏顶部 滚动条置顶时隐藏// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+      // 是否将导航栏透明
+      const navTransparent = header && scrollS < 300 // 透明导航条的条件
 
-  const scrollTrigger = throttle(() => {
-    const scrollS = window.scrollY
-    const nav = document.querySelector('#sticky-nav')
-    const header = document.querySelector('#header')
-    const showNav = scrollS <= windowTop || scrollS < 5 // 非首页无大图时影藏顶部 滚动条置顶时隐藏
-    // 是否将导航栏透明
-    const navTransparent = header && scrollS < 300 // 透明导航条的条件
+      if (navTransparent) {
+        nav && nav.classList.replace('bg-indigo-700', 'bg-none')
+        nav && nav.classList.replace('text-black', 'text-white')
+        nav && nav.classList.replace('shadow-xl', 'shadow-none')
+        nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
+      } else {
+        nav && nav.classList.replace('bg-none', 'bg-indigo-700')
+        nav && nav.classList.replace('text-white', 'text-black')
+        nav && nav.classList.replace('shadow-none', 'shadow-xl')
+        nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
+      }
 
-    if (navTransparent) {
-      nav && nav.classList.replace('bg-indigo-700', 'bg-none')
-      nav && nav.classList.replace('text-black', 'text-white')
-      nav && nav.classList.replace('drop-shadow-xl', 'shadow-none')
-      nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
-    } else {
-      nav && nav.classList.replace('bg-none', 'bg-indigo-700')
-      nav && nav.classList.replace('text-white', 'text-black')
-      nav && nav.classList.replace('shadow-none', 'drop-shadow-xl')
-      nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
-    }
-
-    if (!showNav) {
-      nav && nav.classList.replace('top-0', '-top-20')
-      windowTop = scrollS
-    } else {
-      nav && nav.classList.replace('-top-20', 'top-0')
-      windowTop = scrollS
-    }
-    navDarkMode()
-  }, 200)
+      if (!showNav) {
+        nav && nav.classList.replace('top-0', '-top-20')
+        windowTop = scrollS
+      } else {
+        nav && nav.classList.replace('-top-20', 'top-0')
+        windowTop = scrollS
+      }
+      navDarkMode()
+    })
+  }, throttleMs))
 
   const navDarkMode = () => {
     const nav = document.getElementById('sticky-nav')
@@ -127,7 +129,7 @@ const TopNav = props => {
       <div id='top-nav'>
             <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
             {/* 导航栏 */}
-            <div id='sticky-nav' className={'flex justify-center top-0 shadow-black shadow-none fixed bg-none dark:bg-hexo-black-gray text-gray-200 w-full z-30 transform transition-all duration-200'}>
+            <div id='sticky-nav' className={'flex justify-center top-0 shadow-none fixed bg-none dark:bg-hexo-black-gray text-gray-200 w-full z-30 transform transition-all duration-200'}>
                 <div className='w-full max-w-6xl flex justify-between items-center px-4 py-2'>
                     {/* 左侧功能 */}
                     <div className='justify-start items-center block lg:hidden '>
@@ -142,7 +144,7 @@ const TopNav = props => {
 
                     {/* 右侧功能 */}
                     <div className='mr-1 justify-end items-center '>
-                        <div className='hidden lg:flex'> <MenuButtonGroupTop {...props} /></div>
+                        <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
                         <div className='block lg:hidden'><Link href={'/search'} passHref>
                             <i className='fas fa-search' />
                         </Link></div>

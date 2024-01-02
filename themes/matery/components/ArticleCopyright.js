@@ -1,20 +1,20 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function ArticleCopyright () {
   const router = useRouter()
-  const [path, setPath] = useState(BLOG.LINK + router.asPath)
+  const [path, setPath] = useState(siteConfig('LINK') + router.asPath)
   useEffect(() => {
     setPath(window.location.href)
   })
 
   const { locale } = useGlobal()
 
-  if (!CONFIG_MATERY.ARTICLE_COPYRIGHT) {
+  if (!siteConfig('MATERY_ARTICLE_COPYRIGHT', null, CONFIG)) {
     return <></>
   }
 
@@ -24,7 +24,7 @@ export default function ArticleCopyright () {
         <li>
           <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
           <Link href={'/about'} className="hover:underline">
-            {BLOG.AUTHOR}
+            {siteConfig('AUTHOR')}
           </Link>
         </li>
         <li>

@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
-import React from 'react'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 点击召唤目录抽屉
@@ -10,10 +10,10 @@ import CONFIG_HEXO from '../config_hexo'
  * @constructor
  */
 const TocDrawerButton = (props) => {
-  if (!CONFIG_HEXO.WIDGET_TOC) {
+  const { locale } = useGlobal()
+  if (!siteConfig('HEXO_WIDGET_TOC', null, CONFIG)) {
     return <></>
   }
-  const { locale } = useGlobal()
   return (<div onClick={props.onClick} className='py-2 px-3 cursor-pointer transform duration-200 flex justify-center items-center w-7 h-7 text-center' title={locale.POST.TOP} >
     <i className='fas fa-list-ol text-xs'/>
   </div>)

@@ -1,10 +1,19 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
+import CONFIG from '../config'
+import { SvgIcon } from './SvgIcon'
+import { MenuItemDrop } from './MenuItemDrop'
+import Collapse from '@/components/Collapse'
+import { MenuItemCollapse } from './MenuItemCollapse'
+import LazyImage from '@/components/LazyImage'
+import RandomPostButton from './RandomPostButton'
+import SearchButton from './SearchButton'
+import { siteConfig } from '@/lib/config'
 
-const Nav = ({ navBarTitle, fullWidth }) => {
-  const useSticky = !BLOG.autoCollapsedNavBar
+const Nav = props => {
+  const { navBarTitle, fullWidth, siteInfo } = props
+  const useSticky = !JSON.parse(siteConfig('NOBELIUM_AUTO_COLLAPSE_NAV_BAR', true))
   const navRef = useRef(null)
   const sentinalRef = useRef([])
   const handler = ([entry]) => {
@@ -21,106 +30,95 @@ const Nav = ({ navBarTitle, fullWidth }) => {
   useEffect(() => {
     const obvserver = new window.IntersectionObserver(handler)
     obvserver.observe(sentinalRef.current)
-    // Don't touch this, I have no idea how it works XD
-    // return () => {
-    //   if (sentinalRef.current) obvserver.unobserve(sentinalRef.current)
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      if (sentinalRef.current) obvserver.unobserve(sentinalRef.current)
+    }
   }, [sentinalRef])
   return <>
-    <div className="observer-element h-4 md:h-12" ref={sentinalRef}></div>
-    <div
-      className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60 ${
-        !fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
-      }`}
-      id="sticky-nav"
-      ref={navRef}
-    >
-      <div className="flex items-center">
-        <Link href="/" aria-label={BLOG.title}>
+        <div className="observer-element h-4 md:h-12" ref={sentinalRef}></div>
+        <div
+            className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60 ${!fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
+                }`}
+            id="sticky-nav"
+            ref={navRef}
+        >
+            <div className="flex items-center">
+                <Link href="/" aria-label={siteConfig('TITLE')}>
 
-          <div className="h-6">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                width="24"
-                height="24"
-                className="fill-current text-black dark:text-white"
-              />
-              <rect width="24" height="24" fill="url(#paint0_radial)" />
-              <defs>
-                <radialGradient
-                  id="paint0_radial"
-                  cx="0"
-                  cy="0"
-                  r="1"
-                  gradientUnits="userSpaceOnUse"
-                  gradientTransform="rotate(45) scale(39.598)"
-                >
-                  <stop stopColor="#CFCFCF" stopOpacity="0.6" />
-                  <stop offset="1" stopColor="#E9E9E9" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-            </svg>
-          </div>
+                    <div className="h-6 w-6">
+                        {/* <SvgIcon/> */}
+                        {siteConfig('NOBELIUM_NAV_NOTION_ICON', null, CONFIG)
+                          ? <LazyImage src={siteInfo?.icon} width={24} height={24} alt={siteConfig('AUTHOR')} />
+                          : <SvgIcon />}
 
-        </Link>
-        {navBarTitle
-          ? (
-          <p className="ml-2 font-medium text-day dark:text-night header-name">
-            {navBarTitle}
-          </p>
-            )
-          : (
-          <p className="ml-2 font-medium text-day dark:text-night header-name">
-            {BLOG.title},{' '}
-            <span className="font-normal">{BLOG.description}</span>
-          </p>
-            )}
-      </div>
-      <NavBar />
-    </div>
-  </>;
+                    </div>
+
+                </Link>
+                {navBarTitle
+                  ? (
+                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name">
+                            {navBarTitle}
+                        </p>
+                    )
+                  : (
+                        <p className="ml-2 font-medium text-gray-800 dark:text-gray-300 header-name whitespace-nowrap">
+                            {siteConfig('TITLE')}
+                            {/* ,{' '}<span className="font-normal">{siteConfig('DESCRIPTION')}</span> */}
+                        </p>
+                    )}
+            </div>
+            <NavBar {...props} />
+        </div>
+    </>
 }
 
-const NavBar = (props) => {
-  const { customNav } = props
+const NavBar = props => {
+  const { customMenu, customNav } = props
+  const [isOpen, changeOpen] = useState(false)
+  const toggleOpen = () => {
+    changeOpen(!isOpen)
+  }
+  const collapseRef = useRef(null)
 
   const { locale } = useGlobal()
   let links = [
-    { id: 2, name: locale.NAV.RSS, to: '/feed', show: true },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: true },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: true },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: false },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: true }
+    { id: 2, name: locale.NAV.RSS, to: '/feed', show: siteConfig('ENABLE_RSS') && siteConfig('NOBELIUM_MENU_RSS', null, CONFIG), target: '_blank' },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('NOBELIUM_MENU_SEARCH', null, CONFIG) },
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('NOBELIUM_MENU_ARCHIVE', null, CONFIG) },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('NOBELIUM_MENU_CATEGORY', null, CONFIG) },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('NOBELIUM_MENU_TAG', null, CONFIG) }
   ]
   if (customNav) {
     links = links.concat(customNav)
   }
+
+  // 如果 开启自定义菜单，则覆盖Page生成的菜单
+  if (siteConfig('CUSTOM_MENU')) {
+    links = customMenu
+  }
+
+  if (!links || links.length === 0) {
+    return null
+  }
+
   return (
-    <div className="flex-shrink-0">
-      <ul className="flex flex-row">
-        {links.map(
-          link =>
-            link.show && (
-              <li
-                key={link.id}
-                className="block ml-4 text-black dark:text-gray-50 nav"
-              >
-                <Link href={link.to}>
-                  {link.name}
-                </Link>
-              </li>
-            )
-        )}
-      </ul>
-    </div>
-  );
+        <div className="flex-shrink-0 flex">
+            <ul className="hidden md:flex flex-row">
+                {links?.map((link, index) => <MenuItemDrop key={index} link={link} />)}
+            </ul>
+            <div className='md:hidden'>
+                <Collapse collapseRef={collapseRef} isOpen={isOpen} type='vertical' className='fixed top-16 right-6'>
+                    <div className='dark:border-black bg-white dark:bg-black rounded border p-2 text-sm'>
+                        {links?.map((link, index) => <MenuItemCollapse key={index} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
+                    </div>
+                </Collapse>
+            </div>
+
+            {JSON.parse(siteConfig('NOBELIUM_MENU_RANDOM_POST', null, CONFIG)) && <RandomPostButton {...props} />}
+            {JSON.parse(siteConfig('NOBELIUM_MENU_SEARCH_BUTTON', null, CONFIG)) && <SearchButton {...props}/>}
+            <i onClick={toggleOpen} className='fas fa-bars cursor-pointer px-5 flex justify-center items-center md:hidden'></i>
+        </div>
+  )
 }
 
 export default Nav

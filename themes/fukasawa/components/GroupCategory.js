@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 
 function GroupCategory ({ currentCategory, categories }) {
   if (!categories) {
@@ -22,10 +21,10 @@ function GroupCategory ({ currentCategory, categories }) {
 
             <i className={`${selected ? 'text-white fa-folder-open' : 'fa-folder text-gray-400'} fas mr-2`} />{category.name}({category.count})
           </Link>
-        );
+        )
       })}
     </div>
-  </>;
+  </>
 }
 
 export default GroupCategory

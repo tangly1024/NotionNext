@@ -1,11 +1,24 @@
 /* eslint-disable */
-import React from 'react'
-
+import { useEffect } from 'react'
+const  id = 'canvasFlutteringRibbon'
 export const FlutteringRibbon = () => {
-  React.useEffect(() => {
+     const destroyRibbon = ()=>{
+    const ribbon = document.getElementById(id)
+      if(ribbon && ribbon.parentNode){
+        ribbon.parentNode.removeChild(ribbon)
+      }
+  }
+  
+  useEffect(() => {
     createFlutteringRibbon()
+        return () => destroyRibbon()
+
   }, [])
+    return <></>
 }
+
+export default FlutteringRibbon
+
 
 /**
  * 创建连接点
@@ -125,6 +138,7 @@ function createFlutteringRibbon() {
           init: function () {
             try {
               ;(this._canvas = document.createElement('canvas')),
+                (this._canvas.id = id),
                 (this._canvas.style.display = 'block'),
                 (this._canvas.style.position = 'fixed'),
                 (this._canvas.style.margin = '0'),
@@ -136,6 +150,7 @@ function createFlutteringRibbon() {
                 (this._canvas.style.width = '100%'),
                 (this._canvas.style.height = '100%'),
                 (this._canvas.style['z-index'] = '0'),
+                (this._canvas.style['pointer-events'] = 'none'),
                 this._onResize(),
                 (this._context = this._canvas.getContext('2d')),
                 this._context.clearRect(0, 0, this._width, this._height),
