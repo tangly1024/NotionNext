@@ -5,21 +5,21 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到虾滑主页', url: 'https://blog.tangly1024.com' },
+    { title: '去Voting板块，万一我们谈下来了呢', url: 'https://docs.tangly1024.com' }
   ],
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享编程',
-  HEO_HERO_TITLE_2: '与思维认知',
-  HEO_HERO_TITLE_3: 'TANGLY1024.COM',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_1: '滑雪|Shredding',
+  HEO_HERO_TITLE_2: '顶门',
+  HEO_HERO_TITLE_3: 'Shredxhub.com',
+  HEO_HERO_TITLE_4: '正式运营！',
+  HEO_HERO_TITLE_5: '虾滑Treasure Hunt完结撒花',
+  HEO_HERO_TITLE_LINK: '',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
-  HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
+  HEO_HERO_CATEGORY_1: { title: '福利折扣', url: '/tag/福利折扣' },
+  HEO_HERO_CATEGORY_2: { title: '虾滑集锦', url: '/tag/虾滑集锦' },
   HEO_HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
@@ -29,12 +29,12 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好！我是',
+    '你好，虾仁er这里',
     '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
-    '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
-    '🤖️ 数码科技爱好者',
+    '🤝 chill和无所谓',
+    '🏃 技术交流行动派',
+    '🏠 空翻平花交流营',
+    '🤖️ 户外活动爱好者',
     '🧱 团队小组发动机'
   ],
   HEO_INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
@@ -103,7 +103,7 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
   HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/how-to-question',
+  HEO_SOCIAL_CARD_URL: 'https://linktr.ee/shredx_hub',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
