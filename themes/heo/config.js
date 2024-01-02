@@ -10,7 +10,7 @@ const CONFIG = {
   ],
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '冲粉|Shredding|Milk Run',
+  HEO_HERO_TITLE_1: '冲粉|Shredding|Milk Run|掉裝備',
   HEO_HERO_TITLE_2: 'Yard Sale|爽滑',
   HEO_HERO_TITLE_3: 'Shredxhub.com',
   HEO_HERO_TITLE_4: '正式运营！',
