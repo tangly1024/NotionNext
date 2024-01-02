@@ -11,7 +11,7 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '滑雪|Shredding',
-  HEO_HERO_TITLE_2: '顶门',
+  HEO_HERO_TITLE_2: 'Yard Sale|猛衝',
   HEO_HERO_TITLE_3: 'Shredxhub.com',
   HEO_HERO_TITLE_4: '正式运营！',
   HEO_HERO_TITLE_5: '虾滑Treasure Hunt完结撒花',
