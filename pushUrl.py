@@ -10,7 +10,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 # 每日推送限额，可根据实际情况修改
-QUOTA = 100
+QUOTA = 20
 
 
 def parse_stiemap(site):
