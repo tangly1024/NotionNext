@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到虾滑主页', url: '' },
-    { title: '去Voting板块，万一我们谈下来了呢', url: '' }
+    { title: '欢迎来到虾滑主页', url: 'https://shredxhub.com' },
+    { title: '去Voting板块，万一我们谈下来了呢', url: 'https://shredxhub.com' }
   ],
 
   // 英雄区(首页顶部大卡)
@@ -15,7 +15,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: 'Shredxhub.com',
   HEO_HERO_TITLE_4: '正式运营！',
   HEO_HERO_TITLE_5: '虾滑Treasure Hunt完结撒花',
-  HEO_HERO_TITLE_LINK: '',
+  HEO_HERO_TITLE_LINK: 'https://shredxhub.com',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '福利折扣', url: '/tag/福利折扣' },
@@ -37,7 +37,7 @@ const CONFIG = {
     '🤖️ 户外活动爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: 'https://shredxhub.com', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
