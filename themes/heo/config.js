@@ -18,9 +18,9 @@ const CONFIG = {
   HEO_HERO_TITLE_LINK: 'https://blog.vama.uk',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '学习摘记', url: '/tag/学习摘记' },
-  HEO_HERO_CATEGORY_2: { title: '实盘笔记', url: '/tag/实盘笔记' },
-  HEO_HERO_CATEGORY_3: { title: '浮生若梦', url: '/tag/浮生若梦' },
+  HEO_HERO_CATEGORY_1: { title: '学习笔记', url: '/tag/学习笔记' },
+  HEO_HERO_CATEGORY_2: { title: '浮生若梦', url: '/tag/浮生若梦' },
+  HEO_HERO_CATEGORY_3: { title: '我的交易记', url: '/tag/我的交易记' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '',
