@@ -1,33 +1,34 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import React from 'react'
 import throttle from 'lodash.throttle'
+import { deepClone } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export const BlogListScroll = props => {
   const { posts } = props
   const { locale } = useGlobal()
 
-  const [page, updatePage] = React.useState(1)
+  const [page, updatePage] = useState(1)
 
   let hasMore = false
-  const postsToShow = posts
-    ? Object.assign(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
+  const postsToShow = posts && Array.isArray(posts)
+    ? deepClone(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page)
     : []
 
   if (posts) {
     const totalCount = posts.length
-    hasMore = page * BLOG.POSTS_PER_PAGE < totalCount
+    hasMore = page * parseInt(siteConfig('POSTS_PER_PAGE')) < totalCount
   }
   const handleGetMore = () => {
     if (!hasMore) return
     updatePage(page + 1)
   }
 
-  const targetRef = React.useRef(null)
+  const targetRef = useRef(null)
 
   // 监听滚动自动分页加载
-  const scrollTrigger = React.useCallback(throttle(() => {
+  const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY + window.outerHeight
     const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
     if (scrollS > clientHeight + 100) {
@@ -35,7 +36,7 @@ export const BlogListScroll = props => {
     }
   }, 500))
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
 
     return () => {
@@ -44,7 +45,7 @@ export const BlogListScroll = props => {
   })
 
   return (
-      <div id="container" className="w-full md:pr-12 mb-12" ref={targetRef}>
+      <div id="posts-wrapper" className="w-full md:pr-12 mb-12" ref={targetRef}>
               {postsToShow.map(p => (
                   <article key={p.id} className="mb-12" >
                       <h2 className="mb-4">
@@ -56,7 +57,7 @@ export const BlogListScroll = props => {
                       </h2>
 
                       <div className="mb-4 text-sm text-gray-700">
-                          by <a href="#" className="text-gray-700">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
+                          by <a href="#" className="text-gray-700">{siteConfig('AUTHOR')}</a> on {p.date?.start_date || p.createdTime}
                           <span className="font-bold mx-1"> | </span>
                           <a href="#" className="text-gray-700">{p.category}</a>
                           <span className="font-bold mx-1"> | </span>
@@ -78,5 +79,5 @@ export const BlogListScroll = props => {
               </div>
 
           </div>
-  );
+  )
 }

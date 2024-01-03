@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  --scrollbarBG: #ffffff00;
-  --thumbBG: #b8b8b8;
-}
-body::-webkit-scrollbar {
-  width: 5px;
-}
-body {
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-body::-webkit-scrollbar-track {
-  background: var(--scrollbarBG);
-}
-body::-webkit-scrollbar-thumb {
-  background-color: var(--thumbBG);
-}
-
-::selection {
-  background: rgba(45, 170, 219, 0.3);
-}
-
 .wrapper {
   min-height: 100vh;
   display: flex;
@@ -122,10 +100,6 @@ nav {
   width: 0 !important;
 }
 
-.notion-collection {
-  @apply max-w-0;
-}
-
 .glassmorphism {
   background: hsla(0, 0%, 100%, 0.05);
   -webkit-backdrop-filter: blur(10px);
@@ -181,45 +155,99 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-
-/* waline评论插件夜间适配 */
-.wl-panel{
-  @apply dark:bg-black dark:border-gray-800
-}
-
-.wl-input,.wl-editor{
-  @apply dark:focus-within:bg-gray-900 dark:text-gray-200
-}
-
-.wl-meta > span {
-  @apply dark:bg-gray-800 !important
-}
-
-/* 固定两行 */
-.text-line-2 {
-    overflow : hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	word-wrap: break-word;
-	word-break: break-all;
-}
-
-.nobelium{
-    @apply flex flex-col justify-between
-}
-
-.nobelium .notion-code{
-    /* @apply max-w-2xl; */
-}
-
-.next #announcement-content *{
- font-size:10px !important;
- line-height:1.5 !important;
-}
-
 /* twikoo 评论区超链接样式 */
 .tk-main a {
    @apply text-blue-700
+}
+
+/* Webmention style */
+.webmention-block {
+  background: rgba(0, 116, 222, .2);
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+.webmention-header {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: .5rem;
+}
+
+.webmention-block-intro a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
+.webmention {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.webmention-counts {
+  padding: 16px 0;
+  font-weight: bold;
+}
+
+.webmention-counts .count {
+  font-weight: bold;
+  margin-right: .2rem;
+}
+
+/* .webmention-counts .counts > span {
+  margin-right: .8rem;
+} */
+.webmention-counts .counts>span:not(:last-child):after {
+  content: " • ";
+}
+
+a.avatar-wrapper {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.webmention-avatars .avatar-wrapper {
+  margin-right: -8px;
+}
+
+.avatar {
+  border-radius: 50%;
+  margin: 0;
+  border: 3px solid rgba(0, 116, 222, .5);
+}
+
+.replies {
+  margin: 0;
+  padding: 0;
+}
+
+.reply {
+  list-style: none;
+  display: flex;
+  position: relative;
+  padding: 0;
+  align-items: flex-start;
+  margin-top: .6rem;
+}
+
+.reply p {
+  margin: 0;
+}
+
+.reply .text {
+  margin-left: 1rem;
+  font-size: 14px;
+}
+
+.reply-author-name {
+  font-weight: 500;
+}
+
+.forbid-copy {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }

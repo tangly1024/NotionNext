@@ -4,7 +4,8 @@ import { useImperativeHandle, useRef, useState } from 'react'
 
 let lock = false
 
-const SearchInput = ({ currentTag, currentSearch, cRef }) => {
+const SearchInput = props => {
+  const { tag, keyword, cRef } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const searchInputRef = useRef(null)
@@ -19,7 +20,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     const key = searchInputRef.current.value
     if (key && key !== '') {
       router.push({ pathname: '/search/' + key }).then(r => {
-        console.log('搜索', key)
+        // console.log('搜索', key)
       })
     } else {
       router.push({ pathname: '/' }).then(r => {
@@ -61,14 +62,14 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
   <input
     ref={searchInputRef}
     type='text'
-    placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
+    placeholder={tag ? `${locale.SEARCH.TAGS} #${tag}` : `${locale.SEARCH.ARTICLES}`}
     className={'outline-none w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
     onKeyUp={handleKeyUp}
     onCompositionStart={lockSearchInput}
     onCompositionUpdate={lockSearchInput}
     onCompositionEnd={unLockSearchInput}
     onChange={e => updateSearchKey(e.target.value)}
-    defaultValue={currentSearch || ''}
+    defaultValue={keyword || ''}
   />
 
   <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
