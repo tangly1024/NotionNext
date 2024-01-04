@@ -100,14 +100,6 @@ export default function CustomContextMenu(props) {
     router.push({ pathname: router.pathname, query })
   }
 
-  function handleChangeDarkMode() {
-    const newStatus = !isDarkMode
-    saveDarkModeToCookies(newStatus)
-    updateDarkMode(newStatus)
-    const htmlElement = document.getElementsByTagName('html')[0]
-    htmlElement.classList?.remove(newStatus ? 'dark' : 'dark')
-    htmlElement.classList?.add(newStatus ? 'dark' : 'dark')
-  }
 
   return (
         <div
