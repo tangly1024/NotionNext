@@ -9,7 +9,7 @@ const Style = () => {
   return (
     <style jsx global>{`
       body {
-        background-color: #BC8F8F; 
+        background-color: #E6E6FA; 
         overflow-x: hidden;
       }
 
