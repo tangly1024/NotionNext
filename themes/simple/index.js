@@ -39,7 +39,7 @@ const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: f
  */
 const LayoutBase = props => {
   const { children, slotTop, meta } = props
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
 
   return (
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
@@ -76,9 +76,11 @@ const LayoutBase = props => {
                     <AdSlot type='native' />
                 </div>
 
-                <div id='right-sidebar' className="hidden xl:block flex-none sticky top-8 w-96 border-l dark:border-gray-800 pl-12 border-gray-100">
-                    <SideBar {...props} />
-                </div>
+              {fullWidth
+                ? null
+                : <div id='right-sidebar' className="hidden xl:block flex-none sticky top-8 w-96 border-l dark:border-gray-800 pl-12 border-gray-100">
+              <SideBar {...props} />
+              </div>}
 
             </div>
 
@@ -162,13 +164,14 @@ const LayoutArchive = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword, prev, next } = props
+  const { fullWidth } = useGlobal()
 
   return (
         <LayoutBase {...props}>
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
-            <div id="article-wrapper" className="px-2 xl:max-w-4xl 2xl:max-w-6xl ">
+            <div id="article-wrapper" className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
 
                 {/* 文章信息 */}
                 <ArticleInfo post={post} />
