@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { useGlobal } from '@/lib/global'
+import { saveDarkModeToCookies, THEMES } from '@/themes/theme'
 import useWindowSize from '@/hooks/useWindowSize'
 import { siteConfig } from '@/lib/config'
 
@@ -13,6 +14,7 @@ import { siteConfig } from '@/lib/config'
 export default function CustomContextMenu(props) {
   const [position, setPosition] = useState({ x: '0px', y: '0px' })
   const [show, setShow] = useState(false)
+  const { isDarkMode, updateDarkMode, locale } = useGlobal()
   const menuRef = useRef(null)
   const windowSize = useWindowSize()
   const [width, setWidth] = useState(0)
@@ -98,6 +100,15 @@ export default function CustomContextMenu(props) {
     router.push({ pathname: router.pathname, query })
   }
 
+  function handleChangeDarkMode() {
+    const newStatus = !isDarkMode
+    saveDarkModeToCookies(newStatus)
+    updateDarkMode(newStatus)
+    const htmlElement = document.getElementsByTagName('html')[0]
+    htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
+    htmlElement.classList?.add(newStatus ? 'dark' : 'light')
+  }
+
   return (
         <div
             ref={menuRef}
@@ -146,11 +157,17 @@ export default function CustomContextMenu(props) {
                         <i className="fa-solid fa-arrow-up-right-from-square mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.COPY_URL}</div>
                     </div>
+
+                    <div onClick={handleChangeDarkMode} title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                        {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
+                        <div className='whitespace-nowrap'> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
+                    </div>
                     <div onClick={handeChangeTheme} title={locale.MENU.THEME_SWITCH} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-palette mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.THEME_SWITCH}</div>
                     </div>
                 </div>
+
             </div>
         </div >
   )
