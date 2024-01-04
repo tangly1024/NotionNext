@@ -4,11 +4,12 @@
  * 此处不支持tailwindCSS的 @apply 语法
  * @returns
  */
+//滚动栏颜色
 const Style = () => {
   return (
     <style jsx global>{`
       body {
-        background-color: #DB7093;
+        background-color: #BC8F8F; 
         overflow-x: hidden;
       }
 
