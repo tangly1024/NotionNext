@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       colors: {
         day: {
-          DEFAULT: BLOG.BACKGROUND_LIGHT || '#000000'
+          DEFAULT: BLOG.BACKGROUND_LIGHT || '#ffffff'
         },
         night: {
           DEFAULT: BLOG.BACKGROUND_DARK || '#111827'
