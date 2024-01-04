@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '哈喽大家 つ♡⊂', url: 'https://blog.vama.uk' },
-    { title: '好久不见~ ๑>ᴗ<๑', url: 'https://blog.vama.uk' }
+    { title: '纵有疾风起', url: 'https://blog.vama.uk' },
+    { title: '人生不言弃', url: 'https://blog.vama.uk' }
   ],
 
   // 英雄区(首页顶部大卡)
