@@ -186,7 +186,7 @@ function GroupMenu() {
           <span className="absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full"></span>
         </div>
         <div className="hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0">
-          <i className="fa-solid fa-fire-flame-curved text-4xl"></i>
+          <i className="fa-solid fa-puzzle-piece text-4xl"></i>
         </div>
       </Link>
       {/* 第三个标签在小屏上不显示 */}
