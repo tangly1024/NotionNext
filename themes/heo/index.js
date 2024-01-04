@@ -64,7 +64,7 @@ const LayoutBase = props => {
   return (
     <div
       id="theme-heo"
-      className="bg-[#F4F6F9] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
+      className="bg-[#E7E6DD] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
     >
       {/* SEO信息 */}
       <CommonHead meta={meta} />
