@@ -21,7 +21,7 @@ export default function FloatDarkModeButton () {
   }
 
   return (
-    <div>1
+    <div>
     </div>
   )
 }
