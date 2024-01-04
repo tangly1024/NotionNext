@@ -83,7 +83,7 @@ export default function SlideOver(props) {
                                             </section>
 
                                             <section className='space-y-2 flex flex-col'>
-                                                <div>Vama丨博客</div>
+                                                
                                                 {/* 导航按钮 */}
                                                 {/* 用户自定义菜单 */}
                                                 <MenuListSide {...props}/>
