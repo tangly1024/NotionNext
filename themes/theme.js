@@ -103,7 +103,7 @@ export const initDarkMode = (updateDarkMode) => {
 
   updateDarkMode(newDarkMode)
   saveDarkModeToCookies(newDarkMode)
-  document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'light')
+  document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'dark')
 }
 
 /**
