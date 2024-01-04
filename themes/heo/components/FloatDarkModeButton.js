@@ -21,11 +21,7 @@ export default function FloatDarkModeButton () {
   }
 
   return (
-    <div
-      onClick={handleChangeDarkMode}
-      className={'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'
-      }
-    >
+    <div>1
     </div>
   )
 }
