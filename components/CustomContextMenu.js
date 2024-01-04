@@ -169,6 +169,4 @@ export default function CustomContextMenu(props) {
                 </div>
 
             </div>
-        </div >
-  )
-}
+        </div >)}
