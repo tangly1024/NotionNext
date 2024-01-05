@@ -18,7 +18,7 @@ class MyDocument extends Document {
                       <link rel='preload' href={BLOG.FONT_AWESOME} as="style" crossOrigin="anonymous" />
                       <link rel="stylesheet" href={BLOG.FONT_AWESOME} crossOrigin="anonymous" referrerPolicy="no-referrer" />
                       {/* 预加载评论区-Tin-20240103 */}
-                      <script src="https://cdn.bootcdn.net/ajax/libs/twikoo/1.6.29/twikoo.all.min.js"></script>
+                      {/* <script src="https://cdn.bootcdn.net/ajax/libs/twikoo/1.6.29/twikoo.all.min.js"></script> */}
                   </>}
 
                   {BLOG.FONT_URL?.map((fontUrl, index) => {
