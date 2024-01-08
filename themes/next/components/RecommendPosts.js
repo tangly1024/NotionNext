@@ -1,16 +1,16 @@
-import React from 'react'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 展示文章推荐
  */
 const RecommendPosts = ({ recommendPosts }) => {
-  if (!CONFIG_NEXT.ARTICLE_RELATE_POSTS || !recommendPosts || recommendPosts.length < 1) {
+  const { locale } = useGlobal()
+  if (!siteConfig('NEXT_ARTICLE_RELATE_POSTS', null, CONFIG) || !recommendPosts || recommendPosts.length < 1) {
     return <></>
   }
-  const { locale } = useGlobal()
 
   return (
     <div className="pt-2 border pl-4 py-2 my-4 dark:text-gray-300 ">

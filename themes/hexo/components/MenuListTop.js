@@ -1,7 +1,6 @@
-import React from 'react'
 import { useGlobal } from '@/lib/global'
-import CONFIG_HEXO from '../config_hexo'
-import BLOG from '@/blog.config'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 import { MenuItemDrop } from './MenuItemDrop'
 
 export const MenuListTop = (props) => {
@@ -9,19 +8,25 @@ export const MenuListTop = (props) => {
   const { locale } = useGlobal()
 
   let links = [
-    { id: 1, icon: 'fa-solid fa-house', name: locale.NAV.INDEX, to: '/', show: CONFIG_HEXO.MENU_INDEX },
-    { id: 2, icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_HEXO.MENU_SEARCH },
-    { id: 3, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_HEXO.MENU_ARCHIVE }
-    // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_HEXO.MENU_CATEGORY },
-    // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_HEXO.MENU_TAG }
+    { id: 1, icon: 'fa-solid fa-house', name: locale.NAV.INDEX, to: '/', show: siteConfig('HEXO_MENU_INDEX', null, CONFIG) },
+    { id: 2, icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('HEXO_MENU_SEARCH', null, CONFIG) },
+    { id: 3, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('HEXO_MENU_ARCHIVE', null, CONFIG) }
+    // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('MENU_CATEGORY', null, CONFIG) },
+    // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('MENU_TAG', null, CONFIG) }
   ]
 
   if (customNav) {
     links = links.concat(customNav)
   }
 
+  for (let i = 0; i < links.length; i++) {
+    if (links[i].id !== i) {
+      links[i].id = i
+    }
+  }
+
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 
@@ -31,7 +36,7 @@ export const MenuListTop = (props) => {
 
   return (<>
         <nav id='nav-mobile' className='leading-8 justify-center font-light w-full flex'>
-            {links?.map(link => link && link.show && <MenuItemDrop key={link?.id} link={link} />)}
+            {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
         </nav>
     </>)
 }

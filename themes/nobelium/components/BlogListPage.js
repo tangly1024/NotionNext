@@ -1,5 +1,5 @@
 
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -9,17 +9,17 @@ export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
   const currentPage = +page
 
   const showPrev = currentPage > 1
-  const showNext = page < totalPage
+  const showNext = currentPage < totalPage && posts?.length > 0
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
-      <div className="w-full md:pr-12 mb-12">
+      <div className="w-full md:pr-12 my-6">
 
-            <div id="container">
+            <div id="posts-wrapper">
                 {posts?.map(post => (
                    <BlogPost key={post.id} post={post}/>
                 ))}

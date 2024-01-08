@@ -1,4 +1,5 @@
-import CONFIG_MEDIUM from '../config_medium'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 跳转到网页顶部
@@ -9,7 +10,7 @@ import CONFIG_MEDIUM from '../config_medium'
  * @constructor
  */
 const JumpToTopButton = ({ showPercent = false, percent, className }) => {
-  if (!CONFIG_MEDIUM.WIDGET_TO_TOP) {
+  if (!siteConfig('MEDIUM_WIDGET_TO_TOP', null, CONFIG)) {
     return <></>
   }
   return (

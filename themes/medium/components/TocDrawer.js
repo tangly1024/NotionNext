@@ -1,5 +1,5 @@
 import Catalog from './Catalog'
-import { useGitBookGlobal } from '../LayoutBase'
+import { useMediumGlobal } from '@/themes/medium'
 
 /**
  * 悬浮抽屉目录
@@ -9,7 +9,7 @@ import { useGitBookGlobal } from '../LayoutBase'
  * @constructor
  */
 const TocDrawer = ({ post, cRef }) => {
-  const { tocVisible, changeTocVisible } = useGitBookGlobal()
+  const { tocVisible, changeTocVisible } = useMediumGlobal()
   const switchVisible = () => {
     changeTocVisible(!tocVisible)
   }

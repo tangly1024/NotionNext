@@ -1,5 +1,5 @@
-import React from 'react'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 跳转到评论区
@@ -7,7 +7,7 @@ import CONFIG_MATERY from '../config_matery'
  * @constructor
  */
 const JumpToCommentButton = () => {
-  if (!CONFIG_MATERY.WIDGET_TO_COMMENT) {
+  if (!siteConfig('MATERY_WIDGET_TO_COMMENT', null, CONFIG)) {
     return <></>
   }
 

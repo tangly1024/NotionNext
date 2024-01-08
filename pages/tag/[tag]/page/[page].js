@@ -3,17 +3,18 @@ import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 const Tag = props => {
   const { locale } = useGlobal()
   const { tag, siteInfo } = props
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${tag} | ${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
+    description: siteConfig('DESCRIPTION'),
     image: siteInfo?.pageCover,
     slug: 'tag/' + tag,
     type: 'website'
@@ -27,7 +28,7 @@ export async function getStaticProps({ params: { tag, page } }) {
   const from = 'tag-page-props'
   const props = await getGlobalData({ from })
   // 过滤状态、标签
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag))
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
   // 处理文章数
   props.postCount = props.posts.length
   // 处理分页
@@ -48,7 +49,7 @@ export async function getStaticPaths() {
   const paths = []
   tagOptions?.forEach(tag => {
     // 过滤状态类型
-    const tagPosts = allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag.name))
+    const tagPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag.name))
     // 处理文章页数
     const postCount = tagPosts.length
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)

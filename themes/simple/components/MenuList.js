@@ -1,9 +1,9 @@
-import BLOG from '@/blog.config'
 import Collapse from '@/components/Collapse'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import CONFIG_SIMPLE from '../config_simple'
+import CONFIG from '../config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 import { MenuItemDrop } from './MenuItemDrop'
 
@@ -29,10 +29,10 @@ export const MenuList = ({ customNav, customMenu }) => {
   })
 
   let links = [
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_SIMPLE.MENU_SEARCH },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_SIMPLE.MENU_ARCHIVE },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_SIMPLE.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_SIMPLE.MENU_TAG }
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('SIMPLE_MENU_SEARCH', null, CONFIG) },
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('SIMPLE_MENU_ARCHIVE', null, CONFIG) },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('SIMPLE_MENU_CATEGORY', null, CONFIG) },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('SIMPLE_MENU_TAG', null, CONFIG) }
   ]
 
   if (customNav) {
@@ -40,7 +40,7 @@ export const MenuList = ({ customNav, customMenu }) => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 
@@ -51,7 +51,7 @@ export const MenuList = ({ customNav, customMenu }) => {
   return (<>
         {/* 大屏模式菜单 */}
         <div id='nav-menu-pc' className='hidden md:flex my-auto'>
-            {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
+            {links?.map((link, index) => <MenuItemDrop key={index} link={link} />)}
         </div>
         {/* 移动端小屏菜单 */}
         <div id='nav-menu-mobile' className='flex md:hidden my-auto justify-start'>
@@ -62,7 +62,7 @@ export const MenuList = ({ customNav, customMenu }) => {
 
             <Collapse collapseRef={collapseRef} className='absolute w-full top-12 left-0' isOpen={isOpen}>
                 <div id='menu-wrap' className='bg-white dark:border-hexo-black-gray border'>
-                {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
+                {links?.map((link, index) => <MenuItemCollapse key={index} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
                 </div>
             </Collapse>
         </div>

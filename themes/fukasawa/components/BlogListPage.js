@@ -1,10 +1,11 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { deepClone, isBrowser } from '@/lib/utils'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import PaginationSimple from './PaginationSimple'
 import { useEffect, useState } from 'react'
 import { debounce } from 'lodash'
+import { AdSlot } from '@/components/GoogleAdsense'
 /**
  * 文章列表分页表格
  * @param page 当前页
@@ -14,7 +15,7 @@ import { debounce } from 'lodash'
  * @constructor
  */
 const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
   const showNext = page < totalPage
 
   const [columns, setColumns] = useState(calculateColumns())
@@ -52,12 +53,18 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return (
       <div>
         {/* 文章列表 */}
-        <div id="container" className='grid-container'>
+        <div id="posts-wrapper" className='grid-container'>
           {filterPosts?.map(post => (
             <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>
               <BlogCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
             </div>
           ))}
+          {siteConfig('ADSENSE_GOOGLE_ID') && (
+            <div className='p-3'>
+                <AdSlot type='flow'/>
+            </div>
+          )}
+
         </div>
         <PaginationSimple page={page} showNext={showNext} />
       </div>
@@ -70,7 +77,7 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
  * @returns
  */
 const calculateColumns = () => {
-  if (!isBrowser()) {
+  if (!isBrowser) {
     return 3
   } else {
     if (window.innerWidth >= 1024) {

@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  --scrollbarBG: #ffffff00;
-  --thumbBG: #b8b8b8;
-}
-body::-webkit-scrollbar {
-  width: 5px;
-}
-body {
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-body::-webkit-scrollbar-track {
-  background: var(--scrollbarBG);
-}
-body::-webkit-scrollbar-thumb {
-  background-color: var(--thumbBG);
-}
-
-::selection {
-  background: rgba(45, 170, 219, 0.3);
-}
-
 .wrapper {
   min-height: 100vh;
   display: flex;
@@ -122,10 +100,6 @@ nav {
   width: 0 !important;
 }
 
-.notion-collection {
-  @apply max-w-0;
-}
-
 .glassmorphism {
   background: hsla(0, 0%, 100%, 0.05);
   -webkit-backdrop-filter: blur(10px);
@@ -179,20 +153,6 @@ nav {
   vertical-align: baseline;
   height: 1.25em;
   margin: -0.125em 0.25em;
-}
-
-
-.nobelium{
-    @apply flex flex-col justify-between
-}
-
-.nobelium .notion-code{
-    /* @apply max-w-2xl; */
-}
-
-.next #announcement-content *{
- font-size:13px !important;
- line-height:1.7 !important;
 }
 
 /* twikoo 评论区超链接样式 */
@@ -286,65 +246,8 @@ a.avatar-wrapper {
   font-weight: 500;
 }
 
-.p-4-lines {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.p-3-lines {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* fukasawa的首页响应式分栏 */
-#theme-fukasawa .grid-item {
-    height: auto;
-    break-inside: avoid-column;
-    margin-bottom: .5rem;
-  }
-  
-  /* 大屏幕（宽度≥1024px）下显示3列 */
-  @media (min-width: 1024px) {
-    #theme-fukasawa .grid-container {
-      column-count: 3;
-      column-gap: .5rem;
-    }
-  }
-  
-  /* 小屏幕（宽度≥640px）下显示2列 */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    #theme-fukasawa .grid-container {
-      column-count: 2;
-      column-gap: .5rem;
-    }
-  }
-  
-  /* 移动端（宽度<640px）下显示1列 */
-  @media (max-width: 639px) {
-    #theme-fukasawa .grid-container {
-      column-count: 1;
-      column-gap: .5rem;
-    }
-  }
-
-.notion-external-title {
-  @apply dark:text-white !important;
-}
-
-.notion-external-subtitle {
-  @apply dark:text-gray-400 !important;
-}
-
-.notion-external-block {
-  @apply dark:border-gray-200 !important;
-}
-
-.notion-external-image > svg > g > path{
-  @apply dark:fill-gray-200 !important;
+.forbid-copy {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }

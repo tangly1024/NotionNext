@@ -1,28 +1,28 @@
 
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import CONFIG_EXAMPLE from '../config_example'
+import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
   const currentPage = +page
 
   const showPrev = currentPage > 1
   const showNext = page < totalPage
   const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
-  const showPageCover = CONFIG_EXAMPLE.POST_LIST_COVER
+  const showPageCover = siteConfig('EXAMPLE_POST_LIST_COVER', null, CONFIG)
 
   return (
-        <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'}} mb-12`}>
+        <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'} mb-12`}>
 
-            <div id="container">
+            <div id="posts-wrapper">
                 {posts?.map(post => (
                     <BlogPostCard key={post.id} post = {post}/>
                 ))}

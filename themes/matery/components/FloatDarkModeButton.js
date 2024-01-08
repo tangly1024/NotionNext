@@ -1,11 +1,12 @@
 import { useGlobal } from '@/lib/global'
 import { saveDarkModeToCookies } from '@/themes/theme'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function FloatDarkModeButton() {
   const { isDarkMode, updateDarkMode } = useGlobal()
 
-  if (!CONFIG_MATERY.WIDGET_DARK_MODE) {
+  if (!siteConfig('WIDGET_DARK_MODE', null, CONFIG)) {
     return <></>
   }
 

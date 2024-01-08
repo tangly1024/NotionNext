@@ -1,7 +1,6 @@
-import React from 'react'
 import { useGlobal } from '@/lib/global'
-import CONFIG_MATERY from '../config_matery'
-import BLOG from '@/blog.config'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
 export const MenuListSide = (props) => {
@@ -9,10 +8,10 @@ export const MenuListSide = (props) => {
   const { locale } = useGlobal()
 
   let links = [
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG_MATERY.MENU_ARCHIVE },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG_MATERY.MENU_SEARCH },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_MATERY.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_MATERY.MENU_TAG }
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('MATERY_MENU_ARCHIVE', null, CONFIG) },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('MATERY_MENU_SEARCH', null, CONFIG) },
+    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('MATERY_MENU_CATEGORY', null, CONFIG) },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('MATERY_MENU_TAG', null, CONFIG) }
   ]
 
   if (customNav) {
@@ -20,7 +19,7 @@ export const MenuListSide = (props) => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 
@@ -30,8 +29,7 @@ export const MenuListSide = (props) => {
 
   return (
         <nav>
-            {/* {links.map(link => <MenuItemNormal key={link?.id} link={link} />)} */}
-            {links?.map(link => <MenuItemCollapse key={link?.id} link={link} />)}
+            {links?.map((link, index) => <MenuItemCollapse key={index} link={link} />)}
         </nav>
   )
 }

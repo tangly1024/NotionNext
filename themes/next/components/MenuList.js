@@ -1,7 +1,6 @@
-import React from 'react'
 import { useGlobal } from '@/lib/global'
-import CONFIG_NEXT from '../config_next'
-import BLOG from '@/blog.config'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 import { MenuItemDrop } from './MenuItemDrop'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
@@ -12,9 +11,9 @@ export const MenuList = (props) => {
 
   const defaultLinks = [
     { id: 1, icon: 'fas fa-home', name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { id: 2, icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG_NEXT.MENU_CATEGORY },
-    { id: 3, icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG_NEXT.MENU_TAG },
-    { id: 4, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: CONFIG_NEXT.MENU_ARCHIVE }
+    { id: 2, icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('NEXT_MENU_CATEGORY', null, CONFIG) },
+    { id: 3, icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('NEXT_MENU_TAG', null, CONFIG) },
+    { id: 4, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', slot: archiveSlot, show: siteConfig('NEXT_MENU_ARCHIVE', null, CONFIG) }
   ]
 
   let links = [].concat(defaultLinks)
@@ -23,7 +22,7 @@ export const MenuList = (props) => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 
@@ -40,12 +39,12 @@ export const MenuList = (props) => {
                 data-aos-once="true"
                 data-aos-anchor-placement="top-bottom"
                 className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
-                {links.map(link => link && link.show && <MenuItemDrop key={link?.id} link={link} />)}
+                {links.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
             </nav>
 
             {/* 移动端菜单 */}
             <div id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
-                {links?.map(link => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={link?.id} link={link} />)}
+                {links?.map((link, index) => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={index} link={link} />)}
             </div>
         </>
   )
