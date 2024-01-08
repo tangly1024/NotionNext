@@ -2,6 +2,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import Live2D from '@/components/Live2D'
 import Announcement from './Announcement'
 import Catalog from './Catalog'
+import SocialButton from '@/themes/simple/components/SocialButton'
 
 /**
  * 侧边栏
@@ -27,6 +28,8 @@ export default function SideBar (props) {
         <aside>
             <AdSlot/>
         </aside>
-
+        <aside>
+          <SocialButton />
+        </aside>
     </>)
 }
