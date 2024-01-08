@@ -37,7 +37,7 @@ import { siteConfig } from '@/lib/config'
  */
 const LayoutBase = props => {
   const { children, slotTop, meta } = props
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
 
   // 增加一个状态以触发 Transition 组件的动画
   //   const [showTransition, setShowTransition] = useState(true)
@@ -65,12 +65,12 @@ const LayoutBase = props => {
             <div id='container-inner' className="w-full relative z-10">
 
                 {/* 标题栏 */}
-                <Title {...props} />
+                {fullWidth ? null : <Title {...props} />}
 
                 <div id='container-wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative container mx-auto justify-center md:flex items-start py-8 px-2'}>
 
                     {/* 内容 */}
-                    <div className='w-full max-w-3xl xl:px-14 lg:px-4 '>
+                    <div className={`w-full ${fullWidth ? '' : 'max-w-3xl'} xl:px-14 lg:px-4`}>
                         <Transition
                             show={!onLoading}
                             appear={true}
@@ -89,7 +89,7 @@ const LayoutBase = props => {
                     </div>
 
                     {/* 侧边栏 */}
-                    <SideBar {...props} />
+                    {!fullWidth && <SideBar {...props} />}
 
                 </div>
 
