@@ -12,8 +12,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: 'Only by being faithful to facts',
   HEO_HERO_TITLE_2: 'can be faithful to truth',
   HEO_HERO_TITLE_3: 'Ayao.club',
-  HERO_TITLE_4: '新版上线',
-  HERO_TITLE_5: '',
+  HEO_HERO_TITLE_4: 'recommend',
+  HEO_HERO_TITLE_5: '',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
