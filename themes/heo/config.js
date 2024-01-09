@@ -34,7 +34,7 @@ const CONFIG = {
     '📚 渴求知识学习者',
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机',
-    '🐒臭看番的'
+    '🐒 臭看番的'
   ],
   HEO_INFO_CARD_URL: 'https://ayao.club', // 个人资料底部按钮链接
 
@@ -59,7 +59,10 @@ const CONFIG = {
     {
       title_1: 'Git',
       img_1: '/images/heo/2023ffa5707c4e25b6beb3e6a3d286ede4c6071102.webp',
-      color_1: '#df5b40'
+      color_1: '#df5b40',
+      title_2: 'JS',
+      img_2: '/images/heo/2023786e7fc488f453d5fb2be760c96185c0075502.webp',
+      color_2: '#f7cb4f'
     }
   ],
 
