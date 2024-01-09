@@ -9,10 +9,11 @@ const CONFIG = {
   ],
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: 'Trying',
-  HEO_HERO_TITLE_2: 'to be better',
+  HEO_HERO_TITLE_1: 'Only by being faithful to facts',
+  HEO_HERO_TITLE_2: 'can be faithful to truth',
   HEO_HERO_TITLE_3: 'Ayao.club',
-  HEO_HERO_TITLE_LINK: 'https://ayao.club',
+  HERO_TITLE_4: '新版上线',
+  HERO_TITLE_5: '',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
@@ -58,7 +59,7 @@ const CONFIG = {
     {
       title_1: 'Git',
       img_1: '/images/heo/2023ffa5707c4e25b6beb3e6a3d286ede4c6071102.webp',
-      color_1: '#df5b40',
+      color_1: '#df5b40'
     }
   ],
 
