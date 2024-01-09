@@ -27,7 +27,7 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好！我是',
+    'HI！I AM',
     '🔍 分享与热心帮助',
     '🤝 热爱开发与设计',
     '🏃 脚踏实地行动派',
@@ -36,7 +36,7 @@ const CONFIG = {
     '🧱 团队小组发动机',
     '🐒 臭看番的'
   ],
-  HEO_INFO_CARD_URL: 'https://ayao.club', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
@@ -88,7 +88,7 @@ const CONFIG = {
   HEO_POST_LIST_PREVIEW: false, // 读取文章预览
   HEO_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
 
-  HEO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
+  HEO_ARTICLE_ADJACENT: false, // 显示上一篇下一篇文章推荐
   HEO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
   HEO_ARTICLE_RECOMMEND: true, // 文章关联推荐
 
