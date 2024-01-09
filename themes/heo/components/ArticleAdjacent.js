@@ -56,7 +56,7 @@ export default function ArticleAdjacent({ prev, next }) {
                     passHref
                     className='cursor-pointer justify-between space-y-1 px-5 py-6 rounded-t-xl dark:bg-[#1e1e1e] border dark:border-gray-600 border-b-0 items-center dark:text-white flex flex-col w-full h-18 duration-200'
                 >
-                    <div className='flex justify-start items-center w-full'>上一篇</div>
+                    <div className='flex justify-start items-center w-full'>Previous</div>
                     <div className='flex justify-center items-center text-lg font-bold'>{prev.title}</div>
                 </Link>
                 <Link
@@ -64,7 +64,7 @@ export default function ArticleAdjacent({ prev, next }) {
                     passHref
                     className='cursor-pointer justify-between space-y-1 px-5 py-6 rounded-b-xl dark:bg-[#1e1e1e] border dark:border-gray-600 items-center dark:text-white flex flex-col w-full h-18 duration-200'
                 >
-                    <div className='flex justify-start items-center w-full'>下一篇</div>
+                    <div className='flex justify-start items-center w-full'>Next</div>
                     <div className='flex justify-center items-center text-lg font-bold'>{next.title}</div>
                 </Link>
             </section>
@@ -76,7 +76,7 @@ export default function ArticleAdjacent({ prev, next }) {
                     href={`/${next.slug}`}
                     className='cursor-pointer drop-shadow-xl duration transition-all h-24 dark:bg-[#1e1e1e] border dark:border-gray-600 p-3 bg-white dark:text-gray-300 dark:hover:text-yellow-600 hover:text-white hover:font-bold hover:bg-blue-600 rounded-lg flex flex-col justify-between'
                 >
-                    <div className='text-xs'>下一篇</div>
+                    <div className='text-xs'>Next</div>
                     <hr />
                     <div>{next?.title}</div>
                 </Link>
