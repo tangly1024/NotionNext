@@ -1,5 +1,5 @@
 import CONFIG from './config'
-import { useEffect } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { isBrowser } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
 import { AdSlot } from '@/components/GoogleAdsense'
@@ -10,7 +10,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import dynamic from 'next/dynamic'
 import NotionPage from '@/components/NotionPage'
-// const NotionPage = dynamic(() => import('@/components/NotionPage'), { ssr: false });
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false });
@@ -31,6 +31,10 @@ const CommonHead = dynamic(() => import('@/components/CommonHead'), { ssr: false
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false });
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: false })
 
+// 主题全局状态
+const ThemeGlobalSimple = createContext()
+export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
+
 /**
  * 基础布局
  *
@@ -40,8 +44,10 @@ const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: f
 const LayoutBase = props => {
   const { children, slotTop, meta } = props
   const { onLoading, fullWidth } = useGlobal()
+  const searchModal = useRef(null)
 
   return (
+    <ThemeGlobalSimple.Provider value={{ searchModal }}>
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
             {/* SEO相关 */}
             <CommonHead meta={meta}/>
@@ -88,9 +94,13 @@ const LayoutBase = props => {
                 <JumpToTopButton />
             </div>
 
+              {/* 搜索框 */}
+              <AlgoliaSearchModal cRef={searchModal} {...props}/>
+
             <Footer {...props} />
 
         </div>
+    </ThemeGlobalSimple.Provider>
   )
 }
 
@@ -138,7 +148,9 @@ const LayoutSearch = props => {
     }
   }, [])
 
-  return <LayoutPostList {...props} slotTop={<SearchInput {...props} />} />
+  const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />
+
+  return <LayoutPostList {...props} slotTop={slotTop} />
 }
 
 /**
