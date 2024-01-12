@@ -38,6 +38,12 @@ export default function SideRight(props) {
   } = props
 
   const { locale } = useGlobal()
+
+  // 文章全屏处理
+  if (post && post?.fullWidth) {
+    return null
+  }
+
   return (
     <div id='sideRight' className={'space-y-4 lg:w-80 lg:pt-0 px-2 pt-4'}>
       <InfoCard {...props} />
