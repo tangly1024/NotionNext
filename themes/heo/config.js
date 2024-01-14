@@ -11,10 +11,10 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '分享热爱',
-  HEO_HERO_TITLE_2: '让世界在眼前',
+  HEO_HERO_TITLE_2: '拥抱新世界',
   HEO_HERO_TITLE_3: 'kakarot.cc',
   HEO_HERO_TITLE_4: '新内容上线',
-  HEO_HERO_TITLE_5: '我不知道的事情比我知道的要多得多',
+  HEO_HERO_TITLE_5: '不知道的事情要比知道的多得多',
   HEO_HERO_TITLE_LINK: 'https://kakarot.cc/tag/推荐',
 
   // 英雄区显示三个置顶分类
