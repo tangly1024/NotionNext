@@ -55,8 +55,6 @@ const Hero = props => {
             id="header" style={{ zIndex: 1 }}
             className="w-full h-screen relative bg-black"
         >
-            <LazyImage id='header-cover' src={siteInfo?.pageCover}
-                className={`header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`} />
 
             <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
                 {/* 站点标题 */}
@@ -75,6 +73,10 @@ const Hero = props => {
                     <i className='opacity-70 animate-bounce fas fa-angle-down' />
                 </div>
             </div>
+
+            <LazyImage id='header-cover' src={siteInfo?.pageCover}
+                className={`header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`} />
+
         </header>
   )
 }

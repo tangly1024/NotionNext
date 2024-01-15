@@ -4,21 +4,12 @@ import Link from 'next/link'
 import { BlogItem } from './BlogItem'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
-import CONFIG from '../config'
 
-/**
- * 博客列表
- * @param {*} props
- * @returns
- */
-export default function BlogListPage(props) {
+export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
   const router = useRouter()
   const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
   const currentPage = +page
-
-  // 博客列表嵌入广告
-  const SIMPLE_POST_AD_ENABLE = siteConfig('SIMPLE_POST_AD_ENABLE', false, CONFIG)
 
   const showPrev = currentPage > 1
   const showNext = page < totalPage
@@ -29,9 +20,9 @@ export default function BlogListPage(props) {
 
             <div id="posts-wrapper">
                 {posts?.map((p, index) => (<div key={p.id}>
-                    {SIMPLE_POST_AD_ENABLE && (index + 1) % 3 === 0 && <AdSlot type='in-article' />}
-                    {SIMPLE_POST_AD_ENABLE && (index + 1) === 4 && <AdSlot type='flow' />}
-                    <BlogItem post={p} />
+                        {(index + 1) % 3 === 0 && <AdSlot type='in-article' />}
+                        { (index + 1) === 4 && <AdSlot type='flow'/>}
+                        <BlogItem post={p} />
                 </div>))}
 
             </div>

@@ -3,12 +3,7 @@ import Live2D from '@/components/Live2D'
 import Announcement from './Announcement'
 import Catalog from './Catalog'
 
-/**
- * 侧边栏
- * @param {*} props
- * @returns
- */
-export default function SideBar (props) {
+export const SideBar = (props) => {
   const { notice } = props
   return (<>
 

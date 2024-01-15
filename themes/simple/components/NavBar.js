@@ -1,7 +1,5 @@
-import { siteConfig } from '@/lib/config'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useSimpleGlobal } from '..'
 import { MenuList } from './MenuList'
 
 /**
@@ -9,18 +7,12 @@ import { MenuList } from './MenuList'
  * @param {*} props
  * @returns
  */
-export default function NavBar (props) {
+export const NavBar = (props) => {
   const [showSearchInput, changeShowSearchInput] = useState(false)
   const router = useRouter()
-  const { searchModal } = useSimpleGlobal()
 
-  // 展示搜索框
   const toggleShowSearchInput = () => {
-    if (siteConfig('ALGOLIA_APP_ID')) {
-      searchModal.current.openSearch()
-    } else {
-      changeShowSearchInput(!showSearchInput)
-    }
+    changeShowSearchInput(!showSearchInput)
   }
 
   const onKeyUp = (e) => {

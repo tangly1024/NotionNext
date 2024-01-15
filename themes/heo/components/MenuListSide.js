@@ -29,7 +29,8 @@ export const MenuListSide = (props) => {
 
   return (
         <nav className='flex-col space-y-2'>
-            {links?.map((link, index) => <MenuItemCollapse key={index} link={link} />)}
+            {/* {links.map(link => <MenuItemNormal key={link?.id} link={link} />)} */}
+            {links?.map(link => <MenuItemCollapse key={link?.id} link={link} />)}
         </nav>
   )
 }

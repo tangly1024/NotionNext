@@ -4,12 +4,7 @@ import throttle from 'lodash.throttle'
 import { BlogItem } from './BlogItem'
 import { siteConfig } from '@/lib/config'
 
-/**
- * 滚动博客列表
- * @param {*} props
- * @returns
- */
-export default function BlogListScroll (props) {
+export const BlogListScroll = props => {
   const { posts } = props
   const { locale } = useGlobal()
 

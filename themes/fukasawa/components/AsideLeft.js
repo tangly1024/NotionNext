@@ -13,7 +13,6 @@ import { useFukasawaGlobal } from '..'
 import CONFIG from '@/themes/fukasawa/config'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
-import MailChimpForm from './MailChimpForm'
 
 /**
  * 侧边栏
@@ -83,11 +82,7 @@ function AsideLeft(props) {
             </section>
 
             <section>
-                <MailChimpForm />
-            </section>
-
-            <section>
-                <AdSlot type='in-article' />
+                 <AdSlot type='in-article'/>
             </section>
 
             {router.asPath !== '/tag' && <section className='flex flex-col'>
