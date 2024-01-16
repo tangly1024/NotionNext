@@ -53,7 +53,7 @@ const Hero = props => {
   return (
         <header
             id="header" style={{ zIndex: -1 }}
-            className="w-full h-screen relative bg-black opacity-0"
+            className="w-full h-screen relative bg-black opacity-100"
         >
 
             <div className="z-10 text-white absolute bottom-6 flex flex-col h-full items-center justify-center w-full ">
