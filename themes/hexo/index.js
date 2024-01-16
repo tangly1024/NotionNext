@@ -8,7 +8,6 @@ import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
-import Hero from './components/Hero'
 import { useRouter } from 'next/router'
 import Card from './components/Card'
 import RightFloatArea from './components/RightFloatArea'
@@ -32,6 +31,7 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
+import Hero from './components/Hero'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -70,7 +70,7 @@ const LayoutBase = props => {
 
             {/* 主区块 */}
             <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
-                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
+                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-0'} >
                     <div className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
 
                         <Transition
