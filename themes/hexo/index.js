@@ -69,8 +69,8 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} z--100 bg-hexo-background-gray dark:z--100 bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
-                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z--100'} >
+            <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} z--1 bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative z--1`}>
+                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z--1'} >
                     <div className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
 
                         <Transition
@@ -113,7 +113,7 @@ const LayoutBase = props => {
  */
 const LayoutIndex = (props) => {
   const headerSlot = siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) && <Hero {...props} />
-  return <LayoutPostList {...props} headerSlot={headerSlot} className='pt-8' />
+  return <LayoutPostList {...props} headerSlot={headerSlot} className='pt-8 z-11' />
 }
 
 /**
