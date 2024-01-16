@@ -64,9 +64,9 @@ const Hero = props => {
                 {siteConfig('HEXO_HOME_NAV_BUTTONS', null, CONFIG) && <NavButtonGroup {...props} />}
 
                 {/* 滚动按钮 */}
-                <div onClick={scrollToWrapper} className="z-200 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-8 text-white">
-                    <div className="z-200 opacity-70 animate-bounce text-xs">{siteConfig('HEXO_SHOW_START_READING', null, CONFIG) && locale.COMMON.START_READING}</div>
-                    <i className='z-200 opacity-70 animate-bounce fas fa-angle-down' />
+                <div onClick={scrollToWrapper} className="z-101 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-8 text-white">
+                    <div className="opacity-70 animate-bounce text-xs">{siteConfig('HEXO_SHOW_START_READING', null, CONFIG) && locale.COMMON.START_READING}</div>
+                    <i className='opacity-70 animate-bounce fas fa-angle-down' />
                 </div>
             </div>
 
