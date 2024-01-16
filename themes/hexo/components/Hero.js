@@ -52,11 +52,11 @@ const Hero = props => {
 
   return (
         <header
-            id="header" style={{ zIndex: 1 }}
+            id="header" style={{ zIndex: -1 }}
             className="w-full h-screen relative bg-black"
         >
 
-            <div className="z-10 text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
+            <div className="z-10 text-white absolute bottom-2 flex flex-col h-full items-center justify-center w-full ">
                 {/* 站点标题 */}
                 <div className='z-10 font-black text-4xl md:text-5xl shadow-text'>{siteConfig('TITLE')}</div>
                 {/* 站点欢迎语 */}
@@ -68,7 +68,7 @@ const Hero = props => {
                 {siteConfig('HEXO_HOME_NAV_BUTTONS', null, CONFIG) && <NavButtonGroup {...props} />}
 
                 {/* 滚动按钮 */}
-                <div onClick={scrollToWrapper} className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-19 text-white">
+                <div onClick={scrollToWrapper} className="z-10 cursor-pointer w-full text-center py-4 text-3xl absolute bottom-15 text-white">
                     <div className="opacity-70 animate-bounce text-xs">{siteConfig('HEXO_SHOW_START_READING', null, CONFIG) && locale.COMMON.START_READING}</div>
                     <i className='opacity-70 animate-bounce fas fa-angle-down' />
                 </div>
