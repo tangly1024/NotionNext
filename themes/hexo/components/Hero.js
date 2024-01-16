@@ -52,15 +52,15 @@ const Hero = props => {
 
   return (
         <header
-            id="header" style={{ zIndex: -1 }}
+            id="header" style={{ zIndex: -100 }}
             className="w-full h-screen relative bg-black opacity-100"
         >
 
-            <div className="z-10 text-white absolute bottom-6 flex flex-col h-full items-center justify-center w-full ">
+            <div className="z-100 text-white absolute bottom-10 flex flex-col h-full items-center justify-center w-full ">
                 {/* 站点标题 */}
-                <div className='z-10 font-black text-4xl md:text-5xl shadow-text'>{siteConfig('TITLE')}</div>
+                <div className='z-100 font-black text-4xl md:text-5xl shadow-text'>{siteConfig('TITLE')}</div>
                 {/* 站点欢迎语 */}
-                <div className='z-10 mt-2 h-12 items-center text-center font-medium shadow-text text-lg'>
+                <div className='z-100 mt-2 h-12 items-center text-center font-medium shadow-text text-lg'>
                     <span id='typed' />
                 </div>
 
@@ -75,7 +75,7 @@ const Hero = props => {
             </div>
 
             <LazyImage id='header-cover' src={siteInfo?.pageCover}
-                className={`z-10 header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`} />
+                className={`z-100 header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`} />
 
         </header>
   )
