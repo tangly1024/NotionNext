@@ -69,8 +69,8 @@ const LayoutBase = props => {
             </Transition>
 
             {/* 主区块 */}
-            <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative z--10`}>
-                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z--1'} >
+            <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} z--100 bg-hexo-background-gray dark:z--100 bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
+                <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z--100'} >
                     <div className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
 
                         <Transition
@@ -336,12 +336,12 @@ const LayoutTagIndex = props => {
 
 export {
   CONFIG as THEME_CONFIG,
-  LayoutIndex,
   LayoutSearch,
   LayoutArchive,
   LayoutSlug,
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex
+  LayoutTagIndex,
+  LayoutIndex,
 }
