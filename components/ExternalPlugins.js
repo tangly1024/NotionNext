@@ -12,6 +12,7 @@ const FlutteringRibbon = dynamic(() => import('@/components/FlutteringRibbon'), 
 const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false })
 const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
 const StarrySky = dynamic(() => import('@/components/StarrySky'), { ssr: false })
+const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), { ssr: false });
 const Analytics = dynamic(() => import('@vercel/analytics/react').then(async (m) => { return m.Analytics }), { ssr: false })
 const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
@@ -69,6 +70,7 @@ const ExternalPlugin = (props) => {
   const MATOMO_SITE_ID = siteConfig('MATOMO_SITE_ID')
   const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID')
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
+  const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
 
   if (DISABLE_PLUGIN) {
     return null
@@ -91,6 +93,7 @@ const ExternalPlugin = (props) => {
         {FLUTTERINGRIBBON && <FlutteringRibbon />}
         {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
         {RIBBON && <Ribbon />}
+        {DIFY_CHATBOT_ENABLED && <DifyChatbot />}
         {CUSTOM_RIGHT_CLICK_CONTEXT_MENU && <CustomContextMenu {...props} />}
         {!CAN_COPY && <DisableCopy />}
         {WEB_WHIZ_ENABLED && <WebWhiz />}
