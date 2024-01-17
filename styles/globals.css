@@ -160,6 +160,11 @@ nav {
    @apply text-blue-700
 }
 
+/* twikoo 内置的 element-ui 加载样式 */
+.el-loading-spinner {
+  @apply flex justify-center items-center;
+}
+
 /* Webmention style */
 .webmention-block {
   background: rgba(0, 116, 222, .2);

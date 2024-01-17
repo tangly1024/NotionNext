@@ -162,10 +162,12 @@ export default function CustomContextMenu(props) {
                         {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
                         <div className='whitespace-nowrap'> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
                     </div>
+          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH') && (
                     <div onClick={handeChangeTheme} title={locale.MENU.THEME_SWITCH} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-palette mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.THEME_SWITCH}</div>
                     </div>
+          )}
                 </div>
 
             </div>
