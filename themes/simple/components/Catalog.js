@@ -57,31 +57,33 @@ const Catalog = ({ post }) => {
   }
 
   return <div className='px-3 '>
-    <div className='dark:text-white'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
+        <div className='dark:text-white mb-2'>
+            <i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}
+        </div>
 
-    <div className='overflow-y-auto overscroll-none max-h-36 lg:max-h-96 scroll-hidden' ref={tRef}>
-      <nav className='h-full  text-black'>
-        {post?.toc?.map((tocItem) => {
-          const id = uuidToId(tocItem.id)
-          return (
-            <a
-              key={id}
-              href={`#${id}`}
-              className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-200
+        <div className='overflow-y-auto overscroll-none max-h-36 lg:max-h-96 scroll-hidden' ref={tRef}>
+            <nav className='h-full  text-black'>
+                {post?.toc?.map((tocItem) => {
+                  const id = uuidToId(tocItem.id)
+                  return (
+                        <a
+                            key={id}
+                            href={`#${id}`}
+                            className={`notion-table-of-contents-item duration-300 transform dark:text-gray-200
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
-            >
-              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-red-500 underline overflow-ellipsis truncate'}`}
-              >
-                {tocItem.text}
-              </span>
-            </a>
-          )
-        })}
-      </nav>
+                        >
+                            <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
+                                className={`${activeSection === id && ' font-bold text-red-600 underline overflow-ellipsis truncate'}`}
+                            >
+                                {tocItem.text}
+                            </span>
+                        </a>
+                  )
+                })}
+            </nav>
 
+        </div>
     </div>
-  </div>
 }
 
 export default Catalog
