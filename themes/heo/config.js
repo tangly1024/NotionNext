@@ -83,7 +83,7 @@ const CONFIG = {
     },
     {
       title_1: 'Ikon',
-      img_1: '/images/heo/ikon.png',
+      img_1: '/images/heo/Ikon.png',
       color_1: '#f7cb4f',
       title_2: 'Epic',
       img_2: '/images/heo/epic.png',
