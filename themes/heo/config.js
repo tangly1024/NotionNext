@@ -54,7 +54,7 @@ const CONFIG = {
       img_1: '/images/heo/fatmap.png',
       color_1: '#57b6e6',
       title_2: 'Snow-Forecast',
-      img_2: '/images/heo/smow-forecast.png',
+      img_2: '/images/heo/snow-forecast.png',
       color_2: '#4082c3'
     },
     {
