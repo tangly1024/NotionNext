@@ -14,7 +14,7 @@ const Style = () => {
 
       // 公告栏中的字体固定白色
       #theme-heo #announcement-content .notion {
-        color: white;
+        color: purple;
       }
 
       ::-webkit-scrollbar-thumb {
@@ -51,7 +51,7 @@ const Style = () => {
 
       // 标签滚动动画
       .tags-group-wrapper {
-        animation: rowup 60s linear infinite;
+        animation: rowup 45s linear infinite;
       }
 
       @keyframes rowup {
