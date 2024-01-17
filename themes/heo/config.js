@@ -43,7 +43,7 @@ const CONFIG = {
   HEO_GROUP_ICONS: [
     {
       title_1: 'Slopes',
-      img_1: '/images/heo/slopes.png',
+      img_1: '/images/heo/slopes.webp',
       color_1: '#989bf8',
       title_2: '滑呗',
       img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
