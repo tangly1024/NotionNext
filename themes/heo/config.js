@@ -75,7 +75,7 @@ const CONFIG = {
     },
     {
       title_1: 'Shredhub',
-      img_1: '/images/heo/20237359d71b45ab77829cee5972e36f8c30073902.webp',
+      img_1: '/images/heo/xiahua.png',
       color_1: '#f29e39',
       title_2: 'Waze',
       img_2: '/images/heo/waze.png',
