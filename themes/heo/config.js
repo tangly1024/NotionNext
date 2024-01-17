@@ -44,9 +44,9 @@ const CONFIG = {
     {
       title_1: 'Slopes',
       img_1: '/images/heo/slopes.png',
-      color_1: '#2B78D1',
+      color_1: '#E8F3F9',
       title_2: '滑呗',
-      img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
+      img_2: '/images/heo/huabei.png',
       color_2: '#ffffff'
     },
     {
