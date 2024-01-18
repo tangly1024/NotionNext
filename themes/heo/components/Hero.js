@@ -28,10 +28,10 @@ const Hero = props => {
         }
       >
         {/* 左侧置顶文章组 */}
-        <TopGroup {...props} />
+        <BannerGroup {...props} />
 
         {/* 右侧banner组 */}
-        <BannerGroup {...props} />    
+        <TopGroup {...props} />  
       </div>
     </div>
   )
