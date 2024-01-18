@@ -11,7 +11,6 @@ import { useEffect, useState, createContext, useContext } from 'react'
 import Footer from './components/Footer'
 import TopNavBar from './components/TopNavBar'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import Announcement from './components/Announcement'
 import PageNavDrawer from './components/PageNavDrawer'
 import FloatTocButton from './components/FloatTocButton'
@@ -33,6 +32,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 
 import { MenuItem } from './components/MenuItem'
+import { siteConfig } from '@/lib/config'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -61,7 +61,7 @@ const LayoutBase = (props) => {
   let links = customMenu
 
   // 默认使用自定义菜单，否则将遍历所有的category生成菜单
-  if (!CONFIG.USE_CUSTOM_MENU) {
+  if (!siteConfig('NAV_USE_CUSTOM_MENU', null, CONFIG)) {
     links = categoryOptions && categoryOptions?.map(c => {
       return { id: c.name, title: `# ${c.name}`, to: `/category/${c.name}`, show: true }
     })
@@ -81,7 +81,7 @@ const LayoutBase = (props) => {
                 <TopNavBar {...props} />
 
                 {/* 左右布局区块 */}
-                <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' relative flex justify-between w-full h-screen mx-auto'}>
+                <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' relative flex justify-between w-full h-screen mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
                     <div className={'font-sans hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
@@ -227,9 +227,9 @@ const LayoutSlug = (props) => {
                     {/* <ShareBar post={post} /> */}
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
+                        {siteConfig('POST_DETAIL_CATEGORY', null, CONFIG) && post?.category && <CategoryItem category={post.category} />}
                         <div>
-                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {siteConfig('POST_DETAIL_TAG', null, CONFIG) && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 

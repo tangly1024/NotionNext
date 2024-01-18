@@ -11,7 +11,6 @@ import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
 import Live2D from '@/components/Live2D'
-import BLOG from '@/blog.config'
 import NavPostList from './components/NavPostList'
 import ArticleInfo from './components/ArticleInfo'
 import Catalog from './components/Catalog'
@@ -35,6 +34,7 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostListPage from './components/BlogPostListPage'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { siteConfig } from '@/lib/config'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -49,7 +49,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  */
 const LayoutBase = (props) => {
   const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -70,10 +70,12 @@ const LayoutBase = (props) => {
                 {/* 顶部导航栏 */}
                 <TopNavBar {...props} />
 
-                <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
+                <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
-                    <div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
+                    {fullWidth
+                      ? null
+                      : (<div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
@@ -87,11 +89,11 @@ const LayoutBase = (props) => {
                         <div className='w-72 fixed left-0 bottom-0 z-20 bg-white'>
                             <Footer {...props} />
                         </div>
-                    </div>
+                    </div>) }
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
 
-                        <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
+                        <div id='container-inner' className={`w-full px-7 ${fullWidth ? 'px-10' : 'max-w-3xl'} justify-center mx-auto`}>
                             {slotTop}
                             <WWAds className='w-full' orientation='horizontal'/>
 
@@ -124,27 +126,29 @@ const LayoutBase = (props) => {
                     </div>
 
                     {/*  右侧侧推拉抽屉 */}
-                    <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
-                        <div className='py-14 px-6 sticky top-0'>
-                            <ArticleInfo post={props?.post ? props?.post : props.notice} />
+                    {fullWidth
+                      ? null
+                      : <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
+                      <div className='py-14 px-6 sticky top-0'>
+                          <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                            <div className='py-4'>
-                                <Catalog {...props} />
-                                {slotRight}
-                                {router.route === '/' && <>
-                                    <InfoCard {...props} />
-                                    {CONFIG.WIDGET_REVOLVER_MAPS === 'true' && <RevolverMaps />}
-                                    <Live2D />
-                                </>}
-                                {/* gitbook主题首页只显示公告 */}
-                                <Announcement {...props} />
-                            </div>
+                          <div className='py-4'>
+                              <Catalog {...props} />
+                              {slotRight}
+                              {router.route === '/' && <>
+                                  <InfoCard {...props} />
+                                  {siteConfig('GITBOOK_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
+                                  <Live2D />
+                              </>}
+                              {/* gitbook主题首页只显示公告 */}
+                              <Announcement {...props} />
+                          </div>
 
-                            <AdSlot type='in-article' />
-                            <Live2D />
+                          <AdSlot type='in-article' />
+                          <Live2D />
 
-                        </div>
-                    </div>
+                      </div>
+                  </div>}
 
                 </main>
 
@@ -173,15 +177,15 @@ const LayoutBase = (props) => {
 const LayoutIndex = (props) => {
   const router = useRouter()
   useEffect(() => {
-    router.push(CONFIG.INDEX_PAGE).then(() => {
-      // console.log('跳转到指定首页', CONFIG.INDEX_PAGE)
+    router.push(siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)).then(() => {
+      // console.log('跳转到指定首页', siteConfig('INDEX_PAGE', null, CONFIG))
       setTimeout(() => {
         if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
-            console.log('请检查您的Notion数据库中是否包含此slug页面： ', CONFIG.INDEX_PAGE)
+            console.log('请检查您的Notion数据库中是否包含此slug页面： ', siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG))
             const containerInner = document.querySelector('#theme-gitbook #container-inner')
-            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${CONFIG.INDEX_PAGE}的文章</div></blockquote>`
+            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)}的文章</div></blockquote>`
             containerInner?.insertAdjacentHTML('afterbegin', newHTML)
           }
         }
@@ -230,9 +234,9 @@ const LayoutSlug = (props) => {
                     <ShareBar post={post} />
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
+                        {siteConfig('POST_DETAIL_CATEGORY', null, CONFIG) && post?.category && <CategoryItem category={post.category} />}
                         <div>
-                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {siteConfig('POST_DETAIL_TAG', null, CONFIG) && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 
