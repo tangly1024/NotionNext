@@ -5,9 +5,14 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到虾滑主页', url: 'https://shredxhub.com'},
-    { title: '去Voting板块，万一我们谈下来了呢', url: 'https://roadmap.shredxhub.com/'}
+    { title: '欢迎来到虾滑主页', url: 'https://shredxhub.com' },
+    { title: '去Voting板块，万一我们谈下来了呢', url: 'https://roadmap.shredxhub.com/' }
   ],
+
+  // 英雄区左右侧组件颠倒位置
+  HEO_HERO_REVERSE: true,
+  // 博客主体区左右侧组件颠倒位置
+  HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: 'Yard Sale|掉裝備',
