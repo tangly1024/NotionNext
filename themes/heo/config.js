@@ -6,7 +6,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
    { title: '欢迎来到我的博客', url: 'https://niu7.top' },
-    { title: '人穷就要多读书', url: 'https://zh.z-library.se/booklist/1384948/952f37/%E8%97%8F%E7%BB%8F%E9%98%81.html' },
+    { title: '人穷就要多读书', url: 'https://zh.z-library.se' },
    
    ],
 
@@ -43,7 +43,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://zh.z-library.se/booklist/1384948/952f37/%E9%93%81%E7%89%9B%E7%9A%84%E4%B9%A6%E6%9E%B6.html', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: 'https://zh.z-library.se/booklist/1384948/952f37/%E8%97%8F%E7%BB%8F%E9%98%81.html', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
