@@ -14,9 +14,9 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享福利',
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: 'https://niu7.top',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://docs.tangly1024.com/about',
+  HEO_HERO_TITLE_4: 'Z-library',
+  HEO_HERO_TITLE_5: '世界上最大的电子图书馆',
+  HEO_HERO_TITLE_LINK: 'https://zh.z-library.se/booklist/1384948/952f37/%E9%93%81%E7%89%9B%E7%9A%84%E4%B9%A6%E6%9E%B6.html',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '效率', url: '/tag/效率' },
