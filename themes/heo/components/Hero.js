@@ -223,7 +223,7 @@ function TopGroup(props) {
     <div
       id="hero-right-wrapper"
       onMouseLeave={handleMouseLeave}
-      className="flex-1 relative w-full"
+      className="flex-1 relative w-full pr-10 md:pr-0"
     >
       {/* 置顶推荐文章 */}
       <div
