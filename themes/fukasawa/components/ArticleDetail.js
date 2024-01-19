@@ -6,6 +6,9 @@ import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import ArticleAround from './ArticleAround'
 import { AdSlot } from '@/components/GoogleAdsense'
+import LazyImage from '@/components/LazyImage'
+import { formatDateFmt } from '@/lib/formatDate'
+import WWAds from '@/components/WWAds'
 
 /**
  *
@@ -14,17 +17,16 @@ import { AdSlot } from '@/components/GoogleAdsense'
  */
 export default function ArticleDetail(props) {
   const { post, prev, next } = props
-  const { locale } = useGlobal()
+  const { locale, fullWidth } = useGlobal()
 
   if (!post) {
     return <></>
   }
   return (
-    <div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
+    <div id="container" className={`${fullWidth ? 'px-10' : 'max-w-5xl '} overflow-x-auto flex-grow mx-auto w-screen md:w-full`}>
       {post?.type && !post?.type !== 'Page' && post?.pageCover && (
         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt={post.title} src={post?.pageCover} className='object-center w-full' />
+          <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />
         </div>
       )}
 
@@ -54,16 +56,16 @@ export default function ArticleDetail(props) {
 
               {post?.type !== 'Page' && (<>
                 <Link
-                  href={`/archive#${post?.publishTime?.substr(0, 7)}`}
+                  href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                   passHref
                   className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
 
-                  {post?.publishTime}
+                  {post?.publishDay}
 
                 </Link>
                 <span className='mr-2'>|</span>
                 <span className='mx-2 text-gray-400 dark:text-gray-500'>
-                  {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedTime}
+                  {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}
                 </span>
               </>)}
 
@@ -80,8 +82,7 @@ export default function ArticleDetail(props) {
 
           </section>
 
-          <AdSlot type='in-article'/>
-
+          <WWAds className='w-full' orientation='horizontal'/>
         </header>
 
         {/* Notion文章主体 */}
@@ -90,6 +91,7 @@ export default function ArticleDetail(props) {
         </section>
 
         <section>
+          <AdSlot type='in-article'/>
            {/* 分享 */}
            <ShareBar post={post} />
         </section>

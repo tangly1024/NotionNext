@@ -100,10 +100,6 @@ nav {
   width: 0 !important;
 }
 
-.notion-collection {
-  @apply max-w-0;
-}
-
 .glassmorphism {
   background: hsla(0, 0%, 100%, 0.05);
   -webkit-backdrop-filter: blur(10px);
@@ -159,23 +155,14 @@ nav {
   margin: -0.125em 0.25em;
 }
 
-
-.nobelium{
-    @apply flex flex-col justify-between
-}
-
-.nobelium .notion-code{
-    /* @apply max-w-2xl; */
-}
-
-.next #announcement-content *{
- font-size:13px !important;
- line-height:1.7 !important;
-}
-
 /* twikoo 评论区超链接样式 */
 .tk-main a {
    @apply text-blue-700
+}
+
+/* twikoo 内置的 element-ui 加载样式 */
+.el-loading-spinner {
+  @apply flex justify-center items-center;
 }
 
 /* Webmention style */
@@ -262,4 +249,10 @@ a.avatar-wrapper {
 
 .reply-author-name {
   font-weight: 500;
+}
+
+.forbid-copy {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }

@@ -1,27 +1,32 @@
 import Link from 'next/link'
 import CONFIG from '../config'
-import BLOG from '@/blog.config'
 import TagItemMini from './TagItemMini'
-// import Image from 'next/image'
+import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
-  if (post && !post.pageCoverThumbnail && CONFIG.POST_LIST_COVER_DEFAULT) {
+  const showPreview = siteConfig('HEO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  if (post && !post.pageCoverThumbnail && siteConfig('HEO_POST_LIST_COVER_DEFAULT', null, CONFIG)) {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && !showPreview
+  const showPageCover = siteConfig('HEO_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && !showPreview
   return (
-        <div className={` ${CONFIG.POST_LIST_COVER_HOVER_ENLARGE ? ' hover:scale-110 transition-all duration-150' : ''}`} >
+        <div className={` ${siteConfig('HEO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`} >
 
-            <div className={'animate__animated animate__fadeIn animate__fast border bg-white dark:bg-[#1e1e1e] cursor-pointer flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'}>
+            <div
+                data-aos="fade-up"
+                data-aos-duration="200"
+                data-aos-once="false"
+                data-aos-anchor-placement="top-bottom"
+                className={'border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'}>
 
                 {/* 图片封面 */}
                 {showPageCover && (
-                    <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
-                        <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                            <div className={'h-60 bg-center bg-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'} style={{ backgroundImage: `url('${post?.pageCoverThumbnail}')` }} />
-                        </Link>
-                    </div>
+                    <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                        <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
+                            <LazyImage priority={index === 0} src={post?.pageCoverThumbnail} alt={post?.title} className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300' />
+                        </div>
+                    </Link>
                 )}
 
                 {/* 文字区块 */}
@@ -37,7 +42,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
                         {/* 标题 */}
                         <Link
-                            href={`${BLOG.SUB_PATH}/${post.slug}`}
+                            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                             passHref
                             className={' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'}>
                             <span className='menu-link '>{post.title}</span>
@@ -45,18 +50,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                     </div>
 
                     {/* 摘要 */}
-                    {(!showPreview || showSummary) && !post.results && (
+                    {(!showPreview || showSummary) && (
                         <p className="line-clamp-2 replace my-3 2xl:my-1 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight">
                             {post.summary}
-                        </p>
-                    )}
-
-                    {/* 搜索结果 */}
-                    {post.results && (
-                        <p className="line-clamp-2 mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                            {post.results.map(r => (
-                                <span key={r}>{r}</span>
-                            ))}
                         </p>
                     )}
 

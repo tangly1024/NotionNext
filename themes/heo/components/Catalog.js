@@ -27,7 +27,6 @@ const Catalog = ({ toc }) => {
   // 同步选中目录事件
   const [activeSection, setActiveSection] = useState(null)
 
-  const throttleMs = 200
   const actionSectionScrollSpy = useCallback(throttle(() => {
     const sections = document.getElementsByClassName('notion-h')
     let prevBBox = null
@@ -53,7 +52,7 @@ const Catalog = ({ toc }) => {
     setActiveSection(currentSectionId)
     const index = tocIds.indexOf(currentSectionId) || 0
     tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
-  }, throttleMs))
+  }, 200))
 
   // 无目录就直接返回空
   if (!toc || toc.length < 1) {

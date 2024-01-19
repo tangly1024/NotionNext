@@ -1,5 +1,5 @@
-import BLOG from '@/blog.config'
-// import Image from 'next/image'
+import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 
 /**
@@ -22,18 +22,17 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           return (
             (<Link key={post.id} passHref
                     title={post.title}
-                    href={`${BLOG.SUB_PATH}/${post.slug}`}
+                    href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
 
                     className={'my-3 flex flex-col w-full'}>
 
                     <div className="w-full h-24 md:h-60 overflow-hidden relative rounded-lg mb-2">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={`${headerImage}`} className='object-cover w-full h-full' />
+                        <LazyImage src={`${headerImage}`} className='object-cover w-full h-full' />
                     </div>
 
                     <div
                         className={
-                            ' font-bold  overflow-x-hidden hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
+                            ' font-bold  overflow-x-hidden dark:text-white hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
                             ' hover:text-indigo-400 cursor-pointer'
                         }
                     >

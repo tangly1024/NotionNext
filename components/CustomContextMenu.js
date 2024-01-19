@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { useGlobal } from '@/lib/global'
 import { saveDarkModeToCookies, THEMES } from '@/themes/theme'
+import useWindowSize from '@/hooks/useWindowSize'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 自定义右键菜单
@@ -14,19 +16,33 @@ export default function CustomContextMenu(props) {
   const [show, setShow] = useState(false)
   const { isDarkMode, updateDarkMode, locale } = useGlobal()
   const menuRef = useRef(null)
+  const windowSize = useWindowSize()
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
 
   const { latestPosts } = props
   const router = useRouter()
+  /**
+   * 随机跳转文章
+   */
   function handleJumpToRandomPost() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(randomPost.slug)
+    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
+
+  useLayoutEffect(() => {
+    setWidth(menuRef.current.offsetWidth)
+    setHeight(menuRef.current.offsetHeight)
+  }, [])
 
   useEffect(() => {
     const handleContextMenu = (event) => {
       event.preventDefault()
-      setPosition({ y: `${event.clientY}px`, x: `${event.clientX}px` })
+      // 计算点击位置加菜单宽高是否超出屏幕，如果超出则贴边弹出
+      const x = (event.clientX < windowSize.width - width) ? event.clientX : windowSize.width - width
+      const y = (event.clientY < windowSize.height - height) ? event.clientY : windowSize.height - height
+      setPosition({ y: `${y}px`, x: `${x}px` })
       setShow(true)
     }
 
@@ -43,7 +59,7 @@ export default function CustomContextMenu(props) {
       window.removeEventListener('contextmenu', handleContextMenu)
       window.removeEventListener('click', handleClick)
     }
-  }, [])
+  }, [windowSize])
 
   function handleBack() {
     window.history.back()
@@ -146,10 +162,12 @@ export default function CustomContextMenu(props) {
                         {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
                         <div className='whitespace-nowrap'> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
                     </div>
+          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH') && (
                     <div onClick={handeChangeTheme} title={locale.MENU.THEME_SWITCH} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-palette mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.THEME_SWITCH}</div>
                     </div>
+          )}
                 </div>
 
             </div>

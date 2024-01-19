@@ -3,12 +3,10 @@ import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import Footer from './components/Footer'
 import { useEffect } from 'react'
 import RightFloatButtons from './components/RightFloatButtons'
 import { useRouter } from 'next/router'
-import Mark from 'mark.js'
 import SearchNave from './components/SearchNav'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -31,6 +29,8 @@ import JumpToCommentButton from './components/JumpToCommentButton'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局
@@ -41,7 +41,7 @@ import { Style } from './style'
  */
 const LayoutBase = props => {
   const { children, headerSlot, meta, siteInfo, containerSlot, post } = props
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
 
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
@@ -58,7 +58,7 @@ const LayoutBase = props => {
                 appear={true}
                 enter="transition ease-in-out duration-700 transform order-first"
                 enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100 translate-y-0"
+                enterTo="opacity-100"
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-16"
@@ -67,19 +67,19 @@ const LayoutBase = props => {
                 {headerSlot}
             </Transition>
 
-            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
+            <main id="wrapper" className={`${siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
                 {/* 嵌入区域 */}
-                <div id="container-slot" className={`w-full max-w-6xl ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
+                <div id="container-slot" className={`w-full ${fullWidth ? '' : 'max-w-6xl'} ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                     {containerSlot}
                 </div>
 
-                <div id="container-inner" className="w-full min-h-fit max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center relative z-10">
+                <div id="container-inner" className={`w-full min-h-fit ${fullWidth ? '' : 'max-w-6xl'} mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                     <Transition
                         show={!onLoading}
                         appear={true}
                         enter="transition ease-in-out duration-700 transform order-first"
                         enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100 translate-y-0"
+                        enterTo="opacity-100"
                         leave="transition ease-in-out duration-300 transform"
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 -translate-y-16"
@@ -101,7 +101,7 @@ const LayoutBase = props => {
             <RightFloatButtons {...props} />
 
             {/* 页脚 */}
-            <Footer title={siteInfo?.title || BLOG.TITLE} />
+            <Footer title={siteConfig('TITLE')} />
         </div>
   )
 }
@@ -113,7 +113,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />} />
+  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && <Hero {...props} />} />
 }
 
 /**
@@ -124,7 +124,7 @@ const LayoutIndex = (props) => {
 const LayoutPostList = (props) => {
   return (
         <LayoutBase {...props} containerSlot={<BlogListBar {...props} />}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
         </LayoutBase>
   )
 }
@@ -140,28 +140,23 @@ const LayoutSearch = props => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    setTimeout(() => {
-      if (currentSearch) {
-        const targets = document.getElementsByClassName('replace')
-        for (const container of targets) {
-          if (container && container.innerHTML) {
-            const re = new RegExp(currentSearch, 'gim')
-            const instance = new Mark(container)
-            instance.markRegExp(re, {
-              element: 'span',
-              className: 'text-red-500 border-b border-dashed'
-            })
-          }
+    if (currentSearch) {
+      replaceSearchResult({
+        doms: document.getElementsByClassName('replace'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
         }
-      }
-    }, 100)
+      })
+    }
   })
   return (
         <LayoutBase {...props} currentSearch={currentSearch}>
             {!currentSearch
               ? <SearchNave {...props} />
               : <div id="posts-wrapper">
-                    {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+                    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
                 </div>}
         </LayoutBase>
   )
@@ -196,13 +191,15 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const { fullWidth } = useGlobal()
+  const headerSlot = fullWidth ? null : <PostHeader {...props} />
 
-  return (<LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
+  return (<LayoutBase {...props} headerSlot={headerSlot} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
 
-        <div id='inner-wrapper' className={'w-full lg:max-w-3xl 2xl:max-w-4xl'} >
+        <div id='inner-wrapper' className={`w-full ${fullWidth ? '' : 'lg:max-w-3xl 2xl:max-w-4xl'}`} >
 
             {/* 文章主体卡片 */}
-            <div className="-mt-32 transition-all duration-300 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+            <div className={`${fullWidth ? '' : '-mt-32'} transition-all duration-300 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black`}>
 
                 {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -226,7 +223,7 @@ const LayoutSlug = props => {
                         <article itemScope >
 
                             {/* Notion文章主体 */}
-                            <section className='justify-center mx-auto max-w-2xl lg:max-w-full'>
+                            <section className={`justify-center mx-auto ${fullWidth ? '' : 'max-w-2xl lg:max-w-full'}`}>
                                 {post && <NotionPage post={post} />}
                             </section>
 
@@ -312,7 +309,7 @@ const LayoutCategoryIndex = props => {
             <div id='inner-wrapper' className='w-full'>
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300">
                     <div className='flex justify-center flex-wrap'>
-                        {categoryOptions.map(e => {
+                        {categoryOptions?.map(e => {
                           return (
                                 <Link key={e.name} href={`/category/${e.name}`} passHref legacyBehavior>
                                     <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400' >

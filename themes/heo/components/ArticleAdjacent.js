@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 上一篇，下一篇文章
@@ -9,6 +11,11 @@ import CONFIG from '../config'
  */
 export default function ArticleAdjacent({ prev, next }) {
   const [isScrollEnd, setIsScrollEnd] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    setIsScrollEnd(false)
+  }, [router])
 
   useEffect(() => {
     // 文章是否已经到了底部
@@ -16,11 +23,8 @@ export default function ArticleAdjacent({ prev, next }) {
 
     const handleIntersect = (entries) => {
       entries.forEach((entry) => {
-        console.log(entry.isIntersecting)
         if (entry.isIntersecting) {
           setIsScrollEnd(true)
-        } else {
-        //   setIsScrollEnd(false)
         }
       })
     }
@@ -39,7 +43,7 @@ export default function ArticleAdjacent({ prev, next }) {
     }
   }, [])
 
-  if (!prev || !next || !CONFIG.ARTICLE_ADJACENT) {
+  if (!prev || !next || !siteConfig('HEO_ARTICLE_ADJACENT', null, CONFIG)) {
     return <></>
   }
 
@@ -67,10 +71,10 @@ export default function ArticleAdjacent({ prev, next }) {
 
             {/* 桌面端 */}
 
-            <div id='pc-next-post' className={`hidden md:block fixed z-20 right-16 bottom-4 duration-200 transition-all ${isScrollEnd ? 'mb-0 opacity-100' : '-mb-24 opacity-0'}`}>
+            <div id='pc-next-post' className={`hidden md:block fixed z-40 right-24 bottom-4 duration-200 transition-all ${isScrollEnd ? 'mb-0 opacity-100' : '-mb-24 opacity-0'}`}>
                 <Link
                     href={`/${next.slug}`}
-                    className='cursor-pointer duration transition-all h-24 dark:bg-[#1e1e1e] border dark:border-gray-600 p-3 bg-white dark:text-gray-300 dark:hover:text-yellow-600 hover:text-white hover:font-bold hover:bg-gray-400 rounded-lg flex flex-col justify-between'
+                    className='cursor-pointer drop-shadow-xl duration transition-all h-24 dark:bg-[#1e1e1e] border dark:border-gray-600 p-3 bg-white dark:text-gray-300 dark:hover:text-yellow-600 hover:text-white hover:font-bold hover:bg-blue-600 rounded-lg flex flex-col justify-between'
                 >
                     <div className='text-xs'>下一篇</div>
                     <hr />

@@ -1,6 +1,4 @@
 import CONFIG from './config'
-
-import CommonHead from '@/components/CommonHead'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import Footer from './components/Footer'
 import JumpToBottomButton from './components/JumpToBottomButton'
@@ -10,13 +8,10 @@ import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useRef, useState } from 'react'
-import BLOG from '@/blog.config'
-import Header from './components/Header'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
 import { isBrowser } from '@/lib/utils'
-import Mark from 'mark.js'
 import TocDrawerButton from './components/TocDrawerButton'
 import TocDrawer from './components/TocDrawer'
 import { ArticleLock } from './components/ArticleLock'
@@ -28,6 +23,9 @@ import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
+import replaceSearchResult from '@/components/Mark'
+import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -35,7 +33,7 @@ import { Style } from './style'
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, meta, floatSlot, rightAreaSlot, siteInfo } = props
+  const { children, headerSlot, floatSlot, rightAreaSlot, meta } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
@@ -73,7 +71,7 @@ const LayoutBase = (props) => {
   return (
         <div id='theme-next'>
             {/* SEO相关 */}
-            <CommonHead meta={meta} />
+            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 移动端顶部导航栏 */}
@@ -85,20 +83,20 @@ const LayoutBase = (props) => {
             <div className='h-0.5 w-full bg-gray-700 dark:bg-gray-600 hidden lg:block' />
 
             {/* 主区 */}
-            <main id='wrapper' className={(BLOG.LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : '') + ' next relative flex justify-center flex-1 pb-12'}>
+            <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' next relative flex justify-center flex-1 pb-12'}>
                 {/* 左侧栏样式 */}
                 <SideAreaLeft targetRef={targetRef} {...props} />
 
                 {/* 中央内容 */}
-                <section id='container-inner' className={`${CONFIG.NAV_TYPE !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
+                <section id='container-inner' className={`${siteConfig('NEXT_NAV_TYPE', null, CONFIG) !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
                     <Transition
                         show={!onLoading}
                         appear={true}
                         enter="transition ease-in-out duration-700 transform order-first"
                         enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100 translate-y-0"
+                        enterTo="opacity-100"
                         leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100 translate-y-0"
+                        leaveFrom="opacity-100"
                         leaveTo="opacity-0 -translate-y-16"
                         unmount={false}
                     >
@@ -107,7 +105,7 @@ const LayoutBase = (props) => {
                 </section>
 
                 {/* 右侧栏样式 */}
-                {CONFIG.RIGHT_BAR && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
+                {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
             </main>
 
             {/* 右下角悬浮 */}
@@ -121,7 +119,7 @@ const LayoutBase = (props) => {
             </div>
 
             {/* 页脚 */}
-            <Footer title={siteInfo?.title} />
+            <Footer title={siteConfig('TITLE')} />
         </div>
   )
 }
@@ -133,7 +131,7 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList headerSlot={CONFIG.HOME_BANNER && <Header {...props} />} {...props} />
+  return <LayoutPostList {...props} />
 }
 
 /**
@@ -146,7 +144,7 @@ const LayoutPostList = (props) => {
 
         <BlogListBar {...props} />
 
-        {BLOG.POST_LIST_STYLE !== 'page'
+        {siteConfig('POST_LIST_STYLE') !== 'page'
           ? <BlogPostListScroll {...props} showSummary={true} />
           : <BlogPostListPage {...props} />
         }
@@ -161,17 +159,20 @@ const LayoutPostList = (props) => {
 const LayoutSearch = (props) => {
   const { locale } = useGlobal()
   const { posts, keyword } = props
-  setTimeout(() => {
-    const container = isBrowser() && document.getElementById('posts-wrapper')
-    if (container && container.innerHTML) {
-      const re = new RegExp(keyword, 'gim')
-      const instance = new Mark(container)
-      instance.markRegExp(re, {
-        element: 'span',
-        className: 'text-red-500 border-b border-dashed'
+
+  useEffect(() => {
+    if (isBrowser) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
       })
     }
-  }, 200)
+  }, [])
+
   return (
         <LayoutBase {...props} >
             <StickyBar>
@@ -181,7 +182,7 @@ const LayoutSearch = (props) => {
                 </div>
             </StickyBar>
             <div className="md:mt-5">
-                {BLOG.POST_LIST_STYLE !== 'page'
+                {siteConfig('POST_LIST_STYLE') !== 'page'
                   ? <BlogPostListScroll {...props} showSummary={true} />
                   : <BlogPostListPage {...props} />
                 }
@@ -200,7 +201,7 @@ const Layout404 = props => {
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
-      const article = isBrowser() && document.getElementById('article-wrapper')
+      const article = isBrowser && document.getElementById('article-wrapper')
       if (!article) {
         router.push('/').then(() => {
           // console.log('找不到页面', router.asPath)
@@ -252,7 +253,7 @@ const LayoutArchive = (props) => {
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
   const drawerRight = useRef(null)
-  const targetRef = isBrowser() ? document.getElementById('article-wrapper') : null
+  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
   const floatSlot = <div className='block lg:hidden'>
         <TocDrawerButton onClick={() => {
           drawerRight?.current?.handleSwitchVisible()
@@ -290,7 +291,7 @@ const LayoutCategoryIndex = (props) => {
                     <i className='mr-4 fas faTh' />{locale.COMMON.CATEGORY}:
                 </div>
                 <div id='category-list' className='duration-200 flex flex-wrap'>
-                    {categoryOptions.map(category => {
+                    {categoryOptions?.map(category => {
                       return (
                             <Link
                                 key={category.name}

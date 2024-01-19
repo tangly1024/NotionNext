@@ -1,4 +1,5 @@
-import BLOG from '@/blog.config'
+import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
 import Link from 'next/link'
@@ -27,7 +28,7 @@ export default function LatestPostsGroupMini ({ latestPosts, siteInfo }) {
             </div>
         </div>
         {latestPosts.map(post => {
-          const selected = currentPath === `${BLOG.SUB_PATH}/${post.slug}`
+          const selected = currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
           const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover
 
@@ -35,13 +36,12 @@ export default function LatestPostsGroupMini ({ latestPosts, siteInfo }) {
             (<Link
                     key={post.id}
                     title={post.title}
-                    href={`${BLOG.SUB_PATH}/${post.slug}`}
+                    href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
                     passHref
                     className={'my-3 flex'}>
 
                     <div className="w-20 h-14 overflow-hidden relative">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={`${headerImage}`} className='object-cover w-full h-full rounded-lg'/>
+                            <LazyImage src={`${headerImage}`} className='object-cover w-full h-full rounded-lg'/>
                     </div>
                     <div
                         className={
@@ -52,7 +52,7 @@ export default function LatestPostsGroupMini ({ latestPosts, siteInfo }) {
                     >
                         <div>
                             <div className='line-clamp-2 menu-link'>{post.title}</div>
-                            <div className="text-gray-500">{post.lastEditedTime}</div>
+                            <div className="text-gray-500">{post.lastEditedDay}</div>
                         </div>
                     </div>
 
