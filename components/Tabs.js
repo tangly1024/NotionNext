@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { siteConfig } from '@/lib/config'
 
 /**
  * Tabs切换标签
