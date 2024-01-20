@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '歡迎來到好聽書齋', url: 'https://sound2024b.vercel.app/' },
+    { title: '來上傳你的音檔', url: 'https://coffee-end-b8a.notion.site/2024-B-fca4d22119a3494aadecd43b544f49b9?pvs=4' }
   ],
 
   // 英雄区左右侧组件颠倒位置
