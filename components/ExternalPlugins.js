@@ -3,6 +3,10 @@ import dynamic from 'next/dynamic'
 import LA51 from './LA51'
 import WebWhiz from './Webwhiz'
 import TianLiGPT from './TianliGPT'
+import { GlobalStyle } from './GlobalStyle'
+
+import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS, IMG_SHADOW } from '@/blog.config'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false })
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false })
@@ -73,12 +77,44 @@ const ExternalPlugin = (props) => {
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
   const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
   const TIANLI_KEY = siteConfig('TianliGPT_KEY')
+  const GLOBAL_JS = siteConfig('GLOBAL_JS')
+
+  // 自定义样式css和js引入
+  if (isBrowser) {
+    // 初始化AOS动画
+    // 静态导入本地自定义样式
+    loadExternalResource('/css/custom.css', 'css')
+    loadExternalResource('/js/custom.js', 'js')
+
+    // 自动添加图片阴影
+    if (IMG_SHADOW) {
+      loadExternalResource('/css/img-shadow.css', 'css')
+    }
+
+    // 导入外部自定义脚本
+    if (CUSTOM_EXTERNAL_JS && CUSTOM_EXTERNAL_JS.length > 0) {
+      for (const url of CUSTOM_EXTERNAL_JS) {
+        loadExternalResource(url, 'js')
+      }
+    }
+
+    // 导入外部自定义样式
+    if (CUSTOM_EXTERNAL_CSS && CUSTOM_EXTERNAL_CSS.length > 0) {
+      for (const url of CUSTOM_EXTERNAL_CSS) {
+        loadExternalResource(url, 'css')
+      }
+    }
+  }
 
   if (DISABLE_PLUGIN) {
     return null
   }
 
   return <>
+
+        {/* 全局样式嵌入 */}
+        <GlobalStyle/>
+
         {THEME_SWITCH && <ThemeSwitch />}
         {DEBUG && <DebugPanel />}
         {ANALYTICS_ACKEE_TRACKER && <Ackee />}
@@ -114,6 +150,11 @@ const ExternalPlugin = (props) => {
                     `
             }} /> */}
         </>)}
+
+        {/* 注入JS脚本 */}
+        {GLOBAL_JS && <script async dangerouslySetInnerHTML={{
+          __html: GLOBAL_JS
+        }} />}
 
         {CHATBASE_ID && (<>
             <script id={CHATBASE_ID} src="https://www.chatbase.co/embed.min.js" defer />
