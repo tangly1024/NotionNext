@@ -2,6 +2,7 @@ import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
 import LA51 from './LA51'
 import WebWhiz from './Webwhiz'
+import TianLiGPT from './TianliGPT'
 
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false })
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false })
@@ -71,6 +72,7 @@ const ExternalPlugin = (props) => {
   const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID')
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
   const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
+  const TIANLI_KEY = siteConfig('TianliGPT_KEY')
 
   if (DISABLE_PLUGIN) {
     return null
@@ -98,6 +100,7 @@ const ExternalPlugin = (props) => {
         {!CAN_COPY && <DisableCopy />}
         {WEB_WHIZ_ENABLED && <WebWhiz />}
         {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
+        {TIANLI_KEY && <TianLiGPT/>}
         <VConsole />
         <LoadingProgress />
         <AosAnimation />
