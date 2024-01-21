@@ -31,7 +31,7 @@ const TianLiGPT = () => {
     await loadExternalResource(tianliCss, 'css')
 
     window.tianliGPT_postSelector = '#notion-article';
-    window.tianliGPT_key = 'f50e6b018a094fbb0d7c';
+    window.tianliGPT_key = tianliKey;
 
     await loadExternalResource(tianliJs, 'js')
   }
