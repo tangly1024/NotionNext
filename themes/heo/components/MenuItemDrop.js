@@ -14,7 +14,7 @@ export const MenuItemDrop = ({ link }) => {
         {/* 不含子菜单 */}
         {!hasSubMenu &&
             <Link
-                target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
+                target={link?.to?.indexOf('http') === 0 ? '_self' : '_self'}
                 href={link?.to}
                 className="font-sans hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest">
                 {link?.icon && <i className={link?.icon} />} {link?.name}
