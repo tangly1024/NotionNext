@@ -1,7 +1,7 @@
-import React from 'react'
-import BLOG from '@/blog.config'
 import Link from 'next/link'
 import { RecentComments } from '@waline/client'
+import { useEffect, useState } from 'react'
+import { siteConfig } from '@/lib/config'
 
 /**
  * @see https://waline.js.org/guide/get-started.html
@@ -9,11 +9,11 @@ import { RecentComments } from '@waline/client'
  * @returns
  */
 const ExampleRecentComments = (props) => {
-  const [comments, updateComments] = React.useState([])
-  const [onLoading, changeLoading] = React.useState(true)
-  React.useEffect(() => {
+  const [comments, updateComments] = useState([])
+  const [onLoading, changeLoading] = useState(true)
+  useEffect(() => {
     RecentComments({
-      serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
+      serverURL: siteConfig('COMMENT_WALINE_SERVER_URL'),
       count: 5
     }).then(({ comments }) => {
       changeLoading(false)

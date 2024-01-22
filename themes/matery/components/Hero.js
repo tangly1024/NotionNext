@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import Typed from 'typed.js'
 import CONFIG from '../config'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 
 let wrapperTop = 0
 
@@ -16,13 +16,14 @@ const Hero = props => {
   const [typed, changeType] = useState()
   const { siteInfo } = props
   const { locale } = useGlobal()
+  const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',')
 
   useEffect(() => {
     updateHeaderHeight()
     if (!typed && window && document.getElementById('typed')) {
       changeType(
         new Typed('#typed', {
-          strings: BLOG.GREETING_WORDS.split(','),
+          strings: GREETING_WORDS,
           typeSpeed: 200,
           backSpeed: 100,
           backDelay: 400,
@@ -53,7 +54,7 @@ const Hero = props => {
 
             <div className="text-white absolute flex flex-col h-full items-center justify-center w-full ">
                 {/* 站点标题 */}
-                <div className='text-4xl md:text-5xl shadow-text'>{siteInfo?.title}</div>
+                <div className='text-4xl md:text-5xl shadow-text'>{siteConfig('TITLE')}</div>
                 {/* 站点欢迎语 */}
                 <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
                     <span id='typed' />
@@ -61,12 +62,12 @@ const Hero = props => {
                 {/* 滚动按钮 */}
                 <div onClick={() => { window.scrollTo({ top: wrapperTop, behavior: 'smooth' }) }}
                     className="mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40">
-                    <i className='animate-bounce fas fa-angle-double-down' /> <span>{CONFIG.SHOW_START_READING && locale.COMMON.START_READING}</span>
+                    <i className='animate-bounce fas fa-angle-double-down' /> <span>{siteConfig('MATERY_SHOW_START_READING', null, CONFIG) && locale.COMMON.START_READING}</span>
                 </div>
             </div>
 
             <LazyImage priority={true} id='header-cover'src={siteInfo?.pageCover}
-                className={`header-cover object-center w-full h-screen object-cover ${CONFIG.HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`} />
+                className={`header-cover object-center w-full h-screen object-cover ${siteConfig('MATERY_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`} />
 
         </header>
   )
