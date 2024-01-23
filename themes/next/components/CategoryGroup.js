@@ -1,10 +1,13 @@
+import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
-  if (!categories) return <></>
+  if (!categories || categories.length === 0) return <></>
+  const categoryCount = siteConfig('PREVIEW_CATEGORY_COUNT')
+  const categoryOptions = categories.slice(0, categoryCount)
   return <>
     <div id='category-list' className='dark:border-gray-600 flex flex-wrap'>
-      {categories.map(category => {
+      {categoryOptions.map(category => {
         const selected = currentCategory === category.name
         return (
           <Link

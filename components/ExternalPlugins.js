@@ -2,6 +2,11 @@ import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
 import LA51 from './LA51'
 import WebWhiz from './Webwhiz'
+import TianLiGPT from './TianliGPT'
+import { GlobalStyle } from './GlobalStyle'
+
+import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS, IMG_SHADOW } from '@/blog.config'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false })
 const DebugPanel = dynamic(() => import('@/components/DebugPanel'), { ssr: false })
@@ -12,6 +17,7 @@ const FlutteringRibbon = dynamic(() => import('@/components/FlutteringRibbon'), 
 const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false })
 const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
 const StarrySky = dynamic(() => import('@/components/StarrySky'), { ssr: false })
+const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), { ssr: false });
 const Analytics = dynamic(() => import('@vercel/analytics/react').then(async (m) => { return m.Analytics }), { ssr: false })
 const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
@@ -69,12 +75,46 @@ const ExternalPlugin = (props) => {
   const MATOMO_SITE_ID = siteConfig('MATOMO_SITE_ID')
   const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID')
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
+  const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
+  const TIANLI_KEY = siteConfig('TianliGPT_KEY')
+  const GLOBAL_JS = siteConfig('GLOBAL_JS')
+
+  // 自定义样式css和js引入
+  if (isBrowser) {
+    // 初始化AOS动画
+    // 静态导入本地自定义样式
+    loadExternalResource('/css/custom.css', 'css')
+    loadExternalResource('/js/custom.js', 'js')
+
+    // 自动添加图片阴影
+    if (IMG_SHADOW) {
+      loadExternalResource('/css/img-shadow.css', 'css')
+    }
+
+    // 导入外部自定义脚本
+    if (CUSTOM_EXTERNAL_JS && CUSTOM_EXTERNAL_JS.length > 0) {
+      for (const url of CUSTOM_EXTERNAL_JS) {
+        loadExternalResource(url, 'js')
+      }
+    }
+
+    // 导入外部自定义样式
+    if (CUSTOM_EXTERNAL_CSS && CUSTOM_EXTERNAL_CSS.length > 0) {
+      for (const url of CUSTOM_EXTERNAL_CSS) {
+        loadExternalResource(url, 'css')
+      }
+    }
+  }
 
   if (DISABLE_PLUGIN) {
     return null
   }
 
   return <>
+
+        {/* 全局样式嵌入 */}
+        <GlobalStyle/>
+
         {THEME_SWITCH && <ThemeSwitch />}
         {DEBUG && <DebugPanel />}
         {ANALYTICS_ACKEE_TRACKER && <Ackee />}
@@ -91,10 +131,12 @@ const ExternalPlugin = (props) => {
         {FLUTTERINGRIBBON && <FlutteringRibbon />}
         {COMMENT_TWIKOO_COUNT_ENABLE && <TwikooCommentCounter {...props} />}
         {RIBBON && <Ribbon />}
+        {DIFY_CHATBOT_ENABLED && <DifyChatbot />}
         {CUSTOM_RIGHT_CLICK_CONTEXT_MENU && <CustomContextMenu {...props} />}
         {!CAN_COPY && <DisableCopy />}
         {WEB_WHIZ_ENABLED && <WebWhiz />}
         {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
+        {TIANLI_KEY && <TianLiGPT/>}
         <VConsole />
         <LoadingProgress />
         <AosAnimation />
@@ -108,6 +150,11 @@ const ExternalPlugin = (props) => {
                     `
             }} /> */}
         </>)}
+
+        {/* 注入JS脚本 */}
+        {GLOBAL_JS && <script async dangerouslySetInnerHTML={{
+          __html: GLOBAL_JS
+        }} />}
 
         {CHATBASE_ID && (<>
             <script id={CHATBASE_ID} src="https://www.chatbase.co/embed.min.js" defer />
