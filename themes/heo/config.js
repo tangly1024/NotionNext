@@ -21,7 +21,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: '',
   HEO_HERO_TITLE_4: '',
   HEO_HERO_TITLE_5: '',
-  HEO_HERO_TITLE_LINK: 'https://zlibrary-hk.se',
+  HEO_HERO_TITLE_LINK: '',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '效率', url: '/tag/效率' },
@@ -43,7 +43,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://zlibrary-hk.se/booklist/1384948/952f37/藏经阁.html', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
