@@ -6,25 +6,10 @@ const CONFIG = {
   FUKASAWA_POST_LIST_PREVIEW: false, // 显示文章预览
 
   RANDAM_THUMBNAIL: () => {
-    //var randomNum = Math.floor(Math.random() * 10) + 1;
-    // 拼接图片路径
-    //var imagePath = "/images/random/" + randomNum + ".png";
-    //return imagePath
-    var urls = [
-      "https://vip.helloimg.com/images/2023/10/19/o2pDng.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2pQTY.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2p7PX.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2pNqE.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2ppU9.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2pI7M.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2p8CP.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2pKt6.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2pUwn.png",
-      "https://vip.helloimg.com/images/2023/10/19/o2pghR.png"
-    ];
-  
-    var randomUrl = urls[Math.floor(Math.random()*urls.length)];
-    return randomUrl
+    var randomNum = Math.floor(Math.random() * 10) + 1;
+    拼接图片路径
+    var imagePath = "/images/random/" + randomNum + ".png";
+    return imagePath
   },
   // 菜单
   FUKASAWA_MENU_CATEGORY: true, // 显示分类
