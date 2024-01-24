@@ -1,0 +1,14 @@
+.button {
+  border-radius: 32px;
+  background: linear-gradient(
+    135deg,
+    rgba(77, 121, 255, 1) 0%,
+    rgba(93, 33, 231, 1) 100%
+  );
+  font-size: 14px;
+  color: #fff;
+  padding: 2px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

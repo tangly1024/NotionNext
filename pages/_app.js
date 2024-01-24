@@ -16,6 +16,7 @@ import 'aos/dist/aos.css' // You can also use <link> for styles
 
 import smoothscroll from 'smoothscroll-polyfill'
 import dynamic from 'next/dynamic'
+import Header from '@/components/Header'
 
 // 自定义样式css和js引入
 import ExternalScript from '@/components/ExternalScript'
@@ -32,11 +33,12 @@ const MyApp = ({ Component, pageProps }) => {
   }, [])
 
   return (
-        <GlobalContextProvider>
-            <Component {...pageProps}/>
-            <ExternalPlugins {...pageProps} />
-            <ExternalScript />
-        </GlobalContextProvider>
+    <GlobalContextProvider>
+      <Header currentNav="https://blog.waytoagi.com/" />
+      <Component {...pageProps} />
+      <ExternalPlugins {...pageProps} />
+      <ExternalScript />
+    </GlobalContextProvider>
   )
 }
 
