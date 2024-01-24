@@ -61,6 +61,8 @@ const LayoutBase = props => {
   const { fullWidth } = useGlobal()
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
+  const HEO_HERO_BODY_REVERSE = siteConfig('HEO_HERO_BODY_REVERSE', false, CONFIG)
+
   return (
     <div
       id="theme-heo"
@@ -81,7 +83,7 @@ const LayoutBase = props => {
         <div
           id="container-inner"
           className={
-            'w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'
+            `${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} w-full mx-auto lg:flex justify-center relative z-10`
           }
         >
           <div className={`w-full h-auto ${className || ''}`}>
@@ -90,11 +92,14 @@ const LayoutBase = props => {
             {children}
           </div>
 
+          <div className='lg:px-2'></div>
+
           <div className="hidden xl:block">
             {/* 主区快右侧 */}
             {slotRight}
           </div>
         </div>
+
       </main>
 
       {/* 页脚 */}
