@@ -49,7 +49,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  */
 const LayoutBase = (props) => {
   const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -73,7 +73,9 @@ const LayoutBase = (props) => {
                 <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
-                    <div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
+                    {fullWidth
+                      ? null
+                      : (<div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
@@ -87,11 +89,11 @@ const LayoutBase = (props) => {
                         <div className='w-72 fixed left-0 bottom-0 z-20 bg-white'>
                             <Footer {...props} />
                         </div>
-                    </div>
+                    </div>) }
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
 
-                        <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
+                        <div id='container-inner' className={`w-full px-7 ${fullWidth ? 'px-10' : 'max-w-3xl'} justify-center mx-auto`}>
                             {slotTop}
                             <WWAds className='w-full' orientation='horizontal'/>
 
@@ -124,27 +126,29 @@ const LayoutBase = (props) => {
                     </div>
 
                     {/*  右侧侧推拉抽屉 */}
-                    <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
-                        <div className='py-14 px-6 sticky top-0'>
-                            <ArticleInfo post={props?.post ? props?.post : props.notice} />
+                    {fullWidth
+                      ? null
+                      : <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
+                      <div className='py-14 px-6 sticky top-0'>
+                          <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                            <div className='py-4'>
-                                <Catalog {...props} />
-                                {slotRight}
-                                {router.route === '/' && <>
-                                    <InfoCard {...props} />
-                                    {siteConfig('GITBOOK_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
-                                    <Live2D />
-                                </>}
-                                {/* gitbook主题首页只显示公告 */}
-                                <Announcement {...props} />
-                            </div>
+                          <div className='py-4'>
+                              <Catalog {...props} />
+                              {slotRight}
+                              {router.route === '/' && <>
+                                  <InfoCard {...props} />
+                                  {siteConfig('GITBOOK_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
+                                  <Live2D />
+                              </>}
+                              {/* gitbook主题首页只显示公告 */}
+                              <Announcement {...props} />
+                          </div>
 
-                            <AdSlot type='in-article' />
-                            <Live2D />
+                          <AdSlot type='in-article' />
+                          <Live2D />
 
-                        </div>
-                    </div>
+                      </div>
+                  </div>}
 
                 </main>
 

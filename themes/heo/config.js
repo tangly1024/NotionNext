@@ -9,6 +9,11 @@ const CONFIG = {
     { title: '多多交流😁😁😁', url: '' }
   ],
 
+  // 英雄区左右侧组件颠倒位置
+  HEO_HERO_REVERSE: false,
+  // 博客主体区左右侧组件颠倒位置
+  HEO_HERO_BODY_REVERSE: false,
+
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '分享知识',
   HEO_HERO_TITLE_2: '与学习笔记',
