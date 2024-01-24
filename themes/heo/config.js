@@ -1,12 +1,12 @@
 const CONFIG = {
   HEO_HOME_BANNER_ENABLE: true,
 
-  HEO_SITE_CREATE_TIME: '2023-08-12', // 建站日期，用于计算网站运行的第几天
+  HEO_SITE_CREATE_TIME: '', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
    { title: '欢迎来到我的博客', url: 'https://niu7.top' },
-    { title: '人穷就要多读书', url: 'https://zh.z-library.se' },
+    { title: '人穷就要多读书', url: '' },
    
    ],
 
@@ -16,12 +16,12 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享福利',
-  HEO_HERO_TITLE_2: '与思维认知',
-  HEO_HERO_TITLE_3: 'https://niu7.top',
-  HEO_HERO_TITLE_4: 'Z-library',
-  HEO_HERO_TITLE_5: '世界上最大的电子图书馆',
-  HEO_HERO_TITLE_LINK: 'https://zh.z-library.se/booklist/1384948/952f37/%E8%97%8F%E7%BB%8F%E9%98%81.html',
+  HEO_HERO_TITLE_1: '',
+  HEO_HERO_TITLE_2: '',
+  HEO_HERO_TITLE_3: '',
+  HEO_HERO_TITLE_4: '',
+  HEO_HERO_TITLE_5: '',
+  HEO_HERO_TITLE_LINK: '',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '效率', url: '/tag/效率' },
@@ -43,7 +43,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://zh.z-library.se/booklist/1384948/952f37/%E8%97%8F%E7%BB%8F%E9%98%81.html', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
