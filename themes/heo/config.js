@@ -1,7 +1,7 @@
 const CONFIG = {
   HEO_HOME_BANNER_ENABLE: true,
 
-  HEO_SITE_CREATE_TIME: '', // 建站日期，用于计算网站运行的第几天
+  HEO_SITE_CREATE_TIME: '2023-08-12', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
@@ -43,7 +43,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: 'https://zlibrary-hk.se/booklist/1384948/952f37/%E8%97%8F%E7%BB%8F%E9%98%81.html', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
