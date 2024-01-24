@@ -34,13 +34,11 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '点我！点我！',
+    '点我试试看～',
     '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
     '🏃 脚踏实地行动派',
     '🏠 智能家居小能手',
-    '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    '🤖️ 数码科技爱好者'
   ],
   HEO_INFO_CARD_URL: 'https://github.com/Linlei-dev?tab=repositories', // 个人资料底部按钮链接
 
