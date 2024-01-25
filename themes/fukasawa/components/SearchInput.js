@@ -58,7 +58,7 @@ const SearchInput = (props) => {
       type='text'
       placeholder={locale.SEARCH.ARTICLES}
       aria-label="Search"
-      className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white'}
+      className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light text-black bg-gray-100 dark:bg-gray-800 dark:text-white'}
       onKeyUp={handleKeyUp}
       defaultValue={keyword || ''}
     />
