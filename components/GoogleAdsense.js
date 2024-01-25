@@ -62,7 +62,7 @@ const AdSlot = ({ type = 'show' }) => {
   if (type === 'flow') {
     return <ins className="adsbygoogle"
             data-ad-format="fluid"
-            data-ad-layout-key="-5j+cz+30-f7+bf"
+            data-ad-layout-key="-gw-3+1f-3d+2z"
             style={{ display: 'block' }}
             data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
             data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
