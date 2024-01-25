@@ -2,7 +2,13 @@ const BLOG = require('./blog.config')
 const { fontFamilies } = require('./lib/font')
 
 module.exports = {
-  content: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './themes/**/*.js'],
+  content: [
+    './pages/**/*.js',
+    './components/**/*.js',
+    './layouts/**/*.js',
+    './themes/**/*.js',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
+  ],
   darkMode: BLOG.APPEARANCE === 'class' ? 'media' : 'class', // or 'media' or 'class'
   theme: {
     fontFamily: fontFamilies,
@@ -29,5 +35,5 @@ module.exports = {
   variants: {
     extend: {}
   },
-  plugins: []
+  plugins: [require('flowbite/plugin')]
 }
