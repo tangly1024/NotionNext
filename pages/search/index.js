@@ -1,15 +1,21 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
+/**
+ * 搜索路由
+ * @param {*} props
+ * @returns
+ */
 const Search = props => {
   const { posts, siteInfo } = props
   const { locale } = useGlobal()
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const router = useRouter()
   const keyword = getSearchKey(router)
@@ -18,7 +24,7 @@ const Search = props => {
   // 静态过滤
   if (keyword) {
     filteredPosts = posts.filter(post => {
-      const tagContent = post.tags ? post.tags.join(' ') : ''
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
       const categoryContent = post.category ? post.category.join(' ') : ''
       const searchContent =
                 post.title + post.summary + tagContent + categoryContent
@@ -29,8 +35,8 @@ const Search = props => {
   }
 
   const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
+    description: siteConfig('DESCRIPTION'),
     image: siteInfo?.pageCover,
     slug: 'search',
     type: 'website'
@@ -45,12 +51,12 @@ const Search = props => {
  * 浏览器前端搜索
  */
 export async function getStaticProps() {
-  const props = await getGlobalNotionData({
+  const props = await getGlobalData({
     from: 'search-props',
     pageType: ['Post']
   })
   const { allPages } = props
-  props.posts = allPages.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   return {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)

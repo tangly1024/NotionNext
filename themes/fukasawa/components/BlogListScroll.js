@@ -1,5 +1,5 @@
-import BLOG from '@/blog.config'
-import React from 'react'
+import { siteConfig } from '@/lib/config'
+import { useEffect, useRef, useState } from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import { useGlobal } from '@/lib/global'
@@ -15,18 +15,18 @@ import { useGlobal } from '@/lib/global'
 const BlogListScroll = props => {
   const { posts = [], siteInfo } = props
   const { locale } = useGlobal()
-  const targetRef = React.useRef(null)
+  const targetRef = useRef(null)
 
-  const [page, updatePage] = React.useState(1)
+  const [page, updatePage] = useState(1)
 
   let hasMore = false
   const postsToShow = posts
-    ? Object.assign(posts).slice(0, BLOG.POSTS_PER_PAGE * page)
+    ? Object.assign(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page)
     : []
 
   if (posts) {
     const totalCount = posts.length
-    hasMore = page * BLOG.POSTS_PER_PAGE < totalCount
+    hasMore = page * parseInt(siteConfig('POSTS_PER_PAGE')) < totalCount
   }
   const handleGetMore = () => {
     if (!hasMore) return
@@ -44,7 +44,7 @@ const BlogListScroll = props => {
     })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
@@ -55,7 +55,7 @@ const BlogListScroll = props => {
     return <BlogPostListEmpty />
   } else {
     return (
-            <div id="container" ref={targetRef} className='grid-container' >
+            <div id="posts-wrapper" ref={targetRef} className='grid-container' >
                 {/* 文章列表 */}
                     {postsToShow?.map(post => (
             <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>

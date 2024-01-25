@@ -1,8 +1,9 @@
 import { useGlobal } from '@/lib/global'
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 标签下的文章列表
@@ -14,11 +15,11 @@ const Tag = props => {
   const { tag, siteInfo } = props
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
+    title: `${tag} | ${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
+    description: siteConfig('DESCRIPTION'),
     image: siteInfo?.pageCover,
     slug: 'tag/' + tag,
     type: 'website'
@@ -30,10 +31,10 @@ const Tag = props => {
 
 export async function getStaticProps({ params: { tag } }) {
   const from = 'tag-props'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from })
 
   // 过滤状态
-  props.posts = props.allPages.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.tags && post.tags.includes(tag))
+  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
 
   // 处理文章页数
   props.postCount = props.posts.length
@@ -68,7 +69,7 @@ function getTagNames(tags) {
 
 export async function getStaticPaths() {
   const from = 'tag-static-path'
-  const { tagOptions } = await getGlobalNotionData({ from })
+  const { tagOptions } = await getGlobalData({ from })
   const tagNames = getTagNames(tagOptions)
 
   return {

@@ -1,5 +1,5 @@
 import BlogPostCard from './BlogPostCard'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import PaginationSimple from './PaginationSimple'
 
@@ -12,7 +12,7 @@ import PaginationSimple from './PaginationSimple'
  * @constructor
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
 
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
@@ -20,7 +20,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
 
   return (
       <div className='w-full justify-center'>
-        <div id='container'>
+        <div id='posts-wrapper'>
         {/* 文章列表 */}
         {posts?.map(post => (
           <BlogPostCard key={post.id} post={post} />
