@@ -4,6 +4,7 @@ import copy from 'copy-to-clipboard'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import QRCode from 'qrcode.react'
 
 import {
   FacebookShareButton,
