@@ -94,10 +94,6 @@ function AsideLeft(props) {
                 <SocialButton />
             </section>
 
-            <section className='flex justify-center dark:text-gray-200 pt-4'>
-                <DarkModeButton />
-            </section>
-
             <section className='sticky top-0 pt-12'>
                 <Catalog toc={post?.toc} />
                 <div className='flex justify-center'>
