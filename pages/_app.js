@@ -16,11 +16,11 @@ import Header from '@/components/Header'
 
 const MyApp = ({ Component, pageProps }) => {
   return (
-        <GlobalContextProvider>
-          <Header currentNav="https://blog.waytoagi.com/" />
-          <Component {...pageProps} />
-          <ExternalPlugins {...pageProps} />
-          <ExternalScript />
+      <GlobalContextProvider {...pageProps}>
+            <Header currentNav="https://blog.waytoagi.com/" />
+            <Component {...pageProps} />
+            {/* 全局插件 , 自定义样式、组件等在这里统一引入 */}
+            <ExternalPlugins {...pageProps} />
       </GlobalContextProvider>
   )
 }
