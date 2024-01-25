@@ -60,16 +60,6 @@ function AsideLeft(props) {
         </div>}
 
         <div className={`h-full ${isCollapsed ? 'hidden' : 'px-8'}`}>
-  //            <Logo {...props} />
-
-  //         <section className='siteInfo flex flex-col dark:text-gray-300 pt-8'>
-  //            {siteConfig('DESCRIPTION')}
-  //          </section>
-
-  //         <section className='flex flex-col text-gray-600'>
-  //             <div className='w-12 my-4' />
-  //              <MenuList {...props} />
-  //         </section>
 
             <section className='flex flex-col text-gray-600'>
                 <div className='w-12 my-4' />
