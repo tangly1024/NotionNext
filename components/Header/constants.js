@@ -8,15 +8,15 @@ export const Navs = [
     href: MainHost
   },
   {
-    name: 'AI 站点',
+    name: 'AI 网站',
     href: MainHost + '/sites'
   },
   {
-    name: 'GPTs',
+    name: 'GPTs 应用',
     href: MainHost + '/gpts'
   },
   {
-    name: 'Prompts',
+    name: 'AI 提示词',
     href: MainHost + '/prompts'
   },
   {
