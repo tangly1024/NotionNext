@@ -17,13 +17,13 @@ import WWAds from '@/components/WWAds'
  */
 export default function ArticleDetail(props) {
   const { post, prev, next } = props
-  const { locale } = useGlobal()
+  const { locale, fullWidth } = useGlobal()
 
   if (!post) {
     return <></>
   }
   return (
-    <div id="container" className="max-w-5xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
+    <div id="container" className={`${fullWidth ? 'px-10' : 'max-w-5xl '} overflow-x-auto flex-grow mx-auto w-screen md:w-full`}>
       {post?.type && !post?.type !== 'Page' && post?.pageCover && (
         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
           <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />

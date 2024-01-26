@@ -51,14 +51,14 @@ const LayoutBase = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
 
   return (
         <ThemeGlobalMedium.Provider value={{ tocVisible, changeTocVisible }}>
             {/* SEO相关 */}
-            <CommonHead meta={meta}/>
+            <CommonHead meta={meta} />
             {/* CSS样式 */}
-            <Style/>
+            <Style />
 
             <div id='theme-medium' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
 
@@ -72,7 +72,7 @@ const LayoutBase = props => {
                         {/* 顶部导航栏 */}
                         <TopNavBar {...props} />
 
-                        <div id='container-inner' className='px-7 max-w-5xl justify-center mx-auto min-h-screen'>
+                        <div id='container-inner' className={`px-7 ${fullWidth ? '' : 'max-w-5xl'} justify-center mx-auto min-h-screen`}>
                             <Transition
                                 show={!onLoading}
                                 appear={true}
@@ -96,20 +96,23 @@ const LayoutBase = props => {
                     </div>
 
                     {/* 桌面端右侧 */}
-                    <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${siteConfig('MEDIUM_RIGHT_PANEL_DARK', null, CONFIG) ? 'bg-hexo-black-gray dark' : ''}`}>
-                        <div className='py-14 px-6 sticky top-0'>
-                            <Tabs>
-                                {slotRight}
-                                <div key={locale.NAV.ABOUT}>
-                                    {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
-                                    {showInfoCard && <InfoCard {...props} />}
-                                    {siteConfig('MEDIUM_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
-                                </div>
-                            </Tabs>
-                            <Announcement post={notice} />
-                            <Live2D />
-                        </div>
-                    </div>
+                    {fullWidth
+                      ? null
+                      : <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${siteConfig('MEDIUM_RIGHT_PANEL_DARK', null, CONFIG) ? 'bg-hexo-black-gray dark' : ''}`}>
+                            <div className='py-14 px-6 sticky top-0'>
+                                <Tabs>
+                                    {slotRight}
+                                    <div key={locale.NAV.ABOUT}>
+                                        {router.pathname !== '/search' && <SearchInput className='mt-6  mb-12' />}
+                                        {showInfoCard && <InfoCard {...props} />}
+                                        {siteConfig('MEDIUM_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
+                                    </div>
+                                </Tabs>
+                                <Announcement post={notice} />
+                                <Live2D />
+                            </div>
+                        </div>}
+
                 </main>
 
                 {/* 移动端底部导航栏 */}
@@ -162,7 +165,7 @@ const LayoutSlug = props => {
             {!lock && <div id='article-wrapper'>
 
                 {/* 文章信息 */}
-                <ArticleInfo {...props}/>
+                <ArticleInfo {...props} />
 
                 {/* Notion文章主体 */}
                 <section className="px-1 max-w-4xl">

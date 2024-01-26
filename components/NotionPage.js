@@ -1,13 +1,18 @@
-import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
 import mediumZoom from '@fisch0920/medium-zoom'
-import React, { useEffect, useRef } from 'react'
-// import { Code } from 'react-notion-x/build/third-party/code'
-import TweetEmbed from 'react-tweet-embed'
+import { useEffect, useRef } from 'react'
 import 'katex/dist/katex.min.css'
 import { mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
+import { NotionRenderer } from 'react-notion-x'
+
+// Notion渲染
+// const NotionRenderer = dynamic(() => import('react-notion-x').then(async (m) => {
+//   return m.NotionRenderer
+// }), {
+//   ssr: false
+// })
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then(async (m) => {
@@ -15,6 +20,7 @@ const Code = dynamic(() =>
   }), { ssr: false }
 )
 
+// 公式
 const Equation = dynamic(() =>
   import('@/components/Equation').then(async (m) => {
     // 化学方程式
@@ -33,6 +39,13 @@ const Pdf = dynamic(
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+  ssr: false
+})
+
+/**
+ * tweet嵌入
+ */
+const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
   ssr: false
 })
 

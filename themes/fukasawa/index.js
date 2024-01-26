@@ -46,14 +46,16 @@ export const useFukasawaGlobal = () => useContext(ThemeGlobalFukasawa)
 const LayoutBase = (props) => {
   const { children, headerSlot, meta } = props
   const leftAreaSlot = <Live2D />
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
+
+  const FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT = fullWidth || siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
 
   // 侧边栏折叠从 本地存储中获取 open 状态的初始值
   const [isCollapsed, setIsCollapse] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
+      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
     }
-    return siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
+    return FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
   })
 
   // 在组件卸载时保存 open 状态到本地存储中
@@ -78,7 +80,7 @@ const LayoutBase = (props) => {
                     <AsideLeft {...props} slot={leftAreaSlot} />
 
                     <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
-                        <div id='container-inner' className='2xl:max-w-6xl md:max-w-4xl w-full relative z-10'>
+                        <div id='container-inner' className={`${fullWidth ? '' : '2xl:max-w-6xl md:max-w-4xl'} w-full relative z-10`}>
                             <Transition
                                 show={!onLoading}
                                 appear={true}
