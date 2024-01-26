@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
+    { title: '欢迎来到我的博客', url: 'https://phillweston.com' },
     { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
   ],
 
@@ -19,8 +19,8 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: 'PHILLWESTON.COM',
   HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://phillweston.com',
+  HEO_HERO_TITLE_5: '欢迎访问 CSDN Blog',
+  HEO_HERO_TITLE_LINK: 'https://blog.csdn.net/qq_26550927',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
