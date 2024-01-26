@@ -43,7 +43,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: 'https://zlibrary-hk.se/booklist/1384948/952f37/%E8%97%8F%E7%BB%8F%E9%98%81.html', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
