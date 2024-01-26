@@ -21,7 +21,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: '',
   HEO_HERO_TITLE_4: '',
   HEO_HERO_TITLE_5: '',
-  HEO_HERO_TITLE_LINK: '',
+  HEO_HERO_TITLE_LINK: 'https://v.douyin.com/iLbMpNPt/',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '效率', url: '/tag/效率' },
