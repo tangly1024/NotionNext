@@ -170,11 +170,11 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '偷心 - 张学友',
+      name: '共鸣 - 周深',
       artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song?id=409941281.mp3',
+      url: 'http://music.163.com/song/media/outer/url?id=2117905342.mp3',
       cover:
-          'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+          'https://p1.music.126.net/kDKdNs8hv9aThGKNMtWx1g==/109951169282470776.jpg'
     },
     {
       name: '王都グランセル',
