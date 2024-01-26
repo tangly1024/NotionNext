@@ -172,7 +172,7 @@ const BLOG = {
     {
       name: '偷心 - 张学友',
       artist: 'Falcom Sound Team jdk',
-      url: 'http://m801.music.126.net/20240126014811/f28aec0fce8b950c2844e2daacb7555b/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/32815172068/4244/68e0/e678/5243175551729df9fa4777b590da0d12.mp3',
+      url: 'https://music.163.com/song?id=409941281.mp3',
       cover:
           'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
     },
