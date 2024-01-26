@@ -13,11 +13,11 @@ export const Navs = [
   },
   {
     name: 'GPTs 应用',
-    href: MainHost + '/gpts'
+    href: MainHost + '/gpts-wiki'
   },
   {
-    name: 'AI 提示词',
-    href: MainHost + '/prompts'
+    name: ' AI 提示词',
+    href: MainHost + '/prompts-wiki'
   },
   {
     name: 'AI 资讯',
