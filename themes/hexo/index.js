@@ -1,6 +1,6 @@
 import CONFIG from './config'
 import CommonHead from '@/components/CommonHead'
-import { useEffect, useRef } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
 import TopNav from './components/TopNav'
@@ -32,6 +32,12 @@ import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+
+
+// 主题全局状态
+const ThemeGlobalHexo = createContext()
+export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -42,8 +48,12 @@ import { siteConfig } from '@/lib/config'
 const LayoutBase = props => {
   const { children, headerSlot, floatSlot, slotTop, meta, className } = props
   const { onLoading, fullWidth } = useGlobal()
+  
+  // Algolia搜索框
+  const searchModal = useRef(null)
 
   return (
+    <ThemeGlobalHexo.Provider value={{ searchModal }}>
         <div id='theme-hexo'>
             {/* 网页SEO */}
             <CommonHead meta={meta}/>
@@ -98,9 +108,13 @@ const LayoutBase = props => {
             {/* 悬浮菜单 */}
             <RightFloatArea floatSlot={floatSlot} />
 
+            {/* 全文搜索 */}
+            <AlgoliaSearchModal cRef={searchModal} {...props}/>
+
             {/* 页脚 */}
             <Footer title={siteConfig('TITLE') } />
         </div>
+    </ThemeGlobalHexo.Provider>
   )
 }
 
