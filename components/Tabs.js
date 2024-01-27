@@ -33,7 +33,7 @@ const Tabs = ({ className, children }) => {
         {validChildren.map((item, index) => (
           <section
             key={index}
-            className={`${currentTab === index ? 'opacity-100 static h-auto' : 'opacity-0 absolute h-0'}`}>
+            className={`${currentTab === index ? 'opacity-100 static h-auto' : 'opacity-0 absolute h-0 pointer-events-none'}`}>
             {item}
           </section>
         ))}
