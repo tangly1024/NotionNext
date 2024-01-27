@@ -16,7 +16,7 @@ const BLOG = {
   GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || 'Hi，我是一个程序员, Hi，我是一个打工人,Hi，我是一个干饭人,欢迎来到我的博客🎉',
 
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || false, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
-
+  // RSS Default Info
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Zwei', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '在下陈师傅', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://zweichen.com', // 网站地址
@@ -396,17 +396,20 @@ const BLOG = {
   },
 
   // RSS订阅
+  DESCRIPTION: process.env.NEXT_PUBLIC_DESCRIPTION || 'We do choose who we become.', // 站点描述，被notion中的页面描述覆盖
+  TITLE: process.env.NEXT_PUBLIC_TITLE || 'Zwei\'s Blog', // 站点标题 ，被notion中的页面标题覆盖；此处请勿留空白，否则服务器无法编译
+  
   ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
   MAILCHIMP_LIST_ID: process.env.MAILCHIMP_LIST_ID || null, // 开启mailichimp邮件订阅 客户列表ID ，具体使用方法参阅文档
   MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY || null, // 开启mailichimp邮件订阅 APIkey
 
   // 作废配置
   AVATAR: process.env.NEXT_PUBLIC_AVATAR || '/avatar.svg', // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
-  TITLE: process.env.NEXT_PUBLIC_TITLE || 'Zwei\'s Blog', // 站点标题 ，被notion中的页面标题覆盖；此处请勿留空白，否则服务器无法编译
   HOME_BANNER_IMAGE:
         process.env.NEXT_PUBLIC_HOME_BANNER_IMAGE || '/bg_image.jpg', // 首页背景大图, 会被notion中的封面图覆盖，若无封面图则会使用代码中的 /public/bg_image.jpg 文件
-  DESCRIPTION:
-        process.env.NEXT_PUBLIC_DESCRIPTION || 'We do choose who we become.', // 站点描述，被notion中的页面描述覆盖
+
+
+
 
   // 网站图片
   IMG_LAZY_LOAD_PLACEHOLDER: process.env.NEXT_PUBLIC_IMG_LAZY_LOAD_PLACEHOLDER || 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', // 懒加载占位图片地址，支持base64或url
