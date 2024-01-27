@@ -1,4 +1,3 @@
-import React from 'react'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
@@ -11,9 +10,9 @@ const MenuGroupCard = (props) => {
   const tagSlot = <div className='text-center'>{tagOptions?.length}</div>
 
   const links = [
-    { name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: CONFIG.MENU_ARCHIVE },
-    { name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: CONFIG.MENU_CATEGORY },
-    { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: CONFIG.MENU_TAG }
+    { name: locale.COMMON.ARTICLE, to: '/archive', slot: archiveSlot, show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG) },
+    { name: locale.COMMON.CATEGORY, to: '/category', slot: categorySlot, show: siteConfig('HEO_MENU_CATEGORY', null, CONFIG) },
+    { name: locale.COMMON.TAGS, to: '/tag', slot: tagSlot, show: siteConfig('HEO_MENU_TAG', null, CONFIG) }
   ]
 
   return (

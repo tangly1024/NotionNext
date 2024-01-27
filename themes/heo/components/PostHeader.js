@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
 import WavesArea from './WavesArea'
 import { HashTag } from '@/components/HeroIcons'
@@ -90,7 +90,7 @@ export default function PostHeader({ post, siteInfo }) {
 
                         </div>
 
-                        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
+                        {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && <div className="busuanzi_container_page_pv font-light mr-2">
                             <i className="fa-solid fa-fire-flame-curved"></i> <span className="mr-2 busuanzi_value_page_pv" />
                         </div>}
                     </section>
