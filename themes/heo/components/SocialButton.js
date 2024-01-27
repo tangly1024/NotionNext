@@ -47,6 +47,9 @@ const SocialButton = () => {
       {siteConfig('CONTACT_NETEASE') && <a target='_blank' rel='noreferrer' title={'网易云音乐'} href={siteConfig('CONTACT_NETEASE')} >
         <i className='transform hover:scale-125 duration-150 far fa-circle-play dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
+      {siteConfig('CONTACT_MOVIE') && <a target='_blank' rel='noreferrer' title={'电影'} href={siteConfig('CONTACT_MOVIE')} >
+        <i className='transform hover:scale-125 duration-150 fab fa-youtube dark:hover:text-indigo-400 hover:text-indigo-600'/>
+      </a>}  
     </div>
   </div>
 }
