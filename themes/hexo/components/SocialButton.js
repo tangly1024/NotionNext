@@ -39,7 +39,10 @@ const SocialButton = () => {
         <i className='transform hover:scale-125 duration-150 fab fa-youtube dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
       {siteConfig('CONTACT_XIAOHONGSHU') && <a target='_blank' rel='noreferrer' title={'小红书'} href={siteConfig('CONTACT_XIAOHONGSHU')} >
-        <i className='transform hover:scale-125 duration-150 fab fa-solid fa-book dark:hover:text-indigo-400 hover:text-indigo-600'/>
+        <i className='transform hover:scale-125 duration-150 fa-solid fa-book dark:hover:text-indigo-400 hover:text-indigo-600'/>
+      </a>}
+      {siteConfig('CONTACT_TAOBAO') && <a target='_blank' rel='noreferrer' title={'淘宝'} href={siteConfig('CONTACT_TAOBAO')} >
+        <i className='transform hover:scale-125 duration-150 fa-solid fa-cart-shopping dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
     </div>
   </div>
