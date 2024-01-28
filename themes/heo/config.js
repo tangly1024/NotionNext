@@ -107,7 +107,7 @@ const CONFIG = {
   SOCIAL_CARD_TITLE_1: '💬订阅资讯',
   SOCIAL_CARD_TITLE_2: '订阅 Unraid 资讯频道',
   SOCIAL_CARD_TITLE_3: '加入 Telegram 资讯频道',
-  SOCIAL_CARD_URL: 'https://t.me/+Ysq6jsI-eXs3NjI1',
+  SOCIAL_CARD_URL: 'https://t.me/unraid_jackiewu',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
