@@ -41,3 +41,7 @@ yarn-error.log*
 .idea
 .vscode
 
+
+# sitemap
+/public/robots.txt
+/public/sitemap.xml
