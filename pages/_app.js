@@ -9,11 +9,14 @@ import '@/styles/notion.css' //  重写部分样式
 import 'aos/dist/aos.css' // You can also use <link> for styles
 
 import { GlobalContextProvider } from '@/lib/global'
+import useAdjustStyle from '@/hooks/useAdjustStyle'
 
 // 各种扩展插件 这个要阻塞引入
 import ExternalPlugins from '@/components/ExternalPlugins'
 
 const MyApp = ({ Component, pageProps }) => {
+  // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
+  useAdjustStyle();
   return (
         <GlobalContextProvider {...pageProps}>
             <Component {...pageProps} />
