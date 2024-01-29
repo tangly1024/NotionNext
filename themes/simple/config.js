@@ -3,7 +3,7 @@ const CONFIG = {
   LOGO_IMG: '/Logo.webp',
   TOP_BAR: true, // 显示顶栏
   TOP_BAR_CONTENT: process.env.NEXT_PUBLIC_THEME_SIMPLE_TOP_TIPS || '',
-  LOGO_DESCRIPTION: process.env.NEXT_PUBLIC_THEME_SIMPLE_LOGO_DESCRIPTION || '<div>编程爱好者<br/>/互联网从业者<br/>/知识分享博主</div>',
+  LOGO_DESCRIPTION: process.env.NEXT_PUBLIC_THEME_SIMPLE_LOGO_DESCRIPTION || '<div>我是ah新呀~<br/>/生活分享博主</div>',
 
   AUTHOR_LINK: process.env.NEXT_PUBLIC_AUTHOR_LINK || '#',
 
