@@ -10,6 +10,9 @@ import { useRouter } from 'next/router'
 import throttle from 'lodash.throttle'
 import SideBar from './SideBar'
 import SideBarDrawer from './SideBarDrawer'
+import { siteConfig } from '@/lib/config'
+import SearchButton from './SearchButton'
+import CONFIG from '../config'
 
 let windowTop = 0
 
@@ -26,6 +29,7 @@ const TopNav = props => {
   const router = useRouter()
 
   const [isOpen, changeShow] = useState(false)
+  const showSearchButton = siteConfig('HEXO_MENU_SEARCH',false,CONFIG)
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
@@ -140,11 +144,12 @@ const TopNav = props => {
                 </div>
 
                 {/* 右侧功能 */}
-                <div className='mr-1 justify-end items-center '>
+                <div className='mr-1 flex justify-end items-center '>
                     <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
                     <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
                         {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
                     </div>
+                    {showSearchButton && <SearchButton />}
                 </div>
             </div>
         </div>
