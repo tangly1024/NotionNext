@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Navs } from './constants'
+import { Navs, MainHost } from './constants'
 import React from 'react'
 import MobileMenu from './MobileMenu'
 import AgiButton from './AgiButton'
@@ -9,7 +9,7 @@ const Header = ({ currentNav }) => {
     <header>
       <div className="bg-white mx-auto py-2.5 px-3 flex justify-between items-center">
         <div className="flex items-center">
-          <a href="/">
+          <a href={MainHost}>
             <img
               src="/logo-header.png"
               className="mr-3 h-8"
