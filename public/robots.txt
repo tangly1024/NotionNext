@@ -1,0 +1,12 @@
+
+    # *
+    User-agent: *
+    Allow: /
+  
+    # Host
+    Host: https://notion-next-plum-chi.vercel.app/
+  
+    # Sitemaps
+    Sitemap: https://notion-next-plum-chi.vercel.app//sitemap.xml
+  
+    
