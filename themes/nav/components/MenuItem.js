@@ -20,6 +20,9 @@ export const MenuItem = ({ link }) => {
     return null
   }
 
+  // #号加标题  快速跳转到指定锚点
+  const url = link?.to && link?.to.length > 0 ?  link.to : '#' + link?.title
+
   return <>
         {/* 菜单 */}
         <div
@@ -36,8 +39,7 @@ export const MenuItem = ({ link }) => {
                     </div>
                 </>)
               : (
-                // link?.to
-                    <Link href={'#' + link?.title} className='dark:text-neutral-400 dark:hover:text-white font-bold w-full display-block'>
+                    <Link href={url} className='dark:text-neutral-400 dark:hover:text-white font-bold w-full display-block'>
                         {link?.icon && <i className={`text-base ${link?.icon}`} />}{link?.title}
                     </Link>
                 )
