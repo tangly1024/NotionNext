@@ -21,7 +21,7 @@ const BlogPostCard = ({ post }) => {
                 by <a href="#" className="text-gray-700 dark:text-gray-300">{siteConfig('AUTHOR')}</a> on {post.date?.start_date || post.createdTime}
                 <TwikooCommentCount post={post} className='pl-1'/>
                 <span className="font-bold mx-1"> | </span>
-                <a href={`/category${post.category}`} className="text-gray-700 dark:text-gray-300 hover:underline">{post.category}</a>
+                <Link href={`/category/${post.category}`} className="text-gray-700 dark:text-gray-300 hover:underline">{post.category}</Link>
                 {/* <span className="font-bold mx-1"> | </span> */}
                 {/* <a href="#" className="text-gray-700">2 Comments</a> */}
             </div>

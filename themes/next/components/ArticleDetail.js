@@ -14,6 +14,7 @@ import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
 import { siteConfig } from '@/lib/config'
+import WWAds from '@/components/WWAds'
 
 /**
  *
@@ -79,7 +80,9 @@ export default function ArticleDetail(props) {
 
                 {/* Notion内容主体 */}
                 <article className='mx-auto'>
+                    <WWAds className="w-full" orientation="horizontal" />
                     {post && (<NotionPage post={post} />)}
+                    <WWAds className="w-full" orientation="horizontal" />
                 </article>
 
                 {showArticleInfo && <>

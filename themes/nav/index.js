@@ -30,9 +30,10 @@ import BlogPostListAll from './components/BlogPostListAll'
 import BlogPostCard from './components/BlogPostCard'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-
 import { MenuItem } from './components/MenuItem'
+import LogoBar from './components/LogoBar'
 import { siteConfig } from '@/lib/config'
+
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -75,7 +76,7 @@ const LayoutBase = (props) => {
             <Style/>
 
             {/* 主题样式根基 */}
-            <div id='theme-onenav' className=' dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-onenav' className='dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300'>
 
                 {/* 端顶部导航栏 */}
                 <TopNavBar {...props} />
@@ -86,7 +87,12 @@ const LayoutBase = (props) => {
                     {/* 左侧推拉抽屉 */}
                     <div className={'font-sans hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
 
-                        <div className='mt-20 main-menu z-20 pl-9 pr-7 pb-5 sticky pt-1 top-20 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
+                        {/* 图标Logo */}
+                        <div className='hidden md:block w-full top-0 left-5 md:left-4 z-40 pt-3 md:pt-4'>
+                            <LogoBar {...props} />
+                        </div>
+                        <div className='main-menu z-20 pl-9 pr-7 pb-5 sticky pt-1 top-20 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
+
                            {/* 嵌入 */}
                             {slotLeft}
 
@@ -172,10 +178,10 @@ const LayoutPostListIndex = props => {
   // const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotRight, slotTop, meta } = props
   // const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
   return (
-    <LayoutBase {...props} >
+    <>
         <Announcement {...props} />
         <BlogPostListAll { ...props } />
-    </LayoutBase>
+    </>
   )
 }
 
@@ -189,7 +195,7 @@ const LayoutPostList = props => {
   // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
   // 如果是搜索，则列表顶部嵌入 搜索框
   return (
-    <LayoutBase {...props} >
+    <>
         <div className='w-full max-w-7xl mx-auto justify-center mt-8'>
             <div id='posts-wrapper' class='card-list grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
                 {posts?.map(post => (
@@ -197,7 +203,7 @@ const LayoutPostList = props => {
                 ))}
             </div>
         </div>
-    </LayoutBase>
+    </>
   )
 }
 
@@ -210,41 +216,41 @@ const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
 
   return (
-        <LayoutBase {...props} >
+        <>
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
-            {!lock && <div id='container'>
+              {!lock && <div id='container'>
 
-                {/* title */}
-                <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300">{post?.title}</h1>
+                  {/* title */}
+                  <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300">{post?.title}</h1>
 
-                {/* Notion文章主体 */}
-                {post && (<section id="article-wrapper" className="px-1">
-                    <NotionPage post={post} />
+                  {/* Notion文章主体 */}
+                  {post && (<section id="article-wrapper" className="px-1">
+                      <NotionPage post={post} />
 
                     {/* 分享 */}
                     {/* <ShareBar post={post} /> */}
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {siteConfig('POST_DETAIL_CATEGORY', null, CONFIG) && post?.category && <CategoryItem category={post.category} />}
+                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
                         <div>
-                            {siteConfig('POST_DETAIL_TAG', null, CONFIG) && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 
-                    {/* 上一篇、下一篇文章 */}
-                    {/* {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />} */}
+                      {/* 上一篇、下一篇文章 */}
+                      {/* {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />} */}
 
-                    <AdSlot />
-                    <WWAds className='w-full' orientation='horizontal'/>
+                      <AdSlot />
+                      <WWAds className='w-full' orientation='horizontal'/>
 
-                    <Comment frontMatter={post} />
-                </section>)}
+                      <Comment frontMatter={post} />
+                  </section>)}
 
                 <TocDrawer {...props} />
             </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -255,7 +261,7 @@ const LayoutSlug = (props) => {
  * @returns
  */
 const LayoutSearch = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  return <></>
 }
 
 /**
@@ -265,22 +271,23 @@ const LayoutSearch = (props) => {
  * @returns
  */
 const LayoutArchive = (props) => {
-  const { archivePosts } = props
+  return <div {...props}></div>
+  // const { archivePosts } = props
 
-  return <LayoutBase {...props}>
+  return <>
         <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
             {Object.keys(archivePosts)?.map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
         </div>
-  </LayoutBase>
+  </>
 }
 
 /**
  * 404
  */
 const Layout404 = props => {
-  return <LayoutBase {...props}>
+  return <>
         <div className='w-full h-96 py-80 flex justify-center items-center'>404 Not found.</div>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -289,7 +296,7 @@ const Layout404 = props => {
 const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-  return <LayoutBase {...props}>
+  return <>
      <div className='bg-white dark:bg-gray-700 py-10'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
@@ -311,17 +318,18 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 /**
  * 标签列表
  */
 const LayoutTagIndex = (props) => {
-  const { tagOptions } = props
-  const { locale } = useGlobal()
+  return <div {...props}></div>
+  // const { tagOptions } = props
+  // const { locale } = useGlobal()
 
-  return <LayoutBase {...props}>
+  return <>
      <div className="bg-white dark:bg-gray-700 py-10">
                 <div className="dark:text-gray-200 mb-5">
                     <i className="mr-4 fas fa-tag" />
@@ -337,11 +345,12 @@ const LayoutTagIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
