@@ -37,13 +37,13 @@ export const useNobeliumGlobal = () => useContext(ThemeGlobalNobelium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, post,  meta } = props
+  const { children, post, meta } = props
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
-  const topSlot= <BlogListBar {...props}/>
+  const topSlot = <BlogListBar {...props}/>
 
   return (
         <ThemeGlobalNobelium.Provider value={{ searchModal, filterKey, setFilterKey }}>
@@ -116,7 +116,7 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { posts, topSlot,tag } = props
+  const { posts, topSlot, tag } = props
   const { filterKey } = useNobeliumGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
@@ -160,7 +160,7 @@ const LayoutSearch = props => {
   }, [])
 
   // 在列表中进行实时过滤
-  const {filterKey} = useNobeliumGlobal()
+  const { filterKey } = useNobeliumGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
     filteredBlogPosts = posts.filter(post => {

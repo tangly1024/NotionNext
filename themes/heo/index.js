@@ -59,7 +59,7 @@ const LayoutBase = props => {
   const { fullWidth } = useGlobal()
   const router = useRouter()
   console.log(router)
-  
+
   const headerSlot = (
     <header>
       {/* 顶部导航 */}
@@ -67,11 +67,12 @@ const LayoutBase = props => {
         <NavBar {...props} />
       </div>
       {/* 通知横幅 */}
-      {router.route==='/' ? <>
+      {router.route === '/'
+        ? <>
         <NoticeBar />
         <Hero {...props} />
       </>
-      : null}
+        : null}
       <div className="max-w-[86rem] mx-auto px-3">
         <WWAds className="w-full" orientation="horizontal" />
       </div>
@@ -159,7 +160,6 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-
   return (
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
@@ -184,7 +184,7 @@ const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   const currentSearch = keyword || router?.query?.s
-  
+
   useEffect(() => {
     // 高亮搜索结果
     if (currentSearch) {
@@ -269,7 +269,6 @@ const LayoutSlug = props => {
     const hasCode = document.querySelectorAll('[class^="language-"]').length > 0
     setHasCode(hasCode)
   }, [])
-
 
   const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
     siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
@@ -427,7 +426,6 @@ const Layout404 = props => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-
 
   return (
       <div id="category-outer-wrapper" className="mt-8 px-5 md:px-0">

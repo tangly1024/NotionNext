@@ -71,7 +71,7 @@ const LayoutBase = (props) => {
   const drawerRight = useRef(null)
   const floatSlot = <div className='block lg:hidden'>
     <TocDrawerButton onClick={() => {
-        drawerRight?.current?.handleSwitchVisible()
+      drawerRight?.current?.handleSwitchVisible()
     }} />
  </div>
   const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
@@ -114,7 +114,7 @@ const LayoutBase = (props) => {
 
                 {/* 右侧栏样式 */}
                 {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
-            
+
             </main>
 
             {/* 悬浮目录按钮 */}
@@ -342,5 +342,5 @@ export {
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex,
+  LayoutTagIndex
 }

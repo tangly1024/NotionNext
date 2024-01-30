@@ -43,9 +43,10 @@ const LayoutBase = props => {
   const { children, meta, siteInfo, post } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
-  const containerSlot= router.route==='/' ? <Announcement {...props} /> : <BlogListBar {...props} />
-  const headerSlot= siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && router.route==='/' 
-  ? <Hero {...props} /> : (post && !fullWidth ? <PostHeader {...props} /> : null)
+  const containerSlot = router.route === '/' ? <Announcement {...props} /> : <BlogListBar {...props} />
+  const headerSlot = siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && router.route === '/'
+    ? <Hero {...props} />
+    : (post && !fullWidth ? <PostHeader {...props} /> : null)
 
   const floatRightBottom = post ? <JumpToCommentButton /> : null
 
@@ -198,7 +199,7 @@ const LayoutArchive = (props) => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const { fullWidth } = useGlobal()
- 
+
   return (<>
 
         <div id='inner-wrapper' className={`w-full ${fullWidth ? '' : 'lg:max-w-3xl 2xl:max-w-4xl'}`} >
