@@ -1,5 +1,5 @@
-import React from 'react'
-import BLOG from '@/blog.config'
+import { useEffect, useState } from 'react'
+import { siteConfig } from '@/lib/config'
 import Card from '@/themes/hexo/components/Card'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
@@ -11,12 +11,12 @@ import { RecentComments } from '@waline/client'
  * @returns
  */
 const HexoRecentComments = (props) => {
-  const [comments, updateComments] = React.useState([])
+  const [comments, updateComments] = useState([])
   const { locale } = useGlobal()
-  const [onLoading, changeLoading] = React.useState(true)
-  React.useEffect(() => {
+  const [onLoading, changeLoading] = useState(true)
+  useEffect(() => {
     RecentComments({
-      serverURL: BLOG.COMMENT_WALINE_SERVER_URL,
+      serverURL: siteConfig('COMMENT_WALINE_SERVER_URL'),
       count: 5
     }).then(({ comments }) => {
       changeLoading(false)

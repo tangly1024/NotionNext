@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { useGlobal } from '@/lib/global'
 import { saveDarkModeToCookies, THEMES } from '@/themes/theme'
-import BLOG from '@/blog.config'
 import useWindowSize from '@/hooks/useWindowSize'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 自定义右键菜单
@@ -28,7 +28,7 @@ export default function CustomContextMenu(props) {
   function handleJumpToRandomPost() {
     const randomIndex = Math.floor(Math.random() * latestPosts.length)
     const randomPost = latestPosts[randomIndex]
-    router.push(`${BLOG.SUB_PATH}/${randomPost?.slug}`)
+    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
 
   useLayoutEffect(() => {
@@ -162,10 +162,12 @@ export default function CustomContextMenu(props) {
                         {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
                         <div className='whitespace-nowrap'> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
                     </div>
+          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH') && (
                     <div onClick={handeChangeTheme} title={locale.MENU.THEME_SWITCH} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-palette mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.THEME_SWITCH}</div>
                     </div>
+          )}
                 </div>
 
             </div>

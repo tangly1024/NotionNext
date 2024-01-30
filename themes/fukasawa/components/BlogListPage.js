@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { deepClone, isBrowser } from '@/lib/utils'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
@@ -15,7 +15,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
  * @constructor
  */
 const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
   const showNext = page < totalPage
 
   const [columns, setColumns] = useState(calculateColumns())
@@ -59,7 +59,7 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
               <BlogCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
             </div>
           ))}
-          {BLOG.ADSENSE_GOOGLE_ID && (
+          {siteConfig('ADSENSE_GOOGLE_ID') && (
             <div className='p-3'>
                 <AdSlot type='flow'/>
             </div>
