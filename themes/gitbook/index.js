@@ -49,7 +49,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  */
 const LayoutBase = (props) => {
   const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
-  const { onLoading } = useGlobal()
+  const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -73,7 +73,9 @@ const LayoutBase = (props) => {
                 <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative flex justify-between w-full h-full mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
-                    <div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
+                    {fullWidth
+                      ? null
+                      : (<div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
@@ -87,11 +89,11 @@ const LayoutBase = (props) => {
                         <div className='w-72 fixed left-0 bottom-0 z-20 bg-white'>
                             <Footer {...props} />
                         </div>
-                    </div>
+                    </div>) }
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
 
-                        <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
+                        <div id='container-inner' className={`w-full px-7 ${fullWidth ? 'px-10' : 'max-w-3xl'} justify-center mx-auto`}>
                             {slotTop}
                             <WWAds className='w-full' orientation='horizontal'/>
 
@@ -124,27 +126,29 @@ const LayoutBase = (props) => {
                     </div>
 
                     {/*  右侧侧推拉抽屉 */}
-                    <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
-                        <div className='py-14 px-6 sticky top-0'>
-                            <ArticleInfo post={props?.post ? props?.post : props.notice} />
+                    {fullWidth
+                      ? null
+                      : <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
+                      <div className='py-14 px-6 sticky top-0'>
+                          <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                            <div className='py-4'>
-                                <Catalog {...props} />
-                                {slotRight}
-                                {router.route === '/' && <>
-                                    <InfoCard {...props} />
-                                    {siteConfig('GITBOOK_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
-                                    <Live2D />
-                                </>}
-                                {/* gitbook主题首页只显示公告 */}
-                                <Announcement {...props} />
-                            </div>
+                          <div className='py-4'>
+                              <Catalog {...props} />
+                              {slotRight}
+                              {router.route === '/' && <>
+                                  <InfoCard {...props} />
+                                  {siteConfig('GITBOOK_WIDGET_REVOLVER_MAPS', null, CONFIG) === 'true' && <RevolverMaps />}
+                                  <Live2D />
+                              </>}
+                              {/* gitbook主题首页只显示公告 */}
+                              <Announcement {...props} />
+                          </div>
 
-                            <AdSlot type='in-article' />
-                            <Live2D />
+                          <AdSlot type='in-article' />
+                          <Live2D />
 
-                        </div>
-                    </div>
+                      </div>
+                  </div>}
 
                 </main>
 
@@ -189,7 +193,7 @@ const LayoutIndex = (props) => {
     })
   }, [])
 
-  return <LayoutBase {...props} />
+  return <></>
 }
 
 /**
@@ -199,9 +203,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} >
-            <div className='mt-10'><BlogPostListPage {...props} /></div>
-    </LayoutBase>
+  return <></>
 }
 
 /**
@@ -213,7 +215,7 @@ const LayoutSlug = (props) => {
   const { post, prev, next, lock, validPassword } = props
 
   return (
-        <LayoutBase {...props} >
+        <>
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -246,7 +248,7 @@ const LayoutSlug = (props) => {
 
                 <TocDrawer {...props} />
             </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -257,7 +259,7 @@ const LayoutSlug = (props) => {
  * @returns
  */
 const LayoutSearch = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  return <></>
 }
 
 /**
@@ -269,20 +271,20 @@ const LayoutSearch = (props) => {
 const LayoutArchive = (props) => {
   const { archivePosts } = props
 
-  return <LayoutBase {...props}>
+  return <>
         <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
             {Object.keys(archivePosts)?.map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
         </div>
-  </LayoutBase>
+  </>
 }
 
 /**
  * 404
  */
 const Layout404 = props => {
-  return <LayoutBase {...props}>
+  return <>
         <div className='w-full h-96 py-80 flex justify-center items-center'>404 Not found.</div>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -291,7 +293,7 @@ const Layout404 = props => {
 const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-  return <LayoutBase {...props}>
+  return <>
      <div className='bg-white dark:bg-gray-700 py-10'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
@@ -313,7 +315,7 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 /**
@@ -323,7 +325,7 @@ const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   const { locale } = useGlobal()
 
-  return <LayoutBase {...props}>
+  return <>
      <div className="bg-white dark:bg-gray-700 py-10">
                 <div className="dark:text-gray-200 mb-5">
                     <i className="mr-4 fas fa-tag" />
@@ -339,11 +341,12 @@ const LayoutTagIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

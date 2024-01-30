@@ -5,6 +5,7 @@ import { ArrowPath, ChevronLeft, ChevronRight } from '@/components/HeroIcons'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
+import { compressImage } from '@/lib/notion/mapImage'
 
 /**
  * 弹出框
@@ -13,7 +14,7 @@ export default function Modal(props) {
   const { showModal, setShowModal, modalContent, setModalContent } = usePlogGlobal()
   const { siteInfo, posts } = props
   const cancelButtonRef = useRef(null)
-  const img = modalContent?.pageCover || siteInfo?.pageCover
+  const img = compressImage(modalContent?.pageCover || siteInfo?.pageCover, 1200, 85, 'webp')
   const imgRef = useRef(null)
 
   // 添加loading状态
