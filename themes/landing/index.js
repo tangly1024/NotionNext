@@ -57,13 +57,13 @@ const LayoutBase = (props) => {
  */
 const LayoutIndex = (props) => {
   return (
-        <LayoutBase {...props}>
+        <>
             <Hero />
             <Features />
             <FeaturesBlocks />
             <Testimonials />
             <Newsletter />
-        </LayoutBase>
+        </>
   )
 }
 
@@ -81,24 +81,24 @@ const LayoutSlug = (props) => {
     return <div id='theme-landing'><Loading /></div>
   }
 
-  return <LayoutBase {...props}>
-
+  return <>
         <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
             <NotionPage {...props} />
         </div>
-    </LayoutBase>
+    </>
 }
 
 // 其他布局暂时留空
-const LayoutSearch = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const LayoutArchive = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const Layout404 = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const LayoutCategoryIndex = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const LayoutPostList = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
-const LayoutTagIndex = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
+const LayoutSearch = (props) => <><Hero /></>
+const LayoutArchive = (props) => <><Hero /></>
+const Layout404 = (props) => <><Hero /></>
+const LayoutCategoryIndex = (props) => <><Hero /></>
+const LayoutPostList = (props) => <><Hero /></>
+const LayoutTagIndex = (props) => <><Hero /></>
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
