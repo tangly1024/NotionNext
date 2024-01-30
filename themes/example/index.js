@@ -49,9 +49,9 @@ const LayoutBase = props => {
     slotTop = <div className='pb-12'>#{tag}</div>
   } else if (props.slotTop) {
     slotTop = props.slotTop
-  } else if (router.route==='/search'){
-   // 嵌入一个搜索框在顶部 
-   slotTop = <div className='pb-12'><SearchInput {...props} /></div>
+  } else if (router.route === '/search') {
+    // 嵌入一个搜索框在顶部
+    slotTop = <div className='pb-12'><SearchInput {...props} /></div>
   }
 
   // 增加一个状态以触发 Transition 组件的动画
@@ -136,7 +136,6 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-
   return (
         <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
