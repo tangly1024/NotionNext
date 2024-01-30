@@ -22,9 +22,10 @@ export const Navs = [
   {
     name: 'AI 资讯',
     href: 'https://blog.waytoagi.com/'
+  },
+  {
+    name: 'AI 春晚',
+    href: 'https://blog.waytoagi.com/article/AI-Spring-Festival-Gala',
+    className: 'text-red-600'
   }
-  // {
-  //   name: "知识库",
-  //   href: "https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e",
-  // },
 ]

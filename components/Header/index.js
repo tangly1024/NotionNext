@@ -23,8 +23,8 @@ const Header = ({ currentNav }) => {
                 <a
                   href={nav.href}
                   className={`flex items-center gap-1 text-base md:hover:text-blue-600 ${
-                    currentNav === nav.href ? 'md:text-blue-600' : ''
-                  }`}
+                    nav.className || ''
+                  } ${currentNav === nav.href ? 'md:text-blue-600' : ''}`}
                   // target={nav.href.startsWith("http") ? "_blank" : "_self"}
                 >
                   {nav.name}

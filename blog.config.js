@@ -359,7 +359,8 @@ const BLOG = {
   isProd: process.env.VERCEL_ENV === 'production', // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   VERSION: process.env.NEXT_PUBLIC_VERSION, // 版本号
 
-  BLOG_FAVICON: '/favicon.ico'
+  BLOG_FAVICON: '/favicon.ico',
+  BUNDLE_ANALYZER: false
 }
 
 module.exports = BLOG
