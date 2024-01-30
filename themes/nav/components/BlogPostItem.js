@@ -10,10 +10,6 @@ import BlogPostCard from './BlogPostCard'
  */
 const BlogPostItem = (props) => {
   const { group } = props
-
-  console.log('####### group')
-  console.log(group)
-
   if (group?.category) {
     return <>
             <div id={group?.category} className='category  text-lg font-normal pt-9 pb-4 first:pt-4 select-none flex justify-between font-sans text-neutral-800 dark:text-neutral-400 p-2' key={group?.category}>
