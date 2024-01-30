@@ -52,6 +52,7 @@ export const MenuItem = ({ link }) => {
             <Collapse isOpen={isOpen} key='collapse'>
                 {
                     link?.subMenus?.map((sLink, index) => {
+                        // #号加标题  快速跳转到指定锚点
                         const sUrl =  sLink?.to && sLink?.to.length > 0 ?  sLink.to : '#' + sLink?.title
                         return <div key={index} className='nav-submenu'>
                         <Link href={sUrl}>

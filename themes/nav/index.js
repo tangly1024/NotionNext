@@ -30,11 +30,10 @@ import BlogPostListAll from './components/BlogPostListAll'
 import BlogPostCard from './components/BlogPostCard'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-
 import { MenuItem } from './components/MenuItem'
 import LogoBar from './components/LogoBar'
-
 import { siteConfig } from '@/lib/config'
+
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量

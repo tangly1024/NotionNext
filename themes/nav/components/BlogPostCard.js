@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import NotionIcon from './NotionIcon'
 import { useRouter } from 'next/router'
+import { siteConfig } from '@/lib/config'
 
 const BlogPostCard = ({ post, className }) => {
   const router = useRouter()
   const currentSelected = router.asPath.split('?')[0] === '/' + post.slug
-  let pageIcon = post.pageIcon !== '' ? post.pageIcon : BLOG.IMG_LAZY_LOAD_PLACEHOLDER
+  let pageIcon = post.pageIcon !== '' ? post.pageIcon : siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')
   pageIcon = post.pageIcon.indexOf('amazonaws.com') !== -1 ? post.pageIcon + '&width=88' : post.pageIcon
   return (
     <Link href={`${removeHttp(post.slug)}`} target={(checkRemoveHttp(post.slug) ? '_blank' : '_self')} passHref>
