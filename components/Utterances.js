@@ -16,8 +16,8 @@ const Utterances = ({ issueTerm, layout }) => {
 
   useEffect(() => {
     const anchor = document.getElementById('comments');
-    if(!anchor){
-        return
+    if (!anchor) {
+      return
     }
     const script = document.createElement('script');
     script.onload = () => setLoading(false);
