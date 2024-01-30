@@ -50,15 +50,38 @@ import { siteConfig } from '@/lib/config'
 const LayoutBase = props => {
   const {
     children,
-    headerSlot,
     slotTop,
-    slotRight,
     className,
     meta
   } = props
 
   // 全屏模式下的最大宽度
   const { fullWidth } = useGlobal()
+  const router = useRouter()
+  console.log(router)
+  
+  const headerSlot = (
+    <header>
+      {/* 顶部导航 */}
+      <div id="nav-bar-wrapper" className="h-16">
+        <NavBar {...props} />
+      </div>
+      {/* 通知横幅 */}
+      {router.route==='/' ? <>
+        <NoticeBar />
+        <Hero {...props} />
+      </>
+      : null}
+      <div className="max-w-[86rem] mx-auto px-3">
+        <WWAds className="w-full" orientation="horizontal" />
+      </div>
+      {fullWidth ? null : <PostHeader {...props} />}
+    </header>
+  )
+
+  // 右侧栏 用户信息+标签列表
+  const slotRight = fullWidth ? null : <SideRight {...props} />
+
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
   const HEO_HERO_BODY_REVERSE = siteConfig('HEO_HERO_BODY_REVERSE', false, CONFIG)
@@ -115,26 +138,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const headerSlot = (
-    <header>
-      {/* 顶部导航 */}
-      <div id="nav-bar-wrapper" className="h-16">
-        <NavBar {...props} />
-      </div>
-      {/* 通知横幅 */}
-      <NoticeBar />
-      <Hero {...props} />
-      <div className="max-w-[86rem] mx-auto px-3">
-        <WWAds className="w-full" orientation="horizontal" />
-      </div>
-    </header>
-  )
-
-  // 右侧栏 用户信息+标签列表
-  const slotRight = <SideRight {...props} />
-
   return (
-    <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
       <div id="post-outer-wrapper" className="px-5 md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
@@ -146,7 +150,6 @@ const LayoutIndex = props => {
             <BlogPostListScroll {...props} />
             )}
       </div>
-    </LayoutBase>
   )
 }
 
@@ -156,19 +159,8 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  // 右侧栏
-  const slotRight = <SideRight {...props} />
-  const headerSlot = (
-    <header>
-      {/* 顶部导航 */}
-      <div id="nav-bar-wrapper" className="h-16">
-        <NavBar {...props} />
-      </div>
-    </header>
-  )
 
   return (
-    <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
         <CategoryBar {...props} />
@@ -180,7 +172,6 @@ const LayoutPostList = props => {
             <BlogPostListScroll {...props} />
             )}
       </div>
-    </LayoutBase>
   )
 }
 
@@ -193,16 +184,7 @@ const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   const currentSearch = keyword || router?.query?.s
-  const headerSlot = (
-    <header className="post-bg">
-      {/* 顶部导航 */}
-      <div id="nav-bar-wrapper">
-        <NavBar {...props} />
-      </div>
-      <PostHeader {...props} />
-    </header>
-  )
-
+  
   useEffect(() => {
     // 高亮搜索结果
     if (currentSearch) {
@@ -219,10 +201,9 @@ const LayoutSearch = props => {
     }
   }, [])
   return (
-    <LayoutBase
+    <div
       {...props}
       currentSearch={currentSearch}
-      headerSlot={headerSlot}
     >
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {!currentSearch
@@ -241,7 +222,7 @@ const LayoutSearch = props => {
             </div>
             )}
       </div>
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -253,21 +234,9 @@ const LayoutSearch = props => {
 const LayoutArchive = props => {
   const { archivePosts } = props
 
-  // 右侧栏
-  const slotRight = <SideRight {...props} />
-  const headerSlot = (
-    <header>
-      {/* 顶部导航 */}
-      <div id="nav-bar-wrapper" className="h-16">
-        <NavBar {...props} />
-      </div>
-    </header>
-  )
-
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
 
   return (
-    <LayoutBase {...props} slotRight={slotRight} headerSlot={headerSlot}>
       <div className="p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]">
         {/* 文章分类条 */}
         <CategoryBar {...props} border={false} />
@@ -282,7 +251,6 @@ const LayoutArchive = props => {
           ))}
         </div>
       </div>
-    </LayoutBase>
   )
 }
 
@@ -302,34 +270,16 @@ const LayoutSlug = props => {
     setHasCode(hasCode)
   }, [])
 
-  // 右侧栏
-  const slotRight = fullWidth ? null : <SideRight {...props} />
-  const headerSlot = (
-    <header
-      data-aos="fade-up"
-      data-aos-duration="300"
-      data-aos-once="false"
-      data-aos-anchor-placement="top-bottom"
-      className="post-bg"
-    >
-      {/* 顶部导航 */}
-      <div id="nav-bar-wrapper">
-        <NavBar {...props} />
-      </div>
-      {fullWidth ? null : <PostHeader {...props} />}
-    </header>
-  )
+
   const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
     siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
     siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   return (
-    <LayoutBase
+    <div
       {...props}
-      headerSlot={headerSlot}
       showCategory={false}
       showTag={false}
-      slotRight={slotRight}
     >
       <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
         {lock && <ArticleLock validPassword={validPassword} />}
@@ -390,7 +340,7 @@ const LayoutSlug = props => {
         )}
       </div>
       <FloatTocButton {...props} />
-    </LayoutBase>
+    </div>
   )
 }
 
@@ -477,18 +427,10 @@ const Layout404 = props => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-  const headerSlot = (
-    <header>
-      {/* 顶部导航 */}
-      <div id="nav-bar-wrapper" className="h-16">
-        <NavBar {...props} />
-      </div>
-    </header>
-  )
+
 
   return (
-    <LayoutBase {...props} className="mt-8" headerSlot={headerSlot}>
-      <div id="category-outer-wrapper" className="px-5 md:px-0">
+      <div id="category-outer-wrapper" className="mt-8 px-5 md:px-0">
         <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
           {locale.COMMON.CATEGORY}
         </div>
@@ -520,7 +462,6 @@ const LayoutCategoryIndex = props => {
           })}
         </div>
       </div>
-    </LayoutBase>
   )
 }
 
@@ -532,17 +473,9 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
-  const headerSlot = (
-    <header>
-      {/* 顶部导航 */}
-      <div id="nav-bar-wrapper" className="h-16">
-        <NavBar {...props} />
-      </div>
-    </header>
-  )
+
   return (
-    <LayoutBase {...props} className="mt-8" headerSlot={headerSlot}>
-      <div id="tag-outer-wrapper" className="px-5  md:px-0">
+      <div id="tag-outer-wrapper" className="px-5 mt-8 md:px-0">
         <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
           {locale.COMMON.TAGS}
         </div>
@@ -574,12 +507,12 @@ const LayoutTagIndex = props => {
           })}
         </div>
       </div>
-    </LayoutBase>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
