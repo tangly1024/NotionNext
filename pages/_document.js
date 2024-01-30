@@ -20,6 +20,7 @@ class MyDocument extends Document {
                   </>}
 
                   {BLOG.FONT_URL?.map((fontUrl, index) => {
+                    console.log(fontUrl)
                     if (fontUrl.endsWith('.css')) {
                       return <link key={index} rel="stylesheet" href={fontUrl} />
                     } else {

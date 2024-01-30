@@ -33,7 +33,7 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, floatSlot, rightAreaSlot, meta } = props
+  const { children, headerSlot, rightAreaSlot, meta, post } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
@@ -66,6 +66,15 @@ const LayoutBase = (props) => {
     document.addEventListener('scroll', scrollListener)
     return () => document.removeEventListener('scroll', scrollListener)
   }, [showRightFloat])
+
+  // 悬浮抽屉
+  const drawerRight = useRef(null)
+  const floatSlot = <div className='block lg:hidden'>
+    <TocDrawerButton onClick={() => {
+        drawerRight?.current?.handleSwitchVisible()
+    }} />
+ </div>
+  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
 
   return (
         <div id='theme-next'>
@@ -105,7 +114,13 @@ const LayoutBase = (props) => {
 
                 {/* 右侧栏样式 */}
                 {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
+            
             </main>
+
+            {/* 悬浮目录按钮 */}
+            {post && <div className='block lg:hidden'>
+                <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
+            </div>}
 
             {/* 右下角悬浮 */}
             <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
@@ -139,7 +154,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <div {...props} >
+  return <>
 
         <BlogListBar {...props} />
 
@@ -147,7 +162,7 @@ const LayoutPostList = (props) => {
           ? <BlogPostListScroll {...props} showSummary={true} />
           : <BlogPostListPage {...props} />
         }
-    </div>
+    </>
 }
 
 /**
@@ -173,7 +188,7 @@ const LayoutSearch = (props) => {
   }, [])
 
   return (
-        <div {...props} >
+        <>
             <StickyBar>
                 <div className="p-4 dark:text-gray-200">
                     <i className="mr-1 fas fa-search" />{' '}
@@ -186,7 +201,7 @@ const LayoutSearch = (props) => {
                   : <BlogPostListPage {...props} />
                 }
             </div>
-        </div>
+        </>
   )
 }
 
@@ -230,7 +245,7 @@ const LayoutArchive = (props) => {
   const { archivePosts } = props
 
   return (
-        <div {...props}>
+        <>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-hexo-black-gray shadow-md min-h-full">
                 {Object.keys(archivePosts).map(archiveTitle => (
                     <BlogPostArchive
@@ -240,7 +255,7 @@ const LayoutArchive = (props) => {
                     />
                 ))}
             </div>
-        </div>
+        </>
   )
 }
 
@@ -251,27 +266,14 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
-  const drawerRight = useRef(null)
-  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
-  const floatSlot = <div className='block lg:hidden'>
-        <TocDrawerButton onClick={() => {
-          drawerRight?.current?.handleSwitchVisible()
-        }} />
-    </div>
-
   return (
-        <div {...props} floatSlot={floatSlot}>
+        <>
 
             {post && !lock && <ArticleDetail {...props} />}
 
             {post && lock && <ArticleLock validPassword={validPassword} />}
 
-            {/* 悬浮目录按钮 */}
-            {post && <div className='block lg:hidden'>
-                <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
-            </div>}
-
-        </div>
+        </>
   )
 }
 
@@ -318,7 +320,7 @@ const LayoutCategoryIndex = (props) => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   const { locale } = useGlobal()
-  return <div {...props}>
+  return <>
         <div className='bg-white dark:bg-hexo-black-gray px-10 py-10 shadow h-full'>
             <div className='dark:text-gray-200 mb-5'><i className='fas fa-tags mr-4' />{locale.COMMON.TAGS}:</div>
             <div id='tags-list' className='duration-200 flex flex-wrap'>
@@ -327,7 +329,7 @@ const LayoutTagIndex = (props) => {
                 })}
             </div>
         </div>
-    </div>
+    </>
 }
 
 export {
