@@ -2,7 +2,6 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import Live2D from '@/components/Live2D'
 import Announcement from './Announcement'
 import Catalog from './Catalog'
-import { useEffect } from 'react'
 
 /**
  * 侧边栏
@@ -12,9 +11,6 @@ import { useEffect } from 'react'
 let counter = 0;
 export default function SideBar (props) {
   const { notice } = props
-  useEffect(()=>{
-    console.log('sidebar 渲染次数: ', counter++)
-}, [])
   return (<>
 
         <aside>

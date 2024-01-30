@@ -126,12 +126,12 @@ const LayoutIndex = (props) => {
  * @param {*} props
             */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props}>
+  return <div {...props}>
 
         <div className='w-full p-2'><WWAds className='w-full' orientation='horizontal'/></div>
 
          {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -142,9 +142,9 @@ const LayoutPostList = (props) => {
 const LayoutSlug = (props) => {
   const { lock, validPassword } = props
   return (
-        <LayoutBase {...props} >
+        <div {...props} >
             {lock ? <ArticleLock validPassword={validPassword} /> : <ArticleDetail {...props} />}
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -174,7 +174,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props}>
+  return <div {...props}>
         <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 shadow-md min-h-full">
             {Object.keys(archivePosts).map(archiveTitle => (
                 <BlogArchiveItem
@@ -184,7 +184,7 @@ const LayoutArchive = (props) => {
                 />
             ))}
         </div>
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -193,7 +193,7 @@ const LayoutArchive = (props) => {
             * @returns
             */
 const Layout404 = props => {
-  return <LayoutBase {...props}>404</LayoutBase>
+  return <div {...props}>404</div>
 }
 
 /**
@@ -205,7 +205,7 @@ const LayoutCategoryIndex = (props) => {
   const { locale } = useGlobal()
   const { categoryOptions } = props
   return (
-        <LayoutBase {...props}>
+        <div {...props}>
             <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
@@ -227,7 +227,7 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -239,7 +239,7 @@ const LayoutCategoryIndex = (props) => {
 const LayoutTagIndex = (props) => {
   const { locale } = useGlobal()
   const { tagOptions } = props
-  return <LayoutBase {...props} >
+  return <div {...props} >
         <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
             <div className='dark:text-gray-200 mb-5'><i className='mr-4 fas fa-tag' />{locale.COMMON.TAGS}:</div>
             <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
@@ -252,11 +252,12 @@ const LayoutTagIndex = (props) => {
                 })}
             </div>
         </div>
-    </LayoutBase>
+    </div>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
