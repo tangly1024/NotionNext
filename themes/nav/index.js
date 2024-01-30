@@ -172,10 +172,10 @@ const LayoutPostListIndex = props => {
   // const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotRight, slotTop, meta } = props
   // const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
   return (
-    <LayoutBase {...props} >
+    <>
         <Announcement {...props} />
         <BlogPostListAll { ...props } />
-    </LayoutBase>
+    </>
   )
 }
 
@@ -189,7 +189,7 @@ const LayoutPostList = props => {
   // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
   // 如果是搜索，则列表顶部嵌入 搜索框
   return (
-    <LayoutBase {...props} >
+    <>
         <div className='w-full max-w-7xl mx-auto justify-center mt-8'>
             <div id='posts-wrapper' class='card-list grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
                 {posts?.map(post => (
@@ -197,7 +197,7 @@ const LayoutPostList = props => {
                 ))}
             </div>
         </div>
-    </LayoutBase>
+    </>
   )
 }
 
@@ -210,7 +210,7 @@ const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
 
   return (
-        <LayoutBase {...props} >
+        <>
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -244,7 +244,7 @@ const LayoutSlug = (props) => {
 
                 <TocDrawer {...props} />
             </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -255,7 +255,7 @@ const LayoutSlug = (props) => {
  * @returns
  */
 const LayoutSearch = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  return <></>
 }
 
 /**
@@ -267,20 +267,20 @@ const LayoutSearch = (props) => {
 const LayoutArchive = (props) => {
   const { archivePosts } = props
 
-  return <LayoutBase {...props}>
+  return <>
         <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
             {Object.keys(archivePosts)?.map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
         </div>
-  </LayoutBase>
+  </>
 }
 
 /**
  * 404
  */
 const Layout404 = props => {
-  return <LayoutBase {...props}>
+  return <>
         <div className='w-full h-96 py-80 flex justify-center items-center'>404 Not found.</div>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -289,7 +289,7 @@ const Layout404 = props => {
 const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-  return <LayoutBase {...props}>
+  return <>
      <div className='bg-white dark:bg-gray-700 py-10'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
@@ -311,7 +311,7 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 /**
@@ -321,7 +321,7 @@ const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   const { locale } = useGlobal()
 
-  return <LayoutBase {...props}>
+  return <>
      <div className="bg-white dark:bg-gray-700 py-10">
                 <div className="dark:text-gray-200 mb-5">
                     <i className="mr-4 fas fa-tag" />
@@ -337,11 +337,12 @@ const LayoutTagIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

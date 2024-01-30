@@ -6,8 +6,8 @@ const useAdjustStyle = () => {
      * 避免 callout 含有图片时溢出撑开父容器
      */
     const adjustCalloutImg = () => {
-        const callouts = document.querySelectorAll('.notion-callout-text');
-        callouts.forEach((callout) => {
+        const callOuts = document.querySelectorAll('.notion-callout-text');
+        callOuts.forEach((callout) => {
             const images = callout.querySelectorAll('figure.notion-asset-wrapper.notion-asset-wrapper-image > div');
             const calloutWidth = callout.offsetWidth;
             images.forEach((container) => {

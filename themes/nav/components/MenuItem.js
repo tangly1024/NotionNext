@@ -50,9 +50,9 @@ export const MenuItem = ({ link }) => {
                 {
                     link?.subMenus?.map((sLink, index) => (
                         <div key={index} className='nav-submenu'>
-                            <a href={sLink?.to}>
+                            <Link href={sLink?.to}>
                                 <span className='dark:text-neutral-400 text-gray-500 hover:text-black dark:hover:text-white text-xs font-bold'><i className={`text-xs mr-1 ${sLink?.icon ? sLink?.icon : 'fas fa-hashtag'}`} />{sLink.title}</span>
-                            </a>
+                            </Link>
                         </div>
                     ))
                 }
