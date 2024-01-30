@@ -58,7 +58,6 @@ const LayoutBase = props => {
   // 全屏模式下的最大宽度
   const { fullWidth } = useGlobal()
   const router = useRouter()
-  console.log(router)
 
   const headerSlot = (
     <header>
@@ -81,7 +80,7 @@ const LayoutBase = props => {
   )
 
   // 右侧栏 用户信息+标签列表
-  const slotRight = fullWidth ? null : <SideRight {...props} />
+  const slotRight = (router.route === '/404' || fullWidth) ? null : <SideRight {...props} />
 
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
@@ -349,26 +348,11 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = props => {
-  const { meta, siteInfo } = props
+  // const { meta, siteInfo } = props
   const { onLoading, fullWidth } = useGlobal()
   return (
-    <div
-      id="theme-heo"
-      className="bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
-    >
-      {/* 网页SEO */}
-      <CommonHead meta={meta} siteInfo={siteInfo} />
-      <Style />
-
-      {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
-      <header>
-        {/* 顶部导航 */}
-        <div id="nav-bar-wrapper" className="h-16">
-          <NavBar {...props} />
-        </div>
-      </header>
-
-      {/* 主区块 */}
+    <>
+    {/* 主区块 */}
       <main
         id="wrapper-outer"
         className={`flex-grow ${fullWidth ? '' : 'max-w-4xl'} w-screen mx-auto px-5`}
@@ -414,7 +398,7 @@ const Layout404 = props => {
           </Transition>
         </div>
       </main>
-    </div>
+    </>
   )
 }
 
