@@ -42,9 +42,9 @@ import { siteConfig } from '@/lib/config'
 const LayoutBase = props => {
   const { children, meta, siteInfo, post } = props
   const { onLoading, fullWidth } = useGlobal()
-
-  const containerSlot= <Announcement {...props} /> 
-  const headerSlot= siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) ? <Hero {...props} /> : null 
+  const router = useRouter()
+  const containerSlot= router.route==='/' ? <Announcement {...props} /> : <BlogListBar {...props} />
+  const headerSlot= siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && router.route==='/' ? <Hero {...props} /> : null 
 
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
@@ -126,9 +126,9 @@ const LayoutIndex = (props) => {
  */
 const LayoutPostList = (props) => {
   return (
-        <div {...props} containerSlot={<BlogListBar {...props} />}>
+        <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
-        </div>
+        </>
   )
 }
 

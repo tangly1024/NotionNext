@@ -32,7 +32,6 @@ import { siteConfig } from '@/lib/config'
  * @returns {JSX.Element}
  * @constructor
  */
-let counter = 0
 const LayoutBase = (props) => {
   const { children, headerSlot, floatSlot, rightAreaSlot, meta } = props
   const { onLoading } = useGlobal()
@@ -40,9 +39,6 @@ const LayoutBase = (props) => {
   const floatButtonGroup = useRef(null)
   const [showRightFloat, switchShow] = useState(false)
   const [percent, changePercent] = useState(0) // 页面阅读百分比
-  useEffect(()=>{
-    console.log('sidebar 渲染次数: ', counter++)
-  }, [])
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
     const clientHeight = targetRef?.clientHeight
@@ -213,7 +209,7 @@ const Layout404 = props => {
     }, 3000)
   }, [])
 
-  return <div {...props}>
+  return <>
         <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
             <div className='dark:text-gray-200'>
                 <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
@@ -222,7 +218,7 @@ const Layout404 = props => {
                 </div>
             </div>
         </div>
-    </div>
+    </>
 }
 
 /**
