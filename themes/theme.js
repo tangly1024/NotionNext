@@ -14,13 +14,13 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  * @returns
  */
 export const getGlobalLayoutByTheme = (themeQuery) => {
-    const layout = getLayoutNameByPath(-1)
-    if (themeQuery !== BLOG.THEME) {
-        return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
-      } else {
-        return ThemeComponents[layout]
-      }
+  const layout = getLayoutNameByPath(-1)
+  if (themeQuery !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
+  } else {
+    return ThemeComponents[layout]
   }
+}
 
 /**
  * 加载主题文件
@@ -71,7 +71,7 @@ const checkThemeDOM = () => {
 export const getLayoutNameByPath = (path) => {
   switch (path) {
     case -1:
-        return 'LayoutBase'
+      return 'LayoutBase'
     case '/':
       return 'LayoutIndex'
     case '/archive':
