@@ -7,7 +7,7 @@ import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
@@ -26,6 +26,11 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+
+// 主题全局状态
+const ThemeGlobalNext = createContext()
+export const useNextGlobal = () => useContext(ThemeGlobalNext)
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -33,13 +38,12 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, floatSlot, rightAreaSlot, meta } = props
+  const { children, headerSlot, rightAreaSlot, meta, post } = props
   const { onLoading } = useGlobal()
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
   const [showRightFloat, switchShow] = useState(false)
   const [percent, changePercent] = useState(0) // 页面阅读百分比
-
   const scrollListener = () => {
     const targetRef = document.getElementById('wrapper')
     const clientHeight = targetRef?.clientHeight
@@ -68,7 +72,20 @@ const LayoutBase = (props) => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [showRightFloat])
 
+  // 悬浮抽屉
+  const drawerRight = useRef(null)
+  const floatSlot = <div className='block lg:hidden'>
+    <TocDrawerButton onClick={() => {
+      drawerRight?.current?.handleSwitchVisible()
+    }} />
+ </div>
+
+  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
+
+  const searchModal = useRef(null)
+
   return (
+    <ThemeGlobalNext.Provider value={{ searchModal }}>
         <div id='theme-next'>
             {/* SEO相关 */}
             <CommonHead meta={meta}/>
@@ -76,6 +93,8 @@ const LayoutBase = (props) => {
 
             {/* 移动端顶部导航栏 */}
             <TopNav {...props} />
+
+            <AlgoliaSearchModal cRef={searchModal} {...props}/>
 
             <>{headerSlot}</>
 
@@ -106,7 +125,13 @@ const LayoutBase = (props) => {
 
                 {/* 右侧栏样式 */}
                 {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
+
             </main>
+
+            {/* 悬浮目录按钮 */}
+            {post && <div className='block lg:hidden'>
+                <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
+            </div>}
 
             {/* 右下角悬浮 */}
             <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
@@ -121,6 +146,7 @@ const LayoutBase = (props) => {
             {/* 页脚 */}
             <Footer title={siteConfig('TITLE')} />
         </div>
+      </ThemeGlobalNext.Provider>
   )
 }
 
@@ -140,7 +166,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} >
+  return <>
 
         <BlogListBar {...props} />
 
@@ -148,7 +174,7 @@ const LayoutPostList = (props) => {
           ? <BlogPostListScroll {...props} showSummary={true} />
           : <BlogPostListPage {...props} />
         }
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -174,7 +200,7 @@ const LayoutSearch = (props) => {
   }, [])
 
   return (
-        <LayoutBase {...props} >
+        <>
             <StickyBar>
                 <div className="p-4 dark:text-gray-200">
                     <i className="mr-1 fas fa-search" />{' '}
@@ -187,7 +213,7 @@ const LayoutSearch = (props) => {
                   : <BlogPostListPage {...props} />
                 }
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -210,7 +236,7 @@ const Layout404 = props => {
     }, 3000)
   }, [])
 
-  return <LayoutBase {...props}>
+  return <>
         <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
             <div className='dark:text-gray-200'>
                 <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
@@ -219,7 +245,7 @@ const Layout404 = props => {
                 </div>
             </div>
         </div>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -231,7 +257,7 @@ const LayoutArchive = (props) => {
   const { archivePosts } = props
 
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-hexo-black-gray shadow-md min-h-full">
                 {Object.keys(archivePosts).map(archiveTitle => (
                     <BlogPostArchive
@@ -241,7 +267,7 @@ const LayoutArchive = (props) => {
                     />
                 ))}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -252,27 +278,14 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
-  const drawerRight = useRef(null)
-  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
-  const floatSlot = <div className='block lg:hidden'>
-        <TocDrawerButton onClick={() => {
-          drawerRight?.current?.handleSwitchVisible()
-        }} />
-    </div>
-
   return (
-        <LayoutBase {...props} floatSlot={floatSlot}>
+        <>
 
             {post && !lock && <ArticleDetail {...props} />}
 
             {post && lock && <ArticleLock validPassword={validPassword} />}
 
-            {/* 悬浮目录按钮 */}
-            {post && <div className='block lg:hidden'>
-                <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
-            </div>}
-
-        </LayoutBase>
+        </>
   )
 }
 
@@ -285,7 +298,7 @@ const LayoutCategoryIndex = (props) => {
   const { allPosts, categoryOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase totalPosts={allPosts} {...props}>
+        <div totalPosts={allPosts} {...props}>
             <div className='bg-white dark:bg-hexo-black-gray px-10 py-10 shadow h-full'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas faTh' />{locale.COMMON.CATEGORY}:
@@ -307,7 +320,7 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -319,7 +332,7 @@ const LayoutCategoryIndex = (props) => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   const { locale } = useGlobal()
-  return <LayoutBase {...props}>
+  return <>
         <div className='bg-white dark:bg-hexo-black-gray px-10 py-10 shadow h-full'>
             <div className='dark:text-gray-200 mb-5'><i className='fas fa-tags mr-4' />{locale.COMMON.TAGS}:</div>
             <div id='tags-list' className='duration-200 flex flex-wrap'>
@@ -328,11 +341,12 @@ const LayoutTagIndex = (props) => {
                 })}
             </div>
         </div>
-    </LayoutBase>
+    </>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
