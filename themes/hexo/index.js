@@ -34,7 +34,6 @@ import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 
-
 // 主题全局状态
 const ThemeGlobalHexo = createContext()
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
@@ -46,14 +45,19 @@ export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
  * @constructor
  */
 const LayoutBase = props => {
-  const { post , children, slotTop, meta, className } = props
+  const { post, children, slotTop, meta, className } = props
   const { onLoading, fullWidth } = useGlobal()
 
   const router = useRouter()
   const headerSlot = post
-    ?  <PostHeader {...props} /> : (router.route==='/'  &&  siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG)
-    ? <Hero {...props} /> : null)
-  
+    ? <PostHeader {...props} />
+    : (router.route === '/' && siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG)
+        ? <Hero {...props} />
+        : null)
+
+  const drawerRight = useRef(null)
+  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
+
   const floatSlot = <>
         {post?.toc?.length > 1 && <div className="block lg:hidden">
             <TocDrawerButton
@@ -121,6 +125,10 @@ const LayoutBase = props => {
                 </div>
             </main>
 
+            <div className='block lg:hidden'>
+              <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
+            </div>
+
             {/* 悬浮菜单 */}
             <RightFloatArea floatSlot={floatSlot} />
 
@@ -141,7 +149,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props}  className='pt-8' />
+  return <LayoutPostList {...props} className='pt-8' />
 }
 
 /**
@@ -217,8 +225,6 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const drawerRight = useRef(null)
-  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
 
   return (
         <>
@@ -250,10 +256,6 @@ const LayoutSlug = props => {
                         <Comment frontMatter={post} />
                     </div>
                 </div>}
-            </div>
-
-            <div className='block lg:hidden'>
-                <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
             </div>
 
         </>

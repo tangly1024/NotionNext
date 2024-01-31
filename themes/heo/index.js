@@ -58,8 +58,7 @@ const LayoutBase = props => {
   // 全屏模式下的最大宽度
   const { fullWidth } = useGlobal()
   const router = useRouter()
-  console.log(router)
-  
+
   const headerSlot = (
     <header>
       {/* 顶部导航 */}
@@ -67,11 +66,12 @@ const LayoutBase = props => {
         <NavBar {...props} />
       </div>
       {/* 通知横幅 */}
-      {router.route==='/' ? <>
+      {router.route === '/'
+        ? <>
         <NoticeBar />
         <Hero {...props} />
       </>
-      : null}
+        : null}
       <div className="max-w-[86rem] mx-auto px-3">
         <WWAds className="w-full" orientation="horizontal" />
       </div>
@@ -80,7 +80,7 @@ const LayoutBase = props => {
   )
 
   // 右侧栏 用户信息+标签列表
-  const slotRight = fullWidth ? null : <SideRight {...props} />
+  const slotRight = (router.route === '/404' || fullWidth) ? null : <SideRight {...props} />
 
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
@@ -159,7 +159,6 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-
   return (
       <div id="post-outer-wrapper" className="px-5  md:px-0">
         {/* 文章分类条 */}
@@ -184,7 +183,7 @@ const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
   const currentSearch = keyword || router?.query?.s
-  
+
   useEffect(() => {
     // 高亮搜索结果
     if (currentSearch) {
@@ -270,7 +269,6 @@ const LayoutSlug = props => {
     setHasCode(hasCode)
   }, [])
 
-
   const commentEnable = siteConfig('COMMENT_TWIKOO_ENV_ID') || siteConfig('COMMENT_WALINE_SERVER_URL') || siteConfig('COMMENT_VALINE_APP_ID') ||
     siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
     siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
@@ -350,26 +348,11 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = props => {
-  const { meta, siteInfo } = props
+  // const { meta, siteInfo } = props
   const { onLoading, fullWidth } = useGlobal()
   return (
-    <div
-      id="theme-heo"
-      className="bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
-    >
-      {/* 网页SEO */}
-      <CommonHead meta={meta} siteInfo={siteInfo} />
-      <Style />
-
-      {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
-      <header>
-        {/* 顶部导航 */}
-        <div id="nav-bar-wrapper" className="h-16">
-          <NavBar {...props} />
-        </div>
-      </header>
-
-      {/* 主区块 */}
+    <>
+    {/* 主区块 */}
       <main
         id="wrapper-outer"
         className={`flex-grow ${fullWidth ? '' : 'max-w-4xl'} w-screen mx-auto px-5`}
@@ -415,7 +398,7 @@ const Layout404 = props => {
           </Transition>
         </div>
       </main>
-    </div>
+    </>
   )
 }
 
@@ -427,7 +410,6 @@ const Layout404 = props => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-
 
   return (
       <div id="category-outer-wrapper" className="mt-8 px-5 md:px-0">

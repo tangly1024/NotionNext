@@ -7,7 +7,7 @@ import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
@@ -26,6 +26,11 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+
+// 主题全局状态
+const ThemeGlobalNext = createContext()
+export const useNextGlobal = () => useContext(ThemeGlobalNext)
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -71,12 +76,16 @@ const LayoutBase = (props) => {
   const drawerRight = useRef(null)
   const floatSlot = <div className='block lg:hidden'>
     <TocDrawerButton onClick={() => {
-        drawerRight?.current?.handleSwitchVisible()
+      drawerRight?.current?.handleSwitchVisible()
     }} />
  </div>
+
   const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
 
+  const searchModal = useRef(null)
+
   return (
+    <ThemeGlobalNext.Provider value={{ searchModal }}>
         <div id='theme-next'>
             {/* SEO相关 */}
             <CommonHead meta={meta}/>
@@ -84,6 +93,8 @@ const LayoutBase = (props) => {
 
             {/* 移动端顶部导航栏 */}
             <TopNav {...props} />
+
+            <AlgoliaSearchModal cRef={searchModal} {...props}/>
 
             <>{headerSlot}</>
 
@@ -114,7 +125,7 @@ const LayoutBase = (props) => {
 
                 {/* 右侧栏样式 */}
                 {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
-            
+
             </main>
 
             {/* 悬浮目录按钮 */}
@@ -135,6 +146,7 @@ const LayoutBase = (props) => {
             {/* 页脚 */}
             <Footer title={siteConfig('TITLE')} />
         </div>
+      </ThemeGlobalNext.Provider>
   )
 }
 
@@ -342,5 +354,5 @@ export {
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex,
+  LayoutTagIndex
 }

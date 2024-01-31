@@ -290,5 +290,5 @@ export {
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex,
+  LayoutTagIndex
 }
