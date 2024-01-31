@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 
 function GroupCategory ({ currentCategory, categories }) {
   if (!categories) {
