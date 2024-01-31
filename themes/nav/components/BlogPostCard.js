@@ -22,6 +22,8 @@ const BlogPostCard = ({ post, className }) => {
         </div>
     </Link>
   )
+
+  // 检查连接是否是外链
   function sliceUrlFromHttp(str) {
     // 检查字符串是否包含http
     if (str.includes('http')) {
