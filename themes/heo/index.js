@@ -62,9 +62,8 @@ const LayoutBase = props => {
   const headerSlot = (
     <header>
       {/* 顶部导航 */}
-      <div id="nav-bar-wrapper" className="h-16">
-        <NavBar {...props} />
-      </div>
+      <NavBar {...props} />
+
       {/* 通知横幅 */}
       {router.route === '/'
         ? <>
