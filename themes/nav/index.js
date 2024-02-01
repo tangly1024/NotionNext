@@ -24,7 +24,6 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import BlogPostListAll from './components/BlogPostListAll'
 import BlogPostCard from './components/BlogPostCard'
 import Link from 'next/link'
@@ -47,7 +46,7 @@ export const useNavGlobal = () => useContext(ThemeGlobalNav)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotTop, meta } = props
+  const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotTop } = props
   const { onLoading } = useGlobal()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -70,8 +69,6 @@ const LayoutBase = (props) => {
 
   return (
         <ThemeGlobalNav.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible, categoryOptions }}>
-            {/* HEAD */}
-            <CommonHead meta={meta}/>
             {/* 样式 */}
             <Style/>
 

@@ -23,7 +23,6 @@ import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Announcement from './components/Announcement'
@@ -39,7 +38,7 @@ export const useNextGlobal = () => useContext(ThemeGlobalNext)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, rightAreaSlot, meta, post } = props
+  const { children, headerSlot, rightAreaSlot, post } = props
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
   const [showRightFloat, switchShow] = useState(false)
@@ -87,8 +86,6 @@ const LayoutBase = (props) => {
   return (
     <ThemeGlobalNext.Provider value={{ searchModal }}>
         <div id='theme-next'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 移动端顶部导航栏 */}

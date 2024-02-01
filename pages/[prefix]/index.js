@@ -19,7 +19,7 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const Slug = props => {
-  const { post, siteInfo } = props
+  const { post } = props
   const router = useRouter()
 
   // 文章锁🔐
@@ -66,16 +66,7 @@ const Slug = props => {
     }
   }, [post])
 
-  const meta = {
-    title: post ? `${post?.title} | ${siteConfig('TITLE')}` : `${siteConfig('TITLE')} | loading`,
-    description: post?.summary,
-    type: post?.type,
-    slug: post?.slug,
-    image: post?.pageCoverThumbnail || (siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE),
-    category: post?.category?.[0],
-    tags: post?.tags
-  }
-  props = { ...props, lock, meta, setLock, validPassword }
+  props = { ...props, lock, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
   return <Layout {...props} />

@@ -27,7 +27,6 @@ const SideBar = dynamic(() => import('./components/SideBar'), { ssr: false });
 const JumpToTopButton = dynamic(() => import('./components/JumpToTopButton'), { ssr: false });
 const Footer = dynamic(() => import('./components/Footer'), { ssr: false });
 const SearchInput = dynamic(() => import('./components/SearchInput'), { ssr: false });
-const CommonHead = dynamic(() => import('@/components/CommonHead'), { ssr: false });
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false });
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: false })
 
@@ -42,15 +41,14 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
  * @returns
  */
 const LayoutBase = props => {
-  const { children, slotTop, meta } = props
+  const { children, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const searchModal = useRef(null)
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
+
             <Style/>
 
             {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
