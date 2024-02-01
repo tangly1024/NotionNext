@@ -4,10 +4,12 @@ import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { formatDateFmt } from '@/lib/formatDate'
 import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 export const BlogItem = props => {
   const { post } = props
   const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return <div key={post.id} className="h-42 my-6 pb-12 border-b dark:border-gray-800" >
         {/* 文章标题 */}
@@ -17,7 +19,7 @@ export const BlogItem = props => {
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className="overflow-hidden mr-2 w-56 h-full">
-                        <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                        <Link href={url} passHref legacyBehavior>
                             <LazyImage src={post?.pageCoverThumbnail} className='w-56 h-full object-cover object-center group-hover:scale-110 duration-500' />
                         </Link>
                     </div>
@@ -27,7 +29,7 @@ export const BlogItem = props => {
             <div className='article-info'>
                 <h2 className="mb-2">
                     <Link
-                        href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                        href={url}
                         className="blog-item-title font-bold text-black text-2xl menu-link">
                         {post.title}
                     </Link>
@@ -60,7 +62,7 @@ export const BlogItem = props => {
         </div>
 
         <div className='block'>
-            <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+            <Link href={url} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
                 Continue Reading <i className="fa-solid fa-angle-right align-middle"></i>
             </Link>
         </div>

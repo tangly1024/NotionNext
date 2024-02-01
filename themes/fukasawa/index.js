@@ -12,7 +12,7 @@ import ArticleDetail from './components/ArticleDetail'
 import ArticleLock from './components/ArticleLock'
 import TagItemMini from './components/TagItemMini'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
@@ -48,25 +48,8 @@ const LayoutBase = (props) => {
   const leftAreaSlot = <Live2D />
   const { onLoading, fullWidth } = useGlobal()
 
-  const FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT = fullWidth || siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
-
-  // 侧边栏折叠从 本地存储中获取 open 状态的初始值
-  const [isCollapsed, setIsCollapse] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
-    }
-    return FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
-  })
-
-  // 在组件卸载时保存 open 状态到本地存储中
-  useEffect(() => {
-    if (isBrowser) {
-      localStorage.setItem('fukasawa-sidebar-collapse', isCollapsed)
-    }
-  }, [isCollapsed])
-
   return (
-        <ThemeGlobalFukasawa.Provider value={{ isCollapsed, setIsCollapse }}>
+        <ThemeGlobalFukasawa.Provider value={{}}>
 
             <div id='theme-fukasawa'>
                 {/* SEO信息 */}
