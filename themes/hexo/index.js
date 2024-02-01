@@ -34,7 +34,6 @@ import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 
-
 // 主题全局状态
 const ThemeGlobalHexo = createContext()
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
@@ -46,9 +45,30 @@ export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, floatSlot, slotTop, meta, className } = props
+  const { post, children, slotTop, meta, className } = props
   const { onLoading, fullWidth } = useGlobal()
-  
+
+  const router = useRouter()
+  const headerSlot = post
+    ? <PostHeader {...props} />
+    : (router.route === '/' && siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG)
+        ? <Hero {...props} />
+        : null)
+
+  const drawerRight = useRef(null)
+  const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
+
+  const floatSlot = <>
+        {post?.toc?.length > 1 && <div className="block lg:hidden">
+            <TocDrawerButton
+                onClick={() => {
+                  drawerRight?.current?.handleSwitchVisible()
+                }}
+            />
+        </div>}
+        <JumpToCommentButton />
+    </>
+
   // Algolia搜索框
   const searchModal = useRef(null)
 
@@ -101,9 +121,13 @@ const LayoutBase = props => {
                     </div>
 
                     {/* 右侧栏 */}
-                    <SideRight {...props} />
+                    <SideRight {...props} className={`space-y-4 lg:w-80 pt-4 ${post ? 'lg:pt-0' : 'lg:pt-4'}`} />
                 </div>
             </main>
+
+            <div className='block lg:hidden'>
+              <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
+            </div>
 
             {/* 悬浮菜单 */}
             <RightFloatArea floatSlot={floatSlot} />
@@ -125,8 +149,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  const headerSlot = siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) && <Hero {...props} />
-  return <LayoutPostList {...props} headerSlot={headerSlot} className='pt-8' />
+  return <LayoutPostList {...props} className='pt-8' />
 }
 
 /**
@@ -135,10 +158,10 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} className='pt-8'>
+  return <div className='pt-8'>
         <SlotBar {...props} />
         {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -165,11 +188,11 @@ const LayoutSearch = props => {
   })
 
   return (
-        <LayoutBase {...props} currentSearch={currentSearch} className='pt-8'>
+        <div className='pt-8'>
             {!currentSearch
               ? <SearchNav {...props} />
               : <div id="posts-wrapper"> {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}  </div>}
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -180,7 +203,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props} className='pt-8'>
+  return <div className='pt-8'>
         <Card className='w-full'>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
                 {Object.keys(archivePosts).map(archiveTitle => (
@@ -192,7 +215,7 @@ const LayoutArchive = (props) => {
                 ))}
             </div>
         </Card>
-    </LayoutBase>
+    </div>
 }
 
 /**
@@ -202,23 +225,9 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-  const drawerRight = useRef(null)
-
-  const targetRef = isBrowser ? document.getElementById('article-wrapper') : null
-
-  const floatSlot = <>
-        {post?.toc?.length > 1 && <div className="block lg:hidden">
-            <TocDrawerButton
-                onClick={() => {
-                  drawerRight?.current?.handleSwitchVisible()
-                }}
-            />
-        </div>}
-        <JumpToCommentButton />
-    </>
 
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatSlot={floatSlot} >
+        <>
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
                 {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -249,11 +258,7 @@ const LayoutSlug = props => {
                 </div>}
             </div>
 
-            <div className='block lg:hidden'>
-                <TocDrawer post={post} cRef={drawerRight} targetRef={targetRef} />
-            </div>
-
-        </LayoutBase>
+        </>
   )
 }
 
@@ -278,7 +283,7 @@ const Layout404 = props => {
     }, 3000)
   })
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
                 <div className="dark:text-gray-200">
                     <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
@@ -289,7 +294,7 @@ const Layout404 = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -302,7 +307,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} className='mt-8'>
+        <div className='mt-8'>
             <Card className="w-full min-h-screen">
                 <div className="dark:text-gray-200 mb-5 mx-3">
                     <i className="mr-4 fas fa-th" />  {locale.COMMON.CATEGORY}:
@@ -319,7 +324,7 @@ const LayoutCategoryIndex = props => {
                     })}
                 </div>
             </Card>
-        </LayoutBase>
+        </div>
   )
 }
 
@@ -332,7 +337,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} className='mt-8'>
+        <div className='mt-8'>
             <Card className='w-full'>
                 <div className="dark:text-gray-200 mb-5 ml-4">
                     <i className="mr-4 fas fa-tag" /> {locale.COMMON.TAGS}:
@@ -343,12 +348,13 @@ const LayoutTagIndex = props => {
                     </div>)}
                 </div>
             </Card>
-        </LayoutBase>
+        </div>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

@@ -21,6 +21,7 @@ import Modal from './components/Modal'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import CommonHead from '@/components/CommonHead'
+import { useRouter } from 'next/router'
 
 // 主题全局状态
 const ThemeGlobalPlog = createContext()
@@ -37,6 +38,19 @@ const LayoutBase = props => {
   const { onLoading } = useGlobal()
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState(null)
+
+  // 页面切换关闭遮罩
+  const router = useRouter()
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', closeModal)
+    return () => {
+      router.events.off('routeChangeComplete', closeModal)
+    }
+  }, [router.events])
 
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
@@ -98,9 +112,9 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-        <LayoutBase {...props}>
+        <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -137,11 +151,11 @@ const LayoutSearch = props => {
 const LayoutArchive = props => {
   const { archivePosts } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
                 {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -154,7 +168,7 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
   return (
-        <LayoutBase {...props}>
+        <>
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -168,7 +182,7 @@ const LayoutSlug = props => {
                 </>
             </div>}
 
-        </LayoutBase>
+        </>
   )
 }
 
@@ -178,9 +192,9 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
-  return <LayoutBase {...props}>
+  return <>
         404 Not found.
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -192,7 +206,7 @@ const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
 
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='category-list' className='duration-200 flex flex-wrap'>
                 {categoryOptions?.map(category => {
                   return (
@@ -209,7 +223,7 @@ const LayoutCategoryIndex = (props) => {
                   )
                 })}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -221,7 +235,7 @@ const LayoutCategoryIndex = (props) => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div>
                 <div id='tags-list' className='duration-200 flex flex-wrap'>
                     {tagOptions.map(tag => {
@@ -236,12 +250,13 @@ const LayoutTagIndex = (props) => {
                     })}
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
