@@ -13,12 +13,12 @@ const BLOG = {
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
-  GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || '心爱的，, 再会了。',
+  GREETING_WORDS: process.env.NEXT_PUBLIC_GREETING_WORDS || '——心爱的，, 再会了。',
 
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || true, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '莳萝心爱', // 您的昵称 例如 tangly1024
-  BIO: process.env.NEXT_PUBLIC_BIO || '……心爱的，,再会了。', // 作者简介
+  BIO: process.env.NEXT_PUBLIC_BIO || '我们之于彼此，不过是一种知觉。', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://koimoyou.com', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '爱的狂信徒', // 网站关键词 英文逗号隔开
 
