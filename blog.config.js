@@ -223,19 +223,19 @@ const BLOG = {
     {
       name: '再见',
       artist: 'ヤマモトガク',
-      url: 'https://music.163.com/song?id=1992204362&userid=306584720',
+      url: 'http://music.163.com/song/media/outer/url?id=1992204362.mp3',
       cover:
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
     {
       name: 'PIMP',
       artist: 'Bacao Rhythm & Steel Band',
-      url: 'https://music.163.com/song?id=1409490569&userid=306584720',
+      url: 'http://music.163.com/song/media/outer/url?id=1409490569.mp3',
       cover:
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     }
   ],
-  MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || true, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
+  MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
         process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_SERVER || 'netease', // 音乐平台，[netease, tencent, kugou, xiami, baidu]
   MUSIC_PLAYER_METING_ID:
