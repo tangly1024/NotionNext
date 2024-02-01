@@ -33,19 +33,19 @@ export const MenuList = (props) => {
   return (
         <>
             {/* 大屏模式菜单 */}
-            <nav id='nav' data-aos="fade-down"
+            <menu id='nav' data-aos="fade-down"
                 data-aos-duration="500"
                 data-aos-delay="400"
                 data-aos-once="true"
                 data-aos-anchor-placement="top-bottom"
                 className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
                 {links.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
-            </nav>
+            </menu>
 
             {/* 移动端菜单 */}
-            <div id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
+            <menu id='nav-menu-mobile' className='block md:hidden my-auto justify-start bg-white'>
                 {links?.map((link, index) => link && link.show && <MenuItemCollapse onHeightChange={props.onHeightChange} key={index} link={link} />)}
-            </div>
+            </menu>
         </>
   )
 }

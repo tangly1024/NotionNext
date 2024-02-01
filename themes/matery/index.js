@@ -40,8 +40,15 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, meta, siteInfo, containerSlot, post } = props
+  const { children, meta, siteInfo, post } = props
   const { onLoading, fullWidth } = useGlobal()
+  const router = useRouter()
+  const containerSlot = router.route === '/' ? <Announcement {...props} /> : <BlogListBar {...props} />
+  const headerSlot = siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && router.route === '/'
+    ? <Hero {...props} />
+    : (post && !fullWidth ? <PostHeader {...props} /> : null)
+
+  const floatRightBottom = post ? <JumpToCommentButton /> : null
 
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
@@ -58,7 +65,7 @@ const LayoutBase = props => {
                 appear={true}
                 enter="transition ease-in-out duration-700 transform order-first"
                 enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100"
+                enterTo="opacity-100 w-full"
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-16"
@@ -79,7 +86,7 @@ const LayoutBase = props => {
                         appear={true}
                         enter="transition ease-in-out duration-700 transform order-first"
                         enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100"
+                        enterTo="opacity-100 w-full"
                         leave="transition ease-in-out duration-300 transform"
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 -translate-y-16"
@@ -98,7 +105,7 @@ const LayoutBase = props => {
             </div>
 
             {/* 右下角悬浮 */}
-            <RightFloatButtons {...props} />
+            <RightFloatButtons {...props} floatRightBottom={floatRightBottom}/>
 
             {/* 页脚 */}
             <Footer title={siteConfig('TITLE')} />
@@ -113,7 +120,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && <Hero {...props} />} />
+  return <LayoutPostList {...props}/>
 }
 
 /**
@@ -123,9 +130,9 @@ const LayoutIndex = (props) => {
  */
 const LayoutPostList = (props) => {
   return (
-        <LayoutBase {...props} containerSlot={<BlogListBar {...props} />}>
+        <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -152,13 +159,13 @@ const LayoutSearch = props => {
     }
   })
   return (
-        <LayoutBase {...props} currentSearch={currentSearch}>
+        <>
             {!currentSearch
               ? <SearchNave {...props} />
               : <div id="posts-wrapper">
                     {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
                 </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -169,7 +176,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+  return <>
         <Card className='w-full -mt-32'>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
                 {Object.keys(archivePosts).map(archiveTitle => (
@@ -181,7 +188,7 @@ const LayoutArchive = (props) => {
                 ))}
             </div>
         </Card>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -192,9 +199,8 @@ const LayoutArchive = (props) => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const { fullWidth } = useGlobal()
-  const headerSlot = fullWidth ? null : <PostHeader {...props} />
 
-  return (<LayoutBase {...props} headerSlot={headerSlot} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
+  return (<>
 
         <div id='inner-wrapper' className={`w-full ${fullWidth ? '' : 'lg:max-w-3xl 2xl:max-w-4xl'}`} >
 
@@ -257,7 +263,7 @@ const LayoutSlug = props => {
 
         </div>
 
-    </LayoutBase>
+    </>
   )
 }
 
@@ -280,7 +286,7 @@ const Layout404 = props => {
     }, 3000)
   })
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
                 <div className="dark:text-gray-200">
                     <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
@@ -291,7 +297,7 @@ const Layout404 = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -304,7 +310,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
 
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+        <>
 
             <div id='inner-wrapper' className='w-full'>
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300">
@@ -321,7 +327,7 @@ const LayoutCategoryIndex = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -334,7 +340,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+        <>
             <div id='inner-wrapper' className='w-full drop-shadow-xl'>
 
                 <div className="-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
@@ -354,12 +360,13 @@ const LayoutTagIndex = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

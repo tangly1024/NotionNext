@@ -78,6 +78,7 @@ const ExternalPlugin = (props) => {
   const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
   const TIANLI_KEY = siteConfig('TianliGPT_KEY')
   const GLOBAL_JS = siteConfig('GLOBAL_JS')
+  const CLARITY_ID = siteConfig('CLARITY_ID')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -165,6 +166,18 @@ const ExternalPlugin = (props) => {
                         }
                     `
             }} />
+        </>)}
+
+        {CLARITY_ID && (<>
+          <script async dangerouslySetInnerHTML={{
+            __html: `
+                (function(c,l,a,r,i,t,y){
+                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "${CLARITY_ID}");
+                `
+          }} />
         </>)}
 
         {COMMENT_DAO_VOICE_ID && (<>

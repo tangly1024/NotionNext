@@ -36,8 +36,23 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, slotTop, meta } = props
+  const { children, meta } = props
   const { onLoading, fullWidth } = useGlobal()
+  const router = useRouter()
+  const { category, tag } = props
+  // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
+  // 如果是搜索，则列表顶部嵌入 搜索框
+  let slotTop = null
+  if (category) {
+    slotTop = <div className='pb-12'><i className="mr-1 fas fa-folder-open" />{category}</div>
+  } else if (tag) {
+    slotTop = <div className='pb-12'>#{tag}</div>
+  } else if (props.slotTop) {
+    slotTop = props.slotTop
+  } else if (router.route === '/search') {
+    // 嵌入一个搜索框在顶部
+    slotTop = <div className='pb-12'><SearchInput {...props} /></div>
+  }
 
   // 增加一个状态以触发 Transition 组件的动画
   //   const [showTransition, setShowTransition] = useState(true)
@@ -121,21 +136,10 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { category, tag } = props
-  // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
-  // 如果是搜索，则列表顶部嵌入 搜索框
-  let slotTop = null
-  if (category) {
-    slotTop = <div className='pb-12'><i className="mr-1 fas fa-folder-open" />{category}</div>
-  } else if (tag) {
-    slotTop = <div className='pb-12'>#{tag}</div>
-  } else if (props.slotTop) {
-    slotTop = props.slotTop
-  }
   return (
-        <LayoutBase {...props} slotTop={slotTop}>
+        <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -147,7 +151,7 @@ const LayoutPostList = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   return (
-        <LayoutBase {...props}>
+        <>
             {lock
               ? <ArticleLock validPassword={validPassword} />
               : <div id="article-wrapper" className="px-2">
@@ -156,7 +160,7 @@ const LayoutSlug = props => {
                     <ShareBar post={post} />
                     <Comment frontMatter={post} />
                 </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -166,7 +170,7 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
-  return <LayoutBase {...props}>404 Not found.</LayoutBase>
+  return <>404 Not found.</>
 }
 
 /**
@@ -176,8 +180,6 @@ const Layout404 = (props) => {
  */
 const LayoutSearch = props => {
   const { keyword } = props
-  // 嵌入一个搜索框在顶部
-  const slotTop = <div className='pb-12'><SearchInput {...props} /></div>
   const router = useRouter()
   useEffect(() => {
     if (isBrowser) {
@@ -196,7 +198,7 @@ const LayoutSearch = props => {
     }
   }, [router])
 
-  return <LayoutPostList slotTop={slotTop} {...props} />
+  return <LayoutPostList {...props} />
 }
 
 /**
@@ -206,15 +208,13 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = props => {
   const { archivePosts } = props
-  return (
-        <LayoutBase {...props}>
+  return (<>
             <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
                 {Object.keys(archivePosts).map(archiveTitle => (
                     <BlogListGroupByDate key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
                 ))}
             </div>
-        </LayoutBase>
-  )
+        </>)
 }
 
 /**
@@ -225,11 +225,11 @@ const LayoutArchive = props => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='category-list' className='duration-200 flex flex-wrap'>
                 {categoryOptions?.map(category => <CategoryItem key={category.name} category={category} />)}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -241,16 +241,17 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='tags-list' className='duration-200 flex flex-wrap'>
                 {tagOptions.map(tag => <TagItem key={tag.name} tag={tag} />)}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,
