@@ -47,7 +47,8 @@ const ThemeSwitch = () => {
                 <div className="text-sm flex items-center group-hover:w-32 transition-all duration-200">
                     <i className="fa-solid fa-language w-5" />
                     <div className='w-0 group-hover:w-24 transition-all duration-200 overflow-hidden'>
-                        <select value={lang} onChange={onLangSelectChange} name="themes" className='pl-1 bg-gray-50 dark:bg-black appearance-none outline-none dark:text-white uppercase cursor-pointer'>
+                        <label htmlFor="langSelect" className="sr-only">选择语言：</label>
+                        <select id="langSelect" value={lang} onChange={onLangSelectChange} name="themes" className='pl-1 bg-gray-50 dark:bg-black appearance-none outline-none dark:text-white uppercase cursor-pointer'>
                             {Object.keys(LANGS)?.map(t => {
                               return <option key={t} value={t}>{LANGS[t].LOCALE}</option>
                             })}
@@ -59,7 +60,8 @@ const ThemeSwitch = () => {
                 <div className="text-sm flex items-center group-hover:w-32 transition-all duration-200">
                     <i className="fa-solid fa-palette w-5" />
                     <div className='w-0 group-hover:w-24 transition-all duration-200 overflow-hidden'>
-                        <select value={currentTheme} onChange={onThemeSelectChange} name="themes" className='pl-1 bg-gray-50 dark:bg-black appearance-none outline-none dark:text-white uppercase cursor-pointer'>
+                        <label htmlFor="themeSelect" className="sr-only">选择主题：</label>
+                        <select id="themeSelect" value={currentTheme} onChange={onThemeSelectChange} name="themes" className='pl-1 bg-gray-50 dark:bg-black appearance-none outline-none dark:text-white uppercase cursor-pointer'>
                             {THEMES?.map(t => {
                               return <option key={t} value={t}>{t}</option>
                             })}

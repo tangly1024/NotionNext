@@ -14,11 +14,7 @@ const Announcement = ({ post, className }) => {
                 <i className="mr-2 fas fa-bullhorn" />{locale.COMMON.ANNOUNCEMENT}
             </div>
         </div>
-        {post && (<div id="announcement-content" data-aos="fade-down"
-                    data-aos-duration="500"
-                    data-aos-delay="200"
-                    data-aos-once="true"
-                    data-aos-anchor-placement="top-bottom">
+        {post && (<div id="announcement-content">
             <NotionPage post={post} className='text-center ' />
         </div>)}
     </>
