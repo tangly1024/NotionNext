@@ -32,6 +32,7 @@ import { MenuItem } from './components/MenuItem'
 import LogoBar from './components/LogoBar'
 import { siteConfig } from '@/lib/config'
 import Live2D from '@/components/Live2D'
+import BlogArchiveItem from './components/BlogArchiveItem'
 
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
@@ -269,7 +270,14 @@ const LayoutSearch = (props) => {
  * @returns
  */
 const LayoutArchive = (props) => {
-  return <></>
+  const { archivePosts } = props
+  return (<>
+            <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
+                {Object.keys(archivePosts).map(archiveTitle => (
+                    <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
+                ))}
+            </div>
+        </>)
 }
 
 /**
