@@ -223,7 +223,7 @@ const BLOG = {
     {
       name: '再见',
       artist: 'ヤマモトガク',
-      url: 'http://music.163.com/song/media/outer/url?id=1992204362.mp3',
+      url: 'https://s17.aconvert.com/convert/p3r68-cdx67/lmvtn-5g1iu.mp3',
       cover:
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
