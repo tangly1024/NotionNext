@@ -3,6 +3,7 @@ import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = siteConfig('HEO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
@@ -10,6 +11,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
   const showPageCover = siteConfig('HEO_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && !showPreview
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
   return (
         <div className={` ${siteConfig('HEO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`} >
 
@@ -22,7 +24,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 图片封面 */}
                 {showPageCover && (
-                    <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                    <Link href={url} passHref legacyBehavior>
                         <div className="w-full md:w-5/12 2xl:w-full overflow-hidden">
                             <LazyImage priority={index === 0} src={post?.pageCoverThumbnail} alt={post?.title} className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300' />
                         </div>
@@ -42,7 +44,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
                         {/* 标题 */}
                         <Link
-                            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                            href={url}
                             passHref
                             className={' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'}>
                             <span className='menu-link '>{post.title}</span>

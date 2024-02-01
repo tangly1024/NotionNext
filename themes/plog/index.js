@@ -41,7 +41,7 @@ const LayoutBase = props => {
 
   // 页面切换关闭遮罩
   const router = useRouter()
-  const closeModal = ()=>{
+  const closeModal = () => {
     setShowModal(false)
   }
 
@@ -51,7 +51,6 @@ const LayoutBase = props => {
       router.events.off('routeChangeComplete', closeModal)
     }
   }, [router.events])
-
 
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>

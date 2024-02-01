@@ -11,7 +11,7 @@ import LazyImage from '@/components/LazyImage'
  */
 const BlogPost = (props) => {
   const { post, index, siteInfo } = props
-  const pageThumbnail = compressImage(post?.pageCoverThumbnail || siteInfo?.pageCover, 800, 80)
+  const pageThumbnail = compressImage(post?.pageCoverThumbnail || siteInfo?.pageCover)
   const { setModalContent, setShowModal } = usePlogGlobal()
   const handleClick = () => {
     setShowModal(true)
