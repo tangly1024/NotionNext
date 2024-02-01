@@ -25,7 +25,9 @@ const ThemeSwitch = () => {
     const query = router.query
     query.theme = newTheme
     router.push({ pathname: router.pathname, query }).then(() => {
-      setIsLoading(false)
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 500);
     })
   }
 
@@ -72,8 +74,8 @@ const ThemeSwitch = () => {
         </Draggable>
 
         {/* 切换主题加载时的全屏遮罩 */}
-        <div className={`${isLoading ? 'opacity-50 ' : 'opacity-0'} 
-            w-screen h-screen bg-black text-white shadow-text flex justify-center items-center
+        <div className={`${isLoading ? 'opacity-90 ' : 'opacity-0'} 
+            w-screen h-screen glassmorphism bg-black text-white shadow-text flex justify-center items-center
             transition-all fixed top-0 left-0 pointer-events-none duration-1000 z-50 shadow-inner`}>
             <i className='text-3xl mr-5 fas fa-spinner animate-spin' />
         </div>
