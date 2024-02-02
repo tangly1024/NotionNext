@@ -15,15 +15,7 @@ import { useRouter } from 'next/router'
 const Index = props => {
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${siteConfig('TITLE')} | ${siteConfig('DESCRIPTION')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteConfig('HOME_BANNER_IMAGE'),
-    slug: '',
-    type: 'website'
-  }
-  return <Layout meta={meta} {...props} />
+  return <Layout {...props} />
 }
 
 /**

@@ -22,7 +22,7 @@ export const MenuItem = ({ link }) => {
 
   // #号加标题  快速跳转到指定锚点
   const isAnchor = link?.to === '#'
-  const url = isAnchor ? ('#' + link.name) : link.to
+  const url = isAnchor ? link.to : `#${link.name}`
 
   return <>
         {/* 菜单 */}
@@ -55,7 +55,7 @@ export const MenuItem = ({ link }) => {
                     link?.subMenus?.map((sLink, index) => {
                       // #号加标题  快速跳转到指定锚点
                       const sIsAnchor = sLink?.to === '#'
-                      const sUrl = sIsAnchor ? sLink.to : ('#' + sLink.name)
+                      const sUrl = sIsAnchor ? `#${sLink.name}` : sLink.to
                       return <div key={index} className='nav-submenu'>
                         <Link href={sUrl}>
                             <span className='dark:text-neutral-400 text-gray-500 hover:text-black dark:hover:text-white text-xs font-bold'>
