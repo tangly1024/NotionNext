@@ -18,7 +18,6 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
 // 各种扩展插件 这个要阻塞引入
 import ExternalPlugins from '@/components/ExternalPlugins'
 import GlobalHead from '@/components/GlobalHead'
-import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 
 /**
@@ -32,7 +31,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   const route = useRouter()
   const queryParam = useMemo(() => {
-    return getQueryParam(route.asPath, 'theme') || siteConfig('THEME', BLOG.THEME, pageProps.NOTION_CONFIG)
+    return getQueryParam(route.asPath, 'theme') || pageProps?.NOTION_CONFIG?.THEME || BLOG.THEME
   }, [route])
 
   // 整体布局
