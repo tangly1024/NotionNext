@@ -106,7 +106,7 @@ const BLOG = {
   FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || '', // Facebook App ID 來啟用 messenger 聊天功能 获取: https://developers.facebook.com/
 
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
-
+  GONGAN_BEI_AN: process.env.NEXT_PUBLIC_GONGAN_BEI_AN || '', // 备案号 闽ICP备XXXXXXX
   // START********代码相关********
   // PrismJs 代码相关
   PRISM_JS_PATH: 'https://npm.elemecdn.com/prismjs@1.29.0/components/',
