@@ -11,6 +11,7 @@ import TagGroups from './TagGroups'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { useNextGlobal } from '..'
+import { useRouter } from 'next/router'
 
 let windowTop = 0
 
@@ -24,6 +25,7 @@ const TopNav = (props) => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
   const collapseRef = useRef(null)
+  const router = useRouter()
 
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
@@ -50,6 +52,21 @@ const TopNav = (props) => {
   }, [])
 
   const [isOpen, changeShow] = useState(false)
+
+  // 监听滚动
+  useEffect(() => {
+    router.events.on('routeChangeComplete', menuCollapseHide)
+    return () => {
+      router.events.off('routeChangeComplete', menuCollapseHide)
+    }
+  }, [])
+
+  /**
+   * 点击切换页面后关闭这点菜单
+   */
+  const menuCollapseHide = () => {
+    changeShow(false)
+  }
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)

@@ -85,7 +85,6 @@ const GlobalHead = (props) => {
  * @param {*} router
  */
 const getSEOMeta = (props, router, global) => {
-  console.log(props, router)
   const { locale } = global
   const { post, tag, category, page } = props
   const keyword = router?.query?.s

@@ -65,13 +65,10 @@ const LayoutBase = props => {
       {/* 通知横幅 */}
       {router.route === '/'
         ? <>
-        <NoticeBar />
-        <Hero {...props} />
-      </>
+            <NoticeBar />
+            <Hero {...props} />
+        </>
         : null}
-      <div className="max-w-[86rem] mx-auto px-3">
-        <WWAds className="w-full" orientation="horizontal" />
-      </div>
       {fullWidth ? null : <PostHeader {...props} />}
     </header>
   )
@@ -270,11 +267,7 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   return (
-    <div
-      {...props}
-      showCategory={false}
-      showTag={false}
-    >
+    <>
       <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
         {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -334,7 +327,7 @@ const LayoutSlug = props => {
         )}
       </div>
       <FloatTocButton {...props} />
-    </div>
+    </>
   )
 }
 

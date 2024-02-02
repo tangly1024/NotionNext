@@ -41,6 +41,7 @@ const TopNav = props => {
   useEffect(() => {
     window.addEventListener('scroll', topNavStyleHandler)
     router.events.on('routeChangeComplete', topNavStyleHandler)
+    topNavStyleHandler()
     return () => {
       router.events.off('routeChangeComplete', topNavStyleHandler)
       window.removeEventListener('scroll', topNavStyleHandler)

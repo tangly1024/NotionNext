@@ -8,7 +8,7 @@ import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
-import { isBrowser } from '@/lib/utils'
+import { checkContainHttp, isBrowser } from '@/lib/utils'
 import { uploadDataToAlgolia } from '@/lib/algolia'
 import { siteConfig } from '@/lib/config'
 
@@ -82,8 +82,10 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+  const paths = allPages?.filter(row => checkSlug(row))
+    .map(row => ({ params: { prefix: row.slug } }))
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
+    paths: paths,
     fallback: true
   }
 }
@@ -179,6 +181,14 @@ export function getRecommendPost(post, allPosts, count = 6) {
     recommendPosts = recommendPosts.slice(0, count)
   }
   return recommendPosts
+}
+
+function checkSlug(row) {
+  let slug = row.slug
+  if (slug.startsWith('/')) {
+    slug = slug.substring(1)
+  }
+  return ((slug.match(/\//g) || []).length === 0 && !checkContainHttp(slug)) && row.type.indexOf('Menu') < 0
 }
 
 export default Slug

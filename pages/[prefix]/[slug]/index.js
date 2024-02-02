@@ -5,6 +5,7 @@ import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import Slug, { getRecommendPost } from '..'
 import { uploadDataToAlgolia } from '@/lib/algolia'
+import { checkContainHttp } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
@@ -26,8 +27,10 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+  const paths = allPages?.filter(row => checkSlug(row))
+    .map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } }))
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') > 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } })),
+    paths: paths,
     fallback: true
   }
 }
@@ -89,5 +92,11 @@ export async function getStaticProps({ params: { prefix, slug } }) {
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
 }
-
+function checkSlug(row) {
+  let slug = row.slug
+  if (slug.startsWith('/')) {
+    slug = slug.substring(1)
+  }
+  return (slug.match(/\//g) || []).length === 1 && !checkContainHttp(slug) && row.type.indexOf('Menu') < 0
+}
 export default PrefixSlug
