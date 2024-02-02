@@ -33,7 +33,7 @@ const Footer = ({ title }) => {
 
             <div id='footer-bottom-right'>
                 {siteConfig('BEI_AN') && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{siteConfig('BEI_AN')}</a></>}
-
+                {siteConfig('BEI_AN2') && <><i className='fas fa-shield-alt' /> <a href='https://icp.gov.moe/?keyword=20231188' className='mr-2'>{siteConfig('BEI_AN2')}</a></>}  
                 <span className='hidden busuanzi_container_site_pv'>
                     <i className='fas fa-eye' /><span className='px-1 busuanzi_value_site_pv'> </span>  </span>
                 <span className='pl-2 hidden busuanzi_container_site_uv'>
