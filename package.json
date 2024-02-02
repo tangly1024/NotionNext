@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -37,7 +37,7 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "mongodb": "^4.6.0",
-    "next": "13.5.1",
+    "next": "14.1.0",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
     "nprogress": "^0.2.0",
