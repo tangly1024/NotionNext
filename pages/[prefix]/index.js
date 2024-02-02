@@ -8,7 +8,7 @@ import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
-import { isBrowser } from '@/lib/utils'
+import { checkContainHttp, isBrowser } from '@/lib/utils'
 import { uploadDataToAlgolia } from '@/lib/algolia'
 import { siteConfig } from '@/lib/config'
 
@@ -82,8 +82,10 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+  const paths = allPages?.filter(row => row.slug.indexOf('/') > 0 && !checkContainHttp(row.slug) && row.type.indexOf('Menu') < 0)
+    .map(row => ({ params: { prefix: row.slug } }))
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
+    paths: paths,
     fallback: true
   }
 }
