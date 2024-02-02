@@ -1,5 +1,4 @@
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import { createContext, useContext, useEffect, useRef } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
@@ -45,7 +44,7 @@ export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
  * @constructor
  */
 const LayoutBase = props => {
-  const { post, children, slotTop, meta, className } = props
+  const { post, children, slotTop, className } = props
   const { onLoading, fullWidth } = useGlobal()
 
   const router = useRouter()
@@ -75,8 +74,6 @@ const LayoutBase = props => {
   return (
     <ThemeGlobalHexo.Provider value={{ searchModal }}>
         <div id='theme-hexo'>
-            {/* 网页SEO */}
-            <CommonHead meta={meta}/>
             <Style/>
 
             {/* 顶部导航 */}

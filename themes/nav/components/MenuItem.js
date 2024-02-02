@@ -56,7 +56,6 @@ export const MenuItem = ({ link }) => {
                       // #号加标题  快速跳转到指定锚点
                       const sIsAnchor = sLink?.to === '#'
                       const sUrl = sIsAnchor ? `#${sLink.name}` : sLink.to
-                      console.log('slink', sLink, sUrl, sIsAnchor, sUrl)
                       return <div key={index} className='nav-submenu'>
                         <Link href={sUrl}>
                             <span className='dark:text-neutral-400 text-gray-500 hover:text-black dark:hover:text-white text-xs font-bold'>
