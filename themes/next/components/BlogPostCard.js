@@ -9,6 +9,7 @@ import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { formatDateFmt } from '@/lib/formatDate'
 import { siteConfig } from '@/lib/config'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 const BlogPostCard = ({ post, index, showSummary }) => {
   const { locale } = useGlobal()
@@ -22,6 +23,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
         'data-aos-anchor-placement': 'top-bottom'
       }
     : {}
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
     <Card className="w-full">
@@ -34,7 +36,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
           {/* 文章标题 */}
           <Link
             {...aosProps}
-            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+            href={url}
             passHref
             className={`cursor-pointer text-3xl ${showPreview ? 'text-center' : ''} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
 
@@ -99,7 +101,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
 
           <div className="text-right border-t pt-8 border-dashed">
             <Link
-              href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+              href={url}
               className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
 
               {locale.COMMON.ARTICLE_DETAIL}
@@ -110,7 +112,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
         </div>
 
         {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && (
-          <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+          <Link href={url} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"

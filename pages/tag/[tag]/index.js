@@ -1,4 +1,3 @@
-import { useGlobal } from '@/lib/global'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
@@ -11,20 +10,8 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const Tag = props => {
-  const { locale } = useGlobal()
-  const { tag, siteInfo } = props
-
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteInfo?.pageCover,
-    slug: 'tag/' + tag,
-    type: 'website'
-  }
-  props = { ...props, meta }
 
   return <Layout {...props} />
 }
