@@ -5,6 +5,7 @@ import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import Slug, { getRecommendPost } from '..'
 import { uploadDataToAlgolia } from '@/lib/algolia'
+import { checkContainHttp } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
@@ -26,8 +27,10 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+  const paths = allPages?.filter(row => row.slug.indexOf('/') > 0 && !checkContainHttp(row.slug) && row.type.indexOf('Menu') < 0)
+    .map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } }))
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') > 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } })),
+    paths: paths,
     fallback: true
   }
 }
