@@ -103,20 +103,19 @@ export default function ArticleDetail(props) {
                         {/* 分类 */}
                         {post.category && <>
                             <div className="cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:text-gray-500 border-dashed">
-                                <Link href={`/category/${post.category}`} passHref legacyBehavior>
-                                    <><i className="mr-1 far fa-folder-open" /> {post.category}</>
+                                <Link href={`/category/${post.category}`} legacyBehavior>
+                                    <a><i className="mr-1 far fa-folder-open" /> {post.category}</a>
                                 </Link>
                             </div>
-
                         </>}
 
                         {/* 标签列表 */}
                         {post?.type === 'Post' && (
                             <>
                                 {post.tagItems && (
-                                    <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
+                                    <div className="flex items-center flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
                                         <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
-                                            {locale.COMMON.TAGS}：
+                                            {locale.COMMON.TAGS}:&nbsp;
                                         </div>
                                         {post.tagItems.map(tag => (
                                             <TagItem key={tag.name} tag={tag} />
