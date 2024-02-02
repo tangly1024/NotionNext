@@ -113,9 +113,9 @@ export default function ArticleDetail(props) {
                         {post?.type === 'Post' && (
                             <>
                                 {post.tagItems && (
-                                    <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
+                                    <div className="flex items-center flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
                                         <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
-                                            {locale.COMMON.TAGS}:
+                                            {locale.COMMON.TAGS}:&nbsp;
                                         </div>
                                         {post.tagItems.map(tag => (
                                             <TagItem key={tag.name} tag={tag} />
