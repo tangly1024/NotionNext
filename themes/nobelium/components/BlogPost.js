@@ -1,9 +1,12 @@
 import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 const BlogPost = ({ post }) => {
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+
   return (
-    (<Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}>
+    (<Link href={url}>
 
       <article key={post.id} className="mb-6 md:mb-8">
         <header className="flex flex-col justify-between md:flex-row md:items-baseline">

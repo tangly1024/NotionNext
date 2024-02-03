@@ -3,6 +3,7 @@ import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import LazyImage from '@/components/LazyImage'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 /**
  * 关联推荐文章
@@ -33,12 +34,13 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                   const headerImage = post?.pageCoverThumbnail
                     ? post.pageCoverThumbnail
                     : siteInfo?.pageCover
+                  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
                   return (
                     (<Link
                             key={post.id}
                             title={post.title}
-                            href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                            href={url}
                             passHref
                             className="flex h-40 cursor-pointer overflow-hidden">
 

@@ -5,6 +5,7 @@ import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import Slug, { getRecommendPost } from '..'
 import { uploadDataToAlgolia } from '@/lib/algolia'
+import { checkContainHttp } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
@@ -30,8 +31,10 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+
   return {
-    paths: allPages?.filter(row => hasMultipleSlashes(row.slug) && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1], suffix: row.slug.split('/').slice(1) } })),
+    paths: allPages?.filter(row => checkSlug(row))
+      .map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1], suffix: row.slug.split('/').slice(1) } })),
     fallback: true
   }
 }
@@ -52,7 +55,7 @@ export async function getStaticProps({ params: { prefix, slug, suffix } }) {
   const props = await getGlobalData({ from })
   // 在列表内查找文章
   props.post = props?.allPages?.find((p) => {
-    return p.slug === fullSlug || p.id === idToUuid(fullSlug)
+    return (p.type.indexOf('Menu') < 0) && (p.slug === fullSlug || p.id === idToUuid(fullSlug))
   })
 
   // 处理非列表内文章的内信息
@@ -99,15 +102,12 @@ export async function getStaticProps({ params: { prefix, slug, suffix } }) {
   }
 }
 
-/**
- * 判断是否包含两个以上的 /
- * @param {*} str
- * @returns
- */
-function hasMultipleSlashes(str) {
-  const regex = /\/+/g; // 创建正则表达式，匹配所有的斜杠符号
-  const matches = str.match(regex); // 在字符串中找到所有匹配的斜杠符号
-  return matches && matches.length >= 2; // 判断匹配的斜杠符号数量是否大于等于2
+function checkSlug(row) {
+  let slug = row.slug
+  if (slug.startsWith('/')) {
+    slug = slug.substring(1)
+  }
+  return (slug.match(/\//g) || []).length >= 2 && row.type.indexOf('Menu') < 0 && !checkContainHttp(slug)
 }
 
 export default PrefixSlug
