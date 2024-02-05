@@ -4,9 +4,9 @@
     Allow: /
   
     # Host
-    Host: https://notion-next-plum-chi.vercel.app/
+    Host: https://tangly1024.com
   
     # Sitemaps
-    Sitemap: https://notion-next-plum-chi.vercel.app/sitemap.xml
+    Sitemap: https://tangly1024.com/sitemap.xml
   
     
