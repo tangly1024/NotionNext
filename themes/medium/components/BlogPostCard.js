@@ -8,6 +8,7 @@ import TagItemMini from './TagItemMini'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+import NotionIcon from '@/components/NotionIcon'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = siteConfig('MEDIUM_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
@@ -23,19 +24,19 @@ const BlogPostCard = ({ post, showSummary }) => {
             className="mb-6 max-w-7xl border-b dark:border-gray-800 "
         >
 
-            <div className="lg:py-8 py-4 flex flex-col w-full">
+            <header className="lg:py-8 py-4 flex flex-col w-full">
                 <Link
                     href={url}
                     passHref
                     className={
                         'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
                     }>
-                    <div>
+                    <h2>
                         {siteConfig('MEDIUM_POST_LIST_COVER', null, CONFIG) && <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
                             <LazyImage src={post.pageCoverThumbnail} style={post.pageCoverThumbnail ? {} : { height: '0px' }} className='w-full max-h-96 object-cover hover:scale-125 duration-150' />
                         </div>}
-                        {post.title}
-                    </div>
+                        <NotionIcon icon={post.pageIcon} />{post.title}
+                    </h2>
 
                 </Link>
 
@@ -53,9 +54,9 @@ const BlogPostCard = ({ post, showSummary }) => {
                 <div className="flex"></div>
 
                 {(!showPreview || showSummary) && (
-                    <p className="my-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+                    <main className="my-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
                         {post.summary}
-                    </p>
+                    </main>
                 )}
 
                 {showPreview && (
@@ -76,7 +77,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                         </div>
                     </div>
                 )}
-            </div>
+            </header>
         </div>
   )
 }
