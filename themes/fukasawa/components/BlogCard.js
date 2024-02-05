@@ -4,6 +4,7 @@ import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import LazyImage from '@/components/LazyImage'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  * 文章列表卡片
@@ -32,7 +33,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
   const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
-        <div {...aosProps} style={{ maxHeight: '60rem' }}
+        <article {...aosProps} style={{ maxHeight: '60rem' }}
             className="w-full lg:max-w-sm p-3 shadow mb-4 mx-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg duration-200"
         >
             <div className="flex flex-col justify-between h-full">
@@ -51,16 +52,18 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 文字部分 */}
                 <div className="flex flex-col w-full">
-                    <Link passHref href={url}
-                         className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
-                    >
-                        {post.title}
-                    </Link>
+                    <h2>
+                        <Link passHref href={url}
+                            className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
+                        >
+                        <NotionIcon icon={post.pageIcon} /> {post.title}
+                        </Link>
+                    </h2>
 
                     {(!showPreview || showSummary) && (
-                        <p className="my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6">
+                        <main className="my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6">
                             {post.summary}
-                        </p>
+                        </main>
                     )}
 
                     {/* 分类标签 */}
@@ -83,7 +86,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
   )
 }
 

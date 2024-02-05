@@ -6,6 +6,7 @@ import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+import NotionIcon from '@/components/NotionIcon'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = siteConfig('MATERY_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
@@ -27,7 +28,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             className="w-full mb-4 overflow-hidden shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
             {/* 固定高度 ，空白用图片拉升填充 */}
-            <div className="group flex flex-col h-80 justify-between">
+            <header className="group flex flex-col h-80 justify-between">
 
                 {/* 头部图片 填充卡片 */}
                 {showPageCover && (
@@ -38,13 +39,15 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                                 alt={post.title}
                                 className="h-full w-full group-hover:scale-125 group-hover:brightness-50 brightness-90 rounded-t-md transform object-cover duration-500"
                             />
-                            <div className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full shadow-text'>{post.title}</div>
+                            <h2 className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full shadow-text'>
+                                <NotionIcon icon={post.pageIcon} />{post.title}
+                            </h2>
                         </div>
                     </Link>
                 )}
 
                 {/* 文字描述 */}
-                <div >
+                <main >
                     {/* 描述 */}
                     <div className="px-4 flex flex-col w-full  text-gray-700  dark:text-gray-300">
 
@@ -93,8 +96,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             </div>
                         </div>
                     </>)}
-                </div>
-            </div>
+                </main>
+            </header>
 
         </div>
   )

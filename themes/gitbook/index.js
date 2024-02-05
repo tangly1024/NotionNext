@@ -33,6 +33,7 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { siteConfig } from '@/lib/config'
+import NotionIcon from '@/components/NotionIcon'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -219,7 +220,7 @@ const LayoutSlug = (props) => {
             {!lock && <div id='container'>
 
                 {/* title */}
-                <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
+                <h1 className="text-3xl pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
                 {/* Notion文章主体 */}
                 {post && (<section id="article-wrapper" className="px-1">
