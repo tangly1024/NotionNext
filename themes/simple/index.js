@@ -27,7 +27,6 @@ const SideBar = dynamic(() => import('./components/SideBar'), { ssr: false });
 const JumpToTopButton = dynamic(() => import('./components/JumpToTopButton'), { ssr: false });
 const Footer = dynamic(() => import('./components/Footer'), { ssr: false });
 const SearchInput = dynamic(() => import('./components/SearchInput'), { ssr: false });
-const CommonHead = dynamic(() => import('@/components/CommonHead'), { ssr: false });
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false });
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: false })
 
@@ -42,15 +41,14 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
  * @returns
  */
 const LayoutBase = props => {
-  const { children, slotTop, meta } = props
+  const { children, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const searchModal = useRef(null)
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
         <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
+
             <Style/>
 
             {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
@@ -120,9 +118,9 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-        <LayoutBase {...props}>
+        <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -161,11 +159,11 @@ const LayoutSearch = props => {
 const LayoutArchive = props => {
   const { archivePosts } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
                 {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -179,7 +177,7 @@ const LayoutSlug = props => {
   const { fullWidth } = useGlobal()
 
   return (
-        <LayoutBase {...props}>
+        <>
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -208,7 +206,7 @@ const LayoutSlug = props => {
 
             </div>
 
-        </LayoutBase>
+        </>
   )
 }
 
@@ -218,9 +216,9 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
-  return <LayoutBase {...props}>
+  return <>
         404 Not found.
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -231,7 +229,7 @@ const Layout404 = (props) => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='category-list' className='duration-200 flex flex-wrap'>
                 {categoryOptions?.map(category => {
                   return (
@@ -248,7 +246,7 @@ const LayoutCategoryIndex = props => {
                   )
                 })}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -260,7 +258,7 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='tags-list' className='duration-200 flex flex-wrap'>
                 {tagOptions.map(tag => {
                   return (
@@ -276,12 +274,13 @@ const LayoutTagIndex = (props) => {
                   )
                 })}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
