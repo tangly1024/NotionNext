@@ -27,6 +27,7 @@ assignees: tangly1024
 
 - 【必填】NotionNext版本 [例如. 4.0.18]
 - 【必填】主题 [例如. hexo]
+- 【必填】部署方案 [例如. vercel]
 - 【可选】操作系统: [例如. iOS, Android, macOS, windows]
 - 【可选】浏览器 [例如. chrome, safari, firefox]
 
