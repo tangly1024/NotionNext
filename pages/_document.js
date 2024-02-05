@@ -28,7 +28,7 @@ class MyDocument extends Document {
                   })}
                 </Head>
 
-                <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
+                <body className={`${BLOG.FONT_STYLE} dark:bg-black scroll-smooth`}>
                     <Main />
                     <NextScript />
                 </body>
