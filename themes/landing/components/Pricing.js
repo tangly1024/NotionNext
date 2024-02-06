@@ -8,7 +8,7 @@ import Link from 'next/link'
 export const Pricing = (props) => {
   return <div class="w-full mx-auto bg-white dark:bg-black px-5 py-10 text-gray-800 mb-10">
     <div class="text-center max-w-xl mx-auto">
-        <h1 class="text-5xl md:text-6xl font-bold mb-5 dark:text-white">{siteConfig('LANDING_PRICING_TITLE', null, CONFIG)}</h1>
+        <h1 class="text-5xl md:text-5xl font-bold mb-5 dark:text-white">{siteConfig('LANDING_PRICING_TITLE', null, CONFIG)}</h1>
         <h3 class="text-xl font-medium mb-10 dark:text-gray-400">{siteConfig('LANDING_PRICING_P', null, CONFIG)}</h3>
     </div>
     <div class="max-w-4xl mx-auto md:flex">
