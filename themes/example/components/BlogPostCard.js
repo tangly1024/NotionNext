@@ -4,6 +4,7 @@ import Link from 'next/link'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+import NotionIcon from '@/components/NotionIcon'
 
 const BlogPostCard = ({ post }) => {
   const showPageCover = siteConfig('EXAMPLE_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
@@ -15,16 +16,18 @@ const BlogPostCard = ({ post }) => {
                 <Link
                     href={`/${post.slug}`}
                     className="text-black dark:text-gray-100 text-xl md:text-2xl no-underline hover:underline">
-                    {post?.title}
+                    <NotionIcon icon={post.pageIcon} />{post?.title}
                 </Link>
             </h2>
 
             <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                 by <a href="#" className="text-gray-700 dark:text-gray-300">{siteConfig('AUTHOR')}</a> on {post.date?.start_date || post.createdTime}
                 <TwikooCommentCount post={post} className='pl-1'/>
+               {post.category && <>
                 <span className="font-bold mx-1"> | </span>
                 <Link href={`/category/${post.category}`} className="text-gray-700 dark:text-gray-300 hover:underline">{post.category}</Link>
-                {/* <span className="font-bold mx-1"> | </span> */}
+               </>}
+                            {/* <span className="font-bold mx-1"> | </span> */}
                 {/* <a href="#" className="text-gray-700">2 Comments</a> */}
             </div>
 
