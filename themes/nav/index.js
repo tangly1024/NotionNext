@@ -33,6 +33,7 @@ import LogoBar from './components/LogoBar'
 import { siteConfig } from '@/lib/config'
 import Live2D from '@/components/Live2D'
 import BlogArchiveItem from './components/BlogArchiveItem'
+import NotionIcon from '@/components/NotionIcon'
 
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
@@ -213,7 +214,6 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
-
   return (
         <>
             {/* 文章锁 */}
@@ -222,7 +222,7 @@ const LayoutSlug = (props) => {
               {!lock && <div id='container'>
 
                   {/* title */}
-                  <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300">{post?.title}</h1>
+                  <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
                   {/* Notion文章主体 */}
                   {post && (<section id="article-wrapper" className="px-1">

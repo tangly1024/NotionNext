@@ -16,13 +16,16 @@ function scanSubdirectories(directory) {
   const subdirectories = []
 
   fs.readdirSync(directory).forEach(file => {
-    const fullPath = path.join(directory, file)
-    const stats = fs.statSync(fullPath)
+    // 这段代码会将landing排除在可选主题中
 
-    // landing主题比较特殊，不在可切换的主题中显示
-    if (stats.isDirectory() && file !== 'landing') {
-      subdirectories.push(file)
-    }
+    // const fullPath = path.join(directory, file)
+    // const stats = fs.statSync(fullPath)
+    // landing主题默认隐藏掉，一般网站不会用到
+    // if (stats.isDirectory() && file !== 'landing') {
+    //   subdirectories.push(file)
+    // }
+
+    subdirectories.push(file)
   })
 
   return subdirectories
@@ -94,7 +97,7 @@ module.exports = withBundleAnalyzer({
     // }
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     if (!isServer) {
-      console.log('加载默认主题', path.resolve(__dirname, 'themes', THEME))
+      console.log('[加载主题]', path.resolve(__dirname, 'themes', THEME))
     }
     config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', THEME)
     return config
