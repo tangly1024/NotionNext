@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from 'react'
 
@@ -12,7 +12,7 @@ export default function LazyImage({
   id,
   src,
   alt,
-  placeholderSrc = BLOG.IMG_LAZY_LOAD_PLACEHOLDER,
+  placeholderSrc,
   className,
   width,
   height,
@@ -22,6 +22,9 @@ export default function LazyImage({
 }) {
   const imageRef = useRef(null)
   const [imageLoaded, setImageLoaded] = useState(false)
+  if (!placeholderSrc) {
+    placeholderSrc = siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')
+  }
 
   const handleImageLoad = () => {
     setImageLoaded(true)

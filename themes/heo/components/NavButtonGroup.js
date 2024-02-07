@@ -1,5 +1,3 @@
-
-import React from 'react'
 import Link from 'next/link'
 
 /**
@@ -15,7 +13,7 @@ const NavButtonGroup = (props) => {
 
   return (
     <nav id='home-nav-button' className={'w-full z-10 md:h-72 md:mt-6 xl:mt-32 px-5 py-2 mt-8 flex flex-wrap md:max-w-5xl space-y-2 md:space-y-1 md:flex justify-center max-h-80 overflow-auto'}>
-      {categoryOptions.map(category => {
+      {categoryOptions?.map(category => {
         return (
           <Link
             key={`${category.name}`}

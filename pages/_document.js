@@ -1,7 +1,6 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import BLOG from '@/blog.config'
-import CommonScript from '@/components/CommonScript'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -14,7 +13,6 @@ class MyDocument extends Document {
             <Html lang={BLOG.LANG}>
                 <Head>
                 <link rel='icon' href= {`${BLOG.BLOG_FAVICON}`} />
-                  <CommonScript />
                   {/* 预加载字体 */}
                   {BLOG.FONT_AWESOME && <>
                       <link rel='preload' href={BLOG.FONT_AWESOME} as="style" crossOrigin="anonymous" />
@@ -30,7 +28,7 @@ class MyDocument extends Document {
                   })}
                 </Head>
 
-                <body className={`${BLOG.FONT_STYLE} font-light scroll-smooth`}>
+                <body className={`${BLOG.FONT_STYLE} dark:bg-black scroll-smooth`}>
                     <Main />
                     <NextScript />
                 </body>

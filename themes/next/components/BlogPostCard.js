@@ -1,8 +1,6 @@
-import BLOG from '@/blog.config'
 import { useGlobal } from '@/lib/global'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import Card from './Card'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
@@ -10,10 +8,23 @@ import NotionPage from '@/components/NotionPage'
 import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { formatDateFmt } from '@/lib/formatDate'
+import { siteConfig } from '@/lib/config'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
-const BlogPostCard = ({ post, showSummary }) => {
+const BlogPostCard = ({ post, index, showSummary }) => {
   const { locale } = useGlobal()
-  const showPreview = CONFIG.POST_LIST_PREVIEW && post.blockMap
+  const showPreview = siteConfig('NEXT_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  // 动画样式  首屏卡片不用，后面翻出来的加动画
+  const aosProps = index > 2
+    ? {
+        'data-aos': 'fade-down',
+        'data-aos-duration': '400',
+        'data-aos-once': 'true',
+        'data-aos-anchor-placement': 'top-bottom'
+      }
+    : {}
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+
   return (
     <Card className="w-full">
       <div
@@ -21,26 +32,19 @@ const BlogPostCard = ({ post, showSummary }) => {
         className="flex flex-col-reverse justify-between duration-300"
       >
         <div className="lg:p-8 p-4 flex flex-col w-full">
+
+          {/* 文章标题 */}
           <Link
-            href={`${BLOG.SUB_PATH}/${post.slug}`}
+            {...aosProps}
+            href={url}
             passHref
-            data-aos="fade-down"
-            data-aos-duration="500"
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"
-            className={`cursor-pointer text-3xl ${showPreview ? 'text-center' : ''
-              } leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+            className={`cursor-pointer text-3xl ${showPreview ? 'text-center' : ''} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
 
             <NotionIcon icon={post.pageIcon} /> <span className='menu-link'>{post.title}</span>
 
           </Link>
 
-          <div data-aos="fade-down"
-                data-aos-duration="500"
-                data-aos-delay="100"
-                data-aos-once="true"
-                data-aos-anchor-placement="top-bottom"
-                className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-400 `}>
+          <div {...aosProps} className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-500 `}>
 
             <div>
               {post.category && (
@@ -64,6 +68,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                     <span className='menu-link'>{post.date?.start_date}</span>
                 </Link>
             </div>
+
             <TwikooCommentCount post={post} className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-sm'/>
 
             <div className="hover:text-blue-500 dark:hover:text-blue-400  md:flex-nowrap flex-wrap md:justify-start inline-block">
@@ -74,12 +79,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
 
           {(!showPreview || showSummary) && !post.results && (
-            <p data-aos="fade-down"
-                data-aos-duration="500"
-                data-aos-delay="100"
-                data-aos-once="true"
-                data-aos-anchor-placement="top-bottom"
-                className="mt-4 mb-12 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+            <p {...aosProps} className="mt-4 mb-12 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
               {post.summary}
             </p>
           )}
@@ -94,18 +94,14 @@ const BlogPostCard = ({ post, showSummary }) => {
           )}
 
           {showPreview && post?.blockMap && (
-            <div data-aos="fade-down"
-            data-aos-duration="500"
-            data-aos-delay="100"
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"className="overflow-ellipsis truncate">
+            <div className="overflow-ellipsis truncate">
               <NotionPage post={post} />
             </div>
           )}
 
           <div className="text-right border-t pt-8 border-dashed">
             <Link
-              href={`${BLOG.SUB_PATH}/${post.slug}`}
+              href={url}
               className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
 
               {locale.COMMON.ARTICLE_DETAIL}
@@ -115,8 +111,8 @@ const BlogPostCard = ({ post, showSummary }) => {
           </div>
         </div>
 
-        {CONFIG.POST_LIST_COVER && post?.pageCoverThumbnail && (
-          <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+        {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && (
+          <Link href={url} passHref legacyBehavior>
             <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"

@@ -1,26 +1,13 @@
 import { getGlobalData } from '@/lib/notion/getNotionData'
-import { useGlobal } from '@/lib/global'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
 
 const Index = props => {
-  const { keyword, siteInfo } = props
-  const { locale } = useGlobal()
-
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
-
-  const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-    description: siteInfo?.title,
-    image: siteInfo?.pageCover,
-    slug: 'search/' + (keyword || ''),
-    type: 'website'
-  }
-
-  props = { ...props, meta }
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   return <Layout {...props} />
 }
@@ -112,7 +99,7 @@ const isIterable = obj =>
 async function filterByMemCache(allPosts, keyword) {
   const filterPosts = []
   if (keyword) {
-    keyword = keyword.trim()
+    keyword = keyword.trim().toLowerCase()
   }
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
@@ -130,7 +117,7 @@ async function filterByMemCache(allPosts, keyword) {
       if (!c) {
         continue
       }
-      const index = c.toLowerCase().indexOf(keyword.toLowerCase())
+      const index = c.toLowerCase().indexOf(keyword)
       if (index > -1) {
         hit = true
         hitCount += 1

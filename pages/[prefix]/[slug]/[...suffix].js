@@ -3,11 +3,13 @@ import { getPostBlocks } from '@/lib/notion'
 import { getGlobalData } from '@/lib/notion/getNotionData'
 import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
-import Slug, { getRecommendPost } from '.'
+import Slug, { getRecommendPost } from '..'
 import { uploadDataToAlgolia } from '@/lib/algolia'
+import { checkContainHttp } from '@/lib/utils'
 
 /**
  * 根据notion的slug访问页面
+ * 解析三级以上目录 /article/2023/10/29/test
  * @param {*} props
  * @returns
  */
@@ -15,6 +17,10 @@ const PrefixSlug = props => {
   return <Slug {...props}/>
 }
 
+/**
+ * 编译渲染页面路径
+ * @returns
+ */
 export async function getStaticPaths() {
   if (!BLOG.isProd) {
     return {
@@ -25,14 +31,21 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') > 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } })),
+    paths: allPages?.filter(row => checkSlug(row))
+      .map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1], suffix: row.slug.split('/').slice(1) } })),
     fallback: true
   }
 }
 
-export async function getStaticProps({ params: { prefix, slug } }) {
-  let fullSlug = prefix + '/' + slug
+/**
+ * 抓取页面数据
+ * @param {*} param0
+ * @returns
+ */
+export async function getStaticProps({ params: { prefix, slug, suffix } }) {
+  let fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -42,12 +55,12 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   const props = await getGlobalData({ from })
   // 在列表内查找文章
   props.post = props?.allPages?.find((p) => {
-    return p.slug === fullSlug || p.id === idToUuid(fullSlug)
+    return (p.type.indexOf('Menu') < 0) && (p.slug === fullSlug || p.id === idToUuid(fullSlug))
   })
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
-    const pageId = slug.slice(-1)[0]
+    const pageId = fullSlug.slice(-1)[0]
     if (pageId.length >= 32) {
       const post = await getNotion(pageId)
       props.post = post
@@ -87,6 +100,14 @@ export async function getStaticProps({ params: { prefix, slug } }) {
     props,
     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
   }
+}
+
+function checkSlug(row) {
+  let slug = row.slug
+  if (slug.startsWith('/')) {
+    slug = slug.substring(1)
+  }
+  return (slug.match(/\//g) || []).length >= 2 && row.type.indexOf('Menu') < 0 && !checkContainHttp(slug)
 }
 
 export default PrefixSlug

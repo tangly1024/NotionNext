@@ -1,9 +1,7 @@
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import TopNav from './components/TopNav'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import Footer from './components/Footer'
 import { useEffect } from 'react'
 import RightFloatButtons from './components/RightFloatButtons'
@@ -31,6 +29,7 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局
@@ -40,13 +39,19 @@ import replaceSearchResult from '@/components/Mark'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, headerSlot, meta, siteInfo, containerSlot, post } = props
-  const { onLoading } = useGlobal()
+  const { children, post } = props
+  const { onLoading, fullWidth } = useGlobal()
+  const router = useRouter()
+  const containerSlot = router.route === '/' ? <Announcement {...props} /> : <BlogListBar {...props} />
+  const headerSlot = siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && router.route === '/'
+    ? <Hero {...props} />
+    : (post && !fullWidth ? <PostHeader {...props} /> : null)
+
+  const floatRightBottom = post ? <JumpToCommentButton /> : null
 
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
-            {/* SEO相关 */}
-            <CommonHead meta={meta} siteInfo={siteInfo} />
+
             <Style/>
 
             {/* 顶部导航栏 */}
@@ -58,7 +63,7 @@ const LayoutBase = props => {
                 appear={true}
                 enter="transition ease-in-out duration-700 transform order-first"
                 enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100"
+                enterTo="opacity-100 w-full"
                 leave="transition ease-in-out duration-300 transform"
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-16"
@@ -67,19 +72,19 @@ const LayoutBase = props => {
                 {headerSlot}
             </Transition>
 
-            <main id="wrapper" className={`${CONFIG.HOME_BANNER_ENABLE ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
+            <main id="wrapper" className={`${siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
                 {/* 嵌入区域 */}
-                <div id="container-slot" className={`w-full max-w-6xl ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
+                <div id="container-slot" className={`w-full ${fullWidth ? '' : 'max-w-6xl'} ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                     {containerSlot}
                 </div>
 
-                <div id="container-inner" className="w-full min-h-fit max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center relative z-10">
+                <div id="container-inner" className={`w-full min-h-fit ${fullWidth ? '' : 'max-w-6xl'} mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
                     <Transition
                         show={!onLoading}
                         appear={true}
                         enter="transition ease-in-out duration-700 transform order-first"
                         enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100"
+                        enterTo="opacity-100 w-full"
                         leave="transition ease-in-out duration-300 transform"
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 -translate-y-16"
@@ -98,10 +103,10 @@ const LayoutBase = props => {
             </div>
 
             {/* 右下角悬浮 */}
-            <RightFloatButtons {...props} />
+            <RightFloatButtons {...props} floatRightBottom={floatRightBottom}/>
 
             {/* 页脚 */}
-            <Footer title={siteInfo?.title || BLOG.TITLE} />
+            <Footer title={siteConfig('TITLE')} />
         </div>
   )
 }
@@ -113,7 +118,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} containerSlot={<Announcement {...props} />} headerSlot={CONFIG.HOME_BANNER_ENABLE && <Hero {...props} />} />
+  return <LayoutPostList {...props}/>
 }
 
 /**
@@ -123,9 +128,9 @@ const LayoutIndex = (props) => {
  */
 const LayoutPostList = (props) => {
   return (
-        <LayoutBase {...props} containerSlot={<BlogListBar {...props} />}>
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
-        </LayoutBase>
+        <>
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+        </>
   )
 }
 
@@ -152,13 +157,13 @@ const LayoutSearch = props => {
     }
   })
   return (
-        <LayoutBase {...props} currentSearch={currentSearch}>
+        <>
             {!currentSearch
               ? <SearchNave {...props} />
               : <div id="posts-wrapper">
-                    {BLOG.POST_LIST_STYLE === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
+                    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogPostListPage {...props} /> : <BlogPostListScroll {...props} />}
                 </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -169,7 +174,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+  return <>
         <Card className='w-full -mt-32'>
             <div className="mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray">
                 {Object.keys(archivePosts).map(archiveTitle => (
@@ -181,7 +186,7 @@ const LayoutArchive = (props) => {
                 ))}
             </div>
         </Card>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -191,13 +196,14 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const { fullWidth } = useGlobal()
 
-  return (<LayoutBase {...props} headerSlot={<PostHeader {...props} />} showCategory={false} showTag={false} floatRightBottom={<JumpToCommentButton />}>
+  return (<>
 
-        <div id='inner-wrapper' className={'w-full lg:max-w-3xl 2xl:max-w-4xl'} >
+        <div id='inner-wrapper' className={`w-full ${fullWidth ? '' : 'lg:max-w-3xl 2xl:max-w-4xl'}`} >
 
             {/* 文章主体卡片 */}
-            <div className="-mt-32 transition-all duration-300 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
+            <div className={`${fullWidth ? '' : '-mt-32'} transition-all duration-300 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black`}>
 
                 {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -221,7 +227,7 @@ const LayoutSlug = props => {
                         <article itemScope >
 
                             {/* Notion文章主体 */}
-                            <section className='justify-center mx-auto max-w-2xl lg:max-w-full'>
+                            <section className={`justify-center mx-auto ${fullWidth ? '' : 'max-w-2xl lg:max-w-full'}`}>
                                 {post && <NotionPage post={post} />}
                             </section>
 
@@ -255,7 +261,7 @@ const LayoutSlug = props => {
 
         </div>
 
-    </LayoutBase>
+    </>
   )
 }
 
@@ -278,7 +284,7 @@ const Layout404 = props => {
     }, 3000)
   })
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
                 <div className="dark:text-gray-200">
                     <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
@@ -289,7 +295,7 @@ const Layout404 = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -302,12 +308,12 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
 
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+        <>
 
             <div id='inner-wrapper' className='w-full'>
                 <div className="drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300">
                     <div className='flex justify-center flex-wrap'>
-                        {categoryOptions.map(e => {
+                        {categoryOptions?.map(e => {
                           return (
                                 <Link key={e.name} href={`/category/${e.name}`} passHref legacyBehavior>
                                     <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400' >
@@ -319,7 +325,7 @@ const LayoutCategoryIndex = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -332,7 +338,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-        <LayoutBase {...props} headerSlot={<PostHeader {...props} />} >
+        <>
             <div id='inner-wrapper' className='w-full drop-shadow-xl'>
 
                 <div className="-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black">
@@ -352,12 +358,13 @@ const LayoutTagIndex = props => {
                     </div>
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,
