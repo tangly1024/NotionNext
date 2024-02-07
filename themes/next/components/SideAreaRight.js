@@ -29,7 +29,13 @@ const SideAreaRight = (props) => {
 
   return (<aside id='right' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'mr-4' : 'ml-4') + ' space-y-4 hidden xl:block flex-col w-60 relative z-10'}>
 
-        {siteConfig('NEXT_RIGHT_AD', null, CONFIG) && <Card className='mb-2'>
+        <div className="sticky top-0 space-y-4 w-full">
+
+            {announcementVisible && <Card>
+                <Announcement post={notice} />
+            </Card>}
+
+            {siteConfig('NEXT_RIGHT_AD', null, CONFIG) && <Card className='mb-2'>
             {/* 展示广告  */}
             <ins
                 className='adsbygoogle'
@@ -40,12 +46,6 @@ const SideAreaRight = (props) => {
                 data-ad-format='auto'
                 data-full-width-responsive='true'
             />
-        </Card>}
-
-        <div className="sticky top-0 space-y-4 w-full">
-
-            {announcementVisible && <Card>
-                <Announcement post={notice} />
             </Card>}
 
             {siteConfig('NEXT_RIGHT_LATEST_POSTS', null, CONFIG) && <Card><LatestPostsGroup latestPosts={latestPosts} /></Card>}

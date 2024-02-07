@@ -9,6 +9,7 @@ import Card from './Card'
 import CONFIG from '../config'
 import Live2D from '@/components/Live2D'
 import { siteConfig } from '@/lib/config'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 侧边平铺
@@ -65,7 +66,18 @@ const SideAreaLeft = props => {
                     </div>
                 </Tabs>
             </Card>
-
+            {siteConfig('NEXT_RIGHT_AD', null, CONFIG) && <Card className='mb-2'>
+                {/* 展示广告  */}    
+            <ins
+                className='adsbygoogle'
+                style={{ display: 'block' }}
+                data-adtest='on'
+                data-ad-client='ca-pub-7701362751074682'
+                data-ad-slot='2572710874'
+                data-ad-format='auto'
+                data-full-width-responsive='true'
+            />
+            </Card>}
             <div className='flex justify-center'>
                 {slot}
                 <Live2D />

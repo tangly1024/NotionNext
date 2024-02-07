@@ -148,7 +148,7 @@ const LayoutIndex = (props) => {
         <Card className='my-2 lg:hidden'>
             <Announcement post={notice} />
         </Card>
-        aaaaa
+        
         <BlogListBar {...props} />
 
         {siteConfig('POST_LIST_STYLE') !== 'page'

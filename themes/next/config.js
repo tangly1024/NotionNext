@@ -3,7 +3,7 @@ const CONFIG = {
   NEXT_HOME_BANNER: true, // 首页是否显示大图及标语 [true,false]
   NEXT_HOME_BANNER_STRINGS: ['Hi，我是一个程序员', 'Hi，我是一个打工人', 'Hi，我是一个干饭人', '欢迎来到我的博客🎉'], // 首页大图标语文字
 
-  NEXT_NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
+  NEXT_NAV_TYPE: 'autoCollapse', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
 
   NEXT_POST_LIST_COVER: true, // 文章列表显示封面图
   NEXT_POST_LIST_PREVIEW: true, // 显示文章预览
@@ -26,7 +26,7 @@ const CONFIG = {
   NEXT_MENU_SEARCH: true, // 显示搜索
 
   NEXT_WIDGET_TO_TOP: true, // 是否显示回顶
-  NEXT_WIDGET_TO_BOTTOM: false, // 显示回底
+  NEXT_WIDGET_TO_BOTTOM: true, // 显示回底
   NEXT_WIDGET_DARK_MODE: true, // 显示日间/夜间模式切换
   NEXT_WIDGET_TOC: true, // 移动端显示悬浮目录
 
