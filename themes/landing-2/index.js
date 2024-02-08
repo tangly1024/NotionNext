@@ -58,18 +58,20 @@ const LayoutBase = (props) => {
     loadExternal()
   }, [])
 
-  return <div id='theme-landing-2' className="flex flex-col justify-between bg-white dark:bg-black">
+  return <>
         <Style/>
+        <div id='theme-landing-2' className="flex flex-col justify-between bg-white dark:bg-black">
+            <NavBar/>
 
-        <NavBar/>
-        {children}
-        <Footer/>
+            {children}
 
-        {/* 悬浮按钮 */}
-        <BackToTopButton/>
-        <MadeWithButton/>
+            <Footer/>
 
-    </div>
+            {/* 悬浮按钮 */}
+            <BackToTopButton/>
+            <MadeWithButton/>
+        </div>
+    </>
 }
 
 /**
