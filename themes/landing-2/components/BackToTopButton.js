@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import throttle from 'lodash.throttle';
+import { useCallback, useEffect } from 'react'
 
 export const BackToTopButton = () => {
   useEffect(() => {
@@ -34,7 +35,23 @@ export const BackToTopButton = () => {
     document.querySelector('.back-to-top').onclick = () => {
       scrollTo(document.documentElement);
     };
+
+    window.addEventListener('scroll', navBarScollListener)
+    return () => {
+      window.removeEventListener('scroll', navBarScollListener)
+    }
   })
+
+  // 滚动监听
+  const throttleMs = 200
+  const navBarScollListener = useCallback(
+    throttle(() => {
+      const scrollY = window.scrollY;
+      // 显示或隐藏返回顶部按钮
+      const backToTop = document.querySelector('.back-to-top');
+      backToTop.style.display = scrollY > 50 ? 'flex' : 'none';
+    }, throttleMs)
+  )
 
   return <>
         {/* <!-- ====== Back To Top Start --> */}

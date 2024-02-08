@@ -1,4 +1,3 @@
-import cookie from 'react-cookies'
 import BLOG from '@/blog.config'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 import dynamic from 'next/dynamic'
@@ -108,7 +107,7 @@ export const initDarkMode = (updateDarkMode) => {
   let newDarkMode = isPreferDark()
 
   // 查看cookie中是否用户强制设置深色模式
-  const cookieDarkMode = loadDarkModeFromCookies()
+  const cookieDarkMode = loadDarkModeFromLocalStorage()
   if (cookieDarkMode) {
     newDarkMode = JSON.parse(cookieDarkMode)
   }
@@ -120,7 +119,7 @@ export const initDarkMode = (updateDarkMode) => {
   }
 
   updateDarkMode(newDarkMode)
-  saveDarkModeToCookies(newDarkMode)
+  saveDarkModeToLocalStorage(newDarkMode)
   document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'light')
 }
 
@@ -145,30 +144,14 @@ export function isPreferDark() {
  * 读取深色模式
  * @returns {*}
  */
-export const loadDarkModeFromCookies = () => {
-  return cookie.load('darkMode')
+export const loadDarkModeFromLocalStorage = () => {
+  return localStorage.getItem('darkMode')
 }
 
 /**
    * 保存深色模式
    * @param newTheme
    */
-export const saveDarkModeToCookies = (newTheme) => {
-  cookie.save('darkMode', newTheme, { path: '/' })
-}
-
-/**
- * 读取默认主题
- * @returns {*}
- */
-export const loadThemeFromCookies = () => {
-  return cookie.load('theme')
-}
-
-/**
-   * 保存默认主题
-   * @param newTheme
-   */
-export const saveThemeToCookies = (newTheme) => {
-  cookie.save('theme', newTheme, { path: '/' })
+export const saveDarkModeToLocalStorage = (newTheme) => {
+  localStorage.setItem('darkMode', newTheme)
 }
