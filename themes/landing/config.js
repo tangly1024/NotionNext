@@ -61,7 +61,7 @@ const CONFIG = {
   LANDING_POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://blog.tangly1024.com', // 重定向网站地址
 
   LANDING_PRICING_TITLE: '价格表',
-  LANDING_PRICING_P: 'NotionNext开源免费，此处是演示SAAS订阅付费功能。若您喜欢也可以选择捐赠支持。',
+  LANDING_PRICING_P: 'NotionNext开源免费，此处仅演示订阅付费功能！请勿购买！',
 
   LANDING_PRICING_1_TITLE: '个人版',
   LANDING_PRICING_1_PRICE: '免费',
