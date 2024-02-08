@@ -11,6 +11,7 @@ import replaceSearchResult from '@/components/Mark'
 import dynamic from 'next/dynamic'
 import NotionPage from '@/components/NotionPage'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+import { LAYOUT_MAPPINGS } from '@/blog.config'
 
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false });
@@ -278,6 +279,21 @@ const LayoutTagIndex = (props) => {
   )
 }
 
+/**
+ * 根据路径 获取对应的layout
+ * @param {*} path
+ * @returns
+ */
+const getLayoutNameByPath = (path) => {
+  // 检查特殊处理的路径
+  if (LAYOUT_MAPPINGS[path]) {
+    return LAYOUT_MAPPINGS[path];
+  } else {
+    // 没有特殊处理的路径返回默认layout名称
+    return 'LayoutSlug';
+  }
+}
+
 export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
@@ -288,5 +304,6 @@ export {
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex
+  LayoutTagIndex,
+  getLayoutNameByPath
 }

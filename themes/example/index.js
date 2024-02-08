@@ -26,6 +26,7 @@ import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import { siteConfig } from '@/lib/config'
+import { LAYOUT_MAPPINGS } from '@/blog.config'
 
 /**
  * 基础布局框架
@@ -245,15 +246,31 @@ const LayoutTagIndex = (props) => {
   )
 }
 
+/**
+ * 根据路径 获取对应的layout
+ * @param {*} path
+ * @returns
+ */
+const getLayoutNameByPath = (path) => {
+  // 检查特殊处理的路径
+  if (LAYOUT_MAPPINGS[path]) {
+    return LAYOUT_MAPPINGS[path];
+  } else {
+    // 没有特殊处理的路径返回默认layout名称
+    return 'LayoutSlug';
+  }
+}
+
 export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
   LayoutIndex,
-  LayoutPostList,
   LayoutSearch,
   LayoutArchive,
   LayoutSlug,
   Layout404,
+  LayoutPostList,
   LayoutCategoryIndex,
-  LayoutTagIndex
+  LayoutTagIndex,
+  getLayoutNameByPath
 }

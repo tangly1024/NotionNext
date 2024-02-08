@@ -29,6 +29,7 @@ import { Brand } from './components/Brand'
 import { Footer } from './components/Footer'
 import { BackToTopButton } from './components/BackToTopButton'
 import { MadeWithButton } from './components/MadeWithButton'
+import { LAYOUT_MAPPINGS } from '@/blog.config'
 
 /**
  * 一些外部js
@@ -126,6 +127,20 @@ const Layout404 = (props) => <></>
 const LayoutCategoryIndex = (props) => <></>
 const LayoutPostList = (props) => <></>
 const LayoutTagIndex = (props) => <></>
+/**
+ * 根据路径 获取对应的layout
+ * @param {*} path
+ * @returns
+ */
+const getLayoutNameByPath = (path) => {
+  // 检查特殊处理的路径
+  if (LAYOUT_MAPPINGS[path]) {
+    return LAYOUT_MAPPINGS[path];
+  } else {
+    // 没有特殊处理的路径返回默认layout名称
+    return 'LayoutSlug';
+  }
+}
 
 export {
   CONFIG as THEME_CONFIG,
@@ -137,5 +152,6 @@ export {
   Layout404,
   LayoutPostList,
   LayoutCategoryIndex,
-  LayoutTagIndex
+  LayoutTagIndex,
+  getLayoutNameByPath
 }

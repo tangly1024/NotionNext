@@ -13,11 +13,10 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  * @returns
  */
 export const getGlobalLayoutByTheme = (themeQuery) => {
-  const layout = getLayoutNameByPath(-1)
   if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[m.getLayoutNameByPath(-1)]), { ssr: true })
   } else {
-    return ThemeComponents[layout]
+    return ThemeComponents[ThemeComponents.getLayoutNameByPath('-1')]
   }
 }
 
@@ -29,20 +28,18 @@ export const getGlobalLayoutByTheme = (themeQuery) => {
  */
 export const getLayoutByTheme = ({ router, theme }) => {
   const themeQuery = getQueryParam(router.asPath, 'theme') || theme
-  const layoutName = getLayoutNameByPath(router.pathname)
-
   if (themeQuery !== BLOG.THEME) {
     return dynamic(() => import(`@/themes/${themeQuery}`).then(m => {
       setTimeout(() => {
         checkThemeDOM()
       }, 500);
-      return m[layoutName]
+      return m[m.getLayoutNameByPath(router.pathname)]
     }), { ssr: true })
   } else {
     setTimeout(() => {
       checkThemeDOM()
     }, 100);
-    return ThemeComponents[layoutName]
+    return ThemeComponents[ThemeComponents.getLayoutNameByPath('-1')]
   }
 }
 
@@ -59,40 +56,6 @@ const checkThemeDOM = () => {
         elements[i].parentNode.removeChild(elements[i])
       }
     }
-  }
-}
-
-/**
- * 根据路径 获取对应的layout
- * @param {*} path
- * @returns
- */
-export const getLayoutNameByPath = (path) => {
-  switch (path) {
-    case -1:
-      return 'LayoutBase'
-    case '/':
-      return 'LayoutIndex'
-    case '/archive':
-      return 'LayoutArchive'
-    case '/page/[page]':
-    case '/category/[category]':
-    case '/category/[category]/page/[page]':
-    case '/tag/[tag]':
-    case '/tag/[tag]/page/[page]':
-      return 'LayoutPostList'
-    case '/search':
-    case '/search/[keyword]':
-    case '/search/[keyword]/page/[page]':
-      return 'LayoutSearch'
-    case '/404':
-      return 'Layout404'
-    case '/tag':
-      return 'LayoutTagIndex'
-    case '/category':
-      return 'LayoutCategoryIndex'
-    default:
-      return 'LayoutSlug'
   }
 }
 

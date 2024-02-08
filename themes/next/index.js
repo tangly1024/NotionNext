@@ -27,6 +27,7 @@ import { siteConfig } from '@/lib/config'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Announcement from './components/Announcement'
 import Card from './components/Card'
+import { LAYOUT_MAPPINGS } from '@/blog.config'
 
 // 主题全局状态
 const ThemeGlobalNext = createContext()
@@ -342,6 +343,21 @@ const LayoutTagIndex = (props) => {
     </>
 }
 
+/**
+ * 根据路径 获取对应的layout
+ * @param {*} path
+ * @returns
+ */
+const getLayoutNameByPath = (path) => {
+  // 检查特殊处理的路径
+  if (LAYOUT_MAPPINGS[path]) {
+    return LAYOUT_MAPPINGS[path];
+  } else {
+    // 没有特殊处理的路径返回默认layout名称
+    return 'LayoutSlug';
+  }
+}
+
 export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
@@ -352,5 +368,6 @@ export {
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex
+  LayoutTagIndex,
+  getLayoutNameByPath
 }

@@ -34,6 +34,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
+import { LAYOUT_MAPPINGS } from '@/blog.config'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -342,6 +343,21 @@ const LayoutTagIndex = (props) => {
   </>
 }
 
+/**
+ * 根据路径 获取对应的layout
+ * @param {*} path
+ * @returns
+ */
+const getLayoutNameByPath = (path) => {
+  // 检查特殊处理的路径
+  if (LAYOUT_MAPPINGS[path]) {
+    return LAYOUT_MAPPINGS[path];
+  } else {
+    // 没有特殊处理的路径返回默认layout名称
+    return 'LayoutSlug';
+  }
+}
+
 export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
@@ -350,7 +366,8 @@ export {
   LayoutArchive,
   LayoutSlug,
   Layout404,
-  LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex
+  LayoutCategoryIndex,
+  LayoutTagIndex,
+  getLayoutNameByPath
 }
