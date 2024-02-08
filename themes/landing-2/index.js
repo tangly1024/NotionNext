@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @next/next/no-img-element */
 
 'use client'
 
@@ -30,6 +32,7 @@ import { Footer } from './components/Footer'
 import { BackToTopButton } from './components/BackToTopButton'
 import { MadeWithButton } from './components/MadeWithButton'
 import { LAYOUT_MAPPINGS } from '@/blog.config'
+import { SVG404 } from './components/SVG404'
 
 /**
  * 一些外部js
@@ -120,10 +123,51 @@ const LayoutSlug = (props) => {
     </>
 }
 
-// 其他布局暂时留空
 const LayoutSearch = (props) => <></>
 const LayoutArchive = (props) => <></>
-const Layout404 = (props) => <></>
+const Layout404 = (props) => {
+  return <>
+     {/* <!-- ====== 404 Section Start --> */}
+        <section class="bg-white py-20 dark:bg-dark-2 lg:py-[110px]">
+          <div class="container mx-auto">
+            <div class="flex flex-wrap items-center -mx-4">
+              <div class="w-full px-4 md:w-5/12 lg:w-6/12">
+                <div class="text-center">
+                  <img
+                    src="/images/landing-2/404.svg"
+                    alt="image"
+                    class="max-w-full mx-auto"
+                  />
+                </div>
+              </div>
+              <div class="w-full px-4 md:w-7/12 lg:w-6/12 xl:w-5/12">
+                <div>
+                  <div class="mb-8">
+                    <SVG404/>
+                  </div>
+                  <h3 class="mb-5 text-2xl font-semibold text-dark dark:text-white">
+                    We Can't Seem to Find The Page You're Looking For.
+                  </h3>
+                  <p class="mb-8 text-base text-body-color dark:text-dark-6">
+                    Oops! The page you are looking for does not exist. It might have
+                    been moved or deleted.
+                  </p>
+                  <a
+                    href="javascript:void(0)"
+                    class="py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary"
+                  >
+                    Go To Home
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* <!-- ====== 404 Section End --> */}
+
+    </>
+}
+
 const LayoutCategoryIndex = (props) => <></>
 const LayoutPostList = (props) => <></>
 const LayoutTagIndex = (props) => <></>

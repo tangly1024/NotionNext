@@ -7,8 +7,7 @@
  */
 const Style = () => {
   return <style jsx global>{`
-    
-    
+  
   .sticky{
     position: fixed;
     z-index: 9999;
@@ -137,6 +136,15 @@ const Style = () => {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
   
+  .text-body-color{
+    --tw-text-opacity: 1;
+    color: rgb(99 115 129 / var(--tw-text-opacity));
+  }
+  
+  .text-body-secondary{
+    --tw-text-opacity: 1;
+    color: rgb(136 153 168 / var(--tw-text-opacity));
+  }
 
   `}</style>
 }

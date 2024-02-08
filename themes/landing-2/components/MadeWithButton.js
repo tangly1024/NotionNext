@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 export const MadeWithButton = () => {
   return <>
         {/* <!-- ====== Made With Button Start --> */}
