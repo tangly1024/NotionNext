@@ -37,6 +37,7 @@ const loadExternal = async () => {
   await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js', 'js');
   await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css', 'css');
   await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js', 'js');
+  // 配合animatecss 实现延时滚动动画，和AOS动画相似
   const WOW = window.WOW;
   if (WOW) {
     new WOW().init();
@@ -60,7 +61,8 @@ const LayoutBase = (props) => {
 
   return <>
         <Style/>
-        <div id='theme-landing-2' className="flex flex-col justify-between bg-white dark:bg-black">
+        <div id='theme-landing-2'>
+
             <NavBar/>
 
             {children}
