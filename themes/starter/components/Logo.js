@@ -17,7 +17,7 @@ export const Logo = () => {
     return () => {
       window.removeEventListener('scroll', navBarScrollListener)
     }
-  }, [isDarkMode])
+  })
 
   // 滚动监听
   const throttleMs = 200
