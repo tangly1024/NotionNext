@@ -24,6 +24,8 @@ function scanSubdirectories(directory) {
     // if (stats.isDirectory() && file !== 'landing') {
     //   subdirectories.push(file)
     // }
+
+    subdirectories.push(file)
   })
 
   return subdirectories
