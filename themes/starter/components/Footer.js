@@ -10,7 +10,7 @@ export const Footer = () => {
           <div class="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-4/12 xl:w-3/12">
             <div class="mb-10 w-full">
               <a
-                href="javascript:void(0)"
+
                 class="mb-6 inline-block max-w-[160px]"
               >
                 <img
@@ -25,7 +25,7 @@ export const Footer = () => {
               </p>
               <div class="-mx-3 flex items-center">
                 <a
-                  href="javascript:void(0)"
+
                   class="px-3 text-gray-7 hover:text-white"
                 >
                   <svg
@@ -42,7 +42,7 @@ export const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="javascript:void(0)"
+
                   class="px-3 text-gray-7 hover:text-white"
                 >
                   <svg
@@ -59,7 +59,7 @@ export const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="javascript:void(0)"
+
                   class="px-3 text-gray-7 hover:text-white"
                 >
                   <svg
@@ -82,7 +82,7 @@ export const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="javascript:void(0)"
+
                   class="px-3 text-gray-7 hover:text-white"
                 >
                   <svg
@@ -107,7 +107,7 @@ export const Footer = () => {
               <ul>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     Home
@@ -115,7 +115,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     Features
@@ -123,7 +123,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     About
@@ -131,7 +131,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     Testimonial
@@ -146,7 +146,7 @@ export const Footer = () => {
               <ul>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     How it works
@@ -154,7 +154,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     Privacy policy
@@ -162,7 +162,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     Terms of Service
@@ -170,7 +170,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     Refund policy
@@ -187,7 +187,7 @@ export const Footer = () => {
               <ul>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     LineIcons
@@ -195,7 +195,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     Ecommerce HTML
@@ -203,7 +203,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     TailAdmin
@@ -211,7 +211,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-3 inline-block text-base text-gray-7 hover:text-primary"
                   >
                     PlainAdmin
@@ -273,19 +273,19 @@ export const Footer = () => {
                   class="-mx-3 flex items-center justify-center md:justify-start"
                 >
                   <a
-                    href="javascript:void(0)"
+
                     class="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
                     Privacy policy
                   </a>
                   <a
-                    href="javascript:void(0)"
+
                     class="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
                     Legal notice
                   </a>
                   <a
-                    href="javascript:void(0)"
+
                     class="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
                     Terms of service

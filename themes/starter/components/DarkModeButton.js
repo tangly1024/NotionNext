@@ -6,7 +6,7 @@ export const DarkModeButton = () => {
   const router = useRouter()
   return <>
             <label
-                for="themeSwitcher"
+                // for="themeSwitcher"
                 className="inline-flex cursor-pointer items-center"
                 aria-label="themeSwitcher"
                 name="themeSwitcher"
@@ -43,7 +43,7 @@ export const DarkModeButton = () => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_2172_3070)">
+                    <g clipPath="url(#clip0_2172_3070)">
                       <path
                         d="M12 6.89999C9.18752 6.89999 6.90002 9.18749 6.90002 12C6.90002 14.8125 9.18752 17.1 12 17.1C14.8125 17.1 17.1 14.8125 17.1 12C17.1 9.18749 14.8125 6.89999 12 6.89999ZM12 15.4125C10.125 15.4125 8.58752 13.875 8.58752 12C8.58752 10.125 10.125 8.58749 12 8.58749C13.875 8.58749 15.4125 10.125 15.4125 12C15.4125 13.875 13.875 15.4125 12 15.4125Z"
                       />

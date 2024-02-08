@@ -3,33 +3,33 @@ export const Hero = () => {
      {/* <!-- ====== Hero Section Start --> */}
      <div
       id="home"
-      class="relative overflow-hidden bg-primary pt-[120px] md:pt-[130px] lg:pt-[160px]"
+      className="relative overflow-hidden bg-primary pt-[120px] md:pt-[130px] lg:pt-[160px]"
     >
-      <div class="container">
-        <div class="-mx-4 flex flex-wrap items-center">
-          <div class="w-full px-4">
+      <div className="container">
+        <div className="-mx-4 flex flex-wrap items-center">
+          <div className="w-full px-4">
             <div
-              class="hero-content wow fadeInUp mx-auto max-w-[780px] text-center"
+              className="hero-content wow fadeInUp mx-auto max-w-[780px] text-center"
               data-wow-delay=".2s"
             >
               <h1
-                class="mb-6 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]"
+                className="mb-6 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]"
               >
                 Open-Source Web Template for SaaS, Startup, Apps, and More
               </h1>
               <p
-                class="mx-auto mb-9 max-w-[600px] text-base font-medium text-white sm:text-lg sm:leading-[1.44]"
+                className="mx-auto mb-9 max-w-[600px] text-base font-medium text-white sm:text-lg sm:leading-[1.44]"
               >
                 Multidisciplinary Web Template Built with Your Favourite
                 Technology - HTML Bootstrap, Tailwind and React NextJS.
               </p>
               <ul
-                class="mb-10 flex flex-wrap items-center justify-center gap-5"
+                className="mb-10 flex flex-wrap items-center justify-center gap-5"
               >
                 <li>
                   <a
                     href="https://links.tailgrids.com/play-download"
-                    class="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2 hover:text-body-color"
+                    className="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2 hover:text-body-color"
                   >
                     Download Now
                   </a>
@@ -38,17 +38,17 @@ export const Hero = () => {
                   <a
                     href="https://github.com/tailgrids/play-tailwind"
                     target="_blank"
-                    class="flex items-center gap-4 rounded-md bg-white/[0.12] px-6 py-[14px] text-base font-medium text-white transition duration-300 ease-in-out hover:bg-white hover:text-dark" rel="noreferrer"
+                    className="flex items-center gap-4 rounded-md bg-white/[0.12] px-6 py-[14px] text-base font-medium text-white transition duration-300 ease-in-out hover:bg-white hover:text-dark" rel="noreferrer"
                   >
                     <svg
-                      class="fill-current"
+                      className="fill-current"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <g clip-path="url(#clip0_2005_10818)">
+                      <g clipPath="url(#clip0_2005_10818)">
                         <path
                           d="M12 0.674805C5.625 0.674805 0.375 5.8498 0.375 12.2998C0.375 17.3998 3.7125 21.7498 8.3625 23.3248C8.9625 23.4373 9.15 23.0623 9.15 22.7998C9.15 22.5373 9.15 21.7873 9.1125 20.7748C5.8875 21.5248 5.2125 19.1998 5.2125 19.1998C4.6875 17.8873 3.9 17.5123 3.9 17.5123C2.85 16.7623 3.9375 16.7623 3.9375 16.7623C5.1 16.7998 5.7375 17.9623 5.7375 17.9623C6.75 19.7623 8.475 19.2373 9.1125 18.8998C9.225 18.1498 9.525 17.6248 9.8625 17.3248C7.3125 17.0623 4.575 16.0498 4.575 11.6248C4.575 10.3498 5.0625 9.3373 5.775 8.5498C5.6625 8.2873 5.25 7.0873 5.8875 5.4748C5.8875 5.4748 6.9 5.1748 9.1125 6.6748C10.05 6.4123 11.025 6.2623 12.0375 6.2623C13.05 6.2623 14.0625 6.3748 14.9625 6.6748C17.175 5.2123 18.15 5.4748 18.15 5.4748C18.7875 7.0498 18.4125 8.2873 18.2625 8.5498C19.0125 9.3373 19.4625 10.3873 19.4625 11.6248C19.4625 16.0498 16.725 17.0623 14.175 17.3248C14.5875 17.6998 14.9625 18.4498 14.9625 19.4998C14.9625 21.0748 14.925 22.3123 14.925 22.6873C14.925 22.9873 15.15 23.3248 15.7125 23.2123C20.2875 21.6748 23.625 17.3623 23.625 12.2248C23.5875 5.8498 18.375 0.674805 12 0.674805Z"
                         />
@@ -64,20 +64,20 @@ export const Hero = () => {
                 </li>
               </ul>
               <div>
-                <p class="mb-4 text-center text-base font-medium text-white">
+                <p className="mb-4 text-center text-base font-medium text-white">
                   Built with latest technology
                 </p>
                 <div
-                  class="wow fadeInUp flex items-center justify-center gap-4 text-center"
+                  className="wow fadeInUp flex items-center justify-center gap-4 text-center"
                   data-wow-delay=".3s"
                 >
                   <a
                     href="https://github.com/uideck/play-bootstrap/"
-                    class="text-white/60 duration-300 ease-in-out hover:text-white"
+                    className="text-white/60 duration-300 ease-in-out hover:text-white"
                     target="_blank" rel="noreferrer"
                   >
                     <svg
-                      class="fill-current"
+                      className="fill-current"
                       width="41"
                       height="32"
                       viewBox="0 0 41 32"
@@ -99,8 +99,8 @@ export const Hero = () => {
                       </mask>
                       <g mask="url(#mask0_2005_10788)">
                         <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
                           d="M8.82951 0.048584C6.54719 0.048584 4.85835 2.04626 4.93395 4.21266C5.00655 6.29398 4.91223 8.98962 4.23366 11.1879C3.55264 13.3923 2.4017 14.7893 0.521393 14.9686V16.993C2.4017 17.1727 3.55264 18.5689 4.23358 20.7737C4.91223 22.9719 5.00647 25.6676 4.93387 27.7489C4.85827 29.915 6.54711 31.913 8.82983 31.913H32.2163C34.4987 31.913 36.1872 29.9153 36.1116 27.7489C36.039 25.6676 36.1333 22.9719 36.8119 20.7737C37.4929 18.5689 38.641 17.1721 40.5214 16.993V14.9686C38.6411 14.7889 37.493 13.3927 36.8119 11.1879C36.1332 8.9899 36.039 6.29398 36.1116 4.21266C36.1872 2.04654 34.4987 0.048584 32.2163 0.048584H8.82951ZM27.6401 19.6632C27.6401 22.6463 25.415 24.4554 21.7224 24.4554H15.4366C15.2568 24.4554 15.0844 24.3839 14.9572 24.2568C14.8301 24.1297 14.7587 23.9572 14.7587 23.7774V8.18422C14.7587 8.00442 14.8301 7.83194 14.9572 7.70482C15.0844 7.57766 15.2568 7.50626 15.4366 7.50626H21.6866C24.7656 7.50626 26.7863 9.17406 26.7863 11.7347C26.7863 13.5319 25.427 15.1409 23.6952 15.4228V15.5165C26.0526 15.7751 27.6401 17.408 27.6401 19.6632ZM21.037 9.65538H17.453V14.7179H20.4716C22.8052 14.7179 24.092 13.7782 24.092 12.0986C24.0917 10.5245 22.9855 9.65538 21.037 9.65538ZM17.453 16.7265V22.3055H21.1689C23.5986 22.3055 24.8856 21.3306 24.8856 19.4984C24.8856 17.6663 23.5625 16.7263 21.0126 16.7263L17.453 16.7265Z"
                         />
                       </g>
@@ -109,11 +109,11 @@ export const Hero = () => {
 
                   <a
                     href="https://github.com/TailGrids/play-tailwind/"
-                    class="text-white/60 duration-300 ease-in-out hover:text-white"
+                    className="text-white/60 duration-300 ease-in-out hover:text-white"
                     target="_blank" rel="noreferrer"
                   >
                     <svg
-                      class="fill-current"
+                      className="fill-current"
                       width="41"
                       height="26"
                       viewBox="0 0 41 26"
@@ -143,11 +143,11 @@ export const Hero = () => {
 
                   <a
                     href="https://github.com/NextJSTemplates/play-nextjs"
-                    class="text-white/60 duration-300 ease-in-out hover:text-white"
+                    className="text-white/60 duration-300 ease-in-out hover:text-white"
                     target="_blank" rel="noreferrer"
                   >
                     <svg
-                      class="fill-current"
+                      className="fill-current"
                       width="41"
                       height="36"
                       viewBox="0 0 41 36"
@@ -165,18 +165,18 @@ export const Hero = () => {
 
                   <a
                     href="https://github.com/TailGrids/play-astro/"
-                    class="text-white/60 duration-300 ease-in-out hover:text-white"
+                    className="text-white/60 duration-300 ease-in-out hover:text-white"
                     target="_blank" rel="noreferrer"
                   >
                     <svg
-                      class="mt-0.5 fill-current"
+                      className="mt-0.5 fill-current"
                       width="30"
                       height="38"
                       viewBox="0 0 30 38"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <g clip-path="url(#clip0_2412_2096)">
+                      <g clipPath="url(#clip0_2412_2096)">
                         <path
                           d="M9.54022 32.0145C7.86872 30.4866 7.38074 27.2761 8.07717 24.9502C9.28468 26.4166 10.9578 26.8812 12.6908 27.1434C15.3662 27.548 17.9937 27.3967 20.479 26.1739C20.7633 26.0338 21.0261 25.8477 21.3368 25.6591C21.57 26.3357 21.6306 27.0187 21.5492 27.7139C21.3511 29.407 20.5086 30.7148 19.1685 31.7062C18.6326 32.1027 18.0656 32.4572 17.5121 32.8311C15.8119 33.9803 15.3519 35.3278 15.9907 37.2877C16.0059 37.3358 16.0195 37.3835 16.0538 37.5C15.1857 37.1114 14.5516 36.5456 14.0684 35.8018C13.5581 35.017 13.3153 34.1486 13.3026 33.209C13.2962 32.7518 13.2962 32.2905 13.2347 31.8397C13.0845 30.7407 12.5686 30.2486 11.5967 30.2203C10.5992 30.1912 9.81018 30.8078 9.60094 31.779C9.58497 31.8535 9.5618 31.9271 9.53863 32.0137L9.54022 32.0145Z"
                         />
@@ -198,11 +198,11 @@ export const Hero = () => {
 
                   <a
                     href="https://github.com/NextJSTemplates/play-nextjs"
-                    class="text-white/60 duration-300 ease-in-out hover:text-white"
+                    className="text-white/60 duration-300 ease-in-out hover:text-white"
                     target="_blank" rel="noreferrer"
                   >
                     <svg
-                      class="fill-current"
+                      className="fill-current"
                       width="41"
                       height="40"
                       viewBox="0 0 41 40"
@@ -219,19 +219,19 @@ export const Hero = () => {
             </div>
           </div>
 
-          <div class="w-full px-4">
+          <div className="w-full px-4">
             <div
-              class="wow fadeInUp relative z-10 mx-auto max-w-[845px]"
+              className="wow fadeInUp relative z-10 mx-auto max-w-[845px]"
               data-wow-delay=".25s"
             >
-              <div class="mt-16">
+              <div className="mt-16">
                 <img
                   src="/images/landing-2/hero/hero-image.jpg"
                   alt="hero"
-                  class="mx-auto max-w-full rounded-t-xl rounded-tr-xl"
+                  className="mx-auto max-w-full rounded-t-xl rounded-tr-xl"
                 />
               </div>
-              <div class="absolute -left-9 bottom-0 z-[-1]">
+              <div className="absolute -left-9 bottom-0 z-[-1]">
                 <svg
                   width="134"
                   height="106"
@@ -801,7 +801,7 @@ export const Hero = () => {
                   />
                 </svg>
               </div>
-              <div class="absolute -right-6 -top-6 z-[-1]">
+              <div className="absolute -right-6 -top-6 z-[-1]">
                 <svg
                   width="134"
                   height="106"

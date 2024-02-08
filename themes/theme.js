@@ -8,7 +8,6 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
 
 /**
  * 加载全局布局
- * 如果是
  * @param {*} themeQuery
  * @returns
  */
@@ -39,7 +38,7 @@ export const getLayoutByTheme = ({ router, theme }) => {
     setTimeout(() => {
       checkThemeDOM()
     }, 100);
-    return ThemeComponents[ThemeComponents.getLayoutNameByPath('-1')]
+    return ThemeComponents[ThemeComponents.getLayoutNameByPath(router.pathname)]
   }
 }
 

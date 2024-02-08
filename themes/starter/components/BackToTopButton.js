@@ -31,16 +31,18 @@ export const BackToTopButton = () => {
       t--;
       return (-c / 2) * (t * (t - 2) - 1) + b;
     };
-
-    document.querySelector('.back-to-top').onclick = () => {
-      scrollTo(document.documentElement);
-    };
+    const backToTop = document.querySelector('.back-to-top')
+    if (backToTop) {
+      backToTop.onclick = () => {
+        scrollTo(document.documentElement);
+      };
+    }
 
     window.addEventListener('scroll', navBarScollListener)
     return () => {
       window.removeEventListener('scroll', navBarScollListener)
     }
-  })
+  }, [])
 
   // 滚动监听
   const throttleMs = 200
@@ -49,20 +51,17 @@ export const BackToTopButton = () => {
       const scrollY = window.scrollY;
       // 显示或隐藏返回顶部按钮
       const backToTop = document.querySelector('.back-to-top');
-      backToTop.style.display = scrollY > 50 ? 'flex' : 'none';
+      if (backToTop) {
+        backToTop.style.display = scrollY > 50 ? 'flex' : 'none';
+      }
     }, throttleMs)
   )
 
   return <>
         {/* <!-- ====== Back To Top Start --> */}
-        <a
-      href="javascript:void(0)"
-      class="back-to-top fixed bottom-8 left-auto right-8 z-[999] hidden h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md transition duration-300 ease-in-out hover:bg-dark"
-    >
-      <span
-        class="mt-[6px] h-3 w-3 rotate-45 border-l border-t border-white"
-      ></span>
-    </a>
+        <a className="back-to-top fixed bottom-8 left-auto right-8 z-[999] hidden h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md transition duration-300 ease-in-out hover:bg-dark">
+            <span className="mt-[6px] h-3 w-3 rotate-45 border-l border-t border-white" ></span>
+         </a>
     {/* <!-- ====== Back To Top End --> */}
     </>
 }

@@ -1,6 +1,54 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
+
+import { loadExternalResource } from '@/lib/utils';
+import { useEffect } from 'react';
+
+/**
+ * 一些外部js
+ */
+const loadExternal = async () => {
+  console.log('加载swiper')
+  await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css', 'css');
+  await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js', 'js');
+
+  const Swiper = window.Swiper
+  if (!Swiper) {
+    return
+  }
+  // Testimonial
+  const testimonialSwiper = new Swiper('.testimonial-carousel', {
+    slidesPerView: 1,
+    spaceBetween: 30,
+
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      },
+      1280: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      }
+    }
+  });
+  console.log('swiper', testimonialSwiper)
+};
+
 export const Testimonials = () => {
+  useEffect(() => {
+    loadExternal()
+  }, [])
   return <>
     {/* <!-- ====== Testimonial Section Start --> */}
     <section

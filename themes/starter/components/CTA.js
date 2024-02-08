@@ -25,7 +25,7 @@ export const CTA = () => {
                   majority have suffered in some form.
                 </p>
                 <a
-                  href="javascript:void(0)"
+                  
                   class="inline-block rounded-md border border-transparent bg-secondary px-7 py-3 text-base font-medium text-white transition hover:bg-[#0BB489]"
                 >
                   Start using Play

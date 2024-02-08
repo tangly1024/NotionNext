@@ -31,7 +31,7 @@ export const About = () => {
                 </p>
 
                 <a
-                  href="javascript:void(0)"
+
                   class="inline-flex items-center justify-center rounded-md border border-primary bg-primary px-7 py-3 text-center text-base font-medium text-white hover:border-blue-dark hover:bg-blue-dark"
                 >
                   Know More
@@ -107,11 +107,11 @@ export const About = () => {
                               y2="178.431"
                               gradientUnits="userSpaceOnUse"
                             >
-                              <stop stop-color="white" />
+                              <stop stopColor="white" />
                               <stop
                                 offset="1"
-                                stop-color="white"
-                                stop-opacity="0"
+                                stopColor="white"
+                                stopOpacity="0"
                               />
                             </linearGradient>
                           </defs>
@@ -143,11 +143,11 @@ export const About = () => {
                               y2="133.937"
                               gradientUnits="userSpaceOnUse"
                             >
-                              <stop stop-color="white" />
+                              <stop stopColor="white" />
                               <stop
                                 offset="1"
-                                stop-color="white"
-                                stop-opacity="0"
+                                stopColor="white"
+                                stopOpacity="0"
                               />
                             </linearGradient>
                           </defs>
@@ -179,11 +179,11 @@ export const About = () => {
                               y2="256.79"
                               gradientUnits="userSpaceOnUse"
                             >
-                              <stop stop-color="white" />
+                              <stop stopColor="white" />
                               <stop
                                 offset="1"
-                                stop-color="white"
-                                stop-opacity="0"
+                                stopColor="white"
+                                stopOpacity="0"
                               />
                             </linearGradient>
                           </defs>

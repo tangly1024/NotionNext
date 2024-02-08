@@ -38,8 +38,6 @@ import { SVG404 } from './components/SVG404'
  * 一些外部js
  */
 const loadExternal = async () => {
-  await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js', 'js');
-  await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css', 'css');
   await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js', 'js');
   // 配合animatecss 实现延时滚动动画，和AOS动画相似
   const WOW = window.WOW;
@@ -63,10 +61,8 @@ const LayoutBase = (props) => {
     loadExternal()
   }, [])
 
-  return <>
-        <Style/>
-        <div id='theme-landing-2'>
-
+  return <div id='theme-starter'>
+            <Style/>
             <NavBar/>
 
             {children}
@@ -77,7 +73,6 @@ const LayoutBase = (props) => {
             <BackToTopButton/>
             <MadeWithButton/>
         </div>
-    </>
 }
 
 /**
@@ -128,33 +123,32 @@ const LayoutArchive = (props) => <></>
 const Layout404 = (props) => {
   return <>
      {/* <!-- ====== 404 Section Start --> */}
-        <section class="bg-white py-20 dark:bg-dark-2 lg:py-[110px]">
-          <div class="container mx-auto">
-            <div class="flex flex-wrap items-center -mx-4">
-              <div class="w-full px-4 md:w-5/12 lg:w-6/12">
-                <div class="text-center">
+        <section className="bg-white py-20 dark:bg-dark-2 lg:py-[110px]">
+          <div className="container mx-auto">
+            <div className="flex flex-wrap items-center -mx-4">
+              <div className="w-full px-4 md:w-5/12 lg:w-6/12">
+                <div className="text-center">
                   <img
                     src="/images/landing-2/404.svg"
                     alt="image"
-                    class="max-w-full mx-auto"
+                    className="max-w-full mx-auto"
                   />
                 </div>
               </div>
-              <div class="w-full px-4 md:w-7/12 lg:w-6/12 xl:w-5/12">
+              <div className="w-full px-4 md:w-7/12 lg:w-6/12 xl:w-5/12">
                 <div>
-                  <div class="mb-8">
+                  <div className="mb-8">
                     <SVG404/>
                   </div>
-                  <h3 class="mb-5 text-2xl font-semibold text-dark dark:text-white">
+                  <h3 className="mb-5 text-2xl font-semibold text-dark dark:text-white">
                     We Can't Seem to Find The Page You're Looking For.
                   </h3>
-                  <p class="mb-8 text-base text-body-color dark:text-dark-6">
+                  <p className="mb-8 text-base text-body-color dark:text-dark-6">
                     Oops! The page you are looking for does not exist. It might have
                     been moved or deleted.
                   </p>
                   <a
-                    href="javascript:void(0)"
-                    class="py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary"
+                    className="py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary"
                   >
                     Go To Home
                   </a>

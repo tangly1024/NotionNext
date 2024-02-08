@@ -41,7 +41,7 @@ export const Blog = () => {
                 </span>
                 <h3>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl"
                   >
                     Meet AutoManage, the best AI management tools
@@ -75,7 +75,7 @@ export const Blog = () => {
                 </span>
                 <h3>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl"
                   >
                     How to earn more money as a wellness coach
@@ -109,7 +109,7 @@ export const Blog = () => {
                 </span>
                 <h3>
                   <a
-                    href="javascript:void(0)"
+
                     class="mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl"
                   >
                     The no-fuss guide to upselling and cross selling

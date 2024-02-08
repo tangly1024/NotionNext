@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 /**
@@ -50,19 +51,15 @@ export const MenuList = () => {
                 <ul className="blcok lg:flex 2xl:ml-20">
                   {/* MenuItem */}
                   <li className="group relative">
-                    <a
-                      href="#home"
+                    <Link href="/"
                       className={`ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${router.route === '/' ? 'lg:text-white lg:group-hover:text-white' : ''} lg:group-hover:opacity-70`}
                     >
                       Home1
-                    </a>
+                    </Link>
                   </li>
                   {/* 有子菜单的MenuItem */}
                   <li className="submenu-item group relative">
-                    <a
-                      href="javascript:void(0)"
-                      className={`relative mx-8 flex items-center justify-between py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:ml-8 lg:mr-0 lg:inline-flex lg:py-6 lg:pl-0 lg:pr-4 ${router.route === '/' ? 'lg:text-white lg:group-hover:text-white' : ''} lg:group-hover:opacity-70 xl:ml-10`}
-                    >
+                    <a className={`relative mx-8 flex items-center justify-between py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:ml-8 lg:mr-0 lg:inline-flex lg:py-6 lg:pl-0 lg:pr-4 ${router.route === '/' ? 'lg:text-white lg:group-hover:text-white' : ''} lg:group-hover:opacity-70 xl:ml-10`}>
                       Pages
 
                       <svg
@@ -82,12 +79,12 @@ export const MenuList = () => {
                       className="submenu relative left-0 top-full hidden w-[250px] rounded-sm bg-white p-4 transition-[top] duration-300 group-hover:opacity-100 dark:bg-dark-2 lg:invisible lg:absolute lg:top-[110%] lg:block lg:opacity-0 lg:shadow-lg lg:group-hover:visible lg:group-hover:top-full"
                     >
                         {/* 子菜单SubMenuItem */}
-                      <a
-                        href="about.html"
+                      <Link
+                        href="/about"
                         className="block rounded px-4 py-[10px] text-sm text-body-color hover:text-primary dark:text-dark-6 dark:hover:text-primary"
                       >
                         About Page
-                      </a>
+                      </Link>
                     </div>
                   </li>
                 </ul>
