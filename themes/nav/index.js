@@ -35,6 +35,8 @@ import Live2D from '@/components/Live2D'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import NotionIcon from '@/components/NotionIcon'
 import { LAYOUT_MAPPINGS } from '@/blog.config'
+import { useRouter } from 'next/router'
+import { isBrowser } from '@/lib/utils'
 
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
@@ -215,6 +217,22 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
             {/* 文章锁 */}

@@ -25,6 +25,7 @@ import replaceSearchResult from '@/components/Mark'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { siteConfig } from '@/lib/config'
 import { LAYOUT_MAPPINGS } from '@/blog.config'
+import { useRouter } from 'next/router'
 
 // 主题全局状态
 const ThemeGlobalNobelium = createContext()
@@ -199,7 +200,22 @@ const LayoutArchive = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
 
