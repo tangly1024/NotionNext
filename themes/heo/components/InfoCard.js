@@ -34,7 +34,9 @@ export function InfoCard(props) {
             </h2>
 
             {/* 公告栏 */}
-          
+           <div>
+                <Announcement post={notice} style={{ color: 'white !important' }} />
+            </div>
 
             <div className='flex justify-between'>
                 <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
