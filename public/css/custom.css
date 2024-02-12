@@ -1,7 +1,7 @@
 /* 静态文件导入 自定义样式*/
 
 .wrapper{
-    background:url(/public/background.jpg);
+    background:url(/public/background.png);
     background-repeat: no-repeat;
     background-attachment:fixed; 
     background-size: cover;   
