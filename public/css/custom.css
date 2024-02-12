@@ -1,13 +1,5 @@
 /* 静态文件导入 自定义样式*/
 
-.wrapper{
-    background:url(/public/background.png);
-    background-repeat: no-repeat;
-    background-attachment:fixed; 
-    background-size: cover;   
-    background-position:50% 50%;
-  }
-
 #theme-fukasawa .sideLeft hr{
     opacity: .04;
 }

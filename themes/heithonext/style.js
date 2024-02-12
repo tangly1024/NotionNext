@@ -7,9 +7,18 @@
 const Style = () => {
   return <style jsx global>{`
 
-    // 底色
+    // 底色#eeedee
     body{
-        background-color: #eeedee
+      background:url(/background.png);
+      background-repeat: no-repeat;
+      background-attachment:fixed; 
+      background-size: cover;   
+      background-position:50% 50%;
+      background-color: black;
+    }
+    .w-full{
+      opacity: 0.9;
+      background-color: #black;
     }
     .dark body{
         background-color: black;

@@ -9,11 +9,11 @@ const Footer = ({ title }) => {
 
   return (
         <footer
-            className='relative z-10 dark:bg-gray-800 flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-sm p-6 bg-white dark:text-gray-400'
+            className='relative z-10 dark:bg-neutral-950 flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-sm p-6 bg-white dark:text-gray-400'
         >
 
             <span>
-                <DarkModeButton />
+                {/* <DarkModeButton /> */}
 
                 <i className='fas fa-copyright' /> {`${copyrightDate}`} <span className='mx-1 animate-pulse'><i className='fas fa-heart' /></span> <a href={siteConfig('LINK')} className='underline font-bold '>{siteConfig('AUTHOR')}</a>.<br />
 
