@@ -10,11 +10,13 @@ const Style = () => {
     // 底色
     body{
         background-color: #eeedee
-        background:url(/public/background.jpg);
-        background-repeat: no-repeat;
-        background-attachment:fixed; //不重复
-        background-size: cover;      //填充
-        background-position:50% 50%;
+    }
+    .wrapper{
+      background:url(/public/background.jpg);
+      background-repeat: no-repeat;
+      background-attachment:fixed; //不重复
+      background-size: cover;      //填充
+      background-position:50% 50%;
     }
     .dark body{
         background-color: black;
