@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/formatDate'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  * 文章描述
@@ -18,7 +19,7 @@ export default function ArticleInfo (props) {
         <section className="mt-2 text-gray-600 dark:text-gray-400 leading-8">
             <h2
                 className="blog-item-title mb-5 font-bold text-black text-xl md:text-2xl no-underline">
-                {post?.title}
+                <NotionIcon icon={post?.pageIcon} />{post?.title}
             </h2>
 
             <div className='flex flex-wrap text-gray-700 dark:text-gray-300'>
@@ -27,7 +28,7 @@ export default function ArticleInfo (props) {
                         <span> <i className="fa-regular fa-user"></i> <a href={siteConfig('SIMPLE_AUTHOR_LINK', null, CONFIG)}>{siteConfig('AUTHOR')}</a></span>
                         <span> <i className="fa-regular fa-clock"></i> {post?.publishDay}</span>
                         {post?.category && <span>  <i className="fa-regular fa-folder"></i> <a href={`/category/${post?.category}`} className="hover:text-red-400 transition-all duration-200">{post?.category}</a></span>}
-                        {post?.tags && post?.tags?.length > 0 && post?.tags.map(t => <span key={t}> / <Link href={`/tag/${t}`}><a className=' hover:text-red-400 transition-all duration-200'>{t}</a></Link></span>)}
+                        {post?.tags && post?.tags?.length > 0 && post?.tags.map(t => <span key={t}> / <Link href={`/tag/${t}`}><span className=' hover:text-red-400 transition-all duration-200'>{t}</span></Link></span>)}
                     </div>)}
 
                 {post?.type !== 'Page' && (<div className=''>

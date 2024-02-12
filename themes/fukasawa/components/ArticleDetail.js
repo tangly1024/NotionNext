@@ -9,6 +9,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
 import WWAds from '@/components/WWAds'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  *
@@ -36,7 +37,7 @@ export default function ArticleDetail(props) {
 
           {/* 文章Title */}
           <div className="font-bold text-4xl text-black dark:text-white">
-            {post.title}
+            <NotionIcon icon={post?.pageIcon} />{post.title}
           </div>
 
           <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
