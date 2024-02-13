@@ -6,6 +6,14 @@
  */
 const Style = () => {
   return <style jsx global>{`
+    //logo图片
+    .h-logo{
+      background:url(/heithon_dark.jpg);
+      background-repeat: no-repeat;
+      background-size: 100% auto;   
+      background-position:50% 50%;
+      background-color: white;
+    }
 
     // 底色#eeedee
     body{
@@ -16,8 +24,8 @@ const Style = () => {
       background-position:50% 50%;
       background-color: black;
     }
-    .w-full{
-      opacity: 0.9;
+    .post-card{
+      opacity: 0.85;
       background-color: #black;
     }
     .dark body{
@@ -28,10 +36,10 @@ const Style = () => {
       padding: 40px;
     }
 
-    // 菜单下划线动画
+    // 菜单下划线动画#4e80ee
     #theme-next .menu-link {
       text-decoration: none;
-      background-image: linear-gradient(#4e80ee, #4e80ee);
+      background-image: linear-gradient(#d43b3b, #d43b3b);
       background-repeat: no-repeat;
       background-position: bottom center;
       background-size: 0 2px;
@@ -39,7 +47,7 @@ const Style = () => {
     }
     #theme-next .menu-link:hover {
       background-size: 100% 2px;
-      color: #4e80ee;
+      color: #d43b3b;
     }
 
   `}</style>

@@ -26,7 +26,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
   const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
-    <Card className="w-full">
+    <Card className="w-full post-card">
       <div
         key={post.id}
         className="flex flex-col-reverse justify-between duration-300"
@@ -38,7 +38,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
             {...aosProps}
             href={url}
             passHref
-            className={`cursor-pointer text-3xl ${showPreview ? 'text-center' : ''} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+            className={`cursor-pointer text-3xl ${showPreview ? 'text-center' : ''} leading-tight text-gray-700 dark:text-gray-100 hover:text-red-500 dark:hover:text-red-600`}>
 
             <NotionIcon icon={post.pageIcon} /> <span className='menu-link'>{post.title}</span>
 
@@ -52,7 +52,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
                   <Link
                     href={`/category/${post.category}`}
                     passHref
-                    className="hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-sm transform">
+                    className="hover:text-red-700 dark:hover:text-red-600 cursor-pointer font-light text-sm transform">
 
                     <i className="mr-1 fas fa-folder" />
                     <span className='menu-link'>{post.category}</span>
@@ -64,14 +64,14 @@ const BlogPostCard = ({ post, index, showSummary }) => {
                 <Link
                     href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                     passHref
-                    className="hover:text-blue-500 dark:hover:text-blue-400 font-light cursor-pointer text-sm leading-4 mr-3">
+                    className="hover:text-red-700 dark:hover:text-red-600 font-light cursor-pointer text-sm leading-4 mr-3">
                     <span className='menu-link'>{post.date?.start_date}</span>
                 </Link>
             </div>
 
-            <TwikooCommentCount post={post} className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-sm'/>
+            <TwikooCommentCount post={post} className='hover:text-red-700 dark:hover:text-red-600 hover:underline text-sm'/>
 
-            <div className="hover:text-blue-500 dark:hover:text-blue-400  md:flex-nowrap flex-wrap md:justify-start inline-block">
+            <div className="hover:text-red-700 dark:hover:text-red-600  md:flex-nowrap flex-wrap md:justify-start inline-block">
                 {post.tagItems?.map(tag => (
                   <TagItemMini key={tag.name} tag={tag} />
                 ))}
@@ -102,7 +102,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
           <div className="text-right border-t pt-8 border-dashed">
             <Link
               href={url}
-              className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer">
+              className="hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-red-900 cursor-pointer">
 
               {locale.COMMON.ARTICLE_DETAIL}
               <i className="ml-1 fas fa-angle-right" />

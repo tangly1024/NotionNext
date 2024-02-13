@@ -43,7 +43,7 @@ const LatestPostsGroup = ({ latestPosts }) => {
                 ? 'text-white  bg-gray-600 '
                 : 'text-gray-500 dark:text-gray-400 ') +
               ' text-xs py-1.5 flex hover:bg-gray-500 px-2 duration-200 w-full ' +
-              'hover:text-white dark:hover:text-white cursor-pointer'
+              'hover:text-white dark:hover:text-white cursor-pointer dark:hover:bg-red-600'
             }
           >
             <li className="line-clamp-2">{post.title}</li>

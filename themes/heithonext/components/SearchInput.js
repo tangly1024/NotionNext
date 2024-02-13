@@ -89,7 +89,7 @@ const SearchInput = ({ currentTag, keyword, cRef }) => {
             ref={searchInputRef}
             type='text'
             placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-            className={'outline-none w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white'}
+            className={'outline-none w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-zinc-700 dark:text-white'}
             onKeyUp={handleKeyUp}
             onFocus={handleFocus}
             onCompositionStart={lockSearchInput}
@@ -101,7 +101,7 @@ const SearchInput = ({ currentTag, keyword, cRef }) => {
 
         <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
             onClick={handleSearch}>
-            <i className={`hover:text-black transform duration-200  text-gray-500 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}`} />
+            <i className={`hover:text-red-900 transform duration-200  text-zinc-600 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'}`} />
         </div>
 
         {(showClean &&

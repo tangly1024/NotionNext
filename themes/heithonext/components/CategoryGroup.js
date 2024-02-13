@@ -15,8 +15,8 @@ const CategoryGroup = ({ currentCategory, categories }) => {
             href={`/category/${category.name}`}
             passHref
             className={(selected
-              ? 'hover:text-white dark:hover:text-white bg-gray-600 text-white '
-              : 'dark:text-gray-400 text-gray-500 hover:text-white hover:bg-gray-500 dark:hover:text-white') +
+              ? 'hover:text-white dark:hover:text-white bg-gray-600 text-white'
+              : 'dark:text-gray-400 text-gray-500 hover:text-white hover:bg-gray-500 dark:hover:text-white dark:hover:bg-red-600') +
               '  text-sm w-full items-center duration-300 px-2  cursor-pointer py-1 font-light'}>
 
             <i className={`${selected ? 'text-white fa-folder-open ' : 'text-gray-500 fa-folder '} mr-2 fas`} />{category.name}({category.count})
