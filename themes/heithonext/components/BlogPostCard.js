@@ -113,7 +113,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
 
         {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && (
           <Link href={url} passHref legacyBehavior>
-            <div className="h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden">
+            <div className="h-36 w-full relative duration-200 cursor-pointer transform overflow-hidden">
               <Image
                 className="hover:scale-105 transform duration-500"
                 src={post?.pageCoverThumbnail}
