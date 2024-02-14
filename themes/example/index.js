@@ -25,7 +25,6 @@ import TagItem from './components/TagItem'
 import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
 
 /**
@@ -36,7 +35,7 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta } = props
+  const { children } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const { category, tag } = props
@@ -64,9 +63,6 @@ const LayoutBase = props => {
 
   return (
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
-
-            {/* SEO信息 */}
-            <CommonHead meta={meta}/>
 
             <Style/>
 

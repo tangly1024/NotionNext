@@ -2,6 +2,7 @@ import Link from 'next/link'
 import NotionIcon from './NotionIcon'
 import { useRouter } from 'next/router'
 import { siteConfig } from '@/lib/config'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 const BlogPostCard = ({ post, className }) => {
   const router = useRouter()
@@ -22,30 +23,6 @@ const BlogPostCard = ({ post, className }) => {
         </div>
     </Link>
   )
-
-  // 检查连接是否是外链
-  function sliceUrlFromHttp(str) {
-    // 检查字符串是否包含http
-    if (str.includes('http')) {
-      // 如果包含，找到http的位置
-      const index = str.indexOf('http');
-      // 返回http之后的部分
-      return str.slice(index, str.length);
-    } else {
-      // 如果不包含，返回原字符串
-      return str;
-    }
-  }
-  function checkContainHttp(str) {
-    // 检查字符串是否包含http
-    if (str.includes('http')) {
-      // 如果包含，找到http的位置
-      return str.indexOf('http') > -1
-    } else {
-      // 不包含
-      return false;
-    }
-  }
 }
 
 export default BlogPostCard

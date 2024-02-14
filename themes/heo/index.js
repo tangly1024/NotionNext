@@ -7,7 +7,6 @@
  */
 
 import CONFIG from './config'
-import CommonHead from '@/components/CommonHead'
 import { useEffect, useState } from 'react'
 import Footer from './components/Footer'
 import SideRight from './components/SideRight'
@@ -51,8 +50,7 @@ const LayoutBase = props => {
   const {
     children,
     slotTop,
-    className,
-    meta
+    className
   } = props
 
   // 全屏模式下的最大宽度
@@ -67,13 +65,10 @@ const LayoutBase = props => {
       {/* 通知横幅 */}
       {router.route === '/'
         ? <>
-        <NoticeBar />
-        <Hero {...props} />
-      </>
+            <NoticeBar />
+            <Hero {...props} />
+        </>
         : null}
-      <div className="max-w-[86rem] mx-auto px-3">
-        <WWAds className="w-full" orientation="horizontal" />
-      </div>
       {fullWidth ? null : <PostHeader {...props} />}
     </header>
   )
@@ -90,8 +85,7 @@ const LayoutBase = props => {
       id="theme-heo"
       className="bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
     >
-      {/* SEO信息 */}
-      <CommonHead meta={meta} />
+
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -273,11 +267,7 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   return (
-    <div
-      {...props}
-      showCategory={false}
-      showTag={false}
-    >
+    <>
       <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
         {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -337,7 +327,7 @@ const LayoutSlug = props => {
         )}
       </div>
       <FloatTocButton {...props} />
-    </div>
+    </>
   )
 }
 

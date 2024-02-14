@@ -24,7 +24,6 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import BlogPostListAll from './components/BlogPostListAll'
 import BlogPostCard from './components/BlogPostCard'
 import Link from 'next/link'
@@ -33,6 +32,8 @@ import { MenuItem } from './components/MenuItem'
 import LogoBar from './components/LogoBar'
 import { siteConfig } from '@/lib/config'
 import Live2D from '@/components/Live2D'
+import BlogArchiveItem from './components/BlogArchiveItem'
+import NotionIcon from '@/components/NotionIcon'
 
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
@@ -47,7 +48,7 @@ export const useNavGlobal = () => useContext(ThemeGlobalNav)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotTop, meta } = props
+  const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotTop } = props
   const { onLoading } = useGlobal()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -70,8 +71,6 @@ const LayoutBase = (props) => {
 
   return (
         <ThemeGlobalNav.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible, categoryOptions }}>
-            {/* HEAD */}
-            <CommonHead meta={meta}/>
             {/* 样式 */}
             <Style/>
 
@@ -215,7 +214,6 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
-
   return (
         <>
             {/* 文章锁 */}
@@ -224,7 +222,7 @@ const LayoutSlug = (props) => {
               {!lock && <div id='container'>
 
                   {/* title */}
-                  <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300">{post?.title}</h1>
+                  <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
                   {/* Notion文章主体 */}
                   {post && (<section id="article-wrapper" className="px-1">
@@ -272,7 +270,14 @@ const LayoutSearch = (props) => {
  * @returns
  */
 const LayoutArchive = (props) => {
-  return <></>
+  const { archivePosts } = props
+  return (<>
+            <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
+                {Object.keys(archivePosts).map(archiveTitle => (
+                    <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
+                ))}
+            </div>
+        </>)
 }
 
 /**

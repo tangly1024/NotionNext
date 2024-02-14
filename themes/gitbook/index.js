@@ -29,11 +29,11 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { siteConfig } from '@/lib/config'
+import NotionIcon from '@/components/NotionIcon'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -47,7 +47,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
+  const { children, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -62,7 +62,6 @@ const LayoutBase = (props) => {
 
   return (
         <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
-            <CommonHead meta={meta}/>
             <Style/>
 
             <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
@@ -221,7 +220,7 @@ const LayoutSlug = (props) => {
             {!lock && <div id='container'>
 
                 {/* title */}
-                <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
+                <h1 className="text-3xl pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
                 {/* Notion文章主体 */}
                 {post && (<section id="article-wrapper" className="px-1">

@@ -20,7 +20,6 @@ import BottomNav from './components/BottomNav'
 import Modal from './components/Modal'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
 import { useRouter } from 'next/router'
 
 // 主题全局状态
@@ -34,14 +33,14 @@ export const usePlogGlobal = () => useContext(ThemeGlobalPlog)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, topSlot, meta } = props
+  const { children, topSlot } = props
   const { onLoading } = useGlobal()
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState(null)
 
   // 页面切换关闭遮罩
   const router = useRouter()
-  const closeModal = ()=>{
+  const closeModal = () => {
     setShowModal(false)
   }
 
@@ -52,12 +51,10 @@ const LayoutBase = props => {
     }
   }, [router.events])
 
-
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
         <div id='theme-plog' className='plog relative dark:text-gray-300 w-full dark:bg-black min-h-screen'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
+
             <Style/>
 
             {/* 移动端顶部导航栏 */}
