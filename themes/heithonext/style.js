@@ -17,7 +17,7 @@ const Style = () => {
 
     // 底色#eeedee
     body{
-      background:url(/background.png);
+      background:url(/background.jpg);
       background-repeat: no-repeat;
       background-attachment:fixed; 
       background-size: cover;   
