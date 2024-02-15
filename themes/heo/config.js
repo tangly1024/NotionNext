@@ -89,15 +89,15 @@ const CONFIG = {
       color_1: '#fff',
       title_2: 'FromSoftware',
       img_2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Fromsoftware_logo.svg/440px-Fromsoftware_logo.svg.png',
-      color_2: '#e9572b'
+      color_2: '#fff'
     },
     {
       title_1: '塞尔达传说 旷野之息',
       img_1: 'https://upload.wikimedia.org/wikipedia/zh/1/1a/The_Legend_of_Zelda_Breath_of_the_Wild.png',
-      color_1: '#df5b40',
+      color_1: '#fff',
       title_2: '任天堂',
       img_2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Nintendo.svg/500px-Nintendo.svg.png',
-      color_2: '#1f1f1f'
+      color_2: '#fff'
     }
   ],
 
