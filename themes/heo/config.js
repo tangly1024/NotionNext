@@ -46,57 +46,57 @@ const CONFIG = {
     {
       title_1: '大表哥',
       img_1: 'data:image/jpeg;base64,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',
-      color_1: '#989bf8',
-      title_2: 'Sketch',
-      img_2: 'data:image/jpeg;base64,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',
-      color_2: '#ffffff'
-    },
-    {
-      title_1: 'Docker',
-      img_1: '/images/heo/20231108a540b2862d26f8850172e4ea58ed075102.webp',
-      color_1: '#57b6e6',
-      title_2: 'Photoshop',
-      img_2: '/images/heo/2023e4058a91608ea41751c4f102b131f267075902.webp',
-      color_2: '#4082c3'
-    },
-    {
-      title_1: 'FinalCutPro',
-      img_1: '/images/heo/20233e777652412247dd57fd9b48cf997c01070702.webp',
       color_1: '#ffffff',
-      title_2: 'Python',
-      img_2: '/images/heo/20235c0731cd4c0c95fc136a8db961fdf963071502.webp',
+      title_2: '博德之门3',
+      img_2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Rockstar_Games_Logo.svg/400px-Rockstar_Games_Logo.svg.png',
       color_2: '#ffffff'
     },
     {
-      title_1: 'Swift',
-      img_1: '/images/heo/202328bbee0b314297917b327df4a704db5c072402.webp',
-      color_1: '#eb6840',
-      title_2: 'Principle',
-      img_2: '/images/heo/2023f76570d2770c8e84801f7e107cd911b5073202.webp',
-      color_2: '#8f55ba'
+      title_1: '艾尔登法环',
+      img_1: 'data:image/jpeg;base64,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',
+      color_1: '#ffffff',
+      title_2: 'fromsoftware',
+      img_2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Fromsoftware_logo.svg/440px-Fromsoftware_logo.svg.png',
+      color_2: '#ffffff'
     },
     {
-      title_1: 'illustrator',
-      img_1: '/images/heo/20237359d71b45ab77829cee5972e36f8c30073902.webp',
-      color_1: '#f29e39',
-      title_2: 'CSS3',
-      img_2: '/images/heo/20237c548846044a20dad68a13c0f0e1502f074602.webp',
-      color_2: '#2c51db'
+      title_1: '博德之门3',
+      img_1: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIADgAOAMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAABwUGAQIEAwj/xAAxEAABAwMDAwIEBAcAAAAAAAABAgMEAAUREiExBhNBUWEicYGRBxShsggWIyQygrH/xAAXAQEBAQEAAAAAAAAAAAAAAAABAAID/8QAHBEBAQACAgMAAAAAAAAAAAAAAAECESExEkHR/9oADAMBAAIRAxEAPwBtHODjGfGaijeFht4mE5lk6XFhaSgKzjGeT68bCpKVIbipQt46UKcS3qPAKthn5nA+tUnrXv2u2SW5EEzW58wJbUhwhIKyAELSdgDxnf6bVjPc6bw1e1qbuTDVuaflPoU4WkLWG+cqA4Tzjf7V0JlsmQ5HJIebGooPJHqPWkhKvV2eQbXAMqU3CUoLcYjAfGPhXvrClDb7D2rihm5tOqdaDf5x7tDuvu4KArATkBRJyMeh4JzR5U+EPC93Zu2wTKQtC9Cm1LbBypTalAEgc8HI+VdyZLC1BCXkFROAnOCfkPoaQbtz6jmQVsokRZsVv4WnXt1O6MnlSiSN+T7cU5OnzEn2yJdmHX246m0rHcCUDSlON8ePPP6bUy2i4yJ2s15xX25UZqQ1ntuoC0Z9CMiitsMz4bM+G9ElI1MvJKVDOD9Pekz1sm4RZrPT0u7uSFQymXFOoBQ50lW2+MHbxTw00iPx1tj383QZTYV/dRkobIOPjSo+f9hUkHKmSRckTX4LDErWo/mUvf0ULUN16cc7k8mp2/t2+NZwq33xffToJSoggqwNJB5PtVLaYXHtz0lbyJEbIQ8hZKgVk+N9j7+akJ9vixYcx4sR3GYxb7OEqABc+IHOfb3okxatyaRkuyNKsnt5wloNoKycYKhkEJ8birt+H0Rd6W5YE3BTdqggPPQ0OFROpX+JV8xv6UtpcV4OqSiShMpXxJQ2pSRo07pG/wA9vNMr+Hu3rSu8TgCGiltkEjk5Kjj9PvTwLs4UoShIShICUjAA4Aor0xWag9cVXOuemE9TWgNNlCJ0ZXdiOK4C/Q+x4NWaipPli3yEQET4KGJUYutkPaSVHGT9wDkZ+9dSZjncjOoZebblONmL2tie2MDjyRmmv1d01IaiJZTDizrcJyXWtSyhxnuLwUHA3RlWcg5HoSKgn+lmHI9xjKbD8iz4VGGpQSpZcwQR5BAI3zXLK6vHv4648wu7W2b51EWIkZb1yfeKWisgISs5Gpw+2CQPavorpHpyP0vYY9rjHUUDU65jdxw8qqM6e6alRpcJcuHb4EW3hRaYhKKy+6RpLjitI3xnbfnmrfXSRztaYoreikNNdY10UVJq4EOoKHE6knkGomBbQ1d7vJeRlEpxlSM+dIz+7/lFFFmzKmddY1UUUgaveiiipP/Z',
+      color_1: '#ffffff',
+      title_2: '拉瑞安',
+      img_2: 'https://upload.wikimedia.org/wikipedia/zh/b/b5/Larian_Studios_logo.png',
+      color_2: '#ffffff'
     },
     {
-      title_1: 'JS',
-      img_1: '/images/heo/2023786e7fc488f453d5fb2be760c96185c0075502.webp',
-      color_1: '#f7cb4f',
-      title_2: 'HTML',
-      img_2: '/images/heo/202372b4d760fd8a497d442140c295655426070302.webp',
+      title_1: '双人成行',
+      img_1: 'https://upload.wikimedia.org/wikipedia/zh/a/aa/It_Takes_Two_cover_art.png',
+      color_1: '#fff',
+      title_2: '雾隐工作室',
+      img_2: 'https://upload.wikimedia.org/wikipedia/zh/thumb/a/a2/Hazelight_Studio_Logo.svg/440px-Hazelight_Studio_Logo.svg.png',
+      color_2: '#fff'
+    },
+    {
+      title_1: '最后的生还者2',
+      img_1: 'https://upload.wikimedia.org/wikipedia/zh/f/f2/The_last_of_us_part_2_cover.jpg',
+      color_1: '#fff',
+      title_2: '顽皮狗',
+      img_2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Naughty_Dog_logo.svg/560px-Naughty_Dog_logo.svg.png',
+      color_2: '#fff'
+    },
+    {
+      title_1: '只狼',
+      img_1: 'https://upload.wikimedia.org/wikipedia/zh/f/fe/Sekiro_art_%28Re-uploaded%29.jpg',
+      color_1: '#fff',
+      title_2: 'FromSoftware',
+      img_2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Fromsoftware_logo.svg/440px-Fromsoftware_logo.svg.png',
       color_2: '#e9572b'
     },
     {
-      title_1: 'Git',
-      img_1: '/images/heo/2023ffa5707c4e25b6beb3e6a3d286ede4c6071102.webp',
+      title_1: '塞尔达传说 旷野之息',
+      img_1: 'https://upload.wikimedia.org/wikipedia/zh/1/1a/The_Legend_of_Zelda_Breath_of_the_Wild.png',
       color_1: '#df5b40',
-      title_2: 'Rhino',
-      img_2: '/images/heo/20231ca53fa0b09a3ff1df89acd7515e9516173302.webp',
+      title_2: '任天堂',
+      img_2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Nintendo.svg/500px-Nintendo.svg.png',
       color_2: '#1f1f1f'
     }
   ],
