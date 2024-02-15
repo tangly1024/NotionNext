@@ -113,8 +113,9 @@ const LayoutBase = props => {
           <div className="hidden xl:block">
             {/* 主区快右侧 */}
             {slotRight}
-          </div>
           <AdSlot type="native" />
+          </div>
+          
         </div>
      
       </main>
@@ -164,6 +165,7 @@ const LayoutPostList = props => {
           : (
             <BlogPostListScroll {...props} />
             )}
+      <AdSlot type="flow" />
       </div>
   )
 }
