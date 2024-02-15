@@ -114,8 +114,9 @@ const LayoutBase = props => {
             {/* 主区快右侧 */}
             {slotRight}
           </div>
+          <AdSlot type="native" />
         </div>
-
+     
       </main>
 
       {/* 页脚 */}
