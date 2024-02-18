@@ -1,8 +1,10 @@
+import { siteConfig } from '@/lib/config';
 import { useGlobal } from '@/lib/global';
 import throttle from 'lodash.throttle';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import CONFIG from '../config';
 
 /**
  * 站点图标
@@ -26,9 +28,9 @@ export const Logo = () => {
     const scrollY = window.scrollY;
     // 何时显示浅色或白底的logo
     if (isDarkMode || (!isDarkMode && router.route === '/' && scrollY < 1)) {
-      logo.src = '/images/landing-2/logo/logo-white.svg';
+      logo.src = siteConfig('STARTER_LOGO_WHITE', null, CONFIG);
     } else {
-      logo.src = '/images/landing-2/logo/logo.svg';
+      logo.src = siteConfig('STARTER_LOGO', null, CONFIG);
     }
   }, throttleMs)
 

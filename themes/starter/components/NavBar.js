@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 /**
  * 顶部导航栏
  */
-export const NavBar = () => {
+export const NavBar = (props) => {
   const router = useRouter()
   useEffect(() => {
     // ======= Sticky
@@ -49,7 +49,7 @@ export const NavBar = () => {
                 <div className="flex w-full items-center justify-between px-4">
 
                     {/* 中间菜单 */}
-                    <MenuList/>
+                    <MenuList {...props}/>
 
                     {/* 右侧功能 */}
                     <div className="flex items-center justify-end pr-16 lg:pr-0">

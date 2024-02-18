@@ -63,7 +63,7 @@ const LayoutBase = (props) => {
 
   return <div id='theme-starter'>
             <Style/>
-            <NavBar/>
+            <NavBar {...props}/>
 
             {children}
 
