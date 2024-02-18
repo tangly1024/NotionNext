@@ -129,7 +129,7 @@ const Layout404 = (props) => {
               <div className="w-full px-4 md:w-5/12 lg:w-6/12">
                 <div className="text-center">
                   <img
-                    src="/images/landing-2/404.svg"
+                    src="/images/starter/404.svg"
                     alt="image"
                     className="max-w-full mx-auto"
                   />

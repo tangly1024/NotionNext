@@ -39,7 +39,7 @@ export const Logo = () => {
                     <Link href="/" className="navbar-logo block w-full py-5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                        src="/images/landing-2/logo/logo-white.svg"
+                        src="/images/starter/logo/logo-white.svg"
                         alt="logo"
                         className="header-logo w-full"
                     />

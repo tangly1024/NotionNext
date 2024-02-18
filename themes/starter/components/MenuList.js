@@ -56,9 +56,9 @@ export const MenuList = (props) => {
     links = customMenu
   }
 
-  if (!links || links.length === 0) {
-    return null
-  }
+  //   if (!links || links.length === 0) {
+  //     return null
+  //   }
 
   return <>
             <div>

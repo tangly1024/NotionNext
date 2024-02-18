@@ -84,23 +84,23 @@ export const Testimonials = () => {
                 >
                   <div class="mb-[18px] flex items-center gap-[2px]">
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                   </div>
@@ -113,7 +113,7 @@ export const Testimonials = () => {
                   <a href="#" class="flex items-center gap-4">
                     <div class="h-[50px] w-[50px] overflow-hidden rounded-full">
                       <img
-                        src=".//images/landing-2/testimonials/author-01.jpg"
+                        src="/images/starter/testimonials/author-01.jpg"
                         alt="author"
                         class="h-[50px] w-[50px] overflow-hidden rounded-full"
                       />
@@ -137,23 +137,23 @@ export const Testimonials = () => {
                 >
                   <div class="mb-[18px] flex items-center gap-[2px]">
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                   </div>
@@ -166,7 +166,7 @@ export const Testimonials = () => {
                   <a href="#" class="flex items-center gap-4">
                     <div class="h-[50px] w-[50px] overflow-hidden rounded-full">
                       <img
-                        src=".//images/landing-2/testimonials/author-02.jpg"
+                        src="/images/starter/testimonials/author-02.jpg"
                         alt="author"
                         class="h-[50px] w-[50px] overflow-hidden rounded-full"
                       />
@@ -192,23 +192,23 @@ export const Testimonials = () => {
                 >
                   <div class="mb-[18px] flex items-center gap-[2px]">
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                   </div>
@@ -221,7 +221,7 @@ export const Testimonials = () => {
                   <a href="#" class="flex items-center gap-4">
                     <div class="h-[50px] w-[50px] overflow-hidden rounded-full">
                       <img
-                        src=".//images/landing-2/testimonials/author-03.jpg"
+                        src="/images/starter/testimonials/author-03.jpg"
                         alt="author"
                         class="h-[50px] w-[50px] overflow-hidden rounded-full"
                       />
@@ -247,23 +247,23 @@ export const Testimonials = () => {
                 >
                   <div class="mb-[18px] flex items-center gap-[2px]">
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                   </div>
@@ -276,7 +276,7 @@ export const Testimonials = () => {
                   <a href="#" class="flex items-center gap-4">
                     <div class="h-[50px] w-[50px] overflow-hidden rounded-full">
                       <img
-                        src=".//images/landing-2/testimonials/author-01.jpg"
+                        src="/images/starter/testimonials/author-01.jpg"
                         alt="author"
                         class="h-[50px] w-[50px] overflow-hidden rounded-full"
                       />
@@ -300,23 +300,23 @@ export const Testimonials = () => {
                 >
                   <div class="mb-[18px] flex items-center gap-[2px]">
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                   </div>
@@ -329,7 +329,7 @@ export const Testimonials = () => {
                   <a href="#" class="flex items-center gap-4">
                     <div class="h-[50px] w-[50px] overflow-hidden rounded-full">
                       <img
-                        src=".//images/landing-2/testimonials/author-02.jpg"
+                        src="/images/starter/testimonials/author-02.jpg"
                         alt="author"
                         class="h-[50px] w-[50px] overflow-hidden rounded-full"
                       />
@@ -355,23 +355,23 @@ export const Testimonials = () => {
                 >
                   <div class="mb-[18px] flex items-center gap-[2px]">
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                     <img
-                      src=".//images/landing-2/testimonials/icon-star.svg"
+                      src="/images/starter/testimonials/icon-star.svg"
                       alt="star icon"
                     />
                   </div>
@@ -384,7 +384,7 @@ export const Testimonials = () => {
                   <a href="#" class="flex items-center gap-4">
                     <div class="h-[50px] w-[50px] overflow-hidden rounded-full">
                       <img
-                        src=".//images/landing-2/testimonials/author-03.jpg"
+                        src="/images/starter/testimonials/author-03.jpg"
                         alt="author"
                         class="h-[50px] w-[50px] overflow-hidden rounded-full"
                       />

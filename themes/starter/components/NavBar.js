@@ -5,6 +5,8 @@ import { MenuList } from './MenuList';
 import { DarkModeButton } from './DarkModeButton';
 import { Logo } from './Logo';
 import { useRouter } from 'next/router';
+import { siteConfig } from '@/lib/config';
+import CONFIG from '../config';
 
 /**
  * 顶部导航栏
@@ -58,16 +60,16 @@ export const NavBar = (props) => {
                         {/* 注册登录功能 */}
                         <div className="hidden sm:flex">
                             <a
-                            href="signin.html"
+                            href={siteConfig('STARTER_NAV_BUTTON_1_URL', null, CONFIG)}
                             className={`loginBtn px-[22px] py-2 text-base font-medium ${router.route === '/' ? 'text-white' : ''} hover:opacity-70`}
                             >
-                            Sign In
+                           {siteConfig('STARTER_NAV_BUTTON_1_TEXT', null, CONFIG)}
                             </a>
                             <a
-                            href="signup.html"
+                            href={siteConfig('STARTER_NAV_BUTTON_2_URL', null, CONFIG)}
                             className={`signUpBtn rounded-md bg-white bg-opacity-20 px-6 py-2 text-base font-medium ${router.route === '/' ? 'text-white' : ''} duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark`}
                             >
-                            Sign Up
+                           {siteConfig('STARTER_NAV_BUTTON_2_TEXT', null, CONFIG)}
                             </a>
                         </div>
                     </div>

@@ -31,7 +31,7 @@ export const Team = () => {
             >
               <div class="relative z-10 mx-auto mb-5 h-[120px] w-[120px]">
                 <img
-                  src=".//images/landing-2/team/team-01.png"
+                  src="/images/starter/team/team-01.png"
                   alt="team image"
                   class="h-[120px] w-[120px] rounded-full"
                 />
@@ -343,7 +343,7 @@ export const Team = () => {
             >
               <div class="relative z-10 mx-auto mb-5 h-[120px] w-[120px]">
                 <img
-                  src="/images/landing-2/team/team-02.png"
+                  src="/images/starter/team/team-02.png"
                   alt="team image"
                   class="h-[120px] w-[120px] rounded-full"
                 />
@@ -547,7 +547,7 @@ export const Team = () => {
             >
               <div class="relative z-10 mx-auto mb-5 h-[120px] w-[120px]">
                 <img
-                  src="/images/landing-2/team/team-03.png"
+                  src="/images/starter/team/team-03.png"
                   alt="team image"
                   class="h-[120px] w-[120px] rounded-full"
                 />
@@ -751,7 +751,7 @@ export const Team = () => {
             >
               <div class="relative z-10 mx-auto mb-5 h-[120px] w-[120px]">
                 <img
-                  src="/images/landing-2/team/team-04.png"
+                  src="/images/starter/team/team-04.png"
                   alt="team image"
                   class="h-[120px] w-[120px] rounded-full"
                 />

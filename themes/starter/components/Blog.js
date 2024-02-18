@@ -27,7 +27,7 @@ export const Blog = () => {
               <div class="mb-8 overflow-hidden rounded-[5px]">
                 <a href="blog-details.html" class="block">
                   <img
-                    src=".//images/landing-2/blog/blog-01.jpg"
+                    src="/images/starter/blog/blog-01.jpg"
                     alt="image"
                     class="w-full transition group-hover:rotate-6 group-hover:scale-125"
                   />
@@ -61,7 +61,7 @@ export const Blog = () => {
               <div class="mb-8 overflow-hidden rounded-[5px]">
                 <a href="blog-details.html" class="block">
                   <img
-                    src=".//images/landing-2/blog/blog-02.jpg"
+                    src="/images/starter/blog/blog-02.jpg"
                     alt="image"
                     class="w-full transition group-hover:rotate-6 group-hover:scale-125"
                   />
@@ -95,7 +95,7 @@ export const Blog = () => {
               <div class="mb-8 overflow-hidden rounded-[5px]">
                 <a href="blog-details.html" class="block">
                   <img
-                    src=".//images/landing-2/blog/blog-03.jpg"
+                    src="/images/starter/blog/blog-03.jpg"
                     alt="image"
                     class="w-full transition group-hover:rotate-6 group-hover:scale-125"
                   />

@@ -14,7 +14,7 @@ export const Footer = () => {
                 class="mb-6 inline-block max-w-[160px]"
               >
                 <img
-                  src="/images/landing-2/logo/logo-white.svg"
+                  src="/images/starter/logo/logo-white.svg"
                   alt="logo"
                   class="max-w-full"
                 />
@@ -230,7 +230,7 @@ export const Footer = () => {
                 >
                   <div class="overflow-hidden rounded">
                     <img
-                      src=".//images/landing-2/blog/blog-footer-01.jpg"
+                      src="/images/starter/blog/blog-footer-01.jpg"
                       alt="blog"
                     />
                   </div>
@@ -246,7 +246,7 @@ export const Footer = () => {
                 >
                   <div class="overflow-hidden rounded">
                     <img
-                      src=".//images/landing-2/blog/blog-footer-02.jpg"
+                      src="/images/starter/blog/blog-footer-02.jpg"
                       alt="blog"
                     />
                   </div>
@@ -314,11 +314,11 @@ export const Footer = () => {
 
       <div>
         <span class="absolute left-0 top-0 z-[-1]">
-          <img src="/images/landing-2/footer/shape-1.svg" alt="" />
+          <img src="/images/starter/footer/shape-1.svg" alt="" />
         </span>
 
         <span class="absolute bottom-0 right-0 z-[-1]">
-          <img src="/images/landing-2/footer/shape-3.svg" alt="" />
+          <img src="/images/starter/footer/shape-3.svg" alt="" />
         </span>
 
         <span class="absolute right-0 top-0 z-[-1]">

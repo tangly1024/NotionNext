@@ -14,12 +14,12 @@ export const MadeWithButton = () => {
       <span class="block h-4 w-px bg-stroke dark:bg-dark-3"></span>
       <span class="block w-full max-w-[88px]">
         <img
-          src=".//images/landing-2/brands/tailgrids.svg"
+          src="/images/starter/brands/tailgrids.svg"
           alt="tailgrids"
           class="dark:hidden"
         />
         <img
-          src=".//images/landing-2/brands/tailgrids-white.svg"
+          src="/images/starter/brands/tailgrids-white.svg"
           alt="tailgrids"
           class="hidden dark:block"
         />
