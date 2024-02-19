@@ -305,6 +305,7 @@ const LayoutSlug = props => {
                   <ArticleRecommend {...props} />
                   {/* 上一篇\下一篇文章 */}
                   <ArticleAdjacent {...props} />
+                  <Adslot type='native' />
                 </div>
               )}
             </article>
