@@ -4,8 +4,6 @@ import { useRouter } from 'next/router'
 
 export const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
-  //   const show = true
-  //   const changeShow = () => {}
   const router = useRouter()
 
   if (!link || !link.show) {
@@ -13,7 +11,6 @@ export const MenuItemDrop = ({ link }) => {
   }
   const hasSubMenu = link?.subMenus?.length > 0
   const selected = (router.pathname === link.to) || (router.asPath === link.to)
-
   return <li className='cursor-pointer list-none items-center flex mx-2' onMouseOver={() => changeShow(true)} onMouseOut={() => changeShow(false)} >
 
         {hasSubMenu &&
