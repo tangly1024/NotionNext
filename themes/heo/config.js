@@ -6,7 +6,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
     { title: '欢迎来到我的博客', url: 'https://3hi.xxvv.fun' },
-    { title: 'welcome，strange friends', url: 'https://3hi.xxvv.fun' }
+    { title: '写作是最值得投资的一项技能', url: 'https://3hi.xxvv.fun' }
   ],
 
   // 英雄区(首页顶部大卡)
