@@ -59,6 +59,8 @@ const LayoutBase = props => {
 
   const headerSlot = (
     <header>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5501212635990108"
+    crossorigin="anonymous"></script>
       {/* 顶部导航 */}
       <NavBar {...props} />
 
@@ -70,6 +72,7 @@ const LayoutBase = props => {
         </>
         : null}
       {fullWidth ? null : <PostHeader {...props} />}
+
     </header>
   )
 
