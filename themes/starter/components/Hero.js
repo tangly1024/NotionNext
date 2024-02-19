@@ -1,10 +1,10 @@
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
-import SVGPlayBootstrap from './SVGPlayBoostrap'
-import SVGPlayTailwind from './SVGPlayTailWind'
-import SVGPlayReact from './SVGPlayReact'
-import SVGPlayAstro from './SVGPlayAstro'
-import SVGPlayNext from './SVGPlayNext'
+import SVGPlayBootstrap from './svg/SVGPlayBoostrap'
+import SVGPlayTailwind from './svg/SVGPlayTailWind'
+import SVGPlayReact from './svg/SVGPlayReact'
+import SVGPlayAstro from './svg/SVGPlayAstro'
+import SVGPlayNext from './svg/SVGPlayNext'
 
 export const Hero = () => {
   return <>
@@ -77,20 +77,34 @@ export const Hero = () => {
               {/* 技术栈说明 */}
               <div>
                 <p className="mb-4 text-center text-base font-medium text-white">
-                {siteConfig('STARTER_HERO_BUTTON_3_TEXT', null, CONFIG)}
+                {siteConfig('STARTER_HERO_TITLE_3', null, CONFIG)}
                 </p>
 
                 {/* 产品技术栈图标 */}
-                <div
-                  className="wow fadeInUp flex items-center justify-center gap-4 text-center"
-                  data-wow-delay=".3s"
-                >
+                <div data-wow-delay=".3s" className="wow fadeInUp flex items-center justify-center gap-4 text-center">
+
                   {/* 图标放这里 */}
-                  <SVGPlayBootstrap/>
-                  <SVGPlayTailwind/>
-                  <SVGPlayReact/>
-                  <SVGPlayAstro/>
-                  <SVGPlayNext/>
+                    <a target="_blank" rel="noreferrer" href="https://github.com/uideck/play-bootstrap/"
+                        className="text-white/60 duration-300 ease-in-out hover:text-white" >
+                        <SVGPlayBootstrap/>
+                    </a>
+                    <a target="_blank" rel="noreferrer" href="https://github.com/TailGrids/play-tailwind/"
+                        className="text-white/60 duration-300 ease-in-out hover:text-white" >
+                        <SVGPlayTailwind/>
+                    </a>
+                    <a target="_blank" rel="noreferrer" href="https://github.com/NextJSTemplates/play-nextjs"
+                        className="text-white/60 duration-300 ease-in-out hover:text-white" >
+                      <SVGPlayReact/>
+                    </a>
+                    <a target="_blank" rel="noreferrer" href="https://github.com/TailGrids/play-astro/"
+                       className="text-white/60 duration-300 ease-in-out hover:text-white" >
+                       <SVGPlayAstro/>
+                    </a>
+                    <a target="_blank" rel="noreferrer" href="https://github.com/NextJSTemplates/play-nextjs"
+                        className="text-white/60 duration-300 ease-in-out hover:text-white" >
+                        <SVGPlayNext/>
+                    </a>
+
                 </div>
 
               </div>

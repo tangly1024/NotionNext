@@ -32,7 +32,7 @@ import { Footer } from './components/Footer'
 import { BackToTopButton } from './components/BackToTopButton'
 import { MadeWithButton } from './components/MadeWithButton'
 import { LAYOUT_MAPPINGS } from '@/blog.config'
-import { SVG404 } from './components/SVG404'
+import { SVG404 } from './components/svg/SVG404'
 
 /**
  * 一些外部js

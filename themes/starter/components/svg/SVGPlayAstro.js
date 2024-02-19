@@ -1,10 +1,5 @@
 export default function SVGPlayAstro() {
-  return <a
-  href="https://github.com/TailGrids/play-astro/"
-  className="text-white/60 duration-300 ease-in-out hover:text-white"
-  target="_blank" rel="noreferrer"
->
-  <svg
+  return <svg
     className="mt-0.5 fill-current"
     width="30"
     height="38"
@@ -30,5 +25,4 @@ export default function SVGPlayAstro() {
       </clipPath>
     </defs>
   </svg>
-</a>
 }

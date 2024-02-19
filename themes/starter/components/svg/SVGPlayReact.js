@@ -1,10 +1,5 @@
 export default function SVGPlayReact() {
-  return <a
-  href="https://github.com/NextJSTemplates/play-nextjs"
-  className="text-white/60 duration-300 ease-in-out hover:text-white"
-  target="_blank" rel="noreferrer"
->
-  <svg
+  return <svg
     className="fill-current"
     width="41"
     height="36"
@@ -19,5 +14,4 @@ export default function SVGPlayReact() {
       d="M20.5134 21.7133C22.5714 21.7133 24.2394 20.0451 24.2394 17.9873C24.2394 15.9294 22.5714 14.2612 20.5134 14.2612C18.4558 14.2612 16.7874 15.9294 16.7874 17.9873C16.7874 20.0451 18.4558 21.7133 20.5134 21.7133Z"
     />
   </svg>
-</a>
 }

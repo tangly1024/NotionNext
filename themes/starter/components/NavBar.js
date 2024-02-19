@@ -30,9 +30,9 @@ export const NavBar = (props) => {
       const scrollY = window.scrollY;
       // 控制台输出当前滚动位置和 sticky 值
       if (scrollY > 0) {
-        ud_header.classList.add('sticky');
+        ud_header?.classList?.add('sticky');
       } else {
-        ud_header.classList.remove('sticky');
+        ud_header?.classList?.remove('sticky');
       }
     }, throttleMs)
   )

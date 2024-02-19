@@ -1,10 +1,5 @@
 export default function SVGPlayBootstrap() {
-  return <a
-    href="https://github.com/uideck/play-bootstrap/"
-    className="text-white/60 duration-300 ease-in-out hover:text-white"
-    target="_blank" rel="noreferrer"
-  >
-    <svg
+  return <svg
       className="fill-current"
       width="41"
       height="32"
@@ -33,5 +28,4 @@ export default function SVGPlayBootstrap() {
         />
       </g>
     </svg>
-  </a>
 }
