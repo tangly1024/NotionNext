@@ -77,9 +77,6 @@ const AdSlot = ({ type = 'show' }) => {
             data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
             data-ad-client="ca-pub-5501212635990108"
             data-ad-slot="2810994963"></ins>
-            
-            //data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
-            //data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_NATIVE')}></ins>
   }
 
   //  展示广告
