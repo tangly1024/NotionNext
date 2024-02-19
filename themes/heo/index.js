@@ -106,7 +106,6 @@ const LayoutBase = props => {
             {/* 主区上部嵌入 */}
             {slotTop}
             {children}
-          <AdSlot type="native" />
           </div>
 
           <div className='lg:px-2'></div>
@@ -144,6 +143,7 @@ const LayoutIndex = props => {
           : (
             <BlogPostListScroll {...props} />
             )}
+      <AdSlot type="native" />
       </div>
   )
 }
