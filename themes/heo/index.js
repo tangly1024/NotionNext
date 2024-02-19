@@ -106,6 +106,7 @@ const LayoutBase = props => {
             {/* 主区上部嵌入 */}
             {slotTop}
             {children}
+          <AdSlot type='native' /> //google ads
           </div>
 
           <div className='lg:px-2'></div>
