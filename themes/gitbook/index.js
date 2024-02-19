@@ -29,12 +29,11 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import BlogArchiveItem from './components/BlogArchiveItem'
-import BlogPostListPage from './components/BlogPostListPage'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { siteConfig } from '@/lib/config'
+import NotionIcon from '@/components/NotionIcon'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -48,7 +47,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
+  const { children, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -63,7 +62,6 @@ const LayoutBase = (props) => {
 
   return (
         <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
-            <CommonHead meta={meta}/>
             <Style/>
 
             <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
@@ -193,7 +191,7 @@ const LayoutIndex = (props) => {
     })
   }, [])
 
-  return <LayoutBase {...props} />
+  return <></>
 }
 
 /**
@@ -203,9 +201,7 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props} >
-            <div className='mt-10'><BlogPostListPage {...props} /></div>
-    </LayoutBase>
+  return <></>
 }
 
 /**
@@ -217,14 +213,14 @@ const LayoutSlug = (props) => {
   const { post, prev, next, lock, validPassword } = props
 
   return (
-        <LayoutBase {...props} >
+        <>
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
             {!lock && <div id='container'>
 
                 {/* title */}
-                <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
+                <h1 className="text-3xl pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
                 {/* Notion文章主体 */}
                 {post && (<section id="article-wrapper" className="px-1">
@@ -250,7 +246,7 @@ const LayoutSlug = (props) => {
 
                 <TocDrawer {...props} />
             </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -261,7 +257,7 @@ const LayoutSlug = (props) => {
  * @returns
  */
 const LayoutSearch = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  return <></>
 }
 
 /**
@@ -273,20 +269,20 @@ const LayoutSearch = (props) => {
 const LayoutArchive = (props) => {
   const { archivePosts } = props
 
-  return <LayoutBase {...props}>
+  return <>
         <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
             {Object.keys(archivePosts)?.map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
         </div>
-  </LayoutBase>
+  </>
 }
 
 /**
  * 404
  */
 const Layout404 = props => {
-  return <LayoutBase {...props}>
+  return <>
         <div className='w-full h-96 py-80 flex justify-center items-center'>404 Not found.</div>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -295,7 +291,7 @@ const Layout404 = props => {
 const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-  return <LayoutBase {...props}>
+  return <>
      <div className='bg-white dark:bg-gray-700 py-10'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
@@ -317,7 +313,7 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 /**
@@ -327,7 +323,7 @@ const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   const { locale } = useGlobal()
 
-  return <LayoutBase {...props}>
+  return <>
      <div className="bg-white dark:bg-gray-700 py-10">
                 <div className="dark:text-gray-200 mb-5">
                     <i className="mr-4 fas fa-tag" />
@@ -343,11 +339,12 @@ const LayoutTagIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
