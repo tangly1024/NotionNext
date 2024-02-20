@@ -47,6 +47,49 @@ const CONFIG = {
   STARTER_FEATURE_4_BUTTON_TEXT: '了解更多', // 特性4
   STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
 
+  //   首页ABOUT栏目
+  STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
+  STARTER_ABOUT_TEXT: 'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
+  STARTER_ABOUT_BUTTON_TEXT: '了解更多',
+  STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
+  STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
+  STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
+  STARTER_ABOUT_TIPS_1: '7000+',
+  STARTER_ABOUT_TIPS_2: '博客站点',
+  STARTER_ABOUT_TIPS_3: '正在线上运行',
+
+  STARTER_PRICING_TITLE: '价格表',
+  STARTER_PRICING_TEXT_1: '很棒的定价计划',
+  STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（这里仅做功能展示请勿下单！请勿购买！请勿付费！）',
+
+  STARTER_PRICING_1_TITLE: '入门版',
+  STARTER_PRICING_1_PRICE: '19.9',
+  STARTER_PRICING_1_PRICE_CURRENCY: '$',
+  STARTER_PRICING_1_PRICE_PERIOD: '每月',
+  STARTER_PRICING_1_HEADER: '功能点',
+  STARTER_PRICING_1_FEATURES: '所有的主题,免费更新,帮助手册', // 英文逗号隔开
+  STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
+  STARTER_PRICING_1_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
+
+  STARTER_PRICING_2_TAG: '推荐',
+  STARTER_PRICING_2_TITLE: '基础版',
+  STARTER_PRICING_2_PRICE: '39.9',
+  STARTER_PRICING_2_PRICE_CURRENCY: '$',
+  STARTER_PRICING_2_PRICE_PERIOD: '每月',
+  STARTER_PRICING_2_HEADER: '功能点',
+  STARTER_PRICING_2_FEATURES: '包含入门版,项目源码,内部社群,技术咨询,SEO优化', // 英文逗号隔开
+  STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
+  STARTER_PRICING_2_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/590ad70a-c3b7-4caf-94ec-9ca27bde06d4',
+
+  STARTER_PRICING_3_TITLE: '高级版',
+  STARTER_PRICING_3_PRICE: '59.9',
+  STARTER_PRICING_3_PRICE_CURRENCY: '$',
+  STARTER_PRICING_3_PRICE_PERIOD: '每月',
+  STARTER_PRICING_3_HEADER: '功能点',
+  STARTER_PRICING_3_FEATURES: '包含基础版,功能定制开发', // 英文逗号隔开
+  STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
+  STARTER_PRICING_3_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
+
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG
