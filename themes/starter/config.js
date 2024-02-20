@@ -7,6 +7,9 @@ const CONFIG = {
   STARTER_LOGO: '', // 普通logo图片 示例：/images/starter/logo/logo.svg
   STARTER_LOGO_WHITE: '', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
 
+  // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
+
+  // 英雄区块导航
   STARTER_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具。', // 英雄区文字
   STARTER_HERO_TITLE_2: '使用您喜爱的技术（Tailwind 和 React NextJS）构建各种网站主题模板。  ', // 英雄区文字
   STARTER_HERO_TITLE_3: '使用最新技术构建', // 英雄区文字
@@ -16,13 +19,14 @@ const CONFIG = {
   STARTER_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
+  // 顶部右侧导航暗流
   STARTER_NAV_BUTTON_1_TEXT: 'Sign In',
   STARTER_NAV_BUTTON_1_URL: '/signin',
 
   STARTER_NAV_BUTTON_2_TEXT: 'Sign Up',
   STARTER_NAV_BUTTON_2_URL: '/signup',
 
-  // 特性相关
+  // 特性区块
   STARTER_FEATURE_TITLE: '特性', // 特性
   STARTER_FEATURE_TEXT_1: 'NotionNext的主要特性', // 特性
   STARTER_FEATURE_TEXT_2: 'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站。  ', // 特性
@@ -47,7 +51,7 @@ const CONFIG = {
   STARTER_FEATURE_4_BUTTON_TEXT: '了解更多', // 特性4
   STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
 
-  //   首页ABOUT栏目
+  // 首页ABOUT区块
   STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
   STARTER_ABOUT_TEXT: 'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
@@ -58,6 +62,7 @@ const CONFIG = {
   STARTER_ABOUT_TIPS_2: '博客站点',
   STARTER_ABOUT_TIPS_3: '正在线上运行',
 
+  // 首页价格区块
   STARTER_PRICING_TITLE: '价格表',
   STARTER_PRICING_TEXT_1: '很棒的定价计划',
   STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（NotionNext完全免费，这里仅做主题功能演示。请勿下单！请勿购买！）',
@@ -150,13 +155,55 @@ const CONFIG = {
   STARTER_FAQ_1_ANSWER: 'NotionNext提供了<a href="https://docs.tangly1024.com/about" class="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" class="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" class="underline">交流社群</a>来协助您完成网站的搭建部署',
 
   STARTER_FAQ_2_QUESTION: '部署后要如何编写文章？',
-  STARTER_FAQ_2_ANSWER: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a class="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</>',
+  STARTER_FAQ_2_ANSWER: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a class="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>',
 
   STARTER_FAQ_3_QUESTION: '站点部署失败，更新失败？',
   STARTER_FAQ_3_ANSWER: '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助',
 
   STARTER_FAQ_4_QUESTION: '文章没有实时同步？',
   STARTER_FAQ_4_ANSWER: '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
+
+  STARTER_TEAM_TITLE: '团队成员',
+  STARTER_TEAM_TEXT_1: '我们的开发者团队',
+  STARTER_TEAM_TEXT_2: 'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a class="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
+
+  // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
+  STARTER_TEAM_ITEMS: [
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
+      STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-01.png',
+      STARTER_TEAM_ITEM_NICKNAME: 'Melissa Tatcher',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
+      STARTER_TEAM_ITEM_NICKNAME: 'Stuard Ferrel',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-03.png',
+      STARTER_TEAM_ITEM_NICKNAME: 'Eva Hudson',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Creative Designer'
+    }
+  ],
+
+  // 博客文章区块
+  STARTER_BLOG_TITLE: '我们的博客',
+  STARTER_BLOG_TEXT_1: '最近的新闻',
+  STARTER_BLOG_TEXT_2: '这里会发布一些关于NotionNext的最新动态，包括新的动向、新的未来计划，以及新功能的特性',
+
+  STARTER_FOOTER_PRIVACY_POLICY_TEXT: '隐私政策',
+  STARTER_FOOTER_PRIVACY_POLICY_URL: '/privacy-policy',
+
+  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT: '法律声明',
+  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: '/legacy-notice',
+
+  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: '服务协议',
+  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: '/terms-of-use',
 
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }

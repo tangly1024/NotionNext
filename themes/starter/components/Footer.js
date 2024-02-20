@@ -1,3 +1,7 @@
+import { siteConfig } from '@/lib/config'
+import CONFIG from '../config'
+
+/* eslint-disable @next/next/no-img-element */
 export const Footer = () => {
   return <>
         {/* <!-- ====== Footer Section Start --> */}
@@ -262,6 +266,8 @@ export const Footer = () => {
         </div>
       </div>
 
+      {/* 底部版权信息相关 */}
+
       <div
         class="mt-12 border-t border-[#8890A4] border-opacity-40 py-8 lg:mt-[60px]"
       >
@@ -273,22 +279,22 @@ export const Footer = () => {
                   class="-mx-3 flex items-center justify-center md:justify-start"
                 >
                   <a
-
+                    href= {siteConfig('STARTER_FOOTER_PRIVACY_POLICY_URL', null, CONFIG)}
                     class="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
-                    Privacy policy
+                    {siteConfig('STARTER_FOOTER_PRIVACY_POLICY_TEXT', null, CONFIG)}
                   </a>
                   <a
-
+                    href= {siteConfig('STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL', null, CONFIG)}
                     class="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
-                    Legal notice
+                    {siteConfig('STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT', null, CONFIG)}
                   </a>
                   <a
-
+                    href= {siteConfig('STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL', null, CONFIG)}
                     class="px-3 text-base text-gray-7 hover:text-white hover:underline"
                   >
-                    Terms of service
+                    {siteConfig('STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT', null, CONFIG)}
                   </a>
                 </div>
               </div>
@@ -298,12 +304,12 @@ export const Footer = () => {
                 <p class="text-base text-gray-7">
                   Designed and Developed by
                   <a
-                    href="https://tailgrids.com"
+                    href="https://github.com/tangly1024/NotionNext"
                     rel="nofollow noopner noreferrer"
                     target="_blank"
-                    class="text-gray-1 hover:underline"
+                    class="px-1 text-gray-1 hover:underline"
                   >
-                    TailGrids and UIdeck
+                    NotionNext
                   </a>
                 </p>
               </div>
