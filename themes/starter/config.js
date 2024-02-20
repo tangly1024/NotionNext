@@ -141,6 +141,23 @@ const CONFIG = {
     }
   ],
 
+  //   FAQ模块
+  STARTER_FAQ_TITLE: '常见问题解答',
+  STARTER_FAQ_TEXT_1: '有任何问题吗？请看这里',
+  STARTER_FAQ_TEXT_2: '我们收集了常见的用户疑问',
+
+  STARTER_FAQ_1_QUESTION: 'NotionNext有帮助文档吗？',
+  STARTER_FAQ_1_ANSWER: 'NotionNext提供了<a href="https://docs.tangly1024.com/about" class="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" class="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" class="underline">交流社群</a>来协助您完成网站的搭建部署',
+
+  STARTER_FAQ_2_QUESTION: '部署后要如何编写文章？',
+  STARTER_FAQ_2_ANSWER: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a class="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</>',
+
+  STARTER_FAQ_3_QUESTION: '站点部署失败，更新失败？',
+  STARTER_FAQ_3_ANSWER: '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助',
+
+  STARTER_FAQ_4_QUESTION: '文章没有实时同步？',
+  STARTER_FAQ_4_ANSWER: '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
+
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG
