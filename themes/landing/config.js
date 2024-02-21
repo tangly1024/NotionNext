@@ -15,8 +15,8 @@ const CONFIG = {
   LANDING_HERO_BUTTON_2_LINK: 'https://www.youtube.com/c/Smthelping',
   LANDING_HERO_VIDEO_IMAGE: '/images/home.png',
   //   HERO_VIDEO_URL: '/videos/video.mp4',
-  LANDING_HERO_VIDEO_IFRAME: '//player.bilibili.com/player.html?aid=913088616&bvid=BV1fM4y1L7Qi&cid=1187218697&page=1&&high_quality=1',
-  LANDING_HERO_VIDEO_TIPS: 'Watch the full video (2 min)',
+  LANDING_HERO_VIDEO_IFRAME: 'https://www.youtube.com/embed/AvI9rTkF748?si=AYZCIxorHcQX0EFC',
+  LANDING_HERO_VIDEO_TIPS: 'Watch Feeder Working video (1 min)',
 
   // 特性介绍
   LANDING_FEATURES_HEADER_1: '探索的过程',
