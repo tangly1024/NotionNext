@@ -2,7 +2,6 @@ import BlogPostCard from './BlogPostCard'
 import PaginationNumber from './PaginationNumber'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { siteConfig } from '@/lib/config'
-import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 文章列表分页表格
@@ -25,7 +24,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
                         {posts?.map(post => (
                             <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
                         ))}
-                    <AdsSlot type="flow" />
+                  
                     </div>
 
                     {showPagination && <PaginationNumber page={page} totalPage={totalPage} />}
