@@ -69,8 +69,8 @@ export default function Newsletter() {
 
                             {/* CTA content */}
                             <div className="text-center lg:text-left lg:max-w-xl">
-                                <h3 className="h3 text-white mb-2">需要更多的教程和帮助?</h3>
-                                <p className="text-gray-300 text-lg mb-6">请留下您的电子邮件，我会第一时间与您取得联系</p>
+                                <h3 className="h3 text-white mb-2">Need to design a new feeder?</h3>
+                                <p className="text-gray-300 text-lg mb-6">Please Email to: info@SMThelp.com</p>
 
                                 {/* CTA form */}
                                 <form ref={formRef} className="w-full lg:w-auto">
@@ -79,8 +79,8 @@ export default function Newsletter() {
                                         <button disabled={success} type='submit' className={`btn text-white  shadow ${success ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'}`} href="#0">{success ? 'Subscribed' : 'Subscribe'}</button>
                                     </div>
                                     {/* Success message */}
-                                    {success && <p className="text-sm text-gray-400 mt-3">感谢您的订阅!</p>}
-                                    {!success && <p className="text-sm text-gray-400 mt-3">没有垃圾邮件，您可以随时取消订阅</p>}
+                                    {success && <p className="text-sm text-gray-400 mt-3">Thank you for subscribing!</p>}
+                                    {!success && <p className="text-sm text-gray-400 mt-3">No spam, unsubscribe at any time</p>}
                                 </form>
                             </div>
 
