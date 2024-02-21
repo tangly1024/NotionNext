@@ -1,86 +1,128 @@
+import { RiBracesFill, RiSuitcaseFill } from "react-icons/ri";
+
+import { BsPencilFill } from "react-icons/bs";
+import { FaBookOpen } from "react-icons/fa";
+import { FiLayers } from "react-icons/fi";
+import { TbCertificate } from "react-icons/tb";
+
 const CONFIG = {
 
-  LANDING_HEADER_BUTTON_1_TITLE: 'Github开源',
-  LANDING_HEADER_BUTTON_1_URL: 'https://github.com/tangly1024/NotionNext',
+  HEADER_BUTTON_1_TITLE: '🚀 AI 101',
+  HEDEAR_BUTTON_1_URL: '/about',
 
-  LANDING_HEADER_BUTTON_2_TITLE: '作者博客',
-  LANDING_HEADER_BUTTON_2_URL: 'https://blog.tangly1024.com/',
+  HEADER_BUTTON_2_TITLE: '⏰ 每日精选',
+  HEDEAR_BUTTON_2_URL: '/daily',
+
+  HEADER_BUTTON_3_TITLE: '📰 更新日志',
+  HEDEAR_BUTTON_3_URL: '/updateLog',
+
+  HEADER_BUTTON_4_TITLE: '💪 共创',
+  HEDEAR_BUTTON_4_URL: '/contribute',
+
+  HEADER_BUTTON_5_TITLE: '🧙关于我们',
+  HEDEAR_BUTTON_5_URL: '/us',
 
   // 首页大图英雄板块
-  LANDING_HERO_TITLE_1: 'NotionNext',
-  LANDING_HERO_P_1: '快速搭建独立站、轻松放大品牌价值！',
-  LANDING_HERO_BUTTON_1_TEXT: '开始体验',
-  LANDING_HERO_BUTTON_1_LINK: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
-  LANDING_HERO_BUTTON_2_TEXT: '了解更多',
-  LANDING_HERO_BUTTON_2_LINK: 'https://docs.tangly1024.com/about',
-  LANDING_HERO_VIDEO_IMAGE: '/images/home.png',
-  //   HERO_VIDEO_URL: '/videos/video.mp4',
-  LANDING_HERO_VIDEO_IFRAME: '//player.bilibili.com/player.html?aid=913088616&bvid=BV1fM4y1L7Qi&cid=1187218697&page=1&&high_quality=1',
-  LANDING_HERO_VIDEO_TIPS: 'Watch the full video (2 min)',
+  HERO_TITLE_1: 'Your CookBook to Become a Pro at Communicating with AI',
+  HERO_P_1: "🥳 加入我们的免费开源课程，深入了解最先进的AIGC技术，每月为您呈现8个精选热门AI项目🎉",
+  HERO_BUTTON_1_TEXT: 'Start Learning',
+  CATEGORIES: ["ChatGPT", "Midjourney", "Runway", "Agents"],
+  CATEGORIES2: ["OpenLLM", "StableDiffusion", "DigitalHuman", "AI Audio"],
 
-  // 特性介绍
-  LANDING_FEATURES_HEADER_1: '探索的过程',
-  LANDING_FEATURES_HEADER_1_P: "如何搭建自己的门户网站，塑造一个品牌展示中心？<br/>曾经，它是系统<strong class='font-bold text-red-500'>繁重</strong>的Wordpress、是操作<strong class='font-bold  text-red-500'>复杂</strong>的Hexo、是<strong class='font-bold text-red-500'>昂贵</strong>且<strong class='font-bold text-red-500'>不稳定</strong>的技术团队;<br/>现在，只要一个Notion笔记就够了",
-  LANDING_FEATURES_HEADER_2: 'Notion+NextJs组合方案',
-  LANDING_FEATURES_HEADER_2_P: '在Notion笔记中管理文章数据，NextJs将其渲染成网页排版，通过Vercel等第三方平台将您的网站发布到全球。',
-  LANDING_FEATURES_CARD_1_TITLE: '简单快速的系统',
-  LANDING_FEATURES_CARD_1_P: '在Notion中写下一篇文章，内容立刻在您的网站首页中呈现给互联网',
-  LANDING_FEATURES_CARD_2_TITLE: '高效传播的媒介',
-  LANDING_FEATURES_CARD_2_P: '优秀的SEO、快速的响应速度，让您的产品和宣传触达到更多的受众',
-  LANDING_FEATURES_CARD_3_TITLE: '人性化的定制工具',
-  LANDING_FEATURES_CARD_3_P: '多款主题供您挑选，可以搭建各种不同风格和作用的网站，更多的主题正在陆续加入中。',
+  JOIN_1: '加入我们的社区',
+  JOIN_2: '成为 Prompt Engineering 专家',
+  JOIN_STATS: [
+    {
+      header: "70K+",
+      subtitle: "People Learning",
+    },
+    {
+      header: "10K+",
+      subtitle: "Community Members",
+    },
+    {
+      header: "80+",
+      subtitle: "Content Modules",
+    },
+    {
+      header: "10+",
+      subtitle: "AIGC Project",
+    },
+  ],
 
-  // 特性介绍2
-  LANDING_FEATURES_BLOCK_HEADER: '解决方案',
-  LANDING_FEATURES_BLOCK_P: '人人自媒体的时代，一个网站将帮您链接更多的人，带给你无限的机会和客户。<br/>您还在等什么呢？',
-  LANDING_FEATURES_BLOCK_1_TITLE: '用网站来展示品牌',
-  LANDING_FEATURES_BLOCK_1_P: '比起线下渠道、一个公开域名和网站更有说服力',
-  LANDING_FEATURES_BLOCK_2_TITLE: 'SEO带来更多流量',
-  LANDING_FEATURES_BLOCK_2_P: '借助搜索引擎，精准定位您的受众',
-  LANDING_FEATURES_BLOCK_3_TITLE: '网站的性能很重要',
-  LANDING_FEATURES_BLOCK_3_P: '更快的响应，更好的用户体验',
-  LANDING_FEATURES_BLOCK_4_TITLE: '打造您的个人品牌',
-  LANDING_FEATURES_BLOCK_4_P: '继马斯克、乔布斯之后，您将是下一个传奇',
-  LANDING_FEATURES_BLOCK_5_TITLE: '写作表达是核心技能',
-  LANDING_FEATURES_BLOCK_5_P: '比起只阅读输入，更重要的是反思和输出',
-  LANDING_FEATURES_BLOCK_6_TITLE: '开始写博客吧',
-  LANDING_FEATURES_BLOCK_6_P: 'NotionNext，助您轻松开始写作',
 
-  // 感言
-  LANDING_TESTIMONIALS_HEADER: '已搭建超7000个网站、总浏览量突破100,000,000+',
-  LANDING_TESTIMONIALS_P: '网站内容涵盖地产、教育、建筑、医学、机械、IT、电子、软件、自媒体、数位游民、短视频、电商、学生、摄影爱好者、旅行爱好者等等各行各业',
+  HERO_BUTTON_1_LINK: '/about',
 
-  LANDING_TESTIMONIALS_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
-  LANDING_TESTIMONIALS_NICKNAME: 'Ryan_G',
-  LANDING_TESTIMONIALS_ID: 'Ryan`Log 站长',
-  LANDING_TESTIMONIALS_SOCIAL_NAME: '@Gaoran',
-  LANDING_TESTIMONIALS_SOCIAL_URL: 'https://blog.gaoran.xyz/',
-  LANDING_TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ “',
+  // 特性介绍 Before, it was scattered lessons, chaotic learning paths, and high costs.
+  FEATURES_HEADER_1: '轻松学习AI技术',
+  FEATURES_HEADER_1_P: "如何掌握AI技术成为行业专家？<br/>从过去<strong class='font-bold text-red-500'>零散</strong>的课程, <strong class='font-bold  text-red-500'>混乱</strong>的学习路径和<strong class='font-bold text-red-500'>高昂</strong>的成本;<br/>现在只需一个一站式平台 <strong class='font-bold text-purple-900 bg-clip-text' style='background-image: linear-gradient(to bottom right, rgb(36,5,80), rgb(108,75,150), rgb(213,189,237)); color: transparent;'>Learn Prompt</strong> is all you need",
+  FEATURES_HEADER_2: '三大核心优势',
+  FEATURES_CARD_1_TITLE: '快速入门',
+  FEATURES_CARD_1_P: '选择一门您喜欢的课程，建立学习体系，立即开始您的人工智能之旅',
+  FEATURES_CARD_2_TITLE: '全球化社区',
+  FEATURES_CARD_2_P: '加入我们，与更多社区建立联系！让您的AI技能得到广泛认可和提升',
+  FEATURES_CARD_3_TITLE: '持续更新',
+  FEATURES_CARD_3_P: '快速追踪热门AI产品，分级打造教学课程，享受持续更新的最新内容',
+  
+  FAQ_LEFT: [
+    {
+      icon: (
+        <FaBookOpen className="align-middle inline-block text-dark/500 text-xl" />
+      ),
+      header: "该课程是免费的吗？",
+      subtitle:
+        "它是完全免费和开源的。每个人都可以免费访问我们网站上的所有资源。",
+    },
+    {
+      icon: (
+        <RiBracesFill className="align-middle inline-block text-dark/500 text-xl mt-1" />
+      ),
+      header: "我需要有编程能力吗？",
+      subtitle:
+        "完全不需要！课程的设计具有包容性，无论学员是否具有编程背景，都可以参加。",
+    },
+    {
+      icon: (
+        <TbCertificate className="align-middle inline-block text-dark/500 text-2xl mt-1" />
+      ),
+      header: "学习人工智能真的有用吗？",
+      subtitle:
+        "当然！人工智能是一个快速发展的领域，掌握这项技能将为您打开各行各业的大门。",
+    },
+  ],  
+  FAQ_RIGHT: [
+    {
+      icon: (
+        <FiLayers className="align-middle inline-block text-dark/500 text-xl mt-1" />
+      ),
+      header: "需要人工智能方面的经验吗？",
+      subtitle:
+        "不需要！我们的课程将带您了解人工智能的基础知识和高级技巧。",
+    },
+    {
+      icon: (
+        <RiSuitcaseFill className="align-middle inline-block text-dark/500 text-2xl mt-1" />
+      ),
+      header: "课程是否提供证书？",
+      subtitle:
+        "我们计划发布教程，教您如何从谷歌、微软和其他公司获得人工智能证书。",
+    },
+    {
+      icon: (
+        <BsPencilFill className="align-middle inline-block text-dark/500 text-xl mt-1" />
+      ),
+      header: "我能为这个项目做出贡献吗？",
+      subtitle:
+        "是的，我们一直在寻找投稿人。更多详情，请导航至网站顶部菜单栏，点击‘共创’。",
+    },
+  ],
 
-  LANDING_POST_REDIRECT_ENABLE: process.env.NEXT_PUBLIC_POST_REDIRECT_ENABLE || false, // 是否开启文章地址重定向 ； 用于迁移旧网站域名
-  LANDING_POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://blog.tangly1024.com', // 重定向网站地址
+  START: 'Start Now',
+  START_1: "Learn AI for free, for all levels!",
+  
+  POST_REDIRECT_ENABLE: process.env.NEXT_PUBLIC_POST_REDIRECT_ENABLE || false, // 是否开启文章地址重定向 ； 用于迁移旧网站域名
+  POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://www.learnprompt.pro', // 重定向网站地址
 
-  LANDING_PRICING_TITLE: '价格表',
-  LANDING_PRICING_P: 'NotionNext开源免费，此处仅演示订阅付费功能！请勿购买！',
-
-  LANDING_PRICING_1_TITLE: '个人版',
-  LANDING_PRICING_1_PRICE: '免费',
-  LANDING_PRICING_1_CONTENT: '项目源代码,部署教程,不定时技术答疑',
-  LANDING_PRICING_1_BUTTON: '开始体验',
-  LANDING_PRICING_1_URL: 'https://docs.tangly1024.com/about',
-
-  LANDING_PRICING_2_TITLE: '捐赠版',
-  LANDING_PRICING_2_PRICE: '$9.9/月',
-  LANDING_PRICING_2_CONTENT: '项目源代码,部署教程,长期技术答疑,代码升级合并,内部社群',
-  LANDING_PRICING_2_BUTTON: '立即购买',
-  LANDING_PRICING_2_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/0adb9153-0799-4f51-91aa-1f06391ea4e0',
-
-  LANDING_PRICING_3_TITLE: '企业版',
-  LANDING_PRICING_3_PRICE: '$59/月',
-  LANDING_PRICING_3_CONTENT: '项目源代码,部署教程,VIP技术咨询,代码升级合并,内部社群,定制功能开发,SEO优化',
-  LANDING_PRICING_3_BUTTON: '立即购买',
-  LANDING_PRICING_3_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
-
-  LANDING_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
+  NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG

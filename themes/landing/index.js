@@ -7,6 +7,7 @@
  * 2. 内容大部分是在此文件中写死，notion数据从props参数中传进来
  * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
  */
+/* eslint-disable*/
 import NotionPage from '@/components/NotionPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -15,27 +16,43 @@ import Features from './components/Features'
 import FeaturesBlocks from './components/FeaturesBlocks'
 import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
+import CommonHead from '@/components/CommonHead'
 import { useRouter } from 'next/router'
 import CONFIG from './config'
 import Loading from '@/components/Loading'
 import { isBrowser } from '@/lib/utils'
-import { siteConfig } from '@/lib/config'
-import { Pricing } from './components/Pricing'
+
+// new import
+import Join from "./components/Join";
+import FAQ from "./components/FAQ";
+import GetStarted from "./components/GetStarted";
+
+/**
+ * 这是个配置文件，可以方便在此统一配置信息
+ */
+const THEME_CONFIG = { THEME: 'landing' }
 
 /**
  * 布局框架
- * Landing 主题用作产品落地页展示
- * 结合Stripe或者lemonsqueezy插件可以成为saas支付订阅
+ * 作为一个基础框架使用，定义了整个主题每个页面必备的顶部导航栏和页脚
+ * 其它页面都嵌入到此框架中使用
  * @param {*} props
  * @returns
  */
 const LayoutBase = (props) => {
-  const { children } = props
+    const { meta, siteInfo, children } = props
+    const router = useRouter()
+    const currentPath = router.asPath;  // Current URL path.
+    const isZhHomePage = currentPath === '/zh';
+    const i18n = isZhHomePage ? 'zh' : 'en'
 
-  return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white dark:bg-black">
+    return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white">
+
+        {/* 网页SEO */}
+        <CommonHead meta={meta} siteInfo={siteInfo} />
 
         {/* 顶部导航栏 */}
-        <Header />
+        <Header i18n={i18n}/>
 
         {/* 内容 */}
         <div id='content-wrapper'>
@@ -43,9 +60,10 @@ const LayoutBase = (props) => {
         </div>
 
         {/* 底部页脚 */}
-        <Footer />
+        <Footer i18n={i18n}/>
     </div>
 }
+
 
 /**
  * 首页布局
@@ -53,15 +71,19 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
+  const router = useRouter()
+  const currentPath = router.asPath;  // Current URL path.
+  const isZhHomePage = currentPath === '/zh';
+  const i18n = isZhHomePage ? 'zh' : 'en'
+
   return (
-        <>
-            <Hero />
-            <Features />
-            <FeaturesBlocks />
-            <Testimonials />
-            <Pricing/>
-            <Newsletter />
-        </>
+      <LayoutBase {...props}>
+          <Hero i18n={i18n}/>
+          <Join i18n={i18n}/>
+          <Features i18n={i18n}/>
+          <FAQ i18n={i18n}/>
+          <GetStarted i18n={i18n}/>
+      </LayoutBase>
   )
 }
 
@@ -71,38 +93,37 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutSlug = (props) => {
-  // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
-  const router = useRouter()
-  if (JSON.parse(siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG)) && isBrowser && router.route === '/[prefix]/[slug]') {
-    const redirectUrl = siteConfig('LANDING_POST_REDIRECT_URL', null, CONFIG) + router.asPath.replace('?theme=landing', '')
-    router.push(redirectUrl)
-    return <div id='theme-landing'><Loading /></div>
-  }
+    // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
+    const router = useRouter()
+    if (JSON.parse(CONFIG.POST_REDIRECT_ENABLE) && isBrowser && router.route == '/[prefix]/[slug]') {
+        const redirectUrl = CONFIG.POST_REDIRECT_URL + router.asPath.replace('?theme=landing', '')
+        router.push(redirectUrl)
+        return  <div id='theme-landing'><Loading /></div>
+    }
 
-  return <>
+    return <LayoutBase {...props}>
         <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
             <NotionPage {...props} />
         </div>
-    </>
+    </LayoutBase>
 }
 
 // 其他布局暂时留空
-const LayoutSearch = (props) => <><Hero /></>
-const LayoutArchive = (props) => <><Hero /></>
-const Layout404 = (props) => <><Hero /></>
-const LayoutCategoryIndex = (props) => <><Hero /></>
-const LayoutPostList = (props) => <><Hero /></>
-const LayoutTagIndex = (props) => <><Hero /></>
+const LayoutSearch = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
+const LayoutArchive = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
+const Layout404 = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
+const LayoutCategoryIndex = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
+const LayoutPostList = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
+const LayoutTagIndex = (props) => <LayoutBase {...props}><Hero /></LayoutBase>
 
 export {
-  CONFIG as THEME_CONFIG,
-  LayoutBase,
-  LayoutIndex,
-  LayoutSearch,
-  LayoutArchive,
-  LayoutSlug,
-  Layout404,
-  LayoutPostList,
-  LayoutCategoryIndex,
-  LayoutTagIndex
+    THEME_CONFIG,
+    LayoutIndex,
+    LayoutSearch,
+    LayoutArchive,
+    LayoutSlug,
+    Layout404,
+    LayoutPostList,
+    LayoutCategoryIndex,
+    LayoutTagIndex
 }

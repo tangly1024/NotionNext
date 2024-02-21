@@ -4,23 +4,25 @@ import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 import dynamic from 'next/dynamic'
 import getConfig from 'next/config'
 import * as ThemeComponents from '@theme-components'
+import {useEffect} from 'react'
+import { useRouter } from 'next/router';
 // 所有主题在next.config.js中扫描
 export const { THEMES = [] } = getConfig().publicRuntimeConfig
 
-/**
- * 加载全局布局
- * 如果是
- * @param {*} themeQuery
- * @returns
- */
-export const getGlobalLayoutByTheme = (themeQuery) => {
-  const layout = getLayoutNameByPath(-1)
-  if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
-  } else {
-    return ThemeComponents[layout]
-  }
-}
+// /**
+//  * 加载全局布局
+//  * 如果是
+//  * @param {*} themeQuery
+//  * @returns
+//  */
+// export const getGlobalLayoutByTheme = (themeQuery) => {
+//   const layout = getLayoutNameByPath(-1)
+//   if (themeQuery !== BLOG.THEME) {
+//     return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
+//   } else {
+//     return ThemeComponents[layout]
+//   }
+// }
 
 /**
  * 加载主题文件
@@ -28,38 +30,54 @@ export const getGlobalLayoutByTheme = (themeQuery) => {
  * @param {*} router
  * @returns
  */
-export const getLayoutByTheme = ({ router, theme }) => {
-  const themeQuery = getQueryParam(router.asPath, 'theme') || theme
-  const layoutName = getLayoutNameByPath(router.pathname)
+export const getLayoutByTheme = ({ router, theme }) => {console.log('Router Object:', router); // 打印整个router对象
+  
 
-  if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => {
-      setTimeout(() => {
-        checkThemeDOM()
-      }, 500);
-      return m[layoutName]
-    }), { ssr: true })
-  } else {
-    setTimeout(() => {
-      checkThemeDOM()
-    }, 100);
-    return ThemeComponents[layoutName]
-  }
-}
 
-/**
- * 切换主题时的特殊处理
- */
-const checkThemeDOM = () => {
-  if (isBrowser) {
-    const elements = document.querySelectorAll('[id^="theme-"]')
-    if (elements?.length > 1) {
-      elements[elements.length - 1].scrollIntoView()
-      // 删除前面的元素，只保留最后一个元素
-      for (let i = 0; i < elements.length - 1; i++) {
-        elements[i].parentNode.removeChild(elements[i])
+  const currentPath = getQueryParam(router.asPath, 'theme') || theme // Current URL path.
+  const layout = getLayoutNameByPath(router.pathname)
+  // Check if it's the homepage based on the provided URL.
+  const isHomePage = currentPath === "/";
+  const isZhHomePage = currentPath === '/zh';
+  const is404 = currentPath === '/404'
+  console.log('------------------------------------',currentPath)
+
+  useEffect(() => {
+    function jump() {
+      const path = window.location.hash
+      if (path && path.includes('#')) {
+        const id = path.replace('#', '')
+        const el = window.document.getElementById(id)
+        if(el) {
+          const r = el.getBoundingClientRect()
+        
+          window.scrollTo({
+            top: r.top,
+            behavior: 'smooth'
+          })
+        }
       }
     }
+
+    window.addEventListener('hashchange', jump);  
+
+    return ()=>{
+      window.removeEventListener('hashchange', jump);  
+    }
+  }, []);
+
+  // Choose the theme based on the page.
+  if (isHomePage || isZhHomePage) {
+    // If it's the homepage, use the 'landing' theme (or whatever your homepage theme is called).
+    return dynamic(() => import('@/themes/landing').then(m => m.LayoutIndex), { ssr: true });
+  } else if (is404) {
+    return ThemeComponents[layout]
+  } else {
+    // For other pages, use the 'gitbook' theme (or your alternative theme for other pages).
+    return dynamic(() => import('@/themes/gitbook').then(m => {
+      return m.LayoutSlug
+    }), { ssr: true });
+    // return ThemeComponents[layout]  
   }
 }
 
@@ -70,8 +88,6 @@ const checkThemeDOM = () => {
  */
 export const getLayoutNameByPath = (path) => {
   switch (path) {
-    case -1:
-      return 'LayoutBase'
     case '/':
       return 'LayoutIndex'
     case '/archive':

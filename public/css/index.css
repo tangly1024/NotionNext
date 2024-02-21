@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.brand-button {
+  background: linear-gradient(89.05deg, #004A41 -55.05%, #007B6C 122.01%), #004A41;
+  box-shadow: 0px 4px 40px rgba(0, 55, 49, 0.16);
+}
+
+.buttonfield-shadow {
+  box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.12);
+}
+
+.largecallout {
+  background: linear-gradient(104.84deg, #024C43 6.08%, #009E8B 111.95%, #019281 111.95%), #FFFFFF;
+  box-shadow: 0px 10px 120px rgba(0, 0, 0, 0.06);
+}
+
+.parallax {
+  overflow: hidden;
+  letter-spacing: -2px;
+  line-height: 0.8;
+  margin: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax .scroller {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 64px;
+  display: flex;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.parallax span {
+  display: block;
+  margin-right: 30px;
+}
+
+.banner {
+  background: linear-gradient(90.29deg, #004A41 23.74%, #009885 104.45%);
+}
+
+.left-1 {
+  transform: translateX(0%);
+}
+
+.left-2 {
+  transform: translateX(-100%);
+}
+
+.left-3 {
+  transform: translateX(-200%);
+}
+
+.left-4 {
+  transform: translateX(-300%);
+}
+
+.left-5 {
+  transform: translateX(-400%);
+}
+
+.left-6 {
+  transform: translateX(-500%);
+}
+
+.left-7 {
+  transform: translateX(-600%);
+}
+
+.left-8 {
+  transform: translateX(-700%);
+}
+
+.left-1-mobile {
+  transform: translateX(0%);
+}
+
+.left-2-mobile {
+  transform: translateX(-100%);
+}
+
+.left-3-mobile {
+  transform: translateX(-200%);
+}
+
+.left-4-mobile {
+  transform: translateX(-300%);
+}
+
+.left-5-mobile {
+  transform: translateX(-400%);
+}
+
+.left-6-mobile {
+  transform: translateX(-500%);
+}
+
+.left-7-mobile {
+  transform: translateX(-600%);
+}
+
+.left-8-mobile {
+  transform: translateX(-700%);
+}
+
+@media (min-width: 768px) {
+  .mobile_lazy {
+    loading: lazy;
+  }
+}
+
+@media (max-width: 768px) {
+  .web_lazy {
+    loading: lazy;
+  }
+}

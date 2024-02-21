@@ -2,7 +2,6 @@ import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 博客列表滚动分页
@@ -20,7 +19,7 @@ const NavPostList = (props) => {
 
     let existingGroup = null
     // 开启自动分组排序
-    if (JSON.parse(siteConfig('GITBOOK_AUTO_SORT', true, CONFIG))) {
+    if (JSON.parse(CONFIG.AUTO_SORT)) {
       existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
     } else {
       existingGroup = groups[groups.length - 1] // 获取最后一个分组
@@ -56,7 +55,7 @@ const NavPostList = (props) => {
   if (!groupedArray || groupedArray.length === 0) {
     return <NavPostListEmpty />
   } else {
-    return <div id='posts-wrapper' className='w-full flex-grow space-y-0.5 tracking-wider'>
+    return <div id='posts-wrapper' className='w-full flex-grow'>
             {/* 文章列表 */}
             {groupedArray?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
         </div>

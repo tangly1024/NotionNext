@@ -4,7 +4,7 @@ import Collapse from '@/components/Collapse'
 import { MenuBarMobile } from './MenuBarMobile'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 import { MenuItemDrop } from './MenuItemDrop'
 import DarkModeButton from '@/components/DarkModeButton'
 
@@ -14,17 +14,17 @@ import DarkModeButton from '@/components/DarkModeButton'
  * @returns
  */
 export default function TopNavBar(props) {
-  const { className, customNav, customMenu } = props
+  const { className, customNav, customMenu, i18n, setI18n, router } = props
   const [isOpen, changeShow] = useState(false)
   const collapseRef = useRef(null)
-
+  const [i18nOpen, changeI18nOpen] = useState(false)
   const { locale } = useGlobal()
 
   const defaultLinks = [
-    { icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('GITBOOK_MENU_CATEGORY', null, CONFIG) },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('GITBOOK_BOOK_MENU_TAG', null, CONFIG) },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('GITBOOK_MENU_ARCHIVE', null, CONFIG) },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('GITBOOK_MENU_SEARCH', null, CONFIG) }
+    { icon: 'fas fa-th', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
+    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG },
+    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG.MENU_ARCHIVE },
+    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG.MENU_SEARCH }
   ]
 
   let links = defaultLinks.concat(customNav)
@@ -34,7 +34,7 @@ export default function TopNavBar(props) {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (siteConfig('CUSTOM_MENU')) {
+  if (BLOG.CUSTOM_MENU) {
     links = customMenu
   }
 
@@ -53,6 +53,21 @@ export default function TopNavBar(props) {
 
                 {/* 左侧图标Logo */}
                 <LogoBar {...props} />
+
+                <div className='flex px-2 h-full whitespace-nowrap duration-300 text-sm justify-center dark:text-gray-300 cursor-pointer flex flex-nowrap items-center hover:text-green-600 relative w-20' onClick={()=>{
+                  setI18n(i18n === 'zh' ? 'en': 'zh')
+
+                  if(router.asPath.includes('zh-')) {
+                    const path = router.asPath.replace('zh-', 'en-')
+                    router.push(`${BLOG.SUB_PATH}${path}`)
+                  } else if(router.asPath.includes('en-')) {
+                    const path = router.asPath.replace('en-', 'zh-')
+                    console.log('path', path)
+                    router.push(`${BLOG.SUB_PATH}${path}`)
+                  }
+                }}>
+                  {i18n === 'zh' ? 'EN': 'ZH'}
+                </div>
 
                 {/* 折叠按钮、仅移动端显示 */}
                 <div className='mr-1 flex md:hidden justify-end items-center space-x-4 font-serif dark:text-gray-200'>

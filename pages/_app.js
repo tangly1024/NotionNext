@@ -9,10 +9,11 @@ import '@/styles/notion.css' //  重写部分样式
 import 'aos/dist/aos.css' // You can also use <link> for styles
 
 import { GlobalContextProvider } from '@/lib/global'
-import { getGlobalLayoutByTheme } from '@/themes/theme'
+import { getLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
+import { siteConfig } from '@/lib/config'
 import useAdjustStyle from '@/hooks/useAdjustStyle'
 
 // 各种扩展插件 这个要阻塞引入
@@ -38,7 +39,8 @@ const MyApp = ({ Component, pageProps }) => {
   const GLayout = useCallback(
     props => {
       // 根据页面路径加载不同Layout文件
-      const Layout = getGlobalLayoutByTheme(queryParam)
+      
+      const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router:route})
       return <Layout {...props} />
     },
     [queryParam]
