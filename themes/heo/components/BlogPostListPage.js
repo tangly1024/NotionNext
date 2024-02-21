@@ -24,6 +24,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
                         {posts?.map(post => (
                             <BlogPostCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
                         ))}
+                    <AdsSlot type="flow" />
                     </div>
 
                     {showPagination && <PaginationNumber page={page} totalPage={totalPage} />}
