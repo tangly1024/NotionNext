@@ -2,6 +2,7 @@ import BlogPostCard from './BlogPostCard'
 import PaginationNumber from './PaginationNumber'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { siteConfig } from '@/lib/config'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 文章列表分页表格
