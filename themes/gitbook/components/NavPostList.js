@@ -20,7 +20,7 @@ const NavPostList = (props) => {
 
     let existingGroup = null
     // 开启自动分组排序
-    if (JSON.parse(siteConfig('GITBOOK_AUTO_SORT', true, CONFIG))) {
+    if (siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)) {
       existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
     } else {
       existingGroup = groups[groups.length - 1] // 获取最后一个分组

@@ -2,7 +2,7 @@
 
 import CONFIG from './config'
 import { useRouter } from 'next/router'
-import { useEffect, useState, createContext, useContext } from 'react'
+import { useEffect, useState, createContext, useContext, useRef } from 'react'
 import { isBrowser } from '@/lib/utils'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
@@ -34,6 +34,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -55,16 +56,19 @@ const LayoutBase = (props) => {
   const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
 
   const showTocButton = post?.toc?.length > 1
+  const searchModal = useRef(null)
 
   useEffect(() => {
     setFilteredNavPages(allNavPages)
   }, [post])
 
   return (
-        <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
+        <ThemeGlobalGitbook.Provider value={{ searchModal, tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
             <Style/>
 
-            <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-gitbook' className={`${siteConfig('FONT_STYLE')} scroll-smooth bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300`}>
+                <AlgoliaSearchModal cRef={searchModal} {...props}/>
+
                 {/* 顶部导航栏 */}
                 <TopNavBar {...props} />
 
@@ -73,7 +77,7 @@ const LayoutBase = (props) => {
                     {/* 左侧推拉抽屉 */}
                     {fullWidth
                       ? null
-                      : (<div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
+                      : (<div className={'hidden md:block border-r dark:border-transparent relative z-10 '}>
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />

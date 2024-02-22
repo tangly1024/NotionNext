@@ -53,7 +53,7 @@ const LayoutBase = props => {
 
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
-        <div id='theme-plog' className='plog relative dark:text-gray-300 w-full dark:bg-black min-h-screen'>
+        <div id='theme-plog' className={`${siteConfig('FONT_STYLE')} plog relative dark:text-gray-300 w-full dark:bg-black min-h-screen scroll-smooth`} >
 
             <Style/>
 

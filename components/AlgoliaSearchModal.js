@@ -68,26 +68,41 @@ export default function AlgoliaSearchModal({ cRef }) {
             className: 'text-blue-600 border-b border-dashed'
           }
         })
-      }, 150)
+      }, 200) // 延时高亮
     } catch (error) {
       console.error('Algolia search error:', error)
     }
   }
 
-  const throttledHandleSearch = useRef(throttle(handleSearch, 300)) // 设置节流延迟时间
+  // 定义节流函数，确保在用户停止输入一段时间后才会调用处理搜索的方法
+  const throttledHandleInputChange = useRef(throttle((query) => {
+    handleSearch(query, 0);
+  }, 1000));
+
+  // 用于存储搜索延迟的计时器
+  const searchTimer = useRef(null);
 
   // 修改input的onChange事件处理函数
   const handleInputChange = (e) => {
-    const query = e.target.value
-    throttledHandleSearch.current(query, 0)
-  }
+    const query = e.target.value;
+
+    // 如果已经有计时器在等待搜索，先清除之前的计时器
+    if (searchTimer.current) {
+      clearTimeout(searchTimer.current);
+    }
+
+    // 设置新的计时器，在用户停止输入一段时间后触发搜索
+    searchTimer.current = setTimeout(() => {
+      throttledHandleInputChange.current(query);
+    }, 800);
+  };
 
   /**
    * 切换页码
    * @param {*} page
    */
   const switchPage = (page) => {
-    throttledHandleSearch.current(keyword, page)
+    throttledHandleInputChange.current(keyword, page)
   }
 
   /**

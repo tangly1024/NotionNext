@@ -38,7 +38,7 @@ export const MenuList = (props) => {
                 data-aos-delay="400"
                 data-aos-once="true"
                 data-aos-anchor-placement="top-bottom"
-                className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 font-sans'>
+                className='hidden md:block leading-8 text-gray-500 dark:text-gray-400 '>
                 {links.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
             </menu>
 

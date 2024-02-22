@@ -83,7 +83,7 @@ const LayoutBase = props => {
   return (
     <div
       id="theme-heo"
-      className="bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
+      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}
     >
 
       <Style />
@@ -310,7 +310,10 @@ const LayoutSlug = props => {
               ? null
               : <div className={`${commentEnable && post ? '' : 'hidden'}`}>
                 <hr className="my-4 border-dashed" />
-
+                {/* 评论区上方广告 */}
+                <div className="py-2">
+                    <AdSlot />
+                </div>
                 {/* 评论互动 */}
                 <div className="duration-200 overflow-x-auto px-5">
                   <div className="text-2xl dark:text-white">
@@ -318,9 +321,6 @@ const LayoutSlug = props => {
                     {locale.COMMON.COMMENTS}
                   </div>
                   <Comment frontMatter={post} className="" />
-                  <div className="py-2">
-                    <AdSlot />
-                  </div>
                 </div>
               </div>}
           </div>

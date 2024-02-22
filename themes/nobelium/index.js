@@ -46,7 +46,7 @@ const LayoutBase = props => {
 
   return (
         <ThemeGlobalNobelium.Provider value={{ searchModal, filterKey, setFilterKey }}>
-            <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col'>
+            <div id='theme-nobelium' className={`${siteConfig('FONT_STYLE')} nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col scroll-smooth`}>
 
                 <Style />
 
