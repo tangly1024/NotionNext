@@ -21,7 +21,6 @@ import Loading from '@/components/Loading'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
 import { Pricing } from './components/Pricing'
-import { LAYOUT_MAPPINGS } from '@/blog.config'
 import { useEffect } from 'react'
 
 /**
@@ -114,21 +113,6 @@ const LayoutCategoryIndex = (props) => <><Hero /></>
 const LayoutPostList = (props) => <><Hero /></>
 const LayoutTagIndex = (props) => <><Hero /></>
 
-/**
- * 根据路径 获取对应的layout
- * @param {*} path
- * @returns
- */
-const getLayoutNameByPath = (path) => {
-  // 检查特殊处理的路径
-  if (LAYOUT_MAPPINGS[path]) {
-    return LAYOUT_MAPPINGS[path];
-  } else {
-    // 没有特殊处理的路径返回默认layout名称
-    return 'LayoutSlug';
-  }
-}
-
 export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
@@ -139,6 +123,5 @@ export {
   Layout404,
   LayoutPostList,
   LayoutCategoryIndex,
-  LayoutTagIndex,
-  getLayoutNameByPath
+  LayoutTagIndex
 }

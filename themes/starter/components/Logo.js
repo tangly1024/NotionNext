@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { siteConfig } from '@/lib/config';
 import { useGlobal } from '@/lib/global';
 import throttle from 'lodash.throttle';
-import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import CONFIG from '../config';
@@ -18,41 +18,42 @@ export const Logo = ({ white }) => {
   const [logoTextColor, setLogoTextColor] = useState('text-white')
 
   useEffect(() => {
+    // 滚动监听
+    const throttleMs = 200
+    const navBarScrollListener = throttle(() => {
+      const scrollY = window.scrollY;
+      // 何时显示浅色或白底的logo
+      if (white || isDarkMode || (!isDarkMode && router.route === '/' && scrollY < 1)) {
+        setLogo(siteConfig('STARTER_LOGO_WHITE', null, CONFIG))
+        setLogoTextColor('text-white')
+      } else {
+        setLogo(siteConfig('STARTER_LOGO', null, CONFIG))
+        setLogoTextColor('text-black')
+      }
+    }, throttleMs)
+
     navBarScrollListener()
     window.addEventListener('scroll', navBarScrollListener)
     return () => {
       window.removeEventListener('scroll', navBarScrollListener)
     }
-  })
+  }, [])
 
-  // 滚动监听
-  const throttleMs = 200
-  const navBarScrollListener = throttle(() => {
-    const scrollY = window.scrollY;
-    // 何时显示浅色或白底的logo
-    if (white || isDarkMode || (!isDarkMode && router.route === '/' && scrollY < 1)) {
-      setLogo(siteConfig('STARTER_LOGO_WHITE', null, CONFIG))
-      setLogoTextColor('text-white')
-    } else {
-      setLogo(siteConfig('STARTER_LOGO', null, CONFIG))
-      setLogoTextColor('text-black')
-    }
-  }, throttleMs)
-
-  return <>
-    <div className="w-60 max-w-full px-4">
-        <Link href="/" className="navbar-logo flex items-center w-full py-5">
-        <>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        {logo && <img
-            src={logo}
-            alt="logo"
-            className="header-logo w-full"
-        />}
-        {/* logo文字 */}
-        <span className={`${logoTextColor} py-1.5 header-logo-text whitespace-nowrap text-2xl font-semibold`}>{siteConfig('TITLE')}</span>
-        </>
-        </Link>
+  return <div className="w-60 max-w-full px-4">
+        <div className="navbar-logo flex items-center w-full py-5 cursor-pointer">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {logo && <img
+                onClick={() => {
+                  router.push('/')
+                }}
+                src={logo}
+                alt="logo"
+                className="header-logo w-full"
+            />}
+            {/* logo文字 */}
+            <span onClick={() => { router.push('/') }} className={`${logoTextColor} dark:text-white py-1.5 header-logo-text whitespace-nowrap text-2xl font-semibold`}>
+                {siteConfig('TITLE')}
+            </span>
+        </div>
     </div>
-    </>
 }

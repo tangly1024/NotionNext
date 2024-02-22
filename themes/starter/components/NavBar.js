@@ -1,25 +1,33 @@
 /* eslint-disable no-unreachable */
 import throttle from 'lodash.throttle';
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { MenuList } from './MenuList';
 import { DarkModeButton } from './DarkModeButton';
 import { Logo } from './Logo';
 import { useRouter } from 'next/router';
 import { siteConfig } from '@/lib/config';
 import CONFIG from '../config';
+import { useGlobal } from '@/lib/global';
 
 /**
  * 顶部导航栏
  */
 export const NavBar = (props) => {
   const router = useRouter()
+  const { isDarkMode } = useGlobal()
+  const [buttonTextColor, setColor] = useState(router.route === '/' ? 'text-white' : '')
   useEffect(() => {
+    if (isDarkMode) {
+      setColor('text-white')
+    } else {
+      setColor(router.route === '/' ? 'text-white' : '')
+    }
     // ======= Sticky
     window.addEventListener('scroll', navBarScollListener)
     return () => {
       window.removeEventListener('scroll', navBarScollListener)
     }
-  }, [])
+  }, [isDarkMode])
 
   // 滚动监听
   const throttleMs = 200
@@ -61,13 +69,13 @@ export const NavBar = (props) => {
                         <div className="hidden sm:flex">
                             <a
                             href={siteConfig('STARTER_NAV_BUTTON_1_URL', null, CONFIG)}
-                            className={`loginBtn px-[22px] py-2 text-base font-medium ${router.route === '/' ? 'text-white' : ''} hover:opacity-70`}
+                            className={`loginBtn ${buttonTextColor}  px-[22px] py-2 text-base font-medium hover:opacity-70`}
                             >
                            {siteConfig('STARTER_NAV_BUTTON_1_TEXT', null, CONFIG)}
                             </a>
                             <a
                             href={siteConfig('STARTER_NAV_BUTTON_2_URL', null, CONFIG)}
-                            className={`signUpBtn rounded-md bg-white bg-opacity-20 px-6 py-2 text-base font-medium ${router.route === '/' ? 'text-white' : ''} duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark`}
+                            className={`signUpBtn ${buttonTextColor} rounded-md bg-white bg-opacity-20 px-6 py-2 text-base font-medium duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark`}
                             >
                            {siteConfig('STARTER_NAV_BUTTON_2_TEXT', null, CONFIG)}
                             </a>

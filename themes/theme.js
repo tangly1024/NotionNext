@@ -1,9 +1,10 @@
-import BLOG from '@/blog.config'
+import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 import dynamic from 'next/dynamic'
 import getConfig from 'next/config'
 import * as ThemeComponents from '@theme-components'
-// 所有主题在next.config.js中扫描
+
+// 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig().publicRuntimeConfig
 
 /**
@@ -13,9 +14,9 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  */
 export const getGlobalLayoutByTheme = (themeQuery) => {
   if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[m.getLayoutNameByPath(-1)]), { ssr: true })
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[getLayoutNameByPath(-1)]), { ssr: true })
   } else {
-    return ThemeComponents[ThemeComponents.getLayoutNameByPath('-1')]
+    return ThemeComponents[getLayoutNameByPath('-1')]
   }
 }
 
@@ -32,13 +33,28 @@ export const getLayoutByTheme = ({ router, theme }) => {
       setTimeout(() => {
         checkThemeDOM()
       }, 500);
-      return m[m.getLayoutNameByPath(router.pathname)]
+      return m[getLayoutNameByPath(router.pathname, router.asPath)]
     }), { ssr: true })
   } else {
     setTimeout(() => {
       checkThemeDOM()
     }, 100);
-    return ThemeComponents[ThemeComponents.getLayoutNameByPath(router.pathname)]
+    return ThemeComponents[getLayoutNameByPath(router.pathname, router.asPath)]
+  }
+}
+
+/**
+ * 根据路径 获取对应的layout
+ * @param {*} path
+ * @returns
+ */
+const getLayoutNameByPath = (path) => {
+  console.log('path', path, LAYOUT_MAPPINGS[path])
+  if (LAYOUT_MAPPINGS[path]) {
+    return LAYOUT_MAPPINGS[path];
+  } else {
+    // 没有特殊处理的路径返回默认layout名称
+    return 'LayoutSlug';
   }
 }
 

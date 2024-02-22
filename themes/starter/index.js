@@ -31,8 +31,10 @@ import { Brand } from './components/Brand'
 import { Footer } from './components/Footer'
 import { BackToTopButton } from './components/BackToTopButton'
 import { MadeWithButton } from './components/MadeWithButton'
-import { LAYOUT_MAPPINGS } from '@/blog.config'
 import { SVG404 } from './components/svg/SVG404'
+import { Banner } from './components/Banner'
+import { SignInForm } from './components/SignInForm'
+import { SignUpForm } from './components/SignUpForm'
 
 /**
  * 一些外部js
@@ -62,7 +64,7 @@ const LayoutBase = (props) => {
     loadExternal()
   }, [])
 
-  return <div id='theme-starter' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col scroll-smooth`}>
+  return <div id='theme-starter' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-black scroll-smooth`}>
             <Style/>
             <NavBar {...props}/>
 
@@ -116,15 +118,23 @@ const LayoutIndex = (props) => {
 const LayoutSlug = (props) => {
   // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
   const router = useRouter()
-  if (JSON.parse(siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG)) && isBrowser && router.route === '/[prefix]/[slug]') {
+  if (siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG) && isBrowser && router.route === '/[prefix]/[slug]') {
     const redirectUrl = siteConfig('LANDING_POST_REDIRECT_URL', null, CONFIG) + router.asPath.replace('?theme=landing', '')
     router.push(redirectUrl)
     return <div id='theme-landing'><Loading /></div>
   }
 
+  const { post } = props
   return <>
-        <div id='container-inner' className='mx-auto max-w-screen-lg p-12'>
-            <NotionPage {...props} />
+        <Banner title={post?.title} description={post?.summary}/>
+        <div className="container grow">
+            <div className="flex flex-wrap justify-center -mx-4">
+                <div className="w-full p-4">
+                    <div id='container-inner' className='mx-auto'>
+                        <NotionPage {...props} />
+                    </div>
+                </div>
+            </div>
         </div>
     </>
 }
@@ -176,20 +186,30 @@ const Layout404 = (props) => {
 const LayoutCategoryIndex = (props) => <></>
 const LayoutPostList = (props) => <></>
 const LayoutTagIndex = (props) => <></>
+
 /**
- * 根据路径 获取对应的layout
- * @param {*} path
+ * 登录页面
+ * @param {*} props
  * @returns
  */
-const getLayoutNameByPath = (path) => {
-  // 检查特殊处理的路径
-  if (LAYOUT_MAPPINGS[path]) {
-    return LAYOUT_MAPPINGS[path];
-  } else {
-    // 没有特殊处理的路径返回默认layout名称
-    return 'LayoutSlug';
-  }
+const LayoutSignIn = (props) => {
+  return <>
+        <div className='grow mt-20'>
+            <SignInForm/>
+        </div>
+    </>
 }
+
+/**
+ * 注册页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignUp = (props) => <>
+        <div className='grow mt-20'>
+            <SignUpForm/>
+        </div>
+</>
 
 export {
   CONFIG as THEME_CONFIG,
@@ -202,5 +222,6 @@ export {
   LayoutPostList,
   LayoutCategoryIndex,
   LayoutTagIndex,
-  getLayoutNameByPath
+  LayoutSignIn,
+  LayoutSignUp
 }

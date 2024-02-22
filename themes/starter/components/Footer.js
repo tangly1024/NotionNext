@@ -7,7 +7,6 @@ import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 /* eslint-disable @next/next/no-img-element */
 export const Footer = (props) => {
-  console.log('prop', props)
   const latestPosts = props?.latestPosts ? props?.latestPosts.slice(0, 2) : []
 
   return <>
@@ -72,7 +71,7 @@ export const Footer = (props) => {
                     href={url}
                     className="group flex items-center gap-[22px]"
                 >
-                    <div className="overflow-hidden rounded w-20">
+                    <div className="overflow-hidden rounded w-20 h-12">
                     <img
                         src={item.pageCoverThumbnail}
                         alt={item.title}
@@ -81,7 +80,7 @@ export const Footer = (props) => {
                     <span
                     className="line-clamp-2 max-w-[180px] text-base text-gray-7 group-hover:text-white"
                     >
-                    {item.summary}
+                    {item.title}
                     </span>
                 </a>
                 })}
