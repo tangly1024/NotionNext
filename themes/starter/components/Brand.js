@@ -1,72 +1,34 @@
+/* eslint-disable @next/next/no-img-element */
+
+import CONFIG from '../config'
+
+/**
+ * 合作伙伴
+ * @returns
+ */
 export const Brand = () => {
   return <>
 
     {/* <!-- ====== Brands Section Start --> */}
-    <section class="pb-20 dark:bg-dark">
-      <div class="container px-4">
+    <section className="pb-20 dark:bg-dark">
+      <div className="container px-4">
         <div
-          class="-mx-4 flex flex-wrap items-center justify-center gap-8 xl:gap-11"
+          className="-mx-4 flex flex-wrap items-center justify-center gap-8 xl:gap-11"
         >
-          <a href="https://graygrids.com/">
+          {CONFIG.STARTER_BRANDS?.map((item, index) => {
+            return <a key={index} href={item.URL}>
             <img
-              src="/images/starter/brands/graygrids.svg"
-              alt="graygrids"
-              class="dark:hidden"
+              src={item.IMAGE}
+              alt={item.TITLE}
+              className="dark:hidden"
             />
             <img
-              src="/images/starter/brands/graygrids-white.svg"
-              alt="graygrids"
-              class="hidden dark:block"
-            />
-          </a>
-          <a href="https://lineicons.com/">
-            <img
-              src="/images/starter/brands/lineicons.svg"
-              alt="lineicons"
-              class="dark:hidden"
-            />
-            <img
-              src="/images/starter/brands/lineicons-white.svg"
-              alt="graygrids"
-              class="hidden dark:block"
+              src={item.IMAGE_WHITE}
+              alt={item.TITLE}
+              className="hidden dark:block"
             />
           </a>
-          <a href="https://uideck.com/">
-            <img
-              src="/images/starter/brands/uideck.svg"
-              alt="uideck"
-              class="dark:hidden"
-            />
-            <img
-              src="/images/starter/brands/uideck-white.svg"
-              alt="graygrids"
-              class="hidden dark:block"
-            />
-          </a>
-          <a href="https://ayroui.com/">
-            <img
-              src="/images/starter/brands/ayroui.svg"
-              alt="ayroui"
-              class="dark:hidden"
-            />
-            <img
-              src="/images/starter/brands/ayroui-white.svg"
-              alt="graygrids"
-              class="hidden dark:block"
-            />
-          </a>
-          <a href="https://tailgrids.com/">
-            <img
-              src="/images/starter/brands/tailgrids.svg"
-              alt="tailgrids"
-              class="dark:hidden"
-            />
-            <img
-              src="/images/starter/brands/tailgrids-white.svg"
-              alt="graygrids"
-              class="hidden dark:block"
-            />
-          </a>
+          })}
         </div>
       </div>
     </section>

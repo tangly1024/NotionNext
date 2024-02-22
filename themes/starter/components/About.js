@@ -11,28 +11,28 @@ export const About = () => {
        {/* <!-- ====== About Section Start --> */}
        <section
       id="about"
-      class="bg-gray-1 pb-8 pt-20 dark:bg-dark-2 lg:pb-[70px] lg:pt-[120px]"
+      className="bg-gray-1 pb-8 pt-20 dark:bg-dark-2 lg:pb-[70px] lg:pt-[120px]"
     >
-      <div class="container">
-        <div class="wow fadeInUp" data-wow-delay=".2s">
-          <div class="-mx-4 flex flex-wrap items-center">
+      <div className="container">
+        <div className="wow fadeInUp" data-wow-delay=".2s">
+          <div className="-mx-4 flex flex-wrap items-center">
 
             {/* 左侧的文字说明板块 */}
-            <div class="w-full px-4 lg:w-1/2">
-              <div class="mb-12 max-w-[540px] lg:mb-0">
+            <div className="w-full px-4 lg:w-1/2">
+              <div className="mb-12 max-w-[540px] lg:mb-0">
                 <h2
-                  class="mb-5 text-3xl font-bold leading-tight text-dark dark:text-white sm:text-[40px] sm:leading-[1.2]"
+                  className="mb-5 text-3xl font-bold leading-tight text-dark dark:text-white sm:text-[40px] sm:leading-[1.2]"
                 >
                   {siteConfig('STARTER_ABOUT_TITLE', null, CONFIG)}
                 </h2>
-                <p class="mb-10 text-base leading-relaxed text-body-color dark:text-dark-6"
+                <p className="mb-10 text-base leading-relaxed text-body-color dark:text-dark-6"
                     dangerouslySetInnerHTML={
                     { __html: siteConfig('STARTER_ABOUT_TEXT', null, CONFIG) }
                 }></p>
 
                 <a
                   href={siteConfig('STARTER_ABOUT_BUTTON_URL', null, CONFIG)}
-                  class="inline-flex items-center justify-center rounded-md border border-primary bg-primary px-7 py-3 text-center text-base font-medium text-white hover:border-blue-dark hover:bg-blue-dark"
+                  className="inline-flex items-center justify-center rounded-md border border-primary bg-primary px-7 py-3 text-center text-base font-medium text-white hover:border-blue-dark hover:bg-blue-dark"
                 >
                   {siteConfig('STARTER_ABOUT_BUTTON_TEXT', null, CONFIG)}
                 </a>
@@ -40,49 +40,49 @@ export const About = () => {
             </div>
 
             {/* 右侧的图片海报 */}
-            <div class="w-full px-4 lg:w-1/2">
-              <div class="-mx-2 flex flex-wrap sm:-mx-4 lg:-mx-2 xl:-mx-4">
-                <div class="w-full px-2 sm:w-1/2 sm:px-4 lg:px-2 xl:px-4">
+            <div className="w-full px-4 lg:w-1/2">
+              <div className="-mx-2 flex flex-wrap sm:-mx-4 lg:-mx-2 xl:-mx-4">
+                <div className="w-full px-2 sm:w-1/2 sm:px-4 lg:px-2 xl:px-4">
                   <div
-                    class="mb-4 sm:mb-8 sm:h-[400px] md:h-[540px] lg:h-[400px] xl:h-[500px]"
+                    className="mb-4 sm:mb-8 sm:h-[400px] md:h-[540px] lg:h-[400px] xl:h-[500px]"
                   >
                     <img
                       src={siteConfig('STARTER_ABOUT_IMAGE_1', null, CONFIG)}
                       alt="about image"
-                      class="h-full w-full object-cover object-center"
+                      className="h-full w-full object-cover object-center"
                     />
                   </div>
                 </div>
 
-                <div class="w-full px-2 sm:w-1/2 sm:px-4 lg:px-2 xl:px-4">
+                <div className="w-full px-2 sm:w-1/2 sm:px-4 lg:px-2 xl:px-4">
                   <div
-                    class="mb-4 sm:mb-8 sm:h-[220px] md:h-[346px] lg:mb-4 lg:h-[225px] xl:mb-8 xl:h-[310px]"
+                    className="mb-4 sm:mb-8 sm:h-[220px] md:h-[346px] lg:mb-4 lg:h-[225px] xl:mb-8 xl:h-[310px]"
                   >
                     <img
                       src={siteConfig('STARTER_ABOUT_IMAGE_2', null, CONFIG)}
                       alt="about image"
-                      class="h-full w-full object-cover object-center"
+                      className="h-full w-full object-cover object-center"
                     />
                   </div>
 
                   <div
-                    class="relative z-10 mb-4 flex items-center justify-center overflow-hidden bg-primary px-6 py-12 sm:mb-8 sm:h-[160px] sm:p-5 lg:mb-4 xl:mb-8"
+                    className="relative z-10 mb-4 flex items-center justify-center overflow-hidden bg-primary px-6 py-12 sm:mb-8 sm:h-[160px] sm:p-5 lg:mb-4 xl:mb-8"
                   >
                     <div>
-                      <span class="block text-5xl font-extrabold text-white">
+                      <span className="block text-5xl font-extrabold text-white">
                         {siteConfig('STARTER_ABOUT_TIPS_1', null, CONFIG)}
                       </span>
-                      <span class="block text-base font-semibold text-white">
+                      <span className="block text-base font-semibold text-white">
                         {siteConfig('STARTER_ABOUT_TIPS_2', null, CONFIG)}
                       </span>
                       <span
-                        class="block text-base font-medium text-white text-opacity-70"
+                        className="block text-base font-medium text-white text-opacity-70"
                       >
                         {siteConfig('STARTER_ABOUT_TIPS_3', null, CONFIG)}
                       </span>
                     </div>
                     <div>
-                      <span class="absolute left-0 top-0 -z-10">
+                      <span className="absolute left-0 top-0 -z-10">
                         <svg
                           width="106"
                           height="144"
@@ -118,7 +118,7 @@ export const About = () => {
                           </defs>
                         </svg>
                       </span>
-                      <span class="absolute right-0 top-0 -z-10">
+                      <span className="absolute right-0 top-0 -z-10">
                         <svg
                           width="130"
                           height="97"
@@ -154,7 +154,7 @@ export const About = () => {
                           </defs>
                         </svg>
                       </span>
-                      <span class="absolute bottom-0 right-0 -z-10">
+                      <span className="absolute bottom-0 right-0 -z-10">
                         <svg
                           width="175"
                           height="104"

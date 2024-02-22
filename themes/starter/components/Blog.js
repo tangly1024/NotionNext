@@ -2,67 +2,72 @@
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 
-export const Blog = () => {
+export const Blog = (props) => {
+  const count = siteConfig('STARTER_BLOG_COUNT', 3, CONFIG)
+  const posts = props?.allNavPages
+    ? props.allNavPages.slice(0, count)
+    : []
   return <>
         {/* <!-- ====== Blog Section Start --> */}
-        <section class="bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
-        <div class="container mx-auto">
+        <section className="bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
+        <div className="container mx-auto">
             {/* 区块标题文字 */}
-            <div class="-mx-4 flex flex-wrap justify-center">
-                <div class="w-full px-4">
-                    <div class="mx-auto mb-[60px] max-w-[485px] text-center">
-                    <span class="mb-2 block text-lg font-semibold text-primary">
+            <div className="-mx-4 flex flex-wrap justify-center">
+                <div className="w-full px-4">
+                    <div className="mx-auto mb-[60px] max-w-[485px] text-center">
+                    <span className="mb-2 block text-lg font-semibold text-primary">
                         {siteConfig('STARTER_BLOG_TITLE', null, CONFIG)}
                     </span>
                     <h2
-                        class="mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]"
+                        className="mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]"
                     >
                         {siteConfig('STARTER_BLOG_TEXT_1', null, CONFIG)}
                     </h2>
                     <p dangerouslySetInnerHTML={
                             { __html: siteConfig('STARTER_BLOG_TEXT_2', null, CONFIG) }
-                        } class="text-base text-body-color dark:text-dark-6">
+                        } className="text-base text-body-color dark:text-dark-6">
 
                     </p>
                     </div>
                 </div>
             </div>
             {/* 博客列表 此处优先展示3片文章 */}
-            <div class="-mx-4 flex flex-wrap">
-                <div class="w-full px-4 md:w-1/2 lg:w-1/3">
-                    <div class="wow fadeInUp group mb-10" data-wow-delay=".1s">
-                    <div class="mb-8 overflow-hidden rounded-[5px]">
-                        <a href="blog-details.html" class="block">
+            <div className="-mx-4 flex flex-wrap">
+                {posts?.map((item, index) => {
+                  return <div key={index} className="w-full px-4 md:w-1/2 lg:w-1/3">
+                    <div className="wow fadeInUp group mb-10" data-wow-delay=".1s">
+                    <div className="mb-8 overflow-hidden rounded-[5px]">
+                        <a href="blog-details.html" className="block">
                         <img
-                            src="/images/starter/blog/blog-01.jpg"
-                            alt="image"
-                            class="w-full transition group-hover:rotate-6 group-hover:scale-125"
+                            src={item.pageCoverThumbnail}
+                            alt={item.title}
+                            className="w-full transition group-hover:rotate-6 group-hover:scale-125"
                         />
                         </a>
                     </div>
                     <div>
                         <span
-                        class="mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white"
+                        className="mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white"
                         >
-                        Dec 22, 2023
+                        {item.publishDay}
                         </span>
                         <h3>
                         <a
 
-                            class="mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl"
+                            className="mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl"
                         >
-                            Meet AutoManage, the best AI management tools
+                            {item.title}
                         </a>
                         </h3>
                         <p
-                        class="max-w-[370px] text-base text-body-color dark:text-dark-6"
+                        className="max-w-[370px] text-base text-body-color dark:text-dark-6"
                         >
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry.
+                            {item.summary}
                         </p>
                     </div>
                     </div>
                 </div>
+                }) }
             </div>
         </div>
     </section>

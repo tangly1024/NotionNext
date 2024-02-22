@@ -10,7 +10,7 @@ import CONFIG from '../config';
  * 站点图标
  * @returns
  */
-export const Logo = () => {
+export const Logo = ({ white }) => {
   const router = useRouter()
   const { isDarkMode } = useGlobal()
   const logoWhite = siteConfig('STARTER_LOGO_WHITE', null, CONFIG)
@@ -30,7 +30,7 @@ export const Logo = () => {
   const navBarScrollListener = throttle(() => {
     const scrollY = window.scrollY;
     // 何时显示浅色或白底的logo
-    if (isDarkMode || (!isDarkMode && router.route === '/' && scrollY < 1)) {
+    if (white || isDarkMode || (!isDarkMode && router.route === '/' && scrollY < 1)) {
       setLogo(siteConfig('STARTER_LOGO_WHITE', null, CONFIG))
       setLogoTextColor('text-white')
     } else {

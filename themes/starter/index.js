@@ -41,6 +41,7 @@ const loadExternal = async () => {
   await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js', 'js');
   // 配合animatecss 实现延时滚动动画，和AOS动画相似
   const WOW = window.WOW;
+  console.log('加载WOW动画', WOW)
   if (WOW) {
     new WOW().init();
   }
@@ -61,13 +62,13 @@ const LayoutBase = (props) => {
     loadExternal()
   }, [])
 
-  return <div id='theme-starter'>
+  return <div id='theme-starter' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col scroll-smooth`}>
             <Style/>
             <NavBar {...props}/>
 
             {children}
 
-            <Footer/>
+            <Footer {...props}/>
 
             {/* 悬浮按钮 */}
             <BackToTopButton/>
@@ -83,15 +84,25 @@ const LayoutBase = (props) => {
 const LayoutIndex = (props) => {
   return (
         <>
+        {/* 英雄区 */}
         <Hero/>
+        {/* 产品特性 */}
         <Features/>
+        {/* 关于 */}
         <About/>
+        {/* 价格 */}
         <Pricing/>
+        {/* 评价展示 */}
         <Testimonials/>
+        {/* 常见问题 */}
         <FAQ/>
+        {/* 团队介绍 */}
         <Team/>
-        <Blog/>
+        {/* 博文列表 */}
+        <Blog {...props}/>
+        {/* 联系方式 */}
         <Contact/>
+        {/* 合作伙伴 */}
         <Brand/>
         </>
   )

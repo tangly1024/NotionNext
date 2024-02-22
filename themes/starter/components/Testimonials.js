@@ -20,6 +20,7 @@ const loadExternal = async () => {
     return
   }
   // Testimonial
+  // eslint-disable-next-line no-unused-vars
   const testimonialSwiper = new Swiper('.testimonial-carousel', {
     slidesPerView: 1,
     spaceBetween: 30,
@@ -45,7 +46,6 @@ const loadExternal = async () => {
       }
     }
   });
-  console.log('swiper', testimonialSwiper)
 };
 
 export const Testimonials = () => {
@@ -58,64 +58,64 @@ export const Testimonials = () => {
     {/* <!-- ====== Testimonial Section Start --> */}
     <section
       id="testimonials"
-      class="overflow-hidden bg-gray-1 py-20 dark:bg-dark-2 md:py-[120px]"
+      className="overflow-hidden bg-gray-1 py-20 dark:bg-dark-2 md:py-[120px]"
     >
-      <div class="container mx-auto">
-        <div class="-mx-4 flex flex-wrap justify-center">
-          <div class="w-full px-4">
-            <div class="mx-auto mb-[60px] max-w-[485px] text-center">
-              <span class="mb-2 block text-lg font-semibold text-primary">
+      <div className="container mx-auto">
+        <div className="-mx-4 flex flex-wrap justify-center">
+          <div className="w-full px-4">
+            <div className="mx-auto mb-[60px] max-w-[485px] text-center">
+              <span className="mb-2 block text-lg font-semibold text-primary">
                 {siteConfig('STARTER_TESTIMONIALS_TITLE', null, CONFIG)}
               </span>
               <h2
-                class="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]"
+                className="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]"
               >
                 {siteConfig('STARTER_TESTIMONIALS_TEXT_1', null, CONFIG)}
               </h2>
-              <p class="text-base text-body-color dark:text-dark-6">
+              <p className="text-base text-body-color dark:text-dark-6">
                 {siteConfig('STARTER_TESTIMONIALS_TEXT_2', null, CONFIG)}
               </p>
             </div>
           </div>
         </div>
 
-        <div class="-m-5">
-          <div class="swiper testimonial-carousel common-carousel p-5">
-            <div class="swiper-wrapper">
+        <div className="-m-5">
+          <div className="swiper testimonial-carousel common-carousel p-5">
+            <div className="swiper-wrapper">
 
             {/* 用户评价卡牌 */}
             {CONFIG.STARTER_TESTIMONIALS_ITEMS.map((item, index) => {
-              return <div key={index} class="swiper-slide">
+              return <div key={index} className="swiper-slide">
                     <div
-                        class="rounded-xl bg-white px-4 py-[30px] shadow-testimonial dark:bg-dark sm:px-[30px]"
+                        className="rounded-xl bg-white px-4 py-[30px] shadow-testimonial dark:bg-dark sm:px-[30px]"
                     >
-                        <div class="mb-[18px] flex items-center gap-[2px]">
+                        <div className="mb-[18px] flex items-center gap-[2px]">
                         {ratings.map((rating, index) => (
                             <img key={index} alt="star icon"// 为每个图片设置唯一的 key 属性
                             src={siteConfig('STARTER_TESTIMONIALS_STAR_ICON', null, CONFIG)}/>
                         ))}
                         </div>
 
-                        <p class="mb-6 text-base text-body-color dark:text-dark-6">
+                        <p className="mb-6 text-base text-body-color dark:text-dark-6">
                         “{item.STARTER_TESTIMONIALS_ITEM_TEXT}”
                         </p>
 
-                        <a href={item.STARTER_TESTIMONIALS_ITEM_URL} class="flex items-center gap-4">
-                            <div class="h-[50px] w-[50px] overflow-hidden rounded-full">
+                        <a href={item.STARTER_TESTIMONIALS_ITEM_URL} className="flex items-center gap-4">
+                            <div className="h-[50px] w-[50px] overflow-hidden rounded-full">
                                 <img
                                 src={item.STARTER_TESTIMONIALS_ITEM_AVATAR}
                                 alt="author"
-                                class="h-[50px] w-[50px] overflow-hidden rounded-full object-cover"
+                                className="h-[50px] w-[50px] overflow-hidden rounded-full object-cover"
                                 />
                             </div>
 
                             <div>
                                 <h3
-                                class="text-sm font-semibold text-dark dark:text-white"
+                                className="text-sm font-semibold text-dark dark:text-white"
                                 >
                                 {item.STARTER_TESTIMONIALS_ITEM_NICKNAME}
                                 </h3>
-                                <p class="text-xs text-body-secondary">
+                                <p className="text-xs text-body-secondary">
                                     {item.STARTER_TESTIMONIALS_ITEM_DESCRIPTION}
                                 </p>
                             </div>
@@ -127,11 +127,11 @@ export const Testimonials = () => {
             </div>
 
             {/* 切换按钮  */}
-            <div class="mt-[60px] flex items-center justify-center gap-1">
-              <div class="swiper-button-prev">
+            <div className="mt-[60px] flex items-center justify-center gap-1">
+              <div className="swiper-button-prev">
                 <SVGLeftArrow/>
               </div>
-              <div class="swiper-button-next">
+              <div className="swiper-button-next">
                 <SVGRightArrow/>
               </div>
             </div>

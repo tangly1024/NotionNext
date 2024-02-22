@@ -152,10 +152,10 @@ const CONFIG = {
   STARTER_FAQ_TEXT_2: '我们收集了常见的用户疑问',
 
   STARTER_FAQ_1_QUESTION: 'NotionNext有帮助文档吗？',
-  STARTER_FAQ_1_ANSWER: 'NotionNext提供了<a href="https://docs.tangly1024.com/about" class="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" class="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" class="underline">交流社群</a>来协助您完成网站的搭建部署',
+  STARTER_FAQ_1_ANSWER: 'NotionNext提供了<a href="https://docs.tangly1024.com/about" className="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" className="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" className="underline">交流社群</a>来协助您完成网站的搭建部署',
 
   STARTER_FAQ_2_QUESTION: '部署后要如何编写文章？',
-  STARTER_FAQ_2_ANSWER: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a class="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>',
+  STARTER_FAQ_2_ANSWER: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a className="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>',
 
   STARTER_FAQ_3_QUESTION: '站点部署失败，更新失败？',
   STARTER_FAQ_3_ANSWER: '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助',
@@ -165,7 +165,7 @@ const CONFIG = {
 
   STARTER_TEAM_TITLE: '团队成员',
   STARTER_TEAM_TEXT_1: '我们的开发者团队',
-  STARTER_TEAM_TEXT_2: 'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a class="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
+  STARTER_TEAM_TEXT_2: 'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
   STARTER_TEAM_ITEMS: [
@@ -193,8 +193,91 @@ const CONFIG = {
 
   // 博客文章区块
   STARTER_BLOG_TITLE: '我们的博客',
+  STARTER_BLOG_COUNT: 3, // 首页博文区块默认展示前3篇文章
   STARTER_BLOG_TEXT_1: '最近的新闻',
   STARTER_BLOG_TEXT_2: '这里会发布一些关于NotionNext的最新动态，包括新的动向、新的未来计划，以及新功能的特性',
+
+  // 联系模块
+  STARTER_CONTACT_TITLE: '联系我们',
+  STARTER_CONTACT_TEXT: '告诉我们您遇到的问题',
+  STARTER_CONTACT_LOCATION_TITLE: '我们的位置',
+  STARTER_CONTACT_LOCATION_TEXT: '中国，福建',
+  STARTER_CONTACT_EMAIL_TITLE: '我们如何帮助您？',
+  STARTER_CONTACT_EMAIL_TEXT: 'mail@tangly1024.com',
+
+  STARTER_CONTACT_MSG_TITLE: '向我们留言',
+  STARTER_CONTACT_MSG_NAME: '姓名',
+  STARTER_CONTACT_MSG_EMAIL: '邮箱地址',
+  STARTER_CONTACT_MSG_PHONE: '联系电话',
+  STARTER_CONTACT_MSG_TEXT: '消息内容',
+  STARTER_CONTACT_MSG_SEND: '发送消息',
+
+  // 合作伙伴的图标
+  STARTER_BRANDS: [
+    {
+      IMAGE: '/images/starter/brands/graygrids.svg',
+      IMAGE_WHITE: '/images/starter/brands/graygrids-white.svg',
+      URL: 'https://graygrids.com/',
+      TITLE: 'graygrids'
+    },
+    {
+      IMAGE: '/images/starter/brands/lineicons.svg',
+      IMAGE_WHITE: '/images/starter/brands/lineicons-white.svg',
+      URL: 'https://lineicons.com/',
+      TITLE: 'lineicons'
+    },
+    {
+      IMAGE: '/images/starter/brands/uideck.svg',
+      IMAGE_WHITE: '/images/starter/brands/uideck-white.svg',
+      URL: 'https://uideck.com/',
+      TITLE: 'uideck'
+    },
+    {
+      IMAGE: '/images/starter/brands/ayroui.svg',
+      IMAGE_WHITE: '/images/starter/brands/ayroui-white.svg',
+      URL: 'https://ayroui.com/',
+      TITLE: 'ayroui'
+    },
+    {
+      IMAGE: '/images/starter/brands/tailgrids.svg',
+      IMAGE_WHITE: '/images/starter/brands/tailgrids-white.svg',
+      URL: '"https://tailgrids.com/',
+      TITLE: 'tailgrids'
+    }
+  ],
+
+  STARTER_FOOTER_SLOGAN: '我们通过技术为品牌和公司创造数字体验。',
+
+  // 页脚三列菜单组
+  STARTER_FOOTER_LINK_GROUP: [
+    {
+      TITLE: '关于我们',
+      LINK_GROUP: [
+        { TITLE: '官方主页', URL: '/#home' },
+        { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
+        { TITLE: '帮助支持', URL: 'https://docs.tangly1024.com/article/how-to-question' },
+        { TITLE: '合作申请', URL: 'https://docs.tangly1024.com/my-service' }
+      ]
+    },
+    {
+      TITLE: '功能特性',
+      LINK_GROUP: [
+        { TITLE: '部署指南', URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next' },
+        { TITLE: '升级指南', URL: 'https://docs.tangly1024.com/article/how-to-update-notionnext' },
+        { TITLE: '最新版本', URL: 'https://docs.tangly1024.com/article/latest' }
+      ]
+    },
+    {
+      TITLE: 'Notion写作',
+      LINK_GROUP: [
+        { TITLE: 'Notion开始写作', URL: 'https://docs.tangly1024.com/article/start-to-write' },
+        { TITLE: '快捷键提升效率', URL: 'https://docs.tangly1024.com/article/notion-short-key' },
+        { TITLE: '中国大陆使用Notion', URL: 'https://docs.tangly1024.com/article/notion-faster' }
+      ]
+    }
+  ],
+
+  STARTER_FOOTER_BLOG_LATEST_TITLE: '最新文章',
 
   STARTER_FOOTER_PRIVACY_POLICY_TEXT: '隐私政策',
   STARTER_FOOTER_PRIVACY_POLICY_URL: '/privacy-policy',

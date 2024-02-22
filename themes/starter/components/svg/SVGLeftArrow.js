@@ -1,6 +1,6 @@
 export const SVGLeftArrow = () => {
   return <svg
-    class="fill-current"
+    className="fill-current"
     width="22"
     height="22"
     viewBox="0 0 22 22"
