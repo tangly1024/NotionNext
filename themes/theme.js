@@ -49,7 +49,6 @@ export const getLayoutByTheme = ({ router, theme }) => {
  * @returns
  */
 const getLayoutNameByPath = (path) => {
-  console.log('path', path, LAYOUT_MAPPINGS[path])
   if (LAYOUT_MAPPINGS[path]) {
     return LAYOUT_MAPPINGS[path];
   } else {
