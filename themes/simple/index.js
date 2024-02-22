@@ -47,7 +47,7 @@ const LayoutBase = props => {
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
-        <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
+        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black scroll-smooth`}>
 
             <Style/>
 

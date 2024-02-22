@@ -63,7 +63,7 @@ const Toc = ({ toc }) => {
       <Progress />
     </div>
     <div className='overflow-y-auto max-h-96 overscroll-none scroll-hidden' ref={tRef}>
-      <nav className='h-full font-sans text-black dark:text-gray-300'>
+      <nav className='h-full  text-black dark:text-gray-300'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
           tocIds.push(id)

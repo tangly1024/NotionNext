@@ -66,7 +66,7 @@ const LayoutBase = (props) => {
         <ThemeGlobalGitbook.Provider value={{ searchModal, tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
             <Style/>
 
-            <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-gitbook' className={`${siteConfig('FONT_STYLE')} scroll-smooth bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300`}>
                 <AlgoliaSearchModal cRef={searchModal} {...props}/>
 
                 {/* 顶部导航栏 */}
@@ -77,7 +77,7 @@ const LayoutBase = (props) => {
                     {/* 左侧推拉抽屉 */}
                     {fullWidth
                       ? null
-                      : (<div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
+                      : (<div className={'hidden md:block border-r dark:border-transparent relative z-10 '}>
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
