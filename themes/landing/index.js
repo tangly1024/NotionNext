@@ -34,7 +34,7 @@ import { useEffect } from 'react'
 const LayoutBase = (props) => {
   const { children } = props
 
-  return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white dark:bg-black">
+  return <div id='theme-landing' className={`${siteConfig('FONT_STYLE')} scroll-smooth overflow-hidden flex flex-col justify-between bg-white dark:bg-black`}>
 
         {/* 顶部导航栏 */}
         <Header />
