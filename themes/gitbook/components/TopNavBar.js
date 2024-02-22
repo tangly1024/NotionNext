@@ -39,7 +39,7 @@ export default function TopNavBar(props) {
   }
 
   return (
-        <div id='top-nav' className={'fixed top-0 w-full z-40 ' + className}>
+        <div id='top-nav' className={'fixed top-0 w-full z-20 ' + className}>
 
             {/* 移动端折叠菜单 */}
             <Collapse type='vertical' collapseRef={collapseRef} isOpen={isOpen} className='md:hidden'>
