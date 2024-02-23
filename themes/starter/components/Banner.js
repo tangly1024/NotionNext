@@ -35,7 +35,7 @@ export const Banner = ({ title, description }) => {
                 </li>
                 <li>
                   <a
-                    href="javascript:void(0)"
+                    href="#"
                     className="flex items-center gap-[10px] text-base font-medium text-body-color"
                   >
                     <span className="text-body-color dark:text-dark-6"> / </span>

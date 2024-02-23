@@ -22,7 +22,7 @@ export const SignInForm = () => {
             className="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white dark:bg-dark-2 py-14 px-8 text-center sm:px-12 md:px-[60px]"
             data-wow-delay=".15s">
             <div className="mb-10 text-center">
-              <div href="javascript:void(0)" className="mx-auto inline-block max-w-[160px]">
+              <div href="#" className="mx-auto inline-block max-w-[160px]">
                 <Logo/>
               </div>
             </div>
@@ -51,25 +51,25 @@ export const SignInForm = () => {
             {/* 社交平台 */}
             <ul className="flex justify-between -mx-2 mb-9">
               <li className="w-full px-2">
-                <a href="javascript:void(0)"
+                <a href="#"
                   className="flex h-11 items-center justify-center rounded-md bg-[#4064AC] transition hover:bg-opacity-90">
                  <SVGFacebook className='fill-white'/>
                 </a>
               </li>
               <li className="w-full px-2">
-                <a href="javascript:void(0)"
+                <a href="#"
                   className="flex h-11 items-center justify-center rounded-md bg-[#1C9CEA] transition hover:bg-opacity-90">
                   <SVGTwitter className='fill-white'/>
                 </a>
               </li>
               <li className="w-full px-2">
-                <a href="javascript:void(0)"
+                <a href="#"
                   className="flex h-11 items-center justify-center rounded-md bg-[#D64937] transition hover:bg-opacity-90">
                   <SVGGoogle className='fill-white'/>
                 </a>
               </li>
             </ul>
-            <a href="javascript:void(0)" className="inline-block mb-2 text-base text-dark dark:text-white hover:text-primary dark:hover:text-primary">
+            <a href="#" className="inline-block mb-2 text-base text-dark dark:text-white hover:text-primary dark:hover:text-primary">
               Forget Password?
             </a>
             <p className="text-base text-body-secondary">

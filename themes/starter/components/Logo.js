@@ -23,7 +23,9 @@ export const Logo = ({ white }) => {
     const navBarScrollListener = throttle(() => {
       const scrollY = window.scrollY;
       // 何时显示浅色或白底的logo
-      if (white || isDarkMode || (!isDarkMode && router.route === '/' && scrollY < 1)) {
+      const homePageNavBar = router.route === '/' && scrollY < 10 // 在首页并且视窗在页面顶部
+      console.log('白色', homePageNavBar, router.route, scrollY < 10)
+      if (white || isDarkMode || homePageNavBar) {
         setLogo(siteConfig('STARTER_LOGO_WHITE', null, CONFIG))
         setLogoTextColor('text-white')
       } else {
@@ -37,7 +39,7 @@ export const Logo = ({ white }) => {
     return () => {
       window.removeEventListener('scroll', navBarScrollListener)
     }
-  }, [])
+  }, [isDarkMode, router])
 
   return <div className="w-60 max-w-full px-4">
         <div className="navbar-logo flex items-center w-full py-5 cursor-pointer">

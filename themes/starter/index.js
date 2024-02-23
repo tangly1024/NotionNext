@@ -35,6 +35,7 @@ import { SVG404 } from './components/svg/SVG404'
 import { Banner } from './components/Banner'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
+import Link from 'next/link'
 
 /**
  * 一些外部js
@@ -84,6 +85,10 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
+  const count = siteConfig('STARTER_BLOG_COUNT', 3, CONFIG)
+  const posts = props?.allNavPages
+    ? props.allNavPages.slice(0, count)
+    : []
   return (
         <>
         {/* 英雄区 */}
@@ -101,7 +106,7 @@ const LayoutIndex = (props) => {
         {/* 团队介绍 */}
         <Team/>
         {/* 博文列表 */}
-        <Blog {...props}/>
+        <Blog posts={posts}/>
         {/* 联系方式 */}
         <Contact/>
         {/* 合作伙伴 */}
@@ -140,7 +145,22 @@ const LayoutSlug = (props) => {
 }
 
 const LayoutSearch = (props) => <></>
-const LayoutArchive = (props) => <></>
+
+/**
+ * 文章归档
+ * @param {*} props
+ * @returns
+ */
+const LayoutArchive = (props) => <>
+        {/* 博文列表 */}
+        <Blog {...props}/>
+</>
+
+/**
+ * 404页面
+ * @param {*} props
+ * @returns
+ */
 const Layout404 = (props) => {
   return <>
      {/* <!-- ====== 404 Section Start --> */}
@@ -162,17 +182,17 @@ const Layout404 = (props) => {
                     <SVG404/>
                   </div>
                   <h3 className="mb-5 text-2xl font-semibold text-dark dark:text-white">
-                    We Can't Seem to Find The Page You're Looking For.
+                    {siteConfig('STARTER_404_TITLE', null, CONFIG)}
                   </h3>
                   <p className="mb-8 text-base text-body-color dark:text-dark-6">
-                    Oops! The page you are looking for does not exist. It might have
-                    been moved or deleted.
+                  {siteConfig('STARTER_404_TEXT', null, CONFIG)}
+
                   </p>
-                  <a
+                  <Link href='/'
                     className="py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary"
                   >
-                    Go To Home
-                  </a>
+                    {siteConfig('STARTER_404_BACK', null, CONFIG)}
+                  </Link>
                 </div>
               </div>
             </div>
@@ -195,6 +215,7 @@ const LayoutTagIndex = (props) => <></>
 const LayoutSignIn = (props) => {
   return <>
         <div className='grow mt-20'>
+            <Banner title='登录' description='这里是演示页面，NotionNext目前不提供会员登录功能'/>
             <SignInForm/>
         </div>
     </>
@@ -207,6 +228,7 @@ const LayoutSignIn = (props) => {
  */
 const LayoutSignUp = (props) => <>
         <div className='grow mt-20'>
+            <Banner title='注册' description='这里是演示页面，NotionNext目前不提供会员注册功能'/>
             <SignUpForm/>
         </div>
 </>

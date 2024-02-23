@@ -15,7 +15,7 @@ export const SignUpForm = () => {
             className="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-xl shadow-form bg-white dark:bg-dark-2 py-14 px-8 text-center sm:px-12 md:px-[60px]"
             data-wow-delay=".15s">
             <div className="mb-10 text-center">
-              <a href="javascript:void(0)" className="mx-auto inline-block max-w-[160px]">
+              <a href="#" className="mx-auto inline-block max-w-[160px]">
                <Logo/>
               </a>
             </div>
@@ -43,7 +43,7 @@ export const SignUpForm = () => {
             </span>
             <ul className="flex justify-between -mx-2 mb-9">
               <li className="w-full px-2">
-                <a href="javascript:void(0)"
+                <a href="#"
                   className="flex h-11 items-center justify-center rounded-md bg-[#4064AC] transition hover:bg-opacity-90">
                   <svg width="10" height="20" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -53,7 +53,7 @@ export const SignUpForm = () => {
                 </a>
               </li>
               <li className="w-full px-2">
-                <a href="javascript:void(0)"
+                <a href="#"
                   className="flex h-11 items-center justify-center rounded-md bg-[#1C9CEA] transition hover:bg-opacity-90">
                   <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -63,7 +63,7 @@ export const SignUpForm = () => {
                 </a>
               </li>
               <li className="w-full px-2">
-                <a href="javascript:void(0)"
+                <a href="#"
                   className="flex h-11 items-center justify-center rounded-md bg-[#D64937] transition hover:bg-opacity-90">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -76,11 +76,11 @@ export const SignUpForm = () => {
 
             <p className="mb-4 text-base text-body-secondary">
               By creating an account you are agree with our
-              <a href="javascript:void(0)" className="text-primary hover:underline">
+              <a href="#" className="text-primary hover:underline">
                 Privacy
               </a>
               and
-              <a href="javascript:void(0)" className="text-primary hover:underline">
+              <a href="#" className="text-primary hover:underline">
                 Policy
               </a>
             </p>

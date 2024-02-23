@@ -2,11 +2,12 @@
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 
-export const Blog = (props) => {
-  const count = siteConfig('STARTER_BLOG_COUNT', 3, CONFIG)
-  const posts = props?.allNavPages
-    ? props.allNavPages.slice(0, count)
-    : []
+/**
+ * 博文列表
+ * @param {*} param0
+ * @returns
+ */
+export const Blog = ({ posts }) => {
   return <>
         {/* <!-- ====== Blog Section Start --> */}
         <section className="bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">

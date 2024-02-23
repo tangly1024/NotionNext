@@ -17,17 +17,17 @@ export const NavBar = (props) => {
   const { isDarkMode } = useGlobal()
   const [buttonTextColor, setColor] = useState(router.route === '/' ? 'text-white' : '')
   useEffect(() => {
-    if (isDarkMode) {
+    if (isDarkMode || router.route === '/') {
       setColor('text-white')
     } else {
-      setColor(router.route === '/' ? 'text-white' : '')
+      setColor('')
     }
     // ======= Sticky
     window.addEventListener('scroll', navBarScollListener)
     return () => {
       window.removeEventListener('scroll', navBarScollListener)
     }
-  }, [isDarkMode])
+  }, [[isDarkMode]])
 
   // 滚动监听
   const throttleMs = 200

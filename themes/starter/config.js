@@ -10,8 +10,8 @@ const CONFIG = {
   // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
 
   // 英雄区块导航
-  STARTER_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具。', // 英雄区文字
-  STARTER_HERO_TITLE_2: '使用您喜爱的技术（Tailwind 和 React NextJS）构建各种网站主题模板。  ', // 英雄区文字
+  STARTER_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
+  STARTER_HERO_TITLE_2: '通过笔记无感知地建站、成倍放大您的价值', // 英雄区文字
   STARTER_HERO_TITLE_3: '使用最新技术构建', // 英雄区文字
   STARTER_HERO_BUTTON_1_TEXT: 'Start Now', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
@@ -29,7 +29,7 @@ const CONFIG = {
   // 特性区块
   STARTER_FEATURE_TITLE: '特性', // 特性
   STARTER_FEATURE_TEXT_1: 'NotionNext的主要特性', // 特性
-  STARTER_FEATURE_TEXT_2: 'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站。  ', // 特性
+  STARTER_FEATURE_TEXT_2: 'NotionNext的愿景是帮助您简单、无感知地稳定地搭建自己的网站，放大品牌的价值。 ', // 特性
 
   STARTER_FEATURE_1_TITLE_1: '免费且开源', // 特性1
   STARTER_FEATURE_1_TEXT_1: '项目源码在Github上完全开放共享，遵循MIT协议', // 特性1
@@ -65,7 +65,7 @@ const CONFIG = {
   // 首页价格区块
   STARTER_PRICING_TITLE: '价格表',
   STARTER_PRICING_TEXT_1: '很棒的定价计划',
-  STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（NotionNext完全免费，这里仅做主题功能演示。请勿下单！请勿购买！）',
+  STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
 
   STARTER_PRICING_1_TITLE: '入门版',
   STARTER_PRICING_1_PRICE: '19.9',
@@ -96,8 +96,8 @@ const CONFIG = {
   STARTER_PRICING_3_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
 
   STARTER_TESTIMONIALS_TITLE: '用户反馈',
-  STARTER_TESTIMONIALS_TEXT_1: '我们的站长怎么说',
-  STARTER_TESTIMONIALS_TEXT_2: '有数千位站长使用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，站友们成功上线了自己的网站并且持续运行',
+  STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
+  STARTER_TESTIMONIALS_TEXT_2: '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
   STARTER_TESTIMONIALS_STAR_ICON: '/images/starter/testimonials/icon-star.svg', // 评分图标
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
@@ -205,12 +205,16 @@ const CONFIG = {
   STARTER_CONTACT_EMAIL_TITLE: '我们如何帮助您？',
   STARTER_CONTACT_EMAIL_TEXT: 'mail@tangly1024.com',
 
-  STARTER_CONTACT_MSG_TITLE: '向我们留言',
-  STARTER_CONTACT_MSG_NAME: '姓名',
-  STARTER_CONTACT_MSG_EMAIL: '邮箱地址',
-  STARTER_CONTACT_MSG_PHONE: '联系电话',
-  STARTER_CONTACT_MSG_TEXT: '消息内容',
-  STARTER_CONTACT_MSG_SEND: '发送消息',
+  // 嵌入外部表单
+  STARTER_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/yfctc7', // 基于NoteForm创建，将留言数据存在Notion中
+  //   自定义留言表单
+  //   STARTER_CONTACT_MSG_TITLE: '向我们留言',
+  //   STARTER_CONTACT_MSG_NAME: '姓名',
+  //   STARTER_CONTACT_MSG_EMAIL: '邮箱地址',
+  //   STARTER_CONTACT_MSG_PHONE: '联系电话',
+  //   STARTER_CONTACT_MSG_TEXT: '消息内容',
+  //   STARTER_CONTACT_MSG_SEND: '发送消息',
+  //   STARTER_CONTACT_MSG_THANKS: '感谢您的留言',
 
   // 合作伙伴的图标
   STARTER_BRANDS: [
@@ -287,6 +291,11 @@ const CONFIG = {
 
   STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: '服务协议',
   STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: '/terms-of-use',
+
+  // 404页面的提示语
+  STARTER_404_TITLE: '我们似乎找不到您要找的页面。',
+  STARTER_404_TEXT: '抱歉！您要查找的页面不存在。可能已经移动或删除。',
+  STARTER_404_BACK: '回到主页',
 
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
