@@ -85,7 +85,7 @@ const LayoutBase = (props) => {
 
   return (
     <ThemeGlobalNext.Provider value={{ searchModal }}>
-        <div id='theme-next'>
+        <div id='theme-next' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
             <Style/>
 
             {/* 移动端顶部导航栏 */}
@@ -119,7 +119,7 @@ const LayoutBase = (props) => {
             </div>}
 
             {/* 右下角悬浮 */}
-            <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
+            <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 '>
                 <div className={(showRightFloat ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
                     <JumpToTopButton percent={percent} />
                     <JumpToBottomButton />
@@ -276,6 +276,23 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
+
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
 
