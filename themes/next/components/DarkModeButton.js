@@ -1,12 +1,12 @@
 import { useGlobal } from '@/lib/global'
-import { saveDarkModeToCookies } from '@/themes/theme'
+import { saveDarkModeToLocalStorage } from '@/themes/theme'
 
 const DarkModeButton = () => {
   const { isDarkMode, updateDarkMode } = useGlobal()
   // 用户手动设置主题
   const handleChangeDarkMode = () => {
     const newStatus = !isDarkMode
-    saveDarkModeToCookies(newStatus)
+    saveDarkModeToLocalStorage(newStatus)
     updateDarkMode(newStatus)
     const htmlElement = document.getElementsByTagName('html')[0]
     htmlElement.classList?.remove(newStatus ? 'light' : 'dark')

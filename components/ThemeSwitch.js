@@ -38,7 +38,7 @@ const ThemeSwitch = () => {
 
   return (<>
         <Draggable>
-            <div id="draggableBox" style={{ left: '0px', top: '80vh' }} className="fixed group space-y-2 overflow-hidden z-50 p-3 flex flex-col items-start dark:text-white bg-gray-50 dark:bg-black rounded-xl shadow-lg border dark:border-gray-800">
+            <div id="draggableBox" style={{ left: '0px', top: '80vh' }} className="fixed group space-y-2 overflow-hidden z-50 p-3 flex flex-col items-start dark:text-white bg-white dark:bg-black rounded-xl shadow-lg ">
                 {/* 深色按钮 */}
                 <div className="text-sm flex items-center w-0 group-hover:w-32 transition-all duration-200">
                     <DarkModeButton />
