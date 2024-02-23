@@ -21,6 +21,7 @@ import Loading from '@/components/Loading'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
 import { Pricing } from './components/Pricing'
+import { useEffect } from 'react'
 
 /**
  * 布局框架
@@ -32,7 +33,7 @@ import { Pricing } from './components/Pricing'
 const LayoutBase = (props) => {
   const { children } = props
 
-  return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white dark:bg-black">
+  return <div id='theme-landing' className={`${siteConfig('FONT_STYLE')} scroll-smooth overflow-hidden flex flex-col justify-between bg-white dark:bg-black`}>
 
         {/* 顶部导航栏 */}
         <Header />
@@ -71,8 +72,26 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutSlug = (props) => {
+  const { post } = props
+
   // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
   const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
+
   if (JSON.parse(siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG)) && isBrowser && router.route === '/[prefix]/[slug]') {
     const redirectUrl = siteConfig('LANDING_POST_REDIRECT_URL', null, CONFIG) + router.asPath.replace('?theme=landing', '')
     router.push(redirectUrl)

@@ -73,7 +73,7 @@ const LayoutBase = props => {
 
   return (
     <ThemeGlobalHexo.Provider value={{ searchModal }}>
-        <div id='theme-hexo'>
+        <div id='theme-hexo' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
             <Style/>
 
             {/* 顶部导航 */}
@@ -222,7 +222,22 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
             <div className="w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article">
