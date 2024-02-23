@@ -31,8 +31,9 @@ export const Pricing = () => {
           </div>
         </div>
 
-        {/* 第一个付费计划 */}
         <div className="-mx-4 flex flex-wrap justify-center">
+
+          {/* 第一个付费计划 */}
           <div className="w-full px-4 md:w-1/2 lg:w-1/3">
             <div
               className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
@@ -68,7 +69,7 @@ export const Pricing = () => {
                 </div>
               </div>
               <a
-                href={siteConfig('STARTER_PRICING_1_BUTTON_URL')}
+                href={siteConfig('STARTER_PRICING_1_BUTTON_URL', null, CONFIG)}
                 className="inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark"
               >
                 {siteConfig('STARTER_PRICING_1_BUTTON_TEXT', null, CONFIG)}
@@ -94,8 +95,8 @@ export const Pricing = () => {
               <h2
                 className="space-x-1 mb-11 text-4xl font-semibold text-dark dark:text-white xl:text-[42px] xl:leading-[1.21]"
               >
-                <span className="text-xl font-medium">{siteConfig('STARTER_PRICING_1_PRICE_CURRENCY', null, CONFIG)}</span>
-                <span className="-ml-1 -tracking-[2px]">{siteConfig('STARTER_PRICING_1_PRICE', null, CONFIG)}</span>
+                <span className="text-xl font-medium">{siteConfig('STARTER_PRICING_2_PRICE_CURRENCY', null, CONFIG)}</span>
+                <span className="-ml-1 -tracking-[2px]">{siteConfig('STARTER_PRICING_2_PRICE', null, CONFIG)}</span>
                 <span
                   className="text-base font-normal text-body-color dark:text-dark-6"
                 >
@@ -117,7 +118,7 @@ export const Pricing = () => {
                 </div>
               </div>
               <a
-                href={siteConfig('STARTER_PRICING_2_BUTTON_URL')}
+                href={siteConfig('STARTER_PRICING_2_BUTTON_URL', null, CONFIG)}
                 className="inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark"
               >
                 {siteConfig('STARTER_PRICING_2_BUTTON_TEXT', null, CONFIG)}
@@ -161,7 +162,7 @@ export const Pricing = () => {
                 </div>
               </div>
               <a
-                href={siteConfig('STARTER_PRICING_3_BUTTON_URL')}
+                href={siteConfig('STARTER_PRICING_3_BUTTON_URL', null, CONFIG)}
                 className="inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark"
               >
                 {siteConfig('STARTER_PRICING_3_BUTTON_TEXT', null, CONFIG)}
