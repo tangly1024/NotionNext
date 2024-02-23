@@ -33,13 +33,24 @@ export const getLayoutByTheme = ({ router, theme }) => {
       setTimeout(() => {
         checkThemeDOM()
       }, 500);
-      return m[getLayoutNameByPath(router.pathname, router.asPath)]
+
+      const components = m[getLayoutNameByPath(router.pathname, router.asPath)]
+      if (components) {
+        return components
+      } else {
+        return m.LayoutSlug
+      }
     }), { ssr: true })
   } else {
     setTimeout(() => {
       checkThemeDOM()
     }, 100);
-    return ThemeComponents[getLayoutNameByPath(router.pathname, router.asPath)]
+    const components = ThemeComponents[getLayoutNameByPath(router.pathname, router.asPath)]
+    if (components) {
+      return components
+    } else {
+      return ThemeComponents.LayoutSlug
+    }
   }
 }
 
