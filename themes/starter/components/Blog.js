@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+import Link from 'next/link'
 
 /**
  * 博文列表
@@ -35,16 +37,17 @@ export const Blog = ({ posts }) => {
             {/* 博客列表 此处优先展示3片文章 */}
             <div className="-mx-4 flex flex-wrap">
                 {posts?.map((item, index) => {
+                  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
                   return <div key={index} className="w-full px-4 md:w-1/2 lg:w-1/3">
                     <div className="wow fadeInUp group mb-10" data-wow-delay=".1s">
                     <div className="mb-8 overflow-hidden rounded-[5px]">
-                        <a href="blog-details.html" className="block">
+                        <Link href={url} className="block">
                         <img
                             src={item.pageCoverThumbnail}
                             alt={item.title}
                             className="w-full transition group-hover:rotate-6 group-hover:scale-125"
                         />
-                        </a>
+                        </Link>
                     </div>
                     <div>
                         <span
