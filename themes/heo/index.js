@@ -39,6 +39,7 @@ import LazyImage from '@/components/LazyImage'
 import WWAds from '@/components/WWAds'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
+import { isBrowser } from '@/lib/utils'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -266,6 +267,22 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
     siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
     <>
       <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
@@ -489,7 +506,7 @@ export {
   LayoutArchive,
   LayoutSlug,
   Layout404,
-  LayoutCategoryIndex,
   LayoutPostList,
+  LayoutCategoryIndex,
   LayoutTagIndex
 }
