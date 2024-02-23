@@ -75,7 +75,7 @@ const LayoutBase = (props) => {
             <Style/>
 
             {/* 主题样式根基 */}
-            <div id='theme-onenav' className='dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-onenav' className={`${siteConfig('FONT_STYLE')} dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
 
                 {/* 端顶部导航栏 */}
                 <TopNavBar {...props} />
@@ -84,7 +84,7 @@ const LayoutBase = (props) => {
                 <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' relative flex justify-between w-full h-screen mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
-                    <div className={'font-sans hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
+                    <div className={' hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
 
                         {/* 图标Logo */}
                         <div className='hidden md:block w-full top-0 left-5 md:left-4 z-40 pt-3 md:pt-4'>

@@ -50,7 +50,7 @@ const LayoutBase = (props) => {
   return (
         <ThemeGlobalFukasawa.Provider value={{}}>
 
-            <div id='theme-fukasawa'>
+            <div id='theme-fukasawa' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
                 <Style/>
 
                 <TopNav {...props} />
