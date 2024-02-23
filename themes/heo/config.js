@@ -11,7 +11,7 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: 'Share 编程',
-  HEO_HERO_TITLE_2: 'And 思维',
+  HEO_HERO_TITLE_2: 'And 思想',
   HEO_HERO_TITLE_3: 'chat.openai.com',
   HEO_HERO_TITLE_4: '船欣版本发布',
   HEO_HERO_TITLE_5: 'NextJS 14 - 更快的Turbopack',
