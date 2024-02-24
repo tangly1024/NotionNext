@@ -109,7 +109,7 @@ const LayoutBase = props => {
             {/* 主区上部嵌入 */}
             {slotTop}
             {children}
-          <AdSlot type='native' /> //google ads
+          <AdSlot type='native' /> 
           </div>
 
           <div className='lg:px-2'></div>
@@ -147,7 +147,7 @@ const LayoutIndex = props => {
           : (
             <BlogPostListScroll {...props} />
             )}
-      <AdSlot type='native' /> //google ads
+      <AdSlot type='native' /> 
       </div>
   )
 }
@@ -169,7 +169,7 @@ const LayoutPostList = props => {
           : (
             <BlogPostListScroll {...props} />
             )}
-      <AdSlot type='flow' /> //google ads
+      <AdSlot type='flow' />
       </div>
   )
 }
@@ -309,7 +309,7 @@ const LayoutSlug = props => {
                   <ArticleRecommend {...props} />
                   {/* 上一篇\下一篇文章 */}
                   <ArticleAdjacent {...props} />
-                  <AdSlot type='native' /> //google ads
+                  <AdSlot type='native' /> 
                 </div>
               )}
             </article>
