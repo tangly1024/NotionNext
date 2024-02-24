@@ -9,20 +9,20 @@ import { useRouter } from 'next/router';
 // 所有主题在next.config.js中扫描
 export const { THEMES = [] } = getConfig().publicRuntimeConfig
 
-// /**
-//  * 加载全局布局
-//  * 如果是
-//  * @param {*} themeQuery
-//  * @returns
-//  */
-// export const getGlobalLayoutByTheme = (themeQuery) => {
-//   const layout = getLayoutNameByPath(-1)
-//   if (themeQuery !== BLOG.THEME) {
-//     return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
-//   } else {
-//     return ThemeComponents[layout]
-//   }
-// }
+/**
+ * 加载全局布局
+ * 如果是
+ * @param {*} themeQuery
+ * @returns
+ */
+export const getGlobalLayoutByTheme = (themeQuery) => {
+  const layout = getLayoutNameByPath(-1)
+  if (themeQuery !== BLOG.THEME) {
+    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[layout]), { ssr: true })
+  } else {
+    return ThemeComponents[layout]
+  }
+}
 
 /**
  * 加载主题文件
@@ -30,17 +30,16 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  * @param {*} router
  * @returns
  */
-export const getLayoutByTheme = ({ router, theme }) => {console.log('Router Object:', router); // 打印整个router对象
-  
+export const getLayoutByTheme = ({ router, theme }) => {
+  const currentPath = router.asPath;  // Current URL path.
+  const themeQuery = getQueryParam(router.asPath, 'theme') || theme
+  const layoutName = getLayoutNameByPath(router.pathname)
 
-
-  const currentPath = getQueryParam(router.asPath, 'theme') || theme // Current URL path.
-  const layout = getLayoutNameByPath(router.pathname)
   // Check if it's the homepage based on the provided URL.
   const isHomePage = currentPath === "/";
   const isZhHomePage = currentPath === '/zh';
   const is404 = currentPath === '/404'
-  console.log('------------------------------------',currentPath)
+  console.log('-------------------------------我看看是不是这个',currentPath)
 
   useEffect(() => {
     function jump() {
@@ -66,9 +65,8 @@ export const getLayoutByTheme = ({ router, theme }) => {console.log('Router Obje
     }
   }, []);
 
-  // Choose the theme based on the page.
+
   if (isHomePage || isZhHomePage) {
-    // If it's the homepage, use the 'landing' theme (or whatever your homepage theme is called).
     return dynamic(() => import('@/themes/landing').then(m => m.LayoutIndex), { ssr: true });
   } else if (is404) {
     return ThemeComponents[layout]
@@ -77,7 +75,22 @@ export const getLayoutByTheme = ({ router, theme }) => {console.log('Router Obje
     return dynamic(() => import('@/themes/gitbook').then(m => {
       return m.LayoutSlug
     }), { ssr: true });
-    // return ThemeComponents[layout]  
+  }
+}
+
+/**
+ * 切换主题时的特殊处理
+ */
+const checkThemeDOM = () => {
+  if (isBrowser) {
+    const elements = document.querySelectorAll('[id^="theme-"]')
+    if (elements?.length > 1) {
+      elements[elements.length - 1].scrollIntoView()
+      // 删除前面的元素，只保留最后一个元素
+      for (let i = 0; i < elements.length - 1; i++) {
+        elements[i].parentNode.removeChild(elements[i])
+      }
+    }
   }
 }
 

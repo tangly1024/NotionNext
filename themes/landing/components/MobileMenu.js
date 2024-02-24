@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -66,12 +67,12 @@ export default function MobileMenu() {
         >
           <ul className="px-5 py-2">
             <li>
-              <Link href={CONFIG.HEDEAR_BUTTON_1_URL} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>
+            <Link href={CONFIG.HEDEAR_BUTTON_1_URL} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>
                 <div>{CONFIG.HEADER_BUTTON_1_TITLE}</div>
               </Link>
             </li>
             <li>
-              <Link href={CONFIG.HEDEAR_BUTTON_2_URL} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>
+            <Link href={CONFIG.HEDEAR_BUTTON_2_URL} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>
                 <div>{CONFIG.HEADER_BUTTON_2_TITLE}</div>
               </Link>
             </li>

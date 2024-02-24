@@ -1,5 +1,6 @@
 import BlogPostCard from './BlogPostCard'
 import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import NavPostListEmpty from './NavPostListEmpty'
 import PaginationSimple from './PaginationSimple'
 

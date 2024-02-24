@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 import CONFIG_EN from '../config_en'
 import Link from 'next/link'
@@ -68,14 +68,14 @@ export default function Header(props) {
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
                 <Link href={config.HEDEAR_BUTTON_4_URL} className="font-medium hover:font-bold text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">
-                   <div>{config.HEADER_BUTTON_4_TITLE}</div>
-                   <RxArrowTopRight className="inline-block" />
+                    <div>{config.HEADER_BUTTON_4_TITLE}</div>
+                    <RxArrowTopRight className="inline-block" />
                 </Link>
               </li>
               <li>
-                <Link href={config.HEDEAR_BUTTON_5_URL} className="font-medium hover:font-bold text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">
-                   <div>{config.HEADER_BUTTON_5_TITLE}</div>
-                   <RxArrowTopRight className="inline-block" />
+              <Link href={config.HEDEAR_BUTTON_5_URL} className="font-medium hover:font-bold text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">
+                  <div>{config.HEADER_BUTTON_5_TITLE}</div>
+                  <RxArrowTopRight className="inline-block" />
                 </Link>
               </li>
               {/* <li>
@@ -89,10 +89,10 @@ export default function Header(props) {
               <li onClick={changeI18n} className="font-medium hover:font-bold text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" style={{
                 cursor:'pointer'
               }}>
-                {router.asPath ==='/' ? 'ZH':'EN'}
+                {router.asPath ==='/' ? 'ZH':'EN'}              
               </li>
             </ul>
-            
+
           </nav>
 
           <MobileMenu />

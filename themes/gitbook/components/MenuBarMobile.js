@@ -1,6 +1,7 @@
 import React from 'react'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 

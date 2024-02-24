@@ -1,59 +1,59 @@
+import { subscribeToNewsletter } from '@/lib/mailchimp'
+import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
+import CONFIG from '../config'
+import Logo from './Logo'
+import { siteConfig } from '@/lib/config'
 import ClassicPadding from "./ClassicPadding";
 import React from "react";
 import { RxArrowTopRight } from "react-icons/rx";
 
 function Footer() {
-  const rightLinks = [
-    {
-      name: "公众号",
-      link: "https://mp.weixin.qq.com/s/uRs8TdWKkLZFGbJncsS-Tw",
-    },
-    {
-      name: "Twitter",
-      link: "https://twitter.com/aiwarts",
-    },
-    {
-      name: "GitHub",
-      link: "https://github.com/LearnPrompt/LearnPrompt",
-    },
-    {
-      name: "Contact",
-      link: "mailto:learnprompt2023@gmail.com",
-    },
-  ];
-
-  return (
-    <ClassicPadding className="bg-gray-100 py-6 sm:py-10 border-t-[gray/200] border flex flex-col sm:flex-row justify-between font-vietnam tracking-tight text-default">
-      <div className="hidden sm:flex">© 2023 Learn Prompt. Built with aiwarts.</div>
-      <div className="flex gap-4">
-        {rightLinks.map((link, idx) => (
-          <div
-            className="flex items-center text-default hover:text-dark/500"
-            key={idx}
-          >
-            <a
-              href={link.link}
-              className="transition-all mr-1 font-vietnam tracking-tight"
-              style={{ color: "black" }}
+    const rightLinks = [
+      {
+        name: "公众号",
+        link: "https://mp.weixin.qq.com/s/uRs8TdWKkLZFGbJncsS-Tw",
+      },
+      {
+        name: "Twitter",
+        link: "https://twitter.com/aiwarts",
+      },
+      {
+        name: "GitHub",
+        link: "https://github.com/LearnPrompt/LearnPrompt",
+      },
+      {
+        name: "Contact",
+        link: "mailto:learnprompt2023@gmail.com",
+      },
+    ];
+  
+    return (
+      <ClassicPadding className="bg-gray-100 py-6 sm:py-10 border-t-[gray/200] border flex flex-col sm:flex-row justify-between font-vietnam tracking-tight text-default">
+        <div className="hidden sm:flex">© 2023 Learn Prompt. Built with aiwarts.</div>
+        <div className="flex gap-4">
+          {rightLinks.map((link, idx) => (
+            <div
+              className="flex items-center text-default hover:text-dark/500"
+              key={idx}
             >
-              {link.name}
-            </a>
-            <RxArrowTopRight className="inline-block" />
-          </div>
-        ))}
-      </div>
-      <div className="flex sm:hidden mt-4 sm:mt-0">© 2023 Learn Prompting</div>
-    </ClassicPadding>
-  );
-}
-
-export default Footer;
-
-// import { subscribeToNewsletter } from '@/lib/mailchimp'
-// import Link from 'next/link'
-// import { useEffect, useRef, useState } from 'react'
-// import CONFIG from '../config'
-// import Logo from './Logo'
+              <a
+                href={link.link}
+                className="transition-all mr-1 font-vietnam tracking-tight"
+                style={{ color: "black" }}
+              >
+                {link.name}
+              </a>
+              <RxArrowTopRight className="inline-block" />
+            </div>
+          ))}
+        </div>
+        <div className="flex sm:hidden mt-4 sm:mt-0">© 2023 Learn Prompting</div>
+      </ClassicPadding>
+    );
+  }
+  
+  export default Footer;
 
 // /**
 //  * 页脚
@@ -94,11 +94,9 @@ export default Footer;
 //                         <div className="mb-2">
 //                             <Logo />
 //                         </div>
-//                         {/* <div className="text-sm text-gray-600">
+//                         <div className="text-sm text-gray-600">
 //                             <Link href="/terms-of-use" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">服务条款</Link> · <Link href="/privacy-policy" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">隐私政策</Link>
-//                         </div> */}
-//                         {/* Copyrights note */}
-//                         <div className="text-sm text-gray-600 mr-4">&copy; NotionNext. All rights reserved.</div>
+//                         </div>
 //                     </div>
 
 //                     {/* 2nd block */}
@@ -168,7 +166,7 @@ export default Footer;
 //                     </div>
 
 //                     {/* 开启邮件收集 */}
-//                     {JSON.parse(CONFIG.NEWSLETTER) && <>
+//                     {JSON.parse(siteConfig('LANDING_NEWSLETTER', null, CONFIG)) && <>
 //                         {/* 5th block */}
 //                         <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
 //                             <h6 className="text-gray-800 font-medium mb-2">Subscribe</h6>
@@ -201,6 +199,11 @@ export default Footer;
 
 //                     {/* Social as */}
 //                     <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
+//                         <li>
+//                           <div className='h-full flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100'>
+//                              Powered by<a href='https://github.com/tangly1024/NotionNext' className='mx-1 hover:underline font-semibold'>NotionNext {siteConfig('VERSION')}</a>
+//                           </div>
+//                         </li>
 //                         {/* <li>
 //               <a href="#0" className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out" aria-label="Twitter">
 //                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

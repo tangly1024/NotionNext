@@ -2,6 +2,8 @@ import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
 import { useGitBookGlobal } from '@/themes/gitbook'
 import Link from 'next/link'
+import { siteConfig } from '@/lib/config'
+import CONFIG from '../config'
 
 /**
  * Logo区域

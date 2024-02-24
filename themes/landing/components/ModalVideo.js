@@ -4,6 +4,7 @@ import { useState, useRef, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import CONFIG from '../config'
 import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 
 export default function ModalVideo({
   thumb,

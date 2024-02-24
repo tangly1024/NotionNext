@@ -10,6 +10,7 @@ import 'aos/dist/aos.css' // You can also use <link> for styles
 
 import { GlobalContextProvider } from '@/lib/global'
 import { getLayoutByTheme } from '@/themes/theme'
+import { getGlobalLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'

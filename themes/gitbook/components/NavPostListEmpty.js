@@ -1,3 +1,4 @@
+import { useGlobal } from '@/lib/global'
 
 /**
  * 空白博客 列表

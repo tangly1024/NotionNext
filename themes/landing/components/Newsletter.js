@@ -1,6 +1,7 @@
 import { subscribeToNewsletter } from '@/lib/mailchimp'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function Newsletter() {
   const formRef = useRef()

@@ -5,6 +5,7 @@ import { MenuBarMobile } from './MenuBarMobile'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { MenuItemDrop } from './MenuItemDrop'
 import DarkModeButton from '@/components/DarkModeButton'
 
@@ -53,7 +54,7 @@ export default function TopNavBar(props) {
 
                 {/* 左侧图标Logo */}
                 <LogoBar {...props} />
-
+                
                 <div className='flex px-2 h-full whitespace-nowrap duration-300 text-sm justify-center dark:text-gray-300 cursor-pointer flex flex-nowrap items-center hover:text-green-600 relative w-20' onClick={()=>{
                   setI18n(i18n === 'zh' ? 'en': 'zh')
 

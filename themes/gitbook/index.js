@@ -1,40 +1,45 @@
 'use client'
 
-import CONFIG from './config'
+import CONFIG from './config' // Note: CONFIG is imported twice, so we keep only one instance.
 import { useRouter } from 'next/router'
 import { useEffect, useState, createContext, useContext } from 'react'
-import { isBrowser } from '@/lib/utils'
+import { AdSlot } from '@/components/GoogleAdsense'
+import Announcement from './components/Announcement'
+import ArticleAround from './components/ArticleAround'
+import ArticleInfo from './components/ArticleInfo'
+import { ArticleLock } from './components/ArticleLock'
+import BlogArchiveItem from './components/BlogArchiveItem'
+import BlogPostListPage from './components/BlogPostListPage'
+import Catalog from './components/Catalog'
+import CategoryItem from './components/CategoryItem'
+import Comment from '@/components/Comment'
+import CommonHead from '@/components/CommonHead'
+import FloatTocButton from './components/FloatTocButton'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
 import RevolverMaps from './components/RevolverMaps'
 import TopNavBar from './components/TopNavBar'
 import SearchInput from './components/SearchInput'
 import { useGlobal } from '@/lib/global'
-import Live2D from '@/components/Live2D'
+import Link from 'next/link'
 import BLOG from '@/blog.config'
+import Live2D from '@/components/Live2D'
 import NavPostList from './components/NavPostList'
-import ArticleInfo from './components/ArticleInfo'
-import Catalog from './components/Catalog'
-import Announcement from './components/Announcement'
+import NotionIcon from '@/components/NotionIcon'
+import NotionPage from '@/components/NotionPage'
 import PageNavDrawer from './components/PageNavDrawer'
-import FloatTocButton from './components/FloatTocButton'
-import { AdSlot } from '@/components/GoogleAdsense'
 import JumpToTopButton from './components/JumpToTopButton'
 import ShareBar from '@/components/ShareBar'
-import CategoryItem from './components/CategoryItem'
-import TagItemMini from './components/TagItemMini'
-import ArticleAround from './components/ArticleAround'
-import Comment from '@/components/Comment'
-import TocDrawer from './components/TocDrawer'
-import NotionPage from '@/components/NotionPage'
-import { ArticleLock } from './components/ArticleLock'
-import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
-import BlogArchiveItem from './components/BlogArchiveItem'
-import BlogPostListPage from './components/BlogPostListPage'
-import Link from 'next/link'
+import TagItemMini from './components/TagItemMini'
+import TocDrawer from './components/TocDrawer'
+import { Transition } from '@headlessui/react'
+
 import dynamic from 'next/dynamic'
+
+
+
+
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -49,16 +54,14 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  */
 const LayoutBase = (props) => {
   const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
-  const { onLoading } = useGlobal()
+  console.log('-------------------------------我看看是不是这个2',allNavPages)
+  const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
-
-  // console.log('router --- ', router)
-
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
   const [i18n, setI18n] = useState(()=>{
-    const pathnameArr = location.pathname.split('/');
-    const slug = pathnameArr[pathnameArr.length - 1];
+  const pathnameArr = location.pathname.split('/');
+  const slug = pathnameArr[pathnameArr.length - 1];
 
     if(!slug) return 'zh'
 
@@ -85,7 +88,7 @@ const LayoutBase = (props) => {
 
   return (
         <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
-            <CommonHead meta={meta} />
+          <CommonHead meta={meta} />
             <Style/>
 
             <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
@@ -113,7 +116,7 @@ const LayoutBase = (props) => {
 
                     <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
 
-                        <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
+                    <div id='container-inner' className='w-full px-7 max-w-3xl justify-center mx-auto'>
                             {slotTop}
                             {/* <WWAds className='w-full' orientation='horizontal'/> */}
 
@@ -197,7 +200,7 @@ const LayoutIndex = (props) => {
   const router = useRouter()
   useEffect(() => {
     router.push(CONFIG.INDEX_PAGE).then(() => {
-      // console.log('跳转到指定首页', CONFIG.INDEX_PAGE)
+      // console.log('跳转到指定首页', siteConfig('INDEX_PAGE', null, CONFIG))
       setTimeout(() => {
         if (isBrowser) {
           const article = document.getElementById('notion-article')
@@ -253,7 +256,7 @@ const LayoutSlug = (props) => {
                     <ShareBar post={post} />
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
+                    {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
                         <div>
                             {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
@@ -262,6 +265,7 @@ const LayoutSlug = (props) => {
                     {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
 
                     <AdSlot />
+                    {/* <WWAds className='w-full' orientation='horizontal'/> */}
 
                     <Comment frontMatter={post} />
                 </section>)}

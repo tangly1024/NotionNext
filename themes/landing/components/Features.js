@@ -3,16 +3,15 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
-import LazyImage from '@/components/LazyImage'
 import CONFIG from '../config'
 import CONFIG_EN from '../config_en'
+import LazyImage from '@/components/LazyImage'
 // import FeaturesElement from '@/public/images/features-element.png'
 
 export default function Features(props) {
   const { i18n = 'zh' } = props
 
   const config = i18n === 'zh' ? CONFIG : CONFIG_EN;
-  
 
   const [tab, setTab] = useState(1)
 
@@ -58,7 +57,7 @@ export default function Features(props) {
                   onClick={(e) => { e.preventDefault(); setTab(1) }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">{config.FEATURES_CARD_1_TITLE}</div>
+                  <div className="font-bold leading-snug tracking-tight mb-1">{config.FEATURES_CARD_1_TITLE}</div>
                     <div className="text-gray-600">{config.FEATURES_CARD_1_P}</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -73,7 +72,7 @@ export default function Features(props) {
                   onClick={(e) => { e.preventDefault(); setTab(2) }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">{config.FEATURES_CARD_2_TITLE}</div>
+                  <div className="font-bold leading-snug tracking-tight mb-1">{config.FEATURES_CARD_2_TITLE}</div>
                     <div className="text-gray-600">{config.FEATURES_CARD_2_P}</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -88,7 +87,7 @@ export default function Features(props) {
                   onClick={(e) => { e.preventDefault(); setTab(3) }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">{config.FEATURES_CARD_3_TITLE}</div>
+                  <div className="font-bold leading-snug tracking-tight mb-1">{config.FEATURES_CARD_3_TITLE}</div>
                     <div className="text-gray-600">{config.FEATURES_CARD_3_P}</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -119,7 +118,7 @@ export default function Features(props) {
                     unmount={false}
                   >
                     <div className="relative inline-flex flex-col">
-                      <img src='/images/feature-1.webp'/>
+                      <LazyImage src='/images/feature-1.webp'/>
                     </div>
 
                   </Transition>

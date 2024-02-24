@@ -33,6 +33,7 @@
         "feed": "^4.2.2",
         "js-md5": "^0.7.3",
         "localStorage": "^1.0.4",
+        "lodash": "^4.17.21",
         "lodash.throttle": "^4.1.1",
         "memory-cache": "^0.2.0",
         "mongodb": "^4.6.0",

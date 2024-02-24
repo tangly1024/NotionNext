@@ -2,6 +2,7 @@ import NavPostListEmpty from './NavPostListEmpty'
 import { useRouter } from 'next/router'
 import NavPostItem from './NavPostItem'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 博客列表滚动分页
@@ -55,7 +56,7 @@ const NavPostList = (props) => {
   if (!groupedArray || groupedArray.length === 0) {
     return <NavPostListEmpty />
   } else {
-    return <div id='posts-wrapper' className='w-full flex-grow'>
+    return <div id='posts-wrapper' className='w-full flex-grow space-y-0.5 tracking-wider'>
             {/* 文章列表 */}
             {groupedArray?.map((group, index) => <NavPostItem key={index} group={group} onHeightChange={props.onHeightChange}/>)}
         </div>
