@@ -39,6 +39,8 @@ import LazyImage from '@/components/LazyImage'
 import WWAds from '@/components/WWAds'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
+import { isBrowser } from '@/lib/utils'
+import { loadWowJS } from '@/lib/wow'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -80,10 +82,15 @@ const LayoutBase = props => {
 
   const HEO_HERO_BODY_REVERSE = siteConfig('HEO_HERO_BODY_REVERSE', false, CONFIG)
 
+  // 加载wow动画
+  useEffect(() => {
+    loadWowJS()
+  }, [])
+
   return (
     <div
       id="theme-heo"
-      className="bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col"
+      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}
     >
 
       <Style />
@@ -266,6 +273,22 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_GISCUS_REPO') || siteConfig('COMMENT_CUSDIS_APP_ID') || siteConfig('COMMENT_UTTERRANCES_REPO') ||
     siteConfig('COMMENT_GITALK_CLIENT_ID') || siteConfig('COMMENT_WEBMENTION_ENABLE')
 
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
     <>
       <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
@@ -277,13 +300,10 @@ const LayoutSlug = props => {
             className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 "
           >
             <article
-              data-aos="fade-up"
-              data-aos-duration="300"
-              data-aos-once="false"
-              data-aos-anchor-placement="top-bottom"
               itemScope
               itemType="https://schema.org/Movie"
-              className="subpixel-antialiased overflow-y-hidden"
+              data-wow-delay=".2s"
+              className="wow fadeInUp subpixel-antialiased overflow-y-hidden"
             >
               {/* Notion文章主体 */}
               <section className="px-5 justify-center mx-auto">
@@ -310,7 +330,10 @@ const LayoutSlug = props => {
               ? null
               : <div className={`${commentEnable && post ? '' : 'hidden'}`}>
                 <hr className="my-4 border-dashed" />
-
+                {/* 评论区上方广告 */}
+                <div className="py-2">
+                    <AdSlot />
+                </div>
                 {/* 评论互动 */}
                 <div className="duration-200 overflow-x-auto px-5">
                   <div className="text-2xl dark:text-white">
@@ -318,9 +341,6 @@ const LayoutSlug = props => {
                     {locale.COMMON.COMMENTS}
                   </div>
                   <Comment frontMatter={post} className="" />
-                  <div className="py-2">
-                    <AdSlot />
-                  </div>
                 </div>
               </div>}
           </div>
@@ -489,7 +509,7 @@ export {
   LayoutArchive,
   LayoutSlug,
   Layout404,
-  LayoutCategoryIndex,
   LayoutPostList,
+  LayoutCategoryIndex,
   LayoutTagIndex
 }
