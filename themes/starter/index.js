@@ -54,7 +54,7 @@ const LayoutBase = (props) => {
     loadWowJS()
   }, [])
 
-  return <div id='theme-starter' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-black scroll-smooth`}>
+  return <div id='theme-starter' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
             <Style/>
             <NavBar {...props}/>
 
