@@ -10,7 +10,7 @@
  * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
  */
 import { useRouter } from 'next/router'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
 import CONFIG from './config'
 import NotionPage from '@/components/NotionPage'
@@ -36,19 +36,7 @@ import { Banner } from './components/Banner'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import Link from 'next/link'
-
-/**
- * 一些外部js
- */
-const loadExternal = async () => {
-  await loadExternalResource('https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js', 'js');
-  // 配合animatecss 实现延时滚动动画，和AOS动画相似
-  const WOW = window.WOW;
-  console.log('加载WOW动画', WOW)
-  if (WOW) {
-    new WOW().init();
-  }
-};
+import { loadWowJS } from '@/lib/wow'
 
 /**
  * 布局框架
@@ -61,8 +49,9 @@ const loadExternal = async () => {
 const LayoutBase = (props) => {
   const { children } = props
 
+  // 加载wow动画
   useEffect(() => {
-    loadExternal()
+    loadWowJS()
   }, [])
 
   return <div id='theme-starter' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-black scroll-smooth`}>
