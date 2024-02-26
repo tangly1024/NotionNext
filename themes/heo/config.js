@@ -4,7 +4,8 @@ const CONFIG = {
   HEO_SITE_CREATE_TIME: '2023-11-21', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
-  HEO_NOTICE_BAR: [],
+  HEO_NOTICE_BAR: [
+],
 
   // 英雄区左右侧组件颠倒位置
   HEO_HERO_REVERSE: false,
@@ -15,8 +16,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '坚持梦想',
   HEO_HERO_TITLE_2: '与我同行',
   HEO_HERO_TITLE_3: 'www.mskyer.com',
-  HEO_HERO_TITLE_4: '小店',
-  HEO_HERO_TITLE_5: 'welcome to my shop',
+  HEO_HERO_TITLE_4: '天空行者',
+  HEO_HERO_TITLE_5: 'Welcome to my shop',
   HEO_HERO_TITLE_LINK: 'https://www.mskyer.com/shop',
 
   // 英雄区显示三个置顶分类
@@ -32,14 +33,14 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
-    '🔍 热爱学习曾老湿',
-    '🤝 专业教吉他的人',
-    '🏃 热爱音乐和吉他',
-    '🏠 心善帅气又逗逼',
+    '🔍 分享与热心帮助',
+    '🤝 专修交互与设计',
+    '🏃 脚踏实地行动派',
+    '🏠 智能家居小能手',
     '🤖️ 数码科技爱好者',
-    '🧱 没有了，别点了'
+    '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: '', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
