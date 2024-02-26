@@ -12,14 +12,13 @@ import ArticleDetail from './components/ArticleDetail'
 import ArticleLock from './components/ArticleLock'
 import TagItemMini from './components/TagItemMini'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
 import WWAds from '@/components/WWAds'
 
@@ -44,33 +43,14 @@ export const useFukasawaGlobal = () => useContext(ThemeGlobalFukasawa)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, meta } = props
+  const { children, headerSlot } = props
   const leftAreaSlot = <Live2D />
   const { onLoading, fullWidth } = useGlobal()
 
-  const FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT = fullWidth || siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT', null, CONFIG)
-
-  // 侧边栏折叠从 本地存储中获取 open 状态的初始值
-  const [isCollapsed, setIsCollapse] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('fukasawa-sidebar-collapse') === 'true' || FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
-    }
-    return FUKASAWA_SIDEBAR_COLLAPSE_SATUS_DEFAULT
-  })
-
-  // 在组件卸载时保存 open 状态到本地存储中
-  useEffect(() => {
-    if (isBrowser) {
-      localStorage.setItem('fukasawa-sidebar-collapse', isCollapsed)
-    }
-  }, [isCollapsed])
-
   return (
-        <ThemeGlobalFukasawa.Provider value={{ isCollapsed, setIsCollapse }}>
+        <ThemeGlobalFukasawa.Provider value={{}}>
 
-            <div id='theme-fukasawa'>
-                {/* SEO信息 */}
-                <CommonHead meta={meta}/>
+            <div id='theme-fukasawa' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
                 <Style/>
 
                 <TopNav {...props} />
@@ -126,12 +106,10 @@ const LayoutIndex = (props) => {
  * @param {*} props
             */
 const LayoutPostList = (props) => {
-  return <LayoutBase {...props}>
-
+  return <>
         <div className='w-full p-2'><WWAds className='w-full' orientation='horizontal'/></div>
-
          {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -140,11 +118,27 @@ const LayoutPostList = (props) => {
             * @returns
             */
 const LayoutSlug = (props) => {
-  const { lock, validPassword } = props
+  const { post, lock, validPassword } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
-        <LayoutBase {...props} >
+        <>
             {lock ? <ArticleLock validPassword={validPassword} /> : <ArticleDetail {...props} />}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -174,7 +168,7 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-  return <LayoutBase {...props}>
+  return <>
         <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 shadow-md min-h-full">
             {Object.keys(archivePosts).map(archiveTitle => (
                 <BlogArchiveItem
@@ -184,7 +178,7 @@ const LayoutArchive = (props) => {
                 />
             ))}
         </div>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -193,7 +187,7 @@ const LayoutArchive = (props) => {
             * @returns
             */
 const Layout404 = props => {
-  return <LayoutBase {...props}>404</LayoutBase>
+  return <>404</>
 }
 
 /**
@@ -205,7 +199,7 @@ const LayoutCategoryIndex = (props) => {
   const { locale } = useGlobal()
   const { categoryOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
@@ -227,7 +221,7 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -239,7 +233,7 @@ const LayoutCategoryIndex = (props) => {
 const LayoutTagIndex = (props) => {
   const { locale } = useGlobal()
   const { tagOptions } = props
-  return <LayoutBase {...props} >
+  return <>
         <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
             <div className='dark:text-gray-200 mb-5'><i className='mr-4 fas fa-tag' />{locale.COMMON.TAGS}:</div>
             <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
@@ -252,11 +246,12 @@ const LayoutTagIndex = (props) => {
                 })}
             </div>
         </div>
-    </LayoutBase>
+    </>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

@@ -1,5 +1,5 @@
 import CONFIG from './config'
-import { useEffect } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { isBrowser } from '@/lib/utils'
 import { useGlobal } from '@/lib/global'
 import { AdSlot } from '@/components/GoogleAdsense'
@@ -10,7 +10,8 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import dynamic from 'next/dynamic'
 import NotionPage from '@/components/NotionPage'
-// const NotionPage = dynamic(() => import('@/components/NotionPage'), { ssr: false });
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+import { useRouter } from 'next/router'
 
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false });
@@ -27,9 +28,12 @@ const SideBar = dynamic(() => import('./components/SideBar'), { ssr: false });
 const JumpToTopButton = dynamic(() => import('./components/JumpToTopButton'), { ssr: false });
 const Footer = dynamic(() => import('./components/Footer'), { ssr: false });
 const SearchInput = dynamic(() => import('./components/SearchInput'), { ssr: false });
-const CommonHead = dynamic(() => import('@/components/CommonHead'), { ssr: false });
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false });
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: false })
+
+// 主题全局状态
+const ThemeGlobalSimple = createContext()
+export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
 
 /**
  * 基础布局
@@ -38,13 +42,14 @@ const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: f
  * @returns
  */
 const LayoutBase = props => {
-  const { children, slotTop, meta } = props
+  const { children, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
+  const searchModal = useRef(null)
 
   return (
-        <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
+    <ThemeGlobalSimple.Provider value={{ searchModal }}>
+        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black scroll-smooth`}>
+
             <Style/>
 
             {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
@@ -88,9 +93,13 @@ const LayoutBase = props => {
                 <JumpToTopButton />
             </div>
 
+              {/* 搜索框 */}
+              <AlgoliaSearchModal cRef={searchModal} {...props}/>
+
             <Footer {...props} />
 
         </div>
+    </ThemeGlobalSimple.Provider>
   )
 }
 
@@ -110,9 +119,9 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-        <LayoutBase {...props}>
+        <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -138,7 +147,9 @@ const LayoutSearch = props => {
     }
   }, [])
 
-  return <LayoutPostList {...props} slotTop={<SearchInput {...props} />} />
+  const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : <SearchInput {...props} />
+
+  return <LayoutPostList {...props} slotTop={slotTop} />
 }
 
 /**
@@ -149,11 +160,11 @@ const LayoutSearch = props => {
 const LayoutArchive = props => {
   const { archivePosts } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
                 {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -167,7 +178,7 @@ const LayoutSlug = props => {
   const { fullWidth } = useGlobal()
 
   return (
-        <LayoutBase {...props}>
+        <>
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -196,7 +207,7 @@ const LayoutSlug = props => {
 
             </div>
 
-        </LayoutBase>
+        </>
   )
 }
 
@@ -206,9 +217,26 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
-  return <LayoutBase {...props}>
+  const { post } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
+  return <>
         404 Not found.
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -219,7 +247,7 @@ const Layout404 = (props) => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='category-list' className='duration-200 flex flex-wrap'>
                 {categoryOptions?.map(category => {
                   return (
@@ -236,7 +264,7 @@ const LayoutCategoryIndex = props => {
                   )
                 })}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -248,7 +276,7 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='tags-list' className='duration-200 flex flex-wrap'>
                 {tagOptions.map(tag => {
                   return (
@@ -264,12 +292,13 @@ const LayoutTagIndex = (props) => {
                   )
                 })}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
