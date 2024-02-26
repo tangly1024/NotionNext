@@ -23,7 +23,7 @@ const CONFIG = {
   HEO_HERO_TITLE_LINK: 'https://p.laye.wang',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '投资记录', url: '/tag/投资记录' },
+  HEO_HERO_CATEGORY_1: { title: '投资投机', url: '/tag/投资投机' },
   HEO_HERO_CATEGORY_2: { title: '热门话题', url: '/tag/热门话题' },
   HEO_HERO_CATEGORY_3: { title: '日期归档', url: '/archive' },
 
