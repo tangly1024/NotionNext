@@ -8,7 +8,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 /**
- * 扫描指定目录下的文件夹名，用于获取当前有几个主题
+ * 扫描指定目录下的文件夹名，用于获取所有主题
  * @param {*} directory
  * @returns
  */
@@ -16,16 +16,13 @@ function scanSubdirectories(directory) {
   const subdirectories = []
 
   fs.readdirSync(directory).forEach(file => {
-    // 这段代码会将landing排除在可选主题中
+    const fullPath = path.join(directory, file)
+    const stats = fs.statSync(fullPath)
+    if (stats.isDirectory()) {
+      subdirectories.push(file)
+    }
 
-    // const fullPath = path.join(directory, file)
-    // const stats = fs.statSync(fullPath)
-    // landing主题默认隐藏掉，一般网站不会用到
-    // if (stats.isDirectory() && file !== 'landing') {
-    //   subdirectories.push(file)
-    // }
-
-    subdirectories.push(file)
+    // subdirectories.push(file)
   })
 
   return subdirectories

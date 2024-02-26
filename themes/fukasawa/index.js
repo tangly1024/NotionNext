@@ -50,7 +50,7 @@ const LayoutBase = (props) => {
   return (
         <ThemeGlobalFukasawa.Provider value={{}}>
 
-            <div id='theme-fukasawa'>
+            <div id='theme-fukasawa' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
                 <Style/>
 
                 <TopNav {...props} />
@@ -118,7 +118,23 @@ const LayoutPostList = (props) => {
             * @returns
             */
 const LayoutSlug = (props) => {
-  const { lock, validPassword } = props
+  const { post, lock, validPassword } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
             {lock ? <ArticleLock validPassword={validPassword} /> : <ArticleDetail {...props} />}
