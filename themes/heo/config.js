@@ -15,7 +15,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '坚持梦想',
   HEO_HERO_TITLE_2: '与我同行',
   HEO_HERO_TITLE_3: 'www.mskyer.com',
-  HEO_HERO_TITLE_4: '',
+  HEO_HERO_TITLE_4: '小店',
   HEO_HERO_TITLE_5: 'welcome to my shop',
   HEO_HERO_TITLE_LINK: 'https://www.mskyer.com/shop',
 
