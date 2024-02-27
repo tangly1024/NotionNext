@@ -16,8 +16,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '坚持不懈',
   HEO_HERO_TITLE_2: '与我同行',
   HEO_HERO_TITLE_3: 'www.mskyer.com',
-  HEO_HERO_TITLE_4: '',
-  HEO_HERO_TITLE_5: '佛系小店',
+  HEO_HERO_TITLE_4: '天空行者',
+  HEO_HERO_TITLE_5: 'Welcome to my shop',
   HEO_HERO_TITLE_LINK: 'https://www.mskyer.com/shop',
 
   // 英雄区显示三个置顶分类
@@ -45,7 +45,7 @@ const CONFIG = {
   HEO_GROUP_ICONS: [
     {
       title_1: 'AfterEffect',
-      img_1: '/images/heo/1.png',
+      img_1: '/images/heo/1.webp',
       color_1: '#989bf8',
       title_2: 'Sketch',
       img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
