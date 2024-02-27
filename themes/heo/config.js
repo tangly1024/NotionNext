@@ -12,12 +12,12 @@ const CONFIG = {
   // 博客主体区左右侧组件颠倒位置
   HEO_HERO_BODY_REVERSE: false,
 
-  // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '坚持梦想',
+ // 英雄区(首页顶部大卡)
+  HEO_HERO_TITLE_1: '坚持不懈',
   HEO_HERO_TITLE_2: '与我同行',
   HEO_HERO_TITLE_3: 'www.mskyer.com',
-  HEO_HERO_TITLE_4: '天空行者',
-  HEO_HERO_TITLE_5: 'Welcome to my shop',
+  HEO_HERO_TITLE_4: '',
+  HEO_HERO_TITLE_5: '佛系小店',
   HEO_HERO_TITLE_LINK: 'https://www.mskyer.com/shop',
 
   // 英雄区显示三个置顶分类
@@ -33,12 +33,11 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
-    '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
+    '🔍 诚实心善曾老湿',
+    '🤝 B站up无心月空',
     '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
+    '🏠 居家学习小能手',
     '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
   ],
   HEO_INFO_CARD_URL: 'https://github.com/tangly1024/NotionNext', // 个人资料底部按钮链接
 
@@ -46,7 +45,7 @@ const CONFIG = {
   HEO_GROUP_ICONS: [
     {
       title_1: 'AfterEffect',
-      img_1: '/images/heo/20239df3f66615b532ce571eac6d14ff21cf072602.webp',
+      img_1: '/images/heo/1.png',
       color_1: '#989bf8',
       title_2: 'Sketch',
       img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
