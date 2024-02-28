@@ -11,6 +11,7 @@ import replaceSearchResult from '@/components/Mark'
 import dynamic from 'next/dynamic'
 import NotionPage from '@/components/NotionPage'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+import { useRouter } from 'next/router'
 
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false });
@@ -47,7 +48,7 @@ const LayoutBase = props => {
 
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
-        <div id='theme-simple' className='min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black'>
+        <div id='theme-simple' className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:text-gray-300  bg-white dark:bg-black scroll-smooth`}>
 
             <Style/>
 
@@ -216,6 +217,23 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
+  const { post } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return <>
         404 Not found.
     </>

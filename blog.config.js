@@ -95,9 +95,35 @@ const BLOG = {
 
   // END ************网站字体*****************
 
+
+  // 路径和组件映射，不同路径分别展示主题的什么组件
+  LAYOUT_MAPPINGS: {
+    '-1': 'LayoutBase',
+    '/': 'LayoutIndex',
+    '/archive': 'LayoutArchive',
+    '/page/[page]': 'LayoutPostList',
+    '/category/[category]': 'LayoutPostList',
+    '/category/[category]/page/[page]': 'LayoutPostList',
+    '/tag/[tag]': 'LayoutPostList',
+    '/tag/[tag]/page/[page]': 'LayoutPostList',
+    '/search': 'LayoutSearch',
+    '/search/[keyword]': 'LayoutSearch',
+    '/search/[keyword]/page/[page]': 'LayoutSearch',
+    '/404': 'Layout404',
+    '/tag': 'LayoutTagIndex',
+    '/category': 'LayoutCategoryIndex',
+    '/[prefix]': 'LayoutSlug',
+    '/[prefix]/[slug]': 'LayoutSlug',
+    '/[prefix]/[slug]/[...suffix]': 'LayoutSlug',
+    '/signin': 'LayoutSignIn',
+    '/signup': 'LayoutSignUp'
+  },
+
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || false, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU: process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU || false, // 自定义右键菜单，覆盖系统菜单
-  CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH: process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH || true,
+  CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH: process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH || true, // 右键菜单是否允许切换主题
+
+
 
 
   // 自定义外部脚本，外部样式
@@ -159,6 +185,8 @@ const BLOG = {
   POST_RECOMMEND_COUNT: 6, // 推荐文章数量
   POSTS_PER_PAGE: 12, // post counts per page
   POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
+
+  POST_WAITING_TIME_FOR_404: process.env.NEXT_PUBLIC_POST_WAITING_TIME_FOR_404 || '8', // 文章加载超时时间，单位秒；超时后跳转到404页面
 
   ALGOLIA_APP_ID: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || null, // 在这里查看 https://dashboard.algolia.com/account/api-keys/
   ALGOLIA_ADMIN_APP_KEY: process.env.ALGOLIA_ADMIN_APP_KEY || null, // 管理后台的KEY，不要暴露在代码中，在这里查看 https://dashboard.algolia.com/account/api-keys/

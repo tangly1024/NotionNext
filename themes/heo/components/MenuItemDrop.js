@@ -16,13 +16,13 @@ export const MenuItemDrop = ({ link }) => {
             <Link
                 target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
                 href={link?.to}
-                className="font-sans hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest">
+                className=" hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest">
                 {link?.icon && <i className={link?.icon} />} {link?.name}
             </Link>}
 
         {/* 含子菜单的按钮 */}
         {hasSubMenu && <>
-            <div className='cursor-pointer font-sans hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
+            <div className='cursor-pointer  hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
                 {link?.icon && <i className={link?.icon} />} {link?.name}
             </div>
         </>}
