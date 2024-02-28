@@ -16,12 +16,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   return (
         <article className={` ${siteConfig('HEO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`} >
 
-            <div
-                data-aos="fade-up"
-                data-aos-duration="200"
-                data-aos-once="false"
-                data-aos-anchor-placement="top-bottom"
-                className={'border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'}>
+            <div data-wow-delay=".2s"
+                className={'wow fadeInUp border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row 2xl:h-96 2xl:flex-col group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'}>
 
                 {/* 图片封面 */}
                 {showPageCover && (

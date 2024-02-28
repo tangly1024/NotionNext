@@ -39,7 +39,7 @@ module.exports = {
           'black-gray': '#101414',
           'light-gray': '#e5e5e5'
         },
-        black: '#212b36',
+        // black: '#212b36',
         'dark-700': '#090e34b3',
         dark: {
           DEFAULT: '#111928',

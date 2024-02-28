@@ -40,6 +40,7 @@ import WWAds from '@/components/WWAds'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
+import { loadWowJS } from '@/lib/wow'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -80,6 +81,11 @@ const LayoutBase = props => {
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
   const HEO_HERO_BODY_REVERSE = siteConfig('HEO_HERO_BODY_REVERSE', false, CONFIG)
+
+  // 加载wow动画
+  useEffect(() => {
+    loadWowJS()
+  }, [])
 
   return (
     <div
@@ -294,13 +300,10 @@ const LayoutSlug = props => {
             className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 "
           >
             <article
-              data-aos="fade-up"
-              data-aos-duration="300"
-              data-aos-once="false"
-              data-aos-anchor-placement="top-bottom"
               itemScope
               itemType="https://schema.org/Movie"
-              className="subpixel-antialiased overflow-y-hidden"
+              data-wow-delay=".2s"
+              className="wow fadeInUp subpixel-antialiased overflow-y-hidden"
             >
               {/* Notion文章主体 */}
               <section className="px-5 justify-center mx-auto">
