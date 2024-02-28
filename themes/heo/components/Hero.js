@@ -15,6 +15,7 @@ import CONFIG from '../config'
  * @returns
  */
 const Hero = props => {
+  const HEO_HERO_REVERSE = siteConfig('HEO_HERO_REVERSE', false, CONFIG)
   return (
     <div
       id="hero-wrapper"
@@ -24,11 +25,16 @@ const Hero = props => {
         id="hero"
         style={{ zIndex: 1 }}
         className={
-          'animate__animated animate__fadeIn animate__fast recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex xl:space-x-3 relative'
+           `animate__animated animate__fadeIn animate__fast 
+           ${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
+           recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`
         }
       >
         {/* 左侧banner组 */}
         <BannerGroup {...props} />
+
+        {/* 中间留白 */}
+        <div className='px-1.5 h-full'></div>
 
         {/* 右侧置顶文章组 */}
         <TopGroup {...props} />

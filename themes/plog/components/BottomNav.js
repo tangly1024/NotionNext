@@ -54,7 +54,7 @@ const MenuList = props => {
   return (
         <div className="flex-shrink-0">
             <ul className="hidden md:flex flex-row">
-                {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
+                {links?.map((link, index) => <MenuItemDrop key={index} link={link} />)}
                 <li className='my-auto px-2'>
                     <FullScreenButton />
                 </li>

@@ -8,6 +8,7 @@ import Catalog from './Catalog'
  * @param {*} props
  * @returns
  */
+let counter = 0;
 export default function SideBar (props) {
   const { notice } = props
   return (<>

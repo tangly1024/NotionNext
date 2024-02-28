@@ -5,7 +5,8 @@ import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
-// import Image from 'next/image'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+import NotionIcon from '@/components/NotionIcon'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = siteConfig('MATERY_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
@@ -15,6 +16,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   }
   const showPageCover = siteConfig('MATERY_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
   const delay = (index % 3) * 300
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+
   return (
         <div
             data-aos="zoom-in"
@@ -25,30 +28,31 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             className="w-full mb-4 overflow-hidden shadow-md border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray">
 
             {/* 固定高度 ，空白用图片拉升填充 */}
-            <div className="group flex flex-col h-80 justify-between">
+            <header className="group flex flex-col h-80 justify-between">
 
                 {/* 头部图片 填充卡片 */}
                 {showPageCover && (
-                    <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                    <Link href={url} passHref legacyBehavior>
                         <div className="flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden">
                             <LazyImage
                                 src={post?.pageCoverThumbnail}
                                 alt={post.title}
                                 className="h-full w-full group-hover:scale-125 group-hover:brightness-50 brightness-90 rounded-t-md transform object-cover duration-500"
                             />
-                            <div className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full shadow-text'>{post.title}</div>
+                            <h2 className='absolute bottom-0 left-0 text-white p-6 text-2xl replace break-words w-full shadow-text'>
+                                <NotionIcon icon={post.pageIcon} />{post.title}
+                            </h2>
                         </div>
                     </Link>
                 )}
 
                 {/* 文字描述 */}
-                <div >
+                <main >
                     {/* 描述 */}
                     <div className="px-4 flex flex-col w-full  text-gray-700  dark:text-gray-300">
 
                         {(!showPreview || showSummary) && post.summary && (
-                            <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '4', WebkitBoxOrient: 'vertical' }}
-                                className="replace my-2 text-sm font-light leading-7">
+                            <p className="replace my-2 text-sm font-light leading-7 line-clamp-3">
                                 {post.summary}
                             </p>
                         )}
@@ -91,8 +95,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             </div>
                         </div>
                     </>)}
-                </div>
-            </div>
+                </main>
+            </header>
 
         </div>
   )
