@@ -18,8 +18,8 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '',
   HEO_HERO_TITLE_3: '0y.games',
   HEO_HERO_TITLE_4: '全新上线',
-  HEO_HERO_TITLE_5: '「近期推荐」博德之门3-全DLC',
-  HEO_HERO_TITLE_LINK: 'https://www.0y.games/article/8481d293-be0b-4694-be1f-f0ff501ac857',
+  HEO_HERO_TITLE_5: '「近期推荐」幻兽帕鲁-联机补丁',
+  HEO_HERO_TITLE_LINK: 'https://www.0y.games/article/Palworld',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '热门游戏', url: '/tag/热门' },
