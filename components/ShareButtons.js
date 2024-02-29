@@ -2,6 +2,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import copy from 'copy-to-clipboard'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 import {
@@ -56,7 +57,13 @@ const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
  * @param {*} param0
  * @returns
  */
-const ShareButtons = ({ shareUrl, title, body, image }) => {
+const ShareButtons = ({ post }) => {
+  const router = useRouter()
+  const shareUrl = siteConfig('LINK') + router.asPath
+  const title = post.title || siteConfig('TITLE')
+  const image = post.pageCover
+  const body = post?.title + ' | ' + title + ' ' + shareUrl + ' ' + post?.summary
+
   const services = siteConfig('POSTS_SHARE_SERVICES').split(',')
   const titleWithSiteInfo = title + ' | ' + siteConfig('TITLE')
   const { locale } = useGlobal()

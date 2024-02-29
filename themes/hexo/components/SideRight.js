@@ -34,12 +34,18 @@ const FaceBookPage = dynamic(
 export default function SideRight(props) {
   const {
     post, currentCategory, categories, latestPosts, tags,
-    currentTag, showCategory, showTag, rightAreaSlot, notice
+    currentTag, showCategory, showTag, rightAreaSlot, notice, className
   } = props
 
   const { locale } = useGlobal()
+
+  // 文章全屏处理
+  if (post && post?.fullWidth) {
+    return null
+  }
+
   return (
-    <div id='sideRight' className={'space-y-4 lg:w-80 lg:pt-0 px-2 pt-4'}>
+    <div id='sideRight' className={className}>
       <InfoCard {...props} />
       {siteConfig('HEXO_WIDGET_ANALYTICS', null, CONFIG) && <AnalyticsCard {...props} />}
 
