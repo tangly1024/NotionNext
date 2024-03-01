@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    //{ title: '欢迎来到0y.games', url: 'https://0y.games' },
+    { title: '本站游戏获取游戏暗号0y.games', url: 'https://0y.games' },
   ],
 
   // 英雄区左右侧组件颠倒位置
