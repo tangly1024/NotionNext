@@ -261,8 +261,8 @@ const CONFIG = {
       LINK_GROUP: [
         { TITLE: '官方主页', URL: '/#home' },
         { TITLE: '关于本站', URL: '/about' },
-        { TITLE: '帮助支持', URL: 'https://docs.tangly1024.com/article/how-to-question' },
-        { TITLE: '合作申请', URL: 'https://docs.tangly1024.com/my-service' }
+        // { TITLE: '帮助支持', URL: 'https://docs.tangly1024.com/article/how-to-question' },
+        // { TITLE: '合作申请', URL: 'https://docs.tangly1024.com/my-service' }
       ]
     },
     {
