@@ -19,7 +19,7 @@ export default function AlgoliaSearchModal({ cRef }) {
   const [totalPage, setTotalPage] = useState(0)
   const [totalHit, setTotalHit] = useState(0)
   const [useTime, setUseTime] = useState(0)
-
+  const inputRef = useRef(null)
   /**
      * 对外暴露方法
      */
@@ -27,6 +27,9 @@ export default function AlgoliaSearchModal({ cRef }) {
     return {
       openSearch: () => {
         setIsModalOpen(true)
+        setTimeout(() => {
+          inputRef.current.focus()
+        }, 100)
       }
     }
   })
@@ -119,15 +122,13 @@ export default function AlgoliaSearchModal({ cRef }) {
   return (
     <div
       id="search-wrapper"
-      className={`${
-        isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
-      } z-30 fixed h-screen w-screen left-0 top-0 mt-12 flex items-start justify-center`}
+      className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
+        } z-30 fixed h-screen w-screen left-0 top-0 mt-12 flex items-start justify-center`}
     >
       {/* 模态框 */}
       <div
-        className={`${
-          isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-        } flex flex-col justify-between w-full min-h-[10rem] max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}
+        className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
+          } flex flex-col justify-between w-full min-h-[10rem] max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}
       >
         <div className="flex justify-between items-center">
           <div className="text-2xl text-blue-600 font-bold">搜索</div>
@@ -144,6 +145,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           placeholder="在这里输入搜索关键词..."
           onChange={e => handleInputChange(e)}
           className="text-black dark:text-gray-200 bg-gray-50 dark:bg-gray-600 outline-blue-500 w-full px-4 my-2 py-1 mb-4 border rounded-md"
+          ref={inputRef}
         />
 
         {/* 标签组 */}
@@ -197,20 +199,20 @@ function TagGroups(props) {
   const firstTenTags = tagOptions?.slice(0, 10)
 
   return <div id='tags-group' className='dark:border-gray-700 space-y-2'>
-            {
-                firstTenTags?.map((tag, index) => {
-                  return <Link passHref
-                        key={index}
-                        href={`/tag/${encodeURIComponent(tag.name)}`}
-                        className={'cursor-pointer inline-block whitespace-nowrap'}>
-                        <div className={' flex items-center text-black dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-yellow-600 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all'}>
-                            <div className='text-lg'>{tag.name} </div>{tag.count ? <sup className='relative ml-1'>{tag.count}</sup> : <></>}
-                        </div>
+    {
+      firstTenTags?.map((tag, index) => {
+        return <Link passHref
+          key={index}
+          href={`/tag/${encodeURIComponent(tag.name)}`}
+          className={'cursor-pointer inline-block whitespace-nowrap'}>
+          <div className={' flex items-center text-black dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-yellow-600 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all'}>
+            <div className='text-lg'>{tag.name} </div>{tag.count ? <sup className='relative ml-1'>{tag.count}</sup> : <></>}
+          </div>
 
-                    </Link>
-                })
-            }
-        </div>
+        </Link>
+      })
+    }
+  </div>
 }
 
 /**
@@ -229,7 +231,7 @@ function Pagination(props) {
     pagesElement.push(getPageElement(i, selected, switchPage))
   }
   return <div className='flex space-x-1 w-full justify-center py-1'>
-        {pagesElement.map(p => p)}
+    {pagesElement.map(p => p)}
   </div>
 }
 
