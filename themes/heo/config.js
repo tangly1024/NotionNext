@@ -14,10 +14,9 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: 'Only by being faithful to facts',
-  HEO_HERO_TITLE_2: 'can be faithful to truth',
-  HEO_HERO_TITLE_3: 'Ayao.club',
-  HEO_HERO_TITLE_5: 'recommend',
+  HEO_HERO_TITLE_1: '技术栈',
+  HEO_HERO_TITLE_2: '学海无涯',
+  HEO_HERO_TITLE_5: '热门',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
