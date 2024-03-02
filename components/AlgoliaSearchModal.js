@@ -1,10 +1,11 @@
-import { useState, useImperativeHandle, useRef } from 'react'
+import { useState, useImperativeHandle, useRef, useEffect } from 'react'
 import algoliasearch from 'algoliasearch'
 import replaceSearchResult from '@/components/Mark'
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash/throttle'
 import { siteConfig } from '@/lib/config'
+import { useHotkeys } from "react-hotkeys-hook";
 
 /**
  * 结合 Algolia 实现的弹出式搜索框
@@ -20,6 +21,62 @@ export default function AlgoliaSearchModal({ cRef }) {
   const [totalHit, setTotalHit] = useState(0)
   const [useTime, setUseTime] = useState(0)
   const inputRef = useRef(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  useHotkeys('ctrl+k', (e) => {
+    e.preventDefault()
+    setIsModalOpen(true)
+  })
+  // 方向键调整选中
+  useHotkeys('down', (e) => {
+    e.preventDefault()
+    if (activeIndex < searchResults.length - 1) {
+      setActiveIndex(activeIndex + 1)
+    }
+  }, { enableOnFormTags: true })
+  useHotkeys('up', (e) => {
+    e.preventDefault()
+    if (activeIndex > 0) {
+      setActiveIndex(activeIndex - 1)
+    }
+  }, { enableOnFormTags: true })
+  // esc关闭
+  useHotkeys('esc', (e) => {
+    e.preventDefault()
+    setIsModalOpen(false)
+  }, { enableOnFormTags: true })
+  // 跳转Search结果
+  const onJumpSearchResult = () => {
+    if (searchResults.length > 0) {
+      window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResults[activeIndex].slug}`
+    }
+  }
+  // enter跳转
+  useHotkeys('enter', (e) => {
+    if (searchResults.length > 0) {
+      onJumpSearchResult(index)
+    }
+  }, { enableOnFormTags: true })
+
+  const resetSearch = () => {
+    setActiveIndex(0)
+    setKeyword('')
+    setSearchResults([])
+    setUseTime(0)
+    setTotalPage(0)
+    setTotalHit(0)
+    if (inputRef.current) inputRef.current.value = ''
+  }
+
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 100)
+    } else {
+      resetSearch()
+    }
+  }, [isModalOpen])
   /**
      * 对外暴露方法
      */
@@ -27,9 +84,6 @@ export default function AlgoliaSearchModal({ cRef }) {
     return {
       openSearch: () => {
         setIsModalOpen(true)
-        setTimeout(() => {
-          inputRef.current.focus()
-        }, 100)
       }
     }
   })
@@ -48,6 +102,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     setUseTime(0)
     setTotalPage(0)
     setTotalHit(0)
+    setActiveIndex(0)
     if (!query || query === '') {
       return
     }
@@ -59,7 +114,6 @@ export default function AlgoliaSearchModal({ cRef }) {
       setTotalPage(nbPages)
       setTotalHit(nbHits)
       setSearchResults(hits)
-
       const doms = document.getElementById('search-wrapper').getElementsByClassName('replace')
 
       setTimeout(() => {
@@ -78,8 +132,8 @@ export default function AlgoliaSearchModal({ cRef }) {
   }
 
   // 定义节流函数，确保在用户停止输入一段时间后才会调用处理搜索的方法
-  const throttledHandleInputChange = useRef(throttle((query) => {
-    handleSearch(query, 0);
+  const throttledHandleInputChange = useRef(throttle((query, page = 0) => {
+    handleSearch(query, page);
   }, 1000));
 
   // 用于存储搜索延迟的计时器
@@ -118,7 +172,6 @@ export default function AlgoliaSearchModal({ cRef }) {
   if (!siteConfig('ALGOLIA_APP_ID')) {
     return <></>
   }
-
   return (
     <div
       id="search-wrapper"
@@ -152,33 +205,36 @@ export default function AlgoliaSearchModal({ cRef }) {
         <div className="mb-4">
           <TagGroups />
         </div>
-
         <ul>
-          {searchResults.map(result => (
-            <li key={result.objectID} className="replace my-2">
+          {searchResults.map((result, index) => (
+            <li key={result.objectID}
+              onMouseEnter={() => setActiveIndex(index)}
+              onClick={() => onJumpSearchResult(index)}
+              className={`cursor-pointer replace my-2 p-2 ${activeIndex === index ? 'bg-blue-600  ' : ''}`}>
               <a
-                href={`${siteConfig('SUB_PATH', '')}/${result.slug}`}
-                className="font-bold hover:text-blue-600 text-black dark:text-gray-200"
+                className={`font-bold ${activeIndex === index ? ' text-white' : ' text-black '}`}
               >
                 {result.title}
               </a>
             </li>
           ))}
         </ul>
-
         <Pagination totalPage={totalPage} page={page} switchPage={switchPage} />
-        <div>
-          {totalHit > 0 && (
-            <div>
-              共搜索到 {totalHit} 条结果，用时 {useTime} 毫秒
-            </div>
-          )}
+        <div className='flex items-center justify-between mt-2 text-sm '>
+          <div>
+            {totalHit > 0 && (
+              <p>
+                共搜索到 {totalHit} 条结果，用时 {useTime} 毫秒
+              </p>
+            )}
+          </div>
+          <div className="text-gray-600  text-right">
+            <span >
+              <i className="fa-brands fa-algolia"></i> Algolia 提供搜索服务
+            </span>
+          </div>
         </div>
-        <div className="text-gray-600 mt-2">
-          <span>
-            <i className="fa-brands fa-algolia"></i> Algolia 提供搜索服务
-          </span>{' '}
-        </div>
+
       </div>
 
       {/* 遮罩 */}
@@ -193,7 +249,7 @@ export default function AlgoliaSearchModal({ cRef }) {
 /**
  * 标签组
  */
-function TagGroups(props) {
+function TagGroups() {
   const { tagOptions } = useGlobal()
   //  获取tagOptions数组前十个
   const firstTenTags = tagOptions?.slice(0, 10)
@@ -224,24 +280,23 @@ function Pagination(props) {
   if (totalPage <= 0) {
     return <></>
   }
-  const pagesElement = []
+  return (
+    <div className='flex space-x-1 w-full justify-center py-1'>
+      {Array.from({ length: totalPage }, (_, i) => {
+        const classNames = page === i
+          ? 'font-bold text-white bg-blue-600 rounded'
+          : 'hover:text-blue-600 hover:font-bold'
 
-  for (let i = 0; i < totalPage; i++) {
-    const selected = page === i
-    pagesElement.push(getPageElement(i, selected, switchPage))
-  }
-  return <div className='flex space-x-1 w-full justify-center py-1'>
-    {pagesElement.map(p => p)}
-  </div>
-}
-
-/**
- * 获取分页按钮
- * @param {*} i
- * @param {*} selected
- */
-function getPageElement(i, selected, switchPage) {
-  return <div onClick={() => switchPage(i)} className={`${selected ? 'font-bold text-white bg-blue-600 rounded' : 'hover:text-blue-600 hover:font-bold'} text-center cursor-pointer  w-6 h-6 `}>
-    {i + 1}
-  </div>
+        return (
+          <div
+            onClick={() => switchPage(i)}
+            className={`text-center cursor-pointer w-6 h-6 ${classNames}`}
+            key={i}
+          >
+            {i + 1}
+          </div>
+        )
+      })}
+    </div>
+  )
 }
