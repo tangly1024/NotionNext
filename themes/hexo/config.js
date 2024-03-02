@@ -28,7 +28,7 @@ const CONFIG = {
   ARTICLE_COPYRIGHT: true, // 显示文章版权声明
   ARTICLE_RECOMMEND: true, // 文章关联推荐
 
-  WIDGET_LATEST_POSTS: true, // 显示最新文章卡
+  WIDGET_LATEST_POSTS: false, // 显示最新文章卡
   WIDGET_ANALYTICS: false, // 显示统计卡
   WIDGET_TO_TOP: true,
   WIDGET_TO_COMMENT: true, // 跳到评论区
