@@ -34,7 +34,8 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
