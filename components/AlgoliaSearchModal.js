@@ -205,6 +205,16 @@ export default function AlgoliaSearchModal({ cRef }) {
         <div className="mb-4">
           <TagGroups />
         </div>
+        {
+          searchResults.length === 0 && keyword && (
+            <div>
+              <p className="  text-slate-600 text-center my-4 text-base"> 无法找到相关结果
+                <span
+                  className='font-semibold'
+                >"{keyword}"</span></p>
+            </div>
+          )
+        }
         <ul>
           {searchResults.map((result, index) => (
             <li key={result.objectID}
