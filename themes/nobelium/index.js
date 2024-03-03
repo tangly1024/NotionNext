@@ -22,9 +22,11 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { siteConfig } from '@/lib/config'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
 // 主题全局状态
 const ThemeGlobalNobelium = createContext()
