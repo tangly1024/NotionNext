@@ -21,8 +21,8 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
       <div>
         {/* 文章列表 */}
         <div id="posts-wrapper" className="flex flex-wrap lg:space-y-4 space-y-1">
-          {posts?.map(post => (
-            <BlogPostCard key={post.id} post={post} />
+          {posts?.map((post, index) => (
+            <BlogPostCard key={post.id} index={index} post={post} />
           ))}
         </div>
         <PaginationNumber page={page} totalPage={totalPage} />

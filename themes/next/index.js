@@ -7,7 +7,7 @@ import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
@@ -21,11 +21,18 @@ import { useRouter } from 'next/router'
 import ArticleDetail from './components/ArticleDetail'
 import Link from 'next/link'
 import BlogListBar from './components/BlogListBar'
-import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
+import Announcement from './components/Announcement'
+import Card from './components/Card'
+import dynamic from 'next/dynamic'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
+
+// 主题全局状态
+const ThemeGlobalNext = createContext()
+export const useNextGlobal = () => useContext(ThemeGlobalNext)
 
 /**
  * 基础布局 采用左中右三栏布局，移动端使用顶部导航栏
@@ -33,8 +40,7 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, headerSlot, rightAreaSlot, meta, post } = props
-  const { onLoading } = useGlobal()
+  const { children, headerSlot, rightAreaSlot, post } = props
   const targetRef = useRef(null)
   const floatButtonGroup = useRef(null)
   const [showRightFloat, switchShow] = useState(false)
@@ -71,19 +77,23 @@ const LayoutBase = (props) => {
   const drawerRight = useRef(null)
   const floatSlot = <div className='block lg:hidden'>
     <TocDrawerButton onClick={() => {
-        drawerRight?.current?.handleSwitchVisible()
+      drawerRight?.current?.handleSwitchVisible()
     }} />
  </div>
+
   const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
 
+  const searchModal = useRef(null)
+
   return (
-        <div id='theme-next'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
+    <ThemeGlobalNext.Provider value={{ searchModal }}>
+        <div id='theme-next' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
             <Style/>
 
             {/* 移动端顶部导航栏 */}
             <TopNav {...props} />
+
+            <AlgoliaSearchModal cRef={searchModal} {...props}/>
 
             <>{headerSlot}</>
 
@@ -97,24 +107,12 @@ const LayoutBase = (props) => {
 
                 {/* 中央内容 */}
                 <section id='container-inner' className={`${siteConfig('NEXT_NAV_TYPE', null, CONFIG) !== 'normal' ? 'mt-24' : ''} lg:max-w-3xl xl:max-w-4xl flex-grow md:mt-0 min-h-screen w-full relative z-10`} ref={targetRef}>
-                    <Transition
-                        show={!onLoading}
-                        appear={true}
-                        enter="transition ease-in-out duration-700 transform order-first"
-                        enterFrom="opacity-0 translate-y-16"
-                        enterTo="opacity-100"
-                        leave="transition ease-in-out duration-300 transform"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0 -translate-y-16"
-                        unmount={false}
-                    >
-                        {children}
-                    </Transition>
+                    {children}
                 </section>
 
                 {/* 右侧栏样式 */}
                 {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
-            
+
             </main>
 
             {/* 悬浮目录按钮 */}
@@ -123,7 +121,7 @@ const LayoutBase = (props) => {
             </div>}
 
             {/* 右下角悬浮 */}
-            <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 font-sans'>
+            <div ref={floatButtonGroup} className='right-8 bottom-12 lg:right-2 fixed justify-end z-20 '>
                 <div className={(showRightFloat ? 'animate__animated ' : 'hidden') + ' animate__fadeInUp rounded-md glassmorphism justify-center duration-500  animate__faster flex space-x-2 items-center cursor-pointer '}>
                     <JumpToTopButton percent={percent} />
                     <JumpToBottomButton />
@@ -135,6 +133,7 @@ const LayoutBase = (props) => {
             {/* 页脚 */}
             <Footer title={siteConfig('TITLE')} />
         </div>
+      </ThemeGlobalNext.Provider>
   )
 }
 
@@ -145,7 +144,20 @@ const LayoutBase = (props) => {
  * @returns
  */
 const LayoutIndex = (props) => {
-  return <LayoutPostList {...props} />
+  const { notice } = props
+  return <>
+        {/* 首页移动端顶部显示公告 */}
+        <Card className='my-2 lg:hidden'>
+            <Announcement post={notice} />
+        </Card>
+
+        <BlogListBar {...props} />
+
+        {siteConfig('POST_LIST_STYLE') !== 'page'
+          ? <BlogPostListScroll {...props} showSummary={true} />
+          : <BlogPostListPage {...props} />
+        }
+    </>
 }
 
 /**
@@ -266,6 +278,23 @@ const LayoutArchive = (props) => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
+
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
 
@@ -342,5 +371,5 @@ export {
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex,
+  LayoutTagIndex
 }

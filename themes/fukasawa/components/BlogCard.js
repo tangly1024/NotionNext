@@ -3,7 +3,14 @@ import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import LazyImage from '@/components/LazyImage'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+import NotionIcon from '@/components/NotionIcon'
 
+/**
+ * 文章列表卡片
+ * @param {*} param0
+ * @returns
+ */
 const BlogCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = siteConfig('FUKASAWA_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   // fukasawa 强制显示图片
@@ -11,22 +18,29 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
   const showPageCover = siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
-  const SUB_PATH = siteConfig('SUB_PATH', '')
+  const FUKASAWA_POST_LIST_ANIMATION = siteConfig('FUKASAWA_POST_LIST_ANIMATION', null, CONFIG)
+
+  // 动画样式  首屏卡片不用，后面翻出来的加动画
+  const aosProps = FUKASAWA_POST_LIST_ANIMATION
+    ? {
+        'data-aos': 'fade-up',
+        'data-aos-duration': '300',
+        'data-aos-once': 'true',
+        'data-aos-anchor-placement': 'top-bottom'
+      }
+    : {}
+
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
-        <div
-            data-aos="fade-up"
-            data-aos-duration="600"
-            data-aos-once="true"
-            data-aos-anchor-placement="top-bottom"
-            style={{ maxHeight: '60rem' }}
+        <article {...aosProps} style={{ maxHeight: '60rem' }}
             className="w-full lg:max-w-sm p-3 shadow mb-4 mx-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg duration-200"
         >
             <div className="flex flex-col justify-between h-full">
                 {/* 封面图 */}
                 {showPageCover && (
                     <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden">
-                        <Link href={`${SUB_PATH}/${post.slug}`} passHref legacyBehavior>
+                        <Link href={url} passHref legacyBehavior>
                             <LazyImage
                                 src={post?.pageCoverThumbnail}
                                 alt={post?.title || siteConfig('TITLE')}
@@ -38,16 +52,18 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 文字部分 */}
                 <div className="flex flex-col w-full">
-                    <Link passHref href={`${SUB_PATH}/${post.slug}`}
-                         className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
-                    >
-                        {post.title}
-                    </Link>
+                    <h2>
+                        <Link passHref href={url}
+                            className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
+                        >
+                        <NotionIcon icon={post.pageIcon} /> {post.title}
+                        </Link>
+                    </h2>
 
                     {(!showPreview || showSummary) && (
-                        <p className="my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6">
+                        <main className="my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6">
                             {post.summary}
-                        </p>
+                        </main>
                     )}
 
                     {/* 分类标签 */}
@@ -70,7 +86,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
   )
 }
 

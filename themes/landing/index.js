@@ -15,27 +15,25 @@ import Features from './components/Features'
 import FeaturesBlocks from './components/FeaturesBlocks'
 import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
-import CommonHead from '@/components/CommonHead'
 import { useRouter } from 'next/router'
 import CONFIG from './config'
 import Loading from '@/components/Loading'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
+import { Pricing } from './components/Pricing'
+import { useEffect } from 'react'
 
 /**
  * 布局框架
- * 作为一个基础框架使用，定义了整个主题每个页面必备的顶部导航栏和页脚
- * 其它页面都嵌入到此框架中使用
+ * Landing 主题用作产品落地页展示
+ * 结合Stripe或者lemonsqueezy插件可以成为saas支付订阅
  * @param {*} props
  * @returns
  */
 const LayoutBase = (props) => {
-  const { meta, siteInfo, children } = props
+  const { children } = props
 
-  return <div id='theme-landing' className="overflow-hidden flex flex-col justify-between bg-white">
-
-        {/* 网页SEO */}
-        <CommonHead meta={meta} siteInfo={siteInfo} />
+  return <div id='theme-landing' className={`${siteConfig('FONT_STYLE')} scroll-smooth overflow-hidden flex flex-col justify-between bg-white dark:bg-black`}>
 
         {/* 顶部导航栏 */}
         <Header />
@@ -62,6 +60,7 @@ const LayoutIndex = (props) => {
             <Features />
             <FeaturesBlocks />
             <Testimonials />
+            <Pricing/>
             <Newsletter />
         </>
   )
@@ -73,8 +72,26 @@ const LayoutIndex = (props) => {
  * @returns
  */
 const LayoutSlug = (props) => {
+  const { post } = props
+
   // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
   const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
+
   if (JSON.parse(siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG)) && isBrowser && router.route === '/[prefix]/[slug]') {
     const redirectUrl = siteConfig('LANDING_POST_REDIRECT_URL', null, CONFIG) + router.asPath.replace('?theme=landing', '')
     router.push(redirectUrl)

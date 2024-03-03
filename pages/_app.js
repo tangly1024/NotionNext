@@ -17,17 +17,24 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
 
 // 各种扩展插件 这个要阻塞引入
 import ExternalPlugins from '@/components/ExternalPlugins'
-import { THEME } from '@/blog.config'
+import GlobalHead from '@/components/GlobalHead'
+import BLOG from '@/blog.config'
 
+/**
+ * App挂载DOM 入口文件
+ * @param {*} param0
+ * @returns
+ */
 const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle();
 
   const route = useRouter()
   const queryParam = useMemo(() => {
-    return getQueryParam(route.asPath, 'theme') || THEME
+    return getQueryParam(route.asPath, 'theme') || pageProps?.NOTION_CONFIG?.THEME || BLOG.THEME
   }, [route])
 
+  // 整体布局
   const GLayout = useCallback(
     props => {
       // 根据页面路径加载不同Layout文件
@@ -40,6 +47,7 @@ const MyApp = ({ Component, pageProps }) => {
   return (
     <GlobalContextProvider {...pageProps}>
       <GLayout {...pageProps}>
+        <GlobalHead {...pageProps}/>
         <Component {...pageProps} />
       </GLayout>
       <ExternalPlugins {...pageProps} />

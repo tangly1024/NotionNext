@@ -34,7 +34,7 @@ export default function Modal(props) {
   // 修改当前显示的遮罩内容
   function prev() {
     setLoading(true)
-    const index = posts.findIndex(post => post.slug === modalContent.slug)
+    const index = posts?.findIndex(post => post.slug === modalContent.slug)
     if (index === 0) {
       setModalContent(posts[posts.length - 1])
     } else {
@@ -90,10 +90,11 @@ export default function Modal(props) {
 
                                 {!loading && (<>
                                     <div className='absolute bottom-0 left-0 m-4 z-20'>
-                                        <div className='flex'>
-                                            <h2 style={{ textShadow: '0.1em 0.1em 0.2em black' }} className='text-2xl md:text-5xl text-white mb-4 px-2 py-1 rounded-lg'>{modalContent?.title}</h2>
-                                        </div>
-
+                                        <Link href={`${siteConfig('SUB_PATH', '')}/${modalContent.slug}`}>
+                                            <div className='flex'>
+                                                <h2 style={{ textShadow: '0.1em 0.1em 0.2em black' }} className='text-2xl md:text-5xl text-white mb-4 px-2 py-1 rounded-lg'>{modalContent?.title}</h2>
+                                            </div>
+                                        </Link>
                                         <Link href={`${siteConfig('SUB_PATH', '')}/${modalContent.slug}`}>
                                             <div style={{ textShadow: '0.1em 0.1em 0.2em black' }} className={'line-clamp-3 md:line-clamp-none overflow-hidden cursor-pointer text-gray-50 rounded-lg m-2'}>
                                                 {modalContent?.summary}
