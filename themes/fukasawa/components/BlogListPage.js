@@ -54,9 +54,9 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
       <div>
         {/* 文章列表 */}
         <div id="posts-wrapper" className='grid-container'>
-          {filterPosts?.map(post => (
+          {filterPosts?.map((post, index) => (
             <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>
-              <BlogCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
+              <BlogCard index={index} key={post.id} post={post} siteInfo={siteInfo} />
             </div>
           ))}
           {siteConfig('ADSENSE_GOOGLE_ID') && (

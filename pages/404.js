@@ -9,13 +9,8 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const NoFound = props => {
-  const meta = { title: `${siteConfig('TITLE')} | 页面找不到啦`, image: siteConfig('HOME_BANNER_IMAGE') }
-
-  props = { ...props, meta }
-
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
   return <Layout {...props} />
 }
 
