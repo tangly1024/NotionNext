@@ -5,7 +5,7 @@ import WebWhiz from './Webwhiz'
 import TianLiGPT from './TianliGPT'
 import { GlobalStyle } from './GlobalStyle'
 
-import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS, IMG_SHADOW } from '@/blog.config'
+import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false })
@@ -79,6 +79,7 @@ const ExternalPlugin = (props) => {
   const TIANLI_KEY = siteConfig('TianliGPT_KEY')
   const GLOBAL_JS = siteConfig('GLOBAL_JS')
   const CLARITY_ID = siteConfig('CLARITY_ID')
+  const IMG_SHADOW = siteConfig('IMG_SHADOW')
 
   // 自定义样式css和js引入
   if (isBrowser) {
