@@ -2,7 +2,7 @@
 
 import CONFIG from './config'
 import { useRouter } from 'next/router'
-import { useEffect, useState, createContext, useContext } from 'react'
+import { useEffect, useState, createContext, useContext, useRef } from 'react'
 import { isBrowser } from '@/lib/utils'
 import Footer from './components/Footer'
 import InfoCard from './components/InfoCard'
@@ -29,12 +29,13 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import BlogArchiveItem from './components/BlogArchiveItem'
-import BlogPostListPage from './components/BlogPostListPage'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { siteConfig } from '@/lib/config'
+import NotionIcon from '@/components/NotionIcon'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -48,7 +49,7 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, post, allNavPages, slotLeft, slotRight, slotTop, meta } = props
+  const { children, post, allNavPages, slotLeft, slotRight, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -56,17 +57,19 @@ const LayoutBase = (props) => {
   const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
 
   const showTocButton = post?.toc?.length > 1
+  const searchModal = useRef(null)
 
   useEffect(() => {
     setFilteredNavPages(allNavPages)
   }, [post])
 
   return (
-        <ThemeGlobalGitbook.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
-            <CommonHead meta={meta}/>
+        <ThemeGlobalGitbook.Provider value={{ searchModal, tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
             <Style/>
 
-            <div id='theme-gitbook' className='bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-gitbook' className={`${siteConfig('FONT_STYLE')} scroll-smooth bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300`}>
+                <AlgoliaSearchModal cRef={searchModal} {...props}/>
+
                 {/* 顶部导航栏 */}
                 <TopNavBar {...props} />
 
@@ -75,7 +78,7 @@ const LayoutBase = (props) => {
                     {/* 左侧推拉抽屉 */}
                     {fullWidth
                       ? null
-                      : (<div className={'font-sans hidden md:block border-r dark:border-transparent relative z-10 '}>
+                      : (<div className={'hidden md:block border-r dark:border-transparent relative z-10 '}>
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
@@ -213,7 +216,22 @@ const LayoutPostList = (props) => {
  */
 const LayoutSlug = (props) => {
   const { post, prev, next, lock, validPassword } = props
-
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
             {/* 文章锁 */}
@@ -222,7 +240,7 @@ const LayoutSlug = (props) => {
             {!lock && <div id='container'>
 
                 {/* title */}
-                <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
+                <h1 className="text-3xl pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
                 {/* Notion文章主体 */}
                 {post && (<section id="article-wrapper" className="px-1">
@@ -352,7 +370,7 @@ export {
   LayoutArchive,
   LayoutSlug,
   Layout404,
-  LayoutCategoryIndex,
   LayoutPostList,
+  LayoutCategoryIndex,
   LayoutTagIndex
 }

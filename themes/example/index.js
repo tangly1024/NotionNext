@@ -25,7 +25,6 @@ import TagItem from './components/TagItem'
 import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
 import { siteConfig } from '@/lib/config'
 
 /**
@@ -36,7 +35,7 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, meta } = props
+  const { children } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const { category, tag } = props
@@ -49,9 +48,9 @@ const LayoutBase = props => {
     slotTop = <div className='pb-12'>#{tag}</div>
   } else if (props.slotTop) {
     slotTop = props.slotTop
-  } else if (router.route==='/search'){
-   // 嵌入一个搜索框在顶部 
-   slotTop = <div className='pb-12'><SearchInput {...props} /></div>
+  } else if (router.route === '/search') {
+    // 嵌入一个搜索框在顶部
+    slotTop = <div className='pb-12'><SearchInput {...props} /></div>
   }
 
   // 增加一个状态以触发 Transition 组件的动画
@@ -63,10 +62,7 @@ const LayoutBase = props => {
   //   }, [onLoading])
 
   return (
-        <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
-
-            {/* SEO信息 */}
-            <CommonHead meta={meta}/>
+        <div id='theme-example' className={`${siteConfig('FONT_STYLE')} dark:text-gray-300  bg-white dark:bg-black scroll-smooth`} >
 
             <Style/>
 
@@ -136,7 +132,6 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-
   return (
         <>
             {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
@@ -151,6 +146,22 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
             {lock
@@ -254,11 +265,11 @@ export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
   LayoutIndex,
-  LayoutPostList,
   LayoutSearch,
   LayoutArchive,
   LayoutSlug,
   Layout404,
+  LayoutPostList,
   LayoutCategoryIndex,
   LayoutTagIndex
 }

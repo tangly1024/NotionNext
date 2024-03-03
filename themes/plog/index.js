@@ -20,7 +20,7 @@ import BottomNav from './components/BottomNav'
 import Modal from './components/Modal'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
+import { useRouter } from 'next/router'
 
 // 主题全局状态
 const ThemeGlobalPlog = createContext()
@@ -33,16 +33,28 @@ export const usePlogGlobal = () => useContext(ThemeGlobalPlog)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, topSlot, meta } = props
+  const { children, topSlot } = props
   const { onLoading } = useGlobal()
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setModalContent] = useState(null)
 
+  // 页面切换关闭遮罩
+  const router = useRouter()
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', closeModal)
+    return () => {
+      router.events.off('routeChangeComplete', closeModal)
+    }
+  }, [router.events])
+
   return (
     <ThemeGlobalPlog.Provider value={{ showModal, setShowModal, modalContent, setModalContent }}>
-        <div id='theme-plog' className='plog relative dark:text-gray-300 w-full dark:bg-black min-h-screen'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
+        <div id='theme-plog' className={`${siteConfig('FONT_STYLE')} plog relative dark:text-gray-300 w-full dark:bg-black min-h-screen scroll-smooth`} >
+
             <Style/>
 
             {/* 移动端顶部导航栏 */}
@@ -152,7 +164,22 @@ const LayoutArchive = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
 

@@ -22,9 +22,11 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
 // 主题全局状态
 const ThemeGlobalNobelium = createContext()
@@ -37,20 +39,18 @@ export const useNobeliumGlobal = () => useContext(ThemeGlobalNobelium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, post,  meta } = props
+  const { children, post } = props
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
-  const topSlot= <BlogListBar {...props}/>
+  const topSlot = <BlogListBar {...props}/>
 
   return (
         <ThemeGlobalNobelium.Provider value={{ searchModal, filterKey, setFilterKey }}>
-            <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col'>
-                {/* SEO相关 */}
-                <CommonHead meta={meta} />
-                {/* SEO相关 */}
+            <div id='theme-nobelium' className={`${siteConfig('FONT_STYLE')} nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col scroll-smooth`}>
+
                 <Style />
 
                 {/* 顶部导航栏 */}
@@ -116,7 +116,7 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { posts, topSlot,tag } = props
+  const { posts, topSlot, tag } = props
   const { filterKey } = useNobeliumGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
@@ -160,7 +160,7 @@ const LayoutSearch = props => {
   }, [])
 
   // 在列表中进行实时过滤
-  const {filterKey} = useNobeliumGlobal()
+  const { filterKey } = useNobeliumGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
     filteredBlogPosts = posts.filter(post => {
@@ -201,7 +201,22 @@ const LayoutArchive = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
         <>
 

@@ -26,19 +26,22 @@ export default function ArticleDetail(props) {
   const url = siteConfig('LINK') + useRouter().asPath
   const { locale } = useGlobal()
   const showArticleInfo = siteConfig('NEXT_ARTICLE_INFO', null, CONFIG)
+  // 动画样式  首屏卡片不用，后面翻出来的加动画
+  const aosProps = {
+    'data-aos': 'fade-down',
+    'data-aos-duration': '400',
+    'data-aos-once': 'true',
+    'data-aos-anchor-placement': 'top-bottom'
+  }
 
   return (
         <div id="article-wrapper"
             className="shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full ">
             <div itemScope itemType="https://schema.org/Movie"
-                data-aos="fade-down"
-                data-aos-duration="300"
-                data-aos-once="true"
-                data-aos-anchor-placement="top-bottom"
                 className="subpixel-antialiased overflow-y-hidden py-10 px-5 lg:pt-24 md:px-24  dark:border-gray-700 bg-white dark:bg-hexo-black-gray article-padding"
             >
 
-                {showArticleInfo && <header>
+                {showArticleInfo && <header {...aosProps}>
                     {/* 头图 */}
                     {siteConfig('NEXT_POST_HEADER_IMAGE_VISIBLE', null, CONFIG) && post?.type && !post?.type !== 'Page' && post?.pageCover && (
                         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
@@ -52,7 +55,7 @@ export default function ArticleDetail(props) {
                     </div>
 
                     {/* meta */}
-                    <section className="mt-2 text-gray-400 dark:text-gray-400 font-light leading-7 text-sm">
+                    <section className="mt-2 text-gray-500 dark:text-gray-400 font-light leading-7 text-sm">
                         <div className='flex flex-wrap justify-center'>
                             {post?.type !== 'Page' && (<>
                                 <Link
@@ -100,20 +103,19 @@ export default function ArticleDetail(props) {
                         {/* 分类 */}
                         {post.category && <>
                             <div className="cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:text-gray-500 border-dashed">
-                                <Link href={`/category/${post.category}`} passHref legacyBehavior>
-                                    <><i className="mr-1 far fa-folder-open" /> {post.category}</>
+                                <Link href={`/category/${post.category}`} legacyBehavior>
+                                    <a><i className="mr-1 far fa-folder-open" /> {post.category}</a>
                                 </Link>
                             </div>
-
                         </>}
 
                         {/* 标签列表 */}
                         {post?.type === 'Post' && (
                             <>
                                 {post.tagItems && (
-                                    <div className="flex flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
+                                    <div className="flex items-center flex-nowrap leading-8 p-1 py-4 overflow-x-auto">
                                         <div className="hidden md:block dark:text-gray-300 whitespace-nowrap">
-                                            {locale.COMMON.TAGS}：
+                                            {locale.COMMON.TAGS}:&nbsp;
                                         </div>
                                         {post.tagItems.map(tag => (
                                             <TagItem key={tag.name} tag={tag} />
