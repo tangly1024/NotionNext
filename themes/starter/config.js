@@ -17,8 +17,6 @@ const CONFIG = {
   STARTER_HERO_BUTTON_1_URL: 'mailto:info@watahome.com', // 英雄区按钮
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
-
-
   // 特性区块
   STARTER_FEATURE_TITLE: ' ', // 特性
   STARTER_FEATURE_TEXT_1: 'NotionNext的主要特性', // 特性
