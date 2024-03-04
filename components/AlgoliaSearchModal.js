@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash/throttle'
 import { siteConfig } from '@/lib/config'
-import { useHotkeys } from "react-hotkeys-hook";
+import { useHotkeys } from 'react-hotkeys-hook';
 
 /**
  * 结合 Algolia 实现的弹出式搜索框
@@ -67,7 +67,6 @@ export default function AlgoliaSearchModal({ cRef }) {
     if (inputRef.current) inputRef.current.value = ''
   }
 
-
   useEffect(() => {
     if (isModalOpen) {
       setTimeout(() => {
@@ -122,7 +121,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           search: query,
           target: {
             element: 'span',
-            className: 'text-blue-600 border-b border-dashed'
+            className: 'font-bold border-b border-dashed'
           }
         })
       }, 200) // 延时高亮
@@ -211,7 +210,7 @@ export default function AlgoliaSearchModal({ cRef }) {
               <p className="  text-slate-600 text-center my-4 text-base"> 无法找到相关结果
                 <span
                   className='font-semibold'
-                >"{keyword}"</span></p>
+                >&quot;{keyword}&quot;</span></p>
             </div>
           )
         }
@@ -220,9 +219,9 @@ export default function AlgoliaSearchModal({ cRef }) {
             <li key={result.objectID}
               onMouseEnter={() => setActiveIndex(index)}
               onClick={() => onJumpSearchResult(index)}
-              className={`cursor-pointer replace my-2 p-2 ${activeIndex === index ? 'bg-blue-600  ' : ''}`}>
+              className={`cursor-pointer replace my-2 p-2 duration-100 ${activeIndex === index ? 'bg-blue-600 ' : ''}`}>
               <a
-                className={`font-bold ${activeIndex === index ? ' text-white' : ' text-black '}`}
+                className={`${activeIndex === index ? ' text-white' : ' text-black '}`}
               >
                 {result.title}
               </a>
