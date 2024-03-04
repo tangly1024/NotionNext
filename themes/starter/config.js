@@ -17,7 +17,6 @@ const CONFIG = {
   // 特性区块
   STARTER_FEATURE_TITLE: ' ', // 特性
   STARTER_FEATURE_TEXT_1: 'Our Services', // 特性
-  STARTER_FEATURE_TEXT_2: 'We deliver top-quality home appliances to enhance your everyday living, ensuring reliability, efficiency, and comfort in every purchase ', // 特性
 
   STARTER_FEATURE_1_TITLE_1: 'Home Appliances', // 特性1
   STARTER_FEATURE_1_TEXT_1: '8 years experiences and relationships in Chinese home appliances industry', // 特性1
@@ -30,7 +29,7 @@ const CONFIG = {
   STARTER_FEATURE_2_BUTTON_URL: 'https://docs.tangly1024.com/article/notion-next-themes', // 特性2
 
   STARTER_FEATURE_3_TITLE_1: 'Forwarder', // 特性3
-  STARTER_FEATURE_3_TEXT_1: 'Competitive freight and in-time services will help our global customers get goods quickly', // 特性3
+  STARTER_FEATURE_3_TEXT_1: 'Competitive freight and in-time services help our customers get goods quickly', // 特性3
   STARTER_FEATURE_3_BUTTON_TEXT: 'More', // 特性3
   STARTER_FEATURE_3_BUTTON_URL: 'https://docs.tangly1024.com/article/next-js', // 特性3
 
@@ -40,7 +39,7 @@ const CONFIG = {
   STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
 
   // 首页ABOUT区块
-  STARTER_ABOUT_TITLE: 'A Professional Supplier for home appliances',
+  STARTER_ABOUT_TITLE: 'A Professional Supplier For Home Appliances',
   STARTER_ABOUT_TEXT: 'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
   STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
