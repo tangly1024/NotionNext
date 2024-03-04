@@ -24,7 +24,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 data-aos-once="false"
                 data-aos-anchor-placement="top-bottom"
                 id='blog-post-card'
-                className={`group md:h-50 w-full flex justify-between md:flex-row flex-col-reverse ${siteConfig('HEXO_POST_LIST_IMG_CROSSOVER', null, CONFIG) && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
+                className={`group md:h-56 w-full flex justify-between md:flex-row flex-col-reverse ${siteConfig('HEXO_POST_LIST_IMG_CROSSOVER', null, CONFIG) && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
                     overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
 
                 {/* 文字内容 */}
@@ -34,7 +34,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {showPageCover && (
                     <div className="md:w-5/12 overflow-hidden">
                         <Link href={url} passHref legacyBehavior>
-                        <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-50 w-full object-cover object-center group-hover:scale-110 duration-500' />
+                        <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-56 w-full object-cover object-center group-hover:scale-110 duration-500' />
                         </Link>
                     </div>
                 )}
