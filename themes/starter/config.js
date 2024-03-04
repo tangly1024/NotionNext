@@ -17,12 +17,7 @@ const CONFIG = {
   STARTER_HERO_BUTTON_1_URL: 'mailto:info@watahome.com', // 英雄区按钮
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
-  // 顶部右侧导航暗流
-  STARTER_NAV_BUTTON_1_TEXT: 'Sign In',
-  STARTER_NAV_BUTTON_1_URL: '/signin',
 
-  STARTER_NAV_BUTTON_2_TEXT: 'Sign Up',
-  STARTER_NAV_BUTTON_2_URL: '/signup',
 
   // 特性区块
   STARTER_FEATURE_TITLE: ' ', // 特性
