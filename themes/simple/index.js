@@ -10,8 +10,9 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import dynamic from 'next/dynamic'
 import NotionPage from '@/components/NotionPage'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { useRouter } from 'next/router'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
 // 主题组件
 const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), { ssr: false });

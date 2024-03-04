@@ -1,6 +1,6 @@
 {
     "name": "notion-next",
-    "version": "4.3.0",
+    "version": "4.3.1",
     "homepage": "https://github.com/tangly1024/NotionNext.git",
     "license": "MIT",
     "repository": {
@@ -18,7 +18,7 @@
         "start": "next start",
         "post-build": "next-sitemap --config next-sitemap.config.js",
         "export": "next build && next-sitemap --config next-sitemap.config.js && next export",
-        "bundle-report": "ANALYZE=true yarn build"
+        "bundle-report": "cross-env ANALYZE=true yarn build"
     },
     "dependencies": {
         "@giscus/react": "^2.2.6",
@@ -27,7 +27,7 @@
         "@vercel/analytics": "^1.0.0",
         "algoliasearch": "^4.18.0",
         "animejs": "^3.2.1",
-        "aos": "^3.0.0-beta.6",
+        "aos": "^2.3.4",
         "axios": ">=0.21.1",
         "copy-to-clipboard": "^3.3.1",
         "feed": "^4.2.2",
@@ -45,6 +45,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-facebook": "^8.1.4",
+        "react-hotkeys-hook": "^4.5.0",
         "react-notion-x": "6.16.0",
         "react-share": "^4.4.1",
         "react-tweet-embed": "~2.0.0",
@@ -53,6 +54,7 @@
     "devDependencies": {
         "@waline/client": "^2.5.1",
         "autoprefixer": "^10.4.13",
+        "cross-env": "^7.0.3",
         "eslint": "^7.26.0",
         "eslint-config-next": "^13.1.1",
         "eslint-config-standard": "^16.0.2",
