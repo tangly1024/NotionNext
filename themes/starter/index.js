@@ -30,7 +30,7 @@ import { Contact } from './components/Contact'
 import { Brand } from './components/Brand'
 import { Footer } from './components/Footer'
 import { BackToTopButton } from './components/BackToTopButton'
-import { MadeWithButton } from './components/MadeWithButton'
+// import { MadeWithButton } from './components/MadeWithButton'
 import { SVG404 } from './components/svg/SVG404'
 import { Banner } from './components/Banner'
 import { SignInForm } from './components/SignInForm'
@@ -64,7 +64,7 @@ const LayoutBase = (props) => {
 
             {/* 悬浮按钮 */}
             <BackToTopButton/>
-            <MadeWithButton/>
+            {/* <MadeWithButton/> */}
         </div>
 }
 
