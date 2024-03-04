@@ -14,7 +14,7 @@ import NotionIcon from '@/components/NotionIcon'
  */
 export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary }) => {
   const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
-  return <article className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-80' : 'w-full'}`}>
+  return <article className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-70' : 'w-full'}`}>
        <div>
             <header>
                 <h2>
