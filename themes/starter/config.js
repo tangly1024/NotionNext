@@ -14,7 +14,7 @@ const CONFIG = {
   STARTER_HERO_TITLE_2: 'Professional Supplier of Home Appliances', // 英雄区文字
   STARTER_HERO_TITLE_3: ' ', // 英雄区文字
   STARTER_HERO_BUTTON_1_TEXT: 'Inquiry', // 英雄区按钮
-  STARTER_HERO_BUTTON_1_URL: 'mailto:info@watahome.com', // 英雄区按钮
+  STARTER_HERO_BUTTON_1_URL: 'a href="mailto:info@watahome.com', // 英雄区按钮
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
   // 顶部右侧导航暗流
