@@ -5,48 +5,48 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import {
-    EmailIcon,
-    EmailShareButton,
-    FacebookIcon,
-    FacebookMessengerIcon,
-    FacebookMessengerShareButton,
-    FacebookShareButton,
-    HatenaIcon,
-    HatenaShareButton,
-    InstapaperIcon,
-    InstapaperShareButton,
-    LineIcon,
-    LineShareButton,
-    LinkedinIcon,
-    LinkedinShareButton,
-    LivejournalIcon,
-    LivejournalShareButton,
-    MailruIcon,
-    MailruShareButton,
-    OKIcon,
-    OKShareButton,
-    PinterestIcon,
-    PinterestShareButton,
-    PocketIcon,
-    PocketShareButton,
-    RedditIcon,
-    RedditShareButton,
-    TelegramIcon,
-    TelegramShareButton,
-    TumblrIcon,
-    TumblrShareButton,
-    TwitterIcon,
-    TwitterShareButton,
-    VKIcon,
-    VKShareButton,
-    ViberIcon,
-    ViberShareButton,
-    WeiboIcon,
-    WeiboShareButton,
-    WhatsappIcon,
-    WhatsappShareButton,
-    WorkplaceIcon,
-    WorkplaceShareButton
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  FacebookMessengerShareButton,
+  FacebookShareButton,
+  HatenaIcon,
+  HatenaShareButton,
+  InstapaperIcon,
+  InstapaperShareButton,
+  LineIcon,
+  LineShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  LivejournalIcon,
+  LivejournalShareButton,
+  MailruIcon,
+  MailruShareButton,
+  OKIcon,
+  OKShareButton,
+  PinterestIcon,
+  PinterestShareButton,
+  PocketIcon,
+  PocketShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TumblrIcon,
+  TumblrShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  ViberIcon,
+  ViberShareButton,
+  VKIcon,
+  VKShareButton,
+  WeiboIcon,
+  WeiboShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+  WorkplaceIcon,
+  WorkplaceShareButton
 } from 'react-share'
 
 const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
@@ -61,6 +61,8 @@ const ShareButtons = ({ post }) => {
   const [shareUrl, setShareUrl] = useState(siteConfig('LINK') + router.asPath)
   const title = post?.title || siteConfig('TITLE')
   const image = post?.pageCover
+  const tags = post.tags || []
+  const hashTags = tags.map(tag => `#${tag}`).join(',')
   const body =
     post?.title + ' | ' + title + ' ' + shareUrl + ' ' + post?.summary
 
@@ -95,6 +97,7 @@ const ShareButtons = ({ post }) => {
             <FacebookShareButton
               key={singleService}
               url={shareUrl}
+              hashtag={hashTags}
               className='mx-1'>
               <FacebookIcon size={32} round />
             </FacebookShareButton>
@@ -152,6 +155,7 @@ const ShareButtons = ({ post }) => {
               key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
+              hashtags={tags}
               className='mx-1'>
               <TwitterIcon size={32} round />
             </TwitterShareButton>
@@ -229,6 +233,7 @@ const ShareButtons = ({ post }) => {
               key={singleService}
               url={shareUrl}
               title={titleWithSiteInfo}
+              tags={tags}
               className='mx-1'>
               <TumblrIcon size={32} round />
             </TumblrShareButton>
@@ -274,6 +279,7 @@ const ShareButtons = ({ post }) => {
               key={singleService}
               url={shareUrl}
               quote={titleWithSiteInfo}
+              hashtag={hashTags}
               className='mx-1'>
               <WorkplaceIcon size={32} round />
             </WorkplaceShareButton>
