@@ -17,6 +17,8 @@ const CONFIG = {
   STARTER_HERO_BUTTON_1_URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
+
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
   // 顶部右侧导航暗流
@@ -27,6 +29,7 @@ const CONFIG = {
   STARTER_NAV_BUTTON_2_URL: '/signup',
 
   // 特性区块
+  STARTER_FEATURE_ENABLE: true, // 特性区块开关
   STARTER_FEATURE_TITLE: '特性', // 特性
   STARTER_FEATURE_TEXT_1: 'NotionNext的主要特性', // 特性
   STARTER_FEATURE_TEXT_2: 'NotionNext的愿景是帮助您简单、无感知地稳定地搭建自己的网站，放大品牌的价值。 ', // 特性
@@ -52,6 +55,7 @@ const CONFIG = {
   STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
 
   // 首页ABOUT区块
+  STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
   STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
   STARTER_ABOUT_TEXT: 'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
@@ -63,6 +67,7 @@ const CONFIG = {
   STARTER_ABOUT_TIPS_3: '正在线上运行',
 
   // 首页价格区块
+  STARTER_PRICING_ENABLE: true, // 价格区块开关
   STARTER_PRICING_TITLE: '价格表',
   STARTER_PRICING_TEXT_1: '很棒的定价计划',
   STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
@@ -95,6 +100,8 @@ const CONFIG = {
   STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_3_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
 
+  // 首页用户测评区块
+  STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
   STARTER_TESTIMONIALS_TITLE: '用户反馈',
   STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
   STARTER_TESTIMONIALS_TEXT_2: '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
@@ -146,7 +153,8 @@ const CONFIG = {
     }
   ],
 
-  //   FAQ模块
+  //   FAQ 常见问题模块
+  STARTER_FAQ_ENABLE: true, // 常见问题模块开关
   STARTER_FAQ_TITLE: '常见问题解答',
   STARTER_FAQ_TEXT_1: '有任何问题吗？请看这里',
   STARTER_FAQ_TEXT_2: '我们收集了常见的用户疑问',
@@ -163,6 +171,8 @@ const CONFIG = {
   STARTER_FAQ_4_QUESTION: '文章没有实时同步？',
   STARTER_FAQ_4_ANSWER: '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
 
+  // 团队成员区块
+  STARTER_TEAM_ENABLE: true, // 团队成员区块开关
   STARTER_TEAM_TITLE: '团队成员',
   STARTER_TEAM_TEXT_1: '我们的开发者团队',
   STARTER_TEAM_TEXT_2: 'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
@@ -192,12 +202,14 @@ const CONFIG = {
   ],
 
   // 博客文章区块
+  STARTER_BLOG_ENABLE: true, // 首页博文区块开关
   STARTER_BLOG_TITLE: '我们的博客',
   STARTER_BLOG_COUNT: 3, // 首页博文区块默认展示前3篇文章
   STARTER_BLOG_TEXT_1: '最近的新闻',
   STARTER_BLOG_TEXT_2: '这里会发布一些关于NotionNext的最新动态，包括新的动向、新的未来计划，以及新功能的特性',
 
   // 联系模块
+  STARTER_CONTACT_ENABLE: true, // 联系模块开关
   STARTER_CONTACT_TITLE: '联系我们',
   STARTER_CONTACT_TEXT: '告诉我们您遇到的问题',
   STARTER_CONTACT_LOCATION_TITLE: '我们的位置',
@@ -207,7 +219,7 @@ const CONFIG = {
 
   // 嵌入外部表单
   STARTER_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/yfctc7', // 基于NoteForm创建，将留言数据存在Notion中
-  //   自定义留言表单
+  //   自定义留言表单，以下几个配置暂时废弃
   //   STARTER_CONTACT_MSG_TITLE: '向我们留言',
   //   STARTER_CONTACT_MSG_NAME: '姓名',
   //   STARTER_CONTACT_MSG_EMAIL: '邮箱地址',
@@ -217,6 +229,7 @@ const CONFIG = {
   //   STARTER_CONTACT_MSG_THANKS: '感谢您的留言',
 
   // 合作伙伴的图标
+  STARTER_BRANDS_ENABLE: true, // 合作伙伴开关
   STARTER_BRANDS: [
     {
       IMAGE: '/images/starter/brands/graygrids.svg',
