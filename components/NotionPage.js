@@ -1,13 +1,11 @@
-import { NotionRenderer } from 'react-notion-x'
 import dynamic from 'next/dynamic'
 import mediumZoom from '@fisch0920/medium-zoom'
-import React, { useEffect, useRef } from 'react'
-// import { Code } from 'react-notion-x/build/third-party/code'
-import TweetEmbed from 'react-tweet-embed'
+import { useEffect, useRef } from 'react'
 import 'katex/dist/katex.min.css'
-import { mapImgUrl } from '@/lib/notion/mapImage'
+import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
+import { NotionRenderer } from 'react-notion-x'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then(async (m) => {
@@ -15,6 +13,7 @@ const Code = dynamic(() =>
   }), { ssr: false }
 )
 
+// 公式
 const Equation = dynamic(() =>
   import('@/components/Equation').then(async (m) => {
     // 化学方程式
@@ -36,6 +35,13 @@ const PrismMac = dynamic(() => import('@/components/PrismMac'), {
   ssr: false
 })
 
+/**
+ * tweet嵌入
+ */
+const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
+  ssr: false
+})
+
 const Collection = dynamic(() =>
   import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
 )
@@ -48,6 +54,11 @@ const Tweet = ({ id }) => {
   return <TweetEmbed tweetId={id} />
 }
 
+/**
+ * Notin渲染成网页的核心组件
+ * @param {*} param0
+ * @returns
+ */
 const NotionPage = ({ post, className }) => {
   useEffect(() => {
     autoScrollToTarget()
@@ -61,6 +72,8 @@ const NotionPage = ({ post, className }) => {
   const zoomRef = useRef(zoom ? zoom.clone() : null)
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     // 将相册gallery下的图片加入放大功能
     if (siteConfig('POST_DISABLE_GALLERY_CLICK')) {
       setTimeout(() => {
@@ -98,6 +111,30 @@ const NotionPage = ({ post, className }) => {
         }
       }
     }
+
+    // 放大图片：调整图片质量
+    const observer = new MutationObserver((mutationsList, observer) => {
+      mutationsList.forEach(mutation => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          if (mutation.target.classList.contains('medium-zoom-image--opened')) {
+            // 等待动画完成后替换为更高清的图像
+            setTimeout(() => {
+            // 获取该元素的 src 属性
+              const src = mutation?.target?.getAttribute('src');
+              //   替换为更高清的图像
+              mutation?.target?.setAttribute('src', compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)));
+            }, 800);
+          }
+        }
+      });
+    });
+
+    // 监视整个文档中的元素和属性的变化
+    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+
+    return () => {
+      observer.disconnect();
+    };
   }, [])
 
   if (!post || !post.blockMap) {
