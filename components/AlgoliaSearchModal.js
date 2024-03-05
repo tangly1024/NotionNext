@@ -22,6 +22,7 @@ export default function AlgoliaSearchModal({ cRef }) {
   const [useTime, setUseTime] = useState(0)
   const inputRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   useHotkeys('ctrl+k', (e) => {
     e.preventDefault()
     setIsModalOpen(true)
@@ -105,7 +106,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     if (!query || query === '') {
       return
     }
-
+    setIsLoading(true)
     try {
       const res = await index.search(query, { page, hitsPerPage: 10 })
       const { hits, nbHits, nbPages, processingTimeMS } = res
@@ -113,6 +114,7 @@ export default function AlgoliaSearchModal({ cRef }) {
       setTotalPage(nbPages)
       setTotalHit(nbHits)
       setSearchResults(hits)
+      setIsLoading(false)
       const doms = document.getElementById('search-wrapper').getElementsByClassName('replace')
 
       setTimeout(() => {
@@ -205,7 +207,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           <TagGroups />
         </div>
         {
-          searchResults.length === 0 && keyword && (
+          searchResults.length === 0 && keyword && !isLoading && (
             <div>
               <p className="  text-slate-600 text-center my-4 text-base"> 无法找到相关结果
                 <span
@@ -219,7 +221,9 @@ export default function AlgoliaSearchModal({ cRef }) {
             <li key={result.objectID}
               onMouseEnter={() => setActiveIndex(index)}
               onClick={() => onJumpSearchResult(index)}
-              className={`cursor-pointer replace my-2 p-2 duration-100 ${activeIndex === index ? 'bg-blue-600 dark:bg-yellow-600' : ''}`}>
+              className={`cursor-pointer replace my-2 p-2 duration-100 
+              rounded-lg
+              ${activeIndex === index ? 'bg-blue-600 dark:bg-yellow-600' : ''}`}>
               <a
                 className={`${activeIndex === index ? ' text-white' : ' text-black dark:text-gray-300 '}`}
               >
@@ -237,7 +241,7 @@ export default function AlgoliaSearchModal({ cRef }) {
               </p>
             )}
           </div>
-          <div className="text-gray-600  text-right">
+          <div className="text-gray-600 dark:text-gray-300  text-right">
             <span >
               <i className="fa-brands fa-algolia"></i> Algolia 提供搜索服务
             </span>
@@ -294,7 +298,7 @@ function Pagination(props) {
       {Array.from({ length: totalPage }, (_, i) => {
         const classNames = page === i
           ? 'font-bold text-white bg-blue-600 dark:bg-yellow-600 rounded'
-          : 'hover:text-blue-600 hover:font-bold'
+          : 'hover:text-blue-600 hover:font-bold dark:text-gray-300'
 
         return (
           <div
