@@ -9,6 +9,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/formatDate'
 import WWAds from '@/components/WWAds'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  *
@@ -26,7 +27,7 @@ export default function ArticleDetail(props) {
     <div id="container" className={`${fullWidth ? 'px-10' : 'max-w-5xl '} overflow-x-auto flex-grow mx-auto w-screen md:w-full`}>
       {post?.type && !post?.type !== 'Page' && post?.pageCover && (
         <div className="w-full relative md:flex-shrink-0 overflow-hidden">
-          <LazyImage alt={post.title} src={post?.pageCover} className='object-center w-full' />
+          <LazyImage alt={post.title} src={post?.pageCover} className='object-cover max-h-[60vh] w-full' />
         </div>
       )}
 
@@ -36,7 +37,7 @@ export default function ArticleDetail(props) {
 
           {/* 文章Title */}
           <div className="font-bold text-4xl text-black dark:text-white">
-            {post.title}
+            <NotionIcon icon={post?.pageIcon} />{post.title}
           </div>
 
           <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">

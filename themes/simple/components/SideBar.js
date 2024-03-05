@@ -2,6 +2,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import Live2D from '@/components/Live2D'
 import Announcement from './Announcement'
 import Catalog from './Catalog'
+import WWAds from '@/components/WWAds'
 
 /**
  * 侧边栏
@@ -26,6 +27,7 @@ export default function SideBar (props) {
 
         <aside>
             <AdSlot/>
+            <WWAds orientation="vertical" className="w-full" />
         </aside>
 
     </>)

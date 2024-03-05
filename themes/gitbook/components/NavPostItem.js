@@ -19,9 +19,8 @@ const NavPostItem = (props) => {
 
   if (group?.category) {
     return <>
-            <div
-                onClick={toggleOpenSubMenu}
-                className='select-none flex justify-between text-sm font-sans cursor-pointer p-2 hover:bg-gray-50 rounded-md dark:hover:bg-gray-600' key={group?.category}>
+            <div onClick={toggleOpenSubMenu}
+                className='select-none flex justify-between text-sm cursor-pointer p-2 hover:bg-gray-50 rounded-md dark:hover:bg-gray-600' key={group?.category}>
                 <span>{group?.category}</span>
                 <div className='inline-flex items-center select-none pointer-events-none '><i className={`px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''}`}></i></div>
             </div>
