@@ -183,7 +183,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           } flex flex-col justify-between w-full min-h-[10rem] max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}
       >
         <div className="flex justify-between items-center">
-          <div className="text-2xl text-blue-600 font-bold">搜索</div>
+          <div className="text-2xl text-blue-600 dark:text-yellow-600 font-bold">搜索</div>
           <div>
             <i
               className="text-gray-600 fa-solid fa-xmark p-1 cursor-pointer hover:text-blue-600"
@@ -219,9 +219,9 @@ export default function AlgoliaSearchModal({ cRef }) {
             <li key={result.objectID}
               onMouseEnter={() => setActiveIndex(index)}
               onClick={() => onJumpSearchResult(index)}
-              className={`cursor-pointer replace my-2 p-2 duration-100 ${activeIndex === index ? 'bg-blue-600 ' : ''}`}>
+              className={`cursor-pointer replace my-2 p-2 duration-100 ${activeIndex === index ? 'bg-blue-600 dark:bg-yellow-600' : ''}`}>
               <a
-                className={`${activeIndex === index ? ' text-white' : ' text-black '}`}
+                className={`${activeIndex === index ? ' text-white' : ' text-black dark:text-gray-300 '}`}
               >
                 {result.title}
               </a>
@@ -229,7 +229,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           ))}
         </ul>
         <Pagination totalPage={totalPage} page={page} switchPage={switchPage} />
-        <div className='flex items-center justify-between mt-2 text-sm '>
+        <div className='flex items-center justify-between mt-2 text-sm dark:text-gray-300'>
           <div>
             {totalHit > 0 && (
               <p>
@@ -270,7 +270,7 @@ function TagGroups() {
           key={index}
           href={`/tag/${encodeURIComponent(tag.name)}`}
           className={'cursor-pointer inline-block whitespace-nowrap'}>
-          <div className={' flex items-center text-black dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-yellow-600 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all'}>
+          <div className={'flex items-center text-black dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-yellow-600 hover:scale-110 hover:text-white rounded-lg px-2 py-0.5 duration-150 transition-all'}>
             <div className='text-lg'>{tag.name} </div>{tag.count ? <sup className='relative ml-1'>{tag.count}</sup> : <></>}
           </div>
 
@@ -293,7 +293,7 @@ function Pagination(props) {
     <div className='flex space-x-1 w-full justify-center py-1'>
       {Array.from({ length: totalPage }, (_, i) => {
         const classNames = page === i
-          ? 'font-bold text-white bg-blue-600 rounded'
+          ? 'font-bold text-white bg-blue-600 dark:bg-yellow-600 rounded'
           : 'hover:text-blue-600 hover:font-bold'
 
         return (
