@@ -177,12 +177,12 @@ export default function AlgoliaSearchModal({ cRef }) {
     <div
       id="search-wrapper"
       className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
-        } z-30 fixed h-screen w-screen left-0 top-0 mt-12 flex items-start justify-center`}
+        } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-12 flex items-start justify-center mt-0`}
     >
       {/* 模态框 */}
       <div
         className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-          } flex flex-col justify-between w-full min-h-[10rem] max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}
+          } flex flex-col justify-between w-full min-h-[10rem] max-w-xl dark:bg-hexo-black-gray  h-full dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}
       >
         <div className="flex justify-between items-center">
           <div className="text-2xl text-blue-600 dark:text-yellow-600 font-bold">搜索</div>
@@ -209,14 +209,14 @@ export default function AlgoliaSearchModal({ cRef }) {
         {
           searchResults.length === 0 && keyword && !isLoading && (
             <div>
-              <p className="  text-slate-600 text-center my-4 text-base"> 无法找到相关结果
+              <p className=" text-slate-600 text-center my-4 text-base"> 无法找到相关结果
                 <span
                   className='font-semibold'
                 >&quot;{keyword}&quot;</span></p>
             </div>
           )
         }
-        <ul>
+        <ul className='flex-1 overflow-auto'>
           {searchResults.map((result, index) => (
             <li key={result.objectID}
               onMouseEnter={() => setActiveIndex(index)}
@@ -233,7 +233,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           ))}
         </ul>
         <Pagination totalPage={totalPage} page={page} switchPage={switchPage} />
-        <div className='flex items-center justify-between mt-2 text-sm dark:text-gray-300'>
+        <div className='flex items-center justify-between mt-2 sm:text-sm text-xs dark:text-gray-300'>
           <div>
             {totalHit > 0 && (
               <p>
