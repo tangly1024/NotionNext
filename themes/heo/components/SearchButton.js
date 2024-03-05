@@ -1,8 +1,10 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import { useRef } from 'react'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
 /**
  * 搜索按钮
@@ -14,7 +16,7 @@ export default function SearchButton(props) {
   const searchModal = useRef(null)
 
   function handleSearch() {
-    if (BLOG.ALGOLIA_APP_ID) {
+    if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal.current.openSearch()
     } else {
       router.push('/search')

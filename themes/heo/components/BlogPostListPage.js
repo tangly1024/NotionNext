@@ -1,7 +1,7 @@
 import BlogPostCard from './BlogPostCard'
 import PaginationNumber from './PaginationNumber'
-import BLOG from '@/blog.config'
 import BlogPostListEmpty from './BlogPostListEmpty'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 文章列表分页表格
@@ -12,8 +12,8 @@ import BlogPostListEmpty from './BlogPostListEmpty'
  * @constructor
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
-  const showPagination = postCount >= BLOG.POSTS_PER_PAGE
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
+  const showPagination = postCount >= parseInt(siteConfig('POSTS_PER_PAGE'))
   if (!posts || posts.length === 0 || page > totalPage) {
     return <BlogPostListEmpty />
   } else {

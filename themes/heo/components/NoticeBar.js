@@ -2,13 +2,16 @@
 import { ArrowRightCircle } from '@/components/HeroIcons'
 import CONFIG from '../config'
 import Swipe from './Swipe'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 通知横幅
  */
 export function NoticeBar() {
-  const notices = CONFIG.NOTICE_BAR
-
+  let notices = siteConfig('HEO_NOTICE_BAR', null, CONFIG)
+  if (typeof notices === 'string') {
+    notices = JSON.parse(notices)
+  }
   if (!notices || notices?.length === 0) {
     return <></>
   }

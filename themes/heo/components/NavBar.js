@@ -8,7 +8,8 @@ import SlideOver from './SlideOver'
 import ReadingProgress from './ReadingProgress'
 import { MenuListTop } from './MenuListTop'
 import { isBrowser } from '@/lib/utils'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
+
 /**
  * 顶部导航
  * @param {*} param0
@@ -129,7 +130,11 @@ const NavBar = props => {
         `}</style>
 
         {/* 顶部导航菜单栏 */}
-        <nav id='nav' className={`${fixedNav ? 'fixed' : 'relative bg-none'} ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  ${navBgWhite ? 'bg-white dark:bg-[#18171d]' : 'bg-none'} z-20 h-16 top-0 w-full`}>
+        <nav id='nav' className={`z-20 h-16 top-0 w-full
+            ${fixedNav ? 'fixed' : 'relative bg-transparent'} 
+            ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  
+            ${navBgWhite ? 'bg-white dark:bg-[#18171d]' : 'bg-transparent'}`}>
+
             <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-8'>
                 {/* 左侧logo */}
                 <div className='flex'>
@@ -139,14 +144,14 @@ const NavBar = props => {
                 {/* 中间菜单 */}
                 <div id='nav-bar-swipe' className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full relative w-full ${activeIndex === 0 ? 'fade-in-down' : 'fade-in-up'}`}>
                     {activeIndex === 0 && <MenuListTop {...props} />}
-                    {activeIndex === 1 && <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>{BLOG.AUTHOR || BLOG.TITLE} {BLOG.BIO && <>|</>} {BLOG.BIO}</h1>}
+                    {activeIndex === 1 && <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>{siteConfig('AUTHOR') || siteConfig('TITLE')} {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}</h1>}
                 </div>
 
                 {/* 右侧固定 */}
                 <div className='flex flex-shrink-0 justify-center items-center'>
                     <RandomPostButton {...props} />
                     <SearchButton {...props}/>
-                    {!JSON.parse(BLOG.THEME_SWITCH) && <div className='hidden md:block'><DarkModeButton {...props} /></div>}
+                    {!JSON.parse(siteConfig('THEME_SWITCH')) && <div className='hidden md:block'><DarkModeButton {...props} /></div>}
                     <ReadingProgress />
 
                     {/* 移动端菜单按钮 */}

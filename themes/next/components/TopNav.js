@@ -9,6 +9,9 @@ import { MenuList } from './MenuList'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
+import { useNextGlobal } from '..'
+import { useRouter } from 'next/router'
 
 let windowTop = 0
 
@@ -22,6 +25,7 @@ const TopNav = (props) => {
   const { locale } = useGlobal()
   const searchDrawer = useRef()
   const collapseRef = useRef(null)
+  const router = useRouter()
 
   const scrollTrigger = useCallback(throttle(() => {
     const scrollS = window.scrollY
@@ -38,21 +42,46 @@ const TopNav = (props) => {
 
   // 监听滚动
   useEffect(() => {
-    if (CONFIG.NAV_TYPE === 'autoCollapse') {
+    if (siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse') {
       scrollTrigger()
       window.addEventListener('scroll', scrollTrigger)
     }
     return () => {
-      CONFIG.NAV_TYPE === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
+      siteConfig('NEXT_NAV_TYPE', null, CONFIG) === 'autoCollapse' && window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
 
   const [isOpen, changeShow] = useState(false)
 
+  // 监听滚动
+  useEffect(() => {
+    router.events.on('routeChangeComplete', menuCollapseHide)
+    return () => {
+      router.events.off('routeChangeComplete', menuCollapseHide)
+    }
+  }, [])
+
+  /**
+   * 点击切换页面后关闭这点菜单
+   */
+  const menuCollapseHide = () => {
+    changeShow(false)
+  }
+
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
   }
 
+  const { searchModal } = useNextGlobal()
+  const showSearchModal = () => {
+    if (siteConfig('ALGOLIA_APP_ID')) {
+      searchModal?.current?.openSearch()
+    } else {
+      searchDrawer?.current?.show()
+    }
+  }
+
+  //   搜索栏
   const searchDrawerSlot = <>
         {categories && (
             <section className='mt-8'>
@@ -61,7 +90,7 @@ const TopNav = (props) => {
                     <Link
                         href={'/category'}
                         passHref
-                        className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                        className='mb-3 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
 
                         {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
 
@@ -78,7 +107,7 @@ const TopNav = (props) => {
                     <Link
                         href={'/tag'}
                         passHref
-                        className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+                        className='text-gray-500 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
 
                         {locale.COMMON.MORE} <i className='fas fa-angle-double-right' />
 
@@ -96,7 +125,7 @@ const TopNav = (props) => {
             <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
             {/* 导航栏 */}
-            <div id='sticky-nav' className={`${CONFIG.NAV_TYPE !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
+            <div id='sticky-nav' className={`${siteConfig('NEXT_NAV_TYPE', null, CONFIG) !== 'normal' ? 'fixed' : 'relative'} lg:relative w-full top-0 z-20 transform duration-500`}>
                 <div className='w-full flex justify-between items-center p-4 bg-black dark:bg-gray-800 text-white'>
                     {/* 左侧LOGO 标题 */}
                     <div className='flex flex-none flex-grow-0'>
@@ -111,8 +140,8 @@ const TopNav = (props) => {
 
                     {/* 右侧功能 */}
                     <div className='mr-1 flex justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
-                        <div className="cursor-pointer block lg:hidden" onClick={() => { searchDrawer?.current?.show() }}>
-                            <i className="mr-2 fas fa-search" />{locale.NAV.SEARCH}
+                        <div className="cursor-pointer block lg:hidden" onClick={showSearchModal}>
+                            <i className="mr-2 fas fa-search" />
                         </div>
                     </div>
                 </div>

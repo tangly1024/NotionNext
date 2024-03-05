@@ -8,17 +8,18 @@ import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
-import { isBrowser } from '@/lib/utils'
+import { checkContainHttp } from '@/lib/utils'
 import { uploadDataToAlgolia } from '@/lib/algolia'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 根据notion的slug访问页面
+ * 只解析一级目录例如 /about
  * @param {*} props
  * @returns
  */
 const Slug = props => {
-  const { post, siteInfo } = props
-  const router = useRouter()
+  const { post } = props
 
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
@@ -38,20 +39,6 @@ const Slug = props => {
 
   // 文章加载
   useEffect(() => {
-    // 404
-    if (!post) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const article = document.getElementById('notion-article')
-          if (!article) {
-            router.push('/404').then(() => {
-              console.warn('找不到页面', router.asPath)
-            })
-          }
-        }
-      }, 8 * 1000) // 404时长 8秒
-    }
-
     // 文章加密
     if (post?.password && post?.password !== '') {
       setLock(true)
@@ -64,18 +51,9 @@ const Slug = props => {
     }
   }, [post])
 
-  const meta = {
-    title: post ? `${post?.title} | ${siteInfo?.title}` : `${props?.siteInfo?.title || BLOG.TITLE} | loading`,
-    description: post?.summary,
-    type: post?.type,
-    slug: post?.slug,
-    image: post?.pageCoverThumbnail || (siteInfo?.pageCover || BLOG.HOME_BANNER_IMAGE),
-    category: post?.category?.[0],
-    tags: post?.tags
-  }
-  props = { ...props, lock, meta, setLock, validPassword }
+  props = { ...props, lock, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
   return <Layout {...props} />
 }
 
@@ -89,8 +67,10 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+  const paths = allPages?.filter(row => checkSlug(row))
+    .map(row => ({ params: { prefix: row.slug } }))
   return {
-    paths: allPages?.filter(row => row.slug.indexOf('/') < 0 && row.type.indexOf('Menu') < 0).map(row => ({ params: { prefix: row.slug } })),
+    paths: paths,
     fallback: true
   }
 }
@@ -106,7 +86,7 @@ export async function getStaticProps({ params: { prefix } }) {
   const props = await getGlobalData({ from })
   // 在列表内查找文章
   props.post = props?.allPages?.find((p) => {
-    return p.slug === fullSlug || p.id === idToUuid(fullSlug)
+    return (p.type.indexOf('Menu') < 0) && (p.slug === fullSlug || p.id === idToUuid(fullSlug))
   })
 
   // 处理非列表内文章的内信息
@@ -186,6 +166,14 @@ export function getRecommendPost(post, allPosts, count = 6) {
     recommendPosts = recommendPosts.slice(0, count)
   }
   return recommendPosts
+}
+
+function checkSlug(row) {
+  let slug = row.slug
+  if (slug.startsWith('/')) {
+    slug = slug.substring(1)
+  }
+  return ((slug.match(/\//g) || []).length === 0 && !checkContainHttp(slug)) && row.type.indexOf('Menu') < 0
 }
 
 export default Slug
