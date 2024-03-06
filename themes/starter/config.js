@@ -274,7 +274,7 @@ const CONFIG = {
         { TITLE: '官方主页', URL: '/#home' },
         { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
         { TITLE: '帮助支持', URL: 'https://docs.tangly1024.com/article/how-to-question' },
-        { TITLE: '合作申请', URL: 'https://docs.tangly1024.com/my-service' }
+        { TITLE: '合作申请', URL: 'https://docs.tangly1024.com/article/my-service' }
       ]
     },
     {
