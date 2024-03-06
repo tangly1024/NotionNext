@@ -182,7 +182,7 @@ export default function AlgoliaSearchModal({ cRef }) {
       {/* 模态框 */}
       <div
         className={`${isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-          } flex flex-col justify-between w-full min-h-[10rem] max-w-xl dark:bg-hexo-black-gray  h-full dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}
+          } flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}
       >
         <div className="flex justify-between items-center">
           <div className="text-2xl text-blue-600 dark:text-yellow-600 font-bold">搜索</div>
