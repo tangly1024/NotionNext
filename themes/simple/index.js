@@ -31,6 +31,7 @@ const Footer = dynamic(() => import('./components/Footer'), { ssr: false });
 const SearchInput = dynamic(() => import('./components/SearchInput'), { ssr: false });
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false });
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), { ssr: false })
+const RecommendPosts = dynamic(() => import('./components/RecommendPosts'), { ssr: false })
 
 // 主题全局状态
 const ThemeGlobalSimple = createContext()
@@ -175,7 +176,7 @@ const LayoutArchive = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, lock, validPassword, prev, next } = props
+  const { post, lock, validPassword, prev, next, recommendPosts } = props
   const { fullWidth } = useGlobal()
 
   return (
@@ -201,7 +202,10 @@ const LayoutSlug = props => {
                 {/* 广告嵌入 */}
                 <AdSlot type={'in-article'} />
 
-                {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+                {post?.type === 'Post' && <>
+                <ArticleAround prev={prev} next={next} />
+                <RecommendPosts recommendPosts={recommendPosts}/>
+                </>}
 
                 {/* 评论区 */}
                 <Comment frontMatter={post} />
