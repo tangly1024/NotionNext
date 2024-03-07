@@ -80,6 +80,7 @@ const ExternalPlugin = (props) => {
   const GLOBAL_JS = siteConfig('GLOBAL_JS')
   const CLARITY_ID = siteConfig('CLARITY_ID')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
+  const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -91,6 +92,10 @@ const ExternalPlugin = (props) => {
     // 自动添加图片阴影
     if (IMG_SHADOW) {
       loadExternalResource('/css/img-shadow.css', 'css')
+    }
+
+    if (ANIMATE_CSS_URL) {
+      loadExternalResource(ANIMATE_CSS_URL, 'css')
     }
 
     // 导入外部自定义脚本
