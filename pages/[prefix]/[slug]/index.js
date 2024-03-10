@@ -1,10 +1,9 @@
 import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { idToUuid } from 'notion-utils'
 import { getNotion } from '@/lib/notion/getNotion'
 import Slug, { getRecommendPost } from '..'
-import { uploadDataToAlgolia } from '@/lib/algolia'
+import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { checkContainHttp } from '@/lib/utils'
 
 /**
