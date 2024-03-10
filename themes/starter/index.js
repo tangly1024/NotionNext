@@ -36,7 +36,7 @@ import { Banner } from './components/Banner'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import Link from 'next/link'
-import { loadWowJS } from '@/lib/wow'
+import { loadWowJS } from '@/lib/plugins/wow'
 
 /**
  * 布局框架
@@ -81,7 +81,7 @@ const LayoutIndex = (props) => {
   return (
         <>
         {/* 英雄区 */}
-        <Hero/>
+        {siteConfig('STARTER_HERO_ENABLE', null, CONFIG) && <Hero/>}
         {/* 产品特性 */}
         {siteConfig('STARTER_FEATURE_ENABLE', null, CONFIG) && <Features/>}
         {/* 关于 */}

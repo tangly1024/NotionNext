@@ -1,4 +1,4 @@
-import '@/styles/animate.css' // @see https://animate.style/
+// import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
 import '@/styles/nprogress.css'
 import '@/styles/utility-patterns.css'
