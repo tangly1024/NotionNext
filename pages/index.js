@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { getLayoutByTheme } from '@/themes/theme'
@@ -15,15 +14,7 @@ import { useRouter } from 'next/router'
 const Index = props => {
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${siteConfig('TITLE')} | ${siteConfig('DESCRIPTION')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteConfig('HOME_BANNER_IMAGE'),
-    slug: '',
-    type: 'website'
-  }
-  return <Layout meta={meta} {...props} />
+  return <Layout {...props} />
 }
 
 /**

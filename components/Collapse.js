@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle } from 'react'
+import { useEffect, useImperativeHandle, useRef } from 'react'
 
 /**
  * 折叠面板组件，支持水平折叠、垂直折叠
@@ -7,7 +7,7 @@ import React, { useEffect, useImperativeHandle } from 'react'
  */
 const Collapse = props => {
   const { collapseRef } = props
-  const ref = React.useRef(null)
+  const ref = useRef(null)
   const type = props.type || 'vertical'
 
   useImperativeHandle(collapseRef, () => {
@@ -17,8 +17,10 @@ const Collapse = props => {
        * @param {*} param0
        */
       updateCollapseHeight: ({ height, increase }) => {
-        ref.current.style.height = ref.current.scrollHeight
-        ref.current.style.height = 'auto'
+        if (props.isOpen) {
+          ref.current.style.height = ref.current.scrollHeight
+          ref.current.style.height = 'auto'
+        }
       }
     }
   })
