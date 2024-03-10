@@ -48,6 +48,7 @@ const LayoutBase = props => {
   //   }, [onLoading])
 
   return (
+        <div class="loader"></div>
         <div id='theme-example' className='dark:text-gray-300  bg-white dark:bg-black'>
 
             {/* SEO信息 */}
