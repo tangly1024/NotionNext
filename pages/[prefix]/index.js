@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
@@ -9,7 +8,7 @@ import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { checkContainHttp } from '@/lib/utils'
-import { uploadDataToAlgolia } from '@/lib/algolia'
+import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { siteConfig } from '@/lib/config'
 
 /**

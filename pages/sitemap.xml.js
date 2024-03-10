@@ -1,6 +1,6 @@
 // pages/sitemap.xml.js
 import { getServerSideSitemap } from 'next-sitemap'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/db/getSiteData'
 import BLOG from '@/blog.config'
 
 export const getServerSideProps = async (ctx) => {

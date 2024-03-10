@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
