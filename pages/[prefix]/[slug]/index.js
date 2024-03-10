@@ -1,7 +1,6 @@
 import BLOG from '@/blog.config'
-import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
+import { getGlobalData, getPostBlocks, getPost } from '@/lib/db/getSiteData'
 import { idToUuid } from 'notion-utils'
-import { getNotion } from '@/lib/notion/getNotion'
 import Slug, { getRecommendPost } from '..'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { checkContainHttp } from '@/lib/utils'
@@ -52,7 +51,7 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   if (!props?.post) {
     const pageId = slug.slice(-1)[0]
     if (pageId.length >= 32) {
-      const post = await getNotion(pageId)
+      const post = await getPost(pageId)
       props.post = post
     }
   }
