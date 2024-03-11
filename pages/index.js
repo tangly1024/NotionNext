@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRss } from '@/lib/rss'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { getLayoutByTheme } from '@/themes/theme'

@@ -1,15 +1,13 @@
 import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData, getPostBlocks, getPost } from '@/lib/db/getSiteData'
 import { useEffect, useState } from 'react'
 import { idToUuid } from 'notion-utils'
 import { useRouter } from 'next/router'
-import { getNotion } from '@/lib/notion/getNotion'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { checkContainHttp } from '@/lib/utils'
-import { uploadDataToAlgolia } from '@/lib/algolia'
+import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { siteConfig } from '@/lib/config'
 
 /**
@@ -93,7 +91,7 @@ export async function getStaticProps({ params: { prefix } }) {
   if (!props?.post) {
     const pageId = prefix
     if (pageId.length >= 32) {
-      const post = await getNotion(pageId)
+      const post = await getPost(pageId)
       props.post = post
     }
   }
