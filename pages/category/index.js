@@ -1,4 +1,4 @@
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/db/getSiteData'
 import React from 'react'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'

@@ -36,7 +36,7 @@ import { Banner } from './components/Banner'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import Link from 'next/link'
-import { loadWowJS } from '@/lib/wow'
+import { loadWowJS } from '@/lib/plugins/wow'
 
 /**
  * 布局框架
