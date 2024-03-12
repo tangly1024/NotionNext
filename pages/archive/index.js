@@ -1,10 +1,10 @@
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData } from '@/lib/db/getSiteData'
 import { useEffect } from 'react'
 import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 import { isBrowser } from '@/lib/utils'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import { siteConfig } from '@/lib/config'
 
 const ArchiveIndex = props => {

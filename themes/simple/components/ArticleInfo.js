@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import NotionIcon from '@/components/NotionIcon'
 
 /**

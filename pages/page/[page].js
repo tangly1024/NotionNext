@@ -1,6 +1,5 @@
 import BLOG from '@/blog.config'
-import { getPostBlocks } from '@/lib/notion'
-import { getGlobalData } from '@/lib/notion/getNotionData'
+import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 import { siteConfig } from '@/lib/config'
