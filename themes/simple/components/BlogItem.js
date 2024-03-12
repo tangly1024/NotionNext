@@ -9,12 +9,12 @@ import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 
 export const BlogItem = props => {
-    const { post } = props
-    const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
-    const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
-    const showPreview = siteConfig('POST_LIST_PREVIEW') && post.blockMap
+  const { post } = props
+  const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
+  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+  const showPreview = siteConfig('POST_LIST_PREVIEW') && post.blockMap
 
-    return <div key={post.id} className="h-42 my-6 pb-12 border-b dark:border-gray-800" >
+  return <div key={post.id} className="h-42 my-6 pb-12 border-b dark:border-gray-800" >
         {/* 文章标题 */}
 
         <div className='flex'>
@@ -74,7 +74,7 @@ export const BlogItem = props => {
         </div>
 
         <div className='block'>
-            <Link href={url} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+            <Link href={url} className='inline-block rounded-sm text-blue-600 dark:text-blue-300  text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
                 Continue Reading <i className="fa-solid fa-angle-right align-middle"></i>
             </Link>
         </div>
