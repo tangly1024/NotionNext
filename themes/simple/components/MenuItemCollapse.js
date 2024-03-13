@@ -30,13 +30,13 @@ export const MenuItemCollapse = (props) => {
         <div className='w-full px-8 py-3 text-left border-b dark:bg-hexo-black-gray dark:border-black' onClick={toggleShow} >
             {!hasSubMenu && <Link
                 href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
-                className="font-extralight items-center flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
-                <span className='text-blue-400 hover:text-red-400 transition-all items-center duration-200'>{link?.icon && <span className='mr-2'><i className={link.icon}/></span>}{link?.name}</span>
+                className="items-center flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1">
+                <span className='text-blue-600 dark:text-blue-300 hover:text-red-400 transition-all items-center duration-200'>{link?.icon && <span className='mr-2'><i className={link.icon}/></span>}{link?.name}</span>
             </Link>}
              {hasSubMenu && <div
                 onClick={hasSubMenu ? toggleOpenSubMenu : null}
-                className="font-extralight items-center flex justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest pb-1">
-                <span className='text-blue-400 hover:text-red-400 transition-all items-center duration-200'>{link?.icon && <span className='mr-2'><i className={link.icon}/></span>}{link?.name}</span>
+                className="items-center flex justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest pb-1">
+                <span className='text-blue-600 dark:text-blue-300 hover:text-red-400 transition-all items-center duration-200'>{link?.icon && <span className='mr-2'><i className={link.icon}/></span>}{link?.name}</span>
                <i className={`px-2 fa fa-plus transition-all duration-200 ${isOpen && 'rotate-45'} text-gray-400`}></i>
             </div>}
         </div>
