@@ -43,6 +43,7 @@ module.exports = withBundleAnalyzer({
       },
     ],
     domains: [
+      'photo.jeckwell.info',
       'gravatar.com',
       'www.notion.so',
       'avatars.githubusercontent.com',
