@@ -3,7 +3,7 @@ import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import NotionIcon from '@/components/NotionIcon'
 
