@@ -31,6 +31,15 @@ const Style = () => {
       .notion-carousel-wrapper .notion-carousel.active {
         display: block;
       }
+
+      .notion-carousel-route div {
+        cursor: pointer;
+        margin-bottom: 0.2rem;
+      }
+
+      .notion-carousel-route div:hover {
+        text-decoration: underline; 
+      }
     `}</style>
   )
 }

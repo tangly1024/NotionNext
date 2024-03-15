@@ -38,7 +38,7 @@ export default function BlogRecommend(props) {
               title={post.title}
               href={url}
               passHref
-              className='flex rounded-lg h-72 w-52 cursor-pointer overflow-hidden'>
+              className='flex rounded-lg h-60 w-48 cursor-pointer overflow-hidden'>
               <div className='h-full w-full relative group shadow-movie'>
                 <div className='absolute bottom-4 w-full z-20 duration-300 '>
                   <div className='z-10 text-lg px-4 font-bold text-white shadow-text select-none'>{post.title}</div>
