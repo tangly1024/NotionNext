@@ -1,6 +1,5 @@
 'use client'
 
-
 import BLOG from '@/blog.config'
 import CONFIG from './config'
 import { useEffect } from 'react'
