@@ -176,7 +176,6 @@ const LayoutPostList = props => {
           : (
             <BlogPostListScroll {...props} />
             )}
-      <AdSlot type='flow' />
       </div>
   )
 }
@@ -300,7 +299,6 @@ const LayoutSlug = props => {
     <>
       <div className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
         {lock && <ArticleLock validPassword={validPassword} />}
-      <AdSlot type="in-article" />
         {!lock && (
           <div
             id="article-wrapper"
@@ -329,7 +327,6 @@ const LayoutSlug = props => {
                   <ArticleRecommend {...props} />
                   {/* 上一篇\下一篇文章 */}
                   <ArticleAdjacent {...props} />
-                  <AdSlot type='native' /> 
                 </div>
               )}
             </article>
@@ -340,7 +337,7 @@ const LayoutSlug = props => {
                 <hr className="my-4 border-dashed" />
                 {/* 评论区上方广告 */}
                 <div className="py-2">
-                    <AdSlot />
+                    <AdSlot type='native' />
                 </div>
                 {/* 评论互动 */}
                 <div className="duration-200 overflow-x-auto px-5">
