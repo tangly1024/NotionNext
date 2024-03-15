@@ -133,13 +133,12 @@ function AsideLeft(props) {
                 <DarkModeButton />
             </section>
 
-            <section className='sticky top-0 pt-12'>
+            <section className='sticky top-0 pt-12  flex flex-col max-h-screen '>
                 <Catalog toc={post?.toc} />
                 <div className='flex justify-center'>
                     <div>{slot}</div>
                 </div>
             </section>
-
         </div>
     </div>
 }

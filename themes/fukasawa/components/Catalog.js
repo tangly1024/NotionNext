@@ -58,29 +58,27 @@ const Catalog = ({ toc }) => {
   if (!toc || toc?.length < 1) {
     return <></>
   }
-  return <div id='catalog'>
+  return <div id='catalog' className='flex-1 flex-col flex overflow-hidden'>
     <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
-    <div className='max-h-[calc(100vh-8rem)]'>
-      <nav ref={tRef} className='h-full overflow-y-auto overscroll-none scroll-hidden  text-black'>
-        {toc.map((tocItem) => {
-          const id = uuidToId(tocItem.id)
-          return (
-            <a
-              key={id}
-              href={`#${id}`}
-              className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
+    <nav ref={tRef} className='flex-1 overflow-auto  overscroll-none scroll-hidden   text-black mb-6'>
+      {toc.map((tocItem) => {
+        const id = uuidToId(tocItem.id)
+        return (
+          <a
+            key={id}
+            href={`#${id}`}
+            className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
+          >
+            <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
+              className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
             >
-              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
-              >
-                {tocItem.text}
-              </span>
-            </a>
-          )
-        })}
-      </nav>
-    </div>
+              {tocItem.text}
+            </span>
+          </a>
+        )
+      })}
+    </nav>
   </div>
 }
 
