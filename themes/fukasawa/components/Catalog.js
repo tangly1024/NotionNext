@@ -72,6 +72,7 @@ const Catalog = ({ toc }) => {
           >
             <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
               className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
+              title={tocItem.text}
             >
               {tocItem.text}
             </span>
