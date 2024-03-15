@@ -18,7 +18,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '',
   HEO_HERO_TITLE_3: '0y.games',
   HEO_HERO_TITLE_4: '全新上线',
-  HEO_HERO_TITLE_5: '「近期推荐」3月新游戏推荐-伊苏10',
+  HEO_HERO_TITLE_5: '「近期推荐」3月新游戏-伊苏10',
   HEO_HERO_TITLE_LINK: 'https://www.0y.games/article/NORDICS',
 
   // 英雄区显示三个置顶分类
