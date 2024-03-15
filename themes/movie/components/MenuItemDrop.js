@@ -18,7 +18,7 @@ export const MenuItemDrop = ({ link }) => {
         <Link
           href={link?.to}
           target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
-          className=" menu-link pl-2 pr-4 no-underline tracking-widest pb-1"
+          className="select-none menu-link pl-2 pr-4 no-underline tracking-widest pb-1"
         >
           {link?.icon && <i className={link?.icon} />} {link?.name}
           {hasSubMenu && <i className="px-2 fa fa-angle-down"></i>}
