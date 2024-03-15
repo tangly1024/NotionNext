@@ -18,6 +18,7 @@ import { ArticleLock } from './components/ArticleLock'
 import BlogListGroupByDate from './components/BlogListGroupByDate'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
+import BlogRecommend from './components/BlogRecommend'
 import CategoryGroup from './components/CategoryGroup'
 import CategoryItem from './components/CategoryItem'
 import { Footer } from './components/Footer'
@@ -140,6 +141,73 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const router = useRouter()
   useEffect(() => {
+    // 用js 实现将页面中的多个视频聚合为一个分集的视频
+    function combineVideo() {
+      // 找到 id 为 notion-article 的元素
+      const notionArticle = document.getElementById('notion-article')
+      if (!notionArticle) return // 如果找不到对应的元素，则退出函数
+
+      // 找到所有的 .notion-asset-wrapper 元素
+      const assetWrappers = document.querySelectorAll('.notion-asset-wrapper')
+
+      // 创建一个新的容器元素
+      const carouselWrapper = document.createElement('div')
+      carouselWrapper.classList.add('notion-carousel-wrapper')
+
+      // 创建一个用于保存 figcaption 文本内容的数组
+      const figCaptionValues = []
+
+      // 遍历所有 .notion-asset-wrapper 元素
+      assetWrappers.forEach((wrapper, index) => {
+        // 检查 .notion-asset-wrapper 元素是否有子元素 figcaption
+        const figCaption = wrapper.querySelector('figcaption')
+        if (!figCaption) return // 如果没有子元素 figcaption，则不处理该元素
+
+        // 检查 .notion-asset-wrapper 元素是否有 notion-asset-wrapper-video 或 notion-asset-wrapper-embed 类
+        if (
+          !wrapper.classList.contains('notion-asset-wrapper-video') &&
+          !wrapper.classList.contains('notion-asset-wrapper-embed')
+        )
+          return
+
+        // 获取 figcaption 的文本内容并添加到数组中
+        figCaptionValues.push(figCaption.textContent.trim())
+
+        // 创建一个新的 div 元素用于包裹当前的 .notion-asset-wrapper 元素
+        const carouselItem = document.createElement('div')
+        carouselItem.classList.add('notion-carousel')
+        carouselItem.appendChild(wrapper.cloneNode(true))
+
+        // 如果是第一个元素，设置为 active
+        if (index === 0) {
+          carouselItem.classList.add('active')
+        }
+
+        // 将新创建的元素添加到容器中
+        carouselWrapper.appendChild(carouselItem)
+
+        // 从 DOM 中移除原始的 .notion-asset-wrapper 元素
+        wrapper.parentNode.removeChild(wrapper)
+      })
+
+      // 创建一个用于保存 figcaption 值的容器元素
+      const figCaptionWrapper = document.createElement('div')
+      figCaptionWrapper.classList.add('notion-carousel-route')
+
+      // 遍历 figCaptionValues 数组，并将每个值添加到容器元素中
+      figCaptionValues.forEach(value => {
+        const div = document.createElement('div')
+        div.textContent = value
+        figCaptionWrapper.appendChild(div)
+      })
+
+      // 将包含 figcaption 值的容器元素添加到 notion-article  的第一个子元素插入
+      notionArticle.insertBefore(figCaptionWrapper, notionArticle.firstChild)
+      // 将新创建的容器元素作为 notion-article 的第一个子元素插入
+      notionArticle.insertBefore(carouselWrapper, notionArticle.firstChild)
+    }
+
+    combineVideo()
     // 404
     if (!post) {
       setTimeout(
@@ -165,6 +233,8 @@ const LayoutSlug = props => {
           <ArticleInfo post={post} />
           {/* 页面元素 */}
           <NotionPage post={post} />
+          {/* 推荐 */}
+          <BlogRecommend {...props} />
           {/* 分享栏目 */}
           <ShareBar post={post} />
           {/* 评论区 */}

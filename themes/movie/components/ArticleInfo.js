@@ -5,10 +5,9 @@ import Link from 'next/link'
 export const ArticleInfo = props => {
   const { post } = props
   const { locale } = useGlobal()
-  console.log(post)
 
   return (
-    <section className='w-full mx-auto'>
+    <section className='w-full mx-auto mb-4'>
       <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
 
       <div className='flex gap-3 font-semibold text-sm items-center justify-center'>
@@ -21,10 +20,7 @@ export const ArticleInfo = props => {
 
         {post?.type !== 'Page' && (
           <>
-            <Link
-              href={`/category/${post?.category}`}
-              passHref
-              className='cursor-pointer text-md mr-2 hover:text-black dark:text-green-500'>
+            <Link href={`/category/${post?.category}`} passHref className='cursor-pointer text-md mr-2 text-green-500'>
               {post?.category}
             </Link>
           </>
