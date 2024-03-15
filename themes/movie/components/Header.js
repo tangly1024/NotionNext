@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import { siteConfig } from '@/lib/config'
-import { useMovieGlobal } from '..'
 import Collapse from '@/components/Collapse'
-import { MenuItemCollapse } from './MenuItemCollapse'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import CONFIG from '../config'
-import { MenuItemDrop } from './MenuItemDrop'
-import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useMovieGlobal } from '..'
+import CONFIG from '../config'
+import { MenuItemCollapse } from './MenuItemCollapse'
+import { MenuItemDrop } from './MenuItemDrop'
 
 /**
  * 网站顶部
@@ -77,7 +77,7 @@ export const Header = props => {
     if (showSearch) {
       setTimeout(() => {
         document.getElementById('search').focus()
-      }, 100);
+      }, 100)
     }
   }, [showSearch])
 
@@ -116,20 +116,23 @@ export const Header = props => {
             <div onClick={toggleShowSearchInput} className='flex items-center cursor-pointer'>
               <i className='fas fa-search dark:text-white'></i>
             </div>
-            <div className={`${showSearch ? 'top-16 visible opacity-100' : 'top-10 invisible opacity-0'} duration-200 transition-all max-w-md absolute  w-80 right-4 p-2 flex flex-col gap-2`}>
+            <div
+              className={`${showSearch ? 'top-16 visible opacity-100' : 'top-10 invisible opacity-0'} duration-200 transition-all max-w-md absolute  w-80 right-4 p-2 flex flex-col gap-2`}>
               <input
                 autoFocus
                 id='search'
                 onClick={toggleShowSearchInput}
                 onKeyUp={onKeyUp}
-                className='float-left w-full outline-none h-full outline-blue-200 p-2 rounded text-black bg-gray-100'
+                className='float-left w-full outline-none h-full p-2 rounded text-black bg-gray-100'
                 aria-label='Submit search'
                 type='search'
                 name='s'
                 autoComplete='off'
                 placeholder='Type then hit enter to search...'
               />
-              <button onClick={handleSearch} className='w-full bg-[#383838] rounded py-2'>{locale.COMMON.SEARCH} 搜索</button>
+              <button onClick={handleSearch} className='w-full bg-[#383838] rounded py-2'>
+                {locale.COMMON.SEARCH} 搜索
+              </button>
             </div>
 
             {/* 移动端按钮 */}
