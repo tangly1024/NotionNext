@@ -4,7 +4,9 @@ import BlogPostCard from './BlogPostCard'
 import PaginationNumber from './PaginationNumber'
 
 export const BlogListPage = props => {
-  const { posts } = props
+  const { page = 1, posts, postCount } = props
+  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
+
   const showPageCover = siteConfig('MOVIE_POST_LIST_COVER', null, CONFIG)
 
   return (
@@ -17,7 +19,7 @@ export const BlogListPage = props => {
         ))}
       </div>
 
-      <PaginationNumber {...props} />
+      <PaginationNumber page={page} totalPage={totalPage} />
     </div>
   )
 }

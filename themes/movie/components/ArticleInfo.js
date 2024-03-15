@@ -1,51 +1,50 @@
-import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
+import Link from 'next/link'
 
-export const ArticleInfo = (props) => {
+export const ArticleInfo = props => {
   const { post } = props
-
   const { locale } = useGlobal()
+  console.log(post)
 
   return (
-      <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
-            <div>
-                {post?.type !== 'Page' && <>
-                    <Link
-                        href={`/category/${post?.category}`}
-                        passHref
-                        className="cursor-pointer text-md mr-2 hover:text-black dark:hover:text-white border-b dark:border-gray-500 border-dashed">
+    <section className='w-full mx-auto'>
+      <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
 
-                        <i className="mr-1 fas fa-folder-open" />
-                        {post?.category}
+      <div className='flex gap-3 font-semibold text-sm items-center justify-center'>
+        <Link
+          href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
+          passHref
+          className='pl-1 mr-2 cursor-pointer'>
+          {post?.publishDay}
+        </Link>
 
-                    </Link>
-                    <span className='mr-2'>|</span>
-                </>}
+        {post?.type !== 'Page' && (
+          <>
+            <Link
+              href={`/category/${post?.category}`}
+              passHref
+              className='cursor-pointer text-md mr-2 hover:text-black dark:text-green-500'>
+              {post?.category}
+            </Link>
+          </>
+        )}
 
-                {post?.type !== 'Page' && (<>
-                    <Link
-                        href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-                        passHref
-                        className="pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed">
-
-                        {post?.publishDay}
-
-                    </Link>
-                    <span className='mr-2'>|</span>
-                    <span className='mx-2 text-gray-400 dark:text-gray-500'>
-                        {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedDay}
-                    </span>
-                    <span className='mr-2'>|</span>
-                    <span className="hidden busuanzi_container_page_pv font-light mr-2">
-                    <i className='mr-1 fas fa-eye' />
-                    &nbsp;
-                    <span className="mr-2 busuanzi_value_page_pv" />
-                </span>
-                </>)}
-
-            </div>
-
-        </section>
+        <div className='flex py-1 space-x-3'>
+          {post?.tags?.length > 0 && (
+            <>
+              {locale.COMMON.TAGS} <span>:</span>
+            </>
+          )}
+          {post?.tags?.map(tag => {
+            return (
+              <Link href={`/tag/${tag}`} key={tag} className='text-yellow-500 mr-2'>
+                {tag}
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </section>
   )
 }

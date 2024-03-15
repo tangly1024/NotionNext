@@ -14,7 +14,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
-    <article className='w-full mb-4 cursor-pointer overflow-hidden shadow-movie dark:bg-hexo-black-gray'>
+    <article data-wow-delay=".2s" className='wow fadeInUp w-full mb-4 cursor-pointer overflow-hidden shadow-movie dark:bg-hexo-black-gray'>
       <Link href={url} passHref legacyBehavior>
         {/* 固定高度 ，空白用图片拉升填充 */}
         <div className='group flex flex-col aspect-[2/3] justify-between relative'>
@@ -43,6 +43,10 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             <NotionIcon icon={post.pageIcon} />
             {post.title}
           </h2>
+
+          <p className='absolute bottom-3 z-20 line-clamp-1 text-xs mx-6'>
+            {post?.summary}
+          </p>
 
           <div className='h-3/4 w-full absolute left-0 bottom-0 z-10'>
             <div className='h-full w-full absolute opacity-80 group-hover:opacity-100 transition-all duration-1000 bg-gradient-to-b from-transparent to-black'></div>

@@ -7,6 +7,7 @@ import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import { useRouter } from 'next/router'
@@ -23,6 +24,7 @@ import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import JumpToTopButton from './components/JumpToTopButton'
 import LatestPostsGroup from './components/LatestPostsGroup'
+import SlotBar from './components/SlotBar'
 import TagGroups from './components/TagGroups'
 import TagItem from './components/TagItem'
 import CONFIG from './config'
@@ -46,6 +48,9 @@ const LayoutBase = props => {
 
   const searchModal = useRef(null)
   const [expandMenu, updateExpandMenu] = useState(false)
+  useEffect(() => {
+    loadWowJS()
+  }, [])
 
   return (
     <ThemeGlobalMovie.Provider value={{ searchModal, expandMenu, updateExpandMenu, collapseRef }}>
@@ -118,7 +123,12 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  return <>{siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}</>
+  return (
+    <>
+      <SlotBar {...props} />
+      {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+    </>
+  )
 }
 
 /**
@@ -149,18 +159,20 @@ const LayoutSlug = props => {
   }, [post])
   return (
     <>
-      {!lock
-        ? (
+      {!lock ? (
         <div id='article-wrapper' className='px-2'>
+          {/* 标题 */}
           <ArticleInfo post={post} />
+          {/* 页面元素 */}
           <NotionPage post={post} />
+          {/* 分享栏目 */}
           <ShareBar post={post} />
+          {/* 评论区 */}
           <Comment frontMatter={post} />
         </div>
-          )
-        : (
+      ) : (
         <ArticleLock validPassword={validPassword} />
-          )}
+      )}
     </>
   )
 }
