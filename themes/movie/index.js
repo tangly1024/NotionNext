@@ -1,7 +1,7 @@
 'use client'
 
 import CONFIG from './config'
-import { useEffect } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { Header } from './components/Header'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
@@ -26,6 +26,16 @@ import { useRouter } from 'next/router'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import { siteConfig } from '@/lib/config'
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
+import LatestPostsGroup from './components/LatestPostsGroup'
+import CategoryGroup from './components/CategoryGroup'
+import { formatDateFmt } from '@/lib/utils/formatDate'
+import ArchiveDateList from './components/ArchiveDateList'
+import TagGroups from './components/TagGroups'
+
+// 主题全局状态
+const ThemeGlobalMovie = createContext()
+export const useMovieGlobal = () => useContext(ThemeGlobalMovie)
 
 /**
  * 基础布局框架
@@ -35,32 +45,11 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children } = props
+  const { children, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const { category, tag } = props
-  // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
-  // 如果是搜索，则列表顶部嵌入 搜索框
-  let slotTop = null
-  if (category) {
-    slotTop = (
-      <div className="pb-12">
-        <i className="mr-1 fas fa-folder-open" />
-        {category}
-      </div>
-    )
-  } else if (tag) {
-    slotTop = <div className="pb-12">#{tag}</div>
-  } else if (props.slotTop) {
-    slotTop = props.slotTop
-  } else if (router.route === '/search') {
-    // 嵌入一个搜索框在顶部
-    slotTop = (
-      <div className="pb-12">
-        <SearchInput {...props} />
-      </div>
-    )
-  }
+  const searchModal = useRef(null)
 
   // 增加一个状态以触发 Transition 组件的动画
   //   const [showTransition, setShowTransition] = useState(true)
@@ -71,58 +60,63 @@ const LayoutBase = props => {
   //   }, [onLoading])
 
   return (
-    <div
-      id="theme-example"
-      className={`${siteConfig('FONT_STYLE')} dark:text-gray-300  bg-white dark:bg-[#2A2A2A] scroll-smooth`}
-    >
-      <Style />
+    <ThemeGlobalMovie.Provider value={{ searchModal }}>
+      <div
+        id="theme-movie"
+        className={`${siteConfig('FONT_STYLE')} dark:text-gray-300  bg-white dark:bg-[#2A2A2A] scroll-smooth min-h-screen flex flex-col justify-between`}
+      >
+        <Style />
 
-      {/* 页头 */}
-      <Header {...props} />
+        {/* 页头 */}
+        <Header {...props} />
 
-      {/* 主体 */}
-      <div id="container-inner" className="w-full relative z-10">
-        {/* 标题栏 */}
-        {/* {fullWidth ? null : <Title {...props} />} */}
+        {/* 主体 */}
+        <div id="container-inner" className="w-full relative z-10">
+          {/* 标题栏 */}
+          {/* {fullWidth ? null : <Title {...props} />} */}
 
-        <div
-          id="container-wrapper"
-          className={
-            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
-              ? 'flex-row-reverse'
-              : '') +
-            'relative mx-auto justify-center md:flex items-start py-8 px-2'
-          }
-        >
-          {/* 内容 */}
-          <div className={`w-full ${fullWidth ? '' : ''} xl:px-32 lg:px-4`}>
-            <Transition
-              show={!onLoading}
-              appear={true}
-              enter="transition ease-in-out duration-700 transform order-first"
-              enterFrom="opacity-0 translate-y-16"
-              enterTo="opacity-100"
-              leave="transition ease-in-out duration-300 transform"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 -translate-y-16"
-              unmount={false}
-            >
-              {/* 嵌入模块 */}
-              {slotTop}
-              {children}
-            </Transition>
+          <div
+            id="container-wrapper"
+            className={
+              (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+                ? 'flex-row-reverse'
+                : '') +
+              'relative mx-auto justify-center md:flex items-start py-8 px-2'
+            }
+          >
+            {/* 内容 */}
+            <div className={`w-full ${fullWidth ? '' : ''} xl:px-32 lg:px-4`}>
+              <Transition
+                show={!onLoading}
+                appear={true}
+                enter="transition ease-in-out duration-700 transform order-first"
+                enterFrom="opacity-0 translate-y-16"
+                enterTo="opacity-100"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 -translate-y-16"
+                unmount={false}
+              >
+                {/* 嵌入模块 */}
+                {slotTop}
+                {children}
+              </Transition>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* 页脚 */}
-      <Footer {...props} />
+        {/* 页脚 */}
+        <Footer {...props} />
 
-      {/* 回顶按钮 */}
-      <div className="fixed right-4 bottom-4 z-10">
-        <JumpToTopButton />
+        {/* 搜索框 */}
+        <AlgoliaSearchModal cRef={searchModal} {...props} />
+
+        {/* 回顶按钮 */}
+        <div className="fixed right-4 bottom-4 z-10">
+          <JumpToTopButton />
+        </div>
       </div>
-    </div>
+    </ThemeGlobalMovie.Provider>
   )
 }
 
@@ -200,7 +194,55 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = props => {
-  return <>404 Not found.</>
+  const { locale } = useGlobal()
+  const { searchModal } = useMovieGlobal()
+  const router = useRouter()
+  // 展示搜索框
+  const toggleShowSearchInput = () => {
+    if (siteConfig('ALGOLIA_APP_ID')) {
+      searchModal.current.openSearch()
+    }
+  }
+
+  const onKeyUp = e => {
+    if (e.keyCode === 13) {
+      const search = document.getElementById('search').value
+      if (search) {
+        router.push({ pathname: '/search/' + search })
+      }
+    }
+  }
+
+  return (
+    <>
+      <div className="h-52">
+        <h2 className="text-4xl">{locale.COMMON.NO_RESULTS_FOUND}</h2>
+        <hr className="my-4" />
+        <div className="max-w-md relative">
+          <input
+            autoFocus
+            id="search"
+            onClick={toggleShowSearchInput}
+            onKeyUp={onKeyUp}
+            className="float-left w-full outline-none h-full p-2 rounded dark:bg-[#383838] bg-gray-100"
+            aria-label="Submit search"
+            type="search"
+            name="s"
+            autoComplete="off"
+            placeholder="Type then hit enter to search..."
+          />
+          <i className="fas fa-search absolute right-0 my-auto p-2"></i>
+        </div>
+      </div>
+      {/* 底部导航 */}
+      <div className="h-full flex-grow grid grid-cols-4 gap-4">
+        <LatestPostsGroup {...props} />
+        <CategoryGroup {...props} />
+        <ArchiveDateList {...props} />
+        <TagGroups {...props} />
+      </div>
+    </>
+  )
 }
 
 /**

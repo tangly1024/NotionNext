@@ -8,7 +8,7 @@ import { MenuListTop } from './MenuListTop'
  */
 export const Header = props => {
   return (
-    <header className="w-full px-6 relative z-10">
+    <header className="w-full px-8 relative z-20">
       <div className="mx-auto md:flex justify-between items-center">
         <Link
           href="/"
@@ -17,7 +17,7 @@ export const Header = props => {
           {siteConfig('TITLE')}
         </Link>
         <div className="w-full md:w-auto text-center md:text-right">
-          {/* 右侧文字 */}
+          {/* 右侧菜单 */}
           <MenuListTop {...props} />
         </div>
       </div>
