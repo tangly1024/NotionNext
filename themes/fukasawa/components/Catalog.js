@@ -54,14 +54,13 @@ const Catalog = ({ toc }) => {
 
   // 目录自动滚动
   const tRef = useRef(null)
-
   // 无目录就直接返回空
   if (!toc || toc?.length < 1) {
     return <></>
   }
-
   return <div id='catalog'>
     <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
+    <div className='max-h-[calc(100vh-8rem)]'>
       <nav ref={tRef} className='h-full overflow-y-auto overscroll-none scroll-hidden  text-black'>
         {toc.map((tocItem) => {
           const id = uuidToId(tocItem.id)
@@ -81,6 +80,7 @@ const Catalog = ({ toc }) => {
           )
         })}
       </nav>
+    </div>
   </div>
 }
 
