@@ -46,13 +46,13 @@ export const MenuItemDrop = ({ link }) => {
             return (
               <li
                 key={index}
-                className="cursor-pointer dark:bg-hexo-black-gray dark:hover:bg-gray-300 hover:bg-gray-300 hover:text-black tracking-widest transition-all duration-200 dark:border-gray-800  py-1 pr-6 pl-3"
+                className="cursor-pointer text-start dark:bg-hexo-black-gray dark:hover:bg-gray-300 hover:bg-gray-300 hover:text-black tracking-widest transition-all duration-200 dark:border-gray-800  py-1 pr-6 pl-3"
               >
                 <Link
                   href={sLink.to}
                   target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}
                 >
-                  <span className="text-sm text-nowrap">
+                  <span className="text-sm">
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
                     {sLink.title}
                   </span>
