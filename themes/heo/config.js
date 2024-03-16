@@ -105,8 +105,8 @@ const CONFIG = {
 
   HEO_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
   HEO_SOCIAL_CARD_TITLE_1: '妙语晨光',
-  HEO_SOCIAL_CARD_TITLE_2: '每日一句',
-  HEO_SOCIAL_CARD_TITLE_3: '积少成多',
+  HEO_SOCIAL_CARD_TITLE_2: '为您呈现简洁易懂的英语句子',
+  HEO_SOCIAL_CARD_TITLE_3: '点亮您的英语学习之路！',
   HEO_SOCIAL_CARD_URL: '/category/妙语晨光',
 
   // *****  以下配置无效，只是预留开发 ****
