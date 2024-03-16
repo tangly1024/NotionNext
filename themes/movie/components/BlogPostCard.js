@@ -23,11 +23,11 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             <LazyImage
               src={post?.pageCoverThumbnail}
               alt={post.title}
-              className='h-full w-full group-hover:scale-105 transform object-cover duration-500'
+              className='h-full w-full group-hover:brightness-90 group-hover:scale-105 transform object-cover duration-500'
             />
           </div>
 
-          <div className='absolute bottom-32 z-20'>
+          <div className='absolute bottom-28 z-20'>
             {post?.tagItems && post?.tagItems.length > 0 && (
               <>
                 <div className='px-6 justify-between flex p-2'>

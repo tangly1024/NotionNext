@@ -12,7 +12,7 @@ export default function CategoryItem({ category }) {
             href={`/category/${category.name}`}
             passHref
             legacyBehavior>
-            <div className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
+            <div className={'text-2xl hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
                 <i className='mr-4 fas fa-folder' />{category.name}({category.count})
             </div>
         </Link>

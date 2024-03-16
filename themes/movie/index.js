@@ -64,7 +64,7 @@ const LayoutBase = props => {
         <Header {...props} />
 
         {/* 主体 */}
-        <div id='container-inner' className='w-full relative z-10'>
+        <div id='container-inner' className='w-full relative flex-grow z-10'>
           {/* 标题栏 */}
           {/* {fullWidth ? null : <Title {...props} />} */}
 
@@ -223,12 +223,13 @@ const LayoutSlug = props => {
         figCaptionWrapper.appendChild(div)
       })
 
-      // 将包含 figcaption 值的容器元素添加到 notion-article 的第一个子元素插入
-      videoWrapper.appendChild(carouselWrapper)
+      // 条件是带有caption的视频数量大于1个，否则不处理
       if (figCaptionValues.length > 1) {
+          // 将包含 figcaption 值的容器元素添加到 notion-article 的第一个子元素插入
+        videoWrapper.appendChild(carouselWrapper)
         videoWrapper.appendChild(figCaptionWrapper)
+        notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
       }
-      notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
     }
 
     setTimeout(() => {
