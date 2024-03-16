@@ -37,7 +37,7 @@ export default function SideRight(props) {
 
             <InfoCard {...props} className='w-72' />
 
-            <div className='.'>
+            <div className='sticky top-20 space-y-4'>
 
                 {/* 文章页显示目录 */}
                 {post && post.toc && post.toc.length > 0 && (
