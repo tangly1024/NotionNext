@@ -253,7 +253,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           {totalHit === 0 && (<div className='flex items-center'>
             {
               ShortCutActions.map((action, index) => {
-                return <Fragment key={index}><div className={`border-gray-300 dark:text-gray-300 text-gray-600 px-2 rounded border inline-block `}>{action.key}</div>
+                return <Fragment key={index}><div className='border-gray-300 dark:text-gray-300 text-gray-600 px-2 rounded border inline-block'>{action.key}</div>
                   <span className='ml-2 mr-4  text-gray-600 dark:text-gray-300'>{action.action}</span></Fragment>
               })
             }
