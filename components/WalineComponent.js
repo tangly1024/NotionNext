@@ -1,4 +1,4 @@
-import  { createRef } from 'react'
+import  { createRef, useEffect } from 'react'
 import { init } from '@waline/client'
 import { useRouter } from 'next/router'
 import '@waline/client/dist/waline.css'
