@@ -13,6 +13,7 @@ import { useState } from 'react'
  */
 const PaginationNumber = ({ page, totalPage }) => {
   const router = useRouter()
+  const [value, setValue] = useState('')
   const { locale } = useGlobal()
   const currentPage = +page
   const showNext = page < totalPage
@@ -22,8 +23,9 @@ const PaginationNumber = ({ page, totalPage }) => {
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
-
-  const [value, setValue] = useState('')
+  if (pages?.length <= 1) {
+    return <></>
+  }
 
   const handleInputChange = event => {
     const newValue = event.target.value.replace(/[^0-9]/g, '')
