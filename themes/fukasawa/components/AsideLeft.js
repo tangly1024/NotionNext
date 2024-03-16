@@ -45,6 +45,23 @@ function AsideLeft(props) {
     }
   }, [isCollapsed])
 
+  const position = useMemo(() => {
+    const isReverse = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+    if (isCollapsed) {
+      if (isReverse) {
+        return 'right-2'
+      } else {
+        return 'left-2'
+      }
+    } else {
+      if (isReverse) {
+        return 'right-80'
+      } else {
+        return 'left-80'
+      }
+    }
+  }, [isCollapsed])
+
   // 折叠侧边栏
   const toggleOpen = () => {
     setIsCollapse(!isCollapsed)
@@ -75,22 +92,7 @@ function AsideLeft(props) {
       }
     }
   }, [])
-  const position = useMemo(()=>{
-    const isReverse = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
-    if(isCollapsed){
-      if(isReverse){
-        return 'right-2'
-      }else{
-        return 'left-2'
-      }
-    }else{
-      if(isReverse){
-        return 'right-80'
-      }else{
-        return 'left-80'
-      }
-    }
-  },[isCollapsed] )
+ 
  
   return <div className={`sideLeft relative ${isCollapsed ? 'w-0' : 'w-80'} duration-300 transition-all bg-white dark:bg-hexo-black-gray min-h-screen hidden lg:block z-20`}>
         {/* 折叠按钮 */}
