@@ -46,13 +46,13 @@ export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
  * 给最新的文章标一个红点
  */
 function getNavPagesWithLatest(allNavPages, latestPosts, post) {
-  // 检测需要去除红点的文章 ; localStorage 的 posts_read = {"${post.id}":"Date()"}  保存了所有已读的页面id，和阅读时间；
-  // 如果页面在这里面则不显示红点
-  const postRead = JSON.parse(localStorage.getItem('post_read') || '[]');
-  if (post && !postRead.includes(post.id)) {
-    postRead.push(post.id);
+  // localStorage 保存id和上次阅读时间戳： posts_read_time = {"${post.id}":"Date()"}
+  const postReadTime = JSON.parse(localStorage.getItem('post_read_time') || '{}');
+  if (post) {
+    postReadTime[post.id] = new Date().getTime();
   }
-  localStorage.setItem('post_read', JSON.stringify(postRead));
+  // 更新
+  localStorage.setItem('post_read_time', JSON.stringify(postReadTime));
 
   return allNavPages?.map(item => {
     const res = {
@@ -66,7 +66,10 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
       pageIcon: item.pageIcon || '',
       lastEditedDate: item.lastEditedDate
     }
-    if (latestPosts.some(post => post.id === item.id) && !postRead.includes(item.id)) {
+    // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
+    if (latestPosts.some(post => post.id === item.id) &&
+    (!postReadTime[item.id] || postReadTime[item.id] < new Date(item.lastEditedDate).getTime())
+    ) {
       return { ...res, isLatest: true };
     } else {
       return res;
