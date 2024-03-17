@@ -90,14 +90,19 @@ const checkThemeDOM = () => {
  * @param updateDarkMode 更改主题ChangeState函数
  * @description 读取cookie中存的用户主题
  */
-export const initDarkMode = (updateDarkMode) => {
+export const initDarkMode = (updateDarkMode,defaultDarkMode) => {
   // 查看用户设备浏览器是否深色模型
   let newDarkMode = isPreferDark()
 
-  // 查看cookie中是否用户强制设置深色模式
-  const cookieDarkMode = loadDarkModeFromLocalStorage()
-  if (cookieDarkMode) {
-    newDarkMode = JSON.parse(cookieDarkMode)
+  // 查看localStorage中用户记录的是否深色模式
+  const userDarkMode = loadDarkModeFromLocalStorage()
+  if (userDarkMode) {
+    newDarkMode = userDarkMode
+  }
+    
+  // 如果站点强制设置默认深色，则优先级改过用
+  if(defaultDarkMode){
+    newDarkMode = defaultDarkMode
   }
 
   // url查询条件中是否深色模式
