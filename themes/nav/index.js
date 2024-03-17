@@ -24,15 +24,19 @@ import NotionPage from '@/components/NotionPage'
 import { ArticleLock } from './components/ArticleLock'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
-import CommonHead from '@/components/CommonHead'
-import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostListAll from './components/BlogPostListAll'
 import BlogPostCard from './components/BlogPostCard'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-
 import { MenuItem } from './components/MenuItem'
+import LogoBar from './components/LogoBar'
 import { siteConfig } from '@/lib/config'
+import Live2D from '@/components/Live2D'
+import BlogArchiveItem from './components/BlogArchiveItem'
+import NotionIcon from '@/components/NotionIcon'
+import { useRouter } from 'next/router'
+import { isBrowser } from '@/lib/utils'
+
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
 // 主题全局变量
@@ -46,7 +50,7 @@ export const useNavGlobal = () => useContext(ThemeGlobalNav)
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotTop, meta } = props
+  const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotTop } = props
   const { onLoading } = useGlobal()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -69,13 +73,11 @@ const LayoutBase = (props) => {
 
   return (
         <ThemeGlobalNav.Provider value={{ tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible, categoryOptions }}>
-            {/* HEAD */}
-            <CommonHead meta={meta}/>
             {/* 样式 */}
             <Style/>
 
             {/* 主题样式根基 */}
-            <div id='theme-onenav' className=' dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300'>
+            <div id='theme-onenav' className={`${siteConfig('FONT_STYLE')} dark:bg-hexo-black-gray w-full h-screen min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
 
                 {/* 端顶部导航栏 */}
                 <TopNavBar {...props} />
@@ -84,9 +86,14 @@ const LayoutBase = (props) => {
                 <main id='wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' relative flex justify-between w-full h-screen mx-auto'}>
 
                     {/* 左侧推拉抽屉 */}
-                    <div className={'font-sans hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
+                    <div className={' hidden md:block dark:border-transparent relative z-10 mx-4 w-52 max-h-full pb-44'}>
 
-                        <div className='mt-20 main-menu z-20 pl-9 pr-7 pb-5 sticky pt-1 top-20 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
+                        {/* 图标Logo */}
+                        <div className='hidden md:block w-full top-0 left-5 md:left-4 z-40 pt-3 md:pt-4'>
+                            <LogoBar {...props} />
+                        </div>
+                        <div className='main-menu z-20 pl-9 pr-7 pb-5 sticky pt-1 top-20 overflow-y-scroll h-fit max-h-full scroll-hidden bg-white dark:bg-neutral-800 rounded-xl '>
+
                            {/* 嵌入 */}
                             {slotLeft}
 
@@ -99,6 +106,7 @@ const LayoutBase = (props) => {
 
                         {/* 页脚站点信息 */}
                         <div className='w-56 fixed left-0 bottom-0 z-0'>
+                            <Live2D />
                             <Footer {...props} />
                         </div>
                     </div>
@@ -172,10 +180,10 @@ const LayoutPostListIndex = props => {
   // const { customMenu, children, post, allNavPages, categoryOptions, slotLeft, slotRight, slotTop, meta } = props
   // const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
   return (
-    <LayoutBase {...props} >
+    <>
         <Announcement {...props} />
         <BlogPostListAll { ...props } />
-    </LayoutBase>
+    </>
   )
 }
 
@@ -189,7 +197,7 @@ const LayoutPostList = props => {
   // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
   // 如果是搜索，则列表顶部嵌入 搜索框
   return (
-    <LayoutBase {...props} >
+    <>
         <div className='w-full max-w-7xl mx-auto justify-center mt-8'>
             <div id='posts-wrapper' class='card-list grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
                 {posts?.map(post => (
@@ -197,7 +205,7 @@ const LayoutPostList = props => {
                 ))}
             </div>
         </div>
-    </LayoutBase>
+    </>
   )
 }
 
@@ -208,43 +216,58 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = (props) => {
   const { post, lock, validPassword } = props
-
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
-        <LayoutBase {...props} >
+        <>
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
-            {!lock && <div id='container'>
+              {!lock && <div id='container'>
 
-                {/* title */}
-                <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300">{post?.title}</h1>
+                  {/* title */}
+                  <h1 className="text-3xl pt-4 md:pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
-                {/* Notion文章主体 */}
-                {post && (<section id="article-wrapper" className="px-1">
-                    <NotionPage post={post} />
+                  {/* Notion文章主体 */}
+                  {post && (<section id="article-wrapper" className="px-1">
+                      <NotionPage post={post} />
 
                     {/* 分享 */}
                     {/* <ShareBar post={post} /> */}
                     {/* 文章分类和标签信息 */}
                     <div className='flex justify-between'>
-                        {siteConfig('POST_DETAIL_CATEGORY', null, CONFIG) && post?.category && <CategoryItem category={post.category} />}
+                        {CONFIG.POST_DETAIL_CATEGORY && post?.category && <CategoryItem category={post.category} />}
                         <div>
-                            {siteConfig('POST_DETAIL_TAG', null, CONFIG) && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
+                            {CONFIG.POST_DETAIL_TAG && post?.tagItems?.map(tag => <TagItemMini key={tag.name} tag={tag} />)}
                         </div>
                     </div>
 
-                    {/* 上一篇、下一篇文章 */}
-                    {/* {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />} */}
+                      {/* 上一篇、下一篇文章 */}
+                      {/* {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />} */}
 
-                    <AdSlot />
-                    <WWAds className='w-full' orientation='horizontal'/>
+                      <AdSlot />
+                      <WWAds className='w-full' orientation='horizontal'/>
 
-                    <Comment frontMatter={post} />
-                </section>)}
+                      <Comment frontMatter={post} />
+                  </section>)}
 
                 <TocDrawer {...props} />
             </div>}
-        </LayoutBase>
+        </>
   )
 }
 
@@ -255,7 +278,7 @@ const LayoutSlug = (props) => {
  * @returns
  */
 const LayoutSearch = (props) => {
-  return <LayoutBase {...props}></LayoutBase>
+  return <></>
 }
 
 /**
@@ -266,21 +289,22 @@ const LayoutSearch = (props) => {
  */
 const LayoutArchive = (props) => {
   const { archivePosts } = props
-
-  return <LayoutBase {...props}>
-        <div className="mb-10 pb-20 md:py-12 py-3  min-h-full">
-            {Object.keys(archivePosts)?.map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
-        </div>
-  </LayoutBase>
+  return (<>
+            <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
+                {Object.keys(archivePosts).map(archiveTitle => (
+                    <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
+                ))}
+            </div>
+        </>)
 }
 
 /**
  * 404
  */
 const Layout404 = props => {
-  return <LayoutBase {...props}>
+  return <>
         <div className='w-full h-96 py-80 flex justify-center items-center'>404 Not found.</div>
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -289,7 +313,7 @@ const Layout404 = props => {
 const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-  return <LayoutBase {...props}>
+  return <>
      <div className='bg-white dark:bg-gray-700 py-10'>
                 <div className='dark:text-gray-200 mb-5'>
                     <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
@@ -311,37 +335,19 @@ const LayoutCategoryIndex = (props) => {
                     })}
                 </div>
             </div>
-  </LayoutBase>
+  </>
 }
 
 /**
  * 标签列表
  */
 const LayoutTagIndex = (props) => {
-  const { tagOptions } = props
-  const { locale } = useGlobal()
-
-  return <LayoutBase {...props}>
-     <div className="bg-white dark:bg-gray-700 py-10">
-                <div className="dark:text-gray-200 mb-5">
-                    <i className="mr-4 fas fa-tag" />
-                    {locale.COMMON.TAGS}:
-                </div>
-                <div id="tags-list" className="duration-200 flex flex-wrap">
-                    {tagOptions?.map(tag => {
-                      return (
-                            <div key={tag.name} className="p-2">
-                                <TagItemMini key={tag.name} tag={tag} />
-                            </div>
-                      )
-                    })}
-                </div>
-            </div>
-  </LayoutBase>
+  return <></>
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

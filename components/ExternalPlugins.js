@@ -5,7 +5,7 @@ import WebWhiz from './Webwhiz'
 import TianLiGPT from './TianliGPT'
 import { GlobalStyle } from './GlobalStyle'
 
-import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS, IMG_SHADOW } from '@/blog.config'
+import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 const TwikooCommentCounter = dynamic(() => import('@/components/TwikooCommentCounter'), { ssr: false })
@@ -78,6 +78,9 @@ const ExternalPlugin = (props) => {
   const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
   const TIANLI_KEY = siteConfig('TianliGPT_KEY')
   const GLOBAL_JS = siteConfig('GLOBAL_JS')
+  const CLARITY_ID = siteConfig('CLARITY_ID')
+  const IMG_SHADOW = siteConfig('IMG_SHADOW')
+  const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -89,6 +92,10 @@ const ExternalPlugin = (props) => {
     // 自动添加图片阴影
     if (IMG_SHADOW) {
       loadExternalResource('/css/img-shadow.css', 'css')
+    }
+
+    if (ANIMATE_CSS_URL) {
+      loadExternalResource(ANIMATE_CSS_URL, 'css')
     }
 
     // 导入外部自定义脚本
@@ -165,6 +172,18 @@ const ExternalPlugin = (props) => {
                         }
                     `
             }} />
+        </>)}
+
+        {CLARITY_ID && (<>
+          <script async dangerouslySetInnerHTML={{
+            __html: `
+                (function(c,l,a,r,i,t,y){
+                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "${CLARITY_ID}");
+                `
+          }} />
         </>)}
 
         {COMMENT_DAO_VOICE_ID && (<>
