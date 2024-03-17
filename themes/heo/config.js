@@ -17,8 +17,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: 'D66.CN',
   HEO_HERO_TITLE_2: '分享-进步-快乐',
   HEO_HERO_TITLE_3: 'We have what we need, if we use what we have.',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: '最新的网络技术和最佳实践',
+  HEO_HERO_TITLE_4: 'D66.CN',
+  HEO_HERO_TITLE_5: '趣站，资源，软件应有尽有',
   HEO_HERO_TITLE_LINK: 'https://www.d66.cn',
 
   // 英雄区显示三个置顶分类
