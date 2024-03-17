@@ -170,7 +170,6 @@ const LayoutSlug = props => {
       assetWrappers.forEach((wrapper, index) => {
         // 检查 .notion-asset-wrapper 元素是否有子元素 figcaption
         const figCaption = wrapper.querySelector('figcaption')
-        if (!figCaption) return // 如果没有子元素 figcaption，则不处理该元素
 
         // 检查 .notion-asset-wrapper 元素是否有 notion-asset-wrapper-video 或 notion-asset-wrapper-embed 类
         if (
@@ -179,8 +178,10 @@ const LayoutSlug = props => {
         )
           return
 
+        if (!figCaption && siteConfig('MOVIE_VIDEO_COMBINE_AUTO', false, CONFIG)) return // 如果没有子元素 figcaption，则不处理该元素
+
         // 获取 figcaption 的文本内容并添加到数组中
-        const figCaptionValue = figCaption.textContent.trim()
+        const figCaptionValue = figCaption ? figCaption?.textContent?.trim() : `P-${index}`
         figCaptionValues.push(figCaptionValue)
 
         // 创建一个新的 div 元素用于包裹当前的 .notion-asset-wrapper 元素
@@ -223,13 +224,14 @@ const LayoutSlug = props => {
         figCaptionWrapper.appendChild(div)
       })
 
-      // 条件是带有caption的视频数量大于1个，否则不处理
-      if (figCaptionValues.length > 1) {
-          // 将包含 figcaption 值的容器元素添加到 notion-article 的第一个子元素插入
-        videoWrapper.appendChild(carouselWrapper)
+      // 将包含 figcaption 值的容器元素添加到 notion-article 的第一个子元素插入
+      videoWrapper.appendChild(carouselWrapper)
+      // 显示分集按钮 ，caption的视频数量大于1个
+      if (figCaptionValues.length > 1 || siteConfig('MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE', false, CONFIG)) {
         videoWrapper.appendChild(figCaptionWrapper)
-        notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
       }
+
+      notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
     }
 
     setTimeout(() => {
