@@ -75,7 +75,7 @@ const LayoutBase = props => {
               'relative mx-auto justify-center md:flex items-start py-8 px-2'
             }>
             {/* 内容 */}
-            <div className={`w-full ${fullWidth ? '' : ''} xl:px-32 lg:px-4`}>
+            <div className={`w-full ${fullWidth ? '' : ''} px-4 max-w-[90rem] mx-auto`}>
               <Transition
                 show={!onLoading}
                 appear={true}
@@ -157,7 +157,7 @@ const LayoutSlug = props => {
 
       // 创建一个新的容器元素
       const videoWrapper = document.createElement('div')
-      videoWrapper.className = 'video-wrapper p-2 bg-gray-100 dark:bg-hexo-black-gray max-w-4xl mx-auto'
+      videoWrapper.className = 'video-wrapper py-1 px-3 bg-gray-100 dark:bg-white dark:text-black mx-auto'
 
       // 创建一个新的容器元素
       const carouselWrapper = document.createElement('div')
@@ -234,7 +234,7 @@ const LayoutSlug = props => {
 
     setTimeout(() => {
       combineVideo()
-    }, 100)
+    }, 2000)
 
     // 404
     if (!post) {
@@ -266,7 +266,7 @@ const LayoutSlug = props => {
   return (
     <>
       {!lock ? (
-        <div id='article-wrapper' className='px-2 max-w-5xl mx-auto'>
+        <div id='article-wrapper' className='px-2 max-w-6xl mx-auto'>
           {/* 标题 */}
           <ArticleInfo post={post} />
           {/* 页面元素 */}
