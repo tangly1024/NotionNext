@@ -105,7 +105,7 @@ export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
   }
 
   // 如果站点强制设置默认深色，则优先级改过用
-  if (defaultDarkMode==='dark') {
+  if (defaultDarkMode === 'dark') {
     newDarkMode = defaultDarkMode
   }
 
