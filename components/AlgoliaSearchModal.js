@@ -1,4 +1,4 @@
-import { useState, useImperativeHandle, useRef, useEffect } from 'react'
+import { useState, useImperativeHandle, useRef, useEffect, Fragment } from 'react'
 import algoliasearch from 'algoliasearch'
 import replaceSearchResult from '@/components/Mark'
 import Link from 'next/link'
@@ -6,6 +6,22 @@ import { useGlobal } from '@/lib/global'
 import throttle from 'lodash/throttle'
 import { siteConfig } from '@/lib/config'
 import { useHotkeys } from 'react-hotkeys-hook';
+
+const ShortCutActions = [
+  {
+    key: '↑ ↓',
+    action: '选择'
+  },
+  {
+    key: 'Enter',
+    action: '跳转'
+  },
+  {
+    key: 'Esc',
+    action: '关闭'
+  }
+
+]
 
 /**
  * 结合 Algolia 实现的弹出式搜索框
@@ -234,6 +250,15 @@ export default function AlgoliaSearchModal({ cRef }) {
         </ul>
         <Pagination totalPage={totalPage} page={page} switchPage={switchPage} />
         <div className='flex items-center justify-between mt-2 sm:text-sm text-xs dark:text-gray-300'>
+          {totalHit === 0 && (<div className='flex items-center'>
+            {
+              ShortCutActions.map((action, index) => {
+                return <Fragment key={index}><div className='border-gray-300 dark:text-gray-300 text-gray-600 px-2 rounded border inline-block'>{action.key}</div>
+                  <span className='ml-2 mr-4  text-gray-600 dark:text-gray-300'>{action.action}</span></Fragment>
+              })
+            }
+          </div>)
+          }
           <div>
             {totalHit > 0 && (
               <p>

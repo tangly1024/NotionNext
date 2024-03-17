@@ -3,7 +3,7 @@ import TagItemMini from './TagItemMini'
 import { useGlobal } from '@/lib/global'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import { siteConfig } from '@/lib/config'
 
 export default function PostHeader({ post, siteInfo }) {

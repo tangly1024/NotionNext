@@ -4,7 +4,7 @@ import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import NotionIcon from '@/components/NotionIcon'
 

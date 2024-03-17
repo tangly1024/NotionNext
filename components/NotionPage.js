@@ -17,7 +17,7 @@ const Code = dynamic(() =>
 const Equation = dynamic(() =>
   import('@/components/Equation').then(async (m) => {
     // 化学方程式
-    await import('@/lib/mhchem')
+    await import('@/lib/plugins/mhchem')
     return m.Equation
   }), { ssr: false }
 )
