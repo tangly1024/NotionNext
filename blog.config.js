@@ -61,6 +61,8 @@ const BLOG = {
   FONT_SANS: [
     // '"LXGW WenKai"',
     '"PingFang SC"',
+    '"Noto Sans SC"',
+    '"Source Han Sans SC"',
     '-apple-system',
     'BlinkMacSystemFont',
     '"Hiragino Sans GB"',
@@ -68,11 +70,9 @@ const BLOG = {
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
     '"Segoe UI"',
-    '"Noto Sans SC"',
     'HarmonyOS_Regular',
     '"Helvetica Neue"',
     'Helvetica',
-    '"Source Han Sans SC"',
     'Arial',
     'sans-serif',
     '"Apple Color Emoji"'
