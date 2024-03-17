@@ -101,9 +101,9 @@ export const initDarkMode = (updateDarkMode,defaultDarkMode) => {
   }
     
   // 如果站点强制设置默认深色，则优先级改过用
-  if(defaultDarkMode){
-    newDarkMode = defaultDarkMode
-  }
+  //if(defaultDarkMode){
+    //newDarkMode = defaultDarkMode
+  //}
 
   // url查询条件中是否深色模式
   const queryMode = getQueryVariable('mode')
