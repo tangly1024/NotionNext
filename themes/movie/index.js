@@ -75,7 +75,7 @@ const LayoutBase = props => {
               'relative mx-auto justify-center md:flex items-start py-8 px-2'
             }>
             {/* 内容 */}
-            <div className={`w-full ${fullWidth ? '' : ''} px-4 max-w-[90rem] mx-auto`}>
+            <div className={`w-full ${fullWidth ? '' : ''} px-4`}>
               <Transition
                 show={!onLoading}
                 appear={true}
@@ -125,10 +125,10 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-    <>
+    <div className='max-w-[90rem] mx-auto'>
       <SlotBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-    </>
+    </div>
   )
 }
 
@@ -155,15 +155,15 @@ const LayoutSlug = props => {
       const exists = document.querySelectorAll('.video-wrapper')
       if (exists && exists.length > 0) return
 
-      // 创建一个新的容器元素
+      // 创建视频区块容器元素
       const videoWrapper = document.createElement('div')
       videoWrapper.className = 'video-wrapper py-1 px-3 bg-gray-100 dark:bg-white dark:text-black mx-auto'
 
-      // 创建一个新的容器元素
+      // 创建走马灯封装容器元素
       const carouselWrapper = document.createElement('div')
       carouselWrapper.classList.add('notion-carousel-wrapper')
 
-      // 创建一个用于保存 figcaption 文本内容的数组
+      // 创建分集按钮figcaption文本的数组
       const figCaptionValues = []
 
       // 遍历所有 .notion-asset-wrapper 元素
@@ -178,7 +178,7 @@ const LayoutSlug = props => {
         )
           return
 
-        if (!figCaption && siteConfig('MOVIE_VIDEO_COMBINE_AUTO', false, CONFIG)) return // 如果没有子元素 figcaption，则不处理该元素
+        if (!figCaption) return // 如果没有子元素 figcaption，则不处理该元素
 
         // 获取 figcaption 的文本内容并添加到数组中
         const figCaptionValue = figCaption ? figCaption?.textContent?.trim() : `P-${index}`
@@ -224,14 +224,16 @@ const LayoutSlug = props => {
         figCaptionWrapper.appendChild(div)
       })
 
-      // 将包含 figcaption 值的容器元素添加到 notion-article 的第一个子元素插入
-      videoWrapper.appendChild(carouselWrapper)
-      // 显示分集按钮 ，caption的视频数量大于1个
-      if (figCaptionValues.length > 1 || siteConfig('MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE', false, CONFIG)) {
-        videoWrapper.appendChild(figCaptionWrapper)
+      if (carouselWrapper.children.length > 0) {
+        // 将包含 figcaption 值的容器元素添加到 notion-article 的第一个子元素插入
+        videoWrapper.appendChild(carouselWrapper)
+        // 显示分集按钮 大于1集才显示 ；或者用户 要求强制显示
+        if (figCaptionWrapper.children.length > 1 || siteConfig('MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE', false, CONFIG)) {
+          videoWrapper.appendChild(figCaptionWrapper)
+        }
+        // 放入页面
+        notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
       }
-
-      notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
     }
 
     setTimeout(() => {
@@ -268,7 +270,7 @@ const LayoutSlug = props => {
   return (
     <>
       {!lock ? (
-        <div id='article-wrapper' className='px-2 max-w-6xl mx-auto'>
+        <div id='article-wrapper' className='px-2 max-w-5xl 2xl:max-w-[70%] mx-auto'>
           {/* 标题 */}
           <ArticleInfo post={post} />
           {/* 页面元素 */}
