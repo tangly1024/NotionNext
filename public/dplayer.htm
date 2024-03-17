@@ -8,8 +8,17 @@
     <!-- 引入 DPlayer 样式文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
     <style>
+        html,
         body {
-            margin: 0px 0px;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #dplayer-container {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -25,7 +34,7 @@
 
     <script>
         var myParam = decodeURIComponent(location.search.split('n=')[1]);
-        if(!myParam){
+        if (!myParam) {
             alert('无效的视频地址')
         }
         // 创建 DPlayer 实例

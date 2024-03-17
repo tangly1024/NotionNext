@@ -157,7 +157,7 @@ const LayoutSlug = props => {
 
       // 创建一个新的容器元素
       const videoWrapper = document.createElement('div')
-      videoWrapper.className = 'video-wrapper p-2 bg-gray-100 dark:bg-hexo-black-gray max-w-5xl mx-auto'
+      videoWrapper.className = 'video-wrapper p-2 bg-gray-100 dark:bg-hexo-black-gray max-w-4xl mx-auto'
 
       // 创建一个新的容器元素
       const carouselWrapper = document.createElement('div')
