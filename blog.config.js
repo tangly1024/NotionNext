@@ -60,6 +60,7 @@ const BLOG = {
   // 无衬线字体 例如'"LXGW WenKai"'
   FONT_SANS: [
     // '"LXGW WenKai"',
+    'Arial',
     '"PingFang SC"',
     '"Noto Sans SC"',
     '"Source Han Sans SC"',
@@ -73,7 +74,6 @@ const BLOG = {
     'HarmonyOS_Regular',
     '"Helvetica Neue"',
     'Helvetica',
-    'Arial',
     'sans-serif',
     '"Apple Color Emoji"'
   ],
