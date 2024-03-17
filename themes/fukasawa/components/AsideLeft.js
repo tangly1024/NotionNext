@@ -14,7 +14,7 @@ import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
 import MailChimpForm from './MailChimpForm'
 import { useGlobal } from '@/lib/global'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { isBrowser } from '@/lib/utils'
 import { debounce } from 'lodash'
 
@@ -42,6 +42,23 @@ function AsideLeft(props) {
   useEffect(() => {
     if (isBrowser) {
       localStorage.setItem('fukasawa-sidebar-collapse', isCollapsed)
+    }
+  }, [isCollapsed])
+
+  const position = useMemo(() => {
+    const isReverse = JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+    if (isCollapsed) {
+      if (isReverse) {
+        return 'right-2'
+      } else {
+        return 'left-2'
+      }
+    } else {
+      if (isReverse) {
+        return 'right-80'
+      } else {
+        return 'left-80'
+      }
     }
   }, [isCollapsed])
 
@@ -75,14 +92,15 @@ function AsideLeft(props) {
       }
     }
   }, [])
-
+ 
+ 
   return <div className={`sideLeft relative ${isCollapsed ? 'w-0' : 'w-80'} duration-300 transition-all bg-white dark:bg-hexo-black-gray min-h-screen hidden lg:block z-20`}>
         {/* 折叠按钮 */}
-        {siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_BUTTON', null, CONFIG) && <div className={`${isCollapsed ? '' : 'ml-80'} hidden lg:block sticky top-0 mx-2 cursor-pointer hover:scale-110 duration-300 px-3 py-2`} onClick={toggleOpen}>
+    {siteConfig('FUKASAWA_SIDEBAR_COLLAPSE_BUTTON', null, CONFIG) && <div className={`${position} hidden lg:block fixed top-0 cursor-pointer hover:scale-110 duration-300 px-3 py-2   dark:text-white`} onClick={toggleOpen}>
             {isCollapsed ? <i className="fa-solid fa-indent text-xl"></i> : <i className='fas fa-bars text-xl'></i>}
         </div>}
 
-        <div className={`h-full ${isCollapsed ? 'hidden' : 'px-8'}`}>
+        <div className={`h-full ${isCollapsed ? 'hidden' : 'p-8'}`}>
 
             <Logo {...props} />
 
