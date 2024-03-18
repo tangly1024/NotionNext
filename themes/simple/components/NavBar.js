@@ -25,7 +25,7 @@ export default function NavBar(props) {
 
   const onKeyUp = e => {
     if (e.keyCode === 13) {
-      const search = document.getElementById('theme-simple-search').value
+      const search = document.getElementById('simple-search').value
       if (search) {
         router.push({ pathname: '/search/' + search })
       }
@@ -43,7 +43,7 @@ export default function NavBar(props) {
           {showSearchInput && (
             <input
               autoFocus
-              id="theme-simple-search"
+              id="simple-search"
               onKeyUp={onKeyUp}
               className="float-left w-full outline-none h-full px-4"
               aria-label="Submit search"
