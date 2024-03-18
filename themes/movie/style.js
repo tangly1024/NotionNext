@@ -40,6 +40,11 @@ const Style = () => {
       .notion-carousel-route div:hover {
         text-decoration: underline; 
       }
+
+      .notion-carousel div {
+        height: auto !important;
+        aspect-ratio: 2/1 !important;
+      }
     `}</style>
   )
 }
