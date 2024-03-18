@@ -1,0 +1,350 @@
+import Comment from '@/components/Comment'
+import { AdSlot } from '@/components/GoogleAdsense'
+import replaceSearchResult from '@/components/Mark'
+import NotionPage from '@/components/NotionPage'
+import ShareBar from '@/components/ShareBar'
+import { siteConfig } from '@/lib/config'
+import { deepClone, isBrowser } from '@/lib/utils'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import Announcement from './components/Announcement'
+import { ArticleFooter } from './components/ArticleFooter'
+import { ArticleInfo } from './components/ArticleInfo'
+import { ArticleLock } from './components/ArticleLock'
+import BlogArchiveItem from './components/BlogArchiveItem'
+import { BlogListPage } from './components/BlogListPage'
+import { BlogListScroll } from './components/BlogListScroll'
+import { Footer } from './components/Footer'
+import Header from './components/Header'
+import NavBar from './components/NavBar'
+import SearchNavBar from './components/SearchNavBar'
+import SideBarContent from './components/SideBarContent'
+import SideBarDrawer from './components/SideBarDrawer'
+import CONFIG from './config'
+import { Style } from './style'
+
+// const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
+
+// 主题全局状态
+const ThemeGlobalGame = createContext()
+export const useGameGlobal = () => useContext(ThemeGlobalGame)
+
+/**
+ * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
+
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const LayoutBase = props => {
+  const { allNavPages, children } = props
+
+  //   const fullWidth = post?.fullWidth ?? false
+  //   const { onLoading } = useGlobal()
+  const searchModal = useRef(null)
+  // 在列表中进行实时过滤
+  const [filterKey, setFilterKey] = useState('')
+
+  const [filterGames, setFilterGames] = useState(deepClone(allNavPages?.filter(item => item.recommend)))
+  const [recentGames, setRecentGames] = useState([])
+  const [sideBarVisible, setSideBarVisible] = useState(false)
+
+  useEffect(() => {
+    setRecentGames(localStorage.getItem('recent_games') ? JSON.parse(localStorage.getItem('recent_games')) : [])
+  }, [])
+
+  return (
+    <ThemeGlobalGame.Provider
+      value={{
+        searchModal,
+        filterKey,
+        setFilterKey,
+        recentGames,
+        setRecentGames,
+        filterGames,
+        setFilterGames,
+        sideBarVisible,
+        setSideBarVisible
+      }}>
+      <div
+        id='theme-game'
+        className={`${siteConfig('FONT_STYLE')} w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
+        <Style />
+        {/* 左右布局 */}
+        <div id='wrapper' className={'relative flex justify-between w-full h-full mx-auto'}>
+          {/* 左侧 */}
+          <div className='w-52 hidden xl:block relative z-10'>
+            <div className='py-4 px-2 sticky top-0 h-screen flex flex-col justify-between'>
+              {/* 顶部 */}
+
+              <div className=''>
+                <Header />
+                <NavBar />
+              </div>
+
+              <div className='w-full'>
+                <AdSlot />
+                <AdSlot />
+                <AdSlot />
+              </div>
+
+              <div>
+                <Footer />
+              </div>
+            </div>
+          </div>
+
+          {/* 右侧 */}
+          <main className='flex-grow w-full overflow-x-scroll'>
+            {children}
+            <div className='ads w-full justify-center flex p-2'>
+              <AdSlot type='flow' />
+            </div>
+          </main>
+        </div>
+
+        <SideBarDrawer
+          isOpen={sideBarVisible}
+          onClose={() => {
+            setSideBarVisible(false)
+          }}>
+          <SideBarContent />
+        </SideBarDrawer>
+      </div>
+    </ThemeGlobalGame.Provider>
+  )
+}
+
+/**
+ * 首页
+ * 首页是个博客列表，加上顶部嵌入一个公告
+ * @param {*} props
+ * @returns
+ */
+const LayoutIndex = props => {
+  return <LayoutPostList {...props} topSlot={<Announcement {...props} />} />
+}
+
+/**
+ * 博客列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutPostList = props => {
+  const { posts, topSlot, tag } = props
+  const { filterKey } = useGameGlobal()
+  let filteredBlogPosts = []
+  if (filterKey && posts) {
+    filteredBlogPosts = posts.filter(post => {
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
+      const searchContent = post.title + post.summary + tagContent
+      return searchContent.toLowerCase().includes(filterKey.toLowerCase())
+    })
+  } else {
+    filteredBlogPosts = deepClone(posts)
+  }
+
+  return (
+    <>
+      {topSlot}
+      {tag && <SearchNavBar {...props} />}
+      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+        <BlogListPage {...props} posts={filteredBlogPosts} />
+      ) : (
+        <BlogListScroll {...props} posts={filteredBlogPosts} />
+      )}
+    </>
+  )
+}
+
+/**
+ * 搜索
+ * 页面是博客列表，上方嵌入一个搜索引导条
+ * @param {*} props
+ * @returns
+ */
+const LayoutSearch = props => {
+  const { keyword, posts } = props
+  useEffect(() => {
+    if (isBrowser) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
+      })
+    }
+  }, [])
+
+  // 在列表中进行实时过滤
+  const { filterKey } = useGameGlobal()
+  let filteredBlogPosts = []
+  if (filterKey && posts) {
+    filteredBlogPosts = posts.filter(post => {
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
+      const searchContent = post.title + post.summary + tagContent
+      return searchContent.toLowerCase().includes(filterKey.toLowerCase())
+    })
+  } else {
+    filteredBlogPosts = deepClone(posts)
+  }
+
+  return (
+    <>
+      <SearchNavBar {...props} />
+      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+        <BlogListPage {...props} posts={filteredBlogPosts} />
+      ) : (
+        <BlogListScroll {...props} posts={filteredBlogPosts} />
+      )}
+    </>
+  )
+}
+
+/**
+ * 归档
+ * @param {*} props
+ * @returns
+ */
+const LayoutArchive = props => {
+  const { archivePosts } = props
+  return (
+    <>
+      <div className='mb-10 pb-20 md:py-12 p-3  min-h-screen w-full'>
+        {Object.keys(archivePosts).map(archiveTitle => (
+          <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
+        ))}
+      </div>
+    </>
+  )
+}
+
+/**
+ * 文章详情
+ * @param {*} props
+ * @returns
+ */
+const LayoutSlug = props => {
+  const { post, lock, validPassword } = props
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(
+        () => {
+          if (isBrowser) {
+            const article = document.getElementById('notion-article')
+            if (!article) {
+              router.push('/404').then(() => {
+                console.warn('找不到页面', router.asPath)
+              })
+            }
+          }
+        },
+        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+      )
+    }
+  }, [post])
+  return (
+    <>
+      {lock && <ArticleLock validPassword={validPassword} />}
+
+      {!lock && (
+        <div id='article-wrapper' className='px-2'>
+          <>
+            <ArticleInfo post={post} />
+            <NotionPage post={post} />
+            <ShareBar post={post} />
+            <Comment frontMatter={post} />
+            <ArticleFooter />
+          </>
+        </div>
+      )}
+    </>
+  )
+}
+
+/**
+ * 404 页面
+ * @param {*} props
+ * @returns
+ */
+const Layout404 = props => {
+  return <>404 Not found.</>
+}
+
+/**
+ * 文章分类列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutCategoryIndex = props => {
+  const { categoryOptions } = props
+
+  return (
+    <>
+      <div id='category-list' className='duration-200 flex flex-wrap'>
+        {categoryOptions?.map(category => {
+          return (
+            <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
+              <div
+                className={
+                  'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
+                }>
+                <i className='mr-4 fas fa-folder' />
+                {category.name}({category.count})
+              </div>
+            </Link>
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+/**
+ * 文章标签列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutTagIndex = props => {
+  const { tagOptions } = props
+  return (
+    <>
+      <div>
+        <div id='tags-list' className='duration-200 flex flex-wrap'>
+          {tagOptions.map(tag => {
+            return (
+              <div key={tag.name} className='p-2'>
+                <Link
+                  key={tag}
+                  href={`/tag/${encodeURIComponent(tag.name)}`}
+                  passHref
+                  className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+                  <div className='font-light dark:text-gray-400'>
+                    <i className='mr-1 fas fa-tag' /> {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
+                  </div>
+                </Link>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
+}
+
+export {
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
+}
