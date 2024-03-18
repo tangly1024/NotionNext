@@ -2,6 +2,7 @@
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Comment from '@/components/Comment'
+import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -67,6 +68,11 @@ const LayoutBase = props => {
         <div id='container-inner' className='w-full relative flex-grow z-10'>
           {/* 标题栏 */}
           {/* {fullWidth ? null : <Title {...props} />} */}
+
+          {/* 广告栏 */}
+          <div className='w-full text-center'>
+            <AdSlot />
+          </div>
 
           <div
             id='container-wrapper'
