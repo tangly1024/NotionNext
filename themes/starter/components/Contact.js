@@ -76,7 +76,7 @@ export const Contact = () => {
               {/* 自定义的留言表单 、 需要对接接口 */}
               {/* <MessageForm/> */}
               {/* 嵌入外部表单 */}
-              <iframe src="https://noteforms.com/forms/yfctc7" width="100%" height="500px" frameborder="0"></iframe>
+              <iframe src="https://noteforms.com/forms/yfctc7" width="100%" height="500px" frameBorder="0"></iframe>
 
             </div>
           </div>
