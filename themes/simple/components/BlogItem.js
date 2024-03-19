@@ -1,16 +1,18 @@
 import Link from 'next/link'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import { siteConfig } from '@/lib/config'
 import LazyImage from '@/components/LazyImage'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import NotionIcon from '@/components/NotionIcon'
+import NotionPage from '@/components/NotionPage'
 
 export const BlogItem = props => {
   const { post } = props
   const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
   const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+  const showPreview = siteConfig('POST_LIST_PREVIEW') && post.blockMap
 
   return <div key={post.id} className="h-42 my-6 pb-12 border-b dark:border-gray-800" >
         {/* 文章标题 */}
@@ -56,14 +58,23 @@ export const BlogItem = props => {
                 </header>
 
                 <main className="text-gray-700 dark:text-gray-300 leading-normal mb-6">
-                    {post.summary}
-                    {post.summary && <span>...</span>}
+                    {!showPreview && <>
+                        {post.summary}
+                        {post.summary && <span>...</span>}
+                    </>}
+                    {showPreview && post?.blockMap && (
+                        <div className="overflow-ellipsis truncate">
+                            <NotionPage post={post} />
+                            <hr className='border-dashed py-4' />
+                        </div>
+                    )}
                 </main>
+
             </article>
         </div>
 
         <div className='block'>
-            <Link href={url} className='inline-block rounded-sm text-blue-600 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+            <Link href={url} className='inline-block rounded-sm text-blue-600 dark:text-blue-300  text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
                 Continue Reading <i className="fa-solid fa-angle-right align-middle"></i>
             </Link>
         </div>

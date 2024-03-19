@@ -20,6 +20,7 @@ const ThemeSwitch = () => {
   // 修改当前路径url中的 theme 参数
   // 例如 http://localhost?theme=hexo 跳转到 http://localhost?theme=newTheme
   const onThemeSelectChange = (e) => {
+    document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
     setIsLoading(true)
     const newTheme = e.target.value
     const query = router.query
@@ -32,6 +33,7 @@ const ThemeSwitch = () => {
   }
 
   const onLangSelectChange = (e) => {
+    document.ontouchmove = document.ontouchend = document.onmousemove = document.onmouseup = null
     const newLang = e.target.value
     changeLang(newLang)
   }

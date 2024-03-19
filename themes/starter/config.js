@@ -10,13 +10,15 @@ const CONFIG = {
   // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
 
   // 英雄区块导航
+  STARTER_HERO_ENABLE: true, // 开启英雄区
   STARTER_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
   STARTER_HERO_TITLE_2: '通过笔记无感知地建站、成倍放大您的价值', // 英雄区文字
-  STARTER_HERO_TITLE_3: '使用最新技术构建', // 英雄区文字
+  // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://github.com/Phillweston/Phillweston', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
   // 顶部右侧导航暗流
@@ -27,6 +29,7 @@ const CONFIG = {
   STARTER_NAV_BUTTON_2_URL: '/signup',
 
   // 特性区块
+  STARTER_FEATURE_ENABLE: true, // 特性区块开关
   STARTER_FEATURE_TITLE: 'Expertise and Innovations', // 专业和创新
   STARTER_FEATURE_TEXT_1: 'Exploring the Frontier of Drone Technology and Intelligent Systems', // 探索无人机技术和智能系统的前沿
   STARTER_FEATURE_TEXT_2: 'Combining a deep understanding of electronic engineering from XiDian University with practical experience in drone and intelligent system development, I bring cutting-edge insights and innovations to the field.', // 结合西电的电子工程深入理解和无人机与智能系统开发的实践经验，我为该领域带来前沿洞察和创新。
@@ -53,6 +56,7 @@ const CONFIG = {
 
   // 首页ABOUT区块
   // Home Page ABOUT Section
+  STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
   STARTER_ABOUT_TITLE: 'Advancing the Future of Autonomous Drone Technology',
   STARTER_ABOUT_TEXT: 'My aspiration is to revolutionize the field of autonomous drones, making them more accessible, efficient, and versatile. I envision drones that not only navigate autonomously but also adapt intelligently to various environments and tasks. <br /><br /> By integrating advanced AI, machine learning, and robust control systems, my goal is to develop drones capable of complex operations, enhancing industries from agriculture to urban planning. The journey begins with innovative research, collaboration, and a passion for pushing technological boundaries.',
   STARTER_ABOUT_BUTTON_TEXT: 'Discover the Vision',
@@ -64,6 +68,7 @@ const CONFIG = {
   STARTER_ABOUT_TIPS_3: 'For a Smarter Tomorrow',
 
   // 首页价格区块
+  STARTER_PRICING_ENABLE: true, // 价格区块开关
   STARTER_PRICING_TITLE: '价格表',
   STARTER_PRICING_TEXT_1: '很棒的定价计划',
   STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
@@ -96,6 +101,7 @@ const CONFIG = {
   STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_3_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
 
+  STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
   STARTER_TESTIMONIALS_TITLE: 'User Reviews',
   STARTER_TESTIMONIALS_TEXT_1: 'Hear What They Say',
   STARTER_TESTIMONIALS_TEXT_2: 'Experts and tech enthusiasts from various fields share their experiences with our intelligent drones and AI technology. Their success stories and feedback demonstrate the innovation and practicality of our project.',
@@ -147,7 +153,8 @@ const CONFIG = {
     }
   ],
 
-  //   FAQ模块
+  //   FAQ 常见问题模块
+  STARTER_FAQ_ENABLE: true, // 常见问题模块开关
   STARTER_FAQ_TITLE: 'Frequently Asked Questions',
   STARTER_FAQ_TEXT_1: 'Got Questions? Find Answers Here',
   STARTER_FAQ_TEXT_2: 'We\'ve compiled some of the most common questions from our users',
@@ -164,6 +171,8 @@ const CONFIG = {
   STARTER_FAQ_4_QUESTION: 'Can your drone technology be customized for specific applications?',
   STARTER_FAQ_4_ANSWER: 'Absolutely! We offer customizable solutions tailored to a variety of applications. Contact us to discuss how our technology can meet your specific needs.',
 
+  // 团队成员区块
+  STARTER_TEAM_ENABLE: true, // 团队成员区块开关
   STARTER_TEAM_TITLE: 'Our Team',
   STARTER_TEAM_TEXT_1: 'Meet the Developers',
   STARTER_TEAM_TEXT_2: 'Our innovative solutions are the result of collaborative efforts by a passionate team of developers, researchers, and technology enthusiasts. A big thank you to each <a className="underline" href="[LinkToContributors]">contributor</a>.',
@@ -193,12 +202,14 @@ const CONFIG = {
   ],
 
   // 博客文章区块
+  STARTER_BLOG_ENABLE: true, // 首页博文区块开关
   STARTER_BLOG_TITLE: 'My Blog',
   STARTER_BLOG_COUNT: 3, // Display the latest 3 articles in the blog section on the homepage
   STARTER_BLOG_TEXT_1: 'Recent News',
-  STARTER_BLOG_TEXT_2: 'Here we will publish the latest updates about NotionNext, including new developments, future plans, and features of new functionalities',
+  STARTER_BLOG_TEXT_2: 'In this space, we\'ll share the latest advancements in our drone technology, discuss future innovations, and explore new features and functionalities shaping the world of autonomous flight.',
 
   // 联系模块
+  STARTER_CONTACT_ENABLE: true, // 联系模块开关
   STARTER_CONTACT_TITLE: 'Contact Me',
   STARTER_CONTACT_TEXT: 'Tell us about the issues you are facing',
   STARTER_CONTACT_LOCATION_TITLE: 'My Location',
@@ -218,6 +229,7 @@ const CONFIG = {
   //   STARTER_CONTACT_MSG_THANKS: '感谢您的留言',
 
   // 合作伙伴的图标
+  STARTER_BRANDS_ENABLE: true, // 合作伙伴开关
   STARTER_BRANDS: [
     {
       IMAGE: '/images/starter/brands/graygrids.svg',
@@ -260,8 +272,8 @@ const CONFIG = {
       LINK_GROUP: [
         { TITLE: 'Official Website', URL: '/#home' },
         { TITLE: 'Documentation', URL: 'https://docs.phillweston.com/about' },
-        { TITLE: 'Help & Support', URL: 'https://docs.tangly1024.com/article/how-to-question' },
-        { TITLE: 'Partnership Application', URL: 'https://docs.tangly1024.com/my-service' }
+        { TITLE: 'Help & Support', URL: 'https://docs.phillweston.com/article/how-to-question' },
+        { TITLE: 'Partnership Application', URL: 'https://docs.phillweston.com/my-service' }
       ]
     },
     {

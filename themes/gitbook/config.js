@@ -4,6 +4,8 @@ const CONFIG = {
 
   GITBOOK_AUTO_SORT: process.env.NEXT_PUBLIC_GITBOOK_AUTO_SORT || true, // 是否自动按分类名 归组排序文章；自动归组可能会打乱您Notion中的文章顺序
 
+  GITBOOK_LATEST_POST_RED_BADGE: process.env.NEXT_PUBLIC_GITBOOK_LATEST_POST_RED_BADGE || true, // 是否给最新文章显示红点
+
   // 菜单
   GITBOOK_MENU_CATEGORY: true, // 显示分类
   GITBOOK_BOOK_MENU_TAG: true, // 显示标签
