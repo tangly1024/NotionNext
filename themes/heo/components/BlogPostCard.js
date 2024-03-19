@@ -62,6 +62,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                                 <TagItemMini key={tag.name} tag={tag} />
                             ))}
                         </div>
+                        <div>
+                            { post.publishDate }
+                        </div>
                     </div>
 
                 </div>
