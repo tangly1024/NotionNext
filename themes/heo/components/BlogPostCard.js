@@ -63,7 +63,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             ))}
                         </div>
                         <div>
-                            {formatDateFmt(post?.publishDate, 'yyyy/MM/DD')}
+                            {locale.COMMON.LAST_EDITED_TIME}: {post?.lastEditedDay}
                         </div>
                     </div>
 
