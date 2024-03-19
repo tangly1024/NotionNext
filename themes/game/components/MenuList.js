@@ -4,9 +4,9 @@ import { useGameGlobal } from '..'
 export const MenuList = () => {
   const { setSideBarVisible } = useGameGlobal()
   return (
-    <div>
+    <div className='dark:text-white'>
       <ul>
-        <li className='text-white py-4 px-2 font-bold hover:underline'>
+        <li className='py-4 px-2 font-bold hover:underline'>
           <Link href='/' passHref>
             <span className='flex items-center gap-2'>
               <i className='fas fa-home' />
@@ -14,7 +14,7 @@ export const MenuList = () => {
             </span>
           </Link>
         </li>
-        <li className='text-white py-4 px-2 font-bold hover:underline'>
+        <li className='py-4 px-2 font-bold hover:underline'>
           <button
             className='flex items-center gap-2'
             onClick={() => {

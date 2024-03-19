@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import { deepClone } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
+import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import Link from 'next/link'
 import { useState } from 'react'
 
 /**
  * 游戏列表- 关联游戏，在详情页展示
  * @returns
  */
-export const GameListRelate = ({ games }) => {
-  const gamesClone = deepClone(games)
+export const GameListRelate = ({ posts }) => {
+  const gamesClone = deepClone(posts)
 
   // 构造一个List<Component>
   const components = []
@@ -24,7 +26,7 @@ export const GameListRelate = ({ games }) => {
 
   return (
     <div className='game-list-wrapper w-full max-w-full overflow-x-auto'>
-      <div className='game-grid grid grid-flow-col gap-2'>
+      <div className='game-grid grid grid-flow-col justify-start gap-2'>
         {components?.map((ItemComponent, index) => {
           return ItemComponent
         })}
@@ -38,13 +40,17 @@ export const GameListRelate = ({ games }) => {
  * @param {*} param0
  * @returns
  */
-const GameItem = ({ item, isLargeCard }) => {
-  const { id, title, img, video } = item
+const GameItem = ({ item }) => {
+  const { title } = item
   const [showType, setShowType] = useState('img') // img or video
+  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+
+  const img = item?.pageCoverThumbnail
+  const video = item?.ext?.video
 
   return (
-    <a
-      href={`/game/${id}`}
+    <Link
+      href={`${url}`}
       onMouseOver={() => {
         setShowType('video')
       }}
@@ -71,6 +77,6 @@ const GameItem = ({ item, isLargeCard }) => {
         src={img}
         alt={title}
       />
-    </a>
+    </Link>
   )
 }

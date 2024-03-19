@@ -1,8 +1,8 @@
 import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
-import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
-import dynamic from 'next/dynamic'
-import getConfig from 'next/config'
 import * as ThemeComponents from '@theme-components'
+import getConfig from 'next/config'
+import dynamic from 'next/dynamic'
+import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig().publicRuntimeConfig
@@ -100,7 +100,6 @@ export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
 
   // 查看localStorage中用户记录的是否深色模式
   const userDarkMode = loadDarkModeFromLocalStorage()
-  console.log('深色模式',userDarkMode)
   if (userDarkMode) {
     newDarkMode = userDarkMode === 'dark' || userDarkMode === 'true'
   }

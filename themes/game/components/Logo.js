@@ -6,7 +6,7 @@ export default function Logo() {
   return (
     <Link passHref href='/' className='logo rounded cursor-pointer flex flex-col items-center'>
       <div className='w-full'>
-        <h1 className='text-2xl text-white font-bold font-serif'>{siteConfig('TITLE')}</h1>
+        <h1 className='text-2xl dark:text-white font-bold font-serif'>{siteConfig('TITLE')}</h1>
         <h2 className='text-xs text-gray-400 whitespace-nowrap'>{siteConfig('BIO')}</h2>
       </div>
     </Link>

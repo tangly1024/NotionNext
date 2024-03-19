@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { deepClone } from '@/lib/utils'
+import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
 import { useState } from 'react'
 
 /**
@@ -48,12 +49,15 @@ export const GameListRecent = ({ maxCount = 14 }) => {
  * @returns
  */
 const GameItem = ({ item }) => {
-  const { id, title, img, video } = item || {}
+  const { title } = item || {}
   const [showType, setShowType] = useState('img') // img or video
+  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
 
+  const img = item?.pageCoverThumbnail
+  const video = item?.ext?.video
   return (
     <a
-      href={`/game/${id}`}
+      href={`${url}`}
       onMouseOver={() => {
         setShowType('video')
       }}

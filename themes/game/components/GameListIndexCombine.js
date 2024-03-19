@@ -1,27 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 import { AdSlot } from '@/components/GoogleAdsense'
-import { deepClone } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
+import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import Link from 'next/link'
 import { useState } from 'react'
+import CONFIG from '../config'
 
 /**
  * 游戏列表
  * @returns
  */
-export const GameListIndexCombine = ({ games }) => {
-  const gamesClone = deepClone(games)
-
-  gamesClone?.sort((a, b) => {
-    const orderA = a.order || 999
-    const orderB = b.order || 999
-
-    return orderA - orderB
-  })
+export const GameListIndexCombine = ({ posts }) => {
+  const gamesClone = deepClone(posts)
 
   // 构造一个List<Component>
   const components = []
 
   // 根据序号随机大小;或根据game.recommend 决定
-  const recommend = true
+  const recommend = siteConfig('GAME_INDEX_EXPAND_RECOMMEND', true, CONFIG)
 
   let index = 0
   // 无限循环
@@ -40,7 +36,7 @@ export const GameListIndexCombine = ({ games }) => {
       // 试图将4合一卡组塞满
       while (gamesClone?.length > 0 && groupItems.length < 4) {
         const item = gamesClone.shift()
-        if (item.recommend) {
+        if (item.tags?.some(t => t === siteConfig('GAME_RECOMMEND_TAG', 'Recommend', CONFIG))) {
           components.push(<GameItem key={index} item={item} isLargeCard={true} />)
           break
         } else {
@@ -122,11 +118,14 @@ const GameItemGroup = ({ items }) => {
  * @returns
  */
 const GameItem = ({ item, isLargeCard }) => {
-  const { id, title, img, video } = item
+  const { title } = item
+  const img = item.pageCoverThumbnail
   const [showType, setShowType] = useState('img') // img or video
+  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+  const video = item?.ext?.video
   return (
-    <a
-      href={`/game/${id}`}
+    <Link
+      href={`${url}`}
       onMouseOver={() => {
         setShowType('video')
       }}
@@ -159,6 +158,6 @@ const GameItem = ({ item, isLargeCard }) => {
         src={img}
         alt={title}
       />
-    </a>
+    </Link>
   )
 }

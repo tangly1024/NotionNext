@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { deepClone } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
+import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import Link from 'next/link'
 import { useState } from 'react'
 
 /**
@@ -38,12 +40,14 @@ export const GameListNormal = ({ games, maxCount = 18 }) => {
  * @returns
  */
 const GameItem = ({ item }) => {
-  const { id, title, img, video } = item
+  const { title, img } = item
   const [showType, setShowType] = useState('img') // img or video
+  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+  const video = item?.ext?.video
 
   return (
-    <a
-      href={`/game/${id}`}
+    <Link
+      href={`${url}`}
       onMouseOver={() => {
         setShowType('video')
       }}
@@ -64,6 +68,6 @@ const GameItem = ({ item }) => {
         </video>
       )}
       <img className='w-full h-full absolute object-cover' src={img} alt={title} />
-    </a>
+    </Link>
   )
 }
