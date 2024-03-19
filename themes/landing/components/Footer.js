@@ -1,4 +1,4 @@
-import { subscribeToNewsletter } from '@/lib/mailchimp'
+import { subscribeToNewsletter } from '@/lib/plugins/mailchimp'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
@@ -149,6 +149,11 @@ export default function Footer() {
 
                     {/* Social as */}
                     <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
+                        <li>
+                          <div className='h-full flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100'>
+                             Powered by<a href='https://github.com/tangly1024/NotionNext' className='mx-1 hover:underline font-semibold'>NotionNext {siteConfig('VERSION')}</a>
+                          </div>
+                        </li>
                         {/* <li>
               <a href="#0" className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out" aria-label="Twitter">
                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

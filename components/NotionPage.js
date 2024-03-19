@@ -1,40 +1,34 @@
-import dynamic from 'next/dynamic'
-import mediumZoom from '@fisch0920/medium-zoom'
-import { useEffect, useRef } from 'react'
-import 'katex/dist/katex.min.css'
-import { mapImgUrl } from '@/lib/notion/mapImage'
-import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
+import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
+import { isBrowser } from '@/lib/utils'
+import mediumZoom from '@fisch0920/medium-zoom'
+import 'katex/dist/katex.min.css'
+import dynamic from 'next/dynamic'
+import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 
-// Notion渲染
-// const NotionRenderer = dynamic(() => import('react-notion-x').then(async (m) => {
-//   return m.NotionRenderer
-// }), {
-//   ssr: false
-// })
-
-const Code = dynamic(() =>
-  import('react-notion-x/build/third-party/code').then(async (m) => {
-    return m.Code
-  }), { ssr: false }
+const Code = dynamic(
+  () =>
+    import('react-notion-x/build/third-party/code').then(async m => {
+      return m.Code
+    }),
+  { ssr: false }
 )
 
 // 公式
-const Equation = dynamic(() =>
-  import('@/components/Equation').then(async (m) => {
-    // 化学方程式
-    await import('@/lib/mhchem')
-    return m.Equation
-  }), { ssr: false }
+const Equation = dynamic(
+  () =>
+    import('@/components/Equation').then(async m => {
+      // 化学方程式
+      await import('@/lib/plugins/mhchem')
+      return m.Equation
+    }),
+  { ssr: false }
 )
 
-const Pdf = dynamic(
-  () => import('react-notion-x/build/third-party/pdf').then((m) => m.Pdf),
-  {
-    ssr: false
-  }
-)
+const Pdf = dynamic(() => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf), {
+  ssr: false
+})
 
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
@@ -49,31 +43,43 @@ const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
   ssr: false
 })
 
-const Collection = dynamic(() =>
-  import('react-notion-x/build/third-party/collection').then((m) => m.Collection), { ssr: true }
-)
+/**
+ * 文内google广告
+ */
+const AdEmbed = dynamic(() => import('@/components/GoogleAdsense').then(m => m.AdEmbed), { ssr: true })
 
-const Modal = dynamic(
-  () => import('react-notion-x/build/third-party/modal').then((m) => m.Modal), { ssr: false }
-)
+const Collection = dynamic(() => import('react-notion-x/build/third-party/collection').then(m => m.Collection), {
+  ssr: true
+})
+
+const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').then(m => m.Modal), { ssr: false })
 
 const Tweet = ({ id }) => {
   return <TweetEmbed tweetId={id} />
 }
 
+/**
+ * Notin渲染成网页的核心组件
+ * @param {*} param0
+ * @returns
+ */
 const NotionPage = ({ post, className }) => {
   useEffect(() => {
     autoScrollToTarget()
   }, [])
 
-  const zoom = typeof window !== 'undefined' && mediumZoom({
-    container: '.notion-viewport',
-    background: 'rgba(0, 0, 0, 0.2)',
-    margin: getMediumZoomMargin()
-  })
+  const zoom =
+    typeof window !== 'undefined' &&
+    mediumZoom({
+      container: '.notion-viewport',
+      background: 'rgba(0, 0, 0, 0.2)',
+      margin: getMediumZoomMargin()
+    })
   const zoomRef = useRef(zoom ? zoom.clone() : null)
 
   useEffect(() => {
+    if (!isBrowser) return
+
     // 将相册gallery下的图片加入放大功能
     if (siteConfig('POST_DISABLE_GALLERY_CLICK')) {
       setTimeout(() => {
@@ -81,7 +87,7 @@ const NotionPage = ({ post, className }) => {
           const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
           if (imgList && zoomRef.current) {
             for (let i = 0; i < imgList.length; i++) {
-              (zoomRef.current).attach(imgList[i])
+              zoomRef.current.attach(imgList[i])
             }
           }
 
@@ -111,29 +117,56 @@ const NotionPage = ({ post, className }) => {
         }
       }
     }
+
+    // 放大图片：调整图片质量
+    const observer = new MutationObserver((mutationsList, observer) => {
+      mutationsList.forEach(mutation => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          if (mutation.target.classList.contains('medium-zoom-image--opened')) {
+            // 等待动画完成后替换为更高清的图像
+            setTimeout(() => {
+              // 获取该元素的 src 属性
+              const src = mutation?.target?.getAttribute('src')
+              //   替换为更高清的图像
+              mutation?.target?.setAttribute('src', compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)))
+            }, 800)
+          }
+        }
+      })
+    })
+
+    // 监视整个文档中的元素和属性的变化
+    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] })
+
+    return () => {
+      observer.disconnect()
+    }
   }, [])
 
   if (!post || !post.blockMap) {
     return <>{post?.summary || ''}</>
   }
 
-  return <div id='notion-article' className={`mx-auto overflow-hidden ${className || ''}`}>
-    <NotionRenderer
-      recordMap={post.blockMap}
-      mapPageUrl={mapPageUrl}
-      mapImageUrl={mapImgUrl}
-      components={{
-        Code,
-        Collection,
-        Equation,
-        Modal,
-        Pdf,
-        Tweet
-      }} />
+  return (
+    <div id='notion-article' className={`mx-auto overflow-hidden ${className || ''}`}>
+      <NotionRenderer
+        recordMap={post.blockMap}
+        mapPageUrl={mapPageUrl}
+        mapImageUrl={mapImgUrl}
+        components={{
+          Code,
+          Collection,
+          Equation,
+          Modal,
+          Pdf,
+          Tweet
+        }}
+      />
 
-      <PrismMac/>
-
-  </div>
+      <AdEmbed />
+      <PrismMac />
+    </div>
+  )
 }
 
 /**
