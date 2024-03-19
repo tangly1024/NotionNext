@@ -2,6 +2,7 @@
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Comment from '@/components/Comment'
+import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -67,6 +68,11 @@ const LayoutBase = props => {
         <div id='container-inner' className='w-full relative flex-grow z-10'>
           {/* 标题栏 */}
           {/* {fullWidth ? null : <Title {...props} />} */}
+
+          {/* 广告栏 */}
+          <div className='w-full text-center'>
+            <AdSlot />
+          </div>
 
           <div
             id='container-wrapper'
@@ -188,10 +194,20 @@ const LayoutSlug = props => {
         const carouselItem = document.createElement('div')
         carouselItem.classList.add('notion-carousel')
         carouselItem.appendChild(wrapper)
+
+        // 如有外链、保存在data-src中
+        const iframe = wrapper.querySelector('iframe')
+        if (iframe) {
+          iframe.setAttribute('data-src', iframe.getAttribute('src'))
+        }
+
         // 如果是第一个元素，设置为 active
         if (index === 0) {
           carouselItem.classList.add('active')
+        } else {
+          iframe.setAttribute('src', '')
         }
+
         // 将元素添加到容器中
         carouselWrapper.appendChild(carouselItem)
         // 从 DOM 中移除原始的 .notion-asset-wrapper 元素
@@ -209,15 +225,26 @@ const LayoutSlug = props => {
         div.addEventListener('click', function () {
           // 遍历所有的 carouselItem 元素
           document.querySelectorAll('.notion-carousel').forEach(item => {
+            // 外链保存在data-src中
+            const iframe = item.querySelector('iframe')
+            console.log('iframe', iframe.getAttribute('data-src'), iframe.getAttribute('src'))
+
             // 判断当前元素是否包含该 figCaption 的文本内容，如果是则设置为 active，否则取消 active
             if (item.querySelector('figcaption').textContent.trim() === value) {
               item.classList.add('active')
+              if (iframe) {
+                iframe.setAttribute('src', iframe.getAttribute('data-src'))
+              }
             } else {
               item.classList.remove('active')
               // 不活跃窗口暂停播放，仅支持notion上传视频、不支持外链
               item.querySelectorAll('video')?.forEach(video => {
                 video.pause()
               })
+              // 外链通过设置src来实现视频暂停播放
+              if (iframe) {
+                iframe.setAttribute('src', '')
+              }
             }
           })
         })
