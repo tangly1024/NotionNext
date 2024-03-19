@@ -272,7 +272,8 @@ const CONFIG = {
         { TITLE: 'Official Website', URL: '/#home' },
         { TITLE: 'Documentation', URL: '/about' },
         { TITLE: 'Help & Support', URL: '/how-to-question' },
-        { TITLE: 'Partnership Website', URL: '/links' }
+        { TITLE: 'Friend Link', URL: '/links' },
+        { TITLE: 'Cooperators', URL: '/cooperators' }
       ]
     },
     {
@@ -288,6 +289,7 @@ const CONFIG = {
         { TITLE: 'UAV Integrated Education System', URL: '/article/smart-manufacturing-future-drone-integrated-education-system' },
         { TITLE: 'Guardian of the Sky Eye', URL: '/article/sky-eye-guardian' },
         { TITLE: 'Software-defined Radio-based Anti-drone System', URL: '/article/drone-nemesis-software-radio-based-anti-drone-system' },
+        { TITLE: 'Multifunctional-Underwater-Drone', URL: '/article/dragon-rise-from-depths-multifunctional-underwater-drone' },
       ]
     },
     {

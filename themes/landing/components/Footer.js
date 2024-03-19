@@ -88,7 +88,7 @@ export default function Footer() {
                                 <a href="/category/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Case Studies</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Cooperators</a>
+                                <a href="/cooperators" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Cooperators</a>
                             </li>
                         </ul>
                     </div>
