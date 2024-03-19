@@ -15,7 +15,7 @@ const CONFIG = {
   STARTER_HERO_TITLE_2: 'Elevating Possibilities: Explore the World of Autonomous Drones', // Hero Section Title
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: 'Explore', // Hero Section Button
-  STARTER_HERO_BUTTON_1_URL: 'https://phillweston.xyz/', // Hero Section Button
+  STARTER_HERO_BUTTON_1_URL: 'https://docs.phillweston.com/?theme=heo', // Hero Section Button
   STARTER_HERO_BUTTON_2_TEXT: 'Follow Me on Github', // Hero Section Button
   STARTER_HERO_BUTTON_2_URL: 'https://github.com/Phillweston/Phillweston', // Hero Section Button
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
