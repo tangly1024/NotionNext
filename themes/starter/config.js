@@ -11,13 +11,13 @@ const CONFIG = {
 
   // 英雄区块导航
   STARTER_HERO_ENABLE: true, // 开启英雄区
-  STARTER_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
-  STARTER_HERO_TITLE_2: '通过笔记无感知地建站、成倍放大您的价值', // 英雄区文字
+  STARTER_HERO_TITLE_1: 'Innovating the Skies with Cutting-Edge Drone Technology', // Hero Section Title
+  STARTER_HERO_TITLE_2: 'Elevating Possibilities: Explore the World of Autonomous Drones', // Hero Section Title
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
-  STARTER_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
-  STARTER_HERO_BUTTON_1_URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_URL: 'https://github.com/Phillweston/Phillweston', // 英雄区按钮
+  STARTER_HERO_BUTTON_1_TEXT: 'Explore', // Hero Section Button
+  STARTER_HERO_BUTTON_1_URL: 'https://phillweston.xyz/', // Hero Section Button
+  STARTER_HERO_BUTTON_2_TEXT: 'Follow Me on Github', // Hero Section Button
+  STARTER_HERO_BUTTON_2_URL: 'https://github.com/Phillweston/Phillweston', // Hero Section Button
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
@@ -55,7 +55,6 @@ const CONFIG = {
   STARTER_FEATURE_4_BUTTON_URL: 'https://docs.phillweston.com/about', // 您的关于页面链接
 
   // 首页ABOUT区块
-  // Home Page ABOUT Section
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
   STARTER_ABOUT_TITLE: 'Advancing the Future of Autonomous Drone Technology',
   STARTER_ABOUT_TEXT: 'My aspiration is to revolutionize the field of autonomous drones, making them more accessible, efficient, and versatile. I envision drones that not only navigate autonomously but also adapt intelligently to various environments and tasks. <br /><br /> By integrating advanced AI, machine learning, and robust control systems, my goal is to develop drones capable of complex operations, enhancing industries from agriculture to urban planning. The journey begins with innovative research, collaboration, and a passion for pushing technological boundaries.',
@@ -69,37 +68,37 @@ const CONFIG = {
 
   // 首页价格区块
   STARTER_PRICING_ENABLE: true, // 价格区块开关
-  STARTER_PRICING_TITLE: '价格表',
-  STARTER_PRICING_TEXT_1: '很棒的定价计划',
-  STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
+  STARTER_PRICING_TITLE: 'Project Milestones',
+  STARTER_PRICING_TEXT_1: 'Charting the Progression',
+  STARTER_PRICING_TEXT_2: 'Explore the distinct phases of our journey in drone technology and research, marking significant milestones at each stage.',
 
-  STARTER_PRICING_1_TITLE: '入门版',
-  STARTER_PRICING_1_PRICE: '19.9',
-  STARTER_PRICING_1_PRICE_CURRENCY: '$',
-  STARTER_PRICING_1_PRICE_PERIOD: '每月',
-  STARTER_PRICING_1_HEADER: '功能点',
-  STARTER_PRICING_1_FEATURES: '所有的主题,免费更新,帮助手册', // 英文逗号隔开
-  STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_1_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
+  STARTER_PRICING_1_TITLE: 'Founding Phase',
+  STARTER_PRICING_1_PRICE: '2018-2019',
+  STARTER_PRICING_1_PRICE_CURRENCY: '',
+  STARTER_PRICING_1_PRICE_PERIOD: 'Initial Exploration',
+  STARTER_PRICING_1_HEADER: 'Milestones',
+  STARTER_PRICING_1_FEATURES: 'Joining RoboMaster Team, Conceptualizing UAV Line Inspection System, Participating in Competitions',
+  STARTER_PRICING_1_BUTTON_TEXT: 'Explore',
+  STARTER_PRICING_1_BUTTON_URL: 'https://docs.phillweston.com/',
 
-  STARTER_PRICING_2_TAG: '推荐',
-  STARTER_PRICING_2_TITLE: '基础版',
-  STARTER_PRICING_2_PRICE: '39.9',
-  STARTER_PRICING_2_PRICE_CURRENCY: '$',
-  STARTER_PRICING_2_PRICE_PERIOD: '每月',
-  STARTER_PRICING_2_HEADER: '功能点',
-  STARTER_PRICING_2_FEATURES: '包含入门版,项目源码,内部社群,技术咨询,SEO优化', // 英文逗号隔开
-  STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_2_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/590ad70a-c3b7-4caf-94ec-9ca27bde06d4',
+  STARTER_PRICING_2_TAG: 'Unprecedented Innovation',
+  STARTER_PRICING_2_TITLE: 'Developing Phase',
+  STARTER_PRICING_2_PRICE: '2020-2021',
+  STARTER_PRICING_2_PRICE_CURRENCY: '',
+  STARTER_PRICING_2_PRICE_PERIOD: 'In-depth Research',
+  STARTER_PRICING_2_HEADER: 'Milestones',
+  STARTER_PRICING_2_FEATURES: 'Developing Yi Chi Co-Defense System, AI Challenge Participation, Advancing Control and Vision Algorithms',
+  STARTER_PRICING_2_BUTTON_TEXT: 'Explore',
+  STARTER_PRICING_2_BUTTON_URL: 'https://docs.phillweston.com/',
 
-  STARTER_PRICING_3_TITLE: '高级版',
-  STARTER_PRICING_3_PRICE: '59.9',
-  STARTER_PRICING_3_PRICE_CURRENCY: '$',
-  STARTER_PRICING_3_PRICE_PERIOD: '每月',
-  STARTER_PRICING_3_HEADER: '功能点',
-  STARTER_PRICING_3_FEATURES: '包含基础版,功能定制开发', // 英文逗号隔开
-  STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_3_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
+  STARTER_PRICING_3_TITLE: 'Advancing Phase',
+  STARTER_PRICING_3_PRICE: '2022-Present',
+  STARTER_PRICING_3_PRICE_CURRENCY: '',
+  STARTER_PRICING_3_PRICE_PERIOD: 'Commercial and Academic Success',
+  STARTER_PRICING_3_HEADER: 'Milestones',
+  STARTER_PRICING_3_FEATURES: 'Final Year Project in UAV Technology, Joining Chengdu Zongheng Automation, International Collaborations and Training',
+  STARTER_PRICING_3_BUTTON_TEXT: 'Explore',
+  STARTER_PRICING_3_BUTTON_URL: 'https://docs.phillweston.com/',
 
   STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
   STARTER_TESTIMONIALS_TITLE: 'User Reviews',
