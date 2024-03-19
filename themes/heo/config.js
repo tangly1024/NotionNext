@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: 'Welcome to my blog', url: 'https://docs.phillweston.com' },
-    { title: 'Visit the documentation center for more help', url: 'https://docs.phillweston.com/about' }
+    { title: 'Welcome to my blog', url: '/' },
+    { title: 'Visit the documentation center for more help', url: '/about' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -105,10 +105,10 @@ const CONFIG = {
   ],
 
   HEO_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
-  HEO_SOCIAL_CARD_TITLE_1: 'Communication Channel',
-  HEO_SOCIAL_CARD_TITLE_2: 'Join our community for discussion and sharing',
-  HEO_SOCIAL_CARD_TITLE_3: 'Click to join the community',
-  HEO_SOCIAL_CARD_URL: 'https://docs.phillweston.com/article/how-to-question',
+  HEO_SOCIAL_CARD_TITLE_1: 'Ask Me Anything',
+  HEO_SOCIAL_CARD_TITLE_2: 'Engage and Inquire in Our Interactive Forum',
+  HEO_SOCIAL_CARD_TITLE_3: 'Learn the Best Ways to Pose Your Questions',
+  HEO_SOCIAL_CARD_URL: '/article/how-to-question',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置

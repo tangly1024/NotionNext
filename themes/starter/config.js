@@ -15,7 +15,7 @@ const CONFIG = {
   STARTER_HERO_TITLE_2: 'Elevating Possibilities: Explore the World of Autonomous Drones', // Hero Section Title
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: 'Explore', // Hero Section Button
-  STARTER_HERO_BUTTON_1_URL: 'https://docs.phillweston.com/?theme=heo', // Hero Section Button
+  STARTER_HERO_BUTTON_1_URL: '/?theme=heo', // Hero Section Button
   STARTER_HERO_BUTTON_2_TEXT: 'Follow Me on Github', // Hero Section Button
   STARTER_HERO_BUTTON_2_URL: 'https://github.com/Phillweston/Phillweston', // Hero Section Button
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
@@ -52,14 +52,14 @@ const CONFIG = {
   STARTER_FEATURE_4_TITLE_1: 'Practical and Theoretical Mastery', // 实践与理论精通
   STARTER_FEATURE_4_TEXT_1: 'Blending robust academic foundations with real-world applications, focusing on control systems, vision algorithms, and machine learning.', // 将扎实的学术基础与现实世界的应用相结合，专注于控制系统、视觉算法和机器学习。
   STARTER_FEATURE_4_BUTTON_TEXT: 'Read More', // 阅读更多
-  STARTER_FEATURE_4_BUTTON_URL: 'https://docs.phillweston.com/about', // 您的关于页面链接
+  STARTER_FEATURE_4_BUTTON_URL: '/about', // 您的关于页面链接
 
   // 首页ABOUT区块
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
   STARTER_ABOUT_TITLE: 'Advancing the Future of Autonomous Drone Technology',
   STARTER_ABOUT_TEXT: 'My aspiration is to revolutionize the field of autonomous drones, making them more accessible, efficient, and versatile. I envision drones that not only navigate autonomously but also adapt intelligently to various environments and tasks. <br /><br /> By integrating advanced AI, machine learning, and robust control systems, my goal is to develop drones capable of complex operations, enhancing industries from agriculture to urban planning. The journey begins with innovative research, collaboration, and a passion for pushing technological boundaries.',
   STARTER_ABOUT_BUTTON_TEXT: 'Discover the Vision',
-  STARTER_ABOUT_BUTTON_URL: 'https://docs.phillweston.com/about',
+  STARTER_ABOUT_BUTTON_URL: '/about',
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
   STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
   STARTER_ABOUT_TIPS_1: 'Innovative',
@@ -270,33 +270,33 @@ const CONFIG = {
       TITLE: 'About Me',
       LINK_GROUP: [
         { TITLE: 'Official Website', URL: '/#home' },
-        { TITLE: 'Documentation', URL: 'https://docs.phillweston.com/about' },
-        { TITLE: 'Help & Support', URL: 'https://docs.phillweston.com/article/how-to-question' },
-        { TITLE: 'Partnership Application', URL: 'https://docs.phillweston.com/my-service' }
+        { TITLE: 'Documentation', URL: '/about' },
+        { TITLE: 'Help & Support', URL: '/how-to-question' },
+        { TITLE: 'Partnership Website', URL: '/links' }
       ]
     },
     {
       TITLE: 'Case Studies',
       LINK_GROUP: [
-        { TITLE: 'Disk Array Failure Prediction System', URL: 'https://docs.phillweston.com/article/lstm-deep-transfer-learning-disk-array-failure-prediction' },
-        { TITLE: 'UAV Line Inspection System Based on Deep Learning', URL: 'https://docs.phillweston.com/article/deep-learning-drone-inspection-system' },
-        { TITLE: 'Intelligent Aerial Surveillance System', URL: 'https://docs.phillweston.com/article/yichi-defense-system-comprehensive-control-dynamics' },
-        { TITLE: 'High-altitude Paint Repair Drone', URL: 'https://docs.phillweston.com/article/weiyuan-wing-high-altitude-painting-drone' },
-        { TITLE: 'Urban and Rural Intelligent Logistics UAV System', URL: 'https://docs.phillweston.com/article/hongyun-smart-logistics-drone-system-urban-rural' },
-        { TITLE: 'Drone-based Intelligent Scenic Garbage Cleaning System', URL: 'https://docs.phillweston.com/article/drone-based-intelligent-scenic-area-waste-cleanup-system' },
-        { TITLE: 'Remote All-round Real-time Environmental Monitoring System', URL: 'https://docs.phillweston.com/article/remote-full-spectrum-real-time-environment-monitoring-system' },
-        { TITLE: 'UAV Integrated Education System', URL: 'https://docs.phillweston.com/article/smart-manufacturing-future-drone-integrated-education-system' },
-        { TITLE: 'Guardian of the Sky Eye', URL: 'https://docs.phillweston.com/article/sky-eye-guardian' },
-        { TITLE: 'Software-defined Radio-based Anti-drone System', URL: 'https://docs.phillweston.com/article/drone-nemesis-software-radio-based-anti-drone-system' },
+        { TITLE: 'Disk Array Failure Prediction System', URL: '/article/lstm-deep-transfer-learning-disk-array-failure-prediction' },
+        { TITLE: 'UAV Line Inspection System Based on Deep Learning', URL: '/article/deep-learning-drone-inspection-system' },
+        { TITLE: 'Intelligent Aerial Surveillance System', URL: '/article/yichi-defense-system-comprehensive-control-dynamics' },
+        { TITLE: 'High-altitude Paint Repair Drone', URL: '/article/weiyuan-wing-high-altitude-painting-drone' },
+        { TITLE: 'Urban and Rural Intelligent Logistics UAV System', URL: '/article/hongyun-smart-logistics-drone-system-urban-rural' },
+        { TITLE: 'Drone-based Intelligent Scenic Garbage Cleaning System', URL: '/article/drone-based-intelligent-scenic-area-waste-cleanup-system' },
+        { TITLE: 'Remote All-round Real-time Environmental Monitoring System', URL: '/article/remote-full-spectrum-real-time-environment-monitoring-system' },
+        { TITLE: 'UAV Integrated Education System', URL: '/article/smart-manufacturing-future-drone-integrated-education-system' },
+        { TITLE: 'Guardian of the Sky Eye', URL: '/article/sky-eye-guardian' },
+        { TITLE: 'Software-defined Radio-based Anti-drone System', URL: '/article/drone-nemesis-software-radio-based-anti-drone-system' },
       ]
     },
     {
       TITLE: 'For References',
       LINK_GROUP: [
-        { TITLE: 'EE Vocabulary Preview', URL: 'https://docs.phillweston.com/article/ee-vocabulary-preview' },
-        { TITLE: 'MEMS IMU Device Selection Reference Table (Partial)', URL: 'https://docs.phillweston.com/article/mems-imu-selection-reference-table' },
-        { TITLE: 'List of Papers Related to Shadowsocks', URL: 'https://docs.phillweston.com/article/list-of-papers-related-to-shadowsocks' },
-        { TITLE: '.NET Framework Regular Expressions', URL: 'https://docs.phillweston.com/article/dotnet-framework-regular-expressions' },
+        { TITLE: 'EE Vocabulary Preview', URL: '/article/ee-vocabulary-preview' },
+        { TITLE: 'MEMS IMU Device Selection Reference Table (Partial)', URL: '/article/mems-imu-selection-reference-table' },
+        { TITLE: 'List of Papers Related to Shadowsocks', URL: '/article/list-of-papers-related-to-shadowsocks' },
+        { TITLE: '.NET Framework Regular Expressions', URL: '/article/dotnet-framework-regular-expressions' },
       ]
     }
   ],

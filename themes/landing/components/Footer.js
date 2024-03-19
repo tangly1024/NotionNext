@@ -45,28 +45,28 @@ export default function Footer() {
                             <Logo />
                         </div>
                         <div className="text-sm text-gray-600">
-                            <Link href="/terms-of-use" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">服务条款</Link> · <Link href="/privacy-policy" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">隐私政策</Link>
+                            <Link href="/terms-of-use" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">Privacy Policy</Link> · <Link href="/privacy-policy" className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out">隐私政策</Link>
                         </div>
                     </div>
 
                     {/* 2nd block */}
                     <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-                        <h6 className="text-gray-800 font-medium mb-2">产品</h6>
+                        <h6 className="text-gray-800 font-medium mb-2">Orgnizations</h6>
                         <ul className="text-sm">
                             <li className="mb-2">
-                                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">NotionNext</a>
+                                <a href="https://github.com/XDU-Educational-UAV" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">XDU Educational UAV</a>
                             </li>
                             <li className="mb-2">
-                                {/* <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Vercel</a> */}
+                                {<a href="https://github.com/xdu-aero-association" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">XDU Aero Association</a>}
                             </li>
                             <li className="mb-2">
-                                {/* <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Github</a> */}
+                                {<a href="https://ardupilot.org/" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Ardupilot</a>}
                             </li>
                             <li className="mb-2">
-                                {/* <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Notion</a> */}
+                                {<a href="https://px4.io/" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">PX4-Autopilot</a>}
                             </li>
                             <li className="mb-2">
-                                {/* <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">NextJs</a> */}
+                                {<a href="http://qgroundcontrol.com/" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">QGroundControl</a>}
                             </li>
                         </ul>
                     </div>
@@ -76,16 +76,16 @@ export default function Footer() {
                         <h6 className="text-gray-800 font-medium mb-2">Resources</h6>
                         <ul className="text-sm">
                             <li className="mb-2">
-                                <a href="https://docs.phillweston.com/category/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Technology Sharing</a>
+                                <a href="/category/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Technology Sharing</a>
                             </li>
                             <li className="mb-2">
-                                <a href="https://docs.phillweston.com/category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Studying Notes</a>
+                                <a href="/category/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Studying Notes</a>
                             </li>
                             <li className="mb-2">
-                                <a href="https://docs.phillweston.com/category/%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Reference Materials</a>
+                                <a href="/category/%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Reference Materials</a>
                             </li>
                             <li className="mb-2">
-                                <a href="https://docs.phillweston.com/category/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Case Studies</a>
+                                <a href="/category/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90?theme=example" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Case Studies</a>
                             </li>
                             <li className="mb-2">
                                 <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Cooperators</a>
@@ -95,22 +95,22 @@ export default function Footer() {
 
                     {/* 4th block */}
                     <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
-                        <h6 className="text-gray-800 font-medium mb-2">Organization</h6>
+                        <h6 className="text-gray-800 font-medium mb-2">Pages Overview</h6>
                         <ul className="text-sm">
                             <li className="mb-2">
-                                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Home Page</a>
+                                <a href="/" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Home Page</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">About Me</a>
+                                <a href="/about" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">About Me</a>
                             </li>
                             <li className="mb-2">
                                 <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Our Values</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Milestones</a>
+                                <a href="/terms-of-use" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Terms of Use</a>
                             </li>
                             <li className="mb-2">
-                                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Privacy Policy</a>
+                                <a href="/privacy-policy" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Privacy Policy</a>
                             </li>
                         </ul>
                     </div>
