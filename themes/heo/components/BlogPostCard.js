@@ -63,7 +63,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             ))}
                         </div>
                         <div>
-                           
+                           {post?.publishDay}
                         </div>
                     </div>
 
