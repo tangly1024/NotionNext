@@ -63,7 +63,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             ))}
                         </div>
                         <div>
-                            { post.publishDate }
+                            {formatDateFmt(post?.publishDate, 'yyyy/MM/dd')}`}
                         </div>
                     </div>
 
