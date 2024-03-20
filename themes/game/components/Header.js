@@ -1,5 +1,4 @@
-import { useGlobal } from '@/lib/global'
-import Image from 'next/image'
+import { useGameGlobal } from '..'
 import Logo from './Logo'
 
 /**
@@ -7,10 +6,10 @@ import Logo from './Logo'
  * @returns
  */
 export default function Header() {
-  const { setSideBarVisible } = useGlobal()
+  const { setSideBarVisible } = useGameGlobal()
   return (
     <header className='z-20'>
-      <div className='w-full h-16 rounded-md bg-white shadow-card dark:bg-[#1F2030] flex justify-between items-center px-4'>
+      <div className='w-full h-16 rounded-md bg-white shadow-md hover:shadow-xl transition-shadow duration-200 dark:bg-[#1F2030] flex justify-between items-center px-4'>
         <Logo />
 
         <button
@@ -18,7 +17,7 @@ export default function Header() {
           onClick={() => {
             setSideBarVisible(true)
           }}>
-          <Image src='/svg/search.svg' className='mr-2' width={20} height={20} />
+          <i className='fas fa-search' />
         </button>
       </div>
     </header>

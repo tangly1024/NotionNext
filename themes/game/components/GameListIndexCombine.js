@@ -24,6 +24,7 @@ export const GameListIndexCombine = ({ posts }) => {
   if (recommend) {
     // 4合一卡组
     let groupItems = []
+
     while (gamesClone?.length > 0) {
       index++
 
@@ -38,16 +39,18 @@ export const GameListIndexCombine = ({ posts }) => {
         const item = gamesClone.shift()
         if (item.tags?.some(t => t === siteConfig('GAME_RECOMMEND_TAG', 'Recommend', CONFIG))) {
           components.push(<GameItem key={index} item={item} isLargeCard={true} />)
-          break
+          continue
         } else {
           groupItems.push(item)
         }
       }
 
-      if (groupItems.length === 4 || (gamesClone.length === 0 && groupItems.length > 4)) {
+      if (groupItems.length === 4) {
         components.push(<GameItemGroup key={index} items={groupItems} />)
+        // 清空4合一卡片
         groupItems = []
       } else {
+        // 剩余的4合一不满4个的给他放大卡
         while (groupItems.length > 0) {
           const item = groupItems.shift()
           components.push(<GameItem key={index++} item={item} isLargeCard={true} />)

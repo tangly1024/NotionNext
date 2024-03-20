@@ -40,7 +40,8 @@ export const GameListNormal = ({ games, maxCount = 18 }) => {
  * @returns
  */
 const GameItem = ({ item }) => {
-  const { title, img } = item
+  const { title } = item
+  const img = item.pageCoverThumbnail
   const [showType, setShowType] = useState('img') // img or video
   const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
   const video = item?.ext?.video

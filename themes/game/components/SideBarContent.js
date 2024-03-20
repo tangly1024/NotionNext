@@ -1,5 +1,8 @@
+import { siteConfig } from '@/lib/config'
+import { deepClone } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
 import { useGameGlobal } from '..'
+import CONFIG from '../config'
 import { GameListNormal } from './GameListNormal'
 import Logo from './Logo'
 
@@ -7,9 +10,9 @@ import Logo from './Logo'
  * 侧拉抽屉的内容
  */
 export default function SideBarContent() {
-  const { allGames, sideBarVisible, setSideBarVisible, filterGames, setFilterGames } = useGameGlobal()
+  const { allNavPages, sideBarVisible, setSideBarVisible, filterGames, setFilterGames } = useGameGlobal()
   const inputRef = useRef(null) // 创建对输入框的引用
-
+  const allGames = deepClone(allNavPages)
   useEffect(() => {
     if (sideBarVisible) {
       setTimeout(() => {
@@ -21,7 +24,9 @@ export default function SideBarContent() {
   const handleSearch = e => {
     const search = e.target.value
     if (!search || search === '') {
-      setFilterGames(allGames?.filter(item => item.recommend))
+      setFilterGames(
+        allGames?.filter(item => item.tags?.some(t => t === siteConfig('GAME_RECOMMEND_TAG', 'Recommend', CONFIG)))
+      )
       return
     }
     setFilterGames(

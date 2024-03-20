@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
 import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
 import { useState } from 'react'
+import { useGameGlobal } from '..'
 
 /**
  * 游戏列表- 最近游戏
  * @returns
  */
 export const GameListRecent = ({ maxCount = 14 }) => {
-  const { recentGames } = useGlobal()
+  const { recentGames } = useGameGlobal()
   const gamesClone = deepClone(recentGames)
   // 构造一个List<Component>
   const components = []
@@ -31,8 +31,7 @@ export const GameListRecent = ({ maxCount = 14 }) => {
 
   return (
     <>
-      <div className='text-white text-lg pb-1 p-2'>Recent Played</div>
-      <div className='game-list-recent-wrapper w-full max-w-full overflow-x-auto p-2'>
+      <div className='game-list-recent-wrapper w-full max-w-full overflow-x-auto pt-4 px-2'>
         <div className='game-grid md:flex grid grid-flow-col gap-2'>
           {components?.map((ItemComponent, index) => {
             return ItemComponent
@@ -67,6 +66,9 @@ const GameItem = ({ item }) => {
       title={title}
       className={`card-single h-28 w-28 relative shadow rounded-md overflow-hidden flex justify-center items-center 
                 group   hover:border-purple-400`}>
+      <div className='absolute right-0.5 top-1 z-20'>
+        <i className='fas fa-clock-rotate-left w-6 h-6 flex items-center justify-center shadow rounded-full bg-white text-blue-500 text-sm' />
+      </div>
       <div className='absolute text-sm bottom-2 transition-all duration-200 text-white z-30'>{title}</div>
       <div className='h-1/2 w-full absolute left-0 bottom-0 z-20 opacity-75 transition-all duration-200'>
         <div className='h-full w-full absolute bg-gradient-to-b from-transparent to-black'></div>
