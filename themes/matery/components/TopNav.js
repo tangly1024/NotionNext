@@ -33,12 +33,12 @@ const TopNav = props => {
       const navTransparent = header && scrollS < 300 // 透明导航条的条件
 
       if (navTransparent) {
-        nav && nav.classList.replace('bg-indigo-700', 'bg-none')
+        nav && nav.classList.replace('bg-blue-700', 'bg-none')
         nav && nav.classList.replace('text-black', 'text-white')
         nav && nav.classList.replace('shadow-xl', 'shadow-none')
         nav && nav.classList.replace('dark:bg-hexo-black-gray', 'transparent')
       } else {
-        nav && nav.classList.replace('bg-none', 'bg-indigo-700')
+        nav && nav.classList.replace('bg-none', 'bg-blue-700')
         nav && nav.classList.replace('text-white', 'text-black')
         nav && nav.classList.replace('shadow-none', 'shadow-xl')
         nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
