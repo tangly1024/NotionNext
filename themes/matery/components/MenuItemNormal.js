@@ -12,7 +12,7 @@ export const MenuItemNormal = props => {
     title={link.to}
     href={link.to}
     className={'py-2 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
-     (selected ? 'bg-indigo-500 text-white ' : ' text-black dark:text-white ')}>
+     (selected ? 'bg-blue-500 text-white ' : ' text-black dark:text-white ')}>
 
     <div className='my-auto items-center justify-between flex '>
         <i className={`${link.icon} w-4 ml-3 mr-6 text-center`} />
