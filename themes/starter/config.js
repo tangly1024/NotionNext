@@ -289,7 +289,8 @@ const CONFIG = {
         { TITLE: 'UAV Integrated Education System', URL: '/article/smart-manufacturing-future-drone-integrated-education-system' },
         { TITLE: 'Guardian of the Sky Eye', URL: '/article/sky-eye-guardian' },
         { TITLE: 'Software-defined Radio-based Anti-drone System', URL: '/article/drone-nemesis-software-radio-based-anti-drone-system' },
-        { TITLE: 'Multifunctional-Underwater-Drone', URL: '/article/dragon-rise-from-depths-multifunctional-underwater-drone' },
+        { TITLE: 'Multifunctional Underwater Drone', URL: '/article/dragon-rise-from-depths-multifunctional-underwater-drone' },
+        { TITLE: 'Aerial Antenna Power Pattern Testing System', URL: '/article/hexacopter-drone-antenna-power-pattern-testing-system-development' },
       ]
     },
     {
@@ -299,6 +300,7 @@ const CONFIG = {
         { TITLE: 'MEMS IMU Device Selection Reference Table (Partial)', URL: '/article/mems-imu-selection-reference-table' },
         { TITLE: 'List of Papers Related to Shadowsocks', URL: '/article/list-of-papers-related-to-shadowsocks' },
         { TITLE: '.NET Framework Regular Expressions', URL: '/article/dotnet-framework-regular-expressions' },
+        { TITLE: 'DJI Remote Control MAVLink Protocol V1.0', URL: '/article/dji-remote-control-mavlink-protocol-v1-0' },
       ]
     }
   ],
