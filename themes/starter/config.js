@@ -110,42 +110,42 @@ const CONFIG = {
   STARTER_TESTIMONIALS_ITEMS: [
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: 'Impressive! Your AI-driven drone system outperforms anything I\'ve encountered. The accuracy and efficiency it brings to aerial tasks are unparalleled.',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: '/images/starter/testimonials/author-01.jpg',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'DroneTechExpert',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Industry Specialist',
       STARTER_TESTIMONIALS_ITEM_URL: 'https://industryexpert.blog'
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: 'As a tech enthusiast, I am blown away by the intelligent capabilities of your drones. Their autonomous navigation is a game-changer!',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F0d33d169-f932-41ff-ac6b-88a923c08e02%2F%25E5%25A4%25B4%25E5%2583%258F.jfif?table=collection&id=7787658d-d5c0-4f34-8e32-60c523dfaba3&width=400',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: '/images/starter/testimonials/author-02.jpg',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'TechGuru',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Technology Blogger',
       STARTER_TESTIMONIALS_ITEM_URL: 'https://techguru.blog'
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: 'The integration of AI in your drones has revolutionized the way we approach aerial surveillance. Truly innovative and cutting-edge!',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F6c096b44-beb9-48ee-8f92-1efdde47f3a3%2F338962f1-d352-49c7-9a1b-746e35a7005c%2Fhf.png?table=block&id=ce5a48a9-d77a-4843-a3d9-a78cd4f794ce&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: '/images/starter/testimonials/author-03.jpg',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'AI Innovator',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'AI Researcher',
       STARTER_TESTIMONIALS_ITEM_URL: 'https://aiinnovator.tech'
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: 'Your project sets a new standard in the drone industry. The autonomous features powered by AI are incredibly advanced yet user-friendly.',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd52f6766-3e32-4c3d-8529-46e1f214360f%2Ffavicon.svg?table=collection&id=7d76aad5-a2c4-4d9a-887c-c7913fae4eed&width=400',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: '/images/starter/testimonials/author-04.jpg',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'FutureTechLeader',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Emerging Technologies Analyst',
       STARTER_TESTIMONIALS_ITEM_URL: 'https://futuretechleader.net'
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: 'Utilizing your intelligent drones has significantly enhanced our data collection efficiency. They\'re truly at the forefront of AI and drone technology!',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fafb21381-f51b-4fd0-9998-800dbeb64dbe%2Favatar.png?table=block&id=195935d2-0d8d-49fc-bd81-1db42ee50840&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: '/images/starter/testimonials/author-05.jpg',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'DataWizard',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Data Analyst',
       STARTER_TESTIMONIALS_ITEM_URL: 'https://datawizard.analytics'
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: 'The versatility of your drones in different environmental conditions is outstanding. Their robust AI system demonstrates remarkable adaptability and precision.',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe4f391d7-7d65-4c05-a82c-c6e2c40f06e4%2Fa2a7641a26b367608c6ef28ce9b7e983_(2).png?table=block&id=a386eb0e-4c07-4b18-9ece-bba4e79ce21c&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: '/images/starter/testimonials/author-06.jpg',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'EnviroTech',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Environmental Scientist',
       STARTER_TESTIMONIALS_ITEM_URL: 'https://envirotech.science'
