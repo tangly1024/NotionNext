@@ -1,9 +1,9 @@
-import { getGlobalData } from '@/lib/db/getSiteData'
-import { getDataFromCache } from '@/lib/cache/cache_manager'
 import BLOG from '@/blog.config'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
+import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 const Index = props => {
   const { keyword } = props
@@ -29,7 +29,7 @@ export async function getStaticProps({ params: { keyword, page } }) {
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
   // 处理分页
-  props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
+  props.posts = props.posts.slice(siteConfig('POSTS_PER_PAGE') * (page - 1), siteConfig('POSTS_PER_PAGE') * page)
   props.keyword = keyword
   props.page = page
   delete props.allPages
@@ -87,8 +87,7 @@ function getTextContent(textArray) {
  * @param {*} obj
  * @returns
  */
-const isIterable = obj =>
-  obj != null && typeof obj[Symbol.iterator] === 'function'
+const isIterable = obj => obj != null && typeof obj[Symbol.iterator] === 'function'
 
 /**
  * 在内存缓存中进行全文索引
