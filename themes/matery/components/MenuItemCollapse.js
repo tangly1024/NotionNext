@@ -30,8 +30,8 @@ export const MenuItemCollapse = ({ link }) => {
   const selected = (router.pathname === link.to) || (router.asPath === link.to)
 
   return <>
-        <div onClick={toggleShow} className={'py-2 px-5 duration-300 text-base justify-between hover:bg-indigo-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
-            (selected ? 'bg-indigo-500 text-white ' : ' text-black dark:text-white ')}>
+        <div onClick={toggleShow} className={'py-2 px-5 duration-300 text-base justify-between hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+            (selected ? 'bg-blue-500 text-white ' : ' text-black dark:text-white ')}>
 
             {!hasSubMenu && <Link href={link?.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
                 <div className='my-auto items-center justify-between flex '>
@@ -50,7 +50,7 @@ export const MenuItemCollapse = ({ link }) => {
         {/* 折叠子菜单 */}
         {hasSubMenu && <Collapse isOpen={isOpen}>
             {link.subMenus.map((sLink, index) => {
-              return <div key={index} className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-indigo-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
+              return <div key={index} className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-blue-700 hover:text-white dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
                     <Link href={sLink.to} target={link?.to?.indexOf('http') === 0 ? '_blank' : '_self'}>
                         <span className='text-sm'><i className={`${sLink.icon} w-4 mr-3 text-center`} />{sLink.title}</span>
                     </Link>
