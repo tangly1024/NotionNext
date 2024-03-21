@@ -4,8 +4,8 @@
 const CONFIG = {
 
   // 默认只展示Logo文字，如果设置了logo图片，会在文字左侧显示图标
-  STARTER_LOGO: '', // 普通logo图片 示例：/images/starter/logo/logo.svg
-  STARTER_LOGO_WHITE: '', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
+  STARTER_LOGO: '/images/starter/logo/logo.svg', // 普通logo图片
+  STARTER_LOGO_WHITE: '/images/starter/logo/logo-white.svg', // 透明底浅色logo图片
 
   // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
 
@@ -270,10 +270,14 @@ const CONFIG = {
       TITLE: 'About Me',
       LINK_GROUP: [
         { TITLE: 'Official Website', URL: '/#home' },
-        { TITLE: 'Documentation', URL: '/about' },
+        { TITLE: 'My Journey', URL: '/about' },
         { TITLE: 'Help & Support', URL: '/how-to-question' },
         { TITLE: 'Friend Link', URL: '/links' },
-        { TITLE: 'Cooperators', URL: '/cooperators' }
+        { TITLE: 'Cooperators', URL: '/cooperators' },
+        { TITLE: 'Gallery', URL: '/gallery' },
+        { TITLE: 'Study Materials', URL: '/study-materials' },
+        { TITLE: 'Open Source Code', URL: '/open-source-code' },
+        { TITLE: 'Website Technology', URL: '/website-technology' }
       ]
     },
     {

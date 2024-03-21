@@ -76,12 +76,12 @@ export const SignUpForm = () => {
 
             <p className="mb-4 text-base text-body-secondary">
               By creating an account you are agree with our
-              <a href="#" className="text-primary hover:underline">
-                Privacy
+              <a href="/privacy-policy" className="text-primary hover:underline">
+                Privacy Policy
               </a>
               and
-              <a href="#" className="text-primary hover:underline">
-                Policy
+              <a href="/terms-of-use" className="text-primary hover:underline">
+                Terms of Use
               </a>
             </p>
 

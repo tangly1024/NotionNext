@@ -50,7 +50,7 @@ const CONFIG = {
   LANDING_TESTIMONIALS_HEADER: 'Impacting Diverse Sectors with AI & Drone Innovations',
   LANDING_TESTIMONIALS_P: 'Our work extends across various fields including aerospace, robotics, telecommunications, computer science, digital imaging, and more. It has been instrumental in advancing technology in industries such as real estate, education, construction, medicine, mechanics, and IT, as well as influencing content creation and digital nomadism.',
 
-  LANDING_TESTIMONIALS_AVATAR: 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
+  LANDING_TESTIMONIALS_AVATAR: '/images/starter/testimonials/author-01.jpg',
   LANDING_TESTIMONIALS_NICKNAME: 'DroneTechExpert',
   LANDING_TESTIMONIALS_ID: 'Industry Specialist',
   LANDING_TESTIMONIALS_SOCIAL_NAME: '@DroneTechExpert',

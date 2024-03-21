@@ -205,7 +205,7 @@ const LayoutTagIndex = (props) => <></>
 const LayoutSignIn = (props) => {
   return <>
         <div className='grow mt-20'>
-            <Banner title='登录' description='这里是演示页面，NotionNext目前不提供会员登录功能'/>
+            <Banner title='Login' description='Login function has not been implemented yet.'/>
             <SignInForm/>
         </div>
     </>
@@ -218,7 +218,7 @@ const LayoutSignIn = (props) => {
  */
 const LayoutSignUp = (props) => <>
         <div className='grow mt-20'>
-            <Banner title='注册' description='这里是演示页面，NotionNext目前不提供会员注册功能'/>
+            <Banner title='Register' description='Register function has not been implemented yet.'/>
             <SignUpForm/>
         </div>
 </>
