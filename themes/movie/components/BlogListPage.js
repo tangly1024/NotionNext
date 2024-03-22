@@ -13,7 +13,7 @@ export const BlogListPage = props => {
     <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'} mb-12`}>
       <div
         id='posts-wrapper'
-        className='grid sm:grid-cols-1 sm:gap-12 md:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-20 xl:gap-24 2xl:grid-cols-4'>
+        className='grid sm:grid-cols-1 sm:gap-12 md:grid-cols-2 md:gap-15 lg:grid-cols-3 lg:gap-20 xl:gap-24 2xl:grid-cols-4'>
         {posts?.map(post => (
           <BlogPostCard key={post.id} post={post} />
         ))}
