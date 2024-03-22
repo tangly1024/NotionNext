@@ -47,21 +47,25 @@ export const MenuList = props => {
   }
 
   return (
-    <ul>
-      <li className='py-4 px-2 font-bold'>
+    <ul
+      className={`dark:text-white p-4 space-y-4 shadow-md hover:shadow-xl transition-shadow duration-200 bg-white dark:bg-hexo-black-gray my-4 rounded-md`}>
+      <li>
         <button
-          className='flex items-center gap-2'
+          className='flex items-center hover:scale-105 transition-transform duration-200'
           onClick={() => {
             setSideBarVisible(true)
           }}>
-          <i className='fas fa-search' />
+          <i className='fas fa-search w-6 mr-2' />
           <span>Search</span>
         </button>
-        <button className='flex items-center gap-2'>
+      </li>
+      <li>
+        <button className='flex items-center hover:scale-105 transition-transform duration-200'>
           {/* 切换深色模式 */}
-          <DarkModeButton className='text-center py-4' />
+          <DarkModeButton className='text-center' />
         </button>
       </li>
+      {links?.length > 0 && <hr />}
 
       {links?.map(
         (link, index) =>

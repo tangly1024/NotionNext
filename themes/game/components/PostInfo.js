@@ -33,7 +33,7 @@ export default function PostInfo(props) {
           <>
             <nav className='flex my-2 items-start text-gray-500 dark:text-gray-400'>
               {post?.tags && (
-                <div className='flex flex-nowrap max-w-full overflow-x-auto article-tags'>
+                <div className='flex flex-wrap max-w-full overflow-x-auto article-tags'>
                   {post?.tags.map(tag => (
                     <TagItem key={tag} tag={tag} />
                   ))}

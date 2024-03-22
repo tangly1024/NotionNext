@@ -23,7 +23,9 @@ const DarkModeButton = props => {
     <div
       onClick={toggleDarkMode}
       className={`${className || ''} flex items-center`}>
-      <i className={`fas mr-2 ${isDarkMode ? 'fa-sun' : 'fa-moon px-0.5'}`} />
+      <i
+        className={`w-6 mr-2 fas ${isDarkMode ? 'fa-sun' : 'fa-moon px-0.5'}`}
+      />
       {isDarkMode ? 'Dark Mode' : 'Light Mode'}{' '}
     </div>
   )

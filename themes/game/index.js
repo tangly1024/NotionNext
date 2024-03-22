@@ -13,6 +13,7 @@ import { ArticleLock } from './components/ArticleLock'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
+import BlogPostBar from './components/BlogPostBar'
 import { Footer } from './components/Footer'
 import FullScreen from './components/FullScreen'
 import { GameListIndexCombine } from './components/GameListIndexCombine'
@@ -23,7 +24,6 @@ import GroupTag from './components/GroupTag'
 import Header from './components/Header'
 import { MenuList } from './components/MenuList'
 import PostInfo from './components/PostInfo'
-import SearchNavBar from './components/SearchNavBar'
 import SideBarContent from './components/SideBarContent'
 import SideBarDrawer from './components/SideBarDrawer'
 import CONFIG from './config'
@@ -96,11 +96,10 @@ const LayoutBase = props => {
           <div className='w-52 hidden xl:block relative z-10'>
             <div className='py-4 px-2 sticky top-0 h-screen flex flex-col justify-between'>
               <div className='select-none'>
+                {/* 抬头logo等 */}
                 <Header />
-                <nav
-                  className={` dark:text-white bg-white dark:bg-hexo-black-gray my-4 rounded-md px-2`}>
-                  <MenuList {...props} />
-                </nav>
+                {/* 菜单栏 */}
+                <MenuList {...props} />
               </div>
 
               {/* 左侧广告栏目 */}
@@ -179,7 +178,7 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { posts, tag } = props
+  const { posts } = props
   const { filterKey } = useGameGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
@@ -194,11 +193,11 @@ const LayoutPostList = props => {
 
   return (
     <>
-      {tag && <SearchNavBar {...props} />}
+      <BlogPostBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogListPage posts={filteredBlogPosts} />
+        <BlogListPage posts={filteredBlogPosts} {...props} />
       ) : (
-        <BlogListScroll posts={filteredBlogPosts} />
+        <BlogListScroll posts={filteredBlogPosts} {...props} />
       )}
     </>
   )
@@ -240,7 +239,6 @@ const LayoutSearch = props => {
 
   return (
     <>
-      <SearchNavBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogListPage {...props} posts={filteredBlogPosts} />
       ) : (
@@ -410,7 +408,7 @@ const LayoutSlug = props => {
               </div>
 
               {/* 游戏资讯 */}
-              <div className='game-info dark:text-white py-4 px-2 mt-8 md:mt-0'>
+              <div className='game-info dark:text-white py-4 px-2 md:px-0 mt-8 md:mt-0'>
                 {/* 关联游戏 */}
                 <div className='w-full'>
                   <GameListRelate posts={relateGames} />
@@ -512,15 +510,14 @@ const LayoutTagIndex = props => {
 }
 
 export {
-    Layout404,
-    LayoutArchive,
-    LayoutBase,
-    LayoutCategoryIndex,
-    LayoutIndex,
-    LayoutPostList,
-    LayoutSearch,
-    LayoutSlug,
-    LayoutTagIndex,
-    CONFIG as THEME_CONFIG
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }
-

@@ -26,7 +26,9 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
       onClose && onClose()
     }
     const sideBarDrawer = window.document.getElementById('sidebar-drawer')
-    const sideBarDrawerBackground = window.document.getElementById('sidebar-drawer-background')
+    const sideBarDrawerBackground = window.document.getElementById(
+      'sidebar-drawer-background'
+    )
 
     if (showStatus) {
       sideBarDrawer?.classList.replace('-ml-96', 'ml-0')
@@ -41,7 +43,7 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
     <div id='sidebar-wrapper' className={`top-0 ${className}`}>
       <div
         id='sidebar-drawer'
-        className={`${isOpen ? 'ml-0 visible opacity-100' : '-ml-96 invisible opacity-0'} w-96  bg-black shadow-black shadow-lg flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-30`}>
+        className={`${isOpen ? 'ml-0 visible opacity-100' : '-ml-96 invisible opacity-0'} w-96 bg-[#83FFE7] dark:bg-black shadow-black shadow-lg flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-30`}>
         {children}
       </div>
 
