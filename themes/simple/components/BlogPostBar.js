@@ -11,16 +11,16 @@ export default function BlogPostBar(props) {
 
   if (tag) {
     return (
-      <div className='flex items-center text-xl py-8'>
+      <div className='flex items-center text-xl py-2'>
         <i className='mr-2 fas fa-tag' />
-        {locale.COMMON.TAGS}:{tag}
+        {locale.COMMON.TAGS}: {tag}
       </div>
     )
   } else if (category) {
     return (
-      <div className='flex items-center text-xl py-8'>
+      <div className='flex items-center text-xl py-2'>
         <i className='mr-2 fas fa-th' />
-        {locale.COMMON.CATEGORY}:{category}
+        {locale.COMMON.CATEGORY}: {category}
       </div>
     )
   } else {
