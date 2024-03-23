@@ -8,9 +8,9 @@ export const ArticleInfo = props => {
 
   return (
     <section className='w-full mx-auto mb-4'>
-      <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
+      <h2 className='text-6xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
 
-      <div className='flex gap-3 font-semibold text-sm items-center justify-center'>
+      <div className='flex gap-3 font-semibold text-lg items-center justify-center'>
         <Link
           href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
           passHref
