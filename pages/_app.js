@@ -1,5 +1,3 @@
-npm i @tawk.to/tawk-messenger-react
-yarn add @tawk.to/tawk-messenger-react
 
 import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
