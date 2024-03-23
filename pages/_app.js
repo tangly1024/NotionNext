@@ -3,6 +3,35 @@ import '@/styles/globals.css'
 import '@/styles/nprogress.css'
 import '@/styles/utility-patterns.css'
 
+//tawk
+import "../styles/globals.css";
+import Message from "../components/Message";
+import Head from "next/head";
+import Script from "next/script";
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
+import { useRef } from 'react';
+
+function MyApp({ Component, pageProps }) {
+  const tawkMessengerRef = useRef();
+
+  const handleMinimize = () => {
+    tawkMessengerRef.current.minimize();
+  };
+  return (
+    <>
+      <Component {...pageProps} />
+      <button onClick={handleMinimize}> Minimize the Chat </button>
+
+      <TawkMessengerReact
+        propertyId={process.env.NEXT_PUBLIC_TWAKTO_PROPERTY_ID}
+        widgetId={process.env.NEXT_PUBLIC_TWAKTO_WIDGET_ID}
+        useRef={tawkMessengerRef}
+      />
+    </>
+  );
+}
+
+
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
 import '@/styles/notion.css' //  重写部分样式
