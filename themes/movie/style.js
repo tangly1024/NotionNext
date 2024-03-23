@@ -9,7 +9,7 @@ const Style = () => {
     <style jsx global>{`
       // 底色
       .notion {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
       }
       
       .dark body {
