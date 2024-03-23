@@ -3,14 +3,13 @@ import '@/styles/globals.css'
 import '@/styles/nprogress.css'
 import '@/styles/utility-patterns.css'
 
-//tawk
-import "../styles/globals.css";
-import Message from "../components/Message";
-import Head from "next/head";
-import Script from "next/script";
-import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
+// tawk
+import '../styles/globals.css';
+import Message from '../components/Message';
+import Head from 'next/head';
+import Script from 'next/script';
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 import { useRef } from 'react';
-
 
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css'
