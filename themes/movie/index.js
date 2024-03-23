@@ -301,7 +301,9 @@ const LayoutSlug = props => {
           {/* 标题 */}
           <ArticleInfo post={post} />
           {/* 页面元素 */}
+        <div style={{ fontSize: '16px' }}> {/* 设置字体大小 */}
           <NotionPage post={post} />
+          </div>
           {/* 推荐 */}
           <BlogRecommend {...props} />
           {/* 分享栏目 */}
