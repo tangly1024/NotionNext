@@ -1,4 +1,3 @@
-
 import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
 import '@/styles/nprogress.css'
@@ -33,26 +32,6 @@ const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle();
   
-  //TAWK.TO
-  const tawkMessengerRef = useRef();
-
-  const handleMinimize = () => {
-    tawkMessengerRef.current.minimize();
-  };
-  return (
-    <>
-      <Component {...pageProps} />
-      <button onClick={handleMinimize}> Minimize the Chat </button>
-
-      <TawkMessengerReact
-        propertyId={process.env.NEXT_PUBLIC_TWAKTO_PROPERTY_ID}
-        widgetId={process.env.NEXT_PUBLIC_TWAKTO_WIDGET_ID}
-        useRef={tawkMessengerRef}
-      />
-    </>
-  );
-
-
   
   const route = useRouter()
   const queryParam = useMemo(() => {
