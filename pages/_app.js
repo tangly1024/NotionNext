@@ -1,4 +1,4 @@
-import '@/styles/animate.css' // @see https://animate.style/
+// import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
 import '@/styles/nprogress.css'
 import '@/styles/utility-patterns.css'
@@ -20,9 +20,6 @@ import ExternalPlugins from '@/components/ExternalPlugins'
 import GlobalHead from '@/components/GlobalHead'
 import BLOG from '@/blog.config'
 
-
-
-
 /**
  * App挂载DOM 入口文件
  * @param {*} param0
@@ -31,8 +28,7 @@ import BLOG from '@/blog.config'
 const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle();
-  
-  
+
   const route = useRouter()
   const queryParam = useMemo(() => {
     return getQueryParam(route.asPath, 'theme') || pageProps?.NOTION_CONFIG?.THEME || BLOG.THEME
