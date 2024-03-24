@@ -36,6 +36,7 @@ const BLOG = {
   CONTACT_YOUTUBE: process.env.NEXT_PUBLIC_CONTACT_YOUTUBE || '', // Youtube主页
   CONTACT_TAOBAO: process.env.NEXT_PUBLIC_CONTACT_TAOBAO || '', // 淘宝主页
   CONTACT_XIAOHONGSHU: process.env.NEXT_PUBLIC_CONTACT_XIAOHONGSHU || 'https://www.xiaohongshu.com/user/profile/65b05632000000001302aa25?xhsshare=CopyLink&appuid=65b05632000000001302aa25&apptime=1706483291', // 小红书主页
+  CONTACT_ZHUOZHE: process.env.NEXT_PUBLIC_CONTACT_ZHUOZHE || 'https://lively-sandpaper-7f4.notion.site/ZZ2A-50b2bb98af604d079f06a490bca90a82?pvs=4', // 关于作者
 
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
 
