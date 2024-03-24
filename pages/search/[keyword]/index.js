@@ -1,9 +1,9 @@
-import { getGlobalData } from '@/lib/db/getSiteData'
-import { getDataFromCache } from '@/lib/cache/cache_manager'
 import BLOG from '@/blog.config'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
+import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 const Index = props => {
   // 根据页面路径加载不同Layout文件
@@ -27,10 +27,10 @@ export async function getStaticProps({ params: { keyword } }) {
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
   // 处理分页
-  if (BLOG.POST_LIST_STYLE === 'scroll') {
+  if (siteConfig('POST_LIST_STYLE') === 'scroll') {
     // 滚动列表 给前端返回所有数据
-  } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
+  } else if (siteConfig('POST_LIST_STYLE') === 'page') {
+    props.posts = props.posts?.slice(0, siteConfig('POSTS_PER_PAGE'))
   }
   props.keyword = keyword
   return {
@@ -87,8 +87,7 @@ function getTextContent(textArray) {
  * @param {*} obj
  * @returns
  */
-const isIterable = obj =>
-  obj != null && typeof obj[Symbol.iterator] === 'function'
+const isIterable = obj => obj != null && typeof obj[Symbol.iterator] === 'function'
 
 /**
  * 在内存缓存中进行全文索引

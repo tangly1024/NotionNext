@@ -1,9 +1,10 @@
 import BLOG from '@/blog.config'
-import { getGlobalData, getPostBlocks, getPost } from '@/lib/db/getSiteData'
-import { idToUuid } from 'notion-utils'
-import Slug, { getRecommendPost } from '..'
+import { siteConfig } from '@/lib/config'
+import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { checkContainHttp } from '@/lib/utils'
+import { idToUuid } from 'notion-utils'
+import Slug, { getRecommendPost } from '..'
 
 /**
  * 根据notion的slug访问页面
@@ -12,7 +13,7 @@ import { checkContainHttp } from '@/lib/utils'
  * @returns
  */
 const PrefixSlug = props => {
-  return <Slug {...props}/>
+  return <Slug {...props} />
 }
 
 /**
@@ -31,8 +32,11 @@ export async function getStaticPaths() {
   const { allPages } = await getGlobalData({ from })
 
   return {
-    paths: allPages?.filter(row => checkSlug(row))
-      .map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1], suffix: row.slug.split('/').slice(1) } })),
+    paths: allPages
+      ?.filter(row => checkSlug(row))
+      .map(row => ({
+        params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1], suffix: row.slug.split('/').slice(1) }
+      })),
     fallback: true
   }
 }
@@ -52,8 +56,8 @@ export async function getStaticProps({ params: { prefix, slug, suffix } }) {
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalData({ from })
   // 在列表内查找文章
-  props.post = props?.allPages?.find((p) => {
-    return (p.type.indexOf('Menu') < 0) && (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+  props.post = props?.allPages?.find(p => {
+    return p.type.indexOf('Menu') < 0 && (p.slug === fullSlug || p.id === idToUuid(fullSlug))
   })
 
   // 处理非列表内文章的内信息
@@ -86,7 +90,7 @@ export async function getStaticProps({ params: { prefix, slug, suffix } }) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
     props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-    props.recommendPosts = getRecommendPost(props.post, allPosts, BLOG.POST_RECOMMEND_COUNT)
+    props.recommendPosts = getRecommendPost(props.post, allPosts, siteConfig('POST_RECOMMEND_COUNT'))
   } else {
     props.prev = null
     props.next = null
