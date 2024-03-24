@@ -332,7 +332,7 @@ const LayoutCategoryIndex = props => {
                         {categoryOptions?.map(e => {
                           return (
                                 <Link key={e.name} href={`/category/${e.name}`} passHref legacyBehavior>
-                                    <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400' >
+                                    <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-blue-400' >
                                         <i className={'mr-4 fas fa-folder'} />  {e.name}({e.count})
                                     </div>
                                 </Link>
