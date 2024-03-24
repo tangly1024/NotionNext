@@ -44,6 +44,9 @@ const SocialButton = () => {
       {siteConfig('CONTACT_TAOBAO') && <a target='_blank' rel='noreferrer' title={'淘宝'} href={siteConfig('CONTACT_TAOBAO')} >
         <i className='transform hover:scale-125 duration-150 fa-solid fa-cart-shopping dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
+      {siteConfig('CONTACT_ZHUOZHE') && <a target='_blank' rel='noreferrer' title={'关于作者'} href={siteConfig('CONTACT_ZHUOZHE')} >
+        <i className='transform hover:scale-125 duration-150 fa-solid fa-solid fa-address-card:hover:text-indigo-400 hover:text-indigo-600'/>
+      </a>}
     </div>
   </div>
 }
