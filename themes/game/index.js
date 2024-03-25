@@ -308,7 +308,7 @@ const LayoutSlug = props => {
     // 定义一个函数来处理iframe加载成功事件
     function iframeLoaded() {
       if (game) {
-        // setLoading(false)
+        setLoading(false)
       }
     }
 
