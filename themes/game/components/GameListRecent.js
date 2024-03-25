@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { siteConfig } from '@/lib/config'
 import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import Link from 'next/link'
 import { useState } from 'react'
 import { useGameGlobal } from '..'
 
@@ -50,12 +51,14 @@ export const GameListRecent = ({ maxCount = 14 }) => {
 const GameItem = ({ item }) => {
   const { title } = item || {}
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+  const url = checkContainHttp(item.slug)
+    ? sliceUrlFromHttp(item.slug)
+    : `${siteConfig('SUB_PATH', '')}/${item.slug}`
 
   const img = item?.pageCoverThumbnail
   const video = item?.ext?.video
   return (
-    <a
+    <Link
       href={`${url}`}
       onMouseOver={() => {
         setShowType('video')
@@ -69,13 +72,19 @@ const GameItem = ({ item }) => {
       <div className='absolute right-0.5 top-1 z-20'>
         <i className='fas fa-clock-rotate-left w-6 h-6 flex items-center justify-center shadow rounded-full bg-white text-blue-500 text-sm' />
       </div>
-      <div className='absolute text-sm bottom-2 transition-all duration-200 text-white z-30'>{title}</div>
+      <div className='absolute text-sm bottom-2 transition-all duration-200 text-white z-30'>
+        {title}
+      </div>
       <div className='h-1/2 w-full absolute left-0 bottom-0 z-20 opacity-75 transition-all duration-200'>
         <div className='h-full w-full absolute bg-gradient-to-b from-transparent to-black'></div>
       </div>
 
       {showType === 'video' && (
-        <video className='z-10 object-cover w-auto h-28 absolute overflow-hidden' loop='true' autoPlay preload='none'>
+        <video
+          className='z-10 object-cover w-auto h-28 absolute overflow-hidden'
+          loop='true'
+          autoPlay
+          preload='none'>
           <source src={video} type='video/mp4' />
         </video>
       )}
@@ -84,6 +93,6 @@ const GameItem = ({ item }) => {
         src={img}
         alt={title}
       />
-    </a>
+    </Link>
   )
 }
