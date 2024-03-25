@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Comment from '@/components/Comment'
 import { Draggable } from '@/components/Draggable'
 import { AdSlot } from '@/components/GoogleAdsense'
@@ -278,7 +279,7 @@ const LayoutArchive = props => {
 const LayoutSlug = props => {
   const { post, allNavPages, recommendPosts, lock, validPassword } = props
   const game = deepClone(post)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   //   const [url, setUrl] = useState(game?.ext?.href)
   const relateGames = recommendPosts
   const randomGames = shuffleArray(deepClone(allNavPages))
@@ -380,7 +381,6 @@ const LayoutSlug = props => {
                     </div>
 
                     {/* 游戏封面图 */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     {game?.img && (
                       <img
                         src={game?.img}
