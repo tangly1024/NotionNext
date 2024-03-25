@@ -17,7 +17,7 @@ const Footer = ({ siteInfo }) => {
                 © {`${copyrightDate}`}
             </div>
 
-            <div className='text-xs font-serif'>Powered By <a href='https://sixcnc.com' className='text-xs font-serif'>sixcnc.com</a></div>
+            <div className='text-xs font-serif'>Powered By <a href='https://sixcnc.com' className='text-xs font-serif'>SIXCNC.COM</a></div>
 
             {siteConfig('BEI_AN') && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{siteConfig('BEI_AN')}</a><br /></>}
 
