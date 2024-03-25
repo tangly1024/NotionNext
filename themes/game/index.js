@@ -125,7 +125,7 @@ const LayoutBase = props => {
           onClose={() => {
             setSideBarVisible(false)
           }}>
-          <SideBarContent />
+          <SideBarContent {...props} />
         </SideBarDrawer>
       </div>
     </ThemeGlobalGame.Provider>
