@@ -42,12 +42,12 @@ const CONFIG = {
   STARTER_FEATURE_2_TITLE_1: 'Innovative Drone Solutions', // 创新无人机解决方案
   STARTER_FEATURE_2_TEXT_1: 'From the "Qian Tian Yu Claw" to the "Yi Chi Co-Defense," my projects reflect innovative applications in line inspection and security.', // 从“乾天御爪”到“翼驰协防”，我的项目反映了线路检查和安全领域的创新应用。
   STARTER_FEATURE_2_BUTTON_TEXT: 'Learn More', // 了解更多
-  STARTER_FEATURE_2_BUTTON_URL: 'https://phillweston.xyz/project', // 您的网站/项目页面链接
+  STARTER_FEATURE_2_BUTTON_URL: '/category/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90?theme=heo', // 您的网站/项目页面链接
 
   STARTER_FEATURE_3_TITLE_1: 'Advanced Research and Development', // 高级研究与开发
   STARTER_FEATURE_3_TEXT_1: 'Engaged in cutting-edge research in autonomous flight, image processing, and AI-driven drone technology.', // 从事自主飞行、图像处理和人工智能驱动的无人机技术的前沿研究。
   STARTER_FEATURE_3_BUTTON_TEXT: 'Explore', // 探索
-  STARTER_FEATURE_3_BUTTON_URL: 'https://phillweston.xyz/research', // 您的研究页面链接
+  STARTER_FEATURE_3_BUTTON_URL: '/category/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB?theme=heo', // 您的研究页面链接
 
   STARTER_FEATURE_4_TITLE_1: 'Practical and Theoretical Mastery', // 实践与理论精通
   STARTER_FEATURE_4_TEXT_1: 'Blending robust academic foundations with real-world applications, focusing on control systems, vision algorithms, and machine learning.', // 将扎实的学术基础与现实世界的应用相结合，专注于控制系统、视觉算法和机器学习。
@@ -79,7 +79,7 @@ const CONFIG = {
   STARTER_PRICING_1_HEADER: 'Milestones',
   STARTER_PRICING_1_FEATURES: 'Joining RoboMaster Team, Conceptualizing UAV Line Inspection System, Participating in Competitions',
   STARTER_PRICING_1_BUTTON_TEXT: 'Explore',
-  STARTER_PRICING_1_BUTTON_URL: 'https://docs.phillweston.com/',
+  STARTER_PRICING_1_BUTTON_URL: 'https://img.phillweston.com/file/Phillweston/Large+PDF+Files/Phillweston+Introduction.pdf',
 
   STARTER_PRICING_2_TAG: 'Unprecedented Innovation',
   STARTER_PRICING_2_TITLE: 'Developing Phase',
@@ -89,7 +89,7 @@ const CONFIG = {
   STARTER_PRICING_2_HEADER: 'Milestones',
   STARTER_PRICING_2_FEATURES: 'Developing Yi Chi Co-Defense System, AI Challenge Participation, Advancing Control and Vision Algorithms',
   STARTER_PRICING_2_BUTTON_TEXT: 'Explore',
-  STARTER_PRICING_2_BUTTON_URL: 'https://docs.phillweston.com/',
+  STARTER_PRICING_2_BUTTON_URL: 'https://img.phillweston.com/file/Phillweston/Large+PDF+Files/Phillweston+Introduction.pdf',
 
   STARTER_PRICING_3_TITLE: 'Advancing Phase',
   STARTER_PRICING_3_PRICE: '2022-Present',
@@ -98,7 +98,7 @@ const CONFIG = {
   STARTER_PRICING_3_HEADER: 'Milestones',
   STARTER_PRICING_3_FEATURES: 'Final Year Project in UAV Technology, Joining Chengdu Zongheng Automation, International Collaborations and Training',
   STARTER_PRICING_3_BUTTON_TEXT: 'Explore',
-  STARTER_PRICING_3_BUTTON_URL: 'https://docs.phillweston.com/',
+  STARTER_PRICING_3_BUTTON_URL: 'https://img.phillweston.com/file/Phillweston/Large+PDF+Files/Phillweston+Introduction.pdf',
 
   STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
   STARTER_TESTIMONIALS_TITLE: 'User Reviews',
@@ -300,6 +300,7 @@ const CONFIG = {
     {
       TITLE: 'For References',
       LINK_GROUP: [
+        { TITLE: 'Micro Quadrotor Development Guide', URL: '/article/micro-quadrotor-development-guide' },
         { TITLE: 'EE Vocabulary Preview', URL: '/article/ee-vocabulary-preview' },
         { TITLE: 'MEMS IMU Device Selection Reference Table (Partial)', URL: '/article/mems-imu-selection-reference-table' },
         { TITLE: 'List of Papers Related to Shadowsocks', URL: '/article/list-of-papers-related-to-shadowsocks' },
