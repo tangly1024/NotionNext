@@ -6,6 +6,7 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
+import { loadWowJS } from '@/lib/plugins/wow'
 import { deepClone, isBrowser, shuffleArray } from '@/lib/utils'
 import Link from 'next/link'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
@@ -69,6 +70,7 @@ const LayoutBase = props => {
         ? JSON.parse(localStorage.getItem('recent_games'))
         : []
     )
+    loadWowJS()
   }, [])
 
   return (
@@ -306,7 +308,7 @@ const LayoutSlug = props => {
     // 定义一个函数来处理iframe加载成功事件
     function iframeLoaded() {
       if (game) {
-        setLoading(false)
+        // setLoading(false)
       }
     }
 
@@ -371,7 +373,7 @@ const LayoutSlug = props => {
                 {loading && (
                   <div className='absolute z-20 w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md overflow-hidden '>
                     <div className='z-20 absolute bg-black bg-opacity-75 w-full h-full flex flex-col gap-4 justify-center items-center'>
-                      <h2 className='text-3xl text-white flex gap-2'>
+                      <h2 className='text-3xl text-white flex gap-2 items-center'>
                         <i className='fas fa-spinner animate-spin'></i>
                         {siteConfig('TITLE')}
                       </h2>
