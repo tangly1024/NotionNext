@@ -115,9 +115,7 @@ const GameAd = () => {
  */
 const GameItemGroup = ({ items }) => {
   return (
-    <div
-      data-wow-delay='.2s'
-      className='wow fadeInUp card-group h-[20rem] w-full grid grid-cols-2 grid-rows-2 gap-2'>
+    <div className='card-group h-[20rem] w-full grid grid-cols-2 grid-rows-2 gap-2'>
       {items.map((item, index) => (
         <GameItem key={index} item={item} />
       ))}
@@ -148,8 +146,7 @@ const GameItem = ({ item, isLargeCard }) => {
         setShowType('img')
       }}
       title={title}
-      data-wow-delay='.2s'
-      className={`wow fadeInUp  card-single ${
+      className={`card-single ${
         isLargeCard ? 'h-[20rem]' : 'h-full'
       } w-full relative shadow rounded-md overflow-hidden flex justify-center items-center
                 group   hover:border-purple-400`}>

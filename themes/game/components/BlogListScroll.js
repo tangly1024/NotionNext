@@ -13,7 +13,9 @@ export const BlogListScroll = props => {
 
   let hasMore = false
   const postsToShow =
-    posts && Array.isArray(posts) ? deepClone(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page) : []
+    posts && Array.isArray(posts)
+      ? deepClone(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page)
+      : []
 
   if (posts) {
     const totalCount = posts.length
@@ -30,7 +32,11 @@ export const BlogListScroll = props => {
   const scrollTrigger = useCallback(
     throttle(() => {
       const scrollS = window.scrollY + window.outerHeight
-      const clientHeight = targetRef ? (targetRef.current ? targetRef.current.clientHeight : 0) : 0
+      const clientHeight = targetRef
+        ? targetRef.current
+          ? targetRef.current.clientHeight
+          : 0
+        : 0
       if (scrollS > clientHeight + 100) {
         handleGetMore()
       }
@@ -50,7 +56,9 @@ export const BlogListScroll = props => {
         <GameListIndexCombine posts={postsToShow} />
       </div>
 
-      <div onClick={handleGetMore} className='w-full my-4 py-4 text-center cursor-pointer '>
+      <div
+        onClick={handleGetMore}
+        className='w-full my-4 py-4 text-center cursor-pointer '>
         {' '}
         {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
       </div>
