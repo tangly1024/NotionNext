@@ -1,9 +1,4 @@
-import CONFIG from '../config'
-import { siteConfig } from '@/lib/config';
-import { SVGGifts } from './svg/SVGGifts';
-import { SVGTemplate } from './svg/SVGTemplate';
-import { SVGDesign } from './svg/SVGDesign';
-import { SVGEssential } from './svg/SVGEssential';
+
 /**
  * 产品特性相关，将显示在首页中
  * @returns
@@ -11,125 +6,65 @@ import { SVGEssential } from './svg/SVGEssential';
 export const Features = () => {
   return <>
      {/* <!-- ====== Features Section Start --> */}
-     <section className="pb-8 pt-20 dark:bg-dark lg:pb-[70px] lg:pt-[120px]">
-      <div className="container">
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4">
-            <div className="mx-auto mb-12 max-w-[485px] text-center lg:mb-[70px]">
-              <span className="mb-2 block text-lg font-semibold text-primary">
-                {siteConfig('STARTER_FEATURE_TITLE', null, CONFIG)}
-              </span>
-              <h2
-                className="mb-3 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]"
-              >
-                {siteConfig('STARTER_FEATURE_TEXT_1', null, CONFIG)}
-              </h2>
-              <p className="text-base text-body-color dark:text-dark-6">
-                {siteConfig('STARTER_FEATURE_TEXT_2', null, CONFIG)}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <div className="wow fadeInUp group mb-12" data-wow-delay=".1s">
-              <div
-                className="relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary"
-              >
-                <span
-                  className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
-                ></span>
-                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranscription.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNjcmlwdGlvbi5tcDQiLCJpYXQiOjE3MTAwNTk5MDcsImV4cCI6MjM0MDc3OTkwN30.7V63xM7YYLjdthBgqWR2dk2pb5yUvGA2X7H7R95VM4A&t=2024-03-10T08%3A38%3A27.850Z'/>
-              </div>
-              <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
-                {siteConfig('STARTER_FEATURE_1_TITLE_1', null, CONFIG)}
-              </h4>
-              <p className="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-                {siteConfig('STARTER_FEATURE_1_TEXT_1', null, CONFIG)}
-              </p>
-              <a
-                href={siteConfig('STARTER_FEATURE_1_BUTTON_URL', null, CONFIG)}
-                className="text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary"
-              >
-                {siteConfig('STARTER_FEATURE_1_BUTTON_TEXT', null, CONFIG)}
-              </a>
-            </div>
-          </div>
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <div className="wow fadeInUp group mb-12" data-wow-delay=".15s">
-              <div
-                className="relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary"
-              >
-                <span
-                  className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
-                ></span>
-                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranslatemute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNsYXRlbXV0ZS5tcDQiLCJpYXQiOjE3MTAwNjIwMzcsImV4cCI6MjM0MDc4MjAzN30.GEL8OQRAsusdNHeOes_jaFJZg6UnFa7wg9x42l3ke_c&t=2024-03-10T09%3A13%3A57.300Z' />
-              </div>
-              <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
-              {siteConfig('STARTER_FEATURE_2_TITLE_1', null, CONFIG)}
-              </h4>
-              <p className="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-              {siteConfig('STARTER_FEATURE_2_TEXT_1', null, CONFIG)}
-              </p>
-              <a
-                href={siteConfig('STARTER_FEATURE_2_BUTTON_URL', null, CONFIG)}
-                className="text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary"
-              >
-                {siteConfig('STARTER_FEATURE_2_BUTTON_TEXT', null, CONFIG)}
-              </a>
-            </div>
-          </div>
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <div className="wow fadeInUp group mb-12" data-wow-delay=".2s">
-              <div
-                className="relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary"
-              >
-                <span
-                  className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
-                ></span>
-                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/exportbilmute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9leHBvcnRiaWxtdXRlLm1wNCIsImlhdCI6MTcxMDA2NTE0MCwiZXhwIjoyMzQwNzg1MTQwfQ.BKCaSEl9kRhh_qYnCwWA-gYMURTAvR78_ehd-ACWKy0&t=2024-03-10T10%3A05%3A40.894Z' />
-              </div>
-              <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
-                {siteConfig('STARTER_FEATURE_3_TITLE_1', null, CONFIG)}
-              </h4>
-              <p className="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-              {siteConfig('STARTER_FEATURE_3_TEXT_1', null, CONFIG)}
-              </p>
-              <a
-                href={siteConfig('STARTER_FEATURE_3_BUTTON_URL', null, CONFIG)}
-                className="text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary"
-              >
-                {siteConfig('STARTER_FEATURE_3_BUTTON_TEXT', null, CONFIG)}
-              </a>
-            </div>
-          </div>
-          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
-            <div className="wow fadeInUp group mb-12" data-wow-delay=".25s">
-              <div
-                className="relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary"
-              >
-                <span
-                  className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
-                ></span>
-                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/edit.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9lZGl0Lm1wNCIsImlhdCI6MTcxMDA2Njg5MCwiZXhwIjoyMzQwNzg2ODkwfQ.6Cznj6uI_fMgRL4_QWtLCjuSkce5eOQotaekC71eQZc&t=2024-03-10T10%3A34%3A50.998Z' />
-              </div>
-              <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
-              {siteConfig('STARTER_FEATURE_4_TITLE_1', null, CONFIG)}
-              </h4>
-              <p className="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-              {siteConfig('STARTER_FEATURE_4_TEXT_1', null, CONFIG)}
-              </p>
-              <a
-                href={siteConfig('STARTER_FEATURE_4_BUTTON_URL', null, CONFIG)}
-                className="text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary"
-              >
-                {siteConfig('STARTER_FEATURE_3_BUTTON_TEXT', null, CONFIG)}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+     <section className="py-12 lg:py-24 xl:py-32">
+				<div className="container px-4 md:px-6">
+				  <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+					<div className="space-y-4">
+					  <div className="space-y-2">
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Video Subtitle Generation</h2>
+						<p className="text-gray-500 dark:text-gray-400">
+						  Automatically generate subtitles for your video content.
+						</p>
+					  </div>
+					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
+						<div className="aspect-video" >
+							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranscription.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNjcmlwdGlvbi5tcDQiLCJpYXQiOjE3MTAwNTk5MDcsImV4cCI6MjM0MDc3OTkwN30.7V63xM7YYLjdthBgqWR2dk2pb5yUvGA2X7H7R95VM4A&t=2024-03-10T08%3A38%3A27.850Z"></video>
+						</div>
+					  </div>
+					</div>
+					<div className="space-y-4">
+					  <div className="space-y-2">
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Subtitle Translation</h2>
+						<p className="text-gray-500 dark:text-gray-400">Translate your subtitles into multiple languages.</p>
+					  </div>
+					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
+						<div className="aspect-video" >
+							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranslatemute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNsYXRlbXV0ZS5tcDQiLCJpYXQiOjE3MTAwNjIwMzcsImV4cCI6MjM0MDc4MjAzN30.GEL8OQRAsusdNHeOes_jaFJZg6UnFa7wg9x42l3ke_c&t=2024-03-10T09%3A13%3A57.300Z"></video>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </section>
+			  <section className="bg-gray-50 py-12 lg:py-24 xl:py-32">
+				<div className="container px-4 md:px-6">
+				  <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+					<div className="space-y-4">
+					  <div className="space-y-2">
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Hardcoded Subtitle Video Export</h2>
+						<p className="text-gray-500 dark:text-gray-400">Export your video with hardcoded subtitles.</p>
+					  </div>
+					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
+						<div className="aspect-video" >
+							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/exportbilmute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9leHBvcnRiaWxtdXRlLm1wNCIsImlhdCI6MTcxMDA2NTE0MCwiZXhwIjoyMzQwNzg1MTQwfQ.BKCaSEl9kRhh_qYnCwWA-gYMURTAvR78_ehd-ACWKy0&t=2024-03-10T10%3A05%3A40.894Z" />
+						</div>
+					  </div>
+					</div>
+					<div className="space-y-4">
+					  <div className="space-y-2">
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Subtitle editing</h2>
+						<p className="text-gray-500 dark:text-gray-400">Edit, merge, and split your multilingual subtitles.</p>
+					  </div>
+					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
+						<div className="aspect-video" >
+							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/edit.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9lZGl0Lm1wNCIsImlhdCI6MTcxMDA2Njg5MCwiZXhwIjoyMzQwNzg2ODkwfQ.6Cznj6uI_fMgRL4_QWtLCjuSkce5eOQotaekC71eQZc&t=2024-03-10T10%3A34%3A50.998Z"/>
+						</div>
+					  </div>
+					</div>
+					
+				  </div>
+				</div>
+			  </section>
     {/* <!-- ====== Features Section End --> */}
     </>
 }

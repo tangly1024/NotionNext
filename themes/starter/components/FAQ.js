@@ -28,7 +28,7 @@ export const FAQ = () => {
                 {siteConfig('STARTER_FAQ_TITLE', null, CONFIG)}
               </span>
               <h2
-                className="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]"
+                className="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[18px]"
               >
                 {siteConfig('STARTER_FAQ_TEXT_1', null, CONFIG)}
               </h2>
@@ -67,7 +67,7 @@ export const FAQ = () => {
               >
                 <SVGQuestion/>
               </div>
-              <div className="w-full">
+              <div className="w-full ">
               <h3
                   className="mb-6 text-xl font-semibold text-dark dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
                 >
@@ -118,7 +118,8 @@ export const FAQ = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div>    
+
         </div>
       </div>
 

@@ -68,7 +68,7 @@ const CONFIG = {
   STARTER_ABOUT_TIPS_3: '正在线上运行',
 
   // 首页价格区块
-  STARTER_PRICING_ENABLE: true, // 价格区块开关
+  STARTER_PRICING_ENABLE: false, // 价格区块开关
   STARTER_PRICING_TITLE: '价格表',
   STARTER_PRICING_TEXT_1: '很棒的定价计划',
   STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
@@ -102,7 +102,7 @@ const CONFIG = {
   STARTER_PRICING_3_BUTTON_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
 
   // 首页用户测评区块
-  STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
+  STARTER_TESTIMONIALS_ENABLE: false, // 测评区块开关
   STARTER_TESTIMONIALS_TITLE: '用户反馈',
   STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
   STARTER_TESTIMONIALS_TEXT_2: '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
@@ -156,21 +156,40 @@ const CONFIG = {
 
   //   FAQ 常见问题模块
   STARTER_FAQ_ENABLE: true, // 常见问题模块开关
-  STARTER_FAQ_TITLE: '常见问题解答',
-  STARTER_FAQ_TEXT_1: '有任何问题吗？请看这里',
-  STARTER_FAQ_TEXT_2: '我们收集了常见的用户疑问',
+  STARTER_FAQ_TITLE: 'Frequently Asked Questions and Answers',
+  STARTER_FAQ_TEXT_1: 'Do you have any questions? Please refer to here.',
+  STARTER_FAQ_TEXT_2: 'We have collected common user questions.',
 
-  STARTER_FAQ_1_QUESTION: 'NotionNext有帮助文档吗？',
-  STARTER_FAQ_1_ANSWER: 'NotionNext提供了<a href="https://docs.tangly1024.com/about" className="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" className="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" className="underline">交流社群</a>来协助您完成网站的搭建部署',
+  STARTER_FAQ_1_QUESTION: 'How to experience Aragorn translation for free?',
+  STARTER_FAQ_1_ANSWER: 'There is a link to the author\'s Twitter at the bottom of the page. Follow him and send him a private message to receive it.',
 
-  STARTER_FAQ_2_QUESTION: '部署后要如何编写文章？',
-  STARTER_FAQ_2_ANSWER: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a className="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>',
+  STARTER_FAQ_2_QUESTION: 'What are the rules for deducting credits?',
+  STARTER_FAQ_2_ANSWER: `<span style='white-space: pre-line;'>1 Aragorn credit is equivalent to one minute of video processing time. 
+  Currently, there are three types of video processing in Aragorn: subtitle generation, subtitle translation, and hard subtitle video burning for export.
+   Examples of the charging situations are as follows:
 
-  STARTER_FAQ_3_QUESTION: '站点部署失败，更新失败？',
-  STARTER_FAQ_3_ANSWER: '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助',
+    * If you need to generate subtitles for a 10-minute video, it will consume 10 Aragorn credits.
+    * If you want to generate subtitles and translate them for a 10-minute video, it will consume 20 Aragorn credits.
+    * If you want to generate subtitles, translate them, and export the video with hard subtitles for a 10-minute video, it will consume 30 Aragorn credits.
+  
+  And so on. If the task fails, credits will be returned to your account.</span>`,
 
-  STARTER_FAQ_4_QUESTION: '文章没有实时同步？',
-  STARTER_FAQ_4_ANSWER: '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
+  STARTER_FAQ_3_QUESTION: 'How long are the uploaded videos, generated subtitles, and videos expired?',
+  STARTER_FAQ_3_ANSWER: 'They are saved by default for one month. After one month, we will clean them up periodically.',
+
+  STARTER_FAQ_4_QUESTION: 'What technology does Aragorn use for translation? Which languages are supported?',
+  STARTER_FAQ_4_ANSWER: `Aragorn uses whisper (ASR) + ChatGPT-4 as the large model base + our own optimized model and professional terminology database for ASR processing and translation. 
+  It supports 80+ languages. Currently, only some mainstream languages are available. 
+  If the language you need is not yet offered, you can contact us through Twitter and Discord to request it, 
+  and we will respond promptly.`,
+
+  STARTER_FAQ_5_QUESTION: 'How to translate videos into multiple target languages?',
+  STARTER_FAQ_5_ANSWER: `  Find the subtitle processing task you want to translate, click the translate button to enter the translation task management page, click the “New Translation Task” button, 
+  then select the target language for translation, creating one translation task for each language at a time.`,
+
+  STARTER_FAQ_6_QUESTION: 'How to export videos with hard subtitles?',
+  STARTER_FAQ_6_ANSWER: `Find the subtitle processing task you want to translate, click the export button to enter the export task management page, 
+  click the "New Export Task" button, then select the language to be burned, and click the OK button to proceed.`,
 
   // 团队成员区块
   STARTER_TEAM_ENABLE: true, // 团队成员区块开关
