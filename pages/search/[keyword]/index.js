@@ -1,27 +1,13 @@
-import { getGlobalData } from '@/lib/notion/getNotionData'
-import { useGlobal } from '@/lib/global'
-import { getDataFromCache } from '@/lib/cache/cache_manager'
 import BLOG from '@/blog.config'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
+import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 const Index = props => {
-  const { keyword, siteInfo } = props
-  const { locale } = useGlobal()
-
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteConfig('TITLE')}`,
-    description: siteConfig('TITLE'),
-    image: siteInfo?.pageCover,
-    slug: 'search/' + (keyword || ''),
-    type: 'website'
-  }
-
-  props = { ...props, meta }
 
   return <Layout {...props} />
 }
@@ -41,10 +27,10 @@ export async function getStaticProps({ params: { keyword } }) {
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
   // 处理分页
-  if (BLOG.POST_LIST_STYLE === 'scroll') {
+  if (siteConfig('POST_LIST_STYLE') === 'scroll') {
     // 滚动列表 给前端返回所有数据
-  } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
+  } else if (siteConfig('POST_LIST_STYLE') === 'page') {
+    props.posts = props.posts?.slice(0, siteConfig('POSTS_PER_PAGE'))
   }
   props.keyword = keyword
   return {
@@ -101,8 +87,7 @@ function getTextContent(textArray) {
  * @param {*} obj
  * @returns
  */
-const isIterable = obj =>
-  obj != null && typeof obj[Symbol.iterator] === 'function'
+const isIterable = obj => obj != null && typeof obj[Symbol.iterator] === 'function'
 
 /**
  * 在内存缓存中进行全文索引
@@ -113,7 +98,7 @@ const isIterable = obj =>
 async function filterByMemCache(allPosts, keyword) {
   const filterPosts = []
   if (keyword) {
-    keyword = keyword.trim()
+    keyword = keyword.trim().toLowerCase()
   }
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
@@ -131,7 +116,7 @@ async function filterByMemCache(allPosts, keyword) {
       if (!c) {
         continue
       }
-      const index = c.toLowerCase().indexOf(keyword.toLowerCase())
+      const index = c.toLowerCase().indexOf(keyword)
       if (index > -1) {
         hit = true
         hitCount += 1
