@@ -37,8 +37,14 @@ export const GameListIndexCombine = ({ posts }) => {
       // 试图将4合一卡组塞满
       while (gamesClone?.length > 0 && groupItems.length < 4) {
         const item = gamesClone.shift()
-        if (item.tags?.some(t => t === siteConfig('GAME_RECOMMEND_TAG', 'Recommend', CONFIG))) {
-          components.push(<GameItem key={index} item={item} isLargeCard={true} />)
+        if (
+          item.tags?.some(
+            t => t === siteConfig('GAME_RECOMMEND_TAG', 'Recommend', CONFIG)
+          )
+        ) {
+          components.push(
+            <GameItem key={index} item={item} isLargeCard={true} />
+          )
           continue
         } else {
           groupItems.push(item)
@@ -53,7 +59,9 @@ export const GameListIndexCombine = ({ posts }) => {
         // 剩余的4合一不满4个的给他放大卡
         while (groupItems.length > 0) {
           const item = groupItems.shift()
-          components.push(<GameItem key={index++} item={item} isLargeCard={true} />)
+          components.push(
+            <GameItem key={index++} item={item} isLargeCard={true} />
+          )
         }
       }
     }
@@ -124,7 +132,9 @@ const GameItem = ({ item, isLargeCard }) => {
   const { title } = item
   const img = item.pageCoverThumbnail
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+  const url = checkContainHttp(item.slug)
+    ? sliceUrlFromHttp(item.slug)
+    : `${siteConfig('SUB_PATH', '')}/${item.slug}`
   const video = item?.ext?.video
   return (
     <Link
