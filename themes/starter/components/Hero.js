@@ -70,11 +70,7 @@ export const Hero = () => {
 
               <div className="mt-16">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={siteConfig('STARTER_HERO_PREVIEW_IMAGE', null, CONFIG)}
-                  alt="hero"
-                  className="mx-auto max-w-full rounded-t-xl rounded-tr-xl"
-                />
+                <video autoPlay={true} controls src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragornmultilang.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JubXVsdGlsYW5nLm1wNCIsImlhdCI6MTcxMDA1NzcwMiwiZXhwIjoyMzQwNzc3NzAyfQ.cWTBGxUKj3f1djYhbVZKEQfr6BY5vJrNcoPqCk25asY&t=2024-03-10T08%3A01%3A42.282Z"/>
               </div>
 
               {/* 背景图 */}
