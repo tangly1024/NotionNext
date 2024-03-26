@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Comment from '@/components/Comment'
 import { Draggable } from '@/components/Draggable'
 import { AdSlot } from '@/components/GoogleAdsense'
@@ -5,6 +6,7 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
+import { loadWowJS } from '@/lib/plugins/wow'
 import { deepClone, isBrowser, shuffleArray } from '@/lib/utils'
 import Link from 'next/link'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
@@ -68,6 +70,7 @@ const LayoutBase = props => {
         ? JSON.parse(localStorage.getItem('recent_games'))
         : []
     )
+    loadWowJS()
   }, [])
 
   return (
@@ -122,7 +125,7 @@ const LayoutBase = props => {
           onClose={() => {
             setSideBarVisible(false)
           }}>
-          <SideBarContent />
+          <SideBarContent {...props} />
         </SideBarDrawer>
       </div>
     </ThemeGlobalGame.Provider>
@@ -278,7 +281,7 @@ const LayoutArchive = props => {
 const LayoutSlug = props => {
   const { post, allNavPages, recommendPosts, lock, validPassword } = props
   const game = deepClone(post)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   //   const [url, setUrl] = useState(game?.ext?.href)
   const relateGames = recommendPosts
   const randomGames = shuffleArray(deepClone(allNavPages))
@@ -370,7 +373,7 @@ const LayoutSlug = props => {
                 {loading && (
                   <div className='absolute z-20 w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md overflow-hidden '>
                     <div className='z-20 absolute bg-black bg-opacity-75 w-full h-full flex flex-col gap-4 justify-center items-center'>
-                      <h2 className='text-3xl text-white flex gap-2'>
+                      <h2 className='text-3xl text-white flex gap-2 items-center'>
                         <i className='fas fa-spinner animate-spin'></i>
                         {siteConfig('TITLE')}
                       </h2>
@@ -380,7 +383,6 @@ const LayoutSlug = props => {
                     </div>
 
                     {/* 游戏封面图 */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     {game?.img && (
                       <img
                         src={game?.img}

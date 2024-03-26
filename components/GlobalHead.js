@@ -118,7 +118,7 @@ const getSEOMeta = (props, router, global) => {
       }
     case '/category/[category]':
       return {
-        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title} || ''}`,
+        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
         description: `${siteInfo?.description}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
@@ -126,7 +126,7 @@ const getSEOMeta = (props, router, global) => {
       }
     case '/category/[category]/page/[page]':
       return {
-        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title} || ''}`,
+        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
         description: `${siteInfo?.description}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,

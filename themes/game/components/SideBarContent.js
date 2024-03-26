@@ -9,8 +9,9 @@ import Logo from './Logo'
 /**
  * 侧拉抽屉的内容
  */
-export default function SideBarContent() {
-  const { allNavPages, sideBarVisible, setSideBarVisible, filterGames, setFilterGames } = useGameGlobal()
+export default function SideBarContent({ allNavPages }) {
+  const { sideBarVisible, setSideBarVisible, filterGames, setFilterGames } =
+    useGameGlobal()
   const inputRef = useRef(null) // 创建对输入框的引用
   const allGames = deepClone(allNavPages)
   useEffect(() => {
@@ -25,19 +26,26 @@ export default function SideBarContent() {
     const search = e.target.value
     if (!search || search === '') {
       setFilterGames(
-        allGames?.filter(item => item.tags?.some(t => t === siteConfig('GAME_RECOMMEND_TAG', 'Recommend', CONFIG)))
+        allGames?.filter(item =>
+          item.tags?.some(
+            t => t === siteConfig('GAME_RECOMMEND_TAG', 'Recommend', CONFIG)
+          )
+        )
       )
       return
     }
-    setFilterGames(
-      allGames?.filter(item => {
-        return (
-          item.title.toLowerCase().includes(search.toLowerCase()) ||
-          item.id.toLowerCase().includes(search.toLowerCase()) ||
-          item.id.toLowerCase().replace('-', '').includes(search.toLowerCase().replace('-', ''))
-        )
-      })
-    )
+    const filtered = allGames?.filter(item => {
+      return (
+        item.title.toLowerCase().includes(search.toLowerCase()) ||
+        item.id.toLowerCase().includes(search.toLowerCase()) ||
+        item.id
+          .toLowerCase()
+          .replace('-', '')
+          .includes(search.toLowerCase().replace('-', ''))
+      )
+    })
+
+    setFilterGames(deepClone(filtered))
   }
   return (
     <div className='px-3'>
