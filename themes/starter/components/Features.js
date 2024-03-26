@@ -39,7 +39,7 @@ export const Features = () => {
                 <span
                   className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
                 ></span>
-                <SVGGifts/>
+                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranscription.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNjcmlwdGlvbi5tcDQiLCJpYXQiOjE3MTAwNTk5MDcsImV4cCI6MjM0MDc3OTkwN30.7V63xM7YYLjdthBgqWR2dk2pb5yUvGA2X7H7R95VM4A&t=2024-03-10T08%3A38%3A27.850Z'/>
               </div>
               <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
                 {siteConfig('STARTER_FEATURE_1_TITLE_1', null, CONFIG)}
@@ -63,7 +63,7 @@ export const Features = () => {
                 <span
                   className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
                 ></span>
-                <SVGTemplate/>
+                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranslatemute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNsYXRlbXV0ZS5tcDQiLCJpYXQiOjE3MTAwNjIwMzcsImV4cCI6MjM0MDc4MjAzN30.GEL8OQRAsusdNHeOes_jaFJZg6UnFa7wg9x42l3ke_c&t=2024-03-10T09%3A13%3A57.300Z' />
               </div>
               <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
               {siteConfig('STARTER_FEATURE_2_TITLE_1', null, CONFIG)}
@@ -87,7 +87,7 @@ export const Features = () => {
                 <span
                   className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
                 ></span>
-                <SVGDesign/>
+                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/exportbilmute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9leHBvcnRiaWxtdXRlLm1wNCIsImlhdCI6MTcxMDA2NTE0MCwiZXhwIjoyMzQwNzg1MTQwfQ.BKCaSEl9kRhh_qYnCwWA-gYMURTAvR78_ehd-ACWKy0&t=2024-03-10T10%3A05%3A40.894Z' />
               </div>
               <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
                 {siteConfig('STARTER_FEATURE_3_TITLE_1', null, CONFIG)}
@@ -111,7 +111,7 @@ export const Features = () => {
                 <span
                   className="absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45"
                 ></span>
-                <SVGEssential/>
+                <video controls src='https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/edit.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9lZGl0Lm1wNCIsImlhdCI6MTcxMDA2Njg5MCwiZXhwIjoyMzQwNzg2ODkwfQ.6Cznj6uI_fMgRL4_QWtLCjuSkce5eOQotaekC71eQZc&t=2024-03-10T10%3A34%3A50.998Z' />
               </div>
               <h4 className="mb-3 text-xl font-bold text-dark dark:text-white">
               {siteConfig('STARTER_FEATURE_4_TITLE_1', null, CONFIG)}
