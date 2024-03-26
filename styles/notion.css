@@ -2053,14 +2053,12 @@ code.language-mermaid {
 .notion-simple-table-row {
 }
 
-/* 表格头 */
+/* @Deprecated 表格头（在这写了也不会生效）*/
 .notion-simple-table tr:first-child td {
-  background-color: #f5f6f8;
-  @apply text-center font-bold dark:bg-gray-800 !important;
 }
 
 .notion-simple-table td {
-  border: 1px solid var(#eee) !important;
+  border: 1px solid lightgray !important;
 }
 
 /* 竖屏视频高度bug */
