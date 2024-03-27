@@ -256,9 +256,9 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '无名的人',
-      artist: '毛不易',
-      url: 'https://music.163.com/song/media/outer/url?id=1903149553.mp3',
+      name: '王招君',
+      artist: '任素汐',
+      url: 'https://music.163.com/song/media/outer/url?id=1838919030.mp3',
       cover:
             'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
     },
