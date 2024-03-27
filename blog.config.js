@@ -256,9 +256,9 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '人们匆匆忙忙',
-      artist: 'Double',
-      url: 'https://app.suno.ai/song/3a7667bc-4fc1-47f4-bf02-bd32fdece5c9',
+      name: '无名的人',
+      artist: '毛不易',
+      url: 'https://music.163.com/song/media/outer/url?id=1903149553.mp3',
       cover:
             'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
     },
