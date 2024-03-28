@@ -5,7 +5,7 @@
  */
 export const Features = () => {
   return <>
-     {/* <!-- ====== Features Section Start --> */}
+     {/* <!-- ====== 610 342 Features Section Start --> */}
      <section className="py-12 lg:py-24 xl:py-32">
 				<div className="container px-4 md:px-6">
 				  <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
@@ -18,7 +18,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video" >
-							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranscription.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNjcmlwdGlvbi5tcDQiLCJpYXQiOjE3MTAwNTk5MDcsImV4cCI6MjM0MDc3OTkwN30.7V63xM7YYLjdthBgqWR2dk2pb5yUvGA2X7H7R95VM4A&t=2024-03-10T08%3A38%3A27.850Z"></video>
+						<iframe width="610" height="342" src="https://www.youtube.com/embed/-JL67U6K7-I?si=jzvgVuxDYNOOOMTo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 						</div>
 					  </div>
 					</div>
@@ -29,7 +29,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video" >
-							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragorntranslatemute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JudHJhbnNsYXRlbXV0ZS5tcDQiLCJpYXQiOjE3MTAwNjIwMzcsImV4cCI6MjM0MDc4MjAzN30.GEL8OQRAsusdNHeOes_jaFJZg6UnFa7wg9x42l3ke_c&t=2024-03-10T09%3A13%3A57.300Z"></video>
+						<iframe width="610" height="342" src="https://www.youtube.com/embed/8FFbYsAG4pQ?si=v0zNIODaP_qcimVW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 						</div>
 					  </div>
 					</div>
@@ -46,7 +46,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video" >
-							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/exportbilmute.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9leHBvcnRiaWxtdXRlLm1wNCIsImlhdCI6MTcxMDA2NTE0MCwiZXhwIjoyMzQwNzg1MTQwfQ.BKCaSEl9kRhh_qYnCwWA-gYMURTAvR78_ehd-ACWKy0&t=2024-03-10T10%3A05%3A40.894Z" />
+						<iframe width="610" height="342" src="https://www.youtube.com/embed/CtrQdQWVsMs?si=Wvy7y1CmYDu9Pk-K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 						</div>
 					  </div>
 					</div>
@@ -57,7 +57,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video" >
-							<video controls  src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/edit.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9lZGl0Lm1wNCIsImlhdCI6MTcxMDA2Njg5MCwiZXhwIjoyMzQwNzg2ODkwfQ.6Cznj6uI_fMgRL4_QWtLCjuSkce5eOQotaekC71eQZc&t=2024-03-10T10%3A34%3A50.998Z"/>
+						<iframe width="610" height="342" src="https://www.youtube.com/embed/qxk-QDriIoU?si=wmQWaYgMauMTEJWN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 						</div>
 					  </div>
 					</div>

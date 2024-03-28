@@ -67,10 +67,11 @@ export const Hero = () => {
               className="wow fadeInUp relative z-10 mx-auto max-w-[845px]"
               data-wow-delay=".25s"
             >
+              
 
               <div className="mt-16">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <video autoPlay={true} controls src="https://hlmgngqkvphwswijomgv.supabase.co/storage/v1/object/sign/aragorn/tmp/aragornmultilang.mp4?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhcmFnb3JuL3RtcC9hcmFnb3JubXVsdGlsYW5nLm1wNCIsImlhdCI6MTcxMDA1NzcwMiwiZXhwIjoyMzQwNzc3NzAyfQ.cWTBGxUKj3f1djYhbVZKEQfr6BY5vJrNcoPqCk25asY&t=2024-03-10T08%3A01%3A42.282Z"/>
+                <iframe width="844" height="467" src="https://www.youtube.com/embed/OF5qEbHBQKI?si=J-7kmhlxGRa5fv52" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
               </div>
 
               {/* 背景图 */}
