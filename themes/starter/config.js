@@ -300,14 +300,14 @@ const CONFIG = {
 
   STARTER_FOOTER_BLOG_LATEST_TITLE: 'Latest articles',
 
-  STARTER_FOOTER_PRIVACY_POLICY_TEXT: 'Privacy Policy',
-  STARTER_FOOTER_PRIVACY_POLICY_URL: '/privacy-policy',
+  STARTER_FOOTER_PRIVACY_POLICY_TEXT: 'Terms of Service',
+  STARTER_FOOTER_PRIVACY_POLICY_URL: 'https://www.aragorn.cc/policy/user-service.html',
 
-  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT: 'Legal Statement',
-  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: '/legacy-notice',
+  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT: 'Privacy Policy',
+  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: 'https://www.aragorn.cc/policy/privacy-policy.html',
 
-  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: 'Service Agreement',
-  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: '/terms-of-use',
+  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: 'Cookies Policy',
+  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: 'https://www.aragorn.cc/policy/cookies-policy.html',
 
   // 404页面的提示语
   STARTER_404_TITLE: 'We seem to be unable to find the page you are looking for.',
@@ -315,7 +315,7 @@ const CONFIG = {
   STARTER_404_BACK: 'Return to homepage.',
 
   STARTER_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
-  STARTER_POST_REDIRECT_URL: 'https://www.aragorn.cc', // 重定向域名
+  STARTER_POST_REDIRECT_URL: 'https://www.aragorn.cc/transcriptionTasks', // 重定向域名
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG
