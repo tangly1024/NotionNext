@@ -33,7 +33,7 @@ const useAdjustStyle = () => {
     useEffect(() => {
         for (let i = 0; i < document.styleSheets.length; i++) {
             const styleSheet = document.styleSheets[i];
-            if (styleSheet.href && styleSheet.href.includes('fonts.googleapis.com')) {
+            if (styleSheet.href && styleSheet.href.includes('http')) {
                 continue; // 忽略指定样式表，避免访问报错
             }
             try {
