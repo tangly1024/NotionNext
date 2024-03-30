@@ -2,7 +2,6 @@
 import throttle from 'lodash.throttle';
 import { useCallback, useEffect, useState } from 'react'
 import { MenuList } from './MenuList';
-import { DarkModeButton } from './DarkModeButton';
 import { Logo } from './Logo';
 import { useRouter } from 'next/router';
 import { siteConfig } from '@/lib/config';
@@ -64,15 +63,10 @@ export const NavBar = (props) => {
                     {/* 右侧功能 */}
                     <div className="flex items-center justify-end pr-16 lg:pr-0">
                         {/* 深色模式切换 */}
-                        <DarkModeButton/>
+                        
                         {/* 注册登录功能 */}
                         <div className="hidden sm:flex">
-                            <a
-                            href={siteConfig('STARTER_NAV_BUTTON_1_URL', null, CONFIG)}
-                            className={`loginBtn ${buttonTextColor}  px-[22px] py-2 text-base font-medium hover:opacity-70`}
-                            >
-                           {siteConfig('STARTER_NAV_BUTTON_1_TEXT', null, CONFIG)}
-                            </a>
+        
                             <a
                             href={siteConfig('STARTER_NAV_BUTTON_2_URL', null, CONFIG)}
                             className={`signUpBtn ${buttonTextColor} rounded-md bg-white bg-opacity-20 px-6 py-2 text-base font-medium duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark`}

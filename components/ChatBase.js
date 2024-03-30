@@ -14,6 +14,6 @@ export default function ChatBase() {
         src={`https://www.chatbase.co/chatbot-iframe/${siteConfig('CHATBASE_ID')}`}
         width="100%"
         style={{ height: '100%', minHeight: '700px' }}
-        frameborder="0"
+        frameBorder="0"
     ></iframe>
 }

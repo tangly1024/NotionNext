@@ -31,7 +31,7 @@ export const About = () => {
 					<div className="grid gap-4 md:gap-8">
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video">
-						<iframe width="798" height="439" src="https://www.youtube.com/embed/kbiJlsHifpM?si=aV-OqRaOLvbfi6bh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+						<iframe width="798" height="439" src="https://www.youtube.com/embed/kbiJlsHifpM?si=aV-OqRaOLvbfi6bh" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
 					</div>

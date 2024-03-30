@@ -105,7 +105,7 @@ export default function ModalVideo({
                                         scrolling="no"
                                         border="0"
                                         frameBorder="no"
-                                        allowfullscreen="true"
+                                        allowFullScreen="true"
                                     ></iframe>
                                 </div>
 

@@ -71,7 +71,7 @@ export const Hero = () => {
 
               <div className="mt-16">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <iframe width="844" height="467" src="https://www.youtube.com/embed/OF5qEbHBQKI?si=J-7kmhlxGRa5fv52" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="844" height="467" src="https://www.youtube.com/embed/OF5qEbHBQKI?si=J-7kmhlxGRa5fv52" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
               </div>
 
               {/* 背景图 */}
