@@ -17,6 +17,7 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import BlogPostBar from './components/BlogPostBar'
+import DownloadButton from './components/DownloadButton'
 import { Footer } from './components/Footer'
 import FullScreenButton from './components/FullScreenButton'
 import { GameListIndexCombine } from './components/GameListIndexCombine'
@@ -404,15 +405,15 @@ const LayoutSlug = props => {
 
                 {/* 游戏窗口装饰器 */}
                 {game && !loading && (
-                  <div className='game-decorator bg-[#0B0D14] right-0 bottom-0 flex justify-center h-12 md:w-12 z-10 md:absolute'>
-                    {/* 全屏按钮 */}
+                  <div className='game-decorator bg-[#0B0D14] right-0 bottom-0 flex justify-center z-10 md:absolute'>
+                    <DownloadButton />
                     <FullScreenButton />
                   </div>
                 )}
               </div>
 
               {/* 游戏资讯 */}
-              <div className='game-info dark:text-white py-4 px-2 md:px-0 mt-8 md:mt-0'>
+              <div className='game-info dark:text-white py-4 px-2 md:px-0 mt-14 md:mt-0'>
                 {/* 关联游戏 */}
                 <div className='w-full'>
                   <GameListRelate posts={relateGames} />
