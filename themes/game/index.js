@@ -377,10 +377,10 @@ const LayoutSlug = props => {
                     <div className='z-20 absolute bg-black bg-opacity-75 w-full h-full flex flex-col gap-4 justify-center items-center'>
                       <h2 className='text-3xl text-white flex gap-2 items-center'>
                         <i className='fas fa-spinner animate-spin'></i>
-                        {siteInfo.title || siteConfig('TITLE')}
+                        {siteInfo?.title || siteConfig('TITLE')}
                       </h2>
                       <h3 className='text-xl text-white'>
-                        {siteInfo.description || siteConfig('DESCRIPTION')}
+                        {siteInfo?.description || siteConfig('DESCRIPTION')}
                       </h3>
                     </div>
 
