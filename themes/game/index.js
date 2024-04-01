@@ -377,18 +377,18 @@ const LayoutSlug = props => {
                     <div className='z-20 absolute bg-black bg-opacity-75 w-full h-full flex flex-col gap-4 justify-center items-center'>
                       <h2 className='text-3xl text-white flex gap-2 items-center'>
                         <i className='fas fa-spinner animate-spin'></i>
-                        {siteConfig('TITLE')}
+                        {siteInfo?.title || siteConfig('TITLE')}
                       </h2>
                       <h3 className='text-xl text-white'>
-                        {siteConfig('DESCRIPTION')}
+                        {siteInfo?.description || siteConfig('DESCRIPTION')}
                       </h3>
                     </div>
 
                     {/* 游戏封面图 */}
-                    {game?.img && (
+                    {game?.pageCoverThumbnail && (
                       <img
-                        src={game?.img}
-                        className='w-full h-full blur-md absolute top-0 left-0 z-0'
+                        src={game?.pageCoverThumbnail}
+                        className='w-full h-full object-cover blur-md absolute top-0 left-0 z-0'
                       />
                     )}
                   </div>
