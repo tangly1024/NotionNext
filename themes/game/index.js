@@ -4,6 +4,7 @@ import { Draggable } from '@/components/Draggable'
 import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
+import { PWA as initialPWA } from '@/components/PWA'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -17,7 +18,7 @@ import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import BlogPostBar from './components/BlogPostBar'
 import { Footer } from './components/Footer'
-import FullScreen from './components/FullScreen'
+import FullScreenButton from './components/FullScreenButton'
 import { GameListIndexCombine } from './components/GameListIndexCombine'
 import { GameListRelate } from './components/GameListRealate'
 import { GameListRecent } from './components/GameListRecent'
@@ -45,9 +46,6 @@ export const useGameGlobal = () => useContext(ThemeGlobalGame)
  */
 const LayoutBase = props => {
   const { allNavPages, children } = props
-
-  //   const fullWidth = post?.fullWidth ?? false
-  //   const { onLoading } = useGlobal()
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -279,12 +277,16 @@ const LayoutArchive = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, allNavPages, recommendPosts, lock, validPassword } = props
+  const { post, siteInfo, allNavPages, recommendPosts, lock, validPassword } =
+    props
   const game = deepClone(post)
   const [loading, setLoading] = useState(true)
   //   const [url, setUrl] = useState(game?.ext?.href)
   const relateGames = recommendPosts
   const randomGames = shuffleArray(deepClone(allNavPages))
+
+  // 初始化可安装应用
+  initialPWA(game, siteInfo)
 
   // 将当前游戏加入到最近游玩
   useEffect(() => {
@@ -403,8 +405,8 @@ const LayoutSlug = props => {
                 {/* 游戏窗口装饰器 */}
                 {game && !loading && (
                   <div className='game-decorator bg-[#0B0D14] right-0 bottom-0 flex justify-center h-12 md:w-12 z-10 md:absolute'>
-                    {/* 加入全屏按钮 */}
-                    <FullScreen />
+                    {/* 全屏按钮 */}
+                    <FullScreenButton />
                   </div>
                 )}
               </div>
