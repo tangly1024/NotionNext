@@ -4,7 +4,7 @@
  * 全屏按钮
  * @returns
  */
-export default function FullScreen() {
+export default function FullScreenButton() {
   function toggleFullScreen() {
     // window.scrollTo(0, 2)
     document?.querySelector('#game-wrapper')?.scrollIntoView({
