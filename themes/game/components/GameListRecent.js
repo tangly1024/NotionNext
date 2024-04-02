@@ -33,7 +33,7 @@ export const GameListRecent = ({ maxCount = 14 }) => {
   return (
     <>
       <div className='game-list-recent-wrapper w-full max-w-full overflow-x-auto pt-4 px-2'>
-        <div className='game-grid md:flex grid grid-flow-col gap-2'>
+        <div className='game-grid flex gap-2'>
           {components?.map((ItemComponent, index) => {
             return ItemComponent
           })}
