@@ -29,8 +29,6 @@ export default function Live2D() {
       })
     }
   }, [theme])
-
-
   if (!showPet) {
     return <></>
   }
