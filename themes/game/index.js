@@ -4,6 +4,7 @@ import { Draggable } from '@/components/Draggable'
 import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
+import { PWA as initialPWA } from '@/components/PWA'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -16,8 +17,9 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import BlogPostBar from './components/BlogPostBar'
+import DownloadButton from './components/DownloadButton'
 import { Footer } from './components/Footer'
-import FullScreen from './components/FullScreen'
+import FullScreenButton from './components/FullScreenButton'
 import { GameListIndexCombine } from './components/GameListIndexCombine'
 import { GameListRelate } from './components/GameListRealate'
 import { GameListRecent } from './components/GameListRecent'
@@ -45,9 +47,6 @@ export const useGameGlobal = () => useContext(ThemeGlobalGame)
  */
 const LayoutBase = props => {
   const { allNavPages, children } = props
-
-  //   const fullWidth = post?.fullWidth ?? false
-  //   const { onLoading } = useGlobal()
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -279,12 +278,16 @@ const LayoutArchive = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, allNavPages, recommendPosts, lock, validPassword } = props
+  const { post, siteInfo, allNavPages, recommendPosts, lock, validPassword } =
+    props
   const game = deepClone(post)
   const [loading, setLoading] = useState(true)
   //   const [url, setUrl] = useState(game?.ext?.href)
   const relateGames = recommendPosts
   const randomGames = shuffleArray(deepClone(allNavPages))
+
+  // 初始化可安装应用
+  initialPWA(game, siteInfo)
 
   // 将当前游戏加入到最近游玩
   useEffect(() => {
@@ -375,18 +378,18 @@ const LayoutSlug = props => {
                     <div className='z-20 absolute bg-black bg-opacity-75 w-full h-full flex flex-col gap-4 justify-center items-center'>
                       <h2 className='text-3xl text-white flex gap-2 items-center'>
                         <i className='fas fa-spinner animate-spin'></i>
-                        {siteConfig('TITLE')}
+                        {siteInfo?.title || siteConfig('TITLE')}
                       </h2>
                       <h3 className='text-xl text-white'>
-                        {siteConfig('DESCRIPTION')}
+                        {siteInfo?.description || siteConfig('DESCRIPTION')}
                       </h3>
                     </div>
 
                     {/* 游戏封面图 */}
-                    {game?.img && (
+                    {game?.pageCoverThumbnail && (
                       <img
-                        src={game?.img}
-                        className='w-full h-full blur-md absolute top-0 left-0 z-0'
+                        src={game?.pageCoverThumbnail}
+                        className='w-full h-full object-cover blur-md absolute top-0 left-0 z-0'
                       />
                     )}
                   </div>
@@ -402,15 +405,15 @@ const LayoutSlug = props => {
 
                 {/* 游戏窗口装饰器 */}
                 {game && !loading && (
-                  <div className='game-decorator bg-[#0B0D14] right-0 bottom-0 flex justify-center h-12 md:w-12 z-10 md:absolute'>
-                    {/* 加入全屏按钮 */}
-                    <FullScreen />
+                  <div className='game-decorator bg-[#0B0D14] right-0 bottom-0 flex justify-center z-10 md:absolute'>
+                    <DownloadButton />
+                    <FullScreenButton />
                   </div>
                 )}
               </div>
 
               {/* 游戏资讯 */}
-              <div className='game-info dark:text-white py-4 px-2 md:px-0 mt-8 md:mt-0'>
+              <div className='game-info dark:text-white py-4 px-2 md:px-0 mt-14 md:mt-0'>
                 {/* 关联游戏 */}
                 <div className='w-full'>
                   <GameListRelate posts={relateGames} />
