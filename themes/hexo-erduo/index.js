@@ -225,12 +225,11 @@ const LayoutArchive = (props) => {
  */
 const LayoutMemos = (props) => {
     const memoPageInfo = {
-        id: "9ecc78643def47bcvabeg5fn26304679", // 因为引入了评论互动，所以需要一个ID来对应加载页面评论，这里使用Notion这个菜单的pageID
+        id: "9ecc78643def47bcvabeg5fn26304679",
         type: "Memos",
-        title: "我的说说",
-    }
+        title: "我的说说"
+    };
     return  (
-        {/* 这里不是hexo主题的话，return部分不要照搬，最好参考index.js 文章详情 LayoutSlug的模块移植 */}
     <div className="w-full lg:hover:shadow rounded-md lg:rounded-md lg:px-2 lg:py-4 article">
         {/* 去掉加密的Lock部分判断 */}
         <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full px-3 font-serif">
