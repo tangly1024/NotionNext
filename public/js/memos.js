@@ -47,7 +47,7 @@
 
 // Memos Start
 var memo = {
-    host: 'http://memos.erduoya.top/',
+    host: 'https://memos.erduoya.top/',
     limit: '10',
     creatorId: '1',
     domId: '#memos',
