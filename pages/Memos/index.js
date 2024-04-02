@@ -7,7 +7,6 @@ import BLOG from '@/blog.config'
 
 const MemosIndex = props => {
     const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
     return <Layout {...props} />
 }
 
