@@ -151,20 +151,20 @@ export default function CustomContextMenu(props) {
                 {/* 跳转导航按钮 */}
                 <div className='w-full px-2'>
 
-                    <div onClick={handleJumpToRandomPost} title={locale.MENU.WALK_AROUND} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_RANDOM_POST') && <div onClick={handleJumpToRandomPost} title={locale.MENU.WALK_AROUND} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-podcast mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.WALK_AROUND}</div>
-                    </div>
+                    </div>}
 
-                    <Link href='/category' title={locale.MENU.CATEGORY} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_CATEGORY') && <Link href='/category' title={locale.MENU.CATEGORY} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-square-minus mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.CATEGORY}</div>
-                    </Link>
+                    </Link>}
 
-                    <Link href='/tag' title={locale.MENU.TAGS} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG') && <Link href='/tag' title={locale.MENU.TAGS} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-tag mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.TAGS}</div>
-                    </Link>
+                    </Link>}
 
                 </div>
 
@@ -180,15 +180,16 @@ export default function CustomContextMenu(props) {
                      </div>
                     )}
 
-                    <div onClick={handleCopyLink} title={locale.MENU.SHARE_URL} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK') && <div onClick={handleCopyLink} title={locale.MENU.SHARE_URL} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-arrow-up-right-from-square mr-2" />
                         <div className='whitespace-nowrap'>{locale.MENU.SHARE_URL}</div>
-                    </div>
+                    </div>}
 
-                    <div onClick={handleChangeDarkMode} title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
+                    {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE') && <div onClick={handleChangeDarkMode} title={isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         {isDarkMode ? <i className="fa-regular fa-sun mr-2" /> : <i className="fa-regular fa-moon mr-2" />}
                         <div className='whitespace-nowrap'> {isDarkMode ? locale.MENU.LIGHT_MODE : locale.MENU.DARK_MODE}</div>
-                    </div>
+                    </div>}
+
                     {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH') && (
                     <div onClick={handleChangeTheme} title={locale.MENU.THEME_SWITCH} className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
                         <i className="fa-solid fa-palette mr-2" />

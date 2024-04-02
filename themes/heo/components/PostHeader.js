@@ -5,7 +5,7 @@ import WavesArea from './WavesArea'
 import { HashTag } from '@/components/HeroIcons'
 import WordCount from '@/components/WordCount'
 import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 
 export default function PostHeader({ post, siteInfo }) {
   if (!post) {
