@@ -87,7 +87,7 @@ const LayoutBase = props => {
       }}>
       <div
         id='theme-game'
-        className={`${siteConfig('FONT_STYLE')} w-full h-full min-h-screen justify-center bg-[#83FFE7] dark:bg-black dark:text-gray-300 scroll-smooth`}>
+        className={`${siteConfig('FONT_STYLE')} w-full h-full min-h-screen justify-center dark:bg-black dark:bg-opacity-50 dark:text-gray-300 scroll-smooth`}>
         <Style />
 
         {/* 左右布局 */}
@@ -150,7 +150,12 @@ const LayoutIndex = props => {
       {/* 游戏列表 */}
       <LayoutPostList {...props} />
 
-      {/* 主区域下方 */}
+      {/* 广告 */}
+      <div className='w-full'>
+        <AdSlot type='in-article' />
+      </div>
+
+      {/* 主区域下方 导览 */}
       <div className='w-full bg-white dark:bg-hexo-black-gray rounded-lg p-2'>
         {/* 标签汇总             */}
         <GroupCategory
@@ -159,16 +164,8 @@ const LayoutIndex = props => {
         />
         <hr />
         <GroupTag tagOptions={tagOptions} currentTag={currentTag} />
-      </div>
-
-      {/* 广告 */}
-      <div className='w-full'>
-        <AdSlot type='in-article' />
-      </div>
-
-      {/* 站点公告信息 */}
-      <div className='w-full bg-white dark:bg-hexo-black-gray rounded-lg p-2'>
-        <Announcement {...props} />
+        {/* 站点公告信息 */}
+        <Announcement {...props} className='p-2' />
       </div>
     </>
   )
@@ -282,7 +279,7 @@ const LayoutSlug = props => {
     props
   const game = deepClone(post)
   const [loading, setLoading] = useState(true)
-  //   const [url, setUrl] = useState(game?.ext?.href)
+  const url = game?.ext?.href
   const relateGames = recommendPosts
   const randomGames = shuffleArray(deepClone(allNavPages))
 
@@ -369,9 +366,10 @@ const LayoutSlug = props => {
               </div>
             </Draggable>
 
-            <div className='w-full py-1 md:py-4'>
+            <div className={`w-full py-1 md:py-4 `}>
               {/* 游戏区  */}
-              <div className='bg-black w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md relative'>
+              <div
+                className={`${url ? '' : 'hidden'} bg-black w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md relative`}>
                 {/* Loading遮罩 */}
                 {loading && (
                   <div className='absolute z-20 w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md overflow-hidden '>
@@ -397,11 +395,9 @@ const LayoutSlug = props => {
 
                 <iframe
                   id='game-wrapper'
-                  className={`w-full xl:h-[calc(100vh-8rem)] h-screen md:rounded-md overflow-hidden ${game?.ext?.href ? '' : 'hidden'}`}
-                  style={{
-                    position: 'relative'
-                  }}
-                  src={game?.ext?.href}></iframe>
+                  src={url}
+                  className={`relative w-full xl:h-[calc(100vh-8rem)] h-screen md:rounded-md overflow-hidden`}
+                />
 
                 {/* 游戏窗口装饰器 */}
                 {game && !loading && (
