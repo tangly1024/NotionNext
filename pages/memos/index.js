@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { getLayoutByTheme } from '@/themes/theme'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { getGlobalData } from '@/lib/notion/getNotionData'
 import React from 'react'
 import BLOG from '@/blog.config'
 
