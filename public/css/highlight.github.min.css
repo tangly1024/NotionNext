@@ -1,0 +1,202 @@
+body.light-theme,
+:root {
+  /* light theme color */
+  --color-hljs-hljs: #24292e;
+  --color-hljs-hljs-bg: #fff;
+  --color-hljs-tag: #d73a49;
+  --color-hljs-title: #6f42c1;
+  --color-hljs-attr: #005cc5;
+  --color-hljs-meta: #032f62;
+  --color-hljs-symbol: #e36209;
+  --color-hljs-comment: #6a737d;
+  --color-hljs-quote: #22863a;
+  --color-hljs-subst: #24292e;
+  --color-hljs-section: #005cc5;
+  --color-hljs-bullet: #735c0f;
+  --color-hljs-emphasis: #24292e;
+  --color-hljs-strong: #24292e;
+  --color-hljs-addition: #22863a;
+  --color-hljs-addition-bg: #f0fff4;
+  --color-hljs-deletion: #b31d28;
+  --color-hljs-deletion-bg: #ffeef0;
+}
+
+.dark {
+  /* dark theme colors */
+  --color-hljs-hljs: #adbac7;
+  --color-hljs-hljs-bg: #22272e;
+  --color-hljs-tag: #f47067;
+  --color-hljs-title: #dcbdfb;
+  --color-hljs-attr: #6cb6ff;
+  --color-hljs-meta: #96d0ff;
+  --color-hljs-symbol: #f69d50;
+  --color-hljs-comment: #768390;
+  --color-hljs-quote: #8ddb8c;
+  --color-hljs-subst: #adbac7;
+  --color-hljs-section: #316dca;
+  --color-hljs-bullet: #eac55f;
+  --color-hljs-emphasis: #adbac7;
+  --color-hljs-strong: #adbac7;
+  --color-hljs-addition: #b4f1b4;
+  --color-hljs-addition-bg: #1b4721;
+  --color-hljs-deletion: #ffd8d3;
+  --color-hljs-deletion-bg: #78191b;
+}
+
+/* @media (prefers-color-scheme: light) {
+  body:not(.dark-theme) {
+    --color-hljs-hljs: #24292e;
+    --color-hljs-hljs-bg: #fff;
+    --color-hljs-tag: #d73a49;
+    --color-hljs-title: #6f42c1;
+    --color-hljs-attr: #005cc5;
+    --color-hljs-meta: #032f62;
+    --color-hljs-symbol: #e36209;
+    --color-hljs-comment: #6a737d;
+    --color-hljs-quote: #22863a;
+    --color-hljs-subst: #24292e;
+    --color-hljs-section: #005cc5;
+    --color-hljs-bullet: #735c0f;
+    --color-hljs-emphasis: #24292e;
+    --color-hljs-strong: #24292e;
+    --color-hljs-addition: #22863a;
+    --color-hljs-addition-bg: #f0fff4;
+    --color-hljs-deletion: #b31d28;
+    --color-hljs-deletion-bg: #ffeef0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body:not(.light-theme) {
+    --color-hljs-hljs: #adbac7;
+    --color-hljs-hljs-bg: #22272e;
+    --color-hljs-tag: #f47067;
+    --color-hljs-title: #dcbdfb;
+    --color-hljs-attr: #6cb6ff;
+    --color-hljs-meta: #96d0ff;
+    --color-hljs-symbol: #f69d50;
+    --color-hljs-comment: #768390;
+    --color-hljs-quote: #8ddb8c;
+    --color-hljs-subst: #adbac7;
+    --color-hljs-section: #316dca;
+    --color-hljs-bullet: #eac55f;
+    --color-hljs-emphasis: #adbac7;
+    --color-hljs-strong: #adbac7;
+    --color-hljs-addition: #b4f1b4;
+    --color-hljs-addition-bg: #1b4721;
+    --color-hljs-deletion: #ffd8d3;
+    --color-hljs-deletion-bg: #78191b;
+  }
+} */
+
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+
+code.hljs {
+  padding: 3px 5px
+}
+
+/*!
+  Theme: GitHub
+  Description: Light theme as seen on github.com
+  Author: github.com
+  Maintainer: @Hirse
+  Updated: 2021-05-15
+
+  Outdated base version: https://github.com/primer/github-syntax-light
+  Current colors taken from GitHub's CSS
+*/
+.hljs {
+  color: var(--color-hljs-hljs);
+  background: var(--color-hljs-hljs-bg)
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+  color: var(--color-hljs-tag)
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+  color: var(--color-hljs-title)
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-variable {
+  color: var(--color-hljs-attr)
+}
+
+.hljs-meta .hljs-string,
+.hljs-regexp,
+.hljs-string {
+  color: var(--color-hljs-meta)
+}
+
+.hljs-built_in,
+.hljs-symbol {
+  color: var(--color-hljs-symbol)
+}
+
+.hljs-code,
+.hljs-comment,
+.hljs-formula {
+  color: var(--color-hljs-comment)
+}
+
+.hljs-name,
+.hljs-quote,
+.hljs-selector-pseudo,
+.hljs-selector-tag {
+  color: var(--color-hljs-quote)
+}
+
+.hljs-subst {
+  color: var(--color-hljs-subst)
+}
+
+.hljs-section {
+  color: var(--color-hljs-section);
+  font-weight: 700
+}
+
+.hljs-bullet {
+  color: var(--color-hljs-bullet)
+}
+
+.hljs-emphasis {
+  color: var(--color-hljs-emphasis);
+  font-style: italic
+}
+
+.hljs-strong {
+  color: var(--color-hljs-strong);
+  font-weight: 700
+}
+
+.hljs-addition {
+  color: var(--color-hljs-addition);
+  background-color: var(--color-hljs-addition-bg)
+}
+
+.hljs-deletion {
+  color: var(--color-hljs-deletion);
+  background-color: var(--color-hljs-deletion-bg)
+}
