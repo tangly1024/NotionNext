@@ -9,7 +9,7 @@ export default function PostInfo(props) {
   const { post } = props
 
   return (
-    <section className='flex-wrap flex mt-2 text-gray--600 dark:text-gray-400 font-light leading-8'>
+    <section className='flex-wrap flex m-2 text-gray--600 dark:text-gray-400 font-light leading-8'>
       <div>
         <div>
           {post?.type !== 'Page' && (
