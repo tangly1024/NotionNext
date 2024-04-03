@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Draggable } from '@/components/Draggable'
 import { siteConfig } from '@/lib/config'
 import { deepClone } from '@/lib/utils'
@@ -13,35 +14,28 @@ import FullScreenButton from './FullScreenButton'
  */
 export default function GameEmbed({ post, siteInfo }) {
   const game = deepClone(post)
+  const newWindow = game?.ext?.new_window || false
+  const originUrl = game?.ext?.href
 
   // 提示用户在新窗口打开
-  // const new_window = game?.ext?.new_window || false
-  const new_window = true
-  const url = game?.ext?.href
+  const [tipNewWindow, setTipNewWindow] = useState(newWindow)
+  const [url, setUrl] = useState(originUrl)
   const [loading, setLoading] = useState(true)
-  const [tipNewWindow, setTipNewWindow] = useState(new_window)
 
   /**
    * 新窗口中打开
    */
-  const openInNewWindow = () => {}
+  const openInNewWindow = () => {
+    setTipNewWindow(false)
+    setTimeout(function () {
+      setUrl('')
+      setUrl(originUrl)
+    }, 10000) // 10000毫秒 = 10秒
+  }
 
   // 将当前游戏加入到最近游玩
   useEffect(() => {
-    // 更新最新游戏
-    const recentGames = localStorage.getItem('recent_games')
-      ? JSON.parse(localStorage.getItem('recent_games'))
-      : []
-
-    const existedIndex = recentGames.findIndex(item => item?.id === game?.id)
-    if (existedIndex === -1) {
-      recentGames.unshift(game) // 将游戏插入到数组头部
-    } else {
-      // 如果游戏已存在于数组中，将其移至数组头部
-      const existingGame = recentGames.splice(existedIndex, 1)[0]
-      recentGames.unshift(existingGame)
-    }
-    localStorage.setItem('recent_games', JSON.stringify(recentGames))
+    setUrl(originUrl)
 
     const iframe = document.getElementById('game-wrapper')
 
@@ -55,8 +49,8 @@ export default function GameEmbed({ post, siteInfo }) {
     // 绑定加载事件
     if (iframe?.attachEvent) {
       iframe?.attachEvent('onload', iframeLoaded)
-    } else {
-      if (iframe) iframe.onload = iframeLoaded
+    } else if (iframe) {
+      iframe.onload = iframeLoaded
     }
 
     // 更改iFrame的title
@@ -96,22 +90,38 @@ export default function GameEmbed({ post, siteInfo }) {
                 inline: 'nearest'
               })
             }}>
-            G
+            {/* Title首字母 */}
+            {siteInfo?.title?.charAt(0)}
           </span>
         </div>
       </Draggable>
 
-      {/* 新窗口打开遮罩 */}
+      {/* 提示框新窗口打开 */}
       {tipNewWindow && (
-        <div className='absolute z-20 bg-black bg-opacity-50 w-full h-full flex items-center justify-center'>
-          <div className='w-80 h-80 bg-white rounded-lg text-center flex items-center justify-center'>
-            <div>
-              <p>Click to start the game.</p>
+        <div
+          id='open-tips'
+          className={`animate__animated animate__fadeIn bottom-8 right-4  absolute z-20 flex items-end justify-end`}>
+          <div className='relative w-80 h-auto bg-white rounded-lg p-2'>
+            <div className='absolute right-2'>
               <button
-                onClick={openInNewWindow}
-                className='m-4 px-6 py-2 bg-blue-500 rounded-lg text-white shadow-md'>
-                OK
+                className='text-xl p-2'
+                onClick={() => {
+                  setTipNewWindow(false)
+                }}>
+                <i className='fas fa-times'></i>
               </button>
+            </div>
+            <div className='p-2'>
+              If the game fails to load, please try accessing the{' '}
+              <a
+                className='underline text-blue-500'
+                rel='noReferrer'
+                href={`${url?.replace('/games-external/common/index.htm?n=', '')}`}
+                target='_blank'
+                onClick={openInNewWindow}>
+                source webpage
+              </a>
+              .
             </div>
           </div>
         </div>

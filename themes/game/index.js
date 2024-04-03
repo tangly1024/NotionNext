@@ -44,7 +44,7 @@ export const useGameGlobal = () => useContext(ThemeGlobalGame)
  * @constructor
  */
 const LayoutBase = props => {
-  const { allNavPages, children } = props
+  const { allNavPages, children, siteInfo } = props
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -97,7 +97,7 @@ const LayoutBase = props => {
             <div className='py-4 px-2 sticky top-0 h-screen flex flex-col justify-between'>
               <div className='select-none'>
                 {/* 抬头logo等 */}
-                <Header />
+                <Header siteInfo={siteInfo} />
                 {/* 菜单栏 */}
                 <MenuList {...props} />
               </div>
@@ -281,6 +281,23 @@ const LayoutSlug = props => {
 
   // 初始化可安装应用
   initialPWA(post, siteInfo)
+
+  useEffect(() => {
+    // 更新最新游戏
+    const recentGames = localStorage.getItem('recent_games')
+      ? JSON.parse(localStorage.getItem('recent_games'))
+      : []
+
+    const existedIndex = recentGames.findIndex(item => item?.id === post?.id)
+    if (existedIndex === -1) {
+      recentGames.unshift(post) // 将游戏插入到数组头部
+    } else {
+      // 如果游戏已存在于数组中，将其移至数组头部
+      const existingGame = recentGames.splice(existedIndex, 1)[0]
+      recentGames.unshift(existingGame)
+    }
+    localStorage.setItem('recent_games', JSON.stringify(recentGames))
+  }, [])
 
   return (
     <>
