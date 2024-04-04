@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import Comment from '@/components/Comment'
-import { Draggable } from '@/components/Draggable'
 import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
@@ -17,9 +16,8 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
 import BlogPostBar from './components/BlogPostBar'
-import DownloadButton from './components/DownloadButton'
 import { Footer } from './components/Footer'
-import FullScreenButton from './components/FullScreenButton'
+import GameEmbed from './components/GameEmbed'
 import { GameListIndexCombine } from './components/GameListIndexCombine'
 import { GameListRelate } from './components/GameListRealate'
 import { GameListRecent } from './components/GameListRecent'
@@ -46,7 +44,7 @@ export const useGameGlobal = () => useContext(ThemeGlobalGame)
  * @constructor
  */
 const LayoutBase = props => {
-  const { allNavPages, children } = props
+  const { allNavPages, children, siteInfo } = props
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -99,7 +97,7 @@ const LayoutBase = props => {
             <div className='py-4 px-2 sticky top-0 h-screen flex flex-col justify-between'>
               <div className='select-none'>
                 {/* 抬头logo等 */}
-                <Header />
+                <Header siteInfo={siteInfo} />
                 {/* 菜单栏 */}
                 <MenuList {...props} />
               </div>
@@ -277,61 +275,29 @@ const LayoutArchive = props => {
 const LayoutSlug = props => {
   const { post, siteInfo, allNavPages, recommendPosts, lock, validPassword } =
     props
-  const game = deepClone(post)
-  const [loading, setLoading] = useState(true)
-  const url = game?.ext?.href
+
   const relateGames = recommendPosts
   const randomGames = shuffleArray(deepClone(allNavPages))
 
   // 初始化可安装应用
-  initialPWA(game, siteInfo)
+  initialPWA(post, siteInfo)
 
-  // 将当前游戏加入到最近游玩
   useEffect(() => {
     // 更新最新游戏
     const recentGames = localStorage.getItem('recent_games')
       ? JSON.parse(localStorage.getItem('recent_games'))
       : []
 
-    const existedIndex = recentGames.findIndex(item => item?.id === game?.id)
+    const existedIndex = recentGames.findIndex(item => item?.id === post?.id)
     if (existedIndex === -1) {
-      recentGames.unshift(game) // 将游戏插入到数组头部
+      recentGames.unshift(post) // 将游戏插入到数组头部
     } else {
       // 如果游戏已存在于数组中，将其移至数组头部
       const existingGame = recentGames.splice(existedIndex, 1)[0]
       recentGames.unshift(existingGame)
     }
     localStorage.setItem('recent_games', JSON.stringify(recentGames))
-
-    const iframe = document.getElementById('game-wrapper')
-
-    // 定义一个函数来处理iframe加载成功事件
-    function iframeLoaded() {
-      if (game) {
-        setLoading(false)
-      }
-    }
-
-    // 绑定加载事件
-    if (iframe?.attachEvent) {
-      iframe?.attachEvent('onload', iframeLoaded)
-    } else {
-      if (iframe) iframe.onload = iframeLoaded
-    }
-
-    // 更改iFrame的title
-    if (
-      document
-        ?.getElementById('game-wrapper')
-        ?.contentDocument.querySelector('title')?.textContent
-    ) {
-      document
-        .getElementById('game-wrapper')
-        .contentDocument.querySelector('title').textContent = `${
-        game?.title || ''
-      } - Play ${game?.title || ''} on ${siteConfig('TITLE')}`
-    }
-  }, [game])
+  }, [])
 
   return (
     <>
@@ -339,89 +305,28 @@ const LayoutSlug = props => {
 
       {!lock && (
         <div id='article-wrapper' className='md:px-2'>
-          {/* 游戏区域 */}
           <div className='game-detail-wrapper w-full grow flex md:px-2'>
-            {/* 移动端返回主页按钮 */}
-            <Draggable stick='left'>
-              <div
-                style={{ left: '0px', top: '1rem' }}
-                className='fixed xl:hidden group space-x-1 flex items-center z-20 pr-3 pl-1 bg-[#202030] rounded-r-2xl  shadow-lg '>
-                <Link
-                  href='/'
-                  className='px-1 py-3 hover:scale-125 duration-200 transition-all'
-                  passHref>
-                  <i className='fas fa-arrow-left' />
-                </Link>{' '}
-                <span
-                  className='text-white font-serif'
-                  onClick={() => {
-                    document.querySelector('.game-info').scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'end',
-                      inline: 'nearest'
-                    })
-                  }}>
-                  G
-                </span>
-              </div>
-            </Draggable>
-
             <div className={`w-full py-1 md:py-4 `}>
-              {/* 游戏区  */}
-              <div
-                className={`${url ? '' : 'hidden'} bg-black w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md relative`}>
-                {/* Loading遮罩 */}
-                {loading && (
-                  <div className='absolute z-20 w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md overflow-hidden '>
-                    <div className='z-20 absolute bg-black bg-opacity-75 w-full h-full flex flex-col gap-4 justify-center items-center'>
-                      <h2 className='text-3xl text-white flex gap-2 items-center'>
-                        <i className='fas fa-spinner animate-spin'></i>
-                        {siteInfo?.title || siteConfig('TITLE')}
-                      </h2>
-                      <h3 className='text-xl text-white'>
-                        {siteInfo?.description || siteConfig('DESCRIPTION')}
-                      </h3>
-                    </div>
+              {/* 游戏窗口 */}
+              <GameEmbed post={post} siteInfo={siteInfo} />
 
-                    {/* 游戏封面图 */}
-                    {game?.pageCoverThumbnail && (
-                      <img
-                        src={game?.pageCoverThumbnail}
-                        className='w-full h-full object-cover blur-md absolute top-0 left-0 z-0'
-                      />
-                    )}
-                  </div>
-                )}
-
-                <iframe
-                  id='game-wrapper'
-                  src={url}
-                  className={`relative w-full xl:h-[calc(100vh-8rem)] h-screen md:rounded-md overflow-hidden`}
-                />
-
-                {/* 游戏窗口装饰器 */}
-                {game && !loading && (
-                  <div className='game-decorator bg-[#0B0D14] right-0 bottom-0 flex justify-center z-10 md:absolute'>
-                    <DownloadButton />
-                    <FullScreenButton />
-                  </div>
-                )}
-              </div>
-
-              {/* 游戏资讯 */}
+              {/* 资讯 */}
               <div className='game-info dark:text-white py-4 px-2 md:px-0 mt-14 md:mt-0'>
                 {/* 关联游戏 */}
                 <div className='w-full'>
                   <GameListRelate posts={relateGames} />
                 </div>
 
-                {game && (
+                {/* 详情描述 */}
+                {post && (
                   <div className='bg-white shadow-md my-2 p-2 rounded-md dark:bg-black'>
                     <PostInfo post={post} />
                     <NotionPage post={post} />
                     {/* 广告嵌入 */}
                     <AdSlot />
+                    {/* 分享栏目 */}
                     <ShareBar post={post} />
+                    {/* 评论区 */}
                     <Comment frontMatter={post} />
                   </div>
                 )}
