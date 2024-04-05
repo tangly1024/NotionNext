@@ -229,8 +229,8 @@ const LayoutArchive = (props) => {
 const LayoutMemos = (props) => {
   const memoPageInfo = {
     id: "9e6c78642def47bcbabe35f526307639", // 固定ID，确保唯一性
-    type: "Memos",
-    title: "我的说说",
+    type: "post",
+    title: "碎碎念",
   };
   return  (
   <div className="w-full lg:hover:shadow rounded-md lg:rounded-md lg:px-2 lg:py-4 article">
