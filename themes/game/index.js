@@ -122,7 +122,7 @@ const LayoutBase = props => {
           onClose={() => {
             setSideBarVisible(false)
           }}>
-          <SideBarContent {...props} />
+          <SideBarContent siteInfo={siteInfo} {...props} />
         </SideBarDrawer>
       </div>
     </ThemeGlobalGame.Provider>
@@ -136,12 +136,13 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const { tagOptions, currentTag, categoryOptions, currentCategory } = props
+  const { tagOptions, currentTag, categoryOptions, currentCategory, siteInfo } =
+    props
   return (
     <>
       {/* 首页移动端顶部导航 */}
       <div className='p-2 xl:hidden'>
-        <Header />
+        <Header siteInfo={siteInfo} />
       </div>
       {/* 最近游戏 */}
       <GameListRecent />
@@ -297,7 +298,7 @@ const LayoutSlug = props => {
       recentGames.unshift(existingGame)
     }
     localStorage.setItem('recent_games', JSON.stringify(recentGames))
-  }, [])
+  }, [post])
 
   return (
     <>
