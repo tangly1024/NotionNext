@@ -104,7 +104,7 @@ export const GameListIndexCombine = ({ posts }) => {
  */
 const GameAd = () => {
   return (
-    <div className='card-group border border-gray-600 rounded game-ad h-[20rem] w-full overflow-hidden'>
+    <div className='card-group rounded game-ad h-[20rem] w-full overflow-hidden'>
       <AdSlot type='flow' />
     </div>
   )
