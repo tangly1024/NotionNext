@@ -35,7 +35,9 @@ export default function GameEmbed({ post, siteInfo }) {
 
   // 将当前游戏加入到最近游玩
   useEffect(() => {
+    // 切换游戏时更新
     setUrl(originUrl)
+    setTipNewWindow(newWindow)
 
     const iframe = document.getElementById('game-wrapper')
 
