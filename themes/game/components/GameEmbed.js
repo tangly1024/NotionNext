@@ -37,6 +37,7 @@ export default function GameEmbed({ post, siteInfo }) {
         // console.log("用户切换到了其他标签页");
       } else {
         // console.log("用户回到了当前页面");
+        setLoading(true)
         // 刷新网页
         reloadIframe()
         // 移除监听器
