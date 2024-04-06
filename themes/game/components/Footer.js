@@ -9,8 +9,8 @@ export const Footer = props => {
 
   return (
     <footer
-      className={`z-10 relative mt-6 flex-shrink-0 m-auto w-full dark:text-gray-200 `}>
-      <hr className='my-2 border-black dark:border-gray-100' />
+      className={`z-10 dark:bg-black bg-white p-2 rounded-lg relative mt-6 flex-shrink-0 m-auto w-full dark:text-gray-200 `}>
+      {/* <hr className='my-2 border-black dark:border-gray-100' /> */}
       {/* 页面底部 */}
       <div className='w-full flex justify-between p-4 '>
         <p>
