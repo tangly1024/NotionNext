@@ -5,7 +5,8 @@ import Logo from './Logo'
  * 顶栏
  * @returns
  */
-export default function Header({ siteInfo }) {
+export default function Header(props) {
+  const { siteInfo } = props
   const { setSideBarVisible } = useGameGlobal()
   return (
     <header className='z-20'>
