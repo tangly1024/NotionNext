@@ -4,21 +4,35 @@ import { useEffect } from 'react'
 
 /**
  * 请求广告元素
+ * 调用后，实际只有当广告单元在页面中可见时才会真正获取
  */
 function requestAd(ads) {
   if (!ads || ads.length === 0) {
     return
   }
+
   const adsbygoogle = window.adsbygoogle
   if (adsbygoogle && ads.length > 0) {
-    for (let i = 0; i <= ads.length; i++) {
-      try {
-        const adStatus = ads[i].getAttribute('data-adsbygoogle-status')
-        if (!adStatus || adStatus !== 'done') {
-          adsbygoogle.push(ads[i])
-        }
-      } catch (e) {}
+    const observerOptions = {
+      root: null, // use the viewport as the root
+      threshold: 0.5 // element is considered visible when 50% visible
     }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const adStatus = entry.target.getAttribute('data-adsbygoogle-status')
+          if (!adStatus || adStatus !== 'done') {
+            adsbygoogle.push(entry.target)
+            observer.unobserve(entry.target) // stop observing once ad is loaded
+          }
+        }
+      })
+    }, observerOptions)
+
+    ads.forEach(ad => {
+      observer.observe(ad)
+    })
   }
 }
 
