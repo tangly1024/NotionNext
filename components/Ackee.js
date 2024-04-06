@@ -19,8 +19,8 @@ const Ackee = () => {
     handleAckee(
       router.asPath,
       {
-        server: server,
-        domainId: domainId
+        server,
+        domainId
       },
       {
         /*

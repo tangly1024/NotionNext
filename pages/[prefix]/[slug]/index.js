@@ -30,7 +30,7 @@ export async function getStaticPaths() {
     ?.filter(row => checkSlug(row))
     .map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } }))
   return {
-    paths: paths,
+    paths,
     fallback: true
   }
 }

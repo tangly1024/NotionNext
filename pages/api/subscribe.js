@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { email, firstName, lastName } = req.body
     try {
-      const response = await subscribeToMailchimpApi({ email, first_name: firstName, last_name: lastName })
+      const response = await subscribeToMailchimpApi({ email, firstName, lastName })
       const data = await response.json()
       console.log('data', data)
       res.status(200).json({ status: 'success', message: 'Subscription successful!' })

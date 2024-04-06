@@ -26,7 +26,7 @@ const Artalk = ({ siteInfo }) => {
       locale: artalkLocale,
       //   pageKey: '/post/1', // 固定链接 (留空自动获取)
       //   pageTitle: '关于引入 Artalk 的这档子事', // 页面标题 (留空自动获取)
-      site: site // 你的站点名
+      site // 你的站点名
     })
   }
   return (

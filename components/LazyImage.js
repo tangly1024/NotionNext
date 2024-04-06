@@ -62,7 +62,7 @@ export default function LazyImage({
   const imgProps = {
     ref: imageRef,
     src: imageLoaded ? src : placeholderSrc,
-    alt: alt,
+    alt,
     onLoad: handleImageLoad
   }
 

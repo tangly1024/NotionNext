@@ -69,7 +69,7 @@ export async function getStaticPaths() {
   const { allPages } = await getGlobalData({ from })
   const paths = allPages?.filter(row => checkSlug(row)).map(row => ({ params: { prefix: row.slug } }))
   return {
-    paths: paths,
+    paths,
     fallback: true
   }
 }

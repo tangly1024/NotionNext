@@ -43,10 +43,10 @@ const Player = () => {
         new window.APlayer({
           container: ref.current,
           fixed: true,
-          lrcType: lrcType,
+          lrcType,
           autoplay: autoPlay,
-          order: order,
-          audio: audio
+          order,
+          audio
         })
       )
     }

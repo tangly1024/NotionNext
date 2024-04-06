@@ -4,7 +4,12 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: ['plugin:react/recommended', 'plugin:@next/next/recommended', 'standard', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    'plugin:@next/next/recommended',
+    'standard',
+    'prettier'
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -12,7 +17,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['react', 'react-hooks', 'prettier'],
+  plugins: ['react', 'react-hooks', 'prettier', 'promise', 'node', 'import'],
   settings: {
     react: {
       version: 'detect'
