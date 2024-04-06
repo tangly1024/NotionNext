@@ -19,34 +19,56 @@ export default function GameEmbed({ post, siteInfo }) {
 
   // 提示用户在新窗口打开
   const [tipNewWindow, setTipNewWindow] = useState(newWindow)
-  const [url, setUrl] = useState(originUrl)
   const [loading, setLoading] = useState(true)
 
   /**
-   * 新窗口中打开
+   * 新窗口中打开游戏。
+   * 并且在回到此页面后后刷新iframe，尝试重新加载iframe
    */
   const openInNewWindow = () => {
+    // 关闭提示框
     setTipNewWindow(false)
-    setTimeout(function () {
-      setUrl('')
-      setUrl(originUrl)
-    }, 10000) // 10000毫秒 = 10秒
+    // 添加监听器
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    // 定义监听器函数
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'hidden') {
+        // console.log("用户切换到了其他标签页");
+      } else {
+        // console.log("用户回到了当前页面");
+        // 刷新网页
+        reloadIframe()
+        // 移除监听器
+        document.removeEventListener('visibilitychange', handleVisibilityChange)
+      }
+    }
   }
 
-  // 将当前游戏加入到最近游玩
+  /**
+   * 隐藏提示框
+   */
+  const hiddenTips = () => {
+    setTipNewWindow(false)
+  }
+
+  function reloadIframe() {
+    var iframe = document.getElementById('game-wrapper')
+    iframe.contentWindow.location.reload()
+  }
+
+  // 定义一个函数来处理iframe加载成功事件
+  function iframeLoaded() {
+    if (game) {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
-    // 切换游戏时更新
-    setUrl(originUrl)
+    // 是否弹窗提示新网页打开
     setTipNewWindow(newWindow)
 
     const iframe = document.getElementById('game-wrapper')
-
-    // 定义一个函数来处理iframe加载成功事件
-    function iframeLoaded() {
-      if (game) {
-        setLoading(false)
-      }
-    }
 
     // 绑定加载事件
     if (iframe?.attachEvent) {
@@ -67,11 +89,11 @@ export default function GameEmbed({ post, siteInfo }) {
         game?.title || ''
       } - Play ${game?.title || ''} on ${siteConfig('TITLE')}`
     }
-  }, [game])
+  }, [post])
 
   return (
     <div
-      className={`${url ? '' : 'hidden'} bg-black w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md relative`}>
+      className={`${originUrl ? '' : 'hidden'} bg-black w-full xl:h-[calc(100vh-8rem)] h-screen rounded-md relative`}>
       {/* 移动端返回主页按钮 */}
       <Draggable stick='left'>
         <div
@@ -103,22 +125,18 @@ export default function GameEmbed({ post, siteInfo }) {
         <div
           id='open-tips'
           className={`animate__animated animate__fadeIn bottom-8 right-4  absolute z-20 flex items-end justify-end`}>
-          <div className='relative w-80 h-auto bg-white rounded-lg p-2'>
+          <div className='relative w-96 h-auto bg-white rounded-lg p-2'>
             <div className='absolute right-2'>
-              <button
-                className='text-xl p-2'
-                onClick={() => {
-                  setTipNewWindow(false)
-                }}>
+              <button className='text-xl p-2' onClick={hiddenTips}>
                 <i className='fas fa-times'></i>
               </button>
             </div>
-            <div className='p-2'>
+            <div className='p-2 text-lg'>
               If the game fails to load, please try accessing the{' '}
               <a
                 className='underline text-blue-500'
                 rel='noReferrer'
-                href={`${url?.replace('/games-external/common/index.htm?n=', '')}`}
+                href={`${originUrl?.replace('/games-external/common/index.htm?n=', '')}`}
                 target='_blank'
                 onClick={openInNewWindow}>
                 source webpage
@@ -153,12 +171,12 @@ export default function GameEmbed({ post, siteInfo }) {
       )}
       <iframe
         id='game-wrapper'
-        src={url}
+        src={originUrl}
         className={`relative w-full xl:h-[calc(100vh-8rem)] h-screen md:rounded-md overflow-hidden`}
       />
 
       {/* 游戏窗口装饰器 */}
-      {url && !loading && (
+      {originUrl && !loading && (
         <div className='game-decorator bg-[#0B0D14] right-0 bottom-0 flex justify-center z-10 md:absolute'>
           <DownloadButton />
           <FullScreenButton />
