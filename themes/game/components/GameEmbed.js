@@ -37,6 +37,7 @@ export default function GameEmbed({ post, siteInfo }) {
         // console.log("用户切换到了其他标签页");
       } else {
         // console.log("用户回到了当前页面");
+        setLoading(true)
         // 刷新网页
         reloadIframe()
         // 移除监听器
@@ -98,24 +99,24 @@ export default function GameEmbed({ post, siteInfo }) {
       <Draggable stick='left'>
         <div
           style={{ left: '0px', top: '1rem' }}
-          className='fixed xl:hidden group space-x-1 flex items-center z-20 pr-3 pl-1 bg-[#202030] rounded-r-2xl  shadow-lg '>
+          className='text-white fixed xl:hidden group space-x-1 flex items-center z-20 pr-3 pl-1 bg-[#202030] rounded-r-2xl  shadow-lg '>
           <Link
             href='/'
             className='px-1 py-3 hover:scale-125 duration-200 transition-all'
             passHref>
-            <i className='fas fa-arrow-left' />
+            <i className='fas fa-chevron-left' />
           </Link>{' '}
           <span
-            className='text-white font-serif'
+            className='font-serif px-1'
             onClick={() => {
               document.querySelector('.game-info').scrollIntoView({
                 behavior: 'smooth',
-                block: 'end',
+                block: 'start',
                 inline: 'nearest'
               })
             }}>
             {/* Title首字母 */}
-            {siteInfo?.title?.charAt(0)}
+            <i className='fas fa-info' />
           </span>
         </div>
       </Draggable>
