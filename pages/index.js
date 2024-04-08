@@ -24,9 +24,10 @@ const Index = props => {
  * SSG 获取数据
  * @returns
  */
-export async function getStaticProps() {
+export async function getStaticProps(req) {
+  const { locale } = req
   const from = 'index'
-  const props = await getGlobalData({ from })
+  const props = await getGlobalData({ from, locale })
 
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'

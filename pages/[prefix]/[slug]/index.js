@@ -28,14 +28,16 @@ export async function getStaticPaths() {
   const { allPages } = await getGlobalData({ from })
   const paths = allPages
     ?.filter(row => checkSlug(row))
-    .map(row => ({ params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] } }))
+    .map(row => ({
+      params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] }
+    }))
   return {
     paths: paths,
     fallback: true
   }
 }
 
-export async function getStaticProps({ params: { prefix, slug } }) {
+export async function getStaticProps({ params: { prefix, slug }, locale }) {
   let fullSlug = prefix + '/' + slug
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (!fullSlug.endsWith('.html')) {
@@ -43,10 +45,13 @@ export async function getStaticProps({ params: { prefix, slug } }) {
     }
   }
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from })
+  const props = await getGlobalData({ from, locale })
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
-    return p.type.indexOf('Menu') < 0 && (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+    return (
+      p.type.indexOf('Menu') < 0 &&
+      (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+    )
   })
 
   // 处理非列表内文章的内信息
@@ -74,12 +79,18 @@ export async function getStaticProps({ params: { prefix, slug } }) {
   }
 
   // 推荐关联文章处理
-  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = props.allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
     props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-    props.recommendPosts = getRecommendPost(props.post, allPosts, siteConfig('POST_RECOMMEND_COUNT'))
+    props.recommendPosts = getRecommendPost(
+      props.post,
+      allPosts,
+      siteConfig('POST_RECOMMEND_COUNT')
+    )
   } else {
     props.prev = null
     props.next = null
@@ -97,6 +108,10 @@ function checkSlug(row) {
   if (slug.startsWith('/')) {
     slug = slug.substring(1)
   }
-  return (slug.match(/\//g) || []).length === 1 && !checkContainHttp(slug) && row.type.indexOf('Menu') < 0
+  return (
+    (slug.match(/\//g) || []).length === 1 &&
+    !checkContainHttp(slug) &&
+    row.type.indexOf('Menu') < 0
+  )
 }
 export default PrefixSlug
