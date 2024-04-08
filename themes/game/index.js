@@ -62,11 +62,6 @@ const LayoutBase = props => {
   const [sideBarVisible, setSideBarVisible] = useState(false)
 
   useEffect(() => {
-    setRecentGames(
-      localStorage.getItem('recent_games')
-        ? JSON.parse(localStorage.getItem('recent_games'))
-        : []
-    )
     loadWowJS()
   }, [])
 
@@ -110,9 +105,8 @@ const LayoutBase = props => {
           </div>
 
           {/* 右侧 */}
-          <main className='flex-grow w-full h-full flex flex-col min-h-screen overflow-x-auto'>
+          <main className='flex-grow w-full h-full flex flex-col min-h-screen overflow-x-auto md:p-2'>
             <div className='flex-grow h-full'>{children}</div>
-
             <Footer />
           </main>
         </div>
@@ -274,6 +268,7 @@ const LayoutArchive = props => {
  * @returns
  */
 const LayoutSlug = props => {
+  const { setRecentGames } = useGameGlobal()
   const { post, siteInfo, allNavPages, recommendPosts, lock, validPassword } =
     props
 
@@ -298,6 +293,8 @@ const LayoutSlug = props => {
       recentGames.unshift(existingGame)
     }
     localStorage.setItem('recent_games', JSON.stringify(recentGames))
+
+    setRecentGames(recentGames)
   }, [post])
 
   return (
@@ -305,14 +302,14 @@ const LayoutSlug = props => {
       {lock && <ArticleLock validPassword={validPassword} />}
 
       {!lock && (
-        <div id='article-wrapper' className='md:px-2'>
-          <div className='game-detail-wrapper w-full grow flex md:px-2'>
-            <div className={`w-full py-1 md:py-4 `}>
+        <div id='article-wrapper'>
+          <div className='game-detail-wrapper w-full grow flex'>
+            <div className={`w-full md:py-2`}>
               {/* 游戏窗口 */}
               <GameEmbed post={post} siteInfo={siteInfo} />
 
               {/* 资讯 */}
-              <div className='game-info dark:text-white py-4 px-2 md:px-0 mt-14 md:mt-0'>
+              <div className='game-info  dark:text-white py-2 px-2 md:px-0 mt-14 md:mt-0'>
                 {/* 关联游戏 */}
                 <div className='w-full'>
                   <GameListRelate posts={relateGames} />
@@ -320,7 +317,7 @@ const LayoutSlug = props => {
 
                 {/* 详情描述 */}
                 {post && (
-                  <div className='bg-white shadow-md my-2 p-2 rounded-md dark:bg-black'>
+                  <div className='bg-white shadow-md my-2 p-4 rounded-md dark:bg-black'>
                     <PostInfo post={post} />
                     <NotionPage post={post} />
                     {/* 广告嵌入 */}
