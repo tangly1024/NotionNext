@@ -8,7 +8,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 /**
- * 扫描指定目录下的文件夹名，用于获取当前有几个主题
+ * 扫描指定目录下的文件夹名，用于获取所有主题
  * @param {*} directory
  * @returns
  */
@@ -18,11 +18,11 @@ function scanSubdirectories(directory) {
   fs.readdirSync(directory).forEach(file => {
     const fullPath = path.join(directory, file)
     const stats = fs.statSync(fullPath)
-
-    // landing主题比较特殊，不在可切换的主题中显示
-    if (stats.isDirectory() && file !== 'landing') {
+    if (stats.isDirectory()) {
       subdirectories.push(file)
     }
+
+    // subdirectories.push(file)
   })
 
   return subdirectories
@@ -41,7 +41,8 @@ module.exports = withBundleAnalyzer({
       'images.unsplash.com',
       'source.unsplash.com',
       'p1.qhimg.com',
-      'webmention.io'
+      'webmention.io',
+      'ko-fi.com'
     ]
   },
   // 默认将feed重定向至 /public/rss/feed.xml
@@ -92,20 +93,30 @@ module.exports = withBundleAnalyzer({
     //   })
     // }
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
-    console.log('加载默认主题', path.resolve(__dirname, 'themes', THEME))
-    config.resolve.alias['@theme-components'] = path.resolve(__dirname, 'themes', THEME)
+    if (!isServer) {
+      console.log('[加载主题]', path.resolve(__dirname, 'themes', THEME))
+    }
+    config.resolve.alias['@theme-components'] = path.resolve(
+      __dirname,
+      'themes',
+      THEME
+    )
     return config
   },
   experimental: {
     scrollRestoration: true
   },
-  exportPathMap: async function (defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
-    // 导出时 忽略/pages/sitemap.xml.js ， 否则报错getServerSideProps
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    // export 静态导出时 忽略/pages/sitemap.xml.js ， 否则和getServerSideProps这个动态文件冲突
     const pages = { ...defaultPathMap }
     delete pages['/sitemap.xml']
     return pages
   },
-  publicRuntimeConfig: { // 这里的配置既可以服务端获取到，也可以在浏览器端获取到
+  publicRuntimeConfig: {
+    // 这里的配置既可以服务端获取到，也可以在浏览器端获取到
     NODE_ENV_API: process.env.NODE_ENV_API || 'prod',
     THEMES: themes
   }

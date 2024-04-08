@@ -1,6 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  * 文章详情页介绍
@@ -12,7 +13,7 @@ export default function ArticleInfo(props) {
 
   return (<>
         {/* title */}
-        <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
+        <h1 className="text-3xl pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
 
         {/* meta */}
         <section className="py-2 items-center text-sm  px-1">

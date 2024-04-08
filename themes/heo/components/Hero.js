@@ -24,9 +24,7 @@ const Hero = props => {
       <div
         id="hero"
         style={{ zIndex: 1 }}
-        className={
-           `animate__animated animate__fadeIn animate__fast 
-           ${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
+        className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
            recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`
         }
       >

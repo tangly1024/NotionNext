@@ -1,9 +1,8 @@
-import { useGlobal } from '@/lib/global'
-import { getGlobalData } from '@/lib/notion/getNotionData'
 import BLOG from '@/blog.config'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
 import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 /**
  * 标签下的文章列表
@@ -11,20 +10,8 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const Tag = props => {
-  const { locale } = useGlobal()
-  const { tag, siteInfo } = props
-
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
-
-  const meta = {
-    title: `${tag} | ${locale.COMMON.TAGS} | ${siteConfig('TITLE')}`,
-    description: siteConfig('DESCRIPTION'),
-    image: siteInfo?.pageCover,
-    slug: 'tag/' + tag,
-    type: 'website'
-  }
-  props = { ...props, meta }
 
   return <Layout {...props} />
 }
@@ -34,16 +21,18 @@ export async function getStaticProps({ params: { tag } }) {
   const props = await getGlobalData({ from })
 
   // 过滤状态
-  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post?.tags && post?.tags.includes(tag))
+  props.posts = props.allPages
+    ?.filter(page => page.type === 'Post' && page.status === 'Published')
+    .filter(post => post && post?.tags && post?.tags.includes(tag))
 
   // 处理文章页数
   props.postCount = props.posts.length
 
   // 处理分页
-  if (BLOG.POST_LIST_STYLE === 'scroll') {
+  if (siteConfig('POST_LIST_STYLE') === 'scroll') {
     // 滚动列表 给前端返回所有数据
-  } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
+  } else if (siteConfig('POST_LIST_STYLE') === 'page') {
+    props.posts = props.posts?.slice(0, siteConfig('POSTS_PER_PAGE'))
   }
 
   props.tag = tag
