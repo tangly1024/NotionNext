@@ -9,7 +9,7 @@ const Footer = ({ title }) => {
 
   return (
         <footer
-            className='relative z-10 flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'
+            className='relative flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'
         >
 
             {/* 颜色过度区 */}

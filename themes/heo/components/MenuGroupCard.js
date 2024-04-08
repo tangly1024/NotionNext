@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 const MenuGroupCard = (props) => {
   const { postCount, categoryOptions, tagOptions } = props
