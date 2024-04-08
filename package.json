@@ -3,15 +3,8 @@
     "version": "4.3.1",
     "homepage": "https://github.com/tangly1024/NotionNext.git",
     "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/tangly1024/NotionNext.git"
-    },
-    "author": {
-        "name": "tangly",
-        "email": "mail@tangly1024.com",
-        "url": "http://tangly1024.com"
-    },
+    "repository": "https://github.com/tangly1024/NotionNext.git",
+    "author": "tangly <mail@tangly1024.com> (http://tangly1024.com)",
     "scripts": {
         "dev": "next dev",
         "build": "next build",
@@ -75,5 +68,6 @@
     "bugs": {
         "url": "https://github.com/tangly/NotionNext/issues",
         "email": "tlyong1992@hotmail.com"
-    }
+    },
+    "main": "index.js"
 }
