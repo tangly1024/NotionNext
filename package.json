@@ -26,7 +26,6 @@
         "@next/bundle-analyzer": "^12.1.1",
         "@vercel/analytics": "^1.0.0",
         "algoliasearch": "^4.18.0",
-        "animejs": "^3.2.1",
         "aos": "^2.3.4",
         "feed": "^4.2.2",
         "js-md5": "^0.7.3",
