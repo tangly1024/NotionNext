@@ -4,7 +4,6 @@ import '@/styles/utility-patterns.css'
 
 // core styles shared by all of react-notion-x (required)
 import '@/styles/notion.css' //  重写部分样式
-import 'aos/dist/aos.css' // You can also use <link> for styles
 import 'react-notion-x/src/styles.css'
 
 import useAdjustStyle from '@/hooks/useAdjustStyle'
