@@ -271,7 +271,7 @@ const BLOG = {
     {
       name: '娱乐天空',
       artist: '陈奕迅',
-      url: 'https://music.163.com/#/song?id=28481104',
+      url: 'https://music.163.com/outchain/player?type=2&id=28481104&auto=1&height=66',
       cover: 'http://p2.music.126.net/itkdsMFR8nYzaTiDdHO3tA==/109951165995320408.jpg'
     }
   ],
