@@ -270,8 +270,8 @@ const BLOG = {
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
       name: '娱乐天空',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song?id=28481104&userid=257408243',
+      artist: '陈奕迅',
+      url: 'https://music.163.com/#/song?id=28481104',
       cover: 'http://p2.music.126.net/itkdsMFR8nYzaTiDdHO3tA==/109951165995320408.jpg'
     }
   ],
