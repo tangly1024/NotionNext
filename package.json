@@ -43,8 +43,7 @@
         "react-hotkeys-hook": "^4.5.0",
         "react-notion-x": "6.16.0",
         "react-share": "^4.4.1",
-        "react-tweet-embed": "~2.0.0",
-        "typed.js": "^2.0.12"
+        "react-tweet-embed": "~2.0.0"
     },
     "devDependencies": {
         "@waline/client": "^2.5.1",
