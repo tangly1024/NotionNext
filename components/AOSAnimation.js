@@ -1,5 +1,5 @@
+import { isBrowser } from '@/lib/utils'
 import AOS from 'aos'
-import { isBrowser } from 'react-notion-x'
 
 /**
  * 加载滚动动画

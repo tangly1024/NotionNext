@@ -35,7 +35,6 @@
         "next": "13.3.1",
         "notion-client": "6.15.6",
         "notion-utils": "6.15.6",
-        "nprogress": "^0.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-facebook": "^8.1.4",
