@@ -248,6 +248,27 @@ const LayoutMemos = (props) => {
         </div>
     </div>)
 }
+/**
+ * 登录页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSuibian = (props)=>{
+  const memoPageInfo = {
+    id: "9ecc78643def47bcvabeg5f79",
+    type: "Suibian",
+    title: "登录页面"
+};
+return (
+  <div className="w-full lg:hover:shadow rounded-md lg:rounded-md lg:px-2 lg:py-4 article bg-white">
+    登录页面
+    <div className="duration-200 overflow-x-auto px-3">
+                <Comment frontMatter={memoPageInfo} />
+            </div>
+  </div>
+  
+)
+}
 
 /**
  * 文章详情
@@ -404,10 +425,11 @@ export {
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,
-  LayoutMemos,   //增加LayoutMemos组件Export
+  LayoutMemos, //增加LayoutMemos组件Export
   LayoutSlug,
   Layout404,
   LayoutCategoryIndex,
   LayoutPostList,
-  LayoutTagIndex
+  LayoutTagIndex,
+  LayoutSuibian
 }
