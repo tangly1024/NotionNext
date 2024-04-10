@@ -17,7 +17,6 @@ const Fireworks = () => {
   useEffect(() => {
     // 异步加载
     async function loadFireworks() {
-      console.log('加载烟花')
       loadExternalResource(
         'https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js',
         'js'
