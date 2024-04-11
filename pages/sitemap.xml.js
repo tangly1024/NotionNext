@@ -1,5 +1,6 @@
 // pages/sitemap.xml.js
 import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { getNotionPageData } from '@/lib/db/getSiteData'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
 import { getServerSideSitemap } from 'next-sitemap'
@@ -12,13 +13,12 @@ export const getServerSideProps = async ctx => {
     const id = extractLangId(siteId)
     const locale = extractLangPrefix(siteId)
     // 第一个id站点默认语言
-    const localeFields = generateLocalesSitemap(
-      await getNotionPageData({
-        pageId: id,
-        from: 'sitemap.xml'
-      }).allPages,
-      locale
-    )
+    const siteData = await getNotionPageData({
+      pageId: id,
+      from: 'sitemap.xml'
+    })
+    const link = siteConfig('LINK', BLOG.LINK, siteData.NOTION_CONFIG)
+    const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
     fields = fields.concat(localeFields)
   }
 
@@ -31,43 +31,43 @@ export const getServerSideProps = async ctx => {
   return getServerSideSitemap(ctx, fields)
 }
 
-function generateLocalesSitemap(allPages, locale) {
+function generateLocalesSitemap(link, allPages, locale) {
   if (locale && locale.length > 0 && locale.indexOf('/') !== 0) {
     locale = '/' + locale
   }
   const defaultFields = [
     {
-      loc: `${BLOG.LINK}${locale}`,
+      loc: `${link}${locale}`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     },
     {
-      loc: `${BLOG.LINK}${locale}/archive`,
+      loc: `${link}${locale}/archive`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     },
     {
-      loc: `${BLOG.LINK}${locale}/category`,
+      loc: `${link}${locale}/category`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     },
     {
-      loc: `${BLOG.LINK}${locale}/feed`,
+      loc: `${link}${locale}/feed`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     },
     {
-      loc: `${BLOG.LINK}${locale}/search`,
+      loc: `${link}${locale}/search`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
     },
     {
-      loc: `${BLOG.LINK}${locale}/tag`,
+      loc: `${link}${locale}/tag`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
@@ -81,7 +81,7 @@ function generateLocalesSitemap(allPages, locale) {
           ? post?.slug?.slice(1)
           : post.slug
         return {
-          loc: `${BLOG.LINK}${locale}/${slugWithoutLeadingSlash}`,
+          loc: `${link}${locale}/${slugWithoutLeadingSlash}`,
           lastmod: new Date(post?.publishDay).toISOString().split('T')[0],
           changefreq: 'daily',
           priority: '0.7'

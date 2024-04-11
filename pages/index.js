@@ -59,7 +59,7 @@ export async function getStaticProps(req) {
   generateRobotsTxt()
   // 生成Feed订阅
   if (JSON.parse(BLOG.ENABLE_RSS)) {
-    generateRss(props?.latestPosts || [])
+    generateRss(props?.NOTION_CONFIG, props?.latestPosts || [])
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
@@ -68,7 +68,11 @@ export async function getStaticProps(req) {
 
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: siteConfig(
+      'REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    )
   }
 }
 
