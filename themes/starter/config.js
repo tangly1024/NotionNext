@@ -15,7 +15,7 @@ const CONFIG = {
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
 
   STARTER_HERO_BUTTON_1_TEXT: 'Get Started', // 英雄区按钮
-  STARTER_HERO_BUTTON_1_URL: 'https://www.aragorn.cc/transcriptionTasks', // 英雄区按钮
+  STARTER_HERO_BUTTON_1_URL: 'https://dash.aragorn.cc/transcriptionTasks', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: 'Follow Us', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://belliedmonkey.cc', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
@@ -25,10 +25,10 @@ const CONFIG = {
 
   // 顶部右侧导航暗流
   STARTER_NAV_BUTTON_1_TEXT: 'Sign In',
-  STARTER_NAV_BUTTON_1_URL: 'https://www.aragorn.cc/login',
+  STARTER_NAV_BUTTON_1_URL: 'https://dash.aragorn.cc/login',
 
   STARTER_NAV_BUTTON_2_TEXT: 'Get Started',
-  STARTER_NAV_BUTTON_2_URL: 'https://www.aragorn.cc/transcriptionTasks',
+  STARTER_NAV_BUTTON_2_URL: 'https://dash.aragorn.cc/transcriptionTasks',
 
   // 特性区块
   STARTER_FEATURE_ENABLE: true, // 特性区块开关
@@ -316,7 +316,7 @@ const CONFIG = {
 
       TITLE: 'Contact Us',
       LINK_GROUP: [
-        { TITLE: 'Discord', URL: 'https://discord.gg/YzNxvxSq' },
+        { TITLE: 'Discord', URL: 'https://discord.gg/term4cAft4' },
         { TITLE: 'Twitter', URL: 'https://twitter.com/belliedmonkey' },
 
       ]
@@ -328,13 +328,13 @@ const CONFIG = {
   STARTER_FOOTER_BLOG_LATEST_TITLE: 'Latest articles',
 
   STARTER_FOOTER_PRIVACY_POLICY_TEXT: 'Terms of Service',
-  STARTER_FOOTER_PRIVACY_POLICY_URL: 'https://www.aragorn.cc/policy/user-service.html',
+  STARTER_FOOTER_PRIVACY_POLICY_URL: 'https://dash.aragorn.cc/policy/user-service.html',
 
   STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT: 'Privacy Policy',
-  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: 'https://www.aragorn.cc/policy/privacy-policy.html',
+  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: 'https://dash.aragorn.cc/policy/privacy-policy.html',
 
   STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: 'Cookies Policy',
-  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: 'https://www.aragorn.cc/policy/cookies-policy.html',
+  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: 'https://dash.aragorn.cc/policy/cookies-policy.html',
 
   // 404页面的提示语
   STARTER_404_TITLE: 'We seem to be unable to find the page you are looking for.',
@@ -342,7 +342,7 @@ const CONFIG = {
   STARTER_404_BACK: 'Return to homepage.',
 
   STARTER_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
-  STARTER_POST_REDIRECT_URL: 'https://www.aragorn.cc/transcriptionTasks', // 重定向域名
+  STARTER_POST_REDIRECT_URL: 'https://dash.aragorn.cc/transcriptionTasks', // 重定向域名
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG
