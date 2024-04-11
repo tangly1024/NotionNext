@@ -28,7 +28,9 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                 {locale.COMMON.LATEST_POSTS}
             </div>
         </div>
-        {latestPosts.map(post => {
+        {latestPosts
+        .sort((a, b) => b.publishDate - a.publishDate) // 按时间戳降序排序
+        .map(post => {
           const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover
           const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
           const selected = currentPath === url
@@ -53,7 +55,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
                     >
                         <div>
                             <div className='line-clamp-2 menu-link'>{post.title}</div>
-                            <div className="text-gray-500">{post.lastEditedDay}</div>
+                            <div className="text-gray-500">{post.publishDay}</div>
                         </div>
                     </div>
 
