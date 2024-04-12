@@ -68,11 +68,7 @@ export async function getStaticProps(req) {
 
   return {
     props,
-    revalidate: siteConfig(
-      'REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

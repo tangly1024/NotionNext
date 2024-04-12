@@ -40,11 +40,7 @@ export async function getStaticProps({ params: { keyword }, locale }) {
   props.keyword = keyword
   return {
     props,
-    revalidate: siteConfig(
-      'REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 

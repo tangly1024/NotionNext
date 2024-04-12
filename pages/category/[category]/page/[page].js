@@ -43,11 +43,7 @@ export async function getStaticProps({ params: { category, page } }) {
 
   return {
     props,
-    revalidate: siteConfig(
-      'REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: BLOG.NEXT_REVALIDATE_SECOND
   }
 }
 
