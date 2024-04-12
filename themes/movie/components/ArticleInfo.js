@@ -10,14 +10,6 @@ export const ArticleInfo = props => {
     <section className='w-full mx-auto mb-4'>
       <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
 
-      <div className='flex gap-3 font-semibold text-sm items-center justify-center'>
-        <Link
-          href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-          passHref
-          className='pl-1 mr-2 cursor-pointer'>
-          {post?.publishDay}
-        </Link>
-
         {post?.type !== 'Page' && (
           <>
             <Link href={`/category/${post?.category}`} passHref className='cursor-pointer text-md mr-2 text-green-500'>
