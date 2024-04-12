@@ -43,7 +43,9 @@ export const GameListRelate = ({ posts }) => {
 const GameItem = ({ item }) => {
   const { title } = item
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+  const url = checkContainHttp(item.slug)
+    ? sliceUrlFromHttp(item.slug)
+    : `${siteConfig('SUB_PATH', '')}/${item.slug}`
 
   const img = item?.pageCoverThumbnail
   const video = item?.ext?.video
@@ -60,15 +62,19 @@ const GameItem = ({ item }) => {
       title={title}
       className={`card-single w-24 h-24 relative shadow rounded-md overflow-hidden flex justify-center items-center 
                 group   hover:border-purple-400`}>
-      <div className='text-sm text-center absolute bottom-0 invisible group-hover:bottom-2 group-hover:visible transition-all duration-200 text-white z-30'>
+      <div className='text-xs text-center absolute bottom-0 invisible group-hover:bottom-2 group-hover:visible transition-all duration-200 text-white z-30'>
         {title}
       </div>
-      <div className='h-1/2 w-full absolute left-0 bottom-0 z-20 opacity-0 group-hover:opacity-75 transition-all duration-200'>
+      <div className='h-2/3 w-full absolute left-0 bottom-0 z-20 opacity-0 group-hover:opacity-75 transition-all duration-200'>
         <div className='h-full w-full absolute bg-gradient-to-b from-transparent to-black'></div>
       </div>
 
       {showType === 'video' && (
-        <video className={`z-10 object-cover w-full h-24 absolute overflow-hidden`} loop='true' autoPlay preload='none'>
+        <video
+          className={`z-10 object-cover w-full h-24 absolute overflow-hidden`}
+          loop='true'
+          autoPlay
+          preload='none'>
           <source src={video} type='video/mp4' />
         </video>
       )}

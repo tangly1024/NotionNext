@@ -53,7 +53,10 @@ const Slug = props => {
 
   props = { ...props, lock, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
   return <Layout {...props} />
 }
 
@@ -67,25 +70,31 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
-  const paths = allPages?.filter(row => checkSlug(row)).map(row => ({ params: { prefix: row.slug } }))
+  const paths = allPages
+    ?.filter(row => checkSlug(row))
+    .map(row => ({ params: { prefix: row.slug } }))
   return {
     paths: paths,
     fallback: true
   }
 }
 
-export async function getStaticProps({ params: { prefix } }) {
+export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
-  if (JSON.parse(BLOG.PSEUDO_STATIC)) {
+  const from = `slug-props-${fullSlug}`
+  const props = await getGlobalData({ from, locale })
+  if (siteConfig('PSEUDO_STATIC', BLOG.PSEUDO_STATIC, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
     }
   }
-  const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from })
+
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
-    return p.type.indexOf('Menu') < 0 && (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+    return (
+      p.type.indexOf('Menu') < 0 &&
+      (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+    )
   })
 
   // 处理非列表内文章的内信息
@@ -99,7 +108,14 @@ export async function getStaticProps({ params: { prefix } }) {
   // 无法获取文章
   if (!props?.post) {
     props.post = null
-    return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) }
+    return {
+      props,
+      revalidate: siteConfig(
+        'REVALIDATE_SECOND',
+        BLOG.NEXT_REVALIDATE_SECOND,
+        props.NOTION_CONFIG
+      )
+    }
   }
 
   // 文章内容加载
@@ -113,12 +129,18 @@ export async function getStaticProps({ params: { prefix } }) {
   }
 
   // 推荐关联文章处理
-  const allPosts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = props.allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post)
     props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
     props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-    props.recommendPosts = getRecommendPost(props.post, allPosts, siteConfig('POST_RECOMMEND_COUNT'))
+    props.recommendPosts = getRecommendPost(
+      props.post,
+      allPosts,
+      siteConfig('POST_RECOMMEND_COUNT')
+    )
   } else {
     props.prev = null
     props.next = null
@@ -128,7 +150,11 @@ export async function getStaticProps({ params: { prefix } }) {
   delete props.allPages
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    )
   }
 }
 
@@ -172,7 +198,11 @@ function checkSlug(row) {
   if (slug.startsWith('/')) {
     slug = slug.substring(1)
   }
-  return (slug.match(/\//g) || []).length === 0 && !checkContainHttp(slug) && row.type.indexOf('Menu') < 0
+  return (
+    (slug.match(/\//g) || []).length === 0 &&
+    !checkContainHttp(slug) &&
+    row.type.indexOf('Menu') < 0
+  )
 }
 
 export default Slug

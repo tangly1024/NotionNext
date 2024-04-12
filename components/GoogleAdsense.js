@@ -1,48 +1,105 @@
 import { siteConfig } from '@/lib/config'
 import { loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-function requestAd() {
-  const ads = document.getElementsByClassName('adsbygoogle')
+/**
+ * 请求广告元素
+ * 调用后，实际只有当广告单元在页面中可见时才会真正获取
+ */
+function requestAd(ads) {
+  if (!ads || ads.length === 0) {
+    return
+  }
+
   const adsbygoogle = window.adsbygoogle
   if (adsbygoogle && ads.length > 0) {
-    for (let i = 0; i <= ads.length; i++) {
-      try {
-        const adStatus = ads[i].getAttribute('data-adsbygoogle-status')
-        if (!adStatus || adStatus !== 'done') {
-          adsbygoogle.push(ads[i])
+    const observerOptions = {
+      root: null, // use the viewport as the root
+      threshold: 0.5 // element is considered visible when 50% visible
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const adStatus = entry.target.getAttribute('data-adsbygoogle-status')
+          if (!adStatus || adStatus !== 'done') {
+            adsbygoogle.push(entry.target)
+            observer.unobserve(entry.target) // stop observing once ad is loaded
+          }
         }
-      } catch (e) {}
+      })
+    }, observerOptions)
+
+    ads.forEach(ad => {
+      observer.observe(ad)
+    })
+  }
+}
+
+// 获取节点或其子节点中包含 adsbygoogle 类的节点
+function getNodesWithAdsByGoogleClass(node) {
+  const adsNodes = []
+  // 检查节点及其子节点是否包含 adsbygoogle 类
+  function checkNodeForAds(node) {
+    if (
+      node.nodeType === Node.ELEMENT_NODE &&
+      node.classList.contains('adsbygoogle')
+    ) {
+      adsNodes.push(node)
+    } else {
+      // 递归检查子节点
+      for (let i = 0; i < node.childNodes.length; i++) {
+        checkNodeForAds(node.childNodes[i])
+      }
     }
   }
+  checkNodeForAds(node)
+  return adsNodes
 }
 
 /**
  * 初始化谷歌广告
  * @returns
  */
-export default function GoogleAdsense() {
-  const initGoogleAdsense = () => {
-    loadExternalResource(
-      `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig('ADSENSE_GOOGLE_ID')}`,
-      'js'
-    ).then(url => {
-      setTimeout(() => {
-        requestAd()
-      }, 100)
-    })
-  }
-
-  const router = useRouter()
-  useEffect(() => {
-    // 延迟3秒加载
+export const initGoogleAdsense = async () => {
+  console.log('Load Adsense')
+  loadExternalResource(
+    `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig('ADSENSE_GOOGLE_ID')}`,
+    'js'
+  ).then(url => {
     setTimeout(() => {
-      initGoogleAdsense()
-    }, 3000)
-  }, [router])
+      // 页面加载完成后加载一次广告
+      const ads = document.getElementsByClassName('adsbygoogle')
+      if (window.adsbygoogle && ads.length > 0) {
+        requestAd(Array.from(ads))
+      }
 
-  return null
+      // 创建一个 MutationObserver 实例，监听页面上新出现的广告单元
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          // 检查每个添加到DOM中的节点
+          mutation.addedNodes.forEach(node => {
+            // 如果节点是adsbygoogle元素，则请求广告
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const adsNodes = getNodesWithAdsByGoogleClass(node)
+              if (adsNodes.length > 0) {
+                requestAd(adsNodes)
+              }
+            }
+          })
+        })
+      })
+
+      // 配置 MutationObserver 监听特定类型的 DOM 变化
+      const observerConfig = {
+        childList: true, // 观察目标子节点的变化
+        subtree: true // 包括目标节点的所有后代节点
+      }
+
+      // 启动 MutationObserver
+      observer.observe(document.body, observerConfig)
+    }, 100)
+  })
 }
 
 /**
@@ -128,9 +185,18 @@ const AdEmbed = () => {
           const newInsElement = document.createElement('ins')
           newInsElement.className = 'adsbygoogle w-full py-1'
           newInsElement.style.display = 'block'
-          newInsElement.setAttribute('data-ad-client', siteConfig('ADSENSE_GOOGLE_ID'))
-          newInsElement.setAttribute('data-adtest', siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off')
-          newInsElement.setAttribute('data-ad-slot', siteConfig('ADSENSE_GOOGLE_SLOT_AUTO'))
+          newInsElement.setAttribute(
+            'data-ad-client',
+            siteConfig('ADSENSE_GOOGLE_ID')
+          )
+          newInsElement.setAttribute(
+            'data-adtest',
+            siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'
+          )
+          newInsElement.setAttribute(
+            'data-ad-slot',
+            siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')
+          )
           newInsElement.setAttribute('data-ad-format', 'auto')
           newInsElement.setAttribute('data-full-width-responsive', 'true')
 
