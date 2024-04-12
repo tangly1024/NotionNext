@@ -16,12 +16,12 @@ const GiscusComponent = () => {
   const theme = isDarkMode ? 'dark' : 'light'
   useEffect(() => {
     loadExternalResource('/js/giscus.js', 'js').then(() => {
-      if (window.Giscus) {
-        window.Giscus.init('#giscus')
+      if (window?.Giscus?.init) {
+        window?.Giscus?.init('#giscus')
       }
     })
     return () => {
-      window.Giscus.destroy()
+      window?.Giscus?.destroy()
     }
   }, [isDarkMode])
 
