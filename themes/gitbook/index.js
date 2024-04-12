@@ -43,13 +43,48 @@ const ThemeGlobalGitbook = createContext()
 export const useGitBookGlobal = () => useContext(ThemeGlobalGitbook)
 
 /**
+ * 给最新的文章标一个红点
+ */
+function getNavPagesWithLatest(allNavPages, latestPosts, post) {
+  // localStorage 保存id和上次阅读时间戳： posts_read_time = {"${post.id}":"Date()"}
+  const postReadTime = JSON.parse(localStorage.getItem('post_read_time') || '{}');
+  if (post) {
+    postReadTime[post.id] = new Date().getTime();
+  }
+  // 更新
+  localStorage.setItem('post_read_time', JSON.stringify(postReadTime));
+
+  return allNavPages?.map(item => {
+    const res = {
+      id: item.id,
+      title: item.title || '',
+      pageCoverThumbnail: item.pageCoverThumbnail || '',
+      category: item.category || null,
+      tags: item.tags || null,
+      summary: item.summary || null,
+      slug: item.slug,
+      pageIcon: item.pageIcon || '',
+      lastEditedDate: item.lastEditedDate
+    }
+    // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
+    if (latestPosts.some(post => post.id === item.id) &&
+    (!postReadTime[item.id] || postReadTime[item.id] < new Date(item.lastEditedDate).getTime())
+    ) {
+      return { ...res, isLatest: true };
+    } else {
+      return res;
+    }
+  })
+}
+
+/**
  * 基础布局
  * 采用左右两侧布局，移动端使用顶部导航栏
  * @returns {JSX.Element}
  * @constructor
  */
 const LayoutBase = (props) => {
-  const { children, post, allNavPages, slotLeft, slotRight, slotTop } = props
+  const { children, post, allNavPages, latestPosts, slotLeft, slotRight, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -60,8 +95,8 @@ const LayoutBase = (props) => {
   const searchModal = useRef(null)
 
   useEffect(() => {
-    setFilteredNavPages(allNavPages)
-  }, [post])
+    setFilteredNavPages(getNavPagesWithLatest(allNavPages, latestPosts, post))
+  }, [router])
 
   return (
         <ThemeGlobalGitbook.Provider value={{ searchModal, tocVisible, changeTocVisible, filteredNavPages, setFilteredNavPages, allNavPages, pageNavVisible, changePageNavVisible }}>
@@ -78,7 +113,7 @@ const LayoutBase = (props) => {
                     {/* 左侧推拉抽屉 */}
                     {fullWidth
                       ? null
-                      : (<div className={'hidden md:block border-r dark:border-transparent relative z-10 '}>
+                      : (<div className={'hidden md:block border-r dark:border-transparent relative z-10 dark:bg-hexo-black-gray'}>
                         <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
                             {slotLeft}
                             <SearchInput className='my-3 rounded-md' />
@@ -94,7 +129,7 @@ const LayoutBase = (props) => {
                         </div>
                     </div>) }
 
-                    <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
+                    <div id='center-wrapper' className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen dark:bg-black'>
 
                         <div id='container-inner' className={`w-full px-7 ${fullWidth ? 'px-10' : 'max-w-3xl'} justify-center mx-auto`}>
                             {slotTop}

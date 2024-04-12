@@ -7,7 +7,7 @@ import Link from 'next/link'
 import ArticleAround from './ArticleAround'
 import { AdSlot } from '@/components/GoogleAdsense'
 import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import WWAds from '@/components/WWAds'
 import NotionIcon from '@/components/NotionIcon'
 
