@@ -81,13 +81,14 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
-  if (JSON.parse(BLOG.PSEUDO_STATIC)) {
+  const from = `slug-props-${fullSlug}`
+  const props = await getGlobalData({ from, locale })
+  if (siteConfig('PSEUDO_STATIC', BLOG.PSEUDO_STATIC, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
     }
   }
-  const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
+
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
