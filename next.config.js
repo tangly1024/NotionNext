@@ -53,7 +53,7 @@ function scanSubdirectories(directory) {
   return subdirectories
 }
 
-module.exports = withBundleAnalyzer({
+const nextConfig = {
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
@@ -79,12 +79,15 @@ module.exports = withBundleAnalyzer({
       }
     ]
   },
-  // 多语言
-  i18n: {
-    defaultLocale: BLOG.LANG.slice(0, 2),
-    // 支持的所有多语言,按需填写即可
-    locales
-  },
+  // 多语言， 在export时禁用
+  i18n:
+    process.env.npm_lifecycle_event === 'export'
+      ? undefined
+      : {
+          defaultLocale: BLOG.LANG.slice(0, 2),
+          // 支持的所有多语言,按需填写即可
+          locales
+        },
   // 重写url
   async rewrites() {
     // 处理多语言重定向
@@ -180,4 +183,6 @@ module.exports = withBundleAnalyzer({
     NODE_ENV_API: process.env.NODE_ENV_API || 'prod',
     THEMES: themes
   }
-})
+}
+
+module.exports = withBundleAnalyzer(nextConfig)
