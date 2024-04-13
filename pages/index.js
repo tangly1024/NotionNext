@@ -24,9 +24,10 @@ const Index = props => {
  * SSG 获取数据
  * @returns
  */
-export async function getStaticProps() {
+export async function getStaticProps(req) {
+  const { locale } = req
   const from = 'index'
-  const props = await getGlobalData({ from })
+  const props = await getGlobalData({ from, locale })
 
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
@@ -58,7 +59,7 @@ export async function getStaticProps() {
   generateRobotsTxt()
   // 生成Feed订阅
   if (JSON.parse(BLOG.ENABLE_RSS)) {
-    generateRss(props?.latestPosts || [])
+    generateRss(props?.NOTION_CONFIG, props?.latestPosts || [])
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
@@ -67,7 +68,11 @@ export async function getStaticProps() {
 
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    )
   }
 }
 
