@@ -10,7 +10,7 @@ export default function Header(props) {
   const { setSideBarVisible } = useGameGlobal()
   return (
     <header className='z-20'>
-      <div className='w-full h-16 rounded-md bg-white shadow-md hover:shadow-xl transition-shadow duration-200 dark:bg-[#1F2030] flex justify-between items-center px-4'>
+      <div className='w-full py-2 rounded-md bg-white shadow-md hover:shadow-xl transition-shadow duration-200 dark:bg-[#1F2030] flex justify-between items-center px-4'>
         <Logo siteInfo={siteInfo} />
 
         <button
