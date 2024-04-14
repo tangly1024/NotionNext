@@ -1,3 +1,5 @@
+import { siteConfig } from '@/lib/config'
+import CONFIG from '../config'
 
 /**
  * 产品特性相关，将显示在首页中
@@ -11,9 +13,9 @@ export const Features = () => {
 				  <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
 					<div className="space-y-4">
 					  <div className="space-y-2">
-						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Video Subtitle Generation</h2>
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{siteConfig('STARTER_FEATURE_1_TITLE_1', null, CONFIG)}</h2>
 						<p className="text-gray-500 dark:text-gray-400">
-						  Automatically generate subtitles for your video content.
+						{siteConfig('STARTER_FEATURE_1_TEXT_1', null, CONFIG)}
 						</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
@@ -24,8 +26,8 @@ export const Features = () => {
 					</div>
 					<div className="space-y-4">
 					  <div className="space-y-2">
-						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Subtitle Translation</h2>
-						<p className="text-gray-500 dark:text-gray-400">Translate your subtitles into multiple languages.</p>
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{siteConfig('STARTER_FEATURE_2_TITLE_2', null, CONFIG)}</h2>
+						<p className="text-gray-500 dark:text-gray-400">{siteConfig('STARTER_FEATURE_2_TEXT_2', null, CONFIG)}</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video" >
@@ -41,8 +43,8 @@ export const Features = () => {
 				  <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
 					<div className="space-y-4">
 					  <div className="space-y-2">
-						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Hardcoded Subtitle Video Export</h2>
-						<p className="text-gray-500 dark:text-gray-400">Export your video with hardcoded subtitles.</p>
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{siteConfig('STARTER_FEATURE_3_TITLE_3', null, CONFIG)}</h2>
+						<p className="text-gray-500 dark:text-gray-400">{siteConfig('STARTER_FEATURE_3_TEXT_3', null, CONFIG)}</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video" >
@@ -52,8 +54,8 @@ export const Features = () => {
 					</div>
 					<div className="space-y-4">
 					  <div className="space-y-2">
-						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Subtitle editing</h2>
-						<p className="text-gray-500 dark:text-gray-400">Edit, merge, and split your multilingual subtitles.</p>
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{siteConfig('STARTER_FEATURE_4_TITLE_4', null, CONFIG)}</h2>
+						<p className="text-gray-500 dark:text-gray-400">{siteConfig('STARTER_FEATURE_4_TEXT_4', null, CONFIG)}</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video" >

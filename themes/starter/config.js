@@ -42,18 +42,18 @@ const CONFIG = {
   STARTER_FEATURE_1_BUTTON_TEXT: '', // 特性1
   STARTER_FEATURE_1_BUTTON_URL: '', // 特性1
 
-  STARTER_FEATURE_2_TITLE_1: 'Subtitle Translation', // 特性2
-  STARTER_FEATURE_2_TEXT_1: 'Translate your subtitles into multiple languages.', // 特性2
+  STARTER_FEATURE_2_TITLE_2: 'Subtitle Translation', // 特性2
+  STARTER_FEATURE_2_TEXT_2: 'Translate your subtitles into multiple languages.', // 特性2
   STARTER_FEATURE_2_BUTTON_TEXT: '', // 特性2
   STARTER_FEATURE_2_BUTTON_URL: '', // 特性2
 
-  STARTER_FEATURE_3_TITLE_1: 'Hardcoded Subtitle Video Export', // 特性3
-  STARTER_FEATURE_3_TEXT_1: 'Export your video with hardcoded subtitles.', // 特性3
+  STARTER_FEATURE_3_TITLE_3: 'Hardcoded Subtitle Video Export', // 特性3
+  STARTER_FEATURE_3_TEXT_3: 'Export your video with hardcoded subtitles.', // 特性3
   STARTER_FEATURE_3_BUTTON_TEXT: '', // 特性3
   STARTER_FEATURE_3_BUTTON_URL: '', // 特性3
 
-  STARTER_FEATURE_4_TITLE_1: 'Subtitle editing', // 特性4
-  STARTER_FEATURE_4_TEXT_1: 'Edit, merge, and split your multilingual subtitles. ', // 特性4
+  STARTER_FEATURE_4_TITLE_4: 'Subtitle editing', // 特性4
+  STARTER_FEATURE_4_TEXT_4: 'Edit, merge, and split your multilingual subtitles. ', // 特性4
   STARTER_FEATURE_4_BUTTON_TEXT: '', // 特性4
   STARTER_FEATURE_4_BUTTON_URL: '', // 特性4
 
@@ -62,6 +62,9 @@ const CONFIG = {
   STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
   STARTER_ABOUT_TEXT:
     'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
+  STARTER_ABOUT_1_TITLE_1:'How it works',
+  STARTER_ABOUT_1_TEXT_1:'See the platform in action. Watch the video to learn how to upload your content and generate subtitles in multiple languages.',
+  STARTER_ABOUT_1_BUTTON_1_TEXT:'Get Started',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
   STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',

@@ -145,12 +145,13 @@ export const Footer = props => {
                         CONFIG
                       )}
                     </a>
+                    <div className="w-full px-4 md:w-1/3 lg:w-1/2">
+              
+            </div>
                   </div>
+                 
                 </div>
               </div>
-
-            </div>
-            <div className="w-full px-4 md:w-1/3 lg:w-1/2">
               <div className="my-1 flex justify-center md:justify-end">
                 <p className="text-base text-gray-7">
                   Designed and Developed by
@@ -166,7 +167,9 @@ export const Footer = props => {
 
               </div>
             </div>
+            
           </div>
+          
         </div>
 
         {/* Footer 背景 */}

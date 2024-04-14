@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 import Link from 'next/link'
+import { siteConfig } from '@/lib/config'
+import CONFIG from '../config'
 
 /**
  * 首页的关于模块
@@ -13,10 +15,9 @@ export const About = () => {
 				  <div className="grid items-center gap-6 lg:grid-cols-[1fr_800px] lg:gap-12">
 					<div className="space-y-4">
 					  <div className="space-y-2">
-						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">How it works</h2>
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{siteConfig('STARTER_ABOUT_1_TITLE_1', null, CONFIG)}</h2>
 						<p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-						  See the platform in action. Watch the video to learn how to upload your content and generate subtitles
-						  in multiple languages.
+						{siteConfig('STARTER_ABOUT_1_TEXT_1', null, CONFIG)}
 						</p>
 					  </div>
 					  <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -24,7 +25,7 @@ export const About = () => {
 						  className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
 						  href="/transcriptionTasks"
 						>
-						  Get Started
+						  {siteConfig('STARTER_ABOUT_1_BUTTON_1_TEXT', null, CONFIG)}
 						</Link>
 					  </div>
 					</div>
