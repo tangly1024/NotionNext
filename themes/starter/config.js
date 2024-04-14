@@ -15,7 +15,7 @@ const CONFIG = {
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
 
   STARTER_HERO_BUTTON_1_TEXT: 'Get Started', // 英雄区按钮
-  STARTER_HERO_BUTTON_1_URL: 'https://dash.aragorn.cc/transcriptionTasks', // 英雄区按钮
+  STARTER_HERO_BUTTON_1_URL: 'https://.cc/transcriptionTasks', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: 'Follow Us', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://belliedmonkey.cc', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
