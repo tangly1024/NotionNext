@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import Comment from '@/components/Comment'
-import { AdSlot } from '@/components/GoogleAdsense'
-import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
-import { PWA as initialPWA } from '@/components/PWA'
-import ShareBar from '@/components/ShareBar'
+import Comment from '@/components/comments/Comment'
+import { AdSlot } from '@/components/plugins/GoogleAdsense'
+import replaceSearchResult from '@/components/plugins/Mark'
+import { PWA as initialPWA } from '@/components/plugins/PWA'
+import ShareBar from '@/components/ui/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { deepClone, isBrowser, shuffleArray } from '@/lib/utils'
@@ -31,7 +31,7 @@ import SideBarDrawer from './components/SideBarDrawer'
 import CONFIG from './config'
 import { Style } from './style'
 
-// const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
+// const AlgoliaSearchModal = dynamic(() => import('@/components/plugins/AlgoliaSearchModal'), { ssr: false })
 
 // 主题全局状态
 const ThemeGlobalGame = createContext()

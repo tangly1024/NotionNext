@@ -1,4 +1,4 @@
-import Collapse from '@/components/Collapse'
+import Collapse from '@/components/ui/Collapse'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
@@ -109,11 +109,18 @@ export const Header = props => {
         <div className='md:w-auto text-center flex'>
           {/* 右侧菜单 */}
           <>
-            <nav id='nav-mobile' className='leading-8 justify-center w-full hidden md:flex'>
-              {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
+            <nav
+              id='nav-mobile'
+              className='leading-8 justify-center w-full hidden md:flex'>
+              {links?.map(
+                (link, index) =>
+                  link && link.show && <MenuItemDrop key={index} link={link} />
+              )}
             </nav>
 
-            <div onClick={toggleShowSearchInput} className='flex items-center cursor-pointer'>
+            <div
+              onClick={toggleShowSearchInput}
+              className='flex items-center cursor-pointer'>
               <i className='fas fa-search dark:text-white'></i>
             </div>
             <div
@@ -130,7 +137,9 @@ export const Header = props => {
                 autoComplete='off'
                 placeholder='Type then hit enter to search...'
               />
-              <button onClick={handleSearch} className='w-full bg-[#383838] rounded py-2'>
+              <button
+                onClick={handleSearch}
+                className='w-full bg-[#383838] rounded py-2'>
                 {locale.COMMON.SEARCH} 搜索
               </button>
             </div>
@@ -138,7 +147,11 @@ export const Header = props => {
             {/* 移动端按钮 */}
             <div className='md:hidden'>
               <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
-                {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                {isOpen ? (
+                  <i className='fas fa-times' />
+                ) : (
+                  <i className='fas fa-bars' />
+                )}
               </div>
             </div>
           </>
@@ -147,13 +160,17 @@ export const Header = props => {
 
       <Collapse collapseRef={collapseRef} type='vertical' isOpen={isOpen}>
         {/* 移动端菜单 */}
-        <menu id='nav-menu-mobile' className='block md:hidden my-auto justify-start'>
+        <menu
+          id='nav-menu-mobile'
+          className='block md:hidden my-auto justify-start'>
           {links?.map(
             (link, index) =>
               link &&
               link.show && (
                 <MenuItemCollapse
-                  onHeightChange={param => collapseRef.current?.updateCollapseHeight(param)}
+                  onHeightChange={param =>
+                    collapseRef.current?.updateCollapseHeight(param)
+                  }
                   key={index}
                   link={link}
                 />

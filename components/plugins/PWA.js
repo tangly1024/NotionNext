@@ -1,5 +1,5 @@
 import { compressImage } from '@/lib/notion/mapImage'
-import { isBrowser } from '../lib/utils'
+import { isBrowser } from '../../lib/utils'
 
 /**
  * 初始化PWA

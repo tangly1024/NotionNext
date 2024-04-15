@@ -1,5 +1,5 @@
 // import Image from 'next/image'
-import LazyImage from '@/components/LazyImage'
+import LazyImage from '@/components/renderer/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'

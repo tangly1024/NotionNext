@@ -5,12 +5,12 @@ import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
-import { NotionRenderer } from './react-notion-x'
-// import { NotionRenderer } from 'react-notion-x'
+//  notion-react-x : "6.16.1",
+import { NotionRenderer } from './renderer/react-notion-x'
 
 const Code = dynamic(
   () =>
-    import('react-notion-x/build/third-party/code').then(async m => {
+    import('./renderer/react-notion-x/third-party/code').then(async m => {
       return m.Code
     }),
   { ssr: false }
@@ -19,7 +19,7 @@ const Code = dynamic(
 // 公式
 const Equation = dynamic(
   () =>
-    import('@/components/Equation').then(async m => {
+    import('@/components/renderer/Equation').then(async m => {
       // 化学方程式
       await import('@/lib/plugins/mhchem')
       return m.Equation
@@ -28,7 +28,7 @@ const Equation = dynamic(
 )
 
 const Pdf = dynamic(
-  () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
+  () => import('./renderer/react-notion-x/third-party/pdf').then(m => m.Pdf),
   {
     ssr: false
   }
@@ -36,7 +36,7 @@ const Pdf = dynamic(
 
 // https://github.com/txs
 // import PrismMac from '@/components/PrismMac'
-const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+const PrismMac = dynamic(() => import('@/components/renderer/PrismMac'), {
   ssr: false
 })
 
@@ -51,13 +51,13 @@ const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
  * 文内google广告
  */
 const AdEmbed = dynamic(
-  () => import('@/components/GoogleAdsense').then(m => m.AdEmbed),
+  () => import('@/components/plugins/GoogleAdsense').then(m => m.AdEmbed),
   { ssr: true }
 )
 
 const Collection = dynamic(
   () =>
-    import('react-notion-x/build/third-party/collection').then(
+    import('./renderer/react-notion-x/third-party/collection').then(
       m => m.Collection
     ),
   {
@@ -66,7 +66,8 @@ const Collection = dynamic(
 )
 
 const Modal = dynamic(
-  () => import('react-notion-x/build/third-party/modal').then(m => m.Modal),
+  () =>
+    import('./renderer/react-notion-x/third-party/modal').then(m => m.Modal),
   { ssr: false }
 )
 

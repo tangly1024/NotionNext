@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Katex from '@/components/KatexReact'
+import Katex from '@/components/renderer/KatexReact'
 import { getBlockTitle } from 'notion-utils'
 
 const katexSettings = {
@@ -13,7 +13,13 @@ const katexSettings = {
  * @param {} param0
  * @returns
  */
-export const Equation = ({ block, math, inline = false, className, ...rest }) => {
+export const Equation = ({
+  block,
+  math,
+  inline = false,
+  className,
+  ...rest
+}) => {
   math = math || getBlockTitle(block, null)
   if (!math) return null
 
@@ -21,8 +27,7 @@ export const Equation = ({ block, math, inline = false, className, ...rest }) =>
     <span
       role='button'
       tabIndex={0}
-      className={`notion-equation ${inline ? 'notion-equation-inline' : 'notion-equation-block'}`}
-    >
+      className={`notion-equation ${inline ? 'notion-equation-inline' : 'notion-equation-block'}`}>
       <Katex math={math} settings={katexSettings} {...rest} />
     </span>
   )

@@ -49,7 +49,9 @@ import {
   WorkplaceShareButton
 } from 'react-share'
 
-const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
+const QrCode = dynamic(() => import('@/components/plugins/QrCode'), {
+  ssr: false
+})
 
 /**
  * @author https://github.com/txs

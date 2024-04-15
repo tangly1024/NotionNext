@@ -8,7 +8,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/l
 export const Pdf: React.FC<{ file: string }> = ({ file, ...rest }) => {
   const [numPages, setNumPages] = React.useState(null)
 
-  function onDocumentLoadSuccess({ numPages }) {
+  function onDocumentLoadSuccess({ numPages: any }) {
     setNumPages(numPages)
   }
 

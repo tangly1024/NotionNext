@@ -1,39 +1,43 @@
 import { siteConfig } from '@/lib/config'
 import dynamic from 'next/dynamic'
 import { GlobalStyle } from './GlobalStyle'
-import LA51 from './LA51'
-import TianLiGPT from './TianliGPT'
-import WebWhiz from './Webwhiz'
+import LA51 from './analytics/LA51'
+import TianLiGPT from './plugins/TianliGPT'
+import WebWhiz from './plugins/Webwhiz'
 
 import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
-import { initGoogleAdsense } from './GoogleAdsense'
+import { initGoogleAdsense } from './plugins/GoogleAdsense'
 
 const TwikooCommentCounter = dynamic(
-  () => import('@/components/TwikooCommentCounter'),
+  () => import('@/components/comments/TwikooCommentCounter'),
   { ssr: false }
 )
-const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
+const DebugPanel = dynamic(() => import('@/components/ui/DebugPanel'), {
   ssr: false
 })
-const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), {
+const ThemeSwitch = dynamic(() => import('@/components/plugins/ThemeSwitch'), {
   ssr: false
 })
-const Fireworks = dynamic(() => import('@/components/Fireworks'), {
+const Fireworks = dynamic(() => import('@/components/plugins/Fireworks'), {
   ssr: false
 })
-const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
+const Nest = dynamic(() => import('@/components/plugins/Nest'), { ssr: false })
 const FlutteringRibbon = dynamic(
-  () => import('@/components/FlutteringRibbon'),
+  () => import('@/components/plugins/FlutteringRibbon'),
   { ssr: false }
 )
-const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false })
-const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
-const StarrySky = dynamic(() => import('@/components/StarrySky'), {
+const Ribbon = dynamic(() => import('@/components/plugins/Ribbon'), {
   ssr: false
 })
-const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
+const Sakura = dynamic(() => import('@/components/plugins/Sakura'), {
+  ssr: false
+})
+const StarrySky = dynamic(() => import('@/components/plugins/StarrySky'), {
+  ssr: false
+})
+const DifyChatbot = dynamic(() => import('@/components/plugins/DifyChatbot'), {
   ssr: false
 })
 const Analytics = dynamic(
@@ -43,30 +47,52 @@ const Analytics = dynamic(
     }),
   { ssr: false }
 )
-const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
-const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
-const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
-const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
-const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
+const MusicPlayer = dynamic(() => import('@/components/plugins/Player'), {
   ssr: false
 })
-const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
+const Ackee = dynamic(() => import('@/components/analytics/Ackee'), {
+  ssr: false
+})
+const Gtag = dynamic(() => import('@/components/analytics/Gtag'), {
+  ssr: false
+})
+const Busuanzi = dynamic(() => import('@/components/analytics/Busuanzi'), {
+  ssr: false
+})
+const Messenger = dynamic(
+  () => import('@/components/plugins/FacebookMessenger'),
+  {
+    ssr: false
+  }
+)
+const VConsole = dynamic(() => import('@/components/plugins/VConsole'), {
+  ssr: false
+})
 const CustomContextMenu = dynamic(
-  () => import('@/components/CustomContextMenu'),
+  () => import('@/components/ui/CustomContextMenu'),
   { ssr: false }
 )
-const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
+const DisableCopy = dynamic(() => import('@/components/plugins/DisableCopy'), {
   ssr: false
 })
-const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), {
-  ssr: false
-})
-const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
-  ssr: false
-})
-const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
-  ssr: false
-})
+const AdBlockDetect = dynamic(
+  () => import('@/components/plugins/AdBlockDetect'),
+  {
+    ssr: false
+  }
+)
+const LoadingProgress = dynamic(
+  () => import('@/components/ui/LoadingProgress'),
+  {
+    ssr: false
+  }
+)
+const AosAnimation = dynamic(
+  () => import('@/components/plugins/AOSAnimation'),
+  {
+    ssr: false
+  }
+)
 
 /**
  * 各种插件脚本

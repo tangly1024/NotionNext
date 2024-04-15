@@ -21,30 +21,41 @@
     "bundle-report": "cross-env ANALYZE=true yarn build"
   },
   "dependencies": {
+    "@fisch0920/medium-zoom": "^1.0.7",
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
     "@vercel/analytics": "^1.0.0",
     "algoliasearch": "^4.18.0",
+    "clipboard-copy": "^4.0.1",
     "feed": "^4.2.2",
     "js-md5": "^0.7.3",
+    "katex": "^0.16.10",
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "next": "13.3.1",
     "notion-client": "6.15.6",
+    "notion-types": "6.15.6",
     "notion-utils": "6.15.6",
+    "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-facebook": "^8.1.4",
+    "react-fast-compare": "^3.2.0",
     "react-hotkeys-hook": "^4.5.0",
-    "react-notion-x": "6.16.0",
+    "react-image": "^4.0.3",
+    "react-lazy-images": "^1.1.0",
+    "react-modal": "^3.14.3",
+    "react-pdf": "^5.7.1",
     "react-share": "^4.4.1",
-    "react-tweet-embed": "~2.0.0"
+    "react-tweet-embed": "~2.0.0",
+    "react-use": "^17.3.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.78",
     "@waline/client": "^2.5.1",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
+    "date-fns": "^3.6.0",
     "eslint": "^8.0.0",
     "eslint-config-next": "^13.1.1",
     "eslint-config-prettier": "^9.1.0",
@@ -55,12 +66,17 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "format-number": "^3.0.0",
     "next-sitemap": "^1.6.203",
     "postcss": "^8.4.31",
     "prettier": "3.2.5",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.4.5",
     "webpack-bundle-analyzer": "^4.5.0"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "resolutions": {
     "axios": ">=0.21.1"

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Draggable } from '@/components/Draggable'
+import { Draggable } from '@/components/ui/Draggable'
 import { siteConfig } from '@/lib/config'
 import { deepClone } from '@/lib/utils'
 import Link from 'next/link'

@@ -1,14 +1,14 @@
+import add from 'date-fns/add'
+import format from 'date-fns/format'
+import getDate from 'date-fns/getDate'
+import getDay from 'date-fns/getDay'
+import getHours from 'date-fns/getHours'
+import getMinutes from 'date-fns/getMinutes'
+import getMonth from 'date-fns/getMonth'
+import getYear from 'date-fns/getYear'
+import intervalToDuration from 'date-fns/intervalToDuration'
+import sub from 'date-fns/sub'
 import * as types from 'notion-types'
-import add from 'date-fns/add/index.js'
-import format from 'date-fns/format/index.js'
-import getDate from 'date-fns/getDate/index.js'
-import getDay from 'date-fns/getDay/index.js'
-import getHours from 'date-fns/getHours/index.js'
-import getMinutes from 'date-fns/getMinutes/index.js'
-import getMonth from 'date-fns/getMonth/index.js'
-import getYear from 'date-fns/getYear/index.js'
-import intervalToDuration from 'date-fns/intervalToDuration/index.js'
-import sub from 'date-fns/sub/index.js'
 import { getDateValue, getTextContent } from 'notion-utils'
 
 export interface EvalFormulaContext {
@@ -221,7 +221,7 @@ function evalFunctionFormula(
       return Math.log2(evalFormula(args[0], ctx) as number)
 
     case 'max': {
-      const values = args.map((arg) => evalFormula(arg, ctx) as number)
+      const values = args.map(arg => evalFormula(arg, ctx) as number)
       return values.reduce(
         (acc, value) => Math.max(acc, value),
         Number.NEGATIVE_INFINITY
@@ -229,7 +229,7 @@ function evalFunctionFormula(
     }
 
     case 'min': {
-      const values = args.map((arg) => evalFormula(arg, ctx) as number)
+      const values = args.map(arg => evalFormula(arg, ctx) as number)
       return values.reduce(
         (acc, value) => Math.min(acc, value),
         Number.POSITIVE_INFINITY
@@ -282,7 +282,7 @@ function evalFunctionFormula(
     // ------------------------------------------------------------------------
 
     case 'concat': {
-      const values = args.map((arg) => evalFormula(arg, ctx) as number)
+      const values = args.map(arg => evalFormula(arg, ctx) as number)
       return values.join('')
     }
 
@@ -315,7 +315,7 @@ function evalFunctionFormula(
     case 'join': {
       const [delimiterArg, ...restArgs] = args
       const delimiter = evalFormula(delimiterArg, ctx) as string
-      const values = restArgs.map((arg) => evalFormula(arg, ctx) as number)
+      const values = restArgs.map(arg => evalFormula(arg, ctx) as number)
       return values.join(delimiter)
     }
 

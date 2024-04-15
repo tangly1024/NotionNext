@@ -1,5 +1,5 @@
-import LazyImage from '@/components/LazyImage'
-import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/renderer/LazyImage'
+import NotionIcon from '@/components/ui/NotionIcon'
 import { siteConfig } from '@/lib/config'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'

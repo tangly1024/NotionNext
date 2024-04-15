@@ -1,32 +1,32 @@
 import CONFIG from './config'
 
-import { useEffect, useRef } from 'react'
-import Footer from './components/Footer'
+import NotionPage from '@/components/NotionPage'
+import replaceSearchResult from '@/components/plugins/Mark'
+import LazyImage from '@/components/renderer/LazyImage'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser, scanAndConvertToLinks } from '@/lib/utils'
+import { Transition } from '@headlessui/react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useRef } from 'react'
+import { ArticleLock } from './components/ArticleLock'
+import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
-import Hero from './components/Hero'
-import { useRouter } from 'next/router'
 import Card from './components/Card'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import Hero from './components/Hero'
+import PostHeader from './components/PostHeader'
+import ProductCategories from './components/ProductCategories'
+import ProductCenter from './components/ProductCenter'
 import RightFloatArea from './components/RightFloatArea'
 import SearchNav from './components/SearchNav'
-import BlogPostArchive from './components/BlogPostArchive'
-import { ArticleLock } from './components/ArticleLock'
-import PostHeader from './components/PostHeader'
-import TocDrawer from './components/TocDrawer'
-import NotionPage from '@/components/NotionPage'
-import TagItemMini from './components/TagItemMini'
-import Link from 'next/link'
 import SlotBar from './components/SlotBar'
-import { Transition } from '@headlessui/react'
+import TagItemMini from './components/TagItemMini'
+import TocDrawer from './components/TocDrawer'
 import { Style } from './style'
-import replaceSearchResult from '@/components/Mark'
-import { siteConfig } from '@/lib/config'
-import Header from './components/Header'
-import ProductCenter from './components/ProductCenter'
-import LazyImage from '@/components/LazyImage'
-import ProductCategories from './components/ProductCategories'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -395,14 +395,14 @@ const LayoutTagIndex = props => {
 }
 
 export {
-  CONFIG as THEME_CONFIG,
-  LayoutBase,
-  LayoutIndex,
-  LayoutSearch,
-  LayoutArchive,
-  LayoutSlug,
   Layout404,
+  LayoutArchive,
+  LayoutBase,
   LayoutCategoryIndex,
+  LayoutIndex,
   LayoutPostList,
-  LayoutTagIndex
+  LayoutSearch,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }

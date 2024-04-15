@@ -1,9 +1,9 @@
 import { useGlobal } from '@/lib/global'
 import { useState } from 'react'
-import { Draggable } from './Draggable'
+import { Draggable } from '../ui/Draggable'
 import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import DarkModeButton from './DarkModeButton'
+import DarkModeButton from '../ui/DarkModeButton'
 import { getQueryParam } from '@/lib/utils'
 import LANGS from '@/lib/lang'
 /**

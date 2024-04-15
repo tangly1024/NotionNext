@@ -1,5 +1,5 @@
+import LazyImage from '@/components/renderer/LazyImage'
 import { siteConfig } from '@/lib/config'
-import LazyImage from '@/components/LazyImage'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
 import Link from 'next/link'

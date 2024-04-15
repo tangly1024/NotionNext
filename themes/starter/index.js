@@ -9,8 +9,8 @@
  * 2. 内容大部分是在此文件中写死，notion数据从props参数中传进来
  * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
  */
-import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
+import Loading from '@/components/ui/Loading'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'

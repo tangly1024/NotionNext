@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { AdSlot } from '@/components/GoogleAdsense'
-import LazyImage from '@/components/LazyImage'
+import { AdSlot } from '@/components/plugins/GoogleAdsense'
+import LazyImage from '@/components/renderer/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'

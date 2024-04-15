@@ -1,4 +1,4 @@
-import Collapse from '@/components/Collapse'
+import Collapse from '@/components/ui/Collapse'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'

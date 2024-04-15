@@ -1,26 +1,26 @@
-import { AdSlot } from '@/components/GoogleAdsense'
-import Live2D from '@/components/Live2D'
+import { AdSlot } from '@/components/plugins/GoogleAdsense'
+import Live2D from '@/components/plugins/Live2D'
+import WWAds from '@/components/plugins/WWAds'
 import Announcement from './Announcement'
 import Catalog from './Catalog'
-import WWAds from '@/components/WWAds'
 
 /**
  * 侧边栏
  * @param {*} props
  * @returns
  */
-export default function SideBar (props) {
+export default function SideBar(props) {
   const { notice } = props
-  return (<>
+  return (
+    <>
+      <Catalog {...props} />
 
-            <Catalog {...props} />
+      <Live2D />
 
-            <Live2D />
+      <Announcement post={notice} />
 
-            <Announcement post={notice} />
-
-            <AdSlot/>
-            <WWAds orientation="vertical" className="w-full" />
-
-    </>)
+      <AdSlot />
+      <WWAds orientation='vertical' className='w-full' />
+    </>
+  )
 }

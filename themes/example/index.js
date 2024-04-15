@@ -1,31 +1,31 @@
 'use client'
 
-import CONFIG from './config'
+import NotionPage from '@/components/NotionPage'
+import Comment from '@/components/comments/Comment'
+import replaceSearchResult from '@/components/plugins/Mark'
+import ShareBar from '@/components/ui/ShareBar'
+import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { isBrowser } from '@/lib/utils'
+import { Transition } from '@headlessui/react'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { Header } from './components/Header'
-import { Nav } from './components/Nav'
-import { Footer } from './components/Footer'
-import { Title } from './components/Title'
-import { SideBar } from './components/SideBar'
+import { ArticleInfo } from './components/ArticleInfo'
+import { ArticleLock } from './components/ArticleLock'
+import BlogListGroupByDate from './components/BlogListGroupByDate'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
-import { useGlobal } from '@/lib/global'
-import { ArticleLock } from './components/ArticleLock'
-import { ArticleInfo } from './components/ArticleInfo'
-import JumpToTopButton from './components/JumpToTopButton'
-import NotionPage from '@/components/NotionPage'
-import Comment from '@/components/Comment'
-import ShareBar from '@/components/ShareBar'
-import SearchInput from './components/SearchInput'
-import replaceSearchResult from '@/components/Mark'
-import { isBrowser } from '@/lib/utils'
-import BlogListGroupByDate from './components/BlogListGroupByDate'
 import CategoryItem from './components/CategoryItem'
+import { Footer } from './components/Footer'
+import { Header } from './components/Header'
+import JumpToTopButton from './components/JumpToTopButton'
+import { Nav } from './components/Nav'
+import SearchInput from './components/SearchInput'
+import { SideBar } from './components/SideBar'
 import TagItem from './components/TagItem'
-import { useRouter } from 'next/router'
-import { Transition } from '@headlessui/react'
+import { Title } from './components/Title'
+import CONFIG from './config'
 import { Style } from './style'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 基础布局框架
@@ -43,14 +43,23 @@ const LayoutBase = props => {
   // 如果是搜索，则列表顶部嵌入 搜索框
   let slotTop = null
   if (category) {
-    slotTop = <div className='pb-12'><i className="mr-1 fas fa-folder-open" />{category}</div>
+    slotTop = (
+      <div className='pb-12'>
+        <i className='mr-1 fas fa-folder-open' />
+        {category}
+      </div>
+    )
   } else if (tag) {
     slotTop = <div className='pb-12'>#{tag}</div>
   } else if (props.slotTop) {
     slotTop = props.slotTop
   } else if (router.route === '/search') {
     // 嵌入一个搜索框在顶部
-    slotTop = <div className='pb-12'><SearchInput {...props} /></div>
+    slotTop = (
+      <div className='pb-12'>
+        <SearchInput {...props} />
+      </div>
+    )
   }
 
   // 增加一个状态以触发 Transition 组件的动画
@@ -62,58 +71,62 @@ const LayoutBase = props => {
   //   }, [onLoading])
 
   return (
-        <div id='theme-example' className={`${siteConfig('FONT_STYLE')} dark:text-gray-300  bg-white dark:bg-black scroll-smooth`} >
+    <div
+      id='theme-example'
+      className={`${siteConfig('FONT_STYLE')} dark:text-gray-300  bg-white dark:bg-black scroll-smooth`}>
+      <Style />
 
-            <Style/>
+      {/* 页头 */}
+      <Header {...props} />
 
-            {/* 页头 */}
-            <Header {...props} />
+      {/* 菜单 */}
+      <Nav {...props} />
 
-            {/* 菜单 */}
-            <Nav {...props} />
+      {/* 主体 */}
+      <div id='container-inner' className='w-full relative z-10'>
+        {/* 标题栏 */}
+        {fullWidth ? null : <Title {...props} />}
 
-            {/* 主体 */}
-            <div id='container-inner' className="w-full relative z-10">
+        <div
+          id='container-wrapper'
+          className={
+            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+              ? 'flex-row-reverse'
+              : '') +
+            'relative container mx-auto justify-center md:flex items-start py-8 px-2'
+          }>
+          {/* 内容 */}
+          <div
+            className={`w-full ${fullWidth ? '' : 'max-w-3xl'} xl:px-14 lg:px-4`}>
+            <Transition
+              show={!onLoading}
+              appear={true}
+              enter='transition ease-in-out duration-700 transform order-first'
+              enterFrom='opacity-0 translate-y-16'
+              enterTo='opacity-100'
+              leave='transition ease-in-out duration-300 transform'
+              leaveFrom='opacity-100 translate-y-0'
+              leaveTo='opacity-0 -translate-y-16'
+              unmount={false}>
+              {/* 嵌入模块 */}
+              {slotTop}
+              {children}
+            </Transition>
+          </div>
 
-                {/* 标题栏 */}
-                {fullWidth ? null : <Title {...props} />}
-
-                <div id='container-wrapper' className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + 'relative container mx-auto justify-center md:flex items-start py-8 px-2'}>
-
-                    {/* 内容 */}
-                    <div className={`w-full ${fullWidth ? '' : 'max-w-3xl'} xl:px-14 lg:px-4`}>
-                        <Transition
-                            show={!onLoading}
-                            appear={true}
-                            enter="transition ease-in-out duration-700 transform order-first"
-                            enterFrom="opacity-0 translate-y-16"
-                            enterTo="opacity-100"
-                            leave="transition ease-in-out duration-300 transform"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 -translate-y-16"
-                            unmount={false}
-                        >
-                            {/* 嵌入模块 */}
-                            {slotTop}
-                            {children}
-                        </Transition>
-                    </div>
-
-                    {/* 侧边栏 */}
-                    {!fullWidth && <SideBar {...props} />}
-
-                </div>
-
-            </div>
-
-            {/* 页脚 */}
-            <Footer {...props} />
-
-            {/* 回顶按钮 */}
-            <div className='fixed right-4 bottom-4 z-10'>
-                <JumpToTopButton />
-            </div>
+          {/* 侧边栏 */}
+          {!fullWidth && <SideBar {...props} />}
         </div>
+      </div>
+
+      {/* 页脚 */}
+      <Footer {...props} />
+
+      {/* 回顶按钮 */}
+      <div className='fixed right-4 bottom-4 z-10'>
+        <JumpToTopButton />
+      </div>
+    </div>
   )
 }
 
@@ -133,9 +146,13 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-        <>
-            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-        </>
+    <>
+      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+        <BlogListPage {...props} />
+      ) : (
+        <BlogListScroll {...props} />
+      )}
+    </>
   )
 }
 
@@ -150,29 +167,34 @@ const LayoutSlug = props => {
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const article = document.getElementById('notion-article')
-          if (!article) {
-            router.push('/404').then(() => {
-              console.warn('找不到页面', router.asPath)
-            })
+      setTimeout(
+        () => {
+          if (isBrowser) {
+            const article = document.getElementById('notion-article')
+            if (!article) {
+              router.push('/404').then(() => {
+                console.warn('找不到页面', router.asPath)
+              })
+            }
           }
-        }
-      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+        },
+        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+      )
     }
   }, [post])
   return (
-        <>
-            {lock
-              ? <ArticleLock validPassword={validPassword} />
-              : <div id="article-wrapper" className="px-2">
-                    <ArticleInfo post={post} />
-                    <NotionPage post={post} />
-                    <ShareBar post={post} />
-                    <Comment frontMatter={post} />
-                </div>}
-        </>
+    <>
+      {lock ? (
+        <ArticleLock validPassword={validPassword} />
+      ) : (
+        <div id='article-wrapper' className='px-2'>
+          <ArticleInfo post={post} />
+          <NotionPage post={post} />
+          <ShareBar post={post} />
+          <Comment frontMatter={post} />
+        </div>
+      )}
+    </>
   )
 }
 
@@ -181,7 +203,7 @@ const LayoutSlug = props => {
  * @param {*} props
  * @returns
  */
-const Layout404 = (props) => {
+const Layout404 = props => {
   return <>404 Not found.</>
 }
 
@@ -220,13 +242,19 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = props => {
   const { archivePosts } = props
-  return (<>
-            <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
-                {Object.keys(archivePosts).map(archiveTitle => (
-                    <BlogListGroupByDate key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
-                ))}
-            </div>
-        </>)
+  return (
+    <>
+      <div className='mb-10 pb-20 md:py-12 p-3  min-h-screen w-full'>
+        {Object.keys(archivePosts).map(archiveTitle => (
+          <BlogListGroupByDate
+            key={archiveTitle}
+            archiveTitle={archiveTitle}
+            archivePosts={archivePosts}
+          />
+        ))}
+      </div>
+    </>
+  )
 }
 
 /**
@@ -237,11 +265,13 @@ const LayoutArchive = props => {
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   return (
-        <>
-            <div id='category-list' className='duration-200 flex flex-wrap'>
-                {categoryOptions?.map(category => <CategoryItem key={category.name} category={category} />)}
-            </div>
-        </>
+    <>
+      <div id='category-list' className='duration-200 flex flex-wrap'>
+        {categoryOptions?.map(category => (
+          <CategoryItem key={category.name} category={category} />
+        ))}
+      </div>
+    </>
   )
 }
 
@@ -250,26 +280,28 @@ const LayoutCategoryIndex = props => {
  * @param {*} props
  * @returns
  */
-const LayoutTagIndex = (props) => {
+const LayoutTagIndex = props => {
   const { tagOptions } = props
   return (
-        <>
-            <div id='tags-list' className='duration-200 flex flex-wrap'>
-                {tagOptions.map(tag => <TagItem key={tag.name} tag={tag} />)}
-            </div>
-        </>
+    <>
+      <div id='tags-list' className='duration-200 flex flex-wrap'>
+        {tagOptions.map(tag => (
+          <TagItem key={tag.name} tag={tag} />
+        ))}
+      </div>
+    </>
   )
 }
 
 export {
-  CONFIG as THEME_CONFIG,
-  LayoutBase,
-  LayoutIndex,
-  LayoutSearch,
-  LayoutArchive,
-  LayoutSlug,
   Layout404,
-  LayoutPostList,
+  LayoutArchive,
+  LayoutBase,
   LayoutCategoryIndex,
-  LayoutTagIndex
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }

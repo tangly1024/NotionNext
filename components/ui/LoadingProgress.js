@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 /**
  * 出现页面加载进度条
+ * 采用NProgress方案
  */
 export default function LoadingProgress() {
   const router = useRouter()

@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import * as types from 'notion-types'
-import format from 'date-fns/format/index.js'
+import format from 'date-fns/format'
 import formatNumber from 'format-number'
+import * as types from 'notion-types'
 import { FormulaResult } from 'notion-types'
 
 import { Checkbox } from '../components/checkbox'
@@ -30,7 +30,7 @@ export interface IPropertyProps {
  * This corresponds to rendering the content of a single cell in a table.
  * Property rendering is re-used across all the different types of collection views.
  */
-export const Property: React.FC<IPropertyProps> = (props) => {
+export const Property: React.FC<IPropertyProps> = props => {
   const { components } = useNotionContext()
 
   if (components.Property) {
@@ -40,7 +40,7 @@ export const Property: React.FC<IPropertyProps> = (props) => {
   }
 }
 
-export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
+export const PropertyImpl: React.FC<IPropertyProps> = props => {
   const { components, mapImageUrl, mapPageUrl } = useNotionContext()
   const {
     schema,
@@ -110,8 +110,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
           return (
             <components.PageLink
               className={cs('notion-page-link')}
-              href={mapPageUrl(block.id)}
-            >
+              href={mapPageUrl(block.id)}>
               <PageTitle block={block} />
             </components.PageLink>
           )
@@ -135,9 +134,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
     () =>
       function FileProperty() {
         // TODO: assets should be previewable via image-zoom
-        const files = data
-          .filter((v) => v.length === 2)
-          .map((f) => f.flat().flat())
+        const files = data.filter(v => v.length === 2).map(f => f.flat().flat())
 
         return files.map((file, i) => (
           <components.Link
@@ -145,8 +142,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
             className='notion-property-file'
             href={mapImageUrl(file[2] as string, block)}
             target='_blank'
-            rel='noreferrer noopener'
-          >
+            rel='noreferrer noopener'>
             <GracefulImage
               alt={file[0] as string}
               src={mapImageUrl(file[2] as string, block)}
@@ -330,7 +326,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
       case 'status': {
         const value = data[0][0] || ''
 
-        const option = schema.options?.find((option) => value === option.value)
+        const option = schema.options?.find(option => value === option.value)
 
         const color = option?.color || 'default-inferred'
 
@@ -346,8 +342,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
               className={cs(
                 `notion-property-${schema.type}-item`,
                 color && `notion-item-${color}`
-              )}
-            >
+              )}>
               <span
                 className={cs(`notion-item-bullet-${color}`)}
                 style={{
@@ -372,9 +367,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
         const values = (data[0][0] || '').split(',')
 
         content = values.map((value, index) => {
-          const option = schema.options?.find(
-            (option) => value === option.value
-          )
+          const option = schema.options?.find(option => value === option.value)
           const color = option?.color
 
           return components.propertySelectValue(
@@ -391,8 +384,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
                 className={cs(
                   `notion-property-${schema.type}-item`,
                   color && `notion-item-${color}`
-                )}
-              >
+                )}>
                 {value}
               </div>
             )

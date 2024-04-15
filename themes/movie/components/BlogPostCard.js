@@ -1,5 +1,5 @@
-import LazyImage from '@/components/LazyImage'
-import NotionIcon from '@/components/NotionIcon'
+import LazyImage from '@/components/renderer/LazyImage'
+import NotionIcon from '@/components/ui/NotionIcon'
 import { siteConfig } from '@/lib/config'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'
@@ -8,13 +8,18 @@ import TagItemMini from './TagItemMini'
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   // 主题默认强制显示图片
   if (post && !post.pageCoverThumbnail) {
-    post.pageCoverThumbnail = siteInfo?.pageCover || siteConfig('RANDOM_IMAGE_URL')
+    post.pageCoverThumbnail =
+      siteInfo?.pageCover || siteConfig('RANDOM_IMAGE_URL')
   }
 
-  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+  const url = checkContainHttp(post.slug)
+    ? sliceUrlFromHttp(post.slug)
+    : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
-    <article data-wow-delay=".2s" className='wow fadeInUp w-full mb-4 cursor-pointer overflow-hidden shadow-movie dark:bg-hexo-black-gray'>
+    <article
+      data-wow-delay='.2s'
+      className='wow fadeInUp w-full mb-4 cursor-pointer overflow-hidden shadow-movie dark:bg-hexo-black-gray'>
       <Link href={url} passHref legacyBehavior>
         {/* 固定高度 ，空白用图片拉升填充 */}
         <div className='group flex flex-col aspect-[2/3] justify-between relative'>

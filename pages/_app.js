@@ -2,9 +2,9 @@
 import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 
-// core styles shared by all of react-notion-x (required)
+// core styles shared by all of react-notion-x (required)LazyImage
+import '@/components/renderer/react-notion-x/styles.css'
 import '@/styles/notion.css' //  重写部分样式
-import 'react-notion-x/src/styles.css'
 
 import useAdjustStyle from '@/hooks/useAdjustStyle'
 import { GlobalContextProvider } from '@/lib/global'

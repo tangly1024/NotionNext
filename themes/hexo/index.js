@@ -1,7 +1,7 @@
-import Comment from '@/components/Comment'
-import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
+import Comment from '@/components/comments/Comment'
+import replaceSearchResult from '@/components/plugins/Mark'
+import ShareBar from '@/components/ui/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
@@ -34,7 +34,7 @@ import CONFIG from './config'
 import { Style } from './style'
 
 const AlgoliaSearchModal = dynamic(
-  () => import('@/components/AlgoliaSearchModal'),
+  () => import('@/components/plugins/AlgoliaSearchModal'),
   { ssr: false }
 )
 

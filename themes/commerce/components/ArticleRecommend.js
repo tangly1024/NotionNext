@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import CONFIG from '../config'
+import LazyImage from '@/components/renderer/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import LazyImage from '@/components/LazyImage'
+import Link from 'next/link'
+import CONFIG from '../config'
 
 /**
  * 关联推荐文章

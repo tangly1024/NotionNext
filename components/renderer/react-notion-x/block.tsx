@@ -765,7 +765,6 @@ export const Block: React.FC<BlockProps> = props => {
       return (
         <table className={cs('notion-simple-table', blockId)}>
           <tbody>{children}</tbody>
-          <div>哈哈哈哈哈</div>
         </table>
       )
 

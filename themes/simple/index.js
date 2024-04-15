@@ -1,6 +1,6 @@
-import { AdSlot } from '@/components/GoogleAdsense'
-import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
+import { AdSlot } from '@/components/plugins/GoogleAdsense'
+import replaceSearchResult from '@/components/plugins/Mark'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
@@ -14,7 +14,7 @@ import CONFIG from './config'
 import { Style } from './style'
 
 const AlgoliaSearchModal = dynamic(
-  () => import('@/components/AlgoliaSearchModal'),
+  () => import('@/components/plugins/AlgoliaSearchModal'),
   { ssr: false }
 )
 
@@ -31,11 +31,15 @@ const ArticleLock = dynamic(() => import('./components/ArticleLock'), {
 const ArticleInfo = dynamic(() => import('./components/ArticleInfo'), {
   ssr: false
 })
-const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
+const Comment = dynamic(() => import('@/components/comments/Comment'), {
+  ssr: false
+})
 const ArticleAround = dynamic(() => import('./components/ArticleAround'), {
   ssr: false
 })
-const ShareBar = dynamic(() => import('@/components/ShareBar'), { ssr: false })
+const ShareBar = dynamic(() => import('@/components/ui/ShareBar'), {
+  ssr: false
+})
 const TopBar = dynamic(() => import('./components/TopBar'), { ssr: false })
 const Header = dynamic(() => import('./components/Header'), { ssr: false })
 const NavBar = dynamic(() => import('./components/NavBar'), { ssr: false })
@@ -47,7 +51,9 @@ const Footer = dynamic(() => import('./components/Footer'), { ssr: false })
 const SearchInput = dynamic(() => import('./components/SearchInput'), {
   ssr: false
 })
-const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
+const WWAds = dynamic(() => import('@/components/plugins/WWAds'), {
+  ssr: false
+})
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), {
   ssr: false
 })

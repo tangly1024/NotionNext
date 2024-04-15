@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import ExternalScript from './ExternalScript'
+import ExternalScript from '../ExternalScript'
 
 /**
  * 一个开源ai组件

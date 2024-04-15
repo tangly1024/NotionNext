@@ -1,4 +1,4 @@
-import NotionIcon from '@/components/NotionIcon'
+import NotionIcon from '@/components/ui/NotionIcon'
 import Link from 'next/link'
 import TagItem from './TagItem'
 

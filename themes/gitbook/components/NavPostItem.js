@@ -1,9 +1,9 @@
-import BlogPostCard from './BlogPostCard'
-import { useState } from 'react'
-import Collapse from '@/components/Collapse'
-import Badge from '@/components/Badge'
+import Badge from '@/components/ui/Badge'
+import Collapse from '@/components/ui/Collapse'
 import { siteConfig } from '@/lib/config'
+import { useState } from 'react'
 import CONFIG from '../config'
+import BlogPostCard from './BlogPostCard'
 
 /**
  * 导航列表
@@ -12,7 +12,7 @@ import CONFIG from '../config'
  * @returns {JSX.Element}
  * @constructor
  */
-const NavPostItem = (props) => {
+const NavPostItem = props => {
   const { group } = props
   const [isOpen, changeIsOpen] = useState(group?.selected)
 
@@ -23,25 +23,40 @@ const NavPostItem = (props) => {
   const groupHasLatest = group?.items?.some(post => post.isLatest)
 
   if (group?.category) {
-    return <>
-            <div onClick={toggleOpenSubMenu}
-                className='select-none relative flex justify-between text-sm cursor-pointer p-2 hover:bg-gray-50 rounded-md dark:hover:bg-gray-600' key={group?.category}>
-                <span>{group?.category}</span>
-                <div className='inline-flex items-center select-none pointer-events-none '><i className={`px-2 fas fa-chevron-left transition-all opacity-50 duration-200 ${isOpen ? '-rotate-90' : ''}`}></i></div>
-                {groupHasLatest && siteConfig('GITBOOK_LATEST_POST_RED_BADGE', false, CONFIG) && !isOpen && <Badge/>}
+    return (
+      <>
+        <div
+          onClick={toggleOpenSubMenu}
+          className='select-none relative flex justify-between text-sm cursor-pointer p-2 hover:bg-gray-50 rounded-md dark:hover:bg-gray-600'
+          key={group?.category}>
+          <span>{group?.category}</span>
+          <div className='inline-flex items-center select-none pointer-events-none '>
+            <i
+              className={`px-2 fas fa-chevron-left transition-all opacity-50 duration-200 ${isOpen ? '-rotate-90' : ''}`}></i>
+          </div>
+          {groupHasLatest &&
+            siteConfig('GITBOOK_LATEST_POST_RED_BADGE', false, CONFIG) &&
+            !isOpen && <Badge />}
+        </div>
+        <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
+          {group?.items?.map(post => (
+            <div key={post.id} className='ml-3 border-l'>
+              <BlogPostCard className='text-sm ml-3' post={post} />
             </div>
-            <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
-                {group?.items?.map(post => (<div key={post.id} className='ml-3 border-l'>
-                    <BlogPostCard className='text-sm ml-3' post={post} /></div>))
-                }
-            </Collapse>
-        </>
+          ))}
+        </Collapse>
+      </>
+    )
   } else {
-    return <>
-            {group?.items?.map(post => (<div key={post.id} >
-                <BlogPostCard className='text-sm py-2' post={post} /></div>))
-            }
-        </>
+    return (
+      <>
+        {group?.items?.map(post => (
+          <div key={post.id}>
+            <BlogPostCard className='text-sm py-2' post={post} />
+          </div>
+        ))}
+      </>
+    )
   }
 }
 

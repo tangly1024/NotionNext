@@ -50,7 +50,7 @@ export const Code: React.FC<{
 
     if (copyTimeout.current) {
       clearTimeout(copyTimeout.current)
-      copyTimeout.current = null
+      copyTimeout.current = 0
     }
 
     copyTimeout.current = setTimeout(() => {
