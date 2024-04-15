@@ -11,6 +11,21 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 // 扫描项目 /themes下的目录名
 const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
+// 扫描项目 查找/public目录下的sitemap.xml文件
+;(function () {
+  const filePath = path.resolve(__dirname, 'public/sitemap.xml')
+  try {
+    // 检查文件是否存在
+    fs.accessSync(filePath, fs.constants.F_OK)
+    // 如果文件存在，则删除它
+    fs.unlinkSync(filePath)
+    console.log('删除冗余的public/sitemap.xml')
+  } catch (err) {
+    // 如果文件不存在，则打印警告
+    // console.warn('文件不存在或无法删除')
+  }
+})()
+
 // 检测用户开启的多语言
 const locales = (function () {
   // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
