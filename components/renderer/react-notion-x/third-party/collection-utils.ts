@@ -1,4 +1,4 @@
-import format from 'date-fns/format'
+import { format } from 'date-fns'
 
 export function getCollectionGroups(
   collection: any,

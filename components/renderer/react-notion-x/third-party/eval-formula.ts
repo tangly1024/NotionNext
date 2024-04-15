@@ -1,13 +1,15 @@
-import add from 'date-fns/add'
-import format from 'date-fns/format'
-import getDate from 'date-fns/getDate'
-import getDay from 'date-fns/getDay'
-import getHours from 'date-fns/getHours'
-import getMinutes from 'date-fns/getMinutes'
-import getMonth from 'date-fns/getMonth'
-import getYear from 'date-fns/getYear'
-import intervalToDuration from 'date-fns/intervalToDuration'
-import sub from 'date-fns/sub'
+import {
+  add,
+  format,
+  getDate,
+  getDay,
+  getHours,
+  getMinutes,
+  getMonth,
+  getYear,
+  intervalToDuration,
+  sub
+} from 'date-fns'
 import * as types from 'notion-types'
 import { getDateValue, getTextContent } from 'notion-utils'
 

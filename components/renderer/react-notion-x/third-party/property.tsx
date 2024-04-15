@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import format from 'date-fns/format'
+import { format } from 'date-fns'
 import formatNumber from 'format-number'
 import * as types from 'notion-types'
 import { FormulaResult } from 'notion-types'
@@ -315,14 +315,14 @@ export const PropertyImpl: React.FC<IPropertyProps> = props => {
         //   schema: collection?.schema,
         //   properties: block?.properties
         // })
-
+        // @ts-ignore
         content = components.propertyFormulaValue(props, renderFormulaValue)
         break
 
       case 'title':
         content = components.propertyTitleValue(props, renderTitleValue)
         break
-
+      // @ts-ignore
       case 'status': {
         const value = data[0][0] || ''
 

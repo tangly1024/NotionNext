@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 //  notion-react-x : "6.16.1",
+import LazyImage from './renderer/LazyImage'
 import { NotionRenderer } from './renderer/react-notion-x'
 
 const Code = dynamic(
@@ -193,6 +194,7 @@ const NotionPage = ({ post, className }) => {
         mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
+          Image: LazyImage,
           Code,
           Collection,
           Equation,

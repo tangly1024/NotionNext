@@ -169,7 +169,7 @@ export const Block: React.FC<BlockProps> = props => {
                     ) : (
                       <div className='notion-page-cover-wrapper'>
                         <LazyImage
-                          src={mapImageUrl(page_cover, block)}
+                          src={mapImageUrl(page_cover!, block)}
                           alt={getTextContent(properties?.title)}
                           priority={true}
                           className='notion-page-cover'
@@ -462,7 +462,8 @@ export const Block: React.FC<BlockProps> = props => {
 
     case 'embed':
       return <components.Embed blockId={blockId} block={block} />
-    // case 'replit':
+    // @ts-ignore
+    case 'replit':
     // fallthrough
     case 'tweet':
     // fallthrough
