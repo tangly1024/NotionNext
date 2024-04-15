@@ -71,18 +71,18 @@ export interface PartialNotionContext {
   defaultPageIcon?: string
   defaultPageCover?: string
   defaultPageCoverPosition?: number
-
+  children: any
   zoom?: any
 }
 
-const DefaultLink: React.FC = (props) => (
+const DefaultLink: React.FC = props => (
   <a target='_blank' rel='noopener noreferrer' {...props} />
 )
 const DefaultLinkMemo = React.memo(DefaultLink)
-const DefaultPageLink: React.FC = (props) => <a {...props} />
+const DefaultPageLink: React.FC = props => <a {...props} />
 const DefaultPageLinkMemo = React.memo(DefaultPageLink)
 
-const DefaultEmbed = (props) => <AssetWrapper {...props} />
+const DefaultEmbed = props => <AssetWrapper {...props} />
 const DefaultHeader = Header
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -117,8 +117,7 @@ export const NotionRenderer: React.FC<{
       defaultPageIcon={defaultPageIcon}
       defaultPageCover={defaultPageCover}
       defaultPageCoverPosition={defaultPageCoverPosition}
-      zoom={isImageZoomable ? zoom : null}
-    >
+      zoom={isImageZoomable ? zoom : null}>
       <NotionBlockRenderer {...rest} />
     </NotionContextProvider>
   )
@@ -149,7 +148,7 @@ export const NotionBlockRenderer: React.FC<{
 
   return (
     <Block key={id} level={level} block={block} {...props}>
-      {block?.content?.map((contentBlockId) => (
+      {block?.content?.map(contentBlockId => (
         <NotionBlockRenderer
           key={contentBlockId}
           blockId={contentBlockId}
