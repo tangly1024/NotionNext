@@ -11,6 +11,9 @@ const CONFIG = {
   GITBOOK_BOOK_MENU_TAG: true, // 显示标签
   GITBOOK_MENU_ARCHIVE: true, // 显示归档
   GITBOOK_MENU_SEARCH: true, // 显示搜索
+  
+  MOVIE_VIDEO_COMBINE: true, // 聚合视频，开启后一篇文章内的多个含caption的视频会被合并到文章开头，并展示分集按钮
+  MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE: false, // 即使只有一集也显示集数切换按钮
 
   // Widget
   GITBOOK_WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
