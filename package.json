@@ -46,6 +46,7 @@
     "react-image": "^4.0.3",
     "react-lazy-images": "^1.1.0",
     "react-modal": "^3.14.3",
+    "react-pdf": "^7.7.1",
     "react-share": "^4.4.1",
     "react-tweet-embed": "~2.0.0",
     "react-use": "^17.3.1"
