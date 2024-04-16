@@ -30,7 +30,6 @@ export const MenuItemCollapse = props => {
   const toggleOpenSubMenu = () => {
     changeIsOpen(!isOpen)
   }
-  console.info(link);
 
   return (
     <>
