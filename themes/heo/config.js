@@ -118,7 +118,7 @@ const CONFIG = {
   HEO_MENU_ARCHIVE: true, // 显示归档
   HEO_MENU_SEARCH: true, // 显示搜索
 
-  HEO_POST_LIST_COVER: true, // 列表显示文章封面
+  HEO_POST_LIST_COVER: false, // 列表显示文章封面
   HEO_POST_LIST_COVER_HOVER_ENLARGE: false, // 列表鼠标悬停放大
 
   HEO_POST_LIST_COVER_DEFAULT: true, // 封面为空时用站点背景做默认封面
