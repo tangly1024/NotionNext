@@ -19,7 +19,7 @@ export const About = () => {
   return <>
        {/* <!-- ====== About Section Start 798 439 --> */}
        <section className="bg-gray-50 py-12 lg:py-24 xl:py-32">
-				<div className="container px-4 md:px-6">
+				<div className=" px-4 md:px-6">
 				  <div className="grid items-center gap-6 lg:grid-cols-[1fr_800px] lg:gap-12">
 					<div className="space-y-4">
 					  <div className="space-y-2">
@@ -39,7 +39,7 @@ export const About = () => {
 					</div>
 					<div className="grid gap-4 md:gap-8">
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
-						<div className="aspect-video">
+						<div className="iframe-container">
 							
 						<iframe  width="798" height="439" src="https://www.youtube.com/embed/kbiJlsHifpM?si=aV-OqRaOLvbfi6bh" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 							
