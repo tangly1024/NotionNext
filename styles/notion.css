@@ -72,7 +72,7 @@
   line-height: 1.5;
   color: var(--fg-color);
   caret-color: var(--fg-color);
-  font-family: inherit;
+  font-family: inherit !important;
 }
 
 .notion > * {
@@ -2064,7 +2064,8 @@ code.language-mermaid {
   border: 1px solid var(#eee) !important;
 }
 
-/* 竖屏视频高度bug */
+/* 视频尺寸bug */
 figure.notion-asset-wrapper.notion-asset-wrapper-video > div {
   height: 100% !important;
+  width: 100% !important;
 }
