@@ -8,6 +8,36 @@
 const Style = () => {
   return <style jsx global>{`
 
+  /* 基础样式 */
+.iframe-container iframe {
+  width: 100%;      /* 宽度为容器的100% */
+  height: auto;     /* 高度自动 */
+  aspect-ratio: 16 / 9; /* 维持16:9的宽高比 */
+}
+
+/* 平板设备样式 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .iframe-container {
+    padding: 10px; /* 可以根据需要调整内边距 */
+  }
+}
+
+/* 桌面设备样式 */
+@media (min-width: 1025px) {
+  .iframe-container {
+    max-width: 800px; /* 限制最大宽度 */
+    margin: auto; /* 水平居中显示 */
+  }
+}
+
+/* 手机设备样式 */
+@media (max-width: 767px) {
+  .iframe-container {
+    padding: 5px; /* 对小屏设备减少内边距 */
+  }
+}
+
+
   #theme-starter .sticky{
     position: fixed;
     z-index: 9999;

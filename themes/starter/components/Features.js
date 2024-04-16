@@ -19,7 +19,7 @@ export const Features = () => {
 						</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
-						<div className="aspect-video" >
+						<div className="iframe-container" >
 						<iframe width="610" height="342" src="https://www.youtube.com/embed/-JL67U6K7-I?si=jzvgVuxDYNOOOMTo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
@@ -30,7 +30,7 @@ export const Features = () => {
 						<p className="text-gray-500 dark:text-gray-400">{siteConfig('STARTER_FEATURE_2_TEXT_2', null, CONFIG)}</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
-						<div className="aspect-video" >
+						<div className="iframe-container" >
 						<iframe width="610" height="342" src="https://www.youtube.com/embed/8FFbYsAG4pQ?si=v0zNIODaP_qcimVW" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
@@ -47,7 +47,7 @@ export const Features = () => {
 						<p className="text-gray-500 dark:text-gray-400">{siteConfig('STARTER_FEATURE_3_TEXT_3', null, CONFIG)}</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
-						<div className="aspect-video" >
+						<div className="iframe-container" >
 						<iframe width="610" height="342" src="https://www.youtube.com/embed/CtrQdQWVsMs?si=Wvy7y1CmYDu9Pk-K" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
@@ -58,7 +58,7 @@ export const Features = () => {
 						<p className="text-gray-500 dark:text-gray-400">{siteConfig('STARTER_FEATURE_4_TEXT_4', null, CONFIG)}</p>
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
-						<div className="aspect-video" >
+						<div className="iframe-container" >
 						<iframe width="610" height="342" src="https://www.youtube.com/embed/qxk-QDriIoU?si=wmQWaYgMauMTEJWN" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>

@@ -127,7 +127,7 @@ export const Footer = props => {
                 <p className="text-base text-gray-7">
                   Designed and Developed by
                   <a
-                    href="https://belliedmonkey.com/"
+                    href="https://belliedmonkey.cc/"
                     rel="nofollow noopner noreferrer"
                     target="_blank"
                     className="px-1 text-gray-1 hover:underline"
