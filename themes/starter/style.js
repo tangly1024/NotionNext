@@ -8,6 +8,7 @@
 const Style = () => {
   return <style jsx global>{`
 
+
   /* 基础样式 */
 .iframe-container iframe {
   width: 100%;      /* 宽度为容器的100% */
