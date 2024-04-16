@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
+import { useEffect } from 'react'
 
 
 
@@ -14,12 +15,35 @@ import CONFIG from '../config'
 export const About = () => {
 
 
-
+	useEffect(() => {
+		const handleResize = () => {
+		  const iframe = document.getElementById('responsive-iframe');
+		  if (iframe) {
+			const windowWidth = window.innerWidth;
+			// 这里你可以根据实际需要设置逻辑
+			if (windowWidth >= 1024) {
+			  iframe.style.width = '798px';
+			  iframe.style.height = '449px'; // 保持16:9的宽高比
+			} else {
+			  iframe.style.width = `${windowWidth - 40}px`; // 减去一些边距
+			  iframe.style.height = `${(windowWidth - 40) * 9 / 16}px`; // 保持16:9的宽高比
+			}
+		  }
+		};
+	
+		window.addEventListener('resize', handleResize);
+		handleResize(); // 初始调整
+	
+		return () => {
+		  window.removeEventListener('resize', handleResize);
+		};
+	  }, []);
+	
 
   return <>
        {/* <!-- ====== About Section Start 798 439 --> */}
        <section className="bg-gray-50 py-12 lg:py-24 xl:py-32">
-				<div className=" px-4 md:px-6">
+				<div className="container px-4 md:px-6">
 				  <div className="grid items-center gap-6 lg:grid-cols-[1fr_800px] lg:gap-12">
 					<div className="space-y-4">
 					  <div className="space-y-2">
@@ -39,9 +63,9 @@ export const About = () => {
 					</div>
 					<div className="grid gap-4 md:gap-8">
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
-						<div className="iframe-container">
+						<div className="aspect-video">
 							
-						<iframe  width="798" height="439" src="https://www.youtube.com/embed/kbiJlsHifpM?si=aV-OqRaOLvbfi6bh" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+						<iframe id='responsive-iframe'  width="798" height="439" src="https://www.youtube.com/embed/kbiJlsHifpM?si=aV-OqRaOLvbfi6bh" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 							
 						</div>
 					  </div>
