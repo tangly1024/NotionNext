@@ -20,6 +20,11 @@ const loadExternal = async () => {
     'https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js',
     'js'
   )
+  await loadExternalResource(
+    '/Player.js',
+    'js'
+  )
+
 
   const Swiper = window.Swiper
   if (!Swiper) {
