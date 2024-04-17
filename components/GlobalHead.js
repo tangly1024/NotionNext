@@ -38,7 +38,7 @@ const GlobalHead = props => {
       {siteConfig('SEO_BAIDU_SITE_VERIFICATION') && (
         <meta name='baidu-site-verification' content={siteConfig('SEO_BAIDU_SITE_VERIFICATION')} />
       )}
-      <meta name='keywords' content={keywords} />
+      {/* <meta name='keywords' content={keywords} /> */}
       <meta name='description' content={description} />
       <meta property='og:locale' content={lang} />
       <meta property='og:title' content={title} />
