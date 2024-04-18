@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
+import YouTubeLoader from './YouTubeLoader'
 /**
  * 英雄大图区块
  */
@@ -71,7 +72,8 @@ export const Hero = () => {
 
               <div className="iframe-container">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <iframe  loading="lazy"  width="844" height="467" src="https://www.youtube.com/embed/OF5qEbHBQKI?si=J-7kmhlxGRa5fv52" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                <YouTubeLoader width="844" height="467" videoURL="https://www.youtube.com/embed/OF5qEbHBQKI"/>
+                
               </div>
 
               {/* 背景图 */}
