@@ -20,7 +20,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<iframe width="610" height="342" src="https://www.youtube.com/embed/-JL67U6K7-I?si=jzvgVuxDYNOOOMTo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+						<iframe  loading="lazy"  width="610" height="342" src="https://www.youtube.com/embed/-JL67U6K7-I?si=jzvgVuxDYNOOOMTo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
 					</div>
@@ -31,7 +31,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<iframe width="610" height="342" src="https://www.youtube.com/embed/8FFbYsAG4pQ?si=v0zNIODaP_qcimVW" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+						<iframe  loading="lazy"  width="610" height="342" src="https://www.youtube.com/embed/8FFbYsAG4pQ?si=v0zNIODaP_qcimVW" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
 					</div>
@@ -48,7 +48,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<iframe width="610" height="342" src="https://www.youtube.com/embed/CtrQdQWVsMs?si=Wvy7y1CmYDu9Pk-K" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+						<iframe  loading="lazy"  width="610" height="342" src="https://www.youtube.com/embed/CtrQdQWVsMs?si=Wvy7y1CmYDu9Pk-K" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
 					</div>
@@ -59,7 +59,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<iframe width="610" height="342" src="https://www.youtube.com/embed/qxk-QDriIoU?si=wmQWaYgMauMTEJWN" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+						<iframe  loading="lazy"  width="610" height="342" src="https://www.youtube.com/embed/qxk-QDriIoU?si=wmQWaYgMauMTEJWN" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 						</div>
 					  </div>
 					</div>

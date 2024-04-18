@@ -65,7 +65,7 @@ export const About = () => {
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="aspect-video">
 							
-						<iframe id='responsive-iframe'  width="798" height="439" src="https://www.youtube.com/embed/kbiJlsHifpM?si=aV-OqRaOLvbfi6bh" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+						<iframe loading="lazy" id='responsive-iframe'  width="798" height="439" src="https://www.youtube.com/embed/kbiJlsHifpM?si=aV-OqRaOLvbfi6bh" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
 							
 						</div>
 					  </div>
