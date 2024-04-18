@@ -2,10 +2,35 @@ const { THEME } = require('./blog.config')
 const fs = require('fs')
 const path = require('path')
 const BLOG = require('./blog.config')
+const { extractLangPrefix } = require('./lib/utils/pageId')
 
+// 打包时是否分析代码
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: BLOG.BUNDLE_ANALYZER
 })
+
+// 扫描项目 /themes下的目录名
+const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
+// 检测用户开启的多语言
+const locales = (function () {
+  // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
+  // 支持如下格式配置多个语言的页面id xxx,zh:xxx,en:xxx
+  const langs = ['zh', 'en']
+  if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
+    const siteIds = BLOG.NOTION_PAGE_ID.split(',')
+    for (let index = 0; index < siteIds.length; index++) {
+      const siteId = siteIds[index]
+      const prefix = extractLangPrefix(siteId)
+      // 如果包含前缀 例如 zh , en 等
+      if (prefix) {
+        if (!langs.includes(prefix)) {
+          langs.push(prefix)
+        }
+      }
+    }
+  }
+  return langs
+})()
 
 /**
  * 扫描指定目录下的文件夹名，用于获取所有主题
@@ -27,9 +52,8 @@ function scanSubdirectories(directory) {
 
   return subdirectories
 }
-// 扫描项目 /themes下的目录名
-const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
-module.exports = withBundleAnalyzer({
+
+const nextConfig = {
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
@@ -55,8 +79,55 @@ module.exports = withBundleAnalyzer({
       }
     ]
   },
+  // 多语言， 在export时禁用
+  i18n:
+    process.env.npm_lifecycle_event === 'export'
+      ? undefined
+      : {
+          defaultLocale: BLOG.LANG.slice(0, 2),
+          // 支持的所有多语言,按需填写即可
+          locales
+        },
+  // 重写url
   async rewrites() {
+    // 处理多语言重定向
+    const langsRewrites = []
+    if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
+      const siteIds = BLOG.NOTION_PAGE_ID.split(',')
+      const langs = []
+      for (let index = 0; index < siteIds.length; index++) {
+        const siteId = siteIds[index]
+        const prefix = extractLangPrefix(siteId)
+        // 如果包含前缀 例如 zh , en 等
+        if (prefix) {
+          langs.push(prefix)
+        }
+        console.log('[Locales]', siteId)
+      }
+
+      // 映射多语言
+      // 示例： source: '/:locale(zh|en)/:path*' ; :locale() 会将语言放入重写后的 `?locale=` 中。
+      langsRewrites.push(
+        {
+          source: `/:locale(${langs.join('|')})/:path*`,
+          destination: '/:path*'
+        },
+        // 匹配没有路径的情况，例如 [domain]/zh 或 [domain]/en
+        {
+          source: `/:locale(${langs.join('|')})`,
+          destination: '/'
+        },
+        // 匹配没有路径的情况，例如 [domain]/zh/ 或 [domain]/en/
+        {
+          source: `/:locale(${langs.join('|')})/`,
+          destination: '/'
+        }
+      )
+    }
+
     return [
+      ...langsRewrites,
+      // 伪静态重写
       {
         source: '/:path*.html',
         destination: '/:path*'
@@ -84,17 +155,9 @@ module.exports = withBundleAnalyzer({
     ]
   },
   webpack: (config, { dev, isServer }) => {
-    // Replace React with Preact only in client production build
-    // if (!dev && !isServer) {
-    //   Object.assign(config.resolve.alias, {
-    //     react: 'preact/compat',
-    //     'react-dom/test-utils': 'preact/test-utils',
-    //     'react-dom': 'preact/compat'
-    //   })
-    // }
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     if (!isServer) {
-      console.log('[加载主题]', path.resolve(__dirname, 'themes', THEME))
+      console.log('[默认主题]', path.resolve(__dirname, 'themes', THEME))
     }
     config.resolve.alias['@theme-components'] = path.resolve(
       __dirname,
@@ -120,4 +183,6 @@ module.exports = withBundleAnalyzer({
     NODE_ENV_API: process.env.NODE_ENV_API || 'prod',
     THEMES: themes
   }
-})
+}
+
+module.exports = withBundleAnalyzer(nextConfig)
