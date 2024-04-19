@@ -26,7 +26,7 @@ yarn-error.log*
 
 # local env files
 # 版本号放在此环境变量中
-.env.local 
+.env.local
 .env.development.local
 .env.test.local
 .env.production.local
