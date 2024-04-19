@@ -25,7 +25,8 @@ const Footer = ({ title }) => {
                     <i className='fas fa-users' /> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
                 <br />
                 <h1>{title}</h1>
-                <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by  <a href='https://github.com/tangly1024/NotionNext' className='underline '>NotionNext {siteConfig('VERSION')}</a>.</span>
+                <!--{siteConfig('VERSION')}-->
+                <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by  <a href='https://dear7575' className='underline '>非你莫属</a>.</span>
             </span>
         </footer>
   )
