@@ -21,7 +21,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/-JL67U6K7-I" imgPath='/images/transcription.jpg'/>
+						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/-JL67U6K7-I" imgPath='/images/transcription.webp'/>
 						</div>
 					  </div>
 					</div>
@@ -32,7 +32,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/8FFbYsAG4pQ" imgPath='/images/translation.jpg'/>
+						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/8FFbYsAG4pQ" imgPath='/images/translation.webp'/>
 						
 						</div>
 					  </div>
@@ -50,7 +50,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/CtrQdQWVsMs"  imgPath='/images/export.jpg'/>
+						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/CtrQdQWVsMs"  imgPath='/images/export.webp'/>
 						
 						</div>
 					  </div>
@@ -62,7 +62,7 @@ export const Features = () => {
 					  </div>
 					  <div className="mx-auto aspect-video overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
 						<div className="iframe-container" >
-						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/qxk-QDriIoU"  imgPath='/images/edit.jpg'/>
+						<YouTubeLoader width="610" height="342" videoURL="https://www.youtube.com/embed/qxk-QDriIoU"  imgPath='/images/edit.webp'/>
 						
 						</div>
 					  </div>

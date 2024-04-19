@@ -72,7 +72,7 @@ export const Hero = () => {
 
               <div className="iframe-container">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <YouTubeLoader width="844" height="467" videoURL="https://www.youtube.com/embed/OF5qEbHBQKI"/>
+                <YouTubeLoader width="844" height="467" videoURL="https://www.youtube.com/embed/OF5qEbHBQKI" imgPath='/images/madeeasy.webp'/>
                 
               </div>
 

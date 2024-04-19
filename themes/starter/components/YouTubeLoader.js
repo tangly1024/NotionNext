@@ -13,7 +13,7 @@ function YouTubeLoader({ width = '844px', height = '467px',imgPath = '/images/ma
   return (
 
     <>
-     {!videoLoaded && <button onClick={loadVideo}><LazyImage width={width} height={height} src={imgPath}></LazyImage></button>}
+     {!videoLoaded && <button onClick={loadVideo}><LazyImage  alt={'youtube video'} width={width} height={height} src={imgPath}></LazyImage></button>}
      {videoLoaded &&
         <iframe
         id="responsive-iframe"

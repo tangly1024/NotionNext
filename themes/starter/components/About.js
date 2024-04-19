@@ -29,7 +29,7 @@ export const About = () => {
                     width='610'
                     height='342'
                     videoURL='https://www.youtube.com/embed/kbiJlsHifpM'
-                    imgPath='/images/howitworks.jpg'
+                    imgPath='/images/howitworks.webp'
                   />
                 </div>
               </div>
