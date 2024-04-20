@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Typed from 'typed.js';
 import { useGlobal } from '@/lib/global';
 import { siteConfig } from '@/lib/config';
-import NavButtonGroup from './NavButtonGroup';
+import NavButtonGroup from './NavButtonGroup'; // Remove duplicate import statement
 import Link from 'next/link';
 import Router from 'next/router';
 import { useRouter } from 'next/router';
@@ -80,50 +80,6 @@ const Hero = ({ siteInfo }) => {
 };
 
 export default Hero;
-
-// Path: themes/hexo/components/NavButtonGroup.js
-import React from 'react';
-import { useGlobal } from '@/lib/global';
-import { siteConfig } from '@/lib/config';
-import Link from 'next/link';
-
-const NavButtonGroup = ({ props }) => {
-  const { locale } = useGlobal();
-
-  return (
-    <div className="flex mt-4">
-      {siteConfig('HEXO_HOME_NAV_BUTTONS').map((button, index) => (
-        <Link key={index} href={button.href}>
-          <a className="mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{button.text}</a>
-        </Link>
-      ))}
-    </div>
-  );
-};
-
-export default NavButtonGroup;
-
-// Path: themes/hexo/components/NavButtonGroup.js
-import React from 'react';
-import { useGlobal } from '@/lib/global';
-import { siteConfig } from '@/lib/config';
-import Link from 'next/link';
-
-const NavButtonGroup = ({ props }) => {
-  const { locale } = useGlobal();
-
-  return (
-    <div className="flex mt-4">
-      {siteConfig('HEXO_HOME_NAV_BUTTONS').map((button, index) => (
-        <Link key={index} href={button.href}>
-          <a className="mx-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{button.text}</a>
-        </Link>
-      ))}
-    </div>
-  );
-};
-
-export default NavButtonGroup;
 
 // Path: themes/hexo/components/NavButtonGroup.js
 import React from 'react';
