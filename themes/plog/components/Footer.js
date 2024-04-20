@@ -12,7 +12,7 @@ export const Footer = (props) => {
      <div className="my-4 text-sm leading-6">
        <div className="flex align-baseline justify-start flex-wrap space-x-6">
          <div> © {siteConfig('AUTHOR')} {copyrightDate}  </div>
-         <div>Powered By <a href="https://github.com/tangly1024/NotionNext" className='underline'>© 非你莫属</a></div>
+         <div>Powered By <a href="https://github.com/dear7575" className='underline'>© 非你莫属</a></div>
          <Vercel />
        </div>
      </div>

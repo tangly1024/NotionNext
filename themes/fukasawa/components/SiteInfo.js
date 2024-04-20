@@ -18,7 +18,7 @@ function SiteInfo ({ title }) {
             <span className='pl-2 hidden busuanzi_container_site_uv'> <i className='fas fa-users' /> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
             <br />
             <span className='text-xs font-serif'> Powered by <a href='https://github.com/dear7575' className='underline'>© 非你莫属</a></span><br /></span>
-            <h1>{title}</h1>
+            {/* <h1>{title}</h1> */}
         </footer>
   )
 }
