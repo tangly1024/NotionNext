@@ -44,7 +44,11 @@ function scanSubdirectories(directory) {
     const fullPath = path.join(directory, file)
     const stats = fs.statSync(fullPath)
     if (stats.isDirectory()) {
-      subdirectories.push(file)
+      //  筛选主题
+      if (file !== "starter" && file !== "landing") {
+        console.log("筛选主题:", file)
+        subdirectories.push(file)
+      }
     }
 
     // subdirectories.push(file)
