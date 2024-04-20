@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import AboutAuthor from './AboutAuthor'; // Add import statement for AboutAuthor
-import AboutProject from './AboutProject'; // Add import statement for AboutProject
+import AboutAuthor from './AboutAuthor';
+import AboutProject from './AboutProject'; // Add missing import statement
 
 const App = () => {
     return (
