@@ -24,7 +24,7 @@ export const Footer = props => {
             href='https://github.com/dear7575'
             className=' hover:underline'>
             {' '}
-            © 非你莫属{' '}
+            非你莫属{' '}
           </a>
         </span>
       </div>
