@@ -10,7 +10,6 @@ import { siteConfig } from '@/lib/config'
  * @param {*} props
  * @returns
  */
-
 export default function Category(props) {
   // use different Layout file based on the path
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
