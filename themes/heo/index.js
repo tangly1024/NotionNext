@@ -40,7 +40,7 @@ import WWAds from '@/components/WWAds'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
-import { loadWowJS } from '@/lib/wow'
+import { loadWowJS } from '@/lib/plugins/wow'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
