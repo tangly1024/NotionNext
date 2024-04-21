@@ -38,22 +38,22 @@ const CONFIG = {
   STARTER_FEATURE_1_TITLE_1: '企业与科技', // 特性1
   STARTER_FEATURE_1_TEXT_1: '数字化助手，助力产业升级', // 特性1
   STARTER_FEATURE_1_BUTTON_TEXT: '了解更多', // 特性1
-  STARTER_FEATURE_1_BUTTON_URL: '', // 特性1
+  STARTER_FEATURE_1_BUTTON_URL: '/Business & Technology', // 特性1
 
   STARTER_FEATURE_2_TITLE_1: '现在与未来', // 特性2
   STARTER_FEATURE_2_TEXT_1: '探索面向未来的创新科技', // 特性2
   STARTER_FEATURE_2_BUTTON_TEXT: '了解更多', // 特性2
-  STARTER_FEATURE_2_BUTTON_URL: '', // 特性2
+  STARTER_FEATURE_2_BUTTON_URL: '/Present & Future', // 特性2
 
   STARTER_FEATURE_3_TITLE_1: '责任与信任', // 特性3
   STARTER_FEATURE_3_TEXT_1: ' 聚合微小善行，以科技让世界更美好', // 特性3
   STARTER_FEATURE_3_BUTTON_TEXT: '了解更多', // 特性3
-  STARTER_FEATURE_3_BUTTON_URL: '', // 特性3
+  STARTER_FEATURE_3_BUTTON_URL: '/Responsibility & trust', // 特性3
 
   STARTER_FEATURE_4_TITLE_1: '用户与生活', // 特性4
   STARTER_FEATURE_4_TEXT_1: '让生活更便捷更多彩', // 特性4
   STARTER_FEATURE_4_BUTTON_TEXT: '了解更多', // 特性4
-  STARTER_FEATURE_4_BUTTON_URL: '', // 特性4
+  STARTER_FEATURE_4_BUTTON_URL: '/Users & Life', // 特性4
 
   // 首页ABOUT区块
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
