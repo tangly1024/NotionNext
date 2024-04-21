@@ -4,8 +4,8 @@
 const CONFIG = {
 
   // 默认只展示Logo文字，如果设置了logo图片，会在文字左侧显示图标
-  STARTER_LOGO: 'https://cdn.nakeu.cn/static/logo/logo.png', // 普通logo图片 示例：/images/starter/logo/logo.svg
-  STARTER_LOGO_WHITE: 'https://cdn.nakeu.cn/static/logo/logo.png', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
+  STARTER_LOGO: 'https://cdn.nankoyo.com/static/logo/logo.png', // 普通logo图片 示例：/images/starter/logo/logo.svg
+  STARTER_LOGO_WHITE: 'https://cdn.nankoyo.com/static/logo/logo.png', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
 
   // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
 
@@ -112,42 +112,42 @@ const CONFIG = {
   STARTER_TESTIMONIALS_ITEMS: [
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: '之前尝试过第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ ',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/1.JPG',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/1.JPG',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: '单调',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '站长',
       STARTER_TESTIMONIALS_ITEM_URL: ''
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: '很喜欢这个工具，我的需求是跨平台使用，这个项目有帮助到我。',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/2.JPG',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/2.JPG',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: '听风',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '站长',
       STARTER_TESTIMONIALS_ITEM_URL: ''
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: '呜呜呜，经过一个下午的努力，终于把工具部署好啦，非常感谢NanKo的框架和教程，这是我有生之年用过的最好用的在线音乐播放器。',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/3.JPG',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/3.JPG',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: '难诉',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '站长',
       STARTER_TESTIMONIALS_ITEM_URL: ''
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: '感谢提供这么好的项目哈哈 之前一直不知道怎么部署(别的项目好难好复杂)这个相对非常简单 新手非常友好哦',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/4.JPG',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/4.JPG',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: '行止',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '站长',
       STARTER_TESTIMONIALS_ITEM_URL: ''
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: '非常感谢 NanKo 的项目，这一直是我期待的。',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/5.JPG',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/5.JPG',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: '旧冬',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '站长',
       STARTER_TESTIMONIALS_ITEM_URL: ''
     },
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: '用好久了，太感谢了',
-      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/6.JPG',
+      STARTER_TESTIMONIALS_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/6.JPG',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: '诀别',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '站长',
       STARTER_TESTIMONIALS_ITEM_URL: ''
@@ -181,82 +181,82 @@ const CONFIG = {
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
   STARTER_TEAM_ITEMS: [
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/7.JPG',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/7.JPG',
       STARTER_TEAM_ITEM_NICKNAME: 'NanKo',
       STARTER_TEAM_ITEM_DESCRIPTION: '主要创办人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/8.JPG',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/8.JPG',
       STARTER_TEAM_ITEM_NICKNAME: 'Cute Baby',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科售后负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/9.PNG',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/9.PNG',
       STARTER_TEAM_ITEM_NICKNAME: 'Break feeling',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科服务负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/10.jpg',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/10.jpg',
       STARTER_TEAM_ITEM_NICKNAME: 'Tears',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科技术负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/11.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/11.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Memorial.',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科运维负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/12.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/12.png',
       STARTER_TEAM_ITEM_NICKNAME: 'autism',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科云开发负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/13.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/13.png',
       STARTER_TEAM_ITEM_NICKNAME: 'liquor.',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科数据库负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/14.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/14.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Decadence.',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科接口负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/15.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/15.png',
       STARTER_TEAM_ITEM_NICKNAME: 'lack of love',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科内容负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/16.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/16.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Dream traveler',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科设计负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/17.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/17.png',
       STARTER_TEAM_ITEM_NICKNAME: 'stars.',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科运营负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/18.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/18.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Run away',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科前端负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/19.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/19.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Elaborate°',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科后端负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/20.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/20.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Chilling heart',
       STARTER_TEAM_ITEM_DESCRIPTION:'南科CDN负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/21.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/21.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Midnight',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科系统负责人'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nakeu.cn/static/www.nakeu.cn/team-pic/22.png',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/static/www.nakeu.cn/team-pic/22.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Trauma',
       STARTER_TEAM_ITEM_DESCRIPTION: '南科音乐负责人'
     }
@@ -277,7 +277,7 @@ const CONFIG = {
   STARTER_CONTACT_LOCATION_TITLE: '我们的位置',
   STARTER_CONTACT_LOCATION_TEXT: '中国，天津',
   STARTER_CONTACT_EMAIL_TITLE: 'Email',
-  STARTER_CONTACT_EMAIL_TEXT: 'nopely@nakeu.cn',
+  STARTER_CONTACT_EMAIL_TEXT: 'nopely@nankoyo.com',
 
   // 嵌入外部表单
   STARTER_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/feedback-yjrioz', // 基于NoteForm创建，将留言数据存在Notion中
@@ -348,15 +348,15 @@ const CONFIG = {
     {
       TITLE: '友情链接',
       LINK_GROUP: [
-        { TITLE: '南科开放接口', URL: 'https://open-api.nakeu.cn/' },
-        { TITLE: '南科系统状态', URL: 'https://status.nakeu.cn/' },
-        { TITLE: '南科机器认证', URL: 'https://robot.nakeu.cn/' },
-        { TITLE: '南科Layui框架', URL: 'https://layui.nakeu.cn/' },
-        { TITLE: '南科音乐解锁', URL: 'https://unlock.nakeu.cn/' },
-        { TITLE: '南科在线博客', URL: 'https://blog.nakeu.cn/' },
-        { TITLE: '南科在线工具', URL: 'https://tools.nakeu.cn/' },
-        { TITLE: '南科在线音乐', URL: 'https://music.nakeu.cn/' },
-        { TITLE: '南科在线热榜 ', URL: 'https://hot.nakeu.cn/' }
+        { TITLE: '南科开放接口', URL: 'https://open-api.nankoyo.com/' },
+        { TITLE: '南科系统状态', URL: 'https://status.nankoyo.com/' },
+        { TITLE: '南科机器认证', URL: 'https://robot.nankoyo.com/' },
+        { TITLE: '南科Layui框架', URL: 'https://layui.nankoyo.com/' },
+        { TITLE: '南科音乐解锁', URL: 'https://unlock.nankoyo.com/' },
+        { TITLE: '南科在线博客', URL: 'https://blog.nankoyo.com/' },
+        { TITLE: '南科在线工具', URL: 'https://tools.nankoyo.com' },
+        { TITLE: '南科在线音乐', URL: 'https://music.nankoyo.com/' },
+        { TITLE: '南科在线热榜 ', URL: 'https://hot.nankoyo.com/' }
         
       ]
     }
@@ -379,7 +379,7 @@ const CONFIG = {
   STARTER_404_BACK: '回到主页',
 
   STARTER_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
-  STARTER_POST_REDIRECT_URL: 'https://group.nakeu.cn', // 重定向域名
+  STARTER_POST_REDIRECT_URL: 'https://www.nankoyo.com', // 重定向域名
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || true // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG
