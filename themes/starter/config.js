@@ -348,15 +348,14 @@ const CONFIG = {
     {
       TITLE: '友情链接',
       LINK_GROUP: [
-        { TITLE: '南科开放接口', URL: 'https://open-api.nankoyo.com/' },
-        { TITLE: '南科系统状态', URL: 'https://status.nankoyo.com/' },
-        { TITLE: '南科机器认证', URL: 'https://robot.nankoyo.com/' },
-        { TITLE: '南科Layui框架', URL: 'https://layui.nankoyo.com/' },
-        { TITLE: '南科音乐解锁', URL: 'https://unlock.nankoyo.com/' },
-        { TITLE: '南科在线博客', URL: 'https://blog.nankoyo.com/' },
-        { TITLE: '南科在线工具', URL: 'https://tools.nankoyo.com' },
-        { TITLE: '南科在线音乐', URL: 'https://music.nankoyo.com/' },
-        { TITLE: '南科在线热榜 ', URL: 'https://hot.nankoyo.com/' }
+        { TITLE: 'API', URL: 'https://open-api.nankoyo.com/' },
+        { TITLE: 'Status', URL: 'https://status.nankoyo.com/' }，
+        { TITLE: 'Layui', URL: 'https://layui.nankoyo.com/' },
+        { TITLE: 'unlock', URL: 'https://unlock.nankoyo.com/' },
+        { TITLE: 'blog', URL: 'https://blog.nankoyo.com/' },
+        { TITLE: 'tools', URL: 'https://tools.nankoyo.com' },
+        { TITLE: 'music', URL: 'https://music.nankoyo.com/' },
+        { TITLE: 'hot', URL: 'https://hot.nankoyo.com/' }
         
       ]
     }
