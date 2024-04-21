@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 
 const App = () => {
     return (
@@ -10,7 +9,6 @@ const App = () => {
                     <AboutAuthor />
                 </Col>
                 <Col>
-                    <AboutProject />
                 </Col>
             </Row>
         </Container>
