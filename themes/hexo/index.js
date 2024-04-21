@@ -33,12 +33,12 @@ import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 
-// 主题全局状态
+// Theme global state
 const ThemeGlobalHexo = createContext()
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
 
 /**
- * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
+ * Basic layout with left and right sidebars, and a top navigation bar for mobile devices.
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -68,7 +68,7 @@ const LayoutBase = props => {
         <JumpToCommentButton />
     </>
 
-  // Algolia搜索框
+  // Algolia search modal
   const searchModal = useRef(null)
 
   return (
@@ -76,10 +76,10 @@ const LayoutBase = props => {
         <div id='theme-hexo' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
             <Style/>
 
-            {/* 顶部导航 */}
+            {/* Top navigation */}
             <TopNav {...props} />
 
-            {/* 顶部嵌入 */}
+            {/* Top embed */}
             <Transition
                 show={!onLoading}
                 appear={true}
@@ -94,7 +94,7 @@ const LayoutBase = props => {
                 {headerSlot}
             </Transition>
 
-            {/* 主区块 */}
+            {/* Main section */}
             <main id="wrapper" className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full py-8 md:px-8 lg:px-24 min-h-screen relative`}>
                 <div id="container-inner" className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'} >
                     <div className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
@@ -110,14 +110,14 @@ const LayoutBase = props => {
                             leaveTo="opacity-0 -translate-y-16"
                             unmount={false}
                         >
-                            {/* 主区上部嵌入 */}
+                            {/* Top embed in main section */}
                             {slotTop}
 
                             {children}
                         </Transition>
                     </div>
 
-                    {/* 右侧栏 */}
+                    {/* Right sidebar */}
                     <SideRight {...props} className={`space-y-4 lg:w-80 pt-4 ${post ? 'lg:pt-0' : 'lg:pt-4'}`} />
                 </div>
             </main>
@@ -126,13 +126,13 @@ const LayoutBase = props => {
               <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />
             </div>
 
-            {/* 悬浮菜单 */}
+            {/* Floating menu */}
             <RightFloatArea floatSlot={floatSlot} />
 
-            {/* 全文搜索 */}
+            {/* Full-text search */}
             <AlgoliaSearchModal cRef={searchModal} {...props}/>
 
-            {/* 页脚 */}
+            {/* Footer */}
             <Footer title={siteConfig('TITLE') } />
         </div>
     </ThemeGlobalHexo.Provider>
@@ -140,8 +140,8 @@ const LayoutBase = props => {
 }
 
 /**
- * 首页
- * 是一个博客列表，嵌入一个Hero大图
+ * Homepage
+ * Displays a list of blog posts with a hero image.
  * @param {*} props
  * @returns
  */
@@ -150,7 +150,7 @@ const LayoutIndex = (props) => {
 }
 
 /**
- * 博客列表
+ * Blog post list
  * @param {*} props
  * @returns
  */
@@ -162,7 +162,7 @@ const LayoutPostList = (props) => {
 }
 
 /**
- * 搜索
+ * Search
  * @param {*} props
  * @returns
  */
@@ -194,7 +194,7 @@ const LayoutSearch = props => {
 }
 
 /**
- * 归档
+ * Archive
  * @param {*} props
  * @returns
  */
@@ -216,7 +216,7 @@ const LayoutArchive = (props) => {
 }
 
 /**
- * 文章详情
+ * Article details
  * @param {*} props
  * @returns
  */
@@ -231,7 +231,7 @@ const LayoutSlug = props => {
           const article = document.getElementById('notion-article')
           if (!article) {
             router.push('/404').then(() => {
-              console.warn('找不到页面', router.asPath)
+              console.warn('Page not found', router.asPath)
             })
           }
         }
@@ -246,12 +246,12 @@ const LayoutSlug = props => {
                 {!lock && <div id="article-wrapper" className="overflow-x-auto flex-grow mx-auto md:w-full md:px-5 ">
 
                     <article itemScope itemType="https://schema.org/Movie" className="subpixel-antialiased overflow-y-hidden" >
-                        {/* Notion文章主体 */}
+                        {/* Notion article body */}
                         <section className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
                             {post && <NotionPage post={post} />}
                         </section>
 
-                        {/* 分享 */}
+                        {/* Share */}
                         <ShareBar post={post} />
                         {post?.type === 'Post' && <>
                             <ArticleCopyright {...props} />
@@ -263,7 +263,7 @@ const LayoutSlug = props => {
 
                     <div className='pt-4 border-dashed'></div>
 
-                    {/* 评论互动 */}
+                    {/* Comment interaction */}
                     <div className="duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3">
                         <Comment frontMatter={post} />
                     </div>
@@ -282,13 +282,13 @@ const LayoutSlug = props => {
 const Layout404 = props => {
   const router = useRouter()
   useEffect(() => {
-    // 延时3秒如果加载失败就返回首页
+    // Redirect to homepage after 3 seconds if the page fails to load
     setTimeout(() => {
       if (isBrowser) {
         const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/').then(() => {
-            // console.log('找不到页面', router.asPath)
+            // console.log('Page not found', router.asPath)
           })
         }
       }
@@ -302,7 +302,7 @@ const Layout404 = props => {
                         404
                     </h2>
                     <div className="inline-block text-left h-32 leading-10 items-center">
-                        <h2 className="m-0 p-0">页面未找到</h2>
+                        <h2 className="m-0 p-0">Page not found</h2>
                     </div>
                 </div>
             </div>
@@ -311,7 +311,7 @@ const Layout404 = props => {
 }
 
 /**
- * 分类列表
+ * Category list
  * @param {*} props
  * @returns
  */
@@ -341,7 +341,7 @@ const LayoutCategoryIndex = props => {
 }
 
 /**
- * 标签列表
+ * Tag list
  * @param {*} props
  * @returns
  */
