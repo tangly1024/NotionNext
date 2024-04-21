@@ -22,11 +22,11 @@ export async function getStaticProps({ params: { category, page } }) {
   const from = 'category-page-props'
   let props = await getGlobalData({ from })
 
-  // 过滤状态类型
+  // make sure the page is a number
   props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category))
-  // 处理文章页数
+  //  handle category posts count 
   props.postCount = props.posts.length
-  // 处理分页
+  // handle pagination
   props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
 
   delete props.allPages
@@ -46,9 +46,9 @@ export async function getStaticPaths() {
   const paths = []
 
   categoryOptions?.forEach(category => {
-    // 过滤状态类型
+    // handle category posts
     const categoryPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category.name))
-    // 处理文章页数
+    // handle pagination
     const postCount = categoryPosts.length
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
     if (totalPages > 1) {
