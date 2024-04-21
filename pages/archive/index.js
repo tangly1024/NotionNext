@@ -56,13 +56,17 @@ export async function getStaticProps({ locale }) {
     }
   })
 
-    props.archivePosts = archivePosts;
-    delete props.allPages;
+  props.archivePosts = archivePosts
+  delete props.allPages
 
-    return {
-      props,
-      NEXT_REVALIDATE_SECOND: props.NOTION_CONFIG,
-      revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
-    };
+  return {
+    props,
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    )
   }
+}
+
 export default ArchiveIndex
