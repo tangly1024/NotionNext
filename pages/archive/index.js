@@ -6,10 +6,8 @@ import { getLayoutByTheme } from '@/themes/theme'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/formatDate'
 import { siteConfig } from '@/lib/config'
-import Layout from '@/components/Layout' // Import the missing Layout component
 
 const ArchiveIndex = props => {
-  // use different Layout file based on the path  
   const router = useRouter();
   const path = router.asPath;
   const isArchive = path === '/archive';
