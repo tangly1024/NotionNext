@@ -6,12 +6,13 @@ import { getLayoutByTheme } from '@/themes/theme'
 import { siteConfig } from '@/lib/config'
 
 /**
- *  Category page
+ * 分类页
  * @param {*} props
  * @returns
  */
+
 export default function Category(props) {
-  // use different Layout file based on the path
+  // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   return <Layout {...props} />
@@ -21,11 +22,11 @@ export async function getStaticProps({ params: { category, page } }) {
   const from = 'category-page-props'
   let props = await getGlobalData({ from })
 
-  // make sure the page is a number
+  // 过滤状态类型
   props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category))
-  // handle category posts count
+  // 处理文章页数
   props.postCount = props.posts.length
-  // handle pagination
+  // 处理分页
   props.posts = props.posts.slice(BLOG.POSTS_PER_PAGE * (page - 1), BLOG.POSTS_PER_PAGE * page)
 
   delete props.allPages
@@ -45,9 +46,9 @@ export async function getStaticPaths() {
   const paths = []
 
   categoryOptions?.forEach(category => {
-    // handle category posts
+    // 过滤状态类型
     const categoryPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published').filter(post => post && post.category && post.category.includes(category.name))
-    // handle pagination
+    // 处理文章页数
     const postCount = categoryPosts.length
     const totalPages = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
     if (totalPages > 1) {

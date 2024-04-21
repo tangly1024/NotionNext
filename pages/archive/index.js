@@ -8,10 +8,8 @@ import { formatDateFmt } from '@/lib/formatDate'
 import { siteConfig } from '@/lib/config'
 
 const ArchiveIndex = props => {
-  const router = useRouter();
-  const path = router.asPath;
-  const isArchive = path === '/archive';
-  const Layout = isArchive ? getLayoutByTheme({ theme: siteConfig('THEME'), router }) : getLayoutByTheme({ theme: siteConfig('THEME') });
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
 
   useEffect(() => {
     if (isBrowser) {
@@ -30,16 +28,9 @@ const ArchiveIndex = props => {
   return <Layout {...props} />
 }
 
-/**
- * Retrieves the static props for the archive page.
- * @returns {Promise<Object>} The static props object.
- */
-/**
- * Retrieves the static props for the archive page.
- * @returns {Promise<Object>} The static props object.
- */
 export async function getStaticProps() {
   const props = await getGlobalData({ from: 'archive-index' })
+  // 处理分页
   props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   delete props.allPages
 
