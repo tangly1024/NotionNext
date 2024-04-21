@@ -40,7 +40,6 @@ const ArchiveIndex = props => {
  */
 export async function getStaticProps() {
   const props = await getGlobalData({ from: 'archive-index' })
-  // 
   props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
   delete props.allPages
 
