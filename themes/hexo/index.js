@@ -38,12 +38,12 @@ const AlgoliaSearchModal = dynamic(
   { ssr: false }
 )
 
-// 主题全局状态
+// Theme global state
 const ThemeGlobalHexo = createContext()
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
 
 /**
- * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
+ * Basic layout with left and right sidebars, and a top navigation bar for mobile devices.
  * @param props
  * @returns {JSX.Element}
  * @constructor
@@ -78,7 +78,7 @@ const LayoutBase = props => {
     </>
   )
 
-  // Algolia搜索框
+  // Algolia search modal
   const searchModal = useRef(null)
 
   return (
@@ -88,10 +88,10 @@ const LayoutBase = props => {
         className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
         <Style />
 
-        {/* 顶部导航 */}
+            <Transition
+            {/* Top navigation */}
         <TopNav {...props} />
 
-        {/* 顶部嵌入 */}
         <Transition
           show={!onLoading}
           appear={true}
@@ -124,8 +124,6 @@ const LayoutBase = props => {
                 appear={true}
                 enter='transition ease-in-out duration-700 transform order-first'
                 enterFrom='opacity-0 translate-y-16'
-                enterTo='opacity-100'
-                leave='transition ease-in-out duration-300 transform'
                 leaveFrom='opacity-100 translate-y-0'
                 leaveTo='opacity-0 -translate-y-16'
                 unmount={false}>
@@ -162,8 +160,8 @@ const LayoutBase = props => {
 }
 
 /**
- * 首页
- * 是一个博客列表，嵌入一个Hero大图
+ * Homepage
+ * Displays a list of blog posts with a hero image.
  * @param {*} props
  * @returns
  */
@@ -172,7 +170,7 @@ const LayoutIndex = props => {
 }
 
 /**
- * 博客列表
+ * Blog post list
  * @param {*} props
  * @returns
  */
@@ -190,7 +188,7 @@ const LayoutPostList = props => {
 }
 
 /**
- * 搜索
+ * Search
  * @param {*} props
  * @returns
  */
@@ -231,7 +229,7 @@ const LayoutSearch = props => {
 }
 
 /**
- * 归档
+ * Archive
  * @param {*} props
  * @returns
  */
@@ -255,7 +253,7 @@ const LayoutArchive = props => {
 }
 
 /**
- * 文章详情
+ * Article details
  * @param {*} props
  * @returns
  */
@@ -265,15 +263,13 @@ const LayoutSlug = props => {
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.getElementById('notion-article')
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('Page not found', router.asPath)
+            })
           }
         },
         siteConfig('POST_WAITING_TIME_FOR_404') * 1000
@@ -330,36 +326,36 @@ const LayoutSlug = props => {
 const Layout404 = props => {
   const router = useRouter()
   useEffect(() => {
-    // 延时3秒如果加载失败就返回首页
+    // Redirect to homepage after 3 seconds if the page fails to load
     setTimeout(() => {
       if (isBrowser) {
         const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/').then(() => {
-            // console.log('找不到页面', router.asPath)
+            // console.log('Page not found', router.asPath)
           })
         }
       }
     }, 3000)
   })
   return (
-    <>
-      <div className='text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
-        <div className='dark:text-gray-200'>
-          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
-            404
-          </h2>
-          <div className='inline-block text-left h-32 leading-10 items-center'>
-            <h2 className='m-0 p-0'>页面未找到</h2>
-          </div>
-        </div>
-      </div>
-    </>
+        <>
+            <div className="text-black w-full h-screen text-center justify-center content-center items-center flex flex-col">
+                <div className="dark:text-gray-200">
+                    <h2 className="inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top">
+                        404
+                    </h2>
+                    <div className="inline-block text-left h-32 leading-10 items-center">
+                        <h2 className="m-0 p-0">Page not found</h2>
+                    </div>
+                </div>
+            </div>
+        </>
   )
 }
 
 /**
- * 分类列表
+ * Category list
  * @param {*} props
  * @returns
  */
@@ -397,7 +393,7 @@ const LayoutCategoryIndex = props => {
 }
 
 /**
- * 标签列表
+ * Tag list
  * @param {*} props
  * @returns
  */

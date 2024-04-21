@@ -6,8 +6,9 @@ const { extractLangPrefix } = require('./lib/utils/pageId')
 
 // 打包时是否分析代码
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: BLOG.BUNDLE_ANALYZER
-})
+
+enabled: BLOG.BUNDLE_ANALYZER
+});
 
 // 扫描项目 /themes下的目录名
 const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
@@ -33,12 +34,12 @@ const locales = (function () {
 })()
 
 /**
- * 扫描指定目录下的文件夹名，用于获取所有主题
+ * Scans the subdirectories of the specified directory to get all themes
  * @param {*} directory
  * @returns
  */
 function scanSubdirectories(directory) {
-  const subdirectories = []
+const subdirectories = [];
 
   fs.readdirSync(directory).forEach(file => {
     const fullPath = path.join(directory, file)
