@@ -4,7 +4,7 @@ import TagItemMini from './TagItemMini'
 import CONFIG from '../config'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import NotionIcon from '@/components/NotionIcon'
 
@@ -52,8 +52,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                     <div className="px-4 flex flex-col w-full  text-gray-700  dark:text-gray-300">
 
                         {(!showPreview || showSummary) && post.summary && (
-                            <p style={{ overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: '4', WebkitBoxOrient: 'vertical' }}
-                                className="replace my-2 text-sm font-light leading-7">
+                            <p className="replace my-2 text-sm font-light leading-7 line-clamp-3">
                                 {post.summary}
                             </p>
                         )}
