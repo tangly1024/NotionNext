@@ -46,12 +46,17 @@ export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, showInfoCard = true, slotRight, notice } = props
+  const { children, showInfoCard = true, post, notice } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const { onLoading, fullWidth } = useGlobal()
 
+  const slotRight = post?.toc?.length > 0 && (
+    <div key={locale.COMMON.TABLE_OF_CONTENTS} >
+        <Catalog toc={post?.toc} />
+    </div>
+  )
   const slotTop = <BlogPostBar {...props} />
 
   return (
