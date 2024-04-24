@@ -147,7 +147,7 @@ const GameItem = ({ item, isLargeCard }) => {
     <Link
       title={title}
       href={`${url}`}
-      className={`card-single ${isLargeCard ? 'h-80 ' : 'h-full text-xs'} w-full transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg relative rounded-lg overflow-hidden flex justify-center items-center
+      className={`card-single ${isLargeCard ? 'h-80 ' : 'h-full text-xs'} w-full transition-all duration-200 shadow-md md:hover:scale-105 md:hover:shadow-lg relative rounded-lg overflow-hidden flex justify-center items-center
       group hover:border-purple-400`}
       onMouseOver={() => {
         setShowType('video')
