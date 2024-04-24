@@ -44,7 +44,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                             href={url}
                             passHref
                             className={' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'}>
-                            <NotionIcon icon={post.pageIcon} /><span className='menu-link '>{post.title}</span>
+                            {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}<span className='menu-link '>{post.title}</span>
                         </Link>
                     </header>
 

@@ -71,7 +71,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
               passHref
               href={url}
               className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
-              <NotionIcon icon={post.pageIcon} /> {post.title}
+              {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />} {post.title}
             </Link>
           </h2>
 
