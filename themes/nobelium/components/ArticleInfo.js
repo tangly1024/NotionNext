@@ -14,7 +14,7 @@ export const ArticleInfo = (props) => {
         <div>
 
             <h1 className="font-bold text-3xl text-black dark:text-white">
-                <NotionIcon icon={post?.pageIcon} />{post?.title}
+                {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}{post?.title}
             </h1>
 
             {post?.type !== 'Page' && <>
