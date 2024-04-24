@@ -16,7 +16,7 @@ const BlogPostCard = ({ post }) => {
                 <Link
                     href={`/${post.slug}`}
                     className="text-black dark:text-gray-100 text-xl md:text-2xl no-underline hover:underline">
-                    <NotionIcon icon={post.pageIcon} />{post?.title}
+                    {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}{post?.title}
                 </Link>
             </h2>
 
