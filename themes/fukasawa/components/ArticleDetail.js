@@ -10,6 +10,7 @@ import LazyImage from '@/components/LazyImage'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import WWAds from '@/components/WWAds'
 import NotionIcon from '@/components/NotionIcon'
+import { siteConfig } from '@/lib/config'
 
 /**
  *
@@ -37,7 +38,7 @@ export default function ArticleDetail(props) {
 
           {/* 文章Title */}
           <div className="font-bold text-4xl text-black dark:text-white">
-            <NotionIcon icon={post?.pageIcon} />{post.title}
+            {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}{post.title}
           </div>
 
           <section className="flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8">
