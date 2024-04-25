@@ -109,7 +109,7 @@ const Footer = (props) => {
                     <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{siteConfig('TITLE')} {siteConfig('BIO')}</h1>
                     <h2> {siteConfig('DESCRIPTION')}</h2>
                     {/* 可选备案信息 */}
-                    {siteConfig('GA_BEI_AN') && <><img src="/public/beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
+                    {siteConfig('GA_BEI_AN') && <><img style="height: 20px; width: 20px;" src="public/beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
                   {siteConfig('BEI_AN') && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{siteConfig('BEI_AN')}</a></>}
                 </div>
             </div>
