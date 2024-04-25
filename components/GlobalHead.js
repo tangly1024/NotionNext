@@ -25,7 +25,7 @@ const GlobalHead = props => {
   const title = meta?.title || siteConfig('TITLE')
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type || 'website'
-  const keywords = meta?.tags || siteConfig('KEYWORDS')
+  // const keywords = meta?.tags || siteConfig('KEYWORDS')
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const favicon = siteConfig('BLOG_FAVICON')
@@ -73,7 +73,7 @@ const GlobalHead = props => {
           content={siteConfig('SEO_BAIDU_SITE_VERIFICATION')}
         />
       )}
-      <meta name='keywords' content={keywords} />
+      {/* <meta name='keywords' content={keywords} /> */}
       <meta name='description' content={description} />
       <meta property='og:locale' content={lang} />
       <meta property='og:title' content={title} />
