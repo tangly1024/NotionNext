@@ -97,7 +97,7 @@ const Comment = ({ frontMatter, className }) => {
         observer.unobserve(commentRef.current)
       }
     }
-  }, [])
+  }, [frontMatter])
 
   // 当连接中有特殊参数时跳转到评论区
   if (
