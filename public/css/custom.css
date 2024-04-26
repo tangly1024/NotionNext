@@ -6,3 +6,12 @@
 .fa-info:before {
     content: "\f05a";
 }
+
+#inline-block-container {
+    white-space: nowrap; /* 防止换行 */
+}
+
+#footer-bottom-right img, a {
+    display: inline-block;
+    vertical-align: middle; /* 垂直居中对齐 */
+}
