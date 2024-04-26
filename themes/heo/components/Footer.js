@@ -1,6 +1,5 @@
 import SocialButton from './SocialButton'
 import { siteConfig } from '@/lib/config'
-import Image from 'next/image'
 
 const Footer = ({ title }) => {
   const d = new Date()
@@ -33,7 +32,7 @@ const Footer = ({ title }) => {
                 </div>
 
             <div id='footer-bottom-right'>
-                {siteConfig('GA_BEI_AN') && <><Image width='auto' height='auto' src="./beian.png" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
+                {siteConfig('GA_BEI_AN') && <><img width='auto' height='auto' src="./beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
                 {siteConfig('BEI_AN') && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{siteConfig('BEI_AN')}</a></>}
 
                 <span className='hidden busuanzi_container_site_pv'>
