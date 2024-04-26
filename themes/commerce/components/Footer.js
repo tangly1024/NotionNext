@@ -1,6 +1,5 @@
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
-import Image from 'next/image'
 
 /**
  * 页脚
@@ -110,8 +109,10 @@ const Footer = (props) => {
                     <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>{siteConfig('TITLE')} {siteConfig('BIO')}</h1>
                     <h2> {siteConfig('DESCRIPTION')}</h2>
                     {/* 可选备案信息 */}
-                    {siteConfig('GA_BEI_AN') && <><Image width='auto' height='auto' src="./beian.png" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
+                  <div id="footer-bottom-right">
+                    {siteConfig('GA_BEI_AN') && <><img width='17px' height='17px' src="./beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
                     {siteConfig('BEI_AN') && <><i className='fas fa-shield-alt' /> <a href='https://beian.miit.gov.cn/' className='mr-2'>{siteConfig('BEI_AN')}</a></>}
+                  </div>
                 </div>
             </div>
 
