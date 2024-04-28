@@ -51,12 +51,20 @@ const LayoutBase = props => {
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const { onLoading, fullWidth } = useGlobal()
+  const [slotRight, setSlotRight] = useState(null);
 
-  const slotRight = post?.toc?.length > 0 && (
-    <div key={locale.COMMON.TABLE_OF_CONTENTS} >
-        <Catalog toc={post?.toc} />
-    </div>
-  )
+  useEffect(()=> {
+    if (post?.toc?.length > 0) {
+      setSlotRight(
+        <div key={locale.COMMON.TABLE_OF_CONTENTS}>
+          <Catalog toc={post?.toc} />
+        </div>
+      );
+    } else {
+      setSlotRight(null);
+    }
+  },[post])
+
   const slotTop = <BlogPostBar {...props} />
 
   return (
@@ -178,7 +186,7 @@ const LayoutSlug = props => {
   }, [post])
 
   return (
-        <div showInfoCard={true} slotRight={slotRight} {...props} >
+        <div {...props} >
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 

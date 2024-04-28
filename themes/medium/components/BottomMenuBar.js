@@ -4,7 +4,7 @@ import JumpToTopButton from './JumpToTopButton'
 
 export default function BottomMenuBar ({ post, className }) {
   const { tocVisible, changeTocVisible } = useMediumGlobal()
-  const showTocBotton = post?.toc?.length > 0
+  const showTocButton = post?.toc?.length > 0
 
   const toggleToc = () => {
     changeTocVisible(!tocVisible)
@@ -18,13 +18,13 @@ export default function BottomMenuBar ({ post, className }) {
             <i className='fas fa-search'/>
           </div>
         </Link>
-        <div className='flex w-full items-center justify-center cursor-pointer'>
+        <div className='flex w-full items-center justify-center cursor-pointer z-20'>
           <JumpToTopButton/>
         </div>
-        {showTocBotton && <div onClick={toggleToc} className='flex w-full items-center justify-center cursor-pointer'>
+        {showTocButton && <div onClick={toggleToc} className='flex w-full items-center justify-center cursor-pointer z-30'>
           <i className='fas fa-list-ol ' />
         </div>}
-        { !showTocBotton && <Link href='/' passHref legacyBehavior>
+        { !showTocButton && <Link href='/' passHref legacyBehavior>
           <div className='flex w-full items-center justify-center cursor-pointer'>
             <i className='fas fa-home' />
           </div>
