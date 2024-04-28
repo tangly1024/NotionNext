@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { isBrowser } from '@/lib/utils'
 
 /**
@@ -28,7 +28,7 @@ const Progress = ({ targetRef, showPercent = true }) => {
   }, [])
 
   return (
-    <div className="h-4 w-full shadow-2xl bg-gray-400 font-sans">
+    <div className="h-4 w-full shadow-2xl bg-gray-400 ">
       <div
         className="h-4 bg-gray-600 duration-200"
         style={{ width: `${percent}%` }}

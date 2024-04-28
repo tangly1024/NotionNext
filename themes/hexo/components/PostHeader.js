@@ -1,17 +1,23 @@
 import Link from 'next/link'
 import TagItemMini from './TagItemMini'
 import { useGlobal } from '@/lib/global'
-import BLOG from '@/blog.config'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
+import { siteConfig } from '@/lib/config'
 
 export default function PostHeader({ post, siteInfo }) {
-  const { locale } = useGlobal()
+  const { locale, fullWidth } = useGlobal()
 
   if (!post) {
     return <></>
   }
+
+  // 文章全屏隐藏标头
+  if (fullWidth) {
+    return <div className='my-8'/>
+  }
+
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
 
   return (
@@ -34,7 +40,7 @@ export default function PostHeader({ post, siteInfo }) {
 
           {/* 文章Title */}
           <div className="leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white">
-            <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />{post.title}
+            {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />}{post.title}
           </div>
 
           <section className="flex-wrap shadow-text-md flex text-sm justify-center mt-4 text-white dark:text-gray-400 font-light leading-8">
@@ -57,7 +63,7 @@ export default function PostHeader({ post, siteInfo }) {
               </div>
             </div>
 
-            {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
+            {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && <div className="busuanzi_container_page_pv font-light mr-2">
               <span className="mr-2 busuanzi_value_page_pv" />
               {locale.COMMON.VIEWS}
             </div>}
