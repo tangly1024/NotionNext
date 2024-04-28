@@ -9,7 +9,7 @@ import CONFIG from '../config'
 import dynamic from 'next/dynamic'
 import Announcement from './Announcement'
 import { useGlobal } from '@/lib/global'
-import Live2D from '@/components/Live2D'
+// import Live2D from '@/components/Live2D'
 import { siteConfig } from '@/lib/config'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
@@ -80,7 +80,7 @@ export default function SideRight(props) {
 
         {rightAreaSlot}
         <FaceBookPage/>
-        <Live2D />
+        {/* <Live2D /> */}
       </div>
 
     </div>

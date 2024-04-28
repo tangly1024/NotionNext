@@ -20,7 +20,7 @@ function initLive2DWife() {
   if (screen.width >= 768) {
     Promise.all([
       loadExternalResource(live2dPath + 'waifu.css', 'css'),
-      loadExternalResource(live2dPath + 'live2d.min.js', 'js'),
+      // loadExternalResource(live2dPath + 'live2d.min.js', 'js'),
       loadExternalResource(live2dPath + 'waifu-tips.js', 'js')
     ]).then(() => {
       // eslint-disable-next-line no-undef
