@@ -1,6 +1,11 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
+/**
+ * 支持下拉二级的菜单
+ * @param {*} param0
+ * @returns
+ */
 export const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
