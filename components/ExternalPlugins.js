@@ -152,12 +152,16 @@ const ExternalPlugin = props => {
   }
 
   useEffect(() => {
+    // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
       setTimeout(() => {
-        // 异步渲染谷歌广告
         initGoogleAdsense()
       }, 1000)
     }
+
+    // 执行注入脚本
+    // eslint-disable-next-line no-eval
+    eval(GLOBAL_JS)
   }, [])
 
   if (DISABLE_PLUGIN) {
@@ -204,16 +208,6 @@ const ExternalPlugin = props => {
                     `
             }} /> */}
         </>
-      )}
-
-      {/* 注入JS脚本 */}
-      {GLOBAL_JS && (
-        <script
-          async
-          dangerouslySetInnerHTML={{
-            __html: GLOBAL_JS
-          }}
-        />
       )}
 
       {CHATBASE_ID && (
