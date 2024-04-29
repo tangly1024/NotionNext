@@ -74,7 +74,7 @@ const Toc = ({ toc }) => {
               className={`notion-table-of-contents-item duration-300 transform font-light
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
-              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }} className={`${activeSection === id && ' font-bold text-red-400 underline'}`}>
+              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }} className={`truncate ${activeSection === id ? ' font-bold text-red-400 underline' : ''}`}>
                 {tocItem.text}
               </span>
             </a>

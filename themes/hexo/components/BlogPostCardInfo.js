@@ -25,7 +25,7 @@ export const BlogPostCardInfo = ({ post, showPreview, showPageCover, showSummary
                         className={`line-clamp-2 replace cursor-pointer text-2xl ${showPreview ? 'text-center' : ''
                             } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
 
-                        <NotionIcon icon={post.pageIcon} /><span className='menu-link '>{post.title}</span>
+                        {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}<span className='menu-link '>{post.title}</span>
 
                     </Link>
                 </h2>
