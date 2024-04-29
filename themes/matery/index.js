@@ -9,9 +9,10 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import Announcement from './components/Announcement'
 import ArticleAdjacent from './components/ArticleAdjacent'
 import ArticleCopyright from './components/ArticleCopyright'
@@ -24,15 +25,24 @@ import BlogPostListScroll from './components/BlogPostListScroll'
 import Card from './components/Card'
 import CatalogWrapper from './components/CatalogWrapper'
 import Footer from './components/Footer'
+import Header from './components/Header'
 import Hero from './components/Hero'
 import JumpToCommentButton from './components/JumpToCommentButton'
-import PostHeader from './components/PostHeader'
+import PostHero from './components/PostHero'
 import RightFloatButtons from './components/RightFloatButtons'
 import SearchNave from './components/SearchNav'
 import TagItemMiddle from './components/TagItemMiddle'
-import TopNav from './components/TopNav'
 import CONFIG from './config'
 import { Style } from './style'
+
+const AlgoliaSearchModal = dynamic(
+  () => import('@/components/AlgoliaSearchModal'),
+  { ssr: false }
+)
+
+// 主题全局状态
+const ThemeGlobalMatery = createContext()
+export const useMateryGlobal = () => useContext(ThemeGlobalMatery)
 
 /**
  * 基础布局
@@ -60,74 +70,59 @@ const LayoutBase = props => {
     router.route === '/' ? (
       <Hero {...props} />
     ) : post && !fullWidth ? (
-      <PostHeader {...props} />
+      <PostHero {...props} />
     ) : null
 
   const floatRightBottom = post ? <JumpToCommentButton /> : null
 
+  // Algolia搜索框
+  const searchModal = useRef(null)
+
   return (
-    <div
-      id='theme-matery'
-      className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full scroll-smooth`}>
-      <Style />
+    <ThemeGlobalMatery.Provider value={{ searchModal }}>
+      <div
+        id='theme-matery'
+        className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full scroll-smooth`}>
+        <Style />
 
-      {/* 顶部导航栏 */}
-      <TopNav {...props} />
+        {/* 顶部导航栏 */}
+        <Header {...props} />
 
-      {/* 顶部嵌入 */}
-      {/* <Transition
-                show={!onLoading}
-                appear={true}
-                enter="transition ease-in-out duration-700 transform order-first"
-                enterFrom="opacity-0 -translate-y-16"
-                enterTo="opacity-100 w-full"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-16"
-                unmount={false}
-            > */}
-      {headerSlot}
-      {/* </Transition> */}
+        {/* 顶部嵌入 */}
+        {headerSlot}
 
-      <main
-        id='wrapper'
-        className={`${siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
-        {/* 嵌入区域 */}
-        <div
-          id='container-slot'
-          className={`w-full ${fullWidth ? '' : 'max-w-6xl'} ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
-          {containerSlot}
+        <main
+          id='wrapper'
+          className={`${siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) ? '' : 'pt-16'} flex-1 w-full py-8 md:px-8 lg:px-24 relative`}>
+          {/* 嵌入区域 */}
+          <div
+            id='container-slot'
+            className={`w-full ${fullWidth ? '' : 'max-w-6xl'} ${post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
+            {containerSlot}
+          </div>
+
+          <div
+            id='container-inner'
+            className={`w-full min-h-fit ${fullWidth ? '' : 'max-w-6xl'} mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
+            {children}
+          </div>
+        </main>
+
+        {/* 左下角悬浮 */}
+        <div className='bottom-4 -left-14 fixed justify-end z-40'>
+          <Live2D />
         </div>
 
-        <div
-          id='container-inner'
-          className={`w-full min-h-fit ${fullWidth ? '' : 'max-w-6xl'} mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
-          {/* <Transition
-            show={!onLoading}
-            appear={true}
-            enter='transition ease-in-out duration-700 transform order-first'
-            enterFrom='opacity-0 translate-y-16'
-            enterTo='opacity-100 w-full'
-            leave='transition ease-in-out duration-300 transform'
-            leaveFrom='opacity-100 translate-y-0'
-            leaveTo='opacity-0 -translate-y-16'
-            unmount={false}> */}
-          {children}
-          {/* </Transition> */}
-        </div>
-      </main>
+        {/* 右下角悬浮 */}
+        <RightFloatButtons {...props} floatRightBottom={floatRightBottom} />
 
-      {/* 左下角悬浮 */}
-      <div className='bottom-4 -left-14 fixed justify-end z-40'>
-        <Live2D />
+        {/* 全文搜索 */}
+        <AlgoliaSearchModal cRef={searchModal} {...props} />
+
+        {/* 页脚 */}
+        <Footer title={siteConfig('TITLE')} />
       </div>
-
-      {/* 右下角悬浮 */}
-      <RightFloatButtons {...props} floatRightBottom={floatRightBottom} />
-
-      {/* 页脚 */}
-      <Footer title={siteConfig('TITLE')} />
-    </div>
+    </ThemeGlobalMatery.Provider>
   )
 }
 
