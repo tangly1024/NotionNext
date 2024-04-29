@@ -5,7 +5,7 @@ import { siteConfig } from '@/lib/config'
 /**
  * 文章背景图
  */
-export default function PostHeader({ post, siteInfo }) {
+export default function PostHero({ post, siteInfo }) {
   const headerImage = post?.pageCoverThumbnail
     ? post?.pageCoverThumbnail
     : siteInfo?.pageCover
