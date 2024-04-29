@@ -54,6 +54,22 @@ function scanSubdirectories(directory) {
 }
 
 const nextConfig = {
+  images: {
+    // 图片压缩
+    formats: ['image/avif', 'image/webp', 'image/png'],
+    // 允许next/image加载的图片 域名
+    domains: [
+      'gravatar.com',
+      'www.notion.so',
+      'avatars.githubusercontent.com',
+      'images.unsplash.com',
+      'source.unsplash.com',
+      'p1.qhimg.com',
+      'webmention.io',
+      'ko-fi.com'
+    ]
+  },
+
   // 默认将feed重定向至 /public/rss/feed.xml
   async redirects() {
     return [
