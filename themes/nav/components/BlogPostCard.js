@@ -14,7 +14,7 @@ const BlogPostCard = ({ post, className }) => {
     <Link href={`${url}`} target={(checkContainHttp(post.slug) ? '_blank' : '_self')} passHref>
         <div key={post.id} className={`${className} h-full rounded-2xl p-4 dark:bg-neutral-800 cursor-pointer bg-white hover:bg-white dark:hover:bg-gray-800 ${currentSelected ? 'bg-green-50 text-green-500' : ''}`}>
                 <div className="stack-entry w-full flex space-x-3 select-none dark:text-neutral-200">
-                    <NotionIcon icon={pageIcon} size='10' className='text-6xl w-11 h-11 mx-1 my-0 flex-none' />
+                    {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={pageIcon} size='10' className='text-6xl w-11 h-11 mx-1 my-0 flex-none' />}
                     <div className="stack-comment flex-auto">
                         <p className="title font-bold">{post.title}</p>
                         <p className="description font-normal">{post.summary ? post.summary : '暂无简介'}</p>

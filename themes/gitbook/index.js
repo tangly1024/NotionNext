@@ -166,7 +166,7 @@ const LayoutBase = (props) => {
                     {/*  右侧侧推拉抽屉 */}
                     {fullWidth
                       ? null
-                      : <div style={{ width: '32rem' }} className={'hidden xl:block dark:border-transparent relative z-10 '}>
+                      : <div style={{ width: '20rem' }} className={'hidden xl:block dark:border-transparent flex-shrink-0 relative z-10 '}>
                       <div className='py-14 px-6 sticky top-0'>
                           <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
@@ -275,7 +275,7 @@ const LayoutSlug = (props) => {
             {!lock && <div id='container'>
 
                 {/* title */}
-                <h1 className="text-3xl pt-12  dark:text-gray-300"><NotionIcon icon={post?.pageIcon} />{post?.title}</h1>
+                <h1 className="text-3xl pt-12  dark:text-gray-300">{siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}{post?.title}</h1>
 
                 {/* Notion文章主体 */}
                 {post && (<section id="article-wrapper" className="px-1">

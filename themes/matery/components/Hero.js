@@ -9,7 +9,8 @@ import CONFIG from '../config'
 let wrapperTop = 0
 
 /**
- *
+ * 首页英雄区
+ * 是一张大图，带个居中按钮
  * @returns 头图
  */
 const Hero = props => {
@@ -17,7 +18,6 @@ const Hero = props => {
   const { siteInfo } = props
   const { locale } = useGlobal()
   const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',')
-
   useEffect(() => {
     updateHeaderHeight()
     if (!typed && window && document.getElementById('typed')) {
@@ -61,7 +61,7 @@ const Hero = props => {
       <div className='text-white absolute flex flex-col h-full items-center justify-center w-full '>
         {/* 站点标题 */}
         <div className='text-4xl md:text-5xl shadow-text'>
-          {siteConfig('TITLE')}
+          {siteInfo?.title || siteConfig('TITLE')}
         </div>
         {/* 站点欢迎语 */}
         <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
@@ -72,7 +72,7 @@ const Hero = props => {
           onClick={() => {
             window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
           }}
-          className='mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40'>
+          className='glassmorphism mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40'>
           <i className='animate-bounce fas fa-angle-double-down' />{' '}
           <span>
             {siteConfig('MATERY_SHOW_START_READING', null, CONFIG) &&
