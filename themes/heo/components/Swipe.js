@@ -11,7 +11,7 @@ export function Swipe({ items }) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const handleClick = (item) => {
-    if (isBrowser()) {
+    if (isBrowser) {
       window.open(item?.url)
     }
   }

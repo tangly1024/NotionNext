@@ -37,7 +37,7 @@ const SideBarDrawer = ({ children, isOpen, onOpen, onClose, className }) => {
     }
   }
 
-  return <div id='sidebar-wrapper' className={' block md:hidden top-0 ' + className }>
+  return <div id='sidebar-wrapper' className={' block lg:hidden top-0 ' + className }>
     <div id="sidebar-drawer" className={`${isOpen ? 'ml-0 w-60 visible' : '-ml-60 max-w-side invisible'} bg-white dark:bg-gray-900 shadow-black shadow-lg flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-30`}>
       {children}
     </div>

@@ -1,6 +1,6 @@
 import SideBar from './SideBar'
 import { useRouter } from 'next/router'
-import React, { useEffect, useImperativeHandle } from 'react'
+import { useEffect, useImperativeHandle } from 'react'
 
 /**
  * 侧边栏抽屉面板，可以从侧面拉出

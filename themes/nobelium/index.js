@@ -1,6 +1,5 @@
-import BLOG from '@/blog.config'
 import CONFIG from './config'
-import React, { useEffect, useState } from 'react'
+import { createContext, useEffect, useState, useContext, useRef } from 'react'
 import Nav from './components/Nav'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
@@ -23,7 +22,15 @@ import BlogListBar from './components/BlogListBar'
 import { Transition } from '@headlessui/react'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
-import CommonHead from '@/components/CommonHead'
+import { siteConfig } from '@/lib/config'
+import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
+
+// 主题全局状态
+const ThemeGlobalNobelium = createContext()
+export const useNobeliumGlobal = () => useContext(ThemeGlobalNobelium)
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -32,55 +39,62 @@ import CommonHead from '@/components/CommonHead'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, post, topSlot, meta } = props
-
+  const { children, post } = props
   const fullWidth = post?.fullWidth ?? false
   const { onLoading } = useGlobal()
+  const searchModal = useRef(null)
+  // 在列表中进行实时过滤
+  const [filterKey, setFilterKey] = useState('')
+  const topSlot = <BlogListBar {...props}/>
 
   return (
-        <div id='theme-nobelium' className='nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen'>
-            {/* SEO相关 */}
-            <CommonHead meta={meta}/>
-            {/* SEO相关 */}
-            <Style/>
+        <ThemeGlobalNobelium.Provider value={{ searchModal, filterKey, setFilterKey }}>
+            <div id='theme-nobelium' className={`${siteConfig('FONT_STYLE')} nobelium relative dark:text-gray-300  w-full  bg-white dark:bg-black min-h-screen flex flex-col scroll-smooth`}>
 
-            {/* 顶部导航栏 */}
-            <Nav {...props} />
+                <Style />
 
-            {/* 主区 */}
-            <main id='out-wrapper' className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'}`}>
+                {/* 顶部导航栏 */}
+                <Nav {...props} />
 
-                <Transition
-                    show={!onLoading}
-                    appear={true}
-                    enter="transition ease-in-out duration-700 transform order-first"
-                    enterFrom="opacity-0 translate-y-16"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in-out duration-300 transform"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 -translate-y-16"
-                    unmount={false}
-                >
-                    {/* 顶部插槽 */}
-                    {topSlot}
-                    {children}
-                </Transition>
+                {/* 主区 */}
+                <main id='out-wrapper' className={`relative m-auto flex-grow w-full transition-all ${!fullWidth ? 'max-w-2xl px-4' : 'px-4 md:px-24'}`}>
 
-            </main>
+                    <Transition
+                        show={!onLoading}
+                        appear={true}
+                        enter="transition ease-in-out duration-700 transform order-first"
+                        enterFrom="opacity-0 translate-y-16"
+                        enterTo="opacity-100"
+                        leave="transition ease-in-out duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 -translate-y-16"
+                        unmount={false}
+                    >
+                        {/* 顶部插槽 */}
+                        {topSlot}
+                        {children}
+                    </Transition>
 
-            {/* 页脚 */}
-            <Footer {...props} />
+                </main>
 
-            {/* 右下悬浮 */}
-            <div className='fixed right-4 bottom-4'>
-                <JumpToTopButton />
+                {/* 页脚 */}
+                <Footer {...props} />
+
+                {/* 右下悬浮 */}
+                <div className='fixed right-4 bottom-4'>
+                    <JumpToTopButton />
+                </div>
+
+                {/* 左下悬浮 */}
+                <div className="bottom-4 -left-14 fixed justify-end z-40">
+                    <Live2D />
+                </div>
+
+                {/* 搜索框 */}
+                <AlgoliaSearchModal cRef={searchModal} {...props}/>
+
             </div>
-
-            {/* 左下悬浮 */}
-            <div className="bottom-4 -left-14 fixed justify-end z-40">
-                <Live2D />
-            </div>
-        </div>
+        </ThemeGlobalNobelium.Provider>
   )
 }
 
@@ -102,10 +116,8 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const { posts, topSlot } = props
-
-  // 在列表中进行实时过滤
-  const [filterKey, setFilterKey] = useState('')
+  const { posts, topSlot, tag } = props
+  const { filterKey } = useNobeliumGlobal()
   let filteredBlogPosts = []
   if (filterKey && posts) {
     filteredBlogPosts = posts.filter(post => {
@@ -118,10 +130,11 @@ const LayoutPostList = props => {
   }
 
   return (
-        <LayoutBase {...props} topSlot={<BlogListBar {...props} setFilterKey={setFilterKey} />}>
+        <>
             {topSlot}
-            {BLOG.POST_LIST_STYLE === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
-        </LayoutBase>
+            {tag && <SearchNavBar {...props} />}
+            {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
+        </>
   )
 }
 
@@ -132,9 +145,9 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSearch = props => {
-  const { keyword } = props
+  const { keyword, posts } = props
   useEffect(() => {
-    if (isBrowser()) {
+    if (isBrowser) {
       replaceSearchResult({
         doms: document.getElementById('posts-wrapper'),
         search: keyword,
@@ -145,7 +158,24 @@ const LayoutSearch = props => {
       })
     }
   }, [])
-  return <LayoutPostList {...props} slotTop={<SearchNavBar {...props} />} />
+
+  // 在列表中进行实时过滤
+  const { filterKey } = useNobeliumGlobal()
+  let filteredBlogPosts = []
+  if (filterKey && posts) {
+    filteredBlogPosts = posts.filter(post => {
+      const tagContent = post?.tags ? post?.tags.join(' ') : ''
+      const searchContent = post.title + post.summary + tagContent
+      return searchContent.toLowerCase().includes(filterKey.toLowerCase())
+    })
+  } else {
+    filteredBlogPosts = deepClone(posts)
+  }
+
+  return <>
+    <SearchNavBar {...props} />
+    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} posts={filteredBlogPosts} /> : <BlogListScroll {...props} posts={filteredBlogPosts} />}
+  </>
 }
 
 /**
@@ -156,11 +186,11 @@ const LayoutSearch = props => {
 const LayoutArchive = props => {
   const { archivePosts } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div className="mb-10 pb-20 md:py-12 p-3  min-h-screen w-full">
                 {Object.keys(archivePosts).map(archiveTitle => <BlogArchiveItem key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />)}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -171,9 +201,24 @@ const LayoutArchive = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.getElementById('notion-article')
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
+          }
+        }
+      }, siteConfig('POST_WAITING_TIME_FOR_404') * 1000)
+    }
+  }, [post])
   return (
-        <LayoutBase {...props}>
+        <>
 
             {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -187,7 +232,7 @@ const LayoutSlug = props => {
                 </>
             </div>}
 
-        </LayoutBase>
+        </>
   )
 }
 
@@ -197,9 +242,9 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = (props) => {
-  return <LayoutBase {...props}>
+  return <>
         404 Not found.
-    </LayoutBase>
+    </>
 }
 
 /**
@@ -211,7 +256,7 @@ const LayoutCategoryIndex = (props) => {
   const { categoryOptions } = props
 
   return (
-        <LayoutBase {...props}>
+        <>
             <div id='category-list' className='duration-200 flex flex-wrap'>
                 {categoryOptions?.map(category => {
                   return (
@@ -228,7 +273,7 @@ const LayoutCategoryIndex = (props) => {
                   )
                 })}
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
@@ -240,7 +285,7 @@ const LayoutCategoryIndex = (props) => {
 const LayoutTagIndex = (props) => {
   const { tagOptions } = props
   return (
-        <LayoutBase {...props}>
+        <>
             <div>
                 <div id='tags-list' className='duration-200 flex flex-wrap'>
                     {tagOptions.map(tag => {
@@ -255,12 +300,13 @@ const LayoutTagIndex = (props) => {
                     })}
                 </div>
             </div>
-        </LayoutBase>
+        </>
   )
 }
 
 export {
   CONFIG as THEME_CONFIG,
+  LayoutBase,
   LayoutIndex,
   LayoutSearch,
   LayoutArchive,

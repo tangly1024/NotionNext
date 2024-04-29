@@ -1,5 +1,5 @@
 import Toc from './Toc'
-import React, { useImperativeHandle, useState } from 'react'
+import { useImperativeHandle, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 
 /**

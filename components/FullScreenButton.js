@@ -9,7 +9,7 @@ const FullScreenButton = () => {
   const [isFullScreen, setIsFullScreen] = useState(false)
 
   const handleFullScreenClick = () => {
-    if (!isBrowser()) {
+    if (!isBrowser) {
       return
     }
     const element = document.documentElement

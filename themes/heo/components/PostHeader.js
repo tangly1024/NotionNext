@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
 import WavesArea from './WavesArea'
 import { HashTag } from '@/components/HeroIcons'
 import WordCount from '@/components/WordCount'
 import LazyImage from '@/components/LazyImage'
-import { formatDateFmt } from '@/lib/formatDate'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 
 export default function PostHeader({ post, siteInfo }) {
   if (!post) {
@@ -65,7 +65,7 @@ export default function PostHeader({ post, siteInfo }) {
 
                     {/* 文章Title */}
                     <div className="max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white">
-                        <NotionIcon icon={post.pageIcon} />{post.title}
+                        {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}{post.title}
                     </div>
 
                     {/* 标题底部补充信息 */}
@@ -90,7 +90,7 @@ export default function PostHeader({ post, siteInfo }) {
 
                         </div>
 
-                        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <div className="busuanzi_container_page_pv font-light mr-2">
+                        {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && <div className="busuanzi_container_page_pv font-light mr-2">
                             <i className="fa-solid fa-fire-flame-curved"></i> <span className="mr-2 busuanzi_value_page_pv" />
                         </div>}
                     </section>

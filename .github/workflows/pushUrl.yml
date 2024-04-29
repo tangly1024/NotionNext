@@ -1,0 +1,61 @@
+## 利用GitHub Actions每天定时给百度推送链接，提高收录率 ##
+
+name: pushUrl
+
+# 两种触发方式：一、push代码，二、每天国际标准时间23点（北京时间+8即早上7点）运行
+on:
+  push:
+  schedule:
+    - cron: '0 23 * * *' # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#scheduled-events-schedule
+  workflow_dispatch:
+    inputs:
+      unconditional-invoking:
+        description: 'push url unconditionally'
+        type: boolean
+        required: true
+        default: true
+
+# on:
+  # schedule:
+  #   - cron: '*/5 * * * *' # 每5分钟一次，测试用
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest # 运行环境为最新版的Ubuntu
+    steps:
+      - name: 'Checkout codes' # 步骤一，获取仓库代码
+        uses: actions/checkout@v2
+      # - name: 'Run baiduPush' # 步骤二，执行sh命令文件
+      #   run: npm install && npm run baiduPush # 运行目录是仓库根目录
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Push
+        env:
+          URL: ${{ secrets.URL }}
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
+          BING_API_KEY: ${{ secrets.BING_API_KEY }}
+        run: |
+          if [ -n "$URL" ]; then
+            if [ -n "$BAIDU_TOKEN" ]; then
+              python pushUrl.py --url $URL --baidu_token $BAIDU_TOKEN
+            else
+              echo "请前往 Github Action Secrets 配置 BAIDU_TOKEN:"
+              echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+            fi
+            if [ -n "$BING_API_KEY" ]; then
+              python pushUrl.py --url $URL --bing_api_key $BING_API_KEY
+            else
+              echo "请前往 Github Action Secrets 配置 BING_API_KEY:"
+              echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+            fi
+          else
+            echo "请前往 Github Action Secrets 配置 URL:"
+            echo "详情参见: 'https://www.ghlcode.cn/fe032806-5362-4d82-b746-a0b26ce8b9d9'"
+          fi
+      

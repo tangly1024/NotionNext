@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 import { useGlobal } from '@/lib/global'
 
 const TagItem = ({ tag, selected }) => {

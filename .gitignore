@@ -29,13 +29,13 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 # vercel
 .vercel
 
 # dev
 /data.json
-/yarn.lock
 /pnpm-lock.yaml
 .idea
 .vscode
@@ -45,3 +45,8 @@ yarn-error.log*
 /public/robots.txt
 /public/sitemap.xml
 /public/rss/*
+
+
+# yarn
+package-lock.json
+# yarn.lock

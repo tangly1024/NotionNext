@@ -1,8 +1,9 @@
-import { subscribeToNewsletter } from '@/lib/mailchimp'
+import { subscribeToNewsletter } from '@/lib/plugins/mailchimp'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import Logo from './Logo'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 页脚
@@ -115,7 +116,7 @@ export default function Footer() {
                     </div>
 
                     {/* 开启邮件收集 */}
-                    {JSON.parse(CONFIG.NEWSLETTER) && <>
+                    {JSON.parse(siteConfig('LANDING_NEWSLETTER', null, CONFIG)) && <>
                         {/* 5th block */}
                         <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
                             <h6 className="text-gray-800 font-medium mb-2">Subscribe</h6>
@@ -148,6 +149,11 @@ export default function Footer() {
 
                     {/* Social as */}
                     <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
+                        <li>
+                          <div className='h-full flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100'>
+                             Powered by<a href='https://github.com/tangly1024/NotionNext' className='mx-1 hover:underline font-semibold'>NotionNext {siteConfig('VERSION')}</a>
+                          </div>
+                        </li>
                         {/* <li>
               <a href="#0" className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out" aria-label="Twitter">
                 <svg className="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

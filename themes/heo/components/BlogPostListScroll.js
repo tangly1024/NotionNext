@@ -1,10 +1,10 @@
-import BLOG from '@/blog.config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import { getListByPage } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 博客列表滚动分页
@@ -13,8 +13,8 @@ import { getListByPage } from '@/lib/utils'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = CONFIG.POST_LIST_SUMMARY, siteInfo }) => {
-  const postsPerPage = BLOG.POSTS_PER_PAGE
+const BlogPostListScroll = ({ posts = [], currentSearch, showSummary = siteConfig('HEO_POST_LIST_SUMMARY', null, CONFIG), siteInfo }) => {
+  const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
   const [page, updatePage] = useState(1)
   const postsToShow = getListByPage(posts, page, postsPerPage)
 

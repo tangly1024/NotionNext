@@ -1,4 +1,5 @@
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 博客统计卡牌
@@ -6,7 +7,7 @@ import CONFIG from '../config'
  * @returns
  */
 export function AnalyticsCard(props) {
-  const targetDate = new Date(CONFIG.SITE_CREATE_TIME)
+  const targetDate = new Date(siteConfig('HEO_SITE_CREATE_TIME', null, CONFIG))
   const today = new Date()
   const diffTime = today.getTime() - targetDate.getTime() // 获取两个日期之间的毫秒数差值
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) // 将毫秒数差值转换为天数差值
