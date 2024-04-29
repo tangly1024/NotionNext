@@ -56,7 +56,7 @@ function scanSubdirectories(directory) {
 const nextConfig = {
   images: {
     // 图片压缩
-    formats: ['image/avif', 'image/webp', 'image/png'],
+    formats: ['image/avif', 'image/webp'],
     // 允许next/image加载的图片 域名
     domains: [
       'gravatar.com',
