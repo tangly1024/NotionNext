@@ -19,8 +19,8 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '思考认知',
   HEO_HERO_TITLE_3: '个人成长',
   HEO_HERO_TITLE_4: '好物推荐',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_5: '海涛的在线课程合集',
+  HEO_HERO_TITLE_LINK: 'www.xiaolv.club',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
@@ -34,7 +34,7 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好！我是',
+    '你好！我是海涛',
     '🔍 分享与热心帮助',
     '🤝 专修交互与设计',
     '🏃 脚踏实地行动派',
