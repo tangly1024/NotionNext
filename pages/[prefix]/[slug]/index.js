@@ -26,6 +26,7 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+  // 根据slug中的 / 分割成prefix和slug两个字段 ; 例如 article/test
   const paths = allPages
     ?.filter(row => checkSlug(row))
     .map(row => ({
