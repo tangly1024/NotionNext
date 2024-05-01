@@ -221,6 +221,13 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
+      name: 'Valse di Fantastica',
+      artist: '下村陽子',
+      url: 'http://music.163.com/song/media/outer/url?id=443700749.mp3',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
+    {
       name: '再见',
       artist: 'ヤマモトガク',
       url: 'http://music.163.com/song/media/outer/url?id=2098082874.mp3',
