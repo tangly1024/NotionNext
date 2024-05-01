@@ -228,6 +228,13 @@ const BLOG = {
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
     {
+      name: 'Forest Mixtape',
+      artist: 'Christina Kuong',
+      url: 'http://music.163.com/song/media/outer/url?id=1908182683.mp3',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
+    {
       name: '再见',
       artist: 'ヤマモトガク',
       url: 'http://music.163.com/song/media/outer/url?id=2098082874.mp3',
