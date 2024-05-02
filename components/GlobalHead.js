@@ -60,6 +60,7 @@ const GlobalHead = props => {
       <link rel='icon' href={favicon} />
       <title>{title}</title>
       <meta name='theme-color' content={siteConfig('BACKGROUND_DARK')} />
+
       <meta
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
@@ -90,6 +91,8 @@ const GlobalHead = props => {
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
+
+      <link rel='icon' href={`${siteConfig('BLOG_FAVICON')}`} />
 
       {siteConfig('COMMENT_WEBMENTION_ENABLE') && (
         <>
