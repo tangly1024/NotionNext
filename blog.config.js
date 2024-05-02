@@ -22,7 +22,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'wuyuhanzijin', // 您的昵称
   BIO: process.env.NEXT_PUBLIC_BIO || '因为热爱所以奋斗', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://xiaofeishu-boke.netlify.app', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://linyun.netlify.app', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '技术, 博客, 凌云', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
@@ -448,7 +448,7 @@ const BLOG = {
   IMG_COMPRESS_WIDTH: process.env.NEXT_PUBLIC_IMG_COMPRESS_WIDTH || 800, // Notion图片压缩宽度
 
   // 作废配置
-  AVATAR: process.env.NEXT_PUBLIC_AVATAR || 'https://xiaofeishu-picture.pages.dev/picture/6.png', // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
+  AVATAR: process.env.NEXT_PUBLIC_AVATAR || null, // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
   TITLE: process.env.NEXT_PUBLIC_TITLE || '凌云·LinYun', // 站点标题 ，被notion中的页面标题覆盖；此处请勿留空白，否则服务器无法编译
   HOME_BANNER_IMAGE: process.env.NEXT_PUBLIC_HOME_BANNER_IMAGE || '/bg_image.jpg', // 首页背景大图, 会被notion中的封面图覆盖，若无封面图则会使用代码中的 /public/bg_image.jpg 文件
   DESCRIPTION: process.env.NEXT_PUBLIC_DESCRIPTION || '因为热爱而生', // 站点描述，被notion中的页面描述覆盖
