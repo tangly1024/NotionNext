@@ -61,10 +61,12 @@ const NavPostList = props => {
 
   // 如果都没有选中默认打开第一个
   useEffect(() => {
-    if (expandedGroups.length === 0) {
-      setExpandedGroups([0])
-    }
-  }, [])
+    setTimeout(() => {
+      if (expandedGroups.length === 0) {
+        setExpandedGroups([0])
+      }
+    }, 500)
+  }, [router])
 
   // 折叠项切换，当折叠或展开数组时会调用
   const toggleItem = index => {

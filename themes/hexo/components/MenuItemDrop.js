@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import { useState } from 'react'
-
+/**
+ * 支持二级展开的菜单
+ * @param {*} param0
+ * @returns
+ */
 export const MenuItemDrop = ({ link }) => {
   const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
@@ -25,7 +29,7 @@ export const MenuItemDrop = ({ link }) => {
 
       {hasSubMenu && (
         <>
-          <div className='cursor-pointer  menu-link pl-2 pr-4  no-underline tracking-widest pb-1'>
+          <div className='cursor-pointer menu-link pl-2 pr-4  no-underline tracking-widest pb-1'>
             {link?.icon && <i className={link?.icon} />} {link?.name}
             <i
               className={`px-2 fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i>
@@ -42,7 +46,7 @@ export const MenuItemDrop = ({ link }) => {
             return (
               <li
                 key={index}
-                className='cursor-pointer hover:bg-indigo-300 hover:text-black tracking-widest transition-all duration-200 dark:border-gray-800  py-1 pr-6 pl-3'>
+                className='cursor-pointer hover:bg-indigo-500 hover:text-white tracking-widest transition-all duration-200 dark:border-gray-800  py-1 pr-6 pl-3'>
                 <Link href={sLink.to} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}

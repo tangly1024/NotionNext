@@ -11,7 +11,7 @@ import { useEffect } from 'react'
  * @returns
  */
 const GlobalHead = props => {
-  const { children, siteInfo } = props
+  const { children, siteInfo, post } = props
   let url = siteConfig('PATH')?.length
     ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}`
     : siteConfig('LINK')
@@ -25,11 +25,16 @@ const GlobalHead = props => {
   const title = meta?.title || siteConfig('TITLE')
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type || 'website'
-  const keywords = meta?.tags || siteConfig('KEYWORDS')
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const favicon = siteConfig('BLOG_FAVICON')
   const webFontUrl = siteConfig('FONT_URL')
+
+  // SEO关键词
+  let keywords = meta?.tags || siteConfig('KEYWORDS')
+  if (post?.tags && post?.tags?.length > 0) {
+    keywords = post?.tags?.join(',')
+  }
 
   useEffect(() => {
     // 使用WebFontLoader字体加载
@@ -55,6 +60,7 @@ const GlobalHead = props => {
       <link rel='icon' href={favicon} />
       <title>{title}</title>
       <meta name='theme-color' content={siteConfig('BACKGROUND_DARK')} />
+
       <meta
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
@@ -85,6 +91,8 @@ const GlobalHead = props => {
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
+
+      <link rel='icon' href={`${siteConfig('BLOG_FAVICON')}`} />
 
       {siteConfig('COMMENT_WEBMENTION_ENABLE') && (
         <>

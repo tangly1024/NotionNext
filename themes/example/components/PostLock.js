@@ -2,16 +2,15 @@ import { useGlobal } from '@/lib/global'
 import { useEffect, useRef } from 'react'
 
 /**
- * 加密文章校验组件
+ * 文章锁；通过此组件校验密码访问文章
  * @param {password, validPassword} props
  * @param password 正确的密码
  * @param validPassword(bool) 回调函数，校验正确回调入参为true
  * @returns
  */
-export const ArticleLock = props => {
+export const PostLock = props => {
   const { validPassword } = props
   const { locale } = useGlobal()
-  console.log('locale', locale)
 
   const submitPassword = () => {
     const p = document.getElementById('password')
@@ -23,7 +22,6 @@ export const ArticleLock = props => {
       }
     }
   }
-
   const passwordInputRef = useRef(null)
   useEffect(() => {
     // 选中密码输入框并将其聚焦
@@ -46,11 +44,14 @@ export const ArticleLock = props => {
               }
             }}
             ref={passwordInputRef} // 绑定ref到passwordInputRef变量
-            className='outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-gray-100 dark:bg-gray-500'></input>
+            className='outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg font-light leading-10 text-black dark:bg-gray-500 bg-gray-50'></input>
           <div
             onClick={submitPassword}
-            className='px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 bg-green-500 hover:bg-green-400 text-white rounded-r duration-300'>
-            <i className={'duration-200 cursor-pointer fas fa-key'}>
+            className='px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 rounded-r duration-300 bg-gray-300'>
+            <i
+              className={
+                'duration-200 cursor-pointer fas fa-key dark:text-black'
+              }>
               &nbsp;{locale.COMMON.SUBMIT}
             </i>
           </div>
