@@ -33,6 +33,9 @@ const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
 const StarrySky = dynamic(() => import('@/components/StarrySky'), {
   ssr: false
 })
+const MouseFollow = dynamic(() => import('@/components/MouseFollow'), {
+  ssr: false
+})
 const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
   ssr: false
 })
@@ -86,6 +89,7 @@ const ExternalPlugin = props => {
   const FIREWORKS = siteConfig('FIREWORKS')
   const SAKURA = siteConfig('SAKURA')
   const STARRY_SKY = siteConfig('STARRY_SKY')
+  const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
   const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER')
   const NEST = siteConfig('NEST')
   const FLUTTERINGRIBBON = siteConfig('FLUTTERINGRIBBON')
@@ -183,6 +187,7 @@ const ExternalPlugin = props => {
       {FIREWORKS && <Fireworks />}
       {SAKURA && <Sakura />}
       {STARRY_SKY && <StarrySky />}
+      {MOUSE_FOLLOW && <MouseFollow />}
       {MUSIC_PLAYER && <MusicPlayer />}
       {NEST && <Nest />}
       {FLUTTERINGRIBBON && <FlutteringRibbon />}
