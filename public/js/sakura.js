@@ -174,9 +174,13 @@ function createSakura() {
   }
 }
 
+// 销毁樱花雨
 function destroySakura() {
   const sakura = document.getElementById(id)
   if (sakura && sakura.parentNode) {
     sakura.parentNode.removeChild(sakura)
   }
 }
+
+window.createSakura = createSakura
+window.destroySakura = destroySakura
