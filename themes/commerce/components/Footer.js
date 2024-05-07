@@ -149,9 +149,15 @@ const Footer = props => {
                   )}></img>
               </div>
               <div className='space-y-4'>
-                <div className='flex space-x-4 text-center'>
-                  {siteConfig('COMMERCE_FOOTER_RIGHT_TEXT', null, CONFIG)}
-                </div>
+                <div
+                  className='flex space-x-4 text-center'
+                  dangerouslySetInnerHTML={{
+                    __html: siteConfig(
+                      'COMMERCE_FOOTER_RIGHT_TEXT',
+                      null,
+                      CONFIG
+                    )
+                  }}></div>
               </div>
             </div>
           }
