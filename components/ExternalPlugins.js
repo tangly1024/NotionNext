@@ -23,6 +23,9 @@ const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), {
 const Fireworks = dynamic(() => import('@/components/Fireworks'), {
   ssr: false
 })
+const MouseFollow = dynamic(() => import('@/components/MouseFollow'), {
+  ssr: false
+})
 const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
 const FlutteringRibbon = dynamic(
   () => import('@/components/FlutteringRibbon'),
@@ -119,6 +122,7 @@ const ExternalPlugin = props => {
   const CLARITY_ID = siteConfig('CLARITY_ID')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
+  const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -172,7 +176,7 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
-
+      {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
       {ANALYTICS_ACKEE_TRACKER && <Ackee />}
