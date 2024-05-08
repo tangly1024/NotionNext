@@ -7,8 +7,7 @@ import CONFIG from '../config'
 
 const BlogPostCard = ({ post, className }) => {
   const router = useRouter()
-  const currentSelected = router.asPath.split('?')[0] === '/' + post.slug
-
+  const currentSelected = router.asPath.split('?')[0] === post?.href
   return (
     <Link href={post?.href} passHref>
       <div

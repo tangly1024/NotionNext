@@ -13,7 +13,7 @@ export const NormalMenu = props => {
 
   return (
     <Link
-      key={`${link.slug}`}
+      key={link?.href}
       title={link.name}
       href={link.href}
       className={
