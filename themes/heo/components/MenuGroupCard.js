@@ -15,19 +15,19 @@ const MenuGroupCard = props => {
   const links = [
     {
       name: locale.COMMON.ARTICLE,
-      to: '/archive',
+      href: '/archive',
       slot: archiveSlot,
       show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG)
     },
     {
       name: locale.COMMON.CATEGORY,
-      to: '/category',
+      href: '/category',
       slot: categorySlot,
       show: siteConfig('HEO_MENU_CATEGORY', null, CONFIG)
     },
     {
       name: locale.COMMON.TAGS,
-      to: '/tag',
+      href: '/tag',
       slot: tagSlot,
       show: siteConfig('HEO_MENU_TAG', null, CONFIG)
     }
@@ -40,8 +40,8 @@ const MenuGroupCard = props => {
           return (
             <div key={index} className=''>
               <Link
-                title={link.to}
-                href={link.to}
+                title={link.href}
+                href={link.href}
                 target={link?.target}
                 className={
                   'w-full flex items-center justify-between py-1 hover:scale-105 duration-200 transform dark:hover:text-indigo-400 hover:text-indigo-600 px-2 cursor-pointer'

@@ -1,19 +1,15 @@
 import Badge from '@/components/Badge'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CONFIG from '../config'
 
 const BlogPostCard = ({ post, className }) => {
   const router = useRouter()
-  const currentSelected = router.asPath.split('?')[0] === '/' + post.slug
-  const url = checkContainHttp(post.slug)
-    ? sliceUrlFromHttp(post.slug)
-    : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+  const currentSelected = router.asPath.split('?')[0] === post?.href
   return (
-    <Link href={url} passHref>
+    <Link href={post?.href} passHref>
       <div
         key={post.id}
         className={`${className} relative py-1.5 cursor-pointer px-1.5 hover:bg-gray-50 rounded-md dark:hover:bg-yellow-100 dark:hover:text-yellow-600

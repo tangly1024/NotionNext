@@ -68,6 +68,7 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
       tags: item.tags || null,
       summary: item.summary || null,
       slug: item.slug,
+      href: item.href,
       pageIcon: item.pageIcon || '',
       lastEditedDate: item.lastEditedDate
     }

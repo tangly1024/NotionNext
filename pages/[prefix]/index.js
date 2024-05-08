@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { checkContainHttp } from '@/lib/utils'
+import { checkSlugHasNoSlash, getRecommendPost } from '@/lib/utils/post'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
@@ -71,7 +71,7 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
   const paths = allPages
-    ?.filter(row => checkSlug(row))
+    ?.filter(row => checkSlugHasNoSlash(row))
     .map(row => ({ params: { prefix: row.slug } }))
   return {
     paths: paths,
@@ -156,53 +156,6 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       props.NOTION_CONFIG
     )
   }
-}
-
-/**
- * 获取文章的关联推荐文章列表，目前根据标签关联性筛选
- * @param post
- * @param {*} allPosts
- * @param {*} count
- * @returns
- */
-export function getRecommendPost(post, allPosts, count = 6) {
-  let recommendPosts = []
-  const postIds = []
-  const currentTags = post?.tags || []
-  for (let i = 0; i < allPosts.length; i++) {
-    const p = allPosts[i]
-    if (p.id === post.id || p.type.indexOf('Post') < 0) {
-      continue
-    }
-
-    for (let j = 0; j < currentTags.length; j++) {
-      const t = currentTags[j]
-      if (postIds.indexOf(p.id) > -1) {
-        continue
-      }
-      if (p.tags && p.tags.indexOf(t) > -1) {
-        recommendPosts.push(p)
-        postIds.push(p.id)
-      }
-    }
-  }
-
-  if (recommendPosts.length > count) {
-    recommendPosts = recommendPosts.slice(0, count)
-  }
-  return recommendPosts
-}
-
-function checkSlug(row) {
-  let slug = row.slug
-  if (slug.startsWith('/')) {
-    slug = slug.substring(1)
-  }
-  return (
-    (slug.match(/\//g) || []).length === 0 &&
-    !checkContainHttp(slug) &&
-    row.type.indexOf('Menu') < 0
-  )
 }
 
 export default Slug
