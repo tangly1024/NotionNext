@@ -62,7 +62,10 @@ export async function getStaticProps({
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
-      (p.slug === slug || p.slug === fullSlug || p.id === idToUuid(fullSlug))
+      (p.slug === suffix ||
+        p.slug === fullSlug.substring(fullSlug.lastIndexOf('/') + 1) ||
+        p.slug === fullSlug ||
+        p.id === idToUuid(fullSlug))
     )
   })
 
