@@ -96,7 +96,7 @@ const NavBar = props => {
     {
       id: 2,
       name: locale.NAV.RSS,
-      to: '/feed',
+      href: '/feed',
       show:
         siteConfig('ENABLE_RSS') &&
         siteConfig('NOBELIUM_MENU_RSS', null, CONFIG),
@@ -105,25 +105,25 @@ const NavBar = props => {
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
-      to: '/search',
+      href: '/search',
       show: siteConfig('NOBELIUM_MENU_SEARCH', null, CONFIG)
     },
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
-      to: '/archive',
+      href: '/archive',
       show: siteConfig('NOBELIUM_MENU_ARCHIVE', null, CONFIG)
     },
     {
       icon: 'fas fa-folder',
       name: locale.COMMON.CATEGORY,
-      to: '/category',
+      href: '/category',
       show: siteConfig('NOBELIUM_MENU_CATEGORY', null, CONFIG)
     },
     {
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
-      to: '/tag',
+      href: '/tag',
       show: siteConfig('NOBELIUM_MENU_TAG', null, CONFIG)
     }
   ]

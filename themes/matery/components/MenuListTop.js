@@ -16,25 +16,25 @@ export const MenuListTop = props => {
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
-      to: '/archive',
+      href: '/archive',
       show: siteConfig('MATERY_MENU_ARCHIVE', null, CONFIG)
     },
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
-      to: '/search',
+      href: '/search',
       show: siteConfig('MATERY_MENU_SEARCH', null, CONFIG)
     },
     {
       icon: 'fas fa-folder',
       name: locale.COMMON.CATEGORY,
-      to: '/category',
+      href: '/category',
       show: siteConfig('MATERY_MENU_CATEGORY', null, CONFIG)
     },
     {
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
-      to: '/tag',
+      href: '/tag',
       show: siteConfig('MATERY_MENU_TAG', null, CONFIG)
     }
   ]
