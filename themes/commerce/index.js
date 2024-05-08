@@ -256,16 +256,17 @@ const LayoutSlug = props => {
               <div className='flex md:flex-row flex-col w-full justify-between py-4'>
                 <div
                   id='left-img'
-                  className='w-1/2 flex justify-center items-center border'>
+                  className='md:w-1/2 flex justify-center items-center border'>
                   <LazyImage
                     src={headerImage}
                     className='m-auto w-full h-auto aspect-square object-cover object-center'
                   />
                 </div>
 
-                <div id='info-right' className='w-1/2 p-4'>
+                <div id='info-right' className='md:w-1/2 p-4'>
                   <div>{post?.title}</div>
-                  <div>{post?.summary}</div>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: post?.summary }}></div>
                 </div>
               </div>
             )}
