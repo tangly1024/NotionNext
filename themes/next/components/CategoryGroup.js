@@ -19,7 +19,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
               : 'dark:text-gray-400 text-gray-500 hover:text-white hover:bg-gray-500 dark:hover:text-white') +
               '  text-sm w-full items-center duration-300 px-2  cursor-pointer py-1 font-light'}>
 
-            <i className={`${selected ? 'text-white fa-folder-open ' : 'text-gray-400 fa-folder '} mr-2 fas`} />{category.name}({category.count})
+            <i className={`${selected ? 'text-white fa-folder-open ' : 'text-gray-500 fa-folder '} mr-2 fas`} />{category.name}({category.count})
           </Link>
         );
       })}

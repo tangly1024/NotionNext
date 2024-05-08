@@ -40,7 +40,7 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
     // }
     for (let i = filterAllNavPages.length - 1; i >= 0; i--) {
       const post = filterAllNavPages[i]
-      const articleInfo = post.title + ''
+      const articleInfo = post.title + ' ' + post.summary
       const hit = articleInfo.toLowerCase().indexOf(keyword.toLowerCase()) > -1
       if (!hit) {
         // 删除

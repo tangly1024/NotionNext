@@ -3,6 +3,8 @@ import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
+
 /**
  * 博客归档列表
  * @param posts 所有文章
@@ -24,6 +26,8 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                 </div>
                 <ul>
                     {posts?.map(post => {
+                      const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+
                       const showPreview = siteConfig('HEO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
                       if (post && !post.pageCoverThumbnail && siteConfig('HEO_POST_LIST_COVER_DEFAULT', null, CONFIG)) {
                         post.pageCoverThumbnail = siteInfo?.pageCover
@@ -34,7 +38,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                             {/* 图片封面 */}
                             {showPageCover && (
                                 <div>
-                                    <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                                    <Link href={url} passHref legacyBehavior>
                                         <LazyImage className={'rounded-xl bg-center bg-cover w-40 h-24'} src={post?.pageCoverThumbnail}/>
                                     </Link>
                                 </div>
@@ -53,7 +57,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
 
                                     {/* 标题 */}
                                     <Link
-                                        href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                                        href={url}
                                         passHref
                                         className={' group-hover:text-indigo-700 group-hover:dark:text-indigo-400 text-black dark:text-gray-100 dark:group-hover:text-yellow-600 line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'}>
                                         <span className='menu-link '>{post.title}</span>

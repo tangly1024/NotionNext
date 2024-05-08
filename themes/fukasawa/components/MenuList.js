@@ -30,10 +30,10 @@ export const MenuList = (props) => {
   }
 
   return (<>
-        <menu id='nav-pc' className='hidden md:block font-sans text-sm z-10'>
+        <menu id='nav-pc' className='hidden md:block  text-sm z-10'>
             {links?.map((link, index) => <MenuItemDrop key={index} link={link} />)}
         </menu>
-        <menu id='nav-mobile' className='block md:hidden font-sans text-sm z-10 pb-1'>
+        <menu id='nav-mobile' className='block md:hidden  text-sm z-10 pb-1'>
             {links?.map((link, index) => <MenuItemCollapse key={index} link={link} onHeightChange={props.onHeightChange}/>)}
         </menu>
     </>
