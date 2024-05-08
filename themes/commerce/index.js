@@ -127,11 +127,11 @@ const LayoutIndex = props => {
       {/* 产品中心 */}
       <ProductCenter {...props} />
 
-      {/* 首页企业/品牌介绍 */}
+      {/* 首页企业/品牌介绍 这里展示公告 */}
       {notice && (
-        <div id='brand-introduction' className='w-full my-4 mx-4'>
+        <div id='brand-introduction' className='w-full'>
           <div className='w-full text-center text-4xl font-bold pt-12'>
-            {siteConfig('TEXT_HOME_ABOUT_US', notice.title)}
+            {notice.title}
           </div>
           <NotionPage post={notice} className='text-2xl text-justify' />
         </div>

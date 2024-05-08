@@ -1,4 +1,5 @@
 import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 
 /**
@@ -11,24 +12,40 @@ import { useEffect, useRef } from 'react'
 export const ArticleLock = props => {
   const { validPassword } = props
   const { locale } = useGlobal()
-  console.log('locale', locale)
+  const router = useRouter()
+  const passwordInputRef = useRef(null)
 
+  /**
+   * 输入提交密码
+   */
   const submitPassword = () => {
     const p = document.getElementById('password')
+
+    // 验证失败提示
     if (!validPassword(p?.value)) {
       const tips = document.getElementById('tips')
       if (tips) {
         tips.innerHTML = ''
         tips.innerHTML = `<div class='text-red-500 animate__shakeX animate__animated'>${locale.COMMON.PASSWORD_ERROR}</div>`
       }
+    } else {
+      // 输入密码存入localStorage，下次自动提交
+      localStorage.setItem('password_' + router.asPath, p?.value)
     }
   }
 
-  const passwordInputRef = useRef(null)
   useEffect(() => {
     // 选中密码输入框并将其聚焦
     passwordInputRef.current.focus()
-  }, [])
+
+    // 从localStorage中读取上次记录 自动提交密码
+    const p = localStorage.getItem('password_' + router.asPath)
+    console.log('pp', p, document.getElementById('password'))
+    if (p) {
+      document.getElementById('password').value = p
+      submitPassword()
+    }
+  }, [router])
 
   return (
     <div
