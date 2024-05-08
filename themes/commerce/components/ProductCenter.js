@@ -14,19 +14,15 @@ export default function ProductCenter(props) {
     0,
     parseInt(siteConfig('COMMERCE_HOME_POSTS_COUNT', 9))
   )
-  const COMMERCE_TEXT_CENTER_TITLE = siteConfig(
-    'COMMERCE_TEXT_CENTER_TITLE',
-    'Product Center',
-    CONFIG
-  )
+
   return (
     <div className='w-full my-4 mx-4'>
       <div className='w-full text-center text-4xl font-bold'>
-        {COMMERCE_TEXT_CENTER_TITLE}
+        {siteConfig('COMMERCE_TEXT_CENTER_TITLE', 'Product Center', CONFIG)}
       </div>
       {siteConfig('COMMERCE_TEXT_CENTER_DESCRIPTION') && (
         <div className='w-full text-center text-lg my-3 text-gray-500'>
-          {siteConfig('COMMERCE_TEXT_CENTER_DESCRIPTION')}
+          {siteConfig('COMMERCE_TEXT_CENTER_DESCRIPTION', CONFIG)}
         </div>
       )}
 

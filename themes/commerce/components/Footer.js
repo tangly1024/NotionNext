@@ -26,7 +26,11 @@ const Footer = props => {
             {/* 分类菜单  */}
             <div>
               <div className='font-bold mb-4 text-white'>
-                {siteConfig('COMMERCE_TEXT_FOOTER_MENU_1', 'Product Center')}
+                {siteConfig(
+                  'COMMERCE_TEXT_FOOTER_MENU_1',
+                  'Product Center',
+                  CONFIG
+                )}
               </div>
               <nav
                 id='home-nav-button'
@@ -48,7 +52,7 @@ const Footer = props => {
             {/* 系统菜单  */}
             <div>
               <div className='font-bold mb-4 text-white'>
-                {siteConfig('COMMERCE_TEXT_FOOTER_MENU_2', 'About US')}
+                {siteConfig('COMMERCE_TEXT_FOOTER_MENU_2', 'About US', CONFIG)}
               </div>
               <nav
                 id='home-nav-button'
@@ -116,7 +120,7 @@ const Footer = props => {
                       target='_blank'
                       rel='noreferrer'
                       title={'email'}
-                      href={`mailto:${siteConfig('CONTACT_EMAIL', CONFIG)}`}>
+                      href={`mailto:${siteConfig('CONTACT_EMAIL')}`}>
                       <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-red-400 hover:text-red-600' />{' '}
                       {siteConfig('CONTACT_EMAIL')}
                     </a>
@@ -124,10 +128,10 @@ const Footer = props => {
                 </div>
                 <div className='text-lg'>
                   {' '}
-                  {siteConfig('CONTACT_PHONE', null, CONFIG) && (
+                  {siteConfig('CONTACT_PHONE', null) && (
                     <div>
                       <i className='transform hover:scale-125 duration-150 fas fa-user dark:hover:text-red-400 hover:text-red-600' />{' '}
-                      {siteConfig('CONTACT_PHONE', null, CONFIG)}
+                      {siteConfig('CONTACT_PHONE', null)}
                     </div>
                   )}
                 </div>
