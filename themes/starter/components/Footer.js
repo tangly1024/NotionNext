@@ -1,5 +1,4 @@
 import { siteConfig } from '@/lib/config'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import SocialButton from '@/themes/fukasawa/components/SocialButton'
 import CONFIG from '../config'
 import { Logo } from './Logo'
@@ -74,14 +73,10 @@ export const Footer = props => {
                 {/* 展示两条最新博客文章 */}
                 <div className='flex flex-col gap-8'>
                   {latestPosts?.map((item, index) => {
-                    const url = checkContainHttp(item.slug)
-                      ? sliceUrlFromHttp(item.slug)
-                      : `${siteConfig('SUB_PATH', '')}/${item.slug}`
-
                     return (
                       <a
                         key={index}
-                        href={url}
+                        href={item?.href}
                         className='group flex items-center gap-[22px]'>
                         <div className='overflow-hidden rounded w-20 h-12'>
                           <img src={item.pageCoverThumbnail} alt={item.title} />

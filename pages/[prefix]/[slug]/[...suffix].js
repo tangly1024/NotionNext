@@ -2,9 +2,9 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { checkContainHttp } from '@/lib/utils'
+import { checkSlugHasMorThanTwoSlash, getRecommendPost } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
-import Slug, { getRecommendPost } from '..'
+import Slug from '..'
 
 /**
  * 根据notion的slug访问页面
@@ -33,7 +33,7 @@ export async function getStaticPaths() {
 
   return {
     paths: allPages
-      ?.filter(row => checkSlug(row))
+      ?.filter(row => checkSlugHasMorThanTwoSlash(row))
       .map(row => ({
         params: {
           prefix: row.slug.split('/')[0],
@@ -54,20 +54,18 @@ export async function getStaticProps({
   params: { prefix, slug, suffix },
   locale
 }) {
-  let fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
+  const fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalData({ from, locale })
-  if (siteConfig('PSEUDO_STATIC', BLOG.PSEUDO_STATIC, props.NOTION_CONFIG)) {
-    if (!fullSlug.endsWith('.html')) {
-      fullSlug += '.html'
-    }
-  }
 
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
-      (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+      (p.slug === suffix ||
+        p.slug === fullSlug.substring(fullSlug.lastIndexOf('/') + 1) ||
+        p.slug === fullSlug ||
+        p.id === idToUuid(fullSlug))
     )
   })
 
@@ -130,18 +128,6 @@ export async function getStaticProps({
       props.NOTION_CONFIG
     )
   }
-}
-
-function checkSlug(row) {
-  let slug = row.slug
-  if (slug.startsWith('/')) {
-    slug = slug.substring(1)
-  }
-  return (
-    (slug.match(/\//g) || []).length >= 2 &&
-    row.type.indexOf('Menu') < 0 &&
-    !checkContainHttp(slug)
-  )
 }
 
 export default PrefixSlug
