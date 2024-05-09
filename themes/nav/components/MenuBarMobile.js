@@ -1,6 +1,6 @@
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
 /**
@@ -8,16 +8,28 @@ import { MenuItemCollapse } from './MenuItemCollapse'
  * @param {*} props
  * @returns
  */
-export const MenuBarMobile = (props) => {
+export const MenuBarMobile = props => {
   const { customMenu, customNav } = props
   const { locale } = useGlobal()
 
   let links = [
-    // { name: locale.NAV.INDEX, to: '/' || '/', show: true },
-    { name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('NAV_MENU_CATEGORY', null, CONFIG) },
-    { name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('NAV_MENU_TAG', null, CONFIG) },
-    { name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('NAV_MENU_ARCHIVE', null, CONFIG) }
-    // { name: locale.NAV.SEARCH, to: '/search', show: siteConfig('MENU_SEARCH', null, CONFIG) }
+    // { name: locale.NAV.INDEX, href: '/' || '/', show: true },
+    {
+      name: locale.COMMON.CATEGORY,
+      href: '/category',
+      show: siteConfig('NAV_MENU_CATEGORY', null, CONFIG)
+    },
+    {
+      name: locale.COMMON.TAGS,
+      href: '/tag',
+      show: siteConfig('NAV_MENU_TAG', null, CONFIG)
+    },
+    {
+      name: locale.NAV.ARCHIVE,
+      href: '/archive',
+      show: siteConfig('NAV_MENU_ARCHIVE', null, CONFIG)
+    }
+    // { name: locale.NAV.SEARCH, href: '/search', show: siteConfig('MENU_SEARCH', null, CONFIG) }
   ]
 
   if (customNav) {
@@ -35,7 +47,13 @@ export const MenuBarMobile = (props) => {
 
   return (
     <nav id='nav' className=' text-md'>
-        {links?.map((link, index) => <MenuItemCollapse onHeightChange={props.onHeightChange} key={index} link={link}/>)}
+      {links?.map((link, index) => (
+        <MenuItemCollapse
+          onHeightChange={props.onHeightChange}
+          key={index}
+          link={link}
+        />
+      ))}
     </nav>
   )
 }

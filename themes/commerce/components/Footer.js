@@ -62,7 +62,7 @@ const Footer = props => {
                     <Link
                       key={`${menu.name}`}
                       title={`${menu.name}`}
-                      href={`${menu.to}`}
+                      href={`${menu.href}`}
                       passHref>
                       {menu.name}
                     </Link>
