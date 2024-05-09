@@ -16,7 +16,7 @@ export const Footer = (props) => {
                 {/* 右侧链接 */}
                 {/* <a href="#" className="text-black no-underline hover:underline">Privacy Policy</a> */}
                 <div id="footer-bottom-right">
-                  {siteConfig('GA_BEI_AN') && <><img width="17px" height="17px" src="./beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
+                  {siteConfig('GA_BEI_AN') && <><img width="17px" height="17px" src="./../beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
                   {siteConfig('BEI_AN') && (<a href="https://beian.miit.gov.cn/" className="text-black dark:text-gray-200 no-underline hover:underline ml-4">{siteConfig('BEI_AN')} </a>)}
                 </div>
                 <span className='dark:text-gray-200 no-underline ml-4'>

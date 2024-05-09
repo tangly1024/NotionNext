@@ -20,7 +20,7 @@ const Footer = ({ siteInfo }) => {
       <div className='text-xs font-serif py-1'>Powered By <a href='https://github.com/dear7575' className='underline text-gray-500 dark:text-gray-300'>© 非你莫属</a></div>
 
       <div id="footer-bottom-right">
-        {siteConfig('GA_BEI_AN') && <><img width="17px" height="17px" src="./beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
+        {siteConfig('GA_BEI_AN') && <><img width="17px" height="17px" src="./../beian.png" alt="" /> <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002003110" className="mr-2">{siteConfig('GA_BEI_AN')}</a></>}
         {siteConfig('BEI_AN') && <><i className="fas fa-shield-alt" /> <a href="https://beian.miit.gov.cn/" className="mr-2">{siteConfig('BEI_AN')}</a><br /></>}
       </div>
 
