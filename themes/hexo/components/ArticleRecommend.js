@@ -1,7 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'
 import CONFIG from '../config'
 
@@ -13,7 +12,11 @@ import CONFIG from '../config'
 export default function ArticleRecommend({ recommendPosts, siteInfo }) {
   const { locale } = useGlobal()
 
-  if (!siteConfig('HEXO_ARTICLE_RECOMMEND', null, CONFIG) || !recommendPosts || recommendPosts.length === 0) {
+  if (
+    !siteConfig('HEXO_ARTICLE_RECOMMEND', null, CONFIG) ||
+    !recommendPosts ||
+    recommendPosts.length === 0
+  ) {
     return <></>
   }
 
@@ -27,16 +30,15 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
       </div>
       <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
         {recommendPosts.map(post => {
-          const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover
-          const url = checkContainHttp(post.slug)
-            ? sliceUrlFromHttp(post.slug)
-            : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+          const headerImage = post?.pageCoverThumbnail
+            ? post.pageCoverThumbnail
+            : siteInfo?.pageCover
 
           return (
             <Link
               key={post.id}
               title={post.title}
-              href={url}
+              href={post?.href}
               passHref
               className='flex h-40 cursor-pointer overflow-hidden'>
               <div className='h-full w-full relative group'>

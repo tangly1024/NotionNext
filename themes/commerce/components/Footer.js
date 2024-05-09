@@ -18,7 +18,7 @@ const Footer = props => {
   return (
     <footer
       id='footer-wrapper'
-      className='relative bg-[#2A2A2A] justify-center w-full leading-6 text-gray-300 text-sm p-10'>
+      className='relative bg-[#2A2A2A] justify-center w-full leading-6 text-gray-300 text-sm md:p-10'>
       <div id='footer-container' className='w-full mx-auto max-w-screen-xl'>
         <div className='flex'>
           {/* 页脚左侧菜单组 */}
@@ -26,7 +26,11 @@ const Footer = props => {
             {/* 分类菜单  */}
             <div>
               <div className='font-bold mb-4 text-white'>
-                {siteConfig('COMMERCE_TEXT_FOOTER_MENU_1', 'Product Center')}
+                {siteConfig(
+                  'COMMERCE_TEXT_FOOTER_MENU_1',
+                  'Product Center',
+                  CONFIG
+                )}
               </div>
               <nav
                 id='home-nav-button'
@@ -48,7 +52,7 @@ const Footer = props => {
             {/* 系统菜单  */}
             <div>
               <div className='font-bold mb-4 text-white'>
-                {siteConfig('COMMERCE_TEXT_FOOTER_MENU_2', 'About US')}
+                {siteConfig('COMMERCE_TEXT_FOOTER_MENU_2', 'About US', CONFIG)}
               </div>
               <nav
                 id='home-nav-button'
@@ -58,7 +62,7 @@ const Footer = props => {
                     <Link
                       key={`${menu.name}`}
                       title={`${menu.name}`}
-                      href={`${menu.to}`}
+                      href={`${menu.href}`}
                       passHref>
                       {menu.name}
                     </Link>
@@ -68,97 +72,108 @@ const Footer = props => {
             </div>
           </div>
 
-          {/* 页脚中部联系方式 */}
+          {/* 页脚右侧联系方式 */}
           {
-            <div className='md:border-l pl-4 border-gray-600 my-6 whitespace-pre-line text-left flex-grow'>
-              <div className='font-bold text-l text-white mb-6'>
-                {siteConfig('COMMERCE_TEXT_FOOTER_TITLE', 'Contact US', CONFIG)}
-              </div>
-              <div className='space-y-4'>
-                <div className='flex space-x-4 text-2xl'>
-                  {JSON.parse(
-                    siteConfig('COMMERCE_CONTACT_WHATSAPP_SHOW', null, CONFIG),
-                    true
-                  ) && (
-                    <div>
-                      {
-                        <a
-                          target='_blank'
-                          rel='noreferrer'
-                          href={siteConfig('CONTACT_WHATSAPP', '#', CONFIG)}
-                          title={'telegram'}>
-                          <i className='transform hover:scale-125 duration-150 fa-brands fa-whatsapp dark:hover:text-red-400 hover:text-red-600' />
-                        </a>
-                      }
-                    </div>
-                  )}
-
-                  {JSON.parse(
-                    siteConfig('COMMERCE_CONTACT_TELEGRAM_SHOW', true, CONFIG)
-                  ) && (
-                    <div>
-                      {
-                        <a
-                          target='_blank'
-                          rel='noreferrer'
-                          href={siteConfig('CONTACT_TELEGRAM', '#', CONFIG)}
-                          title={'telegram'}>
-                          <i className='transform hover:scale-125 duration-150 fab fa-telegram dark:hover:text-red-400 hover:text-red-600' />
-                        </a>
-                      }
-                    </div>
-                  )}
-                </div>
-                <div className='text-lg'>
-                  {' '}
-                  {siteConfig('CONTACT_EMAIL') && (
-                    <a
-                      target='_blank'
-                      rel='noreferrer'
-                      title={'email'}
-                      href={`mailto:${siteConfig('CONTACT_EMAIL', CONFIG)}`}>
-                      <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-red-400 hover:text-red-600' />{' '}
-                      {siteConfig('CONTACT_EMAIL')}
-                    </a>
-                  )}
-                </div>
-                <div className='text-lg'>
-                  {' '}
-                  {siteConfig('CONTACT_PHONE', null, CONFIG) && (
-                    <div>
-                      <i className='transform hover:scale-125 duration-150 fas fa-user dark:hover:text-red-400 hover:text-red-600' />{' '}
-                      {siteConfig('CONTACT_PHONE', null, CONFIG)}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          }
-
-          {/* 页脚右侧图片二维码和文字描述 */}
-          {
-            <div className='pl-4 border-gray-600 my-6 whitespace-pre-line text-center flex-grow'>
-              <div className='font-bold text-l text-white mb-6 text-center'>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  className='h-36'
-                  src={siteConfig(
-                    'COMMERCE_FOOTER_RIGHT_IMG_URL',
-                    null,
+            <div className='md:border-l pl-8 space-x-8 border-gray-600 flex flex-grow'>
+              {/* 电话邮箱等 */}
+              <div className='my-6 whitespace-pre-line text-left'>
+                <div className='font-bold text-l text-white mb-6'>
+                  {siteConfig(
+                    'COMMERCE_TEXT_FOOTER_TITLE',
+                    'Contact US',
                     CONFIG
-                  )}></img>
+                  )}
+                </div>
+                <div className='space-y-4'>
+                  <div className='flex space-x-4 text-2xl'>
+                    {JSON.parse(
+                      siteConfig(
+                        'COMMERCE_CONTACT_WHATSAPP_SHOW',
+                        null,
+                        CONFIG
+                      ),
+                      true
+                    ) && (
+                      <div>
+                        {
+                          <a
+                            target='_blank'
+                            rel='noreferrer'
+                            href={siteConfig('CONTACT_WHATSAPP', '#', CONFIG)}
+                            title={'telegram'}>
+                            <i className='transform hover:scale-125 duration-150 fa-brands fa-whatsapp dark:hover:text-red-400 hover:text-red-600' />
+                          </a>
+                        }
+                      </div>
+                    )}
+
+                    {JSON.parse(
+                      siteConfig('COMMERCE_CONTACT_TELEGRAM_SHOW', true, CONFIG)
+                    ) && (
+                      <div>
+                        {
+                          <a
+                            target='_blank'
+                            rel='noreferrer'
+                            href={siteConfig('CONTACT_TELEGRAM', '#', CONFIG)}
+                            title={'telegram'}>
+                            <i className='transform hover:scale-125 duration-150 fab fa-telegram dark:hover:text-red-400 hover:text-red-600' />
+                          </a>
+                        }
+                      </div>
+                    )}
+                  </div>
+                  <div className='text-lg'>
+                    {' '}
+                    {siteConfig('CONTACT_EMAIL') && (
+                      <a
+                        target='_blank'
+                        rel='noreferrer'
+                        title={'email'}
+                        href={`mailto:${siteConfig('CONTACT_EMAIL')}`}>
+                        <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-red-400 hover:text-red-600' />{' '}
+                        {siteConfig('CONTACT_EMAIL')}
+                      </a>
+                    )}
+                  </div>
+                  <div className='text-lg'>
+                    {' '}
+                    {siteConfig('CONTACT_PHONE', null) && (
+                      <div>
+                        <i className='transform hover:scale-125 duration-150 fas fa-user dark:hover:text-red-400 hover:text-red-600' />{' '}
+                        {siteConfig('CONTACT_PHONE', null)}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className='space-y-4'>
-                <div
-                  className='flex space-x-4 text-center'
-                  dangerouslySetInnerHTML={{
-                    __html: siteConfig(
-                      'COMMERCE_FOOTER_RIGHT_TEXT',
-                      null,
-                      CONFIG
-                    )
-                  }}></div>
-              </div>
+
+              {/* 页脚右侧图片二维码和文字描述 */}
+              {
+                <div className=' border-gray-600 my-6 whitespace-pre-line text-center'>
+                  <div className='font-bold text-l text-white mb-6 text-center'>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      className='h-36'
+                      src={siteConfig(
+                        'COMMERCE_FOOTER_RIGHT_IMG_URL',
+                        null,
+                        CONFIG
+                      )}></img>
+                  </div>
+                  <div className='space-y-4'>
+                    <div
+                      className='flex space-x-4 text-center'
+                      dangerouslySetInnerHTML={{
+                        __html: siteConfig(
+                          'COMMERCE_FOOTER_RIGHT_TEXT',
+                          null,
+                          CONFIG
+                        )
+                      }}></div>
+                  </div>
+                </div>
+              }
             </div>
           }
         </div>
@@ -166,7 +181,7 @@ const Footer = props => {
         {/* 底部版权相关 */}
         <div
           id='footer-copyright-wrapper'
-          className='flex flex-col md:flex-row justify-between border-t border-gray-600 pt-8'>
+          className='flex flex-col md:flex-row justify-between border-t border-gray-600 pt-8 px-4 md:px-0'>
           <div className='text-start space-y-1'>
             {/* 网站所有者 */}
             <div>

@@ -15,19 +15,19 @@ const MenuGroupCard = props => {
   const links = [
     {
       name: locale.COMMON.ARTICLE,
-      to: '/archive',
+      href: '/archive',
       slot: archiveSlot,
       show: siteConfig('HEXO_MENU_ARCHIVE', null, CONFIG)
     },
     {
       name: locale.COMMON.CATEGORY,
-      to: '/category',
+      href: '/category',
       slot: categorySlot,
       show: siteConfig('HEXO_MENU_CATEGORY', null, CONFIG)
     },
     {
       name: locale.COMMON.TAGS,
-      to: '/tag',
+      href: '/tag',
       slot: tagSlot,
       show: siteConfig('HEXO_MENU_TAG', null, CONFIG)
     }
@@ -47,9 +47,9 @@ const MenuGroupCard = props => {
         if (link.show) {
           return (
             <Link
-              key={`${link.to}`}
-              title={link.to}
-              href={link.to}
+              key={`${link.href}`}
+              title={link.href}
+              href={link.href}
               target={link?.target}
               className={
                 'py-1.5 my-1 px-2 duration-300 text-base justify-center items-center cursor-pointer'
