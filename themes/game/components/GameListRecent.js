@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { siteConfig } from '@/lib/config'
-import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import { deepClone } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useGameGlobal } from '..'
@@ -53,10 +52,6 @@ const GameItem = ({ item }) => {
   const { recentGames, setRecentGames } = useGameGlobal()
   const { title } = item || {}
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug)
-    ? sliceUrlFromHttp(item.slug)
-    : `${siteConfig('SUB_PATH', '')}/${item.slug}`
-
   const [isClockVisible, setClockVisible] = useState(true)
   const toggleIcons = () => {
     setClockVisible(!isClockVisible)
@@ -77,7 +72,7 @@ const GameItem = ({ item }) => {
   }
 
   const handleButtonClick = () => {
-    router.push(url) // 如果是 Next.js
+    router.push(item?.href) // 如果是 Next.js
   }
 
   const img = item?.pageCoverThumbnail

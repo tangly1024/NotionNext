@@ -24,25 +24,25 @@ export default function Header(props) {
     {
       icon: 'fas fa-th',
       name: locale.COMMON.CATEGORY,
-      to: '/category',
+      href: '/category',
       show: siteConfig('GITBOOK_MENU_CATEGORY', null, CONFIG)
     },
     {
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
-      to: '/tag',
+      href: '/tag',
       show: siteConfig('GITBOOK_BOOK_MENU_TAG', null, CONFIG)
     },
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
-      to: '/archive',
+      href: '/archive',
       show: siteConfig('GITBOOK_MENU_ARCHIVE', null, CONFIG)
     },
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
-      to: '/search',
+      href: '/search',
       show: siteConfig('GITBOOK_MENU_SEARCH', null, CONFIG)
     }
   ]

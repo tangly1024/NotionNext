@@ -2,7 +2,6 @@ import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
 import CONFIG from '../config'
@@ -24,9 +23,6 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     siteConfig('MATERY_POST_LIST_COVER', null, CONFIG) &&
     post?.pageCoverThumbnail
   const delay = (index % 3) * 300
-  const url = checkContainHttp(post.slug)
-    ? sliceUrlFromHttp(post.slug)
-    : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
     <div
@@ -40,7 +36,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
       <header className='group flex flex-col h-80 justify-between'>
         {/* 头部图片 填充卡片 */}
         {showPageCover && (
-          <Link href={url} passHref legacyBehavior>
+          <Link href={post?.href} passHref legacyBehavior>
             <div className='flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden'>
               <LazyImage
                 src={post?.pageCoverThumbnail}
