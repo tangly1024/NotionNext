@@ -17,28 +17,28 @@ export const MenuList = props => {
       id: 1,
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
-      to: '/search',
+      href: '/search',
       show: siteConfig('EXAMPLE_MENU_SEARCH', null, CONFIG)
     },
     {
       id: 2,
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
-      to: '/archive',
+      href: '/archive',
       show: siteConfig('EXAMPLE_MENU_ARCHIVE', null, CONFIG)
     },
     {
       id: 3,
       icon: 'fas fa-folder',
       name: locale.COMMON.CATEGORY,
-      to: '/category',
+      href: '/category',
       show: siteConfig('EXAMPLE_MENU_CATEGORY', null, CONFIG)
     },
     {
       id: 4,
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
-      to: '/tag',
+      href: '/tag',
       show: siteConfig('EXAMPLE_MENU_TAG', null, CONFIG)
     }
   ]

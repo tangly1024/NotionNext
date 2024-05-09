@@ -21,7 +21,7 @@ export const MenuItemCollapse = props => {
     return null
   }
 
-  const selected = router.pathname === link.to || router.asPath === link.to
+  const selected = router.pathname === link.href || router.asPath === link.href
 
   const toggleShow = () => {
     changeShow(!show)
@@ -42,7 +42,7 @@ export const MenuItemCollapse = props => {
         onClick={toggleShow}>
         {!hasSubMenu && (
           <Link
-            href={link?.to}
+            href={link?.href}
             target={link?.target}
             className='py-2 w-full my-auto items-center justify-between flex  '>
             <div>
@@ -78,7 +78,7 @@ export const MenuItemCollapse = props => {
                 className='
               py-2 px-14 cursor-pointer hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white font-bold 
               dark:bg-black text-left justify-start text-gray-600 bg-gray-50 bg-opacity-20 dark:hover:bg-gray-600 tracking-widest transition-all duration-200'>
-                {/* <Link href={sLink.to} target={link?.target}> */}
+                {/* <Link href={sLink.href} target={link?.target}> */}
                 <a href={`/#${sLink.title}`} target={'_self'}>
                   <div>
                     <div
