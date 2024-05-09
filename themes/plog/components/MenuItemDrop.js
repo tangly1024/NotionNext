@@ -16,7 +16,7 @@ export const MenuItemDrop = ({ link }) => {
       onMouseLeave={() => changeShow(false)}>
       {!hasSubMenu && (
         <div className='block text-black dark:text-gray-50 nav'>
-          <Link href={link?.to} target={link?.target}>
+          <Link href={link?.href} target={link?.target}>
             {link?.icon && <i className={link?.icon} />} {link?.name}
           </Link>
         </div>
@@ -39,7 +39,7 @@ export const MenuItemDrop = ({ link }) => {
               <li
                 key={index}
                 className='text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 py-3 pr-6 pl-3'>
-                <Link href={sLink.to} target={link?.target}>
+                <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
                     {sLink.title}
