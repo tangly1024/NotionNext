@@ -1,10 +1,10 @@
+import FullScreenButton from '@/components/FullScreenButton'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import { MenuItemDrop } from './MenuItemDrop'
-import FullScreenButton from '@/components/FullScreenButton'
 import InformationButton from './InformationButton'
 import LogoBar from './LogoBar'
-import { siteConfig } from '@/lib/config'
+import { MenuItemDrop } from './MenuItemDrop'
 
 /**
  * 桌面端底部导航
@@ -12,14 +12,20 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const BottomNav = props => {
-  return <>
-        <div id="bottom-nav" className={'dark:bg-black dark:bg-opacity-50z-20 px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'}>
-            {/* 左侧logo文字栏 */}
-            <LogoBar {...props}/>
-            {/* 右下角菜单栏 */}
-            <MenuList {...props} />
-        </div>
+  return (
+    <>
+      <div
+        id='bottom-nav'
+        className={
+          'dark:bg-black dark:bg-opacity-50z-20 px-4 hidden glassmorphism md:fixed bottom-0 w-screen py-4 md:flex flex-row justify-between items-center'
+        }>
+        {/* 左侧logo文字栏 */}
+        <LogoBar {...props} />
+        {/* 右下角菜单栏 */}
+        <MenuList {...props} />
+      </div>
     </>
+  )
 }
 
 /**
@@ -32,11 +38,39 @@ const MenuList = props => {
 
   const { locale } = useGlobal()
   let links = [
-    { id: 2, name: locale.NAV.RSS, to: '/feed', show: siteConfig('ENABLE_RSS') && siteConfig('NOBELIUM_MENU_RSS', null, CONFIG), target: '_blank' },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('NOBELIUM_MENU_SEARCH', null, CONFIG) },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('NOBELIUM_MENU_ARCHIVE', null, CONFIG) },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('NOBELIUM_MENU_CATEGORY', null, CONFIG) },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('NOBELIUM_MENU_TAG', null, CONFIG) }
+    {
+      id: 2,
+      name: locale.NAV.RSS,
+      href: '/feed',
+      show:
+        siteConfig('ENABLE_RSS') &&
+        siteConfig('NOBELIUM_MENU_RSS', null, CONFIG),
+      target: '_blank'
+    },
+    {
+      icon: 'fas fa-search',
+      name: locale.NAV.SEARCH,
+      href: '/search',
+      show: siteConfig('NOBELIUM_MENU_SEARCH', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-archive',
+      name: locale.NAV.ARCHIVE,
+      href: '/archive',
+      show: siteConfig('NOBELIUM_MENU_ARCHIVE', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-folder',
+      name: locale.COMMON.CATEGORY,
+      href: '/category',
+      show: siteConfig('NOBELIUM_MENU_CATEGORY', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-tag',
+      name: locale.COMMON.TAGS,
+      href: '/tag',
+      show: siteConfig('NOBELIUM_MENU_TAG', null, CONFIG)
+    }
   ]
   if (customNav) {
     links = links.concat(customNav)
@@ -52,17 +86,19 @@ const MenuList = props => {
   }
 
   return (
-        <div className="flex-shrink-0">
-            <ul className="hidden md:flex flex-row">
-                {links?.map((link, index) => <MenuItemDrop key={index} link={link} />)}
-                <li className='my-auto px-2'>
-                    <FullScreenButton />
-                </li>
-                <li className='my-auto px-2'>
-                    <InformationButton/>
-                </li>
-            </ul>
-        </div>
+    <div className='flex-shrink-0'>
+      <ul className='hidden md:flex flex-row'>
+        {links?.map((link, index) => (
+          <MenuItemDrop key={index} link={link} />
+        ))}
+        <li className='my-auto px-2'>
+          <FullScreenButton />
+        </li>
+        <li className='my-auto px-2'>
+          <InformationButton />
+        </li>
+      </ul>
+    </div>
   )
 }
 

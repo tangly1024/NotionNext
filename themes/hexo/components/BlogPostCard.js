@@ -1,9 +1,8 @@
+import LazyImage from '@/components/LazyImage'
+import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
-import { siteConfig } from '@/lib/config'
-import LazyImage from '@/components/LazyImage'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview = siteConfig('HEXO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
@@ -12,7 +11,6 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   }
   const showPageCover = siteConfig('HEXO_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail && !showPreview
   //   const delay = (index % 2) * 200
-  const url = checkContainHttp(post.slug) ? sliceUrlFromHttp(post.slug) : `${siteConfig('SUB_PATH', '')}/${post.slug}`
 
   return (
 
@@ -33,7 +31,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {/* 图片封面 */}
                 {showPageCover && (
                     <div className="md:w-5/12 overflow-hidden">
-                        <Link href={url} passHref legacyBehavior>
+                        <Link href={post?.href} passHref legacyBehavior>
                         <LazyImage priority={index === 1} src={post?.pageCoverThumbnail} className='h-56 w-full object-cover object-center group-hover:scale-110 duration-500' />
                         </Link>
                     </div>
