@@ -2827,7 +2827,7 @@ notion-utils@6.15.6:
     notion-types "^6.15.6"
     p-queue "^7.2.0"
 
-notion-utils@^6.15.6, notion-utils@^6.16.0:
+notion-utils@^6.15.6:
   version "6.16.0"
   resolved "https://registry.yarnpkg.com/notion-utils/-/notion-utils-6.16.0.tgz#b81567b9d8d7ee6199383b9b41f58f5f297a1c36"
   integrity sha512-DxToriZAJW/64O1xlAjyU/50dRmkO1e54+i0dEAPDij0MlHyihEivAMsdEG/6/4eFC972BIsEKZ6BXsSTUYKlQ==
@@ -3228,16 +3228,16 @@ react-modal@^3.14.3:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
-react-notion-x@6.16.0:
-  version "6.16.0"
-  resolved "https://registry.yarnpkg.com/react-notion-x/-/react-notion-x-6.16.0.tgz#48e70e90ab0f4a150b3379a928ac338e1e75dc2f"
-  integrity sha512-YdJikX38YNX5eIKAO9diw/tEhsc0ypnaqOqcdXEr7zFf0h/+eoppEzlLdzYJktnZy4n2q0z5ooXWAQi4QLi8Zw==
+react-notion-x@6.15.5:
+  version "6.15.6"
+  resolved "https://r.cnpmjs.org/react-notion-x/-/react-notion-x-6.15.6.tgz#af42e836dce9f5d3ece97f2796c09608c49347de"
+  integrity sha512-s8FVh8bs2vb32VLvPq21V0rjeWtF+U6Fudaxfx9yA6vVvQ5kgF9RRyc7eNlKpLPfq/HMEqLE52hZW+ecQ15PZQ==
   dependencies:
     "@fisch0920/medium-zoom" "^1.0.7"
     "@matejmazur/react-katex" "^3.1.3"
     katex "^0.15.3"
-    notion-types "^6.16.0"
-    notion-utils "^6.16.0"
+    notion-types "^6.15.6"
+    notion-utils "^6.15.6"
     prismjs "^1.27.0"
     react-fast-compare "^3.2.0"
     react-hotkeys-hook "^3.0.3"
