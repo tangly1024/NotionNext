@@ -12,7 +12,7 @@ export const MenuItemDrop = ({ link }) => {
       className='relative py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center '>
       {!hasSubMenu && (
         <Link
-          href={link?.to}
+          href={link?.href}
           target={link?.target}
           className='w-full my-auto items-center justify-between flex '>
           <div>
@@ -47,7 +47,7 @@ export const MenuItemDrop = ({ link }) => {
             return (
               <li key={sLink.id}>
                 <Link
-                  href={sLink.to}
+                  href={sLink.href}
                   target={link?.target}
                   className='my-auto h-9 px-2 items-center justify-start flex not:last-child:border-b-0 border-b text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 '>
                   {sLink.icon && (

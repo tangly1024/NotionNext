@@ -17,7 +17,7 @@ export const MenuItemDrop = ({ link }) => {
       {!hasSubMenu && (
         <Link
           target={link?.target}
-          href={link?.to}
+          href={link?.href}
           className=' hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
           {link?.icon && <i className={link?.icon} />} {link?.name}
         </Link>
@@ -42,7 +42,7 @@ export const MenuItemDrop = ({ link }) => {
               <li
                 key={index}
                 className='cursor-pointer hover:bg-blue-600 hover:text-white text-gray-900  tracking-widest transition-all duration-200 dark:border-gray-700  py-1 pr-6 pl-3'>
-                <Link href={sLink.to} target={link?.target}>
+                <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
                     {sLink.title}

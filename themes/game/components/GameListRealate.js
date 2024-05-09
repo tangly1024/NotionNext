@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { siteConfig } from '@/lib/config'
-import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import { deepClone } from '@/lib/utils'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -43,16 +42,12 @@ export const GameListRelate = ({ posts }) => {
 const GameItem = ({ item }) => {
   const { title } = item
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug)
-    ? sliceUrlFromHttp(item.slug)
-    : `${siteConfig('SUB_PATH', '')}/${item.slug}`
-
   const img = item?.pageCoverThumbnail
   const video = item?.ext?.video
 
   return (
     <Link
-      href={`${url}`}
+      href={`${item?.href}`}
       onMouseOver={() => {
         setShowType('video')
       }}
