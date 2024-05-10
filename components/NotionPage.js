@@ -84,35 +84,35 @@ const NotionPage = ({ post, className }) => {
   }, [])
 
   const zoom =
-    typeof window !== 'undefined' &&
+    isBrowser &&
     mediumZoom({
-      container: '.notion-viewport',
+      //   container: '.notion-viewport',
       background: 'rgba(0, 0, 0, 0.2)',
       margin: getMediumZoomMargin()
     })
+
   const zoomRef = useRef(zoom ? zoom.clone() : null)
 
   useEffect(() => {
-    if (!isBrowser) return
-
     // 将相册gallery下的图片加入放大功能
     if (siteConfig('POST_DISABLE_GALLERY_CLICK')) {
       setTimeout(() => {
-        const imgList = document?.querySelectorAll(
-          '.notion-asset-wrapper-image img'
-        )
-
-        console.log('放大', imgList)
-
-        if (imgList && zoomRef.current) {
-          for (let i = 0; i < imgList.length; i++) {
-            zoomRef.current.attach(imgList[i])
+        if (isBrowser) {
+          const imgList = document?.querySelectorAll(
+            '.notion-collection-card-cover img'
+          )
+          if (imgList && zoomRef.current) {
+            for (let i = 0; i < imgList.length; i++) {
+              zoomRef.current.attach(imgList[i])
+            }
           }
-        }
 
-        const cards = document.getElementsByClassName('notion-collection-card')
-        for (const e of cards) {
-          e.removeAttribute('href')
+          const cards = document.getElementsByClassName(
+            'notion-collection-card'
+          )
+          for (const e of cards) {
+            e.removeAttribute('href')
+          }
         }
       }, 800)
     }
