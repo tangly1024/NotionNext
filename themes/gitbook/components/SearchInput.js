@@ -1,7 +1,7 @@
-import { useImperativeHandle, useRef, useState } from 'react'
+import { siteConfig } from '@/lib/config'
 import { deepClone } from '@/lib/utils'
 import { useGitBookGlobal } from '@/themes/gitbook'
-import { siteConfig } from '@/lib/config'
+import { useImperativeHandle, useRef, useState } from 'react'
 let lock = false
 
 /**
@@ -50,16 +50,18 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
    * 回车键
    * @param {*} e
    */
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     // 使用Algolia
     if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal?.current?.openSearch()
       return
     }
 
-    if (e.keyCode === 13) { // 回车
+    if (e.keyCode === 13) {
+      // 回车
       handleSearch(searchInputRef.current.value)
-    } else if (e.keyCode === 27) { // ESC
+    } else if (e.keyCode === 27) {
+      // ESC
       cleanSearch()
     }
   }
@@ -80,7 +82,7 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
   }
 
   const [showClean, setShowClean] = useState(false)
-  const updateSearchKey = (val) => {
+  const updateSearchKey = val => {
     if (lock) {
       return
     }
@@ -91,39 +93,50 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
       setShowClean(false)
     }
   }
-  function lockSearchInput () {
+
+  function lockSearchInput() {
     lock = true
   }
 
-  function unLockSearchInput () {
+  function unLockSearchInput() {
     lock = false
   }
 
-  return <div className={'flex w-full'}>
-    <input
-      ref={searchInputRef}
-      type='text'
-      className={`${className} outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white`}
-      onFocus={handleFocus}
-      onKeyUp={handleKeyUp}
-      onCompositionStart={lockSearchInput}
-      onCompositionUpdate={lockSearchInput}
-      onCompositionEnd={unLockSearchInput}
-      onChange={e => updateSearchKey(e.target.value)}
-      defaultValue={currentSearch}
-    />
+  return (
+    <div className={'flex w-full'}>
+      <input
+        ref={searchInputRef}
+        type='text'
+        className={`${className} outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white`}
+        onFocus={handleFocus}
+        onKeyUp={handleKeyUp}
+        onCompositionStart={lockSearchInput}
+        onCompositionUpdate={lockSearchInput}
+        onCompositionEnd={unLockSearchInput}
+        onChange={e => updateSearchKey(e.target.value)}
+        defaultValue={currentSearch}
+      />
 
-    <div className='flex -ml-8 cursor-pointer float-right items-center justify-center py-2'
-      onClick={handleSearch}>
-        <i className={'hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas fa-search'} />
-    </div>
-
-    {(showClean &&
-      <div className='-ml-12 cursor-pointer flex float-right items-center justify-center py-2'>
-        <i className='fas fa-times hover:text-black transform duration-200 text-gray-400 cursor-pointer   dark:hover:text-gray-300' onClick={cleanSearch} />
+      <div
+        className='flex -ml-8 cursor-pointer float-right items-center justify-center py-2'
+        onClick={handleSearch}>
+        <i
+          className={
+            'hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas fa-search'
+          }
+        />
       </div>
+
+      {showClean && (
+        <div className='-ml-12 cursor-pointer flex float-right items-center justify-center py-2'>
+          <i
+            className='fas fa-times hover:text-black transform duration-200 text-gray-400 cursor-pointer   dark:hover:text-gray-300'
+            onClick={cleanSearch}
+          />
+        </div>
       )}
-  </div>
+    </div>
+  )
 }
 
 export default SearchInput
