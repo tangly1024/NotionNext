@@ -17,7 +17,7 @@ export const getServerSideProps = async ctx => {
       pageId: id,
       from: 'sitemap.xml'
     })
-    const link = siteConfig('LINK', BLOG.LINK, siteData.NOTION_CONFIG)
+    const link = siteConfig('LINK', '', siteData.NOTION_CONFIG)
     const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
     fields = fields.concat(localeFields)
   }
