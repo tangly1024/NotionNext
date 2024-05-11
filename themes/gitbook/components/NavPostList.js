@@ -36,7 +36,7 @@ const NavPostList = props => {
       // 默认展开一个
       const defaultOpenIndex = getDefaultOpenIndexByPath(
         categoryFolders,
-        router.asPath.split('?')[0]
+        decodeURIComponent(router.asPath.split('?')[0])
       )
       setExpandedGroups([defaultOpenIndex])
     }, 500)
