@@ -37,7 +37,7 @@ export function InfoCard(props) {
             <div>
                 <Announcement post={notice} style={{ color: 'white !important' }} />
             </div>
-
+/**
             <div className='flex justify-between'>
                 <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
                     {/* 两个社交按钮 */}
@@ -52,6 +52,7 @@ export function InfoCard(props) {
                     </div>
                 </div>
                 <MoreButton />
+ */
             </div>
         </Card>
   )
