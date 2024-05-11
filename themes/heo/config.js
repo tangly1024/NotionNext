@@ -5,9 +5,9 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎到我们的知识星球提问和分享经验', url: 'https://wx.zsxq.com/dweb2/index/group/88855815582482' },
+    { title: '去知识星球提问和分享经验', url: 'https://wx.zsxq.com/dweb2/index/group/88855815582482' },
     { title: 'MATI的官方页面', url: 'https://www.polyu.edu.hk/cbs/study/taught-postgraduate-programmes/ma-scheme-in-chinese-linguistics-and-translation/translating-and-interpreting' },
-    { title: '试一下不那么智能的人工智能问答机器人', url: 'https://chat.matiwiki.com' }
+    { title: '不那么智能的人工智能问答机器人', url: 'https://chat.matiwiki.com' }
   ],
 
   // 英雄区左右侧组件颠倒位置
