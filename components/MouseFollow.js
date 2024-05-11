@@ -13,12 +13,7 @@ const MOUSE_FOLLOW = () => {
 
   useEffect(() => {
     loadExternalResource('/js/mouse-follow.js', 'js').then(url => {
-      if (window.createMouseCanvas) {
-        window.createMouseCanvas()({
-          type,
-          color
-        })
-      }
+      window.createMouseCanvas && window.createMouseCanvas()({ type, color })
     })
   }, [])
 
