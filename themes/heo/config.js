@@ -41,7 +41,7 @@ const CONFIG = {
     '🏃 脚踏实地行动派',
     '🏠 十级心理按摩师',
   ],
-  HEO_INFO_CARD_URL: 'https://matiwiki.com', // 个人资料底部按钮链接
+  // HEO_INFO_CARD_URL: 'https://matiwiki.com', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
