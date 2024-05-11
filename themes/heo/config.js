@@ -16,8 +16,8 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '随便看看',
-  HEO_HERO_TITLE_2: '随机打开一篇文章',
+  HEO_HERO_TITLE_1: '随机打开',
+  HEO_HERO_TITLE_2: '一篇文章',
   HEO_HERO_TITLE_3: 'MATIWIKI.COM',
   HEO_HERO_TITLE_4: '申请必读',
   HEO_HERO_TITLE_5: '答疑帖',
