@@ -65,7 +65,7 @@ export default function SlideOver(props) {
                                         <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
                                             <button
                                                 type="button"
-                                                className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                                                className="rounded-md text-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
                                                 onClick={() => setOpen(false)}
                                             >
                                                 <span className="sr-only">Close panel</span>
