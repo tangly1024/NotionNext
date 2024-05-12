@@ -47,7 +47,7 @@ const NotionPage = ({ post, className }) => {
       processDisableDatabaseUrl()
     }
 
-    // 若url是本站域名，则之间在当前窗口打开、不开新窗口
+    // 处理页内的url
     processPageUrl()
 
     /**
@@ -147,14 +147,20 @@ const processGalleryImg = zoom => {
 }
 
 /**
- * 处理页面内连接跳转
- * 如果链接就是当网站，则不打开新窗口访问
+ * 处理页面内连接跳转:
+ * 1. 若是本站域名，则在当前窗口打开、不开新窗口
+ * 2. 若是Notion笔记中的内链，尝试转换成博客中现有的文章地址
  */
 const processPageUrl = () => {
   if (isBrowser) {
     const currentURL = window.location.origin + window.location.pathname
     const allAnchorTags = document.getElementsByTagName('a') // 或者使用 document.querySelectorAll('a') 获取 NodeList
     for (const anchorTag of allAnchorTags) {
+      // 检查url
+      if (anchorTag.href) {
+        // 如果是notion页面间的内链，尝试匹配成博客的文章链接
+      }
+
       if (anchorTag?.target === '_blank') {
         const hrefWithoutQueryHash = anchorTag.href.split('?')[0].split('#')[0]
         const hrefWithRelativeHash =
