@@ -3,6 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import CategoryGroup from './CategoryGroup'
@@ -28,6 +29,7 @@ const Header = props => {
   const throttleMs = 200
   const showSearchButton = siteConfig('MATERY_MENU_SEARCH', false, CONFIG)
 
+  const router = useRouter()
   const scrollTrigger = useCallback(
     throttle(() => {
       requestAnimationFrame(() => {
@@ -85,7 +87,7 @@ const Header = props => {
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
-  }, [])
+  }, [router])
 
   const [isOpen, changeShow] = useState(false)
 
