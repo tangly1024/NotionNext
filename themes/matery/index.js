@@ -201,7 +201,7 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <>
-      <Card className='w-full -mt-32'>
+      <Card className='w-full mt-8'>
         <div className='mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray'>
           {Object.keys(archivePosts).map(archiveTitle => (
             <BlogPostArchive
@@ -355,27 +355,25 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
 
   return (
-    <>
-      <div id='inner-wrapper' className='w-full'>
-        <div className='drop-shadow-xl -mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300'>
-          <div className='flex justify-center flex-wrap'>
-            {categoryOptions?.map(e => {
-              return (
-                <Link
-                  key={e.name}
-                  href={`/category/${e.name}`}
-                  passHref
-                  legacyBehavior>
-                  <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'>
-                    <i className={'mr-4 fas fa-folder'} /> {e.name}({e.count})
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
+    <div id='inner-wrapper' className='w-full'>
+      <div className='drop-shadow-xl mt-8 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black dark:text-gray-300'>
+        <div className='flex justify-center flex-wrap'>
+          {categoryOptions?.map(e => {
+            return (
+              <Link
+                key={e.name}
+                href={`/category/${e.name}`}
+                passHref
+                legacyBehavior>
+                <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'>
+                  <i className={'mr-4 fas fa-folder'} /> {e.name}({e.count})
+                </div>
+              </Link>
+            )
+          })}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -388,27 +386,25 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-    <>
-      <div id='inner-wrapper' className='w-full drop-shadow-xl'>
-        <div className='-mt-32 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black'>
-          <div className='dark:text-gray-200 py-5 text-center  text-2xl'>
-            <i className='fas fa-tags' /> {locale.COMMON.TAGS}
-          </div>
+    <div id='inner-wrapper' className='w-full drop-shadow-xl'>
+      <div className='mt-8 rounded-md mx-3 px-5 lg:border lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black'>
+        <div className='dark:text-gray-200 py-5 text-center  text-2xl'>
+          <i className='fas fa-tags' /> {locale.COMMON.TAGS}
+        </div>
 
-          <div
-            id='tags-list'
-            className='duration-200 flex flex-wrap justify-center pb-12'>
-            {tagOptions.map(tag => {
-              return (
-                <div key={tag.name} className='p-2'>
-                  <TagItemMiddle key={tag.name} tag={tag} />
-                </div>
-              )
-            })}
-          </div>
+        <div
+          id='tags-list'
+          className='duration-200 flex flex-wrap justify-center pb-12'>
+          {tagOptions.map(tag => {
+            return (
+              <div key={tag.name} className='p-2'>
+                <TagItemMiddle key={tag.name} tag={tag} />
+              </div>
+            )
+          })}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

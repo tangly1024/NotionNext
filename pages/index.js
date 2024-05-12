@@ -56,7 +56,7 @@ export async function getStaticProps(req) {
   }
 
   // 生成robotTxt
-  generateRobotsTxt()
+  generateRobotsTxt(props?.NOTION_CONFIG)
   // 生成Feed订阅
   if (JSON.parse(BLOG.ENABLE_RSS)) {
     generateRss(props?.NOTION_CONFIG, props?.latestPosts || [])
