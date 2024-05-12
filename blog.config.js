@@ -19,7 +19,7 @@ const BLOG = {
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
-    '阅尽千帆终执手，此心安处是吾乡,天地不仁，以萬物為芻狗。聖人不仁。以百姓為芻狗。,先行其言而后从之',
+    '阅尽千帆终执手，此心安处是吾乡,天地不仁，以萬物為芻狗。聖人不仁，以百姓為芻狗。,先行其言而后从之。',
 
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || false, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
 
