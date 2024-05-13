@@ -171,7 +171,7 @@ const Header = props => {
                 <i className='fas fa-bars' />
               )}
             </div>
-            {showSearchButton && <SearchButton />}
+            {/* {showSearchButton && <SearchButton />} */}
           </div>
         </div>
       </div>
