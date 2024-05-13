@@ -19,12 +19,12 @@ const BLOG = {
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
-    'Hi，我是一个游戏玩家, Hi，我是一个游戏设计师,Hi，我是寻者逍,欢迎来到我的博客🎉',
+    'Hi，我是一个游戏玩家,Hi，我是一个游戏设计师,Hi，我是寻者逍,一生追寻美与自由',
 
   CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || false, // 支持Menu 类型，从3.12.0版本起，各主题将逐步支持灵活的二级菜单配置，替代了原来的Page类型，此配置是试验功能、默认关闭。
 
-  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '寻者逍', // 您的昵称 例如 tangly1024
-  BIO: process.env.NEXT_PUBLIC_BIO || '欢迎来到我的个人网站', // 作者简介
+  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '寻者逍Sh1ao_O', // 您的昵称 例如 tangly1024
+  BIO: process.env.NEXT_PUBLIC_BIO || '中传游戏设计系本科在读\n欢迎来到我的个人网站\n该网站正在建设，不代表最终效果（还有好多好多文章没传TAT）', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://tangly1024.com', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Notion, 博客', // 网站关键词 英文逗号隔开
 
@@ -38,6 +38,7 @@ const BLOG = {
   CONTACT_INSTAGRAM: process.env.NEXT_PUBLIC_CONTACT_INSTAGRAM || '', // 您的instagram地址
   CONTACT_BILIBILI: process.env.NEXT_PUBLIC_CONTACT_BILIBILI || 'https://space.bilibili.com/105530955?spm_id_from=333.1007.0.0', // B站主页
   CONTACT_YOUTUBE: process.env.NEXT_PUBLIC_CONTACT_YOUTUBE || '', // Youtube主页
+  CONTACT_ZHIHU: process.env.NEXT_PUBLIC_CONTACT_ZHIHU || 'https://www.zhihu.com/people/zhu-hui-sha-83/collections', // 知乎主页
 
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
 
