@@ -12,7 +12,7 @@ import ArticleDetail from './components/ArticleDetail'
 import ArticleLock from './components/ArticleLock'
 import TagItemMini from './components/TagItemMini'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
@@ -21,6 +21,7 @@ import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import WWAds from '@/components/WWAds'
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 
@@ -46,49 +47,49 @@ const LayoutBase = (props) => {
   const { children, headerSlot } = props
   const leftAreaSlot = <Live2D />
   const { onLoading, fullWidth } = useGlobal()
-
+  const searchModal = useRef(null)
   return (
-        <ThemeGlobalFukasawa.Provider value={{}}>
+    <ThemeGlobalFukasawa.Provider value={{ searchModal }}>
+      <div id='theme-fukasawa' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
+        <AlgoliaSearchModal cRef={searchModal} {...props} />
+        <Style />
 
-            <div id='theme-fukasawa' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
-                <Style/>
+        <TopNav {...props} />
 
-                <TopNav {...props} />
+        <div className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' flex'}>
+          {/* 侧边抽屉 */}
+          <AsideLeft {...props} slot={leftAreaSlot} />
 
-                <div className={(JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') + ' flex'}>
-                    {/* 侧边抽屉 */}
-                    <AsideLeft {...props} slot={leftAreaSlot} />
+          <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
+            <div id='container-inner' className={`${fullWidth ? '' : '2xl:max-w-6xl md:max-w-4xl'} w-full relative z-10`}>
+              <Transition
+                show={!onLoading}
+                appear={true}
+                className="w-full"
+                enter="transition ease-in-out duration-700 transform order-first"
+                enterFrom="opacity-0 translate-y-16"
+                enterTo="opacity-100"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 -translate-y-16"
+                unmount={false}
+              >
+                <div> {headerSlot} </div>
+                <div> {children} </div>
 
-                    <main id='wrapper' className='relative flex w-full py-8 justify-center bg-day dark:bg-night'>
-                        <div id='container-inner' className={`${fullWidth ? '' : '2xl:max-w-6xl md:max-w-4xl'} w-full relative z-10`}>
-                            <Transition
-                                show={!onLoading}
-                                appear={true}
-                                className="w-full"
-                                enter="transition ease-in-out duration-700 transform order-first"
-                                enterFrom="opacity-0 translate-y-16"
-                                enterTo="opacity-100"
-                                leave="transition ease-in-out duration-300 transform"
-                                leaveFrom="opacity-100 translate-y-0"
-                                leaveTo="opacity-0 -translate-y-16"
-                                unmount={false}
-                            >
-                                <div> {headerSlot} </div>
-                                <div> {children} </div>
+              </Transition>
 
-                            </Transition>
-
-                            <div className='mt-2'>
-                              <AdSlot type='native' />
-                            </div>
-
-                        </div>
-                    </main>
-
-                </div>
+              <div className='mt-2'>
+                <AdSlot type='native' />
+              </div>
 
             </div>
-        </ThemeGlobalFukasawa.Provider>
+          </main>
+
+        </div>
+
+      </div>
+    </ThemeGlobalFukasawa.Provider>
   )
 }
 
@@ -107,9 +108,9 @@ const LayoutIndex = (props) => {
             */
 const LayoutPostList = (props) => {
   return <>
-        <div className='w-full p-2'><WWAds className='w-full' orientation='horizontal'/></div>
-         {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
-    </>
+    <div className='w-full p-2'><WWAds className='w-full' orientation='horizontal' /></div>
+    {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+  </>
 }
 
 /**
@@ -136,9 +137,9 @@ const LayoutSlug = (props) => {
     }
   }, [post])
   return (
-        <>
-            {lock ? <ArticleLock validPassword={validPassword} /> : <ArticleDetail {...props} />}
-        </>
+    <>
+      {lock ? <ArticleLock validPassword={validPassword} /> : <ArticleDetail {...props} />}
+    </>
   )
 }
 
@@ -169,16 +170,16 @@ const LayoutSearch = props => {
 const LayoutArchive = (props) => {
   const { archivePosts } = props
   return <>
-        <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 shadow-md min-h-full">
-            {Object.keys(archivePosts).map(archiveTitle => (
-                <BlogArchiveItem
-                    key={archiveTitle}
-                    posts={archivePosts[archiveTitle]}
-                    archiveTitle={archiveTitle}
-                />
-            ))}
-        </div>
-    </>
+    <div className="mb-10 pb-20 bg-white md:p-12 p-3 dark:bg-gray-800 shadow-md min-h-full">
+      {Object.keys(archivePosts).map(archiveTitle => (
+        <BlogArchiveItem
+          key={archiveTitle}
+          posts={archivePosts[archiveTitle]}
+          archiveTitle={archiveTitle}
+        />
+      ))}
+    </div>
+  </>
 }
 
 /**
@@ -199,29 +200,29 @@ const LayoutCategoryIndex = (props) => {
   const { locale } = useGlobal()
   const { categoryOptions } = props
   return (
-        <>
-            <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
-                <div className='dark:text-gray-200 mb-5'>
-                    <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
+    <>
+      <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
+        <div className='dark:text-gray-200 mb-5'>
+          <i className='mr-4 fas fa-th' />{locale.COMMON.CATEGORY}:
+        </div>
+        <div id='category-list' className='duration-200 flex flex-wrap'>
+          {categoryOptions?.map(category => {
+            return (
+              <Link
+                key={category.name}
+                href={`/category/${category.name}`}
+                passHref
+                legacyBehavior>
+                <div
+                  className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
+                  <i className='mr-4 fas fa-folder' />{category.name}({category.count})
                 </div>
-                <div id='category-list' className='duration-200 flex flex-wrap'>
-                    {categoryOptions?.map(category => {
-                      return (
-                            <Link
-                                key={category.name}
-                                href={`/category/${category.name}`}
-                                passHref
-                                legacyBehavior>
-                                <div
-                                    className={'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'}>
-                                    <i className='mr-4 fas fa-folder' />{category.name}({category.count})
-                                </div>
-                            </Link>
-                      )
-                    })}
-                </div>
-            </div>
-        </>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -234,19 +235,19 @@ const LayoutTagIndex = (props) => {
   const { locale } = useGlobal()
   const { tagOptions } = props
   return <>
-        <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
-            <div className='dark:text-gray-200 mb-5'><i className='mr-4 fas fa-tag' />{locale.COMMON.TAGS}:</div>
-            <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
-                {tagOptions.map(tag => {
-                  return (
-                        <div key={tag.name} className="p-2">
-                            <TagItemMini key={tag.name} tag={tag} />
-                        </div>
-                  )
-                })}
+    <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
+      <div className='dark:text-gray-200 mb-5'><i className='mr-4 fas fa-tag' />{locale.COMMON.TAGS}:</div>
+      <div id="tags-list" className="duration-200 flex flex-wrap ml-8">
+        {tagOptions.map(tag => {
+          return (
+            <div key={tag.name} className="p-2">
+              <TagItemMini key={tag.name} tag={tag} />
             </div>
-        </div>
-    </>
+          )
+        })}
+      </div>
+    </div>
+  </>
 }
 
 export {

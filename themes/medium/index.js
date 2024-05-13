@@ -46,11 +46,24 @@ export const useMediumGlobal = () => useContext(ThemeGlobalMedium)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, showInfoCard = true, slotRight, notice } = props
+  const { children, showInfoCard = true, post, notice } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const { onLoading, fullWidth } = useGlobal()
+  const [slotRight, setSlotRight] = useState(null);
+
+  useEffect(()=> {
+    if (post?.toc?.length > 0) {
+      setSlotRight(
+        <div key={locale.COMMON.TABLE_OF_CONTENTS}>
+          <Catalog toc={post?.toc} />
+        </div>
+      );
+    } else {
+      setSlotRight(null);
+    }
+  },[post])
 
   const slotTop = <BlogPostBar {...props} />
 
@@ -97,7 +110,7 @@ const LayoutBase = props => {
                     {/* 桌面端右侧 */}
                     {fullWidth
                       ? null
-                      : <div className={`hidden xl:block border-l dark:border-transparent w-96 relative z-10 ${siteConfig('MEDIUM_RIGHT_PANEL_DARK', null, CONFIG) ? 'bg-hexo-black-gray dark' : ''}`}>
+                      : <div className={`hidden xl:block border-l dark:border-transparent w-80 flex-shrink-0 relative z-10 ${siteConfig('MEDIUM_RIGHT_PANEL_DARK', null, CONFIG) ? 'bg-hexo-black-gray dark' : ''}`}>
                             <div className='py-14 px-6 sticky top-0'>
                                 <Tabs>
                                     {slotRight}
@@ -173,7 +186,7 @@ const LayoutSlug = props => {
   }, [post])
 
   return (
-        <div showInfoCard={true} slotRight={slotRight} {...props} >
+        <div {...props} >
             {/* 文章锁 */}
             {lock && <ArticleLock validPassword={validPassword} />}
 
