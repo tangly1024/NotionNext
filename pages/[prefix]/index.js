@@ -75,7 +75,7 @@ const Slug = props => {
       )
       post.toc = getPageTableOfContents(post, post.blockMap)
     }
-  }, [post, lock])
+  }, [router, lock])
 
   props = { ...props, lock, setLock, validPassword }
   // 根据页面路径加载不同Layout文件

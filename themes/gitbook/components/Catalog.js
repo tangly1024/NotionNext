@@ -65,8 +65,6 @@ const Catalog = ({ post }) => {
     return <></>
   }
 
-  console.log('渲染toc', toc)
-
   return (
     <>
       <div
