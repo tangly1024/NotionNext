@@ -67,7 +67,7 @@ const Style = () => {
 
     * {
         scrollbar-width:thin;
-        background: rgba(60, 60, 67, 0.4);//scrollbar-color: #49b1f5 transparent;
+        scrollbar-color: #49b1f5 transparent
     }
     
 
