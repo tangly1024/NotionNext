@@ -4,7 +4,7 @@
  * 创建樱花雨
  * @param config
  */
-const id = 'canvas_sakura'
+const idSakura = 'canvas_sakura'
 function createSakura() {
   var stop, staticx
   var img = new Image()
@@ -176,7 +176,7 @@ function createSakura() {
 
 // 销毁樱花雨
 function destroySakura() {
-  const sakura = document.getElementById(id)
+  const sakura = document.getElementById(idSakura)
   if (sakura && sakura.parentNode) {
     sakura.parentNode.removeChild(sakura)
   }

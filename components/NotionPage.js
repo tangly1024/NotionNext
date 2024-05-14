@@ -47,9 +47,6 @@ const NotionPage = ({ post, className }) => {
       processDisableDatabaseUrl()
     }
 
-    // 若url是本站域名，则之间在当前窗口打开、不开新窗口
-    processPageUrl()
-
     /**
      * 放大查看图片时替换成高清图像
      */
@@ -146,30 +143,6 @@ const processGalleryImg = zoom => {
   }, 800)
 }
 
-/**
- * 处理页面内连接跳转
- * 如果链接就是当网站，则不打开新窗口访问
- */
-const processPageUrl = () => {
-  if (isBrowser) {
-    const currentURL = window.location.origin + window.location.pathname
-    const allAnchorTags = document.getElementsByTagName('a') // 或者使用 document.querySelectorAll('a') 获取 NodeList
-    for (const anchorTag of allAnchorTags) {
-      if (anchorTag?.target === '_blank') {
-        const hrefWithoutQueryHash = anchorTag.href.split('?')[0].split('#')[0]
-        const hrefWithRelativeHash =
-          currentURL.split('#')[0] + anchorTag.href.split('#')[1]
-
-        if (
-          currentURL === hrefWithoutQueryHash ||
-          currentURL === hrefWithRelativeHash
-        ) {
-          anchorTag.target = '_self'
-        }
-      }
-    }
-  }
-}
 /**
  * 根据url参数自动滚动到指定区域
  */
