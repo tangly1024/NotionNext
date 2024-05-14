@@ -128,6 +128,11 @@ const adjustImgSize = (src, maxWidth) => {
 
   // 正则表达式，用于匹配 URL 中的 width 参数
   const widthRegex = /width=\d+/
-  // 使用正则表达式替换 width 参数
-  return src.replace(widthRegex, `width=${screenWidth}`)
+  // 正则表达式，用于匹配 URL 中的 w 参数
+  const wRegex = /w=\d+/
+
+  // 使用正则表达式替换 width/w 参数
+  return src
+    .replace(widthRegex, `width=${screenWidth}`)
+    .replace(wRegex, `w=${screenWidth}`)
 }
