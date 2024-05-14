@@ -1,4 +1,5 @@
 import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 
 /**
@@ -11,10 +12,15 @@ import { useEffect, useRef } from 'react'
 export const ArticleLock = props => {
   const { validPassword } = props
   const { locale } = useGlobal()
-  console.log('locale', locale)
+  const router = useRouter()
+  const passwordInputRef = useRef(null)
 
+  /**
+   * 输入提交密码
+   */
   const submitPassword = () => {
     const p = document.getElementById('password')
+    // 验证失败提示
     if (!validPassword(p?.value)) {
       const tips = document.getElementById('tips')
       if (tips) {
@@ -24,11 +30,10 @@ export const ArticleLock = props => {
     }
   }
 
-  const passwordInputRef = useRef(null)
   useEffect(() => {
     // 选中密码输入框并将其聚焦
     passwordInputRef.current.focus()
-  }, [])
+  }, [router])
 
   return (
     <div
