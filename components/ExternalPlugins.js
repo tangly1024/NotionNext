@@ -6,70 +6,11 @@ import TianLiGPT from './TianliGPT'
 import WebWhiz from './Webwhiz'
 
 import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config'
+import { mapPageUrl } from '@/lib/notion/mapPageUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { initGoogleAdsense } from './GoogleAdsense'
-
-const TwikooCommentCounter = dynamic(
-  () => import('@/components/TwikooCommentCounter'),
-  { ssr: false }
-)
-const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
-  ssr: false
-})
-const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), {
-  ssr: false
-})
-const Fireworks = dynamic(() => import('@/components/Fireworks'), {
-  ssr: false
-})
-const MouseFollow = dynamic(() => import('@/components/MouseFollow'), {
-  ssr: false
-})
-const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
-const FlutteringRibbon = dynamic(
-  () => import('@/components/FlutteringRibbon'),
-  { ssr: false }
-)
-const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false })
-const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
-const StarrySky = dynamic(() => import('@/components/StarrySky'), {
-  ssr: false
-})
-const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
-  ssr: false
-})
-const Analytics = dynamic(
-  () =>
-    import('@vercel/analytics/react').then(async m => {
-      return m.Analytics
-    }),
-  { ssr: false }
-)
-const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
-const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
-const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
-const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
-const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
-  ssr: false
-})
-const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
-const CustomContextMenu = dynamic(
-  () => import('@/components/CustomContextMenu'),
-  { ssr: false }
-)
-const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
-  ssr: false
-})
-const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), {
-  ssr: false
-})
-const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
-  ssr: false
-})
-const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
-  ssr: false
-})
 
 /**
  * 各种插件脚本
@@ -155,6 +96,7 @@ const ExternalPlugin = props => {
     }
   }
 
+  const router = useRouter()
   useEffect(() => {
     // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
@@ -163,6 +105,11 @@ const ExternalPlugin = props => {
       }, 1000)
     }
 
+    // 映射url
+    mapPageUrl(props?.allNavPages)
+  }, [router])
+
+  useEffect(() => {
     // 执行注入脚本
     // eslint-disable-next-line no-eval
     eval(GLOBAL_JS)
@@ -388,5 +335,66 @@ const ExternalPlugin = props => {
     </>
   )
 }
+
+const TwikooCommentCounter = dynamic(
+  () => import('@/components/TwikooCommentCounter'),
+  { ssr: false }
+)
+const DebugPanel = dynamic(() => import('@/components/DebugPanel'), {
+  ssr: false
+})
+const ThemeSwitch = dynamic(() => import('@/components/ThemeSwitch'), {
+  ssr: false
+})
+const Fireworks = dynamic(() => import('@/components/Fireworks'), {
+  ssr: false
+})
+const MouseFollow = dynamic(() => import('@/components/MouseFollow'), {
+  ssr: false
+})
+const Nest = dynamic(() => import('@/components/Nest'), { ssr: false })
+const FlutteringRibbon = dynamic(
+  () => import('@/components/FlutteringRibbon'),
+  { ssr: false }
+)
+const Ribbon = dynamic(() => import('@/components/Ribbon'), { ssr: false })
+const Sakura = dynamic(() => import('@/components/Sakura'), { ssr: false })
+const StarrySky = dynamic(() => import('@/components/StarrySky'), {
+  ssr: false
+})
+const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
+  ssr: false
+})
+const Analytics = dynamic(
+  () =>
+    import('@vercel/analytics/react').then(async m => {
+      return m.Analytics
+    }),
+  { ssr: false }
+)
+const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
+const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
+const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
+const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
+const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
+  ssr: false
+})
+const VConsole = dynamic(() => import('@/components/VConsole'), { ssr: false })
+const CustomContextMenu = dynamic(
+  () => import('@/components/CustomContextMenu'),
+  { ssr: false }
+)
+const DisableCopy = dynamic(() => import('@/components/DisableCopy'), {
+  ssr: false
+})
+const AdBlockDetect = dynamic(() => import('@/components/AdBlockDetect'), {
+  ssr: false
+})
+const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
+  ssr: false
+})
+const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
+  ssr: false
+})
 
 export default ExternalPlugin

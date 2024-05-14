@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react'
  */
 const Slug = props => {
   const { post } = props
+  const router = useRouter()
 
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
@@ -27,9 +28,14 @@ const Slug = props => {
    * @param {*} result
    */
   const validPassword = passInput => {
-    const encrypt = md5(post.slug + passInput)
-    if (passInput && encrypt === post.password) {
+    if (!post) {
+      return false
+    }
+    const encrypt = md5(post?.slug + passInput)
+    if (passInput && encrypt === post?.password) {
       setLock(false)
+      // 输入密码存入localStorage，下次自动提交
+      localStorage.setItem('password_' + router.asPath, passInput)
       return true
     }
     return false
@@ -49,7 +55,27 @@ const Slug = props => {
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
     }
+
+    // 从localStorage中读取上次记录 自动提交密码
+    const passInput = localStorage.getItem('password_' + router.asPath)
+    if (passInput) {
+      validPassword(passInput)
+    }
   }, [post])
+
+  // 文章加载
+  useEffect(() => {
+    if (lock) {
+      return
+    }
+    // 文章解锁后生成目录与内容
+    if (post?.blockMap?.block) {
+      post.content = Object.keys(post.blockMap.block).filter(
+        key => post.blockMap.block[key]?.value?.parent_id === post.id
+      )
+      post.toc = getPageTableOfContents(post, post.blockMap)
+    }
+  }, [router, lock])
 
   props = { ...props, lock, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
