@@ -62,6 +62,7 @@ const Style = () => {
 
     ::-webkit-scrollbar-thumb {
         background-color: #B0C4DE;
+        border-radius: 8px;
     }
 
 
