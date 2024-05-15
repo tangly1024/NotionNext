@@ -1976,9 +1976,9 @@ svg + .notion-page-title-text {
   /* color: var(--notion-gray); */
 }
 
-.notion-asset-wrapper-pdf > div {
+/* .notion-asset-wrapper-pdf > div {
   width: unset !important;
-}
+} */
 
 /* pdf预览适配页面 */
 .react-pdf__Page__canvas,
