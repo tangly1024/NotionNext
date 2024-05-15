@@ -64,13 +64,15 @@ const Style = () => {
         background-color: #B0C4DE;
         border-radius: 8px;
     }
-    
+
+    /*
     @supports not (-webkit-scrollbar: none) {
     * {
         scrollbar-width: thin;
         scrollbar-color: #49b1f5 transparent;
     }
 }
+不考虑兼容性了*/
 
   `}</style>)
 }
