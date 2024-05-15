@@ -61,9 +61,7 @@ export async function getStaticProps(req) {
   // 生成robotTxt
   generateRobotsTxt(props)
   // 生成Feed订阅
-  if (JSON.parse(BLOG.ENABLE_RSS)) {
-    generateRss(props)
-  }
+  generateRss(props)
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
