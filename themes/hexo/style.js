@@ -65,10 +65,12 @@ const Style = () => {
         border-radius: 8px;
     }
     
+    @supports not (-webkit-scrollbar: none) {
     * {
-        scrollbar-width:thin;
-        scrollbar-color: #49b1f5 transparent
+        scrollbar-width: thin;
+        scrollbar-color: #49b1f5 transparent;
     }
+}
 
   `}</style>)
 }
