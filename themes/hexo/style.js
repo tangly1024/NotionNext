@@ -57,16 +57,18 @@ const Style = () => {
     }
 
     ::-webkit-scrollbar-track {
-        background: f5f5f5;
+        background: #f5f5f5;
     }
 
     ::-webkit-scrollbar-thumb {
         background-color: #B0C4DE;
         border-radius: 8px;
     }
-
-
     
+    * {
+        scrollbar-width:thin;
+        scrollbar-color: #49b1f5 transparent
+    }
 
   `}</style>)
 }
