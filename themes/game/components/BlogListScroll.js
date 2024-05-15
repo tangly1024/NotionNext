@@ -7,19 +7,19 @@ import { GameListIndexCombine } from './GameListIndexCombine'
 
 export const BlogListScroll = props => {
   const { posts } = props
-  const { locale } = useGlobal()
-
+  const { locale, NOTION_CONFIG } = useGlobal()
   const [page, updatePage] = useState(1)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
 
   let hasMore = false
   const postsToShow =
     posts && Array.isArray(posts)
-      ? deepClone(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page)
+      ? deepClone(posts).slice(0, POSTS_PER_PAGE * page)
       : []
 
   if (posts) {
     const totalCount = posts.length
-    hasMore = page * parseInt(siteConfig('POSTS_PER_PAGE')) < totalCount
+    hasMore = page * POSTS_PER_PAGE < totalCount
   }
   const handleGetMore = () => {
     if (!hasMore) return
