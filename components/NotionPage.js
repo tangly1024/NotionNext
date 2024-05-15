@@ -211,13 +211,16 @@ const Equation = dynamic(
   { ssr: false }
 )
 
-// 文档
-const Pdf = dynamic(
-  () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
-  {
-    ssr: false
-  }
-)
+// 原版文档
+// const Pdf = dynamic(
+//   () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
+//   {
+//     ssr: false
+//   }
+// )
+const Pdf = dynamic(() => import('@/components/Pdf').then(m => m.Pdf), {
+  ssr: false
+})
 
 // 美化代码 from: https://github.com/txs
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
