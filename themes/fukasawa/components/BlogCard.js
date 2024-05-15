@@ -1,7 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
@@ -41,10 +40,6 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
       }
     : {}
 
-  const url = checkContainHttp(post.slug)
-    ? sliceUrlFromHttp(post.slug)
-    : `${siteConfig('SUB_PATH', '')}/${post.slug}`
-
   return (
     <article
       {...aosProps}
@@ -53,7 +48,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
       <div className='flex flex-col justify-between h-full'>
         {/* 封面图 */}
         {showPageCover && (
-          <Link href={url} passHref legacyBehavior>
+          <Link href={post?.href} passHref legacyBehavior>
             <div className='flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden'>
               <LazyImage
                 src={post?.pageCoverThumbnail}
@@ -69,9 +64,12 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
           <h2>
             <Link
               passHref
-              href={url}
+              href={post?.href}
               className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
-              <NotionIcon icon={post.pageIcon} /> {post.title}
+              {siteConfig('POST_TITLE_ICON') && (
+                <NotionIcon icon={post.pageIcon} />
+              )}{' '}
+              {post.title}
             </Link>
           </h2>
 

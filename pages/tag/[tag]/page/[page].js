@@ -6,13 +6,16 @@ import { useRouter } from 'next/router'
 
 const Tag = props => {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
   return <Layout {...props} />
 }
 
-export async function getStaticProps({ params: { tag, page } }) {
+export async function getStaticProps({ params: { tag, page }, locale }) {
   const from = 'tag-page-props'
-  const props = await getGlobalData({ from })
+  const props = await getGlobalData({ from, locale })
   // 过滤状态、标签
   props.posts = props.allPages
     ?.filter(page => page.type === 'Post' && page.status === 'Published')
@@ -20,14 +23,21 @@ export async function getStaticProps({ params: { tag, page } }) {
   // 处理文章数
   props.postCount = props.posts.length
   // 处理分页
-  props.posts = props.posts.slice(siteConfig('POSTS_PER_PAGE') * (page - 1), siteConfig('POSTS_PER_PAGE') * page)
+  props.posts = props.posts.slice(
+    siteConfig('POSTS_PER_PAGE') * (page - 1),
+    siteConfig('POSTS_PER_PAGE') * page
+  )
 
   props.tag = tag
   props.page = page
   delete props.allPages
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    )
   }
 }
 

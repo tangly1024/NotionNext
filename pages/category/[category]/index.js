@@ -11,19 +11,26 @@ import { useRouter } from 'next/router'
  */
 export default function Category(props) {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
 
   return <Layout {...props} />
 }
 
-export async function getStaticProps({ params: { category } }) {
+export async function getStaticProps({ params: { category }, locale }) {
   const from = 'category-props'
-  let props = await getGlobalData({ from })
+  let props = await getGlobalData({ from, locale })
 
   // 过滤状态
-  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   // 处理过滤
-  props.posts = props.posts.filter(post => post && post.category && post.category.includes(category))
+  props.posts = props.posts.filter(
+    post => post && post.category && post.category.includes(category)
+  )
   // 处理文章页数
   props.postCount = props.posts.length
   // 处理分页
@@ -39,7 +46,11 @@ export async function getStaticProps({ params: { category } }) {
 
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    )
   }
 }
 

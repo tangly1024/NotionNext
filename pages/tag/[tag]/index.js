@@ -11,14 +11,17 @@ import { useRouter } from 'next/router'
  */
 const Tag = props => {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
 
   return <Layout {...props} />
 }
 
-export async function getStaticProps({ params: { tag } }) {
+export async function getStaticProps({ params: { tag }, locale }) {
   const from = 'tag-props'
-  const props = await getGlobalData({ from })
+  const props = await getGlobalData({ from, locale })
 
   // 过滤状态
   props.posts = props.allPages
@@ -39,7 +42,11 @@ export async function getStaticProps({ params: { tag } }) {
   delete props.allPages
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: siteConfig(
+      'NEXT_REVALIDATE_SECOND',
+      BLOG.NEXT_REVALIDATE_SECOND,
+      props.NOTION_CONFIG
+    )
   }
 }
 

@@ -6,11 +6,13 @@ function GroupCategory({ currentCategory, categoryOptions }) {
   }
 
   return (
-    <>
+    <div className='flex items-center'>
       <Link className='mx-2' href='/category'>
         <i className='fas fa-bars' />
       </Link>
-      <div id='category-list' className='dark:border-gray-600 flex flex-wrap py-1'>
+      <div
+        id='category-list'
+        className='dark:border-gray-600 flex flex-wrap py-1'>
         {categoryOptions.map(category => {
           const selected = currentCategory === category.name
           return (
@@ -34,7 +36,7 @@ function GroupCategory({ currentCategory, categoryOptions }) {
           )
         })}
       </div>
-    </>
+    </div>
   )
 }
 
