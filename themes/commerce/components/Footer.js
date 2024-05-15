@@ -167,7 +167,7 @@ const Footer = props => {
                       dangerouslySetInnerHTML={{
                         __html: siteConfig(
                           'COMMERCE_FOOTER_RIGHT_TEXT',
-                          null,
+                          '',
                           CONFIG
                         )
                       }}></div>
