@@ -101,7 +101,7 @@ const ExternalPlugin = props => {
     // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
       setTimeout(() => {
-        initGoogleAdsense()
+        initGoogleAdsense(ADSENSE_GOOGLE_ID)
       }, 1000)
     }
 
