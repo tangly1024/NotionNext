@@ -51,7 +51,7 @@ const Style = () => {
   
   #theme-starter .sticky #navbarCollapse li > a:hover{
     --tw-text-opacity: 1;
-    color: rgb(55 88 249 / var(--tw-text-opacity));
+    color: rgb(129 60 133 / var(--tw-text-opacity));
     opacity: 1;
   }
   
@@ -62,7 +62,7 @@ const Style = () => {
   
   :is(.dark #theme-starter .sticky #navbarCollapse li > a:hover){
     --tw-text-opacity: 1;
-    color: rgb(55 88 249 / var(--tw-text-opacity));
+    color: rgb(129 60 133 / var(--tw-text-opacity));
   }
   
   #navbarCollapse li .ud-menu-scroll.active{
@@ -71,7 +71,7 @@ const Style = () => {
   
   #theme-starter .sticky #navbarCollapse li .ud-menu-scroll.active{
     --tw-text-opacity: 1;
-    color: rgb(55 88 249 / var(--tw-text-opacity));
+    color: rgb(129 60 133 / var(--tw-text-opacity));
     opacity: 1;
   }
   
@@ -82,7 +82,7 @@ const Style = () => {
   
   #theme-starter .sticky .loginBtn:hover{
     --tw-text-opacity: 1;
-    color: rgb(55 88 249 / var(--tw-text-opacity));
+    color: rgb(129 60 133 / var(--tw-text-opacity));
     opacity: 1;
   }
   
@@ -93,12 +93,12 @@ const Style = () => {
   
   :is(.dark #theme-starter .sticky .loginBtn:hover){
     --tw-text-opacity: 1;
-    color: rgb(55 88 249 / var(--tw-text-opacity));
+    color: rgb(129 60 133 / var(--tw-text-opacity));
   }
   
   #theme-starter .sticky .signUpBtn{
     --tw-bg-opacity: 1;
-    background-color: rgb(55 88 249 / var(--tw-bg-opacity));
+    background-color: rgb(129 60 133 / var(--tw-bg-opacity));
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
@@ -173,7 +173,7 @@ const Style = () => {
 .common-carousel .swiper-button-next:hover,
 .common-carousel .swiper-button-prev:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(55 88 249 / var(--tw-bg-opacity));
+  background-color: rgb(129 60 133 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
   --tw-shadow: 0 0 #0000;
