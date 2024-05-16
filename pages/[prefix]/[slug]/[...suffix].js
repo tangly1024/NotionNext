@@ -92,7 +92,7 @@ export async function getStaticProps({
   }
 
   // 文章内容加载
-  if (!props?.posts?.blockMap) {
+  if (!props?.post?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
   // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
