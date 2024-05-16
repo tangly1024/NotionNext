@@ -1,10 +1,10 @@
 import { siteConfig } from '@/lib/config'
-import BlogPostCard from './BlogPostCard'
-import BlogPostListEmpty from './BlogPostListEmpty'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
-import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import BlogPostCard from './BlogPostCard'
+import BlogPostListEmpty from './BlogPostListEmpty'
 
 /**
  * 博客列表滚动分页
@@ -14,7 +14,8 @@ import { useRouter } from 'next/router'
  * @constructor
  */
 const BlogPostListScroll = ({ posts = [], currentSearch }) => {
-  const postsPerPage = parseInt(siteConfig('POSTS_PER_PAGE'))
+  const { NOTION_CONFIG } = useGlobal()
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
   const [page, updatePage] = useState(1)
   const router = useRouter()
   let filteredPosts = Object.assign(posts)
@@ -26,12 +27,12 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
       return searchContent.toLowerCase().includes(searchKey.toLowerCase())
     })
   }
-  const postsToShow = getPostByPage(page, filteredPosts, postsPerPage)
+  const postsToShow = getPostByPage(page, filteredPosts, POSTS_PER_PAGE)
 
   let hasMore = false
   if (filteredPosts) {
     const totalCount = filteredPosts.length
-    hasMore = page * postsPerPage < totalCount
+    hasMore = page * POSTS_PER_PAGE < totalCount
   }
 
   const handleGetMore = () => {
@@ -40,13 +41,19 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   }
 
   // 监听滚动自动分页加载
-  const scrollTrigger = useCallback(throttle(() => {
-    const scrollS = window.scrollY + window.outerHeight
-    const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
-    if (scrollS > clientHeight + 100) {
-      handleGetMore()
-    }
-  }, 500))
+  const scrollTrigger = useCallback(
+    throttle(() => {
+      const scrollS = window.scrollY + window.outerHeight
+      const clientHeight = targetRef
+        ? targetRef.current
+          ? targetRef.current.clientHeight
+          : 0
+        : 0
+      if (scrollS > clientHeight + 100) {
+        handleGetMore()
+      }
+    }, 500)
+  )
 
   // 监听滚动
   useEffect(() => {
@@ -62,23 +69,27 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
   } else {
-    return <div id='posts-wrapper' ref={targetRef} className='w-full'>
+    return (
+      <div id='posts-wrapper' ref={targetRef} className='w-full'>
+        {/* 文章列表 */}
+        <div className='space-y-1 lg:space-y-4'>
+          {postsToShow?.map(post => (
+            <BlogPostCard key={post.id} post={post} showSummary={true} />
+          ))}
+        </div>
 
-      {/* 文章列表 */}
-      <div className='space-y-1 lg:space-y-4'>
-        {postsToShow?.map(post => (
-          <BlogPostCard key={post.id} post={post} showSummary={true} />
-        ))}
+        <div>
+          <div
+            onClick={() => {
+              handleGetMore()
+            }}
+            className='w-full my-4 py-4 text-center cursor-pointer dark:text-gray-200'>
+            {' '}
+            {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+          </div>
+        </div>
       </div>
-
-      <div>
-        <div onClick={() => {
-          handleGetMore()
-        }}
-          className='w-full my-4 py-4 text-center cursor-pointer dark:text-gray-200'
-        > {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`} </div>
-      </div>
-    </div>
+    )
   }
 }
 
@@ -86,14 +97,11 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
  * 获取从第1页到指定页码的文章
  * @param page 第几页
  * @param totalPosts 所有文章
- * @param postsPerPage 每页文章数量
+ * @param POSTS_PER_PAGE 每页文章数量
  * @returns {*}
  */
-const getPostByPage = function (page, totalPosts, postsPerPage) {
-  return totalPosts.slice(
-    0,
-    postsPerPage * page
-  )
+const getPostByPage = function (page, totalPosts, POSTS_PER_PAGE) {
+  return totalPosts.slice(0, POSTS_PER_PAGE * page)
 }
 
 export default BlogPostListScroll

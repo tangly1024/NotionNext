@@ -3,14 +3,17 @@ import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
 import CONFIG from '../config'
 
 export const BlogItem = props => {
   const { post } = props
+  const { NOTION_CONFIG } = useGlobal()
   const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
-  const showPreview = siteConfig('POST_LIST_PREVIEW') && post.blockMap
+  const showPreview =
+    siteConfig('POST_LIST_PREVIEW', false, NOTION_CONFIG) && post.blockMap
 
   return (
     <div
