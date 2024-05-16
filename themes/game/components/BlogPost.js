@@ -1,10 +1,13 @@
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 
 const BlogPost = ({ post }) => {
-  const showPreview = siteConfig('POST_LIST_PREVIEW') && post.blockMap
+  const { NOTION_CONFIG } = useGlobal()
+  const showPreview =
+    siteConfig('POST_LIST_PREVIEW', false, NOTION_CONFIG) && post?.blockMap
 
   return (
     <Link href={post?.href}>
