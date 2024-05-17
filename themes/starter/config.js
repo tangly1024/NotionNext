@@ -3,7 +3,7 @@
  */
 const CONFIG = {
     // 默认只展示Logo文字，如果设置了logo图片，会在文字左侧显示图标
-    STARTER_LOGO: '', // 普通logo图片 示例：/images/starter/logo/logo.svg
+    STARTER_LOGO: '/images/starter/logo/logo.png', // 普通logo图片 示例：/images/starter/logo/logo.svg
     STARTER_LOGO_WHITE: '', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
   
     // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
