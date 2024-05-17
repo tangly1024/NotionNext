@@ -37,7 +37,7 @@ const CONFIG = {
       '卜仙堂的愿景是帮助更多的六道修行者明悟修行之道，在修行路上越走越远，为隐态世界贡献一份微薄之力！ ', // 特性
   
     STARTER_FEATURE_1_TITLE_1: '价格优惠', // 特性1
-    STARTER_FEATURE_1_TEXT_1: '考虑存在部分修行者窘困的经济现状，卜仙堂不会设高价', // 特性1
+    STARTER_FEATURE_1_TEXT_1: '考虑存在部分修行者窘困的经济现状，卜仙堂不会设高价；并且您在购买后的一个月内退出，可以为您退费', // 特性1
     STARTER_FEATURE_1_BUTTON_TEXT: '', // 特性1
     STARTER_FEATURE_1_BUTTON_URL: '', // 特性1
   
