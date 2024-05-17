@@ -48,18 +48,19 @@ export const NavBar = (props) => {
       {/* <!-- ====== Navbar Section Start --> */}
       <div className="ud-header absolute left-0 top-0 z-40 flex w-full items-center bg-transparent">
         <div className="container">
-          <div className="relative -mx-4 flex items-center">
-            {/* Logo */}
-            <Logo />
+          <div className="relative -mx-4 flex items-center justify-between">
+            {/* Logo 容器 */}
+            <div className="flex items-center">
+              <Logo />
+            </div>
 
-            <div className="flex w-full items-center justify-center px-4">
-              {/* 中间菜单 */}
+            {/* 菜单列表居中 */}
+            <div className="flex items-center justify-center">
               <MenuList {...props} />
             </div>
 
-            {/* 右侧功能 */}
+            {/* 右侧功能容器 */}
             <div className="flex items-center justify-end pr-16 lg:pr-0">
-              {/* 深色模式切换 */}
               <DarkModeButton />
               {/* 注册登录功能 */}
               <div className="hidden sm:flex">
