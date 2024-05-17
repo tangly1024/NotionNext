@@ -60,49 +60,49 @@ const CONFIG = {
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
   STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
   STARTER_ABOUT_TEXT:
-    'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
+    'NanKoYo静态生成器是一款简单而强大的网页生成器，旨在让任何人都能轻松创建出令人印象深刻的网站，无需编程知识。<br /> <br />我们结合了自然语言处理和图形学技术，为用户提供了直观、灵活的网页设计体验。无论您是个人用户还是企业客户，NanKoYo都能满足您的需求，让网页设计变得简单、直观和创意。 ',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
   STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
   STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
-  STARTER_ABOUT_TIPS_1: '7000+',
-  STARTER_ABOUT_TIPS_2: '博客站点',
-  STARTER_ABOUT_TIPS_3: '正在线上运行',
+  STARTER_ABOUT_TIPS_1: '我们的产品目前有,
+  STARTER_ABOUT_TIPS_2: '100,000个',
+  STARTER_ABOUT_TIPS_3: '终端客户正在使用',
 
   // 首页价格区块
   STARTER_PRICING_ENABLE: true, // 价格区块开关
   STARTER_PRICING_TITLE: '价格表',
   STARTER_PRICING_TEXT_1: '很棒的定价计划',
   STARTER_PRICING_TEXT_2:
-    '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
+    '我们制定了灵活的付费模式，您可以按需选择。',
 
-  STARTER_PRICING_1_TITLE: '入门版',
-  STARTER_PRICING_1_PRICE: '19.9',
-  STARTER_PRICING_1_PRICE_CURRENCY: '$',
-  STARTER_PRICING_1_PRICE_PERIOD: '每月',
+  STARTER_PRICING_1_TITLE: '基础套餐',
+  STARTER_PRICING_1_PRICE: '99',
+  STARTER_PRICING_1_PRICE_CURRENCY: '¥',
+  STARTER_PRICING_1_PRICE_PERIOD: '每年',
   STARTER_PRICING_1_HEADER: '功能点',
-  STARTER_PRICING_1_FEATURES: '所有的主题,免费更新,帮助手册', // 英文逗号隔开
+  STARTER_PRICING_1_FEATURES: '适用于个人用户或小型团队,自然语言处理技术,基本图形学技术支持,简单易用的界面,1个自定义域名,基本技术支持', // 英文逗号隔开
   STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_1_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
 
   STARTER_PRICING_2_TAG: '推荐',
-  STARTER_PRICING_2_TITLE: '基础版',
-  STARTER_PRICING_2_PRICE: '39.9',
-  STARTER_PRICING_2_PRICE_CURRENCY: '$',
-  STARTER_PRICING_2_PRICE_PERIOD: '每月',
+  STARTER_PRICING_2_TITLE: '专业套餐',
+  STARTER_PRICING_2_PRICE: '199',
+  STARTER_PRICING_2_PRICE_CURRENCY: '¥',
+  STARTER_PRICING_2_PRICE_PERIOD: '每年',
   STARTER_PRICING_2_HEADER: '功能点',
-  STARTER_PRICING_2_FEATURES: '包含入门版,项目源码,内部社群,技术咨询,SEO优化', // 英文逗号隔开
+  STARTER_PRICING_2_FEATURES: '适用于中小型企业或创业者,自然语言处理技术,全面的图形学技术支持,简单易用的界面,3个自定义域名,定制化选项,优先技术支持', // 英文逗号隔开
   STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_2_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/590ad70a-c3b7-4caf-94ec-9ca27bde06d4',
 
-  STARTER_PRICING_3_TITLE: '高级版',
-  STARTER_PRICING_3_PRICE: '59.9',
-  STARTER_PRICING_3_PRICE_CURRENCY: '$',
-  STARTER_PRICING_3_PRICE_PERIOD: '每月',
+  STARTER_PRICING_3_TITLE: '企业套餐',
+  STARTER_PRICING_3_PRICE: '499',
+  STARTER_PRICING_3_PRICE_CURRENCY: '¥',
+  STARTER_PRICING_3_PRICE_PERIOD: '每年',
   STARTER_PRICING_3_HEADER: '功能点',
-  STARTER_PRICING_3_FEATURES: '包含基础版,功能定制开发', // 英文逗号隔开
+  STARTER_PRICING_3_FEATURES: '适用于大型企业或需要高级定制的用户,自然语言处理技术,全面的图形学技术支持,简单易用的界面,无限自定义域名,定制化选项,24/7优先技术支持,SLA服务水平协议', // 英文逗号隔开
   STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_3_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
