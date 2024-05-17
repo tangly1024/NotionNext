@@ -205,24 +205,104 @@ const CONFIG = {
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
-      STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
+        'https://img.tucang.cc/api/image/show/a11f6f30ede8915d2523c1a48d037849',
+      STARTER_TEAM_ITEM_NICKNAME: 'Emily Zhang',
+      STARTER_TEAM_ITEM_DESCRIPTION: '数据分析师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-01.png',
-      STARTER_TEAM_ITEM_NICKNAME: 'Melissa Tatcher',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/f40c48a5952485b7446c94eb9a2215b8',
+      STARTER_TEAM_ITEM_NICKNAME: 'Andrew Li',
+      STARTER_TEAM_ITEM_DESCRIPTION: '网页设计师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
-      STARTER_TEAM_ITEM_NICKNAME: 'Stuard Ferrel',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/a11f6f30ede8915d2523c1a48d037849,
+      STARTER_TEAM_ITEM_NICKNAME: 'Jason Liu',
+      STARTER_TEAM_ITEM_DESCRIPTION: '软件工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-03.png',
-      STARTER_TEAM_ITEM_NICKNAME: 'Eva Hudson',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Creative Designer'
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/bbd6d07bd180b12a15daa3af925225a6',
+      STARTER_TEAM_ITEM_NICKNAME: 'Sophia Chen',
+      STARTER_TEAM_ITEM_DESCRIPTION: '用户体验设计师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/65ea9696caaef7f87ba2bb63767049a1',
+      STARTER_TEAM_ITEM_NICKNAME: 'Kevin Wang',
+      STARTER_TEAM_ITEM_DESCRIPTION: '前端开发工程师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/a4354642a5bea6f8771b167dfcb42a8f',
+      STARTER_TEAM_ITEM_NICKNAME: 'Jessica Wu',
+      STARTER_TEAM_ITEM_DESCRIPTION: '后端开发工程师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d2bf2966a7879e4f643c484410e8a119',
+      STARTER_TEAM_ITEM_NICKNAME: 'Brian Zhao',
+      STARTER_TEAM_ITEM_DESCRIPTION: '移动应用设计师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d8b7111f02f5af8361ec5fc165bf0f9d',
+      STARTER_TEAM_ITEM_NICKNAME: 'Alice Wang',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'UI/UX 设计师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/f40c48a5952485b7446c94eb9a2215b8',
+      STARTER_TEAM_ITEM_NICKNAME: 'Daniel Lee',
+      STARTER_TEAM_ITEM_DESCRIPTION: '数据库管理员'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/2309e0a59c0b7bea27794fa34de7b5d9',
+      STARTER_TEAM_ITEM_NICKNAME: 'Angela Xu',
+      STARTER_TEAM_ITEM_DESCRIPTION: '系统架构师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/c8c196e4209d339c12cadef6c3191075',
+      STARTER_TEAM_ITEM_NICKNAME: 'Steven Chen',
+      STARTER_TEAM_ITEM_DESCRIPTION: '网络安全专家'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/98f10b5bc914442d90eb584a655d1397',
+      STARTER_TEAM_ITEM_NICKNAME: 'Cindy Zhou',
+      STARTER_TEAM_ITEM_DESCRIPTION: '自然语言处理工程师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d81d5b7317a8993d7fb46e973dce8304',
+      STARTER_TEAM_ITEM_NICKNAME: 'Eric Huang',
+      STARTER_TEAM_ITEM_DESCRIPTION: '人工智能工程师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/76b79c901ba706b9c9f9493c8656cc26',
+      STARTER_TEAM_ITEM_NICKNAME: 'Michelle Liu',
+      STARTER_TEAM_ITEM_DESCRIPTION: '质量保证工程师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d6d866b25421fe15769139d5484be5ce',
+      STARTER_TEAM_ITEM_NICKNAME: 'Tony Guo',
+      STARTER_TEAM_ITEM_DESCRIPTION: '项目经理'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d1470fba37f8504385069e2d9a5d286a',
+      STARTER_TEAM_ITEM_NICKNAME: 'Grace Lin',
+      STARTER_TEAM_ITEM_DESCRIPTION: '网站管理员'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/c1ace7d20f153035ff98791a579e4b81',
+      STARTER_TEAM_ITEM_NICKNAME: 'Michael Zhang',
+      STARTER_TEAM_ITEM_DESCRIPTION: '数据科学家'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/c3750a344a199a2af9472eb4a57a2df2',
+      STARTER_TEAM_ITEM_NICKNAME: 'Jennifer Wang',
+      STARTER_TEAM_ITEM_DESCRIPTION: '云计算工程师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/02cafb4d77f6c46571c55ecf5a690cc8',
+      STARTER_TEAM_ITEM_NICKNAME: 'Alex Wu',
+      STARTER_TEAM_ITEM_DESCRIPTION: '前端设计师'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/4dedab07de87e2f356c478800ff5ad8a',
+      STARTER_TEAM_ITEM_NICKNAME: 'Lucy Chen',
+      STARTER_TEAM_ITEM_DESCRIPTION: '软件测试工程师'
     }
   ],
 
