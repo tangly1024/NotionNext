@@ -215,7 +215,7 @@ const CONFIG = {
       STARTER_TEAM_ITEM_DESCRIPTION: '网页设计师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/a11f6f30ede8915d2523c1a48d037849,
+      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/a11f6f30ede8915d2523c1a48d037849',
       STARTER_TEAM_ITEM_NICKNAME: 'Jason Liu',
       STARTER_TEAM_ITEM_DESCRIPTION: '软件工程师'
     },
