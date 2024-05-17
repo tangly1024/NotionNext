@@ -58,7 +58,7 @@ const CONFIG = {
   
     // 首页ABOUT区块
     STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
-    STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
+    STARTER_ABOUT_TITLE: '持续稳定且深入指导修行的答疑服务',
     STARTER_ABOUT_TEXT:
       '卜仙堂的愿景是帮助更多的六道修行者明悟修行之道，在修行路上越走越远，为隐态世界贡献一份微薄之力！ <br /> <br /> 因为我们一切以世界本质出发，积累知晓的实修经验，您可以放心的学习了解佛道仙易及丹道理论知识，我们会耐心且专业的回答各种疑问。 <br /> <br />我们希望您能通过答疑服务，掌握“普法”、“查事”两大技能。',
     STARTER_ABOUT_BUTTON_TEXT: '了解更多',
