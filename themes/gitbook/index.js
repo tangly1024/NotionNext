@@ -9,6 +9,7 @@ import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
+import { getShortId } from '@/lib/utils/pageId'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -54,14 +55,14 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     localStorage.getItem('post_read_time') || '{}'
   )
   if (post) {
-    postReadTime[post.id] = new Date().getTime()
+    postReadTime[getShortId(post.id)] = new Date().getTime()
   }
   // 更新
   localStorage.setItem('post_read_time', JSON.stringify(postReadTime))
 
   return allNavPages?.map(item => {
     const res = {
-      id: item.id,
+      short_id: item.short_id,
       title: item.title || '',
       pageCoverThumbnail: item.pageCoverThumbnail || '',
       category: item.category || null,
@@ -74,9 +75,9 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     }
     // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
     if (
-      latestPosts.some(post => post.id === item.id) &&
-      (!postReadTime[item.id] ||
-        postReadTime[item.id] < new Date(item.lastEditedDate).getTime())
+      latestPosts.some(post => item?.short_id === post?.short_id) &&
+      (!postReadTime[item.short_id] ||
+        postReadTime[item.short_id] < new Date(item.lastEditedDate).getTime())
     ) {
       return { ...res, isLatest: true }
     } else {
@@ -412,11 +413,9 @@ const LayoutArchive = props => {
  */
 const Layout404 = props => {
   return (
-    <>
-      <div className='w-full h-96 py-80 flex justify-center items-center'>
-        404 Not found.
-      </div>
-    </>
+    <div className='w-full h-96 py-80 flex justify-center items-center'>
+      404 Not found.
+    </div>
   )
 }
 
