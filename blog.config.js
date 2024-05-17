@@ -531,7 +531,7 @@ const BLOG = {
   HOME_BANNER_IMAGE:
     process.env.NEXT_PUBLIC_HOME_BANNER_IMAGE || '/bg_image.jpg', // 首页背景大图, 会被notion中的封面图覆盖，若无封面图则会使用代码中的 /public/bg_image.jpg 文件
   DESCRIPTION:
-    process.env.NEXT_PUBLIC_DESCRIPTION || '轻松创建漂亮的静态网页', // 站点描述，被notion中的页面描述覆盖
+    process.env.NEXT_PUBLIC_DESCRIPTION || 'NankoYo静态生成器是一个创新性的网页项目，旨在为用户提供一种简单而强大的方式来创建静态网站。通过结合自然语言处理和图形学技术，NankoYo能够从用户提供的简单文本描述中生成复杂的网页布局和设计。这个项目的目标是让网站创建变得更加容易和直观，使任何人都能够在没有编程知识的情况下设计出令人印象深刻的网站。NankoYo静态生成器将用户的创意转化为现实，为他们带来了全新的网页开发体验。', // 站点描述，被notion中的页面描述覆盖
 
   // 开发相关
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
