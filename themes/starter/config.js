@@ -65,7 +65,7 @@ const CONFIG = {
   STARTER_ABOUT_BUTTON_URL: '/about',
   STARTER_ABOUT_IMAGE_1: 'https://img.tucang.cc/api/image/show/a8a0e597f2acd9e98a0f6d24077bfc45',
   STARTER_ABOUT_IMAGE_2: 'https://img.tucang.cc/api/image/show/74e88b835701e67910ba71cd0c85919d',
-  STARTER_ABOUT_TIPS_1: '我们的产品目前有,
+  STARTER_ABOUT_TIPS_1: '我们的产品目前有',
   STARTER_ABOUT_TIPS_2: '100,000',
   STARTER_ABOUT_TIPS_3: '终端客户正在使用',
 
