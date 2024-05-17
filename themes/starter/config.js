@@ -31,44 +31,43 @@ const CONFIG = {
   
     // 特性区块
     STARTER_FEATURE_ENABLE: true, // 特性区块开关
-    STARTER_FEATURE_TITLE: '特性', // 特性
-    STARTER_FEATURE_TEXT_1: 'NotionNext的主要特性', // 特性
+    STARTER_FEATURE_TITLE: '优势', // 特性
+    STARTER_FEATURE_TEXT_1: '卜仙堂答疑服务的主要优势', // 特性
     STARTER_FEATURE_TEXT_2:
-      'NotionNext的愿景是帮助您简单、无感知地稳定地搭建自己的网站，放大品牌的价值。 ', // 特性
+      '卜仙堂的愿景是帮助更多的六道修行者明悟修行之道，在修行路上越走越远，为隐态世界贡献一份微薄之力！ ', // 特性
   
-    STARTER_FEATURE_1_TITLE_1: '免费且开源', // 特性1
-    STARTER_FEATURE_1_TEXT_1: '项目源码在Github上完全开放共享，遵循MIT协议', // 特性1
-    STARTER_FEATURE_1_BUTTON_TEXT: '了解更多', // 特性1
-    STARTER_FEATURE_1_BUTTON_URL: 'https://github.com/tangly1024/NotionNext', // 特性1
+    STARTER_FEATURE_1_TITLE_1: '价格优惠', // 特性1
+    STARTER_FEATURE_1_TEXT_1: '考虑存在部分修行者窘困的经济现状，卜仙堂不会设高价', // 特性1
+    STARTER_FEATURE_1_BUTTON_TEXT: '', // 特性1
+    STARTER_FEATURE_1_BUTTON_URL: '', // 特性1
   
-    STARTER_FEATURE_2_TITLE_1: '多种主题定制', // 特性2
-    STARTER_FEATURE_2_TEXT_1: '数十种主题,适用于不同场景，总有一款适合你', // 特性2
-    STARTER_FEATURE_2_BUTTON_TEXT: '了解更多', // 特性2
-    STARTER_FEATURE_2_BUTTON_URL:
-      'https://docs.tangly1024.com/article/notion-next-themes', // 特性2
+    STARTER_FEATURE_2_TITLE_1: '理法严谨清晰', // 特性2
+    STARTER_FEATURE_2_TEXT_1: '我们的修行理念是“秉万法虽异而归宗”', // 特性2
+    STARTER_FEATURE_2_BUTTON_TEXT: '', // 特性2
+    STARTER_FEATURE_2_BUTTON_URL:  '', // 特性2
   
-    STARTER_FEATURE_3_TITLE_1: '优秀的性能', // 特性3
-    STARTER_FEATURE_3_TEXT_1: '基于NextJS开发，更快的响应速度，更好的SEO', // 特性3
-    STARTER_FEATURE_3_BUTTON_TEXT: '了解更多', // 特性3
-    STARTER_FEATURE_3_BUTTON_URL: 'https://docs.tangly1024.com/article/next-js', // 特性3
+    STARTER_FEATURE_3_TITLE_1: '充足的实修经验', // 特性3
+    STARTER_FEATURE_3_TEXT_1: '我们修行方法是“学”、“悟”、“证”、“行”', // 特性3
+    STARTER_FEATURE_3_BUTTON_TEXT: '', // 特性3
+    STARTER_FEATURE_3_BUTTON_URL: '', // 特性3
   
-    STARTER_FEATURE_4_TITLE_1: '便捷的写作体验', // 特性4
-    STARTER_FEATURE_4_TEXT_1: '只需在Notion笔记中编修，自动同步到网站', // 特性4
-    STARTER_FEATURE_4_BUTTON_TEXT: '了解更多', // 特性4
-    STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
+    STARTER_FEATURE_4_TITLE_1: '安全可靠', // 特性4
+    STARTER_FEATURE_4_TEXT_1: '我们不会圈堂劫财及限制自由', // 特性4
+    STARTER_FEATURE_4_BUTTON_TEXT: '', // 特性4
+    STARTER_FEATURE_4_BUTTON_URL: '', // 特性4
   
     // 首页ABOUT区块
     STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
     STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
     STARTER_ABOUT_TEXT:
-      'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
+      '卜仙堂的愿景是帮助更多的六道修行者明悟修行之道，在修行路上越走越远，为隐态世界贡献一份微薄之力！ <br /> <br /> 因为我们一切以世界本质出发，积累知晓的实修经验，您可以放心的学习了解佛道仙易及丹道理论知识，我们会耐心且专业的回答各种疑问。 <br /> <br />我们希望您能通过答疑服务，掌握“普法”、“查事”两大技能。',
     STARTER_ABOUT_BUTTON_TEXT: '了解更多',
-    STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
+    STARTER_ABOUT_BUTTON_URL: 'https://buxiantang.top/post/buxiantang-Service',
     STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
     STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
-    STARTER_ABOUT_TIPS_1: '7000+',
-    STARTER_ABOUT_TIPS_2: '博客站点',
-    STARTER_ABOUT_TIPS_3: '正在线上运行',
+    STARTER_ABOUT_TIPS_1: '160k+',
+    STARTER_ABOUT_TIPS_2: '阅读/观看量',
+    STARTER_ABOUT_TIPS_3: '已经形成',
   
     // 首页价格区块
     STARTER_PRICING_ENABLE: true, // 价格区块开关
