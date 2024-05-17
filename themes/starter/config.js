@@ -38,23 +38,23 @@ const CONFIG = {
   STARTER_FEATURE_1_TITLE_1: '自然语言处理技术', // 特性1
   STARTER_FEATURE_1_TEXT_1: '通过自然语言理解，将用户描述转化为网页设计。', // 特性1
   STARTER_FEATURE_1_BUTTON_TEXT: '了解更多', // 特性1
-  STARTER_FEATURE_1_BUTTON_URL: 'https://github.com/tangly1024/NotionNext', // 特性1
+  STARTER_FEATURE_1_BUTTON_URL: 'https://nankoyo.com/feature-1', // 特性1
 
   STARTER_FEATURE_2_TITLE_1: '图形学技术支持', // 特性2
   STARTER_FEATURE_2_TEXT_1: '利用先进的图形学技术创建精美的网页布局和设计。', // 特性2
   STARTER_FEATURE_2_BUTTON_TEXT: '了解更多', // 特性2
   STARTER_FEATURE_2_BUTTON_URL:
-    'https://docs.tangly1024.com/article/notion-next-themes', // 特性2
+    'https://nankoyo.com/feature-2', // 特性2
 
   STARTER_FEATURE_3_TITLE_1: '简单易用的界面', // 特性3
   STARTER_FEATURE_3_TEXT_1: '提供直观简单的界面，使用户轻松创建网站，无需编程知识。', // 特性3
   STARTER_FEATURE_3_BUTTON_TEXT: '了解更多', // 特性3
-  STARTER_FEATURE_3_BUTTON_URL: 'https://docs.tangly1024.com/article/next-js', // 特性3
+  STARTER_FEATURE_3_BUTTON_URL: 'https://nankoyo.com/feature-3', // 特性3
 
   STARTER_FEATURE_4_TITLE_1: '完全自定义的选项', // 特性4
   STARTER_FEATURE_4_TEXT_1: '允许用户根据需求定制和调整生成的网页，实现个性化设计。', // 特性4
   STARTER_FEATURE_4_BUTTON_TEXT: '了解更多', // 特性4
-  STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
+  STARTER_FEATURE_4_BUTTON_URL: 'https://nankoyo.com/feature-4', // 特性4
 
   // 首页ABOUT区块
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
@@ -62,7 +62,7 @@ const CONFIG = {
   STARTER_ABOUT_TEXT:
     'NanKoYo静态生成器是一款简单而强大的网页生成器，旨在让任何人都能轻松创建出令人印象深刻的网站，无需编程知识。<br /> <br />我们结合了自然语言处理和图形学技术，为用户提供了直观、灵活的网页设计体验。无论您是个人用户还是企业客户，NanKoYo都能满足您的需求，让网页设计变得简单、直观和创意。 ',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
-  STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
+  STARTER_ABOUT_BUTTON_URL: 'https://nankoyo.com/about',
   STARTER_ABOUT_IMAGE_1: 'https://img.tucang.cc/api/image/show/a8a0e597f2acd9e98a0f6d24077bfc45',
   STARTER_ABOUT_IMAGE_2: 'https://img.tucang.cc/api/image/show/74e88b835701e67910ba71cd0c85919d',
   STARTER_ABOUT_TIPS_1: '我们的产品目前有,
@@ -319,9 +319,9 @@ const CONFIG = {
   STARTER_CONTACT_TITLE: '联系我们',
   STARTER_CONTACT_TEXT: '告诉我们您遇到的问题',
   STARTER_CONTACT_LOCATION_TITLE: '我们的位置',
-  STARTER_CONTACT_LOCATION_TEXT: '中国，福建',
+  STARTER_CONTACT_LOCATION_TEXT: '中国，天津',
   STARTER_CONTACT_EMAIL_TITLE: '我们如何帮助您？',
-  STARTER_CONTACT_EMAIL_TEXT: 'mail@tangly1024.com',
+  STARTER_CONTACT_EMAIL_TEXT: 'mail@nankoyo.com',
 
   // 嵌入外部表单
   STARTER_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/feedback-yjrioz', // 基于NoteForm创建，将留言数据存在Notion中
@@ -377,14 +377,14 @@ const CONFIG = {
       TITLE: '关于我们',
       LINK_GROUP: [
         { TITLE: '官方主页', URL: '/#home' },
-        { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
+        { TITLE: '操作文档', URL: 'https://nankoyo.com/operating' },
         {
           TITLE: '帮助支持',
-          URL: 'https://docs.tangly1024.com/article/how-to-question'
+          URL: 'https://nankoyo.com/how-to-question'
         },
         {
           TITLE: '合作申请',
-          URL: 'https://docs.tangly1024.com/article/my-service'
+          URL: 'https://nankoyo.com/my-service'
         }
       ]
     },
@@ -393,29 +393,29 @@ const CONFIG = {
       LINK_GROUP: [
         {
           TITLE: '部署指南',
-          URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next'
+          URL: 'https://nankoyo.com/deploy-nankoyo-next'
         },
         {
           TITLE: '升级指南',
-          URL: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
+          URL: 'https://nankoyo.com/how-to-update-nankoyo'
         },
-        { TITLE: '最新版本', URL: 'https://docs.tangly1024.com/article/latest' }
+        { TITLE: '最新版本', URL: 'https://nankoyo.com/latest' }
       ]
     },
     {
-      TITLE: 'Notion写作',
+      TITLE: '友情链接',
       LINK_GROUP: [
         {
-          TITLE: 'Notion开始写作',
-          URL: 'https://docs.tangly1024.com/article/start-to-write'
+          TITLE: '待添加',
+          URL: '#'
         },
         {
-          TITLE: '快捷键提升效率',
-          URL: 'https://docs.tangly1024.com/article/notion-short-key'
+          TITLE: '待添加',
+          URL: '#'
         },
         {
-          TITLE: '中国大陆使用Notion',
-          URL: 'https://docs.tangly1024.com/article/notion-faster'
+          TITLE: '待添加',
+          URL: '#'
         }
       ]
     }
@@ -438,7 +438,7 @@ const CONFIG = {
   STARTER_404_BACK: '回到主页',
 
   STARTER_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
-  STARTER_POST_REDIRECT_URL: 'https://blog.tangly1024.com', // 重定向域名
+  STARTER_POST_REDIRECT_URL: 'https://nankoyo.com', // 重定向域名
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
 export default CONFIG
