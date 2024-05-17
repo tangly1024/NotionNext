@@ -93,7 +93,7 @@ export const MenuList = props => {
         <nav
           id='navbarCollapse'
           className='absolute right-4 top-full hidden w-full max-w-[250px] rounded-lg bg-white py-5 shadow-lg dark:bg-dark-2 lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent lg:px-4 lg:py-0 lg:shadow-none dark:lg:bg-transparent xl:px-6'>
-          <ul className='flex justify-center lg:flex 2xl:ml-20'>
+          <ul className='flex justify-center lg:flex'>
             {links?.map((link, index) => (
               <MenuItem key={index} link={link} />
             ))}
