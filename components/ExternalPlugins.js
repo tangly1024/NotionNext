@@ -6,7 +6,7 @@ import TianLiGPT from './TianliGPT'
 import WebWhiz from './Webwhiz'
 
 import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config'
-import { mapPageUrl } from '@/lib/notion/mapPageUrl'
+import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -101,12 +101,12 @@ const ExternalPlugin = props => {
     // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
       setTimeout(() => {
-        initGoogleAdsense()
+        initGoogleAdsense(ADSENSE_GOOGLE_ID)
       }, 1000)
     }
 
     // 映射url
-    mapPageUrl(props?.allNavPages)
+    convertInnerUrl(props?.allNavPages)
   }, [router])
 
   useEffect(() => {
