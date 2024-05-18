@@ -34,7 +34,7 @@ export const Pricing = () => {
         <div className="-mx-4 flex flex-wrap justify-center">
 
           {/* 第一个付费计划 */}
-          <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
             <div
               className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
             >
@@ -78,7 +78,7 @@ export const Pricing = () => {
           </div>
 
           {/* 第二个付费计划 */}
-          <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
             <div
               className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
             >
@@ -127,7 +127,7 @@ export const Pricing = () => {
           </div>
 
           {/* 第三个付费计划 */}
-          <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
             <div
               className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
             >
@@ -170,7 +170,7 @@ export const Pricing = () => {
             </div>
           </div>
 
-          <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+          <div className="w-full px-4 md:w-1/2 lg:w-1/4">
             <div
               className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
             >
