@@ -74,7 +74,7 @@ const CONFIG = {
     STARTER_PRICING_TITLE: '价格计划表',
     STARTER_PRICING_TEXT_1: '高性价比的定价计划',
     STARTER_PRICING_TEXT_2:
-      '我们制定了灵活的付费模式，您可以按需选择。）',
+      '我们制定了灵活的付费模式，您可以按需选择。',
 
     STARTER_PRICING_1_TITLE: '结缘版',
     STARTER_PRICING_1_PRICE: '90',
