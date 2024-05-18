@@ -169,6 +169,48 @@ export const Pricing = () => {
               </a>
             </div>
           </div>
+
+          <div className="w-full px-4 md:w-1/2 lg:w-1/3">
+            <div
+              className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
+            >
+              <span
+                className="mb-5 block text-xl font-medium text-dark dark:text-white"
+              >
+                {siteConfig('STARTER_PRICING_4_TITLE', null, CONFIG)}
+              </span>
+              <h2
+                className="space-x-1 mb-11 text-4xl font-semibold text-dark dark:text-white xl:text-[42px] xl:leading-[1.21]"
+              >
+                <span className="text-xl font-medium">{siteConfig('STARTER_PRICING_4_PRICE_CURRENCY', null, CONFIG)}</span>
+                <span className="-ml-1 -tracking-[2px]">{siteConfig('STARTER_PRICING_4_PRICE', null, CONFIG)}</span>
+                <span
+                  className="text-base font-normal text-body-color dark:text-dark-6"
+                >
+                  {siteConfig('STARTER_PRICING_4_PRICE_PERIOD', null, CONFIG)}
+                </span>
+              </h2>
+
+              <div className="mb-[50px]">
+                <h5 className="mb-5 text-lg font-medium text-dark dark:text-white">
+                  {siteConfig('STARTER_PRICING_4_HEADER', null, CONFIG)}
+                </h5>
+                <div className="flex flex-col gap-[14px]">
+                  {siteConfig('STARTER_PRICING_4_FEATURES', null, CONFIG)?.split(',').map((feature, index) => {
+                    return <p key={index} className="text-base text-body-color dark:text-dark-6">
+                      {feature}
+                    </p>
+                  })}
+                </div>
+              </div>
+              <a
+                href={siteConfig('STARTER_PRICING_4_BUTTON_URL', null, CONFIG)}
+                className="inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark"
+              >
+                {siteConfig('STARTER_PRICING_4_BUTTON_TEXT', null, CONFIG)}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
