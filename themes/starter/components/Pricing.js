@@ -82,11 +82,6 @@ export const Pricing = () => {
             <div
               className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
             >
-              <p style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
-                className="absolute p-1 right-0 top-0 inline-block rounded-bl-md rounded-tl-md bg-primary text-base font-medium text-white tracking-wider"
-              >
-                {siteConfig('STARTER_PRICING_2_TAG', null, CONFIG)}
-              </p>
               <span
                 className="mb-5 block text-xl font-medium text-dark dark:text-white"
               >
@@ -131,6 +126,11 @@ export const Pricing = () => {
             <div
               className="relative z-10 mb-10 overflow-hidden rounded-xl bg-white px-8 py-10 shadow-pricing dark:bg-dark-2 sm:p-12 lg:px-6 lg:py-10 xl:p-14"
             >
+              <p style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+                className="absolute p-1 right-0 top-0 inline-block rounded-bl-md rounded-tl-md bg-primary text-base font-medium text-white tracking-wider"
+              >
+                {siteConfig('STARTER_PRICING_3_TAG', null, CONFIG)}
+              </p>
               <span
                 className="mb-5 block text-xl font-medium text-dark dark:text-white"
               >
