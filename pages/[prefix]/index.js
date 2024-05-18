@@ -145,7 +145,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   }
 
   // 文章内容加载
-  if (!props?.posts?.blockMap) {
+  if (!props?.post?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
