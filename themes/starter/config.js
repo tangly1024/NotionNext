@@ -71,46 +71,56 @@ const CONFIG = {
   
     // 首页价格区块
     STARTER_PRICING_ENABLE: true, // 价格区块开关
-    STARTER_PRICING_TITLE: '价格表',
-    STARTER_PRICING_TEXT_1: '很棒的定价计划',
+    STARTER_PRICING_TITLE: '价格计划表',
+    STARTER_PRICING_TEXT_1: '高性价比的定价计划',
     STARTER_PRICING_TEXT_2:
-      '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
-  
-    STARTER_PRICING_1_TITLE: '入门版',
-    STARTER_PRICING_1_PRICE: '19.9',
-    STARTER_PRICING_1_PRICE_CURRENCY: '$',
-    STARTER_PRICING_1_PRICE_PERIOD: '每月',
-    STARTER_PRICING_1_HEADER: '功能点',
-    STARTER_PRICING_1_FEATURES: '所有的主题,免费更新,帮助手册', // 英文逗号隔开
-    STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
-    STARTER_PRICING_1_BUTTON_URL:
-      'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
-  
-    STARTER_PRICING_2_TAG: '推荐',
-    STARTER_PRICING_2_TITLE: '基础版',
-    STARTER_PRICING_2_PRICE: '39.9',
-    STARTER_PRICING_2_PRICE_CURRENCY: '$',
-    STARTER_PRICING_2_PRICE_PERIOD: '每月',
-    STARTER_PRICING_2_HEADER: '功能点',
-    STARTER_PRICING_2_FEATURES: '包含入门版,项目源码,内部社群,技术咨询,SEO优化', // 英文逗号隔开
+      '我们制定了灵活的付费模式，您可以按需选择。）',
+
+    STARTER_PRICING_2_TITLE: '结缘版',
+    STARTER_PRICING_2_PRICE: '90',
+    STARTER_PRICING_2_PRICE_CURRENCY: '￥',
+    STARTER_PRICING_2_PRICE_PERIOD: '每次',
+    STARTER_PRICING_2_HEADER: '内容',
+    STARTER_PRICING_2_FEATURES: '点堂查事,解梦,其他答疑解惑,', // 英文逗号隔开
     STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
     STARTER_PRICING_2_BUTTON_URL:
-      'https://tangly1024.lemonsqueezy.com/checkout/buy/590ad70a-c3b7-4caf-94ec-9ca27bde06d4',
+      'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
+
+    STARTER_PRICING_2_TITLE: '入门版',
+    STARTER_PRICING_2_PRICE: '360',
+    STARTER_PRICING_2_PRICE_CURRENCY: '￥',
+    STARTER_PRICING_2_PRICE_PERIOD: '每年',
+    STARTER_PRICING_2_HEADER: '内容',
+    STARTER_PRICING_2_FEATURES: '赠送玄门六爻讲义,内部社群,佛法、道法答疑,经文含义解析,仙道相关,解梦原理,', // 英文逗号隔开
+    STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
+    STARTER_PRICING_2_BUTTON_URL:
+      'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
   
-    STARTER_PRICING_3_TITLE: '高级版',
-    STARTER_PRICING_3_PRICE: '59.9',
-    STARTER_PRICING_3_PRICE_CURRENCY: '$',
-    STARTER_PRICING_3_PRICE_PERIOD: '每月',
-    STARTER_PRICING_3_HEADER: '功能点',
-    STARTER_PRICING_3_FEATURES: '包含基础版,功能定制开发', // 英文逗号隔开
+    STARTER_PRICING_3_TAG: '推荐',
+    STARTER_PRICING_3_TITLE: '普惠版',
+    STARTER_PRICING_3_PRICE: '1000',
+    STARTER_PRICING_3_PRICE_CURRENCY: '￥',
+    STARTER_PRICING_3_PRICE_PERIOD: '每年',
+    STARTER_PRICING_3_HEADER: '内容',
+    STARTER_PRICING_3_FEATURES: '包含入门版,六爻传授,免费查事,丹道答疑', // 英文逗号隔开
     STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
     STARTER_PRICING_3_BUTTON_URL:
+      'https://tangly1024.lemonsqueezy.com/checkout/buy/590ad70a-c3b7-4caf-94ec-9ca27bde06d4',
+  
+    STARTER_PRICING_4_TITLE: '终生版',
+    STARTER_PRICING_4_PRICE: '4800',
+    STARTER_PRICING_4_PRICE_CURRENCY: '￥',
+    STARTER_PRICING_4_PRICE_PERIOD: '永久',
+    STARTER_PRICING_4_HEADER: '功能点',
+    STARTER_PRICING_4_FEATURES: '包含普惠版,所有内部书籍免费赠送', // 英文逗号隔开
+    STARTER_PRICING_4_BUTTON_TEXT: '立即购买',
+    STARTER_PRICING_4_BUTTON_URL:
       'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
   
     // 首页用户测评区块
     STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
-    STARTER_TESTIMONIALS_TITLE: '用户反馈',
-    STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
+    STARTER_TESTIMONIALS_TITLE: '同修反馈',
+    STARTER_TESTIMONIALS_TEXT_1: '我们的付费同修怎么说',
     STARTER_TESTIMONIALS_TEXT_2:
       '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
     STARTER_TESTIMONIALS_STAR_ICON: '/images/starter/testimonials/icon-star.svg', // 评分图标
