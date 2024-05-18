@@ -34,42 +34,42 @@ export const Blog = ({ posts }) => {
           </div>
           {/* 博客列表 此处优先展示3片文章 */}
           <div className='-mx-4 flex flex-wrap'>
-  {posts?.map((item, index) => {
-    const imageWidth = item.pageCoverThumbnail.width; // 假设图片对象有一个宽度属性
-    return (
-      <div key={index} className='w-full px-4 md:w-1/2 lg:w-1/3'>
-        <div
-          className='wow fadeInUp group mb-10'
-          data-wow-delay='.1s'>
-          <div className='mb-8 overflow-hidden rounded-[5px]'>
-            <Link href={item?.href} className='block'>
-              <img
-                src={item.pageCoverThumbnail}
-                alt={item.title}
-                className={`w-${imageWidth} transition group-hover:rotate-6 group-hover:scale-125`}
-              />
-            </Link>
+            {posts?.map((item, index) => {
+              const imageWidth = item.pageCoverThumbnail.width; // 假设图片对象有一个宽度属性
+              return (
+                <div key={index} className='w-full px-4 md:w-1/2 lg:w-1/3'>
+                  <div
+                    className='wow fadeInUp group mb-10'
+                    data-wow-delay='.1s'>
+                    <div className='mb-8 overflow-hidden rounded-[5px]'>
+                      <Link href={item?.href} className='block'>
+                        <img
+                          src={item.pageCoverThumbnail}
+                          alt={item.title}
+                          className={`w-${imageWidth} transition group-hover:rotate-6 group-hover:scale-125`}
+                        />
+                      </Link>
+                    </div>
+                    <div>
+                      <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
+                        {item.publishDay}
+                      </span>
+                      <h3>
+                        <Link
+                          href={item?.href}
+                          className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
+                          {item.title}
+                        </Link>
+                      </h3>
+                      <p className='max-w-[370px] text-base text-body-color dark:text-dark-6'>
+                        {item.summary}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
-          <div>
-            <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
-              {item.publishDay}
-            </span>
-            <h3>
-              <Link
-                href={item?.href}
-                className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
-                {item.title}
-              </Link>
-            </h3>
-            <p className='max-w-[370px] text-base text-body-color dark:text-dark-6'>
-              {item.summary}
-            </p>
-          </div>
-        </div>
-      </div>
-    )
-  })}
-</div>
 
         </div>
       </section>
