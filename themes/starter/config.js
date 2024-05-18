@@ -131,7 +131,7 @@ const CONFIG = {
         STARTER_TESTIMONIALS_ITEM_TEXT:
           '感谢大佬的答疑！之前接触过各种道门法术，却永远不知道究竟修行是什么，让我打开了新的思维大门！ ',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
-          'https://tiengfeng-img.oss-cn-beijing.aliyuncs.com/author1.svg?Expires=1716013522&OSSAccessKeyId=TMP.3KeC1AqMbCcWV4HuYhkKGpANkivcyyx8c6KR98KonLTWrYpD6JDZDAcqmibWYwNPPDfa1eWEPsQhmFhfCCB8YV9onz1Uva&Signature=kCqCB3JBVqYS8DnUQVzMEzoe3Bg%3D',
+          '/images/author1.svg',
         STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Ryan_G',
         STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Ryan`Log 站长',
         STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.gaoran.xyz/'
@@ -140,7 +140,7 @@ const CONFIG = {
         STARTER_TESTIMONIALS_ITEM_TEXT:
           '很喜欢这个主题，本代码小白用三天台风假期搭建出来了，还根据大佬的教程弄了自定义域名，十分感谢，已请喝咖啡~',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
-          'https://tiengfeng-img.oss-cn-beijing.aliyuncs.com/author2.svg?Expires=1716013828&OSSAccessKeyId=TMP.3KeC1AqMbCcWV4HuYhkKGpANkivcyyx8c6KR98KonLTWrYpD6JDZDAcqmibWYwNPPDfa1eWEPsQhmFhfCCB8YV9onz1Uva&Signature=dRz%2Fji4JFpqzNV6R8IeqBz%2FpxKY%3D',
+          '/images/author2.svg',
         STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Asenkits',
         STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '阿森的百宝袋 站长',
         STARTER_TESTIMONIALS_ITEM_URL: 'https://asenkits.top/'
@@ -149,7 +149,7 @@ const CONFIG = {
         STARTER_TESTIMONIALS_ITEM_TEXT:
           '呜呜呜，经过一个下午的努力，终于把博客部署好啦，非常感谢Tangly1024大佬的框架和教程，这是我有生之年用过的最好用的博客框架┭┮﹏┭┮。从今之后，我就可以在自己的博客里bb啦，( •̀ ω •́ )y ',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
-          'https://tiengfeng-img.oss-cn-beijing.aliyuncs.com/author3.svg?Expires=1716013852&OSSAccessKeyId=TMP.3KeC1AqMbCcWV4HuYhkKGpANkivcyyx8c6KR98KonLTWrYpD6JDZDAcqmibWYwNPPDfa1eWEPsQhmFhfCCB8YV9onz1Uva&Signature=Mf8u%2Bf0vjfH3Evvi0can3VOWXxc%3D',
+          '/images/author3.svg',
         STARTER_TESTIMONIALS_ITEM_NICKNAME: 'DWIND',
         STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '且听风吟 站长',
         STARTER_TESTIMONIALS_ITEM_URL: 'https://www.dwind.top/'
@@ -158,7 +158,7 @@ const CONFIG = {
         STARTER_TESTIMONIALS_ITEM_TEXT:
           '感谢提供这么好的项目哈哈 之前一直不知道怎么部署(别的项目好难好复杂)这个相对非常简单 新手非常友好哦',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
-          'https://tiengfeng-img.oss-cn-beijing.aliyuncs.com/author3.svg?Expires=1716013879&OSSAccessKeyId=TMP.3KeC1AqMbCcWV4HuYhkKGpANkivcyyx8c6KR98KonLTWrYpD6JDZDAcqmibWYwNPPDfa1eWEPsQhmFhfCCB8YV9onz1Uva&Signature=1aMJTaSAOq%2BZr4AZoLkMlVKssZI%3D',
+          '/images/author4.svg',
         STARTER_TESTIMONIALS_ITEM_NICKNAME: '迪升disheng ',
         STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'AI资源分享 Blog',
         STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.disheng.org/'
@@ -167,7 +167,7 @@ const CONFIG = {
         STARTER_TESTIMONIALS_ITEM_TEXT:
           '灰常感谢大佬的博客项目，能将博客和notion结合起来，这一直是我挺期待的博客模式。',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
-          'https://tiengfeng-img.oss-cn-beijing.aliyuncs.com/author4.svg?Expires=1716013903&OSSAccessKeyId=TMP.3KeC1AqMbCcWV4HuYhkKGpANkivcyyx8c6KR98KonLTWrYpD6JDZDAcqmibWYwNPPDfa1eWEPsQhmFhfCCB8YV9onz1Uva&Signature=l39fo%2FnpFlF8YAZsXl8AL8wYX50%3D',
+          '/images/author5.svg',
         STARTER_TESTIMONIALS_ITEM_NICKNAME: 'AnJhon',
         STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Anjhon`s Blog 站长',
         STARTER_TESTIMONIALS_ITEM_URL: 'https://www.anjhon.top'
@@ -175,7 +175,7 @@ const CONFIG = {
       {
         STARTER_TESTIMONIALS_ITEM_TEXT: '用好久了，太感谢了',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
-          'https://tiengfeng-img.oss-cn-beijing.aliyuncs.com/author5.svg?Expires=1716013929&OSSAccessKeyId=TMP.3KeC1AqMbCcWV4HuYhkKGpANkivcyyx8c6KR98KonLTWrYpD6JDZDAcqmibWYwNPPDfa1eWEPsQhmFhfCCB8YV9onz1Uva&Signature=XLyWuRy6rugdo9SZiA7ruWuWBz4%3D',
+          '/images/author6.svg',
         STARTER_TESTIMONIALS_ITEM_NICKNAME: 'LUCEN',
         STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'LUCEN考验辅导 站长',
         STARTER_TESTIMONIALS_ITEM_URL: 'https://www.lucenczz.top/'
