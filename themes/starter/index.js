@@ -43,6 +43,7 @@ import { SVG404 } from './components/svg/SVG404'
 import CategoryBar from './components/CategoryBar'
 import BlogPostArchive from './components/BlogPostArchive'
 import SearchNav from './components/SearchNav'
+
 /**
  * 布局框架
  * Landing-2 主题用作产品落地页展示
