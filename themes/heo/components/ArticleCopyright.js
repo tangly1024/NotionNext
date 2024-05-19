@@ -29,8 +29,11 @@ export default function ArticleCopyright () {
         </li>
         <li>
         <strong className='mr-2'>{locale.COMMON.URL}:</strong>
-          <a className="whitespace-normal break-words hover:underline" href={path}>
-            {path/}
+          <a
+            className="whitespace-normal break-words hover:underline"
+            href={path.endsWith('/') ? `${path}?theme=heo` : `${path}/?theme=heo`}
+          >
+            {path}
           </a>
         </li>
         <li>

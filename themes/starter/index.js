@@ -38,7 +38,7 @@ import { Banner } from './components/Banner'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
-
+import CategoryBar from './components/CategoryBar'
 /**
  * 布局框架
  * Landing-2 主题用作产品落地页展示
@@ -157,16 +157,31 @@ const LayoutSlug = props => {
 const LayoutSearch = props => <></>
 
 /**
- * 文章归档
+ * 归档
  * @param {*} props
  * @returns
  */
-const LayoutArchive = props => (
-  <>
-    {/* 博文列表 */}
-    <Blog {...props} />
-  </>
-)
+const LayoutArchive = props => {
+  const { archivePosts } = props
+
+  // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
+
+  return (
+      <div className="p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]">
+        {/* 文章分类条 */}
+        <CategoryBar {...props} border={false} />
+        <div className="px-3">
+          {Object.keys(archivePosts).map(archiveTitle => (
+            <BlogPostArchive
+              key={archiveTitle}
+              posts={archivePosts[archiveTitle]}
+              archiveTitle={archiveTitle}
+            />
+          ))}
+        </div>
+      </div>
+  )
+}
 
 /**
  * 404页面
