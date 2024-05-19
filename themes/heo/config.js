@@ -1,12 +1,12 @@
 const CONFIG = {
   HEO_HOME_BANNER_ENABLE: true,
 
-  HEO_SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+  HEO_SITE_CREATE_TIME: '2024-05-21', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到我的博客', url: 'https://www.buxiantang.top/?theme=heo' },
+    { title: '我的答疑服务', url: 'https://www.buxiantang.top/#home' }
   ],
 
   // 英雄区左右侧组件颠倒位置
