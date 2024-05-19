@@ -20,7 +20,7 @@ const CONFIG = {
     STARTER_HERO_BUTTON_2_URL: 'https://space.bilibili.com/265656567', // 英雄区按钮
     STARTER_HERO_BUTTON_2_ICON: '/images/starter/bilibili.svg', // 英雄区按钮2的图标，不需要则留空
   
-    STARTER_HERO_PREVIEW_IMAGE: 'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fa845a04b-d140-4ee9-933e-86358e364583%2F03cd6a72-a67e-4398-bda5-eef48c6d0f9f%2Ffollowers.png?table=block&id=290743f9-8253-4b5d-a131-8f70e7010b13&spaceId=a845a04b-d140-4ee9-933e-86358e364583&width=1250&userId=a2d6cd07-1a8f-438a-894c-269b862aa1ab&cache=v2', // 产品预览图 ，默认读取public目录下图片
+    STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/followers.png', // 产品预览图 ，默认读取public目录下图片
   
     // 顶部右侧导航暗流
     STARTER_NAV_BUTTON_1_TEXT: '',
