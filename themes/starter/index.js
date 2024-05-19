@@ -43,7 +43,10 @@ import { SVG404 } from './components/svg/SVG404'
 import CategoryBar from './components/CategoryBar'
 import BlogPostArchive from './components/BlogPostArchive'
 import SearchNav from './components/SearchNav'
-
+import BlogPostListPage from './components/BlogPostListPage'
+import BlogPostListScroll from './components/BlogPostListScroll'
+import ShareBar from '@/components/ShareBar'
+import { AdSlot } from '@/components/GoogleAdsense'
 /**
  * 布局框架
  * Landing-2 主题用作产品落地页展示
