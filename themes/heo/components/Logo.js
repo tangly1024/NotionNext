@@ -6,7 +6,11 @@ import { siteConfig } from '@/lib/config'
 const Logo = props => {
   const { siteInfo } = props
   return (
+<<<<<<< HEAD
         <Link href='/#home' passHref legacyBehavior>
+=======
+        <Link href='/#home/' passHref legacyBehavior>
+>>>>>>> cb87347afa5800581281846158517814d7eea612
             <div className='flex flex-nowrap justify-center items-center cursor-pointer font-extrabold'>
                 <LazyImage src={siteInfo?.icon} width={24} height={24} alt={siteConfig('AUTHOR')} className='mr-4 hidden md:block' />
                 <div id='logo-text' className='group rounded-2xl flex-none relative'>

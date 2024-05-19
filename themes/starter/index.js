@@ -42,6 +42,8 @@ import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 import CategoryBar from './components/CategoryBar'
 import BlogPostArchive from './components/BlogPostArchive'
+import CategoryBar from './components/CategoryBar'
+import BlogPostArchive from './components/BlogPostArchive'
 import SearchNav from './components/SearchNav'
 /**
  * 布局框架
