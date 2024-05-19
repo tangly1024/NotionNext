@@ -11,6 +11,8 @@
  */
 import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
+import { useGlobal } from '@/lib/global'
+import { HashTag } from '@/components/HeroIcons'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
@@ -39,6 +41,8 @@ import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 import CategoryBar from './components/CategoryBar'
+import BlogPostArchive from './components/BlogPostArchive'
+import SearchNav from './components/SearchNav'
 /**
  * 布局框架
  * Landing-2 主题用作产品落地页展示
@@ -112,6 +116,58 @@ const LayoutIndex = props => {
 }
 
 /**
+ * 搜索
+ * @param {*} props
+ * @returns
+ */
+const LayoutSearch = props => {
+  const { keyword } = props
+  const router = useRouter()
+  const currentSearch = keyword || router?.query?.s
+
+  useEffect(() => {
+    // 高亮搜索结果
+    if (currentSearch) {
+      setTimeout(() => {
+        replaceSearchResult({
+          doms: document.getElementsByClassName('replace'),
+          search: currentSearch,
+          target: {
+            element: 'span',
+            className: 'text-red-500 border-b border-dashed'
+          }
+        })
+      }, 100)
+    }
+  }, [])
+  return (
+    <div
+      {...props}
+      currentSearch={currentSearch}
+    >
+      <div id="post-outer-wrapper" className="px-5  md:px-0">
+        {!currentSearch
+          ? (
+            <SearchNav {...props} />
+            )
+          : (
+            <div id="posts-wrapper">
+              {siteConfig('POST_LIST_STYLE') === 'page'
+                ? (
+                  <BlogPostListPage {...props} />
+                  )
+                : (
+                  <BlogPostListScroll {...props} />
+                  )}
+            </div>
+            )}
+      </div>
+    </div>
+  )
+}
+
+
+/**
  * 文章详情页布局
  * @param {*} props
  * @returns
@@ -154,7 +210,6 @@ const LayoutSlug = props => {
   )
 }
 
-const LayoutSearch = props => <></>
 
 /**
  * 归档
@@ -230,9 +285,113 @@ const Layout404 = props => {
   )
 }
 
-const LayoutCategoryIndex = props => <></>
+/**
+ * 分类列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutCategoryIndex = props => {
+  const { categoryOptions } = props
+  const { locale } = useGlobal()
+
+  return (
+      <div id="category-outer-wrapper" className="mt-8 px-5 md:px-0">
+        <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
+          {locale.COMMON.CATEGORY}
+        </div>
+        <div
+          id="category-list"
+          className="duration-200 flex flex-wrap m-10 justify-center"
+        >
+          {categoryOptions?.map(category => {
+            return (
+              <Link
+                key={category.name}
+                href={`/category/${category.name}`}
+                passHref
+                legacyBehavior
+              >
+                <div
+                  className={
+                    'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                  }
+                >
+                  <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
+                  {category.name}
+                  <div className="bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 ">
+                    {category.count}
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+  )
+}
+
+/**
+ * 标签页
+ * @param {*} props
+ * @returns
+ */
+const LayoutTagIndex = props => {
+  const { tagOptions } = props;
+  const { locale } = useGlobal();
+
+  // 定义一个函数来计算边框宽度
+  const calculateBorderWidth = count => {
+    // 根据文章数量计算边框宽度，这里假设文章数量越大，边框越粗
+    // 您可以根据需要调整这个计算逻辑
+    return Math.min(count, 10) * 0.5 + 1; // 假设边框宽度从1px到6px
+  };
+
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div id="tag-outer-wrapper" className="px-5 mt-8 md:px-0">
+        <div className="text-4xl font-extrabold dark:text-gray-200 mb-5">
+          {locale.COMMON.TAGS}
+        </div>
+        <div
+          id="tag-list"
+          className="flex flex-wrap space-x-5 space-y-5 m-10 justify-center"
+        >
+          {tagOptions.map(tag => {
+            const borderWidth = calculateBorderWidth(tag.count);
+            const borderColor = '#813c85'; // 边框颜色
+            return (
+              <Link
+                key={tag.name}
+                href={`/tag/${tag.name}`}
+                passHref
+                legacyBehavior
+              >
+                <div
+                  className={`group flex flex-nowrap items-center cursor-pointer px-4 py-3 hover:bg-indigo-600 transition-all hover:scale-110 duration-150`}
+                  style={{
+                    border: `${borderWidth}px solid${borderColor}`,
+                    borderRadius: '8px', // 添加圆角边框
+                  }}
+                >
+                  <HashTag className={`w-5 h-5 stroke-gray-500 stroke-2`} />
+                  {tag.name}
+                  <div className="bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600">
+                    {tag.count}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
 const LayoutPostList = props => <></>
-const LayoutTagIndex = props => <></>
+
 
 /**
  * 登录页面
@@ -274,7 +433,6 @@ export {
   Layout404,
   LayoutArchive,
   LayoutBase,
-  LayoutCategoryIndex,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,
@@ -282,5 +440,6 @@ export {
   LayoutSignUp,
   LayoutSlug,
   LayoutTagIndex,
+  LayoutCategoryIndex,
   CONFIG as THEME_CONFIG
 }
