@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPlayer Video Player</title>
+    <!-- 引入 DPlayer 样式文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #dplayer-container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 创建一个容器用于放置视频播放器 -->
+    <div id="dplayer-container"></div>
+    <!-- 引入 Hls.js 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <!-- 引入 DPlayer JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+
+    <script>
+        var myParam = decodeURIComponent(location.search.split('n=')[1]);
+        if (!myParam) {
+            alert('无效的视频地址')
+        }
+        // 创建 DPlayer 实例
+        var dp = new DPlayer({
+            // 定义容器
+            container: document.getElementById('dplayer-container'),
+            // 视频源地址
+            video: {
+                url: myParam
+                // 如果有多个清晰度，可以在这里添加更多的清晰度选项
+                // quality: [
+                //     { name: 'HD', url: 'https://example.com/your-video-hd.mp4', type: 'normal' },
+                //     { name: 'SD', url: 'https://example.com/your-video-sd.mp4', type: 'normal' }
+                // ],
+            },
+            autoplay: false, // 设置为手动点击播放
+            // 视频封面图片
+            poster: 'https://example.com/your-video-poster.jpg',
+        });
+    </script>
+</body>
+
+</html>

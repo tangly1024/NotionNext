@@ -1,3 +1,4 @@
+import { useGlobal } from '@/lib/global'
 import { useEffect } from 'react'
 
 /**
@@ -9,8 +10,12 @@ export default function WordCount() {
     countWords()
   })
 
+  const { locale } = useGlobal()
+
   return <div id='wordCountWrapper' className='flex justify-center my-auto font-light'>
-    <i className='mr-1 fas fa-file-word my-auto' /> <span className='hidden md:block'>本文字数</span> <strong id='wordCount'>0</strong> &nbsp;|&nbsp; <i className='mr-1 fas fa-clock my-auto' /> <span className='hidden md:block'>阅读时长 ≈</span> <strong id='readTime'>0</strong> 分钟
+    <i className='mr-1 fas fa-file-word my-auto' />
+    <span className='hidden md:block'>{locale.COMMON.WORD_COUNT}≈</span>
+    <strong id='wordCount'>0</strong> &nbsp;|&nbsp; <i className='mr-1 fas fa-clock my-auto' />{locale.COMMON.READ_TIME} <span className='hidden md:block'>≈</span> <strong id='readTime'>0</strong> {locale.COMMON.MINUTE}
   </div>
 }
 

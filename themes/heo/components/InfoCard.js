@@ -18,7 +18,6 @@ export function InfoCard(props) {
   const router = useRouter()
   // 在文章详情页特殊处理
   const isSlugPage = router.pathname.indexOf('/[prefix]') === 0
-  console.log('TITLE:', siteConfig('TITLE'))
   return (
         <Card className='bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col w-72 overflow-hidden relative'>
             {/* 信息卡牌第一行 */}
@@ -46,8 +45,10 @@ export function InfoCard(props) {
                         <Link href='/about'><GlobeAlt className={'w-6 h-6'} /></Link>
                     </div>
                     <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-                        <Link href={siteConfig('HEO_INFO_CARD_URL', null, CONFIG)}><i className='fab fa-github text-xl' />
+                        {siteConfig('HEO_INFO_CARD_URL', null, CONFIG) && <Link href={siteConfig('HEO_INFO_CARD_URL', null, CONFIG)}>
+                            <i className='fab fa-github text-xl' />
                         </Link>
+                        }
                     </div>
                 </div>
                 <MoreButton />
