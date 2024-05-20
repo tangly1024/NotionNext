@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://www.buxiantang.top/?theme=heo' },
-    { title: '我的答疑服务', url: 'https://www.buxiantang.top/#home' }
+    { title: '欢迎来到我的博客', url: 'https://blog.buxiantang.top' },
+    { title: '我的答疑服务', url: 'https://www.buxiantang.top/' }
   ],
 
   // 英雄区左右侧组件颠倒位置
