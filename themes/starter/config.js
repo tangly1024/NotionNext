@@ -132,53 +132,53 @@ const CONFIG = {
           '感谢大佬的答疑！之前接触过各种道门法术，却永远不知道究竟修行是什么，让我打开了新的思维大门！ ',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
           '/images/author1.svg',
-        STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Ryan_G',
-        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Ryan`Log 站长',
-        STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.gaoran.xyz/'
+        STARTER_TESTIMONIALS_ITEM_NICKNAME: '同修甲',
+        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '',
+        STARTER_TESTIMONIALS_ITEM_URL: ''
       },
       {
         STARTER_TESTIMONIALS_ITEM_TEXT:
-          '很喜欢这个主题，本代码小白用三天台风假期搭建出来了，还根据大佬的教程弄了自定义域名，十分感谢，已请喝咖啡~',
+          '答疑服务真是太棒了！每次交流都能感受到您的专业，我学习到了在别的地方学不到的知识。非常感谢您的帮助！',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
           '/images/author2.svg',
-        STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Asenkits',
-        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '阿森的百宝袋 站长',
-        STARTER_TESTIMONIALS_ITEM_URL: 'https://asenkits.top/'
+        STARTER_TESTIMONIALS_ITEM_NICKNAME: '同修乙',
+        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '',
+        STARTER_TESTIMONIALS_ITEM_URL: ''
       },
       {
         STARTER_TESTIMONIALS_ITEM_TEXT:
-          '呜呜呜，经过一个下午的努力，终于把博客部署好啦，非常感谢Tangly1024大佬的框架和教程，这是我有生之年用过的最好用的博客框架┭┮﹏┭┮。从今之后，我就可以在自己的博客里bb啦，( •̀ ω •́ )y ',
+          '虽然我不太善于表达，但您的答疑服务真的让我受益良多。感谢您的耐心解答，让我对佛道仙易有了更清晰的认识',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
           '/images/author3.svg',
-        STARTER_TESTIMONIALS_ITEM_NICKNAME: 'DWIND',
-        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '且听风吟 站长',
-        STARTER_TESTIMONIALS_ITEM_URL: 'https://www.dwind.top/'
+        STARTER_TESTIMONIALS_ITEM_NICKNAME: '同修丙',
+        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '',
+        STARTER_TESTIMONIALS_ITEM_URL: ''
       },
       {
         STARTER_TESTIMONIALS_ITEM_TEXT:
-          '感谢提供这么好的项目哈哈 之前一直不知道怎么部署(别的项目好难好复杂)这个相对非常简单 新手非常友好哦',
+          '感谢您的答疑服务，让我在修行路上更加坚定。您的专业解答让我受益匪浅，对佛道仙易有了更深刻的理解。',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
           '/images/author4.svg',
-        STARTER_TESTIMONIALS_ITEM_NICKNAME: '迪升disheng ',
-        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'AI资源分享 Blog',
-        STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.disheng.org/'
+        STARTER_TESTIMONIALS_ITEM_NICKNAME: '同修丁',
+        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '',
+        STARTER_TESTIMONIALS_ITEM_URL: ''
       },
       {
         STARTER_TESTIMONIALS_ITEM_TEXT:
-          '灰常感谢大佬的博客项目，能将博客和notion结合起来，这一直是我挺期待的博客模式。',
+          '您的答疑服务简直就是我修行路上的指路明灯！每一次的交流都让我茅塞顿开，我对佛道仙易的兴趣更是倍增。',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
           '/images/author5.svg',
-        STARTER_TESTIMONIALS_ITEM_NICKNAME: 'AnJhon',
-        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Anjhon`s Blog 站长',
-        STARTER_TESTIMONIALS_ITEM_URL: 'https://www.anjhon.top'
+        STARTER_TESTIMONIALS_ITEM_NICKNAME: '同修戊',
+        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '',
+        STARTER_TESTIMONIALS_ITEM_URL: ''
       },
       {
-        STARTER_TESTIMONIALS_ITEM_TEXT: '用好久了，太感谢了',
+        STARTER_TESTIMONIALS_ITEM_TEXT: '解答很详细，这让我感到非常安心，学习到了修行的方法。',
         STARTER_TESTIMONIALS_ITEM_AVATAR:
           '/images/author6.svg',
-        STARTER_TESTIMONIALS_ITEM_NICKNAME: 'LUCEN',
-        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'LUCEN考验辅导 站长',
-        STARTER_TESTIMONIALS_ITEM_URL: 'https://www.lucenczz.top/'
+        STARTER_TESTIMONIALS_ITEM_NICKNAME: '同修己',
+        STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '',
+        STARTER_TESTIMONIALS_ITEM_URL: ''
       }
     ],
   
@@ -188,51 +188,51 @@ const CONFIG = {
     STARTER_FAQ_TEXT_1: '有任何问题吗？请看这里',
     STARTER_FAQ_TEXT_2: '我们收集了常见的用户疑问',
   
-    STARTER_FAQ_1_QUESTION: 'NotionNext有帮助文档吗？',
+    STARTER_FAQ_1_QUESTION: '加入了年付答疑服务的提问是有次数的吗？',
     STARTER_FAQ_1_ANSWER:
-      'NotionNext提供了<a href="https://docs.tangly1024.com/about" className="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" className="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" className="underline">交流社群</a>来协助您完成网站的搭建部署',
+      '年付答疑服务是不限制提问次数的，凡有疑问，均可提问，我们会尽可能从问题的底层逻辑讲起，让你您充分理解问题的本质，从而更好的应对类似问题',
   
-    STARTER_FAQ_2_QUESTION: '部署后要如何编写文章？',
+    STARTER_FAQ_2_QUESTION: '我可以通过答疑服务的学习，掌握查事技能、解梦技能，然后自己收费行道吗',
     STARTER_FAQ_2_ANSWER:
-      '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a className="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>',
+      '卜仙堂的愿景是修行人能够掌握修行方法，可以完成修行回溯的过程，这些技能是应该学习的行道工具，我们不关心您将来收费与否',
   
-    STARTER_FAQ_3_QUESTION: '站点部署失败，更新失败？',
+    STARTER_FAQ_3_QUESTION: '我可以安心的退出答疑服务么？',
     STARTER_FAQ_3_ANSWER:
-      '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助',
+      '卜仙堂的答疑服务是没有自由限制的，当您提出退出意向时，我们会直接终止答疑服务。我们承诺，我们不会像其他传承那样存在圈堂收编行为',
   
-    STARTER_FAQ_4_QUESTION: '文章没有实时同步？',
+    STARTER_FAQ_4_QUESTION: '卜仙堂有法事化解服务吗？',
     STARTER_FAQ_4_ANSWER:
-      '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
+      '卜仙堂的修行准则是“天道法”，服务的出发点是合乎天道。现在及将来，我们都不会有法事服务',
   
     // 团队成员区块
     STARTER_TEAM_ENABLE: true, // 团队成员区块开关
-    STARTER_TEAM_TITLE: '团队成员',
-    STARTER_TEAM_TEXT_1: '我们的开发者团队',
+    STARTER_TEAM_TITLE: '合作伙伴',
+    STARTER_TEAM_TEXT_1: '卜仙堂的答疑团队',
     STARTER_TEAM_TEXT_2:
-      'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
+      '<a className="underline" href="https://buxiantang.top">卜仙堂</a>的答疑服务离不开合作伙伴的共同努力',
   
     // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
     STARTER_TEAM_ITEMS: [
       {
         STARTER_TEAM_ITEM_AVATAR:
-          'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
-        STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
-        STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
+          '/images/starter/team/jinshan.png',
+        STARTER_TEAM_ITEM_NICKNAME: '金山道人',
+        STARTER_TEAM_ITEM_DESCRIPTION: ''
       },
       {
-        STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-01.png',
-        STARTER_TEAM_ITEM_NICKNAME: 'Melissa Tatcher',
-        STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
+        STARTER_TEAM_ITEM_AVATAR: '',
+        STARTER_TEAM_ITEM_NICKNAME: '',
+        STARTER_TEAM_ITEM_DESCRIPTION: ''
       },
       {
-        STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
-        STARTER_TEAM_ITEM_NICKNAME: 'Stuard Ferrel',
-        STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
+        STARTER_TEAM_ITEM_AVATAR: '',
+        STARTER_TEAM_ITEM_NICKNAME: '',
+        STARTER_TEAM_ITEM_DESCRIPTION: ''
       },
       {
-        STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-03.png',
-        STARTER_TEAM_ITEM_NICKNAME: 'Eva Hudson',
-        STARTER_TEAM_ITEM_DESCRIPTION: 'Creative Designer'
+        STARTER_TEAM_ITEM_AVATAR: '',
+        STARTER_TEAM_ITEM_NICKNAME: '',
+        STARTER_TEAM_ITEM_DESCRIPTION: ''
       }
     ],
   
