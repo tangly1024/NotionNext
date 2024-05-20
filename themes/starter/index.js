@@ -122,21 +122,7 @@ const LayoutIndex = props => {
  */
 const LayoutSlug = props => {
   const { post } = props;
-  const router = useRouter();
-
-  // 检查URL是否包含"?theme=heo"以及前一个字符是否为"/"
-  const checkAndRewriteUrl = (url) => {
-    const themeHeo = "?theme=heo";
-    const index = url.indexOf(themeHeo);
-    if (index !== -1) {
-      // 如果前一个字符不是"/"，则添加"/"
-      if (url[index - 1] !== '/') {
-        return url.slice(0, index) + '/' + url.slice(index);
-      }
-    }
-    return url;
-  };
-
+  
   // 如果 是 /article/[slug] 的文章路径则视情况进行重定向到另一个域名
   if (
     !post &&
