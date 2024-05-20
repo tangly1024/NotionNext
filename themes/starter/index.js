@@ -174,7 +174,19 @@ const LayoutSlug = props => {
     </>
   )
 }
+const LayoutSearch = props => <></>
 
+/**
+ * 文章归档
+ * @param {*} props
+ * @returns
+ */
+const LayoutArchive = props => (
+  <>
+    {/* 博文列表 */}
+    <Blog {...props} />
+  </>
+)
 /**
  * 404页面
  * @param {*} props
@@ -221,8 +233,10 @@ const Layout404 = props => {
     </>
   )
 }
-
+const LayoutCategoryIndex = props => <></>
 const LayoutPostList = props => <></>
+const LayoutTagIndex = props => <></>
+
 
 /**
  * 登录页面
