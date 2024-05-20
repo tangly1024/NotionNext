@@ -220,8 +220,8 @@ const CONFIG = {
         STARTER_TEAM_ITEM_DESCRIPTION: ''
       },
       {
-        STARTER_TEAM_ITEM_AVATAR: '',
-        STARTER_TEAM_ITEM_NICKNAME: '',
+        STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/otherteam.png',
+        STARTER_TEAM_ITEM_NICKNAME: '欢迎您的加入',
         STARTER_TEAM_ITEM_DESCRIPTION: ''
       },
       {
@@ -299,7 +299,7 @@ const CONFIG = {
       }
     ],
   
-    STARTER_FOOTER_SLOGAN: '我们通过技术为品牌和公司创造数字体验。',
+    STARTER_FOOTER_SLOGAN: '我们答疑方式为隐态世界做贡献！',
   
     // 页脚三列菜单组
     STARTER_FOOTER_LINK_GROUP: [
