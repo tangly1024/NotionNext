@@ -19,7 +19,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '与修行方法',
   HEO_HERO_TITLE_3: 'buxiantang.top',
   HEO_HERO_TITLE_4: '官网上线',
-  HEO_HERO_TITLE_5: '卜仙堂愿各修行者更上一层楼,
+  HEO_HERO_TITLE_5: '卜仙堂愿各修行者更上一层楼',
   HEO_HERO_TITLE_LINK: 'https://blog.buxiantang.top',
 
   // 英雄区显示三个置顶分类
