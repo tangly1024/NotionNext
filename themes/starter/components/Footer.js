@@ -152,7 +152,7 @@ export const Footer = props => {
                       rel='nofollow noopner noreferrer'
                       target='_blank'
                       className='px-1 text-gray-1 hover:underline'>
-                      NanKoYo静态生成器 {siteConfig('VERSION')}
+                      NKY Static-build {siteConfig('VERSION')}
                     </a>
                   </p>
                 </div>
