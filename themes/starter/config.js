@@ -15,7 +15,7 @@ const CONFIG = {
     // 英雄区两个按钮，如果TEXT留空则隐藏按钮
     STARTER_HERO_BUTTON_1_TEXT: '我的博客', // 英雄区按钮
     STARTER_HERO_BUTTON_1_URL:
-      'https://buxiantang.top/?theme=heo', // 英雄区按钮
+      '/archive', // 英雄区按钮
     STARTER_HERO_BUTTON_2_TEXT: '在BiliBili上关注', // 英雄区按钮
     STARTER_HERO_BUTTON_2_URL: 'https://space.bilibili.com/265656567', // 英雄区按钮
     STARTER_HERO_BUTTON_2_ICON: '/images/starter/bilibili.svg', // 英雄区按钮2的图标，不需要则留空
@@ -190,7 +190,7 @@ const CONFIG = {
   
     STARTER_FAQ_1_QUESTION: '加入了年付答疑服务的提问是有次数的吗？',
     STARTER_FAQ_1_ANSWER:
-      '年付答疑服务是不限制提问次数的，凡有疑问，均可提问，我们会尽可能从问题的底层逻辑讲起，让你您充分理解问题的本质，从而更好的应对类似问题',
+      '年付答疑服务是不限制提问次数的，凡有疑问，均可提问，我们会尽可能从问题的底层逻辑讲起，让您充分理解问题的本质，从而更好的应对类似问题',
   
     STARTER_FAQ_2_QUESTION: '我可以通过答疑服务的学习，掌握查事技能、解梦技能，然后自己收费行道吗？',
     STARTER_FAQ_2_ANSWER:
