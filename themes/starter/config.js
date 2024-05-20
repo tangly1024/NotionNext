@@ -64,7 +64,7 @@ const CONFIG = {
     STARTER_ABOUT_BUTTON_TEXT: '了解更多',
     STARTER_ABOUT_BUTTON_URL: 'https://buxiantang.top/post/buxiantang-Service',
     STARTER_ABOUT_IMAGE_1: '/images/starter/about/wechatex.jpg',
-    STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-0.ipg',
+    STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-0.jpg',
     STARTER_ABOUT_TIPS_1: '160k+',
     STARTER_ABOUT_TIPS_2: '阅读/观看量',
     STARTER_ABOUT_TIPS_3: '已经形成',
