@@ -299,56 +299,32 @@ const CONFIG = {
       }
     ],
   
-    STARTER_FOOTER_SLOGAN: '我们答疑方式为隐态世界做贡献！',
+    STARTER_FOOTER_SLOGAN: '我们通过答疑方式为隐态世界做贡献！',
   
     // 页脚三列菜单组
     STARTER_FOOTER_LINK_GROUP: [
       {
-        TITLE: '关于我们',
+        TITLE: '关于',
         LINK_GROUP: [
           { TITLE: '官方主页', URL: '/#home' },
-          { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
-          {
-            TITLE: '帮助支持',
-            URL: 'https://docs.tangly1024.com/article/how-to-question'
+            TITLE: '关于卜仙堂',
+            URL: 'https://www.buxiantang.top/post/about'
           },
-          {
-            TITLE: '合作申请',
-            URL: 'https://docs.tangly1024.com/article/my-service'
-          }
         ]
       },
       {
-        TITLE: '功能特性',
+        TITLE: '服务特性',
         LINK_GROUP: [
           {
-            TITLE: '部署指南',
-            URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next'
+            TITLE: '答疑价格',
+            URL: '/#pricing'
           },
           {
-            TITLE: '升级指南',
-            URL: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
+            TITLE: '服务优势',
+            URL: '#features'
           },
-          { TITLE: '最新版本', URL: 'https://docs.tangly1024.com/article/latest' }
         ]
       },
-      {
-        TITLE: 'Notion写作',
-        LINK_GROUP: [
-          {
-            TITLE: 'Notion开始写作',
-            URL: 'https://docs.tangly1024.com/article/start-to-write'
-          },
-          {
-            TITLE: '快捷键提升效率',
-            URL: 'https://docs.tangly1024.com/article/notion-short-key'
-          },
-          {
-            TITLE: '中国大陆使用Notion',
-            URL: 'https://docs.tangly1024.com/article/notion-faster'
-          }
-        ]
-      }
     ],
   
     STARTER_FOOTER_BLOG_LATEST_TITLE: '最新文章',
