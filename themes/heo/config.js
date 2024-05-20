@@ -7,7 +7,8 @@ const CONFIG = {
   HEO_NOTICE_BAR: [
     { title: '去知识星球提问和分享经验', url: 'https://wx.zsxq.com/dweb2/index/group/88855815582482' },
     { title: 'MATI的官方页面', url: 'https://www.polyu.edu.hk/cbs/study/taught-postgraduate-programmes/ma-scheme-in-chinese-linguistics-and-translation/translating-and-interpreting' },
-    { title: '“与AI同行”研讨会', url: 'https://www.matiwiki.com/%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/2024/05/Symposium-ai-2024' }
+    { title: '“与AI同行”研讨会', url: 'https://www.matiwiki.com/%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/2024/05/Symposium-ai-2024' },
+    { title: '口笔译研究新图景研讨会', url: 'https://www.matiwiki.com/en/%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/2024/05/tech-translation-culture-seminar' }
   ],
 
   // 英雄区左右侧组件颠倒位置
