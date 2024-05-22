@@ -15,7 +15,7 @@ const CONFIG = {
     // 英雄区两个按钮，如果TEXT留空则隐藏按钮
     STARTER_HERO_BUTTON_1_TEXT: '我的博客', // 英雄区按钮
     STARTER_HERO_BUTTON_1_URL:
-      '/archive', // 英雄区按钮
+      'https://blog.buxiantang.top', // 英雄区按钮
     STARTER_HERO_BUTTON_2_TEXT: '在BiliBili上关注', // 英雄区按钮
     STARTER_HERO_BUTTON_2_URL: 'https://space.bilibili.com/265656567', // 英雄区按钮
     STARTER_HERO_BUTTON_2_ICON: '/images/starter/bilibili.png', // 英雄区按钮2的图标，不需要则留空
