@@ -25,7 +25,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '今予', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '一只平平无奇的浙江大学23级机械工程学院的本科生，主修机械工程专业。', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://tangly1024.com', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.zjuhjy.top/', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '博客,notebook', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
