@@ -210,7 +210,7 @@ const CONFIG = {
       STARTER_TEAM_ITEM_DESCRIPTION: '数据分析师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/f40c48a5952485b7446c94eb9a2215b8',
+      STARTER_TEAM_ITEM_AVATAR: 'https://thirdqq.qlogo.cn/g?b=sdk&k=JQsY5FKTnR4RxVJCOQKicpg&s=640&t=1666728920%22%7D',
       STARTER_TEAM_ITEM_NICKNAME: 'Andrew Li',
       STARTER_TEAM_ITEM_DESCRIPTION: '网页设计师'
     },
