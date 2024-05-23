@@ -11,6 +11,14 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang={BLOG.LANG}>
+        <script
+          async
+          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8437419081527400'
+          crossorigin='anonymous'></script>
+        <meta name='yandex-verification' content='622aa0408012f881' />
+        <script>window.yaContextCb=window.yaContextCb||[]</script>
+        <script src='https://yandex.ru/ads/system/context.js' async></script>
+        <script src='https://cdn.jsdelivr.net/gh/Mindset-Community/live2d-widget@latest/autoload.js'></script>
         <Head>
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
