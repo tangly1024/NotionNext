@@ -205,12 +205,12 @@ const CONFIG = {
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR:
-        'https://img.tucang.cc/api/image/show/a11f6f30ede8915d2523c1a48d037849',
+        'http://q1.qlogo.cn/qhis/on1s0ictqeVDHKp9m8IxMg8wibLwZdKlcsYC7FzonhEEStHzFjwPtjUxAyoTpIKKZkiarn7WiaoTIb8/640',
       STARTER_TEAM_ITEM_NICKNAME: 'Emily Zhang',
       STARTER_TEAM_ITEM_DESCRIPTION: '数据分析师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://thirdqq.qlogo.cn/g?b=sdk&k=JQsY5FKTnR4RxVJCOQKicpg&s=640&t=1666728920%22%7D',
+      STARTER_TEAM_ITEM_AVATAR: 'http://q1.qlogo.cn/qhis/Q3auHgzwzM4Eict7Bx0V51vErWibLictwFib47uOeYn5uI8ibJ7shbkTib4P5TUPL69qXpD8eMYFYJ2XFCBzZT6sKAlA/640',
       STARTER_TEAM_ITEM_NICKNAME: 'Andrew Li',
       STARTER_TEAM_ITEM_DESCRIPTION: '网页设计师'
     },
