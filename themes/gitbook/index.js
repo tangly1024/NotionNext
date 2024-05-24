@@ -75,7 +75,7 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     }
     // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
     if (
-      latestPosts.some(post => item?.short_id === post?.short_id) &&
+      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 0) &&
       (!postReadTime[item.short_id] ||
         postReadTime[item.short_id] < new Date(item.lastEditedDate).getTime())
     ) {
