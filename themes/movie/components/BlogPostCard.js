@@ -14,10 +14,10 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   return (
     <article
       data-wow-delay='.2s'
-      className='wow fadeInUp w-full mb-4 cursor-pointer overflow-hidden shadow-movie dark:bg-hexo-black-gray'>
+      className='wow fadeInUp w-full mb-2 cursor-pointer overflow-hidden shadow-movie dark:bg-hexo-black-gray'>
       <Link href={post?.href} passHref legacyBehavior>
         {/* 固定高度 ，空白用图片拉升填充 */}
-        <div className='group flex flex-col aspect-[2/3] justify-between relative'>
+        <div className='group flex flex-col aspect-[16/9] justify-between relative'>
           {/* 图片 填充卡片 */}
           <div className='flex flex-grow w-full h-full relative duration-200  cursor-pointer transform overflow-hidden'>
             <LazyImage
