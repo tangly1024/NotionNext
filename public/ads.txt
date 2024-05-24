@@ -7,3 +7,50 @@ Contextweb.com, 562899,RESELLER,89ff185a4c4e857c
 hyperad.tech, 150, RESELLER
 hyperad.tech, 215, RESELLER
 google.com, pub-5533854580432370, RESELLER, f08c47fec0942fa0
+headerlift.com, 26415, DIRECT
+improvedigital.com, 545_26415, DIRECT
+improvedigital.com, 545, RESELLER
+google.com, pub-1313834454494130, RESELLER, f08c47fec0942fa0
+google.com, pub-2316275586951220, RESELLER, f08c47fec0942fa0
+appnexus.com, 9994, RESELLER, f5ab79cb980f11d1
+pubmatic.com, 156946, RESELLER, 5d62403b186f2ace
+triplelift.com, 9268, RESELLER, 6c33edb13117fd86
+rubiconproject.com, 25080, RESELLER, 0bfd66d529a55807
+indexexchange.com, 188249, RESELLER, 50b1c356f2c5c8fc
+adform.com, 2970, RESELLER
+criteo.com, B-060094, RESELLER, 9fac4a4a87c2a44f
+themediagrid.com, UW4BSY, RESELLER, 35d5010d7789b49d
+gitberry.com, Z8VbzEVR, DIRECT
+google.com, pub-7214269347534569, RESELLER, f08c47fec0942fa0
+google.com, pub-2754312069774654, RESELLER, f08c47fec0942fa0
+smartadserver.com, 3653, DIRECT, 060d053dcf45cbf3
+pubmatic.com, 156439, RESELLER, 5d62403b186f2ace
+pubmatic.com, 154037, RESELLER, 5d62403b186f2ace
+rubiconproject.com, 16114, RESELLER, 0bfd66d529a55807
+openx.com, 537149888, RESELLER, 6a698e2ec38604c6
+appnexus.com, 3703, RESELLER, f5ab79cb980f11d1
+loopme.com, 5679, RESELLER, 6c8d5f95897a5a3b
+xad.com, 958, RESELLER, 81cbf0a75a5e0e9a
+video.unrulymedia.com, 2564526802, RESELLER, 6f752381ad5ec0e5
+smaato.com, 1100044045, RESELLER, 07bcf65f187117b4
+pubnative.net, 1006576, RESELLER, d641df8625486a7b
+verve.com, 15503, RESELLER, 0c8f5958fc2d6270
+adyoulike.com, b4bf4fdd9b0b915f746f6747ff432bde, RESELLER, 4ad745ead2958bf7
+axonix.com, 57264, RESELLER, bc385f2b4a87b721
+admanmedia.com, 43, RESELLER
+sharethrough.com, OAW69Fon, RESELLER, d53b998a7bd4ecd2
+contextweb.com, 560288, RESELLER, 89ff185a4c4e857c
+rhebus.works, 5252004478, RESELLER
+contextweb.com, 563115, RESELLER, 89ff185a4c4e857c
+adcolony.com, 496220845654deec, RESELLER, 1ad675c9de6b5176
+appads.in, 107606, RESELLER
+rubiconproject.com, 24600, RESELLER, 0bfd66d529a55807
+pubmatic.com, 156177, RESELLER, 5d62403b186f2ace
+sharethrough.com, vLsmWvVl, DIRECT, d53b998a7bd4ecd2
+pubmatic.com, 156557, RESELLER, 5d62403b186f2ace
+rubiconproject.com, 18694, RESELLER, 0bfd66d529a55807
+openx.com, 540274407, RESELLER, 6a698e2ec38604c6
+33across.com, 0013300001kQj2HAAS, RESELLER, bbea06d9c4d2853c
+smaato.com, 1100047713, RESELLER, 07bcf65f187117b4
+smartadserver.com, 4342, RESELLER
+smartadserver.com, 4012, RESELLER
