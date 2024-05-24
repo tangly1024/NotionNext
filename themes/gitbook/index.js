@@ -10,7 +10,6 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { getShortId } from '@/lib/utils/pageId'
-import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -102,7 +101,7 @@ const LayoutBase = props => {
     slotRight,
     slotTop
   } = props
-  const { onLoading, fullWidth } = useGlobal()
+  const { fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -174,7 +173,7 @@ const LayoutBase = props => {
               {slotTop}
               <WWAds className='w-full' orientation='horizontal' />
 
-              <Transition
+              {/* <Transition
                 show={!onLoading}
                 appear={true}
                 enter='transition ease-in-out duration-700 transform order-first'
@@ -183,9 +182,9 @@ const LayoutBase = props => {
                 leave='transition ease-in-out duration-300 transform'
                 leaveFrom='opacity-100 translate-y-0'
                 leaveTo='opacity-0 -translate-y-16'
-                unmount={false}>
-                {children}
-              </Transition>
+                unmount={false}> */}
+              {children}
+              {/* </Transition> */}
 
               {/* Google广告 */}
               <AdSlot type='in-article' />
