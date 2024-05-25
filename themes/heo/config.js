@@ -7,7 +7,7 @@ const CONFIG = {
   HEO_NOTICE_BAR: [
     { title: '欢迎来到我的博客', url: 'https://blog.buxiantang.top' },
     { title: '我的答疑服务', url: 'https://buxiantang.top' },
-    { title: '加锁文章说明', url: '/lockdescription' }
+    { title: '加锁文章说明', url: 'https://buxiantang.top/lockdescription' }
   ],
 
   // 英雄区左右侧组件颠倒位置
