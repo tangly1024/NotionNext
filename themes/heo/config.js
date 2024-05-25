@@ -6,7 +6,8 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: '欢迎来到我的博客', url: 'https://blog.buxiantang.top' },
-    { title: '我的答疑服务', url: 'https://buxiantang.top' }
+    { title: '我的答疑服务', url: 'https://buxiantang.top' },
+    { title: '加锁文章说明', url: '/lockdescription' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -34,13 +35,7 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好！我是天明道友',
-    '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
-    '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
-    '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    '你好！我是天明道友'
   ],
   HEO_INFO_CARD_URL: 'https://buxiantang.top', // 个人资料底部按钮链接
 
