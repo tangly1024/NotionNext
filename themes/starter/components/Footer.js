@@ -156,13 +156,14 @@ export const Footer = props => {
                     </a>
                   </p>
                     <p className='text-base text-gray-7'>
-                    Designed and Developed by
+                    Power by
                     <a
                       href='https://nankoyo.com'
                       rel='nofollow noopner noreferrer'
                       target='_blank'
                       className='px-1 text-gray-1 hover:underline'>
-                      NKY Static-build {siteConfig('VERSION')}
+                      NKY Generato V{siteConfig('VERSION')} 
+                      Theme Star
                     </a>
                   </p>
                 </div>
