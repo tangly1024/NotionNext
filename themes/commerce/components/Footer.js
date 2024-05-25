@@ -62,7 +62,7 @@ const Footer = props => {
                     <Link
                       key={`${menu.name}`}
                       title={`${menu.name}`}
-                      href={`${menu.to}`}
+                      href={`${menu.href}`}
                       passHref>
                       {menu.name}
                     </Link>
@@ -167,7 +167,7 @@ const Footer = props => {
                       dangerouslySetInnerHTML={{
                         __html: siteConfig(
                           'COMMERCE_FOOTER_RIGHT_TEXT',
-                          null,
+                          '',
                           CONFIG
                         )
                       }}></div>

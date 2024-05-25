@@ -33,7 +33,7 @@ export const MenuItemCollapse = props => {
         onClick={toggleShow}>
         {!hasSubMenu && (
           <Link
-            href={link?.to}
+            href={link?.href}
             target={link?.target}
             className='items-center flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1'>
             <span className='text-blue-600 dark:text-blue-300 hover:text-red-400 transition-all items-center duration-200'>
@@ -72,7 +72,7 @@ export const MenuItemCollapse = props => {
               <div
                 key={index}
                 className='dark:bg-black text-left px-10 justify-start text-blue-600 dark:text-blue-300 bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
-                <Link href={sLink.to} target={link?.target}>
+                <Link href={sLink.href} target={link?.target}>
                   <span className='ml-4 text-sm'>
                     {sLink?.icon && (
                       <span className='mr-2 w-4'>

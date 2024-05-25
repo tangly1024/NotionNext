@@ -1,5 +1,3 @@
-import { siteConfig } from '@/lib/config'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'
 
 /**
@@ -17,10 +15,6 @@ export default function BlogListArchive({ archiveTitle, archivePosts }) {
 
       <ul>
         {archivePosts[archiveTitle].map(post => {
-          const url = checkContainHttp(post.slug)
-            ? sliceUrlFromHttp(post.slug)
-            : `${siteConfig('SUB_PATH', '')}/${post.slug}`
-
           return (
             <li
               key={post.id}
@@ -28,7 +22,7 @@ export default function BlogListArchive({ archiveTitle, archivePosts }) {
               <div id={post?.publishDay}>
                 <span className='text-gray-400'>{post?.publishDay}</span> &nbsp;
                 <Link
-                  href={url}
+                  href={post?.href}
                   className='dark:text-gray-400  dark:hover:text-gray-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600'>
                   {post.title}
                 </Link>

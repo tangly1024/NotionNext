@@ -9,7 +9,7 @@ import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
+import { getShortId } from '@/lib/utils/pageId'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -54,28 +54,29 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     localStorage.getItem('post_read_time') || '{}'
   )
   if (post) {
-    postReadTime[post.id] = new Date().getTime()
+    postReadTime[getShortId(post.id)] = new Date().getTime()
   }
   // 更新
   localStorage.setItem('post_read_time', JSON.stringify(postReadTime))
 
   return allNavPages?.map(item => {
     const res = {
-      id: item.id,
+      short_id: item.short_id,
       title: item.title || '',
       pageCoverThumbnail: item.pageCoverThumbnail || '',
       category: item.category || null,
       tags: item.tags || null,
       summary: item.summary || null,
       slug: item.slug,
+      href: item.href,
       pageIcon: item.pageIcon || '',
       lastEditedDate: item.lastEditedDate
     }
     // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
     if (
-      latestPosts.some(post => post.id === item.id) &&
-      (!postReadTime[item.id] ||
-        postReadTime[item.id] < new Date(item.lastEditedDate).getTime())
+      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 0) &&
+      (!postReadTime[item.short_id] ||
+        postReadTime[item.short_id] < new Date(item.lastEditedDate).getTime())
     ) {
       return { ...res, isLatest: true }
     } else {
@@ -100,7 +101,7 @@ const LayoutBase = props => {
     slotRight,
     slotTop
   } = props
-  const { onLoading, fullWidth } = useGlobal()
+  const { fullWidth } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
   const [pageNavVisible, changePageNavVisible] = useState(false)
@@ -172,7 +173,7 @@ const LayoutBase = props => {
               {slotTop}
               <WWAds className='w-full' orientation='horizontal' />
 
-              <Transition
+              {/* <Transition
                 show={!onLoading}
                 appear={true}
                 enter='transition ease-in-out duration-700 transform order-first'
@@ -181,9 +182,9 @@ const LayoutBase = props => {
                 leave='transition ease-in-out duration-300 transform'
                 leaveFrom='opacity-100 translate-y-0'
                 leaveTo='opacity-0 -translate-y-16'
-                unmount={false}>
-                {children}
-              </Transition>
+                unmount={false}> */}
+              {children}
+              {/* </Transition> */}
 
               {/* Google广告 */}
               <AdSlot type='in-article' />
@@ -411,11 +412,9 @@ const LayoutArchive = props => {
  */
 const Layout404 = props => {
   return (
-    <>
-      <div className='w-full h-96 py-80 flex justify-center items-center'>
-        404 Not found.
-      </div>
-    </>
+    <div className='w-full h-96 py-80 flex justify-center items-center'>
+      404 Not found.
+    </div>
   )
 }
 

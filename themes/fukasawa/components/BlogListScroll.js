@@ -1,8 +1,8 @@
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { useEffect, useRef, useState } from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
-import { useGlobal } from '@/lib/global'
 
 /**
  * 文章列表分页表格
@@ -14,19 +14,19 @@ import { useGlobal } from '@/lib/global'
  */
 const BlogListScroll = props => {
   const { posts = [], siteInfo } = props
-  const { locale } = useGlobal()
+  const { locale, NOTION_CONFIG } = useGlobal()
   const targetRef = useRef(null)
-
   const [page, updatePage] = useState(1)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
 
   let hasMore = false
   const postsToShow = posts
-    ? Object.assign(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page)
+    ? Object.assign(posts).slice(0, POSTS_PER_PAGE * page)
     : []
 
   if (posts) {
     const totalCount = posts.length
-    hasMore = page * parseInt(siteConfig('POSTS_PER_PAGE')) < totalCount
+    hasMore = page * POSTS_PER_PAGE < totalCount
   }
   const handleGetMore = () => {
     if (!hasMore) return
@@ -37,7 +37,11 @@ const BlogListScroll = props => {
   const scrollTrigger = () => {
     requestAnimationFrame(() => {
       const scrollS = window.scrollY + window.outerHeight
-      const clientHeight = targetRef ? (targetRef.current ? (targetRef.current.clientHeight) : 0) : 0
+      const clientHeight = targetRef
+        ? targetRef.current
+          ? targetRef.current.clientHeight
+          : 0
+        : 0
       if (scrollS > clientHeight + 100) {
         handleGetMore()
       }
@@ -55,20 +59,29 @@ const BlogListScroll = props => {
     return <BlogPostListEmpty />
   } else {
     return (
-            <div id="posts-wrapper" ref={targetRef} className='grid-container' >
-                {/* 文章列表 */}
-                    {postsToShow?.map(post => (
-            <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>
-            <BlogCard index={posts.indexOf(post)} key={post.id} post={post} siteInfo={siteInfo} />
-                        </div>
-                    ))}
+      <div id='posts-wrapper' ref={targetRef} className='grid-container'>
+        {/* 文章列表 */}
+        {postsToShow?.map(post => (
+          <div
+            key={post.id}
+            className='grid-item justify-center flex'
+            style={{ breakInside: 'avoid' }}>
+            <BlogCard
+              index={posts.indexOf(post)}
+              key={post.id}
+              post={post}
+              siteInfo={siteInfo}
+            />
+          </div>
+        ))}
 
-                <div className="w-full my-4 py-4 text-center cursor-pointer "
-                    onClick={handleGetMore}>
-                    {' '}
-                    {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
-                </div>
-            </div>
+        <div
+          className='w-full my-4 py-4 text-center cursor-pointer '
+          onClick={handleGetMore}>
+          {' '}
+          {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
+        </div>
+      </div>
     )
   }
 }

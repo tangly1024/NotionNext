@@ -1,9 +1,12 @@
 import BLOG from '@/blog.config'
+import useNotification from '@/components/Notification'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
+import { useGlobal } from '@/lib/global'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
+import { getPasswordQuery } from '@/lib/password'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { checkContainHttp } from '@/lib/utils'
+import { checkSlugHasNoSlash, getRecommendPost } from '@/lib/utils/post'
 import { getLayoutByTheme } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
@@ -18,18 +21,27 @@ import { useEffect, useState } from 'react'
  */
 const Slug = props => {
   const { post } = props
+  const router = useRouter()
+  const { locale } = useGlobal()
 
   // 文章锁🔐
   const [lock, setLock] = useState(post?.password && post?.password !== '')
+  const { showNotification, Notification } = useNotification()
 
   /**
    * 验证文章密码
    * @param {*} result
    */
   const validPassword = passInput => {
-    const encrypt = md5(post.slug + passInput)
-    if (passInput && encrypt === post.password) {
+    if (!post) {
+      return false
+    }
+    const encrypt = md5(post?.slug + passInput)
+    if (passInput && encrypt === post?.password) {
       setLock(false)
+      // 输入密码存入localStorage，下次自动提交
+      localStorage.setItem('password_' + router.asPath, passInput)
+      showNotification(locale.COMMON.ARTICLE_UNLOCK_TIPS) // 设置解锁成功提示显示
       return true
     }
     return false
@@ -49,7 +61,31 @@ const Slug = props => {
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
     }
+
+    // 读取上次记录 自动提交密码
+    const passInputs = getPasswordQuery(router.asPath)
+    if (passInputs.length > 0) {
+      for (const passInput of passInputs) {
+        if (validPassword(passInput)) {
+          break // 密码验证成功，停止尝试
+        }
+      }
+    }
   }, [post])
+
+  // 文章加载
+  useEffect(() => {
+    if (lock) {
+      return
+    }
+    // 文章解锁后生成目录与内容
+    if (post?.blockMap?.block) {
+      post.content = Object.keys(post.blockMap.block).filter(
+        key => post.blockMap.block[key]?.value?.parent_id === post.id
+      )
+      post.toc = getPageTableOfContents(post, post.blockMap)
+    }
+  }, [router, lock])
 
   props = { ...props, lock, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
@@ -57,7 +93,12 @@ const Slug = props => {
     theme: siteConfig('THEME'),
     router: useRouter()
   })
-  return <Layout {...props} />
+  return (
+    <>
+      <Layout {...props} />
+      {!lock && <Notification />}
+    </>
+  )
 }
 
 export async function getStaticPaths() {
@@ -71,7 +112,7 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
   const paths = allPages
-    ?.filter(row => checkSlug(row))
+    ?.filter(row => checkSlugHasNoSlash(row))
     .map(row => ({ params: { prefix: row.slug } }))
   return {
     paths: paths,
@@ -119,7 +160,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   }
 
   // 文章内容加载
-  if (!props?.posts?.blockMap) {
+  if (!props?.post?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
@@ -156,53 +197,6 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       props.NOTION_CONFIG
     )
   }
-}
-
-/**
- * 获取文章的关联推荐文章列表，目前根据标签关联性筛选
- * @param post
- * @param {*} allPosts
- * @param {*} count
- * @returns
- */
-export function getRecommendPost(post, allPosts, count = 6) {
-  let recommendPosts = []
-  const postIds = []
-  const currentTags = post?.tags || []
-  for (let i = 0; i < allPosts.length; i++) {
-    const p = allPosts[i]
-    if (p.id === post.id || p.type.indexOf('Post') < 0) {
-      continue
-    }
-
-    for (let j = 0; j < currentTags.length; j++) {
-      const t = currentTags[j]
-      if (postIds.indexOf(p.id) > -1) {
-        continue
-      }
-      if (p.tags && p.tags.indexOf(t) > -1) {
-        recommendPosts.push(p)
-        postIds.push(p.id)
-      }
-    }
-  }
-
-  if (recommendPosts.length > count) {
-    recommendPosts = recommendPosts.slice(0, count)
-  }
-  return recommendPosts
-}
-
-function checkSlug(row) {
-  let slug = row.slug
-  if (slug.startsWith('/')) {
-    slug = slug.substring(1)
-  }
-  return (
-    (slug.match(/\//g) || []).length === 0 &&
-    !checkContainHttp(slug) &&
-    row.type.indexOf('Menu') < 0
-  )
 }
 
 export default Slug

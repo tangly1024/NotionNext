@@ -27,7 +27,7 @@ export const MenuItemCollapse = ({ link }) => {
     return null
   }
 
-  const selected = router.pathname === link.to || router.asPath === link.to
+  const selected = router.pathname === link.href || router.asPath === link.href
 
   return (
     <>
@@ -40,7 +40,7 @@ export const MenuItemCollapse = ({ link }) => {
             : ' text-black dark:text-white ')
         }>
         {!hasSubMenu && (
-          <Link href={link?.to} target={link?.target}>
+          <Link href={link?.href} target={link?.target}>
             <div className='my-auto items-center justify-between flex '>
               {link.icon && (
                 <i className={`${link.icon} w-4 mr-6 text-center`} />
@@ -73,7 +73,7 @@ export const MenuItemCollapse = ({ link }) => {
               <div
                 key={index}
                 className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-indigo-500 dark:hover:bg-indigo-500 hover:text-white tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
-                <Link href={sLink.to} target={link?.target}>
+                <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm'>
                     <i className={`${sLink.icon} w-4 mr-3 text-center`} />
                     {sLink.title}
