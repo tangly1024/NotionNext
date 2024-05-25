@@ -162,9 +162,9 @@ export const Footer = props => {
                       rel='nofollow noopner noreferrer'
                       target='_blank'
                       className='px-1 text-gray-1 hover:underline'>
-                      NKY Generato V{siteConfig('VERSION')} 
-                      Theme Star
+                      NKY Generato V{siteConfig('VERSION')}
                     </a>
+                    Theme Star
                   </p>
                 </div>
               </div>
