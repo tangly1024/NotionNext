@@ -156,7 +156,7 @@ export const Footer = props => {
                     </a>
                   </p>
                     <p className='text-base text-gray-7'>
-                    Powered and developed by
+                    Powered by
                     <a
                       href='https://nankoyo.com'
                       rel='nofollow noopner noreferrer'
