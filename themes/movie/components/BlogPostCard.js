@@ -27,7 +27,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             />
           </div>
 
-          <div className='absolute bottom-28 z-20'>
+          <div className='absolute top-0 left-0 z-20 flex flex-col items-start gap-2 p-2'>
             {post?.tagItems && post?.tagItems.length > 0 && (
               <>
                 <div className='px-6 justify-between flex p-2'>
@@ -39,7 +39,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             )}
           </div>
           {/* 阴影遮罩 */}
-          <h2 className='absolute bottom-10 px-6 transition-all duration-200 text-white text-2xl font-semibold break-words shadow-text z-20'>
+          <h2 className='absolute bottom-10 px-6 transition-all duration-200 text-white text-1xl font-semibold break-words shadow-text z-20'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post.pageIcon} />
             )}

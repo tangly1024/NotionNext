@@ -54,3 +54,12 @@ openx.com, 540274407, RESELLER, 6a698e2ec38604c6
 smaato.com, 1100047713, RESELLER, 07bcf65f187117b4
 smartadserver.com, 4342, RESELLER
 smartadserver.com, 4012, RESELLER
+google.com, pub-5285623249468085, RESELLER, f08c47fec0942fa0
+google.com, pub-8435989769185680, RESELLER, f08c47fec0942fa0
+pubmatic.com, 158150, RESELLER, 5d62403b186f2ace
+video.unrulymedia.com, 1947792888, RESELLER
+rhythmone.com, 1947792888, RESELLER, a670c89d4a324e47
+rhythmone.com, 1117218481, RESELLER, a670c89d4a324e47
+video.unrulymedia.com, 1117218481, RESELLER
+rubiconproject.com, 20474, RESELLER, 0bfd66d529a55807
+appnexus.com, 11995, RESELLER, f5ab79cb980f11d1

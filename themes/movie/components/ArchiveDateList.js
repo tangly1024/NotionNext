@@ -20,14 +20,13 @@ export default function ArchiveDateList(props) {
   dates = dates.slice(0, 5)
   return (
     <div>
-      <div className="text-2xl dark:text-white mb-2">{locale.NAV.ARCHIVE}</div>
+      <div className='text-2xl dark:text-white mb-2'>{locale.NAV.ARCHIVE}</div>
       {dates?.map((date, index) => {
         return (
           <div key={index}>
             <Link
               href={`/archive#${date}`}
-              className="hover:underline dark:text-green-500"
-            >
+              className='hover:underline dark:text-green-500'>
               {date}
             </Link>
           </div>
