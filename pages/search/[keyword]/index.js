@@ -31,11 +31,18 @@ export async function getStaticProps({ params: { keyword }, locale }) {
   )
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
+  const POST_LIST_STYLE = siteConfig(
+    'POST_LIST_STYLE',
+    'Page',
+    props?.NOTION_CONFIG
+  )
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
+
   // 处理分页
-  if (siteConfig('POST_LIST_STYLE') === 'scroll') {
-    // 滚动列表 给前端返回所有数据
-  } else if (siteConfig('POST_LIST_STYLE') === 'page') {
-    props.posts = props.posts?.slice(0, siteConfig('POSTS_PER_PAGE'))
+  if (POST_LIST_STYLE === 'scroll') {
+    // 滚动列表默认给前端返回所有数据
+  } else if (POST_LIST_STYLE) {
+    props.posts = props.posts?.slice(0, POSTS_PER_PAGE)
   }
   props.keyword = keyword
   return {
