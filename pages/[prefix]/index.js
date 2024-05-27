@@ -96,7 +96,7 @@ const Slug = props => {
   return (
     <>
       <Layout {...props} />
-      {!lock && <Notification />}
+      {post?.password && post?.password !== '' && !lock && <Notification />}
     </>
   )
 }
