@@ -156,15 +156,15 @@ export const Footer = props => {
                     </a>
                   </p>
                     <p className='text-base text-gray-7'>
-                    Powered by
+                    由
                     <a
                       href='https://nankoyo.com'
                       rel='nofollow noopner noreferrer'
                       target='_blank'
                       className='px-1 text-gray-1 hover:underline'>
-                      NKY Generato V{siteConfig('VERSION')}
+                      NKY V{siteConfig('VERSION')}
                     </a>
-                    Theme Star
+                    驱动 |主题 - Star v2.1.0
                   </p>
                 </div>
               </div>
