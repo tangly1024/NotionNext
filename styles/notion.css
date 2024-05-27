@@ -523,8 +523,8 @@ summary > .notion-h {
 .notion-page {
   /* width: var(--notion-max-width); */
   width: 100% !important;
-  padding-left: calc(min(12px, 8vw));
-  padding-right: calc(min(12px, 8vw));
+  /* padding-left: calc(min(12px, 8vw)); */
+  /* padding-right: calc(min(12px, 8vw)); */
 }
 
 .notion-full-width {
