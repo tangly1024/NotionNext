@@ -164,7 +164,7 @@ export const Footer = props => {
                       className='px-1 text-gray-1 hover:underline'>
                       NKY V{siteConfig('VERSION')}
                     </a>
-                    驱动 |主题 - Star v2.1.0
+                    驱动 | 主题 - Star v2.1.0
                   </p>
                 </div>
               </div>
