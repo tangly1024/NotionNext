@@ -1,11 +1,12 @@
+import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { deepClone, isBrowser } from '@/lib/utils'
+import { debounce } from 'lodash'
+import { useEffect, useState } from 'react'
 import BlogCard from './BlogCard'
 import BlogPostListEmpty from './BlogListEmpty'
 import PaginationSimple from './PaginationSimple'
-import { useEffect, useState } from 'react'
-import { debounce } from 'lodash'
-import { AdSlot } from '@/components/GoogleAdsense'
 /**
  * 文章列表分页表格
  * @param page 当前页
@@ -15,7 +16,10 @@ import { AdSlot } from '@/components/GoogleAdsense'
  * @constructor
  */
 const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
-  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
+  const { NOTION_CONFIG } = useGlobal()
+  const totalPage = Math.ceil(
+    postCount / parseInt(siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG))
+  )
   const showNext = page < totalPage
 
   const [columns, setColumns] = useState(calculateColumns())
@@ -53,18 +57,25 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return (
       <div>
         {/* 文章列表 */}
-        <div id="posts-wrapper" className='grid-container'>
+        <div id='posts-wrapper' className='grid-container'>
           {filterPosts?.map((post, index) => (
-            <div key={post.id} className='grid-item justify-center flex' style={{ breakInside: 'avoid' }}>
-              <BlogCard index={index} key={post.id} post={post} siteInfo={siteInfo} />
+            <div
+              key={post.id}
+              className='grid-item justify-center flex'
+              style={{ breakInside: 'avoid' }}>
+              <BlogCard
+                index={index}
+                key={post.id}
+                post={post}
+                siteInfo={siteInfo}
+              />
             </div>
           ))}
           {siteConfig('ADSENSE_GOOGLE_ID') && (
             <div className='p-3'>
-                <AdSlot type='flow'/>
+              <AdSlot type='flow' />
             </div>
           )}
-
         </div>
         <PaginationSimple page={page} showNext={showNext} />
       </div>
