@@ -12,7 +12,7 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
-          <meta name="referrer" content="never"> 
+          <meta name='referrer' content='never'> 
           <link rel='icon' href={`${BLOG.BLOG_FAVICON}`} />
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
