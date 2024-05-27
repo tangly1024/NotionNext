@@ -406,16 +406,24 @@ const CONFIG = {
       TITLE: '友情链接',
       LINK_GROUP: [
         {
-          TITLE: '待添加',
-          URL: '#'
+          TITLE: 'Status',
+          URL: 'https://status.nankoyo.com/'
         },
         {
-          TITLE: '待添加',
-          URL: '#'
+          TITLE: 'IT-Tools',
+          URL: 'https://tools.nankoyo.com/'
         },
         {
-          TITLE: '待添加',
-          URL: '#'
+          TITLE: 'NKY-Music',
+          URL: 'https://music.nankoyo.com/'
+        },
+        {
+          TITLE: 'Music-Unlock',
+          URL: 'https://unlock.nankoyo.com/'
+        },
+        {
+          TITLE: 'Hot',
+          URL: 'https://hot.nankoyo.com'
         }
       ]
     }
