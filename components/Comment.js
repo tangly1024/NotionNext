@@ -121,7 +121,7 @@ const Comment = ({ frontMatter, className }) => {
     return null
   }
 
-  if (frontMatter?.comment != 'Hide') {
+  if (frontMatter?.comment !== 'Hide') {
     return (
       <div
         key={frontMatter?.id}
