@@ -102,6 +102,7 @@ export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
   const userDarkMode = loadDarkModeFromLocalStorage()
   if (userDarkMode) {
     newDarkMode = userDarkMode === 'dark' || userDarkMode === 'true'
+    saveDarkModeToLocalStorage(newDarkMode)  //用户手动的才保存
   }
 
   // 如果站点强制设置默认深色，则优先级改过用
@@ -116,7 +117,6 @@ export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
   }
 
   updateDarkMode(newDarkMode)
-  saveDarkModeToLocalStorage(newDarkMode)
   document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'light')
 }
 
