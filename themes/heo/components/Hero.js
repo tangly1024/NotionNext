@@ -62,13 +62,13 @@ function BannerGroup(props) {
  */
 function Banner(props) {
   const router = useRouter()
-  const { latestPosts } = props
+  const { allNavPages } = props
   /**
    * 随机跳转文章
    */
   function handleClickBanner() {
-    const randomIndex = Math.floor(Math.random() * latestPosts.length)
-    const randomPost = latestPosts[randomIndex]
+    const randomIndex = Math.floor(Math.random() * allNavPages.length)
+    const randomPost = allNavPages[randomIndex]
     router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
 
