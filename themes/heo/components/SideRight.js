@@ -30,7 +30,7 @@ export default function SideRight(props) {
   const { post, tagOptions, currentTag, rightAreaSlot } = props
 
   // 只摘取标签的前60个，防止右侧过长
-  const sortedTags = tagOptions.slice(0, 60)
+  const sortedTags = tagOptions?.slice(0, 60) || []
 
   return (
     <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
