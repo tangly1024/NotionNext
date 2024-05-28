@@ -56,6 +56,9 @@ export default function CustomContextMenu(props) {
       setShow(true)
     }
 
+    /**
+     * 鼠标点击事件
+     */
     const handleClick = event => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setShow(false)
@@ -140,6 +143,26 @@ export default function CustomContextMenu(props) {
     htmlElement.classList?.add(newStatus ? 'dark' : 'light')
   }
 
+  // 一些配置变量
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_RANDOM_POST = siteConfig(
+    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_RANDOM_POST'
+  )
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_CATEGORY = siteConfig(
+    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_CATEGORY'
+  )
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG = siteConfig(
+    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG'
+  )
+  const CAN_COPY = siteConfig('CAN_COPY')
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK = siteConfig(
+    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK'
+  )
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE = siteConfig(
+    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE'
+  )
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH = siteConfig(
+    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH'
+  )
   return (
     <div
       ref={menuRef}
@@ -167,7 +190,7 @@ export default function CustomContextMenu(props) {
 
         {/* 跳转导航按钮 */}
         <div className='w-full px-2'>
-          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_RANDOM_POST') && (
+          {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_RANDOM_POST && (
             <div
               onClick={handleJumpToRandomPost}
               title={locale.MENU.WALK_AROUND}
@@ -177,7 +200,7 @@ export default function CustomContextMenu(props) {
             </div>
           )}
 
-          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_CATEGORY') && (
+          {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_CATEGORY && (
             <Link
               href='/category'
               title={locale.MENU.CATEGORY}
@@ -187,7 +210,7 @@ export default function CustomContextMenu(props) {
             </Link>
           )}
 
-          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG') && (
+          {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG && (
             <Link
               href='/tag'
               title={locale.MENU.TAGS}
@@ -202,7 +225,7 @@ export default function CustomContextMenu(props) {
 
         {/* 功能按钮 */}
         <div className='w-full px-2'>
-          {siteConfig('CAN_COPY') && (
+          {CAN_COPY && (
             <div
               onClick={handleCopy}
               title={locale.MENU.COPY}
@@ -212,7 +235,7 @@ export default function CustomContextMenu(props) {
             </div>
           )}
 
-          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK') && (
+          {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK && (
             <div
               onClick={handleCopyLink}
               title={locale.MENU.SHARE_URL}
@@ -222,7 +245,7 @@ export default function CustomContextMenu(props) {
             </div>
           )}
 
-          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE') && (
+          {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE && (
             <div
               onClick={handleChangeDarkMode}
               title={
@@ -241,7 +264,7 @@ export default function CustomContextMenu(props) {
             </div>
           )}
 
-          {siteConfig('CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH') && (
+          {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH && (
             <div
               onClick={handleChangeTheme}
               title={locale.MENU.THEME_SWITCH}
