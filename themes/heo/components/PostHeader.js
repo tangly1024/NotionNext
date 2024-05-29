@@ -59,7 +59,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           id='post-info'
           className='absolute top-48 z-10 flex flex-col space-y-4 lg:-mt-12 w-full max-w-[86rem] px-5'>
           {/* 分类+标签 */}
-          <div className='flex justify-center md:justify-start items-center'>
+          <div className='flex justify-center md:justify-start items-center gap-4'>
             {post.category && (
               <>
                 <Link

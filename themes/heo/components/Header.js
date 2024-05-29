@@ -132,6 +132,11 @@ const Header = props => {
         }
       `}</style>
 
+      {/* fixed时留白高度 */}
+      {fixedNav && !document?.querySelector('#post-bg') && (
+        <div className='h-16'></div>
+      )}
+
       {/* 顶部导航菜单栏 */}
       <nav
         id='nav'
