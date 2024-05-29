@@ -18,7 +18,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
   }
   // 文章头图
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
-
+  const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
   return (
     <div
       id='post-bg'
@@ -67,7 +67,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   className='mr-4'
                   passHref
                   legacyBehavior>
-                  <div className='cursor-pointer font-sm font-bold px-3 py-1 rounded-lg bg-blue-500 hover:bg-white text-white hover:text-blue-500 duration-200 '>
+                  <div className='cursor-pointer font-sm font-bold px-3 py-1 rounded-lg  hover:bg-white text-white bg-blue-500 dark:bg-yellow-500 hover:text-blue-500 duration-200 '>
                     {post.category}
                   </div>
                 </Link>
@@ -103,8 +103,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           </div>
 
           {/* 标题底部补充信息 */}
-          <section className='flex-wrap shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white dark:text-gray-400 font-light leading-8'>
-            <div className='flex justify-center dark:text-gray-200 text-opacity-70'>
+          <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
+            <div className='flex justify-center '>
               <div className='mr-2'>
                 <WordCount />
               </div>
@@ -126,7 +126,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
               </div>
             </div>
 
-            {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && (
+            {/* 阅读统计 */}
+            {ANALYTICS_BUSUANZI_ENABLE && (
               <div className='busuanzi_container_page_pv font-light mr-2'>
                 <i className='fa-solid fa-fire-flame-curved'></i>{' '}
                 <span className='mr-2 busuanzi_value_page_pv' />
