@@ -311,11 +311,12 @@ const LayoutSlug = props => {
                   <PostCopyright {...props} />
                   {/* 文章推荐 */}
                   <PostRecommend {...props} />
-                  {/* 上一篇\下一篇文章 */}
-                  <PostAdjacent {...props} />
                 </div>
               )}
             </article>
+
+            {/* 上一篇\下一篇文章 */}
+            <PostAdjacent {...props} />
 
             {fullWidth ? null : (
               <div className={`${commentEnable && post ? '' : 'hidden'}`}>
@@ -337,6 +338,7 @@ const LayoutSlug = props => {
           </div>
         )}
       </div>
+
       <FloatTocButton {...props} />
     </>
   )
