@@ -1,6 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
 import throttle from 'lodash.throttle'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import DarkModeButton from './DarkModeButton'
 import Logo from './Logo'
@@ -21,6 +22,7 @@ const Header = props => {
   const [navBgWhite, setBgWhite] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
 
+  const router = useRouter()
   const slideOverRef = useRef()
 
   const toggleMenuOpen = () => {
@@ -34,15 +36,15 @@ const Header = props => {
     throttle(() => {
       const scrollS = window.scrollY
       // 导航栏设置 白色背景
-      if (scrollS <= 0) {
+      if (scrollS <= 1) {
         setFixedNav(false)
         setBgWhite(false)
+        setTextWhite(false)
 
         // 文章详情页特殊处理
-        if (document.querySelector('#post-bg')) {
+        if (document?.querySelector('#post-bg')) {
           setFixedNav(true)
           setTextWhite(true)
-          setBgWhite(false)
         }
       } else {
         // 向下滚动后的导航样式
@@ -50,19 +52,21 @@ const Header = props => {
         setTextWhite(false)
         setBgWhite(true)
       }
-    }, 200)
+    }, 100)
   )
+  useEffect(() => {
+    scrollTrigger()
+  }, [router])
 
   // 监听滚动
   useEffect(() => {
-    scrollTrigger()
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
   }, [])
 
-  // 监听导航栏显示文字
+  // 导航栏根据滚动轮播菜单内容
   useEffect(() => {
     let prevScrollY = 0
     let ticking = false
@@ -71,17 +75,14 @@ const Header = props => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY
-
           if (currentScrollY > prevScrollY) {
             setActiveIndex(1) // 向下滚动时设置activeIndex为1
           } else {
             setActiveIndex(0) // 向上滚动时设置activeIndex为0
           }
-
           prevScrollY = currentScrollY
           ticking = false
         })
-
         ticking = true
       }
     }
@@ -158,7 +159,7 @@ const Header = props => {
           </div>
 
           {/* 右侧固定 */}
-          <div className='flex flex-shrink-0 justify-center items-center'>
+          <div className='flex flex-shrink-0 justify-end items-center w-48'>
             <RandomPostButton {...props} />
             <SearchButton {...props} />
             {!JSON.parse(siteConfig('THEME_SWITCH')) && (
