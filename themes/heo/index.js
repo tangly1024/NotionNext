@@ -52,7 +52,7 @@ const LayoutBase = props => {
   const { children, slotTop, className } = props
 
   // 全屏模式下的最大宽度
-  const { fullWidth } = useGlobal()
+  const { fullWidth, isDarkMode } = useGlobal()
   const router = useRouter()
 
   const headerSlot = (
@@ -67,7 +67,7 @@ const LayoutBase = props => {
           <Hero {...props} />
         </>
       ) : null}
-      {fullWidth ? null : <PostHeader {...props} />}
+      {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
     </header>
   )
 

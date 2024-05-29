@@ -12,7 +12,7 @@ import WavesArea from './WavesArea'
  * @param {*} param0
  * @returns
  */
-export default function PostHeader({ post, siteInfo }) {
+export default function PostHeader({ post, siteInfo, isDarkMode }) {
   if (!post) {
     return <></>
   }
@@ -31,19 +31,21 @@ export default function PostHeader({ post, siteInfo }) {
           height: 100%;
           top: 0;
           left: 0;
-          box-shadow: 110px -130px 300px 60px #0060e0 inset;
+          box-shadow: 110px -130px 500px 100px ${isDarkMode
+              ? '#CA8A04'
+              : '#0060e0'} inset;
         }
       `}</style>
 
       <div
         style={{ backdropFilter: 'blur(15px)' }}
-        className={
-          'bg-[#0060e0] absolute top-0 w-full h-full py-10 flex justify-center items-center'
-        }>
+        className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}>
         {/* 文章背景图 */}
         <div
           id='post-cover-wrapper'
-          style={{ filter: 'blur(15px)' }}
+          style={{
+            filter: 'blur(15px)'
+          }}
           className='coverdiv lg:translate-x-96 opacity-50 lg:rotate-12'>
           <LazyImage
             id='post-cover'
