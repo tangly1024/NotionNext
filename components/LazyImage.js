@@ -20,6 +20,8 @@ export default function LazyImage({
   style
 }) {
   const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH')
+  const defaultPlaceholderSrc = siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')
+
   const imageRef = useRef(null)
   const [adjustedSrc, setAdjustedSrc] = useState(
     placeholderSrc || siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')
@@ -35,6 +37,14 @@ export default function LazyImage({
   const handleImageLoad = () => {
     if (typeof onLoad === 'function') {
       onLoad() // 触发传递的onLoad回调函数
+    }
+  }
+  /**
+   * 图片加载失败回调
+   */
+  const handleImageError = () => {
+    if (imageRef.current) {
+      imageRef.current.src = defaultPlaceholderSrc
     }
   }
 
@@ -71,7 +81,8 @@ export default function LazyImage({
     ref: imageRef,
     src: priority ? adjustedSrc : placeholderSrc,
     alt: alt,
-    onLoad: handleImageLoad
+    onLoad: handleImageLoad,
+    onError: handleImageError // 添加onError处理函数
   }
 
   if (id) {
