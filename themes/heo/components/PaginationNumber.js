@@ -56,7 +56,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           }}
           rel='prev'
           className={`${currentPage === 1 ? 'invisible' : 'block'}`}>
-          <div className='relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-lg cursor-pointer group'>
+          <div className='hover:border-indigo-600 dark:hover:border-yellow-600 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
             <i className='fas fa-angle-left mr-2 transition-all duration-200 transform group-hover:-translate-x-4' />
             <div className='absolute translate-x-4 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0'>
               {locale.PAGINATION.PREV}
@@ -69,7 +69,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           {pages}
 
           {/* 跳转页码 */}
-          <div className='bg-white hover:bg-gray-100 dark:hover:bg-yellow-600  dark:bg-[#1e1e1e]  h-10 border flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200'>
+          <div className='bg-white hover:bg-gray-100 dark:hover:bg-yellow-600  dark:bg-[#1e1e1e]  h-10 border dark:border-gray-600 flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200'>
             <input
               value={value}
               className='w-0 group-hover:w-20 group-hover:px-3 transition-all duration-200 bg-gray-100 border-none outline-none h-full rounded-lg'
@@ -90,7 +90,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           }}
           rel='next'
           className={`${+showNext ? 'block' : 'invisible'} `}>
-          <div className='relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-lg cursor-pointer group'>
+          <div className='hover:border-indigo-600 dark:hover:border-yellow-600 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
             <i className='fas fa-angle-right mr-2 transition-all duration-200 transform group-hover:translate-x-6' />
             <div className='absolute -translate-x-10 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:-translate-x-2'>
               {locale.PAGINATION.NEXT}
