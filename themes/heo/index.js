@@ -52,7 +52,7 @@ const LayoutBase = props => {
   const { children, slotTop, className } = props
 
   // 全屏模式下的最大宽度
-  const { fullWidth } = useGlobal()
+  const { fullWidth, isDarkMode } = useGlobal()
   const router = useRouter()
 
   const headerSlot = (
@@ -67,7 +67,7 @@ const LayoutBase = props => {
           <Hero {...props} />
         </>
       ) : null}
-      {fullWidth ? null : <PostHeader {...props} />}
+      {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
     </header>
   )
 
@@ -284,18 +284,18 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600 article`}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600`}>
+        {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
         {!lock && (
-          <div
-            id='article-wrapper'
-            className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
+          <div id='article-wrapper' className='mx-auto md:w-full md:px-5'>
+            {/* 文章主体 */}
             <article
               itemScope
               itemType='https://schema.org/Movie'
               data-wow-delay='.2s'
-              className='wow fadeInUp subpixel-antialiased overflow-y-hidden'>
+              className='wow fadeInUp'>
               {/* Notion文章主体 */}
               <section className='px-5 justify-center mx-auto'>
                 <WWAds orientation='horizontal' className='w-full' />
@@ -311,12 +311,14 @@ const LayoutSlug = props => {
                   <PostCopyright {...props} />
                   {/* 文章推荐 */}
                   <PostRecommend {...props} />
-                  {/* 上一篇\下一篇文章 */}
-                  <PostAdjacent {...props} />
                 </div>
               )}
             </article>
 
+            {/* 上一篇\下一篇文章 */}
+            <PostAdjacent {...props} />
+
+            {/* 评论区 */}
             {fullWidth ? null : (
               <div className={`${commentEnable && post ? '' : 'hidden'}`}>
                 <hr className='my-4 border-dashed' />
@@ -337,6 +339,7 @@ const LayoutSlug = props => {
           </div>
         )}
       </div>
+
       <FloatTocButton {...props} />
     </>
   )
