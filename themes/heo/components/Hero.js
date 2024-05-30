@@ -2,6 +2,7 @@
 import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
@@ -206,6 +207,7 @@ function GroupMenu() {
  */
 function TopGroup(props) {
   const { latestPosts, allNavPages, siteInfo } = props
+  const { locale } = useGlobal()
   const todayCardRef = useRef()
   function handleMouseLeave() {
     todayCardRef.current.coverUp()
@@ -238,7 +240,7 @@ function TopGroup(props) {
                 </div>
                 {/* hover 悬浮的 ‘荐’ 字 */}
                 <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
-                  荐
+                  {locale.COMMON.RECOMMEND_BADGES}
                 </div>
               </div>
             </Link>
@@ -304,6 +306,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
 function TodayCard({ cRef, siteInfo }) {
   const router = useRouter()
   const link = siteConfig('HEO_HERO_TITLE_LINK', null, CONFIG)
+  const { locale } = useGlobal()
   // 卡牌是否盖住下层
   const [isCoverUp, setIsCoverUp] = useState(true)
 
@@ -348,7 +351,7 @@ function TodayCard({ cRef, siteInfo }) {
           isCoverUp
             ? 'opacity-100 cursor-pointer'
             : 'opacity-0 transform scale-110 pointer-events-none'
-        } shadow transition-all duration-200 today-card h-full bg-[#0E57D5] rounded-xl relative overflow-hidden flex items-end`}>
+        } shadow transition-all duration-200 today-card h-full bg-[#0E57D5] dark:bg-yellow-500 rounded-xl relative overflow-hidden flex items-end`}>
         <div
           id='today-card-info'
           className='z-10 flex justify-between w-full relative text-white p-10 items-end'>
@@ -364,12 +367,14 @@ function TodayCard({ cRef, siteInfo }) {
             onClick={handleClickMore}
             className={`'${
               isCoverUp ? '' : 'hidden pointer-events-none '
-            } flex items-center px-3 h-10 justify-center bg-[#425aef] hover:bg-[#4259efcb] transition-colors duration-100 rounded-3xl`}>
+            } flex items-center px-3 h-10 justify-center bg-[#425aef] hover:bg-[#4259efcb] dark:bg-yellow-500 dark:hover:bg-yellow-600 transition-colors duration-100 rounded-3xl`}>
             <PlusSmall
-              className={'w-6 h-6 mr-2 bg-white rounded-full stroke-indigo-400'}
+              className={
+                'w-6 h-6 mr-2 bg-white rounded-full stroke-indigo-400 dark:stroke-yellow-400'
+              }
             />
             <div id='more' className='select-none'>
-              更多推荐
+              {locale.COMMON.MORE}
             </div>
           </div>
         </div>
