@@ -20,7 +20,10 @@ const loadExternal = async () => {
     'https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js',
     'js'
   )
-
+  await loadExternalResource(
+    'https://api.concord.tech/site-v1/b79e079e-2bdf-4048-a587-ea3ffbcd5fe4/site-client',
+    'js'
+  )
   const Swiper = window.Swiper
   if (!Swiper) {
     return
