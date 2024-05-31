@@ -121,6 +121,11 @@ const Comment = ({ frontMatter, className }) => {
     return null
   }
 
+  // 特定文章关闭评论区
+  if (frontMatter?.comment === 'Hide') {
+    return null
+  }
+
   return (
     <div
       key={frontMatter?.id}

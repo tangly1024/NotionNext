@@ -50,11 +50,11 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             {/* 分类 */}
             {post?.category && (
               <div
-                className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
+                className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
                 <Link
                   passHref
                   href={`/category/${post.category}`}
-                  className='cursor-pointer text-xs font-normal menu-link hover:text-indigo-700 dark:hover:text-yellow-700  dark:text-gray-600 transform'>
+                  className='cursor-pointer text-xs font-normal menu-link '>
                   {post.category}
                 </Link>
               </div>
