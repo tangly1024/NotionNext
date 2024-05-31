@@ -10,8 +10,8 @@ const CONFIG = {
 
   // 英雄区块导航
   STARTER_HERO_ENABLE: true, // 开启英雄区
-  STARTER_HERO_TITLE_1: 'NankoYo静态生成器是一个创新性的网页项目，旨在为用户提供一种简单而强大的方式来创建静态网站。', // 英雄区文字
-  STARTER_HERO_TITLE_2: '通过结合自然语言处理和图形学技术，NankoYo能够从用户提供的简单文本描述中生成复杂的网页布局和设计。这个项目的目标是让网站创建变得更加容易和直观，使任何人都能够在没有编程知识的情况下设计出令人印象深刻的网站。NankoYo静态生成器将用户的创意转化为现实，为他们带来了全新的网页开发体验。', // 英雄区文字
+  STARTER_HERO_TITLE_1: 'NankoYo静态生成器', // 英雄区文字
+  STARTER_HERO_TITLE_2: 'NankoYo静态生成器是一个创新性的网页项目，旨在为用户提供一种简单而强大的方式来创建静态网站。通过结合自然语言处理和图形学技术，NankoYo能够从用户提供的简单文本描述中生成复杂的网页布局和设计。这个项目的目标是让网站创建变得更加容易和直观，使任何人都能够在没有编程知识的情况下设计出令人印象深刻的网站。NankoYo静态生成器将用户的创意转化为现实，为他们带来了全新的网页开发体验。', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: '', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:'', // 英雄区按钮
@@ -31,7 +31,7 @@ const CONFIG = {
   // 特性区块
   STARTER_FEATURE_ENABLE: true, // 特性区块开关
   STARTER_FEATURE_TITLE: '特性', // 特性
-  STARTER_FEATURE_TEXT_1: 'NankoYo静态生成器的主要特性', // 特性
+  STARTER_FEATURE_TEXT_1: '主要特性', // 特性
   STARTER_FEATURE_TEXT_2:
     '利用自然语言处理和图形学技术，轻松创建个性化静态网站。', // 特性
 
@@ -65,9 +65,9 @@ const CONFIG = {
   STARTER_ABOUT_BUTTON_URL: '/about',
   STARTER_ABOUT_IMAGE_1: 'https://img.tucang.cc/api/image/show/a8a0e597f2acd9e98a0f6d24077bfc45',
   STARTER_ABOUT_IMAGE_2: 'https://img.tucang.cc/api/image/show/74e88b835701e67910ba71cd0c85919d',
-  STARTER_ABOUT_TIPS_1: '我们的产品目前有',
-  STARTER_ABOUT_TIPS_2: '100,000',
-  STARTER_ABOUT_TIPS_3: '终端客户正在使用',
+  STARTER_ABOUT_TIPS_1: '100,000＋',
+  STARTER_ABOUT_TIPS_2: '终端客户',
+  STARTER_ABOUT_TIPS_3: '正在使用我们的产品',
 
   // 首页价格区块
   STARTER_PRICING_ENABLE: true, // 价格区块开关
