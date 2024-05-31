@@ -121,84 +121,87 @@ const Comment = ({ frontMatter, className }) => {
     return null
   }
 
-  if (frontMatter?.comment !== 'Hide') {
-    return (
-      <div
-        key={frontMatter?.id}
-        id='comment'
-        ref={commentRef}
-        className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
-        {/* 延迟加载评论区 */}
-        {!shouldLoad && (
-          <div className='text-center'>
-            Loading...
-            <i className='fas fa-spinner animate-spin text-3xl ' />
-          </div>
-        )}
-
-        {shouldLoad && (
-          <Tabs>
-            {COMMENT_ARTALK_SERVER && (
-              <div key='Artalk'>
-                <Artalk />
-              </div>
-            )}
-
-            {COMMENT_TWIKOO_ENV_ID && (
-              <div key='Twikoo'>
-                <TwikooCompenent />
-              </div>
-            )}
-
-            {COMMENT_WALINE_SERVER_URL && (
-              <div key='Waline'>
-                <WalineComponent />
-              </div>
-            )}
-
-            {COMMENT_VALINE_APP_ID && (
-              <div key='Valine' name='reply'>
-                <ValineComponent path={frontMatter.id} />
-              </div>
-            )}
-
-            {COMMENT_GISCUS_REPO && (
-              <div key='Giscus'>
-                <GiscusComponent className='px-2' />
-              </div>
-            )}
-
-            {COMMENT_CUSDIS_APP_ID && (
-              <div key='Cusdis'>
-                <CusdisComponent frontMatter={frontMatter} />
-              </div>
-            )}
-
-            {COMMENT_UTTERRANCES_REPO && (
-              <div key='Utterance'>
-                <UtterancesComponent
-                  issueTerm={frontMatter.id}
-                  className='px-2'
-                />
-              </div>
-            )}
-
-            {COMMENT_GITALK_CLIENT_ID && (
-              <div key='GitTalk'>
-                <GitalkComponent frontMatter={frontMatter} />
-              </div>
-            )}
-
-            {COMMENT_WEBMENTION_ENABLE && (
-              <div key='WebMention'>
-                <WebMentionComponent frontMatter={frontMatter} className='px-2' />
-              </div>
-            )}
-          </Tabs>
-        )}
-      </div>
-    )
+  // 特定文章关闭评论区
+  if (frontMatter?.comment === 'Hide') {
+    return null
   }
+
+  return (
+    <div
+      key={frontMatter?.id}
+      id='comment'
+      ref={commentRef}
+      className={`comment mt-5 text-gray-800 dark:text-gray-300 ${className || ''}`}>
+      {/* 延迟加载评论区 */}
+      {!shouldLoad && (
+        <div className='text-center'>
+          Loading...
+          <i className='fas fa-spinner animate-spin text-3xl ' />
+        </div>
+      )}
+
+      {shouldLoad && (
+        <Tabs>
+          {COMMENT_ARTALK_SERVER && (
+            <div key='Artalk'>
+              <Artalk />
+            </div>
+          )}
+
+          {COMMENT_TWIKOO_ENV_ID && (
+            <div key='Twikoo'>
+              <TwikooCompenent />
+            </div>
+          )}
+
+          {COMMENT_WALINE_SERVER_URL && (
+            <div key='Waline'>
+              <WalineComponent />
+            </div>
+          )}
+
+          {COMMENT_VALINE_APP_ID && (
+            <div key='Valine' name='reply'>
+              <ValineComponent path={frontMatter.id} />
+            </div>
+          )}
+
+          {COMMENT_GISCUS_REPO && (
+            <div key='Giscus'>
+              <GiscusComponent className='px-2' />
+            </div>
+          )}
+
+          {COMMENT_CUSDIS_APP_ID && (
+            <div key='Cusdis'>
+              <CusdisComponent frontMatter={frontMatter} />
+            </div>
+          )}
+
+          {COMMENT_UTTERRANCES_REPO && (
+            <div key='Utterance'>
+              <UtterancesComponent
+                issueTerm={frontMatter.id}
+                className='px-2'
+              />
+            </div>
+          )}
+
+          {COMMENT_GITALK_CLIENT_ID && (
+            <div key='GitTalk'>
+              <GitalkComponent frontMatter={frontMatter} />
+            </div>
+          )}
+
+          {COMMENT_WEBMENTION_ENABLE && (
+            <div key='WebMention'>
+              <WebMentionComponent frontMatter={frontMatter} className='px-2' />
+            </div>
+          )}
+        </Tabs>
+      )}
+    </div>
+  )
 }
 
 export default Comment
