@@ -24,8 +24,8 @@ const CONFIG = {
   HEO_HERO_TITLE_LINK: 'https://blog.buxiantang.top',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '书籍讲义', url: '/tag/书籍讲义' },
-  HEO_HERO_CATEGORY_2: { title: '古文解析', url: '/tag/古文解析' },
+  HEO_HERO_CATEGORY_1: { title: '讲义课本', url: 'https://buxiantang.top/handoutbooks' },
+  HEO_HERO_CATEGORY_2: { title: '答疑服务', url: 'https://buxiantang.top/' },
   HEO_HERO_CATEGORY_3: { title: '仙道法则', url: '/tag/仙道法则' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
