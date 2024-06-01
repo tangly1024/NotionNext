@@ -22,7 +22,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
   return (
     <div
       id='post-bg'
-      className='w-full h-[30rem] relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10 mb-5'>
+      className='md:mb-0 -mb-5 w-full h-[30rem] relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10'>
       <style jsx>{`
         .coverdiv:after {
           position: absolute;
@@ -38,7 +38,6 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
       `}</style>
 
       <div
-        style={{ backdropFilter: 'blur(15px)' }}
         className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}>
         {/* 文章背景图 */}
         <div
@@ -46,10 +45,10 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           style={{
             filter: 'blur(15px)'
           }}
-          className='coverdiv lg:translate-x-96 opacity-50 lg:rotate-12'>
+          className='coverdiv lg:opacity-50 lg:translate-x-96 lg:rotate-12'>
           <LazyImage
             id='post-cover'
-            className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]'
+            className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
           />
         </div>
