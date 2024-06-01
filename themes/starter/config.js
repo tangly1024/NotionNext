@@ -19,7 +19,7 @@ const CONFIG = {
   STARTER_HERO_BUTTON_2_URL: '', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
 
-  STARTER_HERO_PREVIEW_IMAGE: 'https://img.tucang.cc/api/image/show/2acdf8c5a8b46c8381175c8abf0a11a0', // 产品预览图 ，默认读取public目录下图片
+  STARTER_HERO_PREVIEW_IMAGE: 'https://cdn.nankoyo.com/public/cache/star/images/hero/hero-image.png', // 产品预览图 ，默认读取public目录下图片
 
   // 顶部右侧导航暗流
   STARTER_NAV_BUTTON_1_TEXT: 'Sign In',
@@ -63,8 +63,8 @@ const CONFIG = {
     'NanKoYo静态生成器是一款简单而强大的网页生成器，旨在让任何人都能轻松创建出令人印象深刻的网站，无需编程知识。<br /> <br />我们结合了自然语言处理和图形学技术，为用户提供了直观、灵活的网页设计体验。无论您是个人用户还是企业客户，NanKoYo都能满足您的需求，让网页设计变得简单、直观和创意。',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
   STARTER_ABOUT_BUTTON_URL: '/about',
-  STARTER_ABOUT_IMAGE_1: 'https://img.tucang.cc/api/image/show/a8a0e597f2acd9e98a0f6d24077bfc45',
-  STARTER_ABOUT_IMAGE_2: 'https://img.tucang.cc/api/image/show/74e88b835701e67910ba71cd0c85919d',
+  STARTER_ABOUT_IMAGE_1: 'https://cdn.nankoyo.com/public/cache/star/images/about/about-image-01.jpg',
+  STARTER_ABOUT_IMAGE_2: 'https://cdn.nankoyo.com/public/cache/star/images/about/about-image-02.jpg',
   STARTER_ABOUT_TIPS_1: '100,000＋',
   STARTER_ABOUT_TIPS_2: '终端客户',
   STARTER_ABOUT_TIPS_3: '正在使用我们的产品',
@@ -121,7 +121,7 @@ const CONFIG = {
       STARTER_TESTIMONIALS_ITEM_TEXT:
         'NanoKoYo静态生成器确实是个神器，简单易用，帮我节省了大量时间！',
       STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://img.tucang.cc/api/image/show/9b7261d6f9eecd6f45d4105b4c41f0d2',
+        'https://cdn.nankoyo.com/public/cache/star/images/testimonials/author-01.png',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Alice Wang',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '产品经理',
       STARTER_TESTIMONIALS_ITEM_URL: '/'
@@ -130,7 +130,7 @@ const CONFIG = {
       STARTER_TESTIMONIALS_ITEM_TEXT:
         'NanoKoYo静态生成器是我使用过的最简单、最有效的工具之一，极大地提升了我的工作效率！！',
       STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://img.tucang.cc/api/image/show/74d53343a8e4e24703d49e1dda474ef2',
+        'https://cdn.nankoyo.com/public/cache/star/images/testimonials/author-02.png',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Michael Smith',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '网站管理员',
       STARTER_TESTIMONIALS_ITEM_URL: '/'
@@ -139,7 +139,7 @@ const CONFIG = {
       STARTER_TESTIMONIALS_ITEM_TEXT:
         'NanoKoYo静态生成器的稳定性和可靠性让我无需担心网站崩溃或数据丢失，十分放心！',
       STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://img.tucang.cc/api/image/show/6a631272e792ca20a823e4c0e065e0ef',
+        'https://cdn.nankoyo.com/public/cache/star/images/testimonials/author-03.png',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Emily Johnson',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '网站开发者',
       STARTER_TESTIMONIALS_ITEM_URL: '/'
@@ -148,7 +148,7 @@ const CONFIG = {
       STARTER_TESTIMONIALS_ITEM_TEXT:
         'NanoKoYo静态生成器的团队服务态度非常好，对于我的疑问和需求都能及时回复和解决，让我感到非常满意和放心！',
       STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://img.tucang.cc/api/image/show/aa212728ef5a06574cf2f1504572b37d',
+        'https://cdn.nankoyo.com/public/cache/star/images/testimonials/author-04.png',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'David Brown',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '系统管理员',
       STARTER_TESTIMONIALS_ITEM_URL: '/'
@@ -157,7 +157,7 @@ const CONFIG = {
       STARTER_TESTIMONIALS_ITEM_TEXT:
         'NanoKoYo静态生成器的用户反馈展示功能帮助我更好地了解用户需求，为产品改进提供了宝贵意见！ ',
       STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://img.tucang.cc/api/image/show/de4c2ec19bdfb681a9ff4fc8b269b54c',
+        'https://cdn.nankoyo.com/public/cache/star/images/testimonials/author-05.png',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Sarah Wilson',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '市场分析师',
       STARTER_TESTIMONIALS_ITEM_URL: '/'
@@ -165,7 +165,7 @@ const CONFIG = {
     {
       STARTER_TESTIMONIALS_ITEM_TEXT: '我对NanoKoYo静态生成器的用户反馈展示功能赞不绝口，它让我能够更直观地了解用户的需求和意见，为产品改进提供了重要参考！',
       STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://img.tucang.cc/api/image/show/4b1b80c0a248b5e14ead547eeb35a1d0',
+        'https://cdn.nankoyo.com/public/cache/star/images/testimonials/author-06.png',
       STARTER_TESTIMONIALS_ITEM_NICKNAME: 'John Lee',
       STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '项目经理',
       STARTER_TESTIMONIALS_ITEM_URL: '/'
@@ -205,102 +205,102 @@ const CONFIG = {
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR:
-        'http://q1.qlogo.cn/qhis/on1s0ictqeVDHKp9m8IxMg8wibLwZdKlcsYC7FzonhEEStHzFjwPtjUxAyoTpIKKZkiarn7WiaoTIb8/640',
+        'https://cdn.nankoyo.com/public/cache/star/images/team/team-01.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Emily Zhang',
       STARTER_TEAM_ITEM_DESCRIPTION: '数据分析师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'http://q1.qlogo.cn/qhis/Q3auHgzwzM4Eict7Bx0V51vErWibLictwFib47uOeYn5uI8ibJ7shbkTib4P5TUPL69qXpD8eMYFYJ2XFCBzZT6sKAlA/640',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-02.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Andrew Li',
       STARTER_TEAM_ITEM_DESCRIPTION: '网页设计师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/a11f6f30ede8915d2523c1a48d037849',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-03.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Jason Liu',
       STARTER_TEAM_ITEM_DESCRIPTION: '软件工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/bbd6d07bd180b12a15daa3af925225a6',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-04.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Sophia Chen',
       STARTER_TEAM_ITEM_DESCRIPTION: '用户体验设计师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/65ea9696caaef7f87ba2bb63767049a1',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-05.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Kevin Wang',
       STARTER_TEAM_ITEM_DESCRIPTION: '前端开发工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/a4354642a5bea6f8771b167dfcb42a8f',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-06.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Jessica Wu',
       STARTER_TEAM_ITEM_DESCRIPTION: '后端开发工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d2bf2966a7879e4f643c484410e8a119',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-07.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Brian Zhao',
       STARTER_TEAM_ITEM_DESCRIPTION: '移动应用设计师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d8b7111f02f5af8361ec5fc165bf0f9d',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-08.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Alice Wang',
       STARTER_TEAM_ITEM_DESCRIPTION: 'UI/UX 设计师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/f40c48a5952485b7446c94eb9a2215b8',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-09.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Daniel Lee',
       STARTER_TEAM_ITEM_DESCRIPTION: '数据库管理员'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/2309e0a59c0b7bea27794fa34de7b5d9',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-10.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Angela Xu',
       STARTER_TEAM_ITEM_DESCRIPTION: '系统架构师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/c8c196e4209d339c12cadef6c3191075',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-11.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Steven Chen',
       STARTER_TEAM_ITEM_DESCRIPTION: '网络安全专家'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/98f10b5bc914442d90eb584a655d1397',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-12.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Cindy Zhou',
       STARTER_TEAM_ITEM_DESCRIPTION: '自然语言处理工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d81d5b7317a8993d7fb46e973dce8304',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-13.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Eric Huang',
       STARTER_TEAM_ITEM_DESCRIPTION: '人工智能工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/76b79c901ba706b9c9f9493c8656cc26',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-14.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Michelle Liu',
       STARTER_TEAM_ITEM_DESCRIPTION: '质量保证工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d6d866b25421fe15769139d5484be5ce',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-15.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Tony Guo',
       STARTER_TEAM_ITEM_DESCRIPTION: '项目经理'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/d1470fba37f8504385069e2d9a5d286a',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-16.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Grace Lin',
       STARTER_TEAM_ITEM_DESCRIPTION: '网站管理员'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/c1ace7d20f153035ff98791a579e4b81',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-17.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Michael Zhang',
       STARTER_TEAM_ITEM_DESCRIPTION: '数据科学家'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/c3750a344a199a2af9472eb4a57a2df2',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-18.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Jennifer Wang',
       STARTER_TEAM_ITEM_DESCRIPTION: '云计算工程师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/02cafb4d77f6c46571c55ecf5a690cc8',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-19.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Alex Wu',
       STARTER_TEAM_ITEM_DESCRIPTION: '前端设计师'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: 'https://img.tucang.cc/api/image/show/4dedab07de87e2f356c478800ff5ad8a',
+      STARTER_TEAM_ITEM_AVATAR: 'https://cdn.nankoyo.com/public/cache/star/images/team/team-20.png',
       STARTER_TEAM_ITEM_NICKNAME: 'Lucy Chen',
       STARTER_TEAM_ITEM_DESCRIPTION: '软件测试工程师'
     }
