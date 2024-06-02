@@ -18,7 +18,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享编程',
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: '20030727.xyz',
-  HEO_HERO_TITLE_4: '我的云盘',
+  HEO_HERO_TITLE_4: '推荐区域',
   HEO_HERO_TITLE_5: '总会找到你想要的\n确定不看看嘛',
   HEO_HERO_TITLE_LINK: '20030727.xyz',
 
