@@ -20,18 +20,19 @@ import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import Catalog from './components/Catalog'
+import CatalogDrawerWrapper from './components/CatalogDrawerWrapper'
 import CategoryItem from './components/CategoryItem'
-import FloatTocButton from './components/FloatTocButton'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import InfoCard from './components/InfoCard'
 import JumpToTopButton from './components/JumpToTopButton'
+import MobileButtonCatalog from './components/MobileButtonCatalog'
+import MobileButtonPageNav from './components/MobileButtonPageNav'
 import NavPostList from './components/NavPostList'
 import PageNavDrawer from './components/PageNavDrawer'
 import RevolverMaps from './components/RevolverMaps'
 import SearchInput from './components/SearchInput'
 import TagItemMini from './components/TagItemMini'
-import TocDrawer from './components/TocDrawer'
 import CONFIG from './config'
 import { Style } from './style'
 
@@ -211,6 +212,7 @@ const LayoutBase = props => {
                 <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
                 <div className='py-4'>
+                  {/* 桌面端目录 */}
                   <Catalog {...props} />
                   {slotRight}
                   {router.route === '/' && (
@@ -235,12 +237,17 @@ const LayoutBase = props => {
           )}
         </main>
 
-        {/* 移动端悬浮目录按钮 */}
-        {showTocButton && !tocVisible && (
-          <div className='md:hidden fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-gray-800 rounded'>
-            <FloatTocButton {...props} />
+        {/* 移动端底部按钮 */}
+        <div className='bottom-button-group md:hidden w-screen h-12 px-4 fixed flex items-center justify-between right-0 bottom-0 z-30 bg-white border-l border-t dark:border-gray-800'>
+          <div className='w-full'>
+            <MobileButtonPageNav />
           </div>
-        )}
+          {showTocButton && (
+            <div className='w-full'>
+              <MobileButtonCatalog />
+            </div>
+          )}
+        </div>
 
         {/* 移动端导航抽屉 */}
         <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
@@ -366,7 +373,8 @@ const LayoutSlug = props => {
             </section>
           )}
 
-          <TocDrawer {...props} />
+          {/* 文章目录 */}
+          <CatalogDrawerWrapper {...props} />
         </div>
       )}
     </>
