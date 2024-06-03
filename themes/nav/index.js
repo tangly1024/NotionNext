@@ -25,7 +25,7 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostCard from './components/BlogPostCard'
 import BlogPostListAll from './components/BlogPostListAll'
 import CategoryItem from './components/CategoryItem'
-import FloatTocButton from './components/FloatTocButton'
+import FloatButtonCatalog from './components/FloatButtonCatalog'
 import Footer from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import LogoBar from './components/LogoBar'
@@ -187,7 +187,7 @@ const LayoutBase = props => {
         {/* 移动端悬浮目录按钮 */}
         {showTocButton && !tocVisible && (
           <div className='md:hidden fixed right-0 bottom-52 z-30 bg-white border-l border-t border-b dark:border-neutral-800 rounded'>
-            <FloatTocButton {...props} />
+            <FloatButtonCatalog {...props} />
           </div>
         )}
 
