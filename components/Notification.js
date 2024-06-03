@@ -1,5 +1,9 @@
 import { useState } from 'react'
 
+/**
+ * 弹框通知
+ * @returns
+ */
 const useNotification = () => {
   const [message, setMessage] = useState('')
   const [isVisible, setIsVisible] = useState(false)
@@ -8,12 +12,13 @@ const useNotification = () => {
     setMessage(msg)
     setIsVisible(true)
     setTimeout(() => {
-      setIsVisible(false)
+      closeNotification()
     }, 3000)
   }
 
   const closeNotification = () => {
     setIsVisible(false)
+    setMessage('')
   }
 
   // 测试通知效果
@@ -33,11 +38,10 @@ const useNotification = () => {
    */
   const Notification = () => {
     return (
-      <div
-        className={`notification fixed left-0 w-full px-2 z-50 transform transition-all duration-300 ${
-          isVisible ? 'bottom-20 animate__animated animate__fadeIn' : ''
-        }  `}>
-        <div className='max-w-3xl mx-auto  bg-green-500 flex items-center justify-between px-4 py-2 text-white rounded-lg shadow-lg'>
+      <div className={`notification fixed left-0 w-full px-2 z-20 bottom-14`}>
+        <div
+          className={` ${isVisible && message ? 'opacity-100 ' : 'invisible opacity-0 bottom-0'} transition-opacity duration-200 
+           max-w-3xl mx-auto bg-green-500 flex items-center justify-between px-4 py-2 text-white rounded-lg shadow-lg`}>
           {message}
           <button
             onClick={closeNotification}
