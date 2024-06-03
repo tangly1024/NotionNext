@@ -5,9 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.buxiantang.top' },
-    { title: '我的答疑服务', url: 'https://buxiantang.top' },
-    { title: '加锁文章说明', url: 'https://buxiantang.top/lockdescription' }
+    { title: 'QQ群聊', url: 'https://qm.qq.com/cgi-bin/qm/qr?k=XuuI3LuOTAHNkvbXYCkUFboencsdyhng&jump_from=webapi&authKey=fjrG6utvJKd+8cQ67fDBQdjxgicl3qYZxNYJdJwMktcziBeCyyKyXmwL05gQirsF' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -19,9 +17,9 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享佛道',
   HEO_HERO_TITLE_2: '与修行方法',
   HEO_HERO_TITLE_3: 'buxiantang.top',
-  HEO_HERO_TITLE_4: '官网上线',
+  HEO_HERO_TITLE_4: 'QQ群聊',
   HEO_HERO_TITLE_5: '卜仙堂愿各修行者更上一层楼',
-  HEO_HERO_TITLE_LINK: 'https://blog.buxiantang.top',
+  HEO_HERO_TITLE_LINK: 'https://qm.qq.com/cgi-bin/qm/qr?k=XuuI3LuOTAHNkvbXYCkUFboencsdyhng&jump_from=webapi&authKey=fjrG6utvJKd+8cQ67fDBQdjxgicl3qYZxNYJdJwMktcziBeCyyKyXmwL05gQirsF',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '讲义课本', url: 'https://buxiantang.top/handoutbooks' },
