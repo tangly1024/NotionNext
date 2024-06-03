@@ -140,9 +140,8 @@ const LayoutBase = props => {
         <main
           id='wrapper'
           className={
-            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
-              ? 'flex-row-reverse'
-              : '') + 'relative flex justify-between w-full h-full mx-auto'
+            (siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : '') +
+            'relative flex justify-between w-full h-full mx-auto'
           }>
           {/* 左侧推拉抽屉 */}
           {fullWidth ? null : (
@@ -150,16 +149,19 @@ const LayoutBase = props => {
               className={
                 'hidden md:block border-r dark:border-transparent relative z-10 dark:bg-hexo-black-gray'
               }>
-              <div className='w-72 py-14 px-6 sticky top-0 overflow-y-scroll h-screen scroll-hidden'>
-                {slotLeft}
-                <SearchInput className='my-3 rounded-md' />
-                <div className='mb-20'>
+              <div className='w-72 pt-14 pb-4 px-6 sticky top-0 h-screen flex justify-between flex-col'>
+                {/* 导航 */}
+                <div className='overflow-y-scroll scroll-hidden'>
+                  {/* 嵌入 */}
+                  {slotLeft}
+                  {/* 搜索框 */}
+                  <SearchInput className='my-3 rounded-md' />
+
+                  {/* 文章列表 */}
                   {/* 所有文章列表 */}
                   <NavPostList filteredNavPages={filteredNavPages} />
                 </div>
-              </div>
-
-              <div className='w-72 fixed left-0 bottom-0 z-20 bg-white'>
+                {/* 页脚 */}
                 <Footer {...props} />
               </div>
             </div>
