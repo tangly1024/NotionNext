@@ -124,7 +124,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalData({ from, locale })
-  if (siteConfig('PSEUDO_STATIC', BLOG.PSEUDO_STATIC, props.NOTION_CONFIG)) {
+  if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
     }
@@ -134,7 +134,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
-      (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+      (p.slug === prefix || p.id === idToUuid(prefix))
     )
   })
 
