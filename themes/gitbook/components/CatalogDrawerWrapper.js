@@ -1,5 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import { useGitBookGlobal } from '@/themes/gitbook'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Catalog from './Catalog'
 
 /**
@@ -12,9 +14,13 @@ import Catalog from './Catalog'
 const CatalogDrawerWrapper = ({ post, cRef }) => {
   const { tocVisible, changeTocVisible } = useGitBookGlobal()
   const { locale } = useGlobal()
+  const router = useRouter()
   const switchVisible = () => {
     changeTocVisible(!tocVisible)
   }
+  useEffect(() => {
+    changeTocVisible(false)
+  }, [router])
   return (
     <>
       <div
