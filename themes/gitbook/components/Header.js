@@ -90,7 +90,7 @@ export default function Header(props) {
             {isOpen ? (
               <i className='fas fa-times' />
             ) : (
-              <i className='fa-solid fa-ellipsis-vertical' />
+              <i className='fa-solid fa-bars' />
             )}
           </div>
         </div>
