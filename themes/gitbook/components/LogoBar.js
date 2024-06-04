@@ -1,6 +1,5 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import { useGitBookGlobal } from '@/themes/gitbook'
 import Link from 'next/link'
 import CONFIG from '../config'
 
@@ -11,19 +10,8 @@ import CONFIG from '../config'
  */
 export default function LogoBar(props) {
   const { siteInfo } = props
-  const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
-
-  const togglePageNavVisible = () => {
-    changePageNavVisible(!pageNavVisible)
-  }
   return (
     <div id='top-wrapper' className='w-full flex items-center'>
-      <div
-        onClick={togglePageNavVisible}
-        className='cursor-pointer md:hidden text-xl pr-3 hover:scale-110 duration-150'>
-        <i
-          className={`fa-solid ${pageNavVisible ? 'fa-align-justify' : 'fa-indent'}`}></i>
-      </div>
       <Link
         href={`/${siteConfig('GITBOOK_INDEX_PAGE', '', CONFIG)}`}
         className='flex text-md md:text-xl dark:text-gray-200'>
