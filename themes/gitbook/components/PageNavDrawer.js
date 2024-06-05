@@ -1,5 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import { useGitBookGlobal } from '@/themes/gitbook'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import NavPostList from './NavPostList'
 
 /**
@@ -13,10 +15,14 @@ const PageNavDrawer = props => {
   const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
   const { filteredNavPages } = props
   const { locale } = useGlobal()
-
+  const router = useRouter()
   const switchVisible = () => {
     changePageNavVisible(!pageNavVisible)
   }
+
+  useEffect(() => {
+    changePageNavVisible(false)
+  }, [router])
 
   return (
     <>
