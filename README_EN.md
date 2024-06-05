@@ -35,15 +35,15 @@ Live Demoï¼š[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ï
 
 It only takes a few minutes to set up your personal site:
 
-- [Quick Deployment Tutorial - Multiple Options Available](https://tangly1024.com/article/notion-next) 
+- [Quick Deployment Tutorial - Multiple Options Available](https://docs.tangly1024.com/article/vercel-deploy-notion-next) 
 
-- [Customization Guide - How to Configure Feature Plugins](https://tangly1024.com/article/notion-next-guide) 
+- [Customization Guide - How to Configure Feature Plugins](https://docs.tangly1024.com/article/how-to-config-notion-next) 
 
-- [Development Guide - How to Conduct Local Development](https://tangly1024.com/article/how-to-develop-with-notion-next)
+- [Development Guide - How to Conduct Local Development](https://docs.tangly1024.com/article/how-to-develop-with-notion-next)
  
-- [Update Guide - How to Get the Latest Upgrade Patch](https://tangly1024.com/article/how-to-update-notionnext)
+- [Update Guide - How to Get the Latest Upgrade Patch](https://docs.tangly1024.com/article/how-to-update-notionnext)
 
-- [Version History - Check Feature Highlights for Each Version](https://tangly1024.com/article/notion-next-changelogs)
+- [Version History - Check Feature Highlights for Each Version](https://docs.tangly1024.com/article/latest)
 
 ## Acknowledgements
 
