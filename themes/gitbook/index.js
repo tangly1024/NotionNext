@@ -239,7 +239,7 @@ const LayoutBase = props => {
           )}
         </main>
 
-        {/* 移动端底部按钮 */}
+        {/* 移动端底部导航按钮 */}
         <div className='bottom-button-group md:hidden w-screen h-12 px-4 fixed flex items-center justify-between right-0 bottom-0 z-30 bg-white border-l border-t dark:border-gray-800'>
           <div className='w-full'>
             <MobileButtonPageNav />
