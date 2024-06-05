@@ -33,17 +33,30 @@ export function InfoCard(props) {
                 {siteConfig('AUTHOR')}
             </h2>
 
-            {/* 公告栏 */}
-            <div>
-                <Announcement post={notice} style={{ color: 'white !important' }} />
-            </div>
+      {/* 公告栏 */}
+      <div>
+        <Announcement post={notice} style={{ color: 'white !important' }} />
+      </div>
 
-            <div className='flex justify-between'>
-                
-                <MoreButton />
- 
-            </div>
-        </Card>
+      <div className='flex justify-between'>
+        <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
+          {/* 两个社交按钮 */}
+          <div className='bg-indigo-400 p-2 rounded-full  transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
+            <Link href='/about'>
+              <GlobeAlt className={'w-6 h-6'} />
+            </Link>
+          </div>
+          <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
+            {siteConfig('HEO_INFO_CARD_URL', null, CONFIG) && (
+              <Link href={siteConfig('HEO_INFO_CARD_URL', null, CONFIG)}>
+                <i className='fab fa-github text-xl' />
+              </Link>
+            )}
+          </div>
+        </div>
+        <MoreButton />
+      </div>
+    </Card>
   )
 }
 
