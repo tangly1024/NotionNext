@@ -1,6 +1,6 @@
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
 
 /**
  * 跳转到网页顶部
@@ -10,7 +10,7 @@ import { siteConfig } from '@/lib/config'
  * @returns {JSX.Element}
  * @constructor
  */
-const JumpToTopButton = ({ showPercent = true, percent }) => {
+const ButtonJumpToTop = ({ showPercent = true, percent }) => {
   const { locale } = useGlobal()
 
   if (!siteConfig('HEXO_WIDGET_TO_TOP', null, CONFIG)) {
@@ -22,4 +22,4 @@ const JumpToTopButton = ({ showPercent = true, percent }) => {
     </div>)
 }
 
-export default JumpToTopButton
+export default ButtonJumpToTop
