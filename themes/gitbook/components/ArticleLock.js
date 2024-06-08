@@ -20,7 +20,6 @@ export const ArticleLock = props => {
    */
   const submitPassword = () => {
     const p = document.getElementById('password')
-
     // 验证失败提示
     if (!validPassword(p?.value)) {
       const tips = document.getElementById('tips')
@@ -28,23 +27,12 @@ export const ArticleLock = props => {
         tips.innerHTML = ''
         tips.innerHTML = `<div class='text-red-500 animate__shakeX animate__animated'>${locale.COMMON.PASSWORD_ERROR}</div>`
       }
-    } else {
-      // 输入密码存入localStorage，下次自动提交
-      localStorage.setItem('password_' + router.asPath, p?.value)
     }
   }
 
   useEffect(() => {
     // 选中密码输入框并将其聚焦
     passwordInputRef.current.focus()
-
-    // 从localStorage中读取上次记录 自动提交密码
-    const p = localStorage.getItem('password_' + router.asPath)
-    console.log('pp', p, document.getElementById('password'))
-    if (p) {
-      document.getElementById('password').value = p
-      submitPassword()
-    }
   }, [router])
 
   return (

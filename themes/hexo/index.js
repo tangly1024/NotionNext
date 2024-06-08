@@ -17,11 +17,12 @@ import ArticleRecommend from './components/ArticleRecommend'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
+import ButtonJumpToComment from './components/ButtonJumpToComment'
+import ButtonRandomPostMini from './components/ButtonRandomPostMini'
 import Card from './components/Card'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import JumpToCommentButton from './components/JumpToCommentButton'
 import PostHero from './components/PostHero'
 import RightFloatArea from './components/RightFloatArea'
 import SearchNav from './components/SearchNav'
@@ -51,8 +52,9 @@ export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
 const LayoutBase = props => {
   const { post, children, slotTop, className } = props
   const { onLoading, fullWidth } = useGlobal()
-
   const router = useRouter()
+  const showRandomButton = siteConfig('HEXO_MENU_RANDOM', false, CONFIG)
+
   const headerSlot = post ? (
     <PostHero {...props} />
   ) : router.route === '/' &&
@@ -63,6 +65,7 @@ const LayoutBase = props => {
   const drawerRight = useRef(null)
   const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
 
+  // 悬浮按钮内容
   const floatSlot = (
     <>
       {post?.toc?.length > 1 && (
@@ -74,7 +77,8 @@ const LayoutBase = props => {
           />
         </div>
       )}
-      {post && <JumpToCommentButton />}
+      {post && <ButtonJumpToComment />}
+      {showRandomButton && <ButtonRandomPostMini {...props} />}
     </>
   )
 

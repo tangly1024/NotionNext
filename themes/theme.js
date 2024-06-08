@@ -14,7 +14,11 @@ export const { THEMES = [] } = getConfig().publicRuntimeConfig
  */
 export const getGlobalLayoutByTheme = themeQuery => {
   if (themeQuery !== BLOG.THEME) {
-    return dynamic(() => import(`@/themes/${themeQuery}`).then(m => m[getLayoutNameByPath(-1)]), { ssr: true })
+    return dynamic(
+      () =>
+        import(`@/themes/${themeQuery}`).then(m => m[getLayoutNameByPath(-1)]),
+      { ssr: true }
+    )
   } else {
     return ThemeComponents[getLayoutNameByPath('-1')]
   }
@@ -36,7 +40,8 @@ export const getLayoutByTheme = ({ router, theme }) => {
             checkThemeDOM()
           }, 500)
 
-          const components = m[getLayoutNameByPath(router.pathname, router.asPath)]
+          const components =
+            m[getLayoutNameByPath(router.pathname, router.asPath)]
           if (components) {
             return components
           } else {
@@ -49,7 +54,8 @@ export const getLayoutByTheme = ({ router, theme }) => {
     setTimeout(() => {
       checkThemeDOM()
     }, 100)
-    const components = ThemeComponents[getLayoutNameByPath(router.pathname, router.asPath)]
+    const components =
+      ThemeComponents[getLayoutNameByPath(router.pathname, router.asPath)]
     if (components) {
       return components
     } else {
@@ -102,6 +108,7 @@ export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
   const userDarkMode = loadDarkModeFromLocalStorage()
   if (userDarkMode) {
     newDarkMode = userDarkMode === 'dark' || userDarkMode === 'true'
+    saveDarkModeToLocalStorage(newDarkMode) // 用户手动的才保存
   }
 
   // 如果站点强制设置默认深色，则优先级改过用
@@ -116,8 +123,9 @@ export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
   }
 
   updateDarkMode(newDarkMode)
-  saveDarkModeToLocalStorage(newDarkMode)
-  document.getElementsByTagName('html')[0].setAttribute('class', newDarkMode ? 'dark' : 'light')
+  document
+    .getElementsByTagName('html')[0]
+    .setAttribute('class', newDarkMode ? 'dark' : 'light')
 }
 
 /**
@@ -131,11 +139,14 @@ export function isPreferDark() {
   if (BLOG.APPEARANCE === 'auto') {
     // 系统深色模式或时间是夜间时，强行置为夜间模式
     const date = new Date()
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const prefersDarkMode = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
     return (
       prefersDarkMode ||
       (BLOG.APPEARANCE_DARK_TIME &&
-        (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] || date.getHours() < BLOG.APPEARANCE_DARK_TIME[1]))
+        (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] ||
+          date.getHours() < BLOG.APPEARANCE_DARK_TIME[1]))
     )
   }
   return false
