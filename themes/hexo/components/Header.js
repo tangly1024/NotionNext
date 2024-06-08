@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
+import ButtonRandomPost from './ButtonRandomPost'
 import CategoryGroup from './CategoryGroup'
 import Logo from './Logo'
 import { MenuListTop } from './MenuListTop'
@@ -28,6 +29,7 @@ const Header = props => {
   const router = useRouter()
   const [isOpen, changeShow] = useState(false)
   const showSearchButton = siteConfig('HEXO_MENU_SEARCH', false, CONFIG)
+  const showRandomButton = siteConfig('HEXO_MENU_RANDOM', false, CONFIG)
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
@@ -172,6 +174,7 @@ const Header = props => {
               )}
             </div>
             {showSearchButton && <SearchButton />}
+            {showRandomButton && <ButtonRandomPost {...props} />}
           </div>
         </div>
       </div>

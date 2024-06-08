@@ -14,7 +14,9 @@ export default function Modal(props) {
     usePlogGlobal()
   const { siteInfo, posts } = props
   const cancelButtonRef = useRef(null)
-  const img = compressImage(
+  const thumbnail =
+    modalContent?.pageCoverThumbnail || siteInfo?.pageCoverThumbnail
+  const bigImage = compressImage(
     modalContent?.pageCover || siteInfo?.pageCover,
     1200,
     85,
@@ -92,63 +94,74 @@ export default function Modal(props) {
               <Dialog.Panel className='group relative transform overflow-hidden rounded-xl text-left shadow-xl transition-all '>
                 {/* 添加onLoad事件处理函数 */}
                 {/* 添加loading状态 */}
+                {/* <div
+                  className={`bg-hexo-black-gray w-32 h-32 flex justify-center items-center `}> */}
                 <div
-                  className={`bg-hexo-black-gray w-32 h-32 flex justify-center items-center ${loading ? '' : 'hidden'}`}>
-                  <ArrowPath className='w-10 h-10 animate-spin text-gray-200' />
+                  className={`absolute right-0 bottom-0 m-4 ${loading ? '' : 'hidden'}`}>
+                  <ArrowPath
+                    className={`w-10 h-10 animate-spin text-gray-200`}
+                  />
                 </div>
+
+                {/* </div> */}
 
                 <Link href={modalContent?.href}>
                   <LazyImage
                     onLoad={handleImageLoad}
-                    src={img}
+                    placeholderSrc={thumbnail}
+                    src={bigImage}
                     ref={imgRef}
-                    style={{ display: loading ? 'none' : 'block' }}
-                    className={`w-full select-none max-w-7xl max-h-[90vh] shadow-xl ${!loading ? ' animate__animated animate__fadeIn' : ''}`}
+                    className={`w-full select-none max-w-7xl max-h-[90vh] shadow-xl  animate__animated animate__fadeIn'`}
                   />
                 </Link>
 
-                {!loading && (
-                  <>
-                    <div className='absolute bottom-0 left-0 m-4 z-20'>
-                      <div className='flex'>
-                        <h2
-                          style={{ textShadow: '0.1em 0.1em 0.2em black' }}
-                          className='text-2xl md:text-5xl text-white mb-4 px-2 py-1 rounded-lg'>
-                          {modalContent?.title}
-                        </h2>
-                      </div>
-                      <div
+                <>
+                  <div className='absolute bottom-0 left-0 m-4 z-20'>
+                    <div className='flex'>
+                      <h2
                         style={{ textShadow: '0.1em 0.1em 0.2em black' }}
-                        className={
-                          'line-clamp-3 md:line-clamp-none overflow-hidden cursor-pointer text-gray-50 rounded-lg m-2'
-                        }>
-                        {modalContent?.summary}
-                      </div>
+                        className='text-2xl md:text-5xl text-white mb-4 px-2 py-1 rounded-lg'>
+                        {modalContent?.title}
+                      </h2>
+                    </div>
+                    <div
+                      style={{ textShadow: '0.1em 0.1em 0.2em black' }}
+                      className={
+                        'line-clamp-3 md:line-clamp-none overflow-hidden cursor-pointer text-gray-50 rounded-lg m-2'
+                      }>
+                      {modalContent?.summary}
+                    </div>
 
-                      {modalContent?.category && (
-                        <div className='flex'>
-                          <Link
-                            href={`/category/${modalContent?.category}`}
-                            className='text-xs rounded-lg mt-3 px-2 py-1 bg-black bg-opacity-20 text-white hover:bg-blue-700 hover:text-white duration-200'>
-                            {modalContent?.category}
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                    {/* <div className="z-10 absolute hover:opacity-50 opacity-0 duration-200 transition-opacity w-full top-0 left-0 px-4 h-full items-center flex justify-between"> */}
-                    <div
-                      onClick={prev}
-                      className='z-10 absolute left-0 top-1/2 -mt-12 group-hover:opacity-50 opacity-0 duration-200 transition-opacity'>
-                      <ChevronLeft className='cursor-pointer w-24 h-32 hover:opacity-100 stroke-white stroke-1 scale-y-150' />
-                    </div>
-                    <div
-                      onClick={next}
-                      className='z-10 absolute right-0 top-1/2 -mt-12 group-hover:opacity-50 opacity-0 duration-200 transition-opacity'>
-                      <ChevronRight className='cursor-pointer w-24 h-32 hover:opacity-100 stroke-white stroke-1 scale-y-150' />
-                    </div>
-                    {/* </div> */}
-                  </>
-                )}
+                    {modalContent?.category && (
+                      <div className='flex'>
+                        <Link
+                          href={`/category/${modalContent?.category}`}
+                          className='text-xs rounded-lg mt-3 px-2 py-1 bg-black bg-opacity-20 text-white hover:bg-blue-700 hover:text-white duration-200'>
+                          {modalContent?.category}
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 卡片的阴影遮罩，为了凸显图片上的文字 */}
+                  <div className='h-1/2 w-full absolute left-0 bottom-0'>
+                    <div className='h-full w-full absolute opacity-80 group-hover:opacity-100 transition-all duration-1000 bg-gradient-to-b from-transparent to-black'></div>
+                  </div>
+
+                  {/* <div className="z-10 absolute hover:opacity-50 opacity-0 duration-200 transition-opacity w-full top-0 left-0 px-4 h-full items-center flex justify-between"> */}
+
+                  <div
+                    onClick={prev}
+                    className='z-10 absolute left-0 top-1/2 -mt-12 group-hover:opacity-50 opacity-0 duration-200 transition-opacity'>
+                    <ChevronLeft className='cursor-pointer w-24 h-32 hover:opacity-100 stroke-white stroke-1 scale-y-150' />
+                  </div>
+                  <div
+                    onClick={next}
+                    className='z-10 absolute right-0 top-1/2 -mt-12 group-hover:opacity-50 opacity-0 duration-200 transition-opacity'>
+                    <ChevronRight className='cursor-pointer w-24 h-32 hover:opacity-100 stroke-white stroke-1 scale-y-150' />
+                  </div>
+                  {/* </div> */}
+                </>
               </Dialog.Panel>
             </Transition.Child>
           </div>
