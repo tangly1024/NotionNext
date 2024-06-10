@@ -2,7 +2,7 @@
 const BLOG = {
   // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_PAGE_ID:
-    process.env.NOTION_PAGE_ID || '91ce815862804ea096ba5f9e647b21c5',
+    process.env.NOTION_PAGE_ID || '4354ad87cff14380a0251880116a3b48',
   PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 5, // 更新内容缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
   THEME: process.env.NEXT_PUBLIC_THEME || 'heo', // 当前主题，在themes文件夹下可找到所有支持的主题；主题名称就是文件夹名，例如 example,fukasawa,gitbook,heo,hexo,landing,matery,medium,next,nobelium,plog,simple
@@ -512,7 +512,9 @@ const BLOG = {
     date: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DATE || 'date',
     tags: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TAGS || 'tags',
     icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon',
-    ext: process.env.NEXT_PUBLIC_NOTION_PROPERTY_EXT || 'ext' // 扩展字段，存放json-string，用于复杂业务
+    ext: process.env.NEXT_PUBLIC_NOTION_PROPERTY_EXT || 'ext',
+    checkout: process.env.NEXT_PUBLIC_NOTION_PROPERTY_CHECKOUT || 'checkout'
+    // 扩展字段，存放json-string，用于复杂业务
   },
 
   // RSS订阅

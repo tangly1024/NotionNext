@@ -263,10 +263,25 @@ const LayoutSlug = props => {
                   />
                 </div>
 
-                <div id='info-right' className='md:w-1/2 p-4'>
-                  <div>{post?.title}</div>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: post?.summary }}></div>
+                <div
+                  id='info-right'
+                  className='md:w-1/2 p-4 flex flex-col justify-between'>
+                  <div>
+                    <div className='text-xl font-bold mb-2'>{post?.title}</div>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: post?.summary }}
+                      className='mb-4'></div>
+                  </div>
+                  <div className='mt-auto'>
+                    <div className='text-lg font-semibold mb-4'>
+                      ${post?.price}
+                    </div>
+                    <a
+                      href={post?.checkout}
+                      className='inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600'>
+                      Checkout
+                    </a>
+                  </div>
                 </div>
               </div>
             )}

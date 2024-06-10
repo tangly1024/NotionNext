@@ -17,7 +17,7 @@ export default function ProductCenter(props) {
 
   return (
     <div className='w-full'>
-      <div className='w-full text-center text-4xl font-bold'>
+      <div className='w-full text-center text-4xl font-bold pb-4'>
         {siteConfig('COMMERCE_TEXT_CENTER_TITLE', 'Product Center', CONFIG)}
       </div>
       {siteConfig('COMMERCE_TEXT_CENTER_DESCRIPTION') && (

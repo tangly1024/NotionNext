@@ -8,7 +8,7 @@ export default function ProductCategories(props) {
   return (
     <div className='hidden md:block w-72 mx-2'>
       {/* 分类菜单  */}
-      <div className='bg-white  p-4'>
+      <div className='bg-white  p-4 rounded-lg'>
         <div className='font-bold text-lg mb-4 border-b-2 py-2 border-[#D2232A]'>
           {siteConfig(
             'COMMERCE_TEXT_CENTER_CATEGORY_TITLE',
