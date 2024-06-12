@@ -24,6 +24,7 @@ export const BlogListPage = props => {
     .split('?')[0]
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
+    .replace('.html', '')
 
   const showPageCover = siteConfig('EXAMPLE_POST_LIST_COVER', null, CONFIG)
 
