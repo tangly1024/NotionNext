@@ -140,7 +140,7 @@ const Header = props => {
       {/* 顶部导航菜单栏 */}
       <nav
         id='nav'
-        className={`z-20 h-16 top-0 w-full duration-500 transition-all
+        className={`z-20 h-16 top-0 w-full duration-300 transition-all
             ${fixedNav ? 'fixed' : 'relative bg-transparent'} 
             ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  
             ${navBgWhite ? 'bg-white dark:bg-[#18171d] shadow' : 'bg-transparent'}`}>
@@ -153,14 +153,18 @@ const Header = props => {
           {/* 中间菜单 */}
           <div
             id='nav-bar-swipe'
-            className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full relative w-full ${activeIndex === 0 ? 'fade-in-down' : 'fade-in-up'}`}>
-            {activeIndex === 0 && <MenuListTop {...props} />}
-            {activeIndex === 1 && (
+            className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full relative w-full`}>
+            <div
+              className={`absolute transition-all duration-700 ${activeIndex === 0 ? 'opacity-100 mt-0' : '-mt-20 opacity-0 invisible'}`}>
+              <MenuListTop {...props} />
+            </div>
+            <div
+              className={`absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'}`}>
               <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>
                 {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
                 {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
               </h1>
-            )}
+            </div>
           </div>
 
           {/* 右侧固定 */}
