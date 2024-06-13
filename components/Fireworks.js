@@ -35,7 +35,11 @@ const Fireworks = () => {
     loadFireworks()
 
     return () => {
-      // 在组件卸载时清理资源（如果需要）
+      // 在组件卸载时清理资源
+      const fireworksElements = document.getElementsByClassName('fireworks')
+      while (fireworksElements.length > 0) {
+        fireworksElements[0].parentNode.removeChild(fireworksElements[0])
+      }
     }
   }, [])
 
