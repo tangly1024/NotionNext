@@ -16,6 +16,8 @@ const PaginationNumber = ({ page, totalPage }) => {
     .split('?')[0]
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
+    .replace('.html', '')
+
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
   return (
@@ -67,22 +69,14 @@ const PaginationNumber = ({ page, totalPage }) => {
   )
 }
 
-function getPageElement(pagePrefix, page, currentPage) {
-  return (
-    <Link
-      href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
-      key={page}
-      passHref
-      className={
-        (page + '' === currentPage + ''
-          ? 'font-bold bg-gray-500 dark:bg-gray-400 text-white '
-          : 'hover:border-t-2 duration-200 transition-all border-white hover:border-gray-400 ') +
-        ' border-white  dark:hover:border-gray-400 cursor-pointer w-8 h-8 justify-center flex items-center font-light hover:font-bold'
-      }>
-      {page}
-    </Link>
-  )
-}
+/**
+ * 生成分页按钮组
+ * @param {*} pagePrefix
+ * @param {*} page
+ * @param {*} currentPage
+ * @param {*} totalPage
+ * @returns
+ */
 function generatePages(pagePrefix, page, currentPage, totalPage) {
   const pages = []
   const groupCount = 7 // 最多显示页签数
@@ -126,4 +120,28 @@ function generatePages(pagePrefix, page, currentPage, totalPage) {
   }
   return pages
 }
+/**
+ * 生成分页按钮对象
+ * @param {*} pagePrefix
+ * @param {*} page
+ * @param {*} currentPage
+ * @returns
+ */
+function getPageElement(pagePrefix, page, currentPage) {
+  return (
+    <Link
+      href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
+      key={page}
+      passHref
+      className={
+        (page + '' === currentPage + ''
+          ? 'font-bold bg-gray-500 dark:bg-gray-400 text-white '
+          : 'hover:border-t-2 duration-200 transition-all border-white hover:border-gray-400 ') +
+        ' border-white  dark:hover:border-gray-400 cursor-pointer w-8 h-8 justify-center flex items-center font-light hover:font-bold'
+      }>
+      {page}
+    </Link>
+  )
+}
+
 export default PaginationNumber

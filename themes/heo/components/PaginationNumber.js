@@ -21,6 +21,7 @@ const PaginationNumber = ({ page, totalPage }) => {
     .split('?')[0]
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
+    .replace('.html', '')
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
   const [value, setValue] = useState('')
