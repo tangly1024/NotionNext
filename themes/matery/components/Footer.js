@@ -51,8 +51,7 @@ const Footer = ({ title }) => {
           <a
             href='https://agercare.com'
             className='underline dark:text-gray-300'>
-            WWW.AGERCARE.COM
-            // NotionNext {siteConfig('VERSION')}
+            www.agercare.com
           </a>
           .
         </span>
