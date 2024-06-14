@@ -27,6 +27,7 @@ class MyDocument extends Document {
         />
         <script src='https://lmsqueezy.com/affiliate.js' defer></script>
         <script src='https://cdn.jsdelivr.net/gh/Mindset-Community/live2d-widget@latest/autoload.js'></script>
+
         <Head>
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (

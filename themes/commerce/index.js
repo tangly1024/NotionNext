@@ -27,6 +27,7 @@ import SlotBar from './components/SlotBar'
 import TagItemMini from './components/TagItemMini'
 import TocDrawer from './components/TocDrawer'
 import { Style } from './style'
+import LemonSqueezyButton from './components/LemonSqueezyButton'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -83,7 +84,7 @@ const LayoutBase = props => {
             ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'
           }>
           <div
-            className={`${className || ''} w-full h-full max-w-screen-xl overflow-hidden`}>
+            className={`${className || ''} w-full h-full max-w-screen-xl overflow-hidden pl-4 pb-4`}>
             <Transition
               show={!onLoading}
               appear={true}
@@ -149,7 +150,7 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-    <div className='bg-white border-[#D2232A] p-4'>
+    <div className='bg-white border-[#D2232A] rounded-lg p-4'>
       <SlotBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
@@ -276,11 +277,10 @@ const LayoutSlug = props => {
                     <div className='text-lg font-semibold mb-4'>
                       ${post?.price}
                     </div>
-                    <a
-                      href={post?.checkout}
-                      className='inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600'>
-                      Checkout
-                    </a>
+                    <div>
+                      {/* Other content */}
+                      <LemonSqueezyButton checkoutUrl={post?.checkout} />
+                    </div>
                   </div>
                 </div>
               </div>
