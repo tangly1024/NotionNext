@@ -28,6 +28,8 @@ import TagItemMini from './components/TagItemMini'
 import TocDrawer from './components/TocDrawer'
 import { Style } from './style'
 import LemonSqueezyButton from './components/LemonSqueezyButton'
+import GumroadButton from './components/GumroadButton'
+import CheckoutButton from './components/CheckoutButton'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -279,7 +281,11 @@ const LayoutSlug = props => {
                     </div>
                     <div>
                       {/* Other content */}
-                      <LemonSqueezyButton checkoutUrl={post?.checkout} />
+                      <LemonSqueezyButton
+                        checkoutUrl={post?.lemonsqueezyCheckout}
+                      />
+                      <GumroadButton checkoutUrl={post?.gumroadCheckout} />
+                      <CheckoutButton checkoutUrl={post?.checkout} />
                     </div>
                   </div>
                 </div>
