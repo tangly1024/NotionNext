@@ -1,7 +1,7 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import BLOG from '@/blog.config'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
-import Script from 'next/script'
+
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
