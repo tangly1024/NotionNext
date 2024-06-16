@@ -22,7 +22,6 @@ export const MenuItemDrop = ({ link }) => {
           {link?.icon && <i className={link?.icon} />} {link?.name}
         </Link>
       )}
-
       {/* 含子菜单的按钮 */}
       {hasSubMenu && (
         <>
@@ -31,7 +30,6 @@ export const MenuItemDrop = ({ link }) => {
           </div>
         </>
       )}
-
       {/* 子菜单 */}
       {hasSubMenu && (
         <ul
