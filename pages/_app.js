@@ -47,17 +47,17 @@ const MyApp = ({ Component, pageProps }) => {
     [queryParam]
   )
 
-  return (
-    <ClerkProvider>
-      <GlobalContextProvider {...pageProps}>
-        <GLayout {...pageProps}>
-          <GlobalHead {...pageProps} />
-          <Component {...pageProps} />
-        </GLayout>
-        <ExternalPlugins {...pageProps} />
-      </GlobalContextProvider>
-    </ClerkProvider>
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const content = (
+    <GlobalContextProvider {...pageProps}>
+      <GLayout {...pageProps}>
+        <GlobalHead {...pageProps} />
+        <Component {...pageProps} />
+      </GLayout>
+      <ExternalPlugins {...pageProps} />
+    </GlobalContextProvider>
   )
+  return <>{enableClerk ? <ClerkProvider>{content}</ClerkProvider> : content}</>
 }
 
 export default MyApp

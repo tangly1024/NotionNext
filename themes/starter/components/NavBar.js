@@ -1,11 +1,9 @@
 /* eslint-disable no-unreachable */
-import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
-import CONFIG from '../config'
 import { DarkModeButton } from './DarkModeButton'
 import { Logo } from './Logo'
 import { MenuList } from './MenuList'
@@ -69,7 +67,7 @@ export const NavBar = props => {
                 {/* 注册登录功能 */}
                 <div className='hidden sm:flex'>
                   <SignedOut>
-                    <a
+                    {/* <a
                       href={siteConfig(
                         'STARTER_NAV_BUTTON_1_URL',
                         null,
@@ -77,7 +75,10 @@ export const NavBar = props => {
                       )}
                       className={`loginBtn ${buttonTextColor}  px-[22px] py-2 text-base font-medium hover:opacity-70`}>
                       {siteConfig('STARTER_NAV_BUTTON_1_TEXT', null, CONFIG)}
-                    </a>
+                    </a> */}
+
+                    <SignInButton mode='modal' />
+
                     {/* <button
                         className={`signUpBtn ${buttonTextColor} rounded-md bg-white bg-opacity-20 px-6 py-2 text-base font-medium duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark`}>
                         {siteConfig('STARTER_NAV_BUTTON_1_TEXT', null, CONFIG)}
