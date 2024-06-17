@@ -126,7 +126,7 @@ const CONFIG = {
   HEO_POST_LIST_PREVIEW: false, // 读取文章预览
   HEO_POST_LIST_IMG_CROSSOVER: false, // 博客列表图片左右交错
 
-  HEO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
+  HEO_ARTICLE_ADJACENT: false, // 显示上一篇下一篇文章推荐
   HEO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
   HEO_ARTICLE_RECOMMEND: true, // 文章关联推荐
 
