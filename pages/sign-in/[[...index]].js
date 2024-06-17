@@ -45,7 +45,9 @@ export async function getStaticProps(req) {
  */
 export async function getStaticPaths() {
   return {
-    paths: [],
+    paths: [
+      { params: { index: [] } } // 使 /sign-in 路径可访问
+    ],
     fallback: true
   }
 }
