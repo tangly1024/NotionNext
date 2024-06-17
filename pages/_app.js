@@ -17,6 +17,7 @@ import { getQueryParam } from '../lib/utils'
 import BLOG from '@/blog.config'
 import ExternalPlugins from '@/components/ExternalPlugins'
 import GlobalHead from '@/components/GlobalHead'
+import { ClerkProvider } from '@clerk/nextjs'
 
 /**
  * App挂载DOM 入口文件
@@ -47,13 +48,15 @@ const MyApp = ({ Component, pageProps }) => {
   )
 
   return (
-    <GlobalContextProvider {...pageProps}>
-      <GLayout {...pageProps}>
-        <GlobalHead {...pageProps} />
-        <Component {...pageProps} />
-      </GLayout>
-      <ExternalPlugins {...pageProps} />
-    </GlobalContextProvider>
+    <ClerkProvider>
+      <GlobalContextProvider {...pageProps}>
+        <GLayout {...pageProps}>
+          <GlobalHead {...pageProps} />
+          <Component {...pageProps} />
+        </GLayout>
+        <ExternalPlugins {...pageProps} />
+      </GlobalContextProvider>
+    </ClerkProvider>
   )
 }
 

@@ -22,6 +22,7 @@
     "build-all-in-dev": "cross-env VERCEL_ENV=production next build"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.1.5",
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
     "@vercel/analytics": "^1.0.0",
@@ -42,6 +43,7 @@
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
+    "@types/react": "^18.3.3",
     "@waline/client": "^2.5.1",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
@@ -59,6 +61,7 @@
     "postcss": "^8.4.31",
     "prettier": "3.2.5",
     "tailwindcss": "^3.3.2",
+    "typescript": "^5.4.5",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {

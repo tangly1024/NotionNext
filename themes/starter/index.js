@@ -33,12 +33,12 @@ import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
 import BLOG from '@/blog.config'
 import { loadWowJS } from '@/lib/plugins/wow'
+import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { Banner } from './components/Banner'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
-
 /**
  * 布局框架
  * Landing-2 主题用作产品落地页展示
@@ -225,6 +225,7 @@ const LayoutTagIndex = props => <></>
  * @returns
  */
 const LayoutSignIn = props => {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
   return (
     <>
       <div className='grow mt-20'>
@@ -232,7 +233,15 @@ const LayoutSignIn = props => {
           title='登录'
           description='这里是演示页面，NotionNext目前不提供会员登录功能'
         />
-        <SignInForm />
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignIn />
+          </div>
+        )}
+
+        {/* 自定义登录表单 */}
+        {!enableClerk && <SignInForm />}
       </div>
     </>
   )
@@ -243,17 +252,29 @@ const LayoutSignIn = props => {
  * @param {*} props
  * @returns
  */
-const LayoutSignUp = props => (
-  <>
-    <div className='grow mt-20'>
-      <Banner
-        title='注册'
-        description='这里是演示页面，NotionNext目前不提供会员注册功能'
-      />
-      <SignUpForm />
-    </div>
-  </>
-)
+const LayoutSignUp = props => {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  return (
+    <>
+      <div className='grow mt-20'>
+        <Banner
+          title='注册'
+          description='这里是演示页面，NotionNext目前不提供会员注册功能'
+        />
+
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignUp />
+          </div>
+        )}
+
+        {/* 自定义登录表单 */}
+        {!enableClerk && <SignUpForm />}
+      </div>
+    </>
+  )
+}
 
 export {
   Layout404,
