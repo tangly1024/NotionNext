@@ -24,7 +24,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'wuyuhanzijin', // 您的昵称
   BIO: process.env.NEXT_PUBLIC_BIO || '因为热爱所以奋斗', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://linyun.netlify.app', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.linyunlink.top', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '技术, 博客, 凌云', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
