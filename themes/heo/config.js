@@ -18,8 +18,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: 'China Travel',
   HEO_HERO_TITLE_2: 'Visafree',
   HEO_HERO_TITLE_3: '144 hour',
-  // HEO_HERO_TITLE_4: '144h',
-  // HEO_HERO_TITLE_5: 'Enjot travel',
+  HEO_HERO_TITLE_4: '144h',
+  HEO_HERO_TITLE_5: 'Enjot travel',
   HEO_HERO_TITLE_LINK: 'https://www.china144h.com/about',
 
   // 英雄区显示三个置顶分类
