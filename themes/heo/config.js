@@ -17,7 +17,7 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '知识与年龄同行',
   HEO_HERO_TITLE_2: '健康与生活相伴',
-  HEO_HERO_TITLE_3: '',
+  HEO_HERO_TITLE_3: 'AGERCARE.COM',
   HEO_HERO_TITLE_4: '',
   HEO_HERO_TITLE_5: '',
   HEO_HERO_TITLE_LINK: 'https://agercare.com',
