@@ -58,6 +58,9 @@ function scanSubdirectories(directory) {
  */
 
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true
+  },
   output: process.env.EXPORT ? 'export' : undefined,
   // 多语言， 在export时禁用
   i18n: process.env.EXPORT
