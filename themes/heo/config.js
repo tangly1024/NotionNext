@@ -20,7 +20,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '与社会素养',
   HEO_HERO_TITLE_3: '直待凌云始道高',
   HEO_HERO_TITLE_4: '欢迎~',
-  HEO_HERO_TITLE_5: '时人不识凌云木，直待凌云始道高',
+  HEO_HERO_TITLE_5: '桂枝日已绿，拂雪凌云端',
   HEO_HERO_TITLE_LINK: 'https://www.linyunlink.top/',
 
   // 英雄区显示三个置顶分类
