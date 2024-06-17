@@ -101,7 +101,7 @@ function MoreButton() {
             'group-hover:stroke-black dark:group-hover:stroke-white w-6 h-6 transition-all duration-100'
           }
         />
-        <div className='font-bold'>了解更多</div>
+        <div className='font-bold'>More</div>
       </div>
     </Link>
   )
