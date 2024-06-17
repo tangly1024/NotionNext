@@ -51,7 +51,8 @@ const LayoutBase = props => {
       </div>
     )
   } else if (tag) {
-    slotTop = <div className='pb-12'>#{tag}</div>
+    // slotTop = <div className='pb-12'>#{tag}</div>
+    slotTop = null
   } else if (props.slotTop) {
     slotTop = props.slotTop
   } else if (router.route === '/search') {
