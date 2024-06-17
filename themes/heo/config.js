@@ -19,9 +19,9 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享知识',
   HEO_HERO_TITLE_2: '与社会素养',
   HEO_HERO_TITLE_3: '直待凌云始道高',
-  HEO_HERO_TITLE_4: '博客更新',
-  HEO_HERO_TITLE_5: '使用 NotionNext 搭建',
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_4: '欢迎~',
+  HEO_HERO_TITLE_5: '时人不识凌云木，直待凌云始道高',
+  HEO_HERO_TITLE_LINK: 'https://www.linyunlink.top/',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
