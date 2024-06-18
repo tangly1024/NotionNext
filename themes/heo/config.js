@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的个人小宇宙！', url: 'https://www.agercare.com/' },
-    { title: '这里记录着我的工作心得、学习感悟和生活点滴。希望我的分享能给您带来启发和乐趣。🌱📝', url: 'https://www.agercare.com/' }
+    { title: '欢迎您来到我们的温馨家园！', url: 'https://www.agercare.com/' },
+    { title: '这里充满了关怀与智慧，是您分享生活、学习新知、享受健康和快乐的理想之地。', url: 'https://www.agercare.com/' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -18,14 +18,14 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '知识与年龄同行',
   HEO_HERO_TITLE_2: '健康与生活相伴',
   HEO_HERO_TITLE_3: '',
-  HEO_HERO_TITLE_4: '',
-  HEO_HERO_TITLE_5: '',
+  HEO_HERO_TITLE_4: '岁月悠长，生活精彩',
+  HEO_HERO_TITLE_5: ' —— 与您共赏每一刻。',
   HEO_HERO_TITLE_LINK: 'https://agercare.com',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '人生百味', url: '/tag/人生百味' },
-  HEO_HERO_CATEGORY_2: { title: '职场沉浮', url: '/tag/职场沉浮' },
-  HEO_HERO_CATEGORY_3: { title: '生活杂记', url: '/tag/生活杂记' },
+  HEO_HERO_CATEGORY_1: { title: '医疗保健', url: '/tag/医疗保健' },
+  HEO_HERO_CATEGORY_2: { title: '健康饮食', url: '/tag/健康饮食' },
+  HEO_HERO_CATEGORY_3: { title: '社交活动', url: '/tag/社交活动' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
@@ -47,58 +47,58 @@ const CONFIG = {
   // 用户技能图标
   HEO_GROUP_ICONS: [
     {
-      title_1: 'Axure',
+      title_1: '退休',
       img_1: '/images/heo/100.png',
       color_1: '#989bf8',
-      title_2: 'Visio',
+      title_2: '养生',
       img_2: '/images/heo/113.png',
       color_2: '#ffffff'
     },
     {
-      title_1: 'Excel',
+      title_1: '太极',
       img_1: '/images/heo/208.png',
       color_1: '#57b6e6',
-      title_2: 'Word',
+      title_2: '京剧',
       img_2: '/images/heo/309.png',
       color_2: '#4082c3'
     },
     {
-      title_1: 'PPT',
+      title_1: '茶艺',
       img_1: '/images/heo/348.png',
       color_1: '#ffffff',
-      title_2: 'Mysql',
+      title_2: '书法',
       img_2: '/images/heo/360.png',
       color_2: '#ffffff'
     },
     {
-      title_1: 'Oracle',
+      title_1: '象棋',
       img_1: '/images/heo/378.png',
       color_1: '#eb6840',
-      title_2: 'Sqlsever',
+      title_2: '广场舞',
       img_2: '/images/heo/384.png',
       color_2: '#8f55ba'
     },
     {
-      title_1: 'Python',
+      title_1: '老年大学',
       img_1: '/images/heo/1030.png',
       color_1: '#f29e39',
-      title_2: 'Java',
+      title_2: '健康',
       img_2: '/images/heo/1043.png',
       color_2: '#2c51db'
     },
     {
-      title_1: 'HTML',
+      title_1: '养老',
       img_1: '/images/heo/1044.png',
       color_1: '#f7cb4f',
-      title_2: 'CSS',
+      title_2: '传统文化',
       img_2: '/images/heo/1052.png',
       color_2: '#e9572b'
     },
     {
-      title_1: 'VUE',
+      title_1: '家庭和睦',
       img_1: '/images/heo/1056.png',
       color_1: '#df5b40',
-      title_2: 'NEXT',
+      title_2: '智慧传承',
       img_2: '/images/heo/1119.png',
       color_2: '#1f1f1f'
     }
