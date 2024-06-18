@@ -48,58 +48,58 @@ const CONFIG = {
   HEO_GROUP_ICONS: [
     {
       title_1: '退休',
-      img_1: '/images/heo/100.png',
+      img_1: '/images/heo/1.png',
       color_1: '#989bf8',
       title_2: '养生',
-      img_2: '/images/heo/113.png',
+      img_2: '/images/heo/4.png',
       color_2: '#ffffff'
     },
     {
       title_1: '太极',
-      img_1: '/images/heo/208.png',
+      img_1: '/images/heo/2.png',
       color_1: '#57b6e6',
       title_2: '京剧',
-      img_2: '/images/heo/309.png',
+      img_2: '/images/heo/11.png',
       color_2: '#4082c3'
     },
     {
       title_1: '茶艺',
-      img_1: '/images/heo/348.png',
+      img_1: '/images/heo/3.png',
       color_1: '#ffffff',
       title_2: '书法',
-      img_2: '/images/heo/360.png',
+      img_2: '/images/heo/7.png',
       color_2: '#ffffff'
     },
     {
       title_1: '象棋',
-      img_1: '/images/heo/378.png',
+      img_1: '/images/heo/9.png',
       color_1: '#eb6840',
       title_2: '广场舞',
-      img_2: '/images/heo/384.png',
+      img_2: '/images/heo/13.png',
       color_2: '#8f55ba'
     },
     {
       title_1: '老年大学',
-      img_1: '/images/heo/1030.png',
+      img_1: '/images/heo/10.png',
       color_1: '#f29e39',
       title_2: '健康',
-      img_2: '/images/heo/1043.png',
+      img_2: '/images/heo/5.png',
       color_2: '#2c51db'
     },
     {
       title_1: '养老',
-      img_1: '/images/heo/1044.png',
+      img_1: '/images/heo/6.png',
       color_1: '#f7cb4f',
       title_2: '传统文化',
-      img_2: '/images/heo/1052.png',
+      img_2: '/images/heo/8.png',
       color_2: '#e9572b'
     },
     {
       title_1: '家庭和睦',
-      img_1: '/images/heo/1056.png',
+      img_1: '/images/heo/14.png',
       color_1: '#df5b40',
       title_2: '智慧传承',
-      img_2: '/images/heo/1119.png',
+      img_2: '/images/heo/12.png',
       color_2: '#1f1f1f'
     }
   ],
