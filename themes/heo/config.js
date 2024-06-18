@@ -6,7 +6,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: '欢迎来到我的个人小宇宙！', url: 'https://www.agercare.com/' },
-    { title: '这里记录着我的工作心得、学习感悟和生活点滴。希望我的分享能给您带来启发和乐趣。让我们一起在字里行间，感受生活的美好和成长的力量。🌱📝', url: 'https://www.agercare.com/' }
+    { title: '这里记录着我的工作心得、学习感悟和生活点滴。希望我的分享能给您带来启发和乐趣。🌱📝', url: 'https://www.agercare.com/' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -17,7 +17,7 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '知识与年龄同行',
   HEO_HERO_TITLE_2: '健康与生活相伴',
-  HEO_HERO_TITLE_3: 'AGERCARE.COM',
+  HEO_HERO_TITLE_3: '',
   HEO_HERO_TITLE_4: '',
   HEO_HERO_TITLE_5: '',
   HEO_HERO_TITLE_LINK: 'https://agercare.com',
