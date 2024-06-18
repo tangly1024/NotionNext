@@ -35,7 +35,7 @@ export function InfoCard(props) {
         </div>
       </div>
 
-      <h2 className='text-3xl font-extrabold mt-3'>{siteConfig('AUTHOR')}</h2>
+      <h2 className='text-3xl font-extrabold mt-3'>{siteConfig('AUTHOR')}|{siteConfig('BIO')}</h2>
 
       {/* 公告栏 */}
       <div>
