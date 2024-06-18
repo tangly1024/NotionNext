@@ -53,7 +53,20 @@ function scanSubdirectories(directory) {
   return subdirectories
 }
 
+/**
+ * @type {import('next').NextConfig}
+ */
+
 const nextConfig = {
+  output: process.env.EXPORT ? 'export' : undefined,
+  // 多语言， 在export时禁用
+  i18n: process.env.EXPORT
+    ? undefined
+    : {
+        defaultLocale: BLOG.LANG.slice(0, 2),
+        // 支持的所有多语言,按需填写即可
+        locales
+      },
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
@@ -71,90 +84,87 @@ const nextConfig = {
   },
 
   // 默认将feed重定向至 /public/rss/feed.xml
-  async redirects() {
-    return [
-      {
-        source: '/feed',
-        destination: '/rss/feed.xml',
-        permanent: true
-      }
-    ]
-  },
-  // 多语言， 在export时禁用
-  i18n:
-    process.env.npm_lifecycle_event === 'export'
-      ? undefined
-      : {
-          defaultLocale: BLOG.LANG.slice(0, 2),
-          // 支持的所有多语言,按需填写即可
-          locales
-        },
-  // 重写url
-  async rewrites() {
-    // 处理多语言重定向
-    const langsRewrites = []
-    if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
-      const siteIds = BLOG.NOTION_PAGE_ID.split(',')
-      const langs = []
-      for (let index = 0; index < siteIds.length; index++) {
-        const siteId = siteIds[index]
-        const prefix = extractLangPrefix(siteId)
-        // 如果包含前缀 例如 zh , en 等
-        if (prefix) {
-          langs.push(prefix)
-        }
-        console.log('[Locales]', siteId)
-      }
-
-      // 映射多语言
-      // 示例： source: '/:locale(zh|en)/:path*' ; :locale() 会将语言放入重写后的 `?locale=` 中。
-      langsRewrites.push(
-        {
-          source: `/:locale(${langs.join('|')})/:path*`,
-          destination: '/:path*'
-        },
-        // 匹配没有路径的情况，例如 [domain]/zh 或 [domain]/en
-        {
-          source: `/:locale(${langs.join('|')})`,
-          destination: '/'
-        },
-        // 匹配没有路径的情况，例如 [domain]/zh/ 或 [domain]/en/
-        {
-          source: `/:locale(${langs.join('|')})/`,
-          destination: '/'
-        }
-      )
-    }
-
-    return [
-      ...langsRewrites,
-      // 伪静态重写
-      {
-        source: '/:path*.html',
-        destination: '/:path*'
-      }
-    ]
-  },
-  async headers() {
-    return [
-      {
-        source: '/:path*{/}?',
-        headers: [
-          { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: '*' },
+  redirects: process.env.EXPORT
+    ? undefined
+    : async () => {
+        return [
           {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value:
-              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+            source: '/feed',
+            destination: '/rss/feed.xml',
+            permanent: true
           }
         ]
-      }
-    ]
-  },
+      },
+  // 重写url
+  rewrites: process.env.EXPORT
+    ? undefined
+    : async () => {
+        // 处理多语言重定向
+        const langsRewrites = []
+        if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
+          const siteIds = BLOG.NOTION_PAGE_ID.split(',')
+          const langs = []
+          for (let index = 0; index < siteIds.length; index++) {
+            const siteId = siteIds[index]
+            const prefix = extractLangPrefix(siteId)
+            // 如果包含前缀 例如 zh , en 等
+            if (prefix) {
+              langs.push(prefix)
+            }
+            console.log('[Locales]', siteId)
+          }
+
+          // 映射多语言
+          // 示例： source: '/:locale(zh|en)/:path*' ; :locale() 会将语言放入重写后的 `?locale=` 中。
+          langsRewrites.push(
+            {
+              source: `/:locale(${langs.join('|')})/:path*`,
+              destination: '/:path*'
+            },
+            // 匹配没有路径的情况，例如 [domain]/zh 或 [domain]/en
+            {
+              source: `/:locale(${langs.join('|')})`,
+              destination: '/'
+            },
+            // 匹配没有路径的情况，例如 [domain]/zh/ 或 [domain]/en/
+            {
+              source: `/:locale(${langs.join('|')})/`,
+              destination: '/'
+            }
+          )
+        }
+
+        return [
+          ...langsRewrites,
+          // 伪静态重写
+          {
+            source: '/:path*.html',
+            destination: '/:path*'
+          }
+        ]
+      },
+  headers: process.env.EXPORT
+    ? undefined
+    : async () => {
+        return [
+          {
+            source: '/:path*{/}?',
+            headers: [
+              { key: 'Access-Control-Allow-Credentials', value: 'true' },
+              { key: 'Access-Control-Allow-Origin', value: '*' },
+              {
+                key: 'Access-Control-Allow-Methods',
+                value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
+              },
+              {
+                key: 'Access-Control-Allow-Headers',
+                value:
+                  'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+              }
+            ]
+          }
+        ]
+      },
   webpack: (config, { dev, isServer }) => {
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     if (!isServer) {
