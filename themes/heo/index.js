@@ -79,7 +79,7 @@ const LayoutBase = props => {
 
   const HEO_HERO_BODY_REVERSE = siteConfig(
     'HEO_HERO_BODY_REVERSE',
-    false,
+    true,
     CONFIG
   )
 
