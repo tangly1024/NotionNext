@@ -5,7 +5,6 @@ import LA51 from './LA51'
 import TianLiGPT from './TianliGPT'
 import WebWhiz from './Webwhiz'
 
-import { CUSTOM_EXTERNAL_CSS, CUSTOM_EXTERNAL_JS } from '@/blog.config'
 import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
@@ -44,8 +43,6 @@ const ExternalPlugin = props => {
   const CHATBASE_ID = siteConfig('CHATBASE_ID')
   const COMMENT_DAO_VOICE_ID = siteConfig('COMMENT_DAO_VOICE_ID')
   const AD_WWADS_ID = siteConfig('AD_WWADS_ID')
-  //   const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
-  //   const COMMENT_TWIKOO_CDN_URL = siteConfig('COMMENT_TWIKOO_CDN_URL')
   const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER')
   const COMMENT_ARTALK_JS = siteConfig('COMMENT_ARTALK_JS')
   const COMMENT_TIDIO_ID = siteConfig('COMMENT_TIDIO_ID')
@@ -64,6 +61,8 @@ const ExternalPlugin = props => {
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
   const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
+  const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
+  const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
 
   // 自定义样式css和js引入
   if (isBrowser) {
