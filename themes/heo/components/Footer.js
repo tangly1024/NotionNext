@@ -35,7 +35,7 @@ const Footer = ({ TITLE }) => {
             href={siteConfig('LINK')}
             // className='underline font-bold dark:text-gray-300 '>
             className='underline dark:text-gray-300 '>
-            {siteConfig('AUTHOR')} | {siteConfig('BIO')}
+            {siteConfig('AUTHOR')}
           </a>
           .
         </div>
