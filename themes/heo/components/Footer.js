@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import SocialButton from './SocialButton'
+// import SocialButton from './SocialButton'
 
 const Footer = ({ TITLE }) => {
   const d = new Date()
@@ -17,9 +17,9 @@ const Footer = ({ TITLE }) => {
       />
 
       {/* 社交按钮 */}
-      <div className='w-full h-24'>
-        <SocialButton />
-      </div>
+      // <div className='w-full h-24'>
+      //   <SocialButton />
+      // </div>
 
       <br />
 
