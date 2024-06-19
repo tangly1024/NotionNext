@@ -19,7 +19,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享知识',
   HEO_HERO_TITLE_2: '与社会素养',
   HEO_HERO_TITLE_3: '直待凌云始道高',
-  HEO_HERO_TITLE_4: '欢迎~',
+  HEO_HERO_TITLE_4: '欢迎来到凌云·LinYun~',
   HEO_HERO_TITLE_5: '桂枝日已绿，拂雪凌云端',
   HEO_HERO_TITLE_LINK: 'https://www.linyunlink.top/',
 
