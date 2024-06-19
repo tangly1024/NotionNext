@@ -20,6 +20,7 @@ export const BlogListPage = props => {
     .split('?')[0]
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
+    .replace('.html', '')
 
   const blogPostRefs = useRef([])
 

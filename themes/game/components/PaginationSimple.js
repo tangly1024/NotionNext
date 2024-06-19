@@ -17,6 +17,7 @@ const PaginationSimple = ({ page, showNext }) => {
     .split('?')[0]
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
+    .replace('.html', '')
 
   return (
     <div className='my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2'>
