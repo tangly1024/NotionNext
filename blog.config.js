@@ -26,8 +26,8 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://agercare.com', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '固定收益,产品经理,Axure,Python,数据分析,数据挖掘,爬虫,Vue,金融工程,Pycharm,Mysql,Tomacat,高等数学,线性代数,统计分析', // 网站关键词 英文逗号隔开
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://senitimes.com', // 网站地址
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '退休金,医疗护理,养老,保健,娱乐,兴趣,老年人活动,晚年,老年痴呆,居家养老,医疗保障,家庭关系,黄昏恋,老年人社交,护理', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || '', // 邮箱地址 例如mail@tangly1024.com
