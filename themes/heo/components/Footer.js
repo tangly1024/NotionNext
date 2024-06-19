@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-// import SocialButton from './SocialButton'
+import SocialButton from './SocialButton'
 
 const Footer = ({ TITLE }) => {
   const d = new Date()
@@ -16,10 +16,10 @@ const Footer = ({ TITLE }) => {
         className='h-32 bg-gradient-to-b from-[#f7f9fe] to-white  dark:bg-[#1a191d] dark:from-inherit dark:to-inherit'
       />
 
-      // {/* 社交按钮 */}
-      // <div className='w-full h-24'>
-      //   <SocialButton />
-      // </div>
+      {/* 社交按钮 */}
+      <div className='w-full h-24'>
+        <SocialButton />
+      </div>
 
       <br />
 
