@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.5.4",
+  "version": "4.6.0",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -17,7 +17,7 @@
     "build": "next build",
     "start": "next start",
     "post-build": "next-sitemap --config next-sitemap.config.js",
-    "export": "next build && next-sitemap --config next-sitemap.config.js && next export",
+    "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
     "bundle-report": "cross-env ANALYZE=true next build",
     "build-all-in-dev": "cross-env VERCEL_ENV=production next build"
   },
@@ -30,7 +30,7 @@
     "js-md5": "^0.7.3",
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
-    "next": "13.3.1",
+    "next": "14.2.4",
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
     "react": "^18.2.0",
