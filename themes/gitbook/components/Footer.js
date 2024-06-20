@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import SocialButton from './SocialButton'
 
 const Footer = ({ siteInfo }) => {
   const d = new Date()
@@ -11,7 +12,9 @@ const Footer = ({ siteInfo }) => {
     <footer className='z-20 bg:white dark:bg-hexo-black-gray justify-center text-center w-full text-sm relative'>
       <hr className='pb-2' />
 
-      <div className='flex justify-center'>
+      <SocialButton />
+
+      <div className='flex justify-center pt-1'>
         <div>
           <i className='mx-1 animate-pulse fas fa-heart' />{' '}
           <a
