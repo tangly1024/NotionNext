@@ -32,6 +32,16 @@ const locales = (function () {
   return langs
 })()
 
+// 编译前执行
+const preBuild = (function () {
+  // 删除 public/sitemap.xml 文件 ； 否则会和/pages/sitemap.xml.js 冲突。
+  const sitemapPath = path.resolve(__dirname, 'public', 'sitemap.xml')
+  if (fs.existsSync(sitemapPath)) {
+    fs.unlinkSync(sitemapPath)
+    console.log('Deleted existing sitemap.xml from public directory')
+  }
+})()
+
 /**
  * 扫描指定目录下的文件夹名，用于获取所有主题
  * @param {*} directory
