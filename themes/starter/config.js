@@ -215,8 +215,7 @@ const CONFIG = {
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
   STARTER_TEAM_ITEMS: [
     {
-      STARTER_TEAM_ITEM_AVATAR:
-        /images/starter/team/jinshan.jpg',
+      STARTER_TEAM_ITEM_AVATAR:'/images/starter/team/jinshan.jpg',
       STARTER_TEAM_ITEM_NICKNAME: '金山道人',
       STARTER_TEAM_ITEM_DESCRIPTION: ''
     },
