@@ -11,7 +11,10 @@ import { SVGEssential } from './svg/SVGEssential';
 export const Features = () => {
   return <>
      {/* <!-- ====== Features Section Start --> */}
-     <section className="pb-8 pt-20 dark:bg-dark lg:pb-[70px] lg:pt-[120px]">
+      <section
+      id="features"
+      className="pb-8 pt-20 dark:bg-dark lg:pb-[70px] lg:pt-[120px]"
+      >
       <div className="container">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
