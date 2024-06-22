@@ -17,6 +17,8 @@ const BLOG = {
   IS_TAG_COLOR_DISTINGUISHED:
     process.env.NEXT_PUBLIC_IS_TAG_COLOR_DISTINGUISHED === 'true' || true, // 对于名称相同的tag是否区分tag的颜色
 
+  TOGGLE_EXPAND: process.env.NEXT_PUBLIC_TOGGLE_EXPAND || false, // notion折叠块(普通或者标题)是否在加载时展开
+
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||

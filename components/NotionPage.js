@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 整个站点的核心组件
@@ -14,6 +15,8 @@ import { NotionRenderer } from 'react-notion-x'
  * @returns
  */
 const NotionPage = ({ post, className }) => {
+  const { NOTION_CONFIG } = useGlobal()
+
   // 是否关闭数据库和画册的点击跳转
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
@@ -32,6 +35,9 @@ const NotionPage = ({ post, className }) => {
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
     autoScrollToHash()
+
+    // toggle块全部展开
+    allToggleExpand(NOTION_CONFIG)
   }, [])
 
   // 页面文章发生变化时会执行的勾子
@@ -157,6 +163,20 @@ const autoScrollToHash = () => {
       }
     }
   }, 180)
+}
+
+const allToggleExpand = (NOTION_CONFIG) => {
+  if (JSON.parse(siteConfig('TOGGLE_EXPAND', true))) {
+    const wrapperElement = document.getElementById('wrapper')
+    if (wrapperElement) {
+      const detailsElements = wrapperElement.getElementsByClassName('notion-toggle')
+      if (detailsElements.length > 0) {
+        for (const element of detailsElements) {
+          element.setAttribute('open', 'true')
+        }
+      }
+    }
+  }
 }
 
 /**
