@@ -246,7 +246,7 @@ const CONFIG = {
   STARTER_CONTACT_LOCATION_TITLE: '我们的位置',
   STARTER_CONTACT_LOCATION_TEXT: '中国，陕西',
   STARTER_CONTACT_EMAIL_TITLE: '我们如何帮助您？',
-  STARTER_CONTACT_EMAIL_TEXT: 'tiengming@qq.com',
+  STARTER_CONTACT_EMAIL_TEXT: 'mail@buxiantang.top',
 
   // 嵌入外部表单
   STARTER_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/juh6wg', // 基于NoteForm创建，将留言数据存在Notion中
