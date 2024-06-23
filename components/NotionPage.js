@@ -166,7 +166,6 @@ const autoScrollToHash = () => {
 }
 
 const allToggleExpand = (NOTION_CONFIG) => {
-  console.log(NOTION_CONFIG)
   const TOGGLE_EXPAND = JSON.parse(siteConfig('TOGGLE_EXPAND', false, NOTION_CONFIG))
   if (TOGGLE_EXPAND) {
     const wrapperElement = document.getElementById('wrapper')
