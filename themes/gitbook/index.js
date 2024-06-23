@@ -19,6 +19,7 @@ import ArticleAround from './components/ArticleAround'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BlogArchiveItem from './components/BlogArchiveItem'
+import BottomMenuBar from './components/BottomMenuBar'
 import Catalog from './components/Catalog'
 import CatalogDrawerWrapper from './components/CatalogDrawerWrapper'
 import CategoryItem from './components/CategoryItem'
@@ -26,8 +27,6 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import InfoCard from './components/InfoCard'
 import JumpToTopButton from './components/JumpToTopButton'
-import MobileButtonCatalog from './components/MobileButtonCatalog'
-import MobileButtonPageNav from './components/MobileButtonPageNav'
 import NavPostList from './components/NavPostList'
 import PageNavDrawer from './components/PageNavDrawer'
 import RevolverMaps from './components/RevolverMaps'
@@ -108,7 +107,6 @@ const LayoutBase = props => {
   const [pageNavVisible, changePageNavVisible] = useState(false)
   const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
 
-  const showTocButton = post?.toc?.length > 1
   const searchModal = useRef(null)
 
   useEffect(() => {
@@ -239,23 +237,11 @@ const LayoutBase = props => {
           )}
         </main>
 
-        {/* 移动端底部导航按钮 */}
-        <div className='bottom-button-group md:hidden w-screen h-12 px-4 fixed flex items-center justify-between right-0 bottom-0 z-30 bg-white border-l border-t dark:border-gray-800'>
-          <div className='w-full'>
-            <MobileButtonPageNav />
-          </div>
-          {showTocButton && (
-            <div className='w-full'>
-              <MobileButtonCatalog />
-            </div>
-          )}
-        </div>
-
         {/* 移动端导航抽屉 */}
         <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
 
         {/* 移动端底部导航栏 */}
-        {/* <BottomMenuBar {...props} className='block md:hidden' /> */}
+        <BottomMenuBar {...props} />
       </div>
     </ThemeGlobalGitbook.Provider>
   )
