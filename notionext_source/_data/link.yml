@@ -1,0 +1,56 @@
+- class_name: 佬们
+  class_desc: 窥镜而自视，又弗如远甚
+  link_list:
+    - name: QuietFallHe
+      link: http://quietfhe.icu
+      avatar: /uploads/qf.jpg
+      descr: 牛逼又强大
+    - name: atri
+      link: https://zjuatri.cn/
+      avatar: /uploads/atri.jpg
+      descr: 是ACEE神佬atri
+    - name: 木槿辞秋
+      link: https://ottohere-mourn.github.io/
+      avatar: /uploads/mjh.jpg
+      descr: 毛毛...有点唐
+    - name: 华零散
+      link: https://hzeroyuke.github.io/my_blog/
+      avatar: /uploads/hls.jpg
+      descr: 强得离谱
+    - name: jiepeng's nootbook
+      link: https://note.jiepeng.tech/
+      avatar: /uploads/jjp.jpg
+      descr: 强得可怕
+    - name: fufu酱
+      link: https://csfufu.life
+      avatar: /uploads/fufu.jpeg
+      descr: 强得吓人
+    - name: 咸鱼暄
+      link: https://xuan-insr.github.io/
+      avatar: /uploads/xyx.jpg
+      descr: 是暄暄！
+    - name: 流霜
+      link: http://yujiezju.run
+      avatar: /uploads/ls.jpg
+      descr: 是lsgg！
+    - name: 夜辰
+      link: https://night1918.top/
+      avatar: /uploads/yc.jpg
+      descr: 是夜辰酱！
+    - name: icnow
+      link: https://icnow0504.github.io/
+      avatar: https://icnow0504.github.io/images/head%20image.jpg
+      descr: 是冰雪奇寒！
+    - name: 预制菜山雀
+      link: https://yuzhicaishanque.github.io
+      avatar: https://yuzhicaishanque.github.io/medias/sq.jpg
+      descr: 可是我还是喜欢叫他老母鸡
+    - name: Savia
+      link: https://savia7582.github.io/Exterior/
+      avatar: /uploads/savia.jpg
+      descr: 我去你说的这个人是我爹
+    - name: 66666a
+      link: https://jzl-66666a.github.io/
+      avatar: https://jzl-66666a.github.io/img/favicon.png
+      descr: 我发现如果称呼6a为"6a哥哥"的话他的攻击性就会大幅减弱
+
