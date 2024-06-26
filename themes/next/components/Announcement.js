@@ -1,7 +1,7 @@
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
 
-// const NotionPage = dynamic(() => import('@/components/NotionPage'))
+const NotionPage = dynamic(() => import('@/components/NotionPage'))
 
 const Announcement = ({ post, className }) => {
   const { locale } = useGlobal()
@@ -16,32 +16,18 @@ const Announcement = ({ post, className }) => {
           {locale.COMMON.ANNOUNCEMENT}
         </div>
       </div>
-      {/* {post && (<div id="announcement-content" data-aos="fade-down"
-                    data-aos-duration="500"
-                    data-aos-delay="200"
-                    data-aos-once="true"
-                    data-aos-anchor-placement="top-bottom">
-            <NotionPage post={post} className='text-center ' />
-        </div>)} */}
-      <div
-        id="announcement-content"
-        data-aos="fade-down"
-        data-aos-duration="500"
-        data-aos-delay="200"
-        data-aos-once="true"
-        data-aos-anchor-placement="top-bottom"
-        className="text-center"
-      >
-        <h2>{post.title}</h2>
-        <p>
-          {post.content.split('\n').map((line, index) => (
-            <span key={index}>
-              {line}
-              <br />
-            </span>
-          ))}
-        </p>
-      </div>
+      {post && (
+        <div
+          id="announcement-content"
+          data-aos="fade-down"
+          data-aos-duration="500"
+          data-aos-delay="200"
+          data-aos-once="true"
+          data-aos-anchor-placement="top-bottom"
+        >
+          {/* <NotionPage post={post} className='text-center ' /> */}
+        </div>
+      )}
     </>
   )
 }
