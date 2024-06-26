@@ -2,7 +2,7 @@ const CONFIG = {
   // 封面大图
   COMMERCE_HOME_BANNER_ENABLE: false,
 
-  COMMERCE_TEXT_CENTER_TITLE: '', // 中间产品区块标题
+  COMMERCE_TEXT_CENTER_TITLE: '老来乐旗舰店', // 中间产品区块标题
   COMMERCE_TEXT_CENTER_DESCRIPTION:
     '', // 中间产品区块文字描述
   COMMERCE_TEXT_CENTER_CATEGORY_TITLE: 'Product Categories', // 左侧产品分类标题
