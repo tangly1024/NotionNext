@@ -28,12 +28,20 @@ const SideAreaRight = props => {
     slot,
     categoryOptions,
     currentCategory,
-    notice,
+    // notice,
     latestPosts
   } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const announcementVisible = notice && Object.keys(notice).length > 0
+  const notice = {
+    id: 'fixed-announcement',
+    title: '🎉欢迎来到Dumb fox的博客🎉',
+    content: `
+      -- 感谢您的支持 ---
+      👏希望你喜欢👏
+    `
+  }
 
   return (
     <aside
@@ -59,9 +67,11 @@ const SideAreaRight = props => {
       )}
 
       <div className="sticky top-0 space-y-4 w-full">
-        {/* {announcementVisible && <Card>
-                <Announcement post={notice} />
-            </Card>} */}
+        {announcementVisible && (
+          <Card>
+            <Announcement post={notice} />
+          </Card>
+        )}
 
         {siteConfig('NEXT_RIGHT_LATEST_POSTS', null, CONFIG) && (
           <Card>
