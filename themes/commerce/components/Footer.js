@@ -28,7 +28,7 @@ const Footer = props => {
               <div className='font-bold mb-4 text-white'>
                 {siteConfig(
                   'COMMERCE_TEXT_FOOTER_MENU_1',
-                  'Product Center',
+                  '产品中心',
                   CONFIG
                 )}
               </div>
@@ -80,7 +80,7 @@ const Footer = props => {
                 <div className='font-bold text-l text-white mb-6'>
                   {siteConfig(
                     'COMMERCE_TEXT_FOOTER_TITLE',
-                    'Contact US',
+                    '关于我们',
                     CONFIG
                   )}
                 </div>
@@ -201,7 +201,7 @@ const Footer = props => {
               <a
                 href='https://github.com/tangly1024/NotionNext'
                 className='dark:text-gray-300'>
-                NotionNext {siteConfig('VERSION')}
+                Senitimes.com
               </a>
               .
             </div>
