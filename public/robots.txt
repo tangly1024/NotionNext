@@ -1,3 +1,4 @@
-# robots.txt generated at https://www.sojson.com/robots/
-User-agent: *
+User-agent:*
 Disallow:
+
+Sitemap:https://www.senitimes.com/sitemap.xml
