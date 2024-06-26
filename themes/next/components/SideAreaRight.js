@@ -35,12 +35,8 @@ const SideAreaRight = props => {
   const router = useRouter()
   const announcementVisible = notice && Object.keys(notice).length > 0
   const notice = {
-    id: 'fixed-announcement',
     title: '🎉欢迎来到Dumb fox的博客🎉',
-    content: `
-      -- 感谢您的支持 ---
-      👏希望你喜欢👏
-    `
+    content: '-- 感谢您的支持 ---\n👏希望你喜欢👏'
   }
 
   return (
