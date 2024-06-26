@@ -34,9 +34,29 @@ const SideAreaRight = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const announcementVisible = notice && Object.keys(notice).length > 0
+
+  // 定义固定的公告内容
   const notice = {
-    title: '🎉欢迎来到Dumb fox的博客🎉',
-    content: '-- 感谢您的支持 ---\n👏希望你喜欢👏'
+    id: 'fixed-announcement',
+    blockMap: {
+      content: {
+        type: 'text',
+        text: [
+          {
+            type: 'text',
+            text: '🎉欢迎来到Dumb fox的博客🎉'
+          },
+          {
+            type: 'text',
+            text: '-- 感谢您的支持 ---'
+          },
+          {
+            type: 'text',
+            text: '👏希望你喜欢👏'
+          }
+        ]
+      }
+    }
   }
 
   return (
