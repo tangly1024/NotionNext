@@ -49,7 +49,7 @@ const Footer = ({ title }) => {
         <span className='text-xs '>
           Powered by{' '}
           <a
-            href='https://agercare.com'
+            href='https://senitimes.com'
             className='underline dark:text-gray-300'>
             www.senitimes.com
           </a>
