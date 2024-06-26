@@ -51,7 +51,7 @@ const Footer = ({ title }) => {
           <a
             href='https://agercare.com'
             className='underline dark:text-gray-300'>
-            www.agercare.com
+            www.senitimes.com
           </a>
           .
         </span>
