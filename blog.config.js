@@ -17,6 +17,8 @@ const BLOG = {
   IS_TAG_COLOR_DISTINGUISHED:
     process.env.NEXT_PUBLIC_IS_TAG_COLOR_DISTINGUISHED === 'true' || true, // 对于名称相同的tag是否区分tag的颜色
 
+  TOGGLE_EXPAND: process.env.NEXT_PUBLIC_TOGGLE_EXPAND || false, // notion折叠块(普通或者标题)是否在加载时展开
+
   // 3.14.1版本后，欢迎语在此配置，英文逗号隔开 ,  即可支持多个欢迎语打字效果。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
@@ -491,6 +493,7 @@ const BLOG = {
     password: process.env.NEXT_PUBLIC_NOTION_PROPERTY_PASSWORD || 'password',
     type: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE || 'type', // 文章类型，
     type_post: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_POST || 'Post', // 当type文章类型与此值相同时，为博文。
+    type_post_url: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_POST_URL || 'Post_url', // 当type文章类型与此值相同时，为外链博文。
     type_page: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_PAGE || 'Page', // 当type文章类型与此值相同时，为单页。
     type_notice:
       process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_NOTICE || 'Notice', // 当type文章类型与此值相同时，为公告。
