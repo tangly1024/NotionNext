@@ -6,6 +6,17 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import Artalk from './Artalk'
 
+// 隐藏评论区头部的函数
+// 提供者：Winner365（blog.365sites.top）
+function changevsblt() {
+   // 获取具有 id 'comheader' 的元素
+   var cmhder = document.getElementById('comheader');
+
+// 隐藏元素
+    cmhder.style.display = 'none';
+
+}
+
 const WalineComponent = dynamic(
   () => {
     return import('@/components/WalineComponent')
@@ -121,9 +132,12 @@ const Comment = ({ frontMatter, className }) => {
     return null
   }
 
-  // 特定文章关闭评论区
+  // 特定文章隐藏评论区
   if (frontMatter?.comment === 'Hide') {
-    return null
+    return （
+    <div>
+      {changevsblt()}
+      </div>
   }
 
   return (
