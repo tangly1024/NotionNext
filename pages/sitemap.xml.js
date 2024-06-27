@@ -55,7 +55,7 @@ function generateLocalesSitemap(link, allPages, locale) {
       priority: '0.7'
     },
     {
-      loc: `${link}${locale}/feed`,
+      loc: `${link}${locale}/rss/feed.xml`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'
