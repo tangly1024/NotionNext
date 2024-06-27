@@ -325,7 +325,7 @@ const LayoutSlug = props => {
                   <AdSlot />
                 </div>
                 {/* 评论互动 */}
-                <div className='duration-200 overflow-x-auto px-5'>
+                <div className='duration-200 overflow-x-auto px-5' id="comheader">
                   <div className='text-2xl dark:text-white'>
                     <i className='fas fa-comment mr-1' />
                     {locale.COMMON.COMMENTS}
