@@ -329,7 +329,7 @@ const BLOG = {
   MUSIC_PLAYER_METING_TYPE:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_TYPE || 'playlist', // 可选值： song | playlist | album | search | artist 
   MUSIC_PLAYER_METING_ID:
-    process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_ID || '2032483048', // 对应歌单的 id
+    process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_ID || '7747232995', // 对应歌单的 id
   MUSIC_PLAYER_METING_LRC_TYPE:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_LRC_TYPE || '1', // 可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）
 
