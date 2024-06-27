@@ -53,11 +53,13 @@ const ThemeSwitch = () => {
         <div
           id='draggableBox'
           style={{ left: '0px', top: '80vh' }}
-          className='fixed group hover:scale-105 transition-all space-y-2 overflow-hidden z-50 p-3 flex flex-col items-start dark:text-white bg-white dark:bg-black rounded-xl shadow-lg '>
+          className='fixed group flex flex-col items-start space-y-2 overflow-hidden z-50 p-3
+                    dark:text-white bg-white dark:bg-black 
+                      rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl   '>
           {/* 主题切换按钮 */}
-          <div className='text-sm flex items-center group-hover:w-32 transition-all duration-200'>
+          <div className='text-sm flex items-center group-hover:w-32  duration-200'>
             <i className='fa-solid fa-palette w-5' />
-            <div className='w-0 group-hover:w-24 transition-all duration-200 overflow-hidden'>
+            <div className='w-0 group-hover:w-24  duration-200 overflow-hidden'>
               <label htmlFor='themeSelect' className='sr-only'>
                 {locale.COMMON.THEME}
               </label>
@@ -79,21 +81,21 @@ const ThemeSwitch = () => {
           </div>
 
           {/* 深色按钮 */}
-          <div className='text-sm flex items-center w-0 group-hover:w-32 transition-all duration-200'>
+          <div className='text-sm flex items-center w-0 group-hover:w-32  duration-200'>
             <DarkModeButton />
             <div
               onClick={toggleDarkMode}
-              className='cursor-pointer w-0 group-hover:w-24 transition-all duration-200 overflow-hidden whitespace-nowrap pl-1 h-auto'>
+              className='cursor-pointer w-0 group-hover:w-24  duration-200 overflow-hidden whitespace-nowrap pl-1 h-auto'>
               {isDarkMode ? locale.MENU.DARK_MODE : locale.MENU.LIGHT_MODE}
             </div>
           </div>
 
           {/* 翻译按钮 */}
-          <div className='text-sm flex items-center group-hover:w-32 transition-all duration-200'>
+          <div className='text-sm flex items-center group-hover:w-32  duration-200'>
             <i className='fa-solid fa-language w-5' />
-            <div className='w-0 group-hover:w-24 transition-all duration-200 overflow-hidden'>
+            <div className='w-0 group-hover:w-24  duration-200 overflow-hidden'>
               <label htmlFor='langSelect' className='sr-only'>
-                选择语言：
+                Language Select
               </label>
               <select
                 id='langSelect'
@@ -118,7 +120,7 @@ const ThemeSwitch = () => {
       <div
         className={`${isLoading ? 'opacity-90 ' : 'opacity-0'} 
             w-screen h-screen glassmorphism bg-black text-white shadow-text flex justify-center items-center
-            transition-all fixed top-0 left-0 pointer-events-none duration-1000 z-50 shadow-inner`}>
+             fixed top-0 left-0 pointer-events-none duration-1000 z-50 shadow-inner`}>
         <i className='text-3xl mr-5 fas fa-spinner animate-spin' />
       </div>
     </>
