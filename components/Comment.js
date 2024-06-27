@@ -134,10 +134,11 @@ const Comment = ({ frontMatter, className }) => {
 
   // 特定文章隐藏评论区
   if (frontMatter?.comment === 'Hide') {
-    return （
+    return (
     <div>
       {changevsblt()}
       </div>
+     );
   }
 
   return (
