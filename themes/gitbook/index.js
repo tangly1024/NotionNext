@@ -129,7 +129,7 @@ const LayoutBase = props => {
 
       <div
         id='theme-gitbook'
-        className={`${siteConfig('FONT_STYLE')} scroll-smooth bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300`}>
+        className={`${siteConfig('FONT_STYLE')} pb-16 md:pb-0 scroll-smooth bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300`}>
         <AlgoliaSearchModal cRef={searchModal} {...props} />
 
         {/* 顶部导航栏 */}
