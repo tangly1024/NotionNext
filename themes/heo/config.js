@@ -39,7 +39,15 @@ const CONFIG = {
     '🔍 分享与热心帮助',
     '🏃 脚踏实地行动派'
   ],
-  HEO_INFO_CARD_URL: 'https://github.com/wuyuhanzijin', // 个人资料底部按钮链接
+  
+    // 个人资料底部按钮
+  HEO_INFO_CARD_URL1: '/about',
+  HEO_INFO_CARD_ICON1: 'fas fa-user',
+  HEO_INFO_CARD_URL2: 'https://github.com/wuyuhanzijin/',
+  HEO_INFO_CARD_ICON2: 'fab fa-github',
+  HEO_INFO_CARD_URL3: 'https://status.linyunlink.top/',
+  HEO_INFO_CARD_TEXT3: '运行状况',
+
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
