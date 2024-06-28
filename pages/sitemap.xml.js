@@ -27,7 +27,6 @@ export const getServerSideProps = async ctx => {
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=59'
   )
-  console.log('fff', fields)
   return getServerSideSitemap(ctx, fields)
 }
 
