@@ -19,7 +19,7 @@ const BlogPostListScroll = ({
   showSummary = siteConfig('NEXT_POST_LIST_SUMMARY', null, CONFIG)
 }) => {
   const { NOTION_CONFIG } = useGlobal()
-  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const [page, updatePage] = useState(1)
   const postsToShow = getPostByPage(page, posts, POSTS_PER_PAGE)
 
