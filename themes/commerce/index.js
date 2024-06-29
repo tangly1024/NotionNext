@@ -1,32 +1,32 @@
 import CONFIG from './config'
 
-import { useEffect, useRef } from 'react'
-import Footer from './components/Footer'
+import LazyImage from '@/components/LazyImage'
+import replaceSearchResult from '@/components/Mark'
+import NotionPage from '@/components/NotionPage'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser, scanAndConvertToLinks } from '@/lib/utils'
+import { Transition } from '@headlessui/react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useRef } from 'react'
+import { ArticleLock } from './components/ArticleLock'
+import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
-import Hero from './components/Hero'
-import { useRouter } from 'next/router'
 import Card from './components/Card'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import Hero from './components/Hero'
+import PostHeader from './components/PostHeader'
+import ProductCategories from './components/ProductCategories'
+import ProductCenter from './components/ProductCenter'
 import RightFloatArea from './components/RightFloatArea'
 import SearchNav from './components/SearchNav'
-import BlogPostArchive from './components/BlogPostArchive'
-import { ArticleLock } from './components/ArticleLock'
-import PostHeader from './components/PostHeader'
-import TocDrawer from './components/TocDrawer'
-import NotionPage from '@/components/NotionPage'
-import TagItemMini from './components/TagItemMini'
-import Link from 'next/link'
 import SlotBar from './components/SlotBar'
-import { Transition } from '@headlessui/react'
+import TagItemMini from './components/TagItemMini'
+import TocDrawer from './components/TocDrawer'
 import { Style } from './style'
-import replaceSearchResult from '@/components/Mark'
-import { siteConfig } from '@/lib/config'
-import Header from './components/Header'
-import ProductCenter from './components/ProductCenter'
-import LazyImage from '@/components/LazyImage'
-import ProductCategories from './components/ProductCategories'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -35,17 +35,19 @@ import ProductCategories from './components/ProductCategories'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, post, floatSlot, slotTop, slotRight, meta, className } =
-    props
+  const { children, post, floatSlot, slotTop, className } = props
   const { onLoading } = useGlobal()
-
+  const router = useRouter()
   // 查找页面上的 链接，并便成为可点击
   useEffect(() => {
     scanAndConvertToLinks(document.getElementById('theme-commerce'))
-  })
+  }, [router])
+
+  const slotRight = router.route !== '/' && !post && (
+    <ProductCategories {...props} />
+  )
 
   let headerSlot = null
-  const router = useRouter()
   if (router.route === '/' && !post) {
     headerSlot = JSON.parse(siteConfig('COMMERCE_HOME_BANNER_ENABLE', true)) ? (
       <Hero {...props} />
@@ -125,11 +127,11 @@ const LayoutIndex = props => {
       {/* 产品中心 */}
       <ProductCenter {...props} />
 
-      {/* 首页企业/品牌介绍 */}
+      {/* 首页企业/品牌介绍 这里展示公告 */}
       {notice && (
-        <div id='brand-introduction' className='w-full my-4 mx-4'>
+        <div id='brand-introduction' className='w-full'>
           <div className='w-full text-center text-4xl font-bold pt-12'>
-            {siteConfig('TEXT_HOME_ABOUT_US', notice.title)}
+            {notice.title}
           </div>
           <NotionPage post={notice} className='text-2xl text-justify' />
         </div>
@@ -146,18 +148,15 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
-  const slotRight = <ProductCategories {...props} />
   return (
-    <LayoutBase {...props} slotRight={slotRight}>
-      <div className='bg-white border-[#D2232A] p-4'>
-        <SlotBar {...props} />
-        {siteConfig('POST_LIST_STYLE') === 'page' ? (
-          <BlogPostListPage {...props} />
-        ) : (
-          <BlogPostListScroll {...props} />
-        )}
-      </div>
-    </LayoutBase>
+    <div className='bg-white border-[#D2232A] p-4'>
+      <SlotBar {...props} />
+      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+        <BlogPostListPage {...props} />
+      ) : (
+        <BlogPostListScroll {...props} />
+      )}
+    </div>
   )
 }
 
@@ -241,7 +240,6 @@ const LayoutSlug = props => {
   const headerImage = post?.pageCover
     ? post.pageCover
     : siteConfig('HOME_BANNER_IMAGE')
-  const floatSlot = <></>
 
   return (
     <>
@@ -258,16 +256,17 @@ const LayoutSlug = props => {
               <div className='flex md:flex-row flex-col w-full justify-between py-4'>
                 <div
                   id='left-img'
-                  className='w-1/2 flex justify-center items-center border'>
+                  className='md:w-1/2 flex justify-center items-center border'>
                   <LazyImage
                     src={headerImage}
                     className='m-auto w-full h-auto aspect-square object-cover object-center'
                   />
                 </div>
 
-                <div id='info-right' className='w-1/2 p-4'>
+                <div id='info-right' className='md:w-1/2 p-4'>
                   <div>{post?.title}</div>
-                  <div>{post?.summary}</div>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: post?.summary }}></div>
                 </div>
               </div>
             )}
@@ -395,14 +394,14 @@ const LayoutTagIndex = props => {
 }
 
 export {
-  CONFIG as THEME_CONFIG,
-  LayoutBase,
-  LayoutIndex,
-  LayoutSearch,
-  LayoutArchive,
-  LayoutSlug,
   Layout404,
+  LayoutArchive,
+  LayoutBase,
   LayoutCategoryIndex,
+  LayoutIndex,
   LayoutPostList,
-  LayoutTagIndex
+  LayoutSearch,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }
