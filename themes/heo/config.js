@@ -1,5 +1,5 @@
 const CONFIG = {
-  HEO_HOME_BANNER_ENABLE: true,
+  HEO_HOME_BANNER_ENABLE: true ，
 
   HEO_SITE_CREATE_TIME: '2024-06-21'，// 建站日期，用于计算网站运行的第几天
 
