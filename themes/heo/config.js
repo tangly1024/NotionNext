@@ -5,9 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的网站', url: 'https://www.120819.xyz' }，
-    { title: '访问博客获取更多帮助', url: 'https://blog.120819.xyz' }
-  ],
+    { title: '欢迎来到我的网站', url: 'https://www.120819.xyz' }
+    { title: '访问博客获取更多帮助'， url: 'https://blog.120819.xyz' }  ]
 
   // 英雄区左右侧组件颠倒位置
   HEO_HERO_REVERSE: false,
@@ -23,9 +22,9 @@ const CONFIG = {
   HEO_HERO_TITLE_LINK: 'https://120819.xyz',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
-  HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
-  HEO_HERO_CATEGORY_3: { title: '健康教育', url: '/tag/健康教育' },
+  HEO_HERO_CATEGORY_1: { title: '必看精选'， url: '/tag/必看精选' },
+  HEO_HERO_CATEGORY_2: { title: '热门文章'， url: '/tag/热门文章' },
+  HEO_HERO_CATEGORY_3: { title: '健康教育'， url: '/tag/健康教育' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
