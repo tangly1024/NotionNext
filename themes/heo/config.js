@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的网站', url: 'https://www.120819.xyz'， }
-    { title: '访问博客获取更多帮助'， url: 'https://blog.120819.xyz' ，}  ]
+    { title: '欢迎来到我的网站'， url: 'https://www.120819.xyz' }
+    { title: '访问博客获取更多帮助', url: 'https://blog.120819.xyz' }  ]
 
   // 英雄区左右侧组件颠倒位置
   HEO_HERO_REVERSE: false,
