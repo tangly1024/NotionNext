@@ -16,9 +16,9 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '分享健康',
-  HEO_HERO_TITLE_2: '与思维认知',
+  HEO_HERO_TITLE_2: '与健康服务',
   HEO_HERO_TITLE_3: '120819.xyz',
-  HEO_HERO_TITLE_4: '新版上线',
+  HEO_HERO_TITLE_4: '新站上线',
   HEO_HERO_TITLE_5: '24小时享受全科医生服务',
   HEO_HERO_TITLE_LINK: 'https://120819.xyz',
 
