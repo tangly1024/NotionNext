@@ -17,8 +17,9 @@ import PaginationSimple from './PaginationSimple'
  */
 const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   const { NOTION_CONFIG } = useGlobal()
+  const postsPerPage = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const totalPage = Math.ceil(
-    postCount / parseInt(siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG))
+    postCount / postsPerPage
   )
   const showNext = page < totalPage
 
@@ -33,23 +34,27 @@ const BlogListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  /**
-   * 文章重新布局，使纵向排列看起来是横向排列
-   */
+   /**
+    * 文章重新布局，使纵向排列看起来是横向排列
+    */
   useEffect(() => {
-    const count = posts?.length || 0
-    const rows = Math.ceil(count / columns)
-    const newFilterPosts = []
-    for (let i = 0; i < columns; i++) {
-      for (let j = 0; j < rows; j++) {
-        const index = j * columns + i
-        if (index < count) {
-          newFilterPosts.push(deepClone(posts[index]))
+    const count = posts?.length || 0;
+    const rows = Math.ceil(count / columns);
+    const newFilterPosts = new Array(count);
+
+    let index = 0;
+    for (let col = 0; col < columns; col++) {
+        for (let row = 0; row < rows; row++) {
+        const sourceIndex = row * columns + col;
+        if (sourceIndex < count) {
+            newFilterPosts[index] = deepClone(posts[sourceIndex]);
+            index++;
         }
-      }
+        }
     }
-    setFilterPosts(newFilterPosts)
-  }, [columns, posts])
+  
+    setFilterPosts(newFilterPosts);
+  }, [columns, posts]);
 
   if (!filterPosts || filterPosts.length === 0) {
     return <BlogPostListEmpty />
