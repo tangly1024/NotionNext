@@ -20,7 +20,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: '120819',
   HEO_HERO_TITLE_4: '新版上线',
   HEO_HERO_TITLE_5: '24小时家庭医生服务',
-  HEO_HERO_TITLE_LINK: '',
+  HEO_HERO_TITLE_LINK: ''
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选'， url: '/tag/必看精选' }，
