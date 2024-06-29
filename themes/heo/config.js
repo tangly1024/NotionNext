@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到家庭医生服务站', url: 'https:/www.120819.xyz' },
+    { title: '欢迎来到家庭医生服务站', url: 'https://www.120819.xyz' },
     { title: '访问博客获取更多帮助', url: 'https://blog.120819.xyz' }
   ],
 
