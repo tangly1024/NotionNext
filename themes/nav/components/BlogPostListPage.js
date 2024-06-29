@@ -13,7 +13,7 @@ import PaginationSimple from './PaginationSimple'
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
   const totalPage = Math.ceil(
-    postCount / parseInt(siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG))
+    postCount / parseInt(siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG))
   )
 
   if (!posts || posts.length === 0) {

@@ -129,7 +129,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       fullSlug += '.html'
     }
   }
-
+  
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
