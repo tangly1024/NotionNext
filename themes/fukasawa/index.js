@@ -114,12 +114,13 @@ const LayoutIndex = props => {
  * @param {*} props
  */
 const LayoutPostList = props => {
+  const POST_LIST_STYLE = siteConfig('POST_LIST_STYLE')
   return (
     <>
       <div className='w-full p-2'>
         <WWAds className='w-full' orientation='horizontal' />
       </div>
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+      { POST_LIST_STYLE=== 'page' ? (
         <BlogListPage {...props} />
       ) : (
         <BlogListScroll {...props} />

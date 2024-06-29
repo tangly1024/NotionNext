@@ -13,7 +13,7 @@ export default function BlogListScroll(props) {
   const { posts } = props
   const { locale, NOTION_CONFIG } = useGlobal()
   const [page, updatePage] = useState(1)
-  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   let hasMore = false
   const postsToShow = posts
     ? Object.assign(posts).slice(0, POSTS_PER_PAGE * page)
