@@ -14,7 +14,7 @@ export const BlogListPage = props => {
   const { locale, NOTION_CONFIG } = useGlobal()
   const router = useRouter()
   const totalPage = Math.ceil(
-    postCount / siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+    postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   )
   const currentPage = +page
 
