@@ -15,12 +15,12 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '全科医生',
+    HEO_HERO_TITLE_1: '分享健康',
   HEO_HERO_TITLE_2: '与思维认知',
-  HEO_HERO_TITLE_3: '120819.xyz',
+  HEO_HERO_TITLE_3: '120819',
   HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: '家庭医生服务站',
-  HEO_HERO_TITLE_LINK: 'https://120819.xyz',
+  HEO_HERO_TITLE_5: '家庭医生签约服务',
+  HEO_HERO_TITLE_LINK: '',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选'， url: '/tag/必看精选' },
