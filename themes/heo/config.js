@@ -14,12 +14,12 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '基础强才是真的强',
-  HEO_HERO_TITLE_2: '根粗则枝繁叶茂',
-  HEO_HERO_TITLE_3: 'jeckwell.info',
+  HEO_HERO_TITLE_1: '基础强',
+  HEO_HERO_TITLE_2: '才是真的强',
+  HEO_HERO_TITLE_3: '根粗则枝繁叶茂',
   HEO_HERO_TITLE_4: 'Blog中心',
   HEO_HERO_TITLE_5: 'Eureka的分享中心',
-  HEO_HERO_TITLE_LINK: 'jeckwell.info',
+  HEO_HERO_TITLE_LINK: '',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '前端', url: '/tag/前端' },
