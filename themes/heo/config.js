@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://jeckwell.info' },
+    { title: '小井的慢慢成长！', url: 'https://jeckwell.info' },
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -14,8 +14,8 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享编程',
-  HEO_HERO_TITLE_2: '与思维认知',
+  HEO_HERO_TITLE_1: '基础强才是真的强',
+  HEO_HERO_TITLE_2: '根粗则枝繁叶茂',
   HEO_HERO_TITLE_3: 'jeckwell.info',
   HEO_HERO_TITLE_4: 'Blog中心',
   HEO_HERO_TITLE_5: 'Eureka的分享中心',
@@ -125,7 +125,7 @@ const CONFIG = {
   HEO_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
 
   HEO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
-  HEO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
+  HEO_ARTICLE_COPYRIGHT: false, // 显示文章版权声明
   HEO_ARTICLE_RECOMMEND: true, // 文章关联推荐
 
   HEO_WIDGET_LATEST_POSTS: true, // 显示最新文章卡
