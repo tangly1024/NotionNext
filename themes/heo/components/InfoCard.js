@@ -71,13 +71,13 @@ function GreetingsWords() {
       } while (greetings[randomIndex] === greeting); // 如果选中的和当前的一样，则重新选取
 
       setGreeting(greetings[randomIndex]);
-    }, 3000); // 每3秒更新一次
+    }, 5000); // 每5秒更新一次
 
     return () => clearInterval(interval); // 清除interval，避免内存泄漏
   }, [greetings, greeting]); // 当greetings或者greeting发生变化时重新设置定时器
 
   return (
-    <div className='select-none cursor-pointer py-1 px-2 bg-indigo-400 hover:bg-indigo-50 hover:text-indigo-950 dark:bg-yellow-500 dark:hover:text-white dark:hover:bg-black text-sm rounded-lg duration-200 transition-colors'>
+    <div className="select-none cursor-pointer py-1 px-2 bg-indigo-400 hover:bg-indigo-50 dark:bg-yellow-500 dark:hover:bg-black text-sm rounded-lg duration-200 transition-colors animate-fade-in-out">
       {greeting}
     </div>
   );
