@@ -47,9 +47,9 @@ const CONFIG = {
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'https://www.snow-forecast.com/',
-  HEO_INFO_CARD_ICON2: 'fas fa-snowplow',
-  HEO_INFO_CARD_URL3: '/about',
+  HEO_INFO_CARD_URL2: 'https://github.com/tangly1024',
+  HEO_INFO_CARD_ICON2: 'fab fa-github',
+  HEO_INFO_CARD_URL3: 'https://www.tangly1024.com',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
@@ -89,7 +89,7 @@ const CONFIG = {
     {
       title_1: 'Shredhub',
       img_1: '/images/heo/xiahua.png',
-      color_1: '#f29e39',
+      color_1: '#F84BABff',
       title_2: 'Waze',
       img_2: '/images/heo/waze.png',
       color_2: '#2c51db'
@@ -108,7 +108,7 @@ const CONFIG = {
       color_1: '#df5b40',
       title_2: 'CSIA',
       img_2: '/images/heo/csia.png',
-      color_2: '#1f1f1f'
+      color_2: '#ffffff'
     }
   ],
 
