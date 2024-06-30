@@ -48,7 +48,7 @@ const CONFIG = {
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
   HEO_INFO_CARD_URL2: 'https://www.snow-forcast.com',
-  HEO_INFO_CARD_ICON2: 'fas fa-snowflake',
+  HEO_INFO_CARD_ICON2: 'fas fa-snowplow',
   HEO_INFO_CARD_URL3: '/about',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
