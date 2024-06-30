@@ -161,14 +161,14 @@ const BLOG = {
   // 代码主题 @see https://github.com/PrismJS/prism-themes
   PRISM_THEME_PREFIX_PATH:
     process.env.NEXT_PUBLIC_PRISM_THEME_PREFIX_PATH ||
-    'https://unpkg.com/prismjs@1.29.0/themes/prism-okaidia.css', // 代码块默认主题
+    'https://npm.elemecdn.com/prism-themes/themes/prism-vs.css', // 代码块默认主题
   PRISM_THEME_SWITCH: process.env.NEXT_PUBLIC_PRISM_THEME_SWITCH || true, // 是否开启浅色/深色模式代码主题切换； 开启后将显示以下两个主题
   PRISM_THEME_LIGHT_PATH:
     process.env.NEXT_PUBLIC_PRISM_THEME_LIGHT_PATH ||
-    'https://unpkg.com/prismjs@1.29.0/themes/prism-okaidia.min.css', // 浅色模式主题，此处我修改为和深色统一，不太喜欢默认的浅色主题
+    'https://npm.elemecdn.com/prism-themes/themes/prism-vs.css', // 浅色模式主题，此处我修改为和深色统一，不太喜欢默认的浅色主题
   PRISM_THEME_DARK_PATH:
     process.env.NEXT_PUBLIC_PRISM_THEME_DARK_PATH ||
-    'https://unpkg.com/prismjs@1.29.0/themes/prism-okaidia.min.css', // 深色模式主题
+    'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-vsc-dark-plus.css', // 深色模式主题
 
   CODE_MAC_BAR: process.env.NEXT_PUBLIC_CODE_MAC_BAR || true, // 代码左上角显示mac的红黄绿图标
   CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || true, // 是否显示行号
