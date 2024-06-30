@@ -8,7 +8,7 @@
 const Style = () => {
   return <style jsx global>{`
 
-  .sticky{
+  #theme-starter .sticky{
     position: fixed;
     z-index: 9999;
     background-color: rgb(255 255 255 / 0.8);
@@ -19,48 +19,48 @@ const Style = () => {
     transition-duration: 150ms;
   }
   
-  :is(.dark .sticky){
+  :is(.dark #theme-starter .sticky){
     background-color: rgb(17 25 40 / 0.8);
   }
   
-  .sticky {
+  #theme-starter .sticky {
     -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
     box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
   }
   
-  .sticky .navbar-logo{
+  #theme-starter .sticky .navbar-logo{
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
   
-  .sticky #navbarToggler span{
+  #theme-starter .sticky #navbarToggler span{
     --tw-bg-opacity: 1;
     background-color: rgb(17 25 40 / var(--tw-bg-opacity));
   }
   
-  :is(.dark .sticky #navbarToggler span){
+  :is(.dark #theme-starter .sticky #navbarToggler span){
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   }
   
-  .sticky #navbarCollapse li > a{
+  #theme-starter .sticky #navbarCollapse li > a{
     --tw-text-opacity: 1;
     color: rgb(17 25 40 / var(--tw-text-opacity));
   }
   
-  .sticky #navbarCollapse li > a:hover{
+  #theme-starter .sticky #navbarCollapse li > a:hover{
     --tw-text-opacity: 1;
     color: rgb(55 88 249 / var(--tw-text-opacity));
     opacity: 1;
   }
   
-  :is(.dark .sticky #navbarCollapse li > a){
+  :is(.dark #theme-starter .sticky #navbarCollapse li > a){
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
   
-  :is(.dark .sticky #navbarCollapse li > a:hover){
+  :is(.dark #theme-starter .sticky #navbarCollapse li > a:hover){
     --tw-text-opacity: 1;
     color: rgb(55 88 249 / var(--tw-text-opacity));
   }
@@ -69,53 +69,53 @@ const Style = () => {
     opacity: 0.7;
   }
   
-  .sticky #navbarCollapse li .ud-menu-scroll.active{
+  #theme-starter .sticky #navbarCollapse li .ud-menu-scroll.active{
     --tw-text-opacity: 1;
     color: rgb(55 88 249 / var(--tw-text-opacity));
     opacity: 1;
   }
   
-  .sticky .loginBtn{
+  #theme-starter .sticky .loginBtn{
     --tw-text-opacity: 1;
     color: rgb(17 25 40 / var(--tw-text-opacity));
   }
   
-  .sticky .loginBtn:hover{
+  #theme-starter .sticky .loginBtn:hover{
     --tw-text-opacity: 1;
     color: rgb(55 88 249 / var(--tw-text-opacity));
     opacity: 1;
   }
   
-  :is(.dark .sticky .loginBtn){
+  :is(.dark #theme-starter .sticky .loginBtn){
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
   
-  :is(.dark .sticky .loginBtn:hover){
+  :is(.dark #theme-starter .sticky .loginBtn:hover){
     --tw-text-opacity: 1;
     color: rgb(55 88 249 / var(--tw-text-opacity));
   }
   
-  .sticky .signUpBtn{
+  #theme-starter .sticky .signUpBtn{
     --tw-bg-opacity: 1;
     background-color: rgb(55 88 249 / var(--tw-bg-opacity));
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
   
-  .sticky .signUpBtn:hover{
+  #theme-starter .sticky .signUpBtn:hover{
     --tw-bg-opacity: 1;
     background-color: rgb(27 68 200 / var(--tw-bg-opacity));
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }
   
-  .sticky #themeSwitcher ~ span{
+  #theme-starter .sticky #themeSwitcher ~ span{
     --tw-text-opacity: 1;
     color: rgb(17 25 40 / var(--tw-text-opacity));
   }
   
-  :is(.dark .sticky #themeSwitcher ~ span){
+  :is(.dark #theme-starter .sticky #themeSwitcher ~ span){
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
   }

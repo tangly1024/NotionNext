@@ -24,9 +24,11 @@ import BlogListBar from './components/BlogListBar'
 import { Style } from './style'
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
-import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Announcement from './components/Announcement'
 import Card from './components/Card'
+import dynamic from 'next/dynamic'
+
+const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
 // 主题全局状态
 const ThemeGlobalNext = createContext()
