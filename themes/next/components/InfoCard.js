@@ -9,7 +9,7 @@ const InfoCard = props => {
     <>
       <div className="flex flex-col items-center justify-center ">
         <div
-          className="hover:scale-105 transform duration-200 cursor-pointer"
+          className="hover:scale-125 transform duration-200 cursor-pointer"
           onClick={() => {
             Router.push('/')
           }}
