@@ -1,4 +1,9 @@
-User-agent:*
-Disallow:
-
-Sitemap:https://www.senitimes.com/sitemap.xml
+# *
+User-agent: *
+Allow: /
+  
+# Host
+Host: https://senitimes.com
+  
+# Sitemaps
+Sitemap: https://senitimes.com/sitemap.xml
