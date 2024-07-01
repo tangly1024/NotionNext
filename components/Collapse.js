@@ -101,7 +101,6 @@ const Collapse = props => {
     </div>
   )
 }
-
 Collapse.defaultProps = { isOpen: true }
 
 export default Collapse
