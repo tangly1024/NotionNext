@@ -6,11 +6,23 @@ const Footer = ({ title }) => {
   const currentYear = d.getFullYear()
   const since = siteConfig('SINCE')
   const copyrightDate = parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
-
+  // 定义百度统计的HTML字符串
+  const baiduAnalyticsScript = `
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0e8d43ed2be5f70ac01cafb06dfc4565";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  `;
   return (
         <footer
             className='relative z-10 dark:bg-gray-800 flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-sm p-6 bg-white dark:text-gray-400'
         >
+              <span dangerouslySetInnerHTML={{ __html: baiduAnalyticsScript }} />
 
             <span>
                 <DarkModeButton />
