@@ -13,6 +13,10 @@ export const MenuItemCollapse = props => {
   const hasSubMenu = link?.subMenus?.length > 0
 
   const [isOpen, changeIsOpen] = useState(true)
+  useEffect(() => {
+    changeShow(true)
+    changeIsOpen(true)
+  }, [])
 
   const toggleShow = () => {
     changeShow(!show)
