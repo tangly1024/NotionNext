@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到我的博客', url: 'https://notion-next-lac-ten-33.vercel.app/' },
+    { title: '点击加入QQ群', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=eRTHdrAudPDQwTw9F_H9lnPKxjtOGAnr&authKey=qXnzt%2BjCil%2FPl%2B7ZTJ4HHtJfuFzF0%2BGrByjSmqRHo0L6gqqFOLwiCidSxzrrH2H2&noverify=0&group_code=617862827' }
   ],
 
   // 英雄区左右侧组件颠倒位置
