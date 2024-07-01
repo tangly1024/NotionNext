@@ -9,7 +9,7 @@ import { useState } from 'react'
  */
 export const MenuItemCollapse = props => {
   const { link } = props
-  const [show, changeShow] = useState(false)
+  const [show, changeShow] = useState(true)
   const hasSubMenu = link?.subMenus?.length > 0
 
   const [isOpen, changeIsOpen] = useState(true)
