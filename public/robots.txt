@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
   
 # Host
-Host: https://senitimes.com
+# Host: https://senitimes.com
   
 # Sitemaps
 Sitemap: https://senitimes.com/sitemap.xml
