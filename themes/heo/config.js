@@ -35,7 +35,6 @@ const CONFIG = {
   HEO_INFOCARD_GREETINGS: [
     '你好！我是Eureka ！',
     '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
     '🏃 脚踏实地行动派',
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
