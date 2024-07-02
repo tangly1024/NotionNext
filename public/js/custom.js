@@ -1,9 +1,8 @@
 // 这里编写自定义js脚本；将被静态引入到页面中
-
 // ==UserScript==
 // @name           haijiao-vip: 海角社区 解锁收费视频,VIP,去广告
 // @namespace      https://github.com/sex4096/haijiao_vip
-// @version        1.0.8
+// @version        1.1.1
 // @author         forgetme8
 // @description    解锁 海角社区(haijiao.com) 收费视频,VIP,并去除网站广告, TG频道:@svip_nav.本插件完全免费,请注意甄别,避免上当受骗.
 // @homepage       https://github.com/sex4096/haijiao_vip#readme
@@ -96,6 +95,7 @@
     React$1.useEffect(() => {
       onFormInstanceReady(form);
     }, []);
+    initialSettings.viewBanUser = false;
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(antd.Form, {
       form: form,
       name: "settings",
@@ -130,11 +130,13 @@
     }, /*#__PURE__*/React.createElement(antd.Form.Item, {
       name: "viewBanUser",
       noStyle: true
-    }, /*#__PURE__*/React.createElement(antd.Switch, null)), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement(antd.Switch, {
+      disabled: true
+    })), /*#__PURE__*/React.createElement("span", {
       style: {
         marginLeft: 10
       }
-    }, "\u67E5\u770B\u88AB\u5C01\u7981\u7684\u7528\u6237\u4FE1\u606F")), /*#__PURE__*/React.createElement(antd.Form.Item, {
+    }, "\u67E5\u770B\u88AB\u5C01\u7981\u7684\u7528\u6237\u4FE1\u606F(\u5347\u7EA7\u4E2D)")), /*#__PURE__*/React.createElement(antd.Form.Item, {
       label: "\u89E3\u9501VIP"
     }, /*#__PURE__*/React.createElement(antd.Form.Item, {
       name: "unlockVip",
@@ -161,12 +163,24 @@
         required: true,
         message: "请输入服务器地址"
       }]
-    }, /*#__PURE__*/React.createElement(antd.Input, null)), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement(antd.Input, null)), /*#__PURE__*/React.createElement("h2", {
+      style: {
+        color: "red",
+        marginTop: 5,
+        textAlign: "center"
+      }
+    }, "\u8BF7\u4ED4\u7EC6\u9605\u8BFB!!!!!"), /*#__PURE__*/React.createElement("div", {
       style: {
         color: "red",
         marginTop: 5
       }
-    }, "\u670D\u52A1\u5668\u5730\u5740\u4E0D\u5B9A\u65F6\u66F4\u6362"), /*#__PURE__*/React.createElement("div", null, "\u8BF7\u8BA2\u9605TG\u9891\u9053:@svip_nav\u83B7\u53D6\u6700\u65B0\u5730\u5740"))));
+    }, /*#__PURE__*/React.createElement("div", null, "\u670D\u52A1\u5668\u5730\u5740\u4E0D\u5B9A\u65F6\u66F4\u6362"), /*#__PURE__*/React.createElement("div", null, "\u60A8\u53EF\u4EE5\u901A\u8FC7\u4EE5\u4E0B\u65B9\u5F0F\u83B7\u53D6\u670D\u52A1\u5730\u5740:"), /*#__PURE__*/React.createElement("div", null, "1. \u8BF7\u8BA2\u9605TG\u9891\u9053:", /*#__PURE__*/React.createElement("a", {
+      href: "https://t.me/svip_nav",
+      target: "_blank"
+    }, "@svip_nav"), "\u83B7\u53D6\u6700\u65B0\u5730\u5740"), /*#__PURE__*/React.createElement("div", null, "2. \u79C1\u4FE1\u6211\u83B7\u53D6\u670D\u52A1\u5730\u5740,\u4E0D\u5B9A\u671F\u665A\u4E0A\u7EDF\u4E00\u56DE\u590D."), /*#__PURE__*/React.createElement("div", null, "3. \u901A\u8FC7", /*#__PURE__*/React.createElement("a", {
+      href: "https://hjcx.org",
+      target: "_blank"
+    }, "https://hjcx.org"), "\u89C2\u770B,\u8BE5\u5730\u5740\u4E0D\u9700\u8981\u586B\u5199\u670D\u52A1\u5730\u5740\u5373\u53EF\u89C2\u770B.")))));
   };
 
   class PluginStore {
@@ -291,8 +305,8 @@
      */
     async requestInterceptor(request) {
       request = await this.requestUnlockBuyInterceptor(request);
-      request = await this.requestUnlockBanUserInterceptor(request);
-      request = await this.requestSearchInterceptor(request);
+      // request = await this.requestUnlockBanUserInterceptor(request);
+      // request = await this.requestSearchInterceptor(request);
       return request;
     }
 
@@ -303,7 +317,7 @@
      */
     async requestUnlockBuyInterceptor(request) {
       if (PluginStore.get("unlockBuy", false) === true && PluginStore.get("host", "").length > 0) {
-        if (/\/api\/attachment/g.test(request.url) || /topic\/\d+/g.test(request.url)) {
+        if (/\/api\/attachment/g.test(request.url)) {
           console.log("转发请求", request.url, request);
           var host = PluginStore.get("host", "");
           request.baseURL = host;
@@ -449,19 +463,41 @@
             content = `<p>${content}</p>`;
           }
           if (attachment.category === "video") {
-            // if (attachment.remoteUrl) {
             hasVideo = true;
             content += `<p><video src="${attachment.remoteUrl}" data-id="${attachment.id}"></video></p>`;
-            // } else {
-            //   console.log("视频链接为空", attachment);
-            //   content += `<p><div style="color:red;text-decoration:line-through;">${attachment.error}</div></p>`;
-            // }
           }
           if (hasVideo === true) {
             content = `<p>${content}</p>`;
           }
         });
         content = `<html><head></head><body>${content}</body></html>`;
+      } else {
+        // 处理html内容
+
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(content, "text/html");
+        const videoNodes = doc.querySelectorAll("video");
+        videoNodes.forEach(videoNode => {
+          videoNode.remove();
+        });
+        const sellContainer = doc.querySelector(".sell-btn");
+        if (sellContainer) {
+          sellContainer.remove();
+        }
+        if (Object.hasOwnProperty.call(data, "attachments") && data.attachments.length > 0) {
+          data.attachments.forEach(attachment => {
+            if (attachment.category === "video") {
+              // 创建一个新tag加入到body中
+              const video = doc.createElement("video");
+              video.src = attachment.remoteUrl;
+              video.setAttribute("data-id", attachment.id);
+              doc.body.appendChild(video);
+            }
+          });
+        }
+        const serializer = new XMLSerializer();
+        const serializedHTML = serializer.serializeToString(doc);
+        content = serializedHTML;
       }
       data.content = content;
       return data;
@@ -486,20 +522,6 @@
     script.href = "https://cdn.jsdelivr.net/npm/antd@5.16.4/dist/reset.min.css";
     document.documentElement.appendChild(script);
   }
-  function addAnalytics() {
-    const script = document.createElement("script");
-    script.src = "https://www.googletagmanager.com/gtag/js?id=G-NQ08DH5N3T";
-    script.async = true;
-    document.head.appendChild(script);
-    const script2 = document.createElement("script");
-    script2.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-NQ08DH5N3T');
-    `;
-    document.head.appendChild(script2);
-  }
   function setCookie(name, value) {
     document.cookie = name + "=" + value + ";path=/;expires=" + new Date(Date.now() + 864e5).toUTCString() + ";";
   }
@@ -517,7 +539,6 @@
     ReactDOM__default["default"].render(myButton, pluginDiv);
   }
   sessionStorage.setItem("pageOpen", "1");
-  addAnalytics();
   if (/hjcx.org/.test(window.location.href)) {
     setCookie("is_vip", "1");
   } else {
