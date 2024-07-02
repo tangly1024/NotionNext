@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://www.notion.so/26694f1fb12f43f88c4900e6351eaeef?pvs=4' },
+    { title: '欢迎来到我的博客', url: 'https://notion-next-lac-ten-33.vercel.app/links' },
     { title: '点击加入QQ群', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=eRTHdrAudPDQwTw9F_H9lnPKxjtOGAnr&authKey=qXnzt%2BjCil%2FPl%2B7ZTJ4HHtJfuFzF0%2BGrByjSmqRHo0L6gqqFOLwiCidSxzrrH2H2&noverify=0&group_code=617862827' }
   ],
 
