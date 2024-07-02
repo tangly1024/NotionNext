@@ -27,7 +27,7 @@ const BLOG = {
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://senitimes.com', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '产品经理,金融工程,金融业务,数据挖掘,数据分析,高等数学,统计学,线性代数', // 网站关键词 英文逗号隔开
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '产品经理,金融工程,数据分析', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || '', // 邮箱地址 例如mail@tangly1024.com
