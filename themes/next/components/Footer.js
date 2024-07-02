@@ -37,7 +37,8 @@ const Footer = ({ title }) => {
                     <i className='fas fa-users' /> <span className='px-1 busuanzi_value_site_uv'> </span> </span>
                 <br />
                 <h1>{title}</h1>
-                <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by  <a href='https://senitimes.com/' className='underline '>SeniTimes</a>.</span>
+                <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>Powered by SeniTimes.</span>
+                // <a href='https://senitimes.com/' className='underline '></a>
             </span>
         </footer>
   )
