@@ -550,7 +550,7 @@ module.exports = BLOG
 
 //addition
  
-bangumi: # 追番设置
+bangumi: // 追番设置
   enable: true
   source: bili
   bgmInfoSource: 'bgmApi'
@@ -576,7 +576,7 @@ bangumi: # 追番设置
     port: '代理端口'
   extra_options:
     key: value
-cinema: # 追剧设置
+cinema: // 追剧设置
   enable: false
   path:
   vmid:
@@ -612,10 +612,10 @@ algolia:
     - tags
     - title
 
-# Home page setting
-# path: Root path for your blogs index page. (default = '')
-# per_page: Posts displayed per page. (0 = disable pagination)
-# order_by: Posts order. (Order by date descending by default)
+// Home page setting
+// path: Root path for your blogs index page. (default = '')
+// per_page: Posts displayed per page. (0 = disable pagination)
+// order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
   per_page: 12
