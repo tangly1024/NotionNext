@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎您来到我们的温馨家园！', url: 'https://www.agercare.com/' },
-    { title: '这里充满了关怀与智慧，是您分享生活、学习新知、享受健康和快乐的理想之地。', url: 'https://www.agercare.com/' }
+    { title: '欢迎您来到我们的温馨家园！', url: 'https://www.senitimes.com/' },
+    { title: '这里充满了关怀与智慧，是您分享生活、学习新知、享受健康和快乐的理想之地。', url: 'https://www.senitimes.com/' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -20,7 +20,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: '',
   HEO_HERO_TITLE_4: '岁月悠长，生活精彩',
   HEO_HERO_TITLE_5: ' —— 与您共赏每一刻。',
-  HEO_HERO_TITLE_LINK: 'https://agercare.com',
+  HEO_HERO_TITLE_LINK: 'https://senitimes.com',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '医疗保健', url: '/tag/医疗保健' },
@@ -42,7 +42,7 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://agercare.com/', // 个人资料底部按钮链接
+  HEO_INFO_CARD_URL: 'https://senitimes.com/', // 个人资料底部按钮链接
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
@@ -108,7 +108,7 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
   HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: 'https://agercare.com',
+  HEO_SOCIAL_CARD_URL: 'https://senitimes.com',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
@@ -126,7 +126,7 @@ const CONFIG = {
   HEO_POST_LIST_PREVIEW: true, // 读取文章预览
   HEO_POST_LIST_IMG_CROSSOVER: false, // 博客列表图片左右交错
 
-  HEO_ARTICLE_ADJACENT: false, // 显示上一篇下一篇文章推荐
+  HEO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
   HEO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
   HEO_ARTICLE_RECOMMEND: true, // 文章关联推荐
 
