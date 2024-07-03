@@ -130,6 +130,7 @@ const GlobalHead = props => {
       <meta name='twitter:title' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
+      <link rel="icon" href="/favicon.ico">      
 
       {COMMENT_WEBMENTION_ENABLE && (
         <>
