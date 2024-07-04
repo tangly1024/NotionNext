@@ -596,21 +596,6 @@ cinema: // 追剧设置
   extra_options:
     key: value
 
-algolia:
-  appId: "Z7A3XW4R2I"
-  apiKey: "12db1ad54372045549ef465881c17e743"
-  adminApiKey: "40321c7c207e7f73b63a19aa24c4761b"
-  chunkSize: 5000
-  indexName: "my-hexo-blog"
-  fields:
-    - content:strip:truncate,0,500
-    - excerpt:strip
-    - gallery
-    - permalink
-    - photos
-    - slug
-    - tags
-    - title
 
 // Home page setting
 // path: Root path for your blogs index page. (default = '')
