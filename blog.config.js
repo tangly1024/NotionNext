@@ -549,53 +549,6 @@ module.exports = BLOG
 
 
 //addition
- 
-bangumi: // 追番设置
-  enable: true
-  source: bili
-  bgmInfoSource: 'bgmApi'
-  path:
-  vmid: 402611949
-  title: '追番列表'
-  quote: 
-  show: 1
-  lazyload: false
-  srcValue: '__image__'
-  lazyloadAttrName: 'data-src=__image__'
-  loading:
-  showMyComment: false
-  pagination: false
-  metaColor:
-  color:
-  webp:
-  progress:
-  extraOrder:
-  order: latest
-  proxy:
-    host: '代理host'
-    port: '代理端口'
-  extra_options:
-    key: value
-cinema: // 追剧设置
-  enable: false
-  path:
-  vmid:
-  title: '追剧列表'
-  quote: 
-  show: 1
-  lazyload: true
-  srcValue: '__image__'
-  lazyloadAttrName: 'data-src=__image__'
-  loading:
-  metaColor:
-  color:
-  webp:
-  progress:
-  extraOrder:
-  order:
-  extra_options:
-    key: value
-
 
 // Home page setting
 // path: Root path for your blogs index page. (default = '')
