@@ -130,7 +130,6 @@ const GlobalHead = props => {
       <meta name='twitter:title' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7913495439904743" crossorigin="anonymous"></script>      
             
       {COMMENT_WEBMENTION_ENABLE && (
         <>
