@@ -15,17 +15,17 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '记录撸毛',
-  HEO_HERO_TITLE_2: '辛路历程',
-  HEO_HERO_TITLE_3: 'TEBOX.TOP',
-  HEO_HERO_TITLE_4: 'AirdropのNotes',
-  HEO_HERO_TITLE_5: 'Tebox,撸毛暴富😄',
+  HEO_HERO_TITLE_1: '撸毛笔记',
+  HEO_HERO_TITLE_2: '',
+  HEO_HERO_TITLE_3: '',
+  HEO_HERO_TITLE_4: 'Make 10X Easier---Airdrop-Hunting',
+  HEO_HERO_TITLE_5: '',
   HEO_HERO_TITLE_LINK: 'https://tebox.top',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '每日签到', url: '/tag/Dailys' },
   HEO_HERO_CATEGORY_2: { title: '每日任务', url: '/tag/Dailym' },
-  HEO_HERO_CATEGORY_3: { title: '空头记录', url: '/tag/Drops' },
+  HEO_HERO_CATEGORY_3: { title: '空投记录', url: '/tag/Drops' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
