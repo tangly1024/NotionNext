@@ -1,7 +1,7 @@
 const CONFIG = {
   HEO_HOME_BANNER_ENABLE: true,
 
-  HEO_SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+  HEO_SITE_CREATE_TIME: '2024-06-26', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
@@ -18,7 +18,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '撸毛笔记',
   HEO_HERO_TITLE_2: '',
   HEO_HERO_TITLE_3: '',
-  HEO_HERO_TITLE_4: 'Make 10X Easier---Airdrop-Hunting',
+  HEO_HERO_TITLE_4: 'Make 10X Easier--Airdrop-Hunting',
   HEO_HERO_TITLE_5: '',
   HEO_HERO_TITLE_LINK: 'https://tebox.top',
 
@@ -34,13 +34,13 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好！我是',
-    '🔍 分享与热心帮助',
-    '🤝 专攻web3.0撸毛',
-    '🏃 脚踏实地行动派',
-    '🛡 教程工具小能手',
-    '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    'TeboxのNotes',
+    '',
+    '',
+    '',
+    '',
+    '',
+    ''
   ],
 
   // 个人资料底部按钮
