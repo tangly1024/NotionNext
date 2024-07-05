@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '感谢您访问本博客，博客仅作记录使用，点击此处查看博客声明', url: 'https://tebox.top/disclaimer' },
+    { title: 'Thank you for visiting this blog. It is intended for record-keeping purposes only. Click here to view the blog disclaimer.', url: 'https://tebox.top/disclaimer' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -15,17 +15,17 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享编程',
-  HEO_HERO_TITLE_2: '与思维认知',
-  HEO_HERO_TITLE_3: 'TANGLY1024.COM',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_1: '记录撸毛',
+  HEO_HERO_TITLE_2: '辛路历程',
+  HEO_HERO_TITLE_3: 'TEBOX.TOP',
+  HEO_HERO_TITLE_4: 'AirdropのNotes',
+  HEO_HERO_TITLE_5: 'Tebox,撸毛暴富😄',
+  HEO_HERO_TITLE_LINK: 'https://tebox.top',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
-  HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
-  HEO_HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
+  HEO_HERO_CATEGORY_1: { title: '每日签到', url: '/tag/Dailys' },
+  HEO_HERO_CATEGORY_2: { title: '每日任务', url: '/tag/Dailym' },
+  HEO_HERO_CATEGORY_3: { title: '空头记录', url: '/tag/Drops' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
@@ -36,9 +36,9 @@ const CONFIG = {
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
     '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
+    '🤝 专攻web3.0撸毛',
     '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
+    '🛡 教程工具小能手',
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
@@ -46,10 +46,10 @@ const CONFIG = {
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'https://github.com/tangly1024',
-  HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://www.tangly1024.com',
-  HEO_INFO_CARD_TEXT3: '了解更多',
+  HEO_INFO_CARD_URL2: 'https://x.com/Cries00',
+  HEO_INFO_CARD_ICON2: 'fab fa-twitter',
+  HEO_INFO_CARD_URL3: 'https://tebox.top',
+  HEO_INFO_CARD_TEXT3: '更多',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
@@ -112,10 +112,10 @@ const CONFIG = {
   ],
 
   HEO_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
-  HEO_SOCIAL_CARD_TITLE_1: '交流频道',
-  HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
+  HEO_SOCIAL_CARD_TITLE_1: '分享频道',
+  HEO_SOCIAL_CARD_TITLE_2: '加入我们的分享社群',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/how-to-question',
+  HEO_SOCIAL_CARD_URL: 'https://https://t.me/+I6jxzl-pAsJmMDdh',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
