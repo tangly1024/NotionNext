@@ -43,7 +43,7 @@ function ChucklePostAI(AI_option) {
 		const interface = {
 			name: "AI摘要",
 			introduce: "我是文章辅助AI, 用于生成本文简介。",
-			version: "GPT",
+			version: "LinYunGPT",
 			...AI_option.interface
 		}
 		insertCSS(); // 插入css
@@ -378,7 +378,7 @@ function ChucklePostAI(AI_option) {
 				return JSON.parse(sessionStorage.getItem('summary'));
 			}
 			try {
-				response = await fetch('https://linyungpt.linyunlink.top/api/summary/?token=xxx', {
+				response = await fetch('https://linyungpt.linyunlink.top/api/summary/?token=Lin114514Yun1919810', {
 					signal: signal,
 					method: "POST",
 					headers: {
