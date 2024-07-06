@@ -15,8 +15,8 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '撸毛笔记',
-  HEO_HERO_TITLE_2: '',
+  HEO_HERO_TITLE_1: '活在当下',
+  HEO_HERO_TITLE_2: '切莫焦虑',
   HEO_HERO_TITLE_3: '',
   HEO_HERO_TITLE_4: 'Make Airdrop Hunting 10X Easier',
   HEO_HERO_TITLE_5: '',
