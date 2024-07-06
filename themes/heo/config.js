@@ -18,7 +18,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '撸毛笔记',
   HEO_HERO_TITLE_2: '',
   HEO_HERO_TITLE_3: '',
-  HEO_HERO_TITLE_4: 'Make 10X Easier--Airdrop-Hunting',
+  HEO_HERO_TITLE_4: 'Make Airdrop Hunting 10X Easier',
   HEO_HERO_TITLE_5: '',
   HEO_HERO_TITLE_LINK: 'https://tebox.top',
 
