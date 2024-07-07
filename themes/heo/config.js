@@ -20,7 +20,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: 'ANYAE.TOP',
   HEO_HERO_TITLE_4: '',
   HEO_HERO_TITLE_5: '',
-  HEO_HERO_TITLE_LINK: 'https://anyae.top',
+  HEO_HERO_TITLE_LINK: 'https://cool.520717.xyz',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/笔记' },
@@ -42,7 +42,14 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://github.com/sucooer', // 个人资料底部按钮链接
+
+  // 个人资料底部按钮
+  HEO_INFO_CARD_URL1: '/about',
+  HEO_INFO_CARD_ICON1: 'fas fa-user',
+  HEO_INFO_CARD_URL2: 'https://github.com/sucooer',
+  HEO_INFO_CARD_ICON2: 'fab fa-github',
+  HEO_INFO_CARD_URL3: 'https://cool.520717.xyz',
+  HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
