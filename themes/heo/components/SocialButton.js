@@ -100,14 +100,18 @@ const SocialButton = () => {
           </a>
         )}
          {siteConfig('CONTACT_WEHCHAT') && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'wehchat'}
-            href={siteConfig('CONTACT_WEHCHAT')}>
-            <i className='transform hover:scale-125 duration-150 'fab', 'weixin' dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}      
+       <a
+          target='_blank'
+         rel='noreferrer'
+         title={'wehchat'}
+         href={siteConfig('CONTACT_WEHCHAT')}>
+        <FontAwesomeIcon 
+         icon={faWeixin} 
+      className='transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600' 
+    />
+  </a>
+)}
+
       </div>
     </div>
   )
