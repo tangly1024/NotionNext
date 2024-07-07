@@ -105,7 +105,7 @@ const SocialButton = () => {
             rel='noreferrer'
             title={'wehchat'}
             href={siteConfig('CONTACT_WEHCHAT')}>
-            <i className='transform hover:scale-125 duration-150 fab fa-wehchat dark:hover:text-indigo-400 hover:text-indigo-600' />
+            <i className='transform hover:scale-125 duration-150 'fab', 'weixin' dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}      
       </div>
