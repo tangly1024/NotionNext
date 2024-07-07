@@ -99,18 +99,32 @@ const SocialButton = () => {
             <i className='transform hover:scale-125 duration-150 fab fa-youtube dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-         {siteConfig('CONTACT_WEHCHAT') && (
-       <a
+         
+     import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWeixin } from '@fortawesome/free-brands-svg-icons';
+
+function SocialButton() {
+  return (
+    <div>
+      {siteConfig('CONTACT_WEHCHAT') && (
+        <a
           target='_blank'
-         rel='noreferrer'
-         title={'wehchat'}
-         href={siteConfig('CONTACT_WEHCHAT')}>
-        <FontAwesomeIcon 
-         icon={faWeixin} 
-      className='transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600' 
-    />
-  </a>
-)}
+          rel='noreferrer'
+          title={'wehchat'}
+          href={siteConfig('CONTACT_WEHCHAT')}>
+          <FontAwesomeIcon 
+            icon={faWeixin} 
+            className='transform hover:scale-125 duration-150 dark:hover:text-indigo-400 hover:text-indigo-600' 
+          />
+        </a>
+      )}
+    </div>
+  );
+}
+
+export default SocialButton;
+
 
       </div>
     </div>
