@@ -1,6 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWeixin } from '@fortawesome/free-brands-svg-icons';
+
 /**
  * 社交联系方式按钮组
  * @returns {JSX.Element}
