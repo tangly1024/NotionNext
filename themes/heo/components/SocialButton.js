@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWeixin } from '@fortawesome/free-brands-svg-icons';
 /**
  * 社交联系方式按钮组
  * @returns {JSX.Element}
@@ -99,14 +100,6 @@ const SocialButton = () => {
             <i className='transform hover:scale-125 duration-150 fab fa-youtube dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-         
-     import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWeixin } from '@fortawesome/free-brands-svg-icons';
-
-function SocialButton() {
-  return (
-    <div>
       {siteConfig('CONTACT_WEHCHAT') && (
         <a
           target='_blank'
@@ -119,13 +112,6 @@ function SocialButton() {
           />
         </a>
       )}
-    </div>
-  );
-}
-
-export default SocialButton;
-
-
       </div>
     </div>
   )
