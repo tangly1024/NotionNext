@@ -18,7 +18,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享健康',
   HEO_HERO_TITLE_2: '与科普知识',
   HEO_HERO_TITLE_3: '120819.xyz',
-  HEO_HERO_TITLE_4: '新站上线',
+  HEO_HERO_TITLE_4: '签约家庭医生',
   HEO_HERO_TITLE_5: '享受全科医生服务',
   HEO_HERO_TITLE_LINK: 'https://120819.xyz',
 
@@ -48,7 +48,7 @@ const CONFIG = {
   HEO_INFO_CARD_ICON1: 'fas fa-user',
   HEO_INFO_CARD_URL2: 'https://github.com/hlcwss',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://www.120819.xyz',
+  HEO_INFO_CARD_URL3: 'https://blog.120819.xyz',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
