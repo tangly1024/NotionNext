@@ -547,14 +547,3 @@ const BLOG = {
 
 module.exports = BLOG
 
-
-//addition
-
-// Home page setting
-// path: Root path for your blogs index page. (default = '')
-// per_page: Posts displayed per page. (0 = disable pagination)
-// order_by: Posts order. (Order by date descending by default)
-index_generator:
-  path: ''
-  per_page: 12
-  order_by: -date
