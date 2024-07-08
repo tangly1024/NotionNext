@@ -206,14 +206,4 @@ const nextConfig = {
   }
 }
 
-module.exports = module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: `/${process.env.NEXT_PUBLIC_POST_URL_PREFIX}/:slug*`,
-        destination: '/article/:slug*',  // 确认 destination 路径正确
-      },
-    ];
-  },
-};
-//withBundleAnalyzer(nextConfig)
+module.exports = withBundleAnalyzer(nextConfig)
