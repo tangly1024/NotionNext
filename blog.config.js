@@ -209,7 +209,7 @@ const BLOG = {
 
   // 文章URL前缀
   POST_URL_PREFIX: process.env.NEXT_PUBLIC_POST_URL_PREFIX ?? 'p',
-  console.log('POST_URL_PREFIX:', POST_URL_PREFIX);  // 添加此行以调试
+  console.log('p_URL_PREFIX:', p_URL_PREFIX);  // 添加此行以调试
   // POST类型文章的默认路径前缀，例如默认POST类型的路径是  /article/[slug]
   // 如果此项配置为 '' 空， 则文章将没有前缀路径
   // 支援類似 WP 可自訂文章連結格式的功能：https://wordpress.org/documentation/article/customize-permalinks/，目前只先實作 %year%/%month%/%day%
