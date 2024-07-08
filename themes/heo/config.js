@@ -18,8 +18,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享健康',
   HEO_HERO_TITLE_2: '与科普知识',
   HEO_HERO_TITLE_3: '120819.xyz',
-  HEO_HERO_TITLE_4: '签约家庭医生',
-  HEO_HERO_TITLE_5: '享受全科医生服务',
+  HEO_HERO_TITLE_4: '',
+  HEO_HERO_TITLE_5: '免费享受全科医生服务',
   HEO_HERO_TITLE_LINK: 'https://120819.xyz',
 
   // 英雄区显示三个置顶分类
