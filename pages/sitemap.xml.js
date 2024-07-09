@@ -27,7 +27,6 @@ export const getServerSideProps = async ctx => {
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=59'
   )
-  console.log('fff', fields)
   return getServerSideSitemap(ctx, fields)
 }
 
@@ -55,7 +54,7 @@ function generateLocalesSitemap(link, allPages, locale) {
       priority: '0.7'
     },
     {
-      loc: `${link}${locale}/feed`,
+      loc: `${link}${locale}/rss/feed.xml`,
       lastmod: new Date().toISOString().split('T')[0],
       changefreq: 'daily',
       priority: '0.7'

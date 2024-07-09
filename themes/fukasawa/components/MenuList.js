@@ -28,11 +28,6 @@ export const MenuList = props => {
       name: locale.NAV.ARCHIVE,
       href: '/archive',
       show: siteConfig('FUKASAWA_MENU_ARCHIVE', null, CONFIG)
-    },
-    {
-      name: locale.NAV.SEARCH,
-      href: '/search',
-      show: siteConfig('FUKASAWA_MENU_SEARCH', null, CONFIG)
     }
   ]
 

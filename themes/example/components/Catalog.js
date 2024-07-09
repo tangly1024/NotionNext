@@ -1,8 +1,6 @@
-import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 /**
  * 目录导航组件
@@ -10,12 +8,7 @@ import { useCallback, useEffect, useState } from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const Catalog = ({ post }) => {
-  const toc = post?.toc
-  // 同步选中目录事件
-  const [activeSection, setActiveSection] = useState(null)
-  const {locale}= useGlobal()
-
+const Catalog = ({ toc }) => {
   // 监听滚动事件
   useEffect(() => {
     window.addEventListener('scroll', actionSectionScrollSpy)
@@ -23,14 +16,20 @@ const Catalog = ({ post }) => {
     return () => {
       window.removeEventListener('scroll', actionSectionScrollSpy)
     }
-  }, [post])
+  }, [])
 
+  // 目录自动滚动
+  const tRef = useRef(null)
+  const tocIds = []
+
+  // 同步选中目录事件
+  const [activeSection, setActiveSection] = useState(null)
   const throttleMs = 200
   const actionSectionScrollSpy = useCallback(
     throttle(() => {
       const sections = document.getElementsByClassName('notion-h')
       let prevBBox = null
-      let currentSectionId = null
+      let currentSectionId = activeSection
       for (let i = 0; i < sections.length; ++i) {
         const section = sections[i]
         if (!section || !(section instanceof Element)) continue
@@ -50,44 +49,37 @@ const Catalog = ({ post }) => {
         break
       }
       setActiveSection(currentSectionId)
-      const tocIds = post?.toc?.map(t => uuidToId(t.id)) || []
       const index = tocIds.indexOf(currentSectionId) || 0
-      if (isBrowser && tocIds?.length > 0) {
-        for (const tocWrapper of document?.getElementsByClassName(
-          'toc-wrapper'
-        )) {
-          tocWrapper?.scrollTo({ top: 28 * index, behavior: 'smooth' })
-        }
-      }
+      tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
     }, throttleMs)
   )
 
   // 无目录就直接返回空
-  if (!toc || toc?.length < 1) {
+  if (!toc || toc.length < 1) {
     return <></>
   }
 
   return (
-    <>
-      <div className='w-full hidden md:block'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
+    <div className='px-3'>
       <div
-        id='toc-wrapper'
-        className='toc-wrapper overflow-y-auto my-2 max-h-80 overscroll-none scroll-hidden'>
-        <nav className='h-full  text-black'>
-          {toc?.map(tocItem => {
+        className='overflow-y-auto max-h-96 overscroll-none scroll-hidden'
+        ref={tRef}>
+        <nav className='h-full  text-black dark:text-gray-300'>
+          {toc.map(tocItem => {
             const id = uuidToId(tocItem.id)
+            tocIds.push(id)
             return (
               <a
                 key={id}
                 href={`#${id}`}
-                className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
+                className={`notion-table-of-contents-item duration-300 transform font-light
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}>
                 <span
                   style={{
                     display: 'inline-block',
                     marginLeft: tocItem.indentLevel * 16
                   }}
-                  className={`truncate ${activeSection === id ? 'font-bold text-gray-500 underline' : ''}`}>
+                  className={`truncate ${activeSection === id ? ' font-bold text-red-400 underline' : ''}`}>
                   {tocItem.text}
                 </span>
               </a>
@@ -95,7 +87,7 @@ const Catalog = ({ post }) => {
           })}
         </nav>
       </div>
-    </>
+    </div>
   )
 }
 
