@@ -1,4 +1,3 @@
-import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
@@ -31,34 +30,26 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
       {latestPosts.map(post => {
         const selected =
           currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
-        const headerImage = post?.pageCoverThumbnail
-          ? post.pageCoverThumbnail
-          : siteInfo?.pageCover
-
         return (
           <Link
             key={post.id}
             title={post.title}
             href={post?.href}
             passHref
-            className={'my-3 flex'}>
-            <div className='w-20 h-14 overflow-hidden relative'>
-              <LazyImage
-                src={`${headerImage}`}
-                className='object-cover w-full h-full rounded-lg'
-              />
-            </div>
+            className={'my-3 flex relative'}>
             <div
               className={
                 (selected ? ' text-indigo-400 ' : 'dark:text-gray-200') +
                 ' text-sm overflow-x-hidden hover:text-indigo-600 px-2 duration-200 w-full rounded ' +
                 ' hover:text-indigo-400 dark:hover:text-yellow-600 cursor-pointer items-center flex'
               }>
-              <div>
-                <div className='line-clamp-2 menu-link'>{post.title}</div>
-                <div className='text-gray-400'>{post.lastEditedDay}</div>
+              <div className='w-full flex justify-between h-7 items-center'>
+                <div className='menu-link flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis'>{post.title}</div>
+                <div className="text-gray-400">{post.lastEditedDay}</div>
               </div>
             </div>
+            <div
+              className="absolute left-0 right-0 bottom-0 border-b border-dashed border-gray-300"></div>
           </Link>
         )
       })}
