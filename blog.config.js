@@ -273,8 +273,8 @@ const BLOG = {
     'https://cdn1.tianli0.top/gh/zhheo/Post-Abstract-AI@0.15.2/tianli_gpt.js',
   TianliGPT_KEY: process.env.NEXT_PUBLIC_TIANLI_GPT_KEY || '',
 
-  // Chatbase 是否显示chatbase机器人 https://www.chatbase.co/
-  CHATBASE_ID: 'yxBNOxY0A-RX0zyTHlY5K',
+  // Chatbase
+  CHATBASE_ID: process.env.NEXT_PUBLIC_CHATBASE_ID || 'yxBNOxY0A-RX0zyTHlY5K', // 是否显示chatbase机器人 https://www.chatbase.co/
   // WebwhizAI 机器人 @see https://github.com/webwhiz-ai/webwhiz
   WEB_WHIZ_ENABLED: process.env.NEXT_PUBLIC_WEB_WHIZ_ENABLED || false, // 是否显示
   WEB_WHIZ_BASE_URL:
