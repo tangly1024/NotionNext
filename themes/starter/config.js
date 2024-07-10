@@ -85,7 +85,7 @@ const CONFIG = {
   STARTER_PRICING_1_FEATURES: '点堂查事,解梦,其他答疑解惑', // 英文逗号隔开
   STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_1_BUTTON_URL:
-    'https://gf.bilibili.com/item/detail/1103571046',
+    'tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1601958350&website=www.oicqzone.com',
 
   STARTER_PRICING_2_TITLE: '入门版',
   STARTER_PRICING_2_PRICE: '365',
@@ -95,7 +95,7 @@ const CONFIG = {
   STARTER_PRICING_2_FEATURES: '赠送玄门六爻讲义,内部社群,佛法、道法答疑,经文含义解析,仙道相关,解梦原理', // 英文逗号隔开
   STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_2_BUTTON_URL:
-    'https://gf.bilibili.com/item/detail/1103614046',
+    'tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1601958350&website=www.oicqzone.com',
   
   STARTER_PRICING_3_TAG: '推荐',
   STARTER_PRICING_3_TITLE: '普惠版',
@@ -106,7 +106,7 @@ const CONFIG = {
   STARTER_PRICING_3_FEATURES: '包含入门版,六爻传授,免费查事,丹道答疑', // 英文逗号隔开
   STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_3_BUTTON_URL:
-    'https://gf.bilibili.com/item/detail/1103733046',
+    'tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1601958350&website=www.oicqzone.com',
 
   STARTER_PRICING_4_TITLE: '终生版',
   STARTER_PRICING_4_PRICE: '4800',
@@ -116,7 +116,7 @@ const CONFIG = {
   STARTER_PRICING_4_FEATURES: '包含普惠版,所有内部书籍免费赠送', // 英文逗号隔开
   STARTER_PRICING_4_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_4_BUTTON_URL:
-    'https://gf.bilibili.com/item/detail/1103734046',
+    'tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1601958350&website=www.oicqzone.com',
 
   // 首页用户测评区块
   STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
