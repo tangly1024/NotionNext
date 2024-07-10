@@ -276,17 +276,39 @@ const LayoutSignUp = props => {
   )
 }
 
-export {
-  Layout404,
-  LayoutArchive,
-  LayoutBase,
-  LayoutCategoryIndex,
-  LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSignIn,
-  LayoutSignUp,
-  LayoutSlug,
-  LayoutTagIndex,
-  CONFIG as THEME_CONFIG
+/**
+ * 授权页面
+ * @param {*} props 
+ * @returns 
+ */
+const LayoutAuth =  props => {
+    const {msg,title} = props
+    return (
+      <>
+        <Banner title={title} description={msg} />
+        <div className='container grow'>
+          <div className='flex flex-wrap justify-center -mx-4'>
+            <div className='w-full p-4'>
+              <div id='container-inner' className='mx-auto'>
+                {/* {slot} */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    )
 }
+
+export {
+    Layout404,
+    LayoutArchive, LayoutAuth, LayoutBase,
+    LayoutCategoryIndex,
+    LayoutIndex,
+    LayoutPostList,
+    LayoutSearch,
+    LayoutSignIn,
+    LayoutSignUp,
+    LayoutSlug, LayoutTagIndex,
+    CONFIG as THEME_CONFIG
+}
+

@@ -9,16 +9,13 @@
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"]
     },
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
     "noEmit": true,
     "incremental": true,
+    "target": "es6",
     "module": "esnext",
     "esModuleInterop": true,
     "moduleResolution": "node",
@@ -28,12 +25,11 @@
   },
   "include": [
     "next-env.d.ts",
+    "**/*.json",
     "**/*.js",
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

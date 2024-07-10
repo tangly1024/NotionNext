@@ -84,12 +84,9 @@ export const getLayoutByTheme = ({ router, theme }) => {
  * @returns
  */
 const getLayoutNameByPath = path => {
-  if (LAYOUT_MAPPINGS[path]) {
-    return LAYOUT_MAPPINGS[path]
-  } else {
-    // 没有特殊处理的路径返回默认layout名称
-    return 'LayoutSlug'
-  }
+  const layoutName = LAYOUT_MAPPINGS[path] || 'LayoutSlug'
+  //   console.log('path-layout',path,layoutName)
+  return layoutName
 }
 
 /**
