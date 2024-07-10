@@ -67,25 +67,49 @@ export const Contact = () => {
               </div>
             </div>
 
+
+
+
             {siteConfig('STARTER_CONTACT_MSG_EXTERNAL_URL', null, CONFIG) && (
               <>
                 {/* 联系方式右侧留言 */}
                 <div className='w-full px-4 lg:w-5/12 xl:w-4/12'>
                   <div
                     className='wow fadeInUp rounded-lg bg-white px-8 py-10 shadow-testimonial dark:bg-dark-2 dark:shadow-none sm:px-10 sm:py-12 md:p-[60px] lg:p-10 lg:px-10 lg:py-12 2xl:p-[60px]'
-                    data-wow-delay='.2s'>
-                    {/* 自定义的留言表单 、 需要对接接口 */}
-                    {/* <MessageForm/> */}
+                    data-wow-delay='.2s'
+                    style={{ position: 'relative' }}>
                     {/* 嵌入外部表单 */}
                     <iframe
-                      src={siteConfig(
-                        'STARTER_CONTACT_MSG_EXTERNAL_URL',
-                        null,
-                        CONFIG
-                      )}
+                      id="formIframe"
+                      src={siteConfig('STARTER_CONTACT_MSG_EXTERNAL_URL', null, CONFIG)}
                       width='100%'
-                      height='500px'
-                      frameBorder='0'></iframe>
+                      height='100%'
+                      frameBorder='0'
+                      style={{ visibility: 'hidden' }}
+                    />
+                    <script
+                      dangerouslySetInnerHTML={{
+                        __html: `
+                          document.getElementById('formIframe').onload = function() {
+                            var iframeDocument = this.contentDocument || this.contentWindow.document;
+                            iframeDocument.querySelectorAll('.ksapc-form-container-write, .src-components-write-footer-index__footerFixed').forEach(function(el) {
+                              el.style.display = 'block';
+                              el.style.width = '100%';
+                              el.style.height = '100%';
+                              el.style.position = 'absolute';
+                              el.style.top = '0';
+                              el.style.left = '0';
+                              el.style.flexDirection = 'column';
+                              el.style.justifyContent = 'space-between';
+                              el.style.alignItems = 'flex-end';
+                              el.style.paddingBottom = '20px';
+                            });
+                            iframeDocument.querySelector('.ksapc-form-container-write').style.display = 'flex';
+                            iframeDocument.querySelector('.src-components-write-footer-index__footerFixed').style.display = 'flex';
+                          };
+                        `
+                      }}
+                    />
                   </div>
                 </div>
               </>
