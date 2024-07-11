@@ -124,17 +124,17 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalData({ from, locale })
-  if (siteConfig('PSEUDO_STATIC', BLOG.PSEUDO_STATIC, props.NOTION_CONFIG)) {
+  if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
     }
   }
-
+  
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
-      (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+      (p.slug === prefix || p.id === idToUuid(prefix))
     )
   })
 
@@ -151,11 +151,13 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     props.post = null
     return {
       props,
-      revalidate: siteConfig(
-        'REVALIDATE_SECOND',
-        BLOG.NEXT_REVALIDATE_SECOND,
-        props.NOTION_CONFIG
-      )
+      revalidate: process.env.EXPORT
+        ? undefined
+        : siteConfig(
+            'NEXT_REVALIDATE_SECOND',
+            BLOG.NEXT_REVALIDATE_SECOND,
+            props.NOTION_CONFIG
+          )
     }
   }
 
@@ -191,11 +193,13 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   delete props.allPages
   return {
     props,
-    revalidate: siteConfig(
-      'NEXT_REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 
