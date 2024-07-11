@@ -7,7 +7,7 @@ const CONFIG = {
   MATERY_HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂； false则随鼠标滚动
 
   // 是否显示开始阅读按钮
-  MATERY_SHOW_START_READING: true,
+  MATERY_SHOW_START_READING: false,
 
   // 菜单配置
   MATERY_MENU_CATEGORY: true, // 显示分类
