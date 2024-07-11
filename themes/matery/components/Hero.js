@@ -67,18 +67,7 @@ const Hero = props => {
         <div className='mt-2 h-12 items-center text-center shadow-text text-white text-lg'>
           <span id='typed' />
         </div>
-        {/* 滚动按钮 */}
-        <div
-          onClick={() => {
-            window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-          }}
-          className='glassmorphism mt-12 border cursor-pointer w-40 text-center pt-4 pb-3 text-md text-white hover:bg-orange-600 duration-300 rounded-3xl z-40'>
-          <i className='animate-bounce fas fa-angle-double-down' />{' '}
-          <span>
-            {siteConfig('MATERY_SHOW_START_READING', null, CONFIG) &&
-              locale.COMMON.START_READING}
-          </span>
-        </div>
+
       </div>
 
       {/* 修改这里的样式，调整高度为20% */}
