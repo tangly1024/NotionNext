@@ -66,11 +66,10 @@ const LayoutBase = props => {
       <BlogListBar {...props} />
     )
   const headerSlot =
-    // siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) && // 注释掉这一行
-    // router.route === '/' ? ( // 注释掉这一行
-      // <Hero {...props} /> // 注释掉这一行
-    // ) : // 注释掉这一行
-    post && !fullWidth ? (
+    siteConfig('MATERY_HOME_BANNER_ENABLE', null, CONFIG) &&
+    router.route === '/' ? (
+      <Hero {...props} />
+    ) : post && !fullWidth ? (
       <PostHero {...props} />
     ) : null
 

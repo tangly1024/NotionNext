@@ -81,12 +81,15 @@ const Hero = props => {
         </div>
       </div>
 
-      <LazyImage
-        priority={true}
-        id='header-cover'
-        src={siteInfo?.pageCover}
-        className={`header-cover object-center w-full h-screen object-cover ${siteConfig('MATERY_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
-      />
+      {/* 修改这里的样式，调整高度为20% */}
+      <div style={{ height: '20vh' }} className='relative'>
+        <LazyImage
+          priority={true}
+          id='header-cover'
+          src={siteInfo?.pageCover}
+          className={`header-cover object-center w-full h-full object-cover ${siteConfig('MATERY_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
+        />
+      </div>
     </header>
   )
 }
