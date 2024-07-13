@@ -67,7 +67,7 @@ export const getLayoutByTheme = ({ router, theme }) => {
   } else {
     setTimeout(() => {
       checkThemeDOM()
-    }, 100)
+    }, 1000)
     const components =
       ThemeComponents[getLayoutNameByPath(router.pathname, router.asPath)]
     if (components) {
