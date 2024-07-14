@@ -206,8 +206,8 @@ const CONFIG = {
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
-      STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
+        'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83319ea5-89af-419a-96e9-38e87cdccd7e%2F4f2e5195-1caf-4185-bbbc-031114af86db%2F%25E5%25A4%25B4%25E5%2583%258F.png?id=f65c8efa-ae71-49bc-90ed-b9e6bed2bdb3&table=collection&spaceId=83319ea5-89af-419a-96e9-38e87cdccd7e&width=60&userId=0323372c-96b2-4b4d-9406-e239bd8a6c59&cache=v2',
+      STARTER_TEAM_ITEM_NICKNAME: '香港Henry',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
     {
@@ -242,7 +242,7 @@ const CONFIG = {
   STARTER_CONTACT_LOCATION_TITLE: '我们的位置',
   STARTER_CONTACT_LOCATION_TEXT: '中国，香港',
   STARTER_CONTACT_EMAIL_TITLE: '我们如何帮助您？',
-  STARTER_CONTACT_EMAIL_TEXT: 'mail@tangly1024.com',
+  STARTER_CONTACT_EMAIL_TEXT: 'whzls@yahoo.com',
 
   // 嵌入外部表单
   STARTER_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/yfctc7', // 基于NoteForm创建，将留言数据存在Notion中
@@ -298,14 +298,14 @@ const CONFIG = {
       TITLE: '关于我们',
       LINK_GROUP: [
         { TITLE: '官方主页', URL: '/#home' },
-        { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
+        { TITLE: '博客主页', URL: 'https://blog.dtsdt/about' },
         {
           TITLE: '帮助支持',
           URL: 'https://docs.tangly1024.com/article/how-to-question'
         },
         {
           TITLE: '合作申请',
-          URL: 'https://docs.tangly1024.com/article/my-service'
+          URL: 'https://www.youtube.com/@hongkonghenry'
         }
       ]
     },
