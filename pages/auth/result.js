@@ -5,11 +5,9 @@ import Slug from '../[prefix]'
 
 /**
 /**
- * 服务端接收参数处理
- * @param {*} ctx
  * @returns
  */
-export const getServerSideProps = async ctx => {
+export const getStaticProps = async () => {
   const from = `auth`
   const props = await getGlobalData({ from })
 

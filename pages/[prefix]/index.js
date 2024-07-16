@@ -30,7 +30,7 @@ const Slug = props => {
 
   /**
    * 验证文章密码
-   * @param {*} result
+   * @param {*} passInput
    */
   const validPassword = passInput => {
     if (!post) {
@@ -129,7 +129,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       fullSlug += '.html'
     }
   }
-  
+
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
