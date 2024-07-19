@@ -317,7 +317,7 @@ const BLOG = {
   COMMENT_TWIKOO_CDN_URL:
 
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_CDN_URL ||
-    'https://cdn.staticfile.net/twikoo/1.6.36/twikoo.min.js', // twikoo客户端cdn
+    'https://cdn.jsdelivr.net/npm/twikoo@1.6.38/dist/twikoo.all.min.js', // twikoo客户端cdn
 
   // utterance
   COMMENT_UTTERRANCES_REPO: process.env.NEXT_PUBLIC_COMMENT_UTTERRANCES_REPO || '', // 你的代码仓库名， 例如我是 'tangly1024/NotionNext'； 更多文档参考 https://utteranc.es/
