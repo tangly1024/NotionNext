@@ -30,7 +30,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         {/* 图片封面 */}
         {showPageCover && (
           <Link href={post?.href} passHref legacyBehavior>
-            <div className='w-full md:w-5/12 2xl:w-full overflow-hidden'>
+            <div className='w-full md:w-5/12 2xl:w-full overflow-hidden cursor-pointer select-none'>
               <LazyImage
                 priority={index === 0}
                 src={post?.pageCoverThumbnail}
