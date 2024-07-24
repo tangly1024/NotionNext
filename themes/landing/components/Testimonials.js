@@ -31,8 +31,8 @@ export default function Testimonials() {
 
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                        <h2 className="h2 mb-4">{siteConfig('LANDING_TESTIMONIALS_HEADER', null, CONFIG)}</h2>
-                        <p className="text-xl text-gray-600" data-aos="zoom-y-out">{siteConfig('LANDING_TESTIMONIALS_P', null, CONFIG)}</p>
+                        <h2 className="h2 mb-4 dark:text-white">{siteConfig('LANDING_TESTIMONIALS_HEADER', null, CONFIG)}</h2>
+                        <p className="text-xl text-gray-600 dark:text-gray-400" data-aos="zoom-y-out">{siteConfig('LANDING_TESTIMONIALS_P', null, CONFIG)}</p>
                     </div>
 
                     {/* Testimonials */}

@@ -74,7 +74,7 @@ const Catalog = ({ post }) => {
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
             >
               <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-gray-500 underline'}`}
+                className={`truncate ${activeSection === id ? 'font-bold text-gray-500 underline' : ''}`}
               >
                 {tocItem.text}
               </span>
