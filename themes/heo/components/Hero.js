@@ -383,8 +383,7 @@ function TodayCard({ cRef, siteInfo }) {
               }
             />
             <div id='more' className='select-none'>
-              {/* EFL-UPDATED */}
-              推荐文章
+              {locale.COMMON.RECOMMEND_POSTS}
             </div>
           </div>
         </div>
