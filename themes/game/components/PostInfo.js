@@ -1,6 +1,7 @@
 import NotionIcon from '@/components/NotionIcon'
 import Link from 'next/link'
 import TagItem from './TagItem'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 文章详情页说明信息
@@ -9,7 +10,7 @@ export default function PostInfo(props) {
   const { post } = props
 
   return (
-    <section className='flex-wrap flex mt-2 text-gray--600 dark:text-gray-400 font-light leading-8'>
+    <section className='flex-wrap flex m-2 text-gray--600 dark:text-gray-400 font-light leading-8'>
       <div>
         <div>
           {post?.type !== 'Page' && (
@@ -25,7 +26,7 @@ export default function PostInfo(props) {
         </div>
 
         <h1 className='font-bold text-3xl text-black dark:text-white'>
-          <NotionIcon icon={post?.pageIcon} />
+          {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}
           {post?.title}
         </h1>
 

@@ -1,19 +1,23 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 /**
- * 页面的Head头，通常有用于SEO
+ * 页面的Head头，有用于SEO
  * @param {*} param0
  * @returns
  */
 const GlobalHead = props => {
-  const { children, siteInfo } = props
-  let url = siteConfig('PATH')?.length ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}` : siteConfig('LINK')
+  const { children, siteInfo, post, NOTION_CONFIG } = props
+  let url = siteConfig('PATH')?.length
+    ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}`
+    : siteConfig('LINK')
   let image
   const router = useRouter()
-  const meta = getSEOMeta(props, router, useGlobal())
+  const meta = getSEOMeta(props, router, useGlobal()?.locale)
   if (meta) {
     url = `${url}/${meta.slug}`
     image = meta.image || '/bg_image.jpg'
@@ -21,22 +25,96 @@ const GlobalHead = props => {
   const title = meta?.title || siteConfig('TITLE')
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type || 'website'
-  const keywords = meta?.tags || siteConfig('KEYWORDS')
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
+  const favicon = siteConfig('BLOG_FAVICON')
+  const webFontUrl = siteConfig('FONT_URL')
+  const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
+
+  const SEO_BAIDU_SITE_VERIFICATION = siteConfig(
+    'SEO_BAIDU_SITE_VERIFICATION',
+    null,
+    NOTION_CONFIG
+  )
+
+  const SEO_GOOGLE_SITE_VERIFICATION = siteConfig(
+    'SEO_GOOGLE_SITE_VERIFICATION',
+    null,
+    NOTION_CONFIG
+  )
+
+  const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
+
+  const COMMENT_WEBMENTION_ENABLE = siteConfig(
+    'COMMENT_WEBMENTION_ENABLE',
+    null,
+    NOTION_CONFIG
+  )
+
+  const COMMENT_WEBMENTION_HOSTNAME = siteConfig(
+    'COMMENT_WEBMENTION_HOSTNAME',
+    null,
+    NOTION_CONFIG
+  )
+  const COMMENT_WEBMENTION_AUTH = siteConfig(
+    'COMMENT_WEBMENTION_AUTH',
+    null,
+    NOTION_CONFIG
+  )
+  const ANALYTICS_BUSUANZI_ENABLE = siteConfig(
+    'ANALYTICS_BUSUANZI_ENABLE',
+    null,
+    NOTION_CONFIG
+  )
+
+  const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
+  // SEO关键词
+  let keywords = meta?.tags || siteConfig('KEYWORDS')
+  if (post?.tags && post?.tags?.length > 0) {
+    keywords = post?.tags?.join(',')
+  }
+
+  useEffect(() => {
+    // 使用WebFontLoader字体加载
+    loadExternalResource(
+      'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js',
+      'js'
+    ).then(url => {
+      const WebFont = window?.WebFont
+      if (WebFont) {
+        console.log('LoadWebFont', webFontUrl)
+        WebFont.load({
+          custom: {
+            // families: ['"LXGW WenKai"'],
+            urls: webFontUrl
+          }
+        })
+      }
+    })
+  }, [])
 
   return (
     <Head>
+      <link rel='icon' href={favicon} />
       <title>{title}</title>
-      <meta name='theme-color' content={siteConfig('BACKGROUND_DARK')} />
-      <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0' />
+      <meta name='theme-color' content={BACKGROUND_DARK} />
+      <meta
+        name='viewport'
+        content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
+      />
       <meta name='robots' content='follow, index' />
       <meta charSet='UTF-8' />
-      {siteConfig('SEO_GOOGLE_SITE_VERIFICATION') && (
-        <meta name='google-site-verification' content={siteConfig('SEO_GOOGLE_SITE_VERIFICATION')} />
+      {SEO_GOOGLE_SITE_VERIFICATION && (
+        <meta
+          name='google-site-verification'
+          content={SEO_GOOGLE_SITE_VERIFICATION}
+        />
       )}
-      {siteConfig('SEO_BAIDU_SITE_VERIFICATION') && (
-        <meta name='baidu-site-verification' content={siteConfig('SEO_BAIDU_SITE_VERIFICATION')} />
+      {SEO_BAIDU_SITE_VERIFICATION && (
+        <meta
+          name='baidu-site-verification'
+          content={SEO_BAIDU_SITE_VERIFICATION}
+        />
       )}
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
@@ -45,27 +123,31 @@ const GlobalHead = props => {
       <meta property='og:description' content={description} />
       <meta property='og:url' content={url} />
       <meta property='og:image' content={image} />
-      <meta property='og:site_name' content={siteConfig('TITLE')} />
+      <meta property='og:site_name' content={title} />
       <meta property='og:type' content={type} />
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
 
-      {siteConfig('COMMENT_WEBMENTION_ENABLE') && (
+      <link rel='icon' href={BLOG_FAVICON} />
+
+      {COMMENT_WEBMENTION_ENABLE && (
         <>
           <link
             rel='webmention'
-            href={`https://webmention.io/${siteConfig('COMMENT_WEBMENTION_HOSTNAME')}/webmention`}
+            href={`https://webmention.io/${COMMENT_WEBMENTION_HOSTNAME}/webmention`}
           />
-          <link rel='pingback' href={`https://webmention.io/${siteConfig('COMMENT_WEBMENTION_HOSTNAME')}/xmlrpc`} />
+          <link
+            rel='pingback'
+            href={`https://webmention.io/${COMMENT_WEBMENTION_HOSTNAME}/xmlrpc`}
+          />
+          {COMMENT_WEBMENTION_AUTH && (
+            <link href={COMMENT_WEBMENTION_AUTH} rel='me' />
+          )}
         </>
       )}
 
-      {siteConfig('COMMENT_WEBMENTION_ENABLE') && siteConfig('COMMENT_WEBMENTION_AUTH') !== '' && (
-        <link href={siteConfig('COMMENT_WEBMENTION_AUTH')} rel='me' />
-      )}
-
-      {JSON.parse(siteConfig('ANALYTICS_BUSUANZI_ENABLE')) && (
+      {ANALYTICS_BUSUANZI_ENABLE && (
         <meta name='referrer' content='no-referrer-when-downgrade' />
       )}
       {meta?.type === 'Post' && (
@@ -73,7 +155,7 @@ const GlobalHead = props => {
           <meta property='article:published_time' content={meta.publishDay} />
           <meta property='article:author' content={siteConfig('AUTHOR')} />
           <meta property='article:section' content={category} />
-          <meta property='article:publisher' content={siteConfig('FACEBOOK_PAGE')} />
+          <meta property='article:publisher' content={FACEBOOK_PAGE} />
         </>
       )}
       {children}
@@ -86,8 +168,7 @@ const GlobalHead = props => {
  * @param {*} props
  * @param {*} router
  */
-const getSEOMeta = (props, router, global) => {
-  const { locale } = global
+const getSEOMeta = (props, router, locale) => {
   const { post, siteInfo, tag, category, page } = props
   const keyword = router?.query?.s
 
@@ -181,7 +262,9 @@ const getSEOMeta = (props, router, global) => {
       }
     default:
       return {
-        title: post ? `${post?.title} | ${siteInfo?.title}` : `${siteInfo?.title} | loading`,
+        title: post
+          ? `${post?.title} | ${siteInfo?.title}`
+          : `${siteInfo?.title} | loading`,
         description: post?.summary,
         type: post?.type,
         slug: post?.slug,
