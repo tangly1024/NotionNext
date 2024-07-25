@@ -523,8 +523,10 @@ summary > .notion-h {
 .notion-page {
   /* width: var(--notion-max-width); */
   width: 100% !important;
-  padding-left: calc(min(12px, 8vw));
-  padding-right: calc(min(12px, 8vw));
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  /* padding-left: calc(min(12px, 8vw)); */
+  /* padding-right: calc(min(12px, 8vw)); */
 }
 
 .notion-full-width {
@@ -1449,6 +1451,7 @@ code[class*='language-'] {
 
 .notion-collection-card-property .notion-page-title-text {
   border-bottom: 0 none;
+  @apply dark:text-gray-200;
 }
 
 .notion-collection-card-property
@@ -1976,9 +1979,9 @@ svg + .notion-page-title-text {
   /* color: var(--notion-gray); */
 }
 
-.notion-asset-wrapper-pdf > div {
+/* .notion-asset-wrapper-pdf > div {
   width: unset !important;
-}
+} */
 
 /* pdf预览适配页面 */
 .react-pdf__Page__canvas,

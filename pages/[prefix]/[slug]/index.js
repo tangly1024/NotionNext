@@ -72,16 +72,18 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
     props.post = null
     return {
       props,
-      revalidate: siteConfig(
-        'REVALIDATE_SECOND',
-        BLOG.NEXT_REVALIDATE_SECOND,
-        props.NOTION_CONFIG
-      )
+      revalidate: process.env.EXPORT
+        ? undefined
+        : siteConfig(
+            'NEXT_REVALIDATE_SECOND',
+            BLOG.NEXT_REVALIDATE_SECOND,
+            props.NOTION_CONFIG
+          )
     }
   }
 
   // 文章内容加载
-  if (!props?.posts?.blockMap) {
+  if (!props?.post?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
   // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
@@ -111,11 +113,13 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   delete props.allPages
   return {
     props,
-    revalidate: siteConfig(
-      'NEXT_REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 

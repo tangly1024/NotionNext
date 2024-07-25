@@ -30,7 +30,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         {/* 图片封面 */}
         {showPageCover && (
           <Link href={post?.href} passHref legacyBehavior>
-            <div className='w-full md:w-5/12 2xl:w-full overflow-hidden'>
+            <div className='w-full md:w-5/12 2xl:w-full overflow-hidden cursor-pointer select-none'>
               <LazyImage
                 priority={index === 0}
                 src={post?.pageCoverThumbnail}
@@ -50,11 +50,11 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             {/* 分类 */}
             {post?.category && (
               <div
-                className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
+                className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
                 <Link
                   passHref
                   href={`/category/${post.category}`}
-                  className='cursor-pointer text-xs font-normal menu-link hover:text-indigo-700 dark:hover:text-yellow-700  dark:text-gray-600 transform'>
+                  className='cursor-pointer text-xs font-normal menu-link '>
                   {post.category}
                 </Link>
               </div>
@@ -76,7 +76,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && (
-            <main className='line-clamp-2 replace my-3 2xl:my-1 text-gray-700  dark:text-gray-300 text-sm font-light leading-tight'>
+            <main className='line-clamp-2 replace text-gray-700  dark:text-gray-300 text-sm font-light leading-tight'>
               {post.summary}
             </main>
           )}
