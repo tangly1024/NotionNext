@@ -235,9 +235,9 @@ const BLOG = {
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
     {
-      name: 'Just The Two Of Us',
-      artist: 'Marcin / ichika Nito / Marcin & Ichika Nito',
-      url: 'http://music.163.com/song/media/outer/url?id=2022113062.mp3',
+      name: '余韻叙情(E-6)',
+      artist: '鷺巣詩郎',
+      url: 'http://music.163.com/song/media/outer/url?id=27552522.mp3',
       cover:
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
