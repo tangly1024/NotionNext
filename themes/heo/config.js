@@ -42,7 +42,11 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://github.com/wmd001', // 个人资料底部按钮链接
+
+  HEO_INFO_CARD_URL1: 'https://github.com/wmd001', // 个人资料底部按钮链接
+  HEO_INFO_CARD_ICON1: 'fab fa-github',
+
+
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
