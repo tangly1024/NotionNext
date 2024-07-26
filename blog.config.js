@@ -228,6 +228,20 @@ const BLOG = {
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
     {
+      name: '穢土',
+      artist: 'Iwamizu',
+      url: 'http://music.163.com/song/media/outer/url?id=1828198418.mp3',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
+    {
+      name: 'Just The Two Of Us',
+      artist: 'Marcin / ichika Nito / Marcin & Ichika Nito',
+      url: 'http://music.163.com/song/media/outer/url?id=2022113062.mp3',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
+    {
       name: 'Forest Mixtape',
       artist: 'Christina Kuong',
       url: 'http://music.163.com/song/media/outer/url?id=1908182683.mp3',
