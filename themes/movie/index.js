@@ -198,14 +198,14 @@ const LayoutSlug = props => {
         // 如有外链、保存在data-src中
         const iframe = wrapper.querySelector('iframe')
         if (iframe) {
-          iframe.setAttribute('data-src', iframe.getAttribute('src'))
+          iframe?.setAttribute('data-src', iframe?.getAttribute('src'))
         }
 
         // 如果是第一个元素，设置为 active
         if (index === 0) {
           carouselItem.classList.add('active')
         } else {
-          iframe.setAttribute('src', '')
+          iframe?.setAttribute('src', '')
         }
 
         // 将元素添加到容器中
@@ -227,7 +227,6 @@ const LayoutSlug = props => {
           document.querySelectorAll('.notion-carousel').forEach(item => {
             // 外链保存在data-src中
             const iframe = item.querySelector('iframe')
-            console.log('iframe', iframe.getAttribute('data-src'), iframe.getAttribute('src'))
 
             // 判断当前元素是否包含该 figCaption 的文本内容，如果是则设置为 active，否则取消 active
             if (item.querySelector('figcaption').textContent.trim() === value) {
@@ -265,7 +264,7 @@ const LayoutSlug = props => {
 
     setTimeout(() => {
       combineVideo()
-    }, 2000)
+    }, 1500)
 
     // 404
     if (!post) {
