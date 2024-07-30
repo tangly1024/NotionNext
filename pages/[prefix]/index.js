@@ -55,8 +55,8 @@ const Slug = props => {
     } else {
       setLock(false)
       if (!lock && post?.blockMap?.block) {
-        post.content = Object.keys(post.blockMap.block).filter(key => post.blockMap.block[key]?.value?.parent_id === post.id)
-        //post.content = Object.keys(post.blockMap.block)
+        // post.content = Object.keys(post.blockMap.block).filter(key => post.blockMap.block[key]?.value?.parent_id === post.id)
+        post.content = Object.keys(post.blockMap.block)
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
     }
