@@ -50,16 +50,16 @@ const Slug = props => {
   // 文章加载
   useEffect(() => {
     // 文章加密
-    if (post?.password && post?.password !== '') {
-      setLock(true)
-    } else {
-      setLock(false)
+    // if (post?.password && post?.password !== '') {
+      // setLock(true)
+    // } else {
+      // setLock(false)
       if (!lock && post?.blockMap?.block) {
         // post.content = Object.keys(post.blockMap.block).filter(key => post.blockMap.block[key]?.value?.parent_id === post.id)
         post.content = Object.keys(post.blockMap.block)
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
-    }
+    // }
 
     // 读取上次记录 自动提交密码
     const passInputs = getPasswordQuery(router.asPath)
