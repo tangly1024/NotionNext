@@ -15,7 +15,7 @@ const CONFIG = {
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: '香港Henry的博客', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:
-    'https://blog.dtsdt', // 英雄区按钮
+    'https://blog.dtsdt.com', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: 'YouTube主页', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://www.youtube.com/@hongkonghenry', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
