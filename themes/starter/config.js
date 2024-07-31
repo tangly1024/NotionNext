@@ -16,7 +16,7 @@ const CONFIG = {
   STARTER_HERO_BUTTON_1_TEXT: '香港Henry的博客', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:
     'https://blog.dtsdt', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_TEXT: '关注YouTube主页', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_TEXT: 'YouTube主页', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://www.youtube.com/@hongkonghenry', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
 
@@ -32,30 +32,30 @@ const CONFIG = {
   // 特性区块
   STARTER_FEATURE_ENABLE: true, // 特性区块开关
   STARTER_FEATURE_TITLE: '特性', // 特性
-  STARTER_FEATURE_TEXT_1: 'NotionNext的主要特性', // 特性
+  STARTER_FEATURE_TEXT_1: 'DTSDT产品的主要特性', // 特性
   STARTER_FEATURE_TEXT_2:
     'NotionNext的愿景是帮助您简单、无感知地稳定地搭建自己的网站，放大品牌的价值。 ', // 特性
 
   STARTER_FEATURE_1_TITLE_1: '免费且开源', // 特性1
   STARTER_FEATURE_1_TEXT_1: '项目源码在Github上完全开放共享，遵循MIT协议', // 特性1
   STARTER_FEATURE_1_BUTTON_TEXT: '了解更多', // 特性1
-  STARTER_FEATURE_1_BUTTON_URL: 'https://github.com/tangly1024/NotionNext', // 特性1
+  STARTER_FEATURE_1_BUTTON_URL: 'https://github.com/zls0725/NotionNext-', // 特性1
 
   STARTER_FEATURE_2_TITLE_1: '多种主题定制', // 特性2
   STARTER_FEATURE_2_TEXT_1: '数十种主题,适用于不同场景，总有一款适合你', // 特性2
   STARTER_FEATURE_2_BUTTON_TEXT: '了解更多', // 特性2
   STARTER_FEATURE_2_BUTTON_URL:
-    'https://docs.tangly1024.com/article/notion-next-themes', // 特性2
+    'https://github.com/zls0725/NotionNext-', // 特性2
 
   STARTER_FEATURE_3_TITLE_1: '优秀的性能', // 特性3
   STARTER_FEATURE_3_TEXT_1: '基于NextJS开发，更快的响应速度，更好的SEO', // 特性3
   STARTER_FEATURE_3_BUTTON_TEXT: '了解更多', // 特性3
-  STARTER_FEATURE_3_BUTTON_URL: 'https://docs.tangly1024.com/article/next-js', // 特性3
+  STARTER_FEATURE_3_BUTTON_URL: 'https://github.com/zls0725/NotionNext-', // 特性3
 
   STARTER_FEATURE_4_TITLE_1: '便捷的写作体验', // 特性4
   STARTER_FEATURE_4_TEXT_1: '只需在Notion笔记中编修，自动同步到网站', // 特性4
   STARTER_FEATURE_4_BUTTON_TEXT: '了解更多', // 特性4
-  STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
+  STARTER_FEATURE_4_BUTTON_URL: 'https://github.com/zls0725/NotionNext-', // 特性4
 
   // 首页ABOUT区块
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
@@ -63,7 +63,7 @@ const CONFIG = {
   STARTER_ABOUT_TEXT:
     'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
-  STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
+  STARTER_ABOUT_BUTTON_URL: 'https://github.com/zls0725/NotionNext-',
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
   STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
   STARTER_ABOUT_TIPS_1: '7000+',
@@ -200,13 +200,13 @@ const CONFIG = {
   STARTER_TEAM_TITLE: '团队成员',
   STARTER_TEAM_TEXT_1: '我们的团队',
   STARTER_TEAM_TEXT_2:
-    'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
+    'DTSDT 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83319ea5-89af-419a-96e9-38e87cdccd7e%2F4f2e5195-1caf-4185-bbbc-031114af86db%2F%25E5%25A4%25B4%25E5%2583%258F.png?id=f65c8efa-ae71-49bc-90ed-b9e6bed2bdb3&table=collection&spaceId=83319ea5-89af-419a-96e9-38e87cdccd7e&width=60&userId=0323372c-96b2-4b4d-9406-e239bd8a6c59&cache=v2',
+        'https://file.notion.so/f/f/83319ea5-89af-419a-96e9-38e87cdccd7e/24930804-367f-445a-a6a2-96a22d580f55/%E5%A4%B4%E5%83%8F500.gif?id=f65c8efa-ae71-49bc-90ed-b9e6bed2bdb3&table=collection&spaceId=83319ea5-89af-419a-96e9-38e87cdccd7e&expirationTimestamp=1722513600000&signature=Gif_WUJkbdEdXdmHhCrZHP_Pc85xQOpZ2sze-DWBILQ',
       STARTER_TEAM_ITEM_NICKNAME: '香港Henry',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
