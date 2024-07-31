@@ -44,15 +44,6 @@ export default function SideRight(props) {
     return null
   }
 
-
-    useEffect(() => {
-    setActiveTab('info');
-    if (post && post.toc && post.toc.length > 1) {
-      setActiveTab('toc');
-    }
-  }, [post?.toc])
-
-  
   return (
     <div id='sideRight' className={className}>
       <InfoCard {...props} />
