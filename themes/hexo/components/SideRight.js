@@ -40,10 +40,25 @@ export default function SideRight(props) {
   const { locale } = useGlobal()
 
   // 文章全屏处理
+  // if (post && post?.fullWidth) {
+    // return null
+  // }
+  const [activeTab, setActiveTab] = useState('info');
+
+
+    useEffect(() => {
+    setActiveTab('info');
+    if (post && post.toc && post.toc.length > 1) {
+      setActiveTab('toc');
+    }
+  }, [post])
+
+  // 文章全屏处理
   if (post && post?.fullWidth) {
     return null
   }
 
+  
   return (
     <div id='sideRight' className={className}>
       <InfoCard {...props} />
