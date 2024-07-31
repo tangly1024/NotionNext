@@ -44,7 +44,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
               <LazyImage
                 alt={post?.title}
                 src={`${headerImage}`}
-                className='object-cover w-full h-full'
+                className='rounded-md object-cover w-full h-full'
               />
             </div>
             <div
