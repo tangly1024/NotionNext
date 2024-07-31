@@ -40,10 +40,9 @@ export default function SideRight(props) {
   const { locale } = useGlobal()
 
   // 文章全屏处理
-  // if (post && post?.fullWidth) {
-    // return null
-  // }
-  const [activeTab, setActiveTab] = useState('info');
+  if (post && post?.fullWidth) {
+    return null
+  }
 
 
     useEffect(() => {
@@ -51,12 +50,7 @@ export default function SideRight(props) {
     if (post && post.toc && post.toc.length > 1) {
       setActiveTab('toc');
     }
-  }, [post])
-
-  // 文章全屏处理
-  if (post && post?.fullWidth) {
-    return null
-  }
+  }, [post?.toc])
 
   
   return (
