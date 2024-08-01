@@ -16,10 +16,10 @@ const CONFIG = {
 
   // 菜单配置 
   HEXO_MENU_INDEX: true, // 显示首页
-  HEXO_MENU_CATEGORY: false, // 显示分类
-  HEXO_MENU_TAG: false, // 显示标签
-  HEXO_MENU_ARCHIVE: false, // 显示归档
-  HEXO_MENU_SEARCH: false, // 显示搜索
+  HEXO_MENU_CATEGORY: true, // 显示分类
+  HEXO_MENU_TAG: true, // 显示标签
+  HEXO_MENU_ARCHIVE: true, // 显示归档
+  HEXO_MENU_SEARCH: true, // 显示搜索
   HEXO_MENU_RANDOM: true, // 显示随机跳转按钮
 
   HEXO_POST_LIST_COVER: true, // 列表显示文章封面
