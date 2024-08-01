@@ -55,9 +55,8 @@ const Slug = props => {
     } else {
       setLock(false)
       if (!lock && post?.blockMap?.block) {
-        post.content = Object.keys(post.blockMap.block).filter(
-          key => post.blockMap.block[key]?.value?.parent_id === post.id
-        )
+        post.content = Object.keys(post.blockMap.block).filter(key => post.blockMap.block[key]?.value?.parent_id === post.id)
+        // post.content = Object.keys(post.blockMap.block)
         post.toc = getPageTableOfContents(post, post.blockMap)
       }
     }
@@ -79,13 +78,18 @@ const Slug = props => {
       return
     }
     // 文章解锁后生成目录与内容
-    if (post?.blockMap?.block) {
-      post.content = Object.keys(post.blockMap.block).filter(
-        key => post.blockMap.block[key]?.value?.parent_id === post.id
-      )
-      post.toc = getPageTableOfContents(post, post.blockMap)
+  //   if (post?.blockMap?.block) {
+  //     post.content = Object.keys(post.blockMap.block).filter(
+  //       key => post.blockMap.block[key]?.value?.parent_id === post.id
+  //     )
+  //     post.toc = getPageTableOfContents(post, post.blockMap)
+  //   }
+    // }, [router, lock])
+    if (!lock && post?.blockMap?.block) {
+      post.content = Object.keys(post.blockMap.block);
+      post.toc = getPageTableOfContents(post, post.blockMap);
     }
-  }, [router, lock])
+  }, [post, router])
 
   props = { ...props, lock, setLock, validPassword }
   // 根据页面路径加载不同Layout文件
