@@ -1,43 +1,22 @@
-// eslint-disable-next-line @next/next/no-document-import-in-page
-import BLOG from '@/blog.config'
-import Document, { Head, Html, Main, NextScript } from 'next/document'
+// Example for using Google Analytics in a Next.js project
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import * as gtag from '../lib/gtag'; // Assume you have set up gtag
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
-  }
+const MyApp = ({ Component, pageProps }) => {
+  const router = useRouter();
 
-  render() {
-    return (
-      <Html lang={BLOG.LANG}>
-        <Head>
-          {/* 预加载字体 */}
-          {BLOG.FONT_AWESOME && (
-            <>
-              <link
-                rel='preload'
-                href={BLOG.FONT_AWESOME}
-                as='style'
-                crossOrigin='anonymous'
-              />
-              <link
-                rel='stylesheet'
-                href={BLOG.FONT_AWESOME}
-                crossOrigin='anonymous'
-                referrerPolicy='no-referrer'
-              />
-            </>
-          )}
-        </Head>
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      gtag.pageview(url, process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
-}
+  return <Component {...pageProps} />;
+};
 
-export default MyDocument
+export default MyApp;
