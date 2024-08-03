@@ -16,7 +16,7 @@ const CONFIG = {
   STARTER_HERO_BUTTON_1_TEXT: '香港Henry的博客', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL: 'https://blog.dtsdt.com', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: 'YouTube主页', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_URL: 'https://www.youtube.com/@hongkonghenry', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_URL: '', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
 
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
