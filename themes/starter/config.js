@@ -205,7 +205,7 @@ const CONFIG = {
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR:
-        'https://file.notion.so/f/f/83319ea5-89af-419a-96e9-38e87cdccd7e/24930804-367f-445a-a6a2-96a22d580f55/%E5%A4%B4%E5%83%8F500.gif?id=f65c8efa-ae71-49bc-90ed-b9e6bed2bdb3&table=collection&spaceId=83319ea5-89af-419a-96e9-38e87cdccd7e&expirationTimestamp=1722513600000&signature=Gif_WUJkbdEdXdmHhCrZHP_Pc85xQOpZ2sze-DWBILQ',
+        'https://file.notion.so/f/f/83319ea5-89af-419a-96e9-38e87cdccd7e/24930804-367f-445a-a6a2-96a22d580f55/%E5%A4%B4%E5%83%8F500.gif?table=collection&id=f65c8efa-ae71-49bc-90ed-b9e6bed2bdb3&spaceId=83319ea5-89af-419a-96e9-38e87cdccd7e&expirationTimestamp=1722751200000&signature=byh6qunPKQdmXaQobvXBTp6GmoGkL0SdgWerc6pJC8w',
       STARTER_TEAM_ITEM_NICKNAME: '香港Henry',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
