@@ -32,9 +32,9 @@ export const MenuBarMobile = props => {
     // { name: locale.NAV.SEARCH, href: '/search', show: siteConfig('MENU_SEARCH', null, CONFIG) }
   ]
 
-  if (customNav) {
-    links = links.concat(customNav)
-  }
+  // if (customNav) {
+  //   links = links.concat(customNav)
+  // }
 
   // 如果 开启自定义菜单，则不再使用 Page生成菜单。
   if (siteConfig('CUSTOM_MENU')) {

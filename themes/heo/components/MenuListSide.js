@@ -15,12 +15,6 @@ export const MenuListSide = props => {
       show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG)
     },
     {
-      icon: 'fas fa-search',
-      name: locale.NAV.SEARCH,
-      href: '/search',
-      show: siteConfig('HEO_MENU_SEARCH', null, CONFIG)
-    },
-    {
       icon: 'fas fa-folder',
       name: locale.COMMON.CATEGORY,
       href: '/category',
@@ -34,9 +28,9 @@ export const MenuListSide = props => {
     }
   ]
 
-  if (customNav) {
-    links = customNav.concat(links)
-  }
+  // if (customNav) {
+  //   links = customNav.concat(links)
+  // }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
   if (siteConfig('CUSTOM_MENU')) {
