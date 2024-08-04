@@ -24,7 +24,6 @@ const SearchInput = ({ currentTag, keyword, cRef }) => {
     const key = searchInputRef.current.value
     if (key && key !== '') {
       router.push({ pathname: '/search/' + key }).then(r => {
-        console.log('搜索', key)
       })
     } else {
       router.push({ pathname: '/' }).then(r => {

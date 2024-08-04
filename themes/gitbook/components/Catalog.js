@@ -1,3 +1,4 @@
+import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
@@ -13,6 +14,7 @@ const Catalog = ({ post }) => {
   const toc = post?.toc
   // 同步选中目录事件
   const [activeSection, setActiveSection] = useState(null)
+  const {locale}= useGlobal()
 
   // 监听滚动事件
   useEffect(() => {
@@ -67,6 +69,7 @@ const Catalog = ({ post }) => {
 
   return (
     <>
+      <div className='w-full hidden md:block'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
       <div
         id='toc-wrapper'
         className='toc-wrapper overflow-y-auto my-2 max-h-80 overscroll-none scroll-hidden'>

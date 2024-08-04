@@ -16,8 +16,6 @@ const NavPostItem = props => {
   const toggleOpenSubMenu = () => {
     changeIsOpen(!isOpen)
   }
-  console.log('group::')
-  console.log(group)
 
   if (group?.category) {
     return (
