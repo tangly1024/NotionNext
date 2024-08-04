@@ -1,3 +1,4 @@
+import { useGlobal } from '@/lib/global'
 import { useGitBookGlobal } from '@/themes/gitbook'
 
 /**
@@ -5,6 +6,7 @@ import { useGitBookGlobal } from '@/themes/gitbook'
  */
 export default function MobileButtonCatalog() {
   const { tocVisible, changeTocVisible } = useGitBookGlobal()
+  const { locale } = useGlobal()
 
   const toggleToc = () => {
     changeTocVisible(!tocVisible)
@@ -19,9 +21,11 @@ export default function MobileButtonCatalog() {
       <a
         id='toc-button'
         className={
-          'fa-list-ol cursor-pointer fas hover:scale-150 transform duration-200'
-        }
-      />
+          'space-x-4 cursor-pointer hover:scale-150 transform duration-200'
+        }>
+        <i className='fa-list-ol fas' />
+        <span>{locale.COMMON.TABLE_OF_CONTENTS}</span>
+      </a>
     </div>
   )
 }
