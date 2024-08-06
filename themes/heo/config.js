@@ -49,7 +49,7 @@ const CONFIG = {
   HEO_INFO_CARD_URL2: 'https://www.goldenbuds.online',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
   HEO_INFO_CARD_URL3: 'https://www.goldenbuds.online',
-  HEO_INFO_CARD_TEXT3: 'more',
+  HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
