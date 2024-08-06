@@ -18,8 +18,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享编程',
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: 'GOLDENBUDS.ONLINE',
-  HEO_HERO_TITLE_4: 'NEW UPDATE',
-  HEO_HERO_TITLE_5: 'New web domain launched',
+  HEO_HERO_TITLE_4: '新版上线',
+  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
   HEO_HERO_TITLE_LINK: 'https://www.goldenbuds.online',
 
   // 英雄区显示三个置顶分类
