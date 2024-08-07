@@ -34,7 +34,7 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好！我是',
+    'Hello！I am',
     '🔍 分享与热心帮助',
     '🤝 专修交互与设计',
     '🏃 脚踏实地行动派',
@@ -49,7 +49,7 @@ const CONFIG = {
   HEO_INFO_CARD_URL2: 'https://www.goldenbuds.online',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
   HEO_INFO_CARD_URL3: 'https://www.goldenbuds.online',
-  HEO_INFO_CARD_TEXT3: '了解更多',
+  HEO_INFO_CARD_TEXT3: 'More',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [],
