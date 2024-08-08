@@ -107,7 +107,7 @@ const GlobalHead = props => {
       {SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
           name='google-site-verification'
-          content={pDVyH1KPaLBtO0qUTeuL0nC8uCh-QVqK67lzsQw3Skw}
+          content='pDVyH1KPaLBtO0qUTeuL0nC8uCh-QVqK67lzsQw3Skw'
         />
       )}
       {SEO_BAIDU_SITE_VERIFICATION && (
@@ -119,13 +119,13 @@ const GlobalHead = props => {
         {SEO_BING_SITE_VERIFICATION && (
           <meta
           name='msvalidate.01'
-          content={080F6EBB523FB5E8E101314D462027D3}
+          content='080F6EBB523FB5E8E101314D462027D3'
             />
             )}
         {SEO_YADEX_SITE_VERIFICATION && (
          <meta
           name='yandex-verification'
-          content={1705ba7c6061fc61}
+          content='1705ba7c6061fc61'
             />
             )}
 
