@@ -137,7 +137,7 @@ const SEO_YANDEX_SITE_VERIFICATION = siteConfig(
           content='080F6EBB523FB5E8E101314D462027D3'
             />
             )}
-        {SEO_YADEX_SITE_VERIFICATION && (
+        {SEO_YANDEX_SITE_VERIFICATION && (
          <meta
           name='yandex-verification'
           content='1705ba7c6061fc61'
