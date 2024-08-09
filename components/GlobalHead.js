@@ -39,10 +39,25 @@ const GlobalHead = props => {
 
   const SEO_GOOGLE_SITE_VERIFICATION = siteConfig(
     'SEO_GOOGLE_SITE_VERIFICATION',
-    null,
+    'pDVyH1KPaLBtO0qUTeuL0nC8uCh-QVqK67lzsQw3Skw',
     NOTION_CONFIG
   )
 
+  //lm添加bing，yandex验证
+  
+const SEO_BING_SITE_VERIFICATION = siteConfig(
+    'msvalidate.01',
+    '080F6EBB523FB5E8E101314D462027D3',
+    NOTION_CONFIG
+  )
+
+const SEO_YANDEX_SITE_VERIFICATION = siteConfig(
+    'yandex-verification',
+    '1705ba7c6061fc61',
+    NOTION_CONFIG
+  )
+  
+ 
   const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
 
   const COMMENT_WEBMENTION_ENABLE = siteConfig(
