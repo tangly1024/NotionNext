@@ -10,17 +10,16 @@ const CONFIG = {
 
   // 英雄区块导航
   STARTER_HERO_ENABLE: true, // 开启英雄区
-  STARTER_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
-  STARTER_HERO_TITLE_2: '通过笔记无感知地建站、成倍放大您的价值', // 英雄区文字
+  STARTER_HERO_TITLE_1: ' 一起梦想，一起设计，一起微笑', // 英雄区文字
+  STARTER_HERO_TITLE_2: 'Dream, Think, Smile, Design, Together', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
-  STARTER_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
-  STARTER_HERO_BUTTON_1_URL:
-    'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
+  STARTER_HERO_BUTTON_1_TEXT: '香港Henry的博客', // 英雄区按钮
+  STARTER_HERO_BUTTON_1_URL: 'https://blog.dtsdt.com', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_TEXT: 'YouTube主页', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_URL: 'https://www.youtube.com/@hongkonghenry', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
 
-  STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
+  STARTER_HERO_PREVIEW_IMAGE: 'images/starter/hero/hero-image.webp', // 产品预览图 ，默认读取public目录下图片
 
   // 顶部右侧导航暗流
   STARTER_NAV_BUTTON_1_TEXT: 'Sign In',
@@ -32,30 +31,30 @@ const CONFIG = {
   // 特性区块
   STARTER_FEATURE_ENABLE: true, // 特性区块开关
   STARTER_FEATURE_TITLE: '特性', // 特性
-  STARTER_FEATURE_TEXT_1: 'NotionNext的主要特性', // 特性
+  STARTER_FEATURE_TEXT_1: 'DTSDT产品的主要特性', // 特性
   STARTER_FEATURE_TEXT_2:
     'NotionNext的愿景是帮助您简单、无感知地稳定地搭建自己的网站，放大品牌的价值。 ', // 特性
 
   STARTER_FEATURE_1_TITLE_1: '免费且开源', // 特性1
   STARTER_FEATURE_1_TEXT_1: '项目源码在Github上完全开放共享，遵循MIT协议', // 特性1
   STARTER_FEATURE_1_BUTTON_TEXT: '了解更多', // 特性1
-  STARTER_FEATURE_1_BUTTON_URL: 'https://github.com/tangly1024/NotionNext', // 特性1
+  STARTER_FEATURE_1_BUTTON_URL: 'https://github.com/zls0725/NotionNext-', // 特性1
 
   STARTER_FEATURE_2_TITLE_1: '多种主题定制', // 特性2
   STARTER_FEATURE_2_TEXT_1: '数十种主题,适用于不同场景，总有一款适合你', // 特性2
   STARTER_FEATURE_2_BUTTON_TEXT: '了解更多', // 特性2
   STARTER_FEATURE_2_BUTTON_URL:
-    'https://docs.tangly1024.com/article/notion-next-themes', // 特性2
+    'https://github.com/zls0725/NotionNext-', // 特性2
 
   STARTER_FEATURE_3_TITLE_1: '优秀的性能', // 特性3
   STARTER_FEATURE_3_TEXT_1: '基于NextJS开发，更快的响应速度，更好的SEO', // 特性3
   STARTER_FEATURE_3_BUTTON_TEXT: '了解更多', // 特性3
-  STARTER_FEATURE_3_BUTTON_URL: 'https://docs.tangly1024.com/article/next-js', // 特性3
+  STARTER_FEATURE_3_BUTTON_URL: 'https://github.com/zls0725/NotionNext-', // 特性3
 
   STARTER_FEATURE_4_TITLE_1: '便捷的写作体验', // 特性4
   STARTER_FEATURE_4_TEXT_1: '只需在Notion笔记中编修，自动同步到网站', // 特性4
   STARTER_FEATURE_4_BUTTON_TEXT: '了解更多', // 特性4
-  STARTER_FEATURE_4_BUTTON_URL: 'https://docs.tangly1024.com/about', // 特性4
+  STARTER_FEATURE_4_BUTTON_URL: 'https://github.com/zls0725/NotionNext-', // 特性4
 
   // 首页ABOUT区块
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
@@ -63,7 +62,7 @@ const CONFIG = {
   STARTER_ABOUT_TEXT:
     'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
-  STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
+  STARTER_ABOUT_BUTTON_URL: 'https://github.com/zls0725/NotionNext-',
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
   STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
   STARTER_ABOUT_TIPS_1: '7000+',
@@ -198,16 +197,15 @@ const CONFIG = {
   // 团队成员区块
   STARTER_TEAM_ENABLE: true, // 团队成员区块开关
   STARTER_TEAM_TITLE: '团队成员',
-  STARTER_TEAM_TEXT_1: '我们的开发者团队',
+  STARTER_TEAM_TEXT_1: '我们的团队',
   STARTER_TEAM_TEXT_2:
-    'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
+    'DTSDT 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
   STARTER_TEAM_ITEMS: [
     {
-      STARTER_TEAM_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
-      STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
+      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-04.png',
+      STARTER_TEAM_ITEM_NICKNAME: '香港Henry',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
     {
@@ -231,18 +229,18 @@ const CONFIG = {
   STARTER_BLOG_ENABLE: true, // 首页博文区块开关
   STARTER_BLOG_TITLE: '我们的博客',
   STARTER_BLOG_COUNT: 3, // 首页博文区块默认展示前3篇文章
-  STARTER_BLOG_TEXT_1: '最近的新闻',
+  STARTER_BLOG_TEXT_1: '最近发布',
   STARTER_BLOG_TEXT_2:
-    '这里会发布一些关于NotionNext的最新动态，包括新的动向、新的未来计划，以及新功能的特性',
+    '这里会发布香港Henry的最新动态，粉丝福利、包括新的动向、以及新的未来计划',
 
   // 联系模块
   STARTER_CONTACT_ENABLE: true, // 联系模块开关
   STARTER_CONTACT_TITLE: '联系我们',
   STARTER_CONTACT_TEXT: '告诉我们您遇到的问题',
   STARTER_CONTACT_LOCATION_TITLE: '我们的位置',
-  STARTER_CONTACT_LOCATION_TEXT: '中国，福建',
+  STARTER_CONTACT_LOCATION_TEXT: '中国，香港',
   STARTER_CONTACT_EMAIL_TITLE: '我们如何帮助您？',
-  STARTER_CONTACT_EMAIL_TEXT: 'mail@tangly1024.com',
+  STARTER_CONTACT_EMAIL_TEXT: 'henry@dtsdt.com',
 
   // 嵌入外部表单
   STARTER_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/yfctc7', // 基于NoteForm创建，将留言数据存在Notion中
@@ -298,14 +296,14 @@ const CONFIG = {
       TITLE: '关于我们',
       LINK_GROUP: [
         { TITLE: '官方主页', URL: '/#home' },
-        { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
+        { TITLE: '博客主页', URL: 'https://blog.dtsdt/about' },
         {
           TITLE: '帮助支持',
-          URL: 'https://docs.tangly1024.com/article/how-to-question'
+          URL: 'https://www.youtube.com/@hongkonghenry'
         },
         {
           TITLE: '合作申请',
-          URL: 'https://docs.tangly1024.com/article/my-service'
+          URL: 'https://www.youtube.com/@hongkonghenry'
         }
       ]
     },
