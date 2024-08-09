@@ -17,7 +17,7 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '分享金融',
   HEO_HERO_TITLE_2: '思维认知',
-  HEO_HERO_TITLE_3: 'DTSDT.COM',
+  HEO_HERO_TITLE_3: '  DTSDT.COM',
   HEO_HERO_TITLE_4: '新版上线',
   HEO_HERO_TITLE_5: 'Youtube更多精彩视频内容',
   HEO_HERO_TITLE_LINK: 'https://www.youtube.com/@hongkonghenry',
