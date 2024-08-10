@@ -39,7 +39,7 @@ const GlobalHead = props => {
 
   const SEO_GOOGLE_SITE_VERIFICATION = siteConfig(
     'SEO_GOOGLE_SITE_VERIFICATION',
-    'pDVyH1KPaLBtO0qUTeuL0nC8uCh-QVqK67lzsQw3Skw',
+    null,
     NOTION_CONFIG
   )
 
@@ -110,7 +110,7 @@ const GlobalHead = props => {
       {SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
           name='google-site-verification'
-          content='SEO_GOOGLE_SITE_VERIFICATION'
+          content='pDVyH1KPaLBtO0qUTeuL0nC8uCh-QVqK67lzsQw3Skw'
         />
       )}
       {SEO_BAIDU_SITE_VERIFICATION && (
