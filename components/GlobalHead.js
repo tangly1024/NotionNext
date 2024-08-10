@@ -43,11 +43,7 @@ const GlobalHead = props => {
     NOTION_CONFIG
   )
 
-  const SEO_YANDEX_SITE_VERIFICATION = siteConfig(
-    'SEO_YANDEX_SITE_VERIFICATION',
-    null,
-    NOTION_CONFIG
-   )
+  
    
   const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
 
@@ -122,14 +118,9 @@ const GlobalHead = props => {
           content={SEO_BAIDU_SITE_VERIFICATION}
         />
       )}
-      {SEO_YANDEX_SITE_VERIFICATION && (
-         <meta
-          name='yandex-verification'
-          content={1705ba7c6061fc61}
-            />
-            )}
+     
       
-            <meta name='yandex-verification' content={1705ba7c6061fc61} />     
+      <meta name='yandex-verification' content={1705ba7c6061fc61} />     
 
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
