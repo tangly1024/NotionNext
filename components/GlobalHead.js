@@ -119,9 +119,6 @@ const GlobalHead = props => {
         />
       )}
      
-      
-      <meta name='yandex-verification' content={1705ba7c6061fc61} />     
-
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
       <meta property='og:locale' content={lang} />
