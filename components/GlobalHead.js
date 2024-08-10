@@ -39,7 +39,7 @@ const GlobalHead = props => {
 
   const SEO_GOOGLE_SITE_VERIFICATION = siteConfig(
     'SEO_GOOGLE_SITE_VERIFICATION',
-    null,
+    'pDVyH1KPaLBtO0qUTeuL0nC8uCh-QVqK67lzsQw3Skw',
     NOTION_CONFIG
   )
 
