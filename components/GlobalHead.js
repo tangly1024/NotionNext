@@ -125,7 +125,7 @@ const GlobalHead = props => {
       {SEO_YANDEX_SITE_VERIFICATION && (
          <meta
           name='yandex-verification'
-          content='1705ba7c6061fc61'
+          content={1705ba7c6061fc61}
             />
             )}
       
