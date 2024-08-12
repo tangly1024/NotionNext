@@ -10,8 +10,8 @@ const CONFIG = {
 
   // 英雄区块导航
   STARTER_HERO_ENABLE: true, // 开启英雄区
-  STARTER_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
-  STARTER_HERO_TITLE_2: '通过笔记无感知地建站、成倍放大您的价值', // 英雄区文字
+  STARTER_HERO_TITLE_1: '属于欧兰沃斯的设计交流平台', // 英雄区文字
+  STARTER_HERO_TITLE_2: '为设计师和创意人士提供互动和学习的空间', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: 'STORE', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:
@@ -187,7 +187,7 @@ const CONFIG = {
   STARTER_FAQ_2_ANSWER:
     '您可以在订阅之后联系我们，详情参考<a className="underline" href="https://github.com/U0hZiY">《联系我们》</a>',
 
-  STARTER_FAQ_3_QUESTION: '订阅号资源全部免费吗？',
+  STARTER_FAQ_3_QUESTION: '订阅后资源全部免费吗？',
   STARTER_FAQ_3_ANSWER:
     '是的，订阅成为会员，所有模块都将对您免费开放致',
 
