@@ -26,7 +26,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'OnlyOnceDesign', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '对不起，我们只做意式极简', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://onlyonce.net', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.onlyonce.net', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Notion, 博客，onlyonce,家具定制，东莞家具，佛山家具，佛山家具源头工厂，东莞家具源头工厂，孙耀说家具，卢卡斯家具', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
@@ -129,7 +129,7 @@ const BLOG = {
     '/signup': 'LayoutSignUp'
   },
 
-  CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
+  CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || false, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
   // 自定义右键菜单
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU:
     process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU || true, // 自定义右键菜单，覆盖系统菜单
