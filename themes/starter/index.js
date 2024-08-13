@@ -230,7 +230,7 @@ const LayoutSignIn = props => {
       <div className='grow mt-20'>
         <Banner
           title='登录'
-          description='这里是演示页面，NotionNext目前不提供会员登录功能'
+          description='这里是演示页面，OnlyOnceDesign目前不提供会员登录功能'
         />
         <SignInForm />
       </div>
@@ -248,7 +248,7 @@ const LayoutSignUp = props => (
     <div className='grow mt-20'>
       <Banner
         title='注册'
-        description='这里是演示页面，NotionNext目前不提供会员注册功能'
+        description='这里是演示页面，OnlyOnceDesign目前不提供会员注册功能'
       />
       <SignUpForm />
     </div>
