@@ -205,13 +205,13 @@ const CONFIG = {
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
   STARTER_TEAM_ITEMS: [
     {
-      STARTER_TEAM_ITEM_AVATAR: '/public/images/starter/team/developer.png',
+      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/developer.png',
         'https://gpol.top/@U0hZiY',
       STARTER_TEAM_ITEM_NICKNAME: '@U0hZiY',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: '/public/images/starter/team/team-02.png',
+      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
       STARTER_TEAM_ITEM_NICKNAME: '@Keagan',
       STARTER_TEAM_ITEM_DESCRIPTION: '主要合伙人'
     },
