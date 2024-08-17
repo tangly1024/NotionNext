@@ -9,7 +9,7 @@ export default function WordCount() {
   const { locale } = useGlobal()
   useEffect(() => {
     countWords()
-  })
+  }, [])
 
   return <span id='wordCountWrapper' className='flex gap-3 font-light'>
         <span className='flex whitespace-nowrap items-center'>
