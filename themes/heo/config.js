@@ -15,12 +15,12 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  //HEO_HERO_TITLE_1: '洋洋',
-  //HEO_HERO_TITLE_2: '真不错',
-  //HEO_HERO_TITLE_3: 'TANGLY1024.COM',
-  //HEO_HERO_TITLE_4: '洋洋上线',
-  //HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  //HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_1: '洋洋',
+  HEO_HERO_TITLE_2: '真不错',
+  HEO_HERO_TITLE_3: 'TANGLY1024.COM',
+  HEO_HERO_TITLE_4: '洋洋博客',
+  HEO_HERO_TITLE_5: 'Blog-YANGYANG',
+  HEO_HERO_TITLE_LINK: 'http://blog.jin-baba.us.kg',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
