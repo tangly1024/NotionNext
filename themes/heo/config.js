@@ -6,8 +6,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   NOTICE_BAR: [
     { title: '欢迎来到我的博客', url: 'https://www.jackiewu.top' },
-    { title: '点击获取技术支持', url: 'https://www.jackiewu.top/about#2d11779e677b4a769a97b513176bcad0' },
-    { title: '欢迎请我喝杯茶~', url: 'https://www.jackiewu.top/about#3a26c66f1a98429b96013f304b798684' },
+    { title: '点击获取技术支持', url: 'https://www.jackiewu.top/paid-service' },
   ],
 
   // 英雄区(首页顶部大卡)
