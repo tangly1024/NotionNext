@@ -79,7 +79,7 @@ export default function SideRight(props) {
         </Card>}
 
         <Card>
-          <a href="https://interserver.awesome-vps.com" target='_blank'><img src="/images/interserver-1.jpg" alt="InterServer Web Hosting and VPS"/></a>
+          <a href="https://interserver.awesome-vps.com" target='_blank'><img src="/images/cloudcone-1.png" alt="InterServer Web Hosting and VPS"/></a>
         </Card>
 
         {rightAreaSlot}
