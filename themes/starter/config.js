@@ -206,7 +206,6 @@ const CONFIG = {
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/developer.png',
-        'https://gpol.top/@U0hZiY',
       STARTER_TEAM_ITEM_NICKNAME: '@U0hZiY',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
