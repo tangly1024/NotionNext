@@ -3,7 +3,6 @@ import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import Script from 'next/script'
 import { useEffect } from 'react'
 
 /**
@@ -74,6 +73,9 @@ const GlobalHead = props => {
   if (post?.tags && post?.tags?.length > 0) {
     keywords = post?.tags?.join(',')
   }
+
+  // monetag广告开关
+  const AD_MONETAG_TOGGLE = siteConfig('AD_MONETAG_TOGGLE')
 
   useEffect(() => {
     // 使用WebFontLoader字体加载
@@ -161,7 +163,10 @@ const GlobalHead = props => {
       )}
       {children}
 
-      <script src="https://alwingulla.com/88/tag.min.js" data-zone="90797" async data-cfasync="false"></script> 
+      {/* monetag 广告 */}
+      {AD_MONETAG_TOGGLE && (
+        <script src="https://alwingulla.com/88/tag.min.js" data-zone="90797" async data-cfasync="false"></script>
+      )}
     </Head>
   )
 }
