@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 import { useEffect } from 'react'
 
 /**
@@ -95,7 +96,6 @@ const GlobalHead = props => {
 
   return (
     <Head>
-      <meta name='bidvertiser' content={'<!-- Bidvertiser2094881 -->'}/>
       <link rel='icon' href={favicon} />
       <title>{title}</title>
       <meta name='theme-color' content={BACKGROUND_DARK} />
@@ -160,6 +160,8 @@ const GlobalHead = props => {
         </>
       )}
       {children}
+
+      <script src="https://alwingulla.com/88/tag.min.js" data-zone="90797" async data-cfasync="false"></script> 
     </Head>
   )
 }
