@@ -63,6 +63,7 @@ const ExternalPlugin = props => {
   const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
+  const AD_MONETAG_TOGGLE = siteConfig('AD_MONETAG_TOGGLE')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -227,6 +228,11 @@ const ExternalPlugin = props => {
           type='text/javascript'
           src='https://cdn.wwads.cn/js/makemoney.js'
           async></script>
+      )}
+
+      {/*monetag 广告*/}
+      {AD_MONETAG_TOGGLE && (
+        <script src="https://alwingulla.com/88/tag.min.js" data-zone="90797" async data-cfasync="false"></script>
       )}
 
       {/* {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />} */}
