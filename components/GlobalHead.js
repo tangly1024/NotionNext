@@ -95,6 +95,7 @@ const GlobalHead = props => {
 
   return (
     <Head>
+      <meta name='bidvertiser' content={'<!-- Bidvertiser2094881 -->'}/>
       <link rel='icon' href={favicon} />
       <title>{title}</title>
       <meta name='theme-color' content={BACKGROUND_DARK} />
