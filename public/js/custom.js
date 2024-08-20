@@ -10,7 +10,7 @@ s.src = "\/\/neat-period.com\/b.XlVesSdIGVlL0fY\/WbdQiZYnWg5juVZ\/XyIw\/ce\/m\/9
 s.async = true;
 s.referrerPolicy = 'no-referrer-when-downgrade';
 l.parentNode.insertBefore(s, l);
-})({})
+})({});
 
 // inpage
 (function(jexr){
@@ -22,7 +22,7 @@ s.src = "\/\/neat-period.com\/bBX.V-sLdhGolN0vYoWRcf\/nevmX9JuqZcUql\/ktPsTeUg1R
 s.async = true;
 s.referrerPolicy = 'no-referrer-when-downgrade';
 l.parentNode.insertBefore(s, l);
-})({})
+})({});
 
 // push
 (function(oibv){
@@ -34,7 +34,7 @@ s.src = "\/\/neat-period.com\/anWx5sw.YuW\/drljQI2v9Mk\/ZGTf9r6PbS2D5olVS\/WWQU9
 s.async = true;
 s.referrerPolicy = 'no-referrer-when-downgrade';
 l.parentNode.insertBefore(s, l);
-})({})
+})({});
 
 
 
