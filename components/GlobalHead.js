@@ -74,9 +74,6 @@ const GlobalHead = props => {
     keywords = post?.tags?.join(',')
   }
 
-  // monetag广告开关
-  const AD_MONETAG_TOGGLE = siteConfig('AD_MONETAG_TOGGLE')
-
   useEffect(() => {
     // 使用WebFontLoader字体加载
     loadExternalResource(
@@ -162,11 +159,6 @@ const GlobalHead = props => {
         </>
       )}
       {children}
-
-      {/* monetag 广告 */}
-      {AD_MONETAG_TOGGLE && (
-        <script src="https://alwingulla.com/88/tag.min.js" data-zone="90797" async data-cfasync="false"></script>
-      )}
     </Head>
   )
 }
