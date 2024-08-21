@@ -165,6 +165,9 @@ const GlobalHead = props => {
       {
         <meta name="monetag" content="d729b6659ae3721d56ba916bea2fc1af"></meta>
       }
+      {
+        <script async="async" data-cfasync="false" src="//thubanoa.com/1?z=7934889"></script>
+      }
     </Head>
   )
 }
