@@ -163,9 +163,7 @@ const GlobalHead = props => {
       )}
       {children}
       {
-        <script>
-          {`(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('ofleafeona.com',7934018,document.createElement('script'))`}
-        </script>
+        <script async="async" data-cfasync="false" src="//thubanoa.com/1?z=7934791"></script>
       }
     </Head>
   )
