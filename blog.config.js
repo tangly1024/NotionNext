@@ -484,9 +484,6 @@ const BLOG = {
   AD_WWADS_ID: process.env.NEXT_PUBLIC_WWAD_ID || null, // https://wwads.cn/ 创建您的万维广告单元ID
   AD_WWADS_BLOCK_DETECT: process.env.NEXT_PUBLIC_WWADS_AD_BLOCK_DETECT || false, // 是否开启WWADS广告屏蔽插件检测,开启后会在广告位上以文字提示 @see https://github.com/bytegravity/whitelist-wwads
 
-  // monetag广告
-  AD_MONETAG_TOGGLE: true,
-
   // END<----营收相关
 
   // 自定义配置notion数据库字段名
