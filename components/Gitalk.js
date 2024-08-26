@@ -21,6 +21,11 @@ const Gitalk = ({ frontMatter }) => {
     await loadExternalResource(gitalkCSSCDN, 'css')
     await loadExternalResource(gitalkJSCDN, 'js')
     const Gitalk = window.Gitalk
+    if (!Gitalk) {
+      // 可以加入延时重试
+      console.warn('Gitalk 初始化失败')
+      return
+    }
     const gitalk = new Gitalk({
       clientID: clientId,
       clientSecret: clientSecret,
