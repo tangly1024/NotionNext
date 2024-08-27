@@ -5,8 +5,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: '' },
-    { title: '查看卡比的赛博空间', url: 'https://kabi.felixchen.top' }
+    { title: '欢迎来到我的博客', url: 'https://blog.felixchen.top' },
+    { title: '卡比的赛博空间', url: 'https://kabi.felixchen.top' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -18,9 +18,9 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享编程',
   HEO_HERO_TITLE_2: '与摄影生活',
   HEO_HERO_TITLE_3: 'FELIXCHEN.TOP',
-  HEO_HERO_TITLE_4: '随机文档',
-  HEO_HERO_TITLE_5: '访问随机主题带来惊喜 😄',
-  HEO_HERO_TITLE_LINK: 'https://blog.felixchen.top',
+  HEO_HERO_TITLE_4: '願你有個好心情',
+  HEO_HERO_TITLE_5: '或许, 你也想看看我的猫 😄',
+  HEO_HERO_TITLE_LINK: 'https://kabi.felixchen.top',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
@@ -45,9 +45,9 @@ const CONFIG = {
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'mailto:felixchentao@163.com',
+  HEO_INFO_CARD_URL2: 'https://github.com/FelixChenT',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://github.com/FelixChenT',
+  HEO_INFO_CARD_URL3: '/about',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
