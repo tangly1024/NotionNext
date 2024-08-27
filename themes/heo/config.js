@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.felixchen.top' },
+    { title: '欢迎来到我的博客', url: '' },
     { title: '查看卡比的赛博空间', url: 'https://kabi.felixchen.top' }
   ],
 
@@ -35,20 +35,19 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
-    '☂️ 下雨了知道打伞',
-    '🌙 天黑了知道回家',
-    '📱 会玩智能手机',
-    '🥣 饿了会找碗筷',
-    '😋 吃饱放不下碗',
-    '❤️ 心里永远充满爱'
+    '🐱 养着可爱的猫',
+    '🌅 光影书写故事',
+    '🖼️ 画面定格永恒',
+    '🛠️ 代码铸就梦想',
+    '📜 程序编织生活'
   ],
 
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'https://blog.felixchen.top',
+  HEO_INFO_CARD_URL2: 'mailto:felixchentao@163.com',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://kabi.felixchen.top',
+  HEO_INFO_CARD_URL3: 'https://github.com/FelixChenT',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
