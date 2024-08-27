@@ -18,14 +18,14 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享编程',
   HEO_HERO_TITLE_2: '与摄影生活',
   HEO_HERO_TITLE_3: 'FELIXCHEN.TOP',
-  HEO_HERO_TITLE_4: '願你有個好心情',
+  HEO_HERO_TITLE_4: '愿你有个好心情',
   HEO_HERO_TITLE_5: '或许, 你也想看看我的猫 😄',
   HEO_HERO_TITLE_LINK: 'https://kabi.felixchen.top',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
-  HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
-  HEO_HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
+  HEO_HERO_CATEGORY_1: { title: '编程学习', url: '/tag/编程学习' },
+  HEO_HERO_CATEGORY_2: { title: '镜影故事', url: '/tag/镜影故事' },
+  HEO_HERO_CATEGORY_3: { title: '素日杂记', url: '/tag/素日杂记' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
