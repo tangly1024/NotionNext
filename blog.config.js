@@ -38,7 +38,7 @@ const BLOG = {
   CONTACT_LINKEDIN: process.env.NEXT_PUBLIC_CONTACT_LINKEDIN || '', // 你的linkedIn 首页
   CONTACT_INSTAGRAM: process.env.NEXT_PUBLIC_CONTACT_INSTAGRAM || '', // 您的instagram地址
   CONTACT_BILIBILI: process.env.NEXT_PUBLIC_CONTACT_BILIBILI || 'https://space.bilibili.com/625752715/setting', // B站主页
-  CONTACT_YOUTUBE: process.env.NEXT_PUBLIC_CONTACT_YOUTUBE || 'https://www.youtube.com/@yuhanbo', // Youtube主页
+  CONTACT_YOUTUBE: process.env.NEXT_PUBLIC_CONTACT_YOUTUBE || '', // Youtube主页
   CONTACT_XIAOHONGSHU: process.env.NEXT_PUBLIC_CONTACT_XIAOHONGSHU || '', // 小红书主页
   CONTACT_ZHISHIXINGQIU: process.env.NEXT_PUBLIC_CONTACT_ZHISHIXINGQIU || '', // 知识星球
   CONTACT_ZHISHIXINGQIU: process.env.NEXT_PUBLIC_CONTACT_TOUTIAOHAO || 'https://www.toutiao.com/c/user/token/MS4wLjABAAAA-iWA1j8GKMUmFDZAFc13moa5H0CZqcG1WFBmr0FZS7I/?source=tuwen_detail&entrance_gid=7355715907177628172&log_from=1dfb3fadc3145_1724836641459', // 知识星球
