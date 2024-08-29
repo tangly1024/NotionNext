@@ -3,7 +3,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 /**
- * 出现页面加载进度条
+ * 加载进度条
+ * NProgress实现
  */
 export default function LoadingProgress() {
   const router = useRouter()

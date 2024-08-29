@@ -63,6 +63,7 @@ const ExternalPlugin = props => {
   const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
+  const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', true)
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -145,7 +146,7 @@ const ExternalPlugin = props => {
       {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
       {TIANLI_KEY && <TianLiGPT />}
       <VConsole />
-      <LoadingProgress />
+      {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
 
