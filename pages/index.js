@@ -3,6 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateRss } from '@/lib/rss'
+import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { getLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
@@ -62,6 +63,8 @@ export async function getStaticProps(req) {
   generateRobotsTxt(props)
   // 生成Feed订阅
   generateRss(props)
+  // 生成
+  generateSitemapXml(props)
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 

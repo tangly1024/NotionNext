@@ -109,7 +109,7 @@ function createNest() {
 
 function destroyNest() {
   const nest = document.getElementById(idNest)
-  if(nest && nest.parentNode){
+  if (nest && nest.parentNode && nest.parentNode.contains(nest)) {
     nest.parentNode.removeChild(nest)
   }
 }
