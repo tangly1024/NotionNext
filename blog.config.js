@@ -311,19 +311,19 @@ const BLOG = {
     {
       name: 'The Faith 最终信仰',
       artist: '尚雯婕',
-      url: 'https://c6.y.qq.com/base/fcgi-bin/u?__=GGuLNT0g0TBs',
+      url: 'https://open.spotify.com/track/7dg3GoD2vXfjRTXMNOMGri?si=806afa3165be40de',
       cover:
         'https://images.app.goo.gl/VD7yr9ULJggt7Bau6'
     },
     {
-      name: 'That Bra',
+      name: '我想我是你的女人',
       artist: '尚雯婕',
-      url: 'https://c6.y.qq.com/base/fcgi-bin/u?__=YoCDMU0g0yO1',
+      url: 'https://open.spotify.com/track/3HntACRQloet6oBCh9HNQl?si=85a222aa565b4ada',
       cover:
         'https://images.app.goo.gl/9xbvFW9L5Xt3e6iQ9'
     }
   ],
-  MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
+  MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || true, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_SERVER || 'tencent', // 音乐平台，[netease, tencent, kugou, xiami, baidu]
   MUSIC_PLAYER_METING_ID:
@@ -513,7 +513,7 @@ const BLOG = {
   },
 
   // RSS订阅
-  ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
+  ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || false, // 是否开启RSS订阅功能
   MAILCHIMP_LIST_ID: process.env.MAILCHIMP_LIST_ID || null, // 开启mailichimp邮件订阅 客户列表ID ，具体使用方法参阅文档
   MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY || null, // 开启mailichimp邮件订阅 APIkey
 
