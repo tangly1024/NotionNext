@@ -82,7 +82,7 @@ const CONFIG = {
       color_1: '#eb6840',
       title_2: 'klaxon',
       img_2: '/images/heo/klaxon.png',
-      color_2: '#8f55ba'
+      color_2: '#ffffff'
     },
     {
       title_1: 'illustrator',
@@ -114,7 +114,7 @@ const CONFIG = {
       color_1: '#df5b40',
       title_2: 'klaxon',
       img_2: '/images/heo/klaxon.png',
-      color_2: '#1f1f1f'
+      color_2: '#ffffff'
     }
   ],
 
