@@ -15,7 +15,7 @@ const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
 const locales = (function () {
   // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
   // 支持如下格式配置多个语言的页面id xxx,zh:xxx,en:xxx
-  let langs = [BLOG.LANG.slice(0, 2)]
+  const langs = [BLOG.LANG.slice(0, 2)]
   if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
     const siteIds = BLOG.NOTION_PAGE_ID.split(',')
     for (let index = 0; index < siteIds.length; index++) {
@@ -33,14 +33,17 @@ const locales = (function () {
 })()
 
 // 编译前执行
-// const preBuild = (function () {
-//   // 删除 public/sitemap.xml 文件 ； 否则会和/pages/sitemap.xml.js 冲突。
-//   const sitemapPath = path.resolve(__dirname, 'public', 'sitemap.xml')
-//   if (fs.existsSync(sitemapPath)) {
-//     fs.unlinkSync(sitemapPath)
-//     console.log('Deleted existing sitemap.xml from public directory')
-//   }
-// })()
+const preBuild = (function () {
+  const sitemapPath = path.resolve(__dirname, 'public', 'sitemap.xml')
+  if (process.env.EXPORT && fs.existsSync(sitemapPath)) {
+    // 删除 public/sitemap.xml 文件 ； 否则会和/pages/sitemap.xml.js 冲突。
+    fs.unlinkSync(sitemapPath)
+    return 'Deleted existing sitemap.xml from public directory'
+  } else {
+    return 'Nothing to do before build'
+  }
+})()
+console.log(preBuild)
 
 /**
  * 扫描指定目录下的文件夹名，用于获取所有主题
