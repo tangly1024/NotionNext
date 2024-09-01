@@ -1,1 +1,3 @@
 google.com, pub-9192211072764171, DIRECT, f08c47fec0942fa0
+appnexus.com, 14163, RESELLER 
+monetizenow.microsoft.com, 254021765, DIRECT
