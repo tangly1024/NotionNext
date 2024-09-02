@@ -163,20 +163,8 @@ const GlobalHead = props => {
       )}
       {children}
 
-      {
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D967ETGCSW"></script>
-      }
-      {
-        <script>
-          {
-            `window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
       
-              gtag('config', 'G-D967ETGCSW');`
-          }
-      </script>
-      }
+
       {
         <script>{`window.msAdsQueue = window.msAdsQueue || [];`}</script>
       }

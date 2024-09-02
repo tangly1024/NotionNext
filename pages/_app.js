@@ -12,6 +12,7 @@ import { getGlobalLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
+import { GoogleTagManager } from '@next/third-parties/google'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
@@ -53,6 +54,7 @@ const MyApp = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </GLayout>
       <ExternalPlugins {...pageProps} />
+      <GoogleTagManager gtmId={`GTM-5WXBJL6B`} />
     </GlobalContextProvider>
   )
 }
