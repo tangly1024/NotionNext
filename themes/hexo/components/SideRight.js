@@ -85,21 +85,26 @@ export default function SideRight(props) {
             <TagGroups tags={tags} currentTag={currentTag} />
           </Card>
         )}
-        {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) &&
+
+        {/* {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) &&
           latestPosts &&
           latestPosts.length > 0 && (
             <Card>
               <LatestPostsGroup {...props} />
             </Card>
-          )}
+        )} */}
 
-        <Announcement post={notice} />
+        {/* <Announcement post={notice} /> */}
 
-        {siteConfig('COMMENT_WALINE_SERVER_URL') &&
-          siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />}
+        {/* {siteConfig('COMMENT_WALINE_SERVER_URL') &&
+          siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />} */}
 
         <Card>
-          <a href="https://cloudcone.awesome-vps.com" target='_blank'><img src="/images/cloudcone-1.png" alt="InterServer Web Hosting and VPS"/></a>
+          <a href="https://fas.st/t/g6ceKiYb" target='_blank'><img src="/images/proxyscrape-premium.png" alt="ProxyScrape"/></a>
+        </Card> 
+        
+        <Card>
+          <a href="https://cloudcone.awesome-vps.com" target='_blank'><img src="/images/cloudcone-1.png" alt="Cloudcone Web Hosting and VPS"/></a>
         </Card>
 
         {rightAreaSlot}
