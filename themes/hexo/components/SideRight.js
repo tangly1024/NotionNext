@@ -56,7 +56,12 @@ export default function SideRight(props) {
   return (
     <div
       id='sideRight'
-      className={` lg:w-80 lg:pt-8 ${post ? 'lg:pt-0' : 'lg:pt-4'}`}>
+      className={` lg:w-80  ${post ? 'lg:pt-0' : 'lg:pt-4'}`}>
+
+      <div style={{marginBottom: '1rem'}}>
+        <InfoCard {...props} />
+      </div>
+
       <div className='sticky top-8 space-y-4'>
         {post && post.toc && post.toc.length > 1 && (
           <Card>
@@ -64,12 +69,13 @@ export default function SideRight(props) {
           </Card>
         )}
 
-        <InfoCard {...props} />
-        {siteConfig('HEXO_WIDGET_ANALYTICS', null, CONFIG) && (
-          <AnalyticsCard {...props} />
-        )}
+      
 
-        {showCategory && (
+        {/* {siteConfig('HEXO_WIDGET_ANALYTICS', null, CONFIG) && (
+          <AnalyticsCard {...props} />
+        )} */}
+
+        {/* {showCategory && (
           <Card>
             <div className='ml-2 mb-1 '>
               <i className='fas fa-th' /> {locale.COMMON.CATEGORY}
@@ -79,12 +85,13 @@ export default function SideRight(props) {
               categories={categories}
             />
           </Card>
-        )}
-        {showTag && (
+        )} */}
+
+        {/* {showTag && (
           <Card>
             <TagGroups tags={tags} currentTag={currentTag} />
           </Card>
-        )}
+        )} */}
 
         {/* {siteConfig('HEXO_WIDGET_LATEST_POSTS', null, CONFIG) &&
           latestPosts &&
