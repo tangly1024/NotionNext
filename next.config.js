@@ -15,7 +15,7 @@ const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
 const locales = (function () {
   // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
   // 支持如下格式配置多个语言的页面id xxx,zh:xxx,en:xxx
-  const langs = ['zh', 'en']
+  let langs = [BLOG.LANG.slice(0, 2)]
   if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
     const siteIds = BLOG.NOTION_PAGE_ID.split(',')
     for (let index = 0; index < siteIds.length; index++) {
@@ -185,6 +185,10 @@ const nextConfig = {
       'themes',
       THEME
     )
+    // Enable source maps in development mode
+    if (process.env.NODE_ENV_API === 'development') {
+      config.devtool = 'source-map'
+    }
     return config
   },
   experimental: {
@@ -201,7 +205,6 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     // 这里的配置既可以服务端获取到，也可以在浏览器端获取到
-    NODE_ENV_API: process.env.NODE_ENV_API || 'prod',
     THEMES: themes
   }
 }
