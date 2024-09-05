@@ -19,11 +19,14 @@ const OpenWrite = () => {
     'OPEN_WRITE_BTN_TEXT',
     '原创不易，完成人机检测，阅读全文'
   )
+  // 验证一次后的有效时长，单位小时
+  const cookieAge = siteConfig('OPEN_WRITE_VALIDITY_DURATION', 1)
   // 白名单
   const whiteList = siteConfig('OPEN_WRITE_WHITE_LIST', '')
 
   const loadOpenWrite = async () => {
     const existWhite = existedWhiteList(router.asPath, whiteList)
+
     // 如果当前页面在白名单中，则屏蔽加锁
     if (existWhite) {
       return
@@ -45,7 +48,8 @@ const OpenWrite = () => {
           name,
           btnText,
           keyword,
-          blogId
+          blogId,
+          cookieAge
         })
       }
     } catch (error) {
