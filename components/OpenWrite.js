@@ -1,6 +1,5 @@
 import { siteConfig } from '@/lib/config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 /**
  * OpenWrite公众号导流插件
@@ -9,7 +8,6 @@ import { useEffect } from 'react'
  * @returns
  */
 const OpenWrite = () => {
-  const router = useRouter()
   const qrcode = siteConfig('OPEN_WRITE_QRCODE', '请配置公众号二维码')
   const blogId = siteConfig('OPEN_WRITE_BLOG_ID')
   const name = siteConfig('OPEN_WRITE_NAME', '请配置公众号名')
@@ -47,7 +45,13 @@ const OpenWrite = () => {
 
   useEffect(() => {
     if (isBrowser && blogId) {
-      loadOpenWrite()
+      // Check if the element with id 'read-more-wrap' already exists
+      const readMoreWrap = document.getElementById('read-more-wrap')
+
+      // Only load the script if the element doesn't exist
+      if (!readMoreWrap) {
+        loadOpenWrite()
+      }
     }
   })
 
