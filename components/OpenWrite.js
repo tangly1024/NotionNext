@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 /**
  * OpenWrite公众号导流插件
  * 使用介绍：https://openwrite.cn/guide/readmore/readmore.html#%E4%BA%8C%E3%80%81%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8
@@ -19,8 +19,6 @@ const OpenWrite = () => {
     'OPEN_WRITE_BTN_TEXT',
     '原创不易，完成人机检测，阅读全文'
   )
-
-  const hasLoaded = useRef(false)
 
   const loadOpenWrite = async () => {
     try {
@@ -48,11 +46,10 @@ const OpenWrite = () => {
   }
 
   useEffect(() => {
-    if (isBrowser && blogId && !hasLoaded.current) {
+    if (isBrowser && blogId) {
       loadOpenWrite()
-      hasLoaded.current = true
     }
-  }, [router])
+  })
 
   return <></>
 }
