@@ -3,6 +3,7 @@
 import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
 import Live2D from '@/components/Live2D'
+import LoadingCover from '@/components/LoadingCover'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -113,6 +114,11 @@ const LayoutBase = props => {
     setFilteredNavPages(getNavPagesWithLatest(allNavPages, latestPosts, post))
   }, [router])
 
+  const GITBOOK_LOADING_COVER = siteConfig(
+    'GITBOOK_LOADING_COVER',
+    true,
+    CONFIG
+  )
   return (
     <ThemeGlobalGitbook.Provider
       value={{
@@ -236,6 +242,8 @@ const LayoutBase = props => {
             </div>
           )}
         </main>
+
+        {GITBOOK_LOADING_COVER && <LoadingCover />}
 
         {/* 移动端导航抽屉 */}
         <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
