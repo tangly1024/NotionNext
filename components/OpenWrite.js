@@ -83,7 +83,7 @@ function existedWhiteList(path, whiteListStr) {
   // 移除查询参数（从 '?' 开始的部分）和 `.html` 后缀
   const processedPath = path
     .replace(/\?.*$/, '') // 移除查询参数
-    .replace(/.*\/([^\/]+)(?:\.html)?$/, '$1') // 去掉前面的路径和 .html
+    .replace(/.*\/([^/]+)(?:\.html)?$/, '$1') // 去掉前面的路径和 .html
 
   // 严格检查白名单字符串中是否包含处理后的 path
   //   const whiteListArray = whiteListStr.split(',')
