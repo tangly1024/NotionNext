@@ -15,12 +15,12 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享编程',
-  HEO_HERO_TITLE_2: '与思维认知',
-  HEO_HERO_TITLE_3: 'TANGLY1024.COM',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_1: '分享个人学习',
+  HEO_HERO_TITLE_2: '与生活',
+  HEO_HERO_TITLE_3: 'gaoqilan.tech',
+  HEO_HERO_TITLE_4: '玩的开心',
+  HEO_HERO_TITLE_5: '上了生活的贼船，就要做快乐的海盗',
+  HEO_HERO_TITLE_LINK: 'gaoqilan.tech',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
