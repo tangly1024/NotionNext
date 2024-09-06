@@ -288,14 +288,17 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600`}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
         {!lock && (
-          <div id='article-wrapper' className='mx-auto md:w-full md:px-5'>
+          <div className='mx-auto md:w-full md:px-5'>
             {/* 文章主体 */}
-            <article itemScope itemType='https://schema.org/Movie'>
+            <article
+              id='article-wrapper'
+              itemScope
+              itemType='https://schema.org/Movie'>
               {/* Notion文章主体 */}
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
