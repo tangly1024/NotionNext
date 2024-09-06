@@ -55,9 +55,12 @@ const OpenWrite = () => {
         // btw初始化后，开始监听read-more-wrap何时消失
         const intervalId = setInterval(() => {
           const readMoreWrapElement = document.getElementById('read-more-wrap')
+          const articleWrapElement = document.getElementById('article-wrapper')
 
-          if (!readMoreWrapElement) {
+          if (!readMoreWrapElement && articleWrapElement) {
             toggleTocItems(false) // 恢复目录项的点击
+            // 自动调整文章区域的高度
+            articleWrapElement.style.height = 'auto'
             // 停止定时器
             clearInterval(intervalId)
           }
