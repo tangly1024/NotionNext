@@ -143,8 +143,8 @@ const LayoutSlug = props => {
       <Banner title={post?.title} description={post?.summary} />
       <div className='container grow'>
         <div className='flex flex-wrap justify-center -mx-4'>
-          <div className='w-full p-4'>
-            <div id='container-inner' className='mx-auto'>
+          <div id='container-inner' className='w-full p-4'>
+            <div id='article-wrapper' className='mx-auto'>
               <NotionPage {...props} />
             </div>
           </div>
