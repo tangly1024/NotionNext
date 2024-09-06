@@ -139,7 +139,7 @@ const BLOG = {
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE:
     process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE || true, // 是否显示深色模式
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK:
-    process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK || true, // 是否显示分享链接
+    process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK || false, // 是否显示分享链接
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_RANDOM_POST:
     process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_RANDOM_POST || true, // 是否显示随机博客
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_CATEGORY:
@@ -202,7 +202,7 @@ const BLOG = {
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
   SUB_PATH: '', // leave this empty unless you want to deploy in a folder
 
-  POST_SHARE_BAR_ENABLE: process.env.NEXT_PUBLIC_POST_SHARE_BAR || 'true', // 文章分享功能 ，将在底部显示一个分享条
+  POST_SHARE_BAR_ENABLE: process.env.NEXT_PUBLIC_POST_SHARE_BAR || 'false', // 文章分享功能 ，将在底部显示一个分享条
   POSTS_SHARE_SERVICES:
     process.env.NEXT_PUBLIC_POST_SHARE_SERVICES ||
     'link,wechat,qq,weibo,email,facebook,twitter,telegram,messenger,line,reddit,whatsapp,linkedin', // 分享的服務，按顺序显示,逗号隔开
