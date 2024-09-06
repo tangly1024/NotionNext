@@ -53,7 +53,7 @@ const OpenWrite = () => {
         })
 
         // btw初始化后，开始监听read-more-wrap何时消失
-        let intervalId = setInterval(() => {
+        const intervalId = setInterval(() => {
           const readMoreWrapElement = document.getElementById('read-more-wrap')
 
           if (!readMoreWrapElement) {
