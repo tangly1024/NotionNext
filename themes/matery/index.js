@@ -254,9 +254,7 @@ const LayoutSlug = props => {
           {lock && <ArticleLock validPassword={validPassword} />}
 
           {!lock && (
-            <div
-              id='article-wrapper'
-              className='overflow-x-auto md:w-full px-3 '>
+            <div className='overflow-x-auto md:w-full px-3 '>
               {/* 文章信息 */}
               {post?.type && post?.type === 'Post' && (
                 <>
@@ -268,7 +266,7 @@ const LayoutSlug = props => {
               )}
 
               <div className='lg:px-10 subpixel-antialiased'>
-                <article itemScope>
+                <article id='article-wrapper' itemScope>
                   {/* Notion文章主体 */}
                   <section
                     data-wow-delay='.1s'
