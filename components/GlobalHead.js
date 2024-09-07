@@ -277,7 +277,7 @@ const getSEOMeta = (props, router, locale) => {
     default:
       return {
         title: post
-          ? `${post?.title}`
+          ? `${post?.title} | ${siteInfo?.title}`
           : `${siteTitle} | loading`,
         description: post?.summary,
         type: post?.type,
