@@ -915,6 +915,7 @@ code[class*='language-'] {
 }
 
 .notion-asset-caption {
+  display: none;
   padding: 6px 0 6px 2px;
   white-space: pre-wrap;
   word-break: break-word;
