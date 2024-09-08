@@ -224,9 +224,7 @@ const LayoutSlug = props => {
     <>
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      <div
-        id='article-wrapper'
-        className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+      <div className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
         {/* 文章信息 */}
         <ArticleInfo post={post} />
 
@@ -234,8 +232,10 @@ const LayoutSlug = props => {
         {/* <AdSlot type={'in-article'} /> */}
         <WWAds orientation='horizontal' className='w-full' />
 
-        {/* Notion文章主体 */}
-        {!lock && <NotionPage post={post} />}
+        <div id='article-wrapper'>
+          {/* Notion文章主体 */}
+          {!lock && <NotionPage post={post} />}
+        </div>
 
         {/* 分享 */}
         <ShareBar post={post} />

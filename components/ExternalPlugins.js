@@ -63,6 +63,7 @@ const ExternalPlugin = props => {
   const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
+  const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', true)
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -145,7 +146,7 @@ const ExternalPlugin = props => {
       {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
       {TIANLI_KEY && <TianLiGPT />}
       <VConsole />
-      <LoadingProgress />
+      {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
 
@@ -186,10 +187,19 @@ const ExternalPlugin = props => {
             async
             dangerouslySetInnerHTML={{
               __html: `
-                (function(c,l,a,r,i,t,y){
-                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                (function(c, l, a, r, i, t, y) {
+                  c[a] = c[a] || function() {
+                    (c[a].q = c[a].q || []).push(arguments);
+                  };
+                  t = l.createElement(r);
+                  t.async = 1;
+                  t.src = "https://www.clarity.ms/tag/" + i;
+                  y = l.getElementsByTagName(r)[0];
+                  if (y && y.parentNode) {
+                    y.parentNode.insertBefore(t, y);
+                  } else {
+                    l.head.appendChild(t);
+                  }
                 })(window, document, "clarity", "script", "${CLARITY_ID}");
                 `
             }}
@@ -204,8 +214,24 @@ const ExternalPlugin = props => {
             async
             dangerouslySetInnerHTML={{
               __html: `
-              (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/daf1a94b.js","daovoice")
-              `
+                (function(i, s, o, g, r, a, m) {
+                  i["DaoVoiceObject"] = r;
+                  i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments);
+                  };
+                  i[r].l = 1 * new Date();
+                  a = s.createElement(o);
+                  m = s.getElementsByTagName(o)[0];
+                  a.async = 1;
+                  a.src = g;
+                  a.charset = "utf-8";
+                  if (m && m.parentNode) {
+                    m.parentNode.insertBefore(a, m);
+                  } else {
+                    s.head.appendChild(a);
+                  }
+                })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/daf1a94b.js", "daovoice")
+                `
             }}
           />
           <script

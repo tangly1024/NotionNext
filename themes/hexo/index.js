@@ -141,10 +141,7 @@ const LayoutBase = props => {
             </div>
 
             {/* 右侧栏 */}
-            <SideRight
-              {...props}
-              className={`space-y-4 lg:w-80 pt-4 ${post ? 'lg:pt-0' : 'lg:pt-4'}`}
-            />
+            <SideRight {...props} />
           </div>
         </main>
 
@@ -290,10 +287,9 @@ const LayoutSlug = props => {
         {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && (
-          <div
-            id='article-wrapper'
-            className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
+          <div className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
             <article
+              id='article-wrapper'
               itemScope
               itemType='https://schema.org/Movie'
               className='subpixel-antialiased overflow-y-hidden'>
