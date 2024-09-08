@@ -9,7 +9,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: 'wellcome', url: 'https://www.amoze.cc/' },
-    { title: '访问文档中心获取更多帮助', url: 'https://www.amoze.cc/' }
+    { title: '🔍The on-site search function has been optimized, come and experience more accurate content search', url: 'https://www.amoze.cc/' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -20,7 +20,7 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: 'Share programming',
   HEO_HERO_TITLE_2: 'and Cognitive Thinking',
-  HEO_HERO_TITLE_3: 'www.amoze.cc/',
+  HEO_HERO_TITLE_3: 'www.amoze.cc',
   HEO_HERO_TITLE_4: 'Web Performance Optimization',
   HEO_HERO_TITLE_5: 'Full-Stack Solutions',
   HEO_HERO_TITLE_LINK: 'https://https://www.amoze.cc/',
