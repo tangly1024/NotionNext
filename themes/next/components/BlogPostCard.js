@@ -116,7 +116,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
           <div className='text-right border-t pt-6 border-solid'>
             <Link
               href={post?.href}
-              className='hover:bg-opacity-90 transform hover:scale-105 transition-all duration-200 px-4 py-3 text-white bg-gray-700 shadow-md cursor-pointer'
+              className='hover:bg-opacity-90 transform hover:scale-105 transition-all duration-200 px-4 py-3 text-white bg-gray-700 shadow-md cursor-pointer'>
               {locale.COMMON.ARTICLE_DETAIL}
               <i className='ml-1 fas fa-angle-right' />
             </Link>
