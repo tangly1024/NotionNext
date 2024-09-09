@@ -102,6 +102,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
             </div>
           )}
 
+          {/* 
           <div className='text-right border-t pt-8 border-dashed'>
             <Link
               href={post?.href}
@@ -110,6 +111,17 @@ const BlogPostCard = ({ post, index, showSummary }) => {
               <i className='ml-1 fas fa-angle-right' />
             </Link>
           </div>
+          */}
+
+          <div className='text-right border-t pt-4 border-solid'>
+            <Link
+              href={post?.href}
+              className='hover:bg-opacity-90 hover:underline transform hover:scale-105 transition-all duration-200 px-4 py-2 text-white bg-gray-700 shadow-md cursor-pointer'>
+              {locale.COMMON.ARTICLE_DETAIL}
+              <i className='ml-1 fas fa-angle-right' />
+            </Link>
+          </div>
+
         </div>
 
         {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) &&
