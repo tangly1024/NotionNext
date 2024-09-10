@@ -204,7 +204,9 @@ const nextConfig = {
     return config
   },
   experimental: {
-    scrollRestoration: true
+    scrollRestoration: true,
+    workerThreads: false,
+    cpus: 1
   },
   exportPathMap: async function (
     defaultPathMap,
