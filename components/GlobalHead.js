@@ -169,7 +169,7 @@ const GlobalHead = props => {
         <script>{`window.msAdsQueue = window.msAdsQueue || [];`}</script>
       }
       {
-        <script async src="https://adsdk.microsoft.com/mmnow/sdk.js?siteId=10323061&publisherId=254021765" crossorigin="anonymous"></script>
+        <script async src="https://adsdk.microsoft.com/mmnow/sdk.js?siteId=365104&publisherId=254037100" crossorigin="anonymous"></script>
       }
     </Head>
   )
