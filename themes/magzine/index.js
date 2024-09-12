@@ -1,0 +1,374 @@
+import Comment from '@/components/Comment'
+import replaceSearchResult from '@/components/Mark'
+import NotionPage from '@/components/NotionPage'
+import ShareBar from '@/components/ShareBar'
+import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { isBrowser } from '@/lib/utils'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { createContext, useContext, useEffect, useState } from 'react'
+import Announcement from './components/Announcement'
+import ArticleAround from './components/ArticleAround'
+import ArticleInfo from './components/ArticleInfo'
+import { ArticleLock } from './components/ArticleLock'
+import BlogArchiveItem from './components/BlogArchiveItem'
+import BlogPostCardHorizontal from './components/BlogPostCardHorizontal'
+import BlogPostCardTop from './components/BlogPostCardTop'
+import BlogPostListPage from './components/BlogPostListPage'
+import BlogPostListScroll from './components/BlogPostListScroll'
+import Catalog from './components/Catalog'
+import CategoryGroup from './components/CategoryGroup'
+import CategoryItem from './components/CategoryItem'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import InfoCard from './components/InfoCard'
+import SearchInput from './components/SearchInput'
+import TagGroups from './components/TagGroups'
+import TagItemMini from './components/TagItemMini'
+import TocDrawer from './components/TocDrawer'
+import CONFIG from './config'
+import { Style } from './style'
+
+// 主题全局状态
+const ThemeGlobalMagzine = createContext()
+export const useMagzineGlobal = () => useContext(ThemeGlobalMagzine)
+
+/**
+ * 基础布局
+ * 采用左右两侧布局，移动端使用顶部导航栏
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const LayoutBase = props => {
+  const { children, showInfoCard = true, post, notice } = props
+  const { locale } = useGlobal()
+  const router = useRouter()
+  const [tocVisible, changeTocVisible] = useState(false)
+  const { onLoading, fullWidth } = useGlobal()
+  const [slotRight, setSlotRight] = useState(null)
+
+  return (
+    <ThemeGlobalMagzine.Provider value={{ tocVisible, changeTocVisible }}>
+      {/* CSS样式 */}
+      <Style />
+
+      <div
+        id='theme-medium'
+        className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
+        <main
+          id='wrapper'
+          className={'relative flex justify-between w-full h-full mx-auto'}>
+          {/* 主区 */}
+          <div id='container-wrapper' className='w-full relative z-10'>
+            <Header {...props} />
+            <div id='main' role='main'>
+              {children}
+            </div>
+            {/* 底部 */}
+            <Footer title={siteConfig('TITLE')} />
+          </div>
+        </main>
+      </div>
+    </ThemeGlobalMagzine.Provider>
+  )
+}
+
+/**
+ * 首页
+ * 首页就是一个博客列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutIndex = props => {
+  const { posts, notice } = props
+  const top = posts[0]
+  const post1 = posts[1]
+  const post2 = posts[2]
+  return (
+    <div className='container mx-auto max-w-7xl'>
+      {/* 首屏文章 */}
+
+      <div className='md:flex justify-between py-10 md:py-16'>
+        <div className='basis-1/2 mb-6'>
+          <BlogPostCardTop post={top} />
+        </div>
+        <div className='px-10'>
+          <div className='flex justify-between px-4 w-full'>
+            <InfoCard {...props} />
+            <Announcement post={notice} />
+          </div>
+          {/* 两篇主要文章 */}
+          <div>
+            <BlogPostCardHorizontal post={post1} />
+            <BlogPostCardHorizontal post={post2} />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * 博客列表
+ * @returns
+ */
+const LayoutPostList = props => {
+  return (
+    <>
+      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+        <BlogPostListPage {...props} />
+      ) : (
+        <BlogPostListScroll {...props} />
+      )}
+    </>
+  )
+}
+
+/**
+ * 文章详情
+ * @param {*} props
+ * @returns
+ */
+const LayoutSlug = props => {
+  const { post, prev, next, lock, validPassword } = props
+  const { locale } = useGlobal()
+  const slotRight = post?.toc && post?.toc?.length >= 3 && (
+    <div key={locale.COMMON.TABLE_OF_CONTENTS}>
+      <Catalog toc={post?.toc} />
+    </div>
+  )
+
+  const router = useRouter()
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(
+        () => {
+          if (isBrowser) {
+            const article = document.getElementById('notion-article')
+            if (!article) {
+              router.push('/404').then(() => {
+                console.warn('找不到页面', router.asPath)
+              })
+            }
+          }
+        },
+        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+      )
+    }
+  }, [post])
+
+  return (
+    <div {...props}>
+      {/* 文章锁 */}
+      {lock && <ArticleLock validPassword={validPassword} />}
+
+      {!lock && (
+        <div>
+          {/* 文章信息 */}
+          <ArticleInfo {...props} />
+
+          {/* Notion文章主体 */}
+          <article id='article-wrapper' className='px-1 max-w-4xl'>
+            {post && <NotionPage post={post} />}
+          </article>
+
+          {/* 文章底部区域  */}
+          <section>
+            {/* 分享 */}
+            <ShareBar post={post} />
+            {/* 文章分类和标签信息 */}
+            <div className='flex justify-between'>
+              {siteConfig('MEDIUM_POST_DETAIL_CATEGORY', null, CONFIG) &&
+                post?.category && <CategoryItem category={post?.category} />}
+              <div>
+                {siteConfig('MEDIUM_POST_DETAIL_TAG', null, CONFIG) &&
+                  post?.tagItems?.map(tag => (
+                    <TagItemMini key={tag.name} tag={tag} />
+                  ))}
+              </div>
+            </div>
+            {/* 上一篇下一篇文章 */}
+            {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+            {/* 评论区 */}
+            <Comment frontMatter={post} />
+          </section>
+
+          {/* 移动端目录 */}
+          <TocDrawer {...props} />
+        </div>
+      )}
+    </div>
+  )
+}
+
+/**
+ * 搜索
+ * @param {*} props
+ * @returns
+ */
+const LayoutSearch = props => {
+  const { locale } = useGlobal()
+  const { keyword } = props
+  const router = useRouter()
+  const currentSearch = keyword || router?.query?.s
+
+  useEffect(() => {
+    if (isBrowser) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
+      })
+    }
+  }, [])
+
+  return (
+    <>
+      {/* 搜索导航栏 */}
+      <div className='py-12'>
+        <div className='pb-4 w-full'>{locale.NAV.SEARCH}</div>
+        <SearchInput currentSearch={currentSearch} {...props} />
+        {!currentSearch && (
+          <>
+            <TagGroups {...props} />
+            <CategoryGroup {...props} />
+          </>
+        )}
+      </div>
+
+      {/* 文章列表 */}
+      {currentSearch && (
+        <div>
+          {siteConfig('POST_LIST_STYLE') === 'page' ? (
+            <BlogPostListPage {...props} />
+          ) : (
+            <BlogPostListScroll {...props} />
+          )}
+        </div>
+      )}
+    </>
+  )
+}
+
+/**
+ * 归档
+ * @param {*} props
+ * @returns
+ */
+const LayoutArchive = props => {
+  const { archivePosts } = props
+  return (
+    <>
+      <div className='mb-10 pb-20 md:py-12 py-3  min-h-full'>
+        {Object.keys(archivePosts)?.map(archiveTitle => (
+          <BlogArchiveItem
+            key={archiveTitle}
+            archiveTitle={archiveTitle}
+            archivePosts={archivePosts}
+          />
+        ))}
+      </div>
+    </>
+  )
+}
+
+/**
+ * 404
+ * @param {*} props
+ * @returns
+ */
+const Layout404 = props => {
+  return (
+    <>
+      <div className='w-full h-96 py-80 flex justify-center items-center'>
+        404 Not found.
+      </div>
+    </>
+  )
+}
+
+/**
+ * 分类列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutCategoryIndex = props => {
+  const { categoryOptions } = props
+  const { locale } = useGlobal()
+  return (
+    <>
+      <div className='bg-white dark:bg-gray-700 py-10'>
+        <div className='dark:text-gray-200 mb-5'>
+          <i className='mr-4 fas fa-th' />
+          {locale.COMMON.CATEGORY}:
+        </div>
+        <div id='category-list' className='duration-200 flex flex-wrap'>
+          {categoryOptions?.map(category => {
+            return (
+              <Link
+                key={category.name}
+                href={`/category/${category.name}`}
+                passHref
+                legacyBehavior>
+                <div
+                  className={
+                    'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
+                  }>
+                  <i className='mr-4 fas fa-folder' />
+                  {category.name}({category.count})
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
+}
+
+/**
+ * 标签列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutTagIndex = props => {
+  const { tagOptions } = props
+  const { locale } = useGlobal()
+  return (
+    <>
+      <div className='bg-white dark:bg-gray-700 py-10'>
+        <div className='dark:text-gray-200 mb-5'>
+          <i className='mr-4 fas fa-tag' />
+          {locale.COMMON.TAGS}:
+        </div>
+        <div id='tags-list' className='duration-200 flex flex-wrap'>
+          {tagOptions?.map(tag => {
+            return (
+              <div key={tag.name} className='p-2'>
+                <TagItemMini key={tag.name} tag={tag} />
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
+}
+
+export {
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
+}
