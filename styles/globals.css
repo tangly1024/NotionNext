@@ -265,12 +265,28 @@ a.avatar-wrapper {
   text-orientation: upright; /* 文字方向正常 */
 }
 
-/* Chatbase 在移动端禁止遮挡 */
+/* 通用样式 */
+button#chatbase-bubble-button {
+  left: 20px !important; /* 使用 !important 来确保覆盖任何现有的样式 */
+  right: auto !important; /* 重置右侧位置 */
+  bottom: 20px !important;
+  transform: scale(0.8); /* 缩小按钮到原来的80% */
+  transform-origin: bottom left; /* 确保缩放是从左下角开始的 */
+  transition: all 0.3s ease; /* 添加过渡效果使变化更平滑 */
+}
+
+/* 移动端特定样式 */
 @media (max-width: 700px) {
   button#chatbase-bubble-button {
-    margin-bottom: 42px;
-    margin-right: 20px;
+    left: 10px !important;
+    bottom: 10px !important;
+    transform: scale(0.7); /* 在移动端进一步缩小 */
   }
+}
+
+/* 悬停效果 */
+button#chatbase-bubble-button:hover {
+  transform: scale(0.85); /* 悬停时稍微放大，提高可操作性 */
 }
 
 img {
