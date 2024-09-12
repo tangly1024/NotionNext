@@ -29,7 +29,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
   return (
     <article
-      className={` ${COVER_HOVER_ENLARGE} ? ' hover:scale-110 transition-all duration-150' : ''}`}>
+      className={` ${COVER_HOVER_ENLARGE} ? ' hover:transition-all duration-150' : ''}`}>
       <div
         data-wow-delay='.2s'
         className={
@@ -48,7 +48,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 priority={index === 0}
                 src={post?.pageCoverThumbnail}
                 alt={post?.title}
-                className='h-60 w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-300'
+                className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out' //宽高都调整为自适应,保证封面居中
               />
             </div>
           </Link>
@@ -74,7 +74,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               </div>
             )}
 
-            {/* 标题 */}
+            {/* 标题和图标 */}
             <Link
               href={post?.href}
               passHref
@@ -82,7 +82,10 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 ' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'
               }>
               {siteConfig('POST_TITLE_ICON') && (
-                <NotionIcon icon={post.pageIcon} />
+                <NotionIcon
+                  icon={post.pageIcon}
+                  className="w-6 h-6 mr-1 align-middle transform translate-y-[-8%]" // 这里控制图标的大小和位置
+                />
               )}
               <span className='menu-link '>{post.title}</span>
             </Link>
