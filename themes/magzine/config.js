@@ -5,10 +5,18 @@ const CONFIG = {
   MAGZINE_HOME_BUTTON_URL: '/about',
   MAGZINE_HOME_BUTTON_TEXT: '了解更多',
 
+  MAGZINE_HOME_HIDDEN_CATEGORY: '分享杂文', //不希望在首页展示的文章分类，用英文逗号隔开
+
   MAGZINE_HOME_TITLE: '立即开创您的在线业务。完全免费。',
   MAGZINE_HOME_DESCRIPTION:
     '借助NotionNext，获得助您开创、经营和扩展业务所需的全部工具和帮助。',
   MAGZINE_HOME_TIPS: 'AI时代来临，这是属于超级个体的狂欢盛宴！',
+
+  // 首页底部推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
+  MAGZINE_RECOMMEND_POST_TAG: '推荐',
+  MAGZINE_RECOMMEND_POST_COUNT: 6,
+  MAGZINE_RECOMMEND_POST_TITLE: '推荐文章',
+  MAGZINE_RECOMMEND_POST_SORT_BY_UPDATE_TIME: false, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
 
   // Style
   MAGZINE_RIGHT_PANEL_DARK: process.env.NEXT_PUBLIC_MAGZINE_RIGHT_DARK || false, // 右侧面板深色模式
@@ -21,15 +29,95 @@ const CONFIG = {
   MAGZINE_POST_DETAIL_CATEGORY: true, // 文章显示分类
   MAGZINE_POST_DETAIL_TAG: true, // 文章显示标签
 
-  // 菜单
+  // 页脚菜单
+  MAGZINE_FOOTER_LINKS: [
+    {
+      name: '友情链接',
+      menus: [
+        { title: '尘世の歌', href: 'https://chenge.ink' },
+        {
+          title: '设计狮网址导航',
+          href: 'https://ct.ued.cat/'
+        },
+        {
+          title: '积极的长腿怪',
+          href: 'https://jjdctg.com'
+        },
+        {
+          title: '自动驾驶小白说',
+          href: 'https://www.helloxiaobai.cn/about'
+        },
+        {
+          title: 'AI-皇帝',
+          href: 'https://www.ai-hd.com/'
+        },
+        {
+          title: 'Andy`s Pro',
+          href: 'https://tw.andys.pro/'
+        },
+        { title: 'LUCEN', href: 'https://www.lucenczz.top/' }
+      ]
+    },
+    {
+      name: '开发者',
+      menus: [
+        { title: 'Github', href: 'https://github.com/tangly1024/NotionNext' },
+        {
+          title: '开发帮助',
+          href: 'https://docs.tangly1024.com/article/how-to-develop-with-notion-next'
+        },
+        {
+          title: '功能反馈',
+          href: 'https://github.com/tangly1024/NotionNext/issues/new/choose'
+        },
+        {
+          title: '技术讨论',
+          href: 'https://github.com/tangly1024/NotionNext/discussions'
+        },
+        {
+          title: '关于作者',
+          href: 'https://blog.tangly1024.com/about'
+        }
+      ]
+    },
+
+    {
+      name: '支持',
+      menus: [
+        {
+          title: '站长社群',
+          href: 'https://docs.tangly1024.com/article/chat-community'
+        },
+        {
+          title: '咨询与定制',
+          href: 'https://docs.tangly1024.com/article/my-service'
+        },
+        {
+          title: '升级手册',
+          href: 'https://docs.tangly1024.com/article/my-service'
+        },
+        {
+          title: '安装教程',
+          href: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
+        },
+        { title: 'SEO推广', href: 'https://seo.tangly1024.com/' }
+      ]
+    },
+    {
+      name: '解决方案',
+      menus: [
+        { title: '建站工具', href: 'https://www.tangly1024.com/' },
+        { title: 'NotionNext', href: 'https://docs.tangly1024.com/about' }
+      ]
+    }
+  ],
+
+  // 旧版本顶部菜单
   MAGZINE_MENU_CATEGORY: true, // 显示分类
   MAGZINE_MENU_TAG: true, // 显示标签
   MAGZINE_MENU_ARCHIVE: true, // 显示归档
   MAGZINE_MENU_SEARCH: true, // 显示搜索
 
-  // Widget
-  MAGZINE_WIDGET_REVOLVER_MAPS:
-    process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
   MAGZINE_WIDGET_TO_TOP: true // 跳回顶部
 }
 export default CONFIG

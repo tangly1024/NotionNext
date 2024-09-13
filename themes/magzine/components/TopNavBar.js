@@ -2,7 +2,6 @@ import Collapse from '@/components/Collapse'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRef, useState } from 'react'
-import CONFIG from '../config'
 import LogoBar from './LogoBar'
 import { MenuBarMobile } from './MenuBarMobile'
 import { MenuItemDrop } from './MenuItemDrop'
@@ -24,25 +23,25 @@ export default function TopNavBar(props) {
       icon: 'fas fa-th',
       name: locale.COMMON.CATEGORY,
       href: '/category',
-      show: siteConfig('MAGZINE_MENU_CATEGORY', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_CATEGORY')
     },
     {
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
       href: '/tag',
-      show: siteConfig('MAGZINE_MENU_TAG', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_TAG')
     },
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('MAGZINE_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_ARCHIVE')
     },
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
       href: '/search',
-      show: siteConfig('MAGZINE_MENU_SEARCH', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_SEARCH')
     }
   ]
 

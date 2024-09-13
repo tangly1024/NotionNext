@@ -4,7 +4,6 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 
@@ -14,8 +13,7 @@ import TagItemMini from './TagItemMini'
  * @returns
  */
 const PostItemCardWide = ({ post, showSummary }) => {
-  const showPreview =
-    siteConfig('MAGZINE_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = siteConfig('MAGZINE_POST_LIST_PREVIEW') && post.blockMap
   const { locale } = useGlobal()
   return (
     <div key={post.id} className='flex justify-between space-x-6 mb-6 '>
@@ -62,10 +60,10 @@ const PostItemCardWide = ({ post, showSummary }) => {
           className={
             'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
           }>
-          {siteConfig('MAGZINE_POST_LIST_CATEGORY', null, CONFIG) && (
+          {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
             <CategoryItem category={post.category} />
           )}
-          {siteConfig('MAGZINE_POST_LIST_TAG', null, CONFIG) &&
+          {siteConfig('MAGZINE_POST_LIST_TAG') &&
             post?.tagItems?.map(tag => (
               <TagItemMini key={tag.name} tag={tag} />
             ))}

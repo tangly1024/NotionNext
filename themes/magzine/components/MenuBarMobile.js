@@ -1,6 +1,5 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import CONFIG from '../config'
 import { MenuItemCollapse } from './MenuItemCollapse'
 
 export const MenuBarMobile = props => {
@@ -12,19 +11,19 @@ export const MenuBarMobile = props => {
     {
       name: locale.COMMON.CATEGORY,
       href: '/category',
-      show: siteConfig('MAGZINE_MENU_CATEGORY', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_CATEGORY')
     },
     {
       name: locale.COMMON.TAGS,
       href: '/tag',
-      show: siteConfig('MAGZINE_MENU_TAG', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_TAG')
     },
     {
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('MAGZINE_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_ARCHIVE')
     }
-    // { name: locale.NAV.SEARCH, href: '/search', show: siteConfig('MENU_SEARCH', null, CONFIG) }
+    // { name: locale.NAV.SEARCH, href: '/search', show: siteConfig('MENU_SEARCH', ) }
   ]
 
   if (customNav) {

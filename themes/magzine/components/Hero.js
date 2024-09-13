@@ -25,7 +25,7 @@ const Hero = ({ posts }) => {
 
   return (
     <>
-      <div className='w-full mx-auto max-w-7xl xl:flex justify-between'>
+      <div className='w-full mx-auto max-w-screen-2xl xl:flex justify-between'>
         {/* 左侧一篇主要置顶文章 */}
         <div className='basis-1/2 mb-6'>
           <PostItemCardTop post={postTop} />

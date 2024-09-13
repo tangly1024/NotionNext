@@ -1,4 +1,5 @@
 import Comment from '@/components/Comment'
+import LoadingCover from '@/components/LoadingCover'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -8,6 +9,7 @@ import { isBrowser } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
+import Announcement from './components/Announcement'
 import ArchiveItem from './components/ArchiveItem'
 import ArticleAround from './components/ArticleAround'
 import ArticleInfo from './components/ArticleInfo'
@@ -18,8 +20,9 @@ import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import PostListHorizontal from './components/PostListHorizontal'
+import PostBannerGroupByCategory from './components/PostBannerGroupByCategory'
 import PostListPage from './components/PostListPage'
+import PostListRecommend from './components/PostListRecommend'
 import PostListScroll from './components/PostListScroll'
 import PostSimpleListHorizontal from './components/PostListSimpleHorizontal'
 import SearchInput from './components/SearchInput'
@@ -40,7 +43,7 @@ export const useMagzineGlobal = () => useContext(ThemeGlobalMagzine)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, showInfoCard = true, post, notice } = props
+  const { children, notice, showInfoCard = true, post } = props
   const { locale } = useGlobal()
   const router = useRouter()
   const [tocVisible, changeTocVisible] = useState(false)
@@ -65,9 +68,14 @@ const LayoutBase = props => {
               {children}
             </div>
             {/* 底部 */}
+            <Announcement
+              post={notice}
+              className={'text-center text-black bg-[#7BE986] py-16'}
+            />
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
+        <LoadingCover />
       </div>
     </ThemeGlobalMagzine.Provider>
   )
@@ -80,15 +88,12 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const { posts, allNavPages } = props
+  const { posts, categoryOptions, allNavPages, latestPosts } = props
   // 最新文章 从第4个元素开始截取出4个
   const newPosts = posts.slice(3, 7)
 
-  // 按分类将文章分组成文件夹
-  const categoryFolders = groupArticles(allNavPages.slice(8))
-
   return (
-    <div className='py-10 md:py-18'>
+    <div className='pt-10 md:pt-18'>
       {/* 首屏宣传区块 */}
       <Hero posts={posts} />
 
@@ -99,52 +104,13 @@ const LayoutIndex = props => {
         posts={newPosts}
       />
 
-      {/* 不同的分类文章列表 */}
-      {categoryFolders?.map((categoryGroup, index) => {
-        if (
-          !categoryGroup ||
-          !categoryGroup.items ||
-          categoryGroup.items.length < 1
-        ) {
-          return null
-        }
+      {/* 文章分类陈列区 */}
+      <PostBannerGroupByCategory {...props} />
 
-        return (
-          <PostListHorizontal
-            title={categoryGroup?.category}
-            href={`/category/${categoryGroup?.category}`}
-            posts={categoryGroup?.items}
-          />
-        )
-      })}
+      {/* 文章推荐  */}
+      <PostListRecommend {...props} />
     </div>
   )
-}
-// 按照分类将文章分组成文件夹
-function groupArticles(allPosts) {
-  if (!allPosts) {
-    return []
-  }
-  const groups = []
-
-  for (let i = 0; i < allPosts.length; i++) {
-    const item = allPosts[i]
-    const categoryName = item?.category ? item?.category : '' // 将 category 转换为字符串
-
-    let existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
-
-    if (existingGroup && existingGroup.category === categoryName) {
-      // 如果分组已存在，并且该分组中的文章数量小于4，添加文章
-      if (existingGroup.items.length < 4) {
-        existingGroup.items.push(item)
-      }
-    } else {
-      // 新建分组，并添加当前文章
-      groups.push({ category: categoryName, items: [item] })
-    }
-  }
-
-  return groups
 }
 
 /**
@@ -171,13 +137,14 @@ const LayoutPostList = props => {
 const LayoutSlug = props => {
   const { post, prev, next, lock, validPassword } = props
   const { locale } = useGlobal()
+  const router = useRouter()
   const slotRight = post?.toc && post?.toc?.length >= 3 && (
     <div key={locale.COMMON.TABLE_OF_CONTENTS}>
       <Catalog toc={post?.toc} />
     </div>
   )
+  console.log('post-文章', post)
 
-  const router = useRouter()
   useEffect(() => {
     // 404
     if (!post) {
@@ -198,7 +165,7 @@ const LayoutSlug = props => {
   }, [post])
 
   return (
-    <div {...props}>
+    <div {...props} className='w-full mx-auto max-w-screen-2xl'>
       {/* 文章锁 */}
       {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -209,7 +176,7 @@ const LayoutSlug = props => {
 
           {/* Notion文章主体 */}
           <article id='article-wrapper' className='px-1 max-w-4xl'>
-            {post && <NotionPage post={post} />}
+            <NotionPage post={post} />
           </article>
 
           {/* 文章底部区域  */}
@@ -218,10 +185,11 @@ const LayoutSlug = props => {
             <ShareBar post={post} />
             {/* 文章分类和标签信息 */}
             <div className='flex justify-between'>
-              {siteConfig('MAGZINE_POST_DETAIL_CATEGORY', null, CONFIG) &&
-                post?.category && <CategoryItem category={post?.category} />}
+              {siteConfig('MAGZINE_POST_DETAIL_CATEGORY') && post?.category && (
+                <CategoryItem category={post?.category} />
+              )}
               <div>
-                {siteConfig('MAGZINE_POST_DETAIL_TAG', null, CONFIG) &&
+                {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
                   post?.tagItems?.map(tag => (
                     <TagItemMini key={tag.name} tag={tag} />
                   ))}

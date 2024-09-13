@@ -4,7 +4,6 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 
@@ -14,8 +13,7 @@ import TagItemMini from './TagItemMini'
  * @returns
  */
 const PostItemCardTop = ({ post, showSummary }) => {
-  const showPreview =
-    siteConfig('MAGZINE_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = siteConfig('MAGZINE_POST_LIST_PREVIEW') && post.blockMap
   const { locale } = useGlobal()
   return (
     <div
@@ -24,9 +22,9 @@ const PostItemCardTop = ({ post, showSummary }) => {
       data-aos-duration='300'
       data-aos-once='false'
       data-aos-anchor-placement='top-bottom'
-      className='mb-6 max-w-7xl '>
+      className='mb-6 max-w-screen-2xl '>
       <div className='flex flex-col w-full'>
-        {siteConfig('MAGZINE_POST_LIST_COVER', null, CONFIG) && (
+        {siteConfig('MAGZINE_POST_LIST_COVER') && (
           <Link
             href={post?.href}
             passHref
@@ -44,14 +42,14 @@ const PostItemCardTop = ({ post, showSummary }) => {
         )}
 
         <div className='flex py-2 mr-2 items-center'>
-          {siteConfig('MAGZINE_POST_LIST_CATEGORY', null, CONFIG) && (
+          {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
             <CategoryItem category={post.category} />
           )}
           <div
             className={
               'flex items-center justify-start flex-wrap space-x-3 text-gray-400'
             }>
-            {siteConfig('MAGZINE_POST_LIST_TAG', null, CONFIG) &&
+            {siteConfig('MAGZINE_POST_LIST_TAG') &&
               post?.tagItems?.map(tag => (
                 <TagItemMini key={tag.name} tag={tag} />
               ))}

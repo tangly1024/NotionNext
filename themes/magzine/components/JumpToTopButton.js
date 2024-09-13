@@ -1,5 +1,4 @@
 import { siteConfig } from '@/lib/config'
-import CONFIG from '../config'
 
 /**
  * 跳转到网页顶部
@@ -10,7 +9,7 @@ import CONFIG from '../config'
  * @constructor
  */
 const JumpToTopButton = ({ showPercent = false, percent, className }) => {
-  if (!siteConfig('MAGZINE_WIDGET_TO_TOP', null, CONFIG)) {
+  if (!siteConfig('MAGZINE_WIDGET_TO_TOP')) {
     return <></>
   }
   return (

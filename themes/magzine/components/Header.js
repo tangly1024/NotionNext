@@ -118,7 +118,7 @@ export default function Header(props) {
       {/* 导航栏菜单内容 */}
       <div
         id='top-navbar'
-        className='flex w-full mx-auto max-w-7xl h-20 transition-all duration-200 items-center justify-between'>
+        className='flex w-full mx-auto max-w-screen-2xl h-20 transition-all duration-200 items-center justify-between'>
         {/* 搜索栏 */}
         {showSearchInput && (
           <input

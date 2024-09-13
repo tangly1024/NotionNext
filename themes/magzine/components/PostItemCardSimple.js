@@ -2,7 +2,6 @@ import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 
 /**
@@ -11,15 +10,14 @@ import CategoryItem from './CategoryItem'
  * @returns
  */
 const PostItemCardSimple = ({ post, showSummary }) => {
-  const showPreview =
-    siteConfig('MAGZINE_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = siteConfig('MAGZINE_POST_LIST_PREVIEW') && post.blockMap
   const { locale } = useGlobal()
   return (
     <div
       key={post.id}
-      className='mb-6 max-w-7xl border-t mr-8 py-2 gap-y-4 flex flex-col dark:border-gray-800 '>
+      className='mb-6 max-w-screen-2xl border-t mr-8 py-2 gap-y-4 flex flex-col dark:border-gray-800 '>
       <div className='flex mr-2 items-center'>
-        {siteConfig('MAGZINE_POST_LIST_CATEGORY', null, CONFIG) && (
+        {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
           <CategoryItem category={post.category} />
         )}
       </div>

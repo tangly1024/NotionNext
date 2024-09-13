@@ -1,21 +1,22 @@
 import Link from 'next/link'
-import PostItemCardSimple from './PostItemCardSimple'
+import PostItemCard from './PostItemCard'
 import PostListEmpty from './PostListEmpty'
 
 /**
  * 博文水平列表
  * 含封面
+ * 可以指定是否有模块背景色
  * @returns {JSX.Element}
  * @constructor
  */
-const PostListHorizontal = ({ title, href, posts }) => {
+const PostListHorizontal = ({ title, href, posts, hasBg }) => {
   if (!posts || posts.length === 0) {
     return <PostListEmpty />
   }
 
   return (
-    <div className='w-full py-10 bg-[#F6F6F1]'>
-      <div className='max-w-7xl w-full mx-auto'>
+    <div className={`w-full py-10 ${hasBg ? 'bg-[#F6F6F1]' : ''}`}>
+      <div className='max-w-screen-2xl w-full mx-auto'>
         {/* 标题 */}
         <div className='flex justify-between items-center py-6'>
           <h3 className='text-2xl'>{title}</h3>
@@ -25,9 +26,9 @@ const PostListHorizontal = ({ title, href, posts }) => {
           </Link>
         </div>
         {/* 列表 */}
-        <ul className='flex'>
-          {posts?.map(p => {
-            return <PostItemCardSimple key={p.id} post={p} />
+        <ul className='flex gap-4'>
+          {posts?.map((p, index) => {
+            return <PostItemCard key={index} post={p} />
           })}
         </ul>
       </div>
