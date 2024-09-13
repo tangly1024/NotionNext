@@ -8,7 +8,7 @@ import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Announcement from './components/Announcement'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
@@ -44,15 +44,12 @@ export const useMagzineGlobal = () => useContext(ThemeGlobalMagzine)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, notice, showInfoCard = true, post } = props
-  const { locale } = useGlobal()
-  const router = useRouter()
+  const { children, notice } = props
   const [tocVisible, changeTocVisible] = useState(false)
-  const { onLoading, fullWidth } = useGlobal()
-  const [slotRight, setSlotRight] = useState(null)
+  const searchModal = useRef(null)
 
   return (
-    <ThemeGlobalMagzine.Provider value={{ tocVisible, changeTocVisible }}>
+    <ThemeGlobalMagzine.Provider value={{ searchModal, tocVisible, changeTocVisible }}>
       {/* CSS样式 */}
       <Style />
 
@@ -71,7 +68,7 @@ const LayoutBase = props => {
             {/* 底部 */}
             <Announcement
               post={notice}
-              className={'text-center text-black bg-[#7BE986] py-16'}
+              className={'text-center text-black bg-[#7BE986] dark:bg-hexo-black-gray py-16'}
             />
             <Footer title={siteConfig('TITLE')} />
           </div>
@@ -89,7 +86,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const { posts, categoryOptions, allNavPages, latestPosts } = props
+  const { posts } = props
   // 最新文章 从第4个元素开始截取出4个
   const newPosts = posts.slice(3, 7)
 
@@ -142,7 +139,7 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, recommendPosts, prev, next, lock, validPassword } = props
+  const { post, recommendPosts, lock, validPassword } = props
   const { locale } = useGlobal()
   const router = useRouter()
 
@@ -212,8 +209,8 @@ const LayoutSlug = props => {
 
               <div className='lg:col-span-1 flex flex-col justify-between px-2 lg:px-0 space-y-2 lg:space-y-0'>
                 {/* meta信息 */}
-                <section className='text-lg gap-y-6 '>
-                  <div className='text-gray-500 py-1 dark:text-gray-600'>
+                <section className='text-lg gap-y-6 text-center lg:text-left'>
+                  <div className='text-gray-500 py-1 dark:text-gray-600 '>
                     {/* <div className='whitespace-nowrap'>
                       <i className='far fa-calendar mr-2' />
                       {post?.publishDay}
@@ -253,14 +250,17 @@ const LayoutSlug = props => {
           </div>
         )}
       </div>
-      {/* 广告醒图 */}
-      <BannerFullWidth />
-      {/* 最新文章区块 */}
-      <PostSimpleListHorizontal
-        title={locale.COMMON.RELATE_POSTS}
-        href='/archive'
-        posts={recommendPosts}
-      />
+      
+      <div>
+        {/* 广告醒图 */}
+        <BannerFullWidth />
+        {/* 最新文章区块 */}
+        <PostSimpleListHorizontal
+            title={locale.COMMON.RELATE_POSTS}
+            href='/archive'
+            posts={recommendPosts}
+        />
+      </div>
     </>
   )
 }

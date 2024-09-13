@@ -15,11 +15,11 @@ export default function BannerFullWidth() {
     return null
   }
   return (
-    <div className='w-full flex lg:flex-row flex-col justify-between h-96 bg-black'>
+    <div className='w-full flex lg:flex-row flex-col justify-between lg:h-96 bg-black'>
       <LazyImage
         alt={siteInfo?.title}
         src={siteInfo?.pageCover}
-        className={`banner-cover w-full h-96 object-cover object-center `}
+        className={`banner-cover w-full lg:h-96 object-cover object-center `}
       />
 
       <div className='w-full flex items-center justify-center'>

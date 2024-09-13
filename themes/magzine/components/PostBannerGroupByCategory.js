@@ -7,7 +7,7 @@ import PostListHorizontal from './PostListHorizontal'
  * @constructor
  */
 const PostBannerGroupByCategory = props => {
-  const { posts, categoryOptions, allNavPages, latestPosts } = props
+  const { posts, categoryOptions, allNavPages } = props
   if (!posts || posts.length === 0) {
     return null
   }
@@ -52,7 +52,7 @@ function groupArticles(categoryOptions, allPosts) {
     const item = allPosts[i]
     const categoryName = item?.category ? item?.category : '' // 将 category 转换为字符串
 
-    let existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
+    const existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
 
     if (existingGroup && existingGroup.category === categoryName) {
       // 如果分组已存在，并且该分组中的文章数量小于4，添加文章

@@ -46,7 +46,7 @@ const Footer = ({ title }) => {
             {MAGZINE_FOOTER_LINKS?.map((group, index) => {
               return (
                 <div key={index}>
-                  <div className='font-bold text-lg text-white lg:pb-8 pb-4'>
+                  <div className='font-bold text-xl text-white lg:pb-8 pb-4'>
                     {group.name}
                   </div>
                   <div className='flex flex-col gap-y-2'>

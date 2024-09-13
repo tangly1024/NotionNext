@@ -39,7 +39,7 @@ const PostItemCard = ({ post }) => {
           href={post?.href}
           passHref
           className={
-            'cursor-pointer  hover:underline leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
+            'text-lg cursor-pointer hover:underline leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
           }>
           <h2>
             {siteConfig('POST_TITLE_ICON') && (
