@@ -49,7 +49,8 @@ const LayoutBase = props => {
   const searchModal = useRef(null)
 
   return (
-    <ThemeGlobalMagzine.Provider value={{ searchModal, tocVisible, changeTocVisible }}>
+    <ThemeGlobalMagzine.Provider
+      value={{ searchModal, tocVisible, changeTocVisible }}>
       {/* CSS样式 */}
       <Style />
 
@@ -68,7 +69,9 @@ const LayoutBase = props => {
             {/* 底部 */}
             <Announcement
               post={notice}
-              className={'text-center text-black bg-[#7BE986] dark:bg-hexo-black-gray py-16'}
+              className={
+                'text-center text-black bg-[#7BE986] dark:bg-hexo-black-gray py-16'
+              }
             />
             <Footer title={siteConfig('TITLE')} />
           </div>
@@ -120,7 +123,7 @@ const LayoutPostList = props => {
   const { category, tag } = props
 
   return (
-    <div className=' max-w-screen-2xl mx-auto w-full'>
+    <div className=' max-w-screen-2xl mx-auto w-full px-2 lg:px-0'>
       {/* 一个顶部条 */}
       <h2 className='py-8 text-2xl font-bold'>{category || tag}</h2>
 
@@ -250,15 +253,15 @@ const LayoutSlug = props => {
           </div>
         )}
       </div>
-      
+
       <div>
         {/* 广告醒图 */}
         <BannerFullWidth />
         {/* 最新文章区块 */}
         <PostSimpleListHorizontal
-            title={locale.COMMON.RELATE_POSTS}
-            href='/archive'
-            posts={recommendPosts}
+          title={locale.COMMON.RELATE_POSTS}
+          href='/archive'
+          posts={recommendPosts}
         />
       </div>
     </>

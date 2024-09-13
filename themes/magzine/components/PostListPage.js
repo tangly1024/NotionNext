@@ -25,7 +25,7 @@ const PostListPage = ({ page = 1, posts = [], postCount }) => {
     <div className='w-full justify-center'>
       <div id='posts-wrapper'>
         {/* 列表 */}
-        <ul className='grid grid-cols-4 gap-4'>
+        <ul className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
           {posts?.map((p, index) => {
             return <PostItemCard key={index} post={p} />
           })}

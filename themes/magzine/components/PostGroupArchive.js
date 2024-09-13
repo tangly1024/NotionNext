@@ -13,7 +13,7 @@ const PostGroupArchive = ({ posts = [], archiveTitle }) => {
   }
 
   return (
-    <div className=''>
+    <div className='px-2 lg:px-0'>
       {/* 分组标题 */}
       <div
         className='pb-4 text-2xl font-bold dark:text-gray-300'
@@ -22,7 +22,7 @@ const PostGroupArchive = ({ posts = [], archiveTitle }) => {
       </div>
 
       {/* 列表 */}
-      <ul className='grid grid-cols-4 *:gap-4'>
+      <ul className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
         {posts?.map((p, index) => {
           return <PostItemCard key={index} post={p} />
         })}

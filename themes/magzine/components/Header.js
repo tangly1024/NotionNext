@@ -4,11 +4,11 @@ import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { useMagzineGlobal } from '..'
 import CONFIG from '../config'
 import LogoBar from './LogoBar'
 import { MenuBarMobile } from './MenuBarMobile'
 import { MenuItemDrop } from './MenuItemDrop'
-import { useMagzineGlobal } from '..'
 
 /**
  * 顶部导航栏 + 菜单
@@ -22,7 +22,7 @@ export default function Header(props) {
   const lastScrollY = useRef(0) // 用于存储上一次的滚动位置
   const { locale } = useGlobal()
   const router = useRouter()
-  const {searchModal} = useMagzineGlobal()
+  const { searchModal } = useMagzineGlobal()
 
   const defaultLinks = [
     {
@@ -155,7 +155,7 @@ export default function Header(props) {
         )}
 
         {/* 右侧移动端折叠按钮 */}
-        <div className='flex items-center gap-x-6'>
+        <div className='flex items-center gap-x-6 pr-4'>
           {/* 搜索按钮 */}
           <div className='flex text-center items-center cursor-pointer'>
             <i
