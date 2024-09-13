@@ -8,21 +8,24 @@ import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 
-const BlogPostCardHorizontal = ({ post, showSummary }) => {
+/**
+ * 水平左右布局的博客卡片
+ * @param {*} param0
+ * @returns
+ */
+const PostItemCardWide = ({ post, showSummary }) => {
   const showPreview =
-    siteConfig('MEDIUM_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+    siteConfig('MAGZINE_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   const { locale } = useGlobal()
   return (
-    <div
-      key={post.id}
-      className='flex justify-between space-x-6 mb-6 border-top border-gray-200'>
+    <div key={post.id} className='flex justify-between space-x-6 mb-6 '>
       {/* 卡牌左侧 */}
       <div className='h-40 w-96'>
         <Link
           href={post?.href}
           passHref
           className={
-            ' cursor-pointer font-bold hover:underline text-xl leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
+            ' cursor-pointer font-semibold hover:underline text-xl leading-tight dark:text-gray-300  dark:hover:text-gray-400'
           }>
           <h3 className='max-w-80 break-words'>
             {siteConfig('POST_TITLE_ICON') && (
@@ -32,22 +35,8 @@ const BlogPostCardHorizontal = ({ post, showSummary }) => {
           </h3>
         </Link>
 
-        <div
-          className={
-            'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
-          }>
-          <div className='text-sm py-1'>{post.date?.start_date}</div>
-          {siteConfig('MEDIUM_POST_LIST_CATEGORY', null, CONFIG) && (
-            <CategoryItem category={post.category} />
-          )}
-          {siteConfig('MEDIUM_POST_LIST_TAG', null, CONFIG) &&
-            post?.tagItems?.map(tag => (
-              <TagItemMini key={tag.name} tag={tag} />
-            ))}
-        </div>
-
         {(!showPreview || showSummary) && (
-          <main className='my-4 line-clamp-2 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+          <main className='my-4 line-clamp-2 text-gray-900 dark:text-gray-300 text-sm'>
             {post.summary}
           </main>
         )}
@@ -68,6 +57,20 @@ const BlogPostCardHorizontal = ({ post, showSummary }) => {
             </div>
           </div>
         )}
+
+        <div
+          className={
+            'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
+          }>
+          {siteConfig('MAGZINE_POST_LIST_CATEGORY', null, CONFIG) && (
+            <CategoryItem category={post.category} />
+          )}
+          {siteConfig('MAGZINE_POST_LIST_TAG', null, CONFIG) &&
+            post?.tagItems?.map(tag => (
+              <TagItemMini key={tag.name} tag={tag} />
+            ))}
+          <div className='text-sm py-1'>{post.date?.start_date}</div>
+        </div>
       </div>
 
       {/* 卡牌右侧图片 */}
@@ -82,4 +85,4 @@ const BlogPostCardHorizontal = ({ post, showSummary }) => {
   )
 }
 
-export default BlogPostCardHorizontal
+export default PostItemCardWide

@@ -32,7 +32,7 @@ export default function ArticleInfo(props) {
             <i className='far fa-calendar-check mr-2' />
             {post?.lastEditedDay}
           </span>
-          <div className='hidden busuanzi_container_page_pv font-light mr-2 whitespace-nowrap'>
+          <div className='hidden busuanzi_container_page_pv  mr-2 whitespace-nowrap'>
             <i className='mr-1 fas fa-eye' />
             <span className='busuanzi_value_page_pv' />
           </div>

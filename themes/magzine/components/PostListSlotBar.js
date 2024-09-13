@@ -5,7 +5,7 @@ import { useGlobal } from '@/lib/global'
  * @param {*} props
  * @returns
  */
-export default function BlogPostBar(props) {
+export default function PostListSlotBar(props) {
   const { tag, category } = props
   const { locale } = useGlobal()
 

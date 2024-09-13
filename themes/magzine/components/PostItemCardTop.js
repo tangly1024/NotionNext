@@ -13,9 +13,9 @@ import TagItemMini from './TagItemMini'
  * @param {*} param0
  * @returns
  */
-const BlogPostCardTop = ({ post, showSummary }) => {
+const PostItemCardTop = ({ post, showSummary }) => {
   const showPreview =
-    siteConfig('MEDIUM_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+    siteConfig('MAGZINE_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   const { locale } = useGlobal()
   return (
     <div
@@ -26,12 +26,12 @@ const BlogPostCardTop = ({ post, showSummary }) => {
       data-aos-anchor-placement='top-bottom'
       className='mb-6 max-w-7xl '>
       <div className='flex flex-col w-full'>
-        {siteConfig('MEDIUM_POST_LIST_COVER', null, CONFIG) && (
+        {siteConfig('MAGZINE_POST_LIST_COVER', null, CONFIG) && (
           <Link
             href={post?.href}
             passHref
             className={
-              'cursor-pointer hover:underline font-bold text-3xl leading-tight  dark:text-gray-300  dark:hover:text-gray-400'
+              'cursor-pointer hover:underline text-4xl leading-tight  dark:text-gray-300  dark:hover:text-gray-400'
             }>
             <div className='w-full max-h-80 object-cover overflow-hidden mb-2'>
               <LazyImage
@@ -43,15 +43,15 @@ const BlogPostCardTop = ({ post, showSummary }) => {
           </Link>
         )}
 
-        <div className='flex py-2 items-center'>
-          {siteConfig('MEDIUM_POST_LIST_CATEGORY', null, CONFIG) && (
+        <div className='flex py-2 mr-2 items-center'>
+          {siteConfig('MAGZINE_POST_LIST_CATEGORY', null, CONFIG) && (
             <CategoryItem category={post.category} />
           )}
           <div
             className={
               'flex items-center justify-start flex-wrap space-x-3 text-gray-400'
             }>
-            {siteConfig('MEDIUM_POST_LIST_TAG', null, CONFIG) &&
+            {siteConfig('MAGZINE_POST_LIST_TAG', null, CONFIG) &&
               post?.tagItems?.map(tag => (
                 <TagItemMini key={tag.name} tag={tag} />
               ))}
@@ -62,9 +62,9 @@ const BlogPostCardTop = ({ post, showSummary }) => {
           href={post?.href}
           passHref
           className={
-            'cursor-pointer hover:underline font-bold text-3xl leading-tight  dark:text-gray-300  dark:hover:text-gray-400'
+            'cursor-pointer hover:underline leading-tight dark:text-gray-300  dark:hover:text-gray-400'
           }>
-          <h2 className='text-2xl'>
+          <h2 className='text-4xl'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post.pageIcon} />
             )}
@@ -75,7 +75,7 @@ const BlogPostCardTop = ({ post, showSummary }) => {
         <div className='flex'></div>
 
         {(!showPreview || showSummary) && (
-          <main className='my-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+          <main className='my-4 text-gray-900 dark:text-gray-300 text-lg  leading-7'>
             {post.summary}
           </main>
         )}
@@ -103,4 +103,4 @@ const BlogPostCardTop = ({ post, showSummary }) => {
   )
 }
 
-export default BlogPostCardTop
+export default PostItemCardTop

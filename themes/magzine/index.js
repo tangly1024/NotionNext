@@ -8,21 +8,20 @@ import { isBrowser } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
-import Announcement from './components/Announcement'
+import ArchiveItem from './components/ArchiveItem'
 import ArticleAround from './components/ArticleAround'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
-import BlogArchiveItem from './components/BlogArchiveItem'
-import BlogPostCardHorizontal from './components/BlogPostCardHorizontal'
-import BlogPostCardTop from './components/BlogPostCardTop'
-import BlogPostListPage from './components/BlogPostListPage'
-import BlogPostListScroll from './components/BlogPostListScroll'
 import Catalog from './components/Catalog'
 import CategoryGroup from './components/CategoryGroup'
 import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import InfoCard from './components/InfoCard'
+import Hero from './components/Hero'
+import PostListHorizontal from './components/PostListHorizontal'
+import PostListPage from './components/PostListPage'
+import PostListScroll from './components/PostListScroll'
+import PostSimpleListHorizontal from './components/PostListSimpleHorizontal'
 import SearchInput from './components/SearchInput'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
@@ -81,32 +80,71 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const { posts, notice } = props
-  const top = posts[0]
-  const post1 = posts[1]
-  const post2 = posts[2]
-  return (
-    <div className='container mx-auto max-w-7xl'>
-      {/* 首屏文章 */}
+  const { posts, allNavPages } = props
+  // 最新文章 从第4个元素开始截取出4个
+  const newPosts = posts.slice(3, 7)
 
-      <div className='md:flex justify-between py-10 md:py-16'>
-        <div className='basis-1/2 mb-6'>
-          <BlogPostCardTop post={top} />
-        </div>
-        <div className='px-10'>
-          <div className='flex justify-between px-4 w-full'>
-            <InfoCard {...props} />
-            <Announcement post={notice} />
-          </div>
-          {/* 两篇主要文章 */}
-          <div>
-            <BlogPostCardHorizontal post={post1} />
-            <BlogPostCardHorizontal post={post2} />
-          </div>
-        </div>
-      </div>
+  // 按分类将文章分组成文件夹
+  const categoryFolders = groupArticles(allNavPages.slice(8))
+
+  return (
+    <div className='py-10 md:py-18'>
+      {/* 首屏宣传区块 */}
+      <Hero posts={posts} />
+
+      {/* 最新文章区块 */}
+      <PostSimpleListHorizontal
+        title='最新文章'
+        href='/archive'
+        posts={newPosts}
+      />
+
+      {/* 不同的分类文章列表 */}
+      {categoryFolders?.map((categoryGroup, index) => {
+        if (
+          !categoryGroup ||
+          !categoryGroup.items ||
+          categoryGroup.items.length < 1
+        ) {
+          return null
+        }
+
+        return (
+          <PostListHorizontal
+            title={categoryGroup?.category}
+            href={`/category/${categoryGroup?.category}`}
+            posts={categoryGroup?.items}
+          />
+        )
+      })}
     </div>
   )
+}
+// 按照分类将文章分组成文件夹
+function groupArticles(allPosts) {
+  if (!allPosts) {
+    return []
+  }
+  const groups = []
+
+  for (let i = 0; i < allPosts.length; i++) {
+    const item = allPosts[i]
+    const categoryName = item?.category ? item?.category : '' // 将 category 转换为字符串
+
+    let existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
+
+    if (existingGroup && existingGroup.category === categoryName) {
+      // 如果分组已存在，并且该分组中的文章数量小于4，添加文章
+      if (existingGroup.items.length < 4) {
+        existingGroup.items.push(item)
+      }
+    } else {
+      // 新建分组，并添加当前文章
+      groups.push({ category: categoryName, items: [item] })
+    }
+  }
+
+  return groups
 }
 
 /**
@@ -117,9 +155,9 @@ const LayoutPostList = props => {
   return (
     <>
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogPostListPage {...props} />
+        <PostListPage {...props} />
       ) : (
-        <BlogPostListScroll {...props} />
+        <PostListScroll {...props} />
       )}
     </>
   )
@@ -180,10 +218,10 @@ const LayoutSlug = props => {
             <ShareBar post={post} />
             {/* 文章分类和标签信息 */}
             <div className='flex justify-between'>
-              {siteConfig('MEDIUM_POST_DETAIL_CATEGORY', null, CONFIG) &&
+              {siteConfig('MAGZINE_POST_DETAIL_CATEGORY', null, CONFIG) &&
                 post?.category && <CategoryItem category={post?.category} />}
               <div>
-                {siteConfig('MEDIUM_POST_DETAIL_TAG', null, CONFIG) &&
+                {siteConfig('MAGZINE_POST_DETAIL_TAG', null, CONFIG) &&
                   post?.tagItems?.map(tag => (
                     <TagItemMini key={tag.name} tag={tag} />
                   ))}
@@ -245,9 +283,9 @@ const LayoutSearch = props => {
       {currentSearch && (
         <div>
           {siteConfig('POST_LIST_STYLE') === 'page' ? (
-            <BlogPostListPage {...props} />
+            <PostListPage {...props} />
           ) : (
-            <BlogPostListScroll {...props} />
+            <PostListScroll {...props} />
           )}
         </div>
       )}
@@ -266,7 +304,7 @@ const LayoutArchive = props => {
     <>
       <div className='mb-10 pb-20 md:py-12 py-3  min-h-full'>
         {Object.keys(archivePosts)?.map(archiveTitle => (
-          <BlogArchiveItem
+          <ArchiveItem
             key={archiveTitle}
             archiveTitle={archiveTitle}
             archivePosts={archivePosts}

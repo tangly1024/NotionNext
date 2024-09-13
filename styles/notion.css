@@ -1664,9 +1664,8 @@ code[class*='language-'] {
 }
 
 /* NOTION CSS OVERRIDE */
-
 .notion {
-  @apply dark:text-gray-300;
+  @apply dark:text-gray-100;
   overflow-wrap: break-word;
 }
 .notion,

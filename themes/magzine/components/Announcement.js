@@ -10,7 +10,7 @@ const Announcement = ({ post, className }) => {
       <div className={className}>
         <section
           id='announcement-wrapper'
-          className='dark:text-gray-300 rounded-xl px-2 py-4'>
+          className='dark:text-gray-300 rounded-xl px-2'>
           {/* <div><i className='mr-2 fas fa-bullhorn' />{locale.COMMON.ANNOUNCEMENT}</div> */}
           {post && (
             <div id='announcement-content'>

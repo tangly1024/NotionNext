@@ -17,6 +17,7 @@ export default function Header(props) {
   const { customNav, customMenu } = props
   const [isOpen, changeShow] = useState(false)
   const collapseRef = useRef(null)
+  const lastScrollY = useRef(0) // 用于存储上一次的滚动位置
 
   const { locale } = useGlobal()
 
@@ -66,15 +67,38 @@ export default function Header(props) {
 
   const scrollTrigger = throttle(() => {
     const scrollS = window.scrollY
-    const nav = document.querySelector('#top-navbar')
+    if (scrollS === lastScrollY.current) return // 如果滚动位置没有变化，则不做任何操作
 
-    const narrowNav = scrollS > 50
+    const nav = document.querySelector('#top-navbar')
+    const narrowNav = scrollS > 60
     if (narrowNav) {
       nav && nav.classList.replace('h-20', 'h-14')
     } else {
       nav && nav.classList.replace('h-14', 'h-20')
     }
+
+    lastScrollY.current = scrollS // 更新上一次的滚动位置
   }, throttleMs)
+
+  const [showSearchInput, changeShowSearchInput] = useState(false)
+
+  // 展示搜索框
+  const toggleShowSearchInput = () => {
+    if (siteConfig('ALGOLIA_APP_ID')) {
+      searchModal.current.openSearch()
+    } else {
+      changeShowSearchInput(!showSearchInput)
+    }
+  }
+
+  const onKeyUp = e => {
+    if (e.keyCode === 13) {
+      const search = document.getElementById('simple-search').value
+      if (search) {
+        router.push({ pathname: '/search/' + search })
+      }
+    }
+  }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
   if (siteConfig('CUSTOM_MENU')) {
@@ -94,25 +118,61 @@ export default function Header(props) {
       {/* 导航栏菜单内容 */}
       <div
         id='top-navbar'
-        className='px-4 flex w-full mx-auto max-w-screen-xl h-20 transition-all duration-200 items-between'>
-        {/* 左侧图标Logo */}
-        <LogoBar {...props} />
+        className='flex w-full mx-auto max-w-7xl h-20 transition-all duration-200 items-center justify-between'>
+        {/* 搜索栏 */}
+        {showSearchInput && (
+          <input
+            autoFocus
+            id='simple-search'
+            onKeyUp={onKeyUp}
+            className='outline-none flex flex-row text-base relative w-full border-b py-2'
+            aria-label='Submit search'
+            type='search'
+            name='s'
+            autoComplete='off'
+            placeholder='Type then hit enter to search...'
+          />
+        )}
 
-        {/* 移动端折叠按钮 */}
-        <div className='mr-1 flex md:hidden justify-end items-center text-lg space-x-4 font-serif dark:text-gray-200'>
-          <div onClick={toggleMenuOpen} className='cursor-pointer'>
-            {isOpen ? (
-              <i className='fas fa-times' />
-            ) : (
-              <i className='fas fa-bars' />
-            )}
+        {/* 默认菜单 */}
+        {!showSearchInput && (
+          <>
+            {/* 左侧图标Logo */}
+            <div className='flex gap-x-8 h-full'>
+              <LogoBar {...props} />
+              {/* 桌面端顶部菜单 */}
+              <div className='hidden md:flex items-center gap-x-2'>
+                {links &&
+                  links?.map(link => (
+                    <MenuItemDrop key={link?.id} link={link} />
+                  ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* 右侧移动端折叠按钮 */}
+        <div className='flex items-center gap-x-2'>
+          <div className='mr-1 flex md:hidden justify-end items-center text-lg space-x-4 font-serif dark:text-gray-200'>
+            <div onClick={toggleMenuOpen} className='cursor-pointer'>
+              {isOpen ? (
+                <i className='fas fa-times' />
+              ) : (
+                <i className='fas fa-bars' />
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* 桌面端顶部菜单 */}
-        <div className='hidden md:flex items-center'>
-          {links &&
-            links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
+          {/* 搜索按钮 */}
+          <div className='text-center items-center cursor-pointer'>
+            <i
+              className={
+                showSearchInput
+                  ? 'fa-regular fa-circle-xmark'
+                  : 'fa-solid fa-magnifying-glass' + ' align-middle'
+              }
+              onClick={toggleShowSearchInput}></i>
+          </div>
         </div>
       </div>
 

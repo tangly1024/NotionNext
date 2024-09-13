@@ -1,8 +1,8 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import BlogPostCard from './BlogPostCard'
-import BlogPostListEmpty from './BlogPostListEmpty'
 import PaginationSimple from './PaginationSimple'
+import PostItemCard from './PostItemCard'
+import PostListEmpty from './PostListEmpty'
 
 /**
  * 文章列表分页表格
@@ -12,13 +12,13 @@ import PaginationSimple from './PaginationSimple'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
+const PostListPage = ({ page = 1, posts = [], postCount }) => {
   const { NOTION_CONFIG } = useGlobal()
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
 
   if (!posts || posts.length === 0) {
-    return <BlogPostListEmpty />
+    return <PostListEmpty />
   }
 
   return (
@@ -26,7 +26,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
       <div id='posts-wrapper'>
         {/* 文章列表 */}
         {posts?.map(post => (
-          <BlogPostCard key={post.id} post={post} />
+          <PostItemCard key={post.id} post={post} />
         ))}
       </div>
       <PaginationSimple page={page} totalPage={totalPage} />
@@ -34,4 +34,4 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
   )
 }
 
-export default BlogPostListPage
+export default PostListPage

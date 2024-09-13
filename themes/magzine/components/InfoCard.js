@@ -1,7 +1,5 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import Router from 'next/router'
-import SocialButton from './SocialButton'
 
 /**
  * 用户信息卡
@@ -10,8 +8,9 @@ import SocialButton from './SocialButton'
  */
 const InfoCard = props => {
   const { siteInfo } = props
+
   return (
-    <div id='info-card' className='py-4'>
+    <div id='info-card'>
       <div className='items-center justify-start'>
         <div
           className='hover:scale-105 transform duration-200 cursor-pointer flex justify-start'
@@ -24,13 +23,12 @@ const InfoCard = props => {
             alt={siteConfig('AUTHOR')}
           />
         </div>
-        <div className='text-xl py-2 hover:scale-105 transform duration-200 flex justify-start dark:text-gray-300'>
+        <div className='text-xl py-2 hover:scale-105 transform duration-200 flex justify-start '>
           {siteConfig('AUTHOR')}
         </div>
-        <div className='font-light text-gray-600 mb-2 hover:scale-105 transform duration-200 flex justify-start dark:text-gray-400'>
+        <div className='text-gray-100 mb-2 hover:scale-105 transform duration-200 flex justify-start'>
           {siteConfig('BIO')}
         </div>
-        <SocialButton />
       </div>
     </div>
   )

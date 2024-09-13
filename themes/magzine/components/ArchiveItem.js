@@ -5,7 +5,7 @@ import Link from 'next/link'
  * @param {*} param0
  * @returns
  */
-export default function BlogArchiveItem({ archiveTitle, archivePosts }) {
+export default function ArchiveItem({ archiveTitle, archivePosts }) {
   return (
     <div key={archiveTitle}>
       <div id={archiveTitle} className='pt-16 pb-4 text-3xl dark:text-gray-300'>

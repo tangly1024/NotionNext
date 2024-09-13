@@ -3,8 +3,8 @@ import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import BlogPostCard from './BlogPostCard'
-import BlogPostListEmpty from './BlogPostListEmpty'
+import PostItemCard from './PostItemCard'
+import PostListEmpty from './PostListEmpty'
 
 /**
  * 博客列表滚动分页
@@ -13,7 +13,7 @@ import BlogPostListEmpty from './BlogPostListEmpty'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListScroll = ({ posts = [], currentSearch }) => {
+const PostListScroll = ({ posts = [], currentSearch }) => {
   const { NOTION_CONFIG } = useGlobal()
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const [page, updatePage] = useState(1)
@@ -67,14 +67,14 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   const { locale } = useGlobal()
 
   if (!postsToShow || postsToShow.length === 0) {
-    return <BlogPostListEmpty currentSearch={currentSearch} />
+    return <PostListEmpty currentSearch={currentSearch} />
   } else {
     return (
       <div id='posts-wrapper' ref={targetRef} className='w-full'>
         {/* 文章列表 */}
         <div className='space-y-1 lg:space-y-4'>
           {postsToShow?.map(post => (
-            <BlogPostCard key={post.id} post={post} showSummary={true} />
+            <PostItemCard key={post.id} post={post} showSummary={true} />
           ))}
         </div>
 
@@ -104,4 +104,4 @@ const getPostByPage = function (page, totalPosts, POSTS_PER_PAGE) {
   return totalPosts.slice(0, POSTS_PER_PAGE * page)
 }
 
-export default BlogPostListScroll
+export default PostListScroll

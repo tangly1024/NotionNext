@@ -9,9 +9,9 @@ import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 
-const BlogPostCard = ({ post, showSummary }) => {
+const PostItemCard = ({ post, showSummary }) => {
   const showPreview =
-    siteConfig('MEDIUM_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+    siteConfig('MAGZINE_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   const { locale } = useGlobal()
   return (
     <div
@@ -29,7 +29,7 @@ const BlogPostCard = ({ post, showSummary }) => {
             'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
           }>
           <h2>
-            {siteConfig('MEDIUM_POST_LIST_COVER', null, CONFIG) && (
+            {siteConfig('MAGZINE_POST_LIST_COVER', null, CONFIG) && (
               <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
                 <LazyImage
                   src={post.pageCoverThumbnail}
@@ -50,10 +50,10 @@ const BlogPostCard = ({ post, showSummary }) => {
             'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
           }>
           <div className='text-sm py-1'>{post.date?.start_date}</div>
-          {siteConfig('MEDIUM_POST_LIST_CATEGORY', null, CONFIG) && (
+          {siteConfig('MAGZINE_POST_LIST_CATEGORY', null, CONFIG) && (
             <CategoryItem category={post.category} />
           )}
-          {siteConfig('MEDIUM_POST_LIST_TAG', null, CONFIG) &&
+          {siteConfig('MAGZINE_POST_LIST_TAG', null, CONFIG) &&
             post?.tagItems?.map(tag => (
               <TagItemMini key={tag.name} tag={tag} />
             ))}
@@ -63,7 +63,7 @@ const BlogPostCard = ({ post, showSummary }) => {
         <div className='flex'></div>
 
         {(!showPreview || showSummary) && (
-          <main className='my-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+          <main className='my-4 text-gray-700 dark:text-gray-300 text-sm  leading-7'>
             {post.summary}
           </main>
         )}
@@ -89,4 +89,4 @@ const BlogPostCard = ({ post, showSummary }) => {
   )
 }
 
-export default BlogPostCard
+export default PostItemCard

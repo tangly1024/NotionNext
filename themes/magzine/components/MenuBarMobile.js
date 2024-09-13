@@ -12,17 +12,17 @@ export const MenuBarMobile = props => {
     {
       name: locale.COMMON.CATEGORY,
       href: '/category',
-      show: siteConfig('MEDIUM_MENU_CATEGORY', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_CATEGORY', null, CONFIG)
     },
     {
       name: locale.COMMON.TAGS,
       href: '/tag',
-      show: siteConfig('MEDIUM_MENU_TAG', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_TAG', null, CONFIG)
     },
     {
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('MEDIUM_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('MAGZINE_MENU_ARCHIVE', null, CONFIG)
     }
     // { name: locale.NAV.SEARCH, href: '/search', show: siteConfig('MENU_SEARCH', null, CONFIG) }
   ]
