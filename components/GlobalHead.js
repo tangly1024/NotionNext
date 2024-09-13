@@ -98,6 +98,7 @@ const GlobalHead = props => {
 
   return (
     <Head>
+      <link ref='canonical' href='https://kcgod.com' />
       <link rel='icon' href={favicon} />
       <title>{title}</title>
       <meta name='theme-color' content={BACKGROUND_DARK} />
