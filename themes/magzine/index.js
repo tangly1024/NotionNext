@@ -178,7 +178,7 @@ const LayoutSlug = props => {
 
             {/* 文章区块分为三列 */}
             <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
-              <div className='h-full lg:col-span-1 hidden lg:contents'>
+              <div className='h-full lg:col-span-1 hidden lg:block'>
                 <Catalog toc={post?.toc} className='sticky top-20' />
               </div>
 
@@ -231,7 +231,7 @@ const LayoutSlug = props => {
 
                 {/* 最新文章区块 */}
                 <div>
-                  <PostGroupLatest {...props} />
+                  <PostGroupLatest {...props} vertical={true} />
                 </div>
 
                 {/* 文章分类区块 */}

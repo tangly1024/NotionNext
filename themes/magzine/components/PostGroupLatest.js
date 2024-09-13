@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
  * @constructor
  */
 const PostGroupLatest = props => {
-  const { latestPosts } = props
+  const { latestPosts, vertical } = props
   // 获取当前路径
   const currentPath = useRouter().asPath
   const { locale, siteInfo } = useGlobal()
@@ -23,12 +23,12 @@ const PostGroupLatest = props => {
   return (
     <>
       {/* 标题 */}
-      <div className=' mb-2 px-1 flex flex-nowrap justify-between'>
+      <div className='mb-2 px-1 flex flex-nowrap justify-between'>
         <div className='font-bold text-lg'>{locale.COMMON.LATEST_POSTS}</div>
       </div>
 
       {/* 文章列表 */}
-      <div className='grid grid-cols-1 lg:grid-cols-4'>
+      <div className={`grid grid-cols-1 ${!vertical ? 'lg:grid-cols-4' : ''}`}>
         {latestPosts.map(post => {
           const selected =
             currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
