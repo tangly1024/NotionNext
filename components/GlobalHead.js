@@ -31,6 +31,7 @@ const GlobalHead = props => {
   const webFontUrl = siteConfig('FONT_URL')
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
   const siteUrl = siteConfig('LINK')
+  const canonical = 'canonical'
 
   const SEO_BAIDU_SITE_VERIFICATION = siteConfig(
     'SEO_BAIDU_SITE_VERIFICATION',
@@ -99,7 +100,7 @@ const GlobalHead = props => {
 
   return (
     <Head>
-      <link ref={'canonical'} href={siteUrl} />
+      <link ref={canonical} href={siteUrl} />
       <link rel='icon' href={favicon} />
       <title>{title}</title>
       <meta name='theme-color' content={BACKGROUND_DARK} />
