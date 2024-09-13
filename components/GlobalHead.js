@@ -99,7 +99,7 @@ const GlobalHead = props => {
 
   return (
     <Head>
-      <link ref='canonical' href={siteUrl} />
+      <link ref={'canonical'} href={siteUrl} />
       <link rel='icon' href={favicon} />
       <title>{title}</title>
       <meta name='theme-color' content={BACKGROUND_DARK} />
