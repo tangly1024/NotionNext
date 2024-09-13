@@ -1,5 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 
 /**
  * 用户信息卡
@@ -7,7 +8,7 @@ import { siteConfig } from '@/lib/config'
  * @returns
  */
 const InfoCard = props => {
-  const { siteInfo } = props
+  const { siteInfo } = useGlobal()
 
   return (
     <div id='info-card'>

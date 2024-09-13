@@ -18,14 +18,14 @@ const PostListRecommend = ({ latestPosts, allNavPages }) => {
   const title = siteConfig('MAGZINE_RECOMMEND_POST_TITLE')
 
   return (
-    <div className={`w-full py-10 bg-[#F6F6F1]`}>
+    <div className={`w-full py-10 px-2 bg-[#F6F6F1]`}>
       <div className='max-w-screen-2xl w-full mx-auto'>
         {/* 标题 */}
         <div className='flex justify-between items-center py-6'>
           <h3 className='text-4xl font-bold'>{title}</h3>
         </div>
         {/* 列表 */}
-        <ul className='flex gap-4 overflow-x-scroll'>
+        <ul className='flex flex-col lg:flex-row gap-4 lg:overflow-x-scroll'>
           {recommendPosts?.map(p => {
             return <PostItemCard key={p.id} post={p} />
           })}

@@ -24,10 +24,12 @@ const PostListPage = ({ page = 1, posts = [], postCount }) => {
   return (
     <div className='w-full justify-center'>
       <div id='posts-wrapper'>
-        {/* 文章列表 */}
-        {posts?.map(post => (
-          <PostItemCard key={post.id} post={post} />
-        ))}
+        {/* 列表 */}
+        <ul className='grid grid-cols-4 gap-4'>
+          {posts?.map((p, index) => {
+            return <PostItemCard key={index} post={p} />
+          })}
+        </ul>
       </div>
       <PaginationSimple page={page} totalPage={totalPage} />
     </div>

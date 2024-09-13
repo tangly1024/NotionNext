@@ -15,7 +15,7 @@ const PostListHorizontal = ({ title, href, posts, hasBg }) => {
   }
 
   return (
-    <div className={`w-full py-10 ${hasBg ? 'bg-[#F6F6F1]' : ''}`}>
+    <div className={`w-full py-10 px-2 lg:px-0 ${hasBg ? 'bg-[#F6F6F1]' : ''}`}>
       <div className='max-w-screen-2xl w-full mx-auto'>
         {/* 标题 */}
         <div className='flex justify-between items-center py-6'>
@@ -26,7 +26,7 @@ const PostListHorizontal = ({ title, href, posts, hasBg }) => {
           </Link>
         </div>
         {/* 列表 */}
-        <ul className='flex gap-4'>
+        <ul className='grid grid-cols-1 lg:grid-cols-4 gap-4'>
           {posts?.map((p, index) => {
             return <PostItemCard key={index} post={p} />
           })}

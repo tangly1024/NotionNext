@@ -16,14 +16,13 @@ const Footer = ({ title }) => {
     parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
   const { siteInfo } = useGlobal()
   const MAGZINE_FOOTER_LINKS = siteConfig('MAGZINE_FOOTER_LINKS', [])
-  console.log('菜单', MAGZINE_FOOTER_LINKS)
 
   return (
     <footer className='z-10 bg-black text-white justify-center m-auto w-full p-6 relative'>
-      <div className='max-w-screen-2xl w-full  mx-auto '>
+      <div className='max-w-screen-2xl w-full mx-auto '>
         {/* 信息与链接区块 */}
-        <div className='w-full flex justify-between py-16'>
-          <div className='gap-x-2 flex items-center'>
+        <div className='w-full flex lg:flex-row flex-col justify-between py-16'>
+          <div className='gap-x-2 py-6 flex items-center'>
             {/* 站长信息 */}
             <LazyImage
               src={siteInfo?.icon}
@@ -43,11 +42,11 @@ const Footer = ({ title }) => {
           </div>
 
           {/* 右侧链接区块 */}
-          <div className='grid grid-cols-4 gap-16'>
+          <div className='grid grid-cols-1 lg:grid-cols-4 lg:gap-16 gap-8'>
             {MAGZINE_FOOTER_LINKS?.map((group, index) => {
               return (
                 <div key={index}>
-                  <div className='font-bold text-lg text-white pb-8'>
+                  <div className='font-bold text-lg text-white lg:pb-8 pb-4'>
                     {group.name}
                   </div>
                   <div className='flex flex-col gap-y-2'>

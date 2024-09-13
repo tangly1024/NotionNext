@@ -10,10 +10,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import Announcement from './components/Announcement'
-import ArchiveItem from './components/ArchiveItem'
-import ArticleAround from './components/ArticleAround'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
+import BannerFullWidth from './components/BannerFullWidth'
 import Catalog from './components/Catalog'
 import CategoryGroup from './components/CategoryGroup'
 import CategoryItem from './components/CategoryItem'
@@ -21,14 +20,16 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import PostBannerGroupByCategory from './components/PostBannerGroupByCategory'
+import PostGroupArchive from './components/PostGroupArchive'
+import PostGroupLatest from './components/PostGroupLates'
 import PostListPage from './components/PostListPage'
 import PostListRecommend from './components/PostListRecommend'
 import PostListScroll from './components/PostListScroll'
 import PostSimpleListHorizontal from './components/PostListSimpleHorizontal'
-import SearchInput from './components/SearchInput'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
 import TocDrawer from './components/TocDrawer'
+import TouchMeCard from './components/TouchMeCard'
 import CONFIG from './config'
 import { Style } from './style'
 
@@ -118,14 +119,20 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
+  // 当前筛选的分类或标签
+  const { category, tag } = props
+
   return (
-    <>
+    <div className=' max-w-screen-2xl mx-auto w-full'>
+      {/* 一个顶部条 */}
+      <h2 className='py-8 text-2xl font-bold'>{category || tag}</h2>
+
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <PostListPage {...props} />
       ) : (
         <PostListScroll {...props} />
       )}
-    </>
+    </div>
   )
 }
 
@@ -135,15 +142,9 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, prev, next, lock, validPassword } = props
+  const { post, recommendPosts, prev, next, lock, validPassword } = props
   const { locale } = useGlobal()
   const router = useRouter()
-  const slotRight = post?.toc && post?.toc?.length >= 3 && (
-    <div key={locale.COMMON.TABLE_OF_CONTENTS}>
-      <Catalog toc={post?.toc} />
-    </div>
-  )
-  console.log('post-文章', post)
 
   useEffect(() => {
     // 404
@@ -165,47 +166,102 @@ const LayoutSlug = props => {
   }, [post])
 
   return (
-    <div {...props} className='w-full mx-auto max-w-screen-2xl'>
-      {/* 文章锁 */}
-      {lock && <ArticleLock validPassword={validPassword} />}
+    <>
+      <div {...props} className='w-full mx-auto max-w-screen-2xl'>
+        {/* 文章锁 */}
+        {lock && <ArticleLock validPassword={validPassword} />}
 
-      {!lock && (
-        <div>
-          {/* 文章信息 */}
-          <ArticleInfo {...props} />
+        {!lock && (
+          <div className='w-full max-w-screen-2xl mx-auto'>
+            {/* 文章信息 */}
+            <ArticleInfo {...props} />
 
-          {/* Notion文章主体 */}
-          <article id='article-wrapper' className='px-1 max-w-4xl'>
-            <NotionPage post={post} />
-          </article>
+            {/* 文章区块分为三列 */}
+            <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
+              <div className='h-full lg:col-span-1'>
+                <Catalog toc={post?.toc} className='sticky top-20' />
+              </div>
 
-          {/* 文章底部区域  */}
-          <section>
-            {/* 分享 */}
-            <ShareBar post={post} />
-            {/* 文章分类和标签信息 */}
-            <div className='flex justify-between'>
-              {siteConfig('MAGZINE_POST_DETAIL_CATEGORY') && post?.category && (
-                <CategoryItem category={post?.category} />
-              )}
-              <div>
-                {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
-                  post?.tagItems?.map(tag => (
-                    <TagItemMini key={tag.name} tag={tag} />
-                  ))}
+              {/* Notion文章主体 */}
+              <article
+                id='article-wrapper'
+                className='max-w-3xl lg:col-span-3 w-full mx-auto'>
+                <NotionPage post={post} />
+
+                {/* 文章底部区域  */}
+                <section>
+                  {/* 分享 */}
+                  <ShareBar post={post} />
+                  {/* 文章分类和标签信息 */}
+                  <div className='flex justify-between'>
+                    {siteConfig('MAGZINE_POST_DETAIL_CATEGORY') &&
+                      post?.category && (
+                        <CategoryItem category={post?.category} />
+                      )}
+                    <div>
+                      {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
+                        post?.tagItems?.map(tag => (
+                          <TagItemMini key={tag.name} tag={tag} />
+                        ))}
+                    </div>
+                  </div>
+                  {/* 评论区 */}
+                  <Comment frontMatter={post} />
+                </section>
+              </article>
+
+              <div className='lg:col-span-1 flex flex-col justify-between'>
+                {/* meta信息 */}
+                <section className='text-lg gap-y-6 '>
+                  <div className='text-gray-500 py-1 dark:text-gray-600'>
+                    {/* <div className='whitespace-nowrap'>
+                      <i className='far fa-calendar mr-2' />
+                      {post?.publishDay}
+                    </div> */}
+                    <div className='whitespace-nowrap mr-2'>
+                      <i className='far fa-calendar-check mr-2' />
+                      {post?.lastEditedDay}
+                    </div>
+                    <div className='hidden busuanzi_container_page_pv  mr-2 whitespace-nowrap'>
+                      <i className='mr-1 fas fa-fire' />
+                      <span className='busuanzi_value_page_pv' />
+                    </div>
+                  </div>
+                </section>
+
+                {/* 最新文章区块 */}
+                <div>
+                  <PostGroupLatest {...props} />
+                </div>
+
+                {/* 文章分类区块 */}
+                <div>
+                  <CategoryGroup {...props} />
+                </div>
+
+                <div>
+                  <TouchMeCard />
+                </div>
+
+                {/* 底部留白 */}
+                <div></div>
               </div>
             </div>
-            {/* 上一篇下一篇文章 */}
-            {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
-            {/* 评论区 */}
-            <Comment frontMatter={post} />
-          </section>
 
-          {/* 移动端目录 */}
-          <TocDrawer {...props} />
-        </div>
-      )}
-    </div>
+            {/* 移动端目录 */}
+            <TocDrawer {...props} />
+          </div>
+        )}
+      </div>
+      {/* 广告醒图 */}
+      <BannerFullWidth />
+      {/* 最新文章区块 */}
+      <PostSimpleListHorizontal
+        title={locale.COMMON.RELATE_POSTS}
+        href='/archive'
+        posts={recommendPosts}
+      />
+    </>
   )
 }
 
@@ -234,11 +290,10 @@ const LayoutSearch = props => {
   }, [])
 
   return (
-    <>
+    <div className='max-w-screen-2xl w-full mx-auto'>
       {/* 搜索导航栏 */}
       <div className='py-12'>
         <div className='pb-4 w-full'>{locale.NAV.SEARCH}</div>
-        <SearchInput currentSearch={currentSearch} {...props} />
         {!currentSearch && (
           <>
             <TagGroups {...props} />
@@ -257,7 +312,7 @@ const LayoutSearch = props => {
           )}
         </div>
       )}
-    </>
+    </div>
   )
 }
 
@@ -270,12 +325,12 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <>
-      <div className='mb-10 pb-20 md:py-12 py-3  min-h-full'>
+      <div className='w-full max-w-screen-2xl mx-auto mt-14 min-h-full'>
         {Object.keys(archivePosts)?.map(archiveTitle => (
-          <ArchiveItem
+          <PostGroupArchive
             key={archiveTitle}
             archiveTitle={archiveTitle}
-            archivePosts={archivePosts}
+            posts={archivePosts[archiveTitle]}
           />
         ))}
       </div>
@@ -307,10 +362,10 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
   return (
-    <>
+    <div className='w-full max-w-screen-2xl mx-auto min-h-96'>
       <div className='bg-white dark:bg-gray-700 py-10'>
-        <div className='dark:text-gray-200 mb-5'>
-          <i className='mr-4 fas fa-th' />
+        <div className='dark:text-gray-200 mb-5 text-2xl font-bold'>
+          {/* <i className='mr-4 fas fa-th' /> */}
           {locale.COMMON.CATEGORY}:
         </div>
         <div id='category-list' className='duration-200 flex flex-wrap'>
@@ -325,7 +380,7 @@ const LayoutCategoryIndex = props => {
                   className={
                     'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
                   }>
-                  <i className='mr-4 fas fa-folder' />
+                  {/* <i className='mr-4 fas fa-folder' /> */}
                   {category.name}({category.count})
                 </div>
               </Link>
@@ -333,7 +388,7 @@ const LayoutCategoryIndex = props => {
           })}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -346,10 +401,10 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-    <>
+    <div className='w-full max-w-screen-2xl mx-auto min-h-96'>
       <div className='bg-white dark:bg-gray-700 py-10'>
-        <div className='dark:text-gray-200 mb-5'>
-          <i className='mr-4 fas fa-tag' />
+        <div className='dark:text-gray-200 mb-5  text-2xl font-bold'>
+          {/* <i className='mr-4 fas fa-tag' /> */}
           {locale.COMMON.TAGS}:
         </div>
         <div id='tags-list' className='duration-200 flex flex-wrap'>
@@ -362,7 +417,7 @@ const LayoutTagIndex = props => {
           })}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

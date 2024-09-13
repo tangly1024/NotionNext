@@ -9,7 +9,7 @@ import Progress from './Progress'
  * @returns {JSX.Element}
  * @constructor
  */
-const Catalog = ({ toc }) => {
+const Catalog = ({ toc, className }) => {
   const tocIds = []
 
   // 目录自动滚动
@@ -62,7 +62,7 @@ const Catalog = ({ toc }) => {
   }
 
   return (
-    <div className='px-3'>
+    <div className={className}>
       <div className='w-full mt-2 mb-4'>
         <Progress />
       </div>

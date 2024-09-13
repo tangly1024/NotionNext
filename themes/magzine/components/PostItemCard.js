@@ -9,12 +9,12 @@ import CategoryItem from './CategoryItem'
  * 普通的博客卡牌
  * 带封面图
  */
-const PostItemCard = ({ post, showSummary }) => {
+const PostItemCard = ({ post }) => {
   const { siteInfo } = useGlobal()
   const cover = post?.pageCoverThumbnail || siteInfo?.pageCover
   return (
     <div key={post.id} className='mb-6 max-w-screen-2xl'>
-      <div className='lg:py-8 py-4 flex flex-col w-full'>
+      <div className='flex flex-col'>
         {siteConfig('MAGZINE_POST_LIST_COVER') && (
           <Link
             href={post?.href}

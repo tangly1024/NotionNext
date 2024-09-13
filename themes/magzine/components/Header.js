@@ -2,6 +2,7 @@ import Collapse from '@/components/Collapse'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
+import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import LogoBar from './LogoBar'
@@ -18,8 +19,8 @@ export default function Header(props) {
   const [isOpen, changeShow] = useState(false)
   const collapseRef = useRef(null)
   const lastScrollY = useRef(0) // 用于存储上一次的滚动位置
-
   const { locale } = useGlobal()
+  const router = useRouter()
 
   const defaultLinks = [
     {
@@ -118,7 +119,7 @@ export default function Header(props) {
       {/* 导航栏菜单内容 */}
       <div
         id='top-navbar'
-        className='flex w-full mx-auto max-w-screen-2xl h-20 transition-all duration-200 items-center justify-between'>
+        className='px-2 lg:px-0 flex w-full mx-auto max-w-screen-2xl h-20 transition-all duration-200 items-center justify-between'>
         {/* 搜索栏 */}
         {showSearchInput && (
           <input
@@ -141,7 +142,7 @@ export default function Header(props) {
             <div className='flex gap-x-8 h-full'>
               <LogoBar {...props} />
               {/* 桌面端顶部菜单 */}
-              <div className='hidden md:flex items-center gap-x-2'>
+              <div className='hidden md:flex items-center gap-x-3'>
                 {links &&
                   links?.map(link => (
                     <MenuItemDrop key={link?.id} link={link} />
@@ -153,6 +154,16 @@ export default function Header(props) {
 
         {/* 右侧移动端折叠按钮 */}
         <div className='flex items-center gap-x-2'>
+          {/* 搜索按钮 */}
+          <div className='flex text-center items-center cursor-pointer'>
+            <i
+              className={
+                showSearchInput
+                  ? 'fa-regular fa-circle-xmark'
+                  : 'fa-solid fa-magnifying-glass' + ' align-middle'
+              }
+              onClick={toggleShowSearchInput}></i>
+          </div>
           <div className='mr-1 flex md:hidden justify-end items-center text-lg space-x-4 font-serif dark:text-gray-200'>
             <div onClick={toggleMenuOpen} className='cursor-pointer'>
               {isOpen ? (
@@ -161,17 +172,6 @@ export default function Header(props) {
                 <i className='fas fa-bars' />
               )}
             </div>
-          </div>
-
-          {/* 搜索按钮 */}
-          <div className='text-center items-center cursor-pointer'>
-            <i
-              className={
-                showSearchInput
-                  ? 'fa-regular fa-circle-xmark'
-                  : 'fa-solid fa-magnifying-glass' + ' align-middle'
-              }
-              onClick={toggleShowSearchInput}></i>
           </div>
         </div>
       </div>

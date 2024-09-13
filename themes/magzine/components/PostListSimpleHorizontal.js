@@ -14,7 +14,7 @@ const PostSimpleListHorizontal = ({ title, href, posts }) => {
 
   return (
     <div className='w-full py-10 bg-[#F6F6F1]'>
-      <div className='max-w-screen-2xl w-full mx-auto'>
+      <div className='max-w-screen-2xl w-full mx-auto px-2'>
         {/* 标题 */}
         <div className='flex justify-between items-center py-6'>
           <h3 className='text-2xl'>{title}</h3>
@@ -24,7 +24,7 @@ const PostSimpleListHorizontal = ({ title, href, posts }) => {
           </Link>
         </div>
         {/* 列表 */}
-        <ul className='flex'>
+        <ul className='flex flex-col lg:flex-row'>
           {posts?.map(p => {
             return <PostItemCardSimple key={p.id} post={p} />
           })}

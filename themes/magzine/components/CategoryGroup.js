@@ -13,11 +13,8 @@ const CategoryGroup = ({ currentCategory, categoryOptions }) => {
   }
   return (
     <div id='category-list' className='pt-4'>
-      <div className='mb-2'>
-        <i className='mr-2 fas fa-th' />
-        {locale.COMMON.CATEGORY}
-      </div>
-      <div className='flex flex-wrap'>
+      <div className='text-lg font-bold mb-2'>{locale.COMMON.CATEGORY}</div>
+      <div className=''>
         {categoryOptions?.map(category => {
           const selected = currentCategory === category.name
           return (
