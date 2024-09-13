@@ -2,6 +2,7 @@ import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
 import CategoryItem from './CategoryItem'
 
@@ -14,19 +15,19 @@ const PostItemCard = ({ post }) => {
   const cover = post?.pageCoverThumbnail || siteInfo?.pageCover
   return (
     <div key={post.id} className='mb-6 max-w-screen-2xl'>
-      <div className='flex flex-col'>
+      <div className='flex flex-col space-y-3'>
         {siteConfig('MAGZINE_POST_LIST_COVER') && (
           <Link
             href={post?.href}
             passHref
             className={
-              'cursor-pointer  hover:underline leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
+              'cursor-pointer hover:underline leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
             }>
             <div className='w-full h-40 aspect-video overflow-hidden mb-2'>
               <LazyImage
                 src={cover}
                 style={cover ? {} : { height: '0px' }}
-                className='w-full h-40 aspect-video object-cover hover:scale-125 duration-150'
+                className='w-full h-40 aspect-video object-cover'
               />
             </div>
           </Link>
@@ -39,7 +40,7 @@ const PostItemCard = ({ post }) => {
           href={post?.href}
           passHref
           className={
-            'text-lg cursor-pointer hover:underline leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
+            'text-xl cursor-pointer hover:underline leading-tight text-gray-700 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400'
           }>
           <h2>
             {siteConfig('POST_TITLE_ICON') && (
@@ -49,7 +50,9 @@ const PostItemCard = ({ post }) => {
           </h2>
         </Link>
 
-        <div className='text-sm py-1'>{post.date?.start_date}</div>
+        <div className='text-sm'>
+          {formatDateFmt(post.publishDate, 'yyyy-MM')}
+        </div>
       </div>
     </div>
   )

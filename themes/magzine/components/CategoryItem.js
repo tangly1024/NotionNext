@@ -7,9 +7,9 @@ export default function CategoryItem({ selected, category, categoryCount }) {
       passHref
       className={
         (selected
-          ? ' bg-gray-600 text-white '
+          ? 'bg-gray-600 text-white '
           : 'dark:text-gray-400 text-gray-900 ') +
-        'text-sm hover:underline flex text-md items-center duration-300 cursor-pointer py-1 whitespace-nowrap'
+        'text-sm font-semibold hover:underline flex text-md items-center duration-300 cursor-pointer py-1 whitespace-nowrap'
       }>
       <div>
         {category} {categoryCount && `(${categoryCount})`}
