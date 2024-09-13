@@ -144,8 +144,8 @@ export default function Header(props) {
               {/* 桌面端顶部菜单 */}
               <div className='hidden md:flex items-center gap-x-3'>
                 {links &&
-                  links?.map(link => (
-                    <MenuItemDrop key={link?.id} link={link} />
+                  links?.map((link, index) => (
+                    <MenuItemDrop key={index} link={link} />
                   ))}
               </div>
             </div>

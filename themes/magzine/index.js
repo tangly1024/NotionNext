@@ -21,7 +21,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import PostBannerGroupByCategory from './components/PostBannerGroupByCategory'
 import PostGroupArchive from './components/PostGroupArchive'
-import PostGroupLatest from './components/PostGroupLates'
+import PostGroupLatest from './components/PostGroupLatest'
 import PostListPage from './components/PostListPage'
 import PostListRecommend from './components/PostListRecommend'
 import PostListScroll from './components/PostListScroll'
@@ -178,14 +178,14 @@ const LayoutSlug = props => {
 
             {/* 文章区块分为三列 */}
             <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
-              <div className='h-full lg:col-span-1'>
+              <div className='h-full lg:col-span-1 hidden lg:contents'>
                 <Catalog toc={post?.toc} className='sticky top-20' />
               </div>
 
               {/* Notion文章主体 */}
               <article
                 id='article-wrapper'
-                className='max-w-3xl lg:col-span-3 w-full mx-auto'>
+                className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
                 <NotionPage post={post} />
 
                 {/* 文章底部区域  */}
@@ -210,7 +210,7 @@ const LayoutSlug = props => {
                 </section>
               </article>
 
-              <div className='lg:col-span-1 flex flex-col justify-between'>
+              <div className='lg:col-span-1 flex flex-col justify-between px-2 lg:px-0 space-y-2 lg:space-y-0'>
                 {/* meta信息 */}
                 <section className='text-lg gap-y-6 '>
                   <div className='text-gray-500 py-1 dark:text-gray-600'>

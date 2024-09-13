@@ -24,7 +24,7 @@ const PostSimpleListHorizontal = ({ title, href, posts }) => {
           </Link>
         </div>
         {/* 列表 */}
-        <ul className='flex flex-col lg:flex-row'>
+        <ul className='grid grid-cols-1 lg:grid-cols-4'>
           {posts?.map(p => {
             return <PostItemCardSimple key={p.id} post={p} />
           })}
