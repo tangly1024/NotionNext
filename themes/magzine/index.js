@@ -188,10 +188,10 @@ const LayoutSlug = props => {
               </div>
 
               {/* Notion文章主体 */}
-              <article
-                id='article-wrapper'
-                className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
-                <NotionPage post={post} />
+              <article className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
+                <div id='article-wrapper'>
+                  <NotionPage post={post} />
+                </div>
 
                 {/* 文章底部区域  */}
                 <section>
