@@ -12,7 +12,7 @@ import SideBarDrawer from './SideBarDrawer'
  * @returns 主题切换
  */
 const ThemeSwitch = () => {
-  const { theme, lang, changeLang, locale, isDarkMode, toggleDarkMode } =
+  const { theme, locale, isDarkMode, toggleDarkMode } =
     useGlobal()
   const router = useRouter()
   const currentTheme = getQueryParam(router.asPath, 'theme') || theme
