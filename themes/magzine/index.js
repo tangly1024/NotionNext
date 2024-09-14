@@ -1,3 +1,4 @@
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Comment from '@/components/Comment'
 import LoadingCover from '@/components/LoadingCover'
 import replaceSearchResult from '@/components/Mark'
@@ -76,7 +77,11 @@ const LayoutBase = props => {
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
+
+        {/* 全局Loading */}
         <LoadingCover />
+        {/* 全局搜索遮罩 */}
+        <AlgoliaSearchModal cRef={searchModal} {...props} />
       </div>
     </ThemeGlobalMagzine.Provider>
   )

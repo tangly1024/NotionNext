@@ -155,19 +155,20 @@ export default function Header(props) {
         )}
 
         {/* 右侧移动端折叠按钮 */}
-        <div className='flex items-center gap-x-6 pr-4'>
+        <div className='flex items-center gap-x-2 pr-2'>
           {/* 搜索按钮 */}
-          <div className='flex text-center items-center cursor-pointer'>
+          <div
+            onClick={toggleShowSearchInput}
+            className='flex text-center items-center cursor-pointer p-2'>
             <i
               className={
                 showSearchInput
                   ? 'fa-regular fa-circle-xmark'
                   : 'fa-solid fa-magnifying-glass' + ' align-middle'
-              }
-              onClick={toggleShowSearchInput}></i>
+              }></i>
           </div>
           <div className='mr-1 flex md:hidden justify-end items-center text-lg space-x-4 font-serif dark:text-gray-200'>
-            <div onClick={toggleMenuOpen} className='cursor-pointer'>
+            <div onClick={toggleMenuOpen} className='cursor-pointer p-2'>
               {isOpen ? (
                 <i className='fas fa-times' />
               ) : (
