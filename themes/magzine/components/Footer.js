@@ -19,7 +19,7 @@ const Footer = ({ title }) => {
 
   return (
     <footer className='z-10 bg-black text-white justify-center m-auto w-full p-6 relative'>
-      <div className='max-w-screen-2xl w-full mx-auto '>
+      <div className='max-w-screen-3xl w-full mx-auto '>
         {/* 信息与链接区块 */}
         <div className='w-full flex lg:flex-row flex-col justify-between py-16'>
           <div className='gap-x-2 py-6 flex items-center'>

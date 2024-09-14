@@ -2,7 +2,12 @@ const BLOG = require('./blog.config')
 const { fontFamilies } = require('./lib/font')
 
 module.exports = {
-  content: ['./pages/**/*.js', './components/**/*.js', './layouts/**/*.js', './themes/**/*.js'],
+  content: [
+    './pages/**/*.js',
+    './components/**/*.js',
+    './layouts/**/*.js',
+    './themes/**/*.js'
+  ],
   darkMode: BLOG.APPEARANCE === 'class' ? 'media' : 'class', // or 'media' or 'class'
   theme: {
     fontFamily: fontFamilies,
@@ -19,8 +24,9 @@ module.exports = {
       xl: '1140px',
       // => @media (min-width: 1200px) { ... }
 
-      '2xl': '1320px'
+      '2xl': '1320px',
       // => @media (min-width: 1400px) { ... }
+      '3xl': '1920px'
     },
     container: {
       center: true,
@@ -64,7 +70,8 @@ module.exports = {
       },
       maxWidth: {
         side: '14rem',
-        '9/10': '90%'
+        '9/10': '90%',
+        'screen-3xl': '1440px'
       },
       boxShadow: {
         input: '0px 7px 20px rgba(0, 0, 0, 0.03)',

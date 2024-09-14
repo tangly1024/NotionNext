@@ -5,7 +5,6 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import CategoryItem from './CategoryItem'
-import TagItemMini from './TagItemMini'
 
 /**
  * 水平左右布局的博客卡片
@@ -16,9 +15,12 @@ const PostItemCardWide = ({ post, showSummary }) => {
   const showPreview = siteConfig('MAGZINE_POST_LIST_PREVIEW') && post.blockMap
   const { locale } = useGlobal()
   return (
-    <div key={post.id} className='flex justify-between space-x-6 mb-6 '>
+    <div key={post.id} className='flex justify-between gap-x-6'>
       {/* 卡牌左侧 */}
-      <div className='h-40 w-96'>
+      <div className='h-40 w-96 gap-y-3 flex flex-col'>
+        {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
+          <CategoryItem category={post.category} />
+        )}
         <Link
           href={post?.href}
           passHref
@@ -34,7 +36,7 @@ const PostItemCardWide = ({ post, showSummary }) => {
         </Link>
 
         {(!showPreview || showSummary) && (
-          <main className='my-4 line-clamp-2 text-gray-900 dark:text-gray-300 text-sm'>
+          <main className='line-clamp-2 text-gray-900 dark:text-gray-300 text-sm'>
             {post.summary}
           </main>
         )}
@@ -58,15 +60,12 @@ const PostItemCardWide = ({ post, showSummary }) => {
 
         <div
           className={
-            'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
+            'flex items-center justify-start flex-wrap space-x-3 text-gray-400'
           }>
-          {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
-            <CategoryItem category={post.category} />
-          )}
-          {siteConfig('MAGZINE_POST_LIST_TAG') &&
+          {/* {siteConfig('MAGZINE_POST_LIST_TAG') &&
             post?.tagItems?.map(tag => (
               <TagItemMini key={tag.name} tag={tag} />
-            ))}
+            ))} */}
           <div className='text-sm py-1'>{post.date?.start_date}</div>
         </div>
       </div>
