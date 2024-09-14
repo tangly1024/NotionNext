@@ -23,7 +23,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: 'www.amoze.cc',
   HEO_HERO_TITLE_4: 'Web Performance Optimization',
   HEO_HERO_TITLE_5: 'Full-Stack Solutions',
-  HEO_HERO_TITLE_LINK: 'https://https://www.amoze.cc/',
+  HEO_HERO_TITLE_LINK: 'https://www.amoze.cc/',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: 'Must-see selection', url: '/tag/必看精选' },
