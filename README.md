@@ -35,7 +35,7 @@ Notion是一个能让效率暴涨的生产力引擎，可以帮你书写文档�
 
 ## 预览效果
 
-在线演示：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，项目支持多主题切换，没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
+在线演示：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，点击左下角挂件可以切换主题，没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
 
 | Next | Medium | Hexo | Fukasawa |
 |--|--|--|--|
