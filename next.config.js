@@ -15,7 +15,7 @@ const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
 const locales = (function () {
   // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
   // 支持如下格式配置多个语言的页面id xxx,zh:xxx,en:xxx
-  let langs = [BLOG.LANG.slice(0, 2)]
+  const langs = [BLOG.LANG.slice(0, 2)]
   if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
     const siteIds = BLOG.NOTION_PAGE_ID.split(',')
     for (let index = 0; index < siteIds.length; index++) {
@@ -33,6 +33,7 @@ const locales = (function () {
 })()
 
 // 编译前执行
+// eslint-disable-next-line no-unused-vars
 const preBuild = (function () {
   if (
     !process.env.npm_lifecycle_event === 'export' &&
@@ -81,6 +82,7 @@ function scanSubdirectories(directory) {
 
 const nextConfig = {
   output: process.env.EXPORT ? 'export' : undefined,
+  staticPageGenerationTimeout: 120,
   // 多语言， 在export时禁用
   i18n: process.env.EXPORT
     ? undefined
