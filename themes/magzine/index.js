@@ -16,7 +16,6 @@ import { ArticleLock } from './components/ArticleLock'
 import BannerFullWidth from './components/BannerFullWidth'
 import Catalog from './components/Catalog'
 import CategoryGroup from './components/CategoryGroup'
-import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -27,6 +26,7 @@ import PostListPage from './components/PostListPage'
 import PostListRecommend from './components/PostListRecommend'
 import PostListScroll from './components/PostListScroll'
 import PostSimpleListHorizontal from './components/PostListSimpleHorizontal'
+import PostNavAround from './components/PostNavAround'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
 import TocDrawer from './components/TocDrawer'
@@ -147,7 +147,7 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, recommendPosts, lock, validPassword } = props
+  const { post, recommendPosts, prev, next, lock, validPassword } = props
   const { locale } = useGlobal()
   const router = useRouter()
 
@@ -195,21 +195,16 @@ const LayoutSlug = props => {
 
                 {/* 文章底部区域  */}
                 <section>
+                  <div className='py-2 flex justify-end'>
+                    {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
+                      post?.tagItems?.map(tag => (
+                        <TagItemMini key={tag.name} tag={tag} />
+                      ))}
+                  </div>
                   {/* 分享 */}
                   <ShareBar post={post} />
-                  {/* 文章分类和标签信息 */}
-                  <div className='flex justify-between'>
-                    {siteConfig('MAGZINE_POST_DETAIL_CATEGORY') &&
-                      post?.category && (
-                        <CategoryItem category={post?.category} />
-                      )}
-                    <div>
-                      {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
-                        post?.tagItems?.map(tag => (
-                          <TagItemMini key={tag.name} tag={tag} />
-                        ))}
-                    </div>
-                  </div>
+                  {/* 上一篇下一篇 */}
+                  <PostNavAround prev={prev} next={next} />
                   {/* 评论区 */}
                   <Comment frontMatter={post} />
                 </section>
@@ -262,10 +257,9 @@ const LayoutSlug = props => {
       <div>
         {/* 广告醒图 */}
         <BannerFullWidth />
-        {/* 最新文章区块 */}
+        {/* 推荐关联文章 */}
         <PostSimpleListHorizontal
           title={locale.COMMON.RELATE_POSTS}
-          href='/archive'
           posts={recommendPosts}
         />
       </div>
