@@ -75,7 +75,7 @@ const Hero = props => {
 
       <div
         id='hero-header-cover'
-        className='bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center'>
+        className='bg-black bg-opacity-50 absolute top-0 w-full h-96 py-10 flex justify-center items-center'>
         <div className='text-white flex flex-col items-center justify-center w-full'>
           {/* 站点标题 */}
           <div className='font-black text-4xl md:text-5xl shadow-text'>
