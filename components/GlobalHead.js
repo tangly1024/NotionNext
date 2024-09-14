@@ -162,15 +162,6 @@ const GlobalHead = props => {
         </>
       )}
       {children}
-
-      
-
-      {
-        <script>{`window.msAdsQueue = window.msAdsQueue || [];`}</script>
-      }
-      {
-        <script async src="https://adsdk.microsoft.com/mmnow/sdk.js?siteId=365104&publisherId=254037100" crossorigin="anonymous"></script>
-      }
     </Head>
   )
 }
