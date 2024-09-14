@@ -30,12 +30,20 @@ const ThemeSwitch = () => {
         <div
           id='draggableBox'
           style={{ left: '0px', top: '80vh' }}
-          className='fixed group flex flex-col items-start space-y-2 overflow-hidden z-20 p-3
+          className='border fixed group flex flex-col items-start space-y-2 overflow-hidden z-20 p-3
                     dark:text-white bg-white dark:bg-black 
                       rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl   '>
           {/* 主题切换按钮 */}
           <div className='text-sm flex items-center group-hover:w-44 h-4 text-center duration-200'>
-            <i className='fa-solid fa-palette w-5' />
+            <i
+              className='cursor-pointer fa-solid fa-palette w-5 '
+              onClick={() => {
+                setSideBarVisible(true)
+              }}
+              onTouchStart={() => {
+                setSideBarVisible(true)
+              }}
+            />
             <div className='w-0 group-hover:w-32 duration-200 overflow-hidden'>
               <label htmlFor='themeSelect' className='sr-only'>
                 {locale.COMMON.THEME}
