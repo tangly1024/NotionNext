@@ -63,21 +63,24 @@ const Hero = props => {
       id='header'
       style={{ zIndex: 1 }}
       className='w-full h-96 relative bg-black'>
-      <div className='text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full '>
-        {/* 站点标题 */}
-        <div className='font-black text-4xl md:text-5xl shadow-text'>
-          {siteInfo?.title || siteConfig('TITLE')}
-        </div>
-      </div>
-
       <LazyImage
         id='header-cover'
         alt={siteInfo?.title}
         src={siteInfo?.pageCover}
         className={`header-cover w-full h-96 object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
       />
+  
+      <div
+        id='hero-header-cover'
+        className='bg-black bg-opacity-70 absolute top-0 w-full h-96 py-10 flex justify-center items-center'>
+        <div className='text-white flex flex-col items-center justify-center w-full'>
+          {/* 站点标题 */}
+          <div className='font-black text-4xl md:text-5xl shadow-text'>
+            {siteInfo?.title || siteConfig('TITLE')}
+          </div>
+        </div>
+      </div>
     </header>
   )
 }
-
 export default Hero
