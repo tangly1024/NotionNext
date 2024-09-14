@@ -24,16 +24,6 @@ const ThemeSwitch = () => {
     router.push({ pathname: router.pathname, query }).then(() => {})
   }
 
-  const onLangSelectChange = e => {
-    document.ontouchmove =
-      document.ontouchend =
-      document.onmousemove =
-      document.onmouseup =
-        null
-    const newLang = e.target.value
-    changeLang(newLang)
-  }
-
   return (
     <>
       {/* 悬浮的主题切换按钮 */}
