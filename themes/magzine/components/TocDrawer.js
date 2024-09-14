@@ -1,4 +1,4 @@
-import { useMediumGlobal } from '..'
+import { useMagzineGlobal } from '..'
 import Catalog from './Catalog'
 
 /**
@@ -9,7 +9,7 @@ import Catalog from './Catalog'
  * @constructor
  */
 const TocDrawer = ({ post, cRef }) => {
-  const { tocVisible, changeTocVisible } = useMediumGlobal()
+  const { tocVisible, changeTocVisible } = useMagzineGlobal()
   const switchVisible = () => {
     changeTocVisible(!tocVisible)
   }
