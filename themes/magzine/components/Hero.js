@@ -15,21 +15,21 @@ const Hero = ({ posts }) => {
   const post2 = posts[2]
   return (
     <>
-      <div className='w-full mx-auto max-w-screen-2xl  xl:flex justify-between'>
+      <div className='w-full mx-auto max-w-screen-3xl xl:flex justify-between gap-10'>
         {/* 左侧一篇主要置顶文章 */}
         <div className='basis-1/2 mb-6 px-2 lg:px-5'>
           <PostItemCardTop post={postTop} />
         </div>
         {/* 右侧 */}
-        <div>
-          {/* 首屏介绍 */}
+        <div className='basis-1/2 flex flex-col gap-y-4'>
+          {/* 首屏宣传小Banner */}
           <BannerItem />
 
           {/* 两篇次要文章 */}
-          <div className='py-4 px-2 lg:px-5'>
-            <hr className='mb-8' />
+          <div className='py-4 px-2 lg:px-0 flex flex-col gap-y-6'>
+            <hr />
             <PostItemCardWide post={post1} />
-            <hr className='mb-8' />
+            <hr />
             <PostItemCardWide post={post2} />
           </div>
         </div>

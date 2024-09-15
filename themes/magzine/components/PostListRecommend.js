@@ -20,7 +20,7 @@ const PostListRecommend = ({ latestPosts, allNavPages }) => {
 
   return (
     <div className={`w-full py-10 px-2 bg-[#F6F6F1] dark:bg-black`}>
-      <div className='max-w-screen-2xl w-full mx-auto'>
+      <div className='max-w-screen-3xl w-full mx-auto'>
         {/* 标题 */}
         <div className='flex justify-between items-center py-6'>
           <h3 className='text-4xl font-bold'>{title}</h3>

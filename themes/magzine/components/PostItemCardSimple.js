@@ -12,7 +12,7 @@ const PostItemCardSimple = ({ post, showSummary }) => {
   return (
     <div
       key={post.id}
-      className='lg:mb-6 max-w-screen-2xl border-t border-gray-300 mr-8 py-2 gap-y-3 flex flex-col dark:border-gray-800 '>
+      className='lg:mb-6 max-w-screen-3xl border-t border-gray-300 mr-8 py-2 gap-y-3 flex flex-col dark:border-gray-800 '>
       <div className='flex mr-2 items-center'>
         {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
           <CategoryItem category={post.category} />

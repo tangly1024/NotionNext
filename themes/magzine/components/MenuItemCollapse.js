@@ -56,7 +56,7 @@ export const MenuItemCollapse = props => {
         {hasSubMenu && (
           <div
             onClick={hasSubMenu ? toggleOpenSubMenu : null}
-            className='py-2 font-extralight flex justify-between cursor-pointer  dark:text-gray-200 no-underline tracking-widest'>
+            className='py-2 flex justify-between cursor-pointer  dark:text-gray-200 no-underline tracking-widest'>
             <div>
               <div className={`${link.icon} text-center w-4 mr-4`} />
               {link.name}
@@ -78,7 +78,7 @@ export const MenuItemCollapse = props => {
                 key={sLink.id}
                 className='
               not:last-child:border-b-0 border-b dark:border-gray-800 py-2 px-14 cursor-pointer hover:bg-gray-100 dark:text-gray-200
-              font-extralight dark:bg-black text-left justify-start text-gray-600 bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200'>
+              dark:bg-black text-left justify-start text-gray-600 bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200'>
                 <Link href={sLink.href} target={link?.target}>
                   <div>
                     <div
