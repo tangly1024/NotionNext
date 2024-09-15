@@ -18,12 +18,14 @@ const PostListHorizontal = ({ title, href, posts, hasBg }) => {
   return (
     <div
       className={`w-full py-10 px-2 lg:px-0 ${hasBg ? 'bg-[#F6F6F1] dark:bg-black' : ''}`}>
-      <div className='max-w-screen-2xl w-full mx-auto'>
+      <div className='max-w-screen-3xl w-full mx-auto'>
         {/* 标题 */}
         <div className='flex justify-between items-center py-6'>
           <h3 className='text-2xl'>{title}</h3>
           {href && (
-            <Link className='hidden lg:block text-lg underline' href={href}>
+            <Link
+              className='hidden font-bold lg:block text-lg underline'
+              href={href}>
               <span>查看全部</span>
               <i className='ml-2 fas fa-arrow-right' />
             </Link>

@@ -14,14 +14,18 @@ const PostSimpleListHorizontal = ({ title, href, posts }) => {
 
   return (
     <div className='w-full py-10 bg-[#F6F6F1] dark:bg-black'>
-      <div className='max-w-screen-2xl w-full mx-auto px-2'>
+      <div className='max-w-screen-3xl w-full mx-auto px-4 lg:px-0'>
         {/* 标题 */}
         <div className='flex justify-between items-center py-6'>
           <h3 className='text-2xl'>{title}</h3>
-          <Link className='text-lg underline' href={href}>
-            <span>查看全部</span>
-            <i className='ml-2 fas fa-arrow-right' />
-          </Link>
+          {href && (
+            <Link
+              className='hidden font-bold lg:block text-lg underline'
+              href={href}>
+              <span>查看全部</span>
+              <i className='ml-2 fas fa-arrow-right' />
+            </Link>
+          )}
         </div>
         {/* 列表 */}
         <ul className='grid grid-cols-1 lg:grid-cols-4'>
@@ -29,6 +33,12 @@ const PostSimpleListHorizontal = ({ title, href, posts }) => {
             return <PostItemCardSimple key={p.id} post={p} />
           })}
         </ul>
+        {href && (
+          <Link className='lg:hidden block text-lg underline' href={href}>
+            <span>查看全部</span>
+            <i className='ml-2 fas fa-arrow-right' />
+          </Link>
+        )}
       </div>
     </div>
   )

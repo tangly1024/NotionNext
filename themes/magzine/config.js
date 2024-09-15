@@ -41,28 +41,14 @@ const CONFIG = {
     {
       name: '友情链接',
       menus: [
-        { title: '尘世の歌', href: 'https://chenge.ink' },
         {
-          title: '设计狮网址导航',
-          href: 'https://ct.ued.cat/'
+          title: 'Tangly的学习笔记',
+          href: 'https://blog.tangly1024.com'
         },
         {
-          title: '积极的长腿怪',
-          href: 'https://jjdctg.com'
-        },
-        {
-          title: '自动驾驶小白说',
-          href: 'https://www.helloxiaobai.cn/about'
-        },
-        {
-          title: 'AI-皇帝',
-          href: 'https://www.ai-hd.com/'
-        },
-        {
-          title: 'Andy`s Pro',
-          href: 'https://tw.andys.pro/'
-        },
-        { title: 'LUCEN', href: 'https://www.lucenczz.top/' }
+          title: 'NotionNext',
+          href: 'https://www.tangly1024.com'
+        }
       ]
     },
     {
@@ -87,7 +73,6 @@ const CONFIG = {
         }
       ]
     },
-
     {
       name: '支持',
       menus: [

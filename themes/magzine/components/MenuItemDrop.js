@@ -29,10 +29,8 @@ export const MenuItemDrop = ({ link }) => {
           }>
           <div className='items-center flex gap-x-1'>
             {link?.icon && <i className={link?.icon} />} {link?.name}
-            {hasSubMenu && (
-              <i
-                className={`px-1 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
-            )}
+            <i
+              className={`px-1 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
           </div>
         </div>
       )}
@@ -40,7 +38,7 @@ export const MenuItemDrop = ({ link }) => {
       {!hasSubMenu && (
         <div
           className={
-            'px-3  gap-x-1 h-full whitespace-nowrap duration-300 text-sm justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
+            'px-3 gap-x-1 h-full whitespace-nowrap duration-300 text-md justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
             (selected
               ? 'bg-gray-600 text-white hover:text-white'
               : 'hover:text-gray-600')
@@ -59,7 +57,7 @@ export const MenuItemDrop = ({ link }) => {
             return (
               <li
                 key={sLink.id}
-                className='text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 py-3 pr-6 pl-3'>
+                className='dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 py-3 pr-6 pl-3'>
                 <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm hover:underline'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}

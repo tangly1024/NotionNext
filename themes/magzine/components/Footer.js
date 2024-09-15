@@ -18,8 +18,10 @@ const Footer = ({ title }) => {
   const MAGZINE_FOOTER_LINKS = siteConfig('MAGZINE_FOOTER_LINKS', [])
 
   return (
-    <footer className='z-10 bg-black text-white justify-center m-auto w-full p-6 relative'>
-      <div className='max-w-screen-2xl w-full mx-auto '>
+    <footer
+      id='footer-bottom'
+      className='z-10 bg-black text-white justify-center m-auto w-full p-6 relative'>
+      <div className='max-w-screen-3xl w-full mx-auto '>
         {/* 信息与链接区块 */}
         <div className='w-full flex lg:flex-row flex-col justify-between py-16'>
           <div className='gap-x-2 py-6 flex items-center'>
@@ -67,10 +69,10 @@ const Footer = ({ title }) => {
         </div>
 
         {/* 页脚 */}
-        <div className='py-4 flex justify-between items-center border-t border-gray-400'>
-          <span className='flex gap-x-2 items-center'>
-            <DarkModeButton />
-            {`${copyrightDate}`}
+        <div className='py-4 flex flex-col lg:flex-row  justify-between items-center border-t border-gray-400'>
+          <div className='flex gap-x-2 justify-between items-center'>
+            <span className='whitespace-nowrap'>{`${copyrightDate}`}</span>
+
             {siteConfig('BEI_AN') && (
               <>
                 <i className='fas fa-shield-alt' />{' '}
@@ -80,30 +82,34 @@ const Footer = ({ title }) => {
                 <br />
               </>
             )}
-          </span>
 
-          <span className='text-sm font-serif'>
-            Powered by{' '}
-            <a
-              href='https://github.com/tangly1024/NotionNext'
-              className='underline justify-start text-white'>
-              NotionNext {siteConfig('VERSION')}
-            </a>
-            .
-          </span>
-          <div className='flex items-center gap-x-2'>
-            <span>
-              <i className='mx-1 animate-pulse fas fa-heart' />{' '}
-              <span className='hidden busuanzi_container_site_pv'>
-                <i className='fas fa-eye' />
-                <span className='px-1 busuanzi_value_site_pv'> </span>{' '}
-              </span>
-              <span className='pl-2 hidden busuanzi_container_site_uv'>
-                <i className='fas fa-users' />{' '}
-                <span className='px-1 busuanzi_value_site_uv'> </span>{' '}
-              </span>
-            </span>
-            <SocialButton />
+            <div className='text-sm font-serif'>
+              Powered by{' '}
+              <a
+                href='https://github.com/tangly1024/NotionNext'
+                className='underline justify-start text-white'>
+                NotionNext {siteConfig('VERSION')}
+              </a>
+              .
+            </div>
+          </div>
+
+          <DarkModeButton className='text-white' />
+
+          <div className='flex justify-between items-center gap-x-2'>
+            <div className='flex items-center gap-x-4'>
+              <div>
+                <span className='hidden busuanzi_container_site_pv'>
+                  <i className='fas fa-eye' />
+                  <span className='px-1 busuanzi_value_site_pv'> </span>{' '}
+                </span>
+                <span className='pl-2 hidden busuanzi_container_site_uv'>
+                  <i className='fas fa-users' />{' '}
+                  <span className='px-1 busuanzi_value_site_uv'> </span>{' '}
+                </span>
+              </div>
+              <SocialButton />
+            </div>
           </div>
         </div>
       </div>
