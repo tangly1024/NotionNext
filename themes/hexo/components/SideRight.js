@@ -11,6 +11,7 @@ import CategoryGroup from './CategoryGroup'
 import { InfoCard } from './InfoCard'
 import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
+import Image from 'next/image'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
 const FaceBookPage = dynamic(
@@ -107,11 +108,15 @@ export default function SideRight(props) {
           siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />} */}
 
         <Card>
-          <a href="https://fas.st/t/g6ceKiYb" target='_blank'><img src="/images/proxyscrape-premium.png" alt="ProxyScrape"/></a>
+          <a href="https://fas.st/t/g6ceKiYb" target='_blank'>
+            <Image src="/images/proxyscrape-premium.png" alt="ProxyScrape" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }}/>
+          </a>
         </Card> 
         
         <Card>
-          <a href="https://cloudcone.awesome-vps.com" target='_blank'><img src="/images/cloudcone-1.png" alt="Cloudcone Web Hosting and VPS"/></a>
+          <a href="https://cloudcone.awesome-vps.com" target='_blank'>
+            <Image src="/images/cloudcone-1.png" alt="Cloudcone Web Hosting and VPS" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }} />
+          </a>
         </Card>
 
         {rightAreaSlot}
