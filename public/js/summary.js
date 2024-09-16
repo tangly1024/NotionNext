@@ -94,7 +94,7 @@ window.onload = function() {
                 // }
 
                 try {
-                    const response = await fetch('https://ai-summarp.linyunlink.top/api/summary/?token=1145141919810', {
+                    const response = await fetch('https://ai-summary.linyunlink.top/', {
                         signal: signal,
                         method: "POST",
                         headers: {
