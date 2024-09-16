@@ -33,6 +33,7 @@ import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
 import CONFIG from './config'
 import { Style } from './style'
+import { isMobile } from '@/lib/utils'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -97,6 +98,7 @@ const LayoutBase = props => {
 
   // Algolia搜索框
   const searchModal = useRef(null)
+  const sideRightContent = !isMobile()? <SideRight {...props} /> : null
 
   return (
     <ThemeGlobalHexo.Provider value={{ searchModal }}>
@@ -154,7 +156,7 @@ const LayoutBase = props => {
             </div>
 
             {/* 右侧栏 */}
-            <SideRight {...props} />
+            {sideRightContent}
           </div>
         </main>
 
