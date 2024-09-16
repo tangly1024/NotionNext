@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
+import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
@@ -95,8 +96,12 @@ const Slug = props => {
   })
   return (
     <>
+      {/* 文章布局 */}
       <Layout {...props} />
+      {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
+      {/* 导流工具 */}
+      <OpenWrite />
     </>
   )
 }
@@ -129,7 +134,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       fullSlug += '.html'
     }
   }
-  
+
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
