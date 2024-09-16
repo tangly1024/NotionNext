@@ -31,7 +31,7 @@ function insertAIDiv(selector) {
   const aiTagDiv = document.createElement('div');
   aiTagDiv.className = 'tianliGPT-tag';
   aiTagDiv.id = 'tianliGPT-tag';
-  aiTagDiv.textContent = 'LinYunGPT';
+  aiTagDiv.textContent = 'tianliGPT';
   aiTitleDiv.appendChild(aiTagDiv);
 
   const aiExplanationDiv = document.createElement('div');
@@ -94,7 +94,7 @@ var tianliGPT = {
     // }
 
     try {
-      const response = await fetch('替换你自己的', {
+      const response = await fetch('https://ai-summarp.linyunlink.top/', {
         signal: signal,
         method: "POST",
         headers: {
