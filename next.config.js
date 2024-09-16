@@ -2,7 +2,7 @@ const { THEME } = require('./blog.config')
 const fs = require('fs')
 const path = require('path')
 const BLOG = require('./blog.config')
-const { extractLangPrefix } = require('./lib/utils/pageId')
+// const { extractLangPrefix } = require('./lib/utils/pageId')
 
 // 打包时是否分析代码
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -12,7 +12,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // 扫描项目 /themes下的目录名
 const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
 // 检测用户开启的多语言
-const locales = (function () {
+/* const locales = (function () {
   // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
   // 支持如下格式配置多个语言的页面id xxx,zh:xxx,en:xxx
   const langs = [BLOG.LANG.slice(0, 2)]
@@ -30,7 +30,7 @@ const locales = (function () {
     }
   }
   return langs
-})()
+})() */
 
 // 编译前执行
 // eslint-disable-next-line no-unused-vars
@@ -84,13 +84,13 @@ const nextConfig = {
   output: process.env.EXPORT ? 'export' : undefined,
   staticPageGenerationTimeout: 120,
   // 多语言， 在export时禁用
-  i18n: process.env.EXPORT
+  /* i18n: process.env.EXPORT
     ? undefined
     : {
         defaultLocale: BLOG.LANG.slice(0, 2),
         // 支持的所有多语言,按需填写即可
         locales
-      },
+      }, */
   images: {
     // 图片压缩
     formats: ['image/avif', 'image/webp'],
@@ -120,7 +120,7 @@ const nextConfig = {
         ]
       },
   // 重写url
-  rewrites: process.env.EXPORT
+  /* rewrites: process.env.EXPORT
     ? undefined
     : async () => {
         // 处理多语言重定向
@@ -166,7 +166,7 @@ const nextConfig = {
             destination: '/:path*'
           }
         ]
-      },
+      }, */
   headers: process.env.EXPORT
     ? undefined
     : async () => {

@@ -1,19 +1,19 @@
 import Live2D from '@/components/Live2D'
-import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
+// import { siteConfig } from '@/lib/config'
+// import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
-import CONFIG from '../config'
-import { AnalyticsCard } from './AnalyticsCard'
-import Announcement from './Announcement'
+// import CONFIG from '../config'
+// import { AnalyticsCard } from './AnalyticsCard'
+// import Announcement from './Announcement'
 import Card from './Card'
 import Catalog from './Catalog'
-import CategoryGroup from './CategoryGroup'
+// import CategoryGroup from './CategoryGroup'
 import { InfoCard } from './InfoCard'
-import LatestPostsGroup from './LatestPostsGroup'
-import TagGroups from './TagGroups'
+// import LatestPostsGroup from './LatestPostsGroup'
+// import TagGroups from './TagGroups'
 import Image from 'next/image'
 
-const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
+// const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
 const FaceBookPage = dynamic(
   () => {
     let facebook = <></>
@@ -35,19 +35,19 @@ const FaceBookPage = dynamic(
 export default function SideRight(props) {
   const {
     post,
-    currentCategory,
-    categories,
-    latestPosts,
-    tags,
-    currentTag,
-    showCategory,
-    showTag,
+    // currentCategory,
+    // categories,
+    // latestPosts,
+    // tags,
+    // currentTag,
+    // showCategory,
+    // showTag,
     rightAreaSlot,
-    notice,
-    className
+    // notice,
+    // className
   } = props
 
-  const { locale } = useGlobal()
+  // const { locale } = useGlobal()
 
   // 文章全屏处理
   if (post && post?.fullWidth) {
@@ -108,13 +108,13 @@ export default function SideRight(props) {
           siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />} */}
 
         <Card>
-          <a href="https://fas.st/t/g6ceKiYb" target='_blank'>
+          <a href="https://fas.st/t/g6ceKiYb" target='_blank' rel='nofollow noreferrer'>
             <Image src="/images/proxyscrape-premium.png" alt="ProxyScrape" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }}/>
           </a>
         </Card> 
         
         <Card>
-          <a href="https://cloudcone.awesome-vps.com" target='_blank'>
+          <a href="https://cloudcone.awesome-vps.com" target='_blank' rel='nofollow noreferrer'>
             <Image src="/images/cloudcone-1.png" alt="Cloudcone Web Hosting and VPS" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }} />
           </a>
         </Card>

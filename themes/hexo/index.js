@@ -55,12 +55,25 @@ const LayoutBase = props => {
   const router = useRouter()
   const showRandomButton = siteConfig('HEXO_MENU_RANDOM', false, CONFIG)
 
-  const headerSlot = post ? (
+  /* const headerSlot = post ? (
     <PostHero {...props} />
   ) : router.route === '/' &&
     siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? (
     <Hero {...props} />
-  ) : null
+  ) : null */
+
+  /* const headerSlot = router.route === '/' &&
+  siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? (
+  <Hero {...props} />
+) : <PostHero {...props} /> */
+  let headerSlot = null
+  if (router.route === '/'){
+    headerSlot = <Hero {...props} />
+  }else{
+    headerSlot = <PostHero {...props} />
+  }
+
+
 
   const drawerRight = useRef(null)
   const tocRef = isBrowser ? document.getElementById('article-wrapper') : null
@@ -94,9 +107,10 @@ const LayoutBase = props => {
 
         {/* 顶部导航 */}
         <Header {...props} />
+        {headerSlot}
 
         {/* 顶部嵌入 */}
-        <Transition
+        {/* <Transition
           show={!onLoading}
           appear={true}
           enter='transition ease-in-out duration-700 transform order-first'
@@ -106,8 +120,7 @@ const LayoutBase = props => {
           leaveFrom='opacity-100'
           leaveTo='opacity-0 translate-y-16'
           unmount={false}>
-          {headerSlot}
-        </Transition>
+        </Transition> */}
 
         {/* 主区块 */}
         <main
