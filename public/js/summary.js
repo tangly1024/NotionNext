@@ -94,7 +94,7 @@ var tianliGPT = {
     // }
 
     try {
-      const response = await fetch('https://ai-summary.linyunlink.top/api/summary/?token=1145141919810', {
+      const response = await fetch('https://ai-summary.linyunlink.top/api/summary/', {
         signal: signal,
         method: "POST",
         headers: {
