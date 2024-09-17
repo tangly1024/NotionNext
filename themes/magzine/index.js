@@ -211,7 +211,6 @@ const LayoutSlug = props => {
                   {/* 上一篇下一篇 */}
                   <PostNavAround prev={prev} next={next} />
 
-                  <AdSlot />
                   {/* 评论区 */}
                   <Comment frontMatter={post} />
                 </section>
@@ -239,6 +238,11 @@ const LayoutSlug = props => {
                 {/* 最新文章区块 */}
                 <div>
                   <PostGroupLatest {...props} vertical={true} />
+                </div>
+
+                {/* Adsense */}
+                <div>
+                  <AdSlot />
                 </div>
 
                 {/* 文章分类区块 */}

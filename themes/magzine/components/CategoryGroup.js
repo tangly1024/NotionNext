@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import CategoryItem from './CategoryItem'
+import Link from 'next/link'
 
 /**
  * 分类
@@ -15,15 +15,23 @@ const CategoryGroup = ({ currentCategory, categoryOptions }) => {
     <div id='category-list' className='pt-4'>
       <div className='text-xl font-bold mb-2'>{locale.COMMON.CATEGORY}</div>
       <div className=''>
-        {categoryOptions?.map(category => {
+        {categoryOptions?.map((category, index) => {
           const selected = currentCategory === category.name
           return (
-            <CategoryItem
-              key={category.name}
-              selected={selected}
-              category={category.name}
-              categoryCount={category.count}
-            />
+            <Link
+              key={index}
+              href={`/category/${category.name}`}
+              passHref
+              className={
+                (selected
+                  ? 'bg-gray-600 text-white '
+                  : 'dark:text-gray-400 text-gray-900 ') +
+                'text-lg hover:underline flex text-md items-center duration-300 cursor-pointer py-1 whitespace-nowrap'
+              }>
+              <span>
+                {category.name} {category?.count && `(${category?.count})`}
+              </span>
+            </Link>
           )
         })}
       </div>
