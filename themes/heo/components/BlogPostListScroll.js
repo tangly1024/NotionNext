@@ -59,11 +59,7 @@ const BlogPostListScroll = ({
   })
 
   const targetRef = useRef(null)
-  const POST_TWO_COLS = siteConfig(
-    'HEO_HOME_POST_TWO_COLS',
-    null,
-    NOTION_CONFIG
-  )
+  const POST_TWO_COLS = siteConfig('HEO_HOME_POST_TWO_COLS', true, CONFIG)
   if (!postsToShow || postsToShow.length === 0) {
     return <BlogPostListEmpty currentSearch={currentSearch} />
   } else {
@@ -71,7 +67,7 @@ const BlogPostListScroll = ({
       <div id='container' ref={targetRef} className='w-full'>
         {/* 文章列表 */}
         <div
-          className={`2xl:grid ${POST_TWO_COLS && '2xl:grid-cols-2'} grid-cols-1 gap-5`}>
+          className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-2'} grid-cols-1 gap-5`}>
           {' '}
           {postsToShow.map(post => (
             <BlogPostCard
