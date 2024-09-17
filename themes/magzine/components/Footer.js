@@ -44,7 +44,7 @@ const Footer = ({ title }) => {
           </div>
 
           {/* 右侧链接区块 */}
-          <div className='grid grid-cols-1 lg:grid-cols-4 lg:gap-16 gap-8'>
+          <div className='grid grid-cols-2 lg:grid-cols-4 lg:gap-16 gap-8'>
             {MAGZINE_FOOTER_LINKS?.map((group, index) => {
               return (
                 <div key={index}>
