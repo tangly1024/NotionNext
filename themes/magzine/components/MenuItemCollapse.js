@@ -38,7 +38,7 @@ export const MenuItemCollapse = props => {
           (selected
             ? 'bg-gray-600 text-white hover:text-white'
             : 'hover:text-gray-600') +
-          ' px-5 w-full text-left duration-200 dark:bg-hexo-black-gray dark:border-black'
+          ' px-7 w-full text-left duration-200 dark:bg-hexo-black-gray dark:border-black'
         }
         onClick={toggleShow}>
         {!hasSubMenu && (
@@ -77,7 +77,7 @@ export const MenuItemCollapse = props => {
               <div
                 key={sLink.id}
                 className='
-              not:last-child:border-b-0 border-b dark:border-gray-800 py-2 px-14 cursor-pointer hover:bg-gray-100 dark:text-gray-200
+              not:last-child:border-b-0 border-b dark:border-gray-800 py-2 pl-12 cursor-pointer hover:bg-gray-100 dark:text-gray-200
               dark:bg-black text-left justify-start text-gray-600 bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200'>
                 <Link href={sLink.href} target={link?.target}>
                   <div>
