@@ -106,7 +106,7 @@ var tianliGPT = {
       completeGenerate = true;
 
       if (response.status === 429) {
-        startAI('请求过于频繁，请稍后再请求AI。');
+        console.log('请求过于频繁，请稍后再请求AI。');
       }
 
       if (!response.ok) {
@@ -122,9 +122,9 @@ var tianliGPT = {
       if (error.name === "AbortError") {
         console.log("请求已被中止");
       } else if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-        startAI("请求LinYunGPT出错了，你正在本地进行调试。");
+        console.log("请求LinYunGPT出错了，你正在本地进行调试。");
       } else {
-        startAI("请求LinYunGPT出错了，请稍后再试。");
+        console.log("请求LinYunGPT出错了，请稍后再试。");
       }
       completeGenerate = true;
       return "";
