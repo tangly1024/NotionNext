@@ -53,6 +53,7 @@ const Catalog = ({ toc, className }) => {
       setActiveSection(currentSectionId)
       const index = tocIds.indexOf(currentSectionId) || 0
       tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
+      console.log(tRef?.current)
     }, throttleMs)
   )
 
@@ -67,7 +68,7 @@ const Catalog = ({ toc, className }) => {
         <Progress />
       </div>
       <div
-        className='overflow-y-auto max-h-44 overscroll-none scroll-hidden'
+        className='overflow-y-auto scroll-hidden lg:max-h-dvh max-h-44'
         ref={tRef}>
         <nav className='h-full  text-black'>
           {toc.map(tocItem => {
