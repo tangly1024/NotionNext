@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import { isBrowser } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 /**
  * 顶部页面阅读进度条
@@ -10,7 +10,8 @@ const Progress = ({ targetRef, showPercent = true }) => {
   const currentRef = targetRef?.current || targetRef
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
-    const target = currentRef || (isBrowser && document.getElementById('article-wrapper'))
+    const target =
+      currentRef || (isBrowser && document.getElementById('article-wrapper'))
     if (target) {
       const clientHeight = target.clientHeight
       const scrollY = window.pageYOffset
@@ -28,13 +29,12 @@ const Progress = ({ targetRef, showPercent = true }) => {
   }, [])
 
   return (
-    <div className="h-4 w-full shadow-2xl bg-hexo-light-gray dark:bg-black">
+    <div className='h-4 w-full shadow-2xl bg-hexo-light-gray dark:bg-black'>
       <div
-        className="h-4 bg-gray-600 duration-200"
-        style={{ width: `${percent}%` }}
-      >
+        className='h-4 bg-gray-600 dark:bg-hexo-black-gray duration-200'
+        style={{ width: `${percent}%` }}>
         {showPercent && (
-          <div className="text-right text-white text-xs">{percent}%</div>
+          <div className='text-right text-white text-xs'>{percent}%</div>
         )}
       </div>
     </div>

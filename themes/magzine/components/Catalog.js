@@ -70,7 +70,7 @@ const Catalog = ({ toc, className }) => {
       <div
         className='overflow-y-auto scroll-hidden lg:max-h-dvh max-h-44'
         ref={tRef}>
-        <nav className='h-full  text-black'>
+        <nav className='h-full text-black'>
           {toc.map(tocItem => {
             const id = uuidToId(tocItem.id)
             tocIds.push(id)
@@ -78,14 +78,14 @@ const Catalog = ({ toc, className }) => {
               <a
                 key={id}
                 href={`#${id}`}
-                className={`notion-table-of-contents-item duration-300 transform  dark:text-gray-300
+                className={`notion-table-of-contents-item duration-300 transform  dark:text-gray-400
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}>
                 <span
                   style={{
                     display: 'inline-block',
                     marginLeft: tocItem.indentLevel * 16
                   }}
-                  className={`truncate ${activeSection === id ? 'font-bold text-gray-500 underline' : ''}`}>
+                  className={`truncate ${activeSection === id ? 'font-bold text-gray-500 dark:text-white underline' : ''}`}>
                   {tocItem.text}
                 </span>
               </a>
