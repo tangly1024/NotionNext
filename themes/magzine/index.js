@@ -17,6 +17,7 @@ import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BannerFullWidth from './components/BannerFullWidth'
 import Catalog from './components/Catalog'
+import CatalogFloat from './components/CatalogFloat'
 import CategoryGroup from './components/CategoryGroup'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -31,7 +32,6 @@ import PostSimpleListHorizontal from './components/PostListSimpleHorizontal'
 import PostNavAround from './components/PostNavAround'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
-import TocDrawer from './components/TocDrawer'
 import TouchMeCard from './components/TouchMeCard'
 import CONFIG from './config'
 import { Style } from './style'
@@ -245,6 +245,9 @@ const LayoutSlug = props => {
                   <AdSlot />
                 </div>
 
+                {/* 留白 */}
+                <div></div>
+
                 {/* 文章分类区块 */}
                 <div>
                   <CategoryGroup {...props} />
@@ -264,7 +267,7 @@ const LayoutSlug = props => {
             </div>
 
             {/* 移动端目录 */}
-            <TocDrawer {...props} />
+            <CatalogFloat {...props} />
           </div>
         )}
       </div>
