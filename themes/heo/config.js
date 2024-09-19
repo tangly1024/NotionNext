@@ -8,8 +8,9 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: '' },
-    { title: '我是淏天', url: 'https://orcatt.one/about' }
+    { title: '我是淏天，欢迎来到我的博客', url: 'https://orcatt.one/about' }
+    { title: '野蛮精神，强健体魄', url: 'https://orcatt.one/about' }
+    
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -18,8 +19,8 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享思维',
-  HEO_HERO_TITLE_2: '探索认知与记录',
+  HEO_HERO_TITLE_1: '探索求知',
+  HEO_HERO_TITLE_2: '与你握手',
   HEO_HERO_TITLE_3: 'orcatt.one',
   HEO_HERO_TITLE_4: '内容更新',
   HEO_HERO_TITLE_5: '浏览最新文章',
@@ -38,21 +39,18 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
-    '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
-    '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
-    '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    '🔍 探索求知',
+    '🏃 运动无限',
+    '🤖️ 野蛮精神',
   ],
 
   // 个人资料底部按钮
-  HEO_INFO_CARD_URL1: '/about',
-  HEO_INFO_CARD_ICON1: 'fas fa-user',
+  // HEO_INFO_CARD_URL1: '/about',
+  // HEO_INFO_CARD_ICON1: 'fas fa-user',
   HEO_INFO_CARD_URL2: 'https://github.com/orcatt',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  // HEO_INFO_CARD_URL3: 'https://www.tangly1024.com',
-  // HEO_INFO_CARD_TEXT3: '了解更多',
+  HEO_INFO_CARD_URL3: '/about',
+  HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
