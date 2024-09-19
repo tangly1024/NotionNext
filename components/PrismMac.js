@@ -10,10 +10,10 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
-import BLOG from '@/blog.config'
 import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useGlobal } from '@/lib/global'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 代码美化相关
@@ -23,22 +23,36 @@ import { useGlobal } from '@/lib/global'
 const PrismMac = () => {
   const router = useRouter()
   const { isDarkMode } = useGlobal()
+  const codeMacBar = siteConfig('CODE_MAC_BAR')
+  const prismjsAutoLoader = siteConfig('PRISM_JS_AUTO_LOADER')
+  const prismjsPath = siteConfig('PRISM_JS_PATH')
+
+  const prismThemeSwitch = siteConfig('PRISM_THEME_SWITCH')
+  const prismThemeDarkPath = siteConfig('PRISM_THEME_DARK_PATH')
+  const prismThemeLightPath = siteConfig('PRISM_THEME_LIGHT_PATH')
+  const prismThemePrefixPath = siteConfig('PRISM_THEME_PREFIX_PATH')
+
+  const mermaidCDN = siteConfig('MERMAID_CDN')
+  const codeLineNumbers = siteConfig('CODE_LINE_NUMBERS')
+
+  const codeCollapse = siteConfig('CODE_COLLAPSE')
+  const codeCollapseExpandDefault = siteConfig('CODE_COLLAPSE_EXPAND_DEFAULT')
 
   useEffect(() => {
-    if (JSON.parse(BLOG.CODE_MAC_BAR)) {
+    if (codeMacBar) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
     // 加载prism样式
-    loadPrismThemeCSS(isDarkMode)
+    loadPrismThemeCSS(isDarkMode, prismThemeSwitch, prismThemeDarkPath, prismThemeLightPath, prismThemePrefixPath)
     // 折叠代码
-    loadExternalResource(BLOG.PRISM_JS_AUTO_LOADER, 'js').then((url) => {
+    loadExternalResource(prismjsAutoLoader, 'js').then((url) => {
       if (window?.Prism?.plugins?.autoloader) {
-        window.Prism.plugins.autoloader.languages_path = BLOG.PRISM_JS_PATH
+        window.Prism.plugins.autoloader.languages_path = prismjsPath
       }
 
-      renderPrismMac()
-      renderMermaid()
-      renderCollapseCode()
+      renderPrismMac(codeLineNumbers)
+      renderMermaid(mermaidCDN)
+      renderCollapseCode(codeCollapse, codeCollapseExpandDefault)
     })
   }, [router, isDarkMode])
 
@@ -46,34 +60,34 @@ const PrismMac = () => {
 }
 
 /**
- * 加载样式
+ * 加载Prism主题样式
  */
-const loadPrismThemeCSS = (isDarkMode) => {
+const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, prismThemeLightPath, prismThemePrefixPath) => {
   let PRISM_THEME
   let PRISM_PREVIOUS
-  if (JSON.parse(BLOG.PRISM_THEME_SWITCH)) {
+  if (prismThemeSwitch) {
     if (isDarkMode) {
-      PRISM_THEME = BLOG.PRISM_THEME_DARK_PATH
-      PRISM_PREVIOUS = BLOG.PRISM_THEME_LIGHT_PATH
+      PRISM_THEME = prismThemeDarkPath
+      PRISM_PREVIOUS = prismThemeLightPath
     } else {
-      PRISM_THEME = BLOG.PRISM_THEME_LIGHT_PATH
-      PRISM_PREVIOUS = BLOG.PRISM_THEME_DARK_PATH
+      PRISM_THEME = prismThemeLightPath
+      PRISM_PREVIOUS = prismThemeDarkPath
     }
     const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
-    if (previousTheme) {
+    if (previousTheme && previousTheme.parentNode && previousTheme.parentNode.contains(previousTheme)) {
       previousTheme.parentNode.removeChild(previousTheme)
     }
     loadExternalResource(PRISM_THEME, 'css')
   } else {
-    loadExternalResource(BLOG.PRISM_THEME_PREFIX_PATH, 'css')
+    loadExternalResource(prismThemePrefixPath, 'css')
   }
 }
 
 /*
  * 将代码块转为可折叠对象
  */
-const renderCollapseCode = () => {
-  if (!JSON.parse(BLOG.CODE_COLLAPSE)) {
+const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
+  if (!codeCollapse) {
     return
   }
   const codeBlocks = document.querySelectorAll('.code-toolbar')
@@ -105,20 +119,27 @@ const renderCollapseCode = () => {
     codeBlock.parentNode.insertBefore(collapseWrapper, codeBlock)
     panel.appendChild(codeBlock)
 
-    header.addEventListener('click', () => {
+    function collapseCode() {
       panel.classList.toggle('invisible')
       panel.classList.toggle('h-0')
       panel.classList.toggle('h-auto')
       header.querySelector('svg').classList.toggle('rotate-180')
       panelWrapper.classList.toggle('border-gray-300')
-    })
+    }
+
+    // 点击后折叠展开代码
+    header.addEventListener('click', collapseCode)
+    // 是否自动展开
+    if (codeCollapseExpandDefault) {
+      header.click()
+    }
   }
 }
 
 /**
  * 将mermaid语言 渲染成图片
  */
-const renderMermaid = async() => {
+const renderMermaid = async(mermaidCDN) => {
   const observer = new MutationObserver(async mutationsList => {
     for (const m of mutationsList) {
       if (m.target.className === 'notion-code language-mermaid') {
@@ -139,7 +160,7 @@ const renderMermaid = async() => {
             }
           }
           if (needLoad) {
-            loadExternalResource(BLOG.MERMAID_CDN, 'js').then(url => {
+            loadExternalResource(mermaidCDN, 'js').then(url => {
               setTimeout(() => {
                 const mermaid = window.mermaid
                 mermaid?.contentLoaded()
@@ -155,11 +176,11 @@ const renderMermaid = async() => {
   }
 }
 
-function renderPrismMac() {
+function renderPrismMac(codeLineNumbers) {
   const container = document?.getElementById('notion-article')
 
   // Add line numbers
-  if (JSON.parse(BLOG.CODE_LINE_NUMBERS)) {
+  if (codeLineNumbers) {
     const codeBlocks = container?.getElementsByTagName('pre')
     if (codeBlocks) {
       Array.from(codeBlocks).forEach(item => {
@@ -193,7 +214,7 @@ function renderPrismMac() {
   }
 
   // 折叠代码行号bug
-  if (JSON.parse(BLOG.CODE_LINE_NUMBERS)) {
+  if (codeLineNumbers) {
     fixCodeLineStyle()
   }
 }

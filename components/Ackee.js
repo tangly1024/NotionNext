@@ -1,19 +1,26 @@
 'use strict'
 
 import { useEffect } from 'react'
-import BLOG from '@/blog.config'
 import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
+import { siteConfig } from '@/lib/config'
 const Ackee = () => {
   const router = useRouter()
+  const server = siteConfig('ANALYTICS_ACKEE_DATA_SERVER')
+  const domainId = siteConfig('ANALYTICS_ACKEE_DOMAIN_ID')
+
+  // 或者使用其他依赖数组，根据需要执行 handleAckee
+  useEffect(() => {
+    handleAckeeCallback()
+  }, [router])
 
   // handleAckee 函数
   const handleAckeeCallback = () => {
     handleAckee(
       router.asPath,
       {
-        server: BLOG.ANALYTICS_ACKEE_DATA_SERVER,
-        domainId: BLOG.ANALYTICS_ACKEE_DOMAIN_ID
+        server: server,
+        domainId: domainId
       },
       {
         /*
@@ -22,23 +29,18 @@ const Ackee = () => {
          */
         detailed: true,
         /*
-        * Enable or disable tracking when on localhost.
-        */
+         * Enable or disable tracking when on localhost.
+         */
         ignoreLocalhost: false,
         /*
-        * Enable or disable the tracking of your own visits.
-        * This is enabled by default, but should be turned off when using a wildcard Access-Control-Allow-Origin header.
-        * Some browsers strictly block third-party cookies. The option won't have an impact when this is the case.
-        */
+         * Enable or disable the tracking of your own visits.
+         * This is enabled by default, but should be turned off when using a wildcard Access-Control-Allow-Origin header.
+         * Some browsers strictly block third-party cookies. The option won't have an impact when this is the case.
+         */
         ignoreOwnVisits: false
       }
     )
   }
-
-  // 或者使用其他依赖数组，根据需要执行 handleAckee
-  useEffect(() => {
-    handleAckeeCallback()
-  }, [router])
 
   return null
 }
@@ -53,8 +55,8 @@ export default Ackee
  * @param {Object} environment - Object containing the URL of the Ackee server and the domain id.
  * @param {?Object} options - Ackee options.
  */
-const handleAckee = async function(pathname, environment, options = {}) {
-  await loadExternalResource(BLOG.ANALYTICS_ACKEE_TRACKER, 'js')
+const handleAckee = async function (pathname, environment, options = {}) {
+  await loadExternalResource(siteConfig('ANALYTICS_ACKEE_TRACKER'), 'js')
   const ackeeTracker = window.ackeeTracker
 
   const instance = ackeeTracker?.create(environment.server, options)

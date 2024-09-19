@@ -1,10 +1,9 @@
-import BlogPostListEmpty from './BlogPostListEmpty'
-import { useRouter } from 'next/router'
-import BlogPostItem from './BlogPostItem'
+/* eslint-disable */
+import { siteConfig } from '@/lib/config'
 import { useNavGlobal } from '@/themes/nav'
 import CONFIG from '../config'
-import { deepClone } from '@/lib/utils'
-import { useEffect, useState, createContext, useContext } from 'react'
+import BlogPostItem from './BlogPostItem'
+import BlogPostListEmpty from './BlogPostListEmpty'
 
 /**
  * 博客列表滚动分页
@@ -14,29 +13,20 @@ import { useEffect, useState, createContext, useContext } from 'react'
  * @constructor
  */
 const BlogPostListAll = (props) => {
-  // const { customMenu, posts, category, tag, allNavPages, categoryOptions } = props
-  // const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
   const { customMenu } = props
-
-  // const [filteredNavPages, setFilteredNavPages] = useState(allNavPages)
   const { filteredNavPages, setFilteredNavPages, allNavPages } = useNavGlobal()
-  // const [filteredNavPages] = useState(allNavPages)
-  
-  // const router = useRouter()
+
   // 对自定义分类格式化，方便后续使用分类名称做索引，检索同步图标信息
   // 目前只支持二级分类
-  let links = customMenu
-  let filterLinks = {}
+  const links = customMenu
+  const filterLinks = {}
   // for循环遍历数组
   links?.map((link, i) => {
-    let linkTitle = link.title + ''
-    // console.log('####### link')
-    // console.log(link)
-    // filterLinks[linkTitle] = link
-    filterLinks[linkTitle] = { title: link.title, icon: link.icon, pageIcon: link.pageIcon  }
-    if(link?.subMenus){
+    const linkTitle = link.title + ''
+    filterLinks[linkTitle] = { title: link.title, icon: link.icon, pageIcon: link.pageIcon }
+    if (link?.subMenus) {
       link.subMenus?.map((group, index) => {
-        let subMenuTitle = group?.title + ''
+        const subMenuTitle = group?.title + ''
         // 自定义分类图标与post的category共用
         // 判断自定义分类与Post中category同名的项，将icon的值传递给post
         // filterLinks[subMenuTitle] = group
@@ -44,27 +34,14 @@ const BlogPostListAll = (props) => {
       })
     }
   })
-  
-  console.log('####### filterLinks')
-  console.log(filterLinks)
 
-
-  // console.log('####### filterLinks')
-  // console.log(filterLinks)
-
-  let selectedSth = false
+  const selectedSth = false
   const groupedArray = filteredNavPages?.reduce((groups, item) => {
-    let categoryName = item?.category ? item?.category : '' // 将category转换为字符串
-    let categoryIcon = filterLinks[categoryName]?.icon ? filterLinks[categoryName]?.icon : '' // 将pageIcon转换为字符串
-
-    // console.log('####### categoryName')
-    // console.log(categoryName)
-    // console.log('####### categoryIcon')
-    // console.log(categoryIcon)
-
+    const categoryName = item?.category ? item?.category : '' // 将category转换为字符串
+    const categoryIcon = filterLinks[categoryName]?.icon ? filterLinks[categoryName]?.icon : '' // 将pageIcon转换为字符串
     let existingGroup = null
     // 开启自动分组排序
-    if (JSON.parse(CONFIG.AUTO_SORT)) {
+    if (JSON.parse(siteConfig('NAV_AUTO_SORT', null, CONFIG))) {
       existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
     } else {
       existingGroup = groups[groups.length - 1] // 获取最后一个分组
@@ -83,17 +60,9 @@ const BlogPostListAll = (props) => {
   groupedArray?.map((group) => {
     // 自定义分类图标与post的category共用
     // 判断自定义分类与Post中category同名的项，将icon的值传递给post
-    // let groupTitle = group?.category
-    // item.icon = filterLinks[categoryName]?.icon ? filterLinks[categoryName]?.icon : ''
-    // console.log('####### item')
-    // console.log(item)
-    let groupSelected = false
-    // for (const post of group?.items) {
-    //   if (router.asPath.split('?')[0] === '/' + post.slug) {
-    //     groupSelected = true
-    //     selectedSth = true
-    //   }
-    // }
+
+    const groupSelected = false
+
     group.selected = groupSelected
     return null
   })
@@ -112,28 +81,6 @@ const BlogPostListAll = (props) => {
         </div>
   }
 
-  // 处理自定义导航菜单项
-  // let keyword = searchInputRef.current.value
-  // if (keyword) {
-  //   keyword = keyword.trim()
-  // } else {
-  //   setFilteredNavPages(allNavPages)
-  // }
-  // for (const filterGroup of filterAllNavPages) {
-  //   for (let i = filterGroup.items.length - 1; i >= 0; i--) {
-  //     const post = filterGroup.items[i]
-  //     const articleInfo = post.title + ''
-  //     const hit = articleInfo.toLowerCase().indexOf(keyword.toLowerCase()) > -1
-  //     if (!hit) {
-  //       // 删除
-  //       filterGroup.items.splice(i, 1)
-  //     }
-  //   }
-  //   if (filterGroup.items && filterGroup.items.length > 0) {
-  //     filterPosts.push(filterGroup)
-  //   }
-  // }
-  
 }
 
 export default BlogPostListAll

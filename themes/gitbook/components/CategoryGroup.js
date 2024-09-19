@@ -1,4 +1,4 @@
-import React from 'react'
+
 import CategoryItem from './CategoryItem'
 
 const CategoryGroup = ({ currentCategory, categoryOptions }) => {

@@ -1,5 +1,5 @@
 import Catalog from './Catalog'
-import React, { useImperativeHandle, useState } from 'react'
+import { useImperativeHandle, useState } from 'react'
 
 /**
  * 目录抽屉栏

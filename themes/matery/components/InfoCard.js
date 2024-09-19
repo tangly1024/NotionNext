@@ -1,9 +1,10 @@
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useRouter } from 'next/router'
 import Card from './Card'
 import SocialButton from './SocialButton'
 import MenuGroupCard from './MenuGroupCard'
 import LazyImage from '@/components/LazyImage'
+
 export function InfoCard (props) {
   const { className, siteInfo } = props
   const router = useRouter()
@@ -14,10 +15,10 @@ export function InfoCard (props) {
         router.push('/')
       }}
     >
-    <LazyImage src={siteInfo?.icon} className='rounded-full' width={120} alt={BLOG.AUTHOR}/>
+    <LazyImage src={siteInfo?.icon} className='rounded-full' width={120} alt={siteConfig('AUTHOR')}/>
     </div>
-    <div className='text-center text-xl pb-4'>{BLOG.AUTHOR}</div>
-    <div className='text-sm text-center'>{BLOG.BIO}</div>
+    <div className='text-center text-xl pb-4'>{siteConfig('AUTHOR')}</div>
+    <div className='text-sm text-center'>{siteConfig('BIO')}</div>
     <MenuGroupCard {...props}/>
     <SocialButton />
   </Card>
