@@ -11,14 +11,17 @@ import { useRouter } from 'next/router'
  */
 const Tag = props => {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
 
   return <Layout {...props} />
 }
 
-export async function getStaticProps({ params: { tag } }) {
+export async function getStaticProps({ params: { tag }, locale }) {
   const from = 'tag-props'
-  const props = await getGlobalData({ from })
+  const props = await getGlobalData({ from, locale })
 
   // 过滤状态
   props.posts = props.allPages
@@ -32,14 +35,23 @@ export async function getStaticProps({ params: { tag } }) {
   if (siteConfig('POST_LIST_STYLE') === 'scroll') {
     // 滚动列表 给前端返回所有数据
   } else if (siteConfig('POST_LIST_STYLE') === 'page') {
-    props.posts = props.posts?.slice(0, siteConfig('POSTS_PER_PAGE'))
+    props.posts = props.posts?.slice(
+      0,
+      siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
+    )
   }
 
   props.tag = tag
   delete props.allPages
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 

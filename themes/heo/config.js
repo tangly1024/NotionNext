@@ -1,4 +1,7 @@
 const CONFIG = {
+  HEO_HOME_POST_TWO_COLS: true, // 首页博客两列显示，若为false则只显示一列
+  HEO_LOADING_COVER: true, // 页面加载的遮罩动画
+
   HEO_HOME_BANNER_ENABLE: true,
 
   HEO_SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
@@ -42,7 +45,7 @@ const CONFIG = {
     '🤖️ 对数字科技充满热情，探索创意领域的可能性',
     '🧱 团队合作精神，共同创造AI+创意的奇迹'
   ],
-  HEO_INFO_CARD_URL: 'https://www.linkedin.com/in/kenchikuliu/', // 个人资料底部按钮链接
+
 
   // 用户技能图标
   HEO_GROUP_ICONS: [

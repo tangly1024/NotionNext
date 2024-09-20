@@ -11,7 +11,7 @@ import TagItemMini from './TagItemMini'
 function GroupTag({ tagOptions, currentTag }) {
   if (!tagOptions) return <></>
   return (
-    <>
+    <div className='flex items-center'>
       <Link href='/tag'>
         <i className='fas fa-tags p-2' />
       </Link>
@@ -21,7 +21,7 @@ function GroupTag({ tagOptions, currentTag }) {
           return <TagItemMini key={tag.name} tag={tag} selected={selected} />
         })}
       </div>
-    </>
+    </div>
   )
 }
 

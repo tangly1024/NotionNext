@@ -264,3 +264,15 @@ a.avatar-wrapper {
   writing-mode: vertical-rl; /* 竖向排列从右向左 */
   text-orientation: upright; /* 文字方向正常 */
 }
+
+/* Chatbase 在移动端禁止遮挡 */
+@media (max-width: 700px) {
+  button#chatbase-bubble-button {
+    margin-bottom: 42px;
+    margin-right: 20px;
+  }
+}
+
+img {
+  display: unset;
+}
