@@ -73,16 +73,20 @@ const OpenWrite = () => {
       console.error('OpenWrite 加载异常', error)
     }
   }
-
   useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('开发环境:屏蔽OpenWrite')
+      return
+    }
     if (isBrowser && blogId) {
+      toggleTocItems(true) // 禁止目录项的点击
+
       // Check if the element with id 'read-more-wrap' already exists
       const readMoreWrap = document.getElementById('read-more-wrap')
 
       // Only load the script if the element doesn't exist
       if (!readMoreWrap) {
         loadOpenWrite()
-        toggleTocItems(true) // 禁止目录项的点击
       }
     }
   })
