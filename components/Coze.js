@@ -16,7 +16,7 @@ export default function Coze() {
 
   const loadCoze = async () => {
     await loadExternalResource(cozeSrc)
-    CozeWebSDK = window.CozeWebSDK
+    const CozeWebSDK = window?.CozeWebSDK
     if (CozeWebSDK) {
       new CozeWebSDK.WebChatClient({
         config: {
