@@ -18,7 +18,7 @@ export default function Coze() {
     await loadExternalResource(cozeSrc)
     const CozeWebSDK = window?.CozeWebSDK
     if (CozeWebSDK) {
-      new CozeWebSDK.WebChatClient({
+      const cozeClient = new CozeWebSDK.WebChatClient({
         config: {
           bot_id: botId
         },
@@ -26,6 +26,7 @@ export default function Coze() {
           title: title
         }
       })
+      console.log('coze', cozeClient)
     }
   }
 
