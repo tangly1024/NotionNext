@@ -3,7 +3,6 @@ import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import Script from 'next/script'
 import { useEffect } from 'react'
 
 /**
