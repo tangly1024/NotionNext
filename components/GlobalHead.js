@@ -164,7 +164,7 @@ const GlobalHead = props => {
 
       {/* Microsoft Monetize */}
       <script>{`window.msAdsQueue = window.msAdsQueue || [];`}</script>
-      <script async src="https://adsdk.microsoft.com/mmnow/sdk.js?siteId=365130&publisherId=254037100" crossorigin="anonymous"></script>
+      <script async src="https://adsdk.microsoft.com/mmnow/sdk.js?siteId=365131&publisherId=254037100" crossorigin="anonymous"></script>
       {children}
     </Head>
   )
