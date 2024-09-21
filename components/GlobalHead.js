@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 import { useEffect } from 'react'
 
 /**
@@ -161,6 +162,10 @@ const GlobalHead = props => {
           <meta property='article:publisher' content={FACEBOOK_PAGE} />
         </>
       )}
+
+      {/* Microsoft Monetize */}
+      <script>{`window.msAdsQueue = window.msAdsQueue || [];`}</script>
+      <script async src="https://adsdk.microsoft.com/mmnow/sdk.js?siteId=365130&publisherId=254037100" crossorigin="anonymous"></script>
       {children}
     </Head>
   )
