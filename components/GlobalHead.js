@@ -161,10 +161,6 @@ const GlobalHead = props => {
           <meta property='article:publisher' content={FACEBOOK_PAGE} />
         </>
       )}
-
-      {/* Microsoft Monetize */}
-      <script>{`window.msAdsQueue = window.msAdsQueue || [];`}</script>
-      <script async src="https://adsdk.microsoft.com/mmnow/sdk.js?siteId=365131&publisherId=254037100" crossorigin="anonymous"></script>
       {children}
     </Head>
   )
