@@ -108,14 +108,14 @@ export default function SideRight(props) {
           siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />} */}
 
         <Card>
-          <a href="https://fas.st/t/g6ceKiYb" target='_blank' rel='nofollow noreferrer'>
-            <Image src="/images/proxyscrape-premium.png" alt="ProxyScrape" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }}/>
+          <a href="https://www.zebracat.ai?via=kcgod" target='_blank' rel='nofollow noreferrer'>
+            <Image src="/images/zebracat.jpeg" alt="zebracat AI" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }}/>
           </a>
         </Card> 
         
         <Card>
-          <a href="https://cloudcone.awesome-vps.com" target='_blank' rel='nofollow noreferrer'>
-            <Image src="/images/cloudcone-1.png" alt="Cloudcone Web Hosting and VPS" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }} />
+          <a href="https://textcortex.com?via=kcgod" target='_blank' rel='nofollow noreferrer'>
+            <Image src="/images/text-cortext.jpeg" alt="Text Cortext, AI-powered writing assistant" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }} />
           </a>
         </Card>
 
