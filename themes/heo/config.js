@@ -7,10 +7,7 @@ const CONFIG = {
   HEO_SITE_CREATE_TIME: '2022-07-29', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
-  HEO_NOTICE_BAR: [
-    { title: '', url: '' },
-    { title: '', url: '' }
-  ],
+  HEO_NOTICE_BAR: [],
 
   // 英雄区左右侧组件颠倒位置
   HEO_HERO_REVERSE: false,
@@ -118,7 +115,7 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
   HEO_SOCIAL_CARD_TITLE_2: '加入副业人的社群',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: '',
+  HEO_SOCIAL_CARD_URL: 'https://fuye.com',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
