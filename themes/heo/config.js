@@ -20,7 +20,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: 'fuye.ren',
   HEO_HERO_TITLE_4: '个性化定制',
   HEO_HERO_TITLE_5: '副业人专属首页',
-  HEO_HERO_TITLE_LINK: 'https://fuye.com',
+  HEO_HERO_TITLE_LINK: 'https://fuye.ren',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '赚钱案例', url: '/tag/赚钱案例' },
@@ -46,9 +46,9 @@ const CONFIG = {
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'https://github.com/tangly1024',
+  HEO_INFO_CARD_URL2: 'https://fuye.ren',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://www.tangly1024.com',
+  HEO_INFO_CARD_URL3: 'https://fuye.ren',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
@@ -115,7 +115,7 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
   HEO_SOCIAL_CARD_TITLE_2: '加入副业人的社群',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: 'https://fuye.com',
+  HEO_SOCIAL_CARD_URL: 'https://fuye.ren',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
