@@ -64,11 +64,11 @@ export default function SideRight(props) {
       </div>
 
       <div className='sticky top-8 space-y-4'>
-        {post && post.toc && post.toc.length > 1 && (
+        {/* {post && post.toc && post.toc.length > 1 && (
           <Card>
             <Catalog toc={post.toc} />
           </Card>
-        )}
+        )} */}
 
       
 
@@ -106,6 +106,12 @@ export default function SideRight(props) {
 
         {/* {siteConfig('COMMENT_WALINE_SERVER_URL') &&
           siteConfig('COMMENT_WALINE_RECENT') && <HexoRecentComments />} */}
+
+        <Card>
+          <a href="https://www.tkqlhce.com/ag106biroiq57678D76DB57799DDCC" target='_blank' rel='nofollow noreferrer'>
+            <Image src="/images/interserver-1.gif" alt="zebracat AI" width={0} height={0} layout='responsive' style={{ width: '100%', height: 'auto' }}/>
+          </a>
+        </Card> 
 
         <Card>
           <a href="https://www.zebracat.ai?via=kcgod" target='_blank' rel='nofollow noreferrer'>
