@@ -12,7 +12,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "incremental": true,
     "target": "es6",
@@ -21,12 +21,12 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve"
   },
   "include": [
     "next-env.d.ts",
     "**/*.json",
-    "**/*.js",
+    // "**/*.js",
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx"
