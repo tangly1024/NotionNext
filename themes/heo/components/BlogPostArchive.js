@@ -5,9 +5,9 @@ import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 
 /**
- * 博客归档列表
+ * 文章歸檔列表
  * @param posts 所有文章
- * @param archiveTitle 归档标题
+ * @param archiveTitle 歸檔標題
  * @returns {JSX.Element}
  * @constructor
  */
@@ -53,10 +53,10 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                   </div>
                 )}
 
-                {/* 文字区块 */}
+                {/* 文字區塊 */}
                 <div className={'flex px-2 flex-col justify-between w-full'}>
                   <div>
-                    {/* 分类 */}
+                    {/* 分類 */}
                     {post?.category && (
                       <div
                         className={`flex items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
@@ -69,7 +69,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                       </div>
                     )}
 
-                    {/* 标题 */}
+                    {/* 標題 */}
                     <Link
                       href={post?.href}
                       passHref
