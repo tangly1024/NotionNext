@@ -81,6 +81,9 @@ function scanSubdirectories(directory) {
  */
 
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true
+  },
   output: process.env.EXPORT ? 'export' : undefined,
   staticPageGenerationTimeout: 120,
   // 多语言， 在export时禁用

@@ -5,11 +5,11 @@ import { getLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
 /**
- * 登录
+ * 注册
  * @param {*} props
  * @returns
  */
-const SignIn = props => {
+const SignUp = props => {
   // 根据页面路径加载不同Layout文件
   const Layout = getLayoutByTheme({
     theme: siteConfig('THEME'),
@@ -37,4 +37,16 @@ export async function getStaticProps(req) {
   }
 }
 
-export default SignIn
+/**
+ * catch-all route for clerk
+ * @returns
+ */
+export async function getStaticPaths() {
+  return {
+    paths: [
+      { params: { index: [] } } // 使 /sign-in 路径可访问
+    ],
+    fallback: true
+  }
+}
+export default SignUp
