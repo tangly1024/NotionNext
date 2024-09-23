@@ -110,6 +110,10 @@ const fetchToken = async (code: string): Promise<NotionTokenResponse> => {
     }
   } catch (error) {
     console.error('Error fetching token', error)
-    return null
+    return {
+      status: 400,
+      statusText: 'failed',
+      data: null as unknown as NotionTokenResponseData
+    }
   }
 }

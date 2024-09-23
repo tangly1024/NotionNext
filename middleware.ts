@@ -27,7 +27,7 @@ const isTenantAdminRoute = createRouteMatcher([
  * @param ev
  * @returns
  */
-const noAuthMiddleware = async (req, ev) => {
+const noAuthMiddleware = async (req: any, ev: any) => {
   // 如果没有配置 Clerk 相关环境变量，返回一个默认响应或者继续处理请求
   return NextResponse.next()
 }

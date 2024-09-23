@@ -2,20 +2,20 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/components/*": ["components/*"],
-      "@/theme/*": ["theme/*"],
-      "@/data/*": ["data/*"],
-      "@/lib/*": ["lib/*"],
-      "@/styles/*": ["styles/*"]
+      "@/*": [
+        "./*"
+      ]
     },
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
     "incremental": true,
-    "target": "es6",
     "module": "esnext",
     "esModuleInterop": true,
     "moduleResolution": "node",
@@ -25,11 +25,12 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.json",
-    // "**/*.js",
+    "**/*.js",
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

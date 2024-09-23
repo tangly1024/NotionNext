@@ -1,7 +1,12 @@
 const axios = require('axios')
 
 // 发送 Notion API 请求
-async function postNotion(properties, databaseId, listContentMain, token) {
+async function postNotion(
+  properties: any,
+  databaseId: string,
+  listContentMain: any[],
+  token: string
+) {
   const url = 'https://api.notion.com/v1/pages'
 
   const children = listContentMain
@@ -46,14 +51,14 @@ async function postNotion(properties, databaseId, listContentMain, token) {
   try {
     const response = await axios.post(url, payload, { headers })
     return response
-  } catch (error) {
+  } catch (error: any) {
     console.error('写入Notion异常', error)
     throw new Error(`Error posting to Notion: ${error.message}`)
   }
 }
 
 // 处理响应结果
-function responseResult(response) {
+function responseResult(response: { status: number; data: any }) {
   if (response.status === 200) {
     console.log('成功...')
     console.log(response.data)
@@ -64,7 +69,14 @@ function responseResult(response) {
 }
 
 // 准备属性字段
-function notionProperty(id, avatar, name, mail, lastLoginTime, token) {
+function notionProperty(
+  id: any,
+  avatar: any,
+  name: any,
+  mail: any,
+  lastLoginTime: any,
+  token: any
+) {
   return {
     id: {
       rich_text: [

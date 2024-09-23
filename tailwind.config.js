@@ -71,7 +71,8 @@ module.exports = {
       maxWidth: {
         side: '14rem',
         '9/10': '90%',
-        'screen-3xl': '1440px'
+        'screen-3xl': '1440px',
+        'screen-4xl': '1560px'
       },
       boxShadow: {
         input: '0px 7px 20px rgba(0, 0, 0, 0.03)',
