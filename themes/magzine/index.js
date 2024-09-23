@@ -12,10 +12,10 @@ import { isBrowser } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import Announcement from './components/Announcement'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BannerFullWidth from './components/BannerFullWidth'
+import CTA from './components/CTA'
 import Catalog from './components/Catalog'
 import CatalogFloat from './components/CatalogFloat'
 import CategoryGroup from './components/CategoryGroup'
@@ -47,7 +47,7 @@ export const useMagzineGlobal = () => useContext(ThemeGlobalMagzine)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, notice } = props
+  const { children } = props
   const [tocVisible, changeTocVisible] = useState(false)
   const searchModal = useRef(null)
 
@@ -69,13 +69,8 @@ const LayoutBase = props => {
             <div id='main' role='main'>
               {children}
             </div>
-            {/* 底部 */}
-            <Announcement
-              post={notice}
-              className={
-                'text-center text-black bg-[#7BE986] dark:bg-hexo-black-gray py-16'
-              }
-            />
+            {/* 行动呼吁 */}
+            <CTA {...props} />
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
