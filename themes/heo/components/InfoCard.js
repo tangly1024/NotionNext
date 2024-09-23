@@ -56,7 +56,7 @@ export function InfoCard(props) {
             </div>
           )}
           {url2 && (
-            <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
+            <div className='bg-red-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
               <Link href={url2}>
                 <i className={icon2} />
               </Link>
@@ -84,7 +84,7 @@ function MoreButton() {
     <Link href={url3}>
       <div
         className={
-          'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
+          'group bg-red-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
         }>
         <ArrowRightCircle
           className={
@@ -112,7 +112,7 @@ function GreetingsWords() {
   return (
     <div
       onClick={handleChangeGreeting}
-      className=' select-none cursor-pointer py-1 px-2 bg-indigo-400 hover:bg-indigo-50  hover:text-indigo-950 dark:bg-yellow-500 dark:hover:text-white dark:hover:bg-black text-sm rounded-lg  duration-200 transition-colors'>
+      className=' select-none cursor-pointer py-1 px-2 bg-red-400 hover:bg-red-100  hover:text-red-950 dark:bg-yellow-500 dark:hover:text-white dark:hover:bg-black text-sm rounded-lg  duration-200 transition-colors'>
       {greeting}
     </div>
   )
