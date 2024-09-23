@@ -33,6 +33,8 @@ const PostItemCardTop = ({ post, showSummary }) => {
             }>
             <div className='w-full max-h-80 object-cover overflow-hidden mb-2'>
               <LazyImage
+                priority
+                alt={post?.title}
                 src={post.pageCoverThumbnail}
                 style={post.pageCoverThumbnail ? {} : { height: '0px' }}
                 className='w-full max-h-80 object-cover hover:scale-125 duration-150'

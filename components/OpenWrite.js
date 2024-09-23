@@ -79,13 +79,14 @@ const OpenWrite = () => {
       return
     }
     if (isBrowser && blogId) {
+      toggleTocItems(true) // 禁止目录项的点击
+
       // Check if the element with id 'read-more-wrap' already exists
       const readMoreWrap = document.getElementById('read-more-wrap')
 
       // Only load the script if the element doesn't exist
       if (!readMoreWrap) {
         loadOpenWrite()
-        toggleTocItems(true) // 禁止目录项的点击
       }
     }
   })
