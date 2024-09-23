@@ -259,7 +259,6 @@ const LayoutSignUp = props => {
 export {
   Layout404,
   LayoutArchive,
-  LayoutAuth,
   LayoutBase,
   LayoutCategoryIndex,
   LayoutIndex,
