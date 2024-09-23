@@ -4,7 +4,7 @@ import Link from 'next/link'
 import CONFIG from '../config'
 
 /**
- * 交流频道
+ * 加入大師房屋
  * @returns
  */
 export default function TouchMeCard() {
@@ -14,7 +14,7 @@ export default function TouchMeCard() {
   return (
     <div className={'relative h-28 text-white flex flex-col'}>
       <FlipCard
-        className='cursor-pointer lg:p-6 p-4 border rounded-xl bg-[#4f65f0] dark:bg-yellow-600 dark:border-gray-600'
+        className='cursor-pointer lg:p-6 p-4 border rounded-xl bg-[#a61b29] dark:bg-yellow-600 dark:border-gray-600'
         frontContent={
           <div className='h-full'>
             <h2 className='font-[1000] text-3xl'>
