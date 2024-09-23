@@ -2,7 +2,6 @@ import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 
 export default function LogoBar(props) {
-  const { siteInfo } = props
   return (
     <div id='top-wrapper' className='w-full flex items-center '>
       <Link
