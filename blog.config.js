@@ -490,7 +490,7 @@ const BLOG = {
   NOTION_PROPERTY_NAME: {
     password: process.env.NEXT_PUBLIC_NOTION_PROPERTY_PASSWORD || '密码',
     type: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE || '类型', // 文章类型，
-    type_post: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_POST || '博文', // 当type文章类型与此值相同时，为博文。
+    type_post: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_POST || '文章', // 当type文章类型与此值相同时，为博文。
     type_page: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_PAGE || '单页', // 当type文章类型与此值相同时，为单页。
     type_notice:
       process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_NOTICE || '公告', // 当type文章类型与此值相同时，为公告。
