@@ -358,6 +358,17 @@ const CONFIG = {
   STARTER_404_TEXT: '抱歉！您要查找的页面不存在。可能已经移动或删除。',
   STARTER_404_BACK: '回到主页',
 
+  // 页面底部的行动呼吁模块
+  STARTER_CTA_ENABLE: true,
+  STARTER_CTA_TITLE: '你还在等待什么呢？',
+  STARTER_CTA_TITLE_2: '现在开始吧',
+  STARTER_CTA_DESCRIOTN:
+    '访问NotionNext的操作文档，我们提供了详细的教程，帮助你即刻搭建站点',
+  STARTER_CTA_BUTTON: true, // 是否显示按钮
+  STARTER_CTA_BUTTON_URL:
+    'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
+  STARTER_CTA_BUTTON_TEXT: '开始体验',
+
   STARTER_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
   STARTER_POST_REDIRECT_URL: 'https://blog.tangly1024.com', // 重定向域名
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
