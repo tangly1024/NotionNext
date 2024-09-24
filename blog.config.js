@@ -11,7 +11,7 @@ const BLOG = {
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2021, // e.g if leave this empty, current year will be used.
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
-  APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
+  APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [22, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
   TAG_SORT_BY_COUNT: true, // 标签是否按照文章数量倒序排列，文章多的标签排在前。
   IS_TAG_COLOR_DISTINGUISHED:
@@ -129,13 +129,13 @@ const BLOG = {
     '/signup': 'LayoutSignUp'
   },
 
-  CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || false, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
+  CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
   // 自定义右键菜单
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU:
     process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU || true, // 自定义右键菜单，覆盖系统菜单
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH:
     process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_SWITCH ||
-    true, // 是否显示切换主题
+    false, // 是否显示切换主题
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE:
     process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_DARK_MODE || true, // 是否显示深色模式
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK:
@@ -182,7 +182,7 @@ const BLOG = {
     'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css', // 深色模式主题
 
   CODE_MAC_BAR: process.env.NEXT_PUBLIC_CODE_MAC_BAR || true, // 代码左上角显示mac的红黄绿图标
-  CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || false, // 是否显示行号
+  CODE_LINE_NUMBERS: process.env.NEXT_PUBLIC_CODE_LINE_NUMBERS || true, // 是否显示行号
   CODE_COLLAPSE: process.env.NEXT_PUBLIC_CODE_COLLAPSE || true, // 是否支持折叠代码框
   CODE_COLLAPSE_EXPAND_DEFAULT:
     process.env.NEXT_PUBLIC_CODE_COLLAPSE_EXPAND_DEFAULT || true, // 折叠代码默认是展开状态
@@ -488,32 +488,32 @@ const BLOG = {
 
   // 自定义配置notion数据库字段名
   NOTION_PROPERTY_NAME: {
-    password: process.env.NEXT_PUBLIC_NOTION_PROPERTY_PASSWORD || 'password',
-    type: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE || 'type', // 文章类型，
-    type_post: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_POST || 'Post', // 当type文章类型与此值相同时，为博文。
-    type_page: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_PAGE || 'Page', // 当type文章类型与此值相同时，为单页。
+    password: process.env.NEXT_PUBLIC_NOTION_PROPERTY_PASSWORD || '密码',
+    type: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE || '类型', // 文章类型，
+    type_post: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_POST || '博文', // 当type文章类型与此值相同时，为博文。
+    type_page: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_PAGE || '单页', // 当type文章类型与此值相同时，为单页。
     type_notice:
-      process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_NOTICE || 'Notice', // 当type文章类型与此值相同时，为公告。
-    type_menu: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_MENU || 'Menu', // 当type文章类型与此值相同时，为菜单。
+      process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_NOTICE || '公告', // 当type文章类型与此值相同时，为公告。
+    type_menu: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_MENU || '菜单', // 当type文章类型与此值相同时，为菜单。
     type_sub_menu:
-      process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_SUB_MENU || 'SubMenu', // 当type文章类型与此值相同时，为子菜单。
-    title: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TITLE || 'title', // 文章标题
-    status: process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS || 'status',
+      process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_SUB_MENU || '子菜单', // 当type文章类型与此值相同时，为子菜单。
+    title: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TITLE || '标题', // 文章标题
+    status: process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS || '状态',
     status_publish:
       process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS_PUBLISH || '已发布', // 当status状态值与此相同时为发布，可以为中文
     status_invisible:
       process.env.NEXT_PUBLIC_NOTION_PROPERTY_STATUS_INVISIBLE || '隐藏', // 当status状态值与此相同时为隐藏发布，可以为中文 ， 除此之外其他页面状态不会显示在博客上
-    summary: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SUMMARY || 'summary',
-    slug: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SLUG || 'slug',
-    category: process.env.NEXT_PUBLIC_NOTION_PROPERTY_CATEGORY || 'category',
-    date: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DATE || 'date',
-    tags: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TAGS || 'tags',
-    icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon',
+    summary: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SUMMARY || '摘要',
+    slug: process.env.NEXT_PUBLIC_NOTION_PROPERTY_SLUG || '链接',
+    category: process.env.NEXT_PUBLIC_NOTION_PROPERTY_CATEGORY || '分类',
+    date: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DATE || '日期',
+    tags: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TAGS || '标签',
+    icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || '图标',
     ext: process.env.NEXT_PUBLIC_NOTION_PROPERTY_EXT || 'ext' // 扩展字段，存放json-string，用于复杂业务
   },
 
   // RSS订阅
-  ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
+  ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || false, // 是否开启RSS订阅功能
   MAILCHIMP_LIST_ID: process.env.MAILCHIMP_LIST_ID || null, // 开启mailichimp邮件订阅 客户列表ID ，具体使用方法参阅文档
   MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY || null, // 开启mailichimp邮件订阅 APIkey
 
