@@ -17,8 +17,8 @@ import { getQueryParam } from '../lib/utils'
 import BLOG from '@/blog.config'
 import ExternalPlugins from '@/components/ExternalPlugins'
 import GlobalHead from '@/components/GlobalHead'
+import { zhCN } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
-
 /**
  * App挂载DOM 入口文件
  * @param {*} param0
@@ -57,7 +57,15 @@ const MyApp = ({ Component, pageProps }) => {
       <ExternalPlugins {...pageProps} />
     </GlobalContextProvider>
   )
-  return <>{enableClerk ? <ClerkProvider>{content}</ClerkProvider> : content}</>
+  return (
+    <>
+      {enableClerk ? (
+        <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
+      ) : (
+        content
+      )}
+    </>
+  )
 }
 
 export default MyApp

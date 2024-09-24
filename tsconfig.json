@@ -2,8 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/blog.config": ["./blog.config"],
       "@/components/*": ["components/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/themes/*": ["themes/*"],
+      "@/pages/*": ["pages/*"],
       "@/data/*": ["data/*"],
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"]

@@ -99,7 +99,11 @@ const checkThemeDOM = () => {
       elements[elements.length - 1].scrollIntoView()
       // 删除前面的元素，只保留最后一个元素
       for (let i = 0; i < elements.length - 1; i++) {
-        if (elements[i] && elements[i].parentNode && elements[i].parentNode.contains(elements[i])) {
+        if (
+          elements[i] &&
+          elements[i].parentNode &&
+          elements[i].parentNode.contains(elements[i])
+        ) {
           elements[i].parentNode.removeChild(elements[i])
         }
       }

@@ -143,6 +143,13 @@
     "@clerk/types" "4.6.0"
     tslib "2.4.1"
 
+"@clerk/localizations@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/@clerk/localizations/-/localizations-3.0.4.tgz#6f9e807f31c675b197179582fca711521b83ba22"
+  integrity sha512-cOvkGXpWbVXU5F0CRedGKVIAaEUQSikBtD+HpsfSxFW9HshTA4DQdkhiQUlpJAyf8WYDJE11V9Dw5cS6ZPlhBg==
+  dependencies:
+    "@clerk/types" "4.21.0"
+
 "@clerk/nextjs@^5.1.5":
   version "5.1.5"
   resolved "https://r.cnpmjs.org/@clerk/nextjs/-/nextjs-5.1.5.tgz#559473a0e61af61d43e4e4a3242794db65b0ebfc"
@@ -166,6 +173,13 @@
     js-cookie "3.0.5"
     std-env "^3.7.0"
     swr "^2.2.0"
+
+"@clerk/types@4.21.0":
+  version "4.21.0"
+  resolved "https://registry.npmjs.org/@clerk/types/-/types-4.21.0.tgz#0ef79321d72983ef6e8c4a945617fe1f7d657c92"
+  integrity sha512-yyPNF4agzub9zXOht9Bk8HG+OkHfLKIpsQuTCiZJszehcKNUqKvJZRxUwdRREBYnBdMl632PKCwbckZsChVxVQ==
+  dependencies:
+    csstype "3.1.1"
 
 "@clerk/types@4.6.0":
   version "4.6.0"
