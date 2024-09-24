@@ -5,6 +5,7 @@ module.exports = {
     node: true
   },
   extends: [
+    'plugin:react/jsx-runtime',
     'plugin:react/recommended',
     'plugin:@next/next/recommended',
     'standard',

@@ -134,7 +134,7 @@ const LayoutBase = props => {
 
       <div
         id='theme-gitbook'
-        className={`${siteConfig('FONT_STYLE')} pb-16 md:pb-0 scroll-smooth bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300`}>
+        className={`${siteConfig('FONT_STYLE')} pb-16 md:pb-0 scroll-smooth bg-white dark:bg-black w-full h-full min-h-screen justify-center dark:text-gray-300`}>
         <AlgoliaSearchModal cRef={searchModal} {...props} />
 
         {/* 顶部导航栏 */}
@@ -142,16 +142,10 @@ const LayoutBase = props => {
 
         <main
           id='wrapper'
-          className={
-            (siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : '') +
-            'relative flex justify-between w-full gap-x-6 h-full mx-auto max-w-screen-4xl'
-          }>
+          className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full gap-x-6 h-full mx-auto max-w-screen-4xl`}>
           {/* 左侧推拉抽屉 */}
           {fullWidth ? null : (
-            <div
-              className={
-                'hidden md:block relative z-10 dark:bg-hexo-black-gray'
-              }>
+            <div className={'hidden md:block relative z-10 '}>
               <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
                 {/* 导航 */}
                 <div className='overflow-y-scroll scroll-hidden pt-10'>
@@ -170,10 +164,10 @@ const LayoutBase = props => {
           {/* 中间内容区域 */}
           <div
             id='center-wrapper'
-            className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen dark:bg-black'>
+            className='dark:bg-hexo-black-gray flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
             <div
               id='container-inner'
-              className={`w-full ${fullWidth ? 'px-10' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
+              className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
               {slotTop}
               <WWAds className='w-full' orientation='horizontal' />
 
@@ -182,9 +176,6 @@ const LayoutBase = props => {
               {/* Google广告 */}
               <AdSlot type='in-article' />
               <WWAds className='w-full' orientation='horizontal' />
-
-              {/* 回顶按钮 */}
-              <JumpToTopButton />
             </div>
 
             {/* 底部 */}
@@ -197,12 +188,12 @@ const LayoutBase = props => {
           {fullWidth ? null : (
             <div
               className={
-                'w-72 hidden xl:block dark:border-transparent flex-shrink-0 relative z-10 '
+                'w-72 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
               }>
               <div className='py-14 sticky top-0'>
                 <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                <div className='py-4'>
+                <div>
                   {/* 桌面端目录 */}
                   <Catalog {...props} />
                   {slotRight}
@@ -230,6 +221,9 @@ const LayoutBase = props => {
 
         {GITBOOK_LOADING_COVER && <LoadingCover />}
 
+        {/* 回顶按钮 */}
+        <JumpToTopButton />
+
         {/* 移动端导航抽屉 */}
         <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
 
@@ -248,29 +242,33 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   const router = useRouter()
-  useEffect(() => {
-    router.push(siteConfig('GITBOOK_INDEX_PAGE')).then(() => {
-      // console.log('跳转到指定首页', siteConfig('INDEX_PAGE'))
-      setTimeout(() => {
-        if (isBrowser) {
-          const article = document.getElementById('notion-article')
-          if (!article) {
-            console.log(
-              '请检查您的Notion数据库中是否包含此slug页面： ',
-              siteConfig('GITBOOK_INDEX_PAGE')
-            )
-            const containerInner = document.querySelector(
-              '#theme-gitbook #container-inner'
-            )
-            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${siteConfig('GITBOOK_INDEX_PAGE')}的文章</div></blockquote>`
-            containerInner?.insertAdjacentHTML('afterbegin', newHTML)
-          }
-        }
-      }, 7 * 1000)
-    })
-  }, [])
+  const index = siteConfig('GITBOOK_INDEX_PAGE')
 
-  return <></>
+  useEffect(() => {
+    const checkArticleExists = async () => {
+      // 这里可以检查文章是否存在
+      const article = document.getElementById('notion-article')
+      if (!article) {
+        console.log('请检查您的Notion数据库中是否包含此slug页面： ', index)
+
+        // 显示错误信息
+        const containerInner = document.querySelector(
+          '#theme-gitbook #container-inner'
+        )
+        const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
+        containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+      } else {
+        // 如果文章存在，立即重定向
+        if (index) {
+          router.push(index)
+        }
+      }
+    }
+
+    checkArticleExists()
+  }, [index, router])
+
+  return <LoadingCover /> // 返回 null 以不渲染任何内容
 }
 
 /**

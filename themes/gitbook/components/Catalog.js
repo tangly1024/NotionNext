@@ -81,14 +81,15 @@ const Catalog = ({ post }) => {
               <a
                 key={id}
                 href={`#${id}`}
-                className={`border-l pl-4 notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
+                //  notion-table-of-contents-item
+                className={`${activeSection === id && 'border-green-500 text-green-500 font-bold'} border-l pl-4 block hover:text-green-500 border-lduration-300 transform font-light dark:text-gray-300
               notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}>
                 <span
                   style={{
                     display: 'inline-block',
                     marginLeft: tocItem.indentLevel * 16
                   }}
-                  className={`truncate ${activeSection === id ? 'border-green-500 font-bold text-gray-500 underline' : ''}`}>
+                  className={`truncate`}>
                   {tocItem.text}
                 </span>
               </a>

@@ -62,7 +62,7 @@ export default function Header(props) {
   return (
     <div id='top-nav' className={'fixed top-0 w-full z-20 ' + className}>
       {/* PC端菜单 */}
-      <div className='flex justify-center border-b items-center w-full h-14 glassmorphism bg-white dark:bg-hexo-black-gray px-7'>
+      <div className='px-5 flex justify-center border-b dark:border-black items-center w-full h-16 glassmorphism bg-white dark:bg-hexo-black-gray'>
         <div className='max-w-screen-4xl w-full flex gap-x-3 justify-between items-center'>
           {/* 左侧*/}
           <div className='flex'>
@@ -78,7 +78,7 @@ export default function Header(props) {
           </div>
 
           {/* 右侧 */}
-          <div className='flex items-center gap-3'>
+          <div className='flex items-center gap-4'>
             <SearchInput className='hidden md:flex md:w-52 lg:w-72' />
             <DarkModeButton className='text-sm items-center h-full hidden md:flex' />
             {/* 折叠按钮、仅移动端显示 */}

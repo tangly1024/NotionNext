@@ -52,7 +52,7 @@ const NavPostItem = props => {
         <div
           onMouseEnter={onHoverToggle}
           onClick={toggleOpenSubMenu}
-          className='cursor-pointer relative flex justify-between text-sm p-2 hover:bg-gray-50 rounded-md dark:hover:bg-yellow-100 dark:hover:text-yellow-600'
+          className='cursor-pointer relative flex justify-between text-md p-2 hover:bg-gray-50 rounded-md dark:hover:bg-yellow-100 dark:hover:text-yellow-600'
           key={group?.category}>
           <span className={`${expanded && 'font-semibold'}`}>
             {group?.category}
@@ -68,7 +68,7 @@ const NavPostItem = props => {
         <Collapse isOpen={expanded} onHeightChange={props.onHeightChange}>
           {group?.items?.map((post, index) => (
             <div key={index} className='ml-3 border-l'>
-              <BlogPostCard className='text-sm ml-3' post={post} />
+              <BlogPostCard className='ml-3' post={post} />
             </div>
           ))}
         </Collapse>
@@ -79,7 +79,7 @@ const NavPostItem = props => {
       <>
         {group?.items?.map((post, index) => (
           <div key={index}>
-            <BlogPostCard className='text-sm py-2' post={post} />
+            <BlogPostCard className='text-md py-2' post={post} />
           </div>
         ))}
       </>

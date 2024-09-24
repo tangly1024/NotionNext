@@ -107,7 +107,7 @@ const SearchInput = ({ currentSearch, cRef, className }) => {
       <input
         ref={searchInputRef}
         type='text'
-        className={`rounded-md outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-800 dark:text-white`}
+        className={`rounded-md outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-black dark:text-white`}
         onFocus={handleFocus}
         onKeyUp={handleKeyUp}
         placeholder='Search'
