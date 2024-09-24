@@ -12,11 +12,12 @@ import { isBrowser } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import Announcement from './components/Announcement'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BannerFullWidth from './components/BannerFullWidth'
+import CTA from './components/CTA'
 import Catalog from './components/Catalog'
+import CatalogFloat from './components/CatalogFloat'
 import CategoryGroup from './components/CategoryGroup'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -31,7 +32,6 @@ import PostSimpleListHorizontal from './components/PostListSimpleHorizontal'
 import PostNavAround from './components/PostNavAround'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
-import TocDrawer from './components/TocDrawer'
 import TouchMeCard from './components/TouchMeCard'
 import CONFIG from './config'
 import { Style } from './style'
@@ -47,7 +47,7 @@ export const useMagzineGlobal = () => useContext(ThemeGlobalMagzine)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, notice } = props
+  const { children } = props
   const [tocVisible, changeTocVisible] = useState(false)
   const searchModal = useRef(null)
 
@@ -69,13 +69,8 @@ const LayoutBase = props => {
             <div id='main' role='main'>
               {children}
             </div>
-            {/* 底部 */}
-            <Announcement
-              post={notice}
-              className={
-                'text-center text-black bg-[#7BE986] dark:bg-hexo-black-gray py-16'
-              }
-            />
+            {/* 行动呼吁 */}
+            <CTA {...props} />
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
@@ -189,7 +184,11 @@ const LayoutSlug = props => {
             {/* 文章区块分为三列 */}
             <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
               <div className='h-full lg:col-span-1 hidden lg:block'>
-                <Catalog toc={post?.toc} className='sticky top-20' />
+                <Catalog
+                  post={post}
+                  toc={post?.toc || []}
+                  className='sticky top-20'
+                />
               </div>
 
               {/* Notion文章主体 */}
@@ -211,7 +210,6 @@ const LayoutSlug = props => {
                   {/* 上一篇下一篇 */}
                   <PostNavAround prev={prev} next={next} />
 
-                  <AdSlot />
                   {/* 评论区 */}
                   <Comment frontMatter={post} />
                 </section>
@@ -241,6 +239,14 @@ const LayoutSlug = props => {
                   <PostGroupLatest {...props} vertical={true} />
                 </div>
 
+                {/* Adsense */}
+                <div>
+                  <AdSlot />
+                </div>
+
+                {/* 留白 */}
+                <div></div>
+
                 {/* 文章分类区块 */}
                 <div>
                   <CategoryGroup {...props} />
@@ -260,7 +266,7 @@ const LayoutSlug = props => {
             </div>
 
             {/* 移动端目录 */}
-            <TocDrawer {...props} />
+            <CatalogFloat {...props} />
           </div>
         )}
       </div>
