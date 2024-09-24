@@ -352,7 +352,7 @@ const BLOG = {
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_COUNT_ENABLE || true, // 博客列表是否显示评论数
   COMMENT_TWIKOO_CDN_URL:
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_CDN_URL ||
-    'https://cdn.bootcdn.net/ajax/libs/twikoo/1.6.9/twikoo.all.min.js', // twikoo客户端cdn
+    'https://cdn.bootcdn.net/ajax/libs/twikoo/1.6.39/twikoo.all.min.js', // twikoo客户端cdn
 
   // utterance
   COMMENT_UTTERRANCES_REPO:
