@@ -45,9 +45,10 @@ export async function getStaticProps(req) {
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { index: [] } } // 使 /sign-in 路径可访问
+      { params: { index: [] } }, // 使 /sign-in 路径可访问
+      { params: { index: ['sign-in'] } } // 明确 sign-in 生成路径
     ],
-    fallback: true
+    fallback: 'blocking' // 使用 'blocking' 模式让未生成的路径也能正确响应
   }
 }
 
