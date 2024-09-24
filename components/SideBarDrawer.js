@@ -53,7 +53,7 @@ const SideBarDrawer = ({
       className={`block ${showOnPC ? '' : 'lg:hidden'} top-0`}>
       <div
         id='sidebar-drawer'
-        className={`${className} ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-[-100%] opacity-0'} transform transition-transform duration-300 ease-in-out bg-white dark:bg-gray-900 flex flex-col fixed h-full left-0 overflow-y-scroll top-0 z-30`}>
+        className={`z-50 ${className} ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-[-100%] opacity-0'} transform transition-transform duration-300 ease-in-out bg-white dark:bg-gray-900 flex flex-col fixed h-full left-0 overflow-y-scroll top-0`}>
         {children}
       </div>
 
