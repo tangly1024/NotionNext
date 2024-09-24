@@ -31,7 +31,6 @@ import JumpToTopButton from './components/JumpToTopButton'
 import NavPostList from './components/NavPostList'
 import PageNavDrawer from './components/PageNavDrawer'
 import RevolverMaps from './components/RevolverMaps'
-import SearchInput from './components/SearchInput'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
@@ -145,25 +144,22 @@ const LayoutBase = props => {
           id='wrapper'
           className={
             (siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : '') +
-            'relative flex justify-between w-full h-full mx-auto'
+            'relative flex justify-between w-full gap-x-6 h-full mx-auto max-w-screen-4xl'
           }>
           {/* 左侧推拉抽屉 */}
           {fullWidth ? null : (
             <div
               className={
-                'hidden md:block border-r dark:border-transparent relative z-10 dark:bg-hexo-black-gray'
+                'hidden md:block relative z-10 dark:bg-hexo-black-gray'
               }>
-              <div className='w-72 pt-14 pb-4 px-6 sticky top-0 h-screen flex justify-between flex-col'>
+              <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
                 {/* 导航 */}
-                <div className='overflow-y-scroll scroll-hidden'>
+                <div className='overflow-y-scroll scroll-hidden pt-10'>
                   {/* 嵌入 */}
                   {slotLeft}
-                  {/* 搜索框 */}
-                  <SearchInput className='my-3 rounded-md' />
 
-                  {/* 文章列表 */}
                   {/* 所有文章列表 */}
-                  <NavPostList filteredNavPages={filteredNavPages} />
+                  <NavPostList filteredNavPages={filteredNavPages} {...props} />
                 </div>
                 {/* 页脚 */}
                 <Footer {...props} />
@@ -171,27 +167,17 @@ const LayoutBase = props => {
             </div>
           )}
 
+          {/* 中间内容区域 */}
           <div
             id='center-wrapper'
             className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen dark:bg-black'>
             <div
               id='container-inner'
-              className={`w-full px-7 ${fullWidth ? 'px-10' : 'max-w-3xl'} justify-center mx-auto`}>
+              className={`w-full ${fullWidth ? 'px-10' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
               {slotTop}
               <WWAds className='w-full' orientation='horizontal' />
 
-              {/* <Transition
-                show={!onLoading}
-                appear={true}
-                enter='transition ease-in-out duration-700 transform order-first'
-                enterFrom='opacity-0 translate-y-16'
-                enterTo='opacity-100'
-                leave='transition ease-in-out duration-300 transform'
-                leaveFrom='opacity-100 translate-y-0'
-                leaveTo='opacity-0 -translate-y-16'
-                unmount={false}> */}
               {children}
-              {/* </Transition> */}
 
               {/* Google广告 */}
               <AdSlot type='in-article' />
@@ -207,14 +193,13 @@ const LayoutBase = props => {
             </div>
           </div>
 
-          {/*  右侧侧推拉抽屉 */}
+          {/*  右侧 */}
           {fullWidth ? null : (
             <div
-              style={{ width: '20rem' }}
               className={
-                'hidden xl:block dark:border-transparent flex-shrink-0 relative z-10 '
+                'w-72 hidden xl:block dark:border-transparent flex-shrink-0 relative z-10 '
               }>
-              <div className='py-14 px-6 sticky top-0'>
+              <div className='py-14 sticky top-0'>
                 <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
                 <div className='py-4'>
@@ -264,20 +249,20 @@ const LayoutBase = props => {
 const LayoutIndex = props => {
   const router = useRouter()
   useEffect(() => {
-    router.push(siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)).then(() => {
-      // console.log('跳转到指定首页', siteConfig('INDEX_PAGE', null, CONFIG))
+    router.push(siteConfig('GITBOOK_INDEX_PAGE')).then(() => {
+      // console.log('跳转到指定首页', siteConfig('INDEX_PAGE'))
       setTimeout(() => {
         if (isBrowser) {
           const article = document.getElementById('notion-article')
           if (!article) {
             console.log(
               '请检查您的Notion数据库中是否包含此slug页面： ',
-              siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)
+              siteConfig('GITBOOK_INDEX_PAGE')
             )
             const containerInner = document.querySelector(
               '#theme-gitbook #container-inner'
             )
-            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)}的文章</div></blockquote>`
+            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${siteConfig('GITBOOK_INDEX_PAGE')}的文章</div></blockquote>`
             containerInner?.insertAdjacentHTML('afterbegin', newHTML)
           }
         }
@@ -350,10 +335,11 @@ const LayoutSlug = props => {
               <ShareBar post={post} />
               {/* 文章分类和标签信息 */}
               <div className='flex justify-between'>
-                {siteConfig('POST_DETAIL_CATEGORY', null, CONFIG) &&
-                  post?.category && <CategoryItem category={post.category} />}
+                {siteConfig('POST_DETAIL_CATEGORY') && post?.category && (
+                  <CategoryItem category={post.category} />
+                )}
                 <div>
-                  {siteConfig('POST_DETAIL_TAG', null, CONFIG) &&
+                  {siteConfig('POST_DETAIL_TAG') &&
                     post?.tagItems?.map(tag => (
                       <TagItemMini key={tag.name} tag={tag} />
                     ))}
