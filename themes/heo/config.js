@@ -1,5 +1,5 @@
 const CONFIG = {
-  HEO_HOME_POST_TWO_COLS: false, // 首页博客两列显示，若为false则只显示一列
+  HEO_HOME_POST_TWO_COLS: true, // 首页博客两列显示，若为false则只显示一列
   HEO_LOADING_COVER: true, // 页面加载的遮罩动画
 
   HEO_HOME_BANNER_ENABLE: true,
@@ -19,7 +19,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '赚钱项目',
   HEO_HERO_TITLE_3: 'fuye.ren',
   HEO_HERO_TITLE_4: '个性化定制',
-  HEO_HERO_TITLE_5: '副业人专属首页',
+  HEO_HERO_TITLE_5: '副业人的浏览器首页',
   HEO_HERO_TITLE_LINK: 'https://fuye.ren',
 
   // 英雄区显示三个置顶分类
