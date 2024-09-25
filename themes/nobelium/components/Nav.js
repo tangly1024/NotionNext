@@ -1,4 +1,5 @@
 import Collapse from '@/components/Collapse'
+import DarkModeButton from '@/components/DarkModeButton'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
@@ -54,7 +55,7 @@ const Nav = props => {
           <Link href='/' aria-label={siteConfig('TITLE')}>
             <div className='h-6 w-6'>
               {/* <SvgIcon/> */}
-              {siteConfig('NOBELIUM_NAV_NOTION_ICON', null, CONFIG) ? (
+              {siteConfig('NOBELIUM_NAV_NOTION_ICON') ? (
                 <LazyImage
                   src={siteInfo?.icon}
                   width={24}
@@ -97,34 +98,32 @@ const NavBar = props => {
       id: 2,
       name: locale.NAV.RSS,
       href: '/feed',
-      show:
-        siteConfig('ENABLE_RSS') &&
-        siteConfig('NOBELIUM_MENU_RSS', null, CONFIG),
+      show: siteConfig('ENABLE_RSS') && siteConfig('NOBELIUM_MENU_RSS'),
       target: '_blank'
     },
     {
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
       href: '/search',
-      show: siteConfig('NOBELIUM_MENU_SEARCH', null, CONFIG)
+      show: siteConfig('NOBELIUM_MENU_SEARCH')
     },
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('NOBELIUM_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('NOBELIUM_MENU_ARCHIVE')
     },
     {
       icon: 'fas fa-folder',
       name: locale.COMMON.CATEGORY,
       href: '/category',
-      show: siteConfig('NOBELIUM_MENU_CATEGORY', null, CONFIG)
+      show: siteConfig('NOBELIUM_MENU_CATEGORY')
     },
     {
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
       href: '/tag',
-      show: siteConfig('NOBELIUM_MENU_TAG', null, CONFIG)
+      show: siteConfig('NOBELIUM_MENU_TAG')
     }
   ]
   if (customNav) {
@@ -167,12 +166,14 @@ const NavBar = props => {
         </Collapse>
       </div>
 
-      {JSON.parse(siteConfig('NOBELIUM_MENU_RANDOM_POST', null, CONFIG)) && (
+      {siteConfig('NOBELIUM_MENU_DARKMODE_BUTTON') && (
+        <DarkModeButton className='text-center p-2.5 hover:bg-black hover:bg-opacity-10  rounded-full' />
+      )}
+
+      {siteConfig('NOBELIUM_MENU_RANDOM_POST') && (
         <RandomPostButton {...props} />
       )}
-      {JSON.parse(siteConfig('NOBELIUM_MENU_SEARCH_BUTTON', null, CONFIG)) && (
-        <SearchButton {...props} />
-      )}
+      {siteConfig('NOBELIUM_MENU_SEARCH_BUTTON') && <SearchButton {...props} />}
       <i
         onClick={toggleOpen}
         className='fas fa-bars cursor-pointer px-5 flex justify-center items-center md:hidden'></i>
