@@ -1,5 +1,6 @@
 import { useMagzineGlobal } from '..'
 import Catalog from './Catalog'
+import CatalogFloatButton from './CatalogFloatButton'
 
 /**
  * 悬浮抽屉目录
@@ -8,14 +9,21 @@ import Catalog from './Catalog'
  * @returns {JSX.Element}
  * @constructor
  */
-const TocDrawer = ({ post, cRef }) => {
+const CatalogFloat = ({ post, cRef }) => {
   const { tocVisible, changeTocVisible } = useMagzineGlobal()
   const switchVisible = () => {
     changeTocVisible(!tocVisible)
   }
   return (
-    <>
-      <div id='medium-toc-float' className='fixed top-0 right-0 z-40'>
+    <div className='lg:hidden'>
+      <div
+        onClick={() => {
+          changeTocVisible(true)
+        }}
+        className='fixed right-0 bottom-24 z-20 shadow bg-white dark:bg-hexo-black-gray'>
+        {!tocVisible && <CatalogFloatButton />}
+      </div>
+      <div id='magzine-toc-float' className='fixed top-0 right-0 z-40'>
         {/* 侧边菜单 */}
         <div
           className={
@@ -26,7 +34,7 @@ const TocDrawer = ({ post, cRef }) => {
           }>
           {post && (
             <>
-              <div className='dark:text-gray-400 text-gray-600 h-56'>
+              <div className='dark:text-gray-400 text-gray-600 h-56 px-2'>
                 <Catalog toc={post.toc} />
               </div>
             </>
@@ -42,7 +50,7 @@ const TocDrawer = ({ post, cRef }) => {
         }
         onClick={switchVisible}
       />
-    </>
+    </div>
   )
 }
-export default TocDrawer
+export default CatalogFloat
