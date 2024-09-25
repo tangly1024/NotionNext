@@ -21,12 +21,8 @@ module.exports = {
       lg: '960px',
       // => @media (min-width: 992px) { ... }
 
-      xl: '1140px',
+      xl: '1140px'
       // => @media (min-width: 1200px) { ... }
-
-      '2xl': '1320px',
-      // => @media (min-width: 1400px) { ... }
-      '3xl': '1920px'
     },
     container: {
       center: true,
