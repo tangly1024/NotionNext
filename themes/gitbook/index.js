@@ -149,7 +149,7 @@ const LayoutBase = props => {
             <div className={'hidden md:block relative z-10 '}>
               <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
                 {/* 导航 */}
-                <div className='overflow-y-scroll scroll-hidden pt-10'>
+                <div className='overflow-y-scroll scroll-hidden pt-10 pl-5'>
                   {/* 嵌入 */}
                   {slotLeft}
 

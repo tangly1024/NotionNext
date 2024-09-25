@@ -65,8 +65,8 @@ export default function Header(props) {
   return (
     <div id='top-nav' className={'fixed top-0 w-full z-20 ' + className}>
       {/* PC端菜单 */}
-      <div className='px-5 flex justify-center border-b dark:border-black items-center w-full h-16 glassmorphism bg-white dark:bg-hexo-black-gray'>
-        <div className='max-w-screen-4xl w-full flex gap-x-3 justify-between items-center'>
+      <div className='flex justify-center border-b dark:border-black items-center w-full h-16 bg-white dark:bg-hexo-black-gray'>
+        <div className='px-5 max-w-screen-4xl w-full flex gap-x-3 justify-between items-center'>
           {/* 左侧*/}
           <div className='flex'>
             <LogoBar {...props} />

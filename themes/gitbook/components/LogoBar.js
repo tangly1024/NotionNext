@@ -14,7 +14,7 @@ export default function LogoBar(props) {
     <div id='logo-wrapper' className='w-full flex items-center mr-2'>
       <Link
         href={`/${siteConfig('GITBOOK_INDEX_PAGE', '', CONFIG)}`}
-        className='flex text-md font-bold md:text-xl dark:text-gray-200'>
+        className='flex text-lg font-bold md:text-2xl dark:text-gray-200'>
         <LazyImage
           src={siteInfo?.icon}
           width={24}
