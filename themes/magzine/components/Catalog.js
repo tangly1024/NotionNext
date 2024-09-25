@@ -23,9 +23,6 @@ const Catalog = ({ post, toc, className }) => {
       actionSectionScrollSpy()
       window.addEventListener('scroll', actionSectionScrollSpy)
     }
-    setTimeout(() => {
-      console.log('目录', post, toc)
-    }, 1000)
     return () => {
       window.removeEventListener('scroll', actionSectionScrollSpy)
     }

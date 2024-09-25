@@ -64,7 +64,7 @@ const ThemeSwitch = () => {
       </Draggable>
 
       <SideBarDrawer
-        className='p-10'
+        className='p-10  max-w-3xl 2xl:max-w-5xl'
         isOpen={sideBarVisible}
         showOnPC={true}
         onClose={() => {
@@ -98,7 +98,7 @@ const ThemeSwitch = () => {
         <div> Click below to switch the theme.</div>
 
         {/* 陈列所有主题 */}
-        <div>
+        <div className='grid lg:grid-cols-2 gap-6'>
           {THEMES?.map(t => {
             return (
               <div
