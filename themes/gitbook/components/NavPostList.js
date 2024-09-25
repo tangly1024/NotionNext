@@ -105,6 +105,7 @@ function groupArticles(filteredNavPages) {
     return []
   }
   const groups = []
+  const AUTO_SORT = siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)
 
   for (let i = 0; i < filteredNavPages.length; i++) {
     const item = filteredNavPages[i]
@@ -112,7 +113,7 @@ function groupArticles(filteredNavPages) {
 
     let existingGroup = null
     // 开启自动分组排序；将同分类的自动归到同一个文件夹，忽略Notion中的排序
-    if (siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)) {
+    if (AUTO_SORT) {
       existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
     } else {
       existingGroup = groups[groups.length - 1] // 获取最后一个分组

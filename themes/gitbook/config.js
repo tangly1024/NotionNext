@@ -15,6 +15,8 @@ const CONFIG = {
   // 导航文章自动排他折叠
   GITBOOK_EXCLUSIVE_COLLAPSE: true, // 一次只展开一个分类，其它文件夹自动关闭。
 
+  GITBOOK_FOLDER_HOVER_EXPAND: true, // 左侧导航文件夹鼠标悬停时自动展开；若为false，则要点击才能展开
+
   // Widget
   GITBOOK_WIDGET_REVOLVER_MAPS:
     process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
