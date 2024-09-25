@@ -167,7 +167,7 @@ const NavBar = props => {
       </div>
 
       {siteConfig('NOBELIUM_MENU_DARKMODE_BUTTON') && (
-        <DarkModeButton className='text-center p-2.5 hover:bg-black hover:bg-opacity-10  rounded-full' />
+        <DarkModeButton className='text-center p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full' />
       )}
 
       {siteConfig('NOBELIUM_MENU_RANDOM_POST') && (

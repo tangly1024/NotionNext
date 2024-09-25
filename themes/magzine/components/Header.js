@@ -1,4 +1,5 @@
 import Collapse from '@/components/Collapse'
+import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
@@ -162,13 +163,19 @@ export default function Header(props) {
           {/* 搜索按钮 */}
           <div
             onClick={toggleShowSearchInput}
-            className='flex text-center items-center cursor-pointer p-2'>
+            className='flex text-center items-center cursor-pointer p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full'>
             <i
               className={
                 showSearchInput
                   ? 'fa-regular fa-circle-xmark'
-                  : 'fa-solid fa-magnifying-glass' + ' align-middle'
+                  : 'fa-solid fa-magnifying-glass' +
+                    ' align-middle hover:scale-110 transform duration-200'
               }></i>
+          </div>
+
+          {/* 深色模式切换 */}
+          <div className='p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full'>
+            <DarkModeButton />
           </div>
 
           {/* 移动端显示开关 */}
