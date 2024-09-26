@@ -101,14 +101,14 @@ const OpenWrite = () => {
     }
   }, [isLoaded, router])
 
-  // 启动一个监听器，当页面上存在#read-more-wrap对象时，所有的 a .notion-table-of-contents-item 对象都禁止点击
+  // 启动一个监听器，当页面上存在#read-more-wrap对象时，所有的 a .catalog-item 对象都禁止点击
 
   return <></>
 }
 
 // 定义禁用和恢复目录项点击的函数
 const toggleTocItems = disable => {
-  const tocItems = document.querySelectorAll('a.notion-table-of-contents-item')
+  const tocItems = document.querySelectorAll('a.catalog-item')
   tocItems.forEach(item => {
     if (disable) {
       item.style.pointerEvents = 'none'

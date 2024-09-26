@@ -84,7 +84,7 @@ const Catalog = ({ toc }) => {
                 key={id}
                 href={`#${id}`}
                 className={`${activeSection === id && 'dark:border-white border-indigo-800 text-indigo-800 font-bold'} hover:font-semibold border-l pl-4 block hover:text-indigo-800 border-lduration-300 transform dark:text-indigo-400 dark:border-indigo-400
-        notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}>
+        notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
                 <span
                   style={{
                     display: 'inline-block',
