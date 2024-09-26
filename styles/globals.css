@@ -276,3 +276,7 @@ a.avatar-wrapper {
 img {
   display: unset;
 }
+
+.adsbygoogle {
+  overflow: hidden;
+}
