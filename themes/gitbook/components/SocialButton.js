@@ -144,6 +144,7 @@ const SocialButton = () => {
             target='_blank'
             rel='noreferrer'
             title={'知识星球'}
+            className='flex justify-center items-center'
             href={CONTACT_ZHISHIXINGQIU}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
