@@ -2,13 +2,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 'use client'
-
-/**
- * 这是一个空白主题，方便您用作创建新主题时的模板，从而开发出您自己喜欢的主题
- * 1. 禁用了代码质量检查功能，提高了代码的宽容度；您可以使用标准的html写法
- * 2. 内容大部分是在此文件中写死，notion数据从props参数中传进来
- * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
- */
 import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
@@ -23,8 +16,8 @@ import { Contact } from './components/Contact'
 import { FAQ } from './components/FAQ'
 import { Features } from './components/Features'
 import { Footer } from './components/Footer'
+import { Header } from './components/Header'
 import { Hero } from './components/Hero'
-import { NavBar } from './components/NavBar'
 import { Pricing } from './components/Pricing'
 import { Team } from './components/Team'
 import { Testimonials } from './components/Testimonials'
@@ -32,6 +25,7 @@ import CONFIG from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
 import { loadWowJS } from '@/lib/plugins/wow'
+import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
@@ -59,14 +53,17 @@ const LayoutBase = props => {
       id='theme-starter'
       className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
       <Style />
-      <NavBar {...props} />
+      {/* 页头 */}
+      <Header {...props} />
 
       {children}
 
+      {/* 页脚 */}
       <Footer {...props} />
 
       {/* 悬浮按钮 */}
       <BackToTopButton />
+
       {/* <MadeWithButton/> */}
     </div>
   )
@@ -102,7 +99,8 @@ const LayoutIndex = props => {
       {siteConfig('STARTER_CONTACT_ENABLE') && <Contact />}
       {/* 合作伙伴 */}
       {siteConfig('STARTER_BRANDS_ENABLE') && <Brand />}
-      <CTA />
+      {/* 行动呼吁 */}
+      {siteConfig('STARTER_CTA_ENABLE') && <CTA />}
     </>
   )
 }
@@ -221,6 +219,7 @@ const LayoutTagIndex = props => <></>
  * @returns
  */
 const LayoutSignIn = props => {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
   const title = siteConfig('STARTER_SIGNIN', '登录')
   const description = siteConfig(
     'STARTER_SIGNIN_DESCRITION',
@@ -230,7 +229,15 @@ const LayoutSignIn = props => {
     <>
       <div className='grow mt-20'>
         <Banner title={title} description={description} />
-        <SignInForm />
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignIn />
+          </div>
+        )}
+
+        {/* 自定义登录表单 */}
+        {!enableClerk && <SignInForm />}
       </div>
     </>
   )
@@ -242,6 +249,8 @@ const LayoutSignIn = props => {
  * @returns
  */
 const LayoutSignUp = props => {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
   const title = siteConfig('STARTER_SIGNIN', '注册')
   const description = siteConfig(
     'STARTER_SIGNIN_DESCRITION',
@@ -251,7 +260,16 @@ const LayoutSignUp = props => {
     <>
       <div className='grow mt-20'>
         <Banner title={title} description={description} />
-        <SignInForm />
+
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignUp />
+          </div>
+        )}
+
+        {/* 自定义登录表单 */}
+        {!enableClerk && <SignUpForm />}
       </div>
     </>
   )
