@@ -60,7 +60,7 @@ const PostItemCardWide = ({ post, showSummary }) => {
 
         <div
           className={
-            'flex items-center justify-start flex-wrap space-x-3 text-gray-400'
+            'flex items-center justify-start flex-wrap space-x-3 text-gray-500'
           }>
           {/* {siteConfig('MAGZINE_POST_LIST_TAG') &&
             post?.tagItems?.map(tag => (
@@ -73,6 +73,7 @@ const PostItemCardWide = ({ post, showSummary }) => {
       {/* 卡牌右侧图片 */}
       <div className='w-40 h-40 object-cover overflow-hidden mb-2'>
         <LazyImage
+          alt={post?.title}
           src={post.pageCoverThumbnail}
           style={post.pageCoverThumbnail ? {} : { height: '0px' }}
           className='w-40 h-40 object-cover hover:scale-125 duration-150'
