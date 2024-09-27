@@ -77,7 +77,7 @@ const Toc = ({ toc }) => {
                 key={id}
                 href={`#${id}`}
                 className={`notion-table-of-contents-item duration-300 transform font-light
-              notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}>
+              notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
                 <span
                   style={{
                     display: 'inline-block',
