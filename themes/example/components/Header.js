@@ -4,12 +4,13 @@ import { MenuList } from './MenuList'
 
 /**
  * 网站顶部
+ * LOGO 和 菜单
  * @returns
  */
 export const Header = props => {
   return (
     <header className='w-full px-6 bg-white  dark:bg-black relative z-20'>
-      <div className='container mx-auto max-w-4xl md:flex justify-between items-center'>
+      <div className='mx-auto max-w-4xl md:flex justify-between items-center'>
         <Link
           href='/'
           className='py-6 w-full text-center md:text-left md:w-auto text-gray-dark no-underline flex justify-center items-center'>

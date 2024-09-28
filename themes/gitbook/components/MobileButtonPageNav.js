@@ -1,3 +1,4 @@
+import { useGlobal } from '@/lib/global'
 import { useGitBookGlobal } from '@/themes/gitbook'
 
 /**
@@ -5,7 +6,7 @@ import { useGitBookGlobal } from '@/themes/gitbook'
  */
 export default function MobileButtonPageNav() {
   const { pageNavVisible, changePageNavVisible } = useGitBookGlobal()
-
+  const { locale } = useGlobal()
   const togglePageNavVisible = () => {
     changePageNavVisible(!pageNavVisible)
   }
@@ -17,11 +18,13 @@ export default function MobileButtonPageNav() {
         'text-black flex justify-center items-center dark:text-gray-200 dark:bg-hexo-black-gray py-2 px-2'
       }>
       <a
-        id='toc-button'
+        id='nav-button'
         className={
-          'fa-book cursor-pointer fas hover:scale-150 transform duration-200'
-        }
-      />
+          'space-x-4 cursor-pointer hover:scale-150 transform duration-200'
+        }>
+        <i className='fa-book fas' />
+        <span>{locale.COMMON.ARTICLE_LIST}</span>
+      </a>
     </div>
   )
 }
