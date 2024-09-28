@@ -47,7 +47,7 @@ const Style = () => {
 
     // 选中字体颜色
     ::selection {
-        background: rgba(45, 170, 219, 0.3);
+        background: rgba(166,27,41,1);
     }
 
     // 自定义滚动条
