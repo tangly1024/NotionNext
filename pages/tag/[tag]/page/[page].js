@@ -34,11 +34,13 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
   delete props.allPages
   return {
     props,
-    revalidate: siteConfig(
-      'NEXT_REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 
@@ -54,7 +56,7 @@ export async function getStaticPaths() {
     // 处理文章页数
     const postCount = tagPosts.length
     const totalPages = Math.ceil(
-      postCount / siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+      postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
     )
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {

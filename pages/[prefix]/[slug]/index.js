@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
+import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { checkSlugHasOneSlash, getRecommendPost } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
@@ -72,11 +73,13 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
     props.post = null
     return {
       props,
-      revalidate: siteConfig(
-        'REVALIDATE_SECOND',
-        BLOG.NEXT_REVALIDATE_SECOND,
-        props.NOTION_CONFIG
-      )
+      revalidate: process.env.EXPORT
+        ? undefined
+        : siteConfig(
+            'NEXT_REVALIDATE_SECOND',
+            BLOG.NEXT_REVALIDATE_SECOND,
+            props.NOTION_CONFIG
+          )
     }
   }
 
@@ -84,6 +87,15 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   if (!props?.post?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
+
+  // 目录默认加载
+  if (props.post?.blockMap?.block) {
+    props.post.content = Object.keys(props.post.blockMap.block).filter(
+      key => props.post.blockMap.block[key]?.value?.parent_id === props.post.id
+    )
+    props.post.toc = getPageTableOfContents(props.post, props.post.blockMap)
+  }
+
   // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
   if (BLOG.ALGOLIA_APP_ID) {
     uploadDataToAlgolia(props?.post)
@@ -111,11 +123,13 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   delete props.allPages
   return {
     props,
-    revalidate: siteConfig(
-      'NEXT_REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 

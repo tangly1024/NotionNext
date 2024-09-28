@@ -10,7 +10,7 @@ export const BlogListPage = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const { NOTION_CONFIG } = useGlobal()
-  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
   const currentPage = +page
 
@@ -20,6 +20,7 @@ export const BlogListPage = props => {
     .split('?')[0]
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
+    .replace('.html', '')
 
   const blogPostRefs = useRef([])
 

@@ -2,13 +2,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 'use client'
-
-/**
- * 这是一个空白主题，方便您用作创建新主题时的模板，从而开发出您自己喜欢的主题
- * 1. 禁用了代码质量检查功能，提高了代码的宽容度；您可以使用标准的html写法
- * 2. 内容大部分是在此文件中写死，notion数据从props参数中传进来
- * 3. 您可在此网站找到更多喜欢的组件 https://www.tailwind-kit.com/
- */
 import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
@@ -23,20 +16,20 @@ import { Contact } from './components/Contact'
 import { FAQ } from './components/FAQ'
 import { Features } from './components/Features'
 import { Footer } from './components/Footer'
+import { Header } from './components/Header'
 import { Hero } from './components/Hero'
-import { NavBar } from './components/NavBar'
 import { Pricing } from './components/Pricing'
 import { Team } from './components/Team'
 import { Testimonials } from './components/Testimonials'
 import CONFIG from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
-import BLOG from '@/blog.config'
 import { loadWowJS } from '@/lib/plugins/wow'
+import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { Banner } from './components/Banner'
+import { CTA } from './components/CTA'
 import { SignInForm } from './components/SignInForm'
-import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 
 /**
@@ -58,16 +51,19 @@ const LayoutBase = props => {
   return (
     <div
       id='theme-starter'
-      className={`${siteConfig('FONT_STYLE', BLOG.FONT_STYLE, props.NOTION_CONFIG)} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
+      className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
       <Style />
-      <NavBar {...props} />
+      {/* 页头 */}
+      <Header {...props} />
 
       {children}
 
+      {/* 页脚 */}
       <Footer {...props} />
 
       {/* 悬浮按钮 */}
       <BackToTopButton />
+
       {/* <MadeWithButton/> */}
     </div>
   )
@@ -84,29 +80,27 @@ const LayoutIndex = props => {
   return (
     <>
       {/* 英雄区 */}
-      {siteConfig('STARTER_HERO_ENABLE', null, CONFIG) && <Hero />}
+      {siteConfig('STARTER_HERO_ENABLE') && <Hero />}
       {/* 产品特性 */}
-      {siteConfig('STARTER_FEATURE_ENABLE', null, CONFIG) && <Features />}
+      {siteConfig('STARTER_FEATURE_ENABLE') && <Features />}
       {/* 关于 */}
-      {siteConfig('STARTER_ABOUT_ENABLE', null, CONFIG) && <About />}
+      {siteConfig('STARTER_ABOUT_ENABLE') && <About />}
       {/* 价格 */}
-      {siteConfig('STARTER_PRICING_ENABLE', null, CONFIG) && <Pricing />}
+      {siteConfig('STARTER_PRICING_ENABLE') && <Pricing />}
       {/* 评价展示 */}
-      {siteConfig('STARTER_TESTIMONIALS_ENABLE', null, CONFIG) && (
-        <Testimonials />
-      )}
+      {siteConfig('STARTER_TESTIMONIALS_ENABLE') && <Testimonials />}
       {/* 常见问题 */}
-      {siteConfig('STARTER_FAQ_ENABLE', null, CONFIG) && <FAQ />}
+      {siteConfig('STARTER_FAQ_ENABLE') && <FAQ />}
       {/* 团队介绍 */}
-      {siteConfig('STARTER_TEAM_ENABLE', null, CONFIG) && <Team />}
+      {siteConfig('STARTER_TEAM_ENABLE') && <Team />}
       {/* 博文列表 */}
-      {siteConfig('STARTER_BLOG_ENABLE', null, CONFIG) && (
-        <Blog posts={posts} />
-      )}
+      {siteConfig('STARTER_BLOG_ENABLE') && <Blog posts={posts} />}
       {/* 联系方式 */}
-      {siteConfig('STARTER_CONTACT_ENABLE', null, CONFIG) && <Contact />}
+      {siteConfig('STARTER_CONTACT_ENABLE') && <Contact />}
       {/* 合作伙伴 */}
-      {siteConfig('STARTER_BRANDS_ENABLE', null, CONFIG) && <Brand />}
+      {siteConfig('STARTER_BRANDS_ENABLE') && <Brand />}
+      {/* 行动呼吁 */}
+      {siteConfig('STARTER_CTA_ENABLE') && <CTA />}
     </>
   )
 }
@@ -123,12 +117,12 @@ const LayoutSlug = props => {
   const router = useRouter()
   if (
     !post &&
-    siteConfig('STARTER_POST_REDIRECT_ENABLE', null, CONFIG) &&
+    siteConfig('STARTER_POST_REDIRECT_ENABLE') &&
     isBrowser &&
     router.route === '/[prefix]/[slug]'
   ) {
     const redirectUrl =
-      siteConfig('STARTER_POST_REDIRECT_URL', null, CONFIG) +
+      siteConfig('STARTER_POST_REDIRECT_URL') +
       router.asPath.replace('?theme=landing', '')
     router.push(redirectUrl)
     return (
@@ -143,8 +137,8 @@ const LayoutSlug = props => {
       <Banner title={post?.title} description={post?.summary} />
       <div className='container grow'>
         <div className='flex flex-wrap justify-center -mx-4'>
-          <div className='w-full p-4'>
-            <div id='container-inner' className='mx-auto'>
+          <div id='container-inner' className='w-full p-4'>
+            <div id='article-wrapper' className='mx-auto'>
               <NotionPage {...props} />
             </div>
           </div>
@@ -195,15 +189,15 @@ const Layout404 = props => {
                   <SVG404 />
                 </div>
                 <h3 className='mb-5 text-2xl font-semibold text-dark dark:text-white'>
-                  {siteConfig('STARTER_404_TITLE', null, CONFIG)}
+                  {siteConfig('STARTER_404_TITLE')}
                 </h3>
                 <p className='mb-8 text-base text-body-color dark:text-dark-6'>
-                  {siteConfig('STARTER_404_TEXT', null, CONFIG)}
+                  {siteConfig('STARTER_404_TEXT')}
                 </p>
                 <Link
                   href='/'
                   className='py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary'>
-                  {siteConfig('STARTER_404_BACK', null, CONFIG)}
+                  {siteConfig('STARTER_404_BACK')}
                 </Link>
               </div>
             </div>
@@ -225,14 +219,25 @@ const LayoutTagIndex = props => <></>
  * @returns
  */
 const LayoutSignIn = props => {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const title = siteConfig('STARTER_SIGNIN', '登录')
+  const description = siteConfig(
+    'STARTER_SIGNIN_DESCRITION',
+    '这里是演示页面，NotionNext目前不提供会员登录功能'
+  )
   return (
     <>
       <div className='grow mt-20'>
-        <Banner
-          title='登录'
-          description='这里是演示页面，NotionNext目前不提供会员登录功能'
-        />
-        <SignInForm />
+        <Banner title={title} description={description} />
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignIn />
+          </div>
+        )}
+
+        {/* 自定义登录表单 */}
+        {!enableClerk && <SignInForm />}
       </div>
     </>
   )
@@ -243,17 +248,32 @@ const LayoutSignIn = props => {
  * @param {*} props
  * @returns
  */
-const LayoutSignUp = props => (
-  <>
-    <div className='grow mt-20'>
-      <Banner
-        title='注册'
-        description='这里是演示页面，NotionNext目前不提供会员注册功能'
-      />
-      <SignUpForm />
-    </div>
-  </>
-)
+const LayoutSignUp = props => {
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  const title = siteConfig('STARTER_SIGNIN', '注册')
+  const description = siteConfig(
+    'STARTER_SIGNIN_DESCRITION',
+    '这里是演示页面，NotionNext目前不提供会员注册功能'
+  )
+  return (
+    <>
+      <div className='grow mt-20'>
+        <Banner title={title} description={description} />
+
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignUp />
+          </div>
+        )}
+
+        {/* 自定义登录表单 */}
+        {!enableClerk && <SignUpForm />}
+      </div>
+    </>
+  )
+}
 
 export {
   Layout404,
