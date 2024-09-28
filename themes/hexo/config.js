@@ -3,7 +3,6 @@ const CONFIG = {
   // 3.14.1以后的版本中，欢迎语在blog.config.js中配置，用英文逗号','隔开多个。
   HEXO_HOME_BANNER_GREETINGS: [
     '找一間房子,過妳想過的日子',
-    
     '歡迎您的來訪'
   ], // 首页大图标语文字
 
