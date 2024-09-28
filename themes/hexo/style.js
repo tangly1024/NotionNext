@@ -17,11 +17,11 @@ const Style = () => {
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
         text-decoration: none;
-        background-image: linear-gradient(#928CEE, #FF5809);
+        background-image: linear-gradient(#f1939c, #a61b29);
         background-repeat: no-repeat;
         background-position: bottom center;
         background-size: 0 2px;
-        transition: background-size 100ms ease-in-out;
+        transition: background-size 200ms ease-in-out;
     }
     
     #theme-hexo .menu-link:hover {
