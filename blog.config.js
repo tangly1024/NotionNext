@@ -312,7 +312,7 @@ const BLOG = {
     {
       name: 'Sogno di Volare',
       artist: 'Falcom Sound Team jdk',
-      url: 'https://www.kugou.com/mixsong/xe0be37.html?fromsearch=Sogno%20di%20Volare',
+      url: 'https://music.163.com/song/media/outer/url?id=1396311816.mp3',
       cover:
         ''
     },
