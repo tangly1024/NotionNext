@@ -313,37 +313,32 @@ const BLOG = {
       name: 'L\'Internationale',
       artist: 'Cherry Chérie',
       url: 'https://music.163.com/song/media/outer/url?id=1396311816.mp3',
-      cover:
-        'http://qiniu.jfseed.top/L%5C%27InternationaleAlbumCover.jpg'
+      cover: 'http://qiniu.jfseed.top/L%5C%27InternationaleAlbumCover.jpg'
     },
     {
       name: '童话镇',
       artist: '陈一发儿',
       url: 'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87%E9%9F%B3%E6%BA%90.mp3',
-      cover:
-        'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87AlbumCover.jpg',
+      cover: 'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87AlbumCover.jpg',
       lrc: '童话镇.lrc'
     },
     {
       name: 'China(The Atomic Era)',
       artist: 'Geoff Knorr, Phill Boucher',
       url: 'https://music.163.com/song/media/outer/url?id=441120082.mp3',
-      cover:
-        ''
+      cover: ''
     },
     {
       name: 'Sogno di Volare',
       artist: 'Christopher Tin',
       url: 'https://music.163.com/song/media/outer/url?id=437292121.mp3',
-      cover:
-        ''
+      cover: ''
     },
     {
       name: 'Flower Dance',
       artist: 'DJ Okawari',
       url: 'https://music.163.com/song/media/outer/url?id=22676167.mp3',
-      cover:
-        ''
+      cover: ''
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
