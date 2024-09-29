@@ -321,7 +321,7 @@ const BLOG = {
       artist: '陈一发儿',
       url: 'https://www.yymp3.com/Play/23362/268513.htm',
       cover:
-        ''
+        '',
       lrc: '陈一发儿-童话镇.lrc'
     },
     {
