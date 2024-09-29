@@ -310,9 +310,9 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: 'L'Internationale',
+      name: 'Sogno di Volare',
       artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/#/song?id=1396311816',
+      url: 'https://www.kugou.com/mixsong/xe0be37.html?fromsearch=Sogno%20di%20Volare',
       cover:
         ''
     },
