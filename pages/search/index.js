@@ -1,8 +1,8 @@
-import { getGlobalData } from '@/lib/db/getSiteData'
-import { useRouter } from 'next/router'
 import BLOG from '@/blog.config'
-import { getLayoutByTheme } from '@/themes/theme'
 import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 /**
  * 搜索路由
@@ -13,7 +13,10 @@ const Search = props => {
   const { posts } = props
 
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
 
   const router = useRouter()
   const keyword = router?.query?.s
@@ -25,7 +28,7 @@ const Search = props => {
       const tagContent = post?.tags ? post?.tags.join(' ') : ''
       const categoryContent = post.category ? post.category.join(' ') : ''
       const searchContent =
-                post.title + post.summary + tagContent + categoryContent
+        post.title + post.summary + tagContent + categoryContent
       return searchContent.toLowerCase().includes(keyword.toLowerCase())
     })
   } else {
@@ -40,16 +43,24 @@ const Search = props => {
 /**
  * 浏览器前端搜索
  */
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
   const props = await getGlobalData({
     from: 'search-props',
-    pageType: ['Post']
+    locale
   })
   const { allPages } = props
-  props.posts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 
