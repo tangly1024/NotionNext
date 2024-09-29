@@ -32,7 +32,7 @@ const TianLiGPT = () => {
 
     window.tianliGPT_postSelector = '#notion-article';
     window.tianliGPT_key = tianliKey;
-    window.tianliGPT_postURL = "*/about/*";
+    window.tianliGPT_postURL = "*/article/*";
 
     await loadExternalResource(tianliJs, 'js')
   }
