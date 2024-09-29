@@ -81,6 +81,9 @@ function scanSubdirectories(directory) {
  */
 
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true
+  },
   output: process.env.EXPORT ? 'export' : undefined,
   staticPageGenerationTimeout: 120,
   // 多语言， 在export时禁用
@@ -191,6 +194,8 @@ const nextConfig = {
       },
   webpack: (config, { dev, isServer }) => {
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
+    config.resolve.alias['@'] = path.resolve(__dirname)
+
     if (!isServer) {
       console.log('[默认主题]', path.resolve(__dirname, 'themes', THEME))
     }

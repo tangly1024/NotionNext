@@ -18,6 +18,12 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import BLOG from '@/blog.config'
 import ExternalPlugins from '@/components/ExternalPlugins'
 import GlobalHead from '@/components/GlobalHead'
+import { zhCN } from '@clerk/localizations'
+import dynamic from 'next/dynamic'
+// import { ClerkProvider } from '@clerk/nextjs'
+const ClerkProvider = dynamic(() =>
+  import('@clerk/nextjs').then(m => m.ClerkProvider)
+)
 
 /**
  * App挂载DOM 入口文件
@@ -47,7 +53,8 @@ const MyApp = ({ Component, pageProps }) => {
     [queryParam]
   )
 
-  return (
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const content = (
     <GlobalContextProvider {...pageProps}>
       <GLayout {...pageProps}>
         <GlobalHead {...pageProps} />
@@ -56,6 +63,15 @@ const MyApp = ({ Component, pageProps }) => {
       <ExternalPlugins {...pageProps} />
       <GoogleTagManager gtmId={`GTM-5WXBJL6B`} />
     </GlobalContextProvider>
+  )
+  return (
+    <>
+      {enableClerk ? (
+        <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
+      ) : (
+        content
+      )}
+    </>
   )
 }
 
