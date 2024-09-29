@@ -321,7 +321,7 @@ const BLOG = {
       artist: '陈一发儿',
       url: 'https://www.qtings.com/track/19',
       cover:
-        '',
+        'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87AlbumCover.jpg',
       lrc: '陈一发儿-童话镇.lrc'
     },
     {
