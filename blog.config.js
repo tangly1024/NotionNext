@@ -314,7 +314,7 @@ const BLOG = {
       artist: 'Cherry Chérie',
       url: 'https://music.163.com/song/media/outer/url?id=1396311816.mp3',
       cover:
-        ''
+        'http://qiniu.jfseed.top/L%5C%27InternationaleAlbumCover.jpg'
     },
     {
       name: '童话镇',
