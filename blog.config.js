@@ -319,7 +319,7 @@ const BLOG = {
     {
       name: '童话镇',
       artist: '陈一发儿',
-      url: 'https://www.qtings.com/track/19',
+      url: 'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87%E9%9F%B3%E6%BA%90.mp3',
       cover:
         'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87AlbumCover.jpg',
       lrc: '陈一发儿-童话镇.lrc'
