@@ -43,7 +43,7 @@ const Player = () => {
         new window.APlayer({
           container: ref.current,
           fixed: true,
-          lrcType: 3,//原本这个值为lrcType
+          lrcType: lrcType,
           autoplay: autoPlay,
           order: order,
           audio: audio
