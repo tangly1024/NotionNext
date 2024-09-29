@@ -329,6 +329,13 @@ const BLOG = {
       url: 'https://music.163.com/song/media/outer/url?id=437292121.mp3',
       cover:
         ''
+    },
+    {
+      name: 'Flower Dance',
+      artist: 'DJ Okawari',
+      url: 'https://music.163.com/song/media/outer/url?id=22676167.mp3',
+      cover:
+        ''
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
