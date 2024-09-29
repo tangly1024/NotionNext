@@ -310,16 +310,23 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: 'Sogno di Volare',
-      artist: 'Falcom Sound Team jdk',
+      name: 'L'Internationale',
+      artist: 'Cherry Chérie',
       url: 'https://music.163.com/song/media/outer/url?id=1396311816.mp3',
       cover:
         ''
     },
     {
-      name: '王都グランセル',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
+      name: 'China(The Atomic Era)',
+      artist: 'Geoff Knorr, Phill Boucher',
+      url: 'https://music.163.com/song/media/outer/url?id=441120082.mp3',
+      cover:
+        ''
+    },
+    {
+      name: 'Sogno di Volare',
+      artist: 'Christopher Tin',
+      url: 'https://music.163.com/song/media/outer/url?id=437292121.mp3',
       cover:
         ''
     }
