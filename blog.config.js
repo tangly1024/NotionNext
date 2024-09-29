@@ -317,6 +317,14 @@ const BLOG = {
         ''
     },
     {
+      name: '童话镇',
+      artist: '陈一发儿',
+      url: 'https://www.yymp3.com/Play/23362/268513.htm',
+      cover:
+        ''
+      lrc: '陈一发儿-童话镇.lrc'
+    },
+    {
       name: 'China(The Atomic Era)',
       artist: 'Geoff Knorr, Phill Boucher',
       url: 'https://music.163.com/song/media/outer/url?id=441120082.mp3',
