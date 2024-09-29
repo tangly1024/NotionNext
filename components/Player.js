@@ -42,7 +42,7 @@ const Player = () => {
       setPlayer(
         new window.APlayer({
           container: ref.current,
-          fixed: true,
+          mini: true,
           lrcType: lrcType,
           autoplay: autoPlay,
           order: order,
