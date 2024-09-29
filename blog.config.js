@@ -319,7 +319,7 @@ const BLOG = {
     {
       name: '童话镇',
       artist: '陈一发儿',
-      url: 'https://www.yymp3.com/Play/23362/268513.htm',
+      url: 'https://www.qtings.com/track/19',
       cover:
         '',
       lrc: '陈一发儿-童话镇.lrc'
