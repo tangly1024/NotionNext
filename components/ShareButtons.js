@@ -70,8 +70,10 @@ const ShareButtons = ({ post }) => {
   const [qrCodeShow, setQrCodeShow] = useState(false)
 
   const copyUrl = () => {
-    navigator?.clipboard?.writeText(shareUrl)
-    alert(locale.COMMON.URL_COPIED + ' \n' + shareUrl)
+    // 确保 shareUrl 是一个正确的字符串并进行解码
+    const decodedUrl = decodeURIComponent(shareUrl)
+    navigator?.clipboard?.writeText(decodedUrl)
+    alert(locale.COMMON.URL_COPIED + ' \n' + decodedUrl)
   }
 
   const openPopover = () => {
