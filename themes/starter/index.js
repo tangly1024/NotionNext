@@ -30,6 +30,7 @@ import Link from 'next/link'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
 import { SignInForm } from './components/SignInForm'
+import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 
 /**
