@@ -24,12 +24,14 @@ import { Testimonials } from './components/Testimonials'
 import CONFIG from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
+import ShareBar from '@/components/ShareBar'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
 import { SignInForm } from './components/SignInForm'
+import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 
 /**
@@ -140,6 +142,7 @@ const LayoutSlug = props => {
           <div id='container-inner' className='w-full p-4'>
             <div id='article-wrapper' className='mx-auto'>
               <NotionPage {...props} />
+              <ShareBar post={post}/>
             </div>
           </div>
         </div>
@@ -276,16 +279,17 @@ const LayoutSignUp = props => {
 }
 
 export {
-  Layout404,
-  LayoutArchive,
-  LayoutBase,
-  LayoutCategoryIndex,
-  LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSignIn,
-  LayoutSignUp,
-  LayoutSlug,
-  LayoutTagIndex,
-  CONFIG as THEME_CONFIG
+    Layout404,
+    LayoutArchive,
+    LayoutBase,
+    LayoutCategoryIndex,
+    LayoutIndex,
+    LayoutPostList,
+    LayoutSearch,
+    LayoutSignIn,
+    LayoutSignUp,
+    LayoutSlug,
+    LayoutTagIndex,
+    CONFIG as THEME_CONFIG
 }
+
