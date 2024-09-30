@@ -332,7 +332,8 @@ const BLOG = {
       name: 'Sogno di Volare',
       artist: 'Christopher Tin',
       url: 'https://music.163.com/song/media/outer/url?id=437292121.mp3',
-      cover: ''
+      cover: '',
+      lrc: '[00:17.95]Una volta che avrà当他张开\n[00:25.26]spiccato il volo,deciderà双翼，他决心起航\n[00:32.59]sguardo verso il ciel saprà:他将目光凝向高空，然后知晓：\n[00:39.90]Lì a casa il cuore sentirà这里让心如同回到了家乡\n[00:48.33]Una volta che avrà当他张开\n[00:54.76]spiccato il volo,deciderà双翼，他决心起航\n[01:02.10]sguardo verso il ciel saprà:他将目光凝向高空，然后知晓：\n[01:09.31]Lì a casa il cuore sentirà这里让心如同回到了家乡\n[01:17.94]Prenderà il primo volo第一只伟大的鸟\n[01:24.91]verso il sole il grande uccello将要飞向那太阳\n[01:31.62]sorvolando il grande Monte Ceceri他轻轻越过宏伟的奇奇里山\n[01:39.03]Riempendo l'universo然后让整个宇宙\n[01:42.36]di stupore e gloria!填满奇迹和荣耀！\n[01:46.86]Una volta che avrà,当他张开双翼\n[01:51.18]Spiccato il Volo, ancora Deciderà他依然决心起航\n[02:01.15]sguardo verso il ciel saprà:他将目光凝向高空，然后知晓：\n[02:08.56]Lì a casa il cuore sentirà这里让心如同回到了家乡\n[02:16.08]L'uomo verrà portato,那个男人\n[02:23.31]dalla sua creazione将带着他的造物\n[02:30.71]come gli uccelli,verso il cielo…像鸟一样达至天的国度\n[02:52.94]Libera, il vento,哇哦 哇哦\n[02:54.69]l'universo di stupore e gloria!然后让整个宇宙填满奇迹和荣耀\n[03:04.01]Una volta che avrà当他张开\n[03:11.34]spiccato il volo,deciderà,双翼，他决心起航\n[03:18.75]sguardo verso il ciel saprà:他将目光凝向高空，然后知晓：\n[03:26.15]Lì a casa il cuore sentirà这里让心如同回到了家乡\n[03:33.53]Gloria! Gloria!壮哉！壮哉！'
     },
     {
       name: 'Flower Dance',
