@@ -302,7 +302,7 @@ const BLOG = {
   MUSIC_PLAYER_VISIBLE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_VISIBLE || true, // 是否在左下角显示播放和切换，如果使用播放器，打开自动播放再隐藏，就会以类似背景音乐的方式播放，无法取消和暂停
   MUSIC_PLAYER_AUTO_PLAY:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || false, // 是否自动播放，不过自动播放时常不生效（移动设备不支持自动播放）
-  MUSIC_PLAYER_LRC_TYPE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_LRC_TYPE || '3', // 歌词显示类型，可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）（前提是有配置歌词路径，对 meting 无效）
+  MUSIC_PLAYER_LRC_TYPE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_LRC_TYPE || '1', // 歌词显示类型，可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）（前提是有配置歌词路径，对 meting 无效）
   MUSIC_PLAYER_CDN_URL:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_CDN_URL ||
     'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js',
@@ -320,7 +320,7 @@ const BLOG = {
       artist: '陈一发儿',
       url: 'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87%E9%9F%B3%E6%BA%90.mp3',
       cover: 'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87AlbumCover.jpg',
-      lrc: './tonghuazhen.lrc'
+      lrc: '[00:00.10]童话镇-陈一发\n[00:00.53]作曲 : 暗杠\n[00:00.97]作词 : 竹君\n[00:22.78]听说白雪公主在逃跑\n[00:26.16]小红帽在担心大灰狼\n[00:29.66]听说疯帽喜欢爱丽丝'
     },
     {
       name: 'China(The Atomic Era)',
