@@ -320,7 +320,7 @@ const BLOG = {
       artist: '陈一发儿',
       url: 'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87%E9%9F%B3%E6%BA%90.mp3',
       cover: 'http://qiniu.jfseed.top/%E7%AB%A5%E8%AF%9D%E9%95%87AlbumCover.jpg',
-      lrc: '童话镇.lrc'
+      lrc: './童话镇.lrc'
     },
     {
       name: 'China(The Atomic Era)',
