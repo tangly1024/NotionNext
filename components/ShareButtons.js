@@ -5,48 +5,48 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import {
-  EmailIcon,
-  EmailShareButton,
-  FacebookIcon,
-  FacebookMessengerIcon,
-  FacebookMessengerShareButton,
-  FacebookShareButton,
-  HatenaIcon,
-  HatenaShareButton,
-  InstapaperIcon,
-  InstapaperShareButton,
-  LineIcon,
-  LineShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
-  LivejournalIcon,
-  LivejournalShareButton,
-  MailruIcon,
-  MailruShareButton,
-  OKIcon,
-  OKShareButton,
-  PinterestIcon,
-  PinterestShareButton,
-  PocketIcon,
-  PocketShareButton,
-  RedditIcon,
-  RedditShareButton,
-  TelegramIcon,
-  TelegramShareButton,
-  TumblrIcon,
-  TumblrShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-  VKIcon,
-  VKShareButton,
-  ViberIcon,
-  ViberShareButton,
-  WeiboIcon,
-  WeiboShareButton,
-  WhatsappIcon,
-  WhatsappShareButton,
-  WorkplaceIcon,
-  WorkplaceShareButton
+    EmailIcon,
+    EmailShareButton,
+    FacebookIcon,
+    FacebookMessengerIcon,
+    FacebookMessengerShareButton,
+    FacebookShareButton,
+    HatenaIcon,
+    HatenaShareButton,
+    InstapaperIcon,
+    InstapaperShareButton,
+    LineIcon,
+    LineShareButton,
+    LinkedinIcon,
+    LinkedinShareButton,
+    LivejournalIcon,
+    LivejournalShareButton,
+    MailruIcon,
+    MailruShareButton,
+    OKIcon,
+    OKShareButton,
+    PinterestIcon,
+    PinterestShareButton,
+    PocketIcon,
+    PocketShareButton,
+    RedditIcon,
+    RedditShareButton,
+    TelegramIcon,
+    TelegramShareButton,
+    TumblrIcon,
+    TumblrShareButton,
+    TwitterIcon,
+    TwitterShareButton,
+    VKIcon,
+    VKShareButton,
+    ViberIcon,
+    ViberShareButton,
+    WeiboIcon,
+    WeiboShareButton,
+    WhatsappIcon,
+    WhatsappShareButton,
+    WorkplaceIcon,
+    WorkplaceShareButton
 } from 'react-share'
 
 const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
@@ -59,8 +59,8 @@ const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
 const ShareButtons = ({ post }) => {
   const router = useRouter()
   const [shareUrl, setShareUrl] = useState(siteConfig('LINK') + router.asPath)
-  const title = post.title || siteConfig('TITLE')
-  const image = post.pageCover
+  const title = post?.title || siteConfig('TITLE')
+  const image = post?.pageCover
   const body =
     post?.title + ' | ' + title + ' ' + shareUrl + ' ' + post?.summary
 
