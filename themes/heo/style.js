@@ -33,8 +33,8 @@ const Style = () => {
       }
 
       .today-card-cover {
-        -webkit-mask-image: linear-gradient(to top, transparent 5%, black 70%);
-        mask-image: linear-gradient(to top, transparent 5%, black 70%);
+        -webkit-mask-image: linear-gradient(to top, transparent 5%, black 10%);
+        mask-image: linear-gradient(to top, transparent 5%, black 10%);
       }
 
       .recent-top-post-group::-webkit-scrollbar {
