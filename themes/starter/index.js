@@ -24,12 +24,15 @@ import { Testimonials } from './components/Testimonials'
 import CONFIG from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
+import ShareBar from '@/components/ShareBar'
+import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
 import { SignInForm } from './components/SignInForm'
+import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 
 /**
@@ -94,7 +97,17 @@ const LayoutIndex = props => {
       {/* 团队介绍 */}
       {siteConfig('STARTER_TEAM_ENABLE') && <Team />}
       {/* 博文列表 */}
-      {siteConfig('STARTER_BLOG_ENABLE') && <Blog posts={posts} />}
+      {siteConfig('STARTER_BLOG_ENABLE') && (
+        <>
+          <Blog posts={posts} />
+          <div className='container mx-auto flex justify-end mb-4'>
+            <Link className='text-lg underline' href={'/archive'}>
+              <span>查看全部</span>
+              <i className='ml-2 fas fa-arrow-right' />
+            </Link>
+          </div>
+        </>
+      )}
       {/* 联系方式 */}
       {siteConfig('STARTER_CONTACT_ENABLE') && <Contact />}
       {/* 合作伙伴 */}
@@ -140,6 +153,7 @@ const LayoutSlug = props => {
           <div id='container-inner' className='w-full p-4'>
             <div id='article-wrapper' className='mx-auto'>
               <NotionPage {...props} />
+              <ShareBar post={post} />
             </div>
           </div>
         </div>
@@ -209,10 +223,167 @@ const Layout404 = props => {
   )
 }
 
-const LayoutCategoryIndex = props => <></>
-const LayoutPostList = props => <></>
-const LayoutTagIndex = props => <></>
+/**
+ * 翻页博客列表
+ */
+const LayoutPostList = props => {
+  const { posts, category, tag } = props
+  const slotTitle = category || tag
 
+  return (
+    <>
+      {/* <!-- ====== Blog Section Start --> */}
+      <section className='bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
+        <div className='container mx-auto'>
+          {/* 区块标题文字 */}
+          <div className='-mx-4 flex flex-wrap justify-center'>
+            <div className='w-full px-4'>
+              <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
+                {slotTitle && (
+                  <h2 className='mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
+                    {slotTitle}
+                  </h2>
+                )}
+
+                {!slotTitle && (
+                  <>
+                    <span className='mb-2 block text-lg font-semibold text-primary'>
+                      {siteConfig('STARTER_BLOG_TITLE')}
+                    </span>
+                    <h2 className='mb-4 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
+                      {siteConfig('STARTER_BLOG_TEXT_1')}
+                    </h2>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: siteConfig('STARTER_BLOG_TEXT_2')
+                      }}
+                      className='text-base text-body-color dark:text-dark-6'></p>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+          {/* 博客列表 此处优先展示3片文章 */}
+          <div className='-mx-4 flex flex-wrap'>
+            {posts?.map((item, index) => {
+              return (
+                <div key={index} className='w-full px-4 md:w-1/2 lg:w-1/3'>
+                  <div
+                    className='wow fadeInUp group mb-10'
+                    data-wow-delay='.1s'>
+                    <div className='mb-8 overflow-hidden rounded-[5px]'>
+                      <Link href={item?.href} className='block'>
+                        <img
+                          src={item.pageCoverThumbnail}
+                          alt={item.title}
+                          className='w-full transition group-hover:rotate-6 group-hover:scale-125'
+                        />
+                      </Link>
+                    </div>
+                    <div>
+                      <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
+                        {item.publishDay}
+                      </span>
+                      <h3>
+                        <Link
+                          href={item?.href}
+                          className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
+                          {item.title}
+                        </Link>
+                      </h3>
+                      <p className='max-w-[370px] text-base text-body-color dark:text-dark-6'>
+                        {item.summary}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+      {/* <!-- ====== Blog Section End --> */}
+    </>
+  )
+}
+/**
+ * 分类列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutCategoryIndex = props => {
+  const { categoryOptions } = props
+  const { locale } = useGlobal()
+  return (
+    <section className='bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
+      <div className='container mx-auto  min-h-96'>
+        <span className='mb-2 text-lg font-semibold text-primary flex justify-center items-center '>
+          {locale.COMMON.CATEGORY}
+        </span>
+        <div
+          id='category-list'
+          className='duration-200 flex flex-wrap justify-center items-center '>
+          {categoryOptions?.map(category => {
+            return (
+              <Link
+                key={category.name}
+                href={`/category/${category.name}`}
+                passHref
+                legacyBehavior>
+                <h2
+                  className={
+                    'hover:text-black text-2xl font-semibold text-dark sm:text-4xl md:text-[40px] md:leading-[1.2] dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
+                  }>
+                  <i className='mr-4 fas fa-folder' />
+                  {category.name}({category.count})
+                </h2>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/**
+ * 标签列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutTagIndex = props => {
+  const { tagOptions } = props
+  const { locale } = useGlobal()
+  return (
+    <section className='bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
+      <div className='container mx-auto  min-h-96'>
+        <span className='mb-2 text-lg font-semibold text-primary flex justify-center items-center '>
+          {locale.COMMON.TAGS}
+        </span>
+        <div
+          id='tags-list'
+          className='duration-200 flex flex-wrap justify-center items-center'>
+          {tagOptions.map(tag => {
+            return (
+              <div key={tag.name} className='p-2'>
+                <Link
+                  key={tag}
+                  href={`/tag/${encodeURIComponent(tag.name)}`}
+                  passHref
+                  className={`cursor-pointer inline-block rounded hover:bg-gray-500 hover:text-white duration-200  mr-2 py-1 px-2 text-md whitespace-nowrap dark:hover:text-white text-gray-600 hover:shadow-xl dark:border-gray-400 notion-${tag.color}_background dark:bg-gray-800`}>
+                  <div className='font-light dark:text-gray-400'>
+                    <i className='mr-1 fas fa-tag' />{' '}
+                    {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
+                  </div>
+                </Link>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
 /**
  * 登录页面
  * @param {*} props
