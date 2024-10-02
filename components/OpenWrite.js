@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -24,14 +25,10 @@ const OpenWrite = () => {
   // 白名单
   const whiteList = siteConfig('OPEN_WRITE_WHITE_LIST', '')
 
+  // 登录信息
+  const { isLoaded, isSignedIn } = useGlobal()
+
   const loadOpenWrite = async () => {
-    const existWhite = existedWhiteList(router.asPath, whiteList)
-
-    // 如果当前页面在白名单中，则屏蔽加锁
-    if (existWhite) {
-      return
-    }
-
     try {
       await loadExternalResource(
         'https://readmore.openwrite.cn/js/readmore-2.0.js',
@@ -74,11 +71,24 @@ const OpenWrite = () => {
     }
   }
   useEffect(() => {
+    const existWhite = existedWhiteList(router.asPath, whiteList)
+    // 白名单中，免检
+    if (existWhite) {
+      return
+    }
+    if (isSignedIn) {
+      // 用户已登录免检
+      console.log('用户已登录')
+      return
+    }
+
+    // 开发环境免检
     if (process.env.NODE_ENV === 'development') {
       console.log('开发环境:屏蔽OpenWrite')
       return
     }
-    if (isBrowser && blogId) {
+
+    if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
 
       // Check if the element with id 'read-more-wrap' already exists
@@ -89,16 +99,16 @@ const OpenWrite = () => {
         loadOpenWrite()
       }
     }
-  })
+  }, [isLoaded, router])
 
-  // 启动一个监听器，当页面上存在#read-more-wrap对象时，所有的 a .notion-table-of-contents-item 对象都禁止点击
+  // 启动一个监听器，当页面上存在#read-more-wrap对象时，所有的 a .catalog-item 对象都禁止点击
 
   return <></>
 }
 
 // 定义禁用和恢复目录项点击的函数
 const toggleTocItems = disable => {
-  const tocItems = document.querySelectorAll('a.notion-table-of-contents-item')
+  const tocItems = document.querySelectorAll('a.catalog-item')
   tocItems.forEach(item => {
     if (disable) {
       item.style.pointerEvents = 'none'

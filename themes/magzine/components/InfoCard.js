@@ -1,6 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 
 /**
  * 用户信息卡
@@ -9,6 +10,7 @@ import { useGlobal } from '@/lib/global'
  */
 const InfoCard = props => {
   const { siteInfo } = useGlobal()
+  const router = useRouter()
 
   return (
     <div id='info-card'>
@@ -16,7 +18,7 @@ const InfoCard = props => {
         <div
           className='hover:scale-105 transform duration-200 cursor-pointer flex justify-start'
           onClick={() => {
-            Router.push('/about')
+            router.push('/about')
           }}>
           <LazyImage
             src={siteInfo?.icon}
