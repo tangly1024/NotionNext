@@ -24,6 +24,7 @@ import { Testimonials } from './components/Testimonials'
 import CONFIG from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
+import Comment from '@/components/Comment'
 import ShareBar from '@/components/ShareBar'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -153,6 +154,7 @@ const LayoutSlug = props => {
           <div id='container-inner' className='w-full p-4'>
             <div id='article-wrapper' className='mx-auto'>
               <NotionPage {...props} />
+              <Comment frontMatter={post} />
               <ShareBar post={post} />
             </div>
           </div>
