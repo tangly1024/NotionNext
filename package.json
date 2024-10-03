@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.7.3",
+  "version": "4.7.4",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -45,7 +45,7 @@
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
-    "@types/react": "18.3.3",
+    "@types/react": "18.3.10",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
     "@waline/client": "^2.5.1",
@@ -65,7 +65,7 @@
     "postcss": "^8.4.31",
     "prettier": "^3.3.2",
     "tailwindcss": "^3.3.2",
-    "typescript": "5.5.3",
+    "typescript": "5.6.2",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {
