@@ -15,6 +15,7 @@ const SideBarDrawer = ({
   showOnPC = false
 }) => {
   const router = useRouter()
+
   useEffect(() => {
     const sideBarDrawerRouteListener = () => {
       switchSideDrawerVisible(false)
@@ -38,10 +39,10 @@ const SideBarDrawer = ({
     )
 
     if (showStatus) {
-      sideBarDrawer?.classList.replace('-ml-96', 'ml-0')
+      sideBarDrawer?.classList.replace('translate-x-[-100%]', 'translate-x-0')
       sideBarDrawerBackground?.classList.replace('hidden', 'block')
     } else {
-      sideBarDrawer?.classList.replace('ml-0', '-ml-96')
+      sideBarDrawer?.classList.replace('translate-x-0', 'translate-x-[-100%]')
       sideBarDrawerBackground?.classList.replace('block', 'hidden')
     }
   }
@@ -49,22 +50,21 @@ const SideBarDrawer = ({
   return (
     <div
       id='sidebar-wrapper'
-      className={` block ${showOnPC ? '' : 'lg:hidden'} top-0`}>
+      className={`block ${showOnPC ? '' : 'lg:hidden'} top-0`}>
       <div
         id='sidebar-drawer'
-        className={`${className} ${isOpen ? 'ml-0 w-96 visible' : '-ml-96 max-w-side invisible'} bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-30`}>
+        className={`z-50 ${className} ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-[-100%] opacity-0'} transform transition-transform duration-300 ease-in-out bg-white dark:bg-gray-900 flex flex-col fixed h-full left-0 overflow-y-scroll top-0`}>
         {children}
       </div>
 
       {/* 背景蒙版 */}
       <div
         id='sidebar-drawer-background'
-        onClick={() => {
-          switchSideDrawerVisible(false)
-        }}
-        className={`${isOpen ? 'block' : 'hidden'} animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-20 w-full h-full bg-black/70`}
+        onClick={() => switchSideDrawerVisible(false)}
+        className={`${isOpen ? 'block' : 'hidden'} fixed top-0 left-0 z-20 w-full h-full bg-black/70 transition-opacity duration-300`}
       />
     </div>
   )
 }
+
 export default SideBarDrawer
