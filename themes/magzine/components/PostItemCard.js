@@ -14,7 +14,7 @@ const PostItemCard = ({ post }) => {
   const { siteInfo } = useGlobal()
   const cover = post?.pageCoverThumbnail || siteInfo?.pageCover
   return (
-    <div key={post.id} className='mb-6 max-w-screen-2xl'>
+    <div key={post.id} className='mb-6 max-w-screen-3xl'>
       <div className='flex flex-col space-y-3'>
         {siteConfig('MAGZINE_POST_LIST_COVER') && (
           <Link
@@ -25,6 +25,7 @@ const PostItemCard = ({ post }) => {
             }>
             <div className='w-full h-40 aspect-video overflow-hidden mb-2'>
               <LazyImage
+                alt={post?.title}
                 src={cover}
                 style={cover ? {} : { height: '0px' }}
                 className='w-full h-40 aspect-video object-cover'

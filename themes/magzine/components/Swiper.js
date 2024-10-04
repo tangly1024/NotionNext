@@ -91,12 +91,12 @@ const Swiper = ({ posts }) => {
     <div className='relative w-full mx-auto'>
       {/* 左侧点击区域 */}
       <div
-        className='absolute inset-y-0 left-0 w-1/5 z-10'
+        className='absolute inset-y-0 left-0 w-1/6 z-10 cursor-move bg-black hover:opacity-10 opacity-0 duration-100'
         onClick={goToPrevious}></div>
 
       {/* 右侧点击区域 */}
       <div
-        className='absolute inset-y-0 right-0 w-1/5 z-10'
+        className='absolute inset-y-0 right-0 w-1/6 z-10 cursor-move bg-black hover:opacity-10 opacity-0 duration-100'
         onClick={goToNext}></div>
 
       {/* Swiper Container */}

@@ -1,21 +1,25 @@
+import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Comment from '@/components/Comment'
+import { AdSlot } from '@/components/GoogleAdsense'
 import LoadingCover from '@/components/LoadingCover'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
+import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
+import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import Announcement from './components/Announcement'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BannerFullWidth from './components/BannerFullWidth'
+import CTA from './components/CTA'
 import Catalog from './components/Catalog'
+import CatalogFloat from './components/CatalogFloat'
 import CategoryGroup from './components/CategoryGroup'
-import CategoryItem from './components/CategoryItem'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -26,9 +30,9 @@ import PostListPage from './components/PostListPage'
 import PostListRecommend from './components/PostListRecommend'
 import PostListScroll from './components/PostListScroll'
 import PostSimpleListHorizontal from './components/PostListSimpleHorizontal'
+import PostNavAround from './components/PostNavAround'
 import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
-import TocDrawer from './components/TocDrawer'
 import TouchMeCard from './components/TouchMeCard'
 import CONFIG from './config'
 import { Style } from './style'
@@ -44,7 +48,7 @@ export const useMagzineGlobal = () => useContext(ThemeGlobalMagzine)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, notice } = props
+  const { children } = props
   const [tocVisible, changeTocVisible] = useState(false)
   const searchModal = useRef(null)
 
@@ -66,17 +70,16 @@ const LayoutBase = props => {
             <div id='main' role='main'>
               {children}
             </div>
-            {/* 底部 */}
-            <Announcement
-              post={notice}
-              className={
-                'text-center text-black bg-[#7BE986] dark:bg-hexo-black-gray py-16'
-              }
-            />
+            {/* 行动呼吁 */}
+            <CTA {...props} />
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
+
+        {/* 全局Loading */}
         <LoadingCover />
+        {/* 全局搜索遮罩 */}
+        <AlgoliaSearchModal cRef={searchModal} {...props} />
       </div>
     </ThemeGlobalMagzine.Provider>
   )
@@ -123,7 +126,7 @@ const LayoutPostList = props => {
   const { category, tag } = props
 
   return (
-    <div className=' max-w-screen-2xl mx-auto w-full px-2 lg:px-0'>
+    <div className=' max-w-screen-3xl mx-auto w-full px-2 lg:px-0'>
       {/* 一个顶部条 */}
       <h2 className='py-8 text-2xl font-bold'>{category || tag}</h2>
 
@@ -142,7 +145,7 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, recommendPosts, lock, validPassword } = props
+  const { post, recommendPosts, prev, next, lock, validPassword } = props
   const { locale } = useGlobal()
   const router = useRouter()
 
@@ -167,44 +170,47 @@ const LayoutSlug = props => {
 
   return (
     <>
-      <div {...props} className='w-full mx-auto max-w-screen-2xl'>
+      <div {...props} className='w-full mx-auto max-w-screen-3xl'>
+        {/* 广告位 */}
+        <WWAds orientation='horizontal' />
+
         {/* 文章锁 */}
         {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && (
-          <div className='w-full max-w-screen-2xl mx-auto'>
+          <div className='w-full max-w-screen-3xl mx-auto'>
             {/* 文章信息 */}
             <ArticleInfo {...props} />
 
             {/* 文章区块分为三列 */}
             <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
               <div className='h-full lg:col-span-1 hidden lg:block'>
-                <Catalog toc={post?.toc} className='sticky top-20' />
+                <Catalog
+                  post={post}
+                  toc={post?.toc || []}
+                  className='sticky top-20'
+                />
               </div>
 
               {/* Notion文章主体 */}
-              <article
-                id='article-wrapper'
-                className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
-                <NotionPage post={post} />
+              <article className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
+                <div id='article-wrapper'>
+                  <NotionPage post={post} />
+                </div>
 
                 {/* 文章底部区域  */}
                 <section>
+                  <div className='py-2 flex justify-end'>
+                    {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
+                      post?.tagItems?.map(tag => (
+                        <TagItemMini key={tag.name} tag={tag} />
+                      ))}
+                  </div>
                   {/* 分享 */}
                   <ShareBar post={post} />
-                  {/* 文章分类和标签信息 */}
-                  <div className='flex justify-between'>
-                    {siteConfig('MAGZINE_POST_DETAIL_CATEGORY') &&
-                      post?.category && (
-                        <CategoryItem category={post?.category} />
-                      )}
-                    <div>
-                      {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
-                        post?.tagItems?.map(tag => (
-                          <TagItemMini key={tag.name} tag={tag} />
-                        ))}
-                    </div>
-                  </div>
+                  {/* 上一篇下一篇 */}
+                  <PostNavAround prev={prev} next={next} />
+
                   {/* 评论区 */}
                   <Comment frontMatter={post} />
                 </section>
@@ -234,6 +240,14 @@ const LayoutSlug = props => {
                   <PostGroupLatest {...props} vertical={true} />
                 </div>
 
+                {/* Adsense */}
+                <div>
+                  <AdSlot />
+                </div>
+
+                {/* 留白 */}
+                <div></div>
+
                 {/* 文章分类区块 */}
                 <div>
                   <CategoryGroup {...props} />
@@ -243,13 +257,17 @@ const LayoutSlug = props => {
                   <TouchMeCard />
                 </div>
 
+                <div>
+                  <WWAds />
+                </div>
+
                 {/* 底部留白 */}
                 <div></div>
               </div>
             </div>
 
             {/* 移动端目录 */}
-            <TocDrawer {...props} />
+            <CatalogFloat {...props} />
           </div>
         )}
       </div>
@@ -257,10 +275,9 @@ const LayoutSlug = props => {
       <div>
         {/* 广告醒图 */}
         <BannerFullWidth />
-        {/* 最新文章区块 */}
+        {/* 推荐关联文章 */}
         <PostSimpleListHorizontal
           title={locale.COMMON.RELATE_POSTS}
-          href='/archive'
           posts={recommendPosts}
         />
       </div>
@@ -293,7 +310,7 @@ const LayoutSearch = props => {
   }, [])
 
   return (
-    <div className='max-w-screen-2xl w-full mx-auto'>
+    <div className='max-w-screen-3xl w-full mx-auto'>
       {/* 搜索导航栏 */}
       <div className='py-12'>
         <div className='pb-4 w-full'>{locale.NAV.SEARCH}</div>
@@ -328,7 +345,7 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <>
-      <div className='w-full max-w-screen-2xl mx-auto mt-14 min-h-full'>
+      <div className='w-full max-w-screen-3xl mx-auto mt-14 min-h-full'>
         {Object.keys(archivePosts)?.map(archiveTitle => (
           <PostGroupArchive
             key={archiveTitle}
@@ -365,7 +382,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
   return (
-    <div className='w-full max-w-screen-2xl mx-auto min-h-96'>
+    <div className='w-full max-w-screen-3xl mx-auto min-h-96'>
       <div className='bg-white dark:bg-gray-700 py-10'>
         <div className='dark:text-gray-200 mb-5 text-2xl font-bold'>
           {/* <i className='mr-4 fas fa-th' /> */}
@@ -404,7 +421,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
   return (
-    <div className='w-full max-w-screen-2xl mx-auto min-h-96'>
+    <div className='w-full max-w-screen-3xl mx-auto min-h-96'>
       <div className='bg-white dark:bg-gray-700 py-10'>
         <div className='dark:text-gray-200 mb-5  text-2xl font-bold'>
           {/* <i className='mr-4 fas fa-tag' /> */}
@@ -424,6 +441,58 @@ const LayoutTagIndex = props => {
   )
 }
 
+/**
+ * 登录页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignIn = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignIn />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+/**
+ * 注册页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignUp = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignUp />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
 export {
   Layout404,
   LayoutArchive,
@@ -432,6 +501,8 @@ export {
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,
+  LayoutSignIn,
+  LayoutSignUp,
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG
