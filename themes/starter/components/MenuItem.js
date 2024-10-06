@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
+/**
+ * 菜单链接
+ * @param {*} param0
+ * @returns
+ */
 export const MenuItem = ({ link }) => {
   const hasSubMenu = link?.subMenus?.length > 0
   const router = useRouter()
@@ -10,7 +14,7 @@ export const MenuItem = ({ link }) => {
       {!hasSubMenu && (
         <li className='group relative whitespace-nowrap'>
           <Link
-            href={link?.to}
+            href={link?.href}
             target={link?.target}
             className={`ud-menu-scroll mx-8 flex py-2 text-base font-medium text-dark group-hover:text-primary dark:text-white lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${router.route === '/' ? 'lg:text-white lg:group-hover:text-white' : ''} lg:group-hover:opacity-70`}>
             {link?.icon && <i className={link.icon + ' mr-2 my-auto'} />}
@@ -43,7 +47,7 @@ export const MenuItem = ({ link }) => {
               return (
                 <Link
                   key={index}
-                  href={sLink.to}
+                  href={sLink.href}
                   target={link?.target}
                   className='block rounded px-4 py-[10px] text-sm text-body-color hover:text-primary dark:text-dark-6 dark:hover:text-primary'>
                   {/* 子菜单SubMenuItem */}

@@ -1,5 +1,5 @@
 :root {
-  --fg-color: rgb(0, 0, 0);
+  --fg-color: rgb(0, 0, 0) !important;
   --fg-color-0: rgba(55, 53, 47, 0.09);
   --fg-color-1: rgba(55, 53, 47, 0.16);
   --fg-color-2: rgba(55, 53, 47, 0.4);
@@ -403,7 +403,8 @@ summary > .notion-h {
 .notion-h1 {
   font-size: 1.575em;
   margin-top: 1.08em;
-  @apply border-b w-full;
+  @apply w-full;
+  /* @apply border-b w-full; */
 }
 .notion-h2 {
   @apply w-full;
@@ -523,8 +524,10 @@ summary > .notion-h {
 .notion-page {
   /* width: var(--notion-max-width); */
   width: 100% !important;
-  padding-left: calc(min(12px, 8vw));
-  padding-right: calc(min(12px, 8vw));
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  /* padding-left: calc(min(12px, 8vw)); */
+  /* padding-right: calc(min(12px, 8vw)); */
 }
 
 .notion-full-width {
@@ -552,7 +555,7 @@ summary > .notion-h {
   width: 100%;
   margin: 6px 0;
   padding: 0;
-  border-bottom-width: 1px;
+  /* border-bottom-width: 1px; */
 }
 
 .notion-link {
@@ -1449,6 +1452,7 @@ code[class*='language-'] {
 
 .notion-collection-card-property .notion-page-title-text {
   border-bottom: 0 none;
+  @apply dark:text-gray-200;
 }
 
 .notion-collection-card-property
@@ -1661,9 +1665,8 @@ code[class*='language-'] {
 }
 
 /* NOTION CSS OVERRIDE */
-
 .notion {
-  @apply dark:text-gray-300;
+  @apply dark:text-gray-100;
   overflow-wrap: break-word;
 }
 .notion,
@@ -1793,8 +1796,7 @@ svg + .notion-page-title-text {
   display: inline-block;
   width: 14px;
   height: 14px;
-  /* fill: var(--fg-color); */
-  fill: rgba(55, 53, 47);
+  fill: var(--fg-color);
   margin-right: 6px;
   @apply dark:fill-gray-200;
 }
@@ -1976,9 +1978,9 @@ svg + .notion-page-title-text {
   /* color: var(--notion-gray); */
 }
 
-.notion-asset-wrapper-pdf > div {
+/* .notion-asset-wrapper-pdf > div {
   width: unset !important;
-}
+} */
 
 /* pdf预览适配页面 */
 .react-pdf__Page__canvas,

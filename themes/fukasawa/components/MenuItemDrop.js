@@ -7,12 +7,14 @@ export const MenuItemDrop = ({ link }) => {
 
   return (
     <li
-      onMouseOver={() => changeShow(true)}
+      onMouseOver={() => {
+        changeShow(true)
+      }}
       onMouseOut={() => changeShow(false)}
-      className='relative py-1 duration-500 justify-between text-gray-500 dark:text-gray-300 hover:text-black hover:underline cursor-pointer flex flex-nowrap items-center '>
+      className='relative py-1 mb-1.5 duration-500 justify-between text-gray-500 dark:text-gray-300 hover:text-black hover:underline cursor-pointer flex flex-nowrap items-center '>
       {!hasSubMenu && (
         <Link
-          href={link?.to}
+          href={link?.href}
           target={link?.target}
           className='w-full my-auto items-center justify-between flex '>
           <div>
@@ -33,7 +35,7 @@ export const MenuItemDrop = ({ link }) => {
           {hasSubMenu && (
             <div className='text-right'>
               <i
-                className={`px-2 fas fa-chevron-right duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
+                className={`px-2 fas fa-chevron-left duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
             </div>
           )}
         </div>
@@ -42,12 +44,12 @@ export const MenuItemDrop = ({ link }) => {
       {/* 子菜单 */}
       {hasSubMenu && (
         <ul
-          className={`${show ? 'visible opacity-100 left-52' : 'invisible opacity-0 left-40'} z-20 py-1 absolute right-0 top-0 w-full border-gray-100  bg-white  dark:bg-black dark:border-gray-800 transition-all duration-300 drop-shadow-lg `}>
+          className={`${show ? 'visible opacity-100 left-72' : 'invisible opacity-0 left-80'} z-20 p-2 absolute right-0 top-0 w-full border-gray-100  bg-white  dark:bg-black dark:border-gray-800 transition-all duration-300 drop-shadow-lg `}>
           {link?.subMenus?.map((sLink, index) => {
             return (
               <li key={index}>
                 <Link
-                  href={sLink.to}
+                  href={sLink.href}
                   target={link?.target}
                   className='my-auto py-1 px-2 items-center justify-start flex text-gray-500 dark:text-gray-300 hover:text-black  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 dark:border-gray-800 '>
                   {sLink.icon && (

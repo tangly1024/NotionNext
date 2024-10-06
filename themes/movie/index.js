@@ -258,7 +258,11 @@ const LayoutSlug = props => {
           videoWrapper.appendChild(figCaptionWrapper)
         }
         // 放入页面
-        notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
+        if (notionArticle.firstChild && notionArticle.contains(notionArticle.firstChild)) {
+          notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
+        } else {
+          notionArticle.appendChild(videoWrapper)
+        }
       }
     }
 
