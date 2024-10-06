@@ -20,14 +20,14 @@ const CONFIG = {
   STARTER_HERO_BUTTON_2_URL: 'https://www.moucao.com/', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
 
-  STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/001.jpg', // 产品预览图 ，默认读取public目录下图片
+  STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/01.jpg', // 产品预览图 ，默认读取public目录下图片
 
   // 顶部右侧导航暗流
   STARTER_NAV_BUTTON_1_TEXT: 'Sign In',
-  STARTER_NAV_BUTTON_1_URL: '/sign-in',
+  STARTER_NAV_BUTTON_1_URL: '/signin',
 
   STARTER_NAV_BUTTON_2_TEXT: 'Sign Up',
-  STARTER_NAV_BUTTON_2_URL: '/sign-up',
+  STARTER_NAV_BUTTON_2_URL: '/signup',
 
   // 特性区块
   STARTER_FEATURE_ENABLE: true, // 特性区块开关
@@ -59,7 +59,7 @@ const CONFIG = {
 
   // 首页ABOUT区块
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
-  STARTER_ABOUT_TITLE: '一套轻量实用的馄饨摊解决方案',
+  STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
   STARTER_ABOUT_TEXT:
     'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
@@ -357,17 +357,6 @@ const CONFIG = {
   STARTER_404_TITLE: '我们似乎找不到您要找的页面。',
   STARTER_404_TEXT: '抱歉！您要查找的页面不存在。可能已经移动或删除。',
   STARTER_404_BACK: '回到主页',
-
-  // 页面底部的行动呼吁模块
-  STARTER_CTA_ENABLE: true,
-  STARTER_CTA_TITLE: '你还在等待什么呢？',
-  STARTER_CTA_TITLE_2: '现在开始吧',
-  STARTER_CTA_DESCRIOTN:
-    '访问NotionNext的操作文档，我们提供了详细的教程，帮助你即刻搭建站点',
-  STARTER_CTA_BUTTON: true, // 是否显示按钮
-  STARTER_CTA_BUTTON_URL:
-    'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
-  STARTER_CTA_BUTTON_TEXT: '开始体验',
 
   STARTER_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
   STARTER_POST_REDIRECT_URL: 'https://blog.tangly1024.com', // 重定向域名
