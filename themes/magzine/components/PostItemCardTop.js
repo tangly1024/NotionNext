@@ -24,7 +24,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
       // data-aos-anchor-placement='top-bottom'
       className='mb-6 max-w-screen-3xl '>
       <div className='flex flex-col w-full'>
-        {siteConfig('MAGZINE_POST_LIST_COVER') && (
+        {siteConfig('MAGZINE_POST_LIST_COVER') && post?.pageCoverThumbnail && (
           <Link
             href={post?.href}
             passHref
