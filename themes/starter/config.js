@@ -15,9 +15,9 @@ const CONFIG = {
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:
-    'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
+    'https://99.sc.cn/n9v54q3dv418/pc/goods-204357.html', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_TEXT: '关注我的博客', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_URL: 'https://www.moucao.com/', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
 
   STARTER_HERO_PREVIEW_IMAGE: '/images/starter/hero/01.jpg', // 产品预览图 ，默认读取public目录下图片
