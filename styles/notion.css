@@ -706,7 +706,7 @@ svg.notion-page-icon {
 }
 
 .notion-asset-wrapper-full {
-  /* max-width: 100vw; */
+  max-width: inherit;
 }
 
 .notion-asset-wrapper img {
@@ -1565,7 +1565,7 @@ code[class*='language-'] {
   }
 
   .notion-asset-wrapper-full {
-    max-width: 100vw;
+    max-width: inherit;
   }
 }
 

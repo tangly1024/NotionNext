@@ -100,8 +100,8 @@ const ExternalPlugin = props => {
   const CHATBASE_ID = siteConfig('CHATBASE_ID')
   const COMMENT_DAO_VOICE_ID = siteConfig('COMMENT_DAO_VOICE_ID')
   const AD_WWADS_ID = siteConfig('AD_WWADS_ID')
-  const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
-  const COMMENT_TWIKOO_CDN_URL = siteConfig('COMMENT_TWIKOO_CDN_URL')
+  //   const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
+  //   const COMMENT_TWIKOO_CDN_URL = siteConfig('COMMENT_TWIKOO_CDN_URL')
   const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER')
   const COMMENT_ARTALK_JS = siteConfig('COMMENT_ARTALK_JS')
   const COMMENT_TIDIO_ID = siteConfig('COMMENT_TIDIO_ID')
@@ -152,12 +152,16 @@ const ExternalPlugin = props => {
   }
 
   useEffect(() => {
+    // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
       setTimeout(() => {
-        // 异步渲染谷歌广告
         initGoogleAdsense()
       }, 1000)
     }
+
+    // 执行注入脚本
+    // eslint-disable-next-line no-eval
+    eval(GLOBAL_JS)
   }, [])
 
   if (DISABLE_PLUGIN) {
@@ -204,16 +208,6 @@ const ExternalPlugin = props => {
                     `
             }} /> */}
         </>
-      )}
-
-      {/* 注入JS脚本 */}
-      {GLOBAL_JS && (
-        <script
-          async
-          dangerouslySetInnerHTML={{
-            __html: GLOBAL_JS
-          }}
-        />
       )}
 
       {CHATBASE_ID && (
@@ -285,7 +279,7 @@ const ExternalPlugin = props => {
           async></script>
       )}
 
-      {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />}
+      {/* {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />} */}
 
       {COMMENT_ARTALK_SERVER && <script defer src={COMMENT_ARTALK_JS} />}
 

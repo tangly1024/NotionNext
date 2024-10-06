@@ -65,7 +65,7 @@ export default function PostHeader({ post, siteInfo }) {
 
                     {/* 文章Title */}
                     <div className="max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white">
-                        <NotionIcon icon={post.pageIcon} />{post.title}
+                        {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}{post.title}
                     </div>
 
                     {/* 标题底部补充信息 */}

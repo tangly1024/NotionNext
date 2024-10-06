@@ -35,7 +35,7 @@ export const BlogItem = props => {
                     <Link
                         href={url}
                         className="blog-item-title font-bold text-black text-2xl menu-link">
-                        <NotionIcon icon={post.pageIcon} />{post.title}
+                        {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}{post.title}
                     </Link>
                 </h2>
 
