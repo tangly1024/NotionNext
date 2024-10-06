@@ -34,7 +34,7 @@ export function PWA(post, siteInfo) {
 
   // 删除已有的 manifest link 元素（如果存在）
   const existingManifest = document.querySelector('link[rel="manifest"]')
-  if (existingManifest) {
+  if (existingManifest && existingManifest.parentNode && existingManifest.parentNode.contains(existingManifest)) {
     existingManifest.parentNode.removeChild(existingManifest)
   }
 
