@@ -34,9 +34,9 @@ export async function getStaticPaths({ locale }) {
   }
 }
 
-export async function getStaticProps({ params: { page } }) {
+export async function getStaticProps({ params: { page }, locale }) {
   const from = `page-${page}`
-  const props = await getGlobalData({ from })
+  const props = await getGlobalData({ from, locale })
   const { allPages } = props
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',
