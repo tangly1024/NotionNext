@@ -78,7 +78,9 @@ function Banner(props) {
       id='banners'
       onClick={handleClickBanner}
       className='hidden xl:flex xl:flex-col group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative overflow-hidden'>
-      <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
+      <div
+        id='banner-title'
+        className='z-10 flex flex-col absolute top-10 left-10'>
         <div className='text-4xl font-bold mb-3  dark:text-white'>
           {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
           <br />
@@ -115,10 +117,10 @@ function Banner(props) {
  * 英雄区左上角banner条中斜向滚动的图标
  */
 function TagsGroupBar() {
-  const groupIcons = siteConfig('HEO_GROUP_ICONS', null, CONFIG).concat(
-    siteConfig('HEO_GROUP_ICONS', null, CONFIG)
-  )
-
+  let groupIcons = siteConfig('HEO_GROUP_ICONS', null, CONFIG)
+  if (groupIcons) {
+    groupIcons = groupIcons.concat(groupIcons)
+  }
   return (
     <div className='tags-group-all flex -rotate-[30deg] h-full'>
       <div className='tags-group-wrapper flex flex-nowrap absolute top-16'>
