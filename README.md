@@ -1,3 +1,13 @@
+# 帮助教程
+
+访问帮助：[NotionNext帮助手册](https://docs.tangly1024.com/) 
+
+> 本项目教程为免费、公开资源，仅限个人学习使用。严禁任何个人或组织将本教程用于商业用途，包括但不限于直接售卖、间接收费、或其他变相盈利行为。转载、复制或介绍本教程内容时，须保留作者信息并明确注明来源。
+> 本项目仅提供由作者团队授权的付费咨询服务，请注意辨别，谨防诈骗行为。任何未经授权的收费服务均可能存在法律风险。
+
+Notion是一个能让效率暴涨的生产力引擎，可以帮你书写文档、管理笔记，搭建知识库，甚至可以为你规划项目、时间管理、组织团队、提高生产力、还有当前最强大的AI技术加持。
+> 如果希望进一步探索Notion的功能，欢迎购买《[Notion笔记从入门到精通进阶课程](https://docs.tangly1024.com/article/notion-tutorial)》
+
 # NotionNext
 
 <p>
@@ -25,25 +35,11 @@
 
 ## 预览效果
 
-在线演示：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，项目支持多主题切换，没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
+在线演示：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，点击左下角挂件可以切换主题，没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
 
 | Next | Medium | Hexo | Fukasawa |
 |--|--|--|--|
 | <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
-
-## 我要如何开始？
-
-只需几分钟即可搭建您的个人站点：
-
-- [部署教程 (支持多方案)](https://docs.tangly1024.com/) 
-
-- [配置手册 - (自定义插件)](https://docs.tangly1024.com/article/notion-next-guide) 
-
-- [二次开发 - (开发手册)](https://docs.tangly1024.com/article/notion-next-secondary-menu)
-
-- [更新指南 - (升级您的代码)](https://docs.tangly1024.com/article/how-to-update-notionnext)
-
-- [版本汇总 - (查询变动功能)](https://docs.tangly1024.com/article/notion-next-changelogs)
 
 ## 致谢
 感谢Craig Hart发起的Nobelium项目
