@@ -337,10 +337,10 @@ const CONFIG = {
   STARTER_FOOTER_PRIVACY_POLICY_URL: 'https://www.onlyonce.net/2024/10/10/Privacy_Policy',
 
   STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT: '法律声明',
-  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: '/legacy-notice',
+  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: 'https://www.onlyonce.net/2024/10/10/Legal_Disclaimer',
 
   STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: '服务协议',
-  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: '/terms-of-use',
+  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: 'https://www.onlyonce.net/2024/10/10/Terms_of_Service',
 
   // 404页面的提示语
   STARTER_404_TITLE: '我们似乎找不到您要找的页面。',
