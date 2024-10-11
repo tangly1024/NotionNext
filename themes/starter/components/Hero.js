@@ -90,6 +90,7 @@ export const Hero = () => {
         {siteConfig('STARTER_HERO_BANNER_IMAGE') && (
           <div className='w-full'>
             <LazyImage
+              className='w-full'
               src={siteConfig('STARTER_HERO_BANNER_IMAGE')}></LazyImage>
           </div>
         )}
