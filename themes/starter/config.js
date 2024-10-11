@@ -14,12 +14,13 @@ const CONFIG = {
   STARTER_HERO_TITLE_2: '为设计师和创意人士提供互动和学习的空间', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: 'STORE', // 英雄区按钮
-  STARTER_HERO_BUTTON_1_URL:
-    'https://github.com/U0hZiY', // 英雄区按钮
+  STARTER_HERO_BUTTON_1_URL: 'https://github.com/U0hZiY', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://github.com/U0hZiY/NotionNext', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
 
+  // 英雄区配图，如需隐藏，改为空值即可 ''
+  STARTER_HERO_BANNER_IMAGE: '/images/starter/hero/banner.webp', // hero区下方的全宽图
   STARTER_HERO_PREVIEW_IMAGE: '/images/heo/4_upscayl_4x_ultrasharp.webp', // 产品预览图 ，默认读取public目录下图片
 
   // 顶部右侧导航暗流
@@ -44,8 +45,7 @@ const CONFIG = {
   STARTER_FEATURE_2_TITLE_1: '量身定制搭建服务', // 特性2
   STARTER_FEATURE_2_TEXT_1: '方案适用于不同场景，总有一款服务适合你', // 特性2
   STARTER_FEATURE_2_BUTTON_TEXT: '了解更多', // 特性2
-  STARTER_FEATURE_2_BUTTON_URL:
-    'https://github.com/U0hZiY', // 特性2
+  STARTER_FEATURE_2_BUTTON_URL: 'https://github.com/U0hZiY', // 特性2
 
   STARTER_FEATURE_3_TITLE_1: '优秀的后端团队', // 特性3
   STARTER_FEATURE_3_TEXT_1: '基于自有全栈团队，更快的响应速度，更好的服务', // 特性3
@@ -84,8 +84,7 @@ const CONFIG = {
   STARTER_PRICING_1_HEADER: '功能点',
   STARTER_PRICING_1_FEATURES: '所有的资源,免费更新', // 英文逗号隔开
   STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_1_BUTTON_URL:
-    'https://gpol.top/@U0hZiY',
+  STARTER_PRICING_1_BUTTON_URL: 'https://gpol.top/@U0hZiY',
 
   STARTER_PRICING_2_TAG: '推荐',
   STARTER_PRICING_2_TITLE: '基础版',
@@ -95,8 +94,7 @@ const CONFIG = {
   STARTER_PRICING_2_HEADER: '功能点',
   STARTER_PRICING_2_FEATURES: '包含入门版,项目模块,内部社群,技术支持', // 英文逗号隔开
   STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_2_BUTTON_URL:
-    'https://gpol.top/@U0hZiY',
+  STARTER_PRICING_2_BUTTON_URL: 'https://gpol.top/@U0hZiY',
 
   STARTER_PRICING_3_TITLE: '高级版',
   STARTER_PRICING_3_PRICE: '59.9',
@@ -105,8 +103,7 @@ const CONFIG = {
   STARTER_PRICING_3_HEADER: '功能点',
   STARTER_PRICING_3_FEATURES: '包含基础版,小程序功能定制开发', // 英文逗号隔开
   STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_3_BUTTON_URL:
-    'https://gpol.top/@U0hZiY',
+  STARTER_PRICING_3_BUTTON_URL: 'https://gpol.top/@U0hZiY',
 
   // 首页用户测评区块
   STARTER_TESTIMONIALS_ENABLE: false, // 测评区块开关
@@ -188,12 +185,10 @@ const CONFIG = {
     '您可以在订阅之后联系我们，详情参考<a className="underline" href="https://github.com/U0hZiY">《联系我们》</a>',
 
   STARTER_FAQ_3_QUESTION: '订阅后资源全部免费吗？',
-  STARTER_FAQ_3_ANSWER:
-    '是的，订阅成为会员，所有模块都将对您免费开放致',
+  STARTER_FAQ_3_ANSWER: '是的，订阅成为会员，所有模块都将对您免费开放致',
 
   STARTER_FAQ_4_QUESTION: '资源会实时同步吗？',
-  STARTER_FAQ_4_ANSWER:
-    '我们会定期更新资源，同步至前端为各位提供满意的服务',
+  STARTER_FAQ_4_ANSWER: '我们会定期更新资源，同步至前端为各位提供满意的服务',
 
   // 团队成员区块
   STARTER_TEAM_ENABLE: true, // 团队成员区块开关
@@ -213,7 +208,7 @@ const CONFIG = {
       STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
       STARTER_TEAM_ITEM_NICKNAME: '@Keagan',
       STARTER_TEAM_ITEM_DESCRIPTION: '主要合伙人'
-    },
+    }
   ],
 
   // 博客文章区块
@@ -245,7 +240,7 @@ const CONFIG = {
   //   STARTER_CONTACT_MSG_THANKS: '感谢您的留言',
 
   // 合作伙伴的图标
-  STARTER_BRANDS_ENABLE:false , // 合作伙伴开关
+  STARTER_BRANDS_ENABLE: false, // 合作伙伴开关
   STARTER_BRANDS: [
     {
       IMAGE: '/images/starter/brands/graygrids.svg',
@@ -334,13 +329,16 @@ const CONFIG = {
   STARTER_FOOTER_BLOG_LATEST_TITLE: '最新文章',
 
   STARTER_FOOTER_PRIVACY_POLICY_TEXT: '隐私政策',
-  STARTER_FOOTER_PRIVACY_POLICY_URL: 'https://www.onlyonce.net/2024/10/10/Privacy_Policy',
+  STARTER_FOOTER_PRIVACY_POLICY_URL:
+    'https://www.onlyonce.net/2024/10/10/Privacy_Policy',
 
   STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT: '法律声明',
-  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL: 'https://www.onlyonce.net/2024/10/10/Legal_Disclaimer',
+  STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL:
+    'https://www.onlyonce.net/2024/10/10/Legal_Disclaimer',
 
   STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: '服务协议',
-  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: 'https://www.onlyonce.net/2024/10/10/Terms_of_Service',
+  STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL:
+    'https://www.onlyonce.net/2024/10/10/Terms_of_Service',
 
   // 404页面的提示语
   STARTER_404_TITLE: '我们似乎找不到您要找的页面。',
