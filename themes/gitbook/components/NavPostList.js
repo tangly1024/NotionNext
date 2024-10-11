@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
+import BlogPostCard from './BlogPostCard'
 import NavPostItem from './NavPostItem'
 
 /**
@@ -13,7 +14,7 @@ import NavPostItem from './NavPostItem'
  * @constructor
  */
 const NavPostList = props => {
-  const { filteredNavPages } = props
+  const { filteredNavPages, post } = props
   const { locale, currentSearch } = useGlobal()
   const router = useRouter()
 
@@ -80,11 +81,22 @@ const NavPostList = props => {
       </div>
     )
   }
+  // 如果href
+  const href = siteConfig('GITBOOK_INDEX_PAGE') + ''
+
+  const homePost = {
+    id: '-1',
+    title: siteConfig('DESCRIPTION'),
+    href: href.indexOf('/') !== 0 ? '/' + href : href
+  }
 
   return (
     <div
       id='posts-wrapper'
-      className='w-full flex-grow space-y-0.5 tracking-wider'>
+      className='w-full flex-grow space-y-0.5 pr-4 tracking-wider'>
+      {/* 当前文章 */}
+      <BlogPostCard className='mb-4' post={homePost} />
+
       {/* 文章列表 */}
       {categoryFolders?.map((group, index) => (
         <NavPostItem
@@ -105,6 +117,7 @@ function groupArticles(filteredNavPages) {
     return []
   }
   const groups = []
+  const AUTO_SORT = siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)
 
   for (let i = 0; i < filteredNavPages.length; i++) {
     const item = filteredNavPages[i]
@@ -112,7 +125,7 @@ function groupArticles(filteredNavPages) {
 
     let existingGroup = null
     // 开启自动分组排序；将同分类的自动归到同一个文件夹，忽略Notion中的排序
-    if (siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)) {
+    if (AUTO_SORT) {
       existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
     } else {
       existingGroup = groups[groups.length - 1] // 获取最后一个分组

@@ -9,6 +9,7 @@ import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Coze from './Coze'
 import { initGoogleAdsense } from './GoogleAdsense'
 
 /**
@@ -65,6 +66,7 @@ const ExternalPlugin = props => {
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
+  const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -150,6 +152,7 @@ const ExternalPlugin = props => {
       {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
+      {COZE_BOT_ID && <Coze />}
 
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && (
         <>

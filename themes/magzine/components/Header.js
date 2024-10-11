@@ -1,6 +1,8 @@
 import Collapse from '@/components/Collapse'
+import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -112,6 +114,8 @@ export default function Header(props) {
     return null
   }
 
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
   return (
     <div
       id='top-navbar-wrapper'
@@ -121,7 +125,7 @@ export default function Header(props) {
       {/* 导航栏菜单内容 */}
       <div
         id='top-navbar'
-        className='px-4 lg:px-0 flex w-full mx-auto max-w-screen-2xl h-20 transition-all duration-200 items-center justify-between'>
+        className='px-4 lg:px-0 flex w-full mx-auto max-w-screen-3xl h-20 transition-all duration-200 items-center justify-between'>
         {/* 搜索栏 */}
         {showSearchInput && (
           <input
@@ -144,7 +148,7 @@ export default function Header(props) {
             <div className='flex gap-x-8 h-full'>
               <LogoBar {...props} />
               {/* 桌面端顶部菜单 */}
-              <div className='hidden md:flex items-center gap-x-3'>
+              <div className='hidden md:flex items-center gap-x-4'>
                 {links &&
                   links?.map((link, index) => (
                     <MenuItemDrop key={index} link={link} />
@@ -154,20 +158,29 @@ export default function Header(props) {
           </>
         )}
 
-        {/* 右侧移动端折叠按钮 */}
-        <div className='flex items-center gap-x-6 pr-4'>
+        {/* 右侧按钮 */}
+        <div className='flex items-center gap-x-2 pr-2'>
           {/* 搜索按钮 */}
-          <div className='flex text-center items-center cursor-pointer'>
+          <div
+            onClick={toggleShowSearchInput}
+            className='flex text-center items-center cursor-pointer p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full'>
             <i
               className={
                 showSearchInput
                   ? 'fa-regular fa-circle-xmark'
-                  : 'fa-solid fa-magnifying-glass' + ' align-middle'
-              }
-              onClick={toggleShowSearchInput}></i>
+                  : 'fa-solid fa-magnifying-glass' +
+                    ' align-middle hover:scale-110 transform duration-200'
+              }></i>
           </div>
+
+          {/* 深色模式切换 */}
+          <div className='p-2.5 hover:bg-black hover:bg-opacity-10 rounded-full'>
+            <DarkModeButton />
+          </div>
+
+          {/* 移动端显示开关 */}
           <div className='mr-1 flex md:hidden justify-end items-center text-lg space-x-4 font-serif dark:text-gray-200'>
-            <div onClick={toggleMenuOpen} className='cursor-pointer'>
+            <div onClick={toggleMenuOpen} className='cursor-pointer p-2'>
               {isOpen ? (
                 <i className='fas fa-times' />
               ) : (
@@ -175,6 +188,20 @@ export default function Header(props) {
               )}
             </div>
           </div>
+
+          {/* 登录相关 */}
+          {enableClerk && (
+            <>
+              <SignedOut>
+                <SignInButton mode='modal'>
+                  <button className='bg-gray-800 hover:bg-gray-900 text-white rounded-lg px-3 py-2'>
+                    {locale.COMMON.SIGN_IN}
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <UserButton />
+            </>
+          )}
         </div>
       </div>
 

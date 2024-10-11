@@ -15,13 +15,13 @@ export default function ArticleInfo(props) {
   return (
     <>
       <div className='flex flex-col gap-y-4 py-4 px-2 lg:px-0'>
-        <div className='flex justify-center mr-2 items-center'>
+        <div className='flex justify-center items-center'>
           {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
             <CategoryItem category={post?.category} />
           )}
           <div
             className={
-              'flex items-center justify-start flex-wrap space-x-3 text-gray-400'
+              'flex items-center justify-start flex-wrap text-gray-400'
             }>
             {siteConfig('MAGZINE_POST_LIST_TAG') &&
               post?.tagItems?.map(tag => (

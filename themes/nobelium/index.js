@@ -19,6 +19,7 @@ import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogListBar from './components/BlogListBar'
 import { BlogListPage } from './components/BlogListPage'
 import { BlogListScroll } from './components/BlogListScroll'
+import Catalog from './components/Catalog'
 import { Footer } from './components/Footer'
 import JumpToTopButton from './components/JumpToTopButton'
 import Nav from './components/Nav'
@@ -78,6 +79,7 @@ const LayoutBase = props => {
             {/* 顶部插槽 */}
             {topSlot}
             {children}
+            {post && <Catalog toc={post?.toc} />}
           </Transition>
         </main>
 
