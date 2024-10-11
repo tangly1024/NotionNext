@@ -25,7 +25,6 @@ import CONFIG from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
 import Comment from '@/components/Comment'
-import LazyImage from '@/components/LazyImage'
 import ShareBar from '@/components/ShareBar'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -86,14 +85,6 @@ const LayoutIndex = props => {
     <>
       {/* 英雄区 */}
       {siteConfig('STARTER_HERO_ENABLE') && <Hero />}
-      {/* 横幅图片 */}
-      {siteConfig('STARTER_HERO_BANNER_IMAGE') && (
-        <div className='w-full'>
-          <LazyImage
-            className='w-full'
-            src={siteConfig('STARTER_HERO_BANNER_IMAGE')}></LazyImage>
-        </div>
-      )}
       {/* 合作伙伴 */}
       {siteConfig('STARTER_BRANDS_ENABLE') && <Brand />}
       {/* 产品特性 */}
