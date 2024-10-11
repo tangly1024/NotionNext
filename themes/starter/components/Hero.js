@@ -85,16 +85,15 @@ export const Hero = () => {
             )}
           </div>
         </div>
-
-        {/* 横幅图片 */}
-        {siteConfig('STARTER_HERO_BANNER_IMAGE') && (
-          <div className='w-full'>
-            <LazyImage
-              className='w-full'
-              src={siteConfig('STARTER_HERO_BANNER_IMAGE')}></LazyImage>
-          </div>
-        )}
       </div>
+      {/* 横幅图片 */}
+      {siteConfig('STARTER_HERO_BANNER_IMAGE') && (
+        <div className='container'>
+          <LazyImage
+            className='w-full'
+            src={siteConfig('STARTER_HERO_BANNER_IMAGE')}></LazyImage>
+        </div>
+      )}
       {/* <!-- ====== Hero Section End --> */}
     </>
   )
