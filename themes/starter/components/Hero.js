@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 /**
  * 英雄大图区块
@@ -66,7 +67,8 @@ export const Hero = () => {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={siteConfig('STARTER_HERO_PREVIEW_IMAGE')}
-                      alt='hero'
+                      alt={siteConfig('TITLE')}
+                      title={siteConfig('TITLE')}
                       className='mx-auto max-w-full rounded-t-xl rounded-tr-xl'
                     />
                   </div>
@@ -83,6 +85,14 @@ export const Hero = () => {
             )}
           </div>
         </div>
+
+        {/* 横幅图片 */}
+        {siteConfig('STARTER_HERO_BANNER_IMAGE') && (
+          <div className='w-full'>
+            <LazyImage
+              src={siteConfig('STARTER_HERO_BANNER_IMAGE')}></LazyImage>
+          </div>
+        )}
       </div>
       {/* <!-- ====== Hero Section End --> */}
     </>
