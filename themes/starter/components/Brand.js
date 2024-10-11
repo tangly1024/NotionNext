@@ -11,7 +11,7 @@ export const Brand = () => {
   return (
     <>
       {/* <!-- ====== Brands Section Start --> */}
-      <section className='pb-20 dark:bg-dark'>
+      <section className='py-20 dark:bg-dark'>
         <div className='container px-4'>
           <div className='-mx-4 flex flex-wrap items-center justify-center gap-8 xl:gap-11'>
             {brands?.map((item, index) => {
