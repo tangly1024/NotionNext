@@ -362,8 +362,8 @@ const LayoutSlug = props => {
                 <ArticleAround prev={prev} next={next} />
               )}
 
-              <AdSlot />
-              <WWAds className='w-full' orientation='horizontal' />
+              {/* <AdSlot />
+              <WWAds className='w-full' orientation='horizontal' /> */}
 
               <Comment frontMatter={post} />
             </section>
