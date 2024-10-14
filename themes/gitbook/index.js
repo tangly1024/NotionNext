@@ -3,6 +3,7 @@
 import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
 import Live2D from '@/components/Live2D'
+import LoadingCover from '@/components/LoadingCover'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -10,6 +11,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { getShortId } from '@/lib/utils/pageId'
+import { SignIn, SignUp } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -30,7 +32,6 @@ import JumpToTopButton from './components/JumpToTopButton'
 import NavPostList from './components/NavPostList'
 import PageNavDrawer from './components/PageNavDrawer'
 import RevolverMaps from './components/RevolverMaps'
-import SearchInput from './components/SearchInput'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
@@ -113,6 +114,11 @@ const LayoutBase = props => {
     setFilteredNavPages(getNavPagesWithLatest(allNavPages, latestPosts, post))
   }, [router])
 
+  const GITBOOK_LOADING_COVER = siteConfig(
+    'GITBOOK_LOADING_COVER',
+    true,
+    CONFIG
+  )
   return (
     <ThemeGlobalGitbook.Provider
       value={{
@@ -129,7 +135,7 @@ const LayoutBase = props => {
 
       <div
         id='theme-gitbook'
-        className={`${siteConfig('FONT_STYLE')} pb-16 md:pb-0 scroll-smooth bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300`}>
+        className={`${siteConfig('FONT_STYLE')} pb-16 md:pb-0 scroll-smooth bg-white dark:bg-black w-full h-full min-h-screen justify-center dark:text-gray-300`}>
         <AlgoliaSearchModal cRef={searchModal} {...props} />
 
         {/* 顶部导航栏 */}
@@ -137,27 +143,18 @@ const LayoutBase = props => {
 
         <main
           id='wrapper'
-          className={
-            (siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : '') +
-            'relative flex justify-between w-full h-full mx-auto'
-          }>
+          className={`${siteConfig('LAYOUT_SIDEBAR_REVERSE') ? 'flex-row-reverse' : ''} relative flex justify-between w-full gap-x-6 h-full mx-auto max-w-screen-4xl`}>
           {/* 左侧推拉抽屉 */}
           {fullWidth ? null : (
-            <div
-              className={
-                'hidden md:block border-r dark:border-transparent relative z-10 dark:bg-hexo-black-gray'
-              }>
-              <div className='w-72 pt-14 pb-4 px-6 sticky top-0 h-screen flex justify-between flex-col'>
+            <div className={'hidden md:block relative z-10 '}>
+              <div className='w-80 pt-14 pb-4 sticky top-0 h-screen flex justify-between flex-col'>
                 {/* 导航 */}
-                <div className='overflow-y-scroll scroll-hidden'>
+                <div className='overflow-y-scroll scroll-hidden pt-10 pl-5'>
                   {/* 嵌入 */}
                   {slotLeft}
-                  {/* 搜索框 */}
-                  <SearchInput className='my-3 rounded-md' />
 
-                  {/* 文章列表 */}
                   {/* 所有文章列表 */}
-                  <NavPostList filteredNavPages={filteredNavPages} />
+                  <NavPostList filteredNavPages={filteredNavPages} {...props} />
                 </div>
                 {/* 页脚 */}
                 <Footer {...props} />
@@ -165,34 +162,21 @@ const LayoutBase = props => {
             </div>
           )}
 
+          {/* 中间内容区域 */}
           <div
             id='center-wrapper'
-            className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen dark:bg-black'>
+            className='flex flex-col justify-between w-full relative z-10 pt-14 min-h-screen'>
             <div
               id='container-inner'
-              className={`w-full px-7 ${fullWidth ? 'px-10' : 'max-w-3xl'} justify-center mx-auto`}>
+              className={`w-full ${fullWidth ? 'px-5' : 'max-w-3xl px-3 lg:px-0'} justify-center mx-auto`}>
               {slotTop}
               <WWAds className='w-full' orientation='horizontal' />
 
-              {/* <Transition
-                show={!onLoading}
-                appear={true}
-                enter='transition ease-in-out duration-700 transform order-first'
-                enterFrom='opacity-0 translate-y-16'
-                enterTo='opacity-100'
-                leave='transition ease-in-out duration-300 transform'
-                leaveFrom='opacity-100 translate-y-0'
-                leaveTo='opacity-0 -translate-y-16'
-                unmount={false}> */}
               {children}
-              {/* </Transition> */}
 
               {/* Google广告 */}
               <AdSlot type='in-article' />
               <WWAds className='w-full' orientation='horizontal' />
-
-              {/* 回顶按钮 */}
-              <JumpToTopButton />
             </div>
 
             {/* 底部 */}
@@ -201,17 +185,16 @@ const LayoutBase = props => {
             </div>
           </div>
 
-          {/*  右侧侧推拉抽屉 */}
+          {/*  右侧 */}
           {fullWidth ? null : (
             <div
-              style={{ width: '20rem' }}
               className={
-                'hidden xl:block dark:border-transparent flex-shrink-0 relative z-10 '
+                'w-72 hidden 2xl:block dark:border-transparent flex-shrink-0 relative z-10 '
               }>
-              <div className='py-14 px-6 sticky top-0'>
+              <div className='py-14 sticky top-0'>
                 <ArticleInfo post={props?.post ? props?.post : props.notice} />
 
-                <div className='py-4'>
+                <div>
                   {/* 桌面端目录 */}
                   <Catalog {...props} />
                   {slotRight}
@@ -237,6 +220,11 @@ const LayoutBase = props => {
           )}
         </main>
 
+        {GITBOOK_LOADING_COVER && <LoadingCover />}
+
+        {/* 回顶按钮 */}
+        <JumpToTopButton />
+
         {/* 移动端导航抽屉 */}
         <PageNavDrawer {...props} filteredNavPages={filteredNavPages} />
 
@@ -255,29 +243,46 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   const router = useRouter()
-  useEffect(() => {
-    router.push(siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)).then(() => {
-      // console.log('跳转到指定首页', siteConfig('INDEX_PAGE', null, CONFIG))
-      setTimeout(() => {
-        if (isBrowser) {
-          const article = document.getElementById('notion-article')
-          if (!article) {
-            console.log(
-              '请检查您的Notion数据库中是否包含此slug页面： ',
-              siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)
-            )
-            const containerInner = document.querySelector(
-              '#theme-gitbook #container-inner'
-            )
-            const newHTML = `<h1 class="text-3xl pt-12  dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${siteConfig('GITBOOK_INDEX_PAGE', null, CONFIG)}的文章</div></blockquote>`
-            containerInner?.insertAdjacentHTML('afterbegin', newHTML)
-          }
-        }
-      }, 7 * 1000)
-    })
-  }, [])
+  const index = siteConfig('GITBOOK_INDEX_PAGE', 'about', CONFIG)
+  const [hasRedirected, setHasRedirected] = useState(false) // 添加状态追踪是否已重定向
 
-  return <></>
+  useEffect(() => {
+    const tryRedirect = async () => {
+      if (!hasRedirected) {
+        // 仅当未重定向时执行
+        setHasRedirected(true) // 更新状态，防止多次执行
+
+        // 重定向到指定文章
+        router.push(index).then(() => {
+          setTimeout(() => {
+            const article = document.getElementById('notion-article')
+            if (!article) {
+              console.log(
+                '请检查您的Notion数据库中是否包含此slug页面： ',
+                index
+              )
+
+              // 显示错误信息
+              const containerInner = document.querySelector(
+                '#theme-gitbook #container-inner'
+              )
+              const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
+              containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+            }
+          }, 2000)
+        })
+      }
+    }
+
+    if (index) {
+      console.log('重定向', index)
+      tryRedirect()
+    } else {
+      console.log('无重定向', index)
+    }
+  }, [index, hasRedirected]) // 将 hasRedirected 作为依赖确保状态变更时更新
+
+  return null // 不渲染任何内容
 }
 
 /**
@@ -333,17 +338,20 @@ const LayoutSlug = props => {
 
           {/* Notion文章主体 */}
           {post && (
-            <section id='article-wrapper' className='px-1'>
-              <NotionPage post={post} />
+            <section className='px-1'>
+              <div id='article-wrapper'>
+                <NotionPage post={post} />
+              </div>
 
               {/* 分享 */}
               <ShareBar post={post} />
               {/* 文章分类和标签信息 */}
               <div className='flex justify-between'>
-                {siteConfig('POST_DETAIL_CATEGORY', null, CONFIG) &&
-                  post?.category && <CategoryItem category={post.category} />}
+                {siteConfig('POST_DETAIL_CATEGORY') && post?.category && (
+                  <CategoryItem category={post.category} />
+                )}
                 <div>
-                  {siteConfig('POST_DETAIL_TAG', null, CONFIG) &&
+                  {siteConfig('POST_DETAIL_TAG') &&
                     post?.tagItems?.map(tag => (
                       <TagItemMini key={tag.name} tag={tag} />
                     ))}
@@ -354,8 +362,8 @@ const LayoutSlug = props => {
                 <ArticleAround prev={prev} next={next} />
               )}
 
-              <AdSlot />
-              <WWAds className='w-full' orientation='horizontal' />
+              {/* <AdSlot />
+              <WWAds className='w-full' orientation='horizontal' /> */}
 
               <Comment frontMatter={post} />
             </section>
@@ -479,6 +487,58 @@ const LayoutTagIndex = props => {
   )
 }
 
+/**
+ * 登录页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignIn = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignIn />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+/**
+ * 注册页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignUp = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignUp />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
 export {
   Layout404,
   LayoutArchive,
@@ -487,6 +547,8 @@ export {
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,
+  LayoutSignIn,
+  LayoutSignUp,
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG

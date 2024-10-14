@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
+import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
@@ -30,7 +31,7 @@ const Slug = props => {
 
   /**
    * 验证文章密码
-   * @param {*} result
+   * @param {*} passInput
    */
   const validPassword = passInput => {
     if (!post) {
@@ -54,12 +55,6 @@ const Slug = props => {
       setLock(true)
     } else {
       setLock(false)
-      if (!lock && post?.blockMap?.block) {
-        post.content = Object.keys(post.blockMap.block).filter(
-          key => post.blockMap.block[key]?.value?.parent_id === post.id
-        )
-        post.toc = getPageTableOfContents(post, post.blockMap)
-      }
     }
 
     // 读取上次记录 自动提交密码
@@ -95,8 +90,12 @@ const Slug = props => {
   })
   return (
     <>
+      {/* 文章布局 */}
       <Layout {...props} />
+      {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
+      {/* 导流工具 */}
+      <OpenWrite />
     </>
   )
 }
@@ -129,7 +128,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       fullSlug += '.html'
     }
   }
-  
+
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
@@ -164,6 +163,14 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   // 文章内容加载
   if (!props?.post?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
+  }
+
+  // 目录默认加载
+  if (props.post?.blockMap?.block) {
+    props.post.content = Object.keys(props.post.blockMap.block).filter(
+      key => props.post.blockMap.block[key]?.value?.parent_id === props.post.id
+    )
+    props.post.toc = getPageTableOfContents(props.post, props.post.blockMap)
   }
 
   // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)

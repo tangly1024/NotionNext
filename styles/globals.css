@@ -272,3 +272,11 @@ a.avatar-wrapper {
     margin-right: 20px;
   }
 }
+
+img {
+  display: unset;
+}
+
+.adsbygoogle {
+  overflow: hidden;
+}
