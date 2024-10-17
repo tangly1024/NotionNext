@@ -29,7 +29,7 @@ const Style = () => {
       }
 
       .notion-carousel-wrapper .notion-carousel.active {
-        display: block;
+        display: red;
       }
 
       .notion-carousel-route div {
