@@ -105,10 +105,7 @@ const GlobalHead = props => {
       <meta name='robots' content='follow, index' />
       <meta charSet='UTF-8' />
       {SEO_GOOGLE_SITE_VERIFICATION && (
-        <meta
-          name='google-site-verification'
-          content={SEO_GOOGLE_SITE_VERIFICATION}
-        />
+      <meta name="google-site-verification" content="ZfEn8Y7lWejqWfxlc-0dzrc3qS4EASd4wNa8l0XgGJE" />
       )}
       {SEO_BAIDU_SITE_VERIFICATION && (
         <meta
