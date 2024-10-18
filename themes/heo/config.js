@@ -62,24 +62,24 @@ const CONFIG = {
       title_1: 'Music',
       img_1: '/images/heo/music.png',
       color_1: '#989bf8',
-      title_2: 'Sketch',
-      img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
+      title_2: 'Piano',
+      img_2: '/images/heo/piano.png',
       color_2: '#ffffff'
     },
     {
-      title_1: 'Docker',
-      img_1: '/images/heo/20231108a540b2862d26f8850172e4ea58ed075102.webp',
+      title_1: 'Read',
+      img_1: '/images/heo/book.png',
       color_1: '#57b6e6',
-      title_2: 'Photoshop',
-      img_2: '/images/heo/2023e4058a91608ea41751c4f102b131f267075902.webp',
+      title_2: 'Volleyball',
+      img_2: '/images/heo/volleyball.png',
       color_2: '#4082c3'
     },
     {
-      title_1: 'FinalCutPro',
-      img_1: '/images/heo/20233e777652412247dd57fd9b48cf997c01070702.webp',
+      title_1: 'Meat',
+      img_1: '/images/heo/meat.png',
       color_1: '#ffffff',
-      title_2: 'Python',
-      img_2: '/images/heo/20235c0731cd4c0c95fc136a8db961fdf963071502.webp',
+      title_2: 'Food',
+      img_2: '/images/heo/fast-food.png',
       color_2: '#ffffff'
     },
     {
@@ -117,10 +117,10 @@ const CONFIG = {
   ],
 
   HEO_SOCIAL_CARD: false, // 是否显示右侧，点击加入社群按钮
-  HEO_SOCIAL_CARD_TITLE_1: '交流频道',
-  HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
-  HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
-  HEO_SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/how-to-question',
+  HEO_SOCIAL_CARD_TITLE_1: '别看啦',
+  HEO_SOCIAL_CARD_TITLE_2: '喜欢你',
+  HEO_SOCIAL_CARD_TITLE_3: '点击喜欢+1',
+  HEO_SOCIAL_CARD_URL: 'https://www.lzy599.space',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
