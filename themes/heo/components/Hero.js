@@ -107,7 +107,7 @@ function Banner(props) {
         <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
           <div className='text-3xl text-white font-extrabold'>{coverTitle}</div>
           <div className='-ml-3 text-gray-300'>
-            <ArrowSmallRight className={'w-24 h-24 stroke-2'} />
+            <ArrowSmallRight className={'w-12 h-12 stroke-2'} />
           </div>
         </div>
       </div>
