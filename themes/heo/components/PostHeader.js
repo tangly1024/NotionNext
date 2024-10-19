@@ -40,18 +40,37 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
       <div
         className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}>
         {/* 文章背景图 */}
+        // 替换为headerImage
         <div
-          id='post-cover-wrapper'
+          className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}
           style={{
-            filter: 'blur(15px)'
-          }}
-          className='coverdiv lg:opacity-50 lg:translate-x-96 lg:rotate-12'>
-          <LazyImage
-            id='post-cover'
-            className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'
-            src={headerImage}
-          />
+            backgroundImage: `url(${headerImage})`, // 使用 headerImage 作为背景图片
+            backgroundSize: 'cover', // 确保背景图片覆盖整个容器
+            backgroundPosition: 'center' // 背景图片居中显示
+          }}>
+
+          {/* 你可以选择是否保留这个部分，或添加其他内容 */}
+          <div id='post-info'
+               className='absolute top-48 z-10 flex flex-col space-y-4 lg:-mt-12 w-full max-w-[86rem] px-5'>
+            {/* 文章的其他信息（分类、标签、标题等） */}
+          </div>
+
+          <WavesArea />
         </div>
+
+
+        {/*<div*/}
+        {/*  id='post-cover-wrapper'*/}
+        {/*  style={{*/}
+        {/*    filter: 'blur(15px)'*/}
+        {/*  }}*/}
+        {/*  className='coverdiv lg:opacity-50 lg:translate-x-96 lg:rotate-12'>*/}
+        {/*  <LazyImage*/}
+        {/*    id='post-cover'*/}
+        {/*    className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'*/}
+        {/*    src={headerImage}*/}
+        {/*  />*/}
+        {/*</div>*/}
 
         {/* 文章文字描述 */}
         <div
@@ -66,7 +85,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   className='mr-4'
                   passHref
                   legacyBehavior>
-                  <div className='cursor-pointer font-sm font-bold px-3 py-1 rounded-lg  hover:bg-white text-white bg-blue-500 dark:bg-yellow-500 hover:text-blue-500 duration-200 '>
+                  <div
+                    className='cursor-pointer font-sm font-bold px-3 py-1 rounded-lg  hover:bg-white text-white bg-blue-500 dark:bg-yellow-500 hover:text-blue-500 duration-200 '>
                     {post.category}
                   </div>
                 </Link>
@@ -94,7 +114,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           </div>
 
           {/* 文章Title */}
-          <div className='max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white'>
+          <div
+            className='max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post.pageIcon} />
             )}
@@ -102,7 +123,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           </div>
 
           {/* 标题底部补充信息 */}
-          <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
+          <section
+            className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
             <div className='flex justify-center '>
               <div className='mr-2'>
                 <WordCount />
