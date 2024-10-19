@@ -42,7 +42,6 @@ import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
-import ProtectedPage from  './components/ProtectedPage'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
