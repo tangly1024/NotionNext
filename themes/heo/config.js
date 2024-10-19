@@ -28,9 +28,9 @@ const CONFIG = {
   HEO_HERO_COVER_TITLE: '闲庭信步',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '必看小说', url: '/tag/必看小说' },
-  HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
-  HEO_HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
+  HEO_HERO_CATEGORY_1: { title: '小说', url: '/tag/小说' },
+  HEO_HERO_CATEGORY_2: { title: '视频', url: '/tag/视频' },
+  HEO_HERO_CATEGORY_3: { title: '音乐', url: '/tag/音乐' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
@@ -51,9 +51,9 @@ const CONFIG = {
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'https://github.com/tangly1024',
+  HEO_INFO_CARD_URL2: 'https://www.lzy599.space',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://www.tangly1024.com',
+  HEO_INFO_CARD_URL3: 'https://www.lzy599.space',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
@@ -83,35 +83,35 @@ const CONFIG = {
       color_2: '#ffffff'
     },
     {
-      title_1: 'Swift',
-      img_1: '/images/heo/202328bbee0b314297917b327df4a704db5c072402.webp',
+      title_1: 'Swimming',
+      img_1: '/images/heo/swimming.png',
       color_1: '#eb6840',
-      title_2: 'Principle',
-      img_2: '/images/heo/2023f76570d2770c8e84801f7e107cd911b5073202.webp',
+      title_2: 'Pc',
+      img_2: '/images/heo/pc.png',
       color_2: '#8f55ba'
     },
     {
-      title_1: 'illustrator',
-      img_1: '/images/heo/20237359d71b45ab77829cee5972e36f8c30073902.webp',
+      title_1: 'Wechat',
+      img_1: '/images/heo/wechat.png',
       color_1: '#f29e39',
-      title_2: 'CSS3',
-      img_2: '/images/heo/20237c548846044a20dad68a13c0f0e1502f074602.webp',
+      title_2: 'Moon',
+      img_2: '/images/heo/moon.png',
       color_2: '#2c51db'
     },
     {
-      title_1: 'JS',
-      img_1: '/images/heo/2023786e7fc488f453d5fb2be760c96185c0075502.webp',
+      title_1: 'Sleep',
+      img_1: '/images/heo/sleep.png',
       color_1: '#f7cb4f',
-      title_2: 'HTML',
-      img_2: '/images/heo/202372b4d760fd8a497d442140c295655426070302.webp',
+      title_2: 'Love',
+      img_2: '/images/heo/love.png',
       color_2: '#e9572b'
     },
     {
-      title_1: 'Git',
-      img_1: '/images/heo/2023ffa5707c4e25b6beb3e6a3d286ede4c6071102.webp',
+      title_1: 'Snow',
+      img_1: '/images/heo/snow.png',
       color_1: '#df5b40',
-      title_2: 'Rhino',
-      img_2: '/images/heo/20231ca53fa0b09a3ff1df89acd7515e9516173302.webp',
+      title_2: 'Doctor',
+      img_2: '/images/heo/doctor.png',
       color_2: '#1f1f1f'
     }
   ],
