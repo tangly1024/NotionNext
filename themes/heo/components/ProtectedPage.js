@@ -1,64 +1,65 @@
-import { useState, useEffect } from 'react'
-import Header from './Header'
+// ProtectedPage.js
 
-const ProtectedPage = (props) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+import { useEffect, useState } from 'react';
 
-  const correctPassword = 'mpc720' // 你想要设置的密码
+// 密码输入组件
+const PasswordProtection = ({ onPasswordSubmit }) => {
+  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    // 页面加载时锁定滚动，直到用户输入正确的密码
-    if (!isAuthenticated) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
-  }, [isAuthenticated])
-
-  const handlePasswordSubmit = (e) => {
-    e.preventDefault()
-    if (password === correctPassword) {
-      setIsAuthenticated(true)
-    } else {
-      setError('密码错误，请重试')
-    }
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onPasswordSubmit(password);
+  };
 
   return (
-    <>
-      {!isAuthenticated && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="bg-white p-6 rounded shadow-lg">
-            <h2 className="mb-4 text-xl font-bold">请输入密码</h2>
-            <form onSubmit={handlePasswordSubmit}>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="border p-2 rounded w-full mb-4"
-                placeholder="输入密码"
-              />
-              {error && <p className="text-red-500">{error}</p>}
-              <button
-                type="submit"
-                className="bg-blue-500 text-white py-2 px-4 rounded"
-              >
-                提交
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-      {isAuthenticated && (
-        <div>
-          <Header {...props} />
-          {/* 你的其他页面内容 */}
-        </div>
-      )}
-    </>
-  )
-}
+    <div className="password-protection">
+      <h2>Enter Password to Access</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter password"
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+};
 
-export default ProtectedPage
+const ProtectedPage = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // 检查localStorage中是否已验证过密码
+    const storedAuth = localStorage.getItem('isAuthenticated');
+    if (storedAuth === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handlePasswordSubmit = (inputPassword) => {
+    const correctPassword = 'your-password'; // 设置的正确密码
+
+    if (inputPassword === correctPassword) {
+      setIsAuthenticated(true);
+      localStorage.setItem('isAuthenticated', 'true'); // 存储验证状态到localStorage
+    } else {
+      alert('Incorrect password, please try again.');
+    }
+  };
+
+  if (!isAuthenticated) {
+    return <PasswordProtection onPasswordSubmit={handlePasswordSubmit} />;
+  }
+
+  // 已通过验证后显示网页内容
+  return (
+    <div>
+      <h1>Welcome to the protected page!</h1>
+      {/* 这里是你需要保护的内容 */}
+    </div>
+  );
+};
+
+export default ProtectedPage;
