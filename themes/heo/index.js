@@ -53,9 +53,7 @@ import ProtectedPage from  './components/ProtectedPage'
 const LayoutBase = props => {
   const { children, slotTop, className } = props
 
-  const [password, setPassword] = useState('')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const correctPassword = 'your-password' // 在这里设置你的密码
+
 
   // 全屏模式下的最大宽度
   const { fullWidth, isDarkMode } = useGlobal()
@@ -76,47 +74,6 @@ const LayoutBase = props => {
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
     </header>
   )
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
-
-  const handlePasswordSubmit = (e) => {
-    e.preventDefault()
-    if (password === correctPassword) {
-      setIsAuthenticated(true)
-      // 你可以选择保存状态，比如使用 localStorage
-      // localStorage.setItem('isAuthenticated', true)
-    } else {
-      alert('密码错误')
-    }
-  }
-
-  // 检查是否已经通过认证（可以在此处使用localStorage）
-  useEffect(() => {
-    // const authenticated = localStorage.getItem('isAuthenticated')
-    // if (authenticated) {
-    //   setIsAuthenticated(true)
-    // }
-  }, [])
-
-  // 如果未通过认证，返回密码输入框
-  if (!isAuthenticated) {
-    return (
-      <div className="password-protection">
-        <h1>请输入密码访问</h1>
-        <form onSubmit={handlePasswordSubmit}>
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="密码"
-            required
-          />
-          <button type="submit">提交</button>
-        </form>
-      </div>
-    )
-  }
 
   // 右侧栏 用户信息+标签列表
   const slotRight =
