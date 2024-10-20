@@ -94,7 +94,7 @@ var tianliGPT = {
     // }
 
     try {
-      const response = await fetch('https://www.gaoqilan.tech/', {
+      const response = await fetch('https://gaoqilan.tech/api/summary?token=666', {
         signal: signal,
         method: "POST",
         headers: {
