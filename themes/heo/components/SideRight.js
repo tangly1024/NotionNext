@@ -44,10 +44,10 @@ export default function SideRight(props) {
           </Card>
         )}
 
-        {/* 联系交流群 */}
-        <div className='wow fadeInUp'>
-          {/*<TouchMeCard />*/}
-        </div>
+        {/*/!* 联系交流群 *!/*/}
+        {/*<div className='wow fadeInUp'>*/}
+        {/*  /!*<TouchMeCard />*!/*/}
+        {/*</div>*/}
 
         {/* 最新文章列表 */}
         <div
