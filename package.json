@@ -1,16 +1,16 @@
 {
-  "name": "notion-next",
-  "version": "4.7.5",
-  "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "name": "林中小屋",
+  "version": "",
+  "homepage": "https://www.lzy599.space/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tangly1024/NotionNext.git"
+    "url": "https://github.com/Sherry720/website"
   },
   "author": {
-    "name": "tangly",
-    "email": "mail@tangly1024.com",
-    "url": "http://tangly1024.com"
+    "name": "anita",
+    "email": "pengchengma720@g,ail.com",
+    "url": "https://www.lzy599.space/"
   },
   "scripts": {
     "dev": "next dev",
