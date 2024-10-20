@@ -6,7 +6,7 @@ import TagItem from './TagItem'
  * @param currentTag
  * @returns {JSX.Element}
  * @constructor
- */
+ [*/
 const TagList = ({ tagOptions, currentTag }) => {
   if (!tagOptions) {
     return <></>
