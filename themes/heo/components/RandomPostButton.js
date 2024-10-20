@@ -13,14 +13,16 @@ export default function RandomPostButton(props) {
    * 随机跳转文章
    */
   function handleClick() {
-    const randomIndex = Math.floor(Math.random() * latestPosts.length)
-    const randomPost = latestPosts[randomIndex]
-    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+    // const randomIndex = Math.floor(Math.random() * latestPosts.length)
+    // const randomPost = latestPosts[randomIndex]
+    // router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+    return <div> </div>
   }
 
-  return (
-        <div title={locale.MENU.WALK_AROUND} className='cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all' onClick={handleClick}>
-            <i className="fa-solid fa-podcast"></i>
-        </div>
-  )
+  // return (
+  //       <div title={locale.MENU.WALK_AROUND} className='cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all' onClick={handleClick}>
+  //           <i className="fa-solid fa-podcast"></i>
+  //       </div>
+  // )
+  return <div> </div>
 }
