@@ -66,8 +66,8 @@ const LayoutBase = props => {
       {/* 通知横幅 */}
       {router.route === '/' ? (
         <>
-          <NoticeBar />
-          <Hero {...props} />
+          {/*<NoticeBar />*/}
+          {/*<Hero {...props} />*/}
         </>
       ) : null}
       {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
@@ -75,17 +75,17 @@ const LayoutBase = props => {
   )
 
   // 右侧栏 用户信息+标签列表
-  const slotRight =
-    router.route === '/404' || fullWidth ? null : <SideRight {...props} />
-
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
-
-  const HEO_HERO_BODY_REVERSE = siteConfig(
-    'HEO_HERO_BODY_REVERSE',
-    false,
-    CONFIG
-  )
-  const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
+  // const slotRight =
+  //   router.route === '/404' || fullWidth ? null : <SideRight {...props} />
+  //
+  // const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  //
+  // const HEO_HERO_BODY_REVERSE = siteConfig(
+  //   'HEO_HERO_BODY_REVERSE',
+  //   false,
+  //   CONFIG
+  // )
+  // const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
 
   // 加载wow动画
   useEffect(() => {
@@ -118,7 +118,7 @@ const LayoutBase = props => {
 
           <div className='hidden xl:block'>
             {/* 主区快右侧 */}
-            {slotRight}
+            {/*{slotRight}*/}
           </div>
         </div>
       </main>
