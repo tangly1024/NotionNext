@@ -31,7 +31,7 @@ const NotionPage = ({ post, className }) => {
   // 页面首次打开时执行的勾子
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
-    autoScrollToTarget()
+    autoScrollToHash()
   }, [])
 
   // 页面文章发生变化时会执行的勾子
@@ -46,9 +46,6 @@ const NotionPage = ({ post, className }) => {
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl()
     }
-
-    // 若url是本站域名，则之间在当前窗口打开、不开新窗口
-    processPageUrl()
 
     /**
      * 放大查看图片时替换成高清图像
@@ -147,33 +144,9 @@ const processGalleryImg = zoom => {
 }
 
 /**
- * 处理页面内连接跳转
- * 如果链接就是当网站，则不打开新窗口访问
+ * 根据url参数自动滚动到锚位置
  */
-const processPageUrl = () => {
-  if (isBrowser) {
-    const currentURL = window.location.origin + window.location.pathname
-    const allAnchorTags = document.getElementsByTagName('a') // 或者使用 document.querySelectorAll('a') 获取 NodeList
-    for (const anchorTag of allAnchorTags) {
-      if (anchorTag?.target === '_blank') {
-        const hrefWithoutQueryHash = anchorTag.href.split('?')[0].split('#')[0]
-        const hrefWithRelativeHash =
-          currentURL.split('#')[0] + anchorTag.href.split('#')[1]
-
-        if (
-          currentURL === hrefWithoutQueryHash ||
-          currentURL === hrefWithRelativeHash
-        ) {
-          anchorTag.target = '_self'
-        }
-      }
-    }
-  }
-}
-/**
- * 根据url参数自动滚动到指定区域
- */
-const autoScrollToTarget = () => {
+const autoScrollToHash = () => {
   setTimeout(() => {
     // 跳转到指定标题
     const needToJumpToTitle = window.location.hash
@@ -238,13 +211,16 @@ const Equation = dynamic(
   { ssr: false }
 )
 
-// 文档
-const Pdf = dynamic(
-  () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
-  {
-    ssr: false
-  }
-)
+// 原版文档
+// const Pdf = dynamic(
+//   () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
+//   {
+//     ssr: false
+//   }
+// )
+const Pdf = dynamic(() => import('@/components/Pdf').then(m => m.Pdf), {
+  ssr: false
+})
 
 // 美化代码 from: https://github.com/txs
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {

@@ -34,21 +34,24 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
   )
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
   // 处理分页
   props.posts = props.posts.slice(
-    siteConfig('POSTS_PER_PAGE') * (page - 1),
-    siteConfig('POSTS_PER_PAGE') * page
+    POSTS_PER_PAGE * (page - 1),
+    POSTS_PER_PAGE * page
   )
   props.keyword = keyword
   props.page = page
   delete props.allPages
   return {
     props,
-    revalidate: siteConfig(
-      'NEXT_REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 
