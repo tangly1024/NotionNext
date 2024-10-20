@@ -241,7 +241,7 @@ const LayoutArchive = props => {
   return (
     <div className='pt-8'>
       <Card className='w-full'>
-        <div className='mb-10 pb-20 bg-white md:p-12 p-3 min-h-full dark:bg-hexo-black-gray'>
+        <div className='mb-10 pb-20 bg-red md:p-12 p-3 min-h-full dark:bg-hexo-black-gray'>
           {Object.keys(archivePosts).map(archiveTitle => (
             <BlogPostArchive
               key={archiveTitle}
@@ -283,7 +283,7 @@ const LayoutSlug = props => {
   }, [post])
   return (
     <>
-      <div className='w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article'>
+      <div className='w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-red dark:bg-hexo-black-gray dark:border-black article'>
         {lock && <ArticleLock validPassword={validPassword} />}
 
         {!lock && (
@@ -312,7 +312,7 @@ const LayoutSlug = props => {
             <div className='pt-4 border-dashed'></div>
 
             {/* 评论互动 */}
-            <div className='duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3'>
+            <div className='duration-200 overflow-x-auto bg-red dark:bg-hexo-black-gray px-3'>
               <Comment frontMatter={post} />
             </div>
           </div>
@@ -382,7 +382,7 @@ const LayoutCategoryIndex = props => {
                 legacyBehavior>
                 <div
                   className={
-                    ' duration-300 dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'
+                    ' duration-300 dark:hover:text-red px-5 cursor-pointer py-2 hover:text-indigo-400'
                   }>
                   <i className='mr-4 fas fa-folder' /> {category.name}(
                   {category.count})
