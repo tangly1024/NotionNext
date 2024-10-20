@@ -31,5 +31,5 @@ export function NoticeBar() {
   //   </div>
   // )
 
-  // return <></>
+  return <></>
 }
