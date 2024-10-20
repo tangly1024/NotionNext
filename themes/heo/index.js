@@ -118,7 +118,7 @@ const LayoutBase = props => {
 
           <div className='hidden xl:block'>
             {/* 主区快右侧 */}
-            {/*{slotRight}*/}
+            {slotRight}
           </div>
         </div>
       </main>
