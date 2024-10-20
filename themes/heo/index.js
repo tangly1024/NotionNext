@@ -78,7 +78,7 @@ const LayoutBase = props => {
   // const slotRight =
   //   router.route === '/404' || fullWidth ? null : <SideRight {...props} />
   //
-  // const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
   //
   // const HEO_HERO_BODY_REVERSE = siteConfig(
   //   'HEO_HERO_BODY_REVERSE',
