@@ -59,7 +59,7 @@ const LayoutBase = props => {
       <Style />
 
       <div
-        id='theme-medium'
+        id='theme-magzine'
         className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
         <main
           id='wrapper'
