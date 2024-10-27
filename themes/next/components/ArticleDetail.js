@@ -35,9 +35,7 @@ export default function ArticleDetail(props) {
   }
 
   return (
-    <div
-      id='article-wrapper'
-      className='shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full '>
+    <div className='shadow md:hover:shadow-2xl overflow-x-auto flex-grow mx-auto w-screen md:w-full '>
       <div
         itemScope
         itemType='https://schema.org/Movie'
@@ -100,7 +98,7 @@ export default function ArticleDetail(props) {
         )}
 
         {/* Notion内容主体 */}
-        <article className='mx-auto'>
+        <article id='article-wrapper' className='mx-auto'>
           <WWAds className='w-full' orientation='horizontal' />
           {post && <NotionPage post={post} />}
           <WWAds className='w-full' orientation='horizontal' />
