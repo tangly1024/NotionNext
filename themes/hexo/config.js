@@ -23,7 +23,7 @@ const CONFIG = {
   HEXO_MENU_RANDOM: false, // 显示随机跳转按钮
 
   HEXO_POST_LIST_COVER: true, // 列表显示文章封面
-  HEXO_POST_LIST_COVER_HOVER_ENLARGE: true, // 列表鼠标悬停放大
+  HEXO_POST_LIST_COVER_HOVER_ENLARGE: false, // 列表鼠标悬停放大
 
   HEXO_POST_LIST_COVER_DEFAULT: false, // 封面为空时用站点背景做默认封面
   HEXO_POST_LIST_SUMMARY: true, // 文章摘要
