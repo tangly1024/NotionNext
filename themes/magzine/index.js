@@ -60,7 +60,7 @@ const LayoutBase = props => {
 
       <div
         id='theme-magzine'
-        className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
+        className={`${siteConfig('FONT_STYLE')} overflow-y-hidden bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
         <main
           id='wrapper'
           className={'relative flex justify-between w-full h-full mx-auto'}>
