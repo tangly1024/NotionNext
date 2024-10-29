@@ -292,3 +292,7 @@ button#chatbase-bubble-button:hover {
 img {
   display: unset;
 }
+
+.adsbygoogle {
+  overflow: hidden;
+}
