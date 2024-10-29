@@ -19,11 +19,15 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '分享编程',
+
   HEO_HERO_TITLE_2: '与摄影生活',
   HEO_HERO_TITLE_3: 'FELIXCHEN.TOP',
   HEO_HERO_TITLE_4: '愿你有个好心情',
   HEO_HERO_TITLE_5: '或许, 你也想看看我的猫 😄',
   HEO_HERO_TITLE_LINK: 'https://www.felixchen.top/kirby',
+  // 英雄区遮罩文字
+  HEO_HERO_COVER_TITLE: '随便逛逛',
+
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '编程学习', url: '/tag/编程学习' },

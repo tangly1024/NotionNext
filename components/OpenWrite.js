@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -24,14 +25,10 @@ const OpenWrite = () => {
   // 白名单
   const whiteList = siteConfig('OPEN_WRITE_WHITE_LIST', '')
 
+  // 登录信息
+  const { isLoaded, isSignedIn } = useGlobal()
+
   const loadOpenWrite = async () => {
-    const existWhite = existedWhiteList(router.asPath, whiteList)
-
-    // 如果当前页面在白名单中，则屏蔽加锁
-    if (existWhite) {
-      return
-    }
-
     try {
       await loadExternalResource(
         'https://readmore.openwrite.cn/js/readmore-2.0.js',
@@ -51,14 +48,49 @@ const OpenWrite = () => {
           blogId,
           cookieAge
         })
+
+        // btw初始化后，开始监听read-more-wrap何时消失
+        const intervalId = setInterval(() => {
+          const readMoreWrapElement = document.getElementById('read-more-wrap')
+          const articleWrapElement = document.getElementById('article-wrapper')
+
+          if (!readMoreWrapElement && articleWrapElement) {
+            toggleTocItems(false) // 恢复目录项的点击
+            // 自动调整文章区域的高度
+            articleWrapElement.style.height = 'auto'
+            // 停止定时器
+            clearInterval(intervalId)
+          }
+        }, 1000) // 每秒检查一次
+
+        // Return cleanup function to clear the interval if the component unmounts
+        return () => clearInterval(intervalId)
       }
     } catch (error) {
       console.error('OpenWrite 加载异常', error)
     }
   }
-
   useEffect(() => {
-    if (isBrowser && blogId) {
+    const existWhite = existedWhiteList(router.asPath, whiteList)
+    // 白名单中，免检
+    if (existWhite) {
+      return
+    }
+    if (isSignedIn) {
+      // 用户已登录免检
+      console.log('用户已登录')
+      return
+    }
+
+    // 开发环境免检
+    if (process.env.NODE_ENV === 'development') {
+      console.log('开发环境:屏蔽OpenWrite')
+      return
+    }
+
+    if (isBrowser && blogId && !isSignedIn) {
+      toggleTocItems(true) // 禁止目录项的点击
+
       // Check if the element with id 'read-more-wrap' already exists
       const readMoreWrap = document.getElementById('read-more-wrap')
 
@@ -67,9 +99,25 @@ const OpenWrite = () => {
         loadOpenWrite()
       }
     }
-  })
+  }, [isLoaded, router])
+
+  // 启动一个监听器，当页面上存在#read-more-wrap对象时，所有的 a .catalog-item 对象都禁止点击
 
   return <></>
+}
+
+// 定义禁用和恢复目录项点击的函数
+const toggleTocItems = disable => {
+  const tocItems = document.querySelectorAll('a.catalog-item')
+  tocItems.forEach(item => {
+    if (disable) {
+      item.style.pointerEvents = 'none'
+      item.style.opacity = '0.5'
+    } else {
+      item.style.pointerEvents = 'auto'
+      item.style.opacity = '1'
+    }
+  })
 }
 
 /**
