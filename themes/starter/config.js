@@ -75,18 +75,18 @@ const CONFIG = {
 
   // 首页价格区块
   STARTER_PRICING_ENABLE: true, // 价格区块开关
-  STARTER_PRICING_TITLE: '价格表',
-  STARTER_PRICING_TEXT_1: '很棒的定价计划',
+  STARTER_PRICING_TITLE: 'Type of shipping',
+  STARTER_PRICING_TEXT_1: 'Flexible transportation methods',
   STARTER_PRICING_TEXT_2:
-    '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
+    'We have multiple modes of transportation, you can choose according to your needs.',
 
-  STARTER_PRICING_1_TITLE: '入门版',
-  STARTER_PRICING_1_PRICE: '19.9',
-  STARTER_PRICING_1_PRICE_CURRENCY: '$',
-  STARTER_PRICING_1_PRICE_PERIOD: '每月',
-  STARTER_PRICING_1_HEADER: '功能点',
-  STARTER_PRICING_1_FEATURES: '所有的主题,免费更新,帮助手册', // 英文逗号隔开
-  STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
+  STARTER_PRICING_1_TITLE: 'Air transport',
+  STARTER_PRICING_1_PRICE: '90.0',
+  STARTER_PRICING_1_PRICE_CURRENCY: '￥',
+  STARTER_PRICING_1_PRICE_PERIOD: '/kg',
+  STARTER_PRICING_1_HEADER: 'Suitable for urgent packages',
+  STARTER_PRICING_1_FEATURES: '15-30 days，door to door,The more transportation，the cheaper it is,Tax and Customs Clearance fees included!', // 英文逗号隔开
+  STARTER_PRICING_1_BUTTON_TEXT: 'Instant inquiry',
   STARTER_PRICING_1_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
 
