@@ -147,11 +147,12 @@ const LayoutIndex = (props) => {
   const { notice } = props
   return <>
         {/* 首页移动端顶部显示公告  公告有内容就展示，不然就隐藏*/}
-     {if(notice!==''&&notice){
+     {notice && notice !== '' ? (
         <Card className='my-2 lg:hidden'>
-            <Announcement post={notice} />
+          <Announcement post={notice} />
         </Card>
-        }}
+      ) : null}
+     
           
         <BlogListBar {...props} />
 
