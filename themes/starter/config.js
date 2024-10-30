@@ -33,7 +33,7 @@ const CONFIG = {
   STARTER_NAV_BUTTON_2_URL: '',
 
   // 特性区块
-  STARTER_FEATURE_ENABLE: true, // 特性区块开关
+  STARTER_FEATURE_ENABLE: false, // 特性区块开关
     STARTER_FEATURE_TITLE: 'Chinafrica', // 特性
   STARTER_FEATURE_TEXT_1: 'What we do?', // 特性
   STARTER_FEATURE_TEXT_2:
@@ -86,37 +86,37 @@ const CONFIG = {
   STARTER_PRICING_1_PRICE_PERIOD: '/kg',
   STARTER_PRICING_1_HEADER: 'Suitable for urgent packages',
   STARTER_PRICING_1_FEATURES: '15-30 days，door to door,The more transportation，the cheaper it is,Tax and Customs Clearance fees included!', // 英文逗号隔开
-  STARTER_PRICING_1_BUTTON_TEXT: 'Instant inquiry',
+  STARTER_PRICING_1_BUTTON_TEXT: 'Get a quote',
   STARTER_PRICING_1_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
 
-  STARTER_PRICING_2_TAG: '推荐',
-  STARTER_PRICING_2_TITLE: '基础版',
-  STARTER_PRICING_2_PRICE: '39.9',
-  STARTER_PRICING_2_PRICE_CURRENCY: '$',
-  STARTER_PRICING_2_PRICE_PERIOD: '每月',
-  STARTER_PRICING_2_HEADER: '功能点',
-  STARTER_PRICING_2_FEATURES: '包含入门版,项目源码,内部社群,技术咨询,SEO优化', // 英文逗号隔开
-  STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
+  STARTER_PRICING_2_TAG: 'recommend',
+  STARTER_PRICING_2_TITLE: 'Sea shipping',
+  STARTER_PRICING_2_PRICE: '30.0',
+  STARTER_PRICING_2_PRICE_CURRENCY: '￥',
+  STARTER_PRICING_2_PRICE_PERIOD: '/kg',
+  STARTER_PRICING_2_HEADER: 'Suitable for most goods',
+  STARTER_PRICING_2_FEATURES: '60-90 days，door to door,The cheapest mode of transportation,Tax and Customs Clearance fees included!', // 英文逗号隔开
+  STARTER_PRICING_2_BUTTON_TEXT: 'Instant inquiry',
   STARTER_PRICING_2_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/590ad70a-c3b7-4caf-94ec-9ca27bde06d4',
 
-  STARTER_PRICING_3_TITLE: '高级版',
-  STARTER_PRICING_3_PRICE: '59.9',
-  STARTER_PRICING_3_PRICE_CURRENCY: '$',
-  STARTER_PRICING_3_PRICE_PERIOD: '每月',
-  STARTER_PRICING_3_HEADER: '功能点',
-  STARTER_PRICING_3_FEATURES: '包含基础版,功能定制开发', // 英文逗号隔开
-  STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
+  STARTER_PRICING_3_TITLE: 'Other',
+  STARTER_PRICING_3_PRICE: 'Inquiry for quotation',
+  STARTER_PRICING_3_PRICE_CURRENCY: '',
+  STARTER_PRICING_3_PRICE_PERIOD: '',
+  STARTER_PRICING_3_HEADER: 'DIY customize your shipping method!',
+  STARTER_PRICING_3_FEATURES: 'Express,truck transportation,Luggage bag,···', // 英文逗号隔开
+  STARTER_PRICING_3_BUTTON_TEXT: 'Customize now',
   STARTER_PRICING_3_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
 
   // 首页用户测评区块
   STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
-  STARTER_TESTIMONIALS_TITLE: '用户反馈',
-  STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
+  STARTER_TESTIMONIALS_TITLE: 'User feedback',
+  STARTER_TESTIMONIALS_TEXT_1: 'What do our users say',
   STARTER_TESTIMONIALS_TEXT_2:
-    '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
+    'Hundreds of customers chose to use Chinafrica to transport their goods, and with the help of customer service, they were able to purchase the highest quality products in China at the most favorable prices in the shortest possible time!',
   STARTER_TESTIMONIALS_STAR_ICON: '/images/starter/testimonials/icon-star.svg', // 评分图标
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
