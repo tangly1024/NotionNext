@@ -1,4 +1,5 @@
 import DarkModeButton from '@/components/DarkModeButton'
+import { GongAnBeiAn } from '@/components/GongAnBeiAn'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
@@ -75,16 +76,17 @@ const Footer = ({ title }) => {
 
             {siteConfig('BEI_AN') && (
               <>
-                <i className='fas fa-shield-alt' />{' '}
+                <i className='fas fa-shield-alt' />
                 <a href='https://beian.miit.gov.cn/' className='mr-2'>
                   {siteConfig('BEI_AN')}
                 </a>
                 <br />
               </>
             )}
+            <GongAnBeiAn />
 
             <div className='text-sm font-serif'>
-              Powered by{' '}
+              Powered by
               <a
                 href='https://github.com/tangly1024/NotionNext'
                 className='underline justify-start text-white'>
@@ -101,11 +103,11 @@ const Footer = ({ title }) => {
               <div>
                 <span className='hidden busuanzi_container_site_pv'>
                   <i className='fas fa-eye' />
-                  <span className='px-1 busuanzi_value_site_pv'> </span>{' '}
+                  <span className='px-1 busuanzi_value_site_pv'> </span>
                 </span>
                 <span className='pl-2 hidden busuanzi_container_site_uv'>
-                  <i className='fas fa-users' />{' '}
-                  <span className='px-1 busuanzi_value_site_uv'> </span>{' '}
+                  <i className='fas fa-users' />
+                  <span className='px-1 busuanzi_value_site_uv'> </span>
                 </span>
               </div>
               <SocialButton />
