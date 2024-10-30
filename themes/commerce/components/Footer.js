@@ -1,3 +1,4 @@
+import { GongAnBeiAn } from '@/components/GongAnBeiAn'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
@@ -234,6 +235,7 @@ const Footer = props => {
                 </a>
               </>
             )}
+            <GongAnBeiAn />
           </div>
         </div>
       </div>
