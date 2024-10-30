@@ -12,6 +12,7 @@ const CONFIG = {
   STARTER_HERO_ENABLE: true, // 开启英雄区
   STARTER_HERO_TITLE_1: 'ChinAfrica', // 英雄区文字
   STARTER_HERO_TITLE_2: '-express- Trading And Logistics Company', // 英雄区文字
+  STARTER_HERO_TITLE_3: 'Assist with product acquisition, Quality Control and Shipping between China and Africa.', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: 'contact us', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:
