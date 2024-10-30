@@ -1,7 +1,11 @@
 import DarkModeButton from '@/components/DarkModeButton'
 import { GongAnBeiAn } from '@/components/GongAnBeiAn'
 import { siteConfig } from '@/lib/config'
-
+/**
+ * 页脚
+ * @param {*} props
+ * @returns
+ */
 export const Footer = props => {
   const d = new Date()
   const currentYear = d.getFullYear()
