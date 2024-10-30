@@ -17,7 +17,7 @@ export const GongAnBeiAn = () => {
     return null
   }
   return (
-    <div className='flex flex-nowrap items-center gap-1'>
+    <div className='flex flex-nowrap items-center gap-1 justify-center'>
       <LazyImage src='/images/gongan.png' width={15} height={15} />
       <a href={href} target='_blank' rel='noopener noreferrer'>
         {BEI_AN_GONGAN}
