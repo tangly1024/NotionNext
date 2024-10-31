@@ -68,7 +68,7 @@ const SocialButton = () => {
             target='_blank'
             rel='noreferrer'
             href={CONTACT_WHATSAPP}
-            title={'linkIn'}>
+            title={'whatsapp'}>
             <i className='transform hover:scale-125 duration-150 fab fa<i class="fa-brands fa-whatsapp dark:hover:text-green-400 hover:text-green-600' />
           </a>
         )}
