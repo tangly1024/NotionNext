@@ -1,3 +1,4 @@
+
 'use client'
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
@@ -66,7 +67,7 @@ const LayoutBase = props => {
       value={{ searchModal, expandMenu, updateExpandMenu, collapseRef }}>
       <div
         id='theme-movie'
-        className={${siteConfig('FONT_STYLE')} dark:text-gray-300 duration-300 transition-all bg-white dark:bg-[#2A2A2A] scroll-smooth min-h-screen flex flex-col justify-between}>
+        className={`${siteConfig('FONT_STYLE')} dark:text-gray-300 duration-300 transition-all bg-white dark:bg-[#2A2A2A] scroll-smooth min-h-screen flex flex-col justify-between`}>
         <Style />
 
         {/* 页头 */}
@@ -83,7 +84,7 @@ const LayoutBase = props => {
                 : '') + 'relative mx-auto justify-center md:flex items-start'
             }>
             {/* 内容 */}
-            <div className={w-full ${fullWidth ? '' : ''} px-0}>
+            <div className={`w-full ${fullWidth ? '' : ''} px-0`}>
               <Transition
                 show={!onLoading}
                 appear={true}
@@ -196,7 +197,7 @@ const LayoutSlug = props => {
         // 获取 figcaption 的文本内容并添加到数组中
         const figCaptionValue = figCaption
           ? figCaption?.textContent?.trim()
-          : P-${index}
+          : `P-${index}`
         figCaptionValues.push(figCaptionValue)
 
         // 创建一个新的 div 元素用于包裹当前的 .notion-asset-wrapper 元素
@@ -491,4 +492,4 @@ export {
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG
-}  
+}
