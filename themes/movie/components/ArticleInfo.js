@@ -8,16 +8,20 @@ export const ArticleInfo = props => {
 
   return (
     <section className='w-full mx-auto mb-4'>
-      <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
+      {/* 标题部分 */}
+      {/* 将标题字体大小设置为 16px，并将字体粗细设置为细体 */}
+      <h2 
+        className='py-10 dark:text-white text-center' 
+        style={{
+          fontSize: '16px',  // 设置字体大小为 16px
+          fontWeight: '300'  // 设置字体粗细为细体
+        }}>
+        {post?.title}
+      </h2>
 
+      {/* 分类和标签部分 */}
       <div className='flex gap-3 font-semibold text-sm items-center justify-center'>
-        <Link
-          href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-          passHref
-          className='pl-1 mr-2 cursor-pointer'>
-          {post?.publishDay}
-        </Link>
-
+        {/* 分类标签（如果文章不是“页面”类型） */}
         {post?.type !== 'Page' && (
           <>
             <Link href={`/category/${post?.category}`} passHref className='cursor-pointer text-md mr-2 text-green-500'>
@@ -26,12 +30,14 @@ export const ArticleInfo = props => {
           </>
         )}
 
+        {/* 标签部分（若文章有标签） */}
         <div className='flex py-1 space-x-3'>
           {post?.tags?.length > 0 && (
             <>
               {locale.COMMON.TAGS} <span>:</span>
             </>
           )}
+          {/* 显示所有标签 */}
           {post?.tags?.map(tag => {
             return (
               <Link href={`/tag/${tag}`} key={tag} className='text-yellow-500 mr-2'>
@@ -40,6 +46,23 @@ export const ArticleInfo = props => {
             )
           })}
         </div>
+      </div>
+
+      {/* 发布日期信息 */}
+      {/* 将发布日期移至文章底部并设置样式 */}
+      <div 
+        className='text-center mt-6'
+        style={{
+          fontSize: '12px',  // 设置字体大小为 12px
+          fontWeight: '300',  // 设置字体粗细为细体
+          color: 'gray'  // 设置文字颜色为灰色
+        }}>
+        <Link
+          href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
+          passHref
+          className='pl-1 cursor-pointer'>
+          {post?.publishDay}
+        </Link>
       </div>
     </section>
   )
