@@ -12,6 +12,7 @@ const SocialButton = () => {
   const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
   const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
 
+  const CONTACT_CONTACT_WHATSAPP = siteConfig('CONTACT_WHATSAPP')
   const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
   const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
   const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
@@ -60,6 +61,15 @@ const SocialButton = () => {
             href={CONTACT_TELEGRAM}
             title={'telegram'}>
             <i className='transform hover:scale-125 duration-150 fab fa-telegram dark:hover:text-green-400 hover:text-green-600' />
+          </a>
+        )}
+        {CONTACT_WHATSAPP && (
+          <a
+            target='_blank'
+            rel='noreferrer'
+            href={CONTACT_WHATSAPP}
+            title={'linkIn'}>
+            <i className='transform hover:scale-125 duration-150 fab fa<i class="fa-brands fa-whatsapp dark:hover:text-green-400 hover:text-green-600' />
           </a>
         )}
         {CONTACT_LINKEDIN && (
