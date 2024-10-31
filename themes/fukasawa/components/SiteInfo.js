@@ -1,4 +1,4 @@
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 
 function SiteInfo({ title }) {
@@ -28,7 +28,7 @@ function SiteInfo({ title }) {
             <br />
           </>
         )}
-        <GongAnBeiAn />
+        <BeiAnGongAn />
         <span className='hidden busuanzi_container_site_pv'>
           <i className='fas fa-eye' />
           <span className='px-1 busuanzi_value_site_pv'> </span>
