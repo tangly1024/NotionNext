@@ -66,7 +66,7 @@ const LayoutBase = props => {
       value={{ searchModal, expandMenu, updateExpandMenu, collapseRef }}>
       <div
         id='theme-movie'
-        className={`${siteConfig('FONT_STYLE')} dark:text-gray-300 duration-300 transition-all bg-white dark:bg-[#2A2A2A] scroll-smooth min-h-screen flex flex-col justify-between`}>
+        className={${siteConfig('FONT_STYLE')} dark:text-gray-300 duration-300 transition-all bg-white dark:bg-[#2A2A2A] scroll-smooth min-h-screen flex flex-col justify-between}>
         <Style />
 
         {/* 页头 */}
@@ -83,7 +83,7 @@ const LayoutBase = props => {
                 : '') + 'relative mx-auto justify-center md:flex items-start'
             }>
             {/* 内容 */}
-            <div className={`w-full ${fullWidth ? '' : ''} px-0`}>
+            <div className={w-full ${fullWidth ? '' : ''} px-0}>
               <Transition
                 show={!onLoading}
                 appear={true}
@@ -196,7 +196,7 @@ const LayoutSlug = props => {
         // 获取 figcaption 的文本内容并添加到数组中
         const figCaptionValue = figCaption
           ? figCaption?.textContent?.trim()
-          : `P-${index}`
+          : P-${index}
         figCaptionValues.push(figCaptionValue)
 
         // 创建一个新的 div 元素用于包裹当前的 .notion-asset-wrapper 元素
@@ -321,39 +321,161 @@ const LayoutSlug = props => {
           className='px-2 max-w-5xl 2xl:max-w-[70%] mx-auto'>
           {/* 标题 */}
           <ArticleInfo post={post} />
-          
-          {/* 页面内容 */}
+          {/* 页面元素 */}
           <NotionPage post={post} />
-          
-          {/* 推荐内容 */}
+          {/* 推荐 */}
           <BlogRecommend {...props} />
-          
-          {/* 分享栏 */}
+          {/* 分享栏目 */}
           <ShareBar post={post} />
-          
           {/* 评论区 */}
           <Comment frontMatter={post} />
-
-          {/* 日期信息 */}
-          {/* 将日期信息放置在页面最底部 */}
-          <div 
-            className='text-center mt-6'
-            style={{
-              fontSize: '12px',   // 设置字体大小为 12px
-              fontWeight: '300',   // 设置字体为细体
-              color: 'gray'        // 设置字体颜色为灰色
-            }}>
-            <Link 
-              href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-              passHref
-              className='pl-1 cursor-pointer'>
-              {post?.publishDay}
-            </Link>
-          </div>
         </div>
       ) : (
         <ArticleLock validPassword={validPassword} />
       )}
+    </>
+  )
+}
+
+/**
+ * 404页
+ * @param {*} props
+ * @returns
+ */
+const Layout404 = props => {
+  const { locale } = useGlobal()
+  const { searchModal } = useMovieGlobal()
+  const router = useRouter()
+  // 展示搜索框
+  const toggleShowSearchInput = () => {
+    if (siteConfig('ALGOLIA_APP_ID')) {
+      searchModal.current.openSearch()
+    }
+  }
+
+  const onKeyUp = e => {
+    if (e.keyCode === 13) {
+      const search = document.getElementById('search').value
+      if (search) {
+        router.push({ pathname: '/search/' + search })
+      }
+    }
+  }
+
+  return (
+    <>
+      <div className='h-52'>
+        <h2 className='text-4xl'>{locale.COMMON.NO_RESULTS_FOUND}</h2>
+        <hr className='my-4' />
+        <div className='max-w-md relative'>
+          <input
+            autoFocus
+            id='search'
+            onClick={toggleShowSearchInput}
+            onKeyUp={onKeyUp}
+            className='float-left w-full outline-none h-full p-2 rounded dark:bg-[#383838] bg-gray-100'
+            aria-label='Submit search'
+            type='search'
+            name='s'
+            autoComplete='off'
+            placeholder='Type then hit enter to search...'
+          />
+          <i className='fas fa-search absolute right-0 my-auto p-2'></i>
+        </div>
+      </div>
+      {/* 底部导航 */}
+      <div className='h-full flex-grow grid grid-cols-4 gap-4'>
+        <LatestPostsGroup {...props} />
+        <CategoryGroup {...props} />
+        <ArchiveDateList {...props} />
+        <TagGroups {...props} />
+      </div>
+    </>
+  )
+}
+
+/**
+ * 搜索页
+ * @param {*} props
+ * @returns
+ */
+const LayoutSearch = props => {
+  const { keyword } = props
+  const router = useRouter()
+  useEffect(() => {
+    if (isBrowser) {
+      // 高亮搜索到的结果
+      const container = document.getElementById('posts-wrapper')
+      if (keyword && container) {
+        replaceSearchResult({
+          doms: container,
+          search: keyword,
+          target: {
+            element: 'span',
+            className: 'text-red-500 border-b border-dashed'
+          }
+        })
+      }
+    }
+  }, [router])
+
+  return <LayoutPostList {...props} />
+}
+
+/**
+ * 归档列表
+ * @param {*} props
+ * @returns 按照日期将文章分组排序
+ */
+const LayoutArchive = props => {
+  const { archivePosts } = props
+  return (
+    <>
+      <div className='mb-10 pb-20 md:py-12 p-3  min-h-screen w-full'>
+        {Object.keys(archivePosts).map(archiveTitle => (
+          <BlogListGroupByDate
+            key={archiveTitle}
+            archiveTitle={archiveTitle}
+            archivePosts={archivePosts}
+          />
+        ))}
+      </div>
+    </>
+  )
+}
+
+/**
+ * 分类列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutCategoryIndex = props => {
+  const { categoryOptions } = props
+  return (
+    <>
+      <div id='category-list' className='duration-200 flex flex-wrap'>
+        {categoryOptions?.map(category => (
+          <CategoryItem key={category.name} category={category} />
+        ))}
+      </div>
+    </>
+  )
+}
+
+/**
+ * 标签列表
+ * @param {*} props
+ * @returns
+ */
+const LayoutTagIndex = props => {
+  const { tagOptions } = props
+  return (
+    <>
+      <div id='tags-list' className='duration-200 flex flex-wrap'>
+        {tagOptions.map(tag => (
+          <TagItem key={tag.name} tag={tag} />
+        ))}
+      </div>
     </>
   )
 }
@@ -369,4 +491,4 @@ export {
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG
-}
+}  
