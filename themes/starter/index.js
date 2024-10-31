@@ -25,6 +25,7 @@ import CONFIG from './config'
 import { Style } from './style'
 // import { MadeWithButton } from './components/MadeWithButton'
 import Comment from '@/components/Comment'
+import LoadingCover from '@/components/LoadingCover'
 import ShareBar from '@/components/ShareBar'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -84,6 +85,7 @@ const LayoutIndex = props => {
   const posts = props?.allNavPages ? props.allNavPages.slice(0, count) : []
   return (
     <>
+      <LoadingCover />
       {/* 英雄区 */}
       {siteConfig('STARTER_HERO_ENABLE') && <Hero />}
       {/* 合作伙伴 */}
