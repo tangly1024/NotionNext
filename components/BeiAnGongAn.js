@@ -5,7 +5,7 @@ import LazyImage from './LazyImage'
  * 公安备案号组件
  * @returns
  */
-export const GongAnBeiAn = () => {
+export const BeiAnGongAn = props => {
   const BEI_AN_GONGAN = siteConfig('BEI_AN_GONGAN')
   // 从BEI_AN_GONGAN 字段中利用正则匹配提取出纯数字部分
   const codeMatch = BEI_AN_GONGAN?.match(/\d+/) // 匹配纯数字
@@ -17,9 +17,9 @@ export const GongAnBeiAn = () => {
     return null
   }
   return (
-    <div className='flex flex-nowrap items-center gap-1 justify-center'>
+    <div className={`${props.className}`}>
       <LazyImage src='/images/gongan.png' width={15} height={15} />
-      <a href={href} target='_blank' rel='noopener noreferrer'>
+      <a href={href} target='_blank' rel='noopener noreferrer' className='ml-1'>
         {BEI_AN_GONGAN}
       </a>
     </div>

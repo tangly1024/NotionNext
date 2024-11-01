@@ -1,4 +1,6 @@
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
+import BeiAnSite from '@/components/BeiAnSite'
+import PoweredBy from '@/components/PoweredBy'
 import { siteConfig } from '@/lib/config'
 
 const Footer = ({ title }) => {
@@ -20,16 +22,8 @@ const Footer = ({ title }) => {
           {siteConfig('AUTHOR')}
         </a>
         .<br />
-        {siteConfig('BEI_AN') && (
-          <>
-            <i className='fas fa-shield-alt' />
-            <a href='https://beian.miit.gov.cn/' className='mr-2'>
-              {siteConfig('BEI_AN')}
-            </a>
-            <br />
-          </>
-        )}
-        <GongAnBeiAn />
+        <BeiAnSite />
+        <BeiAnGongAn />
         <span className='hidden busuanzi_container_site_pv'>
           <i className='fas fa-eye' />
           <span className='px-1 busuanzi_value_site_pv'> </span>
@@ -41,15 +35,7 @@ const Footer = ({ title }) => {
         <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>
           {title} {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
         </h1>
-        <p className='text-xs pt-2 text-light-500 dark:text-gray-500'>
-          Powered by
-          <a
-            href='https://github.com/tangly1024/NotionNext'
-            className='dark:text-gray-300'>
-            NotionNext {siteConfig('VERSION')}
-          </a>
-          .
-        </p>
+        <PoweredBy />
       </span>
       <br />
     </footer>

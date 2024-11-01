@@ -1,5 +1,5 @@
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import DarkModeButton from '@/components/DarkModeButton'
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
 import { siteConfig } from '@/lib/config'
 /**
  * 页脚
@@ -32,7 +32,7 @@ export const Footer = props => {
               {siteConfig('BEI_AN')}
             </a>
           )}
-          <GongAnBeiAn />
+          <BeiAnGongAn />
           <span className='dark:text-gray-200 no-underline ml-4'>
             Powered by
             <a
