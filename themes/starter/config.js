@@ -259,8 +259,9 @@ const CONFIG = {
   //   STARTER_CONTACT_MSG_SEND: '发送消息',
   //   STARTER_CONTACT_MSG_THANKS: '感谢您的留言',
 
-  // 合作伙伴的图标
-  STARTER_BRANDS_ENABLE: true, // 合作伙伴开关
+  // 合作伙伴的图标 目前用不到
+ // STARTER_BRANDS_ENABLE: true, // 合作伙伴开关
+  STARTER_BRANDS_ENABLE: false, // 合作伙伴开关
   STARTER_BRANDS: [
     {
       IMAGE: '/images/starter/brands/graygrids.svg',
