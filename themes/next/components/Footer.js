@@ -44,7 +44,7 @@ const Footer = ({ title }) => {
         <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>
           Powered by{' '}
           <a
-            href='https://www.aioter.top'
+            href='https://xp.magpiefly.top'
             className='underline '>
             毅迪 {siteConfig('VERSION')}
           </a>
