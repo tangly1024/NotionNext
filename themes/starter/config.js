@@ -178,7 +178,7 @@ const CONFIG = {
 
   //   FAQ 常见问题模块
   STARTER_FAQ_ENABLE: false, // 常见问题模块开关
-  STARTER_FAQ_TITLE: '常见问题解答',
+  STARTER_FAQ_TITLE: 'Frequently asked questions',
   STARTER_FAQ_TEXT_1: '有任何问题吗？请看这里',
   STARTER_FAQ_TEXT_2: '我们收集了常见的用户疑问',
 
