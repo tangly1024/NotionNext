@@ -1,6 +1,10 @@
 import { useRef, useState } from 'react'
 import PostItemCard from './PostItemCard'
-
+/**
+ * 横向滑动组件
+ * @param {*} param0
+ * @returns
+ */
 const Swiper = ({ posts }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const containerRef = useRef(null)

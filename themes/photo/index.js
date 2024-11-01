@@ -17,8 +17,6 @@ import ArticleFooter from './components/ArticleFooter'
 import { ArticleHeader } from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BlogListGroupByDate from './components/BlogListGroupByDate'
-import { BlogListPage } from './components/BlogListPage'
-import { BlogListScroll } from './components/BlogListScroll'
 import BlogRecommend from './components/BlogRecommend'
 import CategoryGroup from './components/CategoryGroup'
 import CategoryItem from './components/CategoryItem'
@@ -28,6 +26,7 @@ import { HomeBackgroundImage } from './components/HomeBackgroundImage'
 import JumpToTopButton from './components/JumpToTopButton'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import SlotBar from './components/SlotBar'
+import Swiper from './components/Swiper'
 import TagGroups from './components/TagGroups'
 import TagItem from './components/TagItem'
 import CONFIG from './config'
@@ -136,11 +135,8 @@ const LayoutPostList = props => {
   return (
     <div className='max-w-[90rem] mx-auto'>
       <SlotBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogListPage {...props} />
-      ) : (
-        <BlogListScroll {...props} />
-      )}
+      {/* 滑动组件 */}
+      <Swiper {...props} />
     </div>
   )
 }
@@ -484,14 +480,15 @@ const LayoutTagIndex = props => {
 }
 
 export {
-  Layout404,
-  LayoutArchive,
-  LayoutBase,
-  LayoutCategoryIndex,
-  LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSlug,
-  LayoutTagIndex,
-  CONFIG as THEME_CONFIG
+    Layout404,
+    LayoutArchive,
+    LayoutBase,
+    LayoutCategoryIndex,
+    LayoutIndex,
+    LayoutPostList,
+    LayoutSearch,
+    LayoutSlug,
+    LayoutTagIndex,
+    CONFIG as THEME_CONFIG
 }
+
