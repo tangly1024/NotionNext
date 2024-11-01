@@ -30,6 +30,7 @@ import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
+import { ArticleLock } from './components/ArticleLock'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
 import { SignInForm } from './components/SignInForm'
@@ -84,23 +85,25 @@ const LayoutIndex = props => {
   return (
     <>
       {/* 英雄区 */}
-      {siteConfig('STARTER_HERO_ENABLE') && <Hero />}
+      {siteConfig('STARTER_HERO_ENABLE', true, CONFIG) && <Hero {...props} />}
       {/* 合作伙伴 */}
-      {siteConfig('STARTER_BRANDS_ENABLE') && <Brand />}
+      {siteConfig('STARTER_BRANDS_ENABLE', true, CONFIG) && <Brand />}
       {/* 产品特性 */}
-      {siteConfig('STARTER_FEATURE_ENABLE') && <Features />}
+      {siteConfig('STARTER_FEATURE_ENABLE', true, CONFIG) && <Features />}
       {/* 关于 */}
-      {siteConfig('STARTER_ABOUT_ENABLE') && <About />}
+      {siteConfig('STARTER_ABOUT_ENABLE', true, CONFIG) && <About />}
       {/* 价格 */}
-      {siteConfig('STARTER_PRICING_ENABLE') && <Pricing />}
+      {siteConfig('STARTER_PRICING_ENABLE', true, CONFIG) && <Pricing />}
       {/* 评价展示 */}
-      {siteConfig('STARTER_TESTIMONIALS_ENABLE') && <Testimonials />}
+      {siteConfig('STARTER_TESTIMONIALS_ENABLE', true, CONFIG) && (
+        <Testimonials />
+      )}
       {/* 常见问题 */}
-      {siteConfig('STARTER_FAQ_ENABLE') && <FAQ />}
+      {siteConfig('STARTER_FAQ_ENABLE', true, CONFIG) && <FAQ />}
       {/* 团队介绍 */}
-      {siteConfig('STARTER_TEAM_ENABLE') && <Team />}
+      {siteConfig('STARTER_TEAM_ENABLE', true, CONFIG) && <Team />}
       {/* 博文列表 */}
-      {siteConfig('STARTER_BLOG_ENABLE') && (
+      {siteConfig('STARTER_BLOG_ENABLE', true, CONFIG) && (
         <>
           <Blog posts={posts} />
           <div className='container mx-auto flex justify-end mb-4'>
@@ -112,10 +115,10 @@ const LayoutIndex = props => {
         </>
       )}
       {/* 联系方式 */}
-      {siteConfig('STARTER_CONTACT_ENABLE') && <Contact />}
+      {siteConfig('STARTER_CONTACT_ENABLE', true, CONFIG) && <Contact />}
 
       {/* 行动呼吁 */}
-      {siteConfig('STARTER_CTA_ENABLE') && <CTA />}
+      {siteConfig('STARTER_CTA_ENABLE', true, CONFIG) && <CTA />}
     </>
   )
 }
@@ -126,7 +129,7 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post } = props
+  const { post, lock, validPassword } = props
 
   // 如果 是 /article/[slug] 的文章路径则視情況进行重定向到另一个域名
   const router = useRouter()
@@ -153,11 +156,15 @@ const LayoutSlug = props => {
       <div className='container grow'>
         <div className='flex flex-wrap justify-center -mx-4'>
           <div id='container-inner' className='w-full p-4'>
-            <div id='article-wrapper' className='mx-auto'>
-              <NotionPage {...props} />
-              <Comment frontMatter={post} />
-              <ShareBar post={post} />
-            </div>
+            {lock && <ArticleLock validPassword={validPassword} />}
+
+            {!lock && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+                <Comment frontMatter={post} />
+                <ShareBar post={post} />
+              </div>
+            )}
           </div>
         </div>
       </div>
