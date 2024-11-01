@@ -33,7 +33,7 @@ const CONFIG = {
   STARTER_NAV_BUTTON_2_URL: '',
 
   // 特性区块
-  STARTER_FEATURE_ENABLE: false, // 特性区块开关
+  STARTER_FEATURE_ENABLE: true, // 特性区块开关
     STARTER_FEATURE_TITLE: 'Chinafrica', // 特性
   STARTER_FEATURE_TEXT_1: 'What we do?', // 特性
   STARTER_FEATURE_TEXT_2:
@@ -62,61 +62,61 @@ const CONFIG = {
 
   // 首页ABOUT区块
   STARTER_ABOUT_ENABLE: true, // ABOUT区块开关
-  STARTER_ABOUT_TITLE: 'The most suitable international logistics company for you',
+  STARTER_ABOUT_TITLE: '一套轻量实用的建站解决方案',
   STARTER_ABOUT_TEXT:
-    'We assist with finding the best products at the lowest prices, by using a network of 500,000+ factories. <br /> <br /> Personalized selection of multiple transportation and express services for your situation, delivery within 15-30 days, including door-to-door service.',
-  STARTER_ABOUT_BUTTON_TEXT: 'Learn more',
+    'NotionNext的愿景是帮助非技术人员的小白，最低成本、最快速地搭建自己的网站，帮助您将自己的产品与故事高效地传达给世界。 <br /> <br /> 功能强大的Notion笔记，简单快速的Vercel托管平台，组成一个简单的网站',
+  STARTER_ABOUT_BUTTON_TEXT: '了解更多',
   STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
   STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
-  STARTER_ABOUT_TIPS_1: '60+',
-  STARTER_ABOUT_TIPS_2: 'logistics company',
-  STARTER_ABOUT_TIPS_3: 'Are working with us',
+  STARTER_ABOUT_TIPS_1: '7000+',
+  STARTER_ABOUT_TIPS_2: '博客站点',
+  STARTER_ABOUT_TIPS_3: '正在线上运行',
 
   // 首页价格区块
   STARTER_PRICING_ENABLE: true, // 价格区块开关
-  STARTER_PRICING_TITLE: 'Type of shipping',
-  STARTER_PRICING_TEXT_1: 'Flexible transportation methods',
+  STARTER_PRICING_TITLE: '价格表',
+  STARTER_PRICING_TEXT_1: '很棒的定价计划',
   STARTER_PRICING_TEXT_2:
-    'We have multiple modes of transportation, you can choose according to your needs.',
+    '我们制定了灵活的付费模式，您可以按需选择。（NotionNext免费开源，这里仅演示产品订阅付费功能，请勿下单购买！）',
 
-  STARTER_PRICING_1_TITLE: 'Air transport',
-  STARTER_PRICING_1_PRICE: '90.0',
-  STARTER_PRICING_1_PRICE_CURRENCY: '￥',
-  STARTER_PRICING_1_PRICE_PERIOD: '/kg',
-  STARTER_PRICING_1_HEADER: 'Suitable for urgent packages',
-  STARTER_PRICING_1_FEATURES: '15-30 days，door to door,The more transportation，the cheaper it is,Tax and Customs Clearance fees included!', // 英文逗号隔开
-  STARTER_PRICING_1_BUTTON_TEXT: 'Get a quote',
+  STARTER_PRICING_1_TITLE: '入门版',
+  STARTER_PRICING_1_PRICE: '19.9',
+  STARTER_PRICING_1_PRICE_CURRENCY: '$',
+  STARTER_PRICING_1_PRICE_PERIOD: '每月',
+  STARTER_PRICING_1_HEADER: '功能点',
+  STARTER_PRICING_1_FEATURES: '所有的主题,免费更新,帮助手册', // 英文逗号隔开
+  STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_1_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/c1a38a65-362e-44c5-8065-733fee39eb54',
 
-  STARTER_PRICING_2_TAG: 'recommend',
-  STARTER_PRICING_2_TITLE: 'Sea shipping',
-  STARTER_PRICING_2_PRICE: '30.0',
-  STARTER_PRICING_2_PRICE_CURRENCY: '￥',
-  STARTER_PRICING_2_PRICE_PERIOD: '/kg',
-  STARTER_PRICING_2_HEADER: 'Suitable for most goods',
-  STARTER_PRICING_2_FEATURES: '60-90 days，door to door,The cheapest mode of transportation,Tax and Customs Clearance fees included!', // 英文逗号隔开
-  STARTER_PRICING_2_BUTTON_TEXT: 'Instant inquiry',
+  STARTER_PRICING_2_TAG: '推荐',
+  STARTER_PRICING_2_TITLE: '基础版',
+  STARTER_PRICING_2_PRICE: '39.9',
+  STARTER_PRICING_2_PRICE_CURRENCY: '$',
+  STARTER_PRICING_2_PRICE_PERIOD: '每月',
+  STARTER_PRICING_2_HEADER: '功能点',
+  STARTER_PRICING_2_FEATURES: '包含入门版,项目源码,内部社群,技术咨询,SEO优化', // 英文逗号隔开
+  STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_2_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/590ad70a-c3b7-4caf-94ec-9ca27bde06d4',
 
-  STARTER_PRICING_3_TITLE: 'Other',
-  STARTER_PRICING_3_PRICE: 'Inquiry for quotation',
-  STARTER_PRICING_3_PRICE_CURRENCY: '',
-  STARTER_PRICING_3_PRICE_PERIOD: '',
-  STARTER_PRICING_3_HEADER: 'DIY customize your shipping method!',
-  STARTER_PRICING_3_FEATURES: 'Express,truck transportation,Luggage bag,···', // 英文逗号隔开
-  STARTER_PRICING_3_BUTTON_TEXT: 'Customize now',
+  STARTER_PRICING_3_TITLE: '高级版',
+  STARTER_PRICING_3_PRICE: '59.9',
+  STARTER_PRICING_3_PRICE_CURRENCY: '$',
+  STARTER_PRICING_3_PRICE_PERIOD: '每月',
+  STARTER_PRICING_3_HEADER: '功能点',
+  STARTER_PRICING_3_FEATURES: '包含基础版,功能定制开发', // 英文逗号隔开
+  STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
   STARTER_PRICING_3_BUTTON_URL:
     'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
 
   // 首页用户测评区块
   STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
-  STARTER_TESTIMONIALS_TITLE: 'User feedback',
-  STARTER_TESTIMONIALS_TEXT_1: 'What do our users say',
+  STARTER_TESTIMONIALS_TITLE: '用户反馈',
+  STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
   STARTER_TESTIMONIALS_TEXT_2:
-    'Hundreds of customers chose to use Chinafrica to transport their goods, and with the help of customer service, they were able to purchase the highest quality products in China at the most favorable prices in the shortest possible time!',
+    '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
   STARTER_TESTIMONIALS_STAR_ICON: '/images/starter/testimonials/icon-star.svg', // 评分图标
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
@@ -176,23 +176,27 @@ const CONFIG = {
     }
   ],
 
-  
-  //   FAQ模块
-  STARTER_FAQ_TITLE: 'Frequently asked questions',
+  //   FAQ 常见问题模块
+  STARTER_FAQ_ENABLE: true, // 常见问题模块开关
+  STARTER_FAQ_TITLE: '常见问题解答',
   STARTER_FAQ_TEXT_1: '有任何问题吗？请看这里',
   STARTER_FAQ_TEXT_2: '我们收集了常见的用户疑问',
 
   STARTER_FAQ_1_QUESTION: 'NotionNext有帮助文档吗？',
-  STARTER_FAQ_1_ANSWER: 'NotionNext提供了<a href="https://docs.tangly1024.com/about" className="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" className="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" className="underline">交流社群</a>来协助您完成网站的搭建部署',
+  STARTER_FAQ_1_ANSWER:
+    'NotionNext提供了<a href="https://docs.tangly1024.com/about" className="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" className="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" className="underline">交流社群</a>来协助您完成网站的搭建部署',
 
   STARTER_FAQ_2_QUESTION: '部署后要如何编写文章？',
-  STARTER_FAQ_2_ANSWER: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a className="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>',
+  STARTER_FAQ_2_ANSWER:
+    '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a className="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>',
 
   STARTER_FAQ_3_QUESTION: '站点部署失败，更新失败？',
-  STARTER_FAQ_3_ANSWER: '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助',
+  STARTER_FAQ_3_ANSWER:
+    '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助',
 
   STARTER_FAQ_4_QUESTION: '文章没有实时同步？',
-  STARTER_FAQ_4_ANSWER: '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
+  STARTER_FAQ_4_ANSWER:
+    '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
 
   // 团队成员区块
   STARTER_TEAM_ENABLE: true, // 团队成员区块开关
@@ -296,14 +300,14 @@ const CONFIG = {
     {
       TITLE: 'About us',
       LINK_GROUP: [
-        { TITLE: 'Our story', URL: '/#home' },
+        { TITLE: '官方主页', URL: '/#home' },
         { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
         {
-          TITLE: 'Help and support',
+          TITLE: '帮助支持',
           URL: 'https://docs.tangly1024.com/article/how-to-question'
         },
         {
-          TITLE: 'Collaboration Application',
+          TITLE: '合作申请',
           URL: 'https://docs.tangly1024.com/article/my-service'
         }
       ]
