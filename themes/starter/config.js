@@ -349,6 +349,7 @@ const CONFIG = {
         {
           TITLE: 'Notion开始写作',
           URL: 'https://docs.tangly1024.com/article/start-to-write'
+        },
         {
           TITLE: '快捷键提升效率',
           URL: 'https://docs.tangly1024.com/article/notion-short-key'
