@@ -116,69 +116,69 @@ const CONFIG = {
 
   // 首页用户测评区块 暂时关闭
   //STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
-  STARTER_TESTIMONIALS_ENABLE: false, // 测评区块开关
-  STARTER_TESTIMONIALS_TITLE: '用户反馈',
-  STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
-  STARTER_TESTIMONIALS_TEXT_2:
-    '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
-  STARTER_TESTIMONIALS_STAR_ICON: '/images/starter/testimonials/icon-star.svg', // 评分图标
+  //STARTER_TESTIMONIALS_ENABLE: false, // 测评区块开关
+  //STARTER_TESTIMONIALS_TITLE: '用户反馈',
+  //STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
+  //STARTER_TESTIMONIALS_TEXT_2:
+  //  '数千位站长选择用NotionNext搭建他们的网站,通过帮助手册、交流社群以及技术咨询，大家成功上线了自己的网站',
+  //STARTER_TESTIMONIALS_STAR_ICON: '/images/starter/testimonials/icon-star.svg', // 评分图标
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
-  STARTER_TESTIMONIALS_ITEMS: [
-    {
-      STARTER_TESTIMONIALS_ITEM_TEXT:
-        '感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ ',
-      STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
-      STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Ryan_G',
-      STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Ryan`Log 站长',
-      STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.gaoran.xyz/'
-    },
-    {
-      STARTER_TESTIMONIALS_ITEM_TEXT:
-        '很喜欢这个主题，本代码小白用三天台风假期搭建出来了，还根据大佬的教程弄了自定义域名，十分感谢，已请喝咖啡~',
-      STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F0d33d169-f932-41ff-ac6b-88a923c08e02%2F%25E5%25A4%25B4%25E5%2583%258F.jfif?table=collection&id=7787658d-d5c0-4f34-8e32-60c523dfaba3&width=400',
-      STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Asenkits',
-      STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '阿森的百宝袋 站长',
-      STARTER_TESTIMONIALS_ITEM_URL: 'https://asenkits.top/'
-    },
-    {
-      STARTER_TESTIMONIALS_ITEM_TEXT:
-        '呜呜呜，经过一个下午的努力，终于把博客部署好啦，非常感谢Tangly1024大佬的框架和教程，这是我有生之年用过的最好用的博客框架┭┮﹏┭┮。从今之后，我就可以在自己的博客里bb啦，( •̀ ω •́ )y ',
-      STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F6c096b44-beb9-48ee-8f92-1efdde47f3a3%2F338962f1-d352-49c7-9a1b-746e35a7005c%2Fhf.png?table=block&id=ce5a48a9-d77a-4843-a3d9-a78cd4f794ce&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
-      STARTER_TESTIMONIALS_ITEM_NICKNAME: 'DWIND',
-      STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '且听风吟 站长',
-      STARTER_TESTIMONIALS_ITEM_URL: 'https://www.dwind.top/'
-    },
-    {
-      STARTER_TESTIMONIALS_ITEM_TEXT:
-        '感谢提供这么好的项目哈哈 之前一直不知道怎么部署(别的项目好难好复杂)这个相对非常简单 新手非常友好哦',
-      STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd52f6766-3e32-4c3d-8529-46e1f214360f%2Ffavicon.svg?table=collection&id=7d76aad5-a2c4-4d9a-887c-c7913fae4eed&width=400',
-      STARTER_TESTIMONIALS_ITEM_NICKNAME: '迪升disheng ',
-      STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'AI资源分享 Blog',
-      STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.disheng.org/'
-    },
-    {
-      STARTER_TESTIMONIALS_ITEM_TEXT:
-        '灰常感谢大佬的博客项目，能将博客和notion结合起来，这一直是我挺期待的博客模式。',
-      STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fafb21381-f51b-4fd0-9998-800dbeb64dbe%2Favatar.png?table=block&id=195935d2-0d8d-49fc-bd81-1db42ee50840&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
-      STARTER_TESTIMONIALS_ITEM_NICKNAME: 'AnJhon',
-      STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Anjhon`s Blog 站长',
-      STARTER_TESTIMONIALS_ITEM_URL: 'https://www.anjhon.top'
-    },
-    {
-      STARTER_TESTIMONIALS_ITEM_TEXT: '用好久了，太感谢了',
-      STARTER_TESTIMONIALS_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe4f391d7-7d65-4c05-a82c-c6e2c40f06e4%2Fa2a7641a26b367608c6ef28ce9b7e983_(2).png?table=block&id=a386eb0e-4c07-4b18-9ece-bba4e79ce21c&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
-      STARTER_TESTIMONIALS_ITEM_NICKNAME: 'LUCEN',
-      STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'LUCEN考验辅导 站长',
-      STARTER_TESTIMONIALS_ITEM_URL: 'https://www.lucenczz.top/'
-    }
-  ],
+  //STARTER_TESTIMONIALS_ITEMS: [
+  //  {
+  //    STARTER_TESTIMONIALS_ITEM_TEXT:
+  //      '感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ ',
+  //    STARTER_TESTIMONIALS_ITEM_AVATAR:
+  //      'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F22de3fcb-d90d-4271-bc01-f815f476122b%2F4FE0A0C0-E487-4C74-BF8E-6F01A27461B8-14186-000008094BC289A6.jpg?table=collection&id=a320a2cc-6ebe-4a8d-95cc-ea94e63bced9&width=200',
+  //    STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Ryan_G',
+  //    STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Ryan`Log 站长',
+  //    STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.gaoran.xyz/'
+  //  },
+  //  {
+  //    STARTER_TESTIMONIALS_ITEM_TEXT:
+  //      '很喜欢这个主题，本代码小白用三天台风假期搭建出来了，还根据大佬的教程弄了自定义域名，十分感谢，已请喝咖啡~',
+  //    STARTER_TESTIMONIALS_ITEM_AVATAR:
+  //      'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F0d33d169-f932-41ff-ac6b-88a923c08e02%2F%25E5%25A4%25B4%25E5%2583%258F.jfif?table=collection&id=7787658d-d5c0-4f34-8e32-60c523dfaba3&width=400',
+  //    STARTER_TESTIMONIALS_ITEM_NICKNAME: 'Asenkits',
+  //    STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '阿森的百宝袋 站长',
+  //    STARTER_TESTIMONIALS_ITEM_URL: 'https://asenkits.top/'
+  //  },
+  //  {
+  //    STARTER_TESTIMONIALS_ITEM_TEXT:
+  //      '呜呜呜，经过一个下午的努力，终于把博客部署好啦，非常感谢Tangly1024大佬的框架和教程，这是我有生之年用过的最好用的博客框架┭┮﹏┭┮。从今之后，我就可以在自己的博客里bb啦，( •̀ ω •́ )y ',
+  //    STARTER_TESTIMONIALS_ITEM_AVATAR:
+  //      'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F6c096b44-beb9-48ee-8f92-1efdde47f3a3%2F338962f1-d352-49c7-9a1b-746e35a7005c%2Fhf.png?table=block&id=ce5a48a9-d77a-4843-a3d9-a78cd4f794ce&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+  //    STARTER_TESTIMONIALS_ITEM_NICKNAME: 'DWIND',
+  //    STARTER_TESTIMONIALS_ITEM_DESCRIPTION: '且听风吟 站长',
+  //    STARTER_TESTIMONIALS_ITEM_URL: 'https://www.dwind.top/'
+  //  },
+  //  {
+  //    STARTER_TESTIMONIALS_ITEM_TEXT:
+  //      '感谢提供这么好的项目哈哈 之前一直不知道怎么部署(别的项目好难好复杂)这个相对非常简单 新手非常友好哦',
+  //    STARTER_TESTIMONIALS_ITEM_AVATAR:
+  //      'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd52f6766-3e32-4c3d-8529-46e1f214360f%2Ffavicon.svg?table=collection&id=7d76aad5-a2c4-4d9a-887c-c7913fae4eed&width=400',
+  //    STARTER_TESTIMONIALS_ITEM_NICKNAME: '迪升disheng ',
+  //    STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'AI资源分享 Blog',
+  //    STARTER_TESTIMONIALS_ITEM_URL: 'https://blog.disheng.org/'
+  //  },
+  //  {
+  //    STARTER_TESTIMONIALS_ITEM_TEXT:
+  //      '灰常感谢大佬的博客项目，能将博客和notion结合起来，这一直是我挺期待的博客模式。',
+  //    STARTER_TESTIMONIALS_ITEM_AVATAR:
+  //      'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fafb21381-f51b-4fd0-9998-800dbeb64dbe%2Favatar.png?table=block&id=195935d2-0d8d-49fc-bd81-1db42ee50840&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+  //    STARTER_TESTIMONIALS_ITEM_NICKNAME: 'AnJhon',
+  //    STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'Anjhon`s Blog 站长',
+  //    STARTER_TESTIMONIALS_ITEM_URL: 'https://www.anjhon.top'
+  //  },
+  //  {
+  //    STARTER_TESTIMONIALS_ITEM_TEXT: '用好久了，太感谢了',
+  //    STARTER_TESTIMONIALS_ITEM_AVATAR:
+  //      'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe4f391d7-7d65-4c05-a82c-c6e2c40f06e4%2Fa2a7641a26b367608c6ef28ce9b7e983_(2).png?table=block&id=a386eb0e-4c07-4b18-9ece-bba4e79ce21c&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+  //    STARTER_TESTIMONIALS_ITEM_NICKNAME: 'LUCEN',
+  //    STARTER_TESTIMONIALS_ITEM_DESCRIPTION: 'LUCEN考验辅导 站长',
+  //    STARTER_TESTIMONIALS_ITEM_URL: 'https://www.lucenczz.top/'
+  //  }
+  //],
 
   //   FAQ 常见问题模块 在notion配置
   STARTER_FAQ_ENABLE: true, // 常见问题模块开关
@@ -204,36 +204,36 @@ const CONFIG = {
 
   // 团队成员区块 暂时不需要 先关闭
   //STARTER_TEAM_ENABLE: true, // 团队成员区块开关
-  STARTER_TEAM_ENABLE: false, // 团队成员区块开关
-  STARTER_TEAM_TITLE: '团队成员',
-  STARTER_TEAM_TEXT_1: '我们的开发者团队',
-  STARTER_TEAM_TEXT_2:
-    'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
+  //STARTER_TEAM_ENABLE: false, // 团队成员区块开关
+  //STARTER_TEAM_TITLE: '团队成员',
+  //STARTER_TEAM_TEXT_1: '我们的开发者团队',
+  //STARTER_TEAM_TEXT_2:
+  //  'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
-  STARTER_TEAM_ITEMS: [
-    {
-      STARTER_TEAM_ITEM_AVATAR:
-        'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
-      STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
-    },
-    {
-      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-01.png',
-      STARTER_TEAM_ITEM_NICKNAME: 'Melissa Tatcher',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
-    },
-    {
-      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
-      STARTER_TEAM_ITEM_NICKNAME: 'Stuard Ferrel',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
-    },
-    {
-      STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-03.png',
-      STARTER_TEAM_ITEM_NICKNAME: 'Eva Hudson',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Creative Designer'
-    }
-  ],
+  //STARTER_TEAM_ITEMS: [
+  //  {
+  //    STARTER_TEAM_ITEM_AVATAR:
+  //      'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
+  //    STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
+  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
+  //  },
+  //  {
+  //    STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-01.png',
+  //    STARTER_TEAM_ITEM_NICKNAME: 'Melissa Tatcher',
+  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
+  //  },
+  //  {
+  //    STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
+  //    STARTER_TEAM_ITEM_NICKNAME: 'Stuard Ferrel',
+  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
+  //  },
+  //  {
+  //    STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-03.png',
+  //    STARTER_TEAM_ITEM_NICKNAME: 'Eva Hudson',
+  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Creative Designer'
+  //  }
+  //],
 
   // 博客文章区块 在notion配置
   STARTER_BLOG_ENABLE: true, // 首页博文区块开关
@@ -265,39 +265,39 @@ const CONFIG = {
 
   // 合作伙伴的图标 暂时不需要 先关闭
   //STARTER_BRANDS_ENABLE: true, // 合作伙伴开关
-  STARTER_BRANDS_ENABLE: false, // 合作伙伴开关
-  STARTER_BRANDS: [
-    {
-      IMAGE: '/images/starter/brands/graygrids.svg',
-      IMAGE_WHITE: '/images/starter/brands/graygrids-white.svg',
-      URL: 'https://graygrids.com/',
-      TITLE: 'graygrids'
-    },
-    {
-      IMAGE: '/images/starter/brands/lineicons.svg',
-      IMAGE_WHITE: '/images/starter/brands/lineicons-white.svg',
-      URL: 'https://lineicons.com/',
-      TITLE: 'lineicons'
-    },
-    {
-      IMAGE: '/images/starter/brands/uideck.svg',
-      IMAGE_WHITE: '/images/starter/brands/uideck-white.svg',
-      URL: 'https://uideck.com/',
-      TITLE: 'uideck'
-    },
-    {
-      IMAGE: '/images/starter/brands/ayroui.svg',
-      IMAGE_WHITE: '/images/starter/brands/ayroui-white.svg',
-      URL: 'https://ayroui.com/',
-      TITLE: 'ayroui'
-    },
-    {
-      IMAGE: '/images/starter/brands/tailgrids.svg',
-      IMAGE_WHITE: '/images/starter/brands/tailgrids-white.svg',
-      URL: '"https://tailgrids.com/',
-      TITLE: 'tailgrids'
-    }
-  ],
+  //STARTER_BRANDS_ENABLE: false, // 合作伙伴开关
+  //STARTER_BRANDS: [
+  //  {
+  //    IMAGE: '/images/starter/brands/graygrids.svg',
+  //    IMAGE_WHITE: '/images/starter/brands/graygrids-white.svg',
+  //    URL: 'https://graygrids.com/',
+  //    TITLE: 'graygrids'
+  //  },
+  //  {
+  //    IMAGE: '/images/starter/brands/lineicons.svg',
+  //    IMAGE_WHITE: '/images/starter/brands/lineicons-white.svg',
+  //    URL: 'https://lineicons.com/',
+  //    TITLE: 'lineicons'
+  //  },
+  //  {
+  //    IMAGE: '/images/starter/brands/uideck.svg',
+  //    IMAGE_WHITE: '/images/starter/brands/uideck-white.svg',
+  //    URL: 'https://uideck.com/',
+  //    TITLE: 'uideck'
+  //  },
+  //  {
+  //    IMAGE: '/images/starter/brands/ayroui.svg',
+  //    IMAGE_WHITE: '/images/starter/brands/ayroui-white.svg',
+  //    URL: 'https://ayroui.com/',
+  //    TITLE: 'ayroui'
+  //  },
+  //  {
+  //    IMAGE: '/images/starter/brands/tailgrids.svg',
+  //    IMAGE_WHITE: '/images/starter/brands/tailgrids-white.svg',
+  //    URL: '"https://tailgrids.com/',
+  //   TITLE: 'tailgrids'
+  // }
+  //],
 
   //在notion配置
   STARTER_FOOTER_SLOGAN: '我们通过技术为品牌和公司创造数字体验。',
