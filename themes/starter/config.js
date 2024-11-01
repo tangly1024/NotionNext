@@ -298,16 +298,16 @@ const CONFIG = {
   // 页脚三列菜单组
   STARTER_FOOTER_LINK_GROUP: [
     {
-      TITLE: '关于我们',
+      TITLE: 'About us',
       LINK_GROUP: [
-        { TITLE: '官方主页', URL: '/#home' },
+        { TITLE: 'Our story', URL: '/#home' },
         { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
         {
-          TITLE: '帮助支持',
+          TITLE: 'Help and support',
           URL: 'https://docs.tangly1024.com/article/how-to-question'
         },
         {
-          TITLE: '合作申请',
+          TITLE: 'Collaboration Application',
           URL: 'https://docs.tangly1024.com/article/my-service'
         }
       ]
