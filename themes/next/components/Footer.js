@@ -44,11 +44,10 @@ const Footer = ({ title }) => {
         <span className='text-xs font-serif  text-gray-500 dark:text-gray-300 '>
           Powered by{' '}
           <a
-            href='https://github.com/tangly1024/NotionNext'
+            href='https://www.aioter.top'
             className='underline '>
-            NotionNext {siteConfig('VERSION')}
+            毅迪 {siteConfig('VERSION')}
           </a>
-          .
         </span>
       </span>
     </footer>
