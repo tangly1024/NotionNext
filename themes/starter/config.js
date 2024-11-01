@@ -116,7 +116,7 @@ const CONFIG = {
 
   // 首页用户测评区块 暂时关闭
   //STARTER_TESTIMONIALS_ENABLE: true, // 测评区块开关
-  //STARTER_TESTIMONIALS_ENABLE: false, // 测评区块开关
+  STARTER_TESTIMONIALS_ENABLE: false, // 测评区块开关
   //STARTER_TESTIMONIALS_TITLE: '用户反馈',
   //STARTER_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
   //STARTER_TESTIMONIALS_TEXT_2:
@@ -204,7 +204,7 @@ const CONFIG = {
 
   // 团队成员区块 暂时不需要 先关闭
   //STARTER_TEAM_ENABLE: true, // 团队成员区块开关
-  //STARTER_TEAM_ENABLE: false, // 团队成员区块开关
+  STARTER_TEAM_ENABLE: false, // 团队成员区块开关
   //STARTER_TEAM_TITLE: '团队成员',
   //STARTER_TEAM_TEXT_1: '我们的开发者团队',
   //STARTER_TEAM_TEXT_2:
@@ -265,7 +265,7 @@ const CONFIG = {
 
   // 合作伙伴的图标 暂时不需要 先关闭
   //STARTER_BRANDS_ENABLE: true, // 合作伙伴开关
-  //STARTER_BRANDS_ENABLE: false, // 合作伙伴开关
+  STARTER_BRANDS_ENABLE: false, // 合作伙伴开关
   //STARTER_BRANDS: [
   //  {
   //    IMAGE: '/images/starter/brands/graygrids.svg',
