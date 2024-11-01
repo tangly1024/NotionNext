@@ -87,7 +87,7 @@ export const Testimonials = () => {
             <div className='swiper testimonial-carousel common-carousel p-5'>
               <div className='swiper-wrapper'>
                 {/* 用户评价卡牌 */}
-                {STARTER_TESTIMONIALS_ITEMS.map((item, index) => {
+                {STARTER_TESTIMONIALS_ITEMS?.map((item, index) => {
                   return (
                     <div key={index} className='swiper-slide'>
                       <div className='rounded-xl bg-white px-4 py-[30px] shadow-testimonial dark:bg-dark sm:px-[30px]'>

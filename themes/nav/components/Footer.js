@@ -1,4 +1,4 @@
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 
 const Footer = ({ siteInfo }) => {
@@ -43,7 +43,7 @@ const Footer = ({ siteInfo }) => {
           <br />
         </>
       )}
-      <GongAnBeiAn />
+      <BeiAnGongAn />
 
       <span className='hidden busuanzi_container_site_pv'>
         <i className='text-xs fas fa-eye' />
