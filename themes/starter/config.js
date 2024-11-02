@@ -71,8 +71,6 @@ const CONFIG = {
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
   STARTER_ABOUT_BUTTON_URL: 'https://docs.tangly1024.com/about',
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
-
-  //这个地方图片在notion配置不成功 尝试在这里 似乎有bug
   STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
   STARTER_ABOUT_TIPS_1: '7000+',
   STARTER_ABOUT_TIPS_2: '博客站点',
