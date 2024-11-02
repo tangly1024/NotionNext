@@ -203,37 +203,37 @@ const CONFIG = {
     '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决',
 
   // 团队成员区块 暂时不需要 先关闭
-  //STARTER_TEAM_ENABLE: true, // 团队成员区块开关
-  STARTER_TEAM_ENABLE: false, // 团队成员区块开关
+  STARTER_TEAM_ENABLE: true, // 团队成员区块开关
+  //STARTER_TEAM_ENABLE: false, // 团队成员区块开关
   //STARTER_TEAM_TITLE: '团队成员',
   //STARTER_TEAM_TEXT_1: '我们的开发者团队',
   //STARTER_TEAM_TEXT_2:
   //  'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
 
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
-  //STARTER_TEAM_ITEMS: [
-  //  {
-  //    STARTER_TEAM_ITEM_AVATAR:
-  //      'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa06c61bb-980e-4180-bc18-c15f92c78bb4%2Ftangly1024.jpg?table=collection&id=8e7acf17-de09-4fa1-abde-b5b80ad4a813&t=8e7acf17-de09-4fa1-abde-b5b80ad4a813&width=100&cache=v2',
-  //    STARTER_TEAM_ITEM_NICKNAME: 'Tangly',
-  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
-  //  },
-  //  {
-  //    STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-01.png',
-  //    STARTER_TEAM_ITEM_NICKNAME: 'Melissa Tatcher',
-  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
-  //  },
-  //  {
-  //    STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-02.png',
-  //    STARTER_TEAM_ITEM_NICKNAME: 'Stuard Ferrel',
-  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
-  //  },
-  //  {
-  //    STARTER_TEAM_ITEM_AVATAR: '/images/starter/team/team-03.png',
-  //    STARTER_TEAM_ITEM_NICKNAME: 'Eva Hudson',
-  //    STARTER_TEAM_ITEM_DESCRIPTION: 'Creative Designer'
-  //  }
-  //],
+  STARTER_TEAM_ITEMS: [
+    {
+      STARTER_TEAM_ITEM_AVATAR:
+        '/my-images/starter/team/t01.png',
+      STARTER_TEAM_ITEM_NICKNAME: 'Monkey007',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t02.png',
+      STARTER_TEAM_ITEM_NICKNAME: '虚位以待',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t02.png',
+      STARTER_TEAM_ITEM_NICKNAME: '虚位以待',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
+    },
+    {
+      STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t02.png',
+      STARTER_TEAM_ITEM_NICKNAME: '虚位以待',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Creative Designer'
+    }
+  ],
 
   // 博客文章区块 在notion配置
   STARTER_BLOG_ENABLE: true, // 首页博文区块开关
