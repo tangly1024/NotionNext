@@ -73,7 +73,7 @@ const CONFIG = {
   STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
 
   //这个地方图片在notion配置不成功 尝试在这里
-  STARTER_ABOUT_IMAGE_2: 'public/my-images/starter/about/a03.png',
+  STARTER_ABOUT_IMAGE_2: '/my-images/starter/about/a01.png',
   STARTER_ABOUT_TIPS_1: '7000+',
   STARTER_ABOUT_TIPS_2: '博客站点',
   STARTER_ABOUT_TIPS_3: '正在线上运行',
