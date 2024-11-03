@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import { useGlobal } from '@/lib/global'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * 目录导航组件
@@ -54,28 +54,33 @@ const Catalog = ({ toc }) => {
 
   // 目录自动滚动
   const tRef = useRef(null)
-
   // 无目录就直接返回空
   if (!toc || toc?.length < 1) {
     return <></>
   }
-
-  return <div id='catalog'>
-    <div className='w-full dark:text-gray-300 mb-2'><i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}</div>
-    <div className='h-96'>
-      <nav ref={tRef} className='h-full overflow-y-auto overscroll-none scroll-hidden font-sans text-black'>
-        {toc.map((tocItem) => {
+  return (
+    <div id='catalog' className='flex-1 flex-col flex overflow-hidden'>
+      <div className='w-full dark:text-gray-300 mb-2'>
+        <i className='mr-1 fas fa-stream' />
+        {locale.COMMON.TABLE_OF_CONTENTS}
+      </div>
+      <nav
+        ref={tRef}
+        className='flex-1 overflow-auto  overscroll-none scroll-hidden   text-black mb-6'>
+        {toc.map(tocItem => {
           const id = uuidToId(tocItem.id)
           return (
             <a
               key={id}
               href={`#${id}`}
-              className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
-              notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
-            >
-              <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                className={`${activeSection === id && ' font-bold text-red-400 underline'}`}
-              >
+              className={`${activeSection === id && 'dark:border-white border-gray-800 text-gray-800 font-bold'} hover:font-semibold border-l pl-4 block hover:text-gray-800 border-lduration-300 transform dark:text-gray-400 dark:border-gray-400
+        notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
+              <span
+                style={{
+                  display: 'inline-block',
+                  marginLeft: tocItem.indentLevel * 16
+                }}
+                className={`truncate ${activeSection === id ? ' font-bold text-black dark:text-white underline' : ''}`}>
                 {tocItem.text}
               </span>
             </a>
@@ -83,7 +88,7 @@ const Catalog = ({ toc }) => {
         })}
       </nav>
     </div>
-  </div>
+  )
 }
 
 export default Catalog

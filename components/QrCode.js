@@ -14,16 +14,18 @@ export default function QrCode({ value }) {
       return
     }
     loadExternalResource(qrCodeCDN, 'js').then(url => {
-      const QRCode = window.QRCode
-      qrcode = new QRCode(document.getElementById('qrcode'), {
-        text: value,
-        width: 256,
-        height: 256,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.H
-      })
-    //   console.log('二维码', qrcode, value)
+      const QRCode = window?.QRCode
+      if (typeof QRCode !== 'undefined') {
+        qrcode = new QRCode(document.getElementById('qrcode'), {
+          text: value,
+          width: 256,
+          height: 256,
+          colorDark: '#000000',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        })
+        //   console.log('二维码', qrcode, value)
+      }
     })
     return () => {
       if (qrcode) {
