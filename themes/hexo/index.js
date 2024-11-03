@@ -34,7 +34,6 @@ import TocDrawerButton from './components/TocDrawerButton'
 import CONFIG from './config'
 import { Style } from './style'
 import { AdSlot } from '@/components/GoogleAdsense'
-import { siteConfig } from '@/lib/config'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
