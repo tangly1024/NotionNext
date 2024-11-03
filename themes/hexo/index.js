@@ -33,7 +33,6 @@ import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
 import CONFIG from './config'
 import { Style } from './style'
-import replaceSearchResult from '@/components/Mark'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
 
