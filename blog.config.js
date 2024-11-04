@@ -256,6 +256,13 @@ const BLOG = {
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
     {
+      name: 'morena',
+      artist: 'maria＆victor',
+      url: 'http://163cn.tv/yN6FT9z',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
+    {
       name: 'PIMP',
       artist: 'Bacao Rhythm & Steel Band',
       url: 'http://music.163.com/song/media/outer/url?id=1409490569.mp3',
