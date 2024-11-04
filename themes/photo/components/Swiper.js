@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import PostItemCard from './PostItemCard'
 
+/**
+ * 滑动走马灯
+ * @param {*} param0
+ * @returns
+ */
 const InertiaCarousel = ({ posts }) => {
   const carouselRef = useRef(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -14,7 +19,7 @@ const InertiaCarousel = ({ posts }) => {
   const startDrag = e => {
     e.preventDefault()
     setIsDragging(true)
-    const startPosition = e.pageX || e.touches[0].pageX
+    const startPosition = e.pageX || e.touches?.[0].pageX
     setStartX(startPosition - carouselRef.current.offsetLeft)
     setScrollLeft(carouselRef.current.scrollLeft)
     setLastX(startPosition) // 初始化上一次的位置
@@ -72,7 +77,7 @@ const InertiaCarousel = ({ posts }) => {
   return (
     <div
       ref={carouselRef}
-      className={`flex w-screen overflow-x-auto space-x-6 ${
+      className={`flex w-screen overflow-x-auto space-x-6 md:h-[85vh] ${
         isDragging ? 'cursor-grabbing' : 'cursor-grab'
       }`}
       onMouseDown={startDrag}
@@ -85,11 +90,11 @@ const InertiaCarousel = ({ posts }) => {
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
       {/* Carousel items */}
 
-      <div className='min-w-[33vw]' />
+      <div className='min-w-[5vw] md:min-w-[27vw]' />
       {posts &&
         posts?.map((post, index) => (
           <PostItemCard
-            className='min-w-[33vw] flex items-center justify-center'
+            className='min-w-[80vw] md:min-w-[50vw]  w-full flex items-end justify-center'
             key={index}
             post={post}
           />

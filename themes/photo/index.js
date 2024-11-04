@@ -12,6 +12,7 @@ import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import Announcement from './components/Announcement'
 import ArchiveDateList from './components/ArchiveDateList'
 import ArticleFooter from './components/ArticleFooter'
 import { ArticleHeader } from './components/ArticleInfo'
@@ -137,6 +138,8 @@ const LayoutPostList = props => {
       <SlotBar {...props} />
       {/* 滑动组件 */}
       <Swiper {...props} />
+      {/* 公告 */}
+      <Announcement {...props} className='mx-auto w-full max-w-5xl my-12' />
     </div>
   )
 }
