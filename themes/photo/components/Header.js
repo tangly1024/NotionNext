@@ -9,7 +9,7 @@ import MenuHierarchical from './MenuHierarchical'
 export const Header = props => {
   return (
     <>
-      <header className='w-full px-8 h-20 z-20 flex lg:flex-row md:flex-col justify-center items-center'>
+      <header className='w-full px-8 h-20 z-30 flex lg:flex-row md:flex-col justify-center items-center'>
         {/* 左侧Logo */}
         <Link
           href='/'
@@ -18,7 +18,7 @@ export const Header = props => {
         </Link>
 
         {/* 右侧使用一个三级菜单 */}
-        <div className='md:w-auto text-center flex space-x-2'>
+        <div className='ml-6 mt-7'>
           <MenuHierarchical {...props} />
         </div>
       </header>

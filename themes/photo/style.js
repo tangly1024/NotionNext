@@ -11,39 +11,17 @@ const Style = () => {
       .dark body {
         background-color: black;
       }
-
-      .shadow-movie {
-        box-shadow:
-          0 26px 58px 0 rgba(0, 0, 0, 0.22),
-          0 5px 14px 0 rgba(0, 0, 0, 0.18);
+      // 毛玻璃背景色
+      .bg-glassmorphism {
+        background: hsla(0, 0%, 100%, 0.4);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
       }
 
-      // 视频聚合走马灯
-      .notion-carousel {
-        width: 100%; /* 根据需要调整 */
-        overflow: hidden;
-      }
-
-      .notion-carousel-wrapper .notion-carousel {
-        display: none;
-      }
-
-      .notion-carousel-wrapper .notion-carousel.active {
-        display: block;
-      }
-
-      .notion-carousel-route div {
-        cursor: pointer;
-        margin-bottom: 0.2rem;
-      }
-
-      .notion-carousel-route div:hover {
-        text-decoration: underline; 
-      }
-
-      .notion-carousel div {
-        height: auto !important;
-        aspect-ratio: 2/1 !important;
+      .dark .bg-glassmorphism {
+        background: hsla(0, 0%, 0%, 0.4);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
       }
     `}</style>
   )

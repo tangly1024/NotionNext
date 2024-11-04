@@ -65,7 +65,7 @@ const LayoutBase = props => {
     <ThemeGlobalPhoto.Provider
       value={{ searchModal, expandMenu, updateExpandMenu, collapseRef }}>
       <div
-        id='theme-movie'
+        id='theme-photo'
         className={`${siteConfig('FONT_STYLE')} dark:text-gray-300 duration-300 transition-all bg-white dark:bg-[#2A2A2A] scroll-smooth min-h-screen flex flex-col justify-between`}>
         <Style />
 
@@ -133,7 +133,7 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   return (
-    <div className='max-w-[90rem] mx-auto'>
+    <div className='mx-auto'>
       <SlotBar {...props} />
       {/* 滑动组件 */}
       <Swiper {...props} />
@@ -480,15 +480,14 @@ const LayoutTagIndex = props => {
 }
 
 export {
-    Layout404,
-    LayoutArchive,
-    LayoutBase,
-    LayoutCategoryIndex,
-    LayoutIndex,
-    LayoutPostList,
-    LayoutSearch,
-    LayoutSlug,
-    LayoutTagIndex,
-    CONFIG as THEME_CONFIG
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }
-

@@ -2,7 +2,7 @@ import Collapse from '@/components/Collapse'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePhotoGlobal } from '..'
 import CONFIG from '../config'
 import { MenuItemCollapse } from './MenuItemCollapse'
@@ -19,6 +19,9 @@ export default function MenuHierarchical(props) {
 
   const toggleMenuOpen = () => {
     setIsOpen(!isOpen)
+  }
+  const closeModal = () => {
+    setIsOpen(false)
   }
   let links = [
     {
@@ -59,19 +62,31 @@ export default function MenuHierarchical(props) {
     links = customMenu
   }
 
+  const [title, setTitle] = useState(siteConfig('BIO'))
+
+  useEffect(() => {
+    const currentLink = links.find(link => link.href === router.pathname)
+    if (currentLink) {
+      setTitle(currentLink.name)
+    }
+    closeModal()
+  }, [router])
+
   return (
-    <div className='absolute top-0'>
+    <div className='absolute top-0 mt-7'>
       {/* 菜单按钮 */}
-      <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
-        {isOpen ? (
-          <i className='fas fa-times' />
-        ) : (
-          <i className='fas fa-bars' />
-        )}
+      <div
+        onClick={toggleMenuOpen}
+        className=' whitespace-nowrap cursor-pointer'>
+        {title}
       </div>
-      <Collapse collapseRef={collapseRef} type='vertical' isOpen={isOpen}>
+      <Collapse
+        className='z-50'
+        collapseRef={collapseRef}
+        type='vertical'
+        isOpen={isOpen}>
         {/* 移动端菜单 */}
-        <menu id='nav-menu-mobile' className='my-auto justify-start'>
+        <menu id='nav-menu-mobile' className='my-4 space-y-4 justify-start'>
           {links?.map(
             (link, index) =>
               link &&
@@ -87,6 +102,13 @@ export default function MenuHierarchical(props) {
           )}
         </menu>
       </Collapse>
+      {/* 遮罩 */}
+      {isOpen && (
+        <div
+          onClick={closeModal}
+          className='-z-10 fixed top-0 left-0 w-full h-full flex items-center justify-center bg-glassmorphism'
+        />
+      )}
     </div>
   )
 }

@@ -28,14 +28,12 @@ export const MenuItemCollapse = props => {
 
   return (
     <>
-      <div
-        className='select-none w-full px-6 py-2  text-left '
-        onClick={toggleShow}>
+      <div className='select-none w-full text-left ' onClick={toggleShow}>
         {!hasSubMenu && (
           <Link
             href={link?.href}
             target={link?.target}
-            className='flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest'>
+            className='flex justify-between dark:text-gray-200 no-underline tracking-widest'>
             <span className=' transition-all items-center duration-200'>
               {link?.icon && <i className={link.icon + ' mr-4'} />}
               {link?.name}
@@ -45,7 +43,7 @@ export const MenuItemCollapse = props => {
         {hasSubMenu && (
           <div
             onClick={hasSubMenu ? toggleOpenSubMenu : null}
-            className='flex items-center justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest'>
+            className='flex items-center justify-between cursor-pointer  dark:text-gray-200 no-underline tracking-widest'>
             <span className='transition-all items-center duration-200'>
               {link?.icon && <i className={link.icon + ' mr-4'} />}
               {link?.name}
@@ -66,9 +64,9 @@ export const MenuItemCollapse = props => {
             return (
               <div
                 key={index}
-                className='dark:text-gray-200 text-left px-3 justify-start  tracking-widest transition-all duration-200  py-3 pr-6'>
+                className='dark:text-gray-200 text-left px-3 justify-start py-1 tracking-widest transition-all duration-200 pr-6'>
                 <Link href={sLink.href} target={link?.target}>
-                  <span className='text-sm ml-4 whitespace-nowrap'>
+                  <span className='ml-4 whitespace-nowrap'>
                     {link?.icon && <i className={sLink.icon + ' mr-2'} />}{' '}
                     {sLink.title}
                   </span>
