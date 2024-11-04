@@ -90,20 +90,7 @@ export const Header = props => {
                     </SignedIn>
                   </>
                 )}
-                {!enableClerk && (
-                  <div className='hidden sm:flex gap-4'>
-                    <a
-                      href={siteConfig('STARTER_NAV_BUTTON_1_URL')}
-                      className={`loginBtn ${buttonTextColor} p-2 text-base font-medium hover:opacity-70`}>
-                      {siteConfig('STARTER_NAV_BUTTON_1_TEXT')}
-                    </a>
-                    <a
-                      href={siteConfig('STARTER_NAV_BUTTON_2_URL')}
-                      className={`signUpBtn ${buttonTextColor} p-2 rounded-md bg-white bg-opacity-20 py-2 text-base font-medium duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark`}>
-                      {siteConfig('STARTER_NAV_BUTTON_2_TEXT')}
-                    </a>
-                  </div>
-                )}
+
               </div>
             </div>
           </div>
