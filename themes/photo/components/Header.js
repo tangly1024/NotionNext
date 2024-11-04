@@ -13,7 +13,7 @@ export const Header = props => {
         {/* 左侧Logo */}
         <Link
           href='/'
-          className='logo whitespace-nowrap text-2xl md:text-3xl font-bold text-gray-dark no-underline flex items-center'>
+          className='logo whitespace-nowrap text-2xl md:text-3xl text-gray-dark no-underline flex items-center'>
           {siteConfig('TITLE')}
         </Link>
 

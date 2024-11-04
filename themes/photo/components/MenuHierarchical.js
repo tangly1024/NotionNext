@@ -73,7 +73,7 @@ export default function MenuHierarchical(props) {
   }, [router])
 
   return (
-    <div className='absolute top-0 mt-7'>
+    <div className='absolute top-0 mt-7 italic text-gray-700 dark:text-gray-200'>
       {/* 菜单按钮 */}
       <div
         onClick={toggleMenuOpen}

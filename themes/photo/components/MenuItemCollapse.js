@@ -28,12 +28,12 @@ export const MenuItemCollapse = props => {
 
   return (
     <>
-      <div className='select-none w-full text-left ' onClick={toggleShow}>
+      <div className='select-none w-full text-left' onClick={toggleShow}>
         {!hasSubMenu && (
           <Link
             href={link?.href}
             target={link?.target}
-            className='flex justify-between dark:text-gray-200 no-underline tracking-widest'>
+            className='flex justify-between no-underline tracking-widest'>
             <span className=' transition-all items-center duration-200'>
               {link?.icon && <i className={link.icon + ' mr-4'} />}
               {link?.name}
@@ -43,13 +43,13 @@ export const MenuItemCollapse = props => {
         {hasSubMenu && (
           <div
             onClick={hasSubMenu ? toggleOpenSubMenu : null}
-            className='flex items-center justify-between cursor-pointer  dark:text-gray-200 no-underline tracking-widest'>
+            className='flex items-center justify-between cursor-pointer  no-underline tracking-widest'>
             <span className='transition-all items-center duration-200'>
               {link?.icon && <i className={link.icon + ' mr-4'} />}
               {link?.name}
             </span>
             <i
-              className={`select-none px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''} text-gray-400`}></i>
+              className={`select-none px-2 fas fa-chevron-left transition-all duration-200 ${isOpen ? '-rotate-90' : ''} `}></i>
           </div>
         )}
       </div>
