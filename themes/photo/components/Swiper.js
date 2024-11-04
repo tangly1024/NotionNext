@@ -77,7 +77,7 @@ const InertiaCarousel = ({ posts }) => {
   return (
     <div
       ref={carouselRef}
-      className={`flex w-screen overflow-x-auto space-x-6 md:h-[85vh] ${
+      className={`flex w-screen overflow-x-auto space-x-6 ${
         isDragging ? 'cursor-grabbing' : 'cursor-grab'
       }`}
       onMouseDown={startDrag}
