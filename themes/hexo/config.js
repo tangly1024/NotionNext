@@ -12,7 +12,7 @@ const CONFIG = {
   // 已知未修复bug, 在移动端开启true后会加载不出图片； 暂时建议设置为false。
   HEXO_HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂动； false则随鼠标滚动 ;
   // 是否显示开始阅读按钮
-  HEXO_SHOW_START_READING: true,
+  HEXO_SHOW_START_READING: false,
 
   // 菜单配置
   HEXO_MENU_INDEX: true, // 显示首页
@@ -31,14 +31,14 @@ const CONFIG = {
   HEXO_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
 
   HEXO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
-  HEXO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
+  HEXO_ARTICLE_COPYRIGHT: false, // 显示文章版权声明
   HEXO_ARTICLE_RECOMMEND: true, // 文章关联推荐
 
   HEXO_WIDGET_LATEST_POSTS: true, // 显示最新文章卡
   HEXO_WIDGET_ANALYTICS: false, // 显示统计卡
   HEXO_WIDGET_TO_TOP: true,
   HEXO_WIDGET_TO_COMMENT: true, // 跳到评论区
-  HEXO_WIDGET_DARK_MODE: true, // 夜间模式
-  HEXO_WIDGET_TOC: true // 移动端悬浮目录
+  HEXO_WIDGET_DARK_MODE: false, // 夜间模式
+  HEXO_WIDGET_TOC: false // 移动端悬浮目录
 }
 export default CONFIG
