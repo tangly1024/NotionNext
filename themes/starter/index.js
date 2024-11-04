@@ -95,9 +95,6 @@ const LayoutIndex = props => {
       {/* 价格 */}
       {siteConfig('STARTER_PRICING_ENABLE', true, CONFIG) && <Pricing />}
       {/* 评价展示 */}
-      {siteConfig('STARTER_TESTIMONIALS_ENABLE', true, CONFIG) && (
-        <Testimonials />
-      )}
       {/* 常见问题 */}
       {siteConfig('STARTER_FAQ_ENABLE', true, CONFIG) && <FAQ />}
       {/* 团队介绍 */}
