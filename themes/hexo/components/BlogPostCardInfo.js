@@ -61,10 +61,17 @@ export const BlogPostCardInfo = ({
 
         {/* 摘要 */}
         {(!showPreview || showSummary) && !post.results && (
-          <main className='line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7'>
+          <main className='my-3 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
             {post.summary}
           </main>
         )}
+
+        // 限制摘要行数不超过两行
+        // {(!showPreview || showSummary) && !post.results && (
+        //   <main className='line-clamp-2 replace my-3 text-gray-700  dark:text-gray-300 text-sm font-light leading-7'>
+        //     {post.summary}
+        //   </main>
+        // )}
 
         {/* 搜索结果 */}
         {post.results && (
