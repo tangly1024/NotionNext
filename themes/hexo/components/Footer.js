@@ -10,12 +10,11 @@ const Footer = () => {
     <footer
       className='relative z-10 dark:bg-black flex-shrink-0 bg-hexo-light-gray justify-center text-center m-auto w-full leading-6 text-gray-600 dark:text-gray-100 text-sm p-6'
     >
-      {/* 仅显示年份和作者名字 */}
+      {/* 显示年份、心形图标和作者名字 */}
       <i className='fas fa-copyright' /> {copyrightDate}{' '}
-      <span>
-        <a href={siteConfig('LINK')} className='underline font-bold dark:text-gray-300'>
-          {siteConfig('AUTHOR')}
-        </a>
+      <i className='mx-1 animate-pulse fas fa-heart' />
+      <span className='font-bold dark:text-gray-300'>
+        {siteConfig('AUTHOR')}
       </span>
     </footer>
   )
