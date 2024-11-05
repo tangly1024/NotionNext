@@ -69,9 +69,10 @@ const Catalog = ({ toc }) => {
         <i className='mr-1 fas fa-stream' />
         {locale.COMMON.TABLE_OF_CONTENTS}
       </div>
-      <div className='w-full py-3'>
-        <Progress />
-      </div>
+      // 不显示进度条
+      // <div className='w-full py-3'>
+      //   <Progress />
+      // </div>
       <div
         className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden'
         ref={tRef}>
