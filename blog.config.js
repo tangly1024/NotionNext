@@ -258,7 +258,7 @@ const BLOG = {
     {
       name: 'morena',
       artist: 'maria＆victor',
-      url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VWQ1F6NTFlT081Q3Q3SF96TmtubkowQm9oSjVyLXk1RE9FYTRCZldRUG5qSlE.mp3',
+      url: 'http://music.163.com/song/media/outer/url?id=1438724778.mp3',
       cover:
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
