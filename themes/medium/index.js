@@ -209,7 +209,7 @@ const LayoutSlug = props => {
       {/* 文章锁 */}
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      {!lock && (
+      {!lock && post && (
         <div>
           {/* 文章信息 */}
           <ArticleInfo {...props} />

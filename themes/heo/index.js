@@ -292,7 +292,7 @@ const LayoutSlug = props => {
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
-        {!lock && (
+        {!lock && post && (
           <div className='mx-auto md:w-full md:px-5'>
             {/* 文章主体 */}
             <article

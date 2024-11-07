@@ -315,7 +315,7 @@ const LayoutSlug = props => {
 
   return (
     <>
-      {!lock ? (
+      {!lock ? post && (
         <div
           id='article-wrapper'
           className='px-2 max-w-5xl 2xl:max-w-[70%] mx-auto'>

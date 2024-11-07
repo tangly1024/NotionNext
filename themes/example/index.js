@@ -178,7 +178,7 @@ const LayoutSlug = props => {
     <>
       {lock ? (
         <PostLock validPassword={validPassword} />
-      ) : (
+      ) : post && (
         <div>
           <PostMeta post={post} />
           <div id='article-wrapper'>

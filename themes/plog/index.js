@@ -198,7 +198,7 @@ const LayoutSlug = props => {
     <>
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      {!lock && (
+      {!lock && post && (
         <div className='px-2 my-16 max-w-6xl mx-auto'>
           <>
             <ArticleInfo post={post} />

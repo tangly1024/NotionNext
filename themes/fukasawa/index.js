@@ -159,7 +159,7 @@ const LayoutSlug = props => {
     <>
       {lock ? (
         <ArticleLock validPassword={validPassword} />
-      ) : (
+      ) : post && (
         <ArticleDetail {...props} />
       )}
     </>

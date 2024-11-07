@@ -253,7 +253,7 @@ const LayoutSlug = props => {
           className={`${fullWidth ? '' : '-mt-32'} transition-all duration-300 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black`}>
           {lock && <ArticleLock validPassword={validPassword} />}
 
-          {!lock && (
+          {!lock && post && (
             <div className='overflow-x-auto md:w-full px-3 '>
               {/* 文章信息 */}
               {post?.type && post?.type === 'Post' && (
