@@ -219,14 +219,14 @@ const CONFIG = {
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t02.png',
-      STARTER_TEAM_ITEM_NICKNAME: '虚位以待',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Marketing Expert'
+      STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t04.jpg',
+      STARTER_TEAM_ITEM_NICKNAME: 'Pancake',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Guarantee'
     },
     {
-      STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t02.png',
-      STARTER_TEAM_ITEM_NICKNAME: '虚位以待',
-      STARTER_TEAM_ITEM_DESCRIPTION: 'Digital Marketer'
+      STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t03.png',
+      STARTER_TEAM_ITEM_NICKNAME: 'Moon',
+      STARTER_TEAM_ITEM_DESCRIPTION: 'Inspect'
     },
     {
       STARTER_TEAM_ITEM_AVATAR: '/my-images/starter/team/t02.png',
