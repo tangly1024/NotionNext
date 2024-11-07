@@ -18,13 +18,13 @@ const PostItemCardTop = ({ post, showSummary }) => {
   return (
     <div
       key={post.id}
-      data-aos='fade-up'
-      data-aos-duration='300'
-      data-aos-once='false'
-      data-aos-anchor-placement='top-bottom'
+      // data-aos='fade-up'
+      // data-aos-duration='300'
+      // data-aos-once='false'
+      // data-aos-anchor-placement='top-bottom'
       className='mb-6 max-w-screen-3xl '>
       <div className='flex flex-col w-full'>
-        {siteConfig('MAGZINE_POST_LIST_COVER') && (
+        {siteConfig('MAGZINE_POST_LIST_COVER') && post?.pageCoverThumbnail && (
           <Link
             href={post?.href}
             passHref
@@ -33,6 +33,8 @@ const PostItemCardTop = ({ post, showSummary }) => {
             }>
             <div className='w-full max-h-80 object-cover overflow-hidden mb-2'>
               <LazyImage
+                priority
+                alt={post?.title}
                 src={post.pageCoverThumbnail}
                 style={post.pageCoverThumbnail ? {} : { height: '0px' }}
                 className='w-full max-h-80 object-cover hover:scale-125 duration-150'

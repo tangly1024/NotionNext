@@ -30,7 +30,7 @@ const ThemeSwitch = () => {
         <div
           id='draggableBox'
           style={{ left: '0px', top: '80vh' }}
-          className='border fixed group flex flex-col items-start space-y-2 overflow-hidden z-20 p-3
+          className='border dark:border-gray-600 fixed group flex flex-col items-start space-y-2 overflow-hidden z-20 p-3
                     dark:text-white bg-white dark:bg-black 
                       rounded-xl shadow-lg hover:scale-105 hover:shadow-2xl   '>
           {/* 主题切换按钮 */}
@@ -64,16 +64,16 @@ const ThemeSwitch = () => {
       </Draggable>
 
       <SideBarDrawer
-        className='p-10'
+        className='p-10 max-w-3xl 2xl:max-w-5xl dark:text-white bg-white dark:bg-black '
         isOpen={sideBarVisible}
         showOnPC={true}
         onClose={() => {
           setSideBarVisible(false)
         }}>
         {/* 开关 */}
-        <div className='flex items-center justify-between font-bold dark:text-white'>
+        <div className='flex items-center justify-between font-bold'>
           {/* 深色模式切换 */}
-          <div className='border text-sm flex items-center w-32 duration-200 hover:bg-green-500 p-2'>
+          <div className='border dark:border-gray-60 text-sm flex items-center w-32 duration-200 hover:bg-green-500 p-2'>
             <DarkModeButton />
             <div
               onClick={toggleDarkMode}
@@ -92,13 +92,13 @@ const ThemeSwitch = () => {
           </div>
         </div>
 
-        <hr className='my-4' />
+        <hr className='my-4 dark:border-gray-600' />
 
         <div>点击下方主题进行切换.</div>
         <div> Click below to switch the theme.</div>
 
         {/* 陈列所有主题 */}
-        <div>
+        <div className='grid lg:grid-cols-2 gap-6'>
           {THEMES?.map(t => {
             return (
               <div

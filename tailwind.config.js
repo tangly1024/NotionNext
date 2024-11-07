@@ -14,19 +14,13 @@ module.exports = {
     screens: {
       sm: '540px',
       // => @media (min-width: 576px) { ... }
-
       md: '720px',
       // => @media (min-width: 768px) { ... }
-
       lg: '960px',
       // => @media (min-width: 992px) { ... }
-
       xl: '1140px',
       // => @media (min-width: 1200px) { ... }
-
-      '2xl': '1320px',
-      // => @media (min-width: 1400px) { ... }
-      '3xl': '1920px'
+      '2xl': '1536px'
     },
     container: {
       center: true,
@@ -71,7 +65,8 @@ module.exports = {
       maxWidth: {
         side: '14rem',
         '9/10': '90%',
-        'screen-3xl': '1440px'
+        'screen-3xl': '1440px',
+        'screen-4xl': '1560px'
       },
       boxShadow: {
         input: '0px 7px 20px rgba(0, 0, 0, 0.03)',

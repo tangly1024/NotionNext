@@ -22,9 +22,9 @@ const DarkModeButton = props => {
 
   return (
     <div
-      onClick={toggleDarkMode}
       className={`${className || ''} flex justify-center dark:text-gray-200 text-gray-800`}>
       <div
+        onClick={toggleDarkMode}
         id='darkModeButton'
         className=' hover:scale-110 cursor-pointer transform duration-200 w-5 h-5'>
         {' '}
