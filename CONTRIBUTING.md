@@ -1,4 +1,4 @@
-# Contributing
+# Contributing 
 
 - [Setup](#setup)
 - [Creating new themes](#creating-new-themes)
