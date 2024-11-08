@@ -9,7 +9,7 @@ const CusdisComponent = ({ frontMatter }) => {
   const { isDarkMode, lang } = useGlobal()
   const src = siteConfig('COMMENT_CUSDIS_SCRIPT_SRC')
   const i18nForCusdis = siteConfig('LANG').toLowerCase().indexOf('zh') === 0 ? siteConfig('LANG').toLowerCase() : siteConfig('LANG').toLowerCase().substring(0, 2)
-  const langCDN = siteConfig('COMMENT_CUSDIS_LANG_SRC', `https://cusdis.com/js/widget/lang/${i18nForCusdis}.js`)
+  const langCDN = siteConfig('COMMENT_CUSDIS_LANG_SRC', 'https://cusdis.com/js/widget/lang/zh-cn.js')
 
   //   处理cusdis主题
   useEffect(() => {
