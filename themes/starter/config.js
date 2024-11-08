@@ -6,7 +6,7 @@ const CONFIG = {
   STARTER_LOGO: '/images/starter/logo/logo.svg', // 普通logo图片 示例：/images/starter/logo/logo.svg
   STARTER_LOGO_WHITE: '/images/starter/logo/logo.svg', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
 
-  // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
+  // MENU ，菜单部分不在此处配置，请在Notion数据库中添加MENU
 
   // 英雄区块导航
   STARTER_HERO_ENABLE: true, // 开启英雄区
