@@ -276,10 +276,12 @@ const LayoutSlug = props => {
         {/* 广告醒图 */}
         <BannerFullWidth />
         {/* 推荐关联文章 */}
-        <PostSimpleListHorizontal
-          title={locale.COMMON.RELATE_POSTS}
-          posts={recommendPosts}
-        />
+        {recommendPosts && recommendPosts.length > 0 && (
+          <PostSimpleListHorizontal
+            title={locale.COMMON.RELATE_POSTS}
+            posts={recommendPosts}
+          />
+        )}
       </div>
     </>
   )
