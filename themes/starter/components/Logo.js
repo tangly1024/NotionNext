@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
+import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
@@ -48,14 +49,14 @@ export const Logo = props => {
       <div className='navbar-logo flex items-center w-full py-5 cursor-pointer'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {logo && (
-          <img
+          <LazyImage
+            priority
             onClick={() => {
               router.push('/')
             }}
             src={logo}
-            height={14}
             alt='logo'
-            className='header-logo w-full mr-1'
+            className='header-logo mr-1 h-8'
           />
         )}
         {/* logo文字 */}
