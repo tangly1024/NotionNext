@@ -33,7 +33,7 @@ export const Header = props => {
     return () => {
       window.removeEventListener('scroll', navBarScollListener)
     }
-  }, [[isDarkMode]])
+  }, [isDarkMode])
 
   // 滚动监听
   const throttleMs = 200
@@ -58,7 +58,7 @@ export const Header = props => {
         <div className='container'>
           <div className='relative -mx-4 flex items-center justify-between'>
             {/* Logo */}
-            <Logo />
+            <Logo {...props} />
 
             <div className='flex w-full items-center justify-between px-4'>
               {/* 中间菜单 */}
