@@ -10,10 +10,12 @@ import { useEffect, useState } from 'react'
  * 站点图标
  * @returns
  */
-export const Logo = ({ white }) => {
+export const Logo = props => {
+  const { white, NOTION_CONFIG } = props
   const router = useRouter()
-  const { isDarkMode } = useGlobal()
   const logoWhite = siteConfig('STARTER_LOGO_WHITE')
+  const logoNormal = siteConfig('STARTER_LOGO')
+  const { isDarkMode } = useGlobal()
   const [logo, setLogo] = useState(logoWhite)
   const [logoTextColor, setLogoTextColor] = useState('text-white')
 
@@ -24,11 +26,12 @@ export const Logo = ({ white }) => {
       const scrollY = window.scrollY
       // 何时显示浅色或白底的logo
       const homePageNavBar = router.route === '/' && scrollY < 10 // 在首页并且视窗在页面顶部
+
       if (white || isDarkMode || homePageNavBar) {
-        setLogo(siteConfig('STARTER_LOGO_WHITE'))
+        setLogo(logoWhite)
         setLogoTextColor('text-white')
       } else {
-        setLogo(siteConfig('STARTER_LOGO'))
+        setLogo(logoNormal)
         setLogoTextColor('text-black')
       }
     }, throttleMs)
@@ -50,8 +53,9 @@ export const Logo = ({ white }) => {
               router.push('/')
             }}
             src={logo}
+            height={14}
             alt='logo'
-            className='header-logo w-full'
+            className='header-logo w-full mr-1'
           />
         )}
         {/* logo文字 */}
