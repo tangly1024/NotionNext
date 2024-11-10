@@ -1,1 +1,2 @@
-google.com, pub-2708419466378217, DIRECT, f08c47fec0942fa0
+# 格式：广告系统域名，发布商ID，账户类型，认证ID(可选)
+google.com, pub-您的发布商ID, DIRECT, f08c47fec0942fa0
