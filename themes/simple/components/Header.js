@@ -3,10 +3,12 @@ import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import SocialButton from './SocialButton'
+import DarkModeButton from '@/components/DarkModeButton'
 
 export default function Header({ siteInfo }) {
   return (
-    <header className="bg-white px-4 py-8 text-center dark:bg-gray-900 sm:px-6 lg:px-8">
+    <header className="bg-white px-4 py-8 text-center dark:bg-gray-900 sm:px-6 lg:px-8 relative">
+      <DarkModeButton className='absolute top-8 right-8' />
       <div className="mx-auto max-w-3xl">
         <Link href="/" className="inline-block">
           <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">

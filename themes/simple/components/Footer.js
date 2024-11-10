@@ -1,5 +1,4 @@
 import { BeiAnGongAn } from '@/components/BeiAnGongAn'
-import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 
@@ -13,7 +12,6 @@ export default function Footer() {
     <footer className="border-t bg-background dark:border-gray-700">
       <div className="container mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
-          <DarkModeButton />
           <p className="text-sm text-muted-foreground">
             &copy; {copyrightDate} {siteConfig('AUTHOR')}. All rights reserved.
           </p>
