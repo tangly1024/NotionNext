@@ -1,0 +1,18 @@
+# *
+User-agent: *
+Allow: /
+Allow: /posts/*
+Allow: /article/*
+Allow: /tag/*
+Allow: /category/*
+
+# Host
+Host: https://www.yulin.blog
+
+# Sitemaps
+Sitemap: https://www.yulin.blog/sitemap.xml
+
+# 禁止访问的路径
+# Disallow: /api/*
+# Disallow: /_next/*
+# Disallow: /admin/*
