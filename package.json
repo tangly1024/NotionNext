@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next-sitemap --config next-sitemap.config.js",
     "start": "next start",
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
