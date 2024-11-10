@@ -4,36 +4,29 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import SocialButton from './SocialButton'
 
-/**
- * 网站顶部
- * @returns
- */
-export default function Header(props) {
-  const { siteInfo } = props
-
+export default function Header({ siteInfo }) {
   return (
-    <header className='text-center justify-between items-center px-6 bg-white h-80 dark:bg-black relative z-10'>
-      <div className='float-none inline-block py-12'>
-        <Link href='/'>
-          {/* 可使用一张单图作为logo */}
-          <div className='flex space-x-6 justify-center'>
-            <div className='hover:rotate-45 hover:scale-125 transform duration-200 cursor-pointer justify-center items-center flex'>
+    <header className="bg-white px-4 py-8 text-center dark:bg-gray-900 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-3xl">
+        <Link href="/" className="inline-block">
+          <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
+            <div className="transform cursor-pointer transition duration-200 hover:rotate-45 hover:scale-110">
               <LazyImage
                 priority={true}
                 src={siteInfo?.icon}
-                className='rounded-full'
+                className="rounded-full"
                 width={100}
                 height={100}
                 alt={siteConfig('AUTHOR')}
               />
             </div>
 
-            <div className='flex-col flex justify-center'>
-              <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>
+            <div className="flex flex-col justify-center">
+              <h1 className="py-2 font-serif text-2xl text-gray-800 transition duration-200 hover:scale-105 dark:text-gray-100">
                 {siteConfig('AUTHOR')}
-              </div>
-              <div
-                className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center'
+              </h1>
+              <p
+                className="py-2 font-light text-gray-600 transition duration-200 hover:scale-105 dark:text-gray-300"
                 dangerouslySetInnerHTML={{
                   __html: siteConfig('SIMPLE_LOGO_DESCRIPTION', null, CONFIG)
                 }}
@@ -42,12 +35,12 @@ export default function Header(props) {
           </div>
         </Link>
 
-        <div className='flex justify-center'>
+        <div className="mt-6 flex justify-center">
           <SocialButton />
         </div>
-        <div className='text-xs mt-4 text-gray-500 dark:text-gray-300'>
+        <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
           {siteConfig('DESCRIPTION')}
-        </div>
+        </p>
       </div>
     </header>
   )

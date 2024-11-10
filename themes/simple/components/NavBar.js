@@ -4,28 +4,22 @@ import { useState } from 'react'
 import { useSimpleGlobal } from '..'
 import { MenuList } from './MenuList'
 
-/**
- * 菜单导航
- * @param {*} props
- * @returns
- */
 export default function NavBar(props) {
-  const [showSearchInput, changeShowSearchInput] = useState(false)
+  const [showSearchInput, setShowSearchInput] = useState(false)
   const router = useRouter()
   const { searchModal } = useSimpleGlobal()
 
-  // 展示搜索框
   const toggleShowSearchInput = () => {
     if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal.current.openSearch()
     } else {
-      changeShowSearchInput(!showSearchInput)
+      setShowSearchInput(!showSearchInput)
     }
   }
 
-  const onKeyUp = e => {
-    if (e.keyCode === 13) {
-      const search = document.getElementById('simple-search').innerText
+  const onKeyUp = (e) => {
+    if (e.key === 'Enter') {
+      const search = e.target.value.trim()
       if (search) {
         router.push({ pathname: '/search/' + search })
       }
@@ -33,37 +27,36 @@ export default function NavBar(props) {
   }
 
   return (
-    <nav className='w-full bg-white md:pt-0  relative z-20 shadow border-t border-gray-100 dark:border-hexo-black-gray dark:bg-black'>
-      <div
-        id='nav-bar-inner'
-        className='h-12 mx-auto max-w-9/10 justify-between items-center text-sm md:text-md md:justify-start'>
-        {/* 左侧菜单 */}
-        <div className='h-full w-full float-left text-center md:text-left flex flex-wrap items-stretch md:justify-start md:items-start space-x-4'>
-          {showSearchInput && (
+    <nav className="relative w-full border-y border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+      <div className="mx-auto max-w-9/10 flex h-12 items-center justify-between">
+        <div className="flex flex-1 items-center justify-between">
+          {showSearchInput ? (
             <input
               autoFocus
-              id='simple-search'
+              id="simple-search"
               onKeyUp={onKeyUp}
-              className='float-left w-full outline-none h-full px-4'
-              aria-label='Submit search'
-              type='search'
-              name='s'
-              autoComplete='off'
-              placeholder='Type then hit enter to search...'
+              className="w-full rounded-md border border-gray-300 bg-white px-3 py-1 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              aria-label="Submit search"
+              type="search"
+              name="s"
+              autoComplete="off"
+              placeholder="Type then hit enter to search..."
             />
+          ) : (
+            <MenuList {...props} />
           )}
-          {!showSearchInput && <MenuList {...props} />}
-        </div>
-
-        <div className='absolute right-12 h-full text-center px-2 flex items-center text-blue-400  cursor-pointer'>
-          {/* <!-- extra links --> */}
-          <i
-            className={
-              showSearchInput
-                ? 'fa-regular fa-circle-xmark'
-                : 'fa-solid fa-magnifying-glass' + ' align-middle'
-            }
-            onClick={toggleShowSearchInput}></i>
+          
+          <button
+            onClick={toggleShowSearchInput}
+            className="ml-2 rounded-full p-1 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700"
+            aria-label={showSearchInput ? "Close search" : "Open search"}
+          >
+            <i
+              className={`${
+                showSearchInput ? 'fa-regular fa-circle-xmark' : 'fa-solid fa-magnifying-glass'
+              } text-lg`}
+            ></i>
+          </button>
         </div>
       </div>
     </nav>

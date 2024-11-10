@@ -2,65 +2,70 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export const MenuItemDrop = ({ link }) => {
-  const [show, changeShow] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
 
   if (!link || !link.show) {
     return null
   }
 
+  const handleMouseEnter = () => setIsOpen(true)
+  const handleMouseLeave = () => setIsOpen(false)
+
   return (
     <div
-      onMouseOver={() => changeShow(true)}
-      onMouseOut={() => changeShow(false)}>
-      {!hasSubMenu && (
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {!hasSubMenu ? (
         <Link
           href={link?.href}
           target={link?.target}
-          className=' menu-link pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1'>
-          {link?.icon && (
-            <span className='mr-2'>
-              <i className={link.icon} />
-            </span>
-          )}
+          className="menu-link inline-flex items-center px-4 py-2 text-sm text-gray-700 no-underline transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+        >
+          {link?.icon && <i className={`${link.icon} mr-2`} aria-hidden="true" />}
           {link?.name}
-          {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>}
         </Link>
+      ) : (
+        <button
+          className="menu-link inline-flex items-center px-4 py-2 text-sm text-gray-700 no-underline transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+        >
+          {link?.icon && <i className={`${link.icon} mr-2`} aria-hidden="true" />}
+          {link?.name}
+          <i
+            className={`fas fa-chevron-down ml-2 transition-transform duration-300 ${
+              isOpen ? 'rotate-180' : ''
+            }`}
+            aria-hidden="true"
+          />
+        </button>
       )}
 
-      {hasSubMenu && (
-        <>
-          <div className='cursor-pointer  menu-link pl-2 pr-4 text-gray-700 dark:text-gray-200 no-underline tracking-widest pb-1'>
-            {link?.icon && (
-              <span className='mr-2'>
-                <i className={link.icon} />
-              </span>
-            )}{' '}
-            {link?.name}
-            <i
-              className={`px-2 fas fa-chevron-down duration-500 transition-all ${show ? ' rotate-180' : ''}`}></i>
-          </div>
-        </>
-      )}
-
-      {/* 子菜单 */}
       {hasSubMenu && (
         <ul
-          className={`${show ? 'visible opacity-100 top-12' : 'invisible opacity-0 top-10'} border-gray-100  bg-white  dark:bg-black dark:border-gray-800 transition-all duration-300 z-20 absolute block drop-shadow-lg `}>
-          {link.subMenus.map((sLink, index) => {
-            return (
-              <li
-                key={index}
-                className='not:last-child:border-b-0 border-b text-blue-600 dark:text-blue-300 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 dark:border-gray-800  py-3 pr-6 pl-2'>
-                <Link href={sLink.href} target={link?.target}>
-                  <span className='text-sm text-nowrap'>
-                    {sLink?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                    {sLink.title}
-                  </span>
-                </Link>
-              </li>
-            )
-          })}
+          className={`absolute left-0 z-20 mt-2 w-48 rounded-md border border-gray-200 bg-white py-2 shadow-lg transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 ${
+            isOpen
+              ? 'visible translate-y-0 opacity-100'
+              : 'invisible -translate-y-2 opacity-0'
+          }`}
+        >
+          {link.subMenus.map((subLink, index) => (
+            <li key={index}>
+              <Link
+                href={subLink.href}
+                target={subLink?.target}
+                className="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-blue-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-blue-400"
+              >
+                {subLink?.icon && (
+                  <i className={`${subLink.icon} mr-2`} aria-hidden="true" />
+                )}
+                {subLink.title}
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </div>

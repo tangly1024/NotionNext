@@ -42,12 +42,8 @@ const CONFIG = {
       name: '友情链接',
       menus: [
         {
-          title: 'Tangly的学习笔记',
-          href: 'https://blog.tangly1024.com'
-        },
-        {
-          title: 'NotionNext',
-          href: 'https://www.tangly1024.com'
+          title: 'Sisphs的博客 ｜ 独立开发者',
+          href: 'https://www.yulin.blog'
         }
       ]
     },

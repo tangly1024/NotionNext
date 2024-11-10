@@ -23,7 +23,7 @@ const Style = () => {
   }
   
   #theme-simple .blog-item-title {
-    color: #276077;
+    color: #C54F38;
   }
   
   .dark #theme-simple .blog-item-title {

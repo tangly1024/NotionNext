@@ -1,92 +1,67 @@
-import Collapse from '@/components/Collapse'
-import Link from 'next/link'
 import { useState } from 'react'
+import Link from 'next/link'
+import Collapse from '@/components/Collapse'
 
-/**
- * 折叠菜单
- * @param {*} param0
- * @returns
- */
-export const MenuItemCollapse = props => {
-  const { link } = props
-  const [show, changeShow] = useState(false)
+export const MenuItemCollapse = ({ link, onHeightChange }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
-
-  const [isOpen, changeIsOpen] = useState(false)
-
-  const toggleShow = () => {
-    changeShow(!show)
-  }
-
-  const toggleOpenSubMenu = () => {
-    changeIsOpen(!isOpen)
-  }
 
   if (!link || !link.show) {
     return null
   }
 
+  const toggleSubMenu = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
-    <>
+    <div className="border-b border-gray-200 dark:border-gray-700 dark:bg-gray-800">
       <div
-        className='w-full px-8 py-3 text-left border-b dark:bg-hexo-black-gray dark:border-black'
-        onClick={toggleShow}>
-        {!hasSubMenu && (
+        className="flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+        onClick={hasSubMenu ? toggleSubMenu : undefined}
+      >
+        {!hasSubMenu ? (
           <Link
             href={link?.href}
             target={link?.target}
-            className='items-center flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1'>
-            <span className='text-blue-600 dark:text-blue-300 hover:text-red-400 transition-all items-center duration-200'>
-              {link?.icon && (
-                <span className='mr-2'>
-                  <i className={link.icon} />
-                </span>
-              )}
-              {link?.name}
-            </span>
+            className="flex w-full items-center text-gray-700 no-underline transition-colors hover:text-primary dark:text-gray-200 dark:hover:text-primary-foreground"
+          >
+            {link?.icon && <i className={`${link.icon} mr-2`} aria-hidden="true" />}
+            <span>{link?.name}</span>
           </Link>
-        )}
-        {hasSubMenu && (
-          <div
-            onClick={hasSubMenu ? toggleOpenSubMenu : null}
-            className='items-center flex justify-between pl-2 pr-4 cursor-pointer  dark:text-gray-200 no-underline tracking-widest pb-1'>
-            <span className='text-blue-600 dark:text-blue-300 hover:text-red-400 transition-all items-center duration-200'>
-              {link?.icon && (
-                <span className='mr-2'>
-                  <i className={link.icon} />
-                </span>
-              )}
+        ) : (
+          <>
+            <span className="flex items-center text-gray-700 dark:text-gray-200">
+              {link?.icon && <i className={`${link.icon} mr-2`} aria-hidden="true" />}
               {link?.name}
             </span>
             <i
-              className={`px-2 fa fa-plus transition-all duration-200 ${isOpen && 'rotate-45'} text-gray-400`}></i>
-          </div>
+              className={`fa fa-plus text-gray-400 transition-transform duration-200 ${
+                isOpen ? 'rotate-45' : ''
+              }`}
+              aria-hidden="true"
+            />
+          </>
         )}
       </div>
 
-      {/* 折叠子菜单 */}
       {hasSubMenu && (
-        <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
-          {link.subMenus.map((sLink, index) => {
-            return (
-              <div
-                key={index}
-                className='dark:bg-black text-left px-10 justify-start text-blue-600 dark:text-blue-300 bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
-                <Link href={sLink.href} target={link?.target}>
-                  <span className='ml-4 text-sm'>
-                    {sLink?.icon && (
-                      <span className='mr-2 w-4'>
-                        <i className={sLink.icon} />
-                      </span>
-                    )}
-                    {sLink.title}
-                  </span>
-                </Link>
-              </div>
-            )
-          })}
+        <Collapse isOpen={isOpen} onHeightChange={onHeightChange}>
+          {link.subMenus.map((subLink, index) => (
+            <Link
+              key={index}
+              href={subLink.href}
+              target={subLink?.target}
+              className="block border-t border-gray-100 bg-gray-50 px-6 py-3 text-sm text-gray-700 no-underline transition-colors hover:bg-gray-100 hover:text-primary dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+            >
+              {subLink?.icon && (
+                <i className={`${subLink.icon} mr-2 w-4`} aria-hidden="true" />
+              )}
+              {subLink.title}
+            </Link>
+          ))}
         </Collapse>
       )}
-    </>
+    </div>
   )
 }
