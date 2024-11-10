@@ -1,35 +1,39 @@
 import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
+import { ChevronUp } from 'lucide-react'
 
-/**
- * 跳转到网页顶部
- * 当屏幕下滑500像素后会出现该控件
- * @param targetRef 关联高度的目标html标签
- * @param showPercent 是否显示百分比
- * @returns {JSX.Element}
- * @constructor
- */
 const JumpToTopButton = () => {
   const { locale } = useGlobal()
-  const [show, switchShow] = useState(false)
-  const scrollListener = () => {
-    const scrollY = window.pageYOffset
-    const shouldShow = scrollY > 200
-    if (shouldShow !== show) {
-      switchShow(shouldShow)
-    }
-  }
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
-    document.addEventListener('scroll', scrollListener)
-    return () => document.removeEventListener('scroll', scrollListener)
+    const scrollListener = () => {
+      const shouldShow = window.pageYOffset > 200
+      if (shouldShow !== show) {
+        setShow(shouldShow)
+      }
+    }
+
+    window.addEventListener('scroll', scrollListener)
+    return () => window.removeEventListener('scroll', scrollListener)
   }, [show])
 
-  return <div title={locale.POST.TOP}
-        className={(show ? ' opacity-100 ' : 'invisible  opacity-0') + ' transition-all duration-300 flex items-center justify-center cursor-pointer bg-black h-10 w-10 bg-opacity-40 rounded-sm'}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-    ><i className='fas fa-angle-up text-white ' />
-    </div>
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  return (
+    <button
+      title={locale.POST.TOP}
+      className={`fixed bottom-8 right-8 flex h-12 w-12 items-center justify-center rounded-full bg-black bg-opacity-60 text-white shadow-lg transition-all duration-300 hover:bg-opacity-60 focus:outline-none active:outline-none dark:bg-white dark:bg-opacity-80 dark:text-gray-800 dark:hover:bg-opacity-30 ${
+        show ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
+      }`}
+      onClick={handleClick}
+      aria-label={locale.POST.TOP}
+    >
+      <ChevronUp className="h-6 w-6" />
+    </button>
+  )
 }
 
 export default JumpToTopButton
