@@ -10,7 +10,7 @@ const CONFIG = {
 
   EXAMPLE_POST_LIST_COVER: true, // 列表显示文章封面
 
-  EXAMPLE_TITLE_IMAGE: false, // 标题栏，是否背景图片
+  EXAMPLE_TITLE_IMAGE: true, // 标题栏，是否背景图片
 
   // 文章页面布局
   EXAMPLE_ARTICLE_LAYOUT_VERTICAL: false, // 文章详情，左右布局改为上下布局
