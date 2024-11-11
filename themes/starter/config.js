@@ -298,7 +298,7 @@ const CONFIG = {
   // 页脚三列菜单组
   STARTER_FOOTER_LINK_GROUP: [
     {
-      TITLE: 'About us',
+      TITLE: 'About us ',
       LINK_GROUP: [
         { TITLE: 'Home', URL: '/#home' },
         { TITLE: 'Our story', URL: 'https://www.chin-a-frica.store/Aboutus' },
