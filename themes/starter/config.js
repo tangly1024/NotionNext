@@ -301,14 +301,14 @@ const CONFIG = {
       TITLE: 'About us ',
       LINK_GROUP: [
         { TITLE: 'Home', URL: '/#home' },
-        { TITLE: 'Our story', URL: 'www.chin-a-frica.store/article/guide' },
+        { TITLE: 'Our story', URL: 'https://www.chin-a-frica.store/article/example-1' },
         {
           TITLE: 'What we do',
-          URL: 'https://www.chin-a-frica.store/article/example-1'
+          URL: 'https://www.chin-a-frica.store/article/example-2'
         },
         {
           TITLE: 'Contact us',
-          URL: 'https://www.chin-a-frica.store/article/example-2'
+          URL: 'https://www.chin-a-frica.store/article/example-3'
         }
       ]
     },
@@ -317,13 +317,13 @@ const CONFIG = {
       LINK_GROUP: [
         {
           TITLE: 'Our rates',
-          URL: 'https://www.chin-a-frica.store/article/example-3'
+          URL: 'https://www.chin-a-frica.store/article/example-4'
         },
         {
           TITLE: 'Areas we ship',
-          URL: 'https://www.chin-a-frica.store/article/example-4'
+          URL: 'https://www.chin-a-frica.store/article/example-5'
         },
-        { TITLE: 'Products we ship', URL: 'https://www.chin-a-frica.store/article/example-5' }
+        { TITLE: 'Products we ship', URL: 'https://www.chin-a-frica.store/article/example-6' }
       ]
     },
     {
@@ -331,15 +331,15 @@ const CONFIG = {
       LINK_GROUP: [
         {
           TITLE: 'For Chinese merchants',
-          URL: 'https://www.chin-a-frica.store/article/example-6'
-        },
-        {
-          TITLE: 'For logistics companies',
           URL: 'https://www.chin-a-frica.store/article/example-7'
         },
         {
-          TITLE: 'For corporate customers',
+          TITLE: 'For logistics companies',
           URL: 'https://www.chin-a-frica.store/article/example-8'
+        },
+        {
+          TITLE: 'For corporate customers',
+          URL: 'https://www.chin-a-frica.store/article/example-9'
         }
       ]
     }
