@@ -81,6 +81,7 @@ const LayoutBase = props => {
  */
 const LayoutIndex = props => {
   const count = siteConfig('STARTER_BLOG_COUNT', 3, CONFIG)
+  const { locale } = useGlobal()
   const posts = props?.allNavPages ? props.allNavPages.slice(0, count) : []
   return (
     <>
@@ -108,7 +109,7 @@ const LayoutIndex = props => {
           <Blog posts={posts} />
           <div className='container mx-auto flex justify-end mb-4'>
             <Link className='text-lg underline' href={'/archive'}>
-              <span>查看全部</span>
+              <span>{locale.COMMON.MORE}</span>
               <i className='ml-2 fas fa-arrow-right' />
             </Link>
           </div>

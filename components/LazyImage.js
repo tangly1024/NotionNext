@@ -18,6 +18,7 @@ export default function LazyImage({
   height,
   title,
   onLoad,
+  onClick,
   style
 }) {
   const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH')
@@ -122,7 +123,9 @@ export default function LazyImage({
   if (style) {
     imgProps.style = style
   }
-
+  if (onClick) {
+    imgProps.onClick = onClick
+  }
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
