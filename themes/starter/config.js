@@ -301,10 +301,10 @@ const CONFIG = {
       TITLE: 'About us ',
       LINK_GROUP: [
         { TITLE: 'Home', URL: '/#home' },
-        { TITLE: 'Our story', URL: 'www.chin-a-frica.store/article/About-us' },
+        { TITLE: 'Our story', URL: 'www.chin-a-frica.store/article/guide' },
         {
           TITLE: 'What we do',
-          URL: 'https://www.chin-a-frica.store/whatwedo'
+          URL: 'https://www.chin-a-frica.store/article/example-1'
         },
         {
           TITLE: 'Contact us',
@@ -317,7 +317,7 @@ const CONFIG = {
       LINK_GROUP: [
         {
           TITLE: 'Our rates',
-          URL: 'https://www.chin-a-frica.store/article/rate'
+          URL: 'https://www.chin-a-frica.store/article/example-3'
         },
         {
           TITLE: 'Areas we ship',
