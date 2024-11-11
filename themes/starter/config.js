@@ -301,7 +301,7 @@ const CONFIG = {
       TITLE: 'About us ',
       LINK_GROUP: [
         { TITLE: 'Home', URL: '/#home' },
-        { TITLE: 'Our story', URL: 'https://www.chin-a-frica.store/article/About-us' },
+        { TITLE: 'Our story', URL: 'www.chin-a-frica.store/article/About-us' },
         {
           TITLE: 'What we do',
           URL: 'https://www.chin-a-frica.store/whatwedo'
