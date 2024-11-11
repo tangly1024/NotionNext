@@ -358,7 +358,7 @@ const CONFIG = {
 
   // 404页面的提示语
   STARTER_404_TITLE: 'We can not find the page you are looking for',
-  STARTER_404_TEXT: '抱歉！您要查找的页面不存在。可能已经移动或删除。',
+  STARTER_404_TEXT: 'Sorry！The page you are looking for does not exist. It may have been moved or deleted.',
   STARTER_404_BACK: 'Back to Home',
 
   // 页面底部的行动呼吁模块
