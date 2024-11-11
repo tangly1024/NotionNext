@@ -317,7 +317,7 @@ const CONFIG = {
       LINK_GROUP: [
         {
           TITLE: 'Our rates',
-          URL: 'https://www.chin-a-frica.store/article/example-3'
+          URL: 'https://www.chin-a-frica.store/article/rate'
         },
         {
           TITLE: 'Areas we ship',
