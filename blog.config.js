@@ -484,6 +484,9 @@ const BLOG = {
   // 其他配置选项...
     
   // 谷歌AdSense 代码段
+  module.exports = {
+  // 其他配置选项...
+  
   ADSENSE_SCRIPT: `
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916796318706760"
     crossorigin="anonymous"></script>
