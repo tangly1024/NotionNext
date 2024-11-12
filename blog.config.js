@@ -432,24 +432,6 @@ const BLOG = {
   COMMENT_WEBMENTION_TOKEN: process.env.NEXT_PUBLIC_WEBMENTION_TOKEN || '',
 
   // <---- 评论插件
-  // ----> 谷歌AdSense
-  import Head from 'next/head';
-  import blogConfig from '../path/to/blog.config.js';  // 确认路径正确
-
-  export default function HomePage() {
-  return (
-     <>
-       <Head>
-         {/* 插入配置中的 AdSense 脚本 */}
-         <div dangerouslySetInnerHTML={{ __html: blogConfig.ADSENSE_SCRIPT }} />
-       </Head>
-       <main>
-         <h1>欢迎来到我的博客</h1>
-         {/* 其他页面内容 */}
-       </main>
-     </>
-   );
- }
 
   // ----> 站点统计
   ANALYTICS_VERCEL: process.env.NEXT_PUBLIC_ANALYTICS_VERCEL || true, // vercel自带的统计 https://vercel.com/docs/concepts/analytics/quickstart https://github.com/tangly1024/NotionNext/issues/897
@@ -500,16 +482,7 @@ const BLOG = {
     process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_SLOT_AUTO || '8807314373', // Google AdScene>广告>按单元广告>新建展示广告 （自动广告）
   module.exports = {
   // 其他配置选项...
-    
-  // 谷歌AdSense 代码段
-  module.exports = {
-  // 其他配置选项...
-  
-  ADSENSE_SCRIPT: `
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6916796318706760"
-    crossorigin="anonymous"></script>
-  `
-};
+
 
   // 万维广告
   AD_WWADS_ID: process.env.NEXT_PUBLIC_WWAD_ID || null, // https://wwads.cn/ 创建您的万维广告单元ID
