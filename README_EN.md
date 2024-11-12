@@ -1,4 +1,4 @@
-# Free Installation and Usage Guide
+# Free Installation and Usage Guide 
 
 Click here to access the help documentation: NotionNext Help Manual - (Completely Free)
 
