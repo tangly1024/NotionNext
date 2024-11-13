@@ -8,7 +8,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react/recommended',
     'plugin:@next/next/recommended',
-    'standard',
+    'next',
     'prettier',
     'plugin:@typescript-eslint/recommended', // 添加 TypeScript 推荐规则
     'plugin:@typescript-eslint/recommended-requiring-type-checking' // 添加需要类型检查的规则
