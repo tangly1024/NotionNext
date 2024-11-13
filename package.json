@@ -52,7 +52,7 @@
     "@waline/client": "^2.5.1",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
-    "eslint": "^9.6.0",
+    "eslint": "^8.56.0",
     "eslint-config-next": "^13.1.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^16.0.2",
