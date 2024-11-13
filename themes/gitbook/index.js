@@ -255,7 +255,7 @@ const LayoutIndex = props => {
         // 重定向到指定文章
         router.push(index).then(() => {
           setTimeout(() => {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               console.log(
                 '请检查您的Notion数据库中是否包含此slug页面： ',
@@ -309,7 +309,7 @@ const LayoutSlug = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
