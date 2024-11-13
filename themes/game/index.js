@@ -307,7 +307,7 @@ const LayoutSlug = props => {
     <>
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      {!lock && (
+      {!lock && post && (
         <div id='article-wrapper'>
           <div className='game-detail-wrapper w-full grow flex'>
             <div className={`w-full md:py-2`}>
