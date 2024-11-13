@@ -19,7 +19,8 @@
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
     "bundle-report": "cross-env ANALYZE=true next build",
-    "build-all-in-dev": "cross-env VERCEL_ENV=production next build"
+    "build-all-in-dev": "cross-env VERCEL_ENV=production next build",
+    "version": "echo $npm_package_version"
   },
   "dependencies": {
     "@clerk/localizations": "^3.0.4",
