@@ -6,9 +6,6 @@ Allow: /article/*
 Allow: /tag/*
 Allow: /category/*
 
-# Host
-Host: https://www.yulin.blog
-
 # Sitemaps
 Sitemap: https://www.yulin.blog/sitemap.xml
 
