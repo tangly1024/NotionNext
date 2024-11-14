@@ -155,7 +155,7 @@ const LayoutSlug = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -177,7 +177,7 @@ const LayoutSlug = props => {
         {/* 文章锁 */}
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && (
+        {!lock && post && (
           <div className='w-full max-w-screen-3xl mx-auto'>
             {/* 文章信息 */}
             <ArticleInfo {...props} />
@@ -276,10 +276,12 @@ const LayoutSlug = props => {
         {/* 广告醒图 */}
         <BannerFullWidth />
         {/* 推荐关联文章 */}
-        <PostSimpleListHorizontal
-          title={locale.COMMON.RELATE_POSTS}
-          posts={recommendPosts}
-        />
+        {recommendPosts && recommendPosts.length > 0 && (
+          <PostSimpleListHorizontal
+            title={locale.COMMON.RELATE_POSTS}
+            posts={recommendPosts}
+          />
+        )}
       </div>
     </>
   )
