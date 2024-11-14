@@ -1,15 +1,11 @@
-# *
-User-agent: *
-Allow: /
-Allow: /posts/*
-Allow: /article/*
-Allow: /tag/*
-Allow: /category/*
 
-# Sitemaps
-Sitemap: https://www.yulin.blog/sitemap.xml
+     User-agent: *
+      Allow: /
+      Allow: /posts/*
+      Allow: /article/*
+      Allow: /tag/*
+      Allow: /category/*
 
-# 禁止访问的路径
-# Disallow: /api/*
-# Disallow: /_next/*
-# Disallow: /admin/*
+      # Sitemaps
+      Sitemap: https://www.yulin.blog/sitemap.xml
+      
