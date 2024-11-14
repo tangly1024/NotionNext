@@ -1,7 +1,7 @@
 import Collapse from '@/components/Collapse'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * 折叠菜单
@@ -30,6 +30,11 @@ export const MenuItemCollapse = props => {
   const toggleOpenSubMenu = () => {
     changeIsOpen(!isOpen)
   }
+
+  // 路由切换时菜单收起
+  useEffect(() => {
+    changeIsOpen(false)
+  }, [router])
 
   return (
     <>
