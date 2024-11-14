@@ -62,11 +62,12 @@ export default function Header(props) {
   // 向下滚动时，调整导航条高度
   useEffect(() => {
     scrollTrigger()
+    changeShow(false)
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
-  }, [])
+  }, [router])
 
   const throttleMs = 150
 
