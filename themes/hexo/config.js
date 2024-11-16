@@ -8,7 +8,7 @@ const CONFIG = {
     '欢迎来到我的博客🎉'
   ], // 首页大图标语文字
 
-  HEXO_HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
+  HEXO_HOME_NAV_BUTTONS: false, // 首页是否显示分类大图标按钮
   // 已知未修复bug, 在移动端开启true后会加载不出图片； 暂时建议设置为false。
   HEXO_HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂动； false则随鼠标滚动 ;
   // 是否显示开始阅读按钮
