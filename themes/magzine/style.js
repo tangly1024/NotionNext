@@ -5,14 +5,27 @@
  * @returns
  */
 const Style = () => {
-  return <style jsx global>{`
-    
-    // 底色
-    .dark body{
+  return (
+    <style jsx global>{`
+      // 底色
+      .dark body {
         background-color: black;
-    }
+      }
 
-  `}</style>
+      /* 自定义滚动条样式（适用于 Chrome、Safari 和 Edge） */
+      html::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      html::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+      html::-webkit-scrollbar-thumb {
+        background: #4e4e4e;
+      }
+    `}</style>
+  )
 }
 
 export { Style }
