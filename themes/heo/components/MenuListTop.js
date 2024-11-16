@@ -1,3 +1,4 @@
+<meta name='impact-site-verification' value='34a3b29f-c653-4aa9-b66a-8d2770e680f4' />
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
