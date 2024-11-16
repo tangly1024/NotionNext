@@ -16,7 +16,7 @@ const CONFIG = {
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: '', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:
-    'https://www.chin-a-frica.store/article/example-2', // 英雄区按钮
+    '', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: '', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://www.facebook.com/profile.php?id=61568479663391&mibextid=LQQJ4d', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
