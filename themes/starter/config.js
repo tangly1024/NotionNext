@@ -18,7 +18,7 @@ const CONFIG = {
   STARTER_HERO_BUTTON_1_URL:
     'https://www.chin-a-frica.store/article/example-2', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: 'Follow us on Facebook', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_URL: 'https://www.facebook.com/profile.php?id=61568479663391&mibextid=LQQJ4d', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
 
   // 英雄区配图，如需隐藏，改为空值即可 ''
@@ -298,17 +298,17 @@ const CONFIG = {
   // 页脚三列菜单组
   STARTER_FOOTER_LINK_GROUP: [
     {
-      TITLE: 'About us',
+      TITLE: 'About us ',
       LINK_GROUP: [
         { TITLE: 'Home', URL: '/#home' },
-        { TITLE: 'Our story', URL: 'https://www.chin-a-frica.store/article/guide' },
+        { TITLE: 'Our story', URL: 'https://www.chin-a-frica.store/article/example-1' },
         {
           TITLE: 'What we do',
-          URL: 'https://docs.tangly1024.com/article/how-to-question'
+          URL: 'https://www.chin-a-frica.store/article/example-2'
         },
         {
           TITLE: 'Contact us',
-          URL: 'https://docs.tangly1024.com/article/my-service'
+          URL: 'https://www.chin-a-frica.store/article/example-3'
         }
       ]
     },
@@ -317,13 +317,13 @@ const CONFIG = {
       LINK_GROUP: [
         {
           TITLE: 'Our rates',
-          URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next'
+          URL: 'https://www.chin-a-frica.store/article/example-4'
         },
         {
           TITLE: 'Areas we ship',
-          URL: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
+          URL: 'https://www.chin-a-frica.store/article/example-5'
         },
-        { TITLE: 'Products we ship', URL: 'https://docs.tangly1024.com/article/latest' }
+        { TITLE: 'Products we ship', URL: 'https://www.chin-a-frica.store/article/example-6' }
       ]
     },
     {
@@ -331,15 +331,15 @@ const CONFIG = {
       LINK_GROUP: [
         {
           TITLE: 'For Chinese merchants',
-          URL: 'https://docs.tangly1024.com/article/start-to-write'
+          URL: 'https://www.chin-a-frica.store/article/example-7'
         },
         {
           TITLE: 'For logistics companies',
-          URL: 'https://docs.tangly1024.com/article/notion-short-key'
+          URL: 'https://www.chin-a-frica.store/article/example-8'
         },
         {
           TITLE: 'For corporate customers',
-          URL: 'https://docs.tangly1024.com/article/notion-faster'
+          URL: 'https://www.chin-a-frica.store/article/example-9'
         }
       ]
     }
@@ -357,9 +357,9 @@ const CONFIG = {
   STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: '/terms-of-use',
 
   // 404页面的提示语
-  STARTER_404_TITLE: '我们似乎找不到您要找的页面。',
-  STARTER_404_TEXT: '抱歉！您要查找的页面不存在。可能已经移动或删除。',
-  STARTER_404_BACK: '回到主页',
+  STARTER_404_TITLE: 'We can not find the page you are looking for',
+  STARTER_404_TEXT: 'Sorry！The page you are looking for does not exist. It may have been moved or deleted.',
+  STARTER_404_BACK: 'Back to Home',
 
   // 页面底部的行动呼吁模块
   STARTER_CTA_ENABLE: false,
