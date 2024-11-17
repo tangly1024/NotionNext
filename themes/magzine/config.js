@@ -1,7 +1,7 @@
 const CONFIG = {
   // 首屏信息栏按钮文字
-  MAGZINE_HOME_BANNER_ENABLE: true, // 首屏右上角的宣传位
-  MAGZINE_HOME_BUTTON: true,
+  MAGZINE_HOME_BANNER_ENABLE: false, // 首屏右上角的宣传位
+  MAGZINE_HOME_BUTTON: false,
   MAGZINE_HOME_BUTTON_URL: '/about',
   MAGZINE_HOME_BUTTON_TEXT: '了解更多',
 
@@ -31,78 +31,12 @@ const CONFIG = {
 
   // 文章页面联系卡
   MAGZINE_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
-  MAGZINE_SOCIAL_CARD_TITLE_1: '交流频道',
-  MAGZINE_SOCIAL_CARD_TITLE_2: '加入社群讨论分享',
-  MAGZINE_SOCIAL_CARD_TITLE_3: '点击加入社群',
+  MAGZINE_SOCIAL_CARD_TITLE_1: 'Vigrid官方频道',
+  MAGZINE_SOCIAL_CARD_TITLE_2: '加入社群',
+  MAGZINE_SOCIAL_CARD_TITLE_3: '点击加入英灵殿',
   MAGZINE_SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/chat-community',
 
-  // 页脚菜单
-  MAGZINE_FOOTER_LINKS: [
-    {
-      name: '友情链接',
-      menus: [
-        {
-          title: 'Tangly的学习笔记',
-          href: 'https://blog.tangly1024.com'
-        },
-        {
-          title: 'NotionNext',
-          href: 'https://www.tangly1024.com'
-        }
-      ]
-    },
-    {
-      name: '开发者',
-      menus: [
-        { title: 'Github', href: 'https://github.com/tangly1024/NotionNext' },
-        {
-          title: '开发帮助',
-          href: 'https://docs.tangly1024.com/article/how-to-develop-with-notion-next'
-        },
-        {
-          title: '功能反馈',
-          href: 'https://github.com/tangly1024/NotionNext/issues/new/choose'
-        },
-        {
-          title: '技术讨论',
-          href: 'https://github.com/tangly1024/NotionNext/discussions'
-        },
-        {
-          title: '关于作者',
-          href: 'https://blog.tangly1024.com/about'
-        }
-      ]
-    },
-    {
-      name: '支持',
-      menus: [
-        {
-          title: '站长社群',
-          href: 'https://docs.tangly1024.com/article/chat-community'
-        },
-        {
-          title: '咨询与定制',
-          href: 'https://docs.tangly1024.com/article/my-service'
-        },
-        {
-          title: '升级手册',
-          href: 'https://docs.tangly1024.com/article/my-service'
-        },
-        {
-          title: '安装教程',
-          href: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
-        },
-        { title: 'SEO推广', href: 'https://seo.tangly1024.com/' }
-      ]
-    },
-    {
-      name: '解决方案',
-      menus: [
-        { title: '建站工具', href: 'https://www.tangly1024.com/' },
-        { title: 'NotionNext', href: 'https://docs.tangly1024.com/about' }
-      ]
-    }
-  ],
+
 
   // 旧版本顶部菜单
   MAGZINE_MENU_CATEGORY: true, // 显示分类
