@@ -16,7 +16,7 @@ const CONFIG = {
 
   MAGZINE_POST_LIST_COVER: true, // 文章列表显示图片封面
   MAGZINE_POST_LIST_PREVIEW: true, // 列表显示文章预览
-  MAGZINE_POST_LIST_CATEGORY: true, // 列表显示文章分类
+  MAGZINE_POST_LIST_CATEGORY: false, // 列表显示文章分类
   MAGZINE_POST_LIST_TAG: true, // 列表显示文章标签
 
   MAGZINE_POST_DETAIL_CATEGORY: true, // 文章显示分类
@@ -34,7 +34,7 @@ const CONFIG = {
   // 旧版本顶部菜单
   MAGZINE_MENU_CATEGORY: true, // 显示分类
   MAGZINE_MENU_TAG: true, // 显示标签
-  MAGZINE_MENU_ARCHIVE: true, // 显示归档
+  MAGZINE_MENU_ARCHIVE: false, // 显示归档
   MAGZINE_MENU_SEARCH: true, // 显示搜索
 
   MAGZINE_WIDGET_TO_TOP: true // 跳回顶部
