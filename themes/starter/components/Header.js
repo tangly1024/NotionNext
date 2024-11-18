@@ -86,6 +86,11 @@ export const Header = props => {
                       </div>
                     </SignedOut>
                     <SignedIn>
+                      <Link
+                        href='/dashboard'
+                        className='bg-black hover:bg-gray-900 text-white py-2 px-4 rounded-lg '>
+                        Dashboard
+                      </Link>
                       <UserButton />
                     </SignedIn>
                   </>

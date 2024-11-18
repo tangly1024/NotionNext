@@ -39,6 +39,16 @@ export const getGlobalLayoutByTheme = themeQuery => {
 }
 
 /**
+ * 动态获取布局
+ * @param {*} props
+ */
+export const DynamicLayout = props => {
+  const { router, theme } = props
+  const SelectedLayout = getLayoutByTheme({ router, theme })
+  return <SelectedLayout {...props} />
+}
+
+/**
  * 加载主题文件
  * 如果是
  * @param {*} router
