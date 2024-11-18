@@ -227,6 +227,20 @@ const BLOG = {
       cover:
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
+    {
+      name: 'he des Alizes (原曲:衛星カフェテラス)',
+      artist: 'Foxtail-Grass Studio',
+      url: 'http://music.163.com/song/media/outer/url?id=41416746.mp3',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
+    {
+      name: 'I Miss You (Extended)',
+      artist: 'ichika Nito',
+      url: 'http://music.163.com/song/media/outer/url?id=1808027556.mp3',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
      {
       name: 'Morena',
       artist: ' ',
