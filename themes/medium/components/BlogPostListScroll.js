@@ -15,7 +15,7 @@ import BlogPostListEmpty from './BlogPostListEmpty'
  */
 const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   const { NOTION_CONFIG } = useGlobal()
-  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, NOTION_CONFIG)
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const [page, updatePage] = useState(1)
   const router = useRouter()
   let filteredPosts = Object.assign(posts)

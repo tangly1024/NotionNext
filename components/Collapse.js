@@ -26,9 +26,9 @@ const Collapse = props => {
   })
 
   /**
-     * 折叠
-     * @param {*} element
-     */
+   * 折叠
+   * @param {*} element
+   */
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
     const sectionWidth = element.scrollWidth
@@ -51,9 +51,9 @@ const Collapse = props => {
   }
 
   /**
-     * 展开
-     * @param {*} element
-     */
+   * 展开
+   * @param {*} element
+   */
   const expandSection = element => {
     const sectionHeight = element.scrollHeight
     const sectionWidth = element.scrollWidth
@@ -82,13 +82,24 @@ const Collapse = props => {
       collapseSection(ref.current)
     }
     // 通知父组件高度变化
-    props?.onHeightChange && props.onHeightChange({ height: ref.current.scrollHeight, increase: props.isOpen })
+    props?.onHeightChange &&
+      props.onHeightChange({
+        height: ref.current.scrollHeight,
+        increase: props.isOpen
+      })
   }, [props.isOpen])
 
   return (
-        <div ref={ref} style={type === 'vertical' ? { height: '0px', willChange: 'height' } : { width: '0px', willChange: 'width' }} className={`${props.className || ''} overflow-hidden duration-200 `}>
-            {props.children}
-        </div>
+    <div
+      ref={ref}
+      style={
+        type === 'vertical'
+          ? { height: '0px', willChange: 'height' }
+          : { width: '0px', willChange: 'width' }
+      }
+      className={`${props.className || ''} overflow-hidden duration-300`}>
+      {props.children}
+    </div>
   )
 }
 Collapse.defaultProps = { isOpen: false }
