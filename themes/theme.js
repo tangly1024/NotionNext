@@ -84,12 +84,9 @@ export const getLayoutByTheme = ({ router, theme }) => {
  * @returns
  */
 const getLayoutNameByPath = path => {
-  if (LAYOUT_MAPPINGS[path]) {
-    return LAYOUT_MAPPINGS[path]
-  } else {
-    // 没有特殊处理的路径返回默认layout名称
-    return 'LayoutSlug'
-  }
+  const layoutName = LAYOUT_MAPPINGS[path] || 'LayoutSlug'
+  //   console.log('path-layout',path,layoutName)
+  return layoutName
 }
 
 /**
@@ -102,7 +99,13 @@ const checkThemeDOM = () => {
       elements[elements.length - 1].scrollIntoView()
       // 删除前面的元素，只保留最后一个元素
       for (let i = 0; i < elements.length - 1; i++) {
-        elements[i].parentNode.removeChild(elements[i])
+        if (
+          elements[i] &&
+          elements[i].parentNode &&
+          elements[i].parentNode.contains(elements[i])
+        ) {
+          elements[i].parentNode.removeChild(elements[i])
+        }
       }
     }
   }
