@@ -1,15 +1,18 @@
-import { getGlobalData } from '@/lib/db/getSiteData'
-import { useEffect } from 'react'
 import BLOG from '@/blog.config'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
+import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import { siteConfig } from '@/lib/config'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const ArchiveIndex = props => {
   // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
 
   useEffect(() => {
     if (isBrowser) {
@@ -28,10 +31,12 @@ const ArchiveIndex = props => {
   return <Layout {...props} />
 }
 
-export async function getStaticProps() {
-  const props = await getGlobalData({ from: 'archive-index' })
+export async function getStaticProps({ locale }) {
+  const props = await getGlobalData({ from: 'archive-index', locale })
   // 处理分页
-  props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
+  props.posts = props.allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)
@@ -56,7 +61,13 @@ export async function getStaticProps() {
 
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 

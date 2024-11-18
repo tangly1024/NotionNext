@@ -28,25 +28,25 @@ export const Header = props => {
       id: 1,
       icon: 'fa-solid fa-house',
       name: locale.NAV.INDEX,
-      to: '/',
+      href: '/',
       show: siteConfig('MOVIE_MENU_INDEX', null, CONFIG)
     },
     {
       id: 2,
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
-      to: '/search',
+      href: '/search',
       show: siteConfig('MOVIE_MENU_SEARCH', null, CONFIG)
     },
     {
       id: 3,
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
-      to: '/archive',
+      href: '/archive',
       show: siteConfig('MOVIE_MENU_ARCHIVE', null, CONFIG)
     }
-    // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('MENU_CATEGORY', null, CONFIG) },
-    // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('MENU_TAG', null, CONFIG) }
+    // { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, href: '/category', show: siteConfig('MENU_CATEGORY', null, CONFIG) },
+    // { icon: 'fas fa-tag', name: locale.COMMON.TAGS, href: '/tag', show: siteConfig('MENU_TAG', null, CONFIG) }
   ]
 
   if (customNav) {
@@ -99,23 +99,32 @@ export const Header = props => {
 
   return (
     <>
-      <header className='w-full px-8 relative z-20 flex lg:flex-row md:flex-col justify-between items-center'>
+      <header className='w-full px-8 h-20 z-20 flex lg:flex-row md:flex-col justify-between items-center'>
+        {/* 左侧Logo */}
         <Link
           href='/'
-          className='whitespace-nowrap py-6 text-2xl md:text-3xl font-bold text-gray-dark no-underline flex items-center'>
+          className='logo whitespace-nowrap text-2xl md:text-3xl font-bold text-gray-dark no-underline flex items-center'>
           {siteConfig('TITLE')}
         </Link>
 
-        <div className='md:w-auto text-center flex'>
+        <div className='md:w-auto text-center flex space-x-2'>
           {/* 右侧菜单 */}
           <>
-            <nav id='nav-mobile' className='leading-8 justify-center w-full hidden md:flex'>
-              {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
+            <nav
+              id='nav-mobile'
+              className='leading-8 justify-center w-full hidden md:flex'>
+              {links?.map(
+                (link, index) =>
+                  link && link.show && <MenuItemDrop key={index} link={link} />
+              )}
             </nav>
 
-            <div onClick={toggleShowSearchInput} className='flex items-center cursor-pointer'>
+            <div
+              onClick={toggleShowSearchInput}
+              className='flex items-center cursor-pointer'>
               <i className='fas fa-search dark:text-white'></i>
             </div>
+
             <div
               className={`${showSearch ? 'top-16 visible opacity-100' : 'top-10 invisible opacity-0'} duration-200 transition-all max-w-md absolute  w-80 right-4 p-2 flex flex-col gap-2`}>
               <input
@@ -130,7 +139,9 @@ export const Header = props => {
                 autoComplete='off'
                 placeholder='Type then hit enter to search...'
               />
-              <button onClick={handleSearch} className='w-full bg-[#383838] rounded py-2'>
+              <button
+                onClick={handleSearch}
+                className='w-full bg-[#383838] rounded py-2'>
                 {locale.COMMON.SEARCH} 搜索
               </button>
             </div>
@@ -138,22 +149,32 @@ export const Header = props => {
             {/* 移动端按钮 */}
             <div className='md:hidden'>
               <div onClick={toggleMenuOpen} className='w-8 cursor-pointer'>
-                {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                {isOpen ? (
+                  <i className='fas fa-times' />
+                ) : (
+                  <i className='fas fa-bars' />
+                )}
               </div>
             </div>
           </>
         </div>
       </header>
 
-      <Collapse collapseRef={collapseRef} type='vertical' isOpen={isOpen}>
+      <Collapse
+        className='block md:hidden'
+        collapseRef={collapseRef}
+        type='vertical'
+        isOpen={isOpen}>
         {/* 移动端菜单 */}
-        <menu id='nav-menu-mobile' className='block md:hidden my-auto justify-start'>
+        <menu id='nav-menu-mobile' className='my-auto justify-start'>
           {links?.map(
             (link, index) =>
               link &&
               link.show && (
                 <MenuItemCollapse
-                  onHeightChange={param => collapseRef.current?.updateCollapseHeight(param)}
+                  onHeightChange={param =>
+                    collapseRef.current?.updateCollapseHeight(param)
+                  }
                   key={index}
                   link={link}
                 />
