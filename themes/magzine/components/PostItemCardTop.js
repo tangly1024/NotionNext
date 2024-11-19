@@ -13,11 +13,11 @@ import TagItemMini from './TagItemMini'
  * @returns
  */
 const PostItemCardTop = ({ post, showSummary }) => {
-  const showPreview = siteConfig('MAGZINE_POST_LIST_PREVIEW') && post.blockMap
+  const showPreview = siteConfig('MAGZINE_POST_LIST_PREVIEW') && post?.blockMap
   const { locale } = useGlobal()
   return (
     <div
-      key={post.id}
+      key={post?.id}
       // data-aos='fade-up'
       // data-aos-duration='300'
       // data-aos-once='false'
@@ -26,7 +26,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
       <div className='flex flex-col w-full'>
         {siteConfig('MAGZINE_POST_LIST_COVER') && post?.pageCoverThumbnail && (
           <Link
-            href={post?.href}
+            href={post?.href || ''}
             passHref
             className={
               'cursor-pointer hover:underline text-4xl leading-tight  dark:text-gray-300  dark:hover:text-gray-400'
@@ -35,8 +35,8 @@ const PostItemCardTop = ({ post, showSummary }) => {
               <LazyImage
                 priority
                 alt={post?.title}
-                src={post.pageCoverThumbnail}
-                style={post.pageCoverThumbnail ? {} : { height: '0px' }}
+                src={post?.pageCoverThumbnail}
+                style={post?.pageCoverThumbnail ? {} : { height: '0px' }}
                 className='w-full max-h-80 object-cover hover:scale-125 duration-150'
               />
             </div>
@@ -45,7 +45,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
 
         <div className='flex py-2 mr-2 items-center'>
           {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
-            <CategoryItem category={post.category} />
+            <CategoryItem category={post?.category} />
           )}
           <div
             className={
@@ -59,16 +59,16 @@ const PostItemCardTop = ({ post, showSummary }) => {
         </div>
 
         <Link
-          href={post?.href}
+          href={post?.href || ''}
           passHref
           className={
             'cursor-pointer hover:underline leading-tight dark:text-gray-300  dark:hover:text-gray-400'
           }>
           <h2 className='text-4xl'>
             {siteConfig('POST_TITLE_ICON') && (
-              <NotionIcon icon={post.pageIcon} />
+              <NotionIcon icon={post?.pageIcon} />
             )}
-            {post.title}
+            {post?.title}
           </h2>
         </Link>
 
@@ -76,7 +76,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
 
         {(!showPreview || showSummary) && (
           <main className='my-4 text-gray-900 dark:text-gray-300 text-lg  leading-7'>
-            {post.summary}
+            {post?.summary}
           </main>
         )}
 
@@ -97,7 +97,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
           </div>
         )}
 
-        <div className='text-sm py-1'>{post.date?.start_date}</div>
+        <div className='text-sm py-1'>{post?.date?.start_date}</div>
       </div>
     </div>
   )
