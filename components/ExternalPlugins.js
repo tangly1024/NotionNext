@@ -56,7 +56,7 @@ const ExternalPlugin = props => {
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
   const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
   const TIANLI_KEY = siteConfig('TianliGPT_KEY')
-  const GLOBAL_JS = siteConfig('GLOBAL_JS')
+  const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
   const CLARITY_ID = siteConfig('CLARITY_ID')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')

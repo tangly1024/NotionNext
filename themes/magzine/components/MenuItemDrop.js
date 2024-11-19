@@ -22,7 +22,7 @@ export const MenuItemDrop = ({ link }) => {
       {hasSubMenu && (
         <div
           className={
-            'h-full whitespace-nowrap duration-300 text-md justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
+            'px-2 h-full whitespace-nowrap duration-300 text-md justify-between dark:text-gray-300 cursor-pointer flex flex-nowrap items-center ' +
             (selected
               ? 'bg-gray-600 text-white hover:text-white'
               : 'hover:text-gray-600')
@@ -52,7 +52,7 @@ export const MenuItemDrop = ({ link }) => {
       {/* 子菜单 */}
       {hasSubMenu && (
         <ul
-          className={`${show ? 'visible opacity-100 top-14' : 'invisible opacity-0 top-10'} absolute border bg-white dark:bg-black dark:border-gray-800 transition-all duration-150 z-20 block rounded-lg drop-shadow-lg p-4 `}>
+          className={`${show ? 'visible opacity-100 top-14' : 'invisible opacity-0 top-20'} absolute border bg-white dark:bg-black dark:border-gray-800 transition-all duration-150 z-20 block rounded-lg drop-shadow-lg p-4 `}>
           {link?.subMenus?.map(sLink => {
             return (
               <li
