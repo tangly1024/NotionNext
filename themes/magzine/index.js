@@ -6,6 +6,8 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import WWAds from '@/components/WWAds'
+import DashboardBody from '@/components/ui/dashboard/DashboardBody'
+import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
@@ -155,7 +157,9 @@ const LayoutSlug = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.querySelector('#article-wrapper #notion-article')
+            const article = document.querySelector(
+              '#article-wrapper #notion-article'
+            )
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -495,11 +499,39 @@ const LayoutSignUp = props => {
   )
 }
 
+/**
+ * 仪表盘
+ * @param {*} props
+ * @returns
+ */
+const LayoutDashboard = props => {
+  const { post } = props
+
+  return (
+    <>
+      <div className='container grow'>
+        <div className='flex flex-wrap justify-center -mx-4'>
+          <div id='container-inner' className='w-full p-4'>
+            {post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* 仪表盘 */}
+      <DashboardHeader />
+      <DashboardBody />
+    </>
+  )
+}
 export {
   Layout404,
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
+  LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

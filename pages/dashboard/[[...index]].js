@@ -75,14 +75,17 @@ export async function getStaticProps({ locale }) {
 
 export const getStaticPaths = async () => {
   return {
-    // 定义需要预渲染的路径
     paths: [
-      { params: { index: [''] } }, // 对应 /dashboard
-      { params: { index: ['membership'] } }, // 对应 /dashboard/membership
-      { params: { index: ['order'] } }, // 对应 /dashboard/order
-      { params: { index: ['favorite'] } } // 对应 /dashboard/favorite
+      { params: { index: [] } }, // 对应首页路径
+      { params: { index: ['membership'] } },
+      { params: { index: ['balance'] } },
+      { params: { index: ['user-profile'] } },
+      { params: { index: ['user-profile', 'security'] } }, // 嵌套路由，按结构传递
+      { params: { index: ['order'] } },
+      { params: { index: ['affiliate'] } }
     ],
     fallback: 'blocking' // 或者 true，阻塞式渲染
   }
 }
+
 export default Dashboard
