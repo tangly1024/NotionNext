@@ -50,46 +50,34 @@ export const DynamicLayout = props => {
 
 /**
  * 加载主题文件
- * 如果是
  * @param {*} router
+ * @param {*} theme
  * @returns
  */
 export const getLayoutByTheme = ({ router, theme }) => {
   const themeQuery = getQueryParam(router.asPath, 'theme') || theme
-  if (themeQuery !== BLOG.THEME) {
-    return dynamic(
-      () =>
-        import(`@/themes/${themeQuery}`).then(m => {
-          setTimeout(() => {
-            checkThemeDOM()
-          }, 500)
+  const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
+  const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
 
-          const components =
-            m[getLayoutNameByPath(router.pathname, router.asPath)]
-          if (components) {
-            return components
-          } else {
-            return m.LayoutSlug
-          }
-        }),
+  const loadThemeComponents = componentsSource => {
+    const components =
+      componentsSource[layoutName] || componentsSource.LayoutSlug
+    setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500) // 根据主题选择延迟时间
+    return components
+  }
+
+  if (isDefaultTheme) {
+    return loadThemeComponents(ThemeComponents)
+  } else {
+    return dynamic(
+      () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
       { ssr: true }
     )
-  } else {
-    setTimeout(() => {
-      checkThemeDOM()
-    }, 100)
-    const components =
-      ThemeComponents[getLayoutNameByPath(router.pathname, router.asPath)]
-    if (components) {
-      return components
-    } else {
-      return ThemeComponents.LayoutSlug
-    }
   }
 }
 
 /**
- * 根据路径 获取对应的layout
+ * 根据路径 获取对应的layout名称
  * @param {*} path
  * @returns
  */
@@ -101,8 +89,9 @@ const getLayoutNameByPath = path => {
 
 /**
  * 切换主题时的特殊处理
+ * 删除多余的元素
  */
-const checkThemeDOM = () => {
+const fixThemeDOM = () => {
   if (isBrowser) {
     const elements = document.querySelectorAll('[id^="theme-"]')
     if (elements?.length > 1) {

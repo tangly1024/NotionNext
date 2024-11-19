@@ -97,4 +97,5 @@ const fetchToken = async code => {
     console.error('Error fetching token', error)
   }
 }
+
 export default UI

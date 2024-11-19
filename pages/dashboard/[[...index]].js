@@ -1,9 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
-import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
-import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { getRecommendPost } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
@@ -63,38 +60,6 @@ export async function getStaticProps({ locale }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
-  // 目录默认加载
-  if (props.post?.blockMap?.block) {
-    props.post.content = Object.keys(props.post.blockMap.block).filter(
-      key => props.post.blockMap.block[key]?.value?.parent_id === props.post.id
-    )
-    props.post.toc = getPageTableOfContents(props.post, props.post.blockMap)
-  }
-
-  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
-  if (BLOG.ALGOLIA_APP_ID) {
-    uploadDataToAlgolia(props?.post)
-  }
-
-  // 推荐关联文章处理
-  const allPosts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
-  )
-  if (allPosts && allPosts.length > 0) {
-    const index = allPosts.indexOf(props.post)
-    props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
-    props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-    props.recommendPosts = getRecommendPost(
-      props.post,
-      allPosts,
-      siteConfig('POST_RECOMMEND_COUNT')
-    )
-  } else {
-    props.prev = null
-    props.next = null
-    props.recommendPosts = []
-  }
-
   delete props.allPages
   return {
     props,
@@ -108,4 +73,16 @@ export async function getStaticProps({ locale }) {
   }
 }
 
+export const getStaticPaths = async () => {
+  return {
+    // 定义需要预渲染的路径
+    paths: [
+      { params: { index: [''] } }, // 对应 /dashboard
+      { params: { index: ['membership'] } }, // 对应 /dashboard/membership
+      { params: { index: ['order'] } }, // 对应 /dashboard/order
+      { params: { index: ['favorite'] } } // 对应 /dashboard/favorite
+    ],
+    fallback: 'blocking' // 或者 true，阻塞式渲染
+  }
+}
 export default Dashboard
