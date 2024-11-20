@@ -4,11 +4,9 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import Coze from './Coze'
 import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
-import LA51 from './LA51'
-import TianLiGPT from './TianliGPT'
+
 import WebWhiz from './Webwhiz'
 
 /**
@@ -148,7 +146,7 @@ const ExternalPlugin = props => {
       {!CAN_COPY && <DisableCopy />}
       {WEB_WHIZ_ENABLED && <WebWhiz />}
       {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
-      {TIANLI_KEY && <TianLiGPT />}
+      {TIANLI_KEY && <TianliGPT />}
       <VConsole />
       {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
@@ -424,6 +422,16 @@ const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
   ssr: false
 })
 const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
+  ssr: false
+})
+
+const Coze = dynamic(() => import('@/components/Coze'), {
+  ssr: false
+})
+const LA51 = dynamic(() => import('@/components/LA51'), {
+  ssr: false
+})
+const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
   ssr: false
 })
 
