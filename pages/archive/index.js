@@ -3,17 +3,16 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import { getLayoutByTheme } from '@/themes/theme'
+import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+/**
+ * 归档首页
+ * @param {*} props
+ * @returns
+ */
 const ArchiveIndex = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-
   useEffect(() => {
     if (isBrowser) {
       const anchor = window.location.hash
@@ -28,7 +27,9 @@ const ArchiveIndex = props => {
     }
   }, [])
 
-  return <Layout {...props} />
+  const router = useRouter()
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} router={router} {...props} />
 }
 
 export async function getStaticProps({ locale }) {
