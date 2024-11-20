@@ -2,17 +2,13 @@ import BLOG from '@/blog.config'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
-import { getLayoutByTheme } from '@/themes/theme'
+import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
 const Index = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-
-  return <Layout {...props} />
+  const router = useRouter()
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} router={router} {...props} />
 }
 
 /**
