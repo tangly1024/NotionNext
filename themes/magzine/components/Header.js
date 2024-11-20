@@ -1,8 +1,9 @@
 import Collapse from '@/components/Collapse'
 import DarkModeButton from '@/components/DarkModeButton'
+import DashboardButton from '@/components/ui/dashboard/DashboardButton'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -200,7 +201,10 @@ export default function Header(props) {
                   </button>
                 </SignInButton>
               </SignedOut>
-              <UserButton />
+              <SignedIn>
+                <UserButton />
+                <DashboardButton />
+              </SignedIn>
             </>
           )}
         </div>
