@@ -42,7 +42,7 @@ export const MenuItem = ({ link }) => {
             </svg>
           </a>
 
-          <div className='submenu relative left-0 top-full hidden w-[250px] rounded-sm bg-white p-4 transition-[top] duration-300 group-hover:opacity-100 dark:bg-dark-2 lg:invisible lg:absolute lg:top-[110%] lg:block lg:opacity-0 lg:shadow-lg lg:group-hover:visible lg:group-hover:top-full'>
+          <div className='submenu border dark:border-gray-600 relative left-0 top-full hidden w-[250px] rounded-sm bg-white p-4 transition-[top] duration-300 group-hover:opacity-100 dark:bg-dark-2 lg:invisible lg:absolute lg:top-[110%] lg:block lg:opacity-0 lg:shadow-lg lg:group-hover:visible lg:group-hover:top-full'>
             {link.subMenus.map((sLink, index) => {
               return (
                 <Link
@@ -51,7 +51,7 @@ export const MenuItem = ({ link }) => {
                   target={link?.target}
                   className='block rounded px-4 py-[10px] text-sm text-body-color hover:text-primary dark:text-dark-6 dark:hover:text-primary'>
                   {/* 子菜单SubMenuItem */}
-                  <span className='text-sm ml-4 whitespace-nowrap'>
+                  <span className='text-md ml-2 whitespace-nowrap'>
                     {link?.icon && (
                       <i className={sLink.icon + ' mr-2 my-auto'} />
                     )}{' '}
