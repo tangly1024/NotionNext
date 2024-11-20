@@ -27,6 +27,8 @@ import { Style } from './style'
 import Comment from '@/components/Comment'
 import replaceSearchResult from '@/components/Mark'
 import ShareBar from '@/components/ShareBar'
+import DashboardBody from '@/components/ui/dashboard/DashboardBody'
+import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { SignIn, SignUp } from '@clerk/nextjs'
@@ -177,6 +179,39 @@ const LayoutSlug = props => {
   )
 }
 
+/**
+ * 仪表盘
+ * @param {*} props
+ * @returns
+ */
+const LayoutDashboard = props => {
+  const { post } = props
+
+  return (
+    <>
+      <div className='container grow'>
+        <div className='flex flex-wrap justify-center -mx-4'>
+          <div id='container-inner' className='w-full p-4'>
+            {post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* 仪表盘 */}
+      <DashboardHeader />
+      <DashboardBody />
+    </>
+  )
+}
+
+/**
+ * 搜索
+ * @param {*} props
+ * @returns
+ */
 const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
@@ -491,6 +526,7 @@ export {
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
+  LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,

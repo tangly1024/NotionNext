@@ -4,7 +4,7 @@ import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateRss } from '@/lib/rss'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
-import { getLayoutByTheme } from '@/themes/theme'
+import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
 /**
@@ -13,12 +13,9 @@ import { useRouter } from 'next/router'
  * @returns
  */
 const Index = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-  return <Layout {...props} />
+  const router = useRouter()
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} router={router} {...props} />
 }
 
 /**
