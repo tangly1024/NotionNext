@@ -174,7 +174,7 @@ const LayoutSlug = props => {
 
   return (
     <>
-      <div {...props} className='w-full mx-auto max-w-screen-3xl'>
+      <div className='w-full mx-auto max-w-screen-3xl'>
         {/* 广告位 */}
         <WWAds orientation='horizontal' />
 
