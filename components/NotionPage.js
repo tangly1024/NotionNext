@@ -4,7 +4,9 @@ import { isBrowser } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import Image from 'next/legacy/image'
+import Link from 'next/link'
+import { useEffect, useMemo, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 
 /**
@@ -27,6 +29,20 @@ const NotionPage = ({ post, className }) => {
     })
 
   const zoomRef = useRef(zoom ? zoom.clone() : null)
+
+  const components = useMemo(
+    () => ({
+      nextLegacyImage: Image,
+      nextLink: Link,
+      Code,
+      Collection,
+      Equation,
+      Pdf,
+      Modal,
+      Tweet
+    }),
+    []
+  )
 
   // 页面首次打开时执行的勾子
   useEffect(() => {
@@ -92,14 +108,7 @@ const NotionPage = ({ post, className }) => {
         recordMap={post?.blockMap}
         mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
-        components={{
-          Code,
-          Collection,
-          Equation,
-          Modal,
-          Pdf,
-          Tweet
-        }}
+        components={components}
       />
 
       <AdEmbed />
