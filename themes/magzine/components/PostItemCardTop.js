@@ -4,6 +4,7 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
+import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 
@@ -13,7 +14,8 @@ import TagItemMini from './TagItemMini'
  * @returns
  */
 const PostItemCardTop = ({ post, showSummary }) => {
-  const showPreview = siteConfig('MAGZINE_POST_LIST_PREVIEW') && post?.blockMap
+  const showPreview =
+    siteConfig('MAGZINE_POST_LIST_PREVIEW', true, CONFIG) && post?.blockMap
   const { locale } = useGlobal()
   return (
     <div
@@ -24,24 +26,24 @@ const PostItemCardTop = ({ post, showSummary }) => {
       // data-aos-anchor-placement='top-bottom'
       className='mb-6 max-w-screen-3xl '>
       <div className='flex flex-col w-full'>
-        {siteConfig('MAGZINE_POST_LIST_COVER') && post?.pageCoverThumbnail && (
-          <Link
-            href={post?.href || ''}
-            passHref
-            className={
-              'cursor-pointer hover:underline text-4xl leading-tight  dark:text-gray-300  dark:hover:text-gray-400'
-            }>
-            <div className='w-full max-h-80 object-cover overflow-hidden mb-2'>
-              <LazyImage
-                priority
-                alt={post?.title}
-                src={post?.pageCoverThumbnail}
-                style={post?.pageCoverThumbnail ? {} : { height: '0px' }}
-                className='w-full max-h-80 object-cover hover:scale-125 duration-150'
-              />
-            </div>
-          </Link>
-        )}
+        {siteConfig('MAGZINE_POST_LIST_COVER', true, CONFIG) &&
+          post?.pageCoverThumbnail && (
+            <Link
+              href={post?.href || ''}
+              passHref
+              className={
+                'cursor-pointer hover:underline text-4xl leading-tight  dark:text-gray-300  dark:hover:text-gray-400'
+              }>
+              <div className='w-full h-80 object-cover overflow-hidden mb-2'>
+                <LazyImage
+                  priority
+                  alt={post?.title}
+                  src={post?.pageCoverThumbnail}
+                  className='w-full h-80 object-cover hover:scale-125 duration-150'
+                />
+              </div>
+            </Link>
+          )}
 
         <div className='flex py-2 mr-2 items-center'>
           {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
