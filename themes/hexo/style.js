@@ -37,7 +37,7 @@ const Style = () => {
         left: 0;
         width: 100%;
         height: 100%;
-        background:  linear-gradient(to bottom, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0) 25%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0.5) 100%); /* 修改起始颜色为深灰色 */
+        background:  linear-gradient(to bottom, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0) 25%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0.5) 100%);
     }
 
     /* Custem */
@@ -47,7 +47,7 @@ const Style = () => {
 
     // 选中字体颜色
     ::selection {
-        background: rgba(45, 170, 219, 0.3);
+        background: rgba(255, 92, 92, 0.3); /* 修改选中背景色为红色 */
     }
 
     // 自定义滚动条
@@ -61,12 +61,12 @@ const Style = () => {
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #49b1f5;
+        background-color: #FF5C5C; /* 修改滚动条颜色为红色 */
     }
 
     * {
-        scrollbar-width:thin;
-        scrollbar-color: #49b1f5 transparent
+        scrollbar-width: thin;
+        scrollbar-color: #FF5C5C transparent; /* 修改滚动条颜色为红色 */
     }
     
 
