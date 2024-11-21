@@ -84,7 +84,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
-  output: process.env.EXPORT ? 'export' : undefined,
+  output: process.env.EXPORT ? 'export' : 'standalone',
   staticPageGenerationTimeout: 120,
   // 多语言， 在export时禁用
   i18n: process.env.EXPORT
