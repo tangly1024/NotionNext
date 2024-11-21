@@ -220,6 +220,7 @@ const nextConfig = {
     // export 静态导出时 忽略/pages/sitemap.xml.js ， 否则和getServerSideProps这个动态文件冲突
     const pages = { ...defaultPathMap }
     delete pages['/sitemap.xml']
+    delete pages['/auth']
     return pages
   },
   publicRuntimeConfig: {
@@ -228,4 +229,6 @@ const nextConfig = {
   }
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+module.exports = process.env.ANALYZE
+  ? withBundleAnalyzer(nextConfig)
+  : nextConfig

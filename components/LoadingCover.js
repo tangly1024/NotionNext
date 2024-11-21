@@ -1,3 +1,4 @@
+'user client'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 /**
