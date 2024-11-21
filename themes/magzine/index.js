@@ -62,18 +62,24 @@ const LayoutBase = props => {
 
       <div
         id='theme-magzine'
-        className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
+        className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen flex flex-col justify-between dark:text-gray-300 scroll-smooth`}>
         <main
           id='wrapper'
-          className={'relative flex justify-between w-full h-full mx-auto'}>
+          className='relative flex flex-col justify-between w-full h-full mx-auto'>
           {/* 主区 */}
-          <div id='container-wrapper' className='w-full relative z-10'>
+          <div
+            id='container-wrapper'
+            className='w-full h-full min-h-screen flex flex-col relative z-10'>
             <Header {...props} />
-            <div id='main' role='main'>
+
+            <div
+              id='main'
+              role='main'
+              className='flex-grow' // 这个类保证 main 区域填满剩余的空白
+            >
               {children}
             </div>
-            {/* 行动呼吁 */}
-            <CTA {...props} />
+
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
@@ -115,6 +121,9 @@ const LayoutIndex = props => {
 
       {/* 文章推荐  */}
       <PostListRecommend {...props} />
+
+      {/* 行动呼吁 */}
+      <CTA {...props} />
     </div>
   )
 }
@@ -150,31 +159,28 @@ const LayoutSlug = props => {
   const { post, recommendPosts, prev, next, lock, validPassword } = props
   const { locale } = useGlobal()
   const router = useRouter()
-
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
           }
-        },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-      )
+        }
+      }, waiting404)
     }
   }, [post])
 
   return (
     <>
-      <div {...props} className='w-full mx-auto max-w-screen-3xl'>
+      <div className='w-full mx-auto max-w-screen-3xl'>
         {/* 广告位 */}
         <WWAds orientation='horizontal' />
 
@@ -372,9 +378,11 @@ const LayoutArchive = props => {
 const Layout404 = props => {
   return (
     <>
-      <div className='w-full h-96 py-80 flex justify-center items-center'>
+      <div className='w-full py-40 flex justify-center items-center'>
         404 Not found.
       </div>
+      {/* 文章推荐  */}
+      <PostListRecommend {...props} />
     </>
   )
 }
