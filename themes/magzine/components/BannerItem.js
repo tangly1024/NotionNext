@@ -10,7 +10,6 @@ import CONFIG from '../config'
 export default function BannerItem() {
   // 首屏信息栏按钮文字
   const banner = siteConfig('MAGZINE_HOME_BANNER_ENABLE', null, CONFIG)
-
   const button = siteConfig('MAGZINE_HOME_BUTTON', null, CONFIG)
   const text = siteConfig('MAGZINE_HOME_BUTTON_TEXT', null, CONFIG)
   const url = siteConfig('MAGZINE_HOME_BUTTON_URL', null, CONFIG)
