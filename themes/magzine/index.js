@@ -6,16 +6,19 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import WWAds from '@/components/WWAds'
+import DashboardBody from '@/components/ui/dashboard/DashboardBody'
+import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
+import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
-import Announcement from './components/Announcement'
 import ArticleInfo from './components/ArticleInfo'
 import { ArticleLock } from './components/ArticleLock'
 import BannerFullWidth from './components/BannerFullWidth'
+import CTA from './components/CTA'
 import Catalog from './components/Catalog'
 import CatalogFloat from './components/CatalogFloat'
 import CategoryGroup from './components/CategoryGroup'
@@ -47,7 +50,7 @@ export const useMagzineGlobal = () => useContext(ThemeGlobalMagzine)
  * @constructor
  */
 const LayoutBase = props => {
-  const { children, notice } = props
+  const { children } = props
   const [tocVisible, changeTocVisible] = useState(false)
   const searchModal = useRef(null)
 
@@ -58,7 +61,7 @@ const LayoutBase = props => {
       <Style />
 
       <div
-        id='theme-medium'
+        id='theme-magzine'
         className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
         <main
           id='wrapper'
@@ -69,13 +72,8 @@ const LayoutBase = props => {
             <div id='main' role='main'>
               {children}
             </div>
-            {/* 底部 */}
-            <Announcement
-              post={notice}
-              className={
-                'text-center text-black bg-[#7BE986] dark:bg-hexo-black-gray py-16'
-              }
-            />
+            {/* 行动呼吁 */}
+            <CTA {...props} />
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
@@ -159,7 +157,9 @@ const LayoutSlug = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector(
+              '#article-wrapper #notion-article'
+            )
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -181,7 +181,7 @@ const LayoutSlug = props => {
         {/* 文章锁 */}
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && (
+        {!lock && post && (
           <div className='w-full max-w-screen-3xl mx-auto'>
             {/* 文章信息 */}
             <ArticleInfo {...props} />
@@ -280,10 +280,12 @@ const LayoutSlug = props => {
         {/* 广告醒图 */}
         <BannerFullWidth />
         {/* 推荐关联文章 */}
-        <PostSimpleListHorizontal
-          title={locale.COMMON.RELATE_POSTS}
-          posts={recommendPosts}
-        />
+        {recommendPosts && recommendPosts.length > 0 && (
+          <PostSimpleListHorizontal
+            title={locale.COMMON.RELATE_POSTS}
+            posts={recommendPosts}
+          />
+        )}
       </div>
     </>
   )
@@ -445,14 +447,96 @@ const LayoutTagIndex = props => {
   )
 }
 
+/**
+ * 登录页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignIn = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignIn />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+/**
+ * 注册页面
+ * @param {*} props
+ * @returns
+ */
+const LayoutSignUp = props => {
+  const { post } = props
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  return (
+    <>
+      <div className='grow mt-20'>
+        {/* clerk预置表单 */}
+        {enableClerk && (
+          <div className='flex justify-center py-6'>
+            <SignUp />
+          </div>
+        )}
+        <div id='article-wrapper'>
+          <NotionPage post={post} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+/**
+ * 仪表盘
+ * @param {*} props
+ * @returns
+ */
+const LayoutDashboard = props => {
+  const { post } = props
+
+  return (
+    <>
+      <div className='container grow'>
+        <div className='flex flex-wrap justify-center -mx-4'>
+          <div id='container-inner' className='w-full p-4'>
+            {post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* 仪表盘 */}
+      <DashboardHeader />
+      <DashboardBody />
+    </>
+  )
+}
 export {
   Layout404,
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
+  LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,
+  LayoutSignIn,
+  LayoutSignUp,
   LayoutSlug,
   LayoutTagIndex,
   CONFIG as THEME_CONFIG

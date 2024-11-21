@@ -3,6 +3,7 @@
 - [Setup](#setup)
 - [Creating new themes](#creating-new-themes)
 - [Adding localizations](#adding-localizations)
+- [Environment Variables](#environment-variables)
 
 Thanks for considering to contribute!
 
@@ -41,6 +42,19 @@ localization! Follow these steps to add a new localization:
 2. Start translating the strings.
 3. Add your language config to [lang.js][lang.js]. 
 4. [Create a PR][pr] with your localization updates.
+
+## Environment Variables
+
+NotionNext uses environment variables for configuration. To set up your development environment:
+
+1. Copy `.env.example` to `.env.local`
+2. Fill in the required values in `.env.local`
+3. Never commit `.env.local` to version control
+
+The configuration priority is:
+1. Notion Config Table (highest)
+2. Environment Variables
+3. blog.config.js (lowest)
 
 [fork]: https://github.com/tangly1024/NotionNext/fork
 [pr]: https://github.com/tangly1024/NotionNext/compare

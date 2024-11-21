@@ -2,7 +2,6 @@
 
 import AlgoliaSearchModal from '@/components/AlgoliaSearchModal'
 import Comment from '@/components/Comment'
-import { AdSlot } from '@/components/GoogleAdsense'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -24,6 +23,7 @@ import CategoryGroup from './components/CategoryGroup'
 import CategoryItem from './components/CategoryItem'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
+import { HomeBackgroundImage } from './components/HomeBackgroundImage'
 import JumpToTopButton from './components/JumpToTopButton'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import SlotBar from './components/SlotBar'
@@ -47,15 +47,23 @@ const LayoutBase = props => {
   const { children, slotTop } = props
   const { onLoading, fullWidth } = useGlobal()
   const collapseRef = useRef(null)
-
+  const router = useRouter()
   const searchModal = useRef(null)
   const [expandMenu, updateExpandMenu] = useState(false)
   useEffect(() => {
     loadWowJS()
   }, [])
 
+  // 首页背景图
+  const headerSlot =
+    router.route === '/' &&
+    siteConfig('MOVIE_HOME_BACKGROUND', null, CONFIG) ? (
+      <HomeBackgroundImage />
+    ) : null
+
   return (
-    <ThemeGlobalMovie.Provider value={{ searchModal, expandMenu, updateExpandMenu, collapseRef }}>
+    <ThemeGlobalMovie.Provider
+      value={{ searchModal, expandMenu, updateExpandMenu, collapseRef }}>
       <div
         id='theme-movie'
         className={`${siteConfig('FONT_STYLE')} dark:text-gray-300 duration-300 transition-all bg-white dark:bg-[#2A2A2A] scroll-smooth min-h-screen flex flex-col justify-between`}>
@@ -63,25 +71,19 @@ const LayoutBase = props => {
 
         {/* 页头 */}
         <Header {...props} />
+        {headerSlot}
 
         {/* 主体 */}
         <div id='container-inner' className='w-full relative flex-grow z-10'>
-          {/* 标题栏 */}
-          {/* {fullWidth ? null : <Title {...props} />} */}
-
-          {/* 广告栏 */}
-          <div className='w-full text-center'>
-            <AdSlot />
-          </div>
-
           <div
             id='container-wrapper'
             className={
-              (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE')) ? 'flex-row-reverse' : '') +
-              'relative mx-auto justify-center md:flex items-start py-8 px-2'
+              (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+                ? 'flex-row-reverse'
+                : '') + 'relative mx-auto justify-center md:flex items-start'
             }>
             {/* 内容 */}
-            <div className={`w-full ${fullWidth ? '' : ''} px-4`}>
+            <div className={`w-full ${fullWidth ? '' : ''} px-6`}>
               <Transition
                 show={!onLoading}
                 appear={true}
@@ -133,7 +135,11 @@ const LayoutPostList = props => {
   return (
     <div className='max-w-[90rem] mx-auto'>
       <SlotBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page' ? <BlogListPage {...props} /> : <BlogListScroll {...props} />}
+      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+        <BlogListPage {...props} />
+      ) : (
+        <BlogListScroll {...props} />
+      )}
     </div>
   )
 }
@@ -150,7 +156,7 @@ const LayoutSlug = props => {
     // 用js 实现将页面中的多个视频聚合为一个分集的视频
     function combineVideo() {
       // 找到 id 为 notion-article 的元素
-      const notionArticle = document.getElementById('notion-article')
+      const notionArticle = document.querySelector('#article-wrapper #notion-article')
       if (!notionArticle) return // 如果找不到对应的元素，则退出函数
 
       // 找到所有的 .notion-asset-wrapper 元素
@@ -163,7 +169,8 @@ const LayoutSlug = props => {
 
       // 创建视频区块容器元素
       const videoWrapper = document.createElement('div')
-      videoWrapper.className = 'video-wrapper py-1 px-3 bg-gray-100 dark:bg-white dark:text-black mx-auto'
+      videoWrapper.className =
+        'video-wrapper py-1 px-3 bg-gray-100 dark:bg-white dark:text-black mx-auto'
 
       // 创建走马灯封装容器元素
       const carouselWrapper = document.createElement('div')
@@ -187,7 +194,9 @@ const LayoutSlug = props => {
         if (!figCaption) return // 如果没有子元素 figcaption，则不处理该元素
 
         // 获取 figcaption 的文本内容并添加到数组中
-        const figCaptionValue = figCaption ? figCaption?.textContent?.trim() : `P-${index}`
+        const figCaptionValue = figCaption
+          ? figCaption?.textContent?.trim()
+          : `P-${index}`
         figCaptionValues.push(figCaptionValue)
 
         // 创建一个新的 div 元素用于包裹当前的 .notion-asset-wrapper 元素
@@ -216,7 +225,8 @@ const LayoutSlug = props => {
 
       // 创建一个用于保存 figcaption 值的容器元素
       const figCaptionWrapper = document.createElement('div')
-      figCaptionWrapper.className = 'notion-carousel-route py-2 max-h-36 overflow-y-auto'
+      figCaptionWrapper.className =
+        'notion-carousel-route py-2 max-h-36 overflow-y-auto'
 
       // 遍历 figCaptionValues 数组，并将每个值添加到容器元素中
       figCaptionValues.forEach(value => {
@@ -254,11 +264,17 @@ const LayoutSlug = props => {
         // 将包含 figcaption 值的容器元素添加到 notion-article 的第一个子元素插入
         videoWrapper.appendChild(carouselWrapper)
         // 显示分集按钮 大于1集才显示 ；或者用户 要求强制显示
-        if (figCaptionWrapper.children.length > 1 || siteConfig('MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE', false, CONFIG)) {
+        if (
+          figCaptionWrapper.children.length > 1 ||
+          siteConfig('MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE', false, CONFIG)
+        ) {
           videoWrapper.appendChild(figCaptionWrapper)
         }
         // 放入页面
-        if (notionArticle.firstChild && notionArticle.contains(notionArticle.firstChild)) {
+        if (
+          notionArticle.firstChild &&
+          notionArticle.contains(notionArticle.firstChild)
+        ) {
           notionArticle.insertBefore(videoWrapper, notionArticle.firstChild)
         } else {
           notionArticle.appendChild(videoWrapper)
@@ -275,7 +291,7 @@ const LayoutSlug = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -299,8 +315,10 @@ const LayoutSlug = props => {
 
   return (
     <>
-      {!lock ? (
-        <div id='article-wrapper' className='px-2 max-w-5xl 2xl:max-w-[70%] mx-auto'>
+      {!lock ? post && (
+        <div
+          id='article-wrapper'
+          className='px-2 max-w-5xl 2xl:max-w-[70%] mx-auto'>
           {/* 标题 */}
           <ArticleInfo post={post} />
           {/* 页面元素 */}
@@ -415,7 +433,11 @@ const LayoutArchive = props => {
     <>
       <div className='mb-10 pb-20 md:py-12 p-3  min-h-screen w-full'>
         {Object.keys(archivePosts).map(archiveTitle => (
-          <BlogListGroupByDate key={archiveTitle} archiveTitle={archiveTitle} archivePosts={archivePosts} />
+          <BlogListGroupByDate
+            key={archiveTitle}
+            archiveTitle={archiveTitle}
+            archivePosts={archivePosts}
+          />
         ))}
       </div>
     </>
