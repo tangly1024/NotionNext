@@ -14,16 +14,20 @@ RUN yarn install --frozen-lockfile
 # 2. Rebuild the source code only when needed
 FROM base AS builder
 ARG NOTION_PAGE_ID
+ENV NEXT_BUILD_STANDALONE=true
+
 WORKDIR /app
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN yarn build
 
 # 3. Production image, copy all the files and run next
 FROM base AS runner
+ENV NODE_ENV=production
+
 WORKDIR /app
 
-ENV NODE_ENV=production
 
 COPY --from=builder /app/public ./public
 
