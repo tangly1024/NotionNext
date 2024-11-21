@@ -16,7 +16,7 @@ const CONFIG = {
 
   MAGZINE_POST_LIST_COVER: true, // 文章列表显示图片封面
   MAGZINE_POST_LIST_PREVIEW: true, // 列表显示文章预览
-  MAGZINE_POST_LIST_CATEGORY: false, // 列表显示文章分类
+  MAGZINE_POST_LIST_CATEGORY: true, // 列表显示文章分类
   MAGZINE_POST_LIST_TAG: true, // 列表显示文章标签
 
   MAGZINE_POST_DETAIL_CATEGORY: true, // 文章显示分类
@@ -24,7 +24,7 @@ const CONFIG = {
 
   // 文章页面联系卡
   MAGZINE_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
-  MAGZINE_SOCIAL_CARD_TITLE_1: 'Vigrid官方频道',
+  MAGZINE_SOCIAL_CARD_TITLE_1: 'Valhalla官方频道',
   MAGZINE_SOCIAL_CARD_TITLE_2: '加入社群',
   MAGZINE_SOCIAL_CARD_TITLE_3: '点击加入英灵殿',
   MAGZINE_SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/chat-community',
@@ -32,7 +32,7 @@ const CONFIG = {
 
 
   // 旧版本顶部菜单
-  MAGZINE_MENU_CATEGORY: true, // 显示分类
+  MAGZINE_MENU_CATEGORY: false, // 显示分类
   MAGZINE_MENU_TAG: true, // 显示标签
   MAGZINE_MENU_ARCHIVE: false, // 显示归档
   MAGZINE_MENU_SEARCH: true, // 显示搜索
