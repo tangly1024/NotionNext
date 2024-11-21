@@ -127,7 +127,8 @@ const BLOG = {
     '/[prefix]/[slug]/[...suffix]': 'LayoutSlug',
     '/auth/result': 'LayoutAuth',
     '/sign-in/[[...index]]': 'LayoutSignIn',
-    '/sign-up/[[...index]]': 'LayoutSignUp'
+    '/sign-up/[[...index]]': 'LayoutSignUp',
+    '/dashboard/[[...index]]': 'LayoutDashboard'
   },
 
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
@@ -551,7 +552,9 @@ const BLOG = {
   VERSION: (() => {
     try {
       // 优先使用环境变量，否则从package.json中获取版本号
-      return process.env.NEXT_PUBLIC_VERSION || require('./package.json').version
+      return (
+        process.env.NEXT_PUBLIC_VERSION || require('./package.json').version
+      )
     } catch (error) {
       console.warn('Failed to load package.json version:', error)
       return '1.0.0' // 缺省版本号
