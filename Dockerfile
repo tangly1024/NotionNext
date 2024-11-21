@@ -28,7 +28,6 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-
 COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
