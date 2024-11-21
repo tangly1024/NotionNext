@@ -17,7 +17,7 @@ const Style = () => {
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
         text-decoration: none;
-        background-image: linear-gradient(#928CEE, #928CEE);
+        background-image: linear-gradient(#FF5C5C, #FF5C5C); /* 修改下划线颜色为红色 */
         background-repeat: no-repeat;
         background-position: bottom center;
         background-size: 0 2px;
@@ -26,7 +26,7 @@ const Style = () => {
     
     #theme-hexo .menu-link:hover {
         background-size: 100% 2px;
-        color: #928CEE;
+        color: #FF5C5C; /* 修改悬停时文字颜色为红色 */
     }
 
     /* 设置了从上到下的渐变黑色 */
@@ -37,7 +37,7 @@ const Style = () => {
         left: 0;
         width: 100%;
         height: 100%;
-        background:  linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0) 25%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0.5) 100%);
+        background:  linear-gradient(to bottom, rgba(50,50,50,0.5) 0%, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0) 25%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0.5) 100%); /* 修改起始颜色为深灰色 */
     }
 
     /* Custem */
