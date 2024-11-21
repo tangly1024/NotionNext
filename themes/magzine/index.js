@@ -62,18 +62,24 @@ const LayoutBase = props => {
 
       <div
         id='theme-magzine'
-        className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen justify-center dark:text-gray-300 scroll-smooth`}>
+        className={`${siteConfig('FONT_STYLE')} bg-white dark:bg-hexo-black-gray w-full h-full min-h-screen flex flex-col justify-between dark:text-gray-300 scroll-smooth`}>
         <main
           id='wrapper'
-          className={'relative flex justify-between w-full h-full mx-auto'}>
+          className='relative flex flex-col justify-between w-full h-full mx-auto'>
           {/* 主区 */}
-          <div id='container-wrapper' className='w-full relative z-10'>
+          <div
+            id='container-wrapper'
+            className='w-full h-full min-h-screen flex flex-col relative z-10'>
             <Header {...props} />
-            <div id='main' role='main'>
+
+            <div
+              id='main'
+              role='main'
+              className='flex-grow' // 这个类保证 main 区域填满剩余的空白
+            >
               {children}
             </div>
-            {/* 行动呼吁 */}
-            <CTA {...props} />
+
             <Footer title={siteConfig('TITLE')} />
           </div>
         </main>
@@ -115,6 +121,9 @@ const LayoutIndex = props => {
 
       {/* 文章推荐  */}
       <PostListRecommend {...props} />
+
+      {/* 行动呼吁 */}
+      <CTA {...props} />
     </div>
   )
 }
@@ -125,14 +134,14 @@ const LayoutIndex = props => {
  */
 const LayoutPostList = props => {
   // 当前筛选的分类或标签
-  const { category, tag } = props
+  const { category, tag, NOTION_CONFIG } = props
 
   return (
     <div className=' max-w-screen-3xl mx-auto w-full px-2 lg:px-0'>
       {/* 一个顶部条 */}
       <h2 className='py-8 text-2xl font-bold'>{category || tag}</h2>
 
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
+      {siteConfig('POST_LIST_STYLE', 'page', NOTION_CONFIG) === 'page' ? (
         <PostListPage {...props} />
       ) : (
         <PostListScroll {...props} />
@@ -150,128 +159,135 @@ const LayoutSlug = props => {
   const { post, recommendPosts, prev, next, lock, validPassword } = props
   const { locale } = useGlobal()
   const router = useRouter()
-
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
-    if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+    if (!post && router?.route?.indexOf('/[prefix]') === 0) {
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
           }
-        },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-      )
+        }
+      }, waiting404)
     }
-  }, [post])
+  }, [router])
 
   return (
     <>
-      <div {...props} className='w-full mx-auto max-w-screen-3xl'>
+      <div className='w-full mx-auto max-w-screen-3xl'>
         {/* 广告位 */}
         <WWAds orientation='horizontal' />
 
         {/* 文章锁 */}
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && post && (
+        {!lock && (
           <div className='w-full max-w-screen-3xl mx-auto'>
-            {/* 文章信息 */}
-            <ArticleInfo {...props} />
+            {post && (
+              <>
+                {/* 文章信息 */}
+                <ArticleInfo {...props} />
 
-            {/* 文章区块分为三列 */}
-            <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
-              <div className='h-full lg:col-span-1 hidden lg:block'>
-                <Catalog
-                  post={post}
-                  toc={post?.toc || []}
-                  className='sticky top-20'
-                />
-              </div>
-
-              {/* Notion文章主体 */}
-              <article className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
-                <div id='article-wrapper'>
-                  <NotionPage post={post} />
-                </div>
-
-                {/* 文章底部区域  */}
-                <section>
-                  <div className='py-2 flex justify-end'>
-                    {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
-                      post?.tagItems?.map(tag => (
-                        <TagItemMini key={tag.name} tag={tag} />
-                      ))}
+                {/* 文章区块分为三列 */}
+                <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
+                  <div className='h-full lg:col-span-1 hidden lg:block'>
+                    <Catalog
+                      post={post}
+                      toc={post?.toc || []}
+                      className='sticky top-20'
+                    />
                   </div>
-                  {/* 分享 */}
-                  <ShareBar post={post} />
-                  {/* 上一篇下一篇 */}
-                  <PostNavAround prev={prev} next={next} />
 
-                  {/* 评论区 */}
-                  <Comment frontMatter={post} />
-                </section>
-              </article>
+                  {/* Notion文章主体 */}
+                  <article className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
+                    <div id='article-wrapper'>
+                      <NotionPage post={post} />
+                    </div>
 
-              <div className='lg:col-span-1 flex flex-col justify-between px-2 lg:px-0 space-y-2 lg:space-y-0'>
-                {/* meta信息 */}
-                <section className='text-lg gap-y-6 text-center lg:text-left'>
-                  <div className='text-gray-500 py-1 dark:text-gray-600 '>
-                    {/* <div className='whitespace-nowrap'>
-                      <i className='far fa-calendar mr-2' />
-                      {post?.publishDay}
-                    </div> */}
-                    <div className='whitespace-nowrap mr-2'>
-                      <i className='far fa-calendar-check mr-2' />
-                      {post?.lastEditedDay}
+                    {/* 文章底部区域  */}
+                    <section>
+                      <div className='py-2 flex justify-end'>
+                        {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
+                          post?.tagItems?.map(tag => (
+                            <TagItemMini key={tag.name} tag={tag} />
+                          ))}
+                      </div>
+                      {/* 分享 */}
+                      <ShareBar post={post} />
+                      {/* 上一篇下一篇 */}
+                      <PostNavAround prev={prev} next={next} />
+
+                      {/* 评论区 */}
+                      <Comment frontMatter={post} />
+                    </section>
+                  </article>
+
+                  <div className='lg:col-span-1 flex flex-col justify-between px-2 lg:px-0 space-y-2 lg:space-y-0'>
+                    {/* meta信息 */}
+                    <section className='text-lg gap-y-6 text-center lg:text-left'>
+                      <div className='text-gray-500 py-1 dark:text-gray-600 '>
+                        {/* <div className='whitespace-nowrap'>
+          <i className='far fa-calendar mr-2' />
+          {post?.publishDay}
+        </div> */}
+                        <div className='whitespace-nowrap mr-2'>
+                          <i className='far fa-calendar-check mr-2' />
+                          {post?.lastEditedDay}
+                        </div>
+                        <div className='hidden busuanzi_container_page_pv  mr-2 whitespace-nowrap'>
+                          <i className='mr-1 fas fa-fire' />
+                          <span className='busuanzi_value_page_pv' />
+                        </div>
+                      </div>
+                    </section>
+
+                    {/* 最新文章区块 */}
+                    <div>
+                      <PostGroupLatest {...props} vertical={true} />
                     </div>
-                    <div className='hidden busuanzi_container_page_pv  mr-2 whitespace-nowrap'>
-                      <i className='mr-1 fas fa-fire' />
-                      <span className='busuanzi_value_page_pv' />
+
+                    {/* Adsense */}
+                    <div>
+                      <AdSlot />
                     </div>
+
+                    {/* 留白 */}
+                    <div></div>
+
+                    {/* 文章分类区块 */}
+                    <div>
+                      <CategoryGroup {...props} />
+                    </div>
+
+                    <div>
+                      <TouchMeCard />
+                    </div>
+
+                    <div>
+                      <WWAds />
+                    </div>
+
+                    {/* 底部留白 */}
+                    <div></div>
                   </div>
-                </section>
-
-                {/* 最新文章区块 */}
-                <div>
-                  <PostGroupLatest {...props} vertical={true} />
                 </div>
 
-                {/* Adsense */}
-                <div>
-                  <AdSlot />
-                </div>
+                {/* 移动端目录 */}
+                <CatalogFloat {...props} />
+              </>
+            )}
 
-                {/* 留白 */}
-                <div></div>
-
-                {/* 文章分类区块 */}
-                <div>
-                  <CategoryGroup {...props} />
-                </div>
-
-                <div>
-                  <TouchMeCard />
-                </div>
-
-                <div>
-                  <WWAds />
-                </div>
-
-                {/* 底部留白 */}
-                <div></div>
+            {!post && (
+              <div className='flex justify-center items-center w-full py-40'>
+                Loading...
               </div>
-            </div>
-
-            {/* 移动端目录 */}
-            <CatalogFloat {...props} />
+            )}
           </div>
         )}
       </div>
@@ -372,9 +388,11 @@ const LayoutArchive = props => {
 const Layout404 = props => {
   return (
     <>
-      <div className='w-full h-96 py-80 flex justify-center items-center'>
+      <div className='w-full py-40 flex justify-center items-center'>
         404 Not found.
       </div>
+      {/* 文章推荐  */}
+      <PostListRecommend {...props} />
     </>
   )
 }

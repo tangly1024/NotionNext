@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import CONFIG from '../config'
 import PostItemCard from './PostItemCard'
 import PostListEmpty from './PostListEmpty'
 import Swiper from './Swiper'
@@ -16,7 +17,7 @@ const PostListRecommend = ({ latestPosts, allNavPages }) => {
   if (!recommendPosts || recommendPosts.length === 0) {
     return <PostListEmpty />
   }
-  const title = siteConfig('MAGZINE_RECOMMEND_POST_TITLE')
+  const title = siteConfig('MAGZINE_RECOMMEND_POST_TITLE', '', CONFIG)
 
   return (
     <div className={`w-full py-10 px-2 bg-[#F6F6F1] dark:bg-black`}>
