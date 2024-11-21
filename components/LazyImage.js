@@ -41,6 +41,10 @@ export default function LazyImage({
     if (typeof onLoad === 'function') {
       onLoad() // 触发传递的onLoad回调函数
     }
+    // 移除占位符类名
+    if (imageRef.current) {
+      imageRef.current.classList.remove('lazy-image-placeholder')
+    }
   }
   /**
    * 图片加载失败回调
@@ -53,6 +57,7 @@ export default function LazyImage({
       } else {
         imageRef.current.src = defaultPlaceholderSrc
       }
+      imageRef.current.classList.remove('lazy-image-placeholder')
     }
   }
 
@@ -141,15 +146,14 @@ export default function LazyImage({
       <style>
         {` 
         .lazy-image-placeholder{
-
-        background: 
-            linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
-            #f2f2f2;
-        background-size:300% 100%;
-        animation: l1 1s infinite linear;
-        }
-        @keyframes l1 {
-        0% {background-position: right}
+            background: 
+                linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+                #f2f2f2;
+            background-size:300% 100%;
+            animation: l1 1s infinite linear;
+            }
+            @keyframes l1 {
+            0% {background-position: right}
         }
         `}
       </style>
