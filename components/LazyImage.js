@@ -59,7 +59,6 @@ export default function LazyImage({
   useEffect(() => {
     const adjustedImageSrc =
       adjustImgSize(src, maxWidth) || defaultPlaceholderSrc
-
     // 加载原图
     const img = new Image()
     img.src = adjustedImageSrc
@@ -68,7 +67,6 @@ export default function LazyImage({
       handleImageLoaded(adjustedImageSrc)
     }
     img.onerror = handleImageError
-
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -81,11 +79,9 @@ export default function LazyImage({
       },
       { rootMargin: '50px 0px' } // Adjust the rootMargin as needed to trigger the loading earlier or later
     )
-
     if (imageRef.current) {
       observer.observe(imageRef.current)
     }
-
     return () => {
       if (imageRef.current) {
         observer.unobserve(imageRef.current)
@@ -97,6 +93,7 @@ export default function LazyImage({
   const imgProps = {
     ref: imageRef,
     src: currentSrc,
+    'data-src': src,
     alt: alt,
     onLoad: handleThumbnailLoaded, // 缩略图加载完成
     onError: handleImageError // 添加onError处理函数
@@ -118,7 +115,7 @@ export default function LazyImage({
     imgProps.height = height
   }
   if (className) {
-    imgProps.className = className
+    imgProps.className = className + ' lazy-image-placeholder'
   }
   if (style) {
     imgProps.style = style
@@ -126,6 +123,11 @@ export default function LazyImage({
   if (onClick) {
     imgProps.onClick = onClick
   }
+
+  if (!src) {
+    return null
+  }
+
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -136,6 +138,21 @@ export default function LazyImage({
           <link rel='preload' as='image' href={adjustImgSize(src, maxWidth)} />
         </Head>
       )}
+      <style>
+        {` 
+        .lazy-image-placeholder{
+
+        background: 
+            linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+            #f2f2f2;
+        background-size:300% 100%;
+        animation: l1 1s infinite linear;
+        }
+        @keyframes l1 {
+        0% {background-position: right}
+        }
+        `}
+      </style>
     </>
   )
 }
