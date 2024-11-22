@@ -28,11 +28,11 @@ const PostSimpleListHorizontal = ({ title, href, posts }) => {
           )}
         </div>
         {/* 列表 */}
-        <ul className='grid grid-cols-1 lg:grid-cols-4'>
+        <div className='grid grid-cols-1 lg:grid-cols-4'>
           {posts?.map(p => {
             return <PostItemCardSimple key={p.id} post={p} />
           })}
-        </ul>
+        </div>
         {href && (
           <Link className='lg:hidden block text-lg underline' href={href}>
             <span>查看全部</span>
