@@ -26,7 +26,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'M24代言人VC', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://m24vc.vercel.app/', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.youtube.com/@M24VC', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '', // 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
