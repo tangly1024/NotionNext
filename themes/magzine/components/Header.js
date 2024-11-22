@@ -20,7 +20,7 @@ import { MenuItemDrop } from './MenuItemDrop'
  */
 export default function Header(props) {
   const { customNav, customMenu } = props
-  const [isOpen, changeShow] = useState(false)
+  const [isOpen, setOpen] = useState(false)
   const collapseRef = useRef(null)
   const lastScrollY = useRef(0) // 用于存储上一次的滚动位置
   const { locale } = useGlobal()
@@ -57,13 +57,13 @@ export default function Header(props) {
   let links = defaultLinks.concat(customNav)
 
   const toggleMenuOpen = () => {
-    changeShow(!isOpen)
+    setOpen(!isOpen)
   }
 
   // 向下滚动时，调整导航条高度
   useEffect(() => {
     scrollTrigger()
-    changeShow(false)
+    setOpen(false)
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
@@ -216,7 +216,7 @@ export default function Header(props) {
         collapseRef={collapseRef}
         isOpen={isOpen}
         className='md:hidden'>
-        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
+        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2'>
           <MenuBarMobile
             {...props}
             onHeightChange={param =>
