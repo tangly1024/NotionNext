@@ -1,7 +1,7 @@
 'use client'
-import { UserProfile } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import DashboardUser from './DashboardUser'
 
 const DashboardMenuList = dynamic(() => import('./DashboardMenuList'))
 const DashboardItemMembership = dynamic(
@@ -25,21 +25,11 @@ export default function DashboardBody() {
       <div className='side-tabs w-full md:w-72'>
         <DashboardMenuList />
       </div>
+      {/* 控制台右侧内容 */}
       <div className='main-content-wrapper w-full'>
         {basePath === '/dashboard' && <DashboardItemHome />}
-        {(basePath === '/dashboard/user-profile' ||
-          basePath === '/dashboard/user-profile/security') && (
-          <UserProfile
-            appearance={{
-              elements: {
-                cardBox: 'w-full',
-                rootBox: 'w-full'
-              }
-            }}
-            className='bg-blue-300'
-            routing='path'
-            path='/dashboard/user-profile'
-          />
+        {basePath?.indexOf('/dashboard/user-profile') === 0 && (
+          <DashboardUser />
         )}
         {basePath === '/dashboard/balance' && <DashboardItemBalance />}
         {basePath === '/dashboard/membership' && <DashboardItemMembership />}
