@@ -9,7 +9,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: '𝓦𝓮𝓵𝓬𝓸𝓶𝓮 𝓽𝓸 𝓶𝔂 𝓑𝓵𝓸𝓰'},
-    { title: '迎面走来的你让我蠢蠢欲动'}
+    { title: '迎面走来的你让我蠢蠢欲动', url: 'https://img2.sanye.us.kg/sanye/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(54).png'}
   ],
 
   // 英雄区左右侧组件颠倒位置
