@@ -115,16 +115,17 @@ const AdSlot = ({ type = 'show' }) => {
     return null
   }
   // 文章内嵌广告
-  if (type === 'in-article') {
-    return (
-      <ins
-        className='adsbygoogle'
-        style={{ display: 'block', textAlign: 'center' }}
-        data-ad-layout='in-article'
-        data-ad-format='fluid'
-        data-adtest={ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
-        data-ad-client={ADSENSE_GOOGLE_ID}
-        data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_IN_ARTICLE')}></ins>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5261134418167409"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-5261134418167409"
+     data-ad-slot="4535274909"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
     )
   }
 
