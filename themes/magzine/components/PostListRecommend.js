@@ -27,11 +27,11 @@ const PostListRecommend = ({ latestPosts, allNavPages }) => {
           <h3 className='text-4xl font-bold'>{title}</h3>
         </div>
         {/* 列表 */}
-        <ul className='hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-4'>
+        <div className='hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-4'>
           {recommendPosts?.map((p, index) => {
             return <PostItemCard key={index} post={p} />
           })}
-        </ul>
+        </div>
         <div className='block lg:hidden px-2'>
           <Swiper posts={recommendPosts} />
         </div>
