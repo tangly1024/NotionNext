@@ -117,7 +117,9 @@ const AdSlot = ({ type = 'show' }) => {
   // 文章内嵌广告
      if (type === 'in-article') {
     return (
-      <ins class="adsbygoogle"
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5261134418167409"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
      style="display:block; text-align:center;"
      data-ad-layout="in-article"
      data-ad-format="fluid"
