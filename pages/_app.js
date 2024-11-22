@@ -16,7 +16,7 @@ import { getQueryParam } from '../lib/utils'
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
 import ExternalPlugins from '@/components/ExternalPlugins'
-import GlobalHead from '@/components/GlobalHead'
+import SEO from '@/components/SEO'
 import { zhCN } from '@clerk/localizations'
 import dynamic from 'next/dynamic'
 // import { ClerkProvider } from '@clerk/nextjs'
@@ -45,7 +45,6 @@ const MyApp = ({ Component, pageProps }) => {
   // 整体布局
   const GLayout = useCallback(
     props => {
-      // 根据页面路径加载不同Layout文件
       const Layout = getGlobalLayoutByTheme(queryParam)
       return <Layout {...props} />
     },
@@ -56,7 +55,7 @@ const MyApp = ({ Component, pageProps }) => {
   const content = (
     <GlobalContextProvider {...pageProps}>
       <GLayout {...pageProps}>
-        <GlobalHead {...pageProps} />
+        <SEO {...pageProps} />
         <Component {...pageProps} />
       </GLayout>
       <ExternalPlugins {...pageProps} />
