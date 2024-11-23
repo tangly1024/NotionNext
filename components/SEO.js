@@ -10,7 +10,7 @@ import { useEffect } from 'react'
  * @param {*} param0
  * @returns
  */
-const GlobalHead = props => {
+const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
   let url = siteConfig('PATH')?.length
     ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}`
@@ -275,4 +275,4 @@ const getSEOMeta = (props, router, locale) => {
   }
 }
 
-export default GlobalHead
+export default SEO
