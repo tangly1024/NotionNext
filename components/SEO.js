@@ -82,7 +82,7 @@ const SEO = props => {
     ).then(url => {
       const WebFont = window?.WebFont
       if (WebFont) {
-        console.log('LoadWebFont', webFontUrl)
+        // console.log('LoadWebFont', webFontUrl)
         WebFont.load({
           custom: {
             // families: ['"LXGW WenKai"'],
