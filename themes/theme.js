@@ -112,6 +112,7 @@ export const getLayoutByTheme = ({ layoutName, theme }) => {
     )
   }
 
+  setTimeout(fixThemeDOM, 100)
   return LayoutComponents
 }
 
