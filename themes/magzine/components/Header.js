@@ -150,12 +150,12 @@ export default function Header(props) {
             <div className='flex gap-x-8 h-full'>
               <LogoBar {...props} />
               {/* 桌面端顶部菜单 */}
-              <div className='hidden md:flex items-center gap-x-4 py-1'>
+              <ul className='hidden md:flex items-center gap-x-4 py-1'>
                 {links &&
                   links?.map((link, index) => (
                     <MenuItemDrop key={index} link={link} />
                   ))}
-              </div>
+              </ul>
             </div>
           </>
         )}
