@@ -14,10 +14,11 @@ import Swiper from './Swiper'
 const PostListRecommend = ({ latestPosts, allNavPages }) => {
   // 获取推荐文章
   const recommendPosts = getTopPosts({ latestPosts, allNavPages })
+  const title = siteConfig('MAGZINE_RECOMMEND_POST_TITLE', '', CONFIG)
+
   if (!recommendPosts || recommendPosts.length === 0) {
     return <PostListEmpty />
   }
-  const title = siteConfig('MAGZINE_RECOMMEND_POST_TITLE', '', CONFIG)
 
   return (
     <div className={`w-full py-10 px-2 bg-[#F6F6F1] dark:bg-black`}>
