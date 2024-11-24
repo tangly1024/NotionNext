@@ -147,10 +147,10 @@ export default function Header(props) {
         {!showSearchInput && (
           <>
             {/* 左侧图标Logo */}
-            <div className='flex gap-x-8 h-full'>
-              <LogoBar {...props} />
+            <div className='flex gap-x-2 lg:gap-x-4 h-full'>
+              <LogoBar className={'text-sm md:text-md lg:text-lg'} />
               {/* 桌面端顶部菜单 */}
-              <ul className='hidden md:flex items-center gap-x-4 py-1'>
+              <ul className='hidden md:flex items-center gap-x-4 py-1 text-sm md:text-md'>
                 {links &&
                   links?.map((link, index) => (
                     <MenuItemDrop key={index} link={link} />
