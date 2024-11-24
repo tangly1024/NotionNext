@@ -12,7 +12,7 @@ export default function BeiAnSite() {
   return (
     <span>
       <i className='fas fa-shield-alt' />
-      <a href='https://icp.gov.moe/?keyword=20245948' className='mx-1'>
+      <a href='https://icp.gov.moe/?keyword=20245948' className='mx-1' target="_blank">
         {siteConfig('BEI_AN')}
       </a>
       <br />

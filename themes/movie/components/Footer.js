@@ -28,7 +28,7 @@ export const Footer = props => {
           {siteConfig('BEI_AN') && (
             <a
               href='https://icp.gov.moe/?keyword=20245948'
-              className='text-black dark:text-gray-200 no-underline hover:underline ml-4'>
+              className='text-black dark:text-gray-200 no-underline hover:underline ml-4' target="_blank">
               {siteConfig('BEI_AN')}
             </a>
           )}
