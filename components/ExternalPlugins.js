@@ -8,6 +8,7 @@ import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
 
 import Head from 'next/head'
+import ExternalScript from './ExternalScript'
 import WebWhiz from './Webwhiz'
 
 /**
@@ -258,10 +259,10 @@ const ExternalPlugin = props => {
             {/* 提前连接到广告服务器 */}
             <link rel='preconnect' href='https://cdn.wwads.cn' />
           </Head>
-          <script
+          <ExternalScript
             type='text/javascript'
             src='https://cdn.wwads.cn/js/makemoney.js'
-            async></script>
+          />
         </>
       )}
 
