@@ -9,7 +9,6 @@ const Style = () => {
     <style jsx global>{`
       body {
         background-color: #f7f9fe;
-        overflow-x: hidden;
       }
 
       // 公告栏中的字体固定白色
@@ -67,3 +66,4 @@ const Style = () => {
 }
 
 export { Style }
+
