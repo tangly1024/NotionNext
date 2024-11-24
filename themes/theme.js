@@ -2,6 +2,7 @@ import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
 import * as ThemeComponents from '@theme-components'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
 // 在next.config.js中扫描所有主题
@@ -56,19 +57,20 @@ export const getThemeConfig = async themeQuery => {
 
 /**
  * 加载全局布局
- * @param {*} themeQuery
+ * @param {*} theme
  * @returns
  */
-export const getGlobalLayoutByTheme = themeQuery => {
-  if (themeQuery !== BLOG.THEME) {
+export const getBaseLayoutByTheme = theme => {
+  const LayoutBase = ThemeComponents['LayoutBase']
+  const isDefaultTheme = !theme || theme === BLOG.THEME
+  if (!isDefaultTheme) {
     return dynamic(
-      () =>
-        import(`@/themes/${themeQuery}`).then(m => m[getLayoutNameByPath(-1)]),
+      () => import(`@/themes/${theme}`).then(m => m['LayoutBase']),
       { ssr: true }
     )
-  } else {
-    return ThemeComponents[getLayoutNameByPath('-1')]
   }
+
+  return LayoutBase
 }
 
 /**
@@ -76,8 +78,8 @@ export const getGlobalLayoutByTheme = themeQuery => {
  * @param {*} props
  */
 export const DynamicLayout = props => {
-  const { router, theme } = props
-  const SelectedLayout = getLayoutByTheme({ router, theme })
+  const { theme, layoutName } = props
+  const SelectedLayout = getLayoutByTheme({ layoutName, theme })
   return <SelectedLayout {...props} />
 }
 
@@ -87,26 +89,31 @@ export const DynamicLayout = props => {
  * @param {*} theme
  * @returns
  */
-export const getLayoutByTheme = ({ router, theme }) => {
-  const themeQuery = getQueryParam(router.asPath, 'theme') || theme
-  const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
+export const getLayoutByTheme = ({ layoutName, theme }) => {
+  // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
+  const LayoutComponents =
+    ThemeComponents[layoutName] || ThemeComponents.LayoutSlug
+
+  const router = useRouter()
+  const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
 
-  const loadThemeComponents = componentsSource => {
-    const components =
-      componentsSource[layoutName] || componentsSource.LayoutSlug
-    setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500) // 根据主题选择延迟时间
-    return components
-  }
-
-  if (isDefaultTheme) {
-    return loadThemeComponents(ThemeComponents)
-  } else {
+  // 加载非当前默认主题
+  if (!isDefaultTheme) {
+    const loadThemeComponents = componentsSource => {
+      const components =
+        componentsSource[layoutName] || componentsSource.LayoutSlug
+      setTimeout(fixThemeDOM, 500)
+      return components
+    }
     return dynamic(
       () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
       { ssr: true }
     )
   }
+
+  setTimeout(fixThemeDOM, 100)
+  return LayoutComponents
 }
 
 /**
@@ -128,8 +135,6 @@ const fixThemeDOM = () => {
   if (isBrowser) {
     const elements = document.querySelectorAll('[id^="theme-"]')
     if (elements?.length > 1) {
-      elements[elements.length - 1].scrollIntoView()
-      // 删除前面的元素，只保留最后一个元素
       for (let i = 0; i < elements.length - 1; i++) {
         if (
           elements[i] &&
@@ -139,6 +144,7 @@ const fixThemeDOM = () => {
           elements[i].parentNode.removeChild(elements[i])
         }
       }
+      elements[0]?.scrollIntoView()
     }
   }
 }

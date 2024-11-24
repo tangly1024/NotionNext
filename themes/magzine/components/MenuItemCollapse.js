@@ -17,10 +17,6 @@ export const MenuItemCollapse = props => {
 
   const router = useRouter()
 
-  if (!link || !link.show) {
-    return null
-  }
-
   const selected = router.pathname === link.href || router.asPath === link.href
 
   const toggleShow = () => {
@@ -35,6 +31,10 @@ export const MenuItemCollapse = props => {
   useEffect(() => {
     setOpen(false)
   }, [router])
+
+  if (!link || !link.show) {
+    return null
+  }
 
   return (
     <>
