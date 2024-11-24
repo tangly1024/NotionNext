@@ -57,32 +57,35 @@ export default function LazyImage({
       } else {
         imageRef.current.src = defaultPlaceholderSrc
       }
-      imageRef.current.classList.remove('lazy-image-placeholder')
+      // 移除占位符类名
+      if (imageRef.current) {
+        imageRef.current.classList.remove('lazy-image-placeholder')
+      }
     }
   }
 
   useEffect(() => {
     const adjustedImageSrc =
       adjustImgSize(src, maxWidth) || defaultPlaceholderSrc
-    // 加载原图
-    const img = new Image()
-    img.src = adjustedImageSrc
-    img.onload = () => {
-      setCurrentSrc(adjustedImageSrc)
-      handleImageLoaded(adjustedImageSrc)
-    }
-    img.onerror = handleImageError
+
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const lazyImage = entry.target
-            lazyImage.src = adjustedImageSrc
-            observer.unobserve(lazyImage)
+            // 拉取图片
+            const img = new Image()
+            img.src = adjustedImageSrc
+            img.onload = () => {
+              setCurrentSrc(adjustedImageSrc)
+              handleImageLoaded(adjustedImageSrc)
+            }
+            img.onerror = handleImageError
+
+            observer.unobserve(entry.target)
           }
         })
       },
-      { rootMargin: '50px 0px' } // Adjust the rootMargin as needed to trigger the loading earlier or later
+      { rootMargin: '50px 0px' } // 轻微提前加载
     )
     if (imageRef.current) {
       observer.observe(imageRef.current)
@@ -98,36 +101,19 @@ export default function LazyImage({
   const imgProps = {
     ref: imageRef,
     src: currentSrc,
-    'data-src': src,
-    alt: alt,
-    onLoad: handleThumbnailLoaded, // 缩略图加载完成
-    onError: handleImageError // 添加onError处理函数
+    'data-src': src, // 存储原始图片地址
+    alt: alt || 'Lazy loaded image',
+    onLoad: handleThumbnailLoaded,
+    onError: handleImageError,
+    className: `${className || ''} lazy-image-placeholder`,
+    style,
+    width: width || 'auto',
+    height: height || 'auto',
+    onClick
   }
 
-  if (id) {
-    imgProps.id = id
-  }
-
-  if (title) {
-    imgProps.title = title
-  }
-
-  if (width && width !== 'auto') {
-    imgProps.width = width
-  }
-
-  if (height && height !== 'auto') {
-    imgProps.height = height
-  }
-  if (className) {
-    imgProps.className = className + ' lazy-image-placeholder'
-  }
-  if (style) {
-    imgProps.style = style
-  }
-  if (onClick) {
-    imgProps.onClick = onClick
-  }
+  if (id) imgProps.id = id
+  if (title) imgProps.title = title
 
   if (!src) {
     return null
