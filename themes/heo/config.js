@@ -19,8 +19,8 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '同是天涯沦落人',
-  HEO_HERO_TITLE_2: '相逢何必曾相识',
-  HEO_HERO_TITLE_3: '',
+  HEO_HERO_TITLE_2: '',
+  HEO_HERO_TITLE_3: '相逢何必曾相识',
   HEO_HERO_TITLE_4: '𝓢𝓪𝓷𝔂𝓮',
   HEO_HERO_TITLE_5: '',
   HEO_HERO_TITLE_LINK: '',
