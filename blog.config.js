@@ -25,7 +25,7 @@ const BLOG = {
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '潦草学者', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '阅读 思考 创作 感受', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.liaocaoxuezhe.com', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '效率工具,自我管理,知识管理,个人博客,产品经理,产品', // 网站关键词 英文逗号隔开
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '生成式AI,效率工具,知识管理,个人博客,产品经理', // 网站关键词 英文逗号隔开
 
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
