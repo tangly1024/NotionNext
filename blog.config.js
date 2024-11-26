@@ -234,6 +234,13 @@ const BLOG = {
       cover:
             'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
     },
+     {
+      name: '明日有明天',
+      artist: '陈慧娴',
+      url: 'http://music.163.com/song/media/outer/url?id=110865.mp3',
+      cover:
+            'https://i.postimg.cc/SKF4SPn2/IMG-4916-20240201-184413.jpg'
+    },
     {
       name: 'The First Layer',
       artist: 'Kevin Penkin',
