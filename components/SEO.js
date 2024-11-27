@@ -18,6 +18,32 @@ const SEO = props => {
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
+  const webFontUrl = siteConfig('FONT_URL')
+
+  useEffect(() => {
+    // 使用WebFontLoader字体加载
+    loadExternalResource(
+      'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js',
+      'js'
+    ).then(url => {
+      const WebFont = window?.WebFont
+      if (WebFont) {
+        // console.log('LoadWebFont', webFontUrl)
+        WebFont.load({
+          custom: {
+            // families: ['"LXGW WenKai"'],
+            urls: webFontUrl
+          }
+        })
+      }
+    })
+  }, [])
+
+  // SEO关键词
+  let keywords = meta?.tags || siteConfig('KEYWORDS')
+  if (post?.tags && post?.tags?.length > 0) {
+    keywords = post?.tags?.join(',')
+  }
   if (meta) {
     url = `${url}/${meta.slug}`
     image = meta.image || '/bg_image.jpg'
@@ -28,7 +54,6 @@ const SEO = props => {
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const favicon = siteConfig('BLOG_FAVICON')
-  const webFontUrl = siteConfig('FONT_URL')
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
 
   const SEO_BAIDU_SITE_VERIFICATION = siteConfig(
@@ -68,30 +93,6 @@ const SEO = props => {
   )
 
   const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
-  // SEO关键词
-  let keywords = meta?.tags || siteConfig('KEYWORDS')
-  if (post?.tags && post?.tags?.length > 0) {
-    keywords = post?.tags?.join(',')
-  }
-
-  useEffect(() => {
-    // 使用WebFontLoader字体加载
-    loadExternalResource(
-      'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js',
-      'js'
-    ).then(url => {
-      const WebFont = window?.WebFont
-      if (WebFont) {
-        console.log('LoadWebFont', webFontUrl)
-        WebFont.load({
-          custom: {
-            // families: ['"LXGW WenKai"'],
-            urls: webFontUrl
-          }
-        })
-      }
-    })
-  }, [])
 
   return (
     <Head>

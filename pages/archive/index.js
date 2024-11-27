@@ -4,7 +4,6 @@ import { getGlobalData } from '@/lib/db/getSiteData'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 /**
@@ -27,9 +26,8 @@ const ArchiveIndex = props => {
     }
   }, [])
 
-  const router = useRouter()
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} router={router} {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutArchive' {...props} />
 }
 
 export async function getStaticProps({ locale }) {
