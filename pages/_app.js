@@ -8,7 +8,7 @@ import 'react-notion-x/src/styles.css' // 原版的react-notion-x
 
 import useAdjustStyle from '@/hooks/useAdjustStyle'
 import { GlobalContextProvider } from '@/lib/global'
-import { getGlobalLayoutByTheme } from '@/themes/theme'
+import { getBaseLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
@@ -34,7 +34,7 @@ const MyApp = ({ Component, pageProps }) => {
   useAdjustStyle()
 
   const route = useRouter()
-  const queryParam = useMemo(() => {
+  const theme = useMemo(() => {
     return (
       getQueryParam(route.asPath, 'theme') ||
       pageProps?.NOTION_CONFIG?.THEME ||
@@ -45,10 +45,10 @@ const MyApp = ({ Component, pageProps }) => {
   // 整体布局
   const GLayout = useCallback(
     props => {
-      const Layout = getGlobalLayoutByTheme(queryParam)
+      const Layout = getBaseLayoutByTheme(theme)
       return <Layout {...props} />
     },
-    [queryParam]
+    [theme]
   )
 
   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
