@@ -27,7 +27,7 @@ const BLOG = {
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '𝓢𝓪𝓷𝔂𝓮', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '一个普通的干饭人🍚', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://sanye.us.kg', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Blog','CTF','网络安全', // 网站关键词 英文逗号隔开
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Blog','CTF','网络安全',// 网站关键词 英文逗号隔开
 
   // 社交链接，不需要可留空白，例如 CONTACT_WEIBO:''
   CONTACT_EMAIL: process.env.NEXT_PUBLIC_CONTACT_EMAIL || '', // 邮箱地址 例如mail@tangly1024.com
@@ -322,7 +322,21 @@ const BLOG = {
       url: 'https://img2.sanye.us.kg/sanye/-%E8%A8%98%E6%86%B6-%20(%E8%AE%B0%E5%BF%86)%20-%20%E5%B8%82%E5%B7%9D%E6%B7%B3.mp3',
       cover:
         'https://img2.sanye.us.kg/sanye/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(43).png'
-    }
+    },
+    {
+      name: '三葉のテ一マ',
+      artist: 'RADWIMPS',
+      url: 'https://img2.sanye.us.kg/sanye/三葉のテーマ - RADWIMPS.mp3',
+      cover:
+        'https://img2.sanye.us.kg/sanye/屏幕截图 2024-11-30 000838.png'
+    },
+    {
+      name: 'スパークル',
+      artist: 'RADWIMPS',
+      url: 'https://img2.sanye.us.kg/sanye/スパークル (Movie ver.) - RADWIMPS.mp3',
+      cover:
+        'https://img2.sanye.us.kg/sanye/屏幕截图 2024-11-30 000838.png'
+    },
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
