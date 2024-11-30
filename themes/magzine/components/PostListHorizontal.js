@@ -32,11 +32,11 @@ const PostListHorizontal = ({ title, href, posts, hasBg }) => {
           )}
         </div>
         {/* 列表 */}
-        <ul className='hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-4'>
+        <div className='hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-4'>
           {posts?.map((p, index) => {
             return <PostItemCard key={index} post={p} />
           })}
-        </ul>
+        </div>
         <div className='block lg:hidden px-2'>
           <Swiper posts={posts} />
           {href && (
