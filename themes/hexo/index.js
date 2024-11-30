@@ -269,7 +269,7 @@ const LayoutSlug = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -286,7 +286,7 @@ const LayoutSlug = props => {
       <div className='w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article'>
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && (
+        {!lock && post && (
           <div className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
             <article
               id='article-wrapper'
@@ -333,7 +333,7 @@ const Layout404 = props => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (isBrowser) {
-        const article = document.getElementById('notion-article')
+        const article = document.querySelector('#article-wrapper #notion-article')
         if (!article) {
           router.push('/').then(() => {
             // console.log('找不到页面', router.asPath)

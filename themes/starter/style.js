@@ -54,6 +54,11 @@ const Style = () => {
     color: rgb(55 88 249 / var(--tw-text-opacity));
     opacity: 1;
   }
+
+  #theme-starter .sticky #navbarCollapse li > button{
+    --tw-text-opacity: 1;
+    color: rgb(17 25 40 / var(--tw-text-opacity));
+  }
   
   :is(.dark #theme-starter .sticky #navbarCollapse li > a){
     --tw-text-opacity: 1;
@@ -64,7 +69,12 @@ const Style = () => {
     --tw-text-opacity: 1;
     color: rgb(55 88 249 / var(--tw-text-opacity));
   }
-  
+
+  :is(.dark #theme-starter .sticky #navbarCollapse li > button){
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+
   #navbarCollapse li .ud-menu-scroll.active{
     opacity: 0.7;
   }

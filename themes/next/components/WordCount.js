@@ -23,7 +23,7 @@ export default function WordCount() {
  * 更新字数统计和阅读时间
  */
 function countWords() {
-  const articleText = deleteHtmlTag(document.getElementById('notion-article')?.innerHTML)
+  const articleText = deleteHtmlTag(document.querySelector('#article-wrapper #notion-article')?.innerHTML)
   const wordCount = fnGetCpmisWords(articleText)
   // 阅读速度 300-500每分钟
   document.getElementById('wordCount').innerHTML = wordCount
