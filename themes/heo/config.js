@@ -1,4 +1,7 @@
 const CONFIG = {
+  HEO_HOME_POST_TWO_COLS: true, // 首页博客两列显示，若为false则只显示一列
+  HEO_LOADING_COVER: true, // 页面加载的遮罩动画
+
   HEO_HOME_BANNER_ENABLE: true,
 
   HEO_SITE_CREATE_TIME: '2024-06-25', // 建站日期，用于计算网站运行的第几天
@@ -15,12 +18,6 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '科技分享',
-  HEO_HERO_TITLE_2: '与技术提升',
-  HEO_HERO_TITLE_3: 'blog.ichenc.xyz',
-  HEO_HERO_TITLE_4: '文章推荐',
-  HEO_HERO_TITLE_5: '写作是最值得投资的技能',
-  HEO_HERO_TITLE_LINK: 'https://blog.ichenc.xyz/article/de23b024-218b-4c06-a8ad-3d9c20472256',
 
     // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },

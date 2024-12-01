@@ -67,24 +67,29 @@ const Catalog = ({ post }) => {
 
   return (
     <>
+      {/* <div className='w-full hidden md:block'>
+        <i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}
+        </div> */}
+
       <div
         id='toc-wrapper'
         className='toc-wrapper overflow-y-auto my-2 max-h-80 overscroll-none scroll-hidden'>
-        <nav className='h-full  text-black'>
+        <nav className='h-full text-black'>
           {toc?.map(tocItem => {
             const id = uuidToId(tocItem.id)
             return (
               <a
                 key={id}
                 href={`#${id}`}
-                className={`notion-table-of-contents-item duration-300 transform font-light dark:text-gray-300
-              notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}>
+                //  notion-table-of-contents-item
+                className={`${activeSection === id && 'border-green-500 text-green-500 font-bold'} border-l pl-4 block hover:text-green-500 border-lduration-300 transform font-light dark:text-gray-300
+              notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
                 <span
                   style={{
                     display: 'inline-block',
                     marginLeft: tocItem.indentLevel * 16
                   }}
-                  className={`truncate ${activeSection === id ? 'font-bold text-gray-500 underline' : ''}`}>
+                  className={`truncate`}>
                   {tocItem.text}
                 </span>
               </a>
