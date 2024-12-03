@@ -10,7 +10,9 @@ import { DynamicLayout } from '@/themes/theme'
  */
 export default function Category(props) {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
+  return (
+    <DynamicLayout theme={theme} layoutName='LayoutCategoryIndex' {...props} />
+  )
 }
 
 export async function getStaticProps({ locale }) {
