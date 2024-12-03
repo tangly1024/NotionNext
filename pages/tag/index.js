@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 const TagIndex = props => {
   const router = useRouter()
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutTagIndex' {...props} />
 }
 
 export async function getStaticProps(req) {
