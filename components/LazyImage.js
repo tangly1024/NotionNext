@@ -85,7 +85,7 @@ export default function LazyImage({
           }
         })
       },
-      { rootMargin: '10px 0px' } // 轻微提前加载
+      { rootMargin: '50px 0px' } // 轻微提前加载
     )
     if (imageRef.current) {
       observer.observe(imageRef.current)

@@ -87,7 +87,7 @@ const Slug = props => {
   return (
     <>
       {/* 文章布局 */}
-      <DynamicLayout theme={theme} router={router} {...props} />
+      <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
       {/* 导流工具 */}
