@@ -28,8 +28,14 @@ const Footer = () => {
         id='footer-bottom'
         className='w-full h-20 flex flex-col p-3 lg:flex-row justify-between px-6 items-center bg-[#f1f3f7] dark:bg-[#21232A] border-t dark:border-t-[#3D3D3F]'>
         <div id='footer-bottom-left'>
-          <PoweredBy />
-          <CopyRightDate />
+          Pi-Tone Inc. <i className='fas fa-copyright' />{' '}
+          {`${copyrightDate}`} {' '}
+          <a
+            href={siteConfig('LINK')}
+            className='underline font-bold dark:text-gray-300 '>
+            {siteConfig('AUTHOR')}
+          </a>
+          .
         </div>
 
         <div id='footer-bottom-right'>

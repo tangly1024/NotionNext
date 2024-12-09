@@ -8,7 +8,6 @@ export const MenuItemDrop = ({ link }) => {
   if (!link || !link.show) {
     return null
   }
-
   return (
     <div
       onMouseOver={() => changeShow(true)}

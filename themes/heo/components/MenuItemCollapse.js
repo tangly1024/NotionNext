@@ -24,7 +24,6 @@ export const MenuItemCollapse = ({ link }) => {
   if (!link || !link.show) {
     return null
   }
-
   return (
     <>
       <div
