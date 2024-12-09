@@ -224,35 +224,37 @@ const LayoutSlug = props => {
     <>
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      <div
-        id='article-wrapper'
-        className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
-        {/* 文章信息 */}
-        <ArticleInfo post={post} />
+      {!lock && post && (
+        <div className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+          {/* 文章信息 */}
+          <ArticleInfo post={post} />
 
-        {/* 广告嵌入 */}
-        {/* <AdSlot type={'in-article'} /> */}
-        <WWAds orientation='horizontal' className='w-full' />
+          {/* 广告嵌入 */}
+          {/* <AdSlot type={'in-article'} /> */}
+          <WWAds orientation='horizontal' className='w-full' />
 
-        {/* Notion文章主体 */}
-        {!lock && <NotionPage post={post} />}
+          <div id='article-wrapper'>
+            {/* Notion文章主体 */}
+            {!lock && <NotionPage post={post} />}
+          </div>
 
-        {/* 分享 */}
-        <ShareBar post={post} />
+          {/* 分享 */}
+          <ShareBar post={post} />
 
-        {/* 广告嵌入 */}
-        <AdSlot type={'in-article'} />
+          {/* 广告嵌入 */}
+          <AdSlot type={'in-article'} />
 
-        {post?.type === 'Post' && (
-          <>
-            <ArticleAround prev={prev} next={next} />
-            <RecommendPosts recommendPosts={recommendPosts} />
-          </>
-        )}
+          {post?.type === 'Post' && (
+            <>
+              <ArticleAround prev={prev} next={next} />
+              <RecommendPosts recommendPosts={recommendPosts} />
+            </>
+          )}
 
-        {/* 评论区 */}
-        <Comment frontMatter={post} />
-      </div>
+          {/* 评论区 */}
+          <Comment frontMatter={post} />
+        </div>
+      )}
     </>
   )
 }
@@ -271,7 +273,7 @@ const Layout404 = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)

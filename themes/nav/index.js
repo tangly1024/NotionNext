@@ -261,7 +261,7 @@ const LayoutSlug = props => {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -290,8 +290,10 @@ const LayoutSlug = props => {
 
           {/* Notion文章主体 */}
           {post && (
-            <section id='article-wrapper' className='px-1'>
-              <NotionPage post={post} />
+            <section className='px-1'>
+              <div id='article-wrapper'>
+                <NotionPage post={post} />
+              </div>
 
               {/* 分享 */}
               {/* <ShareBar post={post} /> */}

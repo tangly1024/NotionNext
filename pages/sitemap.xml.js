@@ -1,7 +1,7 @@
 // pages/sitemap.xml.js
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getNotionPageData } from '@/lib/db/getSiteData'
+import { getGlobalData } from '@/lib/db/getSiteData'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
 import { getServerSideSitemap } from 'next-sitemap'
 
@@ -13,11 +13,15 @@ export const getServerSideProps = async ctx => {
     const id = extractLangId(siteId)
     const locale = extractLangPrefix(siteId)
     // 第一个id站点默认语言
-    const siteData = await getNotionPageData({
+    const siteData = await getGlobalData({
       pageId: id,
       from: 'sitemap.xml'
     })
-    const link = siteConfig('LINK', '', siteData.NOTION_CONFIG)
+    const link = siteConfig(
+      'LINK',
+      siteData?.siteInfo?.link,
+      siteData.NOTION_CONFIG
+    )
     const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
     fields = fields.concat(localeFields)
   }

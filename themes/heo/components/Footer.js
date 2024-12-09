@@ -1,13 +1,13 @@
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
+import CopyRightDate from '@/components/CopyRightDate'
+import PoweredBy from '@/components/PoweredBy'
 import { siteConfig } from '@/lib/config'
 import SocialButton from './SocialButton'
-
-const Footer = ({ title }) => {
-  const d = new Date()
-  const currentYear = d.getFullYear()
-  const since = siteConfig('SINCE')
-  const copyrightDate =
-    parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
-
+/**
+ * 页脚
+ * @returns
+ */
+const Footer = () => {
   return (
     <footer className='relative flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'>
       {/* 颜色过度区 */}
@@ -47,6 +47,7 @@ const Footer = ({ title }) => {
               </a>
             </>
           )}
+          <BeiAnGongAn />
 
           <span className='hidden busuanzi_container_site_pv'>
             <i className='fas fa-eye' />
