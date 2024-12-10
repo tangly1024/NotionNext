@@ -1,4 +1,5 @@
 /* eslint-disable no-unreachable */
+import DashboardButton from '@/components/ui/dashboard/DashboardButton'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
@@ -87,6 +88,7 @@ export const Header = props => {
                     </SignedOut>
                     <SignedIn>
                       <UserButton />
+                      <DashboardButton className={'hidden md:block'} />
                     </SignedIn>
                   </>
                 )}
