@@ -1,7 +1,11 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { MenuItemCollapse } from './MenuItemCollapse'
-
+/**
+ * 移动端菜单
+ * @param {*} props
+ * @returns
+ */
 export const MenuBarMobile = props => {
   const { customMenu, customNav } = props
   const { locale } = useGlobal()

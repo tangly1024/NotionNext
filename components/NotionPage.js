@@ -149,9 +149,11 @@ const processGalleryImg = zoom => {
 const autoScrollToHash = () => {
   setTimeout(() => {
     // 跳转到指定标题
-    const needToJumpToTitle = window.location.hash
+    const hash = window?.location?.hash
+    const needToJumpToTitle = hash && hash > 0
     if (needToJumpToTitle) {
-      const tocNode = document.getElementById(window.location.hash.substring(1))
+      console.log('jump to hash', hash)
+      const tocNode = document.getElementById(hash.substring(1))
       if (tocNode && tocNode?.className?.indexOf('notion') > -1) {
         tocNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
       }
