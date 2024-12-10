@@ -1,6 +1,7 @@
 import FlipCard from '@/components/FlipCard'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
+import CONFIG from '../config'
 
 /**
  * 交流频道
@@ -8,7 +9,7 @@ import Link from 'next/link'
  */
 export default function TouchMeCard() {
   // 开关
-  if (!siteConfig('MAGZINE_SOCIAL_CARD', null)) {
+  if (!siteConfig('MAGZINE_SOCIAL_CARD', null, CONFIG)) {
     return <></>
   }
 
@@ -27,7 +28,7 @@ export default function TouchMeCard() {
           </div>
         }
         backContent={
-          <Link href={siteConfig('MAGZINE_SOCIAL_CARD_URL')}>
+          <Link href={siteConfig('MAGZINE_SOCIAL_CARD_URL', '#', CONFIG)}>
             <div className='font-[1000] text-xl h-full'>
               {siteConfig('MAGZINE_SOCIAL_CARD_TITLE_3')}
             </div>

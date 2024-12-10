@@ -7,12 +7,15 @@ import LoadingCover from '@/components/LoadingCover'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
+import DashboardBody from '@/components/ui/dashboard/DashboardBody'
+import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { getShortId } from '@/lib/utils/pageId'
 import { SignIn, SignUp } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
@@ -255,7 +258,9 @@ const LayoutIndex = props => {
         // 重定向到指定文章
         router.push(index).then(() => {
           setTimeout(() => {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector(
+              '#article-wrapper #notion-article'
+            )
             if (!article) {
               console.log(
                 '请检查您的Notion数据库中是否包含此slug页面： ',
@@ -301,15 +306,25 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, prev, next, lock, validPassword } = props
+  const { post, prev, next, siteInfo, lock, validPassword } = props
   const router = useRouter()
+  // 如果是文档首页文章，则修改浏览器标签
+  const index = siteConfig('GITBOOK_INDEX_PAGE', 'about', CONFIG)
+  const basePath = router.asPath.split('?')[0]
+  const title =
+    basePath?.indexOf(index) > 0
+      ? `${post?.title} | ${siteInfo?.description}`
+      : `${post?.title} | ${siteInfo?.title}`
+
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector(
+              '#article-wrapper #notion-article'
+            )
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -323,6 +338,10 @@ const LayoutSlug = props => {
   }, [post])
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+
       {/* 文章锁 */}
       {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -539,17 +558,47 @@ const LayoutSignUp = props => {
   )
 }
 
-export {
-  Layout404,
-  LayoutArchive,
-  LayoutBase,
-  LayoutCategoryIndex,
-  LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSignIn,
-  LayoutSignUp,
-  LayoutSlug,
-  LayoutTagIndex,
-  CONFIG as THEME_CONFIG
+/**
+ * 仪表盘
+ * @param {*} props
+ * @returns
+ */
+const LayoutDashboard = props => {
+  const { post } = props
+
+  return (
+    <>
+      <div className='container grow'>
+        <div className='flex flex-wrap justify-center -mx-4'>
+          <div id='container-inner' className='w-full p-4'>
+            {post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* 仪表盘 */}
+      <DashboardHeader />
+      <DashboardBody />
+    </>
+  )
 }
+
+export {
+    Layout404,
+    LayoutArchive,
+    LayoutBase,
+    LayoutCategoryIndex,
+    LayoutDashboard,
+    LayoutIndex,
+    LayoutPostList,
+    LayoutSearch,
+    LayoutSignIn,
+    LayoutSignUp,
+    LayoutSlug,
+    LayoutTagIndex,
+    CONFIG as THEME_CONFIG
+}
+
