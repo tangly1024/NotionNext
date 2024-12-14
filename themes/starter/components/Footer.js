@@ -5,8 +5,11 @@ import { SVGFooterCircleBG } from './svg/SVGFooterCircleBG'
 
 /* eslint-disable @next/next/no-img-element */
 export const Footer = props => {
-  const latestPosts = props?.latestPosts ? props?.latestPosts.slice(0, 2) : []
-  const STARTER_FOOTER_LINK_GROUP = siteConfig('STARTER_FOOTER_LINK_GROUP')
+  const footerPostCount = siteConfig('STARTER_FOOTER_POST_COUNT', 2)
+  const latestPosts = props?.latestPosts
+    ? props?.latestPosts.slice(0, footerPostCount)
+    : []
+  const STARTER_FOOTER_LINK_GROUP = siteConfig('STARTER_FOOTER_LINK_GROUP', [])
   return (
     <>
       {/* <!-- ====== Footer Section Start --> */}
@@ -73,9 +76,14 @@ export const Footer = props => {
                         key={index}
                         href={item?.href}
                         className='group flex items-center gap-[22px]'>
-                        <div className='overflow-hidden rounded w-20 h-12'>
-                          <img src={item.pageCoverThumbnail} alt={item.title} />
-                        </div>
+                        {item.pageCoverThumbnail && (
+                          <div className='overflow-hidden rounded w-20 h-12'>
+                            <img
+                              src={item.pageCoverThumbnail}
+                              alt={item.title}
+                            />
+                          </div>
+                        )}
                         <span className='line-clamp-2 max-w-[180px] text-base text-gray-7 group-hover:text-white'>
                           {item.title}
                         </span>

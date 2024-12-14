@@ -23,9 +23,6 @@ const Catalog = ({ post, toc, className }) => {
       actionSectionScrollSpy()
       window.addEventListener('scroll', actionSectionScrollSpy)
     }
-    setTimeout(() => {
-      console.log('目录', post, toc)
-    }, 1000)
     return () => {
       window.removeEventListener('scroll', actionSectionScrollSpy)
     }
@@ -67,6 +64,7 @@ const Catalog = ({ post, toc, className }) => {
   return (
     <div className={className}>
       <div className='w-full mt-2 mb-4'>
+        {/* 阅读进度条 */}
         <Progress />
       </div>
       <div
@@ -80,14 +78,14 @@ const Catalog = ({ post, toc, className }) => {
               <a
                 key={id}
                 href={`#${id}`}
-                className={`notion-table-of-contents-item duration-300 transform  dark:text-gray-400
-              notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}>
+                className={`${activeSection === id && 'dark:border-white border-gray-800 text-gray-800 font-bold'} hover:font-semibold border-l pl-4 block hover:text-gray-800 border-lduration-300 transform dark:text-gray-400 dark:border-gray-400
+            notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
                 <span
                   style={{
                     display: 'inline-block',
                     marginLeft: tocItem.indentLevel * 16
                   }}
-                  className={`truncate ${activeSection === id ? 'font-bold text-gray-500 dark:text-white underline' : ''}`}>
+                  className={`truncate ${activeSection === id ? ' font-bold text-black dark:text-white underline' : ''}`}>
                   {tocItem.text}
                 </span>
               </a>

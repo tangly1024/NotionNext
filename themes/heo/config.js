@@ -22,8 +22,12 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: 'lazypigzyh.top',
   HEO_HERO_TITLE_4: '新版上线',
+
   HEO_HERO_TITLE_5: '更多功能敬请期待',
   HEO_HERO_TITLE_LINK: 'https://github.com/Bersulang',
+  // 英雄区遮罩文字
+  HEO_HERO_COVER_TITLE: '随便逛逛',
+
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },

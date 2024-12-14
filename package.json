@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.7.2",
+  "version": "4.7.11",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "repository": {
@@ -19,13 +19,17 @@
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
     "bundle-report": "cross-env ANALYZE=true next build",
-    "build-all-in-dev": "cross-env VERCEL_ENV=production next build"
+    "build-all-in-dev": "cross-env VERCEL_ENV=production next build",
+    "version": "echo $npm_package_version"
   },
   "dependencies": {
+    "@clerk/localizations": "^3.0.4",
+    "@clerk/nextjs": "^5.1.5",
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
     "@vercel/analytics": "^1.0.0",
     "algoliasearch": "^4.18.0",
+    "axios": "^1.7.2",
     "feed": "^4.2.2",
     "js-md5": "^0.7.3",
     "lodash.throttle": "^4.1.1",
@@ -42,23 +46,25 @@
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
+    "@types/react": "18.3.10",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "@waline/client": "^2.5.1",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
-    "eslint": "^7.26.0",
+    "eslint": "^8.57.1",
     "eslint-config-next": "^13.1.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.23.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "next-sitemap": "^1.6.203",
     "postcss": "^8.4.31",
-    "prettier": "3.2.5",
+    "prettier": "^3.3.2",
     "tailwindcss": "^3.3.2",
+    "typescript": "5.6.2",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {

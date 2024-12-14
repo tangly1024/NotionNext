@@ -8,7 +8,7 @@ import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getPasswordQuery } from '@/lib/password'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { checkSlugHasNoSlash, getRecommendPost } from '@/lib/utils/post'
-import { getLayoutByTheme } from '@/themes/theme'
+import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
 import { idToUuid } from 'notion-utils'
@@ -31,7 +31,7 @@ const Slug = props => {
 
   /**
    * 验证文章密码
-   * @param {*} result
+   * @param {*} passInput
    */
   const validPassword = passInput => {
     if (!post) {
@@ -82,16 +82,12 @@ const Slug = props => {
     }
   }, [router, lock])
 
-  props = { ...props, lock, setLock, validPassword }
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
+  props = { ...props, lock, validPassword }
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return (
     <>
       {/* 文章布局 */}
-      <Layout {...props} />
+      <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
       {/* 导流工具 */}
