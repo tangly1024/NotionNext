@@ -1,7 +1,10 @@
 const CONFIG = {
+  HEO_HOME_POST_TWO_COLS: true, // 首页博客两列显示，若为false则只显示一列
+  HEO_LOADING_COVER: true, // 页面加载的遮罩动画
+
   HEO_HOME_BANNER_ENABLE: true,
 
-  HEO_SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+  HEO_SITE_CREATE_TIME: '2023-09-21', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
@@ -9,13 +12,18 @@ const CONFIG = {
     { title: 'Welcome to my blog', url: '' }
   ],
 
+  // 英雄区左右侧组件颠倒位置
+  HEO_HERO_REVERSE: false,
+  // 博客主体区左右侧组件颠倒位置
+  HEO_HERO_BODY_REVERSE: false,
+
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享编程',
-  HEO_HERO_TITLE_2: '与思维握手',
-  HEO_HERO_TITLE_3: 'Orcatt.me',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: '浏览最新博客',
-  HEO_HERO_TITLE_LINK: 'https://www.orcatt.me/',
+  HEO_HERO_TITLE_1: '探索求知',
+  HEO_HERO_TITLE_2: '与你握手',
+  HEO_HERO_TITLE_3: 'orcatt.one',
+  HEO_HERO_TITLE_4: '内容更新',
+  HEO_HERO_TITLE_5: '浏览最新文章',
+  HEO_HERO_TITLE_LINK: '',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
@@ -30,12 +38,18 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
-    '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
-    '🏃 脚踏实地行动派',
-    '💪 壮汉人狠话不多'
+    '🔍 探索求知',
+    '🏃 运动无限',
+    '🤖️ 野蛮精神',
   ],
-  HEO_INFO_CARD_URL: 'https://github.com/orcatt', // 个人资料底部按钮链接
+
+  // 个人资料底部按钮
+  // HEO_INFO_CARD_URL1: '/about',
+  // HEO_INFO_CARD_ICON1: 'fas fa-user',
+  HEO_INFO_CARD_URL2: 'https://github.com/orcatt',
+  HEO_INFO_CARD_ICON2: 'fab fa-github',
+  HEO_INFO_CARD_URL3: '/about',
+  HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [

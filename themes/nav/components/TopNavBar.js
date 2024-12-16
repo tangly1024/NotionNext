@@ -52,7 +52,7 @@ export default function TopNavBar(props) {
   return (
         <div id='top-nav' className={'fixed top-0 w-full z-40 bg-white dark:bg-neutral-900 shadow bg-opacity-70 dark:bg-opacity-60 backdrop-filter backdrop-blur-lg  md:shadow-none pb-2 md:pb-0 ' + className}>
             {/* 图标Logo */}
-            <div className='fixed top-0 left-5 md:left-4 z-40 pt-3 md:pt-4'>
+            <div className='fixed block md:hidden top-0 left-5 md:left-4 z-40 pt-3 md:pt-4'>
                 <LogoBar {...props} />
             </div>
 
