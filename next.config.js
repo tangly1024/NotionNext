@@ -84,7 +84,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
-  output: process.env.EXPORT ? 'export' : undefined,
+  output: process.env.EXPORT ? 'export' : process.env.NEXT_BUILD_STANDALONE === 'true' ? 'standalone' : undefined,
   staticPageGenerationTimeout: 120,
   // 多语言， 在export时禁用
   i18n: process.env.EXPORT
@@ -220,6 +220,7 @@ const nextConfig = {
     // export 静态导出时 忽略/pages/sitemap.xml.js ， 否则和getServerSideProps这个动态文件冲突
     const pages = { ...defaultPathMap }
     delete pages['/sitemap.xml']
+    delete pages['/auth']
     return pages
   },
   publicRuntimeConfig: {
@@ -228,4 +229,6 @@ const nextConfig = {
   }
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+module.exports = process.env.ANALYZE
+  ? withBundleAnalyzer(nextConfig)
+  : nextConfig
