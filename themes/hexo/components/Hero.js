@@ -26,10 +26,7 @@ const Hero = props => {
     updateHeaderHeight()
 
     if (!typed && window && document.getElementById('typed')) {
-      loadExternalResource(
-        'https://cdn.jsdelivr.net/npm/typed.js@2.0.12',
-        'js'
-      ).then(() => {
+      loadExternalResource('/js/typed.min.js', 'js').then(() => {
         if (window.Typed) {
           changeType(
             new window.Typed('#typed', {
@@ -66,7 +63,7 @@ const Hero = props => {
       <div className='text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full '>
         {/* 站点标题 */}
         <div className='font-black text-4xl md:text-5xl shadow-text'>
-          {siteConfig('TITLE')}
+          {siteInfo?.title || siteConfig('TITLE')}
         </div>
         {/* 站点欢迎语 */}
         <div className='mt-2 h-12 items-center text-center font-medium shadow-text text-lg'>
@@ -92,6 +89,7 @@ const Hero = props => {
 
       <LazyImage
         id='header-cover'
+        alt={siteInfo?.title}
         src={siteInfo?.pageCover}
         className={`header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
       />

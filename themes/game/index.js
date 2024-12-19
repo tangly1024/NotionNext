@@ -44,7 +44,15 @@ export const useGameGlobal = () => useContext(ThemeGlobalGame)
  * @constructor
  */
 const LayoutBase = props => {
-  const { allNavPages, children, siteInfo } = props
+  const {
+    allNavPages,
+    children,
+    siteInfo,
+    tagOptions,
+    currentTag,
+    categoryOptions,
+    currentCategory
+  } = props
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -107,6 +115,23 @@ const LayoutBase = props => {
           {/* 右侧 */}
           <main className='flex-grow w-full h-full flex flex-col min-h-screen overflow-x-auto md:p-2'>
             <div className='flex-grow h-full'>{children}</div>
+            {/* 广告 */}
+            <div className='w-full py-4'>
+              <AdSlot type='in-article' />
+            </div>
+
+            {/* 主区域下方 导览 */}
+            <div className='w-full bg-white dark:bg-hexo-black-gray rounded-lg p-2'>
+              {/* 标签汇总             */}
+              <GroupCategory
+                categoryOptions={categoryOptions}
+                currentCategory={currentCategory}
+              />
+              <hr />
+              <GroupTag tagOptions={tagOptions} currentTag={currentTag} />
+              {/* 站点公告信息 */}
+              <Announcement {...props} className='p-2' />
+            </div>
             <Footer />
           </main>
         </div>
@@ -130,8 +155,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const { tagOptions, currentTag, categoryOptions, currentCategory, siteInfo } =
-    props
+  const { siteInfo } = props
   return (
     <>
       {/* 首页移动端顶部导航 */}
@@ -142,24 +166,6 @@ const LayoutIndex = props => {
       <GameListRecent />
       {/* 游戏列表 */}
       <LayoutPostList {...props} />
-
-      {/* 广告 */}
-      <div className='w-full'>
-        <AdSlot type='in-article' />
-      </div>
-
-      {/* 主区域下方 导览 */}
-      <div className='w-full bg-white dark:bg-hexo-black-gray rounded-lg p-2'>
-        {/* 标签汇总             */}
-        <GroupCategory
-          categoryOptions={categoryOptions}
-          currentCategory={currentCategory}
-        />
-        <hr />
-        <GroupTag tagOptions={tagOptions} currentTag={currentTag} />
-        {/* 站点公告信息 */}
-        <Announcement {...props} className='p-2' />
-      </div>
     </>
   )
 }
@@ -301,7 +307,7 @@ const LayoutSlug = props => {
     <>
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      {!lock && (
+      {!lock && post && (
         <div id='article-wrapper'>
           <div className='game-detail-wrapper w-full grow flex'>
             <div className={`w-full md:py-2`}>

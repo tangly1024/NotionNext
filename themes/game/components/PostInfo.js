@@ -1,6 +1,7 @@
 import NotionIcon from '@/components/NotionIcon'
 import Link from 'next/link'
 import TagItem from './TagItem'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 文章详情页说明信息
@@ -25,7 +26,7 @@ export default function PostInfo(props) {
         </div>
 
         <h1 className='font-bold text-3xl text-black dark:text-white'>
-          <NotionIcon icon={post?.pageIcon} />
+          {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}
           {post?.title}
         </h1>
 

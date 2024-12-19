@@ -12,7 +12,6 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
-          <link rel='icon' href={`${BLOG.BLOG_FAVICON}`} />
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
             <>
@@ -30,25 +29,6 @@ class MyDocument extends Document {
               />
             </>
           )}
-
-          {BLOG.FONT_URL?.map((fontUrl, index) => {
-            if (
-              fontUrl.endsWith('.css') ||
-              fontUrl.includes('googleapis.com/css')
-            ) {
-              return <link key={index} rel='stylesheet' href={fontUrl} />
-            } else {
-              return (
-                <link
-                  key={index}
-                  rel='preload'
-                  href={fontUrl}
-                  as='font'
-                  type='font/woff2'
-                />
-              )
-            }
-          })}
         </Head>
 
         <body>

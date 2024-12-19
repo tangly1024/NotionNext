@@ -17,21 +17,21 @@ export const MenuList = props => {
       id: 1,
       icon: 'fas fa-home',
       name: locale.NAV.INDEX,
-      to: '/' || '/',
+      href: '/' || '/',
       show: true
     },
     {
       id: 2,
       icon: 'fas fa-th',
       name: locale.COMMON.CATEGORY,
-      to: '/category',
+      href: '/category',
       show: siteConfig('GAME_MENU_CATEGORY', null, CONFIG)
     },
     {
       id: 3,
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
-      to: '/tag',
+      href: '/tag',
       show: siteConfig('GAME_MENU_TAG', null, CONFIG)
     }
   ]

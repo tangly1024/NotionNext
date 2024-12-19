@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { GameListIndexCombine } from './GameListIndexCombine'
 import PaginationSimple from './PaginationSimple'
 /**
@@ -8,9 +9,9 @@ import PaginationSimple from './PaginationSimple'
  */
 export const BlogListPage = props => {
   const { page = 1, postCount } = props
-  const totalPage = Math.ceil(
-    postCount / parseInt(siteConfig('POSTS_PER_PAGE'))
-  )
+  const { NOTION_CONFIG } = useGlobal()
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
+  const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
   const showNext = page < totalPage
 
   return (

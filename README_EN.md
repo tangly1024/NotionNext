@@ -1,3 +1,15 @@
+# Free Installation and Usage Guide
+
+Click here to access the help documentation: NotionNext Help Manual - (Completely Free)
+
+## Rights Statement
+
+This project's tutorial is a free and open resource intended solely for personal learning use. It is strictly prohibited for any individual or organization to use this tutorial for commercial purposes, including but not limited to direct sales, indirect charges, or any other forms of profit. When reproducing, copying, or sharing this tutorial, the author's information must be retained, and the source clearly cited.
+
+This project only offers paid consultation services authorized by the author's team. Please be vigilant against fraud. Any unauthorized paid services may be subject to legal risks.
+
+You can set up your personal website in just a few minutes. Here is the link to my free tutorial:
+
 # NotionNext
 
 <p>
@@ -30,20 +42,6 @@ Live Demoï¼š[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ï
 | Next | Medium | Hexo | Fukasawa |
 |--|--|--|--|
 | <img src='./docs/theme-next.png' width='300'/> [NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
-
-## Get Start!
-
-It only takes a few minutes to set up your personal site:
-
-- [Quick Deployment Tutorial - Multiple Options Available](https://tangly1024.com/article/notion-next) 
-
-- [Customization Guide - How to Configure Feature Plugins](https://tangly1024.com/article/notion-next-guide) 
-
-- [Development Guide - How to Conduct Local Development](https://tangly1024.com/article/how-to-develop-with-notion-next)
- 
-- [Update Guide - How to Get the Latest Upgrade Patch](https://tangly1024.com/article/how-to-update-notionnext)
-
-- [Version History - Check Feature Highlights for Each Version](https://tangly1024.com/article/notion-next-changelogs)
 
 ## Acknowledgements
 

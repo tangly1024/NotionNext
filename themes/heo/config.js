@@ -1,4 +1,7 @@
 const CONFIG = {
+  HEO_HOME_POST_TWO_COLS: true, // 首页博客两列显示，若为false则只显示一列
+  HEO_LOADING_COVER: true, // 页面加载的遮罩动画
+
   HEO_HOME_BANNER_ENABLE: true,
 
   HEO_SITE_CREATE_TIME: '2024-04-20', // 建站日期，用于计算网站运行的第几天
@@ -21,6 +24,8 @@ const CONFIG = {
   HEO_HERO_TITLE_4: '非你莫属',
   HEO_HERO_TITLE_5: '北港不夏的个人博客',
   HEO_HERO_TITLE_LINK: 'https://dear7575.cn',
+  // 英雄区遮罩文字
+  HEO_HERO_COVER_TITLE: '随便逛逛',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
@@ -43,6 +48,14 @@ const CONFIG = {
     '🧱 团队小组发动机'
   ],
   HEO_INFO_CARD_URL: 'https://github.com/dear7575', // 个人资料底部按钮链接
+
+  // 个人资料底部按钮
+  HEO_INFO_CARD_URL1: '/about',
+  HEO_INFO_CARD_ICON1: 'fas fa-user',
+  HEO_INFO_CARD_URL2: 'https://github.com/dear7575',
+  HEO_INFO_CARD_ICON2: 'fab fa-github',
+  HEO_INFO_CARD_URL3: 'https://dear7575.cn',
+  HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [

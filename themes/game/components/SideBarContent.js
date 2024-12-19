@@ -37,9 +37,9 @@ export default function SideBarContent({ allNavPages, siteInfo }) {
     const filtered = allGames?.filter(item => {
       return (
         item.title.toLowerCase().includes(search.toLowerCase()) ||
-        item.id.toLowerCase().includes(search.toLowerCase()) ||
-        item.id
-          .toLowerCase()
+        item.short_id?.toLowerCase().includes(search.toLowerCase()) ||
+        item.short_id
+          ?.toLowerCase()
           .replace('-', '')
           .includes(search.toLowerCase().replace('-', ''))
       )

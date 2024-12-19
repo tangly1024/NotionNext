@@ -1,10 +1,11 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
+import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { checkContainHttp } from '@/lib/utils'
+import { checkSlugHasMorThanTwoSlash, getRecommendPost } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
-import Slug, { getRecommendPost } from '..'
+import Slug from '..'
 
 /**
  * 根据notion的slug访问页面
@@ -30,17 +31,17 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
-
+  const paths = allPages
+    ?.filter(row => checkSlugHasMorThanTwoSlash(row))
+    .map(row => ({
+      params: {
+        prefix: row.slug.split('/')[0],
+        slug: row.slug.split('/')[1],
+        suffix: row.slug.split('/').slice(2)
+      }
+    }))
   return {
-    paths: allPages
-      ?.filter(row => checkSlug(row))
-      .map(row => ({
-        params: {
-          prefix: row.slug.split('/')[0],
-          slug: row.slug.split('/')[1],
-          suffix: row.slug.split('/').slice(1)
-        }
-      })),
+    paths: paths,
     fallback: true
   }
 }
@@ -54,20 +55,18 @@ export async function getStaticProps({
   params: { prefix, slug, suffix },
   locale
 }) {
-  let fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
+  const fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalData({ from, locale })
-  if (siteConfig('PSEUDO_STATIC', BLOG.PSEUDO_STATIC, props.NOTION_CONFIG)) {
-    if (!fullSlug.endsWith('.html')) {
-      fullSlug += '.html'
-    }
-  }
 
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
-      (p.slug === fullSlug || p.id === idToUuid(fullSlug))
+      (p.slug === suffix ||
+        p.slug === fullSlug.substring(fullSlug.lastIndexOf('/') + 1) ||
+        p.slug === fullSlug ||
+        p.id === idToUuid(fullSlug))
     )
   })
 
@@ -85,18 +84,29 @@ export async function getStaticProps({
     props.post = null
     return {
       props,
-      revalidate: siteConfig(
-        'REVALIDATE_SECOND',
-        BLOG.NEXT_REVALIDATE_SECOND,
-        props.NOTION_CONFIG
-      )
+      revalidate: process.env.EXPORT
+        ? undefined
+        : siteConfig(
+            'NEXT_REVALIDATE_SECOND',
+            BLOG.NEXT_REVALIDATE_SECOND,
+            props.NOTION_CONFIG
+          )
     }
   }
 
   // 文章内容加载
-  if (!props?.posts?.blockMap) {
+  if (!props?.post?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
+
+  // 目录默认加载
+  if (props.post?.blockMap?.block) {
+    props.post.content = Object.keys(props.post.blockMap.block).filter(
+      key => props.post.blockMap.block[key]?.value?.parent_id === props.post.id
+    )
+    props.post.toc = getPageTableOfContents(props.post, props.post.blockMap)
+  }
+
   // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
   if (BLOG.ALGOLIA_APP_ID) {
     uploadDataToAlgolia(props?.post)
@@ -124,24 +134,14 @@ export async function getStaticProps({
   delete props.allPages
   return {
     props,
-    revalidate: siteConfig(
-      'NEXT_REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
-}
-
-function checkSlug(row) {
-  let slug = row.slug
-  if (slug.startsWith('/')) {
-    slug = slug.substring(1)
-  }
-  return (
-    (slug.match(/\//g) || []).length >= 2 &&
-    row.type.indexOf('Menu') < 0 &&
-    !checkContainHttp(slug)
-  )
 }
 
 export default PrefixSlug

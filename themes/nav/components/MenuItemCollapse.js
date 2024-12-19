@@ -20,8 +20,10 @@ export const MenuItemCollapse = props => {
   if (!link || !link.show) {
     return null
   }
-
-  const selected = router.pathname === link.to || router.asPath === link.to
+  // #号加标题  快速跳转到指定锚点
+  const isAnchor = link?.href === '#'
+  const url = isAnchor ? `#${link.name}` : link.href
+  const selected = router.pathname === link.href || router.asPath === link.href
 
   const toggleShow = () => {
     changeShow(!show)
@@ -42,7 +44,7 @@ export const MenuItemCollapse = props => {
         onClick={toggleShow}>
         {!hasSubMenu && (
           <Link
-            href={link?.to}
+            href={url}
             target={link?.target}
             className='py-2 w-full my-auto items-center justify-between flex  '>
             <div>
@@ -72,21 +74,24 @@ export const MenuItemCollapse = props => {
       {hasSubMenu && (
         <Collapse isOpen={isOpen} onHeightChange={props.onHeightChange}>
           {link?.subMenus?.map((sLink, index) => {
+            // #号加标题  快速跳转到指定锚点
+            const sIsAnchor = sLink?.href === '#'
+            const sUrl = sIsAnchor ? `#${sLink.name}` : sLink.href
+
             return (
               <div
                 key={index}
                 className='
               py-2 px-14 cursor-pointer hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white font-bold 
               dark:bg-black text-left justify-start text-gray-600 bg-gray-50 bg-opacity-20 dark:hover:bg-gray-600 tracking-widest transition-all duration-200'>
-                {/* <Link href={sLink.to} target={link?.target}> */}
-                <a href={`/#${sLink.title}`} target={'_self'}>
+                <Link href={sUrl} target={'_self'}>
                   <div>
                     <div
                       className={`${sLink?.icon ? sLink?.icon : 'fas fa-hashtag'} text-center w-3 mr-2 text-xs`}
                     />
                     {sLink.title}
                   </div>
-                </a>
+                </Link>
               </div>
             )
           })}
