@@ -1,5 +1,13 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "headers": []
+  "headers": [ {
+    "source": "/.well-known/apple-app-site-association",
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      }
+    ]
+  }]
 }

@@ -1,0 +1,15 @@
+{
+    "applinks": {
+        "details": [
+            {
+                "appIDs": ["BJFG39YAL5.com.simo54.todo"],
+                "components": [
+                    {
+                        "/": "*",
+                        "comment": ""
+                    }
+                ]
+            }
+        ]
+    }
+}
