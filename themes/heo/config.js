@@ -58,15 +58,7 @@ const CONFIG = {
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
-    //{
-      //title_1: 'AfterEffect',
-      //img_1: '/images/heo/20239df3f66615b532ce571eac6d14ff21cf072602.webp',
-      //color_1: '#989bf8',
-      //title_2: 'Sketch',
-      //img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
-      //color_2: '#ffffff'
-    //},
-        {
+    {
       title_1: 'ball',
       img_1: '/images/heo/ball.png',
       color_1: '#e4e2e2',
@@ -75,12 +67,12 @@ const CONFIG = {
       color_2: '#f2786f'
     },
     {
-      title_1: 'Docker',
-      img_1: '/images/heo/20231108a540b2862d26f8850172e4ea58ed075102.webp',
+      title_1: 'wow',
+      img_1: '/images/heo/wow.webp',
       color_1: '#57b6e6',
-      title_2: 'Photoshop',
-      img_2: '/images/heo/2023e4058a91608ea41751c4f102b131f267075902.webp',
-      color_2: '#4082c3'
+      title_2: 'jump',
+      img_2: '/images/heo/jump.png',
+      color_2: '#9fe404'
     },
     {
       title_1: 'FinalCutPro',
