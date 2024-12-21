@@ -8,8 +8,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到我的博客', url: 'https://blog.netanio.com' },
+    { title: '欢迎来到现实世界', url: 'https://blog.netanio.com' }
   ],
 
   // 英雄区左右侧组件颠倒位置
@@ -18,9 +18,9 @@ const CONFIG = {
   HEO_HERO_BODY_REVERSE: false,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享编程',
-  HEO_HERO_TITLE_2: '与思维认知',
-  HEO_HERO_TITLE_3: 'TANGLY1024.COM',
+  HEO_HERO_TITLE_1: '分享游戏开发',
+  HEO_HERO_TITLE_2: '与我的杂七杂八',
+  HEO_HERO_TITLE_3: 'NETANIO.COM',
   HEO_HERO_TITLE_4: '新版上线',
   HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
   HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
@@ -58,13 +58,21 @@ const CONFIG = {
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
-    {
-      title_1: 'AfterEffect',
-      img_1: '/images/heo/20239df3f66615b532ce571eac6d14ff21cf072602.webp',
-      color_1: '#989bf8',
-      title_2: 'Sketch',
-      img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
-      color_2: '#ffffff'
+    //{
+      //title_1: 'AfterEffect',
+      //img_1: '/images/heo/20239df3f66615b532ce571eac6d14ff21cf072602.webp',
+      //color_1: '#989bf8',
+      //title_2: 'Sketch',
+      //img_2: '/images/heo/2023e0ded7b724a39f12d59c3dc8fbdc7cbe074202.webp',
+      //color_2: '#ffffff'
+    //},
+        {
+      title_1: 'ball',
+      img_1: '/images/heo/ball.png',
+      color_1: '#e4e2e2',
+      title_2: 'mario',
+      img_2: '/images/heo/mario.png',
+      color_2: '#f2786f'
     },
     {
       title_1: 'Docker',
