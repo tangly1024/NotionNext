@@ -78,7 +78,7 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     }
     // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
     if (
-      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 0) &&
+      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 14) &&
       (!postReadTime[item.short_id] ||
         postReadTime[item.short_id] < new Date(item.lastEditedDate).getTime())
     ) {
@@ -316,6 +316,7 @@ const LayoutSlug = props => {
       ? `${post?.title} | ${siteInfo?.description}`
       : `${post?.title} | ${siteInfo?.title}`
 
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
@@ -332,7 +333,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
