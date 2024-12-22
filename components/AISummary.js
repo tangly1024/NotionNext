@@ -1,8 +1,10 @@
 import styles from './AISummary.module.css'
 import { useEffect, useState } from 'react'
+import { useGlobal } from '@/lib/global'
 
 const AISummary = ({ aiSummary }) => {
-  const [summary, setSummary] = useState('生成中...')
+  const { locale } = useGlobal()
+  const [summary, setSummary] = useState(locale.AI_SUMMARY.GENERATING + '...')
 
   useEffect(() => {
     showAiSummaryAnimation(aiSummary, setSummary)
@@ -24,7 +26,7 @@ const AISummary = ({ aiSummary }) => {
               />
             </svg>
           </div>
-          <div className={styles['ai-title']}>AI智能摘要</div>
+          <div className={styles['ai-title']}>{locale.AI_SUMMARY.NAME}</div>
           <div className={styles['ai-tag']}>GPT</div>
         </div>
         <div className={styles['ai-content']}>
