@@ -12,9 +12,12 @@ import { useEffect } from 'react'
  */
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
-  let url = siteConfig('PATH')?.length
-    ? `${siteConfig('LINK')}/${siteConfig('SUB_PATH', '')}`
-    : siteConfig('LINK')
+  const PATH = siteConfig('PATH')
+  const LINK = siteConfig('LINK')
+  const SUB_PATH = siteConfig('SUB_PATH', '')
+  let url = PATH?.length
+    ? `${LINK}/${SUB_PATH}`
+    : LINK
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -40,7 +43,8 @@ const SEO = props => {
   }, [])
 
   // SEO关键词
-  let keywords = meta?.tags || siteConfig('KEYWORDS')
+  const KEYWORDS = siteConfig('KEYWORDS')
+  let keywords = meta?.tags || KEYWORDS
   if (post?.tags && post?.tags?.length > 0) {
     keywords = post?.tags?.join(',')
   }
@@ -48,11 +52,12 @@ const SEO = props => {
     url = `${url}/${meta.slug}`
     image = meta.image || '/bg_image.jpg'
   }
-  const title = meta?.title || siteConfig('TITLE')
+  const TITLE = siteConfig('TITLE')
+  const title = meta?.title || TITLE
   const description = meta?.description || `${siteInfo?.description}`
   const type = meta?.type || 'website'
   const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
-  const category = meta?.category || siteConfig('KEYWORDS') // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
+  const category = meta?.category || KEYWORDS // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const favicon = siteConfig('BLOG_FAVICON')
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
 
@@ -94,6 +99,7 @@ const SEO = props => {
 
   const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
 
+  const AUTHOR = siteConfig('AUTHOR')
   return (
     <Head>
       <link rel='icon' href={favicon} />
@@ -154,7 +160,7 @@ const SEO = props => {
       {meta?.type === 'Post' && (
         <>
           <meta property='article:published_time' content={meta.publishDay} />
-          <meta property='article:author' content={siteConfig('AUTHOR')} />
+          <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
           <meta property='article:publisher' content={FACEBOOK_PAGE} />
         </>
@@ -173,6 +179,7 @@ const getSEOMeta = (props, router, locale) => {
   const { post, siteInfo, tag, category, page } = props
   const keyword = router?.query?.s
 
+  const TITLE = siteConfig('TITLE')
   switch (router.route) {
     case '/':
       return {
@@ -235,7 +242,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/search/[keyword]/page/[page]':
       return {
         title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: siteConfig('TITLE'),
+        description: TITLE,
         image: `${siteInfo?.pageCover}`,
         slug: 'search/' + (keyword || ''),
         type: 'website'
