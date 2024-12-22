@@ -91,12 +91,12 @@ const CONFIG = {
       color_2: '#ffffff'
     },
     {
-      title_1: 'pika',
-      img_1: '/images/heo/pika.png',
-      color_1: '#f29e39',
-      title_2: 'ys',
-      img_2: '/images/heo/ys.png',
-      color_2: '#fff6ec'
+      title_1: 'unity',
+      img_1: '/images/heo/unity.png',
+      color_1: '#f25247',
+      title_2: 'unreal',
+      img_2: '/images/heo/unreal.png',
+      color_2: '#c79eed'
     },
     {
       title_1: 'mw',
