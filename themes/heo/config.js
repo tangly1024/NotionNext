@@ -22,7 +22,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '与杂七杂八',
   HEO_HERO_TITLE_3: 'BLOG.NETANIO.COM',
   HEO_HERO_TITLE_4: '欢迎登陆',
-  HEO_HERO_TITLE_5: '地球Online4.0 当前在线玩家80亿',
+  HEO_HERO_TITLE_5: '地球Online4.0 当前在线80亿',
   HEO_HERO_TITLE_LINK: 'https://blog.netanio.com',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
