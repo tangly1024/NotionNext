@@ -27,6 +27,7 @@ import { siteConfig } from '@/lib/config'
 import Announcement from './components/Announcement'
 import Card from './components/Card'
 import dynamic from 'next/dynamic'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
@@ -89,7 +90,7 @@ const LayoutBase = (props) => {
     <ThemeGlobalNext.Provider value={{ searchModal }}>
         <div id='theme-next' className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
             <Style/>
-
+           
             {/* 移动端顶部导航栏 */}
             <TopNav {...props} />
 
@@ -132,6 +133,8 @@ const LayoutBase = (props) => {
 
             {/* 页脚 */}
             <Footer title={siteConfig('TITLE')} />
+            {/* vercel 性能监控 */}
+            <SpeedInsights/>
         </div>
       </ThemeGlobalNext.Provider>
   )

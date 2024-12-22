@@ -20,7 +20,6 @@ const ExternalPlugin = props => {
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN')
   const THEME_SWITCH = siteConfig('THEME_SWITCH')
   const DEBUG = siteConfig('DEBUG')
-  const ANALYTICS_ACKEE_TRACKER = siteConfig('ANALYTICS_ACKEE_TRACKER')
   const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL')
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
@@ -138,7 +137,6 @@ const ExternalPlugin = props => {
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
-      {ANALYTICS_ACKEE_TRACKER && <Ackee />}
       {ANALYTICS_GOOGLE_ID && <Gtag />}
       {ANALYTICS_VERCEL && <Analytics />}
       {ANALYTICS_BUSUANZI_ENABLE && <Busuanzi />}
@@ -385,7 +383,6 @@ const Analytics = dynamic(
   { ssr: false }
 )
 const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
-const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
 const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
