@@ -64,6 +64,10 @@ const ExternalPlugin = props => {
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
 
+  // 添加 Umami 配置
+  const UMAMI_TRACKER_URL = siteConfig('UMAMI_TRACKER_URL')
+  const UMAMI_ID = siteConfig('UMAMI_ID')
+
   // 自定义样式css和js引入
   if (isBrowser) {
     // 初始化AOS动画
@@ -106,6 +110,15 @@ const ExternalPlugin = props => {
 
     // 映射url
     convertInnerUrl(props?.allNavPages)
+
+    // 添加 Umami 跟踪代码
+    if (UMAMI_TRACKER_URL && UMAMI_ID) {
+      const script = document.createElement('script');
+      script.src = `${UMAMI_TRACKER_URL}`;
+      script.setAttribute('data-website-id', UMAMI_ID);
+      script.async = true;
+      document.head.appendChild(script);
+    }
   }, [router])
 
   useEffect(() => {
