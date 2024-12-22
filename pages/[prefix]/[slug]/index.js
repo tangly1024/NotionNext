@@ -6,6 +6,8 @@ import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
 import { checkSlugHasOneSlash, getRecommendPost } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
+import { getPageContentText } from '@/pages/search/[keyword]'
+import { getAiSummary } from '@/lib/plugins/aiSummary'
 
 /**
  * 根据notion的slug访问页面
@@ -94,6 +96,26 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
       key => props.post.blockMap.block[key]?.value?.parent_id === props.post.id
     )
     props.post.toc = getPageTableOfContents(props.post, props.post.blockMap)
+
+    const aiSummaryAPI = siteConfig('AI_SUMMARY_API')
+    if (aiSummaryAPI) {
+      const aiSummaryKey = siteConfig('AI_SUMMARY_KEY')
+      const wordLimit = siteConfig('AI_SUMMARY_WORD_LIMIT', '1000')
+      const post = props.post
+      let content = ''
+      for (let heading of post.toc) {
+        content += heading.text + ' '
+      }
+      content += getPageContentText(post, post.blockMap)
+      const combinedText = post.title + ' ' + content
+      const truncatedText = combinedText.slice(0, wordLimit)
+
+      props.post.aiSummary = await getAiSummary(
+        aiSummaryAPI,
+        aiSummaryKey,
+        truncatedText
+      )
+    }
   }
 
   // 生成全文索引 && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
