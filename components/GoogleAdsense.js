@@ -39,6 +39,7 @@ function requestAd(ads) {
 // 获取节点或其子节点中包含 adsbygoogle 类的节点
 function getNodesWithAdsByGoogleClass(node) {
   const adsNodes = []
+
   // 检查节点及其子节点是否包含 adsbygoogle 类
   function checkNodeForAds(node) {
     if (
@@ -53,6 +54,7 @@ function getNodesWithAdsByGoogleClass(node) {
       }
     }
   }
+
   checkNodeForAds(node)
   return adsNodes
 }
@@ -174,6 +176,9 @@ const AdSlot = ({ type = 'show' }) => {
  * @param {*} props
  */
 const AdEmbed = () => {
+  const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
+  const ADSENSE_GOOGLE_TEST = siteConfig('ADSENSE_GOOGLE_TEST')
+  const ADSENSE_GOOGLE_SLOT_AUTO = siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')
   useEffect(() => {
     setTimeout(() => {
       // 找到所有 class 为 notion-text 且内容为 '<ins/>' 的 div 元素
@@ -187,18 +192,12 @@ const AdEmbed = () => {
           const newInsElement = document.createElement('ins')
           newInsElement.className = 'adsbygoogle w-full py-1'
           newInsElement.style.display = 'block'
-          newInsElement.setAttribute(
-            'data-ad-client',
-            siteConfig('ADSENSE_GOOGLE_ID')
-          )
+          newInsElement.setAttribute('data-ad-client', ADSENSE_GOOGLE_ID)
           newInsElement.setAttribute(
             'data-adtest',
-            siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'
+            ADSENSE_GOOGLE_TEST ? 'on' : 'off'
           )
-          newInsElement.setAttribute(
-            'data-ad-slot',
-            siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')
-          )
+          newInsElement.setAttribute('data-ad-slot', ADSENSE_GOOGLE_SLOT_AUTO)
           newInsElement.setAttribute('data-ad-format', 'auto')
           newInsElement.setAttribute('data-full-width-responsive', 'true')
 
