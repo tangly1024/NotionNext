@@ -93,10 +93,10 @@ const CONFIG = {
     {
       title_1: 'unity',
       img_1: '/images/heo/unity.png',
-      color_1: '#f25247',
+      color_1: '#ead1dc',
       title_2: 'unreal',
       img_2: '/images/heo/unreal.png',
-      color_2: '#c79eed'
+      color_2: '#d5a6bd'
     },
     {
       title_1: 'mw',
