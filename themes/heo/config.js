@@ -20,10 +20,10 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '游戏开发',
   HEO_HERO_TITLE_2: '与杂七杂八',
-  HEO_HERO_TITLE_3: 'NETANIO.COM',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_3: 'BLOG.NETANIO.COM',
+  HEO_HERO_TITLE_4: '欢迎登陆',
+  HEO_HERO_TITLE_5: '地球Online4.0 当前在线玩家80亿',
+  HEO_HERO_TITLE_LINK: 'https://blog.netanio.com',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
 
