@@ -96,7 +96,7 @@ const CONFIG = {
       color_1: '#ead1dc',
       title_2: 'unreal',
       img_2: '/images/heo/unreal.png',
-      color_2: '#d5a6bd'
+      color_2: '#eeeeee'
     },
     {
       title_1: 'mw',
