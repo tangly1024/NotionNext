@@ -6,12 +6,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import Artalk from './Artalk'
 
-const WalineComponent = dynamic(
-  () => {
-    return import('@/components/WalineComponent')
-  },
-  { ssr: false }
-)
 
 const CusdisComponent = dynamic(
   () => {
@@ -69,7 +63,6 @@ const Comment = ({ frontMatter, className }) => {
 
   const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER')
   const COMMENT_TWIKOO_ENV_ID = siteConfig('COMMENT_TWIKOO_ENV_ID')
-  const COMMENT_WALINE_SERVER_URL = siteConfig('COMMENT_WALINE_SERVER_URL')
   const COMMENT_VALINE_APP_ID = siteConfig('COMMENT_VALINE_APP_ID')
   const COMMENT_GISCUS_REPO = siteConfig('COMMENT_GISCUS_REPO')
   const COMMENT_CUSDIS_APP_ID = siteConfig('COMMENT_CUSDIS_APP_ID')
@@ -151,12 +144,6 @@ const Comment = ({ frontMatter, className }) => {
           {COMMENT_TWIKOO_ENV_ID && (
             <div key='Twikoo'>
               <TwikooCompenent />
-            </div>
-          )}
-
-          {COMMENT_WALINE_SERVER_URL && (
-            <div key='Waline'>
-              <WalineComponent />
             </div>
           )}
 
