@@ -8,6 +8,7 @@ import { idToUuid } from 'notion-utils'
 import Slug from '..'
 import { getPageContentText } from '@/pages/search/[keyword]'
 import { getAiSummary } from '@/lib/plugins/aiSummary'
+import { getDataFromCache, setDataToCache } from '@/lib/cache/cache_manager'
 
 /**
  * 根据notion的slug访问页面
@@ -99,22 +100,30 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
 
     const aiSummaryAPI = siteConfig('AI_SUMMARY_API')
     if (aiSummaryAPI) {
-      const aiSummaryKey = siteConfig('AI_SUMMARY_KEY')
-      const wordLimit = siteConfig('AI_SUMMARY_WORD_LIMIT', '1000')
       const post = props.post
-      let content = ''
-      for (let heading of post.toc) {
-        content += heading.text + ' '
+      const cacheKey = `ai_summary_${post.id}`
+      let aiSummary = await getDataFromCache(cacheKey)
+      if (aiSummary) {
+        props.post.aiSummary = aiSummary
+      } else {
+        const aiSummaryKey = siteConfig('AI_SUMMARY_KEY')
+        const aiSummaryCacheTime = siteConfig('AI_SUMMARY_CACHE_TIME')
+        const wordLimit = siteConfig('AI_SUMMARY_WORD_LIMIT', '1000')
+        let content = ''
+        for (let heading of post.toc) {
+          content += heading.text + ' '
+        }
+        content += getPageContentText(post, post.blockMap)
+        const combinedText = post.title + ' ' + content
+        const truncatedText = combinedText.slice(0, wordLimit)
+        aiSummary = await getAiSummary(
+          aiSummaryAPI,
+          aiSummaryKey,
+          truncatedText
+        )
+        await setDataToCache(cacheKey, aiSummary, aiSummaryCacheTime)
+        props.post.aiSummary = aiSummary
       }
-      content += getPageContentText(post, post.blockMap)
-      const combinedText = post.title + ' ' + content
-      const truncatedText = combinedText.slice(0, wordLimit)
-
-      props.post.aiSummary = await getAiSummary(
-        aiSummaryAPI,
-        aiSummaryKey,
-        truncatedText
-      )
     }
   }
 

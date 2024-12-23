@@ -277,6 +277,7 @@ const BLOG = {
   AI_SUMMARY_KEY:
       process.env.AI_SUMMARY_KEY ||
       '',
+  AI_SUMMARY_CACHE_TIME: process.env.AI_SUMMARY_CACHE_TIME || 1800, // 缓存时间，单位秒
   AI_SUMMARY_WORD_LIMIT: process.env.AI_SUMMARY_WORD_LIMIT || 1000,
 
 
