@@ -20,7 +20,7 @@ const ExternalPlugin = props => {
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN')
   const THEME_SWITCH = siteConfig('THEME_SWITCH')
   const DEBUG = siteConfig('DEBUG')
-  const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL')
+  // const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL')
   const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
   const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
@@ -69,10 +69,33 @@ const ExternalPlugin = props => {
 
   // 自定义样式css和js引入
   if (isBrowser) {
-    // 初始化AOS动画
-    // 静态导入本地自定义样式
-    loadExternalResource('/css/custom.css', 'css')
-    loadExternalResource('/js/custom.js', 'js')
+    // 检查文件是否存在的函数
+    const checkFileExists = async (url) => {
+      try {
+        const response = await fetch(url, { method: 'HEAD' });
+        return response.ok;
+      } catch (error) {
+        console.log(`File ${url} not found`);
+        return false;
+      }
+    };
+
+    // 异步加载文件
+    const loadFiles = async () => {
+      // 检查并加载 custom.css
+      const cssExists = await checkFileExists('/css/custom.css');
+      if (cssExists) {
+        loadExternalResource('/css/custom.css', 'css');
+      }
+
+      // 检查并加载 custom.js
+      const jsExists = await checkFileExists('/js/custom.js');
+      if (jsExists) {
+        loadExternalResource('/js/custom.js', 'js');
+      }
+    };
+
+    loadFiles();
 
     // 自动添加图片阴影
     if (IMG_SHADOW) {
@@ -138,7 +161,7 @@ const ExternalPlugin = props => {
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
       {ANALYTICS_GOOGLE_ID && <Gtag />}
-      {ANALYTICS_VERCEL && <Analytics />}
+      {/* {ANALYTICS_VERCEL && <Analytics />} */}
       {ANALYTICS_BUSUANZI_ENABLE && <Busuanzi />}
       {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
       {FIREWORKS && <Fireworks />}
@@ -375,13 +398,13 @@ const StarrySky = dynamic(() => import('@/components/StarrySky'), {
 const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
   ssr: false
 })
-const Analytics = dynamic(
-  () =>
-    import('@vercel/analytics/react').then(async m => {
-      return m.Analytics
-    }),
-  { ssr: false }
-)
+// const Analytics = dynamic(
+//   () =>
+//     import('@vercel/analytics/react').then(async m => {
+//       return m.Analytics
+//     }),
+//   { ssr: false }
+// )
 const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
 const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })

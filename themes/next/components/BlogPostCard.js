@@ -32,6 +32,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
         className='flex flex-col-reverse justify-between duration-300'>
         <div className='lg:p-4 p-2 flex flex-col w-full'>
           {/* 文章标题 */}
+          <div>
              <Link
             {...aosProps}
             href={post?.href}
@@ -41,7 +42,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
             )}{' '}
             <span className='menu-link'>{post.title}</span>
           </Link>
-
+          </div>
           <div
             {...aosProps}
             className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} flex-wrap dark:text-gray-500 text-gray-500 `}>
@@ -51,7 +52,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
                   <Link
                     href={`/category/${post.category}`}
                     passHref
-                    className='hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-sm transform'>
+                    className='hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-s transform'>
                     <i className='mr-1 fas fa-folder' />
                     <span className='menu-link'>{post.category}</span>
                   </Link>
@@ -61,14 +62,14 @@ const BlogPostCard = ({ post, index, showSummary }) => {
               <Link
                 href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                 passHref
-                className='hover:text-blue-500 dark:hover:text-blue-400 font-light cursor-pointer text-sm leading-4 mr-3'>
+                className='hover:text-blue-500 dark:hover:text-blue-400 font-light cursor-pointer text-s leading-4 mr-3'>
                 <span className='menu-link'>{post.date?.start_date}</span>
               </Link>
             </div>
 
             <TwikooCommentCount
               post={post}
-              className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-sm'
+              className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-s'
             />
 
             <div className='hover:text-blue-500 dark:hover:text-blue-400  md:flex-nowrap flex-wrap md:justify-start inline-block'>
@@ -82,7 +83,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
             <Link href={post?.href}>
                <p
               {...aosProps}
-              className='mt-3 mb-3 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
+              className='mt-3 mb-3 text-gray-700 dark:text-gray-300 text-m font-light leading-7'>
               {post.summary}
             </p>
             </Link>
