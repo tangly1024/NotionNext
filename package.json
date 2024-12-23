@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "@waline/client": "^2.5.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.26.0",
     "eslint-config-next": "^13.1.1",
