@@ -30,23 +30,20 @@ const LatestPostsGroup = ({ latestPosts }) => {
         const selected =
           currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
         return (
+          <ul>
           <Link
             key={post.id}
             title={post.title}
             href={post?.href}
-            passHref
-            className={'my-1 flex font-light'}>
-            <div
-              className={
-                (selected
-                  ? 'text-white  bg-gray-600 '
-                  : 'text-gray-500 dark:text-gray-400 ') +
-                ' text-xs py-1.5 flex hover:bg-gray-500 px-2 duration-200 w-full ' +
-                'hover:text-white dark:hover:text-white cursor-pointer'
-              }>
-              <li className='line-clamp-2'>{post.title}</li>
-            </div>
+            className={`my-1 flex font-light ${
+              selected
+                ? 'text-white bg-gray-600'
+                : 'text-gray-500 dark:text-gray-400'
+            } text-xs py-1.5 hover:bg-gray-500 px-2 duration-200 w-full hover:text-white dark:hover:text-white cursor-pointer`}
+          >
+            <li className="line-clamp-2">{post.title}</li>
           </Link>
+          </ul>
         )
       })}
     </>
