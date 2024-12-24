@@ -182,8 +182,9 @@ const AdEmbed = () => {
   useEffect(() => {
     setTimeout(() => {
       // 找到所有 class 为 notion-text 且内容为 '<ins/>' 的 div 元素
-      const notionTextElements = document.querySelectorAll('div.notion-text')
-
+      const notionTextElements = document.querySelectorAll(
+        '#article-wrapper #notion-article div.notion-text'
+      )
       // 遍历找到的元素
       notionTextElements?.forEach(element => {
         // 检查元素的内容是否为 '<ins/>'
