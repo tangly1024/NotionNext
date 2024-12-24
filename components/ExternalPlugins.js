@@ -69,33 +69,8 @@ const ExternalPlugin = props => {
 
   // 自定义样式css和js引入
   if (isBrowser) {
-    // 检查文件是否存在的函数
-    const checkFileExists = async (url) => {
-      try {
-        const response = await fetch(url, { method: 'HEAD' });
-        return response.ok;
-      } catch (error) {
-        console.log(`File ${url} not found`);
-        return false;
-      }
-    };
-
-    // 异步加载文件
-    const loadFiles = async () => {
-      // 检查并加载 custom.css
-      const cssExists = await checkFileExists('/css/custom.css');
-      if (cssExists) {
-        loadExternalResource('/css/custom.css', 'css');
-      }
-
-      // 检查并加载 custom.js
-      const jsExists = await checkFileExists('/js/custom.js');
-      if (jsExists) {
-        loadExternalResource('/js/custom.js', 'js');
-      }
-    };
-
-    loadFiles();
+    loadExternalResource('/css/custom.css', 'css');
+    loadExternalResource('/js/custom.js', 'js');
 
     // 自动添加图片阴影
     if (IMG_SHADOW) {
