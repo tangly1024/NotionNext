@@ -2,7 +2,7 @@
     "applinks": {
         "details": [
             {
-                "appIDs": ["BJFG39YAL5.com.simo54.todo"],
+                "appIDs": ["BAAG9986TH.com.simo54.todo"],
                 "components": [
                     {
                         "/": "/apps/todo/*",
