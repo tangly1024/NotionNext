@@ -44,6 +44,7 @@ function getNodesWithAdsByGoogleClass(node) {
   function checkNodeForAds(node) {
     if (
       node.nodeType === Node.ELEMENT_NODE &&
+      node.tagName === 'INS' &&
       node.classList.contains('adsbygoogle')
     ) {
       adsNodes.push(node)
@@ -71,7 +72,7 @@ export const initGoogleAdsense = async ADSENSE_GOOGLE_ID => {
   ).then(url => {
     setTimeout(() => {
       // 页面加载完成后加载一次广告
-      const ads = document.getElementsByClassName('adsbygoogle')
+      const ads = document.querySelectorAll('ins.adsbygoogle')
       if (window.adsbygoogle && ads.length > 0) {
         requestAd(Array.from(ads))
       }
@@ -206,8 +207,6 @@ const AdEmbed = () => {
           element?.parentNode?.replaceChild(newInsElement, element)
         }
       })
-
-      requestAd()
     }, 1000)
   }, [])
   return <></>
