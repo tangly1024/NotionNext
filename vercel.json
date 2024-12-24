@@ -1,13 +1,23 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [ {
-    "source": "/.well-known/apple-app-site-association",
-    "headers": [
-      {
-        "key": "Content-Type",
-        "value": "application/json"
-      }
-    ]
-  }]
+  "headers": [
+    {
+      "source": "/.well-known/apple-app-site-association",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/.well-known/apple-app-site-association",
+      "destination": "/api/apple-app-site-association"
+    }
+  ]
 }

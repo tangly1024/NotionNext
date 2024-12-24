@@ -189,6 +189,18 @@ const nextConfig = {
                   'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
               }
             ]
+          },      {
+            source: '/.well-known/apple-app-site-association',
+            headers: [
+              {
+                key: 'Content-Type',
+                value: 'application/json',
+              },
+              {
+                key: 'Cache-Control',
+                value: 'public, max-age=3600',
+              },
+            ],
           }
         ]
       },
