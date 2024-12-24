@@ -189,7 +189,7 @@ const AdEmbed = () => {
       // 遍历找到的元素
       notionTextElements?.forEach(element => {
         // 检查元素的内容是否为 '<ins/>'
-        if (element.innerHTML.trim() === '&lt;ins/&gt;') {
+        if (element.textContent.trim() === '<ins/>') {
           // 创建新的 <ins> 元素
           const newInsElement = document.createElement('ins')
           newInsElement.className = 'adsbygoogle w-full py-1'
