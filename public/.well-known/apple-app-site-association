@@ -5,7 +5,7 @@
                 "appIDs": ["BAAG9986TH.com.simo54.todo"],
                 "components": [
                     {
-                        "/": "/apps/todo/*",
+                        "/": "/apps/todo*",
                         "comment": ""
                     }
                 ]
