@@ -49,7 +49,7 @@ const CONFIG = {
   ],
 
   // 个人资料底部按钮
-  HEO_INFO_CARD_URL1: '/aboutme',
+  HEO_INFO_CARD_URL1: '/contactme',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
   HEO_INFO_CARD_URL2: 'https://github.com/Bersulang',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
