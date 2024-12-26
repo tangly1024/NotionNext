@@ -7,7 +7,7 @@ import SideAreaLeft from './components/SideAreaLeft'
 import SideAreaRight from './components/SideAreaRight'
 import TopNav from './components/TopNav'
 import { useGlobal } from '@/lib/global'
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BlogPostListPage from './components/BlogPostListPage'
 import StickyBar from './components/StickyBar'
@@ -27,7 +27,8 @@ import { siteConfig } from '@/lib/config'
 import Announcement from './components/Announcement'
 import Card from './components/Card'
 import dynamic from 'next/dynamic'
-
+import { isMobile } from 'react-device-detect';
+import { throttle } from 'lodash';
 const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
 // 主题全局状态
@@ -45,33 +46,41 @@ const LayoutBase = (props) => {
   const floatButtonGroup = useRef(null)
   const [showRightFloat, switchShow] = useState(false)
   const [percent, changePercent] = useState(0) // 页面阅读百分比
-  const scrollListener = () => {
-    const targetRef = document.getElementById('wrapper')
-    const clientHeight = targetRef?.clientHeight
-    const scrollY = window.pageYOffset
-    const fullHeight = clientHeight - window.outerHeight
-    let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
-    if (per > 100) per = 100
-    const shouldShow = scrollY > 100 && per > 0
 
-    if (shouldShow !== showRightFloat) {
-      switchShow(shouldShow)
-    }
-    changePercent(per)
-  }
+  const scrollListener = useCallback(() => {
+    // 使用 requestAnimationFrame 优化滚动性能
+    requestAnimationFrame(() => {
+      const targetRef = document.getElementById('wrapper')
+      const clientHeight = targetRef?.clientHeight
+      const scrollY = window.pageYOffset
+      const fullHeight = clientHeight - window.outerHeight
+      let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
+      if (per > 100) per = 100
+      const shouldShow = scrollY > 100 && per > 0
 
+      if (shouldShow !== showRightFloat) {
+        switchShow(shouldShow)
+      }
+      changePercent(per)
+    })
+  }, [showRightFloat])
+
+  // 使用节流优化滚动监听
   useEffect(() => {
-    // facebook messenger 插件需要调整右下角悬浮按钮的高度
+    const throttledScrollListener = throttle(scrollListener, 100)
+    document.addEventListener('scroll', throttledScrollListener)
+    return () => document.removeEventListener('scroll', throttledScrollListener)
+  }, [scrollListener])
+
+  // facebook messenger 插件需要调整右下角悬浮按钮的高度
+  useEffect(() => {
     const fb = document.getElementsByClassName('fb-customerchat')
     if (fb.length === 0) {
       floatButtonGroup?.current?.classList.replace('bottom-24', 'bottom-12')
     } else {
       floatButtonGroup?.current?.classList.replace('bottom-12', 'bottom-24')
     }
-
-    document.addEventListener('scroll', scrollListener)
-    return () => document.removeEventListener('scroll', scrollListener)
-  }, [showRightFloat])
+  }, [])
 
   // 悬浮抽屉
   const drawerRight = useRef(null)
@@ -91,9 +100,9 @@ const LayoutBase = (props) => {
             <Style/>
            
             {/* 移动端顶部导航栏 */}
-            <TopNav {...props} />
+            {isMobile&&<TopNav {...props} />}
 
-            <AlgoliaSearchModal cRef={searchModal} {...props}/>
+            {!isMobile&&<AlgoliaSearchModal cRef={searchModal} {...props}/>}
 
             <>{headerSlot}</>
 
@@ -111,7 +120,7 @@ const LayoutBase = (props) => {
                 </section>
 
                 {/* 右侧栏样式 */}
-                {siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
+                {!isMobile&&siteConfig('NEXT_RIGHT_BAR', null, CONFIG) && <SideAreaRight targetRef={targetRef} slot={rightAreaSlot} {...props} />}
 
             </main>
 
@@ -139,7 +148,7 @@ const LayoutBase = (props) => {
 
 /**
  * 首页
- * 首页就是一个博客列表
+ * 首页就是���个博客列表
  * @param {*} props
  * @returns
  */
