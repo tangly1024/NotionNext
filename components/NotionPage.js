@@ -150,7 +150,7 @@ const autoScrollToHash = () => {
   setTimeout(() => {
     // 跳转到指定标题
     const hash = window?.location?.hash
-    const needToJumpToTitle = hash && hash > 0
+    const needToJumpToTitle = hash && hash.length > 0
     if (needToJumpToTitle) {
       console.log('jump to hash', hash)
       const tocNode = document.getElementById(hash.substring(1))
