@@ -8,6 +8,7 @@ import SocialButton from './SocialButton'
  * @returns
  */
 const Footer = () => {
+  const BEI_AN = siteConfig('BEI_AN')
   return (
     <footer className='relative flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'>
       {/* 颜色过度区 */}
@@ -33,7 +34,7 @@ const Footer = () => {
         </div>
 
         <div id='footer-bottom-right'>
-          {siteConfig('BEI_AN') && (
+          {BEI_AN && (
             <>
               <i className='fas fa-shield-alt' />{' '}
               <a href='https://beian.miit.gov.cn/' className='mr-2'>
