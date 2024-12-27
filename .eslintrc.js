@@ -12,7 +12,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['react', 'react-hooks', 'prettier','n'],
+  plugins: ['react', 'react-hooks', 'prettier'],
   settings: {
     react: {
       version: 'detect'

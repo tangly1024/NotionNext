@@ -1,8 +1,7 @@
-import Comment from '@/components/Comment'
+import { lazy, Suspense } from 'react'
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
 import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
@@ -11,10 +10,39 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CONFIG from '../config'
 import ArticleCopyright from './ArticleCopyright'
-import BlogAround from './BlogAround'
-import RecommendPosts from './RecommendPosts'
 import TagItem from './TagItem'
 import WordCount from './WordCount'
+
+const Comment = lazy(() => import('@/components/Comment'))
+const ShareBar = lazy(() => import('@/components/ShareBar'))
+const RecommendPosts = lazy(() => import('./RecommendPosts'))
+const BlogAround = lazy(() => import('./BlogAround'))
+
+const ArticleMeta = ({ post }) => {
+  if (post?.type === 'Page') return null
+  
+  return (
+    <div className='flex flex-wrap justify-center'>
+      <Link
+        href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
+        passHref
+        legacyBehavior>
+        <div className='pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed'>
+          <i className='far fa-calendar mr-1' /> {post?.publishDay}
+        </div>
+      </Link>
+      <span className='mr-2'>
+        {' '}| <i className='far fa-calendar-check mr-2' />
+        {post.lastEditedDay}{' '}
+      </span>
+
+      <div className='hidden busuanzi_container_page_pv font-light mr-2'>
+        <i className='mr-1 fas fa-eye' />
+        <span className='mr-2 busuanzi_value_page_pv' />
+      </div>
+    </div>
+  )
+}
 
 /**
  *
@@ -46,8 +74,7 @@ export default function ArticleDetail(props) {
           <header {...aosProps}>
             {/* 头图 */}
             {siteConfig('NEXT_POST_HEADER_IMAGE_VISIBLE', null, CONFIG) &&
-              post?.type &&
-              !post?.type !== 'Page' &&
+              post?.type !== 'Page' &&
               post?.pageCover && (
                 <div className='w-full relative md:flex-shrink-0 overflow-hidden'>
                   <LazyImage
@@ -68,32 +95,7 @@ export default function ArticleDetail(props) {
 
             {/* meta */}
             <section className='mt-2 text-gray-500 dark:text-gray-400 font-light leading-7 text-sm'>
-              <div className='flex flex-wrap justify-center'>
-                {post?.type !== 'Page' && (
-                  <>
-                    <Link
-                      href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-                      passHref
-                      legacyBehavior>
-                      <div className='pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed'>
-                        <i className='far fa-calendar mr-1' />{' '}
-                        {post?.publishDay}
-                      </div>
-                    </Link>
-                    <span className='mr-2'>
-                      {' '}
-                      | <i className='far fa-calendar-check mr-2' />
-                      {post.lastEditedDay}{' '}
-                    </span>
-
-                    <div className='hidden busuanzi_container_page_pv font-light mr-2'>
-                      <i className='mr-1 fas fa-eye' />
-                      <span className='mr-2 busuanzi_value_page_pv' />
-                    </div>
-                  </>
-                )}
-              </div>
-
+              <ArticleMeta post={post} />
               <WordCount />
             </section>
           </header>
@@ -107,62 +109,24 @@ export default function ArticleDetail(props) {
         </article>
 
         {showArticleInfo && (
-          <>
-            {/* 分享 */}
-            <ShareBar post={post} />
-
-            {/* 版权声明 */}
+          <Suspense fallback={<div>Loading...</div>}>
             {post?.type === 'Post' && (
-              <ArticleCopyright author={siteConfig('AUTHOR')} url={url} />
+              <>
+                <ShareBar post={post} />
+                <ArticleCopyright author={siteConfig('AUTHOR')} url={url} />
+                <RecommendPosts currentPost={post} recommendPosts={recommendPosts} />
+                <BlogAround prev={prev} next={next} />
+              </>
             )}
-
-            {/* 推荐文章 */}
-            {post?.type === 'Post' && (
-              <RecommendPosts
-                currentPost={post}
-                recommendPosts={recommendPosts}
-              />
-            )}
-
-            <section className='flex justify-between'>
-              {/* 分类 */}
-              {post.category && (
-                <>
-                  <div className='cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:text-gray-500 border-dashed'>
-                    <Link href={`/category/${post.category}`} legacyBehavior>
-                      <a>
-                        <i className='mr-1 far fa-folder-open' />{' '}
-                        {post.category}
-                      </a>
-                    </Link>
-                  </div>
-                </>
-              )}
-
-              {/* 标签列表 */}
-              {post?.type === 'Post' && (
-                <>
-                  {post.tagItems && (
-                    <div className='flex items-center flex-nowrap leading-8 p-1 py-4 overflow-x-auto'>
-                      <div className='hidden md:block dark:text-gray-300 whitespace-nowrap'>
-                        {locale.COMMON.TAGS}:&nbsp;
-                      </div>
-                      {post.tagItems.map(tag => (
-                        <TagItem key={tag.name} tag={tag} />
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </section>
-            {post?.type === 'Post' && <BlogAround prev={prev} next={next} />}
-          </>
+          </Suspense>
         )}
 
         {/* 评论互动 */}
-        <div className='duration-200 w-full dark:border-gray-700 bg-white dark:bg-hexo-black-gray'>
-          <Comment frontMatter={post} />
-        </div>
+        <Suspense fallback={<div>Loading comments...</div>}>
+          <div className='duration-200 w-full dark:border-gray-700 bg-white dark:bg-hexo-black-gray'>
+            <Comment frontMatter={post} />
+          </div>
+        </Suspense>
       </div>
     </div>
   )

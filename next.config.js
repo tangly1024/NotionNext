@@ -172,7 +172,22 @@ const nextConfig = {
                   'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
               }
             ]
-          }
+          },
+          {
+            source: '/:path*',
+            headers: [
+              {
+                key: 'Link',
+                value: [
+                  '</css/main.css>; rel=preload; as=style',
+                  '</css/custom.css>; rel=preload; as=style',
+                  '</css/font-awesome.min.css>; rel=preload; as=style',
+                  '</css/prism.css>; rel=preload; as=style',
+                  '</css/animate.min.css>; rel=preload; as=style'
+                ].join(', '),
+              },
+            ],
+          },
         ]
       },
   webpack: (config, { dev, isServer }) => {

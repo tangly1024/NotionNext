@@ -1,4 +1,3 @@
-import Live2D from '@/components/Live2D'
 import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
@@ -81,7 +80,6 @@ const SideAreaLeft = props => {
 
         <div className='flex justify-center'>
           {slot}
-          <Live2D />
         </div>
       </div>
     </aside>
