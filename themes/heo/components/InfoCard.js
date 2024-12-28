@@ -44,7 +44,7 @@ export function InfoCard(props) {
           {/* 个人描述 - 绝对定位覆盖在头像位置 */}
           <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
             <div className='text-center text-white'>
-              全栈开发工程师
+              测试开发工程师
             </div>
           </div>
         </div>

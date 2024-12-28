@@ -82,15 +82,6 @@ const SocialButton = () => {
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-        {JSON.parse(ENABLE_RSS) && (
-          <a
-            target='_blank'
-            rel='noreferrer'
-            title={'RSS'}
-            href={'/rss/feed.xml'}>
-            <i className='transform hover:scale-125 duration-150 fas fa-rss dark:hover:text-indigo-400 hover:text-indigo-600' />
-          </a>
-        )}
         {CONTACT_BILIBILI && (
           <a
             target='_blank'
