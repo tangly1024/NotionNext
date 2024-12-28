@@ -23,48 +23,51 @@ export function InfoCard(props) {
   const url2 = siteConfig('HEO_INFO_CARD_URL2', null, CONFIG)
   const icon2 = siteConfig('HEO_INFO_CARD_ICON2', null, CONFIG)
   return (
-    <Card className='wow fadeInUp bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col w-72 overflow-hidden relative'>
-      {/* 信息卡牌第一行 */}
-      <div className='flex justify-between'>
-        {/* 问候语 */}
-        <GreetingsWords />
-        {/* 头像 */}
-        <div
-          className={`${isSlugPage ? 'absolute right-0 -mt-8 -mr-6 hover:opacity-0 hover:scale-150 blur' : 'cursor-pointer'} justify-center items-center flex dark:text-gray-100 transform transitaion-all duration-200`}>
+    <Card className='wow fadeInUp bg-[#4f65f0] dark:bg-[#f2b94bdd] text-white flex flex-col w-[283px] h-[320px] overflow-hidden relative p-5'>
+      <div className='flex flex-col items-center'>
+        {/* 问候语 - 可点击切换 */}
+        <div className='mb-4 cursor-pointer hover:scale-105 transition-transform duration-200'>
+          <GreetingsWords />
+        </div>
+
+        {/* 头像和描述容器 */}
+        <div className='relative w-full flex justify-center items-center mb-10 group'>
+          {/* 头像 */}
           <LazyImage
             src={siteInfo?.icon}
-            className='rounded-full'
-            width={isSlugPage ? 100 : 28}
+            className='rounded-2xl transition-opacity duration-300 group-hover:opacity-0'
+            width={120}
+            height={120}
             alt={siteConfig('AUTHOR')}
           />
-        </div>
-      </div>
 
-      <h2 className='text-3xl font-extrabold mt-3'>{siteConfig('AUTHOR')}</h2>
-
-      {/* 公告栏 */}
-      <Announcement post={notice} style={{ color: 'white !important' }} />
-
-      <div className='flex justify-between'>
-        <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
-          {/* 两个社交按钮 */}
-          {url1 && (
-            <div className='w-10 text-center bg-indigo-400 p-2 rounded-full  transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-              <Link href={url1}>
-                <i className={icon1} />
-              </Link>
+          {/* 个人描述 - 绝对定位覆盖在头像位置 */}
+          <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+            <div className='text-center text-white'>
+              全栈开发工程师
             </div>
-          )}
-          {url2 && (
-            <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-              <Link href={url2}>
-                <i className={icon2} />
-              </Link>
-            </div>
-          )}
+          </div>
         </div>
-        {/* 第三个按钮 */}
-        <MoreButton />
+
+        {/* 底部信息组 */}
+        <div className='flex justify-between items-center w-full'>
+          {/* 左侧名称和描述 */}
+          <Link href='/about' className='flex flex-col hover:scale-105 transition-transform duration-200'>
+            <h2 className='text-xl font-bold'>{siteConfig('AUTHOR')}</h2>
+            <div className='text-sm opacity-80'>无限进步</div>
+          </Link>
+
+          {/* 右侧社交图标 */}
+          <div className='flex items-center'>
+            {url2 && (
+              <Link href={url2} className='hover:scale-110 transition-transform duration-200'>
+                <div className='w-10 h-10 rounded-full bg-indigo-400 dark:bg-white dark:text-black flex items-center justify-center hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-colors duration-200'>
+                  <i className={`${icon2} text-xl`}></i>
+                </div>
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </Card>
   )
