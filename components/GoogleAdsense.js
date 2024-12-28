@@ -100,7 +100,11 @@ export const initGoogleAdsense = async ADSENSE_GOOGLE_ID => {
       }
 
       // 启动 MutationObserver
-      observer.observe(document.body, observerConfig)
+      observer.observe(
+        document.querySelector('#article-wrapper #notion-article') ||
+          document.body,
+        observerConfig
+      )
     }, 100)
   })
 }
