@@ -42,11 +42,7 @@ function getNodesWithAdsByGoogleClass(node) {
 
   // 检查节点及其子节点是否包含 adsbygoogle 类
   function checkNodeForAds(node) {
-    if (
-      node.nodeType === Node.ELEMENT_NODE &&
-      node.tagName === 'INS' &&
-      node.classList.contains('adsbygoogle')
-    ) {
+    if (node.tagName === 'INS' && node.classList.contains('adsbygoogle')) {
       adsNodes.push(node)
     } else {
       // 递归检查子节点
