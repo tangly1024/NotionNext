@@ -12,7 +12,6 @@ const InfoCard = (props) => {
   useEffect(() => {
     setIsMobileDevice(isMobile)
   }, [])
-      console.log("isMobileDevice",isMobileDevice);
       
   return <>
     <div className='flex flex-col items-center justify-center '>

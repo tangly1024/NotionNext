@@ -22,9 +22,9 @@ const BlogPost = (props) => {
 
   // 实现动画 一个接一个出现
   let delay = index * 100
-  if (isMobile()) {
-    delay = 0
-  }
+  // if (isMobile()) {
+  //   delay = 0
+  // }
 
   return (
         <article
