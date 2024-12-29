@@ -11,6 +11,12 @@ import { TIMELINE_CONFIG } from '@/lib/timeline.config'
 const About = props => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [visitStats, setVisitStats] = useState({
+    pv: 0,
+    uv: 0,
+    todayPv: 0,
+    todayUv: 0
+  })
 
   // 每2秒切换一次文字
   useEffect(() => {
@@ -110,6 +116,100 @@ const About = props => {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  useEffect(() => {
+    // 获取今天的日期（格式：YYYY-MM-DD）
+    const getToday = () => {
+      const date = new Date()
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+    }
+
+    // 从localStorage获取上一次的统计数据
+    const getLastStats = () => {
+      try {
+        const saved = localStorage.getItem('visitStats')
+        if (saved) {
+          return JSON.parse(saved)
+        }
+      } catch (e) {
+        console.error('Failed to parse saved stats:', e)
+      }
+      return null
+    }
+
+    // 保存当前统计数据到localStorage
+    const saveCurrentStats = (stats) => {
+      try {
+        localStorage.setItem('visitStats', JSON.stringify({
+          date: getToday(),
+          pv: stats.pv,
+          uv: stats.uv
+        }))
+      } catch (e) {
+        console.error('Failed to save stats:', e)
+      }
+    }
+
+    // 计算今日统计数据
+    const calculateTodayStats = (currentStats, lastStats) => {
+      if (!lastStats || lastStats.date !== getToday()) {
+        // 如果没有上次数据，或者不是今天的数据，今日数据设为当前值
+        return {
+          todayPv: currentStats.pv,
+          todayUv: currentStats.uv
+        }
+      }
+      // 计算今日增量
+      return {
+        todayPv: Math.max(0, currentStats.pv - lastStats.pv),
+        todayUv: Math.max(0, currentStats.uv - lastStats.uv)
+      }
+    }
+
+    // 动态加载不蒜子脚本
+    const loadBusuanzi = () => {
+      const script = document.createElement('script')
+      script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'
+      script.async = true
+      document.body.appendChild(script)
+
+      // 监听统计数据更新
+      const checkStats = setInterval(() => {
+        const pvElement = document.querySelector('.busuanzi_value_site_pv')
+        const uvElement = document.querySelector('.busuanzi_value_site_uv')
+
+        if (pvElement?.textContent && uvElement?.textContent) {
+          const currentStats = {
+            pv: parseInt(pvElement.textContent) || 0,
+            uv: parseInt(uvElement.textContent) || 0
+          }
+
+          const lastStats = getLastStats()
+          const todayStats = calculateTodayStats(currentStats, lastStats)
+
+          setVisitStats({
+            ...currentStats,
+            ...todayStats
+          })
+
+          // 保存当前统计数据
+          saveCurrentStats(currentStats)
+
+          clearInterval(checkStats)
+        }
+      }, 100)
+
+      // 设置超时，避免无限等待
+      setTimeout(() => clearInterval(checkStats), 5000)
+
+      return () => {
+        clearInterval(checkStats)
+        document.body.removeChild(script)
+      }
+    }
+
+    loadBusuanzi()
+  }, [])
 
   return (
     <div className="flex justify-center w-full min-h-screen">
@@ -466,21 +566,31 @@ const About = props => {
               <h3 className="text-lg font-bold mb-4">访问统计</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-2xl font-bold">3</div>
+                  <div className="text-2xl font-bold text-blue-400">{visitStats.todayUv}</div>
                   <div className="text-gray-400">今日人数</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">5</div>
+                  <div className="text-2xl font-bold text-green-400">{visitStats.todayPv}</div>
                   <div className="text-gray-400">今日访问</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">21</div>
+                  <div className="text-2xl font-bold text-purple-400">{visitStats.uv}</div>
                   <div className="text-gray-400">总访问人数</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">323</div>
+                  <div className="text-2xl font-bold text-pink-400">{visitStats.pv}</div>
                   <div className="text-gray-400">总访问量</div>
                 </div>
+              </div>
+
+              {/* 隐藏的不蒜子统计元素 */}
+              <div style={{ display: 'none' }}>
+                <span className="busuanzi_container_site_pv">
+                  <span className="busuanzi_value_site_pv"></span>
+                </span>
+                <span className="busuanzi_container_site_uv">
+                  <span className="busuanzi_value_site_uv"></span>
+                </span>
               </div>
             </div>
 
