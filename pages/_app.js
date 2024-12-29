@@ -3,6 +3,7 @@ import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from "@vercel/analytics/react"
 
 // core styles shared by all of react-notion-x (required)
 import '@/styles/notion.css' //  重写部分notion样式
@@ -73,6 +74,7 @@ const MyApp = ({ Component, pageProps }) => {
       )}
       <RightClickMenu posts={pageProps.posts || []} />
       <SpeedInsights />
+      <Analytics />
     </>
   )
 }
