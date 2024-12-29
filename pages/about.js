@@ -562,24 +562,78 @@ const About = props => {
           {/* 统计和地理位置 */}
           <div className="grid grid-cols-2 gap-6 mb-12">
             {/* 访问统计 */}
-            <div className="bg-gray-900 text-white rounded-lg p-6 shadow-lg">
-              <h3 className="text-lg font-bold mb-4">访问统计</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <div className="text-2xl font-bold text-blue-400">{visitStats.todayUv}</div>
-                  <div className="text-gray-400">今日人数</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-green-400">{visitStats.todayPv}</div>
-                  <div className="text-gray-400">今日访问</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-purple-400">{visitStats.uv}</div>
-                  <div className="text-gray-400">总访问人数</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-pink-400">{visitStats.pv}</div>
-                  <div className="text-gray-400">总访问量</div>
+            <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden group transition-colors duration-300">
+              {/* 背景装饰 - 适配浅色/深色模式 */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-500/10 dark:via-purple-500/5 dark:to-pink-500/10 transition-colors duration-300"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-500/10 dark:to-purple-500/10 blur-2xl transform rotate-45 transition-colors duration-300"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-green-100/50 to-blue-100/50 dark:from-green-500/10 dark:to-blue-500/10 blur-2xl transform -rotate-45 transition-colors duration-300"></div>
+
+              {/* 内容区域 */}
+              <div className="relative z-10">
+                <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-gray-800 dark:text-white">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21H7C5.89543 21 5 20.1046 5 19V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M17 7L21 3L17 7ZM21 3L17 3L21 3ZM21 3V7V3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  访问统计
+                </h3>
+
+                <div className="grid grid-cols-2 gap-4">
+                  {/* 今日人数 */}
+                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-blue-100 dark:bg-blue-500/10 rounded-lg">
+                        <svg className="w-4 h-4 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none">
+                          <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-gray-600 dark:text-gray-300">今日人数</span>
+                    </div>
+                    <div className="text-2xl font-bold text-blue-500 dark:text-blue-400">{visitStats.todayUv}</div>
+                  </div>
+
+                  {/* 今日访问 */}
+                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-green-100 dark:bg-green-500/10 rounded-lg">
+                        <svg className="w-4 h-4 text-green-500 dark:text-green-400" viewBox="0 0 24 24" fill="none">
+                          <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-gray-600 dark:text-gray-300">今日访问</span>
+                    </div>
+                    <div className="text-2xl font-bold text-green-500 dark:text-green-400">{visitStats.todayPv}</div>
+                  </div>
+
+                  {/* 总访问人数 */}
+                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-purple-100 dark:bg-purple-500/10 rounded-lg">
+                        <svg className="w-4 h-4 text-purple-500 dark:text-purple-400" viewBox="0 0 24 24" fill="none">
+                          <path d="M17 20H7C5.89543 20 5 19.1046 5 18V9L12 4L19 9V18C19 19.1046 18.1046 20 17 20Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-gray-600 dark:text-gray-300">总访问人数</span>
+                    </div>
+                    <div className="text-2xl font-bold text-purple-500 dark:text-purple-400">{visitStats.uv}</div>
+                  </div>
+
+                  {/* 总访问量 */}
+                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-pink-100 dark:bg-pink-500/10 rounded-lg">
+                        <svg className="w-4 h-4 text-pink-500 dark:text-pink-400" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-gray-600 dark:text-gray-300">总访问量</span>
+                    </div>
+                    <div className="text-2xl font-bold text-pink-500 dark:text-pink-400">{visitStats.pv}</div>
+                  </div>
                 </div>
               </div>
 
