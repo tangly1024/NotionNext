@@ -20,18 +20,32 @@ const Artalk = ({ siteInfo }) => {
 
   const initArtalk = async () => {
     await loadExternalResource(artalkCss, 'css')
-    window?.Artalk?.init({
-      server: artalkServer, // 后端地址
-      el: '#artalk', // 容器元素
+    const artalk = window?.Artalk?.init({
+      server: artalkServer,
+      el: '#artalk',
       locale: artalkLocale,
-      //   pageKey: '/post/1', // 固定链接 (留空自动获取)
-      //   pageTitle: '关于引入 Artalk 的这档子事', // 页面标题 (留空自动获取)
-      site: site // 你的站点名
+      site: site,
+      darkMode: document.documentElement.classList.contains('dark')
     })
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          const isDark = document.documentElement.classList.contains('dark')
+          artalk?.setDarkMode(isDark)
+        }
+      })
+    })
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+
+    return () => observer.disconnect()
   }
-  return (
-        <div id="artalk"></div>
-  )
+
+  return <div id="artalk"></div>
 }
 
 export default Artalk
