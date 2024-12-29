@@ -151,24 +151,14 @@ const Header = props => {
           {/* 中间菜单 */}
           <div
             id='nav-bar-swipe'
-            className='hidden lg:flex flex-grow justify-center items-center h-full relative'>
-            <div
-              className={`absolute transition-all duration-700 ${activeIndex === 0 ? 'opacity-100 mt-0' : '-mt-20 opacity-0 invisible'
-                }`}>
+            className='hidden lg:flex flex-1 justify-center items-center'>
+            <div className='flex flex-row items-center space-x-2'>
               <MenuListTop {...props} />
-            </div>
-            <div
-              className={`absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'
-                }`}>
-              <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>
-                {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
-                {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
-              </h1>
             </div>
           </div>
 
           {/* 右侧固定 */}
-          <div className='flex flex-shrink-0 justify-end items-center w-48'>
+          <div className='flex flex-shrink-0 items-center'>
             <RandomPostButton {...props} />
             <SearchButton {...props} />
             {!JSON.parse(siteConfig('THEME_SWITCH')) && (
