@@ -40,6 +40,7 @@
     "notion-client": "6.15.6",
     "notion-utils": "6.15.6",
     "react": "^18.2.0",
+    "react-amap": "^1.2.8",
     "react-dom": "^18.2.0",
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.5.0",

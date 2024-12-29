@@ -3437,6 +3437,11 @@ quick-lru@^5.1.1:
   resolved "https://registry.npmmirror.com/quick-lru/-/quick-lru-5.1.1.tgz"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
+react-amap@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/react-amap/-/react-amap-1.2.8.tgz#cb5a6441c5e83acb0d7b2e8a1b20dc539b759d9b"
+  integrity sha512-uHPEUXti+CcwFyCeqGGqR0ACnXJA9D8S/lQYal9AG3XEOrwkaOFbWUavrvXxjcfAclROIWg8uKxzlRpMQnkHFg==
+
 react-dom@^18.2.0:
   version "18.3.1"
   resolved "https://registry.npmmirror.com/react-dom/-/react-dom-18.3.1.tgz"

@@ -5,6 +5,21 @@ import CONFIG from '@/themes/heo/config'
 import { useState, useEffect, useRef } from 'react'
 import { TIMELINE_CONFIG } from '@/lib/timeline.config'
 import Script from 'next/script'
+import dynamic from 'next/dynamic'
+
+const AMapComponent = dynamic(() => import('@/components/AMapComponent'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="flex flex-col items-center gap-2">
+        <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          加载地图中...
+        </span>
+      </div>
+    </div>
+  )
+})
 
 /**
  * 关于页面
@@ -910,54 +925,24 @@ const About = props => {
                 <div className="relative z-10">
                   {/* 地图容器 */}
                   <div className="w-full h-28 rounded-xl overflow-hidden mb-3 relative bg-gray-100 dark:bg-gray-800">
-                    <div
-                      ref={mapRef}
-                      className="w-full h-full"
-                      style={{
-                        background: '#1c1c1c',
-                        opacity: mapLoaded ? 1 : 0,
-                        transition: 'opacity 0.3s ease-in-out'
-                      }}
-                    ></div>
+                    <AMapComponent onLocationChange={(newLocation) => {
+                      setLocation(prev => ({
+                        ...prev,
+                        ...newLocation
+                      }))
+                    }} />
 
-                    {/* 加载状态 */}
-                    {!mapLoaded && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="flex flex-col items-center gap-2">
-                          <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
-                            加载地图中...
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* 定位按钮 */}
-                    {mapLoaded && (
-                      <div className="absolute bottom-2 right-2 flex gap-2">
-                        <button
-                          className={`p-1.5 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 ${locating ? 'animate-pulse' : ''
-                            }`}
-                          onClick={initLocation}
-                          disabled={locating}
-                        >
-                          <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z" stroke="currentColor" strokeWidth="2" />
-                            <path d="M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="currentColor" strokeWidth="2" />
-                          </svg>
-                        </button>
-
-                        {/* 打开地图按钮 */}
-                        <button
-                          className="p-1.5 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200"
-                          onClick={() => window.open(`https://uri.amap.com/marker?position=${location.coords.join(',')}`)}
-                        >
-                          <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24" fill="none">
-                            <path d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </button>
-                      </div>
-                    )}
+                    {/* 定位按钮组 */}
+                    <div className="absolute bottom-2 right-2 flex gap-2">
+                      <button
+                        className="p-1.5 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200"
+                        onClick={() => window.open(`https://uri.amap.com/marker?position=${location.coords.join(',')}`)}
+                      >
+                        <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24" fill="none">
+                          <path d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
 
                   {/* 位置信息 */}
