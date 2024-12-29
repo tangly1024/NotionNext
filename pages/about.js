@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 import { TIMELINE_CONFIG } from '@/lib/timeline.config'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
+import TimelineCard from '@/components/TimelineCard'
 
 const AMapComponent = dynamic(() => import('@/components/AMapComponent'), {
   ssr: false,
