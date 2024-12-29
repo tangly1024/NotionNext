@@ -23,6 +23,7 @@ const About = props => {
   const mapInstance = useRef(null)
   const [isClient, setIsClient] = useState(false)
   const [mapLoaded, setMapLoaded] = useState(false)
+  const [scriptLoaded, setScriptLoaded] = useState(false)
   const [location, setLocation] = useState({
     city: '南京市',
     district: '江宁区',
@@ -45,60 +46,137 @@ const About = props => {
     return () => clearInterval(timer)
   }, [])
 
-  // 获取地理位置信息
-  const getLocation = async () => {
-    if (!window.AMap) return
+  // 浏览器定位
+  const getBrowserLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error('Browser geolocation not supported'))
+        return
+      }
 
-    try {
-      setLocating(true)
-
-      return new Promise((resolve, reject) => {
-        window.AMap.plugin('AMap.Geolocation', () => {
-          const geolocation = new window.AMap.Geolocation({
-            enableHighAccuracy: true,
-            timeout: 10000,
-            buttonPosition: 'RB',
-            buttonOffset: new window.AMap.Pixel(10, 20),
-            zoomToAccuracy: true
-          })
-
-          geolocation.getCurrentPosition((status, result) => {
-            if (status === 'complete') {
-              resolve({
-                city: result.addressComponent.city,
-                district: result.addressComponent.district,
-                province: result.addressComponent.province,
-                coords: [result.position.lng, result.position.lat]
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            // 使用经纬度获取详细地址信息
+            const geocoder = new window.AMap.Geocoder()
+            const result = await new Promise((resolve, reject) => {
+              geocoder.getAddress([position.coords.longitude, position.coords.latitude], (status, result) => {
+                if (status === 'complete' && result.info === 'OK') {
+                  resolve(result)
+                } else {
+                  reject(new Error('Geocoding failed'))
+                }
               })
-            } else {
-              reject(new Error('定位失败'))
+            })
+
+            const addressComponent = result.regeocode.addressComponent
+            resolve({
+              city: addressComponent.city,
+              district: addressComponent.district,
+              province: addressComponent.province,
+              coords: [position.coords.longitude, position.coords.latitude]
+            })
+          } catch (error) {
+            reject(error)
+          }
+        },
+        (error) => reject(error),
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        }
+      )
+    })
+  }
+
+  // IP定位
+  const getIpLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (!window.AMap) {
+        reject(new Error('AMap not loaded'))
+        return
+      }
+
+      window.AMap.plugin(['AMap.CitySearch'], () => {
+        const citySearch = new window.AMap.CitySearch()
+
+        citySearch.getLocalCity(async (status, result) => {
+          if (status === 'complete' && result.info === 'OK') {
+            try {
+              const geocoder = new window.AMap.Geocoder()
+              const geocodeResult = await new Promise((resolve, reject) => {
+                geocoder.getLocation(result.city, (status, result) => {
+                  if (status === 'complete' && result.info === 'OK') {
+                    resolve(result)
+                  } else {
+                    reject(new Error('Geocoding failed'))
+                  }
+                })
+              })
+
+              const location = geocodeResult.geocodes[0].location
+              resolve({
+                city: result.city,
+                province: result.province,
+                district: result.district || '',
+                coords: [location.lng, location.lat]
+              })
+            } catch (error) {
+              reject(error)
             }
-          })
+          } else {
+            reject(new Error('City search failed'))
+          }
         })
       })
+    })
+  }
+
+  // 初始化位置信息
+  const initLocation = async () => {
+    setLocating(true)
+    try {
+      let locationInfo
+
+      // 先尝试浏览器定位
+      try {
+        locationInfo = await getBrowserLocation()
+        console.log('Browser location successful')
+      } catch (error) {
+        console.log('Browser location failed, trying IP location')
+        // 浏览器定位失败，尝试IP定位
+        locationInfo = await getIpLocation()
+      }
+
+      if (locationInfo) {
+        setLocation(locationInfo)
+
+        // 如果地图已经初始化，更新地图中心点
+        if (mapInstance.current) {
+          mapInstance.current.setCenter(locationInfo.coords)
+          updateMapFeatures(locationInfo.coords)
+        }
+      }
     } catch (error) {
-      console.error('Location error:', error)
-      return null
+      console.error('All location methods failed:', error)
     } finally {
       setLocating(false)
     }
   }
 
-  // 地图初始化函数
+  // 初始化地图
   const initMap = async () => {
-    if (!window.AMap || !mapRef.current || mapInstance.current) return
+    if (!mapRef.current || mapInstance.current) return
 
     try {
-      // 尝试获取位置
-      const locationInfo = await getLocation()
-      if (locationInfo) {
-        setLocation(locationInfo)
-      }
+      // 先获取位置信息
+      await initLocation()
 
       // 创建地图实例
       mapInstance.current = new window.AMap.Map(mapRef.current, {
         zoom: 11,
-        center: locationInfo?.coords || location.coords,
+        center: location.coords,
         mapStyle: 'amap://styles/dark',
         viewMode: '3D',
         pitch: 35,
@@ -109,41 +187,51 @@ const About = props => {
         defaultCursor: 'default'
       })
 
-      // 使用 Promise 处理地图加载
       mapInstance.current.on('complete', () => {
         setMapLoaded(true)
-
-        // 添加标记和动画
-        const marker = new window.AMap.Marker({
-          position: locationInfo?.coords || location.coords,
-          anchor: 'bottom-center',
-          offset: new window.AMap.Pixel(0, 0)
-        })
-
-        const circle = new window.AMap.Circle({
-          center: locationInfo?.coords || location.coords,
-          radius: 500,
-          fillColor: '#1890ff',
-          fillOpacity: 0.3,
-          strokeWeight: 0
-        })
-
-        mapInstance.current.add([marker, circle])
-
-        // 添加动画效果
-        let scale = 1
-        const animate = setInterval(() => {
-          scale = scale === 1 ? 1.5 : 1
-          circle.setOptions({
-            radius: 500 * scale
-          })
-        }, 1000)
-
-        mapInstance.current.animateTimer = animate
+        updateMapFeatures(location.coords)
       })
-
     } catch (error) {
       console.error('Map initialization error:', error)
+      setMapLoaded(true)
+    }
+  }
+
+  // 添加地图特性（标记、动画等）
+  const addMapFeatures = () => {
+    if (!mapInstance.current) return
+
+    try {
+      // 添加标记
+      const marker = new window.AMap.Marker({
+        position: location.coords,
+        anchor: 'bottom-center'
+      })
+
+      // 添加圆圈动画
+      const circle = new window.AMap.Circle({
+        center: location.coords,
+        radius: 500,
+        fillColor: '#1890ff',
+        fillOpacity: 0.3,
+        strokeWeight: 0
+      })
+
+      mapInstance.current.add([marker, circle])
+
+      // 添加动画效果
+      let scale = 1
+      const animate = setInterval(() => {
+        scale = scale === 1 ? 1.5 : 1
+        circle.setOptions({
+          radius: 500 * scale
+        })
+      }, 1000)
+
+      // 存储动画定时器
+      mapInstance.current.animateTimer = animate
+    } catch (error) {
+      console.error('Error adding map features:', error)
     }
   }
 
@@ -152,25 +240,23 @@ const About = props => {
     setIsClient(true)
   }, [])
 
-  // 地图初始化和清理
+  // 脚本加载后初始化地图
   useEffect(() => {
-    if (!isClient) return
-
-    // 如果已经加载了 AMap，直接初始化
-    if (window.AMap) {
+    if (scriptLoaded && isClient && !mapInstance.current) {
       initMap()
     }
+  }, [scriptLoaded, isClient])
 
+  // 组件卸载时清理
+  useEffect(() => {
     return () => {
       if (mapInstance.current) {
-        // 清理动画
         clearInterval(mapInstance.current.animateTimer)
-        // 销毁地图实例
         mapInstance.current.destroy()
         mapInstance.current = null
       }
     }
-  }, [isClient])
+  }, [])
 
   // 获取第2-5个技能标签
   const tags = CONFIG.HEO_INFOCARD_GREETINGS.slice(1, 5)
@@ -834,31 +920,49 @@ const About = props => {
                       }}
                     ></div>
 
-                    {/* 地图控制按钮 */}
-                    {mapLoaded && (
-                      <div className="absolute bottom-2 right-2 flex gap-2">
-                        <button
-                          className="p-1.5 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200"
-                          onClick={() => window.open('https://uri.amap.com/marker?position=118.7969,32.0603', '_blank')}
-                        >
-                          <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </button>
-                      </div>
-                    )}
-
                     {/* 加载状态 */}
                     {!mapLoaded && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            加载地图中...
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 定位按钮 */}
+                    {mapLoaded && (
+                      <div className="absolute bottom-2 right-2 flex gap-2">
+                        <button
+                          className={`p-1.5 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 ${locating ? 'animate-pulse' : ''
+                            }`}
+                          onClick={initLocation}
+                          disabled={locating}
+                        >
+                          <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z" stroke="currentColor" strokeWidth="2" />
+                            <path d="M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="currentColor" strokeWidth="2" />
+                          </svg>
+                        </button>
+
+                        {/* 打开地图按钮 */}
+                        <button
+                          className="p-1.5 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200"
+                          onClick={() => window.open(`https://uri.amap.com/marker?position=${location.coords.join(',')}`)}
+                        >
+                          <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
                       </div>
                     )}
                   </div>
 
                   {/* 位置信息 */}
                   <div className="flex items-center gap-2 text-gray-800 dark:text-gray-200">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
                       <path d="M12 21C16.4183 21 20 17.4183 20 13C20 8.58172 16.4183 5 12 5C7.58172 5 4 8.58172 4 13C4 17.4183 7.58172 21 12 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>

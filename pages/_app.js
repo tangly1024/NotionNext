@@ -2,6 +2,8 @@
 import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 // core styles shared by all of react-notion-x (required)
 import '@/styles/notion.css' //  重写部分notion样式
 import 'react-notion-x/src/styles.css' // 原版的react-notion-x
@@ -70,6 +72,7 @@ const MyApp = ({ Component, pageProps }) => {
         content
       )}
       <RightClickMenu posts={pageProps.posts || []} />
+      <SpeedInsights />
     </>
   )
 }
