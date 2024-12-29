@@ -299,6 +299,13 @@ const Layout404 = props => {
 }
 
 /**
+ * 关于页面
+ */
+const LayoutAbout = props => {
+  return <div>About</div>
+}
+
+/**
  * 翻页博客列表
  */
 const LayoutPostList = props => {
