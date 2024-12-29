@@ -29,6 +29,7 @@ class MyDocument extends Document {
               />
             </>
           )}
+          <script src="https://webapi.amap.com/maps?v=2.0&key=ceade792a1519d0d17166da0d84b9446	"></script>
         </Head>
 
         <body>

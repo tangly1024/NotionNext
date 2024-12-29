@@ -2,8 +2,9 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import BLOG from '@/blog.config'
 import CONFIG from '@/themes/heo/config'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { TIMELINE_CONFIG } from '@/lib/timeline.config'
+import Script from 'next/script'
 
 /**
  * 关于页面
@@ -18,6 +19,18 @@ const About = props => {
     todayUv: 0
   })
 
+  const mapRef = useRef(null)
+  const mapInstance = useRef(null)
+  const [isClient, setIsClient] = useState(false)
+  const [mapLoaded, setMapLoaded] = useState(false)
+  const [location, setLocation] = useState({
+    city: '南京市',
+    district: '江宁区',
+    province: '江苏省',
+    coords: [118.7969, 32.0603]
+  })
+  const [locating, setLocating] = useState(false)
+
   // 每2秒切换一次文字
   useEffect(() => {
     const timer = setInterval(() => {
@@ -31,6 +44,133 @@ const About = props => {
 
     return () => clearInterval(timer)
   }, [])
+
+  // 获取地理位置信息
+  const getLocation = async () => {
+    if (!window.AMap) return
+
+    try {
+      setLocating(true)
+
+      return new Promise((resolve, reject) => {
+        window.AMap.plugin('AMap.Geolocation', () => {
+          const geolocation = new window.AMap.Geolocation({
+            enableHighAccuracy: true,
+            timeout: 10000,
+            buttonPosition: 'RB',
+            buttonOffset: new window.AMap.Pixel(10, 20),
+            zoomToAccuracy: true
+          })
+
+          geolocation.getCurrentPosition((status, result) => {
+            if (status === 'complete') {
+              resolve({
+                city: result.addressComponent.city,
+                district: result.addressComponent.district,
+                province: result.addressComponent.province,
+                coords: [result.position.lng, result.position.lat]
+              })
+            } else {
+              reject(new Error('定位失败'))
+            }
+          })
+        })
+      })
+    } catch (error) {
+      console.error('Location error:', error)
+      return null
+    } finally {
+      setLocating(false)
+    }
+  }
+
+  // 地图初始化函数
+  const initMap = async () => {
+    if (!window.AMap || !mapRef.current || mapInstance.current) return
+
+    try {
+      // 尝试获取位置
+      const locationInfo = await getLocation()
+      if (locationInfo) {
+        setLocation(locationInfo)
+      }
+
+      // 创建地图实例
+      mapInstance.current = new window.AMap.Map(mapRef.current, {
+        zoom: 11,
+        center: locationInfo?.coords || location.coords,
+        mapStyle: 'amap://styles/dark',
+        viewMode: '3D',
+        pitch: 35,
+        skyColor: '#1c1c1c',
+        resizeEnable: true,
+        preloadMode: true,
+        features: ['bg', 'road', 'building'],
+        defaultCursor: 'default'
+      })
+
+      // 使用 Promise 处理地图加载
+      mapInstance.current.on('complete', () => {
+        setMapLoaded(true)
+
+        // 添加标记和动画
+        const marker = new window.AMap.Marker({
+          position: locationInfo?.coords || location.coords,
+          anchor: 'bottom-center',
+          offset: new window.AMap.Pixel(0, 0)
+        })
+
+        const circle = new window.AMap.Circle({
+          center: locationInfo?.coords || location.coords,
+          radius: 500,
+          fillColor: '#1890ff',
+          fillOpacity: 0.3,
+          strokeWeight: 0
+        })
+
+        mapInstance.current.add([marker, circle])
+
+        // 添加动画效果
+        let scale = 1
+        const animate = setInterval(() => {
+          scale = scale === 1 ? 1.5 : 1
+          circle.setOptions({
+            radius: 500 * scale
+          })
+        }, 1000)
+
+        mapInstance.current.animateTimer = animate
+      })
+
+    } catch (error) {
+      console.error('Map initialization error:', error)
+    }
+  }
+
+  // 客户端渲染检测
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // 地图初始化和清理
+  useEffect(() => {
+    if (!isClient) return
+
+    // 如果已经加载了 AMap，直接初始化
+    if (window.AMap) {
+      initMap()
+    }
+
+    return () => {
+      if (mapInstance.current) {
+        // 清理动画
+        clearInterval(mapInstance.current.animateTimer)
+        // 销毁地图实例
+        mapInstance.current.destroy()
+        mapInstance.current = null
+      }
+    }
+  }, [isClient])
 
   // 获取第2-5个技能标签
   const tags = CONFIG.HEO_INFOCARD_GREETINGS.slice(1, 5)
@@ -559,80 +699,105 @@ const About = props => {
             </div>
           </div>
 
-          {/* 统计和地理位置 */}
-          <div className="grid grid-cols-2 gap-6 mb-12">
-            {/* 访问统计 */}
-            <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden group transition-colors duration-300">
-              {/* 背景装饰 - 适配浅色/深色模式 */}
+          {/* 访问统计和地理位置区域 */}
+          <div className="grid grid-cols-2 gap-6">
+            {/* 访问统计卡片 */}
+            <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden group transition-all duration-300">
+              {/* 背景装饰 */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-500/10 dark:via-purple-500/5 dark:to-pink-500/10 transition-colors duration-300"></div>
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-500/10 dark:to-purple-500/10 blur-2xl transform rotate-45 transition-colors duration-300"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-green-100/50 to-blue-100/50 dark:from-green-500/10 dark:to-blue-500/10 blur-2xl transform -rotate-45 transition-colors duration-300"></div>
 
               {/* 内容区域 */}
               <div className="relative z-10">
-                <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-gray-800 dark:text-white">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 21H7C5.89543 21 5 20.1046 5 19V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M17 7L21 3L17 7ZM21 3L17 3L21 3ZM21 3V7V3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  访问统计
-                </h3>
+                {/* 标题区域 */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-100/80 dark:bg-blue-500/10 rounded-xl">
+                      <svg className="w-4 h-4 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 21H7C5.89543 21 5 20.1046 5 19V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M17 7L21 3L17 7ZM21 3L17 3L21 3ZM21 3V7V3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800 dark:text-white">访问统计</h3>
+                  </div>
 
+                  {/* 装饰动画 */}
+                  <div className="flex gap-1">
+                    <div className="w-1 h-1 rounded-full bg-blue-400 animate-pulse"></div>
+                    <div className="w-1 h-1 rounded-full bg-purple-400 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-1 h-1 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  </div>
+                </div>
+
+                {/* 统计数据网格 */}
                 <div className="grid grid-cols-2 gap-4">
                   {/* 今日人数 */}
-                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-blue-100 dark:bg-blue-500/10 rounded-lg">
-                        <svg className="w-4 h-4 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none">
+                  <div className="group/card bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="p-1.5 bg-blue-100 dark:bg-blue-500/10 rounded-lg">
+                        <svg className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" viewBox="0 0 24 24" fill="none">
                           <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                           <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">今日人数</span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">今日人数</span>
                     </div>
-                    <div className="text-2xl font-bold text-blue-500 dark:text-blue-400">{visitStats.todayUv}</div>
+                    <div className="flex items-baseline gap-1.5">
+                      <div className="text-xl font-bold text-blue-500 dark:text-blue-400">{visitStats.todayUv}</div>
+                      <div className="text-xs text-gray-400 dark:text-gray-500">访客</div>
+                    </div>
                   </div>
 
                   {/* 今日访问 */}
-                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-green-100 dark:bg-green-500/10 rounded-lg">
-                        <svg className="w-4 h-4 text-green-500 dark:text-green-400" viewBox="0 0 24 24" fill="none">
+                  <div className="group/card bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="p-1.5 bg-green-100 dark:bg-green-500/10 rounded-lg">
+                        <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" viewBox="0 0 24 24" fill="none">
                           <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                           <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">今日访问</span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">今日访问</span>
                     </div>
-                    <div className="text-2xl font-bold text-green-500 dark:text-green-400">{visitStats.todayPv}</div>
+                    <div className="flex items-baseline gap-1.5">
+                      <div className="text-xl font-bold text-green-500 dark:text-green-400">{visitStats.todayPv}</div>
+                      <div className="text-xs text-gray-400 dark:text-gray-500">次数</div>
+                    </div>
                   </div>
 
                   {/* 总访问人数 */}
-                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-purple-100 dark:bg-purple-500/10 rounded-lg">
-                        <svg className="w-4 h-4 text-purple-500 dark:text-purple-400" viewBox="0 0 24 24" fill="none">
+                  <div className="group/card bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="p-1.5 bg-purple-100 dark:bg-purple-500/10 rounded-lg">
+                        <svg className="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" viewBox="0 0 24 24" fill="none">
                           <path d="M17 20H7C5.89543 20 5 19.1046 5 18V9L12 4L19 9V18C19 19.1046 18.1046 20 17 20Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">总访问人数</span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">总访问人数</span>
                     </div>
-                    <div className="text-2xl font-bold text-purple-500 dark:text-purple-400">{visitStats.uv}</div>
+                    <div className="flex items-baseline gap-1.5">
+                      <div className="text-xl font-bold text-purple-500 dark:text-purple-400">{visitStats.uv}</div>
+                      <div className="text-xs text-gray-400 dark:text-gray-500">访客</div>
+                    </div>
                   </div>
 
                   {/* 总访问量 */}
-                  <div className="bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-pink-100 dark:bg-pink-500/10 rounded-lg">
-                        <svg className="w-4 h-4 text-pink-500 dark:text-pink-400" viewBox="0 0 24 24" fill="none">
+                  <div className="group/card bg-gradient-to-br from-white/80 to-white/40 dark:from-white/10 dark:to-white/5 backdrop-blur-lg rounded-xl p-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg border border-gray-100/20 dark:border-white/10">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="p-1.5 bg-pink-100 dark:bg-pink-500/10 rounded-lg">
+                        <svg className="w-3.5 h-3.5 text-pink-500 dark:text-pink-400" viewBox="0 0 24 24" fill="none">
                           <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                           <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                           <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">总访问量</span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">总访问量</span>
                     </div>
-                    <div className="text-2xl font-bold text-pink-500 dark:text-pink-400">{visitStats.pv}</div>
+                    <div className="flex items-baseline gap-1.5">
+                      <div className="text-xl font-bold text-pink-500 dark:text-pink-400">{visitStats.pv}</div>
+                      <div className="text-xs text-gray-400 dark:text-gray-500">次数</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -648,23 +813,93 @@ const About = props => {
               </div>
             </div>
 
-            {/* 地理位置 */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-              <div className="mb-4">
-                <p className="text-lg">我现在中国 江苏省 上海市</p>
+            {/* 地理位置和个人信息区域 */}
+            <div className="space-y-6">
+              {/* 地理位置卡片 */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                {/* 背景装饰 */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 dark:from-blue-500/10 dark:via-purple-500/5 dark:to-pink-500/10 transition-colors duration-300"></div>
+
+                {/* 内容区域 */}
+                <div className="relative z-10">
+                  {/* 地图容器 */}
+                  <div className="w-full h-28 rounded-xl overflow-hidden mb-3 relative bg-gray-100 dark:bg-gray-800">
+                    <div
+                      ref={mapRef}
+                      className="w-full h-full"
+                      style={{
+                        background: '#1c1c1c',
+                        opacity: mapLoaded ? 1 : 0,
+                        transition: 'opacity 0.3s ease-in-out'
+                      }}
+                    ></div>
+
+                    {/* 地图控制按钮 */}
+                    {mapLoaded && (
+                      <div className="absolute bottom-2 right-2 flex gap-2">
+                        <button
+                          className="p-1.5 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-lg backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200"
+                          onClick={() => window.open('https://uri.amap.com/marker?position=118.7969,32.0603', '_blank')}
+                        >
+                          <svg className="w-4 h-4 text-gray-600 dark:text-gray-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                      </div>
+                    )}
+
+                    {/* 加载状态 */}
+                    {!mapLoaded && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 位置信息 */}
+                  <div className="flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 21C16.4183 21 20 17.4183 20 13C20 8.58172 16.4183 5 12 5C7.58172 5 4 8.58172 4 13C4 17.4183 7.58172 21 12 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span className="text-base">我现在住在中国 {location.province} {location.city} {location.district}</span>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <div className="text-gray-500 dark:text-gray-400">生于</div>
-                  <div className="font-bold">2002</div>
-                </div>
-                <div>
-                  <div className="text-gray-500 dark:text-gray-400">毕业于</div>
-                  <div className="font-bold">南京信息工程大学</div>
-                </div>
-                <div>
-                  <div className="text-gray-500 dark:text-gray-400">现在职业</div>
-                  <div className="font-bold text-purple-600">测试开发工程师</div>
+
+              {/* 个人信息卡片 */}
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                {/* 背景装饰 */}
+                <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-blue-50/30 to-purple-50/50 dark:from-green-500/10 dark:via-blue-500/5 dark:to-purple-500/10 transition-colors duration-300"></div>
+
+                {/* 内容区域 */}
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between">
+                    {/* 出生年份 */}
+                    <div className="space-y-1">
+                      <div className="text-xs text-gray-500 dark:text-gray-400">生于</div>
+                      <div className="text-lg font-bold text-blue-500 dark:text-blue-400">2002-02-26</div>
+                    </div>
+
+                    {/* 毕业院校 */}
+                    <div className="space-y-1">
+                      <div className="text-xs text-gray-500 dark:text-gray-400">毕业于</div>
+                      <div className="text-lg font-bold text-amber-600 dark:text-amber-500">
+                        南京信息工程大学
+                        <div className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                          计算机科学与技术
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 当前职业 */}
+                    <div className="space-y-1">
+                      <div className="text-xs text-gray-500 dark:text-gray-400">现在职业</div>
+                      <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                        测试开发工程师
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
