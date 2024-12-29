@@ -23,6 +23,7 @@ import dynamic from 'next/dynamic'
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
 )
+import RightClickMenu from '@/pages/RightClickMenu'
 
 /**
  * App挂载DOM 入口文件
@@ -68,6 +69,7 @@ const MyApp = ({ Component, pageProps }) => {
       ) : (
         content
       )}
+      <RightClickMenu posts={pageProps.posts || []} />
     </>
   )
 }

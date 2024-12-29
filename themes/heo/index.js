@@ -51,10 +51,11 @@ import { Style } from './style'
  */
 const LayoutBase = props => {
   const { children, slotTop, className } = props
-
-  // 全屏模式下的最大宽度
   const { fullWidth, isDarkMode } = useGlobal()
   const router = useRouter()
+
+  // 判断是否是 about 页面
+  const isAboutPage = router.pathname === '/about'
 
   const headerSlot = (
     <header>
@@ -72,24 +73,6 @@ const LayoutBase = props => {
     </header>
   )
 
-  // 右侧栏 用户信息+标签列表
-  const slotRight =
-    router.route === '/404' || fullWidth ? null : <SideRight {...props} />
-
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
-
-  const HEO_HERO_BODY_REVERSE = siteConfig(
-    'HEO_HERO_BODY_REVERSE',
-    false,
-    CONFIG
-  )
-  const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
-
-  // 加载wow动画
-  useEffect(() => {
-    loadWowJS()
-  }, [])
-
   return (
     <div
       id='theme-heo'
@@ -102,10 +85,10 @@ const LayoutBase = props => {
       {/* 主区块 */}
       <main
         id='wrapper-outer'
-        className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5`}>
+        className={`flex-grow w-full ${fullWidth ? '' : 'max-w-[86rem]'} mx-auto relative md:px-5`}>
         <div
           id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} w-full mx-auto lg:flex justify-center relative z-10`}>
+          className={`w-full mx-auto lg:flex justify-center relative z-10`}>
           <div className={`w-full h-auto ${className || ''}`}>
             {/* 主区上部嵌入 */}
             {slotTop}
@@ -114,17 +97,19 @@ const LayoutBase = props => {
 
           <div className='lg:px-2'></div>
 
-          <div className='hidden xl:block'>
-            {/* 主区快右侧 */}
-            {slotRight}
-          </div>
+          {/* 仅在非about页面显示右侧栏 */}
+          {!isAboutPage && (
+            <div className='hidden xl:block'>
+              <SideRight {...props} />
+            </div>
+          )}
         </div>
       </main>
 
       {/* 页脚 */}
       <Footer />
 
-      {HEO_LOADING_COVER && <LoadingCover />}
+      {siteConfig('HEO_LOADING_COVER', true, CONFIG) && <LoadingCover />}
     </div>
   )
 }

@@ -19,16 +19,18 @@ export const MenuItemDrop = ({ link }) => {
         <Link
           target={link?.target}
           href={link?.href}
-          className={`hover:bg-blue-500 hover:text-white rounded-full flex justify-center items-center w-[70px] h-[35px] mx-5 no-underline tracking-widest transition-colors duration-200 font-bold ${show ? 'bg-blue-500 text-white' : ''
+          className={`inline-flex items-center px-4 py-1.5 mx-2 hover:bg-blue-500 hover:text-white rounded-full transition-all duration-200 font-bold ${show ? 'bg-blue-500 text-white' : ''
             }`}>
-          {link?.icon && <i className={link?.icon} />} {link?.name}
+          {link?.icon && <i className={`${link?.icon} mr-2`} />}
+          <span className="whitespace-nowrap">{link?.name}</span>
         </Link>
       )}
       {/* 含子菜单的按钮 */}
       {hasSubMenu && (
-        <div className={`cursor-pointer hover:bg-blue-500 hover:text-white rounded-full flex justify-center items-center w-[70px] h-[35px] mx-5 no-underline tracking-widest transition-colors duration-200 font-bold ${show ? 'bg-blue-500 text-white' : ''
+        <div className={`inline-flex items-center px-4 py-1.5 mx-2 cursor-pointer hover:bg-blue-500 hover:text-white rounded-full transition-all duration-200 font-bold ${show ? 'bg-blue-500 text-white' : ''
           }`}>
-          {link?.icon && <i className={link?.icon} />} {link?.name}
+          {link?.icon && <i className={`${link?.icon} mr-2`} />}
+          <span className="whitespace-nowrap">{link?.name}</span>
         </div>
       )}
       {/* 子菜单 */}
@@ -36,16 +38,17 @@ export const MenuItemDrop = ({ link }) => {
         <ul
           style={{ backdropFilter: 'blur(3px)' }}
           className={`${show ? 'visible opacity-100 top-10' : 'invisible opacity-0 top-14'
-            } flex flex-row absolute left-1/2 transform -translate-x-1/2 drop-shadow-md overflow-hidden rounded-full bg-white dark:bg-[#1e1e1e] transition-all duration-300 z-20 whitespace-nowrap border border-gray-100`}>
+            } absolute left-1/2 transform -translate-x-1/2 flex flex-row bg-white dark:bg-[#1e1e1e] drop-shadow-lg rounded-full transition-all duration-300 z-20 border-2 border-blue-500 dark:border-blue-600 min-w-[250px]`}>
           {link.subMenus.map((sLink, index) => (
             <li
               key={index}
-              className='cursor-pointer hover:bg-blue-500 hover:text-white text-gray-900 dark:text-gray-100 tracking-widest transition-all duration-200 py-1 px-4'>
-              <Link href={sLink.href} target={link?.target}>
-                <span className='text-sm text-nowrap font-extralight'>
-                  {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                  {sLink.title}
-                </span>
+              className='flex-1 text-gray-900 dark:text-gray-100 transition-all duration-200 flex items-center justify-center'>
+              <Link
+                href={sLink.href}
+                target={link?.target}
+                className="px-4 py-1.5 mx-4 my-1.5 inline-flex items-center justify-center rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200">
+                {link?.icon && <i className={`${sLink?.icon} mr-2`} />}
+                <span className="whitespace-nowrap font-bold">{sLink.title}</span>
               </Link>
             </li>
           ))}

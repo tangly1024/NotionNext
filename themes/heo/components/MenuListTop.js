@@ -48,11 +48,11 @@ export const MenuListTop = props => {
     <>
       <nav
         id='nav-mobile'
-        className='flex flex-row items-center justify-center whitespace-nowrap'>
+        className='flex flex-row items-center justify-center'>
         {links?.map(
           (link, index) =>
             link && link.show && (
-              <div key={index} className="inline-flex group hover:bg-blue-500 hover:text-white transition-all duration-200 px-4 py-2 rounded-lg">
+              <div key={index} className="inline-flex">
                 <MenuItemDrop link={link} />
               </div>
             )

@@ -69,7 +69,7 @@ const CONFIG = {
         },
         {
           title: '关于作者',
-          href: 'https://blog.tangly1024.com/about'
+          href: 'https://localhost:3000/about'
         }
       ]
     },

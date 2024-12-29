@@ -30,7 +30,7 @@ const CONFIG = {
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '日常生活', url: '/tag/日常生活' },
   HEO_HERO_CATEGORY_2: { title: '代码编程', url: '/tag/代码编程' },
-  HEO_HERO_CATEGORY_3: { title: '关于', url: '/tag/关于' },
+  HEO_HERO_CATEGORY_3: { title: '关于', url: '/about' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
@@ -41,11 +41,11 @@ const CONFIG = {
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
     '🧑‍💻 测试开发工程师',
-    '🔍 分享与热心帮助',
-    '📚 持续学习者',
-    '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
     '🤖️ 数码科技爱好者',
+    '🔍 分享与热心帮助',
+    '🏃 脚踏实地行动派',
+    '📚 持续学习者',
+    '🏠 智能家居小能手',
     '🧱 团队小组发动机'
   ],
 
@@ -54,8 +54,6 @@ const CONFIG = {
   HEO_INFO_CARD_ICON1: 'fas fa-user',
   HEO_INFO_CARD_URL2: 'https://github.com/Episkey-G',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://www.episkey.top',
-  HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
@@ -155,6 +153,9 @@ const CONFIG = {
   HEO_WIDGET_TO_TOP: true,
   HEO_WIDGET_TO_COMMENT: true, // 跳到评论区
   HEO_WIDGET_DARK_MODE: true, // 夜间模式
-  HEO_WIDGET_TOC: true // 移动端悬浮目录
+  HEO_WIDGET_TOC: true, // 移动端悬浮目录
+
+  // 个人标签
+  HEO_MOTTO_WORDS: ['体验', '学习', '生活', '程序'],
 }
 export default CONFIG

@@ -128,7 +128,8 @@ const BLOG = {
     '/auth/result': 'LayoutAuth',
     '/sign-in/[[...index]]': 'LayoutSignIn',
     '/sign-up/[[...index]]': 'LayoutSignUp',
-    '/dashboard/[[...index]]': 'LayoutDashboard'
+    '/dashboard/[[...index]]': 'LayoutDashboard',
+    '/about': 'LayoutBase'
   },
 
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
@@ -559,7 +560,15 @@ const BLOG = {
       console.warn('Failed to load package.json version:', error)
       return '1.0.0' // 缺省版本号
     }
-  })()
+  })(),
+
+  CUSTOM_MENU: [
+    {
+      name: '关于',
+      path: '/about',
+      icon: 'fas fa-user'
+    }
+  ]
 }
 
 module.exports = BLOG
