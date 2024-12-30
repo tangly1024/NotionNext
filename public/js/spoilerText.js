@@ -1,6 +1,7 @@
 function convertTextToSpoilerSpan(node, className, spoilerTag) {
   const regex = new RegExp(`${spoilerTag}(.*?)${spoilerTag}`, 'g')
   const wholeText = node.wholeText
+  let outerSpan = document.createElement('span')
   const fragments = []
   let lastIndex = 0
   let match
@@ -8,7 +9,7 @@ function convertTextToSpoilerSpan(node, className, spoilerTag) {
     console.log('符合要求的文字' + wholeText)
     // 添加前面未匹配的部分
     if (match.index > lastIndex) {
-      fragments.push(
+      outerSpan.appendChild(
         document.createTextNode(wholeText.slice(lastIndex, match.index))
       )
     }
@@ -19,21 +20,16 @@ function convertTextToSpoilerSpan(node, className, spoilerTag) {
     if (className) {
       span.className = className
     }
-    fragments.push(span)
+    outerSpan.appendChild(span)
     // 设置lastIndex
     lastIndex = regex.lastIndex
   }
-  if (fragments.length) {
+  if (outerSpan.childNodes.length) {
     // 添加剩余未匹配的部分
     if (lastIndex < wholeText.length) {
-      fragments.push(document.createTextNode(wholeText.slice(lastIndex)))
+      outerSpan.appendChild(document.createTextNode(wholeText.slice(lastIndex)))
     }
-
-    // 替换原节点
-    fragments.forEach(fragment => {
-      node.parentNode.appendChild(fragment)
-    })
-    node.remove()
+    node.replaceWith(outerSpan)
   }
 }
 
