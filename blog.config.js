@@ -228,6 +228,13 @@ const BLOG = {
             'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
     },
     {
+      name: '華の乱',
+      artist: '石田勝範',
+      url: 'http://music.163.com/song/media/outer/url?id=4881802.mp3',
+      cover:
+            'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
       name: 'Valse di Fantastica',
       artist: '下村 陽子',
       url: 'http://music.163.com/song/media/outer/url?id=461544436.mp3',
