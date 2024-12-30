@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from 'react'
 import { TIMELINE_CONFIG } from '@/lib/timeline.config'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
-import TimelineCard from '@/components/TimelineCard'
 
 const AMapComponent = dynamic(() => import('@/components/AMapComponent'), {
   ssr: false,
@@ -16,6 +15,20 @@ const AMapComponent = dynamic(() => import('@/components/AMapComponent'), {
         <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
         <span className="text-sm text-gray-500 dark:text-gray-400">
           加载地图中...
+        </span>
+      </div>
+    </div>
+  )
+})
+
+const CareerTimeline = dynamic(() => import('@/components/CareerTimeline'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="flex flex-col items-center gap-2">
+        <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          加载时间线中...
         </span>
       </div>
     </div>
@@ -653,152 +666,7 @@ const About = props => {
             </div>
 
             {/* 右侧生涯进度卡片 */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <div className="mb-6">
-                <div className="text-sm text-gray-500 dark:text-gray-400">生涯</div>
-                <div className="text-2xl font-bold dark:text-white">无限进步</div>
-              </div>
-
-              <div className="space-y-8">
-                {TIMELINE_CONFIG.timelines.map((timeline, index) => (
-                  <div key={index} className="relative">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                        {timeline.period}
-                      </span>
-                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                        {formatProgress(progresses[timeline.period] || 0)}
-                      </span>
-                    </div>
-
-                    {/* 进度条 */}
-                    <div className="relative w-full h-3 bg-gray-200 rounded-full dark:bg-gray-700 overflow-hidden">
-                      <div
-                        className="absolute h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-1000 ease-in-out progress-bar-animation progress-update"
-                        style={{ width: `${progresses[timeline.period]}%` }}
-                      >
-                        <div className="absolute inset-0 bg-white/20 animate-shimmer"></div>
-                      </div>
-                    </div>
-
-                    {/* 时间线标记 */}
-                    <div className="relative h-24 mt-2">
-                      <div className="absolute w-full h-0.5 bg-gray-200 dark:bg-gray-700 top-3"></div>
-                      {timeline.milestones.map((milestone, mIndex, array) => {
-                        if (!milestone.date) {
-                          console.error('Missing date for milestone:', milestone);
-                          return null;
-                        }
-
-                        try {
-                          // 处理日期格式
-                          let position;
-                          let displayDate;
-
-                          if (milestone.type === 0) {
-                            // 进行中的里程碑 - 使用单一日期
-                            const [year, month] = milestone.date.split('-');
-                            const milestoneDate = new Date(milestone.date);
-                            const startDate = new Date(timeline.startDate);
-                            const endDate = new Date(timeline.endDate);
-
-                            position = ((milestoneDate - startDate) / (endDate - startDate)) * 100;
-                            displayDate = formatDate(year, month);
-                          } else {
-                            // 已完成的里程碑 - 可能包含日期范围
-                            const dates = milestone.date.split('至');
-                            const startDate = new Date(timeline.startDate);
-                            const endDate = new Date(timeline.endDate);
-                            const milestoneDate = new Date(dates[0]); // 使用开始日期作为位置参考
-
-                            position = ((milestoneDate - startDate) / (endDate - startDate)) * 100;
-                            displayDate = milestone.date; // 保存完整日期范围用于悬浮显示
-                          }
-
-                          // 根据类型决定样式
-                          const dotColorClass = milestone.type === 0
-                            ? 'bg-yellow-400 ring-4 ring-yellow-100 dark:ring-yellow-900/30'
-                            : 'bg-blue-500';
-
-                          const labelColorClass = milestone.type === 0
-                            ? 'text-yellow-600 dark:text-yellow-400 font-medium'
-                            : 'text-gray-500 dark:text-gray-400';
-
-                          return (
-                            <div
-                              key={mIndex}
-                              className="absolute transform -translate-x-1/2 top-0 group"
-                              style={{
-                                left: `${position}%`,
-                                zIndex: milestone.type === 0 ? 10 : mIndex
-                              }}
-                            >
-                              <div className="flex flex-col items-center">
-                                <div className="relative">
-                                  <div className={`w-2.5 h-2.5 rounded-full ${dotColorClass} mb-1 transition-all duration-300
-                                    ${milestone.type === 0 ? 'animate-pulse scale-110' : ''}`}
-                                  ></div>
-
-                                  {/* 悬浮提示 - 仅对已完成的里程碑显示 */}
-                                  {milestone.type === 1 && (
-                                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-20">
-                                      <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 text-white text-xs rounded-lg py-3 px-4 shadow-xl border border-gray-700/50 backdrop-blur-sm min-w-[240px]">
-                                        {/* 日期 */}
-                                        <div className="flex items-center justify-between gap-4 w-full">
-                                          <div className="flex items-center gap-2 flex-shrink-0">
-                                            <div className="w-3 h-3">
-                                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z" fill="currentColor" />
-                                              </svg>
-                                            </div>
-                                            <span className="font-medium text-gray-300">完成时间</span>
-                                          </div>
-                                          <span className="font-semibold text-sm text-white">{displayDate}</span>
-                                        </div>
-
-                                        {/* 装饰元素 */}
-                                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
-                                        <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></div>
-
-                                        {/* 尾部箭头 */}
-                                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
-                                          <div className="w-2 h-2 bg-gray-900 rotate-45 transform origin-center"></div>
-                                        </div>
-
-                                        {/* 模糊光晕效果 */}
-                                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg filter blur opacity-50"></div>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* 日期和标签 */}
-                                <div className="flex flex-col items-center">
-                                  {/* 只为进行中的里程碑显示日期 */}
-                                  {milestone.type === 0 && (
-                                    <span className={`text-xs ${labelColorClass} whitespace-nowrap`}>
-                                      {displayDate}
-                                    </span>
-                                  )}
-                                  <span className={`text-xs mt-0.5 whitespace-nowrap
-                                    ${milestone.type === 0 ? 'text-yellow-600 dark:text-yellow-400 font-medium' : 'text-gray-400 dark:text-gray-500'}`}
-                                  >
-                                    {milestone.label}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        } catch (error) {
-                          console.error('Error processing milestone:', milestone, error);
-                          return null;
-                        }
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <CareerTimeline />
           </div>
 
           {/* 访问统计和地理位置区域 */}
