@@ -1,11 +1,10 @@
 /**
  * 将Node文本中的指定标签内容转换为带有指定类名的span
+ * @param regex
  * @param node
  * @param className
- * @param spoilerTag
  */
-function convertTextToSpoilerSpan(node, className, spoilerTag) {
-  const regex = new RegExp(`${spoilerTag}(.*?)${spoilerTag}`, 'g')
+function convertTextToSpoilerSpan(regex, node, className) {
   const wholeText = node.wholeText
   let outerSpan = document.createElement('span')
   const fragments = []
@@ -46,14 +45,21 @@ function convertTextToSpoilerSpan(node, className, spoilerTag) {
  * @param spoilerTag
  */
 function processTextNodes(root, className, spoilerTag) {
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null)
+  const regex = new RegExp(`${spoilerTag}(.*?)${spoilerTag}`, 'g')
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function (node) {
+      return regex.test(node.wholeText)
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT
+    }
+  })
   const waitProcessNodes = []
   while (walker.nextNode()) {
     const node = walker.currentNode
     waitProcessNodes.push(node)
   }
   for (const waitProcessNode of waitProcessNodes) {
-    convertTextToSpoilerSpan(waitProcessNode, className, spoilerTag)
+    convertTextToSpoilerSpan(regex, waitProcessNode, className)
   }
 }
 
