@@ -2,10 +2,11 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import BLOG from '@/blog.config'
 import CONFIG from '@/themes/heo/config'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { TIMELINE_CONFIG } from '@/lib/timeline.config'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
+import GitHubContributionCard from '@/themes/heo/components/GitHubContributionCard'
 
 const AMapComponent = dynamic(() => import('@/components/AMapComponent'), {
   ssr: false,
@@ -466,6 +467,18 @@ const About = props => {
     loadBusuanzi()
   }, [])
 
+  // 获取月份标签
+  const getMonthLabels = () => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const labels = []
+    const now = new Date()
+    for (let i = 11; i >= 0; i--) {
+      const monthIndex = (now.getMonth() - i + 12) % 12
+      labels.push(months[monthIndex])
+    }
+    return labels
+  }
+
   return (
     <div className="flex justify-center w-full min-h-screen">
       <div className="max-w-[1200px] w-full px-5 relative">
@@ -507,12 +520,15 @@ const About = props => {
           </div>
 
           {/* 标题和描述 */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-2 dark:text-white">关于我</h1>
             <p className="text-gray-600 dark:text-gray-300">
               生活明朗，万物可爱✨
             </p>
           </div>
+
+          {/* 使用新的 GitHubContributionCard 组件 */}
+          <GitHubContributionCard posts={props.allPosts} />
 
           {/* 个人介绍卡片区域 - 两列布局 */}
           <div className="grid grid-cols-2 gap-6 mb-8 w-full">
@@ -1117,6 +1133,10 @@ const About = props => {
         /* 确保文本不会换行 */
         .whitespace-nowrap {
           white-space: nowrap;
+        }
+
+        .grid-cols-52 {
+          grid-template-columns: repeat(52, minmax(0, 1fr));
         }
       `}</style>
     </div>
