@@ -22,7 +22,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: 'lazypigzyh.top',
   HEO_HERO_TITLE_4: '2025！',
-  HEO_HERO_TITLE_5: '新的一年祝愿大家心想事成！',
+  HEO_HERO_TITLE_5: '祝愿大家心想事成！',
   HEO_HERO_TITLE_LINK: 'https://www.lazypigzyh.top/',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
