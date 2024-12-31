@@ -96,7 +96,7 @@ export function InfoCard(props) {
     <div className="perspective-3000">
       <Card
         ref={cardRef}
-        className='wow fadeInUp bg-gradient-to-br from-blue-500 via-blue-400 to-blue-500 dark:from-yellow-500 dark:via-yellow-400 dark:to-yellow-500 text-white flex flex-col w-72 h-[320px] relative p-5 overflow-hidden group transition-all duration-300 hover:shadow-2xl'
+        className='wow fadeInUp relative w-72 h-[320px] overflow-hidden group transition-all duration-300 hover:shadow-2xl'
         style={{
           transform: isHovering
             ? `rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`
@@ -105,18 +105,30 @@ export function InfoCard(props) {
           transition: 'transform 0.3s ease-out'
         }}
       >
-        {/* 背景装饰 */}
-        <div className='absolute inset-0 bg-[url("/images/patterns/pattern-1-light.svg")] dark:bg-[url("/images/patterns/pattern-1-dark.svg")] opacity-30 bg-repeat bg-[length:48px_48px] animate-pattern-slide'></div>
+        {/* 背景图片 */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-500 group-hover:scale-110"
+          style={{
+            backgroundImage: 'url("/images/infoCardBg.png")',
+            filter: 'brightness(0.85) contrast(1.1)'
+          }}
+        />
+
+        {/* 添加一个非常淡的遮罩，以确保文字可读性 */}
+        <div className="absolute inset-0 bg-black/10 dark:bg-black/20" />
+
+        {/* 装饰图案 */}
+        <div className='absolute inset-0 bg-[url("/images/patterns/pattern-1-light.svg")] dark:bg-[url("/images/patterns/pattern-1-dark.svg")] opacity-20 bg-repeat bg-[length:48px_48px] animate-pattern-slide'></div>
 
         {/* 光泽效果 */}
         <div
           className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none'
           style={{
             background: isHovering
-              ? `radial-gradient(circle at ${((mousePosition.x + 10) * 5)}% ${((mousePosition.y + 10) * 5)}%, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 60%)`
+              ? `radial-gradient(circle at ${((mousePosition.x + 10) * 5)}% ${((mousePosition.y + 10) * 5)}%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)`
               : 'none'
           }}
-        ></div>
+        />
 
         {/* 星星闪烁效果 */}
         <div className='absolute inset-0 overflow-hidden'>
@@ -132,7 +144,7 @@ export function InfoCard(props) {
                 animationDelay: `${star.delay}s`,
                 animationDuration: `${star.duration}s`
               }}
-            ></div>
+            />
           ))}
         </div>
 
@@ -142,8 +154,7 @@ export function InfoCard(props) {
         </div>
 
         {/* 卡片内容 */}
-        <div className='flex flex-col items-center relative z-10' style={{ transform: 'translateZ(50px)' }}>
-          {/* 原有内容保持不变 */}
+        <div className='relative flex flex-col items-center p-5 z-10' style={{ transform: 'translateZ(50px)' }}>
           {/* 问候语 - 可点击切换 */}
           <div className='mb-4 cursor-pointer transform hover:scale-105 transition-all duration-200'>
             <GreetingsWords />
@@ -157,40 +168,55 @@ export function InfoCard(props) {
             {/* 头像容器 */}
             <div
               ref={avatarRef}
-              className='relative transform-gpu transition-transform duration-200 ease-out'
+              className='relative transform-gpu transition-all duration-300 ease-out hover:scale-110'
               style={{
                 transform: isHovering
-                  ? `rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`
-                  : 'rotateX(0deg) rotateY(0deg)',
+                  ? `translateZ(50px) rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`
+                  : 'translateZ(0) rotateX(0deg) rotateY(0deg)',
                 transformStyle: 'preserve-3d'
               }}
             >
               {/* 头像正面 */}
-              <LazyImage
-                src={siteInfo?.icon}
-                className='rounded-2xl w-[120px] h-[120px] object-cover transition-all duration-500 group-hover/avatar:scale-110 group-hover/avatar:shadow-xl'
-                width={120}
-                height={120}
-                alt={siteConfig('AUTHOR')}
-              />
+              <div className="relative">
+                <LazyImage
+                  src={siteInfo?.icon}
+                  className='rounded-2xl w-[120px] h-[120px] object-cover transition-all duration-500 group-hover/avatar:shadow-2xl'
+                  width={120}
+                  height={120}
+                  alt={siteConfig('AUTHOR')}
+                />
 
-              {/* 头像悬浮信息 */}
-              <div className='absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300'>
-                <div className='text-center text-white px-2 transform translate-z-30'>
+                {/* 头像边框发光效果 */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-yellow-500 dark:to-orange-500 rounded-2xl opacity-0 group-hover/avatar:opacity-70 blur transition-all duration-500 -z-10"></div>
+              </div>
+
+              {/* 头像悬浮信息 - 前面板 */}
+              <div
+                className='absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300'
+                style={{ transform: 'translateZ(60px)' }}
+              >
+                <div className='text-center text-white px-2'>
                   <div className='text-sm font-medium mb-1'>测试开发工程师</div>
                   <div className='text-xs opacity-80'>热爱生活，热爱编程</div>
                 </div>
               </div>
 
+              {/* 装饰边框 - 后面板 */}
+              <div
+                className='absolute inset-2 border-2 border-white/20 rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300'
+                style={{ transform: 'translateZ(-30px)' }}
+              ></div>
+
               {/* 3D 效果阴影 */}
               <div
-                className='absolute inset-0 rounded-2xl bg-black/20 blur-md -z-10 transition-transform duration-200'
+                className='absolute inset-0 rounded-2xl bg-black/20 blur-xl transition-all duration-300'
                 style={{
                   transform: isHovering
-                    ? `translateZ(-20px) rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`
-                    : 'translateZ(-20px)'
+                    ? 'translateZ(-50px)'
+                    : 'translateZ(-20px)',
+                  opacity: isHovering ? 0.5 : 0.2
                 }}
-              ></div>
+              />
             </div>
           </div>
 
@@ -198,7 +224,7 @@ export function InfoCard(props) {
           <div className='flex justify-between items-center w-full'>
             {/* 左侧名称和描述 */}
             <Link href='/about' className='group/link flex flex-col hover:scale-105 transition-all duration-200'>
-              <h2 className='text-xl font-bold group-hover/link:text-white/90'>{siteConfig('AUTHOR')}</h2>
+              <h2 className='text-xl font-bold text-white group-hover/link:text-white/90'>{siteConfig('AUTHOR')}</h2>
               <div className='text-sm text-white/80 group-hover/link:text-white/70'>无限进步</div>
             </Link>
 
@@ -207,14 +233,14 @@ export function InfoCard(props) {
               {url1 && (
                 <Link href={url1} className='transform hover:scale-110 transition-all duration-200'>
                   <div className='w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:rotate-12'>
-                    <i className={`${icon1} text-xl`}></i>
+                    <i className={`${icon1} text-xl text-white`}></i>
                   </div>
                 </Link>
               )}
               {url2 && (
                 <Link href={url2} className='transform hover:scale-110 transition-all duration-200'>
                   <div className='w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:rotate-12'>
-                    <i className={`${icon2} text-xl`}></i>
+                    <i className={`${icon2} text-xl text-white`}></i>
                   </div>
                 </Link>
               )}
@@ -291,23 +317,47 @@ export function InfoCard(props) {
             transform: translateZ(30px);
           }
 
-          @keyframes greeting-change {
-            0% {
+          .group-hover\/avatar:hover {
+            transform: scale(1.1);
+          }
+
+          @keyframes float {
+            0%, 100% {
               transform: translateY(0);
-              opacity: 1;
             }
             50% {
               transform: translateY(-10px);
-              opacity: 0;
-            }
-            100% {
-              transform: translateY(0);
-              opacity: 1;
             }
           }
 
-          .animate-greeting-change {
-            animation: greeting-change 0.3s ease-in-out;
+          .animate-float {
+            animation: float 3s ease-in-out infinite;
+          }
+
+          @keyframes glow {
+            0%, 100% {
+              opacity: 0.5;
+            }
+            50% {
+              opacity: 0.8;
+            }
+          }
+
+          .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+          }
+
+          @keyframes rotate3d {
+            0% {
+              transform: rotate3d(0, 1, 0, 0deg);
+            }
+            100% {
+              transform: rotate3d(0, 1, 0, 360deg);
+            }
+          }
+
+          .hover\:rotate3d:hover {
+            animation: rotate3d 8s linear infinite;
           }
         `}</style>
       </Card>
@@ -340,25 +390,257 @@ function MoreButton() {
  */
 function GreetingsWords() {
   const greetings = siteConfig('HEO_INFOCARD_GREETINGS', null, CONFIG)
-  const [greeting, setGreeting] = useState(greetings[0])
+  const [greeting, setGreeting] = useState('')
   const [isAnimating, setIsAnimating] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
+  const [sparkles, setSparkles] = useState([])
+  const greetingRef = useRef(null)
 
-  // 每次点击，随机获取greetings中的一个
-  const handleChangeGreeting = () => {
+  // 根据时间生成问候语
+  const getTimeBasedGreeting = () => {
+    const hour = new Date().getHours()
+    const timeGreetings = {
+      morning: ['早安，准备开始一天的工作了吗？', '早上好，今天也要元气满满哦！', '早安，一日之计在于晨'],
+      noon: ['午安，要记得午休哦', '中午好，要不要小憩一下？', '午安，来杯下午茶吧'],
+      afternoon: ['下午好，要来杯咖啡吗？', '下午茶时间到！', '悠闲的下午时光'],
+      evening: ['晚上好，今天过得怎么样？', '夜幕降临，放松一下吧', '晚安，记得早点休息哦'],
+      midnight: ['夜深了，还在加班吗？', '深夜了，要注意休息哦', '已经很晚了，早点休息吧']
+    }
+
+    let timeBasedGreetings
+    if (hour >= 5 && hour < 11) {
+      timeBasedGreetings = timeGreetings.morning
+    } else if (hour >= 11 && hour < 13) {
+      timeBasedGreetings = timeGreetings.noon
+    } else if (hour >= 13 && hour < 18) {
+      timeBasedGreetings = timeGreetings.afternoon
+    } else if (hour >= 18 && hour < 23) {
+      timeBasedGreetings = timeGreetings.evening
+    } else {
+      timeBasedGreetings = timeGreetings.midnight
+    }
+
+    return timeBasedGreetings[Math.floor(Math.random() * timeBasedGreetings.length)]
+  }
+
+  // 初始化问候语
+  useEffect(() => {
+    setGreeting(getTimeBasedGreeting())
+  }, [])
+
+  // 生成随机火花效果
+  useEffect(() => {
+    const generateSparkles = () => {
+      const newSparkles = []
+      for (let i = 0; i < 10; i++) {
+        newSparkles.push({
+          id: i,
+          left: Math.random() * 100,
+          top: Math.random() * 100,
+          size: Math.random() * 4 + 1,
+          delay: Math.random() * 1,
+          duration: Math.random() * 0.5 + 0.5
+        })
+      }
+      setSparkles(newSparkles)
+    }
+    generateSparkles()
+  }, [greeting])
+
+  // 每次点击，随机获取问候语
+  const handleChangeGreeting = (e) => {
+    e.stopPropagation() // 阻止事件冒泡
+    if (isAnimating) return
     setIsAnimating(true)
+
+    // 添加点击波纹效果
+    const rect = greetingRef.current?.getBoundingClientRect()
+    if (rect) {
+      const ripple = document.createElement('div')
+      ripple.className = 'greeting-ripple'
+      ripple.style.left = `${e.clientX - rect.left}px`
+      ripple.style.top = `${e.clientY - rect.top}px`
+      greetingRef.current?.appendChild(ripple)
+      setTimeout(() => ripple.remove(), 1000)
+    }
+
     setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * greetings.length)
-      setGreeting(greetings[randomIndex])
+      // 随机选择：80%概率使用时间相关问候语，20%概率使用自定义问候语
+      const useTimeBasedGreeting = Math.random() < 0.8
+      let newGreeting
+      do {
+        if (useTimeBasedGreeting) {
+          newGreeting = getTimeBasedGreeting()
+        } else {
+          const randomIndex = Math.floor(Math.random() * greetings.length)
+          newGreeting = greetings[randomIndex]
+        }
+      } while (newGreeting === greeting)
+      setGreeting(newGreeting)
       setIsAnimating(false)
     }, 300)
   }
 
+  // 获取时间相关的图标
+  const getTimeIcon = () => {
+    const hour = new Date().getHours()
+    if (hour >= 5 && hour < 11) return 'fas fa-sun animate-spin-slow text-yellow-500'
+    if (hour >= 11 && hour < 13) return 'fas fa-cloud-sun animate-pulse text-orange-500'
+    if (hour >= 13 && hour < 18) return 'fas fa-sun animate-spin-slow text-orange-500'
+    if (hour >= 18 && hour < 23) return 'fas fa-moon animate-bounce text-blue-500'
+    return 'fas fa-stars animate-twinkle text-purple-500'
+  }
+
   return (
     <div
+      ref={greetingRef}
+      className="greeting-container relative select-none cursor-pointer group"
       onClick={handleChangeGreeting}
-      className={`select-none cursor-pointer py-1 px-3 bg-white/20 hover:bg-white/30 text-sm rounded-lg backdrop-blur-sm transition-all duration-200 ${isAnimating ? 'animate-greeting-change' : ''}`}
+      onMouseEnter={(e) => {
+        e.stopPropagation()
+        setIsHovering(true)
+      }}
+      onMouseLeave={(e) => {
+        e.stopPropagation()
+        setIsHovering(false)
+      }}
     >
-      {greeting}
+      {/* 主要内容 */}
+      <div
+        className={`
+          relative z-10 py-2 px-4 
+          bg-gradient-to-r from-white/20 to-white/10
+          hover:from-white/30 hover:to-white/20
+          rounded-lg backdrop-blur-sm
+          transition-all duration-300
+          border border-white/10
+          hover:border-white/20
+          shadow-lg hover:shadow-xl
+          transform hover:-translate-y-0.5
+          overflow-hidden
+          ${isAnimating ? 'animate-greeting-change' : ''}
+        `}
+      >
+        {/* 火花效果 */}
+        {isHovering && sparkles.map(spark => (
+          <div
+            key={spark.id}
+            className="absolute w-1 h-1 bg-white rounded-full animate-sparkle pointer-events-none"
+            style={{
+              left: `${spark.left}%`,
+              top: `${spark.top}%`,
+              width: `${spark.size}px`,
+              height: `${spark.size}px`,
+              animationDelay: `${spark.delay}s`,
+              animationDuration: `${spark.duration}s`
+            }}
+          />
+        ))}
+
+        {/* 文字内容 */}
+        <div className="relative z-10 flex items-center gap-2">
+          <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors duration-300">
+            {greeting}
+          </span>
+          <span className="text-xs text-white/60 group-hover:text-white/80 transition-colors duration-300">
+            <i className={getTimeIcon()} />
+          </span>
+        </div>
+
+        {/* 光束效果 */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/0 via-white/5 to-white/0 -skew-x-12 animate-shine" />
+        </div>
+
+        {/* 悬浮光晕 */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 blur-xl" />
+        </div>
+      </div>
+
+      {/* 添加动画样式 */}
+      <style jsx>{`
+        @keyframes greeting-change {
+          0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: translateY(-5px) scale(0.95);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+        }
+
+        @keyframes sparkle {
+          0%, 100% {
+            opacity: 0;
+            transform: scale(0);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes shine {
+          0% {
+            transform: translateX(-100%) skewX(-12deg);
+          }
+          100% {
+            transform: translateX(200%) skewX(-12deg);
+          }
+        }
+
+        .animate-sparkle {
+          animation: sparkle var(--duration, 1s) ease-in-out infinite;
+          animation-delay: var(--delay, 0s);
+        }
+
+        .animate-shine {
+          animation: shine 2s ease-in-out infinite;
+        }
+
+        .animate-spin-slow {
+          animation: spin 3s linear infinite;
+        }
+
+        .greeting-ripple {
+          position: absolute;
+          border-radius: 50%;
+          width: 100px;
+          height: 100px;
+          background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+          transform: translate(-50%, -50%) scale(0);
+          animation: ripple 1s ease-out;
+          pointer-events: none;
+        }
+
+        @keyframes ripple {
+          to {
+            transform: translate(-50%, -50%) scale(4);
+            opacity: 0;
+          }
+        }
+
+        @keyframes stars-twinkle {
+          0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+        }
+
+        .animate-twinkle {
+          animation: stars-twinkle 1.5s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   )
 }
