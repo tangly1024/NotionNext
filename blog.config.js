@@ -270,6 +270,17 @@ const BLOG = {
   // 星空雨特效 黑夜模式才会生效
   STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
+  // AI 文章摘要生成
+  AI_SUMMARY_API:
+      process.env.AI_SUMMARY_API||
+      '',
+  AI_SUMMARY_KEY:
+      process.env.AI_SUMMARY_KEY ||
+      '',
+  AI_SUMMARY_CACHE_TIME: process.env.AI_SUMMARY_CACHE_TIME || 1800, // 缓存时间，单位秒
+  AI_SUMMARY_WORD_LIMIT: process.env.AI_SUMMARY_WORD_LIMIT || 1000,
+
+
   //   ********挂件组件相关********
   // AI 文章摘要生成 @see https://docs_s.tianli0.top/
   TianliGPT_CSS:
