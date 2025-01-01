@@ -10,6 +10,7 @@ import Comment from '@/components/Comment'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { HashTag } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
+import LoadingCover from '@/components/LoadingCover'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -41,6 +42,7 @@ import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
+import AISummary from '@/components/AISummary'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -82,6 +84,7 @@ const LayoutBase = props => {
     false,
     CONFIG
   )
+  const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
 
   // 加载wow动画
   useEffect(() => {
@@ -120,7 +123,9 @@ const LayoutBase = props => {
       </main>
 
       {/* 页脚 */}
-      <Footer title={siteConfig('TITLE')} />
+      <Footer />
+
+      {HEO_LOADING_COVER && <LoadingCover />}
     </div>
   )
 }
@@ -190,7 +195,7 @@ const LayoutSearch = props => {
     }
   }, [])
   return (
-    <div {...props} currentSearch={currentSearch}>
+    <div currentSearch={currentSearch}>
       <div id='post-outer-wrapper' className='px-5  md:px-0'>
         {!currentSearch ? (
           <SearchNav {...props} />
@@ -263,13 +268,16 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector(
+              '#article-wrapper #notion-article'
+            )
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -277,25 +285,29 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 bg-white dark:bg-[#18171d] dark:border-gray-600`}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
-        {!lock && (
-          <div id='article-wrapper' className='mx-auto md:w-full md:px-5'>
+        {!lock && post && (
+          <div className='mx-auto md:w-full md:px-5'>
             {/* 文章主体 */}
-            <article itemScope itemType='https://schema.org/Movie'>
+            <article
+              id='article-wrapper'
+              itemScope
+              itemType='https://schema.org/Movie'>
               {/* Notion文章主体 */}
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
+                <AISummary aiSummary={post.aiSummary}/>
                 <WWAds orientation='horizontal' className='w-full' />
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />

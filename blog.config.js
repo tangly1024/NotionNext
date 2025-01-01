@@ -125,8 +125,10 @@ const BLOG = {
     '/[prefix]': 'LayoutSlug',
     '/[prefix]/[slug]': 'LayoutSlug',
     '/[prefix]/[slug]/[...suffix]': 'LayoutSlug',
-    '/signin': 'LayoutSignIn',
-    '/signup': 'LayoutSignUp'
+    '/auth/result': 'LayoutAuth',
+    '/sign-in/[[...index]]': 'LayoutSignIn',
+    '/sign-up/[[...index]]': 'LayoutSignUp',
+    '/dashboard/[[...index]]': 'LayoutDashboard'
   },
 
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
@@ -251,7 +253,7 @@ const BLOG = {
   ],
 
   // 鼠标跟随特效
-  MOUSE_FOLLOW: process.env.NEXT_PUBLIC_MOUSE_FOLLOW || true, // 开关
+  MOUSE_FOLLOW: process.env.NEXT_PUBLIC_MOUSE_FOLLOW || false, // 开关
   // 这两个只有在鼠标跟随特效开启时才生效
   // 鼠标类型 1：路劲散点 2：下降散点 3：上升散点 4：边缘向鼠标移动散点 5：跟踪转圈散点 6：路径线条 7：聚集散点 8：聚集网格 9：移动网格 10：上升粒子 11：转圈随机颜色粒子 12：圆锥放射跟随蓝色粒子
   MOUSE_FOLLOW_EFFECT_TYPE: 11, // 1-12
@@ -267,6 +269,17 @@ const BLOG = {
   RIBBON: process.env.NEXT_PUBLIC_RIBBON || false, // 开关
   // 星空雨特效 黑夜模式才会生效
   STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
+
+  // AI 文章摘要生成
+  AI_SUMMARY_API:
+      process.env.AI_SUMMARY_API||
+      '',
+  AI_SUMMARY_KEY:
+      process.env.AI_SUMMARY_KEY ||
+      '',
+  AI_SUMMARY_CACHE_TIME: process.env.AI_SUMMARY_CACHE_TIME || 1800, // 缓存时间，单位秒
+  AI_SUMMARY_WORD_LIMIT: process.env.AI_SUMMARY_WORD_LIMIT || 1000,
+
 
   //   ********挂件组件相关********
   // AI 文章摘要生成 @see https://docs_s.tianli0.top/
@@ -295,6 +308,8 @@ const BLOG = {
     'https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json', // 挂件模型地址 @see https://github.com/xiazeyu/live2d-widget-models
   WIDGET_PET_SWITCH_THEME:
     process.env.NEXT_PUBLIC_WIDGET_PET_SWITCH_THEME || true, // 点击宠物挂件切换博客主题
+
+  SPOILER_TEXT_TAG: process.env.NEXT_PUBLIC_SPOILER_TEXT_TAG || '', // Spoiler文本隐藏功能，如Notion中 [sp]希望被spoiler的文字[sp]，填入[sp] 即可
 
   // 音乐播放插件
   MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || false, // 是否使用音乐播放插件
@@ -329,7 +344,7 @@ const BLOG = {
   MUSIC_PLAYER_METING_ID:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_ID || '60198', // 对应歌单的 id
   MUSIC_PLAYER_METING_LRC_TYPE:
-    process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_LRC_TYPE || '1', // 可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）
+    process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_LRC_TYPE || '1', // 已废弃！！！可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）
 
   //   ********挂件组件相关********
   // ----> 评论互动 可同时开启多个支持 WALINE VALINE GISCUS CUSDIS UTTERRANCES GITALK
@@ -352,7 +367,7 @@ const BLOG = {
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_COUNT_ENABLE || false, // 博客列表是否显示评论数
   COMMENT_TWIKOO_CDN_URL:
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_CDN_URL ||
-    'https://cdn.staticfile.net/twikoo/1.6.17/twikoo.min.js', // twikoo客户端cdn
+    'https://cdn.jsdelivr.net/npm/twikoo@1.6.17/dist/twikoo.all.min.js', // twikoo客户端cdn
 
   // utterance
   COMMENT_UTTERRANCES_REPO:
@@ -539,7 +554,8 @@ const BLOG = {
     process.env.NEXT_PUBLIC_DESCRIPTION || '这是一个由NotionNext生成的站点', // 站点描述，被notion中的页面描述覆盖
 
   // 开发相关
-  NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
+  NOTION_ACTIVE_USER: process.env.NOTION_ACTIVE_USER || '',
+  NOTION_TOKEN_V2: process.env.NOTION_TOKEN_V2 || '', // Useful if you prefer not to make your database public
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
   ENABLE_CACHE:
     process.env.ENABLE_CACHE ||
@@ -547,7 +563,17 @@ const BLOG = {
     process.env.npm_lifecycle_event === 'export', // 在打包过程中默认开启缓存，开发或运行时开启此功能意义不大。
   isProd: process.env.VERCEL_ENV === 'production' || process.env.EXPORT, // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
   BUNDLE_ANALYZER: process.env.ANALYZE === 'true' || false, // 是否展示编译依赖内容与大小
-  VERSION: process.env.NEXT_PUBLIC_VERSION // 版本号
+  VERSION: (() => {
+    try {
+      // 优先使用环境变量，否则从package.json中获取版本号
+      return (
+        process.env.NEXT_PUBLIC_VERSION || require('./package.json').version
+      )
+    } catch (error) {
+      console.warn('Failed to load package.json version:', error)
+      return '1.0.0' // 缺省版本号
+    }
+  })()
 }
 
 module.exports = BLOG

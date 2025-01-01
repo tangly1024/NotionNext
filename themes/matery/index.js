@@ -225,13 +225,14 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const { fullWidth } = useGlobal()
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -239,7 +240,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
@@ -253,10 +254,8 @@ const LayoutSlug = props => {
           className={`${fullWidth ? '' : '-mt-32'} transition-all duration-300 rounded-md mx-3 lg:border lg:rounded-xl lg:py-4 bg-white dark:bg-hexo-black-gray  dark:border-black`}>
           {lock && <ArticleLock validPassword={validPassword} />}
 
-          {!lock && (
-            <div
-              id='article-wrapper'
-              className='overflow-x-auto md:w-full px-3 '>
+          {!lock && post && (
+            <div className='overflow-x-auto md:w-full px-3 '>
               {/* 文章信息 */}
               {post?.type && post?.type === 'Post' && (
                 <>
@@ -268,7 +267,7 @@ const LayoutSlug = props => {
               )}
 
               <div className='lg:px-10 subpixel-antialiased'>
-                <article itemScope>
+                <article id='article-wrapper' itemScope>
                   {/* Notion文章主体 */}
                   <section
                     data-wow-delay='.1s'
@@ -322,7 +321,7 @@ const Layout404 = props => {
     setTimeout(() => {
       const article =
         typeof document !== 'undefined' &&
-        document.getElementById('notion-article')
+        document.querySelector('#article-wrapper #notion-article')
       if (!article) {
         router.push('/').then(() => {
           // console.log('找不到页面', router.asPath)

@@ -1,15 +1,15 @@
 import { siteConfig } from '@/lib/config'
-import dynamic from 'next/dynamic'
-import { GlobalStyle } from './GlobalStyle'
-import LA51 from './LA51'
-import TianLiGPT from './TianliGPT'
-import WebWhiz from './Webwhiz'
-
 import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
+
+import Head from 'next/head'
+import ExternalScript from './ExternalScript'
+import WebWhiz from './Webwhiz'
 
 /**
  * 各种插件脚本
@@ -56,13 +56,16 @@ const ExternalPlugin = props => {
   const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
   const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
   const TIANLI_KEY = siteConfig('TianliGPT_KEY')
-  const GLOBAL_JS = siteConfig('GLOBAL_JS')
+  const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
   const CLARITY_ID = siteConfig('CLARITY_ID')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
   const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
   const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
   const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
+  // 默认关闭NProgress
+  const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
+  const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -101,11 +104,13 @@ const ExternalPlugin = props => {
     if (ADSENSE_GOOGLE_ID) {
       setTimeout(() => {
         initGoogleAdsense(ADSENSE_GOOGLE_ID)
-      }, 1000)
+      }, 3000)
     }
 
-    // 映射url
-    convertInnerUrl(props?.allNavPages)
+    setTimeout(() => {
+      // 映射url
+      convertInnerUrl(props?.allNavPages)
+    }, 500)
   }, [router])
 
   useEffect(() => {
@@ -143,11 +148,12 @@ const ExternalPlugin = props => {
       {!CAN_COPY && <DisableCopy />}
       {WEB_WHIZ_ENABLED && <WebWhiz />}
       {AD_WWADS_BLOCK_DETECT && <AdBlockDetect />}
-      {TIANLI_KEY && <TianLiGPT />}
+      {TIANLI_KEY && <TianliGPT />}
       <VConsole />
-      <LoadingProgress />
+      {ENABLE_NPROGRSS && <LoadingProgress />}
       <AosAnimation />
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
+      {COZE_BOT_ID && <Coze />}
 
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && (
         <>
@@ -248,10 +254,16 @@ const ExternalPlugin = props => {
       )}
 
       {AD_WWADS_ID && (
-        <script
-          type='text/javascript'
-          src='https://cdn.wwads.cn/js/makemoney.js'
-          async></script>
+        <>
+          <Head>
+            {/* 提前连接到广告服务器 */}
+            <link rel='preconnect' href='https://cdn.wwads.cn' />
+          </Head>
+          <ExternalScript
+            type='text/javascript'
+            src='https://cdn.wwads.cn/js/makemoney.js'
+          />
+        </>
       )}
 
       {/* {COMMENT_TWIKOO_ENV_ID && <script defer src={COMMENT_TWIKOO_CDN_URL} />} */}
@@ -418,6 +430,16 @@ const LoadingProgress = dynamic(() => import('@/components/LoadingProgress'), {
   ssr: false
 })
 const AosAnimation = dynamic(() => import('@/components/AOSAnimation'), {
+  ssr: false
+})
+
+const Coze = dynamic(() => import('@/components/Coze'), {
+  ssr: false
+})
+const LA51 = dynamic(() => import('@/components/LA51'), {
+  ssr: false
+})
+const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
   ssr: false
 })
 
