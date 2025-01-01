@@ -28,6 +28,18 @@ export function AnalyticsCard(props) {
   // 计算平均发文频率
   const postsPerMonth = (postCount / (diffDays / 30)).toFixed(1)
 
+  // 格式化日期函数，确保服务端和客户端渲染一致
+  const formatDate = (date) => {
+    const d = new Date(date)
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+
+  // 格式化目标日期
+  const formattedTargetDate = formatDate(targetDate)
+
   // 加载不蒜子统计脚本
   useEffect(() => {
     const loadBusuanzi = () => {
@@ -88,7 +100,7 @@ export function AnalyticsCard(props) {
             <div className='stat-value font-medium text-blue-500 dark:text-yellow-500'>{formattedTime}</div>
           </div>
           <div className="text-xs text-gray-500 dark:text-gray-400 pl-6 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            始于 {targetDate.toLocaleDateString()}
+            始于 {formattedTargetDate}
           </div>
         </div>
 
