@@ -153,83 +153,86 @@ export function InfoCard(props) {
           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-[200%] bg-gradient-to-b from-white/0 via-white/5 to-white/0 rotate-45 transform -translate-x-full animate-light-beam'></div>
         </div>
 
-        {/* 卡片内容 */}
-        <div className='relative flex flex-col items-center p-5 z-10' style={{ transform: 'translateZ(50px)' }}>
-          {/* 问候语 - 可点击切换 */}
-          <div className='mb-4 cursor-pointer transform hover:scale-105 transition-all duration-200'>
-            <GreetingsWords />
-          </div>
+        {/* 卡片内容 - 调整内部布局 */}
+        <div className='relative flex flex-col justify-between h-full p-5 z-10' style={{ transform: 'translateZ(50px)' }}>
+          {/* 上部分内容 */}
+          <div className='flex flex-col items-center'>
+            {/* 问候语 */}
+            <div className='mb-4'>
+              <GreetingsWords />
+            </div>
 
-          {/* 头像和描述容器 */}
-          <div className='relative w-full flex justify-center items-center mb-10 group/avatar perspective-1000'>
-            {/* 头像装饰光环 */}
-            <div className='absolute inset-0 bg-gradient-to-r from-white/0 via-white/50 to-white/0 rounded-full blur opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-700 animate-halo'></div>
+            {/* 头像部分 */}
+            <div className='relative w-full flex justify-center items-center mb-6 group/avatar perspective-1000'>
+              {/* 头像装饰光环 */}
+              <div className='absolute inset-0 bg-gradient-to-r from-white/0 via-white/50 to-white/0 rounded-full blur opacity-0 group-hover/avatar:opacity-100 transition-opacity duration-700 animate-halo'></div>
 
-            {/* 头像容器 */}
-            <div
-              ref={avatarRef}
-              className='relative transform-gpu transition-all duration-300 ease-out hover:scale-110'
-              style={{
-                transform: isHovering
-                  ? `translateZ(50px) rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`
-                  : 'translateZ(0) rotateX(0deg) rotateY(0deg)',
-                transformStyle: 'preserve-3d'
-              }}
-            >
-              {/* 头像正面 */}
-              <div className="relative">
-                <LazyImage
-                  src={siteInfo?.icon}
-                  className='rounded-2xl w-[120px] h-[120px] object-cover transition-all duration-500 group-hover/avatar:shadow-2xl'
-                  width={120}
-                  height={120}
-                  alt={siteConfig('AUTHOR')}
-                />
-
-                {/* 头像边框发光效果 */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-yellow-500 dark:to-orange-500 rounded-2xl opacity-0 group-hover/avatar:opacity-70 blur transition-all duration-500 -z-10"></div>
-              </div>
-
-              {/* 头像悬浮信息 - 前面板 */}
+              {/* 头像容器 */}
               <div
-                className='absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300'
-                style={{ transform: 'translateZ(60px)' }}
-              >
-                <div className='text-center text-white px-2'>
-                  <div className='text-sm font-medium mb-1'>测试开发工程师</div>
-                  <div className='text-xs opacity-80'>热爱生活，热爱编程</div>
-                </div>
-              </div>
-
-              {/* 装饰边框 - 后面板 */}
-              <div
-                className='absolute inset-2 border-2 border-white/20 rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300'
-                style={{ transform: 'translateZ(-30px)' }}
-              ></div>
-
-              {/* 3D 效果阴影 */}
-              <div
-                className='absolute inset-0 rounded-2xl bg-black/20 blur-xl transition-all duration-300'
+                ref={avatarRef}
+                className='relative transform-gpu transition-all duration-300 ease-out hover:scale-110'
                 style={{
                   transform: isHovering
-                    ? 'translateZ(-50px)'
-                    : 'translateZ(-20px)',
-                  opacity: isHovering ? 0.5 : 0.2
+                    ? `translateZ(50px) rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`
+                    : 'translateZ(0) rotateX(0deg) rotateY(0deg)',
+                  transformStyle: 'preserve-3d'
                 }}
-              />
+              >
+                {/* 头像正面 */}
+                <div className="relative">
+                  <LazyImage
+                    src={siteInfo?.icon}
+                    className='rounded-2xl w-[120px] h-[120px] object-cover transition-all duration-500 group-hover/avatar:shadow-2xl'
+                    width={120}
+                    height={120}
+                    alt={siteConfig('AUTHOR')}
+                  />
+
+                  {/* 头像边框发光效果 */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 dark:from-yellow-500 dark:to-orange-500 rounded-2xl opacity-0 group-hover/avatar:opacity-70 blur transition-all duration-500 -z-10"></div>
+                </div>
+
+                {/* 头像悬浮信息 - 前面板 */}
+                <div
+                  className='absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300'
+                  style={{ transform: 'translateZ(60px)' }}
+                >
+                  <div className='text-center text-white px-2'>
+                    <div className='text-sm font-medium mb-1'>测试开发工程师</div>
+                    <div className='text-xs opacity-80'>热爱生活，热爱编程</div>
+                  </div>
+                </div>
+
+                {/* 装饰边框 - 后面板 */}
+                <div
+                  className='absolute inset-2 border-2 border-white/20 rounded-2xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300'
+                  style={{ transform: 'translateZ(-30px)' }}
+                ></div>
+
+                {/* 3D 效果阴影 */}
+                <div
+                  className='absolute inset-0 rounded-2xl bg-black/20 blur-xl transition-all duration-300'
+                  style={{
+                    transform: isHovering
+                      ? 'translateZ(-50px)'
+                      : 'translateZ(-20px)',
+                    opacity: isHovering ? 0.5 : 0.2
+                  }}
+                />
+              </div>
             </div>
           </div>
 
           {/* 底部信息组 */}
-          <div className='flex justify-between items-center w-full'>
+          <div className='flex justify-between items-end w-full gap-4'>
             {/* 左侧名称和描述 */}
-            <Link href='/about' className='group/link flex flex-col hover:scale-105 transition-all duration-200'>
+            <Link href='/about' className='group/link flex flex-col flex-1 hover:scale-105 transition-all duration-200'>
               <h2 className='text-xl font-bold text-white group-hover/link:text-white/90'>{siteConfig('AUTHOR')}</h2>
               <div className='text-sm text-white/80 group-hover/link:text-white/70'>无限进步</div>
             </Link>
 
             {/* 右侧社交图标 */}
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 shrink-0'>
               {url1 && (
                 <Link href={url1} className='transform hover:scale-110 transition-all duration-200'>
                   <div className='w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center backdrop-blur-sm transition-all duration-200 hover:rotate-12'>
