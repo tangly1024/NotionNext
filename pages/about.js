@@ -40,6 +40,7 @@ const CareerTimeline = dynamic(() => import('@/components/CareerTimeline'), {
  * 关于页面
  */
 const About = props => {
+  console.log('About page props:', props)
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const [visitStats, setVisitStats] = useState({
@@ -528,7 +529,7 @@ const About = props => {
           </div>
 
           {/* 使用新的 GitHubContributionCard 组件 */}
-          <GitHubContributionCard posts={props.allPosts} />
+          <GitHubContributionCard posts={props.allPosts || []} />
 
           {/* 个人介绍卡片区域 - 两列布局 */}
           <div className="grid grid-cols-2 gap-6 mb-8 w-full">
@@ -1144,9 +1145,13 @@ const About = props => {
 }
 
 export async function getStaticProps() {
-  const props = await getGlobalData({ from: 'about-page' })
+  const globalData = await getGlobalData({ from: 'about-page' })
+
   return {
-    props,
+    props: {
+      ...globalData,
+      allPosts: globalData.allPages?.filter(page => page.type === 'Post' && page.status === 'Published') || []
+    },
     revalidate: parseInt(siteConfig('NEXT_REVALIDATE_SECOND'))
   }
 }

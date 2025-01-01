@@ -3,28 +3,40 @@ import { useMemo, useState } from 'react'
 const GitHubContributionCard = ({ posts }) => {
   // 获取可用的年份列表
   const availableYears = useMemo(() => {
-    if (!posts || posts.length === 0) return [new Date().getFullYear()]
+    if (!posts || posts.length === 0) {
+      return [new Date().getFullYear()]
+    }
+
+    // 收集所有文章的年份
     const years = new Set()
+    // 添加当前年份
+    years.add(new Date().getFullYear())
+
     posts.forEach(post => {
-      const date = new Date(post.updateDate || post.date)
-      years.add(date.getFullYear())
+      // 使用 date.start_date 作为文章日期
+      if (post.date && post.date.start_date) {
+        const date = new Date(post.date.start_date)
+        const year = date.getFullYear()
+        if (!isNaN(year)) {
+          years.add(year)
+        }
+      }
     })
-    return Array.from(years).sort((a, b) => b - a) // 降序排列
+
+    // 转换为数组并降序排列
+    return Array.from(years).sort((a, b) => b - a)
   }, [posts])
 
   // 当前选中的年份
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
-
-  // 日期格式化函数
-  const formatDate = (date) => {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate())
-  }
+  const [selectedYear, setSelectedYear] = useState(() => {
+    return new Date().getFullYear()
+  })
 
   // 生成基于文章更新的贡献数据
   const generateContributionData = (year) => {
     const data = []
-    const startDate = new Date(year, 0, 1) // 该年1月1日
-    const endDate = new Date(year, 11, 31, 23, 59, 59) // 该年12月31日
+    const startDate = new Date(Date.UTC(year, 0, 1)) // 使用 UTC 时间
+    const endDate = new Date(Date.UTC(year, 11, 31))
     const now = new Date()
 
     // 如果是当前年份，使用当前日期作为结束日期
@@ -35,24 +47,56 @@ const GitHubContributionCard = ({ posts }) => {
       data.push({
         date: new Date(d),
         count: 0,
-        posts: [] // 存储当天的文章列表
+        posts: []
       })
     }
 
     // 统计文章更新的贡献
     if (posts && posts.length > 0) {
       posts.forEach(post => {
-        // 使用 updateDate 或 date，并格式化为当地时间的日期（不含时间）
-        const updateDate = formatDate(new Date(post.updateDate || post.date))
-        const formattedStartDate = formatDate(startDate)
-        const formattedEndDate = formatDate(actualEndDate)
+        // 处理创建时间
+        if (post.date && post.date.start_date) {
+          const createDate = new Date(Date.UTC(
+            new Date(post.date.start_date).getUTCFullYear(),
+            new Date(post.date.start_date).getUTCMonth(),
+            new Date(post.date.start_date).getUTCDate()
+          ))
 
-        // 只统计选中年份的更新
-        if (updateDate >= formattedStartDate && updateDate <= formattedEndDate) {
-          const daysDiff = Math.floor((updateDate - formattedStartDate) / (24 * 60 * 60 * 1000))
-          if (daysDiff >= 0 && daysDiff < data.length) {
-            data[daysDiff].count += 1
-            data[daysDiff].posts.push(post) // 记录文章信息
+          if (!isNaN(createDate.getTime()) && createDate.getUTCFullYear() === year) {
+            const createDayOfYear = Math.floor((createDate - startDate) / (24 * 60 * 60 * 1000))
+
+            if (createDayOfYear >= 0 && createDayOfYear < data.length) {
+              data[createDayOfYear].count += 1
+              data[createDayOfYear].posts.push({
+                title: post.title,
+                slug: post.slug,
+                date: createDate,
+                type: '创建'
+              })
+            }
+          }
+        }
+
+        // 处理更新时间
+        if (post.date && post.date.last_edited_time) {
+          const updateDate = new Date(Date.UTC(
+            new Date(post.date.last_edited_time).getUTCFullYear(),
+            new Date(post.date.last_edited_time).getUTCMonth(),
+            new Date(post.date.last_edited_time).getUTCDate()
+          ))
+
+          if (!isNaN(updateDate.getTime()) && updateDate.getUTCFullYear() === year) {
+            const updateDayOfYear = Math.floor((updateDate - startDate) / (24 * 60 * 60 * 1000))
+
+            if (updateDayOfYear >= 0 && updateDayOfYear < data.length) {
+              data[updateDayOfYear].count += 1
+              data[updateDayOfYear].posts.push({
+                title: post.title,
+                slug: post.slug,
+                date: updateDate,
+                type: '更新'
+              })
+            }
           }
         }
       })
@@ -62,7 +106,9 @@ const GitHubContributionCard = ({ posts }) => {
   }
 
   // 使用 useMemo 缓存贡献数据
-  const contributionData = useMemo(() => generateContributionData(selectedYear), [posts, selectedYear])
+  const contributionData = useMemo(() => {
+    return generateContributionData(selectedYear)
+  }, [posts, selectedYear])
 
   // 获取总贡献数
   const totalContributions = useMemo(() => {
@@ -102,11 +148,25 @@ const GitHubContributionCard = ({ posts }) => {
 
   // 格式化提示文本
   const formatTooltip = (contribution) => {
-    if (!contribution) return '没有更新'
-    const date = contribution.date.toLocaleDateString('zh-CN')
+    if (!contribution) return 'No contributions'
+
+    // 统一日期格式化函数
+    const formatLocalDate = (date) => {
+      const d = new Date(date)
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      const month = months[d.getMonth()]
+      const day = d.getDate()
+      const ordinal = (n) => {
+        const s = ['th', 'st', 'nd', 'rd']
+        const v = n % 100
+        return n + (s[(v - 20) % 10] || s[v] || s[0])
+      }
+      return `${month} ${ordinal(day)}`
+    }
+
+    const date = formatLocalDate(contribution.date)
     const count = contribution.count
-    const postTitles = contribution.posts.map(post => post.title).join('、')
-    return `${date} 更新了 ${count} 篇文章${count > 0 ? `：${postTitles}` : ''}`
+    return `${count} contributions on ${date}.`
   }
 
   return (
@@ -189,13 +249,13 @@ const GitHubContributionCard = ({ posts }) => {
         </div>
 
         {/* 图例 */}
-        <div className="flex items-center justify-end gap-2 mt-4 text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center justify-end gap-2 mt-4 text-xs text-gray-600 dark:text-gray-400">
           <span>较少</span>
           <div className="flex gap-1">
             {[0, 1, 2, 3, 4].map((level) => (
               <div
                 key={level}
-                className={`w-3 h-3 rounded-sm ${getContributionClass(level)} transition-transform hover:scale-110`}
+                className={`w-3 h-3 rounded-sm ${getContributionClass(level)} border border-gray-300/10 dark:border-gray-700/30 transition-transform hover:scale-110`}
               />
             ))}
           </div>
