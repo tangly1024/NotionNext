@@ -35,7 +35,6 @@ import LatestPostsGroup from './components/LatestPostsGroup'
 import { NoticeBar } from './components/NoticeBar'
 import PostAdjacent from './components/PostAdjacent'
 import PostCopyright from './components/PostCopyright'
-import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
 import PostRecommend from './components/PostRecommend'
 import SearchNav from './components/SearchNav'
@@ -59,7 +58,7 @@ const LayoutBase = props => {
   const isAboutPage = router.pathname === '/about'
 
   const headerSlot = (
-    <header>
+    <header className='sticky top-0 z-50 bg-white/60 dark:bg-[#18171d]/80 backdrop-blur-lg border-b dark:border-gray-800 mb-4'>
       {/* 顶部导航 */}
       <Header {...props} />
 
@@ -70,7 +69,6 @@ const LayoutBase = props => {
           <Hero {...props} />
         </>
       ) : null}
-      {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
     </header>
   )
 
@@ -86,7 +84,7 @@ const LayoutBase = props => {
       {/* 主区块 */}
       <main
         id='wrapper-outer'
-        className={`flex-grow w-full ${fullWidth ? '' : 'max-w-[86rem]'} mx-auto relative md:px-5`}>
+        className={`flex-grow w-full ${fullWidth ? '' : 'max-w-[86rem]'} mx-auto relative md:px-5 pt-4`}>
         <div
           id='container-inner'
           className={`w-full mx-auto lg:flex justify-center relative z-10`}>
@@ -292,7 +290,7 @@ const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
-                <AISummary aiSummary={post.aiSummary}/>
+                <AISummary aiSummary={post.aiSummary} />
                 <WWAds orientation='horizontal' className='w-full' />
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />
