@@ -55,7 +55,7 @@ const noAuthMiddleware = async (req: NextRequest, ev: any) => {
       console.log(
         `redirect from ${req.nextUrl.pathname} to ${redirectToUrl.pathname}`
       )
-      return NextResponse.redirect(redirectToUrl)
+      return NextResponse.redirect(redirectToUrl, 308)
     }
   }
   return NextResponse.next()
