@@ -271,15 +271,10 @@ const BLOG = {
   STARRY_SKY: process.env.NEXT_PUBLIC_STARRY_SKY || false, // 开关
 
   // AI 文章摘要生成
-  AI_SUMMARY_API:
-      process.env.AI_SUMMARY_API||
-      '',
-  AI_SUMMARY_KEY:
-      process.env.AI_SUMMARY_KEY ||
-      '',
+  AI_SUMMARY_API: process.env.AI_SUMMARY_API || '',
+  AI_SUMMARY_KEY: process.env.AI_SUMMARY_KEY || '',
   AI_SUMMARY_CACHE_TIME: process.env.AI_SUMMARY_CACHE_TIME || 1800, // 缓存时间，单位秒
   AI_SUMMARY_WORD_LIMIT: process.env.AI_SUMMARY_WORD_LIMIT || 1000,
-
 
   //   ********挂件组件相关********
   // AI 文章摘要生成 @see https://docs_s.tianli0.top/
@@ -531,6 +526,9 @@ const BLOG = {
   ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
   MAILCHIMP_LIST_ID: process.env.MAILCHIMP_LIST_ID || null, // 开启mailichimp邮件订阅 客户列表ID ，具体使用方法参阅文档
   MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY || null, // 开启mailichimp邮件订阅 APIkey
+
+  // uuid重定向至 slug
+  UUID_REDIRECT: process.env.UUID_REDIRECT || false,
 
   // ANIMATE.css 动画
   ANIMATE_CSS_URL:
