@@ -1,0 +1,23 @@
+/* Spoiler text styles */
+.spoiler-text {
+    color: transparent;  /* 文字透明 */
+    background-color: #808080; /* 背景为黑色 */
+    border-color: #808080;
+    text-decoration-color: #808080;
+    text-emphasis-color: #808080;
+    border-radius: 8px;
+    filter: blur(1px);  /* 初始模糊 */
+    --hide-transition: 0.3s ease-out;
+    transition: opacity var(--hide-transition),
+    filter var(--hide-transition);
+}
+
+.spoiler-text:hover {
+    color: inherit; /* 鼠标悬停时恢复文字颜色 */
+    background-color: inherit; /* 鼠标悬停时恢复背景颜色 */
+    border-color: inherit;
+    text-decoration-color: inherit;
+    text-emphasis-color: inherit;
+    opacity: 1;  /* 鼠标悬停时恢复不透明度 */
+    filter: blur(0);  /* 鼠标悬停时解除模糊 */
+}
