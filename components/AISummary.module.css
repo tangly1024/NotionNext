@@ -1,0 +1,53 @@
+.post-ai {
+    font-family: 'Noto Sans SC', sans-serif;
+    margin-bottom: 20px;
+}
+.ai-container {
+    background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+.ai-header {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+}
+.ai-icon {
+    margin-right: 10px;
+}
+.ai-title {
+    font-size: 18px;
+    font-weight: bold;
+    flex-grow: 1;
+}
+.ai-tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+.ai-content {
+    padding: 20px;
+}
+.ai-explanation {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+.blinking-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 20px;
+    background-color: #333;
+    animation: blink 0.7s infinite;
+    margin-left: 5px;
+}
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
