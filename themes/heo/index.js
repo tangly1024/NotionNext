@@ -58,18 +58,20 @@ const LayoutBase = props => {
   const isAboutPage = router.pathname === '/about'
 
   const headerSlot = (
-    <header className='sticky top-0 z-50 bg-white/60 dark:bg-[#18171d]/80 backdrop-blur-lg border-b dark:border-gray-800 mb-4'>
-      {/* 顶部导航 */}
-      <Header {...props} />
+    <>
+      {/* 顶部导航 - 固定位置 */}
+      <div className='sticky top-0 z-50 bg-white/60 dark:bg-[#18171d]/80 backdrop-blur-lg border-b dark:border-gray-800'>
+        <Header {...props} />
+      </div>
 
-      {/* 通知横幅 */}
-      {router.route === '/' ? (
-        <>
+      {/* 通知横幅和Hero - 不固定位置 */}
+      {router.route === '/' && (
+        <div className='bg-white/60 dark:bg-[#18171d]/80 backdrop-blur-lg mb-4'>
           <NoticeBar />
           <Hero {...props} />
-        </>
-      ) : null}
-    </header>
+        </div>
+      )}
+    </>
   )
 
   return (
