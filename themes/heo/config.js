@@ -48,7 +48,7 @@ const CONFIG = {
 
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: 'https://www.thebxcshey.top/rss/feed.xml',
-  HEO_INFO_CARD_ICON1: 'fas fa-user',
+  HEO_INFO_CARD_ICON1: 'fa-solid fa-rss',
   HEO_INFO_CARD_URL2: 'https://github.com/XCShey',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
   HEO_INFO_CARD_URL3: '/about',
