@@ -238,48 +238,65 @@ const GitHubContributionCard = ({ posts }) => {
 
       {/* 贡献图表 */}
       <div className="relative z-10">
-        {/* 月份标签 */}
-        <div className="flex justify-between mb-2 text-xs text-gray-500 dark:text-gray-400">
-          {getMonthLabels().map((month, index) => (
-            <span key={index} className="font-medium">{month}</span>
-          ))}
-        </div>
-
         {/* 星期标签和贡献格子 */}
         <div className="flex gap-2">
-          {/* 星期标签 */}
-          <div className="flex flex-col justify-between text-xs text-gray-500 dark:text-gray-400 py-1">
-            <span>Sun</span>
-            <span>Mon</span>
-            <span>Tue</span>
-            <span>Wed</span>
-            <span>Thu</span>
-            <span>Fri</span>
-            <span>Sat</span>
-          </div>
+          <div className="flex-grow pl-10">
+            {/* 月份标签 */}
+            <div className="relative h-6 mb-2">
+              {Array.from({ length: 12 }).map((_, monthIndex) => {
+                const firstDayOfMonth = new Date(Date.UTC(selectedYear, monthIndex, 1))
+                const daysSinceYearStart = Math.floor((firstDayOfMonth - new Date(Date.UTC(selectedYear, 0, 1))) / (24 * 60 * 60 * 1000))
+                const weekIndex = Math.floor((daysSinceYearStart + yearInfo.firstDayOfWeek) / 7)
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-          {/* 贡献格子 */}
-          <div className="grid gap-1 flex-grow" style={{ gridTemplateColumns: `repeat(${yearInfo.totalWeeks}, minmax(0, 1fr))` }}>
-            {Array.from({ length: yearInfo.totalWeeks }).map((_, weekIndex) => (
-              <div key={weekIndex} className="grid grid-rows-7 gap-1">
-                {Array.from({ length: 7 }).map((_, dayIndex) => {
-                  // 计算实际的数据索引
-                  let dataIndex = weekIndex * 7 + dayIndex - yearInfo.firstDayOfWeek
-
-                  // 检查是否是有效的日期
-                  const isValidDate = dataIndex >= 0 && dataIndex < contributionData.length
-                  const contribution = isValidDate ? contributionData[dataIndex] : null
-
+                // 确保月份在当前年份内
+                if (firstDayOfMonth.getUTCFullYear() === selectedYear) {
                   return (
-                    <div
-                      key={dayIndex}
-                      className={`w-3 h-3 rounded-sm ${isValidDate ? (contribution ? getContributionClass(contribution.count) : 'bg-gray-200 dark:bg-gray-700') : 'bg-transparent'} transition-all duration-200 hover:scale-110 hover:ring-2 hover:ring-emerald-300 dark:hover:ring-emerald-600 cursor-pointer group`}
-                      title={isValidDate ? formatTooltip(contribution) : ''}
-                    />
+                    <span
+                      key={monthIndex}
+                      className="absolute text-xs font-medium text-gray-500 dark:text-gray-400"
+                      style={{ left: `${(weekIndex / yearInfo.totalWeeks) * 100}%` }}
+                    >
+                      {months[monthIndex]}
+                    </span>
                   )
-                })}
-              </div>
-            ))}
+                }
+                return null
+              })}
+            </div>
+
+            {/* 贡献格子 */}
+            <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${yearInfo.totalWeeks}, minmax(0, 1fr))` }}>
+              {Array.from({ length: yearInfo.totalWeeks }).map((_, weekIndex) => (
+                <div key={weekIndex} className="grid grid-rows-7 gap-1">
+                  {Array.from({ length: 7 }).map((_, dayIndex) => {
+                    // 计算实际的数据索引
+                    let dataIndex = weekIndex * 7 + dayIndex - yearInfo.firstDayOfWeek
+
+                    // 检查是否是有效的日期
+                    const isValidDate = dataIndex >= 0 && dataIndex < contributionData.length
+                    const contribution = isValidDate ? contributionData[dataIndex] : null
+
+                    const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+                    const isFirstColumn = weekIndex === 0
+
+                    return (
+                      <div key={dayIndex} className="relative">
+                        {isFirstColumn && [1, 3, 5].includes(dayIndex) && (
+                          <span className="absolute right-full mr-2 text-xs font-medium text-gray-500 dark:text-gray-400 w-10 whitespace-nowrap text-left" style={{ top: '0', transform: 'translateY(0)' }}>
+                            {weekDays[dayIndex]}
+                          </span>
+                        )}
+                        <div
+                          className={`w-3 h-3 rounded-sm ${isValidDate ? (contribution ? getContributionClass(contribution.count) : 'bg-gray-200 dark:bg-gray-700') : 'bg-transparent'} transition-all duration-200 hover:scale-110 hover:ring-2 hover:ring-emerald-300 dark:hover:ring-emerald-600 cursor-pointer group`}
+                          title={isValidDate ? formatTooltip(contribution) : ''}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
