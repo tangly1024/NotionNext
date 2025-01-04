@@ -386,90 +386,90 @@ const Snake = ({
       @keyframes rageSnakeHead {
         0% { 
           transform: scale(1.4) rotate(-12deg) translateY(0) translateZ(5px);
-          filter: brightness(1.8) contrast(1.5) saturate(2.2);
+          filter: brightness(1.6) contrast(1.4) saturate(2);
           box-shadow: 
-            0 0 35px rgba(220, 38, 38, 1),
-            0 0 70px rgba(239, 68, 68, 0.9),
-            0 0 100px rgba(248, 113, 113, 0.8),
-            inset 0 0 40px rgba(254, 202, 202, 0.8);
+            0 0 25px rgba(220, 38, 38, 0.8),
+            0 0 50px rgba(239, 68, 68, 0.6),
+            0 0 75px rgba(248, 113, 113, 0.4),
+            inset 0 0 30px rgba(254, 202, 202, 0.5);
         }
         50% { 
           transform: scale(1.5) rotate(12deg) translateY(0) translateZ(8px);
-          filter: brightness(2) contrast(1.6) saturate(2.5);
+          filter: brightness(1.8) contrast(1.5) saturate(2.2);
           box-shadow: 
-            0 0 50px rgba(220, 38, 38, 1),
-            0 0 100px rgba(239, 68, 68, 0.95),
-            0 0 150px rgba(248, 113, 113, 0.9),
-            inset 0 0 50px rgba(254, 202, 202, 0.9);
+            0 0 35px rgba(220, 38, 38, 0.9),
+            0 0 70px rgba(239, 68, 68, 0.7),
+            0 0 105px rgba(248, 113, 113, 0.5),
+            inset 0 0 40px rgba(254, 202, 202, 0.6);
         }
         100% { 
           transform: scale(1.4) rotate(-12deg) translateY(0) translateZ(5px);
-          filter: brightness(1.8) contrast(1.5) saturate(2.2);
+          filter: brightness(1.6) contrast(1.4) saturate(2);
           box-shadow: 
-            0 0 35px rgba(220, 38, 38, 1),
-            0 0 70px rgba(239, 68, 68, 0.9),
-            0 0 100px rgba(248, 113, 113, 0.8),
-            inset 0 0 40px rgba(254, 202, 202, 0.8);
+            0 0 25px rgba(220, 38, 38, 0.8),
+            0 0 50px rgba(239, 68, 68, 0.6),
+            0 0 75px rgba(248, 113, 113, 0.4),
+            inset 0 0 30px rgba(254, 202, 202, 0.5);
         }
       }
       @keyframes rageSnakeBody {
         0% { 
           transform: scale(1.2) rotate(var(--rotate-deg, 0deg)) translateZ(calc(var(--index) * -1px));
-          filter: brightness(1.6) contrast(1.4) saturate(2);
+          filter: brightness(1.4) contrast(1.3) saturate(1.8);
           box-shadow: 
-            0 0 35px rgba(220, 38, 38, 0.95),
-            0 0 70px rgba(239, 68, 68, 0.9),
-            0 0 100px rgba(248, 113, 113, 0.8),
-            inset 0 0 30px rgba(254, 202, 202, 0.7);
+            0 0 25px rgba(220, 38, 38, 0.8),
+            0 0 50px rgba(239, 68, 68, 0.6),
+            0 0 75px rgba(248, 113, 113, 0.4),
+            inset 0 0 20px rgba(254, 202, 202, 0.5);
         }
         50% { 
           transform: scale(1.3) rotate(calc(var(--rotate-deg, 0deg) + 12deg)) translateZ(calc(var(--index) * -1px + 5px));
-          filter: brightness(1.8) contrast(1.5) saturate(2.2);
+          filter: brightness(1.6) contrast(1.4) saturate(2);
           box-shadow: 
-            0 0 50px rgba(220, 38, 38, 1),
-            0 0 100px rgba(239, 68, 68, 0.95),
-            0 0 150px rgba(248, 113, 113, 0.9),
-            inset 0 0 40px rgba(254, 202, 202, 0.8);
+            0 0 35px rgba(220, 38, 38, 0.9),
+            0 0 70px rgba(239, 68, 68, 0.7),
+            0 0 105px rgba(248, 113, 113, 0.5),
+            inset 0 0 30px rgba(254, 202, 202, 0.6);
         }
         100% { 
           transform: scale(1.2) rotate(var(--rotate-deg, 0deg)) translateZ(calc(var(--index) * -1px));
-          filter: brightness(1.6) contrast(1.4) saturate(2);
+          filter: brightness(1.4) contrast(1.3) saturate(1.8);
           box-shadow: 
-            0 0 35px rgba(220, 38, 38, 0.95),
-            0 0 70px rgba(239, 68, 68, 0.9),
-            0 0 100px rgba(248, 113, 113, 0.8),
-            inset 0 0 30px rgba(254, 202, 202, 0.7);
+            0 0 25px rgba(220, 38, 38, 0.8),
+            0 0 50px rgba(239, 68, 68, 0.6),
+            0 0 75px rgba(248, 113, 113, 0.4),
+            inset 0 0 20px rgba(254, 202, 202, 0.5);
         }
       }
       @keyframes glowPulse {
         0%, 100% { 
-          opacity: 0.95; 
-          transform: scale(1.4); 
-          filter: blur(4px); 
-          background: radial-gradient(circle at center, rgba(239, 68, 68, 0.95), transparent 80%);
+          opacity: 0.7; 
+          transform: scale(1.3); 
+          filter: blur(3px); 
+          background: radial-gradient(circle at center, rgba(239, 68, 68, 0.7), transparent 75%);
         }
         50% { 
-          opacity: 1; 
-          transform: scale(1.8); 
-          filter: blur(5px);
-          background: radial-gradient(circle at center, rgba(220, 38, 38, 1), transparent 85%);
+          opacity: 0.8; 
+          transform: scale(1.6); 
+          filter: blur(4px);
+          background: radial-gradient(circle at center, rgba(220, 38, 38, 0.8), transparent 80%);
         }
       }
       @keyframes rageEyeGlow {
         0%, 100% {
           box-shadow: 
-            0 0 10px #ff0000,
-            0 0 20px #ff0000,
+            0 0 15px #ff0000,
             0 0 30px #ff0000,
-            inset 0 0 8px #ffffff;
+            0 0 45px #ff0000,
+            inset 0 0 12px #ffffff;
           background: #ff0000;
         }
         50% {
           box-shadow: 
-            0 0 15px #ff3333,
-            0 0 30px #ff3333,
-            0 0 45px #ff3333,
-            inset 0 0 12px #ffffff;
+            0 0 20px #ff3333,
+            0 0 40px #ff3333,
+            0 0 60px #ff3333,
+            inset 0 0 15px #ffffff;
           background: #ff3333;
         }
       }
@@ -505,19 +505,19 @@ const Snake = ({
         background: linear-gradient(135deg, #ef4444, #991b1b);
         position: relative;
         box-shadow: 
-          0 0 35px rgba(220, 38, 38, 1),
-          0 0 70px rgba(239, 68, 68, 0.9),
-          0 0 100px rgba(248, 113, 113, 0.8),
-          inset 0 0 40px rgba(254, 202, 202, 0.8);
+          0 0 25px rgba(220, 38, 38, 0.8),
+          0 0 50px rgba(239, 68, 68, 0.6),
+          0 0 75px rgba(248, 113, 113, 0.4),
+          inset 0 0 30px rgba(254, 202, 202, 0.5);
       }
       .snake-head.rage::before {
         content: '';
         position: absolute;
         inset: -8px;
-        background: radial-gradient(circle at center, rgba(239, 68, 68, 0.95), transparent 80%);
+        background: radial-gradient(circle at center, rgba(239, 68, 68, 0.7), transparent 75%);
         border-radius: inherit;
         animation: glowPulse 0.8s ease-in-out infinite;
-        filter: blur(4px);
+        filter: blur(3px);
       }
       .snake-body.rage {
         animation: rageSnakeBody var(--pulse-speed) ease-in-out infinite;
@@ -525,10 +525,10 @@ const Snake = ({
         background: linear-gradient(135deg, #ef4444, #991b1b) !important;
         position: relative;
         box-shadow: 
-          0 0 35px rgba(220, 38, 38, 0.95),
-          0 0 70px rgba(239, 68, 68, 0.9),
-          0 0 100px rgba(248, 113, 113, 0.8),
-          inset 0 0 30px rgba(254, 202, 202, 0.7);
+          0 0 25px rgba(220, 38, 38, 0.8),
+          0 0 50px rgba(239, 68, 68, 0.6),
+          0 0 75px rgba(248, 113, 113, 0.4),
+          inset 0 0 20px rgba(254, 202, 202, 0.5);
         transform-style: preserve-3d;
         z-index: 10;
       }
@@ -536,11 +536,11 @@ const Snake = ({
         content: '';
         position: absolute;
         inset: -8px;
-        background: radial-gradient(circle at center, rgba(239, 68, 68, 0.95), transparent 80%);
+        background: radial-gradient(circle at center, rgba(239, 68, 68, 0.7), transparent 75%);
         border-radius: inherit;
         animation: glowPulse 0.8s ease-in-out infinite;
         animation-delay: calc(var(--index, 0) * -0.08s);
-        filter: blur(4px);
+        filter: blur(3px);
         z-index: -1;
       }
       .snake-body.rage::after {
@@ -559,10 +559,10 @@ const Snake = ({
         animation: rageEyeGlow 0.8s ease-in-out infinite;
         background: #ff0000;
         box-shadow: 
-          0 0 10px #ff0000,
-          0 0 20px #ff0000,
+          0 0 15px #ff0000,
           0 0 30px #ff0000,
-          inset 0 0 8px #ffffff;
+          0 0 45px #ff0000,
+          inset 0 0 12px #ffffff;
       }
     `
   }

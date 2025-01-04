@@ -462,9 +462,10 @@ const GitHubContributionCard = ({ posts }) => {
                           })()}
                           {isEaten && contribution && contribution.count > 0 && !snake.getSnakeBodyStyle(weekIndex, dayIndex) && (
                             <>
-                              <div className={`absolute inset-0 rounded-sm ring-2 ${getBorderGlowClass(contribution.count)} animate-[borderPulse_2s_ease-in-out_infinite]`}></div>
-                              <div className="absolute inset-0 bg-gradient-to-br from-gray-100/90 to-gray-200/90 dark:from-gray-700/90 dark:to-gray-800/90"></div>
-                              <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/10 dark:from-white/0 dark:to-white/5"></div>
+                              <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 transition-all duration-300"></div>
+                              <div className={`absolute inset-0 border-2 border-emerald-400/50 dark:border-emerald-500/50 rounded-sm animate-[borderGlow_2s_ease-in-out_infinite]`}></div>
+                              <div className={`absolute inset-0 ${getGlowColor(contribution.count)} animate-[breathe_2s_ease-in-out_infinite]`}></div>
+                              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/20 dark:from-white/0 dark:to-white/10"></div>
                             </>
                           )}
                           {!snake.isSnakeHead(weekIndex, dayIndex) && !snake.getSnakeBodyStyle(weekIndex, dayIndex) && !isEaten && (
@@ -521,6 +522,26 @@ const GitHubContributionCard = ({ posts }) => {
         @keyframes borderPulse {
           0%, 100% { opacity: 0.5; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.05); }
+        }
+        @keyframes breathe {
+          0%, 100% { 
+            box-shadow: 0 0 15px rgba(16,185,129,0.4);
+            transform: scale(1);
+          }
+          50% { 
+            box-shadow: 0 0 25px rgba(16,185,129,0.6);
+            transform: scale(1.05);
+          }
+        }
+        @keyframes borderGlow {
+          0%, 100% { 
+            border-color: rgba(16,185,129,0.4);
+            box-shadow: 0 0 10px rgba(16,185,129,0.3);
+          }
+          50% { 
+            border-color: rgba(16,185,129,0.8);
+            box-shadow: 0 0 20px rgba(16,185,129,0.6);
+          }
         }
       `}</style>
       <style jsx global>{`
