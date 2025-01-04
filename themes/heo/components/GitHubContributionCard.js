@@ -1,4 +1,26 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect, useCallback } from 'react'
+import Snake from './Snake'
+
+// 计算年份的周数和起始日信息
+const getYearWeeksInfo = (year) => {
+  const firstDay = new Date(Date.UTC(year, 0, 1))
+  const lastDay = new Date(Date.UTC(year, 11, 31))
+
+  // 获取第一天是星期几（0-6，0代表星期日）
+  const firstDayOfWeek = firstDay.getUTCDay()
+
+  // 计算总天数
+  const totalDays = Math.floor((lastDay - firstDay) / (24 * 60 * 60 * 1000)) + 1
+
+  // 计算需要的总周数（包括可能不完整的第一周和最后一周）
+  const totalWeeks = Math.ceil((totalDays + firstDayOfWeek) / 7)
+
+  return {
+    totalWeeks,
+    firstDayOfWeek,
+    totalDays
+  }
+}
 
 const GitHubContributionCard = ({ posts }) => {
   // 获取可用的年份列表
@@ -105,10 +127,24 @@ const GitHubContributionCard = ({ posts }) => {
     return data
   }
 
+  // 使用 useMemo 缓存年份信息
+  const yearInfo = useMemo(() => {
+    return getYearWeeksInfo(selectedYear)
+  }, [selectedYear])
+
   // 使用 useMemo 缓存贡献数据
   const contributionData = useMemo(() => {
     return generateContributionData(selectedYear)
-  }, [posts, selectedYear])
+  }, [selectedYear])
+
+  // 获取某个位置的贡献值
+  const getContributionValue = useCallback((weekIndex, dayIndex) => {
+    const dataIndex = weekIndex * 7 + dayIndex - yearInfo.firstDayOfWeek
+    if (dataIndex >= 0 && dataIndex < contributionData.length) {
+      return contributionData[dataIndex]?.count || 0
+    }
+    return -1
+  }, [contributionData, yearInfo.firstDayOfWeek])
 
   // 获取总贡献数
   const totalContributions = useMemo(() => {
@@ -169,76 +205,134 @@ const GitHubContributionCard = ({ posts }) => {
     return `${date}: ${createCount} new, ${updateCount} updates, ${count} total contributions`
   }
 
-  // 计算年份的周数和起始日信息
-  const getYearWeeksInfo = (year) => {
-    const firstDay = new Date(Date.UTC(year, 0, 1))
-    const lastDay = new Date(Date.UTC(year, 11, 31))
+  // 添加动画状态
+  const [isLoaded, setIsLoaded] = useState(false)
 
-    // 获取第一天是星期几（0-6，0代表星期日）
-    const firstDayOfWeek = firstDay.getUTCDay()
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
 
-    // 计算总天数
-    const totalDays = Math.floor((lastDay - firstDay) / (24 * 60 * 60 * 1000)) + 1
+  // 贪吃蛇状态
+  const [isSnakeActive, setIsSnakeActive] = useState(true)
+  const [eatenCells, setEatenCells] = useState(new Set())
 
-    // 计算需要的总周数（包括可能不完整的第一周和最后一周）
-    const totalWeeks = Math.ceil((totalDays + firstDayOfWeek) / 7)
+  // 重置贪吃蛇
+  const handleSnakeReset = useCallback(() => {
+    setEatenCells(new Set())
+  }, [])
 
-    return {
-      totalWeeks,
-      firstDayOfWeek,
-      totalDays
+  // 处理贪吃蛇吃掉格子
+  const handleEatCell = useCallback((weekIndex, dayIndex) => {
+    if (isSnakeActive) { // 只在激活状态下记录被吃掉的格子
+      setEatenCells(prev => new Set([...prev, `${weekIndex}-${dayIndex}`]))
     }
+  }, [isSnakeActive])
+
+  // 切换贪吃蛇状态
+  const toggleSnake = useCallback(() => {
+    if (isSnakeActive) {
+      // 如果当前是激活状态，先重置再关闭
+      handleSnakeReset()
+      setIsSnakeActive(false)
+    } else {
+      // 如果当前是关闭状态，直接开启
+      setIsSnakeActive(true)
+    }
+  }, [isSnakeActive, handleSnakeReset])
+
+  // 使用 Snake 组件
+  const snake = Snake({
+    isActive: isSnakeActive,
+    yearInfo,
+    getContributionValue,
+    contributionData,
+    onEatCell: handleEatCell,
+    onReset: handleSnakeReset
+  })
+
+  // 获取贡献等级对应的荧光颜色
+  const getGlowColor = (count) => {
+    if (count === 1) return 'shadow-[0_0_10px_rgba(16,185,129,0.5)] dark:shadow-[0_0_10px_rgba(16,185,129,0.3)]'
+    if (count === 2) return 'shadow-[0_0_10px_rgba(16,185,129,0.6)] dark:shadow-[0_0_10px_rgba(16,185,129,0.4)]'
+    if (count === 3) return 'shadow-[0_0_10px_rgba(16,185,129,0.7)] dark:shadow-[0_0_10px_rgba(16,185,129,0.5)]'
+    if (count >= 4) return 'shadow-[0_0_10px_rgba(16,185,129,0.8)] dark:shadow-[0_0_10px_rgba(16,185,129,0.6)]'
+    return ''
   }
 
-  // 使用 useMemo 缓存年份信息
-  const yearInfo = useMemo(() => {
-    return getYearWeeksInfo(selectedYear)
-  }, [selectedYear])
+  // 获取贡献等级对应的边框颜色
+  const getBorderGlowClass = (count) => {
+    if (count === 1) return 'ring-emerald-300 dark:ring-emerald-700'
+    if (count === 2) return 'ring-emerald-400 dark:ring-emerald-600'
+    if (count === 3) return 'ring-emerald-500 dark:ring-emerald-500'
+    if (count >= 4) return 'ring-emerald-600 dark:ring-emerald-400'
+    return 'ring-gray-300 dark:ring-gray-600'
+  }
 
   return (
-    <div className="mb-12 bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden transform hover:scale-[1.01] transition-all duration-200">
-      {/* 背景装饰 */}
+    <div className={`mb-12 bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden transform hover:scale-[1.01] transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      {/* 高级背景装饰 */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-green-50/30 to-teal-50/50 dark:from-emerald-500/10 dark:via-green-500/5 dark:to-teal-500/10 transition-colors duration-300"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.1),rgba(255,255,255,0))]"></div>
 
-      {/* 装饰图案 */}
-      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-emerald-500/20 to-green-500/20 blur-3xl transform rotate-45"></div>
-      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-teal-500/20 to-emerald-500/20 blur-3xl transform -rotate-45"></div>
+      {/* 动态装饰图案 */}
+      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-emerald-500/20 to-green-500/20 blur-3xl transform rotate-45 animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-teal-500/20 to-emerald-500/20 blur-3xl transform -rotate-45 animate-pulse [animation-delay:1s]"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)] pointer-events-none"></div>
 
       {/* 标题区域 */}
-      <div className="relative z-10 flex items-center justify-between mb-8">
+      <div className="relative z-10 flex items-center justify-between mb-8 group">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <i className="fas fa-history text-xl text-emerald-500 dark:text-emerald-400"></i>
-            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">Article Updates</h3>
+          <div className="flex items-center gap-2 relative">
+            <div className="absolute -inset-3 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+            <i className="fas fa-history text-xl text-emerald-500 dark:text-emerald-400 transform transition-all duration-500 hover:rotate-[360deg] relative"></i>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 tracking-wide group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-all duration-300 relative">
+              Article Updates
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-500"></span>
+            </h3>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrevYear}
               disabled={availableYears.indexOf(selectedYear) === availableYears.length - 1}
-              className="p-1 text-gray-500 hover:text-emerald-500 dark:text-gray-400 dark:hover:text-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2 text-gray-500 hover:text-emerald-500 dark:text-gray-400 dark:hover:text-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-110 hover:rotate-12 relative group/btn"
             >
-              <i className="fas fa-chevron-left"></i>
+              <span className="absolute inset-0 bg-emerald-500/10 rounded-full scale-0 group-hover/btn:scale-100 transition-transform duration-300"></span>
+              <i className="fas fa-chevron-left relative z-10"></i>
             </button>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 min-w-[4rem] text-center">
+            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 min-w-[4rem] text-center tracking-wider transition-all duration-300 hover:text-emerald-500 dark:hover:text-emerald-400 relative group/year">
               {selectedYear}
+              <span className="absolute -bottom-1 left-0 w-full h-px bg-emerald-500/50 scale-x-0 group-hover/year:scale-x-100 transition-transform duration-300 origin-left"></span>
             </span>
             <button
               onClick={handleNextYear}
               disabled={availableYears.indexOf(selectedYear) === 0}
-              className="p-1 text-gray-500 hover:text-emerald-500 dark:text-gray-400 dark:hover:text-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2 text-gray-500 hover:text-emerald-500 dark:text-gray-400 dark:hover:text-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-110 hover:-rotate-12 relative group/btn"
             >
-              <i className="fas fa-chevron-right"></i>
+              <span className="absolute inset-0 bg-emerald-500/10 rounded-full scale-0 group-hover/btn:scale-100 transition-transform duration-300"></span>
+              <i className="fas fa-chevron-right relative z-10"></i>
             </button>
           </div>
-          <span className="px-2 py-1 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 rounded-full">
-            {totalContributions} Contributions
-          </span>
+          <div className="relative group/counter">
+            <span className="px-4 py-1.5 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-100/80 dark:bg-emerald-900/30 rounded-full shadow-sm transition-all duration-300 group-hover/counter:shadow-emerald-500/20 group-hover/counter:shadow-lg relative">
+              <span className="relative z-10">{totalContributions} Contributions</span>
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 group-hover/counter:translate-x-full transition-transform duration-1000 ease-in-out"></span>
+            </span>
+          </div>
+          {/* 贪吃蛇开关按钮 */}
+          <button
+            onClick={toggleSnake}
+            className={`p-2 rounded-full transition-all duration-300 ${isSnakeActive
+              ? 'bg-emerald-500 text-white hover:bg-emerald-600'
+              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+              }`}
+          >
+            <i className="fas fa-snake text-lg"></i>
+          </button>
         </div>
       </div>
 
       {/* 贡献图表 */}
       <div className="relative z-10">
-        {/* 星期标签和贡献格子 */}
         <div className="flex gap-2">
           <div className="flex-grow pl-10">
             {/* 月份标签 */}
@@ -249,13 +343,17 @@ const GitHubContributionCard = ({ posts }) => {
                 const weekIndex = Math.floor((daysSinceYearStart + yearInfo.firstDayOfWeek) / 7)
                 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-                // 确保月份在当前年份内
                 if (firstDayOfMonth.getUTCFullYear() === selectedYear) {
                   return (
                     <span
                       key={monthIndex}
-                      className="absolute text-xs font-medium text-gray-500 dark:text-gray-400"
-                      style={{ left: `${(weekIndex / yearInfo.totalWeeks) * 100}%` }}
+                      className="absolute text-xs font-medium text-gray-500/80 dark:text-gray-400/80 tracking-wider hover:text-emerald-500 dark:hover:text-emerald-400 transition-all duration-300 hover:-translate-y-0.5 hover:font-semibold"
+                      style={{
+                        left: `${(weekIndex / yearInfo.totalWeeks) * 100}%`,
+                        transform: `translateX(-50%) translateY(${isLoaded ? '0' : '0.5rem'})`,
+                        opacity: isLoaded ? 1 : 0,
+                        transition: `all 0.5s ease-out ${monthIndex * 0.05}s`
+                      }}
                     >
                       {months[monthIndex]}
                     </span>
@@ -270,27 +368,96 @@ const GitHubContributionCard = ({ posts }) => {
               {Array.from({ length: yearInfo.totalWeeks }).map((_, weekIndex) => (
                 <div key={weekIndex} className="grid grid-rows-7 gap-1">
                   {Array.from({ length: 7 }).map((_, dayIndex) => {
-                    // 计算实际的数据索引
                     let dataIndex = weekIndex * 7 + dayIndex - yearInfo.firstDayOfWeek
-
-                    // 检查是否是有效的日期
                     const isValidDate = dataIndex >= 0 && dataIndex < contributionData.length
                     const contribution = isValidDate ? contributionData[dataIndex] : null
-
                     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
                     const isFirstColumn = weekIndex === 0
+                    const isEaten = eatenCells.has(`${weekIndex}-${dayIndex}`)
 
                     return (
-                      <div key={dayIndex} className="relative">
+                      <div key={dayIndex} className="relative" style={{
+                        opacity: isLoaded ? 1 : 0,
+                        transform: isLoaded ? 'scale(1)' : 'scale(0.8)',
+                        transition: `all 0.5s ease-out ${(weekIndex * 7 + dayIndex) * 0.002}s`
+                      }}>
                         {isFirstColumn && [1, 3, 5].includes(dayIndex) && (
-                          <span className="absolute right-full mr-2 text-xs font-medium text-gray-500 dark:text-gray-400 w-10 whitespace-nowrap text-left" style={{ top: '0', transform: 'translateY(0)' }}>
+                          <span className="absolute right-full mr-2 text-xs font-medium text-gray-500/80 dark:text-gray-400/80 w-10 whitespace-nowrap text-left tracking-wide hover:text-emerald-500 dark:hover:text-emerald-400 transition-all duration-300 hover:-translate-x-0.5 hover:font-semibold" style={{ top: '0' }}>
                             {weekDays[dayIndex]}
                           </span>
                         )}
                         <div
-                          className={`w-3 h-3 rounded-sm ${isValidDate ? (contribution ? getContributionClass(contribution.count) : 'bg-gray-200 dark:bg-gray-700') : 'bg-transparent'} transition-all duration-200 hover:scale-110 hover:ring-2 hover:ring-emerald-300 dark:hover:ring-emerald-600 cursor-pointer group`}
+                          className={`w-3 h-3 rounded-sm ${snake.isSnakeHead(weekIndex, dayIndex)
+                            ? 'bg-yellow-400 dark:bg-yellow-500 scale-125 z-20 animate-[snakeHead_0.3s_ease-in-out_infinite]'
+                            : (() => {
+                              const bodyStyle = snake.getSnakeBodyStyle(weekIndex, dayIndex)
+                              if (bodyStyle) {
+                                return `${bodyStyle.style} z-10 transition-all duration-300 animate-[snakeBody_0.3s_ease-in-out_infinite]`
+                              }
+                              return isEaten && contribution && contribution.count > 0
+                                ? 'bg-gray-200 dark:bg-gray-700'
+                                : isValidDate
+                                  ? (contribution ? getContributionClass(contribution.count) : 'bg-gray-200 dark:bg-gray-700')
+                                  : 'bg-transparent'
+                            })()
+                            } transition-all duration-300 hover:scale-150 hover:rotate-45 cursor-pointer group relative overflow-hidden`}
+                          style={(() => {
+                            const bodyStyle = snake.getSnakeBodyStyle(weekIndex, dayIndex)
+                            if (bodyStyle) {
+                              return {
+                                transform: `scale(${bodyStyle.scale}) ${bodyStyle.transform}`,
+                                opacity: bodyStyle.opacity,
+                                animationDelay: bodyStyle.animationDelay,
+                                animationDuration: bodyStyle.animationDuration
+                              }
+                            }
+                            return {}
+                          })()}
                           title={isValidDate ? formatTooltip(contribution) : ''}
-                        />
+                        >
+                          {snake.isSnakeHead(weekIndex, dayIndex) && (
+                            <>
+                              <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 dark:from-yellow-400 dark:via-yellow-500 dark:to-yellow-600 animate-pulse rounded-sm overflow-hidden snake-head">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
+                                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]"></div>
+                              </div>
+                              <div className="absolute top-0.5 left-0.5 w-1 h-1 rounded-full bg-black dark:bg-white snake-eyes">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent rounded-full"></div>
+                              </div>
+                              <div className="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-black dark:bg-white snake-eyes">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent rounded-full"></div>
+                              </div>
+                              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-0.5 bg-red-500/80 dark:bg-red-400/80 rounded-full transform -translate-y-0.5">
+                                <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent rounded-full"></div>
+                              </div>
+                            </>
+                          )}
+                          {(() => {
+                            const bodyStyle = snake.getSnakeBodyStyle(weekIndex, dayIndex)
+                            if (bodyStyle) {
+                              return (
+                                <>
+                                  <div className={`absolute inset-0 bg-gradient-to-br from-yellow-200 to-yellow-400 dark:from-yellow-300 dark:to-yellow-500 opacity-${Math.floor(bodyStyle.opacity * 100)}`}></div>
+                                  <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 dark:from-white/0 dark:to-white/10"></div>
+                                </>
+                              )
+                            }
+                            return null
+                          })()}
+                          {isEaten && contribution && contribution.count > 0 && !snake.getSnakeBodyStyle(weekIndex, dayIndex) && (
+                            <>
+                              <div className={`absolute inset-0 rounded-sm ring-2 ${getBorderGlowClass(contribution.count)} animate-[borderPulse_2s_ease-in-out_infinite]`}></div>
+                              <div className="absolute inset-0 bg-gradient-to-br from-gray-100/90 to-gray-200/90 dark:from-gray-700/90 dark:to-gray-800/90"></div>
+                              <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/10 dark:from-white/0 dark:to-white/5"></div>
+                            </>
+                          )}
+                          {!snake.isSnakeHead(weekIndex, dayIndex) && !snake.getSnakeBodyStyle(weekIndex, dayIndex) && !isEaten && (
+                            <>
+                              <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 dark:from-white/0 dark:to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/10 transition-colors duration-300"></div>
+                            </>
+                          )}
+                        </div>
                       </div>
                     )
                   })}
@@ -301,23 +468,170 @@ const GitHubContributionCard = ({ posts }) => {
         </div>
 
         {/* 图例 */}
-        <div className="flex items-center justify-end gap-2 mt-4 text-xs text-gray-600 dark:text-gray-400">
-          <span>较少</span>
-          <div className="flex gap-1">
+        <div className="flex items-center justify-end gap-3 mt-6 text-xs text-gray-600 dark:text-gray-400">
+          <span className="font-medium tracking-wide relative group/legend">
+            较少
+            <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-emerald-500/50 group-hover/legend:w-full transition-all duration-300"></span>
+          </span>
+          <div className="flex gap-1.5">
             {[0, 1, 2, 3, 4].map((level) => (
               <div
                 key={level}
-                className={`w-3 h-3 rounded-sm ${getContributionClass(level)} border border-gray-300/10 dark:border-gray-700/30 transition-transform hover:scale-110`}
-              />
+                className={`w-3 h-3 rounded-sm ${getContributionClass(level)} border border-gray-300/10 dark:border-gray-700/30 transition-all duration-300 hover:scale-150 hover:rotate-45 hover:ring-1 hover:ring-emerald-300 dark:hover:ring-emerald-600 relative group/box`}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 dark:from-white/0 dark:to-white/10 opacity-0 group-hover/box:opacity-100 transition-opacity duration-300"></div>
+              </div>
             ))}
           </div>
-          <span>较多</span>
+          <span className="font-medium tracking-wide relative group/legend">
+            较多
+            <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-emerald-500/50 group-hover/legend:w-full transition-all duration-300"></span>
+          </span>
         </div>
       </div>
 
       <style jsx>{`
         .grid-cols-52 {
           grid-template-columns: repeat(52, minmax(0, 1fr));
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        @keyframes glow {
+          0%, 100% { filter: brightness(1); }
+          50% { filter: brightness(1.3); }
+        }
+        @keyframes borderPulse {
+          0%, 100% { opacity: 0.5; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.05); }
+        }
+        @keyframes snakeHead {
+          0% { 
+            transform: scale(1.25) rotate(-5deg) translateY(0) translateZ(2px);
+            filter: brightness(1.2) contrast(1.1);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 0 30px rgba(250, 204, 21, 0.2);
+          }
+          25% { 
+            transform: scale(1.3) rotate(0deg) translateY(-1px) translateZ(4px);
+            filter: brightness(1.3) contrast(1.2);
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.5), 0 0 40px rgba(250, 204, 21, 0.3);
+          }
+          50% { 
+            transform: scale(1.25) rotate(5deg) translateY(0) translateZ(2px);
+            filter: brightness(1.2) contrast(1.1);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 0 30px rgba(250, 204, 21, 0.2);
+          }
+          75% { 
+            transform: scale(1.3) rotate(0deg) translateY(1px) translateZ(4px);
+            filter: brightness(1.3) contrast(1.2);
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.5), 0 0 40px rgba(250, 204, 21, 0.3);
+          }
+          100% { 
+            transform: scale(1.25) rotate(-5deg) translateY(0) translateZ(2px);
+            filter: brightness(1.2) contrast(1.1);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 0 30px rgba(250, 204, 21, 0.2);
+          }
+        }
+        @keyframes snakeBody {
+          0% { 
+            transform: scale(1) rotate(var(--rotate-deg, 0deg)) translateZ(calc(var(--index) * -0.5px));
+            filter: brightness(1) contrast(1) saturate(1);
+            box-shadow: 0 0 calc((30 - var(--index)) * 1px) rgba(250, 204, 21, calc(0.3 - var(--index) * 0.01));
+          }
+          50% { 
+            transform: scale(1.1) rotate(calc(var(--rotate-deg, 0deg) + 5deg)) translateZ(calc(var(--index) * -0.5px + 2px));
+            filter: brightness(1.2) contrast(1.1) saturate(1.2);
+            box-shadow: 0 0 calc((30 - var(--index)) * 1.5px) rgba(250, 204, 21, calc(0.4 - var(--index) * 0.01));
+          }
+          100% { 
+            transform: scale(1) rotate(var(--rotate-deg, 0deg)) translateZ(calc(var(--index) * -0.5px));
+            filter: brightness(1) contrast(1) saturate(1);
+            box-shadow: 0 0 calc((30 - var(--index)) * 1px) rgba(250, 204, 21, calc(0.3 - var(--index) * 0.01));
+          }
+        }
+        @keyframes snakeEyes {
+          0%, 90% { transform: scale(1) translateY(0); opacity: 1; background: currentColor; }
+          95% { transform: scale(0.8) translateY(0.5px); opacity: 0.8; background: #ff3e3e; }
+          100% { transform: scale(1) translateY(0); opacity: 1; background: currentColor; }
+        }
+        @keyframes snakeTrail {
+          0% { 
+            transform: scaleX(0.2) scaleY(0.2);
+            opacity: 0.6;
+            filter: blur(2px);
+          }
+          50% { 
+            transform: scaleX(1) scaleY(1);
+            opacity: 0.3;
+            filter: blur(4px);
+          }
+          100% { 
+            transform: scaleX(0.2) scaleY(0.2);
+            opacity: 0;
+            filter: blur(2px);
+          }
+        }
+        @keyframes snakeGlow {
+          0%, 100% { 
+            box-shadow: 
+              0 0 15px rgba(250, 204, 21, 0.4),
+              0 0 30px rgba(250, 204, 21, 0.2),
+              inset 0 0 10px rgba(250, 204, 21, 0.3);
+            filter: brightness(1.2);
+          }
+          50% { 
+            box-shadow: 
+              0 0 25px rgba(250, 204, 21, 0.6),
+              0 0 50px rgba(250, 204, 21, 0.3),
+              inset 0 0 15px rgba(250, 204, 21, 0.5);
+            filter: brightness(1.4);
+          }
+        }
+        .snake-head {
+          transform-style: preserve-3d;
+          animation: snakeHead 0.6s ease-in-out infinite, snakeGlow 1.5s ease-in-out infinite;
+          background: linear-gradient(135deg, #ffd700, #ffa500);
+        }
+        .snake-head::before {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+          border-radius: inherit;
+          z-index: 1;
+        }
+        .snake-body {
+          transform-style: preserve-3d;
+          animation: snakeBody 0.8s ease-in-out infinite;
+          animation-delay: calc(var(--index, 0) * -0.1s);
+          background: linear-gradient(135deg, 
+            rgba(255, 215, 0, calc(1 - var(--index) * 0.03)), 
+            rgba(255, 165, 0, calc(1 - var(--index) * 0.03))
+          );
+        }
+        .snake-eyes {
+          animation: snakeEyes 3s ease-in-out infinite;
+          box-shadow: 0 0 5px currentColor;
+        }
+        .snake-trail {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(250, 204, 21, 0.3), transparent 70%);
+          animation: snakeTrail 0.5s ease-out forwards;
+          pointer-events: none;
+        }
+        .contribution-grid {
+          perspective: 1000px;
+          transform-style: preserve-3d;
+        }
+        .contribution-cell {
+          transform-style: preserve-3d;
+          transition: all 0.3s ease-out;
+        }
+        .contribution-cell:hover {
+          transform: translateZ(10px) scale(1.2);
+          box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
         }
       `}</style>
     </div>
