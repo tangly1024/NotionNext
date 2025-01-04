@@ -151,6 +151,11 @@ const GitHubContributionCard = ({ posts }) => {
     return contributionData.reduce((sum, day) => sum + day.count, 0)
   }, [contributionData])
 
+  // 获取有贡献的格子总数
+  const totalContributionCells = useMemo(() => {
+    return contributionData.reduce((sum, day) => sum + (day.count > 0 ? 1 : 0), 0)
+  }, [contributionData])
+
   // 切换到上一年
   const handlePrevYear = () => {
     const currentIndex = availableYears.indexOf(selectedYear)
@@ -247,7 +252,8 @@ const GitHubContributionCard = ({ posts }) => {
     getContributionValue,
     contributionData,
     onEatCell: handleEatCell,
-    onReset: handleSnakeReset
+    onReset: handleSnakeReset,
+    totalContributions: totalContributionCells
   })
 
   // 获取贡献等级对应的荧光颜色
@@ -388,11 +394,11 @@ const GitHubContributionCard = ({ posts }) => {
                         )}
                         <div
                           className={`w-3 h-3 rounded-sm ${snake.isSnakeHead(weekIndex, dayIndex)
-                            ? 'bg-yellow-400 dark:bg-yellow-500 scale-125 z-20 animate-[snakeHead_0.3s_ease-in-out_infinite]'
+                            ? `${snake.isRage ? 'snake-head rage' : 'snake-head'} z-20`
                             : (() => {
                               const bodyStyle = snake.getSnakeBodyStyle(weekIndex, dayIndex)
                               if (bodyStyle) {
-                                return `${bodyStyle.style} z-10 transition-all duration-300 animate-[snakeBody_0.3s_ease-in-out_infinite]`
+                                return `${bodyStyle.style} z-10`
                               }
                               return isEaten && contribution && contribution.count > 0
                                 ? 'bg-gray-200 dark:bg-gray-700'
@@ -407,8 +413,10 @@ const GitHubContributionCard = ({ posts }) => {
                               return {
                                 transform: `scale(${bodyStyle.scale}) ${bodyStyle.transform}`,
                                 opacity: bodyStyle.opacity,
-                                animationDelay: bodyStyle.animationDelay,
-                                animationDuration: bodyStyle.animationDuration
+                                '--index': bodyStyle['--index'],
+                                '--rotate-deg': bodyStyle['--rotate-deg'],
+                                '--glow-color': bodyStyle['--glow-color'],
+                                '--pulse-speed': bodyStyle['--pulse-speed']
                               }
                             }
                             return {}
@@ -417,17 +425,21 @@ const GitHubContributionCard = ({ posts }) => {
                         >
                           {snake.isSnakeHead(weekIndex, dayIndex) && (
                             <>
-                              <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 dark:from-yellow-400 dark:via-yellow-500 dark:to-yellow-600 animate-pulse rounded-sm overflow-hidden snake-head">
+                              <div className={`absolute inset-0 bg-gradient-to-br ${snake.isRage
+                                ? 'from-red-400 via-red-500 to-red-600 dark:from-red-500 dark:via-red-600 dark:to-red-700'
+                                : 'from-yellow-300 via-yellow-400 to-yellow-500 dark:from-yellow-400 dark:via-yellow-500 dark:to-yellow-600'
+                                } animate-pulse rounded-sm overflow-hidden ${snake.isRage ? 'snake-head rage' : 'snake-head'}`}>
                                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
                                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]"></div>
                               </div>
-                              <div className="absolute top-0.5 left-0.5 w-1 h-1 rounded-full bg-black dark:bg-white snake-eyes">
+                              <div className={`absolute top-0.5 left-0.5 w-1 h-1 rounded-full bg-black dark:bg-white ${snake.isRage ? 'snake-eyes rage' : 'snake-eyes'}`}>
                                 <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent rounded-full"></div>
                               </div>
-                              <div className="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-black dark:bg-white snake-eyes">
+                              <div className={`absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-black dark:bg-white ${snake.isRage ? 'snake-eyes rage' : 'snake-eyes'}`}>
                                 <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent rounded-full"></div>
                               </div>
-                              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-0.5 bg-red-500/80 dark:bg-red-400/80 rounded-full transform -translate-y-0.5">
+                              <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-0.5 ${snake.isRage ? 'bg-red-600/90 dark:bg-red-500/90' : 'bg-red-500/80 dark:bg-red-400/80'
+                                } rounded-full transform -translate-y-0.5`}>
                                 <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent rounded-full"></div>
                               </div>
                             </>
@@ -437,8 +449,12 @@ const GitHubContributionCard = ({ posts }) => {
                             if (bodyStyle) {
                               return (
                                 <>
-                                  <div className={`absolute inset-0 bg-gradient-to-br from-yellow-200 to-yellow-400 dark:from-yellow-300 dark:to-yellow-500 opacity-${Math.floor(bodyStyle.opacity * 100)}`}></div>
-                                  <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 dark:from-white/0 dark:to-white/10"></div>
+                                  {!bodyStyle.isRage && (
+                                    <>
+                                      <div className="absolute inset-0 bg-gradient-to-br from-yellow-200 to-yellow-400 dark:from-yellow-300 dark:to-yellow-500 opacity-${Math.floor(bodyStyle.opacity * 100)}"></div>
+                                      <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/20 dark:from-white/0 dark:to-white/10"></div>
+                                    </>
+                                  )}
                                 </>
                               )
                             }
@@ -506,121 +522,8 @@ const GitHubContributionCard = ({ posts }) => {
           0%, 100% { opacity: 0.5; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.05); }
         }
-        @keyframes snakeHead {
-          0% { 
-            transform: scale(1.25) rotate(-5deg) translateY(0) translateZ(2px);
-            filter: brightness(1.2) contrast(1.1);
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 0 30px rgba(250, 204, 21, 0.2);
-          }
-          25% { 
-            transform: scale(1.3) rotate(0deg) translateY(-1px) translateZ(4px);
-            filter: brightness(1.3) contrast(1.2);
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.5), 0 0 40px rgba(250, 204, 21, 0.3);
-          }
-          50% { 
-            transform: scale(1.25) rotate(5deg) translateY(0) translateZ(2px);
-            filter: brightness(1.2) contrast(1.1);
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 0 30px rgba(250, 204, 21, 0.2);
-          }
-          75% { 
-            transform: scale(1.3) rotate(0deg) translateY(1px) translateZ(4px);
-            filter: brightness(1.3) contrast(1.2);
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.5), 0 0 40px rgba(250, 204, 21, 0.3);
-          }
-          100% { 
-            transform: scale(1.25) rotate(-5deg) translateY(0) translateZ(2px);
-            filter: brightness(1.2) contrast(1.1);
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 0 30px rgba(250, 204, 21, 0.2);
-          }
-        }
-        @keyframes snakeBody {
-          0% { 
-            transform: scale(1) rotate(var(--rotate-deg, 0deg)) translateZ(calc(var(--index) * -0.5px));
-            filter: brightness(1) contrast(1) saturate(1);
-            box-shadow: 0 0 calc((30 - var(--index)) * 1px) rgba(250, 204, 21, calc(0.3 - var(--index) * 0.01));
-          }
-          50% { 
-            transform: scale(1.1) rotate(calc(var(--rotate-deg, 0deg) + 5deg)) translateZ(calc(var(--index) * -0.5px + 2px));
-            filter: brightness(1.2) contrast(1.1) saturate(1.2);
-            box-shadow: 0 0 calc((30 - var(--index)) * 1.5px) rgba(250, 204, 21, calc(0.4 - var(--index) * 0.01));
-          }
-          100% { 
-            transform: scale(1) rotate(var(--rotate-deg, 0deg)) translateZ(calc(var(--index) * -0.5px));
-            filter: brightness(1) contrast(1) saturate(1);
-            box-shadow: 0 0 calc((30 - var(--index)) * 1px) rgba(250, 204, 21, calc(0.3 - var(--index) * 0.01));
-          }
-        }
-        @keyframes snakeEyes {
-          0%, 90% { transform: scale(1) translateY(0); opacity: 1; background: currentColor; }
-          95% { transform: scale(0.8) translateY(0.5px); opacity: 0.8; background: #ff3e3e; }
-          100% { transform: scale(1) translateY(0); opacity: 1; background: currentColor; }
-        }
-        @keyframes snakeTrail {
-          0% { 
-            transform: scaleX(0.2) scaleY(0.2);
-            opacity: 0.6;
-            filter: blur(2px);
-          }
-          50% { 
-            transform: scaleX(1) scaleY(1);
-            opacity: 0.3;
-            filter: blur(4px);
-          }
-          100% { 
-            transform: scaleX(0.2) scaleY(0.2);
-            opacity: 0;
-            filter: blur(2px);
-          }
-        }
-        @keyframes snakeGlow {
-          0%, 100% { 
-            box-shadow: 
-              0 0 15px rgba(250, 204, 21, 0.4),
-              0 0 30px rgba(250, 204, 21, 0.2),
-              inset 0 0 10px rgba(250, 204, 21, 0.3);
-            filter: brightness(1.2);
-          }
-          50% { 
-            box-shadow: 
-              0 0 25px rgba(250, 204, 21, 0.6),
-              0 0 50px rgba(250, 204, 21, 0.3),
-              inset 0 0 15px rgba(250, 204, 21, 0.5);
-            filter: brightness(1.4);
-          }
-        }
-        .snake-head {
-          transform-style: preserve-3d;
-          animation: snakeHead 0.6s ease-in-out infinite, snakeGlow 1.5s ease-in-out infinite;
-          background: linear-gradient(135deg, #ffd700, #ffa500);
-        }
-        .snake-head::before {
-          content: '';
-          position: absolute;
-          inset: -2px;
-          background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
-          border-radius: inherit;
-          z-index: 1;
-        }
-        .snake-body {
-          transform-style: preserve-3d;
-          animation: snakeBody 0.8s ease-in-out infinite;
-          animation-delay: calc(var(--index, 0) * -0.1s);
-          background: linear-gradient(135deg, 
-            rgba(255, 215, 0, calc(1 - var(--index) * 0.03)), 
-            rgba(255, 165, 0, calc(1 - var(--index) * 0.03))
-          );
-        }
-        .snake-eyes {
-          animation: snakeEyes 3s ease-in-out infinite;
-          box-shadow: 0 0 5px currentColor;
-        }
-        .snake-trail {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at center, rgba(250, 204, 21, 0.3), transparent 70%);
-          animation: snakeTrail 0.5s ease-out forwards;
-          pointer-events: none;
-        }
+      `}</style>
+      <style jsx global>{`
         .contribution-grid {
           perspective: 1000px;
           transform-style: preserve-3d;
@@ -633,6 +536,7 @@ const GitHubContributionCard = ({ posts }) => {
           transform: translateZ(10px) scale(1.2);
           box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
         }
+        ${snake?.styles || ''}
       `}</style>
     </div>
   )
