@@ -19,10 +19,10 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '热爱生活',
-  HEO_HERO_TITLE_2: '热爱自由',
+  HEO_HERO_TITLE_2: '追求自由',
   HEO_HERO_TITLE_3: 'THEBXCSHEY·COM',
   HEO_HERO_TITLE_4: '点击进入我的主页',
-  HEO_HERO_TITLE_5: '热爱山地骑行',
+  HEO_HERO_TITLE_5: '敢于探索',
   HEO_HERO_TITLE_LINK: 'https://hp.thebxcshey.top',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
