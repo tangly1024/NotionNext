@@ -37,16 +37,14 @@ const GitHubContributionCard = ({ posts }) => {
     const data = []
     const startDate = new Date(Date.UTC(year, 0, 1)) // 使用 UTC 时间
     const endDate = new Date(Date.UTC(year, 11, 31))
-    const now = new Date()
-
-    // 如果是当前年份，使用当前日期作为结束日期
-    const actualEndDate = year === now.getFullYear() ? now : endDate
 
     // 初始化该年的数据，默认贡献为0
-    for (let d = new Date(startDate); d <= actualEndDate; d.setDate(d.getDate() + 1)) {
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
       data.push({
         date: new Date(d),
         count: 0,
+        createCount: 0,
+        updateCount: 0,
         posts: []
       })
     }
@@ -66,12 +64,13 @@ const GitHubContributionCard = ({ posts }) => {
             const createDayOfYear = Math.floor((createDate - startDate) / (24 * 60 * 60 * 1000))
 
             if (createDayOfYear >= 0 && createDayOfYear < data.length) {
+              data[createDayOfYear].createCount += 1
               data[createDayOfYear].count += 1
               data[createDayOfYear].posts.push({
                 title: post.title,
                 slug: post.slug,
                 date: createDate,
-                type: '创建'
+                type: 'Created'
               })
             }
           }
@@ -89,12 +88,13 @@ const GitHubContributionCard = ({ posts }) => {
             const updateDayOfYear = Math.floor((updateDate - startDate) / (24 * 60 * 60 * 1000))
 
             if (updateDayOfYear >= 0 && updateDayOfYear < data.length) {
+              data[updateDayOfYear].updateCount += 1
               data[updateDayOfYear].count += 1
               data[updateDayOfYear].posts.push({
                 title: post.title,
                 slug: post.slug,
                 date: updateDate,
-                type: '更新'
+                type: 'Updated'
               })
             }
           }
@@ -133,8 +133,8 @@ const GitHubContributionCard = ({ posts }) => {
 
   // 获取贡献等级的样式
   const getContributionClass = (count) => {
-    if (count === 0) return 'bg-gray-100 dark:bg-gray-800'
-    if (count === 1) return 'bg-emerald-100 dark:bg-emerald-900/60'
+    if (count === 0) return 'bg-gray-200 dark:bg-gray-700'
+    if (count === 1) return 'bg-emerald-200 dark:bg-emerald-800'
     if (count === 2) return 'bg-emerald-300 dark:bg-emerald-700'
     if (count === 3) return 'bg-emerald-400 dark:bg-emerald-600'
     return 'bg-emerald-500 dark:bg-emerald-500'
@@ -142,7 +142,7 @@ const GitHubContributionCard = ({ posts }) => {
 
   // 获取月份标签
   const getMonthLabels = () => {
-    const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     return months
   }
 
@@ -165,9 +165,35 @@ const GitHubContributionCard = ({ posts }) => {
     }
 
     const date = formatLocalDate(contribution.date)
-    const count = contribution.count
-    return `${count} contributions on ${date}.`
+    const { createCount, updateCount, count } = contribution
+    return `${date}: ${createCount} new, ${updateCount} updates, ${count} total contributions`
   }
+
+  // 计算年份的周数和起始日信息
+  const getYearWeeksInfo = (year) => {
+    const firstDay = new Date(Date.UTC(year, 0, 1))
+    const lastDay = new Date(Date.UTC(year, 11, 31))
+
+    // 获取第一天是星期几（0-6，0代表星期日）
+    const firstDayOfWeek = firstDay.getUTCDay()
+
+    // 计算总天数
+    const totalDays = Math.floor((lastDay - firstDay) / (24 * 60 * 60 * 1000)) + 1
+
+    // 计算需要的总周数（包括可能不完整的第一周和最后一周）
+    const totalWeeks = Math.ceil((totalDays + firstDayOfWeek) / 7)
+
+    return {
+      totalWeeks,
+      firstDayOfWeek,
+      totalDays
+    }
+  }
+
+  // 使用 useMemo 缓存年份信息
+  const yearInfo = useMemo(() => {
+    return getYearWeeksInfo(selectedYear)
+  }, [selectedYear])
 
   return (
     <div className="mb-12 bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg relative overflow-hidden transform hover:scale-[1.01] transition-all duration-200">
@@ -183,7 +209,7 @@ const GitHubContributionCard = ({ posts }) => {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <i className="fas fa-history text-xl text-emerald-500 dark:text-emerald-400"></i>
-            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">文章更新频率</h3>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200">Article Updates</h3>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -194,7 +220,7 @@ const GitHubContributionCard = ({ posts }) => {
               <i className="fas fa-chevron-left"></i>
             </button>
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300 min-w-[4rem] text-center">
-              {selectedYear} 年
+              {selectedYear}
             </span>
             <button
               onClick={handleNextYear}
@@ -205,7 +231,7 @@ const GitHubContributionCard = ({ posts }) => {
             </button>
           </div>
           <span className="px-2 py-1 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/30 rounded-full">
-            共更新 {totalContributions} 篇
+            {totalContributions} Contributions
           </span>
         </div>
       </div>
@@ -223,23 +249,32 @@ const GitHubContributionCard = ({ posts }) => {
         <div className="flex gap-2">
           {/* 星期标签 */}
           <div className="flex flex-col justify-between text-xs text-gray-500 dark:text-gray-400 py-1">
-            <span>一</span>
-            <span>三</span>
-            <span>五</span>
+            <span>Sun</span>
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
           </div>
 
           {/* 贡献格子 */}
-          <div className="grid grid-cols-52 gap-1 flex-grow">
-            {Array.from({ length: 52 }).map((_, weekIndex) => (
+          <div className="grid gap-1 flex-grow" style={{ gridTemplateColumns: `repeat(${yearInfo.totalWeeks}, minmax(0, 1fr))` }}>
+            {Array.from({ length: yearInfo.totalWeeks }).map((_, weekIndex) => (
               <div key={weekIndex} className="grid grid-rows-7 gap-1">
                 {Array.from({ length: 7 }).map((_, dayIndex) => {
-                  const dataIndex = weekIndex * 7 + dayIndex
-                  const contribution = contributionData[dataIndex]
+                  // 计算实际的数据索引
+                  let dataIndex = weekIndex * 7 + dayIndex - yearInfo.firstDayOfWeek
+
+                  // 检查是否是有效的日期
+                  const isValidDate = dataIndex >= 0 && dataIndex < contributionData.length
+                  const contribution = isValidDate ? contributionData[dataIndex] : null
+
                   return (
                     <div
                       key={dayIndex}
-                      className={`w-3 h-3 rounded-sm ${contribution ? getContributionClass(contribution.count) : 'bg-gray-100 dark:bg-gray-800'} transition-all duration-200 hover:scale-110 hover:ring-2 hover:ring-emerald-300 dark:hover:ring-emerald-600 cursor-pointer group`}
-                      title={formatTooltip(contribution)}
+                      className={`w-3 h-3 rounded-sm ${isValidDate ? (contribution ? getContributionClass(contribution.count) : 'bg-gray-200 dark:bg-gray-700') : 'bg-transparent'} transition-all duration-200 hover:scale-110 hover:ring-2 hover:ring-emerald-300 dark:hover:ring-emerald-600 cursor-pointer group`}
+                      title={isValidDate ? formatTooltip(contribution) : ''}
                     />
                   )
                 })}
