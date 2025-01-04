@@ -40,7 +40,6 @@ const CareerTimeline = dynamic(() => import('@/components/CareerTimeline'), {
  * 关于页面
  */
 const About = props => {
-  console.log('About page props:', props)
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const [visitStats, setVisitStats] = useState({
