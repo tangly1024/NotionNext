@@ -26,7 +26,7 @@ export const CTA = () => {
                     </span>
                   </h2>
                   <p className='mx-auto mb-6 max-w-[515px] text-base leading-[1.5] text-white'>
-                    {siteConfig('STARTER_CTA_DESCRIOTN')}
+                    {siteConfig('STARTER_CTA_DESCRIPTION')}
                   </p>
                   {siteConfig('STARTER_CTA_BUTTON') && (
                     <>
