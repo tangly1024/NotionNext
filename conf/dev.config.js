@@ -7,6 +7,10 @@ module.exports = {
   // TAILWINDCSS 配置的自定义颜色，作废
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
+
+  // Redis 缓存数据库地址
+  REDIS_URL: process.env.REDIS_URL || '',
+
   ENABLE_CACHE:
     process.env.ENABLE_CACHE ||
     process.env.npm_lifecycle_event === 'build' ||
