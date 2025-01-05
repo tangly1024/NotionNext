@@ -10,6 +10,7 @@ export async function getServerSideProps(ctx) {
   ctx.res.setHeader('Content-Type', 'text/xml')
   ctx.res.write(rssData.atom1()) // 直接返回内容
   ctx.res.end()
+  return { props: {} }
 }
 
 export default function rssAtomXml() {}

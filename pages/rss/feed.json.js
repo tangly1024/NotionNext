@@ -10,6 +10,7 @@ export async function getServerSideProps(ctx) {
   ctx.res.setHeader('Content-Type', 'application/json')
   ctx.res.write(rssData.json1()) // 直接返回内容
   ctx.res.end()
+  return { props: {} }
 }
 
 export default function rssFeedJson() {}
