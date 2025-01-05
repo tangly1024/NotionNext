@@ -38,7 +38,7 @@ const BLOG = {
   ...require('./conf/ad.config'), // 广告营收插件
 
   // 高级用法
-  ...require('./conf/layout-map.config'), // 路由与布局映射自定义
+  ...require('./conf/layout-map.config'), // 路由与布局映射自定义，例如自定义特定路由的页面布局
   ...require('./conf/notion.config'), // 读取notion数据库相关的扩展配置，例如自定义表头
   ...require('./conf/dev.config'), // 开发、调试时需要关注的配置
 
