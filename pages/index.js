@@ -4,6 +4,8 @@ import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
+import { isNotVercelProduction } from '@/lib/utils'
+import { generateRss } from '@/lib/rss'
 
 /**
  * 首页布局
@@ -53,12 +55,14 @@ export async function getStaticProps(req) {
     }
   }
 
-  // 生成robotTxt
-  generateRobotsTxt(props)
-  // 生成Feed订阅
-  // generateRss(props)
-  // 生成
-  generateSitemapXml(props)
+  if (isNotVercelProduction) {
+    // 生成robotTxt
+    generateRobotsTxt(props)
+    // 生成Feed订阅
+    generateRss(props)
+    // 生成
+    generateSitemapXml(props)
+  }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
