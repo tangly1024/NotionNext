@@ -28,8 +28,8 @@ const BLOG = {
   // 原配置文件过长，且并非所有人都会用到，故此将配置拆分到/conf/目录下, 按需找到对应文件并修改即可
   ...require('./conf/comment.config'), // 评论插件
   ...require('./conf/contact.config'), // 作者联系方式配置
+  ...require('./conf/post.config'), // 文章与列表配置
   ...require('./conf/analytics.config'), // 站点访问统计
-  ...require('./conf/post.config'), // 博客列表数量、文章url相关配置
   ...require('./conf/image.config'), // 网站图片相关配置
   ...require('./conf/font.config'), // 网站字体
   ...require('./conf/right-click-menu'), // 自定义右键菜单相关配置

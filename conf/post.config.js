@@ -1,5 +1,5 @@
 /**
- * 博客列表相关配置
+ * 文章相关功能
  */
 module.exports = {
   // 文章URL前缀
@@ -8,6 +8,9 @@ module.exports = {
   // 如果此项配置为 '' 空， 则文章将没有前缀路径
   // 支援類似 WP 可自訂文章連結格式的功能：https://wordpress.org/documentation/article/customize-permalinks/，目前只先實作 %year%/%month%/%day%
   // 例：如想連結改成前綴 article + 時間戳記，可變更為： 'article/%year%/%month%/%day%'
+
+  POST_SCHEDULE_PUBLISH:
+    process.env.NEXT_PUBLIC_NOTION_SCHEDULE_PUBLISH || true, // 按照文章的发布时间字段，控制自动上下架
 
   // 分享条
   POST_SHARE_BAR_ENABLE: process.env.NEXT_PUBLIC_POST_SHARE_BAR || 'true', //文章底部分享条开关
