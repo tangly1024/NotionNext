@@ -58,7 +58,7 @@ const LayoutBase = props => {
   // 首页背景图
   const headerSlot =
     router.route === '/' &&
-    siteConfig('MOVIE_HOME_BACKGROUND', null, CONFIG) ? (
+    siteConfig('PHOTO_HOME_BACKGROUND', null, CONFIG) ? (
       <HomeBackgroundImage />
     ) : null
 
@@ -157,7 +157,9 @@ const LayoutSlug = props => {
     // 用js 实现将页面中的多个视频聚合为一个分集的视频
     function combineVideo() {
       // 找到 id 为 notion-article 的元素
-      const notionArticle = document.querySelector('#article-wrapper #notion-article')
+      const notionArticle = document.querySelector(
+        '#article-wrapper #notion-article'
+      )
       if (!notionArticle) return // 如果找不到对应的元素，则退出函数
 
       // 找到所有的 .notion-asset-wrapper 元素
@@ -267,7 +269,7 @@ const LayoutSlug = props => {
         // 显示分集按钮 大于1集才显示 ；或者用户 要求强制显示
         if (
           figCaptionWrapper.children.length > 1 ||
-          siteConfig('MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE', false, CONFIG)
+          siteConfig('PHOTO_VIDEO_COMBINE_SHOW_PAGE_FORCE', false, CONFIG)
         ) {
           videoWrapper.appendChild(figCaptionWrapper)
         }
@@ -289,19 +291,18 @@ const LayoutSlug = props => {
 
     // 404
     if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector('#article-wrapper #notion-article')
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
           }
-        },
-        waiting404
-      )
+        }
+      }, waiting404)
     }
     return () => {
       // 获取所有 class="video-wrapper" 的元素
@@ -316,23 +317,25 @@ const LayoutSlug = props => {
 
   return (
     <>
-      {!lock ? post && (
-        <div
-          id='article-wrapper'
-          className='px-2 max-w-5xl 2xl:max-w-[70%] mx-auto'>
-          {/* 标题 */}
-          <ArticleHeader post={post} />
-          {/* 页面元素 */}
-          <NotionPage post={post} />
-          {/* 文章页脚 */}
-          <ArticleFooter post={post} />
-          {/* 推荐 */}
-          <BlogRecommend {...props} />
-          {/* 分享栏目 */}
-          <ShareBar post={post} />
-          {/* 评论区 */}
-          <Comment frontMatter={post} />
-        </div>
+      {!lock ? (
+        post && (
+          <div
+            id='article-wrapper'
+            className='px-2 max-w-5xl 2xl:max-w-[70%] mx-auto'>
+            {/* 标题 */}
+            <ArticleHeader post={post} />
+            {/* 页面元素 */}
+            <NotionPage post={post} />
+            {/* 文章页脚 */}
+            <ArticleFooter post={post} />
+            {/* 推荐 */}
+            <BlogRecommend {...props} />
+            {/* 分享栏目 */}
+            <ShareBar post={post} />
+            {/* 评论区 */}
+            <Comment frontMatter={post} />
+          </div>
+        )
       ) : (
         <ArticleLock validPassword={validPassword} />
       )}
