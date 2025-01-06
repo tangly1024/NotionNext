@@ -61,7 +61,7 @@ export async function getStaticProps(req) {
   generateRss(props)
   // 生成
   generateSitemapXml(props)
-  if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
+  if (BLOG['UUID_REDIRECT']) {
     // 生成重定向 JSON
     generateRedirectJson(props)
   }
