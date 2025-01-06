@@ -1,6 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { checkStrIsNotionId, getLastPartOfUrl } from '@/lib/utils'
+import {
+  checkStrIsNotionId,
+  checkStrIsUuid,
+  getLastPartOfUrl
+} from '@/lib/utils'
 import { idToUuid } from 'notion-utils'
 import BLOG from './blog.config'
 
@@ -40,19 +44,22 @@ const noAuthMiddleware = async (req: NextRequest, ev: any) => {
     if (checkStrIsNotionId(lastPart)) {
       lastPart = idToUuid(lastPart)
     }
-    if (lastPart) {
+    if (checkStrIsUuid(lastPart)) {
       let redirectJson: Record<string, string | null> = {}
       if (BLOG.REDIS_URL) {
         try {
-          const redisResponse = await fetch(`${req.nextUrl.origin}/api/redirect`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              lastPart: lastPart
-            })
-          })
+          const redisResponse = await fetch(
+            `${req.nextUrl.origin}/api/redirect`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                lastPart: lastPart
+              })
+            }
+          )
           const redisResult = await redisResponse.json()
           redirectJson = {
             [lastPart]: redisResult.data
