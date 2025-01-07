@@ -7,15 +7,15 @@ const CONFIG = {
 
   MAGZINE_HOME_HIDDEN_CATEGORY: '分享杂文', //不希望在首页展示的文章分类，用英文逗号隔开
 
-  MAGZINE_HOME_TITLE: '立即开创您的在线业务。完全免费。',
+  MAGZINE_HOME_TITLE: 'Know more about AI/AR/VR Glasses and XR',
   MAGZINE_HOME_DESCRIPTION:
-    '借助NotionNext，获得助您开创、经营和扩展业务所需的全部工具和帮助。',
-  MAGZINE_HOME_TIPS: 'AI时代来临，这是属于超级个体的狂欢盛宴！',
+    'Focused on AI/AR/VR Glasses reviews and usage tips, XR-related content and software reviews',
+  MAGZINE_HOME_TIPS: 'Through AI and AR, the virtual and the real will be combined.',
 
   // 首页底部推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
-  MAGZINE_RECOMMEND_POST_TAG: '推荐',
+  MAGZINE_RECOMMEND_POST_TAG: 'Recommend',
   MAGZINE_RECOMMEND_POST_COUNT: 6,
-  MAGZINE_RECOMMEND_POST_TITLE: '推荐文章',
+  MAGZINE_RECOMMEND_POST_TITLE: 'Recommended Article',
   MAGZINE_RECOMMEND_POST_SORT_BY_UPDATE_TIME: false, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
 
   // Style
@@ -31,9 +31,9 @@ const CONFIG = {
 
   // 文章页面联系卡
   MAGZINE_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
-  MAGZINE_SOCIAL_CARD_TITLE_1: '交流频道',
-  MAGZINE_SOCIAL_CARD_TITLE_2: '加入社群讨论分享',
-  MAGZINE_SOCIAL_CARD_TITLE_3: '点击加入社群',
+  MAGZINE_SOCIAL_CARD_TITLE_1: 'Communication Channel',
+  MAGZINE_SOCIAL_CARD_TITLE_2: 'Join community discussions and share',
+  MAGZINE_SOCIAL_CARD_TITLE_3: 'Click to join the community',
   MAGZINE_SOCIAL_CARD_URL: 'https://docs.tangly1024.com/article/chat-community',
 
   // 页脚菜单
