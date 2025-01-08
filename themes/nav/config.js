@@ -3,7 +3,7 @@ const CONFIG = {
 
   NAV_AUTO_SORT: process.env.NEXT_PUBLIC_NAV_AUTO_SORT || true, // 是否自动按分类名 归组排序文章；自动归组可能会打乱您Notion中的文章顺序
 
-  NAV_SHOW_TITLE_TEXT: false, // 标题栏显示文本
+  NAV_SHOW_TITLE_TEXT: true, // 标题栏显示文本
   NAV_USE_CUSTOM_MENU: true, // 使用自定义菜单（可支持子菜单，支持自定义分类图标），若为true则显示所有的category分类
 
   // 菜单
