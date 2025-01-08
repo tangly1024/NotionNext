@@ -32,27 +32,37 @@ const locales = (function () {
   return langs
 })()
 
+// 删除文件，并自动生成日志
+function deleteFileIfExists(relativePath) {
+  // 使用 path.resolve 解析为完整路径
+  const filePath = path.resolve(__dirname, relativePath)
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath)
+    // 通过路径生成文件名和目录
+    const fileName = path.basename(filePath)  // 获取文件名
+    const directory = path.dirname(filePath)  // 获取文件所在目录
+    const relativeDirectory = path.relative(__dirname, directory)  // 获取相对路径
+    // 生成日志消息
+    console.log(`Deleted existing ${fileName} from ${relativeDirectory || 'root directory'}`)
+  }
+}
+
 // 编译前执行
-// eslint-disable-next-line no-unused-vars
-const preBuild = (function () {
+(function () {
   if (
     !process.env.npm_lifecycle_event === 'export' &&
     !process.env.npm_lifecycle_event === 'build'
   ) {
     return
   }
-  // 删除 public/sitemap.xml 文件 ； 否则会和/pages/sitemap.xml.js 冲突。
-  const sitemapPath = path.resolve(__dirname, 'public', 'sitemap.xml')
-  if (fs.existsSync(sitemapPath)) {
-    fs.unlinkSync(sitemapPath)
-    console.log('Deleted existing sitemap.xml from public directory')
-  }
-
-  const sitemap2Path = path.resolve(__dirname, 'sitemap.xml')
-  if (fs.existsSync(sitemap2Path)) {
-    fs.unlinkSync(sitemap2Path)
-    console.log('Deleted existing sitemap.xml from root directory')
-  }
+  // 删除 public/sitemap.xml 文件
+  deleteFileIfExists('public/sitemap.xml')
+  // 删除根目录的 sitemap.xml 文件
+  deleteFileIfExists('sitemap.xml')
+  // 删除 rss 文件
+  deleteFileIfExists('public/rss/feed.xml')
+  deleteFileIfExists('public/rss/atom.xml')
+  deleteFileIfExists('public/rss/feed.json')
 })()
 
 /**
