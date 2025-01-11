@@ -1,10 +1,11 @@
 import { redisCacheTime, redisClient } from '@/lib/cache/redis_cache'
-import { redirectCacheKey } from '@/lib/redirect'
+import BLOG from '@/blog.config'
 
 export default async function handler(req, res) {
   const { lastPart } = req.body
   try {
-    const result = (await redisClient.hget(redirectCacheKey, lastPart)) || null
+    const result =
+      (await redisClient.hget(BLOG.REDIRECT_CACHE_KEY, lastPart)) || null
     res.setHeader(
       'Cache-Control',
       `public, max-age=${redisCacheTime}, stale-while-revalidate=${redisCacheTime / 6}`

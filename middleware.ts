@@ -1,12 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  checkStrIsNotionId,
-  checkStrIsUuid,
-  getLastPartOfUrl
-} from '@/lib/utils'
+import { checkStrIsNotionId, checkStrIsUuid, getLastPartOfUrl } from '@/lib/utils'
 import { idToUuid } from 'notion-utils'
 import BLOG from './blog.config'
+import { upstashRedisClient } from '@/lib/cache/upstash_redis_cache'
 
 /**
  * Clerk 身份验证中间件
@@ -46,7 +43,15 @@ const noAuthMiddleware = async (req: NextRequest, ev: any) => {
     }
     if (checkStrIsUuid(lastPart)) {
       let redirectJson: Record<string, string | null> = {}
-      if (BLOG.REDIS_URL) {
+      if (upstashRedisClient) {
+        const redisResult = (await upstashRedisClient.hget(
+          BLOG.REDIRECT_CACHE_KEY,
+          lastPart
+        )) as string
+        redirectJson = {
+          [lastPart]: redisResult
+        }
+      } else if (BLOG.REDIS_URL) {
         try {
           const redisResponse = await fetch(
             `${req.nextUrl.origin}/api/redirect`,
