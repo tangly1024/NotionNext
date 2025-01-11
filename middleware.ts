@@ -1,6 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { checkStrIsNotionId, checkStrIsUuid, getLastPartOfUrl } from '@/lib/utils'
+import {
+  checkStrIsNotionId,
+  checkStrIsUuid,
+  getLastPartOfUrl
+} from '@/lib/utils'
 import { idToUuid } from 'notion-utils'
 import BLOG from './blog.config'
 import { upstashRedisClient } from '@/lib/cache/upstash_redis_cache'
@@ -65,9 +69,9 @@ const noAuthMiddleware = async (req: NextRequest, ev: any) => {
               })
             }
           )
-          const redisResult = await redisResponse.json()
+          const redisResult = await redisResponse?.json()
           redirectJson = {
-            [lastPart]: redisResult.data
+            [lastPart]: redisResult?.data
           }
         } catch (e) {
           console.warn('读取Redis失败', e)
