@@ -9,6 +9,7 @@ const CONFIG = {
   MOVIE_MENU_SEARCH: true, // 显示搜索
   MOVIE_HOME_BACKGROUND: false, // 首页是否显示背景图, 默认关闭
 
+  MOVIE_PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
   MOVIE_ARTICLE_RECOMMEND: true, // 推荐关联内容在文章底部
   MOVIE_VIDEO_COMBINE: true, // 聚合视频，开启后一篇文章内的多个含caption的视频会被合并到文章开头，并展示分集按钮
   MOVIE_VIDEO_COMBINE_SHOW_PAGE_FORCE: false, // 即使只有一集也显示集数切换按钮
