@@ -53,7 +53,7 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
               }>
               <div>
                 <div className='line-clamp-2 menu-link'>{post.title}</div>
-                <div className='text-gray-400'>{post.lastEditedDay}</div>
+                <div className='text-gray-400'>{post?.publishDay}</div>
               </div>
             </div>
           </Link>
