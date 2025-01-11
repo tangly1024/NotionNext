@@ -29,21 +29,21 @@ export default function MenuHierarchical(props) {
       icon: 'fa-solid fa-house',
       name: locale.NAV.INDEX,
       href: '/',
-      show: siteConfig('MOVIE_MENU_INDEX', null, CONFIG)
+      show: siteConfig('PHOTO_MENU_INDEX', null, CONFIG)
     },
     {
       id: 2,
       icon: 'fas fa-search',
       name: locale.NAV.SEARCH,
       href: '/search',
-      show: siteConfig('MOVIE_MENU_SEARCH', null, CONFIG)
+      show: siteConfig('PHOTO_MENU_SEARCH', null, CONFIG)
     },
     {
       id: 3,
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('MOVIE_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('PHOTO_MENU_ARCHIVE', null, CONFIG)
     }
   ]
 
