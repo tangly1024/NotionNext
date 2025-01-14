@@ -24,7 +24,7 @@ export default function DashboardButton({ className }) {
     <button
       type='button'
       className={`${className || ''} text-white bg-gray-800 hover:bg-gray-900 hover:ring-4 hover:ring-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2 me-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700`}>
-      <Link href='/dashboard'>仪表盘</Link>
+      <Link href='/dashboard'>儀表板</Link>
     </button>
   )
 }
