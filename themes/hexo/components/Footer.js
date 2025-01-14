@@ -38,7 +38,7 @@ const Footer = ({ title }) => {
           {title} {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
         </h1>
         <br />  
-        <PoweredBy className='justify-center text-light-300' />
+        <PoweredBy className='justify-center text-light-600' />
       </span>
       <br />
     </footer>
