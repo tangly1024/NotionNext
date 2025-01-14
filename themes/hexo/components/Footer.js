@@ -14,6 +14,7 @@ const Footer = ({ title }) => {
     <footer className='relative z-10 dark:bg-black flex-shrink-0 bg-hexo-light-gray justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm p-6'>
       {/* <DarkModeButton/> */}
       <i className='fas fa-copyright' /> {`${copyrightDate}`}
+      <span>&nbsp;</span>
       <span>
         <i className='mx-1 animate-pulse fas fa-heart' />
         <a
@@ -28,6 +29,7 @@ const Footer = ({ title }) => {
           <i className='fas fa-eye' />
           <span className='px-1 busuanzi_value_site_pv'> </span>
         </span>
+        <span>&nbsp;</span>
         <span className='pl-2 hidden busuanzi_container_site_uv'>
           <i className='fas fa-users' />
           <span className='px-1 busuanzi_value_site_uv'> </span>
