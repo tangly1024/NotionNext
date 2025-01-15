@@ -89,7 +89,7 @@ const Catalog = ({ toc }) => {
                     display: 'inline-block',
                     marginLeft: tocItem.indentLevel * 16
                   }}
-                  className={`truncate ${activeSection === id ? 'font-bold text-green-500 underline' : ''}`}>
+                  className={`truncate ${activeSection === id ? 'font-bold text-blue-500 underline' : ''}`}>
                   {tocItem.text}
                 </span>
               </a>
