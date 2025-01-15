@@ -280,12 +280,9 @@ const LayoutSlug = props => {
                   {/* 分享 */}
                   <ShareBar post={post} />
 
-                  {/* 版权说明 */}
-                /* {post?.type === 'Post' && <ArticleCopyright {...props} />} */
                    
                 </article>
 
-               /* <hr className='border-dashed' /> */
 
                 {/* 评论互动 */}
                 <div className='overflow-x-auto dark:bg-hexo-black-gray px-3'>
@@ -309,6 +306,14 @@ const LayoutSlug = props => {
     </>
   )
 }
+
+/**
+ *  { 版权说明 }
+ *   {post?.type === 'Post' && <ArticleCopyright {...props} />} 
+ * <hr className='border-dashed' />
+ */
+
+
 
 /**
  * 404
