@@ -32,11 +32,11 @@ export const ArticleInfo = props => {
               {locale.COMMON.POST_TIME}: {post?.publishDay}
             </Link>
             <span className='whitespace-nowrap'>
-              <i className='far fa-calendar-check fa-fw' />
+              <i className='far fa-calendar-check fa-fw' />{' '}
               {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}
             </span>
             <span className='hidden busuanzi_container_page_pv font-light mr-2'>
-              <i className='mr-1 fas fa-eye' />
+              <i className='mr-1 fas fa-eye' />{' '}
               <span className='busuanzi_value_page_pv' />
             </span>
             <WordCount wordCount={post.wordCount} readTime={post.readTime} />
