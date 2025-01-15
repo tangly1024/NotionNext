@@ -34,9 +34,9 @@ export const MenuItemCollapse = ({ link }) => {
       <div
         onClick={toggleShow}
         className={
-          'py-2 px-5 duration-300 text-base justify-between hover:bg-indigo-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+          'py-2 px-5 duration-300 text-base justify-between hover:bg-blue-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
           (selected
-            ? 'bg-indigo-500 text-white '
+            ? 'bg-blue-500 text-white '
             : ' text-black dark:text-white ')
         }>
         {!hasSubMenu && (
@@ -72,7 +72,7 @@ export const MenuItemCollapse = ({ link }) => {
             return (
               <div
                 key={index}
-                className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-indigo-500 dark:hover:bg-indigo-500 hover:text-white tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
+                className='cursor-pointer whitespace-nowrap dark:text-gray-200  w-full font-extralight dark:bg-black text-left px-5 justify-start bg-gray-100  hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
                 <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm'>
                     <i className={`${sLink.icon} w-4 mr-3 text-center`} />
