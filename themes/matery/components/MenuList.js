@@ -63,7 +63,7 @@ const MenuList = props => {
               title={link.href}
               href={link.href}
               className={
-                'py-1.5 px-5 text-base justify-between hover:bg-indigo-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
+                'py-1.5 px-5 text-base justify-between hover:bg-blue-400 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center ' +
                 (selected ? 'bg-gray-200 text-black' : ' ')
               }>
               <div className='my-auto items-center justify-center flex '>
