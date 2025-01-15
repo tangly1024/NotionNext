@@ -8,7 +8,7 @@ const Announcement = ({ notice }) => {
   if (!notice || Object.keys(notice).length === 0) {
     return <></>
   }
-  return <div className="px-3 w-full">
+  return <div className="px-3 w-full mt-2">
         <div
             data-aos="zoom-in"
             data-aos-duration="500"
