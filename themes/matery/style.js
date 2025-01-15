@@ -32,7 +32,8 @@ const Style = () => {
           rgba(0, 0, 0, 0.5) 100%
         );
       }
-
+      //theme color #4338ca
+      
       // 自定义滚动条
       ::-webkit-scrollbar {
         width: 5px;
@@ -44,12 +45,12 @@ const Style = () => {
       }
 
       ::-webkit-scrollbar-thumb {
-        background-color: #4338ca;
+        background-color: #3864ca;
       }
 
       * {
         scrollbar-width: thin;
-        scrollbar-color: #4338ca transparent;
+        scrollbar-color: #3864ca transparent;
       }
     `}</style>
   )
