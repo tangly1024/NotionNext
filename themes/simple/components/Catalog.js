@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
-import { useGlobal } from '@/lib/global'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * 目录导航组件
@@ -40,7 +40,9 @@ const Catalog = ({ post }) => {
         break
       }
       setActiveSection(currentSectionId)
-      const index = post?.toc?.findIndex(obj => uuidToId(obj.id) === currentSectionId)
+      const index = post?.toc?.findIndex(
+        obj => uuidToId(obj.id) === currentSectionId
+      )
       tRef?.current?.scrollTo({ top: 28 * index, behavior: 'smooth' })
     }, throttleMs)
 
@@ -56,34 +58,40 @@ const Catalog = ({ post }) => {
     return <></>
   }
 
-  return <div className='px-3 '>
-        <div className='dark:text-white mb-2'>
-            <i className='mr-1 fas fa-stream' />{locale.COMMON.TABLE_OF_CONTENTS}
-        </div>
+  return (
+    <div className='px-3 '>
+      <div className='dark:text-white mb-2'>
+        <i className='mr-1 fas fa-stream' />
+        {locale.COMMON.TABLE_OF_CONTENTS}
+      </div>
 
-        <div className='overflow-y-auto overscroll-none max-h-36 lg:max-h-96 scroll-hidden' ref={tRef}>
-            <nav className='h-full  text-black'>
-                {post?.toc?.map((tocItem) => {
-                  const id = uuidToId(tocItem.id)
-                  return (
-                        <a
-                            key={id}
-                            href={`#${id}`}
-                            className={`notion-table-of-contents-item duration-300 transform dark:text-gray-200
-            notion-table-of-contents-item-indent-level-${tocItem.indentLevel} `}
-                        >
-                            <span style={{ display: 'inline-block', marginLeft: tocItem.indentLevel * 16 }}
-                                className={`${activeSection === id && ' font-bold text-red-600 underline overflow-ellipsis truncate'}`}
-                            >
-                                {tocItem.text}
-                            </span>
-                        </a>
-                  )
-                })}
-            </nav>
-
-        </div>
+      <div
+        className='overflow-y-auto overscroll-none max-h-36 lg:max-h-96 scroll-hidden'
+        ref={tRef}>
+        <nav className='h-full  text-black'>
+          {post?.toc?.map(tocItem => {
+            const id = uuidToId(tocItem.id)
+            return (
+              <a
+                key={id}
+                href={`#${id}`}
+                className={`${activeSection === id && 'dark:border-white border-red-700 text-red-700 font-bold'} hover:font-semibold border-l pl-4 block hover:text-red-600 border-lduration-300 transform dark:text-red-400 dark:border-red-400
+                notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    marginLeft: tocItem.indentLevel * 16
+                  }}
+                  className={`truncate ${activeSection === id ? ' font-bold text-red-600 dark:text-white underline' : ''}`}>
+                  {tocItem.text}
+                </span>
+              </a>
+            )
+          })}
+        </nav>
+      </div>
     </div>
+  )
 }
 
 export default Catalog
