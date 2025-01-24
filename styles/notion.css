@@ -555,6 +555,7 @@ summary > .notion-h {
   width: 100%;
   margin: 6px 0;
   padding: 0;
+  border-top: 1px solid #e5e7eb !important;
   /* border-bottom-width: 1px; */
 }
 
@@ -1681,8 +1682,8 @@ code[class*='language-'] {
   color: inherit;
 }
 
-svg.notion-page-icon {
-  /* @apply hidden;*/
+notion-callout svg.notion-page-icon {
+  @apply hidden;
 }
 
 svg + .notion-page-title-text {

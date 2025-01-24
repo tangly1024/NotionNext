@@ -23,26 +23,6 @@ export const MessageForm = () => {
     }))
   }
 
-  //   useEffect(() => {
-  //     const form = formRef.current
-  //     const handleSubmit = (e) => {
-  //       e.preventDefault()
-  //       submitComments(formData).then(response => {
-  //         console.log('Subscription succeeded:', response)
-  //         // 在此处添加成功订阅后的操作
-  //         setSuccess(true)
-  //       })
-  //         .catch(error => {
-  //           console.error('Subscription failed:', error)
-  //           // 在此处添加订阅失败后的操作
-  //         })
-  //     }
-  //     form?.addEventListener('submit', handleSubmit)
-  //     return () => {
-  //       form?.removeEventListener('submit', handleSubmit)
-  //     }
-  //   }, [submitComments])
-
   return (
     <>
       <h3 className='mb-8 text-2xl font-semibold text-dark dark:text-white md:text-[28px] md:leading-[1.42]'>

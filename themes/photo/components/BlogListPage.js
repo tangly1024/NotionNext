@@ -10,7 +10,7 @@ export const BlogListPage = props => {
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const totalPage = Math.ceil(postCount / POSTS_PER_PAGE)
 
-  const showPageCover = siteConfig('MOVIE_POST_LIST_COVER', null, CONFIG)
+  const showPageCover = siteConfig('PHOTO_POST_LIST_COVER', null, CONFIG)
   if (!posts || posts.length === 0) {
     return null
   }

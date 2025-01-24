@@ -13,7 +13,7 @@ export default function BlogRecommend(props) {
   const { recommendPosts, siteInfo } = props
   const { locale } = useGlobal()
   if (
-    !siteConfig('MOVIE_ARTICLE_RECOMMEND', null, CONFIG) ||
+    !siteConfig('PHOTO_ARTICLE_RECOMMEND', null, CONFIG) ||
     !recommendPosts ||
     recommendPosts.length === 0
   ) {
