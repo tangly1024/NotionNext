@@ -62,7 +62,8 @@
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {
-    "axios": ">=0.21.1"
+    "axios": ">=0.21.1",
+    "cross-env": "npm:cross-env@^7.0.3"
   },
   "bugs": {
     "url": "https://github.com/tangly/NotionNext/issues",
