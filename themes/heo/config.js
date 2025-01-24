@@ -1,59 +1,63 @@
 const CONFIG = {
-  HEO_HOME_POST_TWO_COLS: true, // 首页博客两列显示，若为false则只显示一列
+  HEO_HOME_POST_TWO_COLS: false, // 首页博客两列显示，若为false则只显示一列
   HEO_LOADING_COVER: true, // 页面加载的遮罩动画
 
   HEO_HOME_BANNER_ENABLE: true,
 
-  HEO_SITE_CREATE_TIME: '2021-09-21', // 建站日期，用于计算网站运行的第几天
+  HEO_SITE_CREATE_TIME: '2025-01-23', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
-    { title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
+    { title: '欢迎来到我的博客❤' },
+    { title: '我希望事情是本来的样子而不是我臆想的样子。', url: 'https://space.bilibili.com/334597217' },
+    { title: '你和你喜欢的人一起坐过过山车吗？', url: 'https://space.bilibili.com/334597217' },
+    { title: '专注于眼前的事物吧。', url: 'https://space.bilibili.com/334597217' },
+    { title: '放下助人情节，尊重他人命运。', url: 'https://space.bilibili.com/334597217' },
+    { title: '童话也是生活的一部分。', url: 'https://space.bilibili.com/334597217' },
+    { title: '欢迎来我的Bilibili主页逛逛 :)', url: 'https://space.bilibili.com/334597217' }
   ],
 
   // 英雄区左右侧组件颠倒位置
   HEO_HERO_REVERSE: false,
   // 博客主体区左右侧组件颠倒位置
-  HEO_HERO_BODY_REVERSE: false,
+  HEO_HERO_BODY_REVERSE: true,
 
   // 英雄区(首页顶部大卡)
-  HEO_HERO_TITLE_1: '分享编程',
-  HEO_HERO_TITLE_2: '与思维认知',
-  HEO_HERO_TITLE_3: 'TANGLY1024.COM',
-  HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: 'NotionNext4.0 轻松定制主题',
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_1: '分享电子生活',
+  HEO_HERO_TITLE_2: '尽己所能记录问题与解决方案',
+  HEO_HERO_TITLE_3: 'from 2025',
+  HEO_HERO_TITLE_4: 'XXX',
+  HEO_HERO_TITLE_5: 'XXX',
+  HEO_HERO_TITLE_LINK: 'https://www.barryzed.top',
   // 英雄区遮罩文字
-  HEO_HERO_COVER_TITLE: '随便逛逛',
+  HEO_HERO_COVER_TITLE: '随便逛逛->',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
-  HEO_HERO_CATEGORY_2: { title: '热门文章', url: '/tag/热门文章' },
-  HEO_HERO_CATEGORY_3: { title: '实用教程', url: '/tag/实用教程' },
+  HEO_HERO_CATEGORY_1: { title: '教程', url: '/tag/教程' },
+  HEO_HERO_CATEGORY_2: { title: '游戏', url: '/tag/游戏' },
+  HEO_HERO_CATEGORY_3: { title: 'XXX', url: '/tag/XXX' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
-  HEO_HERO_RECOMMEND_POST_TAG: '推荐',
+  HEO_HERO_RECOMMEND_POST_TAG: 'Latest',
   HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: false, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
   //   HERO_RECOMMEND_COVER: 'https://cdn.pixabay.com/photo/2015/10/30/20/13/sunrise-1014712_1280.jpg', // 英雄区右侧图片
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
-    '🔍 分享与热心帮助',
-    '🤝 专修交互与设计',
-    '🏃 脚踏实地行动派',
-    '🏠 智能家居小能手',
-    '🤖️ 数码科技爱好者',
-    '🧱 团队小组发动机'
+    '1',
+    '2',
+    '3',
+    '4',
+    '5'
   ],
 
   // 个人资料底部按钮
-  HEO_INFO_CARD_URL1: '/about',
-  HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'https://github.com/tangly1024',
-  HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://www.tangly1024.com',
+  HEO_INFO_CARD_URL1: 'xxx',
+  HEO_INFO_CARD_ICON1: 'fa-solid fa-music',
+  HEO_INFO_CARD_URL2: 'https://space.bilibili.com/334597217',
+  HEO_INFO_CARD_ICON2: 'fa-brands fa-bilibili',
+  HEO_INFO_CARD_URL3: 'https://space.bilibili.com/334597217',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
@@ -116,7 +120,7 @@ const CONFIG = {
     }
   ],
 
-  HEO_SOCIAL_CARD: true, // 是否显示右侧，点击加入社群按钮
+  HEO_SOCIAL_CARD: false, // 是否显示右侧，点击加入社群按钮
   HEO_SOCIAL_CARD_TITLE_1: '交流频道',
   HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
@@ -125,8 +129,8 @@ const CONFIG = {
   // 底部统计面板文案
   HEO_POST_COUNT_TITLE: '文章数:',
   HEO_SITE_TIME_TITLE: '建站天数:',
-  HEO_SITE_VISIT_TITLE: '访问量:',
-  HEO_SITE_VISITOR_TITLE: '访客数:',
+  //HEO_SITE_VISIT_TITLE: '访问量:',
+  //HEO_SITE_VISITOR_TITLE: '访客数:',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置
