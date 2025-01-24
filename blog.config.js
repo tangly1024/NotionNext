@@ -57,12 +57,12 @@ const BLOG = {
 
   // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
   LAYOUT_SIDEBAR_REVERSE:
-    process.env.NEXT_PUBLIC_LAYOUT_SIDEBAR_REVERSE || false,
+    process.env.NEXT_PUBLIC_LAYOUT_SIDEBAR_REVERSE || true,
 
   // 欢迎语打字效果,Hexo,Matery主题支持, 英文逗号隔开多个欢迎语。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
-    '我希望事情是本来的样子而不是我臆想的样子。,放下助人情节，尊重他人命运。,放下个人素质，享受缺德人生。,童话也是生活的一部分。,你和你喜欢的人一起坐过过山车吗？,欸？这狗怎么上来的？',
+    '我希望事情是本来的样子而不是我臆想的样子。,放下助人情节，尊重他人命运。,童话也是生活的一部分。,你和你喜欢的人一起坐过过山车吗？,欸？这狗怎么上来的？',
 
   // uuid重定向至 slug
   UUID_REDIRECT: process.env.UUID_REDIRECT || false
