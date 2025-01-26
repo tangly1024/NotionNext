@@ -45,7 +45,7 @@ const PostItemCardTop = ({ post, showSummary }) => {
             </Link>
           )}
 
-        <div className='flex py-2 mr-2 items-center'>
+        <div className='flex py-2 space-x-1 items-center'>
           {siteConfig('MAGZINE_POST_LIST_CATEGORY') && (
             <CategoryItem category={post?.category} />
           )}
