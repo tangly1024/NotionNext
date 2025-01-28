@@ -23,7 +23,7 @@ const BLOG = {
   BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
 
   // RSS订阅
-  ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
+  ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || false, // 是否开启RSS订阅功能
 
   // 其它复杂配置
   // 原配置文件过长，且并非所有人都会用到，故此将配置拆分到/conf/目录下, 按需找到对应文件并修改即可
@@ -62,7 +62,7 @@ const BLOG = {
   // 欢迎语打字效果,Hexo,Matery主题支持, 英文逗号隔开多个欢迎语。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
-    '我希望事情是本来的样子而不是我臆想的样子。,放下助人情节，尊重他人命运。,童话也是生活的一部分。,你和你喜欢的人一起坐过过山车吗？,欸？这狗怎么上来的？',
+    '我希望事情是本来的样子而不是我臆想的样子。,放下助人情节，尊重他人命运。,童话也是生活的一部分。,你和你喜欢的人一起坐过摩天轮吗？,欸？这狗怎么上来的？',
 
   // uuid重定向至 slug
   UUID_REDIRECT: process.env.UUID_REDIRECT || false
