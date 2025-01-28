@@ -226,7 +226,14 @@ const BLOG = {
       url: 'http://music.163.com/song/media/outer/url?id=22813882.mp3',
       cover:
             'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
-    },    
+    },
+     {
+      name: 'Freak',
+      artist: 'ichika Nito',
+      url: 'http://music.163.com/song/media/outer/url?id=2606425151.mp3',
+      cover:
+            'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },   
     {
       name: 'Be What You Wanna Be',
       artist: 'Darin',
