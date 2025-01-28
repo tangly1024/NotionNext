@@ -221,6 +221,13 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
      {
+      name: '灰色の水曜日',
+      artist: 'トリプルH',
+      url: 'http://music.163.com/song/media/outer/url?id=22813882.mp3',
+      cover:
+            'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },    
+    {
       name: 'Be What You Wanna Be',
       artist: 'Darin',
       url: 'https://ri-sycdn.kuwo.cn/a155bfa6fa8dc7238145f11273e9131a/6749b033/resource/n2/80/89/2000571795.mp3',
