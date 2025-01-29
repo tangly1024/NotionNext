@@ -13,6 +13,7 @@ const CONFIG = {
     { title: '你和你喜欢的人一起坐过摩天轮吗？', url: 'https://space.bilibili.com/334597217' },
     { title: '放下助人情节，尊重他人命运。', url: 'https://space.bilibili.com/334597217' },
     { title: '童话也是生活的一部分。', url: 'https://space.bilibili.com/334597217' },
+    { title: '喝的多了兑了水的水也会醉。', url: 'https://space.bilibili.com/334597217' },
     { title: '欢迎来我的Bilibili主页逛逛 :)', url: 'https://space.bilibili.com/334597217' }
   ],
 
