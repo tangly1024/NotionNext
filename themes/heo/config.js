@@ -9,11 +9,11 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: '欢迎来到我的博客❤' },
-    { title: '我希望事情是本来的样子而不是我臆想的样子。', url: 'https://space.bilibili.com/334597217' },
-    { title: '你和你喜欢的人一起坐过摩天轮吗？', url: 'https://space.bilibili.com/334597217' },
-    { title: '放下助人情节，尊重他人命运。', url: 'https://space.bilibili.com/334597217' },
-    { title: '童话也是生活的一部分。', url: 'https://space.bilibili.com/334597217' },
-    { title: '喝的多了兑了水的水也会醉。', url: 'https://space.bilibili.com/334597217' },
+    { title: '我希望事情是本来的样子而不是我臆想的样子。', url: '' },
+    { title: '你和你喜欢的人一起坐过摩天轮吗？', url: '' },
+    { title: '放下助人情节，尊重他人命运。', url: '' },
+    { title: '童话也是生活的一部分。', url: '' },
+    { title: '喝的多了兑了水的水也会醉。', url: '' },
     { title: '欢迎来我的Bilibili主页逛逛 :)', url: 'https://space.bilibili.com/334597217' }
   ],
 
