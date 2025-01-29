@@ -30,12 +30,12 @@ const CONFIG = {
   HEO_HERO_TITLE_5: 'XXX',
   HEO_HERO_TITLE_LINK: 'https://www.barryzed.top',
   // 英雄区遮罩文字
-  HEO_HERO_COVER_TITLE: '随便逛逛->',
+  HEO_HERO_COVER_TITLE: '随便逛逛？->',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '教程', url: '/tag/教程' },
   HEO_HERO_CATEGORY_2: { title: '游戏', url: '/tag/游戏' },
-  HEO_HERO_CATEGORY_3: { title: 'XXX', url: '/tag/XXX' },
+  HEO_HERO_CATEGORY_3: { title: '编程', url: '/tag/编程' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: 'Latest',
@@ -51,7 +51,8 @@ const CONFIG = {
     '会一点launchpad并在精进的',
     '就爱自己瞎搞，还啥都想搞的',
     '一直想考驾照但科一还没过的',
-    '单身的T_T'
+    '单身的T_T',
+    '超级喜欢收集各种OST的'
   ],
 
   // 个人资料底部按钮
