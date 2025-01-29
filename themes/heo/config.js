@@ -45,16 +45,18 @@ const CONFIG = {
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
     '你好！我是',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5'
+    'Apex Legends里爱玩探路者的',
+    '爱玩各种单机游戏的',
+    '爱打架子鼓的',
+    '会一点launchpad并在精进的',
+    '就爱自己瞎搞，还啥都想搞的',
+    '一直想考驾照但科一还没过的',
+    '单身的T_T'
   ],
 
   // 个人资料底部按钮
-  HEO_INFO_CARD_URL1: 'xxx',
-  HEO_INFO_CARD_ICON1: 'fa-solid fa-music',
+  HEO_INFO_CARD_URL1: 'https://www.barryzed.top/article/record_info',
+  HEO_INFO_CARD_ICON1: 'fa-duotone fa-solid fa-chart-pie',
   HEO_INFO_CARD_URL2: 'https://space.bilibili.com/334597217',
   HEO_INFO_CARD_ICON2: 'fa-brands fa-bilibili',
   HEO_INFO_CARD_URL3: 'https://space.bilibili.com/334597217',
