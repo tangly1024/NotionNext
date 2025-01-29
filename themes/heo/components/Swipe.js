@@ -12,7 +12,7 @@ export function Swipe({ items }) {
 
   const handleClick = item => {
     if (isBrowser) {
-      window.open(item?.url)
+      window.open(isBrowser && item?.url)
     }
   }
 
