@@ -14,6 +14,7 @@ const CONFIG = {
     { title: '放下助人情节，尊重他人命运。'},
     { title: '童话也是生活的一部分。'},
     { title: '喝的多了兑了水的水也会醉。'},
+    { title: '墨小菊天下第一！'},
     { title: '欢迎来我的Bilibili主页逛逛 :)', url: 'https://space.bilibili.com/334597217' }
   ],
 
