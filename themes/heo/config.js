@@ -45,7 +45,7 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好！我是',
+    'Hi！我是',
     'Apex Legends里爱玩探路者的',
     '爱玩各种单机游戏的',
     '爱打架子鼓的',
