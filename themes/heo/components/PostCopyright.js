@@ -12,14 +12,27 @@ import CONFIG from '../config'
 export default function PostCopyright() {
   const router = useRouter()
   const [path, setPath] = useState(siteConfig('LINK') + router.asPath)
+  const [copied, setCopied] = useState(false) // 复制成功提示
+
   useEffect(() => {
     setPath(window.location.href)
-  })
+  }, [])
 
   const { locale } = useGlobal()
 
   if (!siteConfig('HEO_ARTICLE_COPYRIGHT', null, CONFIG)) {
     return <></>
+  }
+
+  // 复制链接的函数
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(path)
+      setCopied(true) // 设置复制成功
+      setTimeout(() => setCopied(false), 2000) // 2秒后隐藏提示
+    } catch (error) {
+      console.error('复制失败:(')
+    }
   }
 
   return (
@@ -33,11 +46,13 @@ export default function PostCopyright() {
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.URL}:</strong>
-          <a
-            className='whitespace-normal break-words hover:underline'
-            href={path}>
+          <button
+            className='whitespace-normal break-words hover:underline text-blue-500'
+            onClick={handleCopy}
+          >
             {path}
-          </a>
+          </button>
+          {copied && <span className='ml-2 text-green-500'>✅ 链接复制成功!</span>}
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
