@@ -50,7 +50,7 @@ export default function PostCopyright() {
             className='whitespace-normal break-words hover:underline text-blue-500'
             onClick={handleCopy}
           >
-            {path}
+            {path} <span className='text-gray-500'>(单击复制链接)</span>
           </button>
           {copied && <span className='ml-2 text-green-500'>✅ 链接复制成功!</span>}
         </li>
