@@ -31,7 +31,7 @@ export default function PostCopyright() {
       setCopied(true) // 设置复制成功
       setTimeout(() => setCopied(false), 2000) // 2秒后隐藏提示
     } catch (error) {
-      console.error('复制失败:(', error)
+      console.error('复制失败:(')
     }
   }
 
