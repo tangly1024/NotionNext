@@ -11,12 +11,12 @@ import CONFIG from '../config'
  */
 export default function PostCopyright() {
   const router = useRouter()
-  const [path, setPath] = useState(siteConfig('LINK') + router.asPath)
+  const [path, setPath] = useState('') // 初始状态为空
   const [copied, setCopied] = useState(false) // 复制成功提示
 
   useEffect(() => {
-    setPath(window.location.href)
-  }, [])
+    setPath(window.location.href) // 每次路由变化时更新 URL
+  }, [router.asPath]) // 监听 router.asPath
 
   const { locale } = useGlobal()
 
@@ -31,7 +31,7 @@ export default function PostCopyright() {
       setCopied(true) // 设置复制成功
       setTimeout(() => setCopied(false), 2000) // 2秒后隐藏提示
     } catch (error) {
-      console.error('复制失败:(')
+      console.error('复制失败:(', error)
     }
   }
 
