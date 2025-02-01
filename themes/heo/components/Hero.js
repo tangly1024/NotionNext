@@ -269,47 +269,24 @@ function TopGroup(props) {
  * 获取推荐置顶文章
  */
 function getTopPosts({ latestPosts, allNavPages }) {
-  // 默认展示最近更新
-  if (
-    !siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) ||
-    siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG) === ''
-  ) {
-    return latestPosts
-  }
-
-  // 显示包含‘推荐’标签的文章
-  let sortPosts = []
-
-  // 排序方式
-  if (
-    JSON.parse(
-      siteConfig('HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME', null, CONFIG)
-    )
-  ) {
-    sortPosts = Object.create(allNavPages).sort((a, b) => {
-      const dateA = new Date(a?.lastEditedDate)
-      const dateB = new Date(b?.lastEditedDate)
-      return dateB - dateA
-    })
-  } else {
-    sortPosts = Object.create(allNavPages)
-  }
+  let sortPosts = [...allNavPages].sort((a, b) => {
+    const dateA = new Date(a?.lastEditedDate)
+    const dateB = new Date(b?.lastEditedDate)
+    return dateB - dateA  // 按更新时间降序排序
+  })
 
   const topPosts = []
   for (const post of sortPosts) {
-    if (topPosts.length === 6) {
-      break
-    }
-    // 查找标签
+    if (topPosts.length === 6) break
     if (
-      post?.tags?.indexOf(
-        siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG)
-      ) >= 0
+      post?.tags?.includes(siteConfig('HEO_HERO_RECOMMEND_POST_TAG', null, CONFIG))
     ) {
       topPosts.push(post)
     }
   }
   return topPosts
+}
+
 }
 
 /**
