@@ -289,7 +289,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
     sortPosts = Object.create(allNavPages).sort((a, b) => {
       const dateA = new Date(a?.lastEditedDate)
       const dateB = new Date(b?.lastEditedDate)
-      return dateA - dateB
+      return dateB - dateA
     })
   } else {
     sortPosts = Object.create(allNavPages)
