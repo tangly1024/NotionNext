@@ -35,7 +35,7 @@ export default function SideRight(props) {
   const sortedTags = tagOptions?.slice(0, 24) || []
    console.log('SideRight 组件被渲染， props:', props)  //调试信息
   return (
-    <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full border border-blue-500'>
+    <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full overflow-y-auto'> {/* 移除边框 */}
       <InfoCard {...props} className='w-72 wow fadeInUp' />
 
       <div className='sticky top-20 space-y-4'>
