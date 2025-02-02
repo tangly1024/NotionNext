@@ -60,8 +60,8 @@ const Style = () => {
       }
 
        /* 添加以下 CSS */
-    .scrollbar-hidden::-webkit-scrollbar {
-      display: none;
+    html body ::-webkit-scrollbar {
+        display: none;
     }
     `}</style>
   )
