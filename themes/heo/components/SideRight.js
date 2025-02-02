@@ -1,3 +1,4 @@
+// components/SideRight.js
 import Live2D from '@/components/Live2D'
 import dynamic from 'next/dynamic'
 import { AnalyticsCard } from './AnalyticsCard'
@@ -7,6 +8,7 @@ import { InfoCard } from './InfoCard'
 import LatestPostsGroupMini from './LatestPostsGroupMini'
 import TagGroups from './TagGroups'
 import TouchMeCard from './TouchMeCard'
+import DouyinHotList from './DouyinHotList.js'; //  <-- 这里的路径应该为 './DouyinHotList.js'
 
 const FaceBookPage = dynamic(
   () => {
@@ -60,7 +62,9 @@ export default function SideRight(props) {
         {rightAreaSlot}
 
         <FaceBookPage />
+          <DouyinHotList/> {/* 渲染 DouyinHotList 组件 */}
         <Live2D />
+
 
         {/* 标签和成绩 */}
         <Card
