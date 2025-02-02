@@ -37,7 +37,7 @@ const DouyinHotList = () => {
   if (loading) {
     console.log("DouyinHotList is loading")
     return (
-      <Card className='bg-white dark:bg-[#1e1e1e] dark:text-white p-4 rounded-xl border dark:border-gray-700'>
+      <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl p-4'>
         <p>加载中...</p>
       </Card>
     );
@@ -46,9 +46,9 @@ const DouyinHotList = () => {
   if (error) {
     console.log("DouyinHotList has error:", error)
     return (
-      <Card className='bg-white dark:bg-[#1e1e1e] dark:text-white p-4 rounded-xl border dark:border-gray-700'>
+        <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl p-4'>
         <p>加载失败,请稍后重试。</p>
-      </Card>
+        </Card>
     );
   }
 
@@ -57,22 +57,22 @@ const DouyinHotList = () => {
   const slicedHotList = hotList.slice(0, 10);
 
   return (
-    <Card className='bg-white dark:bg-[#1e1e1e] dark:text-white rounded-xl border dark:border-gray-700'>
-      <div className='flex items-center p-4 border-b dark:border-gray-700'>
-        <i className="fa-brands fa-tiktok text-xl mr-2" />
-        <h2 className="text-xl font-bold">抖音热点榜</h2>
-      </div>
-      <ul className="p-2 ">
-        {slicedHotList.map((item, index) => (
-          <li key={index} className="py-2 border-b dark:border-gray-700">
-            <a href={item.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 dark:hover:text-yellow-600">
-              <span className="text-gray-500  mr-2">{index + 1}.</span>
-              {item.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </Card>
+      <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl '>
+          <div className='flex items-center p-4 border-b dark:border-gray-700'>
+              <i className="fa-brands fa-tiktok text-xl mr-2" />
+              <h2 className="text-xl font-bold">抖音热点榜</h2>
+          </div>
+          <ul className="p-2 ">
+              {slicedHotList.map((item, index) => (
+                  <li key={index} className="py-2 border-b dark:border-gray-700">
+                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 dark:hover:text-yellow-600">
+                          <span className="text-gray-500  mr-2">{index + 1}.</span>
+                          {item.title}
+                      </a>
+                  </li>
+              ))}
+          </ul>
+      </Card>
   );
 };
 
