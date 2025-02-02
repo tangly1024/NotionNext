@@ -8,8 +8,8 @@ const DouyinHotList = () => {
     const [error, setError] = useState(null);
     const scrollRef = useRef(null);
     const containerRef = useRef(null);
+      const animationRef = useRef(null);
     const [isScrolling, setIsScrolling] = useState(false);
-
 
     useEffect(() => {
         console.log('useEffect in DouyinHotList is executed');
@@ -39,43 +39,45 @@ const DouyinHotList = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-          console.log("循环滚动 useEffect 执行");
-        if (scrollRef.current && hotList && hotList.length > 0) {
+   useEffect(() => {
+        console.log("循环滚动 useEffect 执行");
+       if (scrollRef.current && hotList && hotList.length > 0  && containerRef.current) {
             const scrollContainer = scrollRef.current;
-            const scrollHeight = scrollContainer.scrollHeight;
-            const containerHeight = containerRef.current.offsetHeight;
-
-
+           const scrollHeight = scrollContainer.scrollHeight;
+           const containerHeight = containerRef.current.offsetHeight;
             if(containerHeight){
-                  let currentScroll = 0;
-                  const animationSpeed = 20;
-                 const animateScroll = () => {
+                let currentScroll = 0;
+                const animationSpeed = 20;
+
+                const animateScroll = () => {
+                    if(!scrollRef.current) return;
                     currentScroll += 1;
                     scrollContainer.scrollTop = currentScroll;
-                    if(currentScroll > scrollHeight - containerHeight){
+
+                     if(currentScroll >= scrollHeight - containerHeight){
                       currentScroll = 0;
-                     scrollContainer.scrollTop = 0;
-                     }
-                  requestAnimationFrame(animateScroll);
+                       scrollContainer.scrollTop = 0;
+                       }
+                animationRef.current = requestAnimationFrame(animateScroll);
+
                 };
-                   animateScroll();
+               animationRef.current = requestAnimationFrame(animateScroll);
            scrollContainer.addEventListener('scroll', handleScroll);
                 return () => {
-                 scrollContainer.removeEventListener('scroll', handleScroll)
-                  };
+                   scrollContainer.removeEventListener('scroll', handleScroll)
+                   cancelAnimationFrame(animationRef.current)
+                };
             }
-
-       }
+        }
     }, [hotList]);
 
 
     const handleScroll = () => {
-      setIsScrolling(true);
-         clearTimeout(window.scrollTimer)
-      window.scrollTimer = setTimeout(() => {
-      setIsScrolling(false)
-        }, 1000);
+       setIsScrolling(true);
+           clearTimeout(window.scrollTimer)
+        window.scrollTimer = setTimeout(() => {
+        setIsScrolling(false)
+           }, 1000);
    }
 
     if (loading) {
@@ -107,7 +109,7 @@ const DouyinHotList = () => {
                 <i className="fa-brands fa-tiktok text-xl mr-2" />
                 <h2 className="text-xl font-bold">抖音热点榜</h2>
             </div>
-            <div className={`relative overflow-y-hidden  ${isScrolling ? 'scrollbar-visible' : 'scrollbar-hidden'}`} style={{ maxHeight: '250px' }} ref={containerRef}>
+            <div className={`relative overflow-y-auto  ${isScrolling ? 'scrollbar-visible' : 'scrollbar-hidden'}`} style={{ maxHeight: '250px' }} ref={containerRef}>
                 <ul className="relative" ref={scrollRef}>
                     {slicedHotList.map((item, index) => (
                         <li key={index} className="py-2 border-b dark:border-gray-700 " style={{ whiteSpace: 'nowrap' }}>
