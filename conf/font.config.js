@@ -46,7 +46,8 @@ module.exports = {
     'serif',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
-    '"Apple Color Emoji"'
+    '"Apple Color Emoji"',
+    '"Noto Color Emoji"' 
   ],
   FONT_AWESOME:
     process.env.NEXT_PUBLIC_FONT_AWESOME_PATH ||
