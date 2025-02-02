@@ -43,7 +43,20 @@ const Style = () => {
       .scroll-hidden::-webkit-scrollbar {
         display: none;
       }
+      .scrollbar-visible::-webkit-scrollbar {
+        display: block;
+      }
 
+      .scrollbar-visible::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      .scrollbar-visible::-webkit-scrollbar-thumb {
+          background: #888;
+            border-radius: 10px;
+      }
+      .scrollbar-visible::-webkit-scrollbar-thumb:hover {
+          background: #555;
+      }
       * {
         box-sizing: border-box;
       }
@@ -61,9 +74,13 @@ const Style = () => {
           transform: translateX(-50%);
         }
       }
+
+       /* 添加以下 CSS */
+    .scrollbar-hidden::-webkit-scrollbar {
+      display: none;
+    }
     `}</style>
   )
 }
 
 export { Style }
-
