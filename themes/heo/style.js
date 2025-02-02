@@ -61,7 +61,7 @@ const Style = () => {
 
        /* 添加以下 CSS */
     html body ::-webkit-scrollbar {
-        display: none;
+      display: none;
     }
     `}</style>
   )
