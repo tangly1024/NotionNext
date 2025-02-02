@@ -16,7 +16,7 @@ const DouyinHotList = () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch('https://api.98dou.cn/api/hotlist?type=toutiao');
+                const response = await fetch('https://api.98dou.cn/api/hotlist?type=douyin');
                 console.log('API Response:', response);
 
                 if (!response.ok) {
@@ -42,24 +42,25 @@ const DouyinHotList = () => {
         if (scrollRef.current && hotList && hotList.length > 0) {
             const scrollContainer = scrollRef.current;
             const scrollHeight = scrollContainer.scrollHeight;
-             const containerHeight = containerRef.current?.offsetHeight;
+            const containerHeight = containerRef.current.offsetHeight;
 
             if(containerHeight){
-              let currentScroll = 0;
-              const animationSpeed = 20; // Adjust as needed
+                  let currentScroll = 0;
+                  const animationSpeed = 20; // Adjust as needed
 
-            const animateScroll = () => {
-                currentScroll += 1;
-                scrollContainer.scrollTop = currentScroll;
-                  if (currentScroll > scrollHeight - containerHeight) {
-                      currentScroll = 0;
-                      scrollContainer.scrollTop = 0;
-                  }
-                requestAnimationFrame(animateScroll);
-            };
+                 const animateScroll = () => {
+                        currentScroll += 1;
+                        scrollContainer.scrollTop = currentScroll;
+                      if(currentScroll >= scrollHeight ){
+                         currentScroll = 0;
+                         scrollContainer.scrollTop = 0;
+                       }
 
-              animateScroll();
+                    requestAnimationFrame(animateScroll);
+                };
+                animateScroll()
             }
+
         }
     }, [hotList]);
 
@@ -92,10 +93,10 @@ const DouyinHotList = () => {
                 <i className="fa-brands fa-tiktok text-xl mr-2" />
                 <h2 className="text-xl font-bold">抖音热点榜</h2>
             </div>
-            <div className="overflow-y-scroll relative" style={{ maxHeight: '300px' }} ref={containerRef}>
+            <div className="overflow-y-hidden relative" style={{ maxHeight: '250px' }} ref={containerRef}>
                 <ul className="relative" ref={scrollRef}>
                     {hotList.map((item, index) => (
-                        <li key={index} className="py-2 border-b dark:border-gray-700 h-10">
+                        <li key={index} className="py-2 border-b dark:border-gray-700 " style={{ whiteSpace: 'nowrap' }}>
                             <a href={item.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 dark:hover:text-yellow-600">
                                 <span className="text-gray-500 mr-2">{index + 1}.</span>
                                 {item.title}
