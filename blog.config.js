@@ -221,13 +221,20 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
      {
+      name: 'Nostalgia',
+      artist: '佐藤天平',
+      url: 'http://music.163.com/song/media/outer/url?id=1416570762.mp3',
+      cover:
+            'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
       name: '灰色の水曜日',
       artist: 'トリプルH',
       url: 'http://music.163.com/song/media/outer/url?id=22813882.mp3',
       cover:
             'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
     },
-     {
+    {
       name: 'Freak',
       artist: 'ichika Nito',
       url: 'http://music.163.com/song/media/outer/url?id=2606425151.mp3',
