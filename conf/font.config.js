@@ -32,7 +32,8 @@ module.exports = {
     '"Source Han Sans SC"',
     'Arial',
     'sans-serif',
-    '"Apple Color Emoji"'
+    '"Apple Color Emoji"',
+    '"Noto Color Emoji"'
   ],
   // 衬线字体 例如'"LXGW WenKai"'
   FONT_SERIF: [
