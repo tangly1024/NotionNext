@@ -8,8 +8,7 @@ const DouyinHotList = () => {
     const [error, setError] = useState(null);
     const scrollRef = useRef(null);
     const containerRef = useRef(null);
-    const animationRef = useRef(null);
-
+     const animationRef = useRef(null);
 
     useEffect(() => {
         console.log('useEffect in DouyinHotList is executed');
@@ -27,7 +26,7 @@ const DouyinHotList = () => {
                 const data = await response.json();
                 console.log('API Data:', data);
                 setHotList(data.data);
-                console.log('hotList:', data.data);
+                 console.log('hotList:', data.data);
             } catch (err) {
                 setError(err);
                 console.error('Error fetching Douyin hot list:', err);
@@ -39,48 +38,51 @@ const DouyinHotList = () => {
         fetchData();
     }, []);
 
-     useEffect(() => {
+
+      useEffect(() => {
         console.log("循环滚动 useEffect 执行");
-         if (scrollRef.current && hotList && hotList.length > 0 && containerRef.current) {
-             const scrollContainer = scrollRef.current;
-             const scrollHeight = scrollContainer.scrollHeight;
-             const containerHeight = containerRef.current.offsetHeight;
-            let currentScroll = 0;
+          if (scrollRef.current && hotList && hotList.length > 0  && containerRef.current) {
+            const scrollContainer = scrollRef.current;
+              const scrollHeight = scrollContainer.scrollHeight;
+              const containerHeight = containerRef.current.offsetHeight;
+             let currentScroll = 0;
+                const animationSpeed = 20;
 
-            const animateScroll = () => {
-                if (!scrollRef.current) return;
-                 currentScroll +=1;
-                 scrollContainer.scrollTop = currentScroll;
+             const animateScroll = () => {
+                    if(!scrollRef.current) return;
+                    currentScroll +=1;
+                   scrollRef.current.scrollTop = currentScroll;
 
-                  if(currentScroll > scrollHeight - containerHeight){
-                      currentScroll = 0;
-                     scrollContainer.scrollTop = 0;
-                  }
+                      if(currentScroll > scrollHeight - containerHeight){
+                          currentScroll = 0;
+                        scrollRef.current.scrollTop = 0;
+                     }
+
                  animationRef.current = requestAnimationFrame(animateScroll);
-            };
-            animationRef.current = requestAnimationFrame(animateScroll);
+              };
+                 animationRef.current = requestAnimationFrame(animateScroll);
 
-             const handleScroll = () => {
+              const handleScroll = (e) => {
                 if(animationRef.current){
-                  cancelAnimationFrame(animationRef.current);
-                }
-               animationRef.current = requestAnimationFrame(animateScroll)
-             };
+                      cancelAnimationFrame(animationRef.current);
+                  }
+                  animationRef.current = requestAnimationFrame(animateScroll)
+                if (e.type === 'wheel') {
+                     // e.preventDefault();
+                    //  scrollContainer.scrollBy({ top: e.deltaY , behavior: 'smooth' });
+                      scrollContainer.scrollTop += e.deltaY ;
 
-
-            scrollContainer.addEventListener('scroll', handleScroll);
-
-
-             return () => {
-                  if(scrollRef.current){
-                     scrollContainer.removeEventListener('scroll', handleScroll);
-                  cancelAnimationFrame(animationRef.current);
-               }
-           };
-       }
+                   }
+               };
+               scrollContainer.addEventListener('wheel', handleScroll);
+                return () => {
+                    if(scrollContainer){
+                      scrollContainer.removeEventListener('wheel', handleScroll);
+                      cancelAnimationFrame(animationRef.current)
+                    }
+                };
+          }
     }, [hotList]);
-
-
 
 
     if (loading) {
@@ -107,12 +109,13 @@ const DouyinHotList = () => {
 
 
     return (
-        <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl  max-h-[250px] overflow-y-auto  '>
+        <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl max-h-[250px]   overflow-hidden'>
             <div className='flex items-center p-4 border-b dark:border-gray-700'>
                 <i className="fa-brands fa-tiktok text-xl mr-2" />
                 <h2 className="text-xl font-bold">抖音热点榜</h2>
             </div>
-             <ul className="relative" ref={scrollRef}>
+            <div className="relative"   ref={containerRef}>
+                <ul className="relative" ref={scrollRef}>
                     {slicedHotList.map((item, index) => (
                         <li key={index} className="py-2 border-b dark:border-gray-700 " style={{ whiteSpace: 'nowrap' }}>
                             <a href={item.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 dark:hover:text-yellow-600 line-clamp-2">
@@ -122,6 +125,7 @@ const DouyinHotList = () => {
                         </li>
                     ))}
                 </ul>
+            </div>
         </Card>
     );
 };
