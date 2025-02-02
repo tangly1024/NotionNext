@@ -59,7 +59,7 @@ const DouyinHotList = () => {
   return (
     <Card className='bg-white dark:bg-[#1e1e1e] dark:text-white border border-red-500'>
       <div className='flex items-center p-4 border-b dark:border-gray-700'>
-         <img src="https://orrzzz.sirv.com/Images/douyin.png" alt="抖音图标" className="w-6 h-6 mr-2"/>
+        <i className="fa-brands fa-tiktok text-xl mr-2" /> {/* 使用 Font Awesome 图标 */}
         <h2 className="text-xl font-bold">抖音热点榜</h2>
       </div>
       <ul className="p-2 ">
