@@ -1,13 +1,15 @@
 // components/DouyinHotList.js
 import React, { useState, useEffect, useRef } from 'react';
 import Card from './Card';
+import ScrollContainer from './ScrollContainer';
+
 
 const DouyinHotList = () => {
     const [hotList, setHotList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const scrollRef = useRef(null);
-
+     const scrollRef = useRef(null);
+    const animationRef = useRef(null)
 
     useEffect(() => {
         console.log('useEffect in DouyinHotList is executed');
@@ -25,7 +27,7 @@ const DouyinHotList = () => {
                 const data = await response.json();
                 console.log('API Data:', data);
                 setHotList(data.data);
-                console.log('hotList:', data.data);
+                   console.log('hotList:', data.data);
             } catch (err) {
                 setError(err);
                 console.error('Error fetching Douyin hot list:', err);
@@ -37,42 +39,31 @@ const DouyinHotList = () => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        console.log("循环滚动 useEffect 执行");
+        if (scrollRef.current && hotList && hotList.length > 0 ) {
+            const scrollContainer = scrollRef.current;
+              const scrollHeight = scrollContainer.scrollHeight;
+               let currentScroll = 0;
 
-      useEffect(() => {
-          console.log("循环滚动 useEffect 执行");
-         if (scrollRef.current && hotList && hotList.length > 0 ) {
-                const scrollContainer = scrollRef.current;
-                  const scrollHeight = scrollContainer.scrollHeight;
-                 let currentScroll = 0;
-
-                const animateScroll = () => {
+              const animateScroll = () => {
                    if(!scrollRef.current) return;
-                     currentScroll +=1;
-                     scrollContainer.scrollTop = currentScroll;
-                    if(currentScroll > scrollHeight){
+                    currentScroll += 1;
+                  scrollRef.current.scrollTop = currentScroll;
+                   if(currentScroll > scrollHeight){
                         currentScroll = 0;
-                        scrollContainer.scrollTop = 0;
-                     }
-                   requestAnimationFrame(animateScroll);
-              };
-            const animationId =  requestAnimationFrame(animateScroll);
-           const handleScroll = (e) => {
-              if (e.type === 'wheel') {
-                scrollContainer.scrollTop += e.deltaY;
-                requestAnimationFrame(animateScroll);
-                cancelAnimationFrame(animationId)
+                       scrollRef.current.scrollTop = 0;
+                   }
+                 animationRef.current = requestAnimationFrame(animateScroll);
+             };
+              animationRef.current = requestAnimationFrame(animateScroll);
+            return () => {
+              if(animationRef.current){
+                 cancelAnimationFrame(animationRef.current)
              }
            };
-               scrollContainer.addEventListener('wheel', handleScroll);
-              return () => {
-                 if(scrollContainer){
-                   scrollContainer.removeEventListener('wheel', handleScroll);
-                     cancelAnimationFrame(animationId);
-                 }
-            };
-        }
-    }, [hotList]);
-
+      }
+     }, [hotList]);
 
 
     if (loading) {
@@ -95,25 +86,26 @@ const DouyinHotList = () => {
 
     console.log("DouyinHotList is render with data:", hotList)
 
-
     return (
-          <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl  overflow-hidden max-h-[450px]  '>
+         <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl   overflow-hidden'>
             <div className='flex items-center p-4 border-b dark:border-gray-700'>
                 <i className="fa-brands fa-tiktok text-xl mr-2" />
                 <h2 className="text-xl font-bold">抖音热点榜</h2>
             </div>
-              <ul className="relative" ref={scrollRef}>
-                    {hotList.map((item, index) =>
-                    index < 15 && (
-                        <li key={index} className="py-2 border-b dark:border-gray-700 " style={{ whiteSpace: 'nowrap' }}>
+               <ScrollContainer maxHeight="250px"  >
+                  <ul className="relative" ref={scrollRef}>
+                    {hotList.map((item, index) => (
+                     index < 15 && (
+                          <li key={index} className="py-2 border-b dark:border-gray-700 " style={{ whiteSpace: 'nowrap' }}>
                             <a href={item.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 dark:hover:text-yellow-600 line-clamp-2">
                                 <span className="text-gray-500 mr-2">{index + 1}.</span>
                                 {item.title}
                             </a>
-                         </li>
-                      )
-                    )}
+                        </li>
+                        )
+                    ))}
                 </ul>
+                 </ScrollContainer>
         </Card>
     );
 };
