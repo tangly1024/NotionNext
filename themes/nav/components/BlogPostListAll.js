@@ -1,9 +1,9 @@
 /* eslint-disable */
-import BlogPostListEmpty from './BlogPostListEmpty'
-import BlogPostItem from './BlogPostItem'
+import { siteConfig } from '@/lib/config'
 import { useNavGlobal } from '@/themes/nav'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
+import BlogPostItem from './BlogPostItem'
+import BlogPostListEmpty from './BlogPostListEmpty'
 
 /**
  * 博客列表滚动分页

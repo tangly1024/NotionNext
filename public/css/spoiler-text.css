@@ -1,0 +1,48 @@
+/* Spoiler text styles with sharp edges */
+.spoiler-text {
+    color: transparent;  /* 文字透明 */
+    background-color: #000000; /* 背景为黑色 */
+    border-color: #000000;  /* 边框颜色 */
+    text-decoration-color: #000000; /* 删除线颜色 */
+    text-emphasis-color: #000000; /* 强调文字颜色 */
+    filter: none;  /* 移除模糊效果 */
+    --hide-transition: 0.3s ease-out;
+    transition: 
+        color var(--hide-transition),
+        background-color var(--hide-transition),
+        border-color var(--hide-transition),
+        text-decoration-color var(--hide-transition),
+        text-emphasis-color var(--hide-transition),
+        opacity 0.35s cubic-bezier(.25,.46,.45,.94); /* 平滑过渡 */
+}
+
+.spoiler-text:hover {
+    color: inherit; /* 鼠标悬停时恢复文字颜色 */
+    background-color: inherit; /* 鼠标悬停时恢复背景颜色 */
+    border-color: inherit;
+    text-decoration-color: inherit;
+    text-emphasis-color: inherit;
+    opacity: 1;  /* 鼠标悬停时恢复不透明度 */
+}
+
+/* Spoiler child elements with transition */
+.spoiler-text * {
+    transition: opacity 0.35s cubic-bezier(.25,.46,.45,.94); /* 子元素透明度平滑过渡 */
+}
+
+/* Spoiler when not hovered */
+.spoiler-text:not(:hover) {
+    color: transparent!important; /* 非悬停时文字透明 */
+    background-color: #000000!important; /* 非悬停时背景为黑色 */
+    border-color: #000000!important; /* 非悬停时边框为黑色 */
+}
+
+.spoiler-text:not(:hover) * {
+    opacity: 0!important; /* 非悬停时子元素透明 */
+}
+
+/* Remove border in non-hover states */
+.spoiler-text:not(:hover),
+.spoiler-text:not(:hover) * {
+    border: none!important;
+}

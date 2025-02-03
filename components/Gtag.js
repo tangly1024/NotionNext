@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import * as gtag from '@/lib/gtag'
+import * as gtag from '@/lib/plugins/gtag'
 
 const Gtag = () => {
   const router = useRouter()
