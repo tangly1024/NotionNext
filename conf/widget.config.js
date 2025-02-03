@@ -39,7 +39,7 @@ module.exports = {
     {
       name: 'Rubia',
       artist: '周深',
-      url: 'https://music.163.com/#/song?id=1815684465&uct2=U2FsdGVkX18Z7HmjNGbeFippOdE+Ktqwg+I9fbroql0=',
+      url: 'https://music.163.com/song/media/outer/url?id=1815684465.mp3',
       cover:
         'http://p2.music.126.net/499AYZ3epP1T7GJYvnJZZQ==/109951165671947083.jpg?param=130y130'
     },
