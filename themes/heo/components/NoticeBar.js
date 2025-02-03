@@ -17,15 +17,8 @@ export function NoticeBar() {
     return <></>
   }
 
-  // 获取或生成随机种子
-  let seed = localStorage.getItem('noticeBarSeed')
-  if (!seed) {
-    seed = generateRandomSeed()
-    localStorage.setItem('noticeBarSeed', seed)
-  }
-
-  // 根据种子生成随机顺序
-  notices = shuffleArray(notices, seed)
+  // 随机打乱 notices 数组
+  notices = shuffleArray(notices)
 
   return (
     <div className='max-w-[86rem] w-full mx-auto flex h-12 mb-4 px-5 font-bold'>
@@ -43,38 +36,16 @@ export function NoticeBar() {
 }
 
 /**
- * 生成随机种子
- * @returns {string} - 随机种子
- */
-function generateRandomSeed() {
-  return Math.random().toString(36).substring(2, 15)
-}
-
-/**
- * 使用种子随机打乱数组
+ * 使用 Fisher-Yates 算法随机打乱数组
  * @param {Array} array - 需要打乱的数组
- * @param {string} seed - 随机种子
  * @returns {Array} - 打乱顺序后的新数组
  */
-function shuffleArray(array, seed) {
+function shuffleArray(array) {
   const shuffledArray = [...array] // 创建数组的副本，以避免修改原始数组
-  const random = seedrandom(seed)
   for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
+    const j = Math.floor(Math.random() * (i + 1))
     ;[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]
   }
   return shuffledArray
 }
 
-/**
- * 创建一个基于种子的随机数生成器
- * @param {string} seed - 随机种子
- * @returns {function} - 随机数生成器
- */
-function seedrandom(seed) {
-  let t = seed
-  return function() {
-    t = (t * 9301 + 49297) % 233280
-    return t / 233280
-  }
-}
