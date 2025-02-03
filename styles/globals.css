@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow-x: hidden;
+}
+
 .wrapper {
   min-height: 100vh;
   display: flex;
@@ -15,6 +19,7 @@
   position: sticky;
   z-index: 10;
   top: -1px;
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   transition: all 0.5s cubic-bezier(0.4, 0, 0, 1);
   border-bottom-color: transparent;
@@ -70,15 +75,20 @@ nav {
 
 @supports not (backdrop-filter: none) {
   .sticky-nav {
+    -webkit-backdrop-filter: none;
     backdrop-filter: none;
     @apply bg-day dark:bg-gray-800;
   }
 }
 
 .shadow-card {
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
-    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
-    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  box-shadow:
+    rgba(0, 0, 0, 0.07) 0px 1px 2px,
+    rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px,
+    rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px,
+    rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 .gt-meta {
@@ -105,7 +115,6 @@ nav {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
-
 
 .medium-zoom-overlay {
   background: none !important;
@@ -157,7 +166,7 @@ nav {
 
 /* twikoo 评论区超链接样式 */
 .tk-main a {
-   @apply text-blue-700
+  @apply text-blue-700;
 }
 
 /* twikoo 内置的 element-ui 加载样式 */
@@ -167,7 +176,7 @@ nav {
 
 /* Webmention style */
 .webmention-block {
-  background: rgba(0, 116, 222, .2);
+  background: rgba(0, 116, 222, 0.2);
   padding: 1rem 2rem;
   border-radius: 5px;
 }
@@ -176,11 +185,11 @@ nav {
   font-style: italic;
   font-weight: 700;
   font-size: 16px;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .webmention-block-intro a {
-  color: #0000EE;
+  color: #0000ee;
   text-decoration: underline;
 }
 
@@ -197,14 +206,14 @@ nav {
 
 .webmention-counts .count {
   font-weight: bold;
-  margin-right: .2rem;
+  margin-right: 0.2rem;
 }
 
 /* .webmention-counts .counts > span {
   margin-right: .8rem;
 } */
-.webmention-counts .counts>span:not(:last-child):after {
-  content: " • ";
+.webmention-counts .counts > span:not(:last-child):after {
+  content: ' • ';
 }
 
 a.avatar-wrapper {
@@ -221,7 +230,7 @@ a.avatar-wrapper {
 .avatar {
   border-radius: 50%;
   margin: 0;
-  border: 3px solid rgba(0, 116, 222, .5);
+  border: 3px solid rgba(0, 116, 222, 0.5);
 }
 
 .replies {
@@ -235,7 +244,7 @@ a.avatar-wrapper {
   position: relative;
   padding: 0;
   align-items: flex-start;
-  margin-top: .6rem;
+  margin-top: 0.6rem;
 }
 
 .reply p {
@@ -255,4 +264,25 @@ a.avatar-wrapper {
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+
+.writing-vertical {
+  writing-mode: vertical-rl; /* 竖向排列从右向左 */
+  text-orientation: upright; /* 文字方向正常 */
+}
+
+/* Chatbase 在移动端禁止遮挡 */
+@media (max-width: 700px) {
+  button#chatbase-bubble-button {
+    margin-bottom: 42px;
+    margin-right: 20px;
+  }
+}
+
+img {
+  display: unset;
+}
+
+.adsbygoogle {
+  overflow: hidden;
 }

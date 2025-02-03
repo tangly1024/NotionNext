@@ -74,7 +74,7 @@ const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, pri
       PRISM_PREVIOUS = prismThemeDarkPath
     }
     const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
-    if (previousTheme) {
+    if (previousTheme && previousTheme.parentNode && previousTheme.parentNode.contains(previousTheme)) {
       previousTheme.parentNode.removeChild(previousTheme)
     }
     loadExternalResource(PRISM_THEME, 'css')
