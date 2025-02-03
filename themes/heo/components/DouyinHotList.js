@@ -100,7 +100,7 @@ const DouyinHotList = () => {
         <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl max-h-[450px] overflow-hidden'>
             <div className='flex items-center p-4 border-b dark:border-gray-700'>
                 <i className="fa-brands fa-tiktok text-xl mr-2" />
-                <h2 className="text-xl font-bold text-gray-700 dark:text-white">抖音热点榜</h2>{/* 添加 text-gray-700 dark:text-white */}
+                <h2 className="text-xl font-bold text-gray-700 dark:text-white">抖音热搜榜</h2>{/* 添加 text-gray-700 dark:text-white */}
             </div>
             <ScrollContainer maxHeight="375px">
                 <ul className="relative" ref={scrollRef}>
