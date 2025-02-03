@@ -16,6 +16,7 @@ const CONFIG = {
     { title: '喝的多了兑了水的水也会醉。'},
     { title: '墨小菊天下第一！'},
     { title: '时间让你我越走越近，却越来越陌生。'},
+    { title: '𝑲𝒆𝒆𝒑 𝒐𝒏 𝒌𝒆𝒆𝒑𝒊𝒏𝒈 𝒐𝒏.'},
     { title: '欢迎来我的Bilibili主页逛逛 :)', url: 'https://space.bilibili.com/334597217' }
   ],
 
