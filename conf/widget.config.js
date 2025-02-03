@@ -25,7 +25,7 @@ module.exports = {
   SPOILER_TEXT_TAG: process.env.NEXT_PUBLIC_SPOILER_TEXT_TAG || '', // Spoiler文本隐藏功能，如Notion中 [sp]希望被spoiler的文字[sp]，填入[sp] 即可
 
   // 音乐播放插件
-  MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || false, // 是否使用音乐播放插件
+  MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || true, // 是否使用音乐播放插件
   MUSIC_PLAYER_VISIBLE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_VISIBLE || true, // 是否在左下角显示播放和切换，如果使用播放器，打开自动播放再隐藏，就会以类似背景音乐的方式播放，无法取消和暂停
   MUSIC_PLAYER_AUTO_PLAY:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || true, // 是否自动播放，不过自动播放时常不生效（移动设备不支持自动播放）
@@ -37,25 +37,113 @@ module.exports = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '风を共に舞う気持ち',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731419.mp3',
-      cover:
-        'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+      name: 'Nostalgia',
+      artist: '佐藤天平',
+      url: 'http://music.163.com/song/media/outer/url?id=1416570762.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
     },
     {
-      name: '王都グランセル',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
-      cover:
-        'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+      name: '灰色の水曜日',
+      artist: 'トリプルH',
+      url: 'http://music.163.com/song/media/outer/url?id=22813882.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'Freak',
+      artist: 'ichika Nito',
+      url: 'http://music.163.com/song/media/outer/url?id=2606425151.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'Be What You Wanna Be',
+      artist: 'Darin',
+      url: 'https://ri-sycdn.kuwo.cn/a155bfa6fa8dc7238145f11273e9131a/6749b033/resource/n2/80/89/2000571795.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: '華の乱',
+      artist: '石田勝範',
+      url: 'http://music.163.com/song/media/outer/url?id=4881802.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'Valse di Fantastica',
+      artist: '下村 陽子',
+      url: 'http://music.163.com/song/media/outer/url?id=461544436.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'he des Alizes (原曲:衛星カフェテラス)',
+      artist: 'Foxtail-Grass Studio',
+      url: 'http://music.163.com/song/media/outer/url?id=41416746.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: '明日有明天',
+      artist: '陈慧娴',
+      url: 'http://music.163.com/song/media/outer/url?id=110865.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'The First Layer',
+      artist: 'Kevin Penkin',
+      url: 'http://music.163.com/song/media/outer/url?id=509106635.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'I Miss You (Extended)',
+      artist: 'ichika Nito',
+      url: 'http://music.163.com/song/media/outer/url?id=1808027556.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'Morena',
+      artist: ' ',
+      url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VWQ1F6NTFlT081Q3Q3SF96TmtubkowQm9oSjVyLXk1RE9FYTRCZldRUG5qSlE.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: '穢土',
+      artist: 'Iwamizu',
+      url: 'http://music.163.com/song/media/outer/url?id=1828198418.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: '余韻叙情(E-6)',
+      artist: '鷺巣詩郎',
+      url: 'http://music.163.com/song/media/outer/url?id=27552522.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'Forest Mixtape',
+      artist: 'Christina Kuong',
+      url: 'http://music.163.com/song/media/outer/url?id=1908182683.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: '再见',
+      artist: 'ヤマモトガク',
+      url: 'http://music.163.com/song/media/outer/url?id=2098082874.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: '文豪とアルケミスト ～Piano ver.～',
+      artist: '坂本英城',
+      url: 'http://music.163.com/song/media/outer/url?id=490637049.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
+      name: 'PIMP',
+      artist: 'Bacao Rhythm & Steel Band',
+      url: 'http://music.163.com/song/media/outer/url?id=1409490569.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
   MUSIC_PLAYER_METING_SERVER:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_SERVER || 'netease', // 音乐平台，[netease, tencent, kugou, xiami, baidu]
   MUSIC_PLAYER_METING_ID:
-    process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_ID || '60198', // 对应歌单的 id
+    process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_ID || '1992204362', // 对应歌单的 id
   MUSIC_PLAYER_METING_LRC_TYPE:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING_LRC_TYPE || '1', // 已废弃！！！可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）
 
