@@ -10,7 +10,7 @@ import SocialButton from './SocialButton'
 const Footer = () => {
   const BEI_AN = siteConfig('BEI_AN')
   return (
-    <footer className='relative flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'>
+    <footer id='footer' className='relative flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'>
       {/* 颜色过度区 */}
       <div
         id='color-transition'
@@ -27,8 +27,8 @@ const Footer = () => {
       {/* 底部页面信息 */}
       <div
         id='footer-bottom'
-        className='w-full h-20 flex flex-col p-3 lg:flex-row justify-between px-6 items-center bg-[#f1f3f7] dark:bg-[#21232A] border-t dark:border-t-[#3D3D3F]'>
-        <div id='footer-bottom-left'>
+        className='w-full h-20 flex  p-3 justify-center items-center bg-[#f1f3f7] dark:bg-[#21232A] border-t dark:border-t-[#3D3D3F]'>  {/*移除 justify-between ,添加  justify-center items-center */}
+        <div id='footer-bottom-left' className='text-center flex flex-col lg:flex-row justify-center items-center '> {/* 添加 text-center,  将 flex-col lg:flex-row  移入到内部 div */}
           <PoweredBy />
           <CopyRightDate />
         </div>
