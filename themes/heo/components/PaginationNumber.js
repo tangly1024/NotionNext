@@ -45,7 +45,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   return (
     <>
       {/* pc端分页按钮 */}
-      <div className='hidden lg:flex justify-between items-end mt-10 font-medium text-black duration-500 dark:text-gray-300 pt-3 space-x-2 overflow-x-auto'>
+      <div className='hidden lg:flex justify-between items-end  font-medium text-black duration-500 dark:text-gray-300 pt-3 space-x-2 overflow-x-auto'> {/* 移除  mt-10 */}
         {/* 上一页 */}
         <Link
           href={{
