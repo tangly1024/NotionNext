@@ -35,7 +35,7 @@ export default function SideRight(props) {
   const sortedTags = tagOptions?.slice(0, 24) || []
     console.log('SideRight 组件被渲染， props:', props)  //调试信息
   return (
-    <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full border border-blue-500'>
+    <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full  overflow-y-auto'> {/* 移除边框 */}
       <InfoCard {...props} className='w-72 wow fadeInUp' />
 
       <div className='sticky top-20 space-y-4'>
@@ -51,13 +51,8 @@ export default function SideRight(props) {
           <TouchMeCard />
         </div>
 
-      {/* 最新文章列表 */}
-         <div
-          className={
-            'border wow fadeInUp  hover:border-indigo-600  dark:hover:border-yellow-600 duration-200 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white rounded-xl lg:p-6 p-4 hidden lg:block bg-white'
-          }>
-              <DouyinHotList/> {/* 渲染 DouyinHotList 组件  放在  LatestPostsGroupMini 组件之前*/}
-        </div>
+        {/* 最新文章列表 */}
+         <DouyinHotList/> {/* 渲染 DouyinHotList 组件  放在  LatestPostsGroupMini 组件之前*/}
 
 
         {rightAreaSlot}
