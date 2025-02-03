@@ -17,7 +17,7 @@ const DouyinHotList = () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch('https://api.98dou.cn/api/hotlist?type=douyin');
+                const response = await fetch('https://api.vvhan.com/api/hotlist/douyinHot');
                 console.log('API Response:', response);
 
                 if (!response.ok) {
