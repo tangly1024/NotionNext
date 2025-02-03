@@ -5,17 +5,18 @@ import { siteConfig } from '@/lib/config'
 
 const InfoCard = props => {
   const { siteInfo } = props
+
   return (
     <>
       <div className="flex flex-col items-center justify-center ">
         <div
-          className="hover:scale-125 transform duration-200 cursor-pointer"
+          className="hover:scale-105 transform duration-200 cursor-pointer"
           onClick={() => {
             Router.push('/')
           }}
         >
           <LazyImage
-            src={siteInfo?.icon}
+            src="/dumb_fox.jpg"
             className="rounded-full"
             width={120}
             alt={siteConfig('AUTHOR')}

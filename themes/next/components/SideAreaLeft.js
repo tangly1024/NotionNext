@@ -31,7 +31,7 @@ const SideAreaLeft = props => {
         ' hidden lg:block flex-col w-60 z-20 relative'
       }
     >
-      <section className="sticky top-0 w-60">
+      <section className="w-60">
         {/* 菜单 */}
         <section className="shadow hidden lg:block mb-5 pb-4 bg-white dark:bg-hexo-black-gray hover:shadow-xl duration-200">
           <Logo className="h-32" {...props} />
@@ -44,49 +44,49 @@ const SideAreaLeft = props => {
             </div>
           )}
         </section>
-
-        <div className="hidden lg:block">
-          <Card>
-            <Tabs>
-              {showToc && (
-                <div
-                  key={locale.COMMON.TABLE_OF_CONTENTS}
-                  className="dark:text-gray-400 text-gray-600 bg-white dark:bg-hexo-black-gray duration-200"
-                >
-                  <Toc toc={post.toc} />
-                </div>
-              )}
-
-              <div
-                key={locale.NAV.ABOUT}
-                className="mb-5 bg-white dark:bg-hexo-black-gray duration-200 py-6"
-              >
-                <InfoCard {...props} />
-                <>
-                  <div className="mt-2 text-center dark:text-gray-300 font-light text-xs">
-                    <span className="px-1 ">
-                      <strong className="font-medium">{postCount}</strong>
-                      {locale.COMMON.POSTS}
-                    </span>
-                    <span className="px-1 busuanzi_container_site_uv hidden">
-                      |{' '}
-                      <strong className="pl-1 busuanzi_value_site_uv font-medium" />
-                      {locale.COMMON.VISITORS}
-                    </span>
-                    {/* <span className='px-1 busuanzi_container_site_pv hidden'>
-                | <strong className='pl-1 busuanzi_value_site_pv font-medium'/>{locale.COMMON.VIEWS}</span> */}
-                  </div>
-                </>
-              </div>
-            </Tabs>
-          </Card>
-
-          <div className="flex justify-center">
-            {slot}
-            <Live2D />
-          </div>
-        </div>
       </section>
+
+      <div className="sticky top-4 hidden lg:block">
+        <Card>
+          <Tabs>
+            {showToc && (
+              <div
+                key={locale.COMMON.TABLE_OF_CONTENTS}
+                className="dark:text-gray-400 text-gray-600 bg-white dark:bg-hexo-black-gray duration-200"
+              >
+                <Toc toc={post.toc} />
+              </div>
+            )}
+
+            <div
+              key={locale.NAV.ABOUT}
+              className="mb-5 bg-white dark:bg-hexo-black-gray duration-200 py-6"
+            >
+              <InfoCard {...props} />
+              <>
+                <div className="mt-2 text-center dark:text-gray-300 font-light text-xs">
+                  <span className="px-1 ">
+                    <strong className="font-medium">{postCount}</strong>
+                    {locale.COMMON.POSTS}
+                  </span>
+                  <span className="px-1 busuanzi_container_site_uv hidden">
+                    |{' '}
+                    <strong className="pl-1 busuanzi_value_site_uv font-medium" />
+                    {locale.COMMON.VISITORS}
+                  </span>
+                  {/* <span className='px-1 busuanzi_container_site_pv hidden'>
+                | <strong className='pl-1 busuanzi_value_site_pv font-medium'/>{locale.COMMON.VIEWS}</span> */}
+                </div>
+              </>
+            </div>
+          </Tabs>
+        </Card>
+
+        <div className="flex justify-center">
+          {slot}
+          <Live2D />
+        </div>
+      </div>
     </aside>
   )
 }

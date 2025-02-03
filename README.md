@@ -15,29 +15,35 @@
   </a>
 </p>
 
-
 中文文档 | [README in English](./README_EN.md)
 
 <hr/>
 
-一个使用 NextJS + Notion API 实现的，部署在 Vercel 上的静态博客系统。为Notion和所有创作者设计。
+一个使用 NextJS + Notion API 实现的，部署在 Vercel 上的静态博客系统。为 Notion 和所有创作者设计。
 
+## 运行
+
+```
+yarn
+yarn build
+yarn start
+```
 
 ## 预览效果
 
 在线演示：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，项目支持多主题切换，没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
 
-| Next | Medium | Hexo | Fukasawa |
-|--|--|--|--|
-| <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
+| Next                                                                                                   | Medium                                                                                                       | Hexo                                                                                                   | Fukasawa                                                                                                           |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| <img src='./docs/theme-next.png' width='300'/> [预览 NEXT](https://preview.tangly1024.com/?theme=next) | <img src='./docs/theme-medium.png' width='300'/> [预览 MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览 HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览 FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
 
 ## 我要如何开始？
 
 只需几分钟即可搭建您的个人站点：
 
-- [部署教程 (支持多方案)](https://docs.tangly1024.com/) 
+- [部署教程 (支持多方案)](https://docs.tangly1024.com/)
 
-- [配置手册 - (自定义插件)](https://docs.tangly1024.com/article/notion-next-guide) 
+- [配置手册 - (自定义插件)](https://docs.tangly1024.com/article/notion-next-guide)
 
 - [二次开发 - (开发手册)](https://docs.tangly1024.com/article/notion-next-secondary-menu)
 
@@ -46,7 +52,8 @@
 - [版本汇总 - (查询变动功能)](https://docs.tangly1024.com/article/notion-next-changelogs)
 
 ## 致谢
-感谢Craig Hart发起的Nobelium项目
+
+感谢 Craig Hart 发起的 Nobelium 项目
 
 <table><tr align="left">
   <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://github.com/craigary" title="Craig Hart">Craig Hart</a></td>
@@ -191,7 +198,6 @@
 </tr>
 </table>
 
-
 ## 引用技术
 
 - **框架**: [Next.js](https://nextjs.org)
@@ -199,7 +205,6 @@
 - **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
 - **评论**: [Twikoo](https://github.com/imaegoo/twikoo), [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://cusdis.com), [Utterances](https://utteranc.es)
 - **图标**: [Fontawesome](https://fontawesome.com/v6/icons/)
-
 
 ## License
 
