@@ -958,6 +958,12 @@ code[class*='language-'] {
   overflow: hidden;
 }
 
+.notion-callout-text .notion-text{
+  padding: 0px 0px !important;
+  margin: 0px 0px !important;
+  line-height: normal !important;
+}
+
 .notion-toggle {
   padding: 3px 2px;
   width: 100%;
@@ -1682,7 +1688,7 @@ code[class*='language-'] {
   color: inherit;
 }
 
-notion-callout svg.notion-page-icon {
+.notion-callout svg.notion-page-icon {
   @apply hidden;
 }
 
