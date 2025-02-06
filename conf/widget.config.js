@@ -56,6 +56,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=399354381.mp3',
       cover:
         'http://p1.music.126.net/hIOFATG-3vNyYHOj31Tyew==/109951169829283327.jpg?param=130y130'
+    },
+    {
+      name: '消愁',
+      artist: '毛不易',
+      url: 'https://music.163.com/song/media/outer/url?id=569200213.mp3',
+      cover:
+        'http://p2.music.126.net/vmCcDvD1H04e9gm97xsCqg==/109951163350929740.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
