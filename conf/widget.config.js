@@ -53,7 +53,7 @@ module.exports = {
     {
       name: '我怀念的(Live)',
       artist: '孙燕姿',
-      url: 'https://music.163.com/song/media/outer/url?id=399354381.mp3',
+      url: 'https://music.163.com/song/media/outer/url?id=34200623.mp3',
       cover:
         'http://p1.music.126.net/hIOFATG-3vNyYHOj31Tyew==/109951169829283327.jpg?param=130y130'
     },
