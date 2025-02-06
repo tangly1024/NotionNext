@@ -77,6 +77,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=447926071.mp3',
       cover:
         'http://p1.music.126.net/34YW1QtKxJ_3YnX9ZzKhzw==/2946691234868155.jpg?param=130y130'
+    },
+    {
+      name: '是你',
+      artist: '赵露思',
+      url: 'https://wj.hhthht.cn/shini.mp3',
+      cover:
+        'http://p2.music.126.net/-HXQekCg_mYEvnuUZXY3hA==/109951168210692627.jpg?param=140y140'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
