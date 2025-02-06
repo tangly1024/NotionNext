@@ -76,7 +76,7 @@ module.exports = {
       artist: '赵雷',
       url: 'https://music.163.com/song/media/outer/url?id=447926071.mp3',
       cover:
-        'http://p2.music.126.net/-noYXenVuiTrlcxrCqNPjQ==/109951169213362679.jpg?param=130y130'
+        'http://p1.music.126.net/34YW1QtKxJ_3YnX9ZzKhzw==/2946691234868155.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
