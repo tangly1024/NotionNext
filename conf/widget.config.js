@@ -70,6 +70,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=2049512697.mp3',
       cover:
         'http://p2.music.126.net/TmOHxaGnFNlwNX8aPz66oA==/109951168638913915.jpg?param=130y130'
+    },
+    {
+      name: '成都',
+      artist: '赵雷',
+      url: 'https://music.163.com/song/media/outer/url?id=447926071.mp3',
+      cover:
+        'http://p2.music.126.net/-noYXenVuiTrlcxrCqNPjQ==/109951169213362679.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
