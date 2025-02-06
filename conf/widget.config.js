@@ -63,6 +63,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=569200213.mp3',
       cover:
         'http://p2.music.126.net/vmCcDvD1H04e9gm97xsCqg==/109951163350929740.jpg?param=130y130'
+    },
+    {
+      name: '向云端',
+      artist: '小霞 / 海洋Bo',
+      url: 'https://music.163.com/song/media/outer/url?id=2049512697.mp3',
+      cover:
+        'http://p2.music.126.net/TmOHxaGnFNlwNX8aPz66oA==/109951168638913915.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
