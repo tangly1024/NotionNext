@@ -81,7 +81,7 @@ module.exports = {
     {
       name: '是你',
       artist: '赵露思',
-      url: 'https://wj.hhthht.cn/shini.mp3',
+      url: 'https://hhtwj.netlify.app/shini.mp3',
       cover:
         'http://p2.music.126.net/-HXQekCg_mYEvnuUZXY3hA==/109951168210692627.jpg?param=140y140'
     },
@@ -102,7 +102,7 @@ module.exports = {
     {
       name: '如愿',
       artist: '王菲',
-      url: 'https://wj.hhthht.cn/ruyuan.mp3',
+      url: 'https://hhtwj.netlify.app/ruyuan.mp3',
       cover:
         'http://p2.music.126.net/SvTfw8UsSPbt6bk-i0n3IQ==/109951166537609949.jpg?param=130y130'
     }
