@@ -37,6 +37,12 @@ module.exports = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
+      name: 'Dignity (feat. Cassie Wei)',
+      artist: 'Mili / Yamato Kasai / Cassie Wei',
+      url: 'http://music.163.com/song/media/outer/url?id=2669311296.mp3',
+      cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
+    },
+    {
       name: 'Nostalgia',
       artist: '佐藤天平',
       url: 'http://music.163.com/song/media/outer/url?id=1416570762.mp3',
