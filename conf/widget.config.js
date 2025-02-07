@@ -133,6 +133,27 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=27937429.mp3',
       cover:
         'http://p1.music.126.net/3eVhNBf4fv133FRgMj4IPQ==/109951164628978750.jpg?param=130y130'
+    },
+    {
+      name: '南屏晚钟',
+      artist: '蔡琴',
+      url: 'https://music.163.com/song/media/outer/url?id=211637.mp3',
+      cover:
+        'http://p1.music.126.net/ywlEDcdWT6PE8RydPYfXlg==/109951163213084637.jpg?param=130y130'
+    },
+    {
+      name: '匆匆那年',
+      artist: '王菲',
+      url: 'https://music.163.com/song/media/outer/url?id=31514406.mp3',
+      cover:
+        'http://p2.music.126.net/yXyeAl-7m0tqfx4AX7BDSQ==/2542070884980240.jpg?param=130y130'
+    },
+    {
+      name: '因为爱情',
+      artist: '陈奕迅 / 王菲',
+      url: 'https://music.163.com/song/media/outer/url?id=25640795.mp3',
+      cover:
+        'http://p1.music.126.net/0POVOSSjqgVoOUGc5haWBQ==/109951163392311918.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
