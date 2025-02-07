@@ -58,6 +58,13 @@ module.exports = {
         'http://p1.music.126.net/hIOFATG-3vNyYHOj31Tyew==/109951169829283327.jpg?param=130y130'
     },
     {
+      name: '后来',
+      artist: '刘若英',
+      url: 'https://music.163.com/song/media/outer/url?id=27937429.mp3',
+      cover:
+        'http://p2.music.126.net/_WOqdHTd8xXyzGZNN-uRTg==/109951167280997242.jpg?param=130y130'
+    },
+    {
       name: '消愁',
       artist: '毛不易',
       url: 'https://music.163.com/song/media/outer/url?id=569200213.mp3',
@@ -112,6 +119,20 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=1456890009.mp3',
       cover:
         'http://p2.music.126.net/yN1ke1xYMJ718FiHaDWtYQ==/109951165076380471.jpg?param=130y130'
+    },
+    {
+      name: '热爱105°C的你',
+      artist: '阿肆',
+      url: 'https://music.163.com/song/media/outer/url?id=1840459406.mp3',
+      cover:
+        'http://p1.music.126.net/6Herq6VjqEM2wJYiML3y4A==/109951166098679116.jpg?param=130y130'
+    },
+    {
+      name: '盛夏的果实',
+      artist: '莫文蔚',
+      url: 'https://music.163.com/song/media/outer/url?id=27937429.mp3',
+      cover:
+        'http://p1.music.126.net/3eVhNBf4fv133FRgMj4IPQ==/109951164628978750.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
