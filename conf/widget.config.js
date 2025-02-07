@@ -98,6 +98,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=2151215703.mp3',
       cover:
         'http://p2.music.126.net/6vJ1VJtF7T3BPRjH4wF5ig==/109951169547109113.jpg?param=130y130'
+    },
+    {
+      name: '如愿',
+      artist: '王菲',
+      url: 'https://wj.hhthht.cn/ruyuan.mp3',
+      cover:
+        'http://p2.music.126.net/SvTfw8UsSPbt6bk-i0n3IQ==/109951166537609949.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
