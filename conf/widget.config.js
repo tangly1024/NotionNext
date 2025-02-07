@@ -154,6 +154,20 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=25640795.mp3',
       cover:
         'http://p1.music.126.net/0POVOSSjqgVoOUGc5haWBQ==/109951163392311918.jpg?param=130y130'
+    },
+    {
+      name: '大鱼',
+      artist: '周深',
+      url: 'https://hhtwj.netlify.app/dayu.mp3',
+      cover:
+        'https://img2.kuwo.cn/star/albumcover/500/65/1/1261222476.jpg'
+    },
+    {
+      name: '小美满',
+      artist: '周深',
+      url: 'https://hhtwj.netlify.app/xiaomeiman.mp3',
+      cover:
+        'http://p2.music.126.net/ve0l1aPRUBPP7e4x2Oz5DA==/109951169318479430.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
