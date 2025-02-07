@@ -91,6 +91,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=413834729.mp3',
       cover:
         'http://p1.music.126.net/kVwk6b8Qdya8oDyGDcyAVA==/1364493930777368.jpg?param=130y130'
+    },
+    {
+      name: '5:20AM',
+      artist: '芊芊龍',
+      url: 'https://music.163.com/song/media/outer/url?id=2151215703.mp3',
+      cover:
+        'http://p2.music.126.net/6vJ1VJtF7T3BPRjH4wF5ig==/109951169547109113.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
