@@ -189,6 +189,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=1357374736.mp3',
       cover:
         'http://p2.music.126.net/qnQ93WnZHACVvIM14c4sAQ==/109951163984007061.jpg?param=130y130'
+    },
+    {
+      name: '小幸运',
+      artist: '田馥甄',
+      url: 'https://hhtwj.netlify.app/xiaoxingyun.mp3',
+      cover:
+        'https://img2.kuwo.cn/star/albumcover/500/12/4/3442823652.jpg'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
