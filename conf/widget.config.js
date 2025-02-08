@@ -88,7 +88,7 @@ module.exports = {
     {
       name: '是你',
       artist: '赵露思',
-      url: 'https://hhtwj.netlify.app/shini.mp3',
+      url: 'https://wj.hhthht.cn/shini.mp3',
       cover:
         'http://p2.music.126.net/-HXQekCg_mYEvnuUZXY3hA==/109951168210692627.jpg?param=140y140'
     },
@@ -109,7 +109,7 @@ module.exports = {
     {
       name: '如愿',
       artist: '王菲',
-      url: 'https://hhtwj.netlify.app/ruyuan.mp3',
+      url: 'https://wj.hhthht.cn/ruyuan.mp3',
       cover:
         'http://p2.music.126.net/SvTfw8UsSPbt6bk-i0n3IQ==/109951166537609949.jpg?param=130y130'
     },
@@ -158,14 +158,14 @@ module.exports = {
     {
       name: '大鱼',
       artist: '周深',
-      url: 'https://hhtwj.netlify.app/dayu.mp3',
+      url: 'https://wj.hhthht.cn/dayu.mp3',
       cover:
         'https://img2.kuwo.cn/star/albumcover/500/65/1/1261222476.jpg'
     },
     {
       name: '小美满',
       artist: '周深',
-      url: 'https://hhtwj.netlify.app/xiaomeiman.mp3',
+      url: 'https://wj.hhthht.cn/xiaomeiman.mp3',
       cover:
         'http://p2.music.126.net/ve0l1aPRUBPP7e4x2Oz5DA==/109951169318479430.jpg?param=130y130'
     },
@@ -193,9 +193,16 @@ module.exports = {
     {
       name: '小幸运',
       artist: '田馥甄',
-      url: 'https://hhtwj.netlify.app/xiaoxingyun.mp3',
+      url: 'https://wj.hhthht.cn/xiaoxingyun.mp3',
       cover:
         'https://img2.kuwo.cn/star/albumcover/500/12/4/3442823652.jpg'
+    },
+    {
+      name: '多远都要在一起',
+      artist: 'G.E.M.邓紫棋',
+      url: 'https://music.163.com/song/media/outer/url?id=432698302.mp3',
+      cover:
+        'http://p1.music.126.net/eX7aCeGTF3Lt_swJSbE4yQ==/18700493765616158.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
