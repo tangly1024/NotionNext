@@ -203,6 +203,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=432698302.mp3',
       cover:
         'http://p1.music.126.net/eX7aCeGTF3Lt_swJSbE4yQ==/18700493765616158.jpg?param=130y130'
+    },
+    {
+      name: '童话镇',
+      artist: '容祖儿',
+      url: 'https://music.163.com/song/media/outer/url?id=2611596618.mp3',
+      cover:
+        'http://p1.music.126.net/AmdNYt2fNQnYBBOzw1mpKQ==/109951169826214140.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
