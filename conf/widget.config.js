@@ -210,6 +210,13 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=2611596618.mp3',
       cover:
         'http://p1.music.126.net/AmdNYt2fNQnYBBOzw1mpKQ==/109951169826214140.jpg?param=130y130'
+    },
+    {
+      name: '盛夏光年',
+      artist: '五月天',
+      url: 'https://music.163.com/song/media/outer/url?id=5255949.mp3',
+      cover:
+        'http://p1.music.126.net/NOg81TCngSPhkwNQe373GA==/69269232567554.jpg?param=130y130'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
