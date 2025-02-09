@@ -6,6 +6,9 @@ import { generateRss } from '@/lib/rss'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/redirect'
+import { SpeedInsights } from "@vercel/speed-insights/next" //2024年2月9日 加入Vercel的Speed Insights，用于优化网站加载速度
+import { Analytics } from "@vercel/analytics/react" //2024年2月9日 加入Vercel的Analytics，用于统计网站访问数据
+
 
 /**
  * 首页布局

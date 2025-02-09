@@ -4,6 +4,10 @@ import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
+import { SpeedInsights } from "@vercel/speed-insights/next" //2024年2月9日 加入Vercel的Speed Insights，用于优化网站加载速度
+import { Analytics } from "@vercel/analytics/react" //2024年2月9日 加入Vercel的Analytics，用于统计网站访问数据
+
+
 
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}

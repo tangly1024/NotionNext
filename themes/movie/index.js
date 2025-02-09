@@ -31,6 +31,9 @@ import TagGroups from './components/TagGroups'
 import TagItem from './components/TagItem'
 import CONFIG from './config'
 import { Style } from './style'
+import { SpeedInsights } from "@vercel/speed-insights/next" //2024年2月9日 加入Vercel的Speed Insights，用于优化网站加载速度
+import { Analytics } from "@vercel/analytics/react" //2024年2月9日 加入Vercel的Analytics，用于统计网站访问数据
+
 
 // 主题全局状态
 const ThemeGlobalMovie = createContext()

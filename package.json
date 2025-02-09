@@ -27,7 +27,7 @@
     "@clerk/nextjs": "^5.1.5",
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
-    "@vercel/analytics": "^1.0.0",
+    "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
     "algoliasearch": "^4.18.0",
     "axios": "^1.7.2",
