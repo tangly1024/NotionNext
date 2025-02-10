@@ -1,3 +1,4 @@
+import { siteConfig } from '@/lib/config'
 import BlogPostCard from './BlogPostCard'
 import NavPostListEmpty from './NavPostListEmpty'
 import PaginationSimple from './PaginationSimple'
@@ -11,22 +12,24 @@ import PaginationSimple from './PaginationSimple'
  * @constructor
  */
 const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
-  const totalPage = Math.ceil(postCount / parseInt(siteConfig('POSTS_PER_PAGE')))
+  const totalPage = Math.ceil(
+    postCount / parseInt(siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG))
+  )
 
   if (!posts || posts.length === 0) {
     return <NavPostListEmpty />
   }
 
   return (
-      <div className='w-full justify-center'>
-        <div id='posts-wrapper'>
+    <div className='w-full justify-center'>
+      <div id='posts-wrapper'>
         {/* 文章列表 */}
         {posts?.map(post => (
           <BlogPostCard key={post.id} post={post} />
         ))}
-        </div>
-        <PaginationSimple page={page} totalPage={totalPage} />
       </div>
+      <PaginationSimple page={page} totalPage={totalPage} />
+    </div>
   )
 }
 

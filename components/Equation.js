@@ -8,8 +8,12 @@ const katexSettings = {
   strict: false
 }
 
+/**
+ * 数学公式
+ * @param {} param0
+ * @returns
+ */
 export const Equation = ({ block, math, inline = false, className, ...rest }) => {
-//   const { recordMap } = useNotionContext()
   math = math || getBlockTitle(block, null)
   if (!math) return null
 

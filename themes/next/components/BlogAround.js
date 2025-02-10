@@ -14,7 +14,7 @@ export default function BlogAround ({ prev, next }) {
       {prev && <Link
         href={`/${prev.slug}`}
         passHref
-        className='text-sm py-3 text-gray-400 hover:underline cursor-pointer'>
+        className='text-sm py-3 text-gray-500 hover:underline cursor-pointer'>
 
         <i className='mr-1 fas fa-angle-double-left' />{prev.title}
 
@@ -22,7 +22,7 @@ export default function BlogAround ({ prev, next }) {
       {next && <Link
         href={`/${next.slug}`}
         passHref
-        className='text-sm flex py-3 text-gray-400 hover:underline cursor-pointer'>
+        className='text-sm flex py-3 text-gray-500 hover:underline cursor-pointer'>
         {next.title}
         <i className='ml-1 my-1 fas fa-angle-double-right' />
 
