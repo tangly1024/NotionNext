@@ -10,9 +10,19 @@ export default function BlogPostBar(props) {
   const { locale } = useGlobal()
 
   if (tag) {
-    return <div className='flex items-center  py-8'><div className='text-xl'><i className='mr-2 fas fa-tag' />{locale.COMMON.TAGS}:</div>{tag}</div>
+    return (
+      <div className='flex items-center text-xl py-8'>
+        <i className='mr-2 fas fa-tag' />
+        {locale.COMMON.TAGS}:{tag}
+      </div>
+    )
   } else if (category) {
-        <div className='flex items-center  py-8'><div className='text-xl'><i className='mr-2 fas fa-th' />{locale.COMMON.CATEGORY}:</div>{category}</div>
+    return (
+      <div className='flex items-center text-xl py-8'>
+        <i className='mr-2 fas fa-th' />
+        {locale.COMMON.CATEGORY}:{category}
+      </div>
+    )
   } else {
     return <></>
   }
