@@ -63,8 +63,8 @@ const CONFIG = {
   HEO_INFO_CARD_ICON1: 'fa-duotone fa-solid fa-chart-pie',
   HEO_INFO_CARD_URL2: 'https://space.bilibili.com/334597217',
   HEO_INFO_CARD_ICON2: 'fa-brands fa-bilibili',
-  HEO_INFO_CARD_URL3: 'https://www.barryzed.top/article/about',
-  HEO_INFO_CARD_TEXT3: '了解更多',
+  HEO_INFO_CARD_URL3: 'http://123.60.97.243:5230/',
+  HEO_INFO_CARD_TEXT3: '个人朋友圈',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
