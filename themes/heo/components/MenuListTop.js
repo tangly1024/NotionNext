@@ -1,16 +1,34 @@
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import { siteConfig } from '@/lib/config'
 import { MenuItemDrop } from './MenuItemDrop'
 
-export const MenuListTop = (props) => {
+export const MenuListTop = props => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
   let links = [
-    { id: 1, icon: 'fa-solid fa-house', name: locale.NAV.INDEX, to: '/', show: siteConfig('HEO_MENU_INDEX', null, CONFIG) },
-    { id: 2, icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('HEO_MENU_SEARCH', null, CONFIG) },
-    { id: 3, icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG) }
+    {
+      id: 1,
+      icon: 'fa-solid fa-house',
+      name: locale.NAV.INDEX,
+      href: '/',
+      show: siteConfig('HEO_MENU_INDEX', null, CONFIG)
+    },
+    {
+      id: 2,
+      icon: 'fas fa-search',
+      name: locale.NAV.SEARCH,
+      href: '/search',
+      show: siteConfig('HEO_MENU_SEARCH', null, CONFIG)
+    },
+    {
+      id: 3,
+      icon: 'fas fa-archive',
+      name: locale.NAV.ARCHIVE,
+      href: '/archive',
+      show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG)
+    }
   ]
 
   if (customNav) {
@@ -26,9 +44,16 @@ export const MenuListTop = (props) => {
     return null
   }
 
-  return (<>
-        <nav id='nav-mobile' className='leading-8 justify-center font-light w-full flex'>
-            {links?.map((link, index) => link && link.show && <MenuItemDrop key={index} link={link} />)}
-        </nav>
-    </>)
+  return (
+    <>
+      <nav
+        id='nav-mobile'
+        className='leading-8 justify-center font-light w-full flex'>
+        {links?.map(
+          (link, index) =>
+            link && link.show && <MenuItemDrop key={index} link={link} />
+        )}
+      </nav>
+    </>
+  )
 }
