@@ -76,6 +76,7 @@ const LayoutSlug = props => {
 
   // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
@@ -90,7 +91,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])

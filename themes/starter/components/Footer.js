@@ -2,6 +2,7 @@ import { siteConfig } from '@/lib/config'
 import SocialButton from '@/themes/fukasawa/components/SocialButton'
 import { Logo } from './Logo'
 import { SVGFooterCircleBG } from './svg/SVGFooterCircleBG'
+import Link from 'next/link'
 
 /* eslint-disable @next/next/no-img-element */
 export const Footer = props => {
@@ -48,11 +49,11 @@ export const Footer = props => {
                       {item?.LINK_GROUP?.map((l, i) => {
                         return (
                           <li key={i}>
-                            <a
+                            <Link
                               href={l.URL}
                               className='mb-3 inline-block text-base text-gray-7 hover:text-primary'>
                               {l.TITLE}
-                            </a>
+                            </Link>
                           </li>
                         )
                       })}
@@ -72,7 +73,7 @@ export const Footer = props => {
                 <div className='flex flex-col gap-8'>
                   {latestPosts?.map((item, index) => {
                     return (
-                      <a
+                      <Link
                         key={index}
                         href={item?.href}
                         className='group flex items-center gap-[22px]'>
@@ -87,7 +88,7 @@ export const Footer = props => {
                         <span className='line-clamp-2 max-w-[180px] text-base text-gray-7 group-hover:text-white'>
                           {item.title}
                         </span>
-                      </a>
+                      </Link>
                     )
                   })}
                 </div>
@@ -104,27 +105,27 @@ export const Footer = props => {
               <div className='w-full px-4 md:w-2/3 lg:w-1/2'>
                 <div className='my-1'>
                   <div className='-mx-3 flex items-center justify-center md:justify-start'>
-                    <a
-                      href={siteConfig('STARTER_FOOTER_PRIVACY_POLICY_URL')}
+                    <Link
+                      href={siteConfig('STARTER_FOOTER_PRIVACY_POLICY_URL', '')}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig('STARTER_FOOTER_PRIVACY_POLICY_TEXT')}
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL'
+                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL', ''
                       )}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig('STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT')}
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL'
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL', ''
                       )}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT'
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT', ''
                       )}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

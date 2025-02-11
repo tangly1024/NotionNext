@@ -267,6 +267,7 @@ const LayoutSlug = props => {
 const Layout404 = props => {
   const { post } = props
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
@@ -281,7 +282,7 @@ const Layout404 = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
