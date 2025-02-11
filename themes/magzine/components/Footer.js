@@ -8,6 +8,7 @@ import PoweredBy from '@/components/PoweredBy'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
+import CONFIG from '../config'
 import SocialButton from './SocialButton'
 
 /**
@@ -15,7 +16,7 @@ import SocialButton from './SocialButton'
  */
 const Footer = ({ title }) => {
   const { siteInfo } = useGlobal()
-  const MAGZINE_FOOTER_LINKS = siteConfig('MAGZINE_FOOTER_LINKS', [])
+  const MAGZINE_FOOTER_LINKS = siteConfig('MAGZINE_FOOTER_LINKS', [], CONFIG)
 
   return (
     <footer
