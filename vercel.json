@@ -1,5 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "headers": []
+  "headers": []，
+  "build": {
+    "env": {
+      "YARN_REGISTRY": "https://registry.npmjs.org"
+    }
+  }
 }
