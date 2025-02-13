@@ -146,7 +146,7 @@ const Header = props => {
             ${navBgWhite ? 'bg-white dark:bg-[#18171d] shadow' : 'bg-transparent'}`}>
         <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-6'>
           {/* 左侧logo */}
-          <Logo {...props} />
+         
 
           {/* 中间菜单 */}
           <div
