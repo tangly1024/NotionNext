@@ -84,7 +84,10 @@ function Banner(props) {
       <div
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
-        <div className='text-4xl font-bold mb-3 text-orange-300 dark:text-orange-500'>
+        <div className="text-4xl font-bold mb-3"
+     style={{
+        textShadow: '2px 2px 4px rgba(0,0,0,0.6)',  // 黑色阴影，增强对比
+     }}>
           {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
           <br />
           {siteConfig('HEO_HERO_TITLE_2', null, CONFIG)}
