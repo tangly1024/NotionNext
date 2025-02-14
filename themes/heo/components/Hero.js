@@ -84,7 +84,7 @@ function Banner(props) {
       <div
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
-        <div className='text-4xl font-bold mb-3  dark:text-white'>
+        <div className='text-4xl font-bold mb-3 text-orange-500 dark:text-orange-300'>
           {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
           <br />
           {siteConfig('HEO_HERO_TITLE_2', null, CONFIG)}
