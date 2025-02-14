@@ -29,19 +29,19 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享电子生活',
   HEO_HERO_TITLE_2: '尽己所能记录问题与解决方案',
   HEO_HERO_TITLE_3: 'from 2025',
-  HEO_HERO_TITLE_4: 'XXX',
-  HEO_HERO_TITLE_5: 'XXX',
-  HEO_HERO_TITLE_LINK: 'https://www.barryzed.top',
+  HEO_HERO_TITLE_4: ' ',
+  HEO_HERO_TITLE_5: '我的个人朋友圈上线啦！',
+  HEO_HERO_TITLE_LINK: 'https://www.barryzed.top/article/memos_brief',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛？',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '教程', url: '/tag/教程' },
-  HEO_HERO_CATEGORY_2: { title: '游戏', url: '/tag/游戏' },
-  HEO_HERO_CATEGORY_3: { title: '编程', url: '/tag/编程' },
+  HEO_HERO_CATEGORY_1: { title: '教程', url: '/category/教程' },
+  HEO_HERO_CATEGORY_2: { title: '游戏', url: '/category/游戏' },
+  HEO_HERO_CATEGORY_3: { title: '编程', url: '/category/编程' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
-  HEO_HERO_RECOMMEND_POST_TAG: 'Latest',
+  HEO_HERO_RECOMMEND_POST_TAG: '推荐',
   HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: true, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
   HERO_RECOMMEND_COVER: 'https://pic1.imgdb.cn/item/679a3cfbd0e0a243d4f879f9.webp', // 英雄区右侧图片
 
@@ -53,9 +53,10 @@ const CONFIG = {
     '爱打架子鼓的',
     '会一点launchpad并在精进的',
     '就爱自己瞎搞，还啥都想搞的',
-    '一直想考驾照但科一还没过的',
+    '爱玩以撒的',
     '单身的T_T',
-    '超级喜欢收集各种OST的'
+    '喜欢收集游戏设定集的',
+    '喜欢收集各种OST的'
   ],
 
   // 个人资料底部按钮
