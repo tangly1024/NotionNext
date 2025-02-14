@@ -84,7 +84,7 @@ function Banner(props) {
       <div
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
-        <div className="text-4xl font-bold mb-3 text-orange-300 dark:text-orange-500"
+        <div className="text-4xl font-bold mb-3 text-orange-500 dark:text-orange-300"
      style={{
         textShadow: '2px 2px 4px rgba(0,0,0,0.6)',  
      }}>
