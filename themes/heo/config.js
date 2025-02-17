@@ -21,8 +21,8 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享编程',
   HEO_HERO_TITLE_2: '与思维认知',
   HEO_HERO_TITLE_3: 'lazypigzyh.top',
-  HEO_HERO_TITLE_4: '2025！',
-  HEO_HERO_TITLE_5: '祝愿大家心想事成！',
+  HEO_HERO_TITLE_4: '新版上线！',
+  HEO_HERO_TITLE_5: '更多精彩敬请期待！',
   HEO_HERO_TITLE_LINK: 'https://www.lazypigzyh.top/',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
