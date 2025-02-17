@@ -39,7 +39,7 @@ module.exports = {
     {
       name: '国王的心',
       artist: '安东尼亚诺小合唱团',
-      url: 'http://music.163.com/song/media/outer/url?id=1428491200.mp3',
+      url: 'http://music.163.com/song/media/outer/url?id=1300423464.mp3',
       cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
     },
     {
