@@ -5,7 +5,6 @@ const TagItemMini = ({ tag, selected = false }) => {
   return (
     <Link
       key={tag}
-      prefetch={false}
       href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
       passHref
       className={

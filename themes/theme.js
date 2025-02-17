@@ -1,11 +1,9 @@
-import BLOG from '@/blog.config'
+import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
 import * as ThemeComponents from '@theme-components'
-import { LayoutBase as LayoutBaseComponent } from '@theme-components/LayoutBase'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { getQueryParam, isBrowser } from '../lib/utils'
-import { siteConfig } from '@/lib/config'
+import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
@@ -63,23 +61,25 @@ export const getThemeConfig = async themeQuery => {
  * @returns
  */
 export const getBaseLayoutByTheme = theme => {
-  const LayoutBase = LayoutBaseComponent || ThemeComponents['LayoutBase']
+  const LayoutBase = ThemeComponents['LayoutBase']
   const isDefaultTheme = !theme || theme === BLOG.THEME
   if (!isDefaultTheme) {
     return dynamic(
-      () => import(`@/themes/${theme}/LayoutBase`).then(m => m['LayoutBase']),
+      () => import(`@/themes/${theme}`).then(m => m['LayoutBase']),
       { ssr: true }
     )
   }
+
   return LayoutBase
 }
+
 /**
  * 动态获取布局
  * @param {*} props
  */
 export const DynamicLayout = props => {
-  const { theme, layoutName, layout } = props
-  const SelectedLayout = getLayoutByTheme({ layoutName, theme, layout })
+  const { theme, layoutName } = props
+  const SelectedLayout = getLayoutByTheme({ layoutName, theme })
   return <SelectedLayout {...props} />
 }
 
@@ -89,37 +89,42 @@ export const DynamicLayout = props => {
  * @param {*} theme
  * @returns
  */
-export const getLayoutByTheme = ({ layoutName, theme, layout }) => {
+export const getLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
-    layout || ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
-  if (siteConfig('THEME_SWITCH')) {
-    const router = useRouter()
-    const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
-    const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
-    // 加载非当前默认主题
-    if (!isDefaultTheme) {
-      return dynamic(
-        () =>
-          import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`)
-            .then(m => {
-              setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
-              return m[layoutName]
-            })
-            .catch(err => {
-              import(`@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`).then(
-                m => {
-                  setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
-                  return m[layoutName]
-                }
-              )
-            }),
-        { ssr: true }
-      )
+    ThemeComponents[layoutName] || ThemeComponents.LayoutSlug
+
+  const router = useRouter()
+  const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
+  const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
+
+  // 加载非当前默认主题
+  if (!isDefaultTheme) {
+    const loadThemeComponents = componentsSource => {
+      const components =
+        componentsSource[layoutName] || componentsSource.LayoutSlug
+      setTimeout(fixThemeDOM, 500)
+      return components
     }
+    return dynamic(
+      () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
+      { ssr: true }
+    )
   }
-  // setTimeout(fixThemeDOM, 100)
+
+  setTimeout(fixThemeDOM, 100)
   return LayoutComponents
+}
+
+/**
+ * 根据路径 获取对应的layout名称
+ * @param {*} path
+ * @returns
+ */
+const getLayoutNameByPath = path => {
+  const layoutName = LAYOUT_MAPPINGS[path] || 'LayoutSlug'
+  //   console.log('path-layout',path,layoutName)
+  return layoutName
 }
 
 /**
@@ -145,20 +150,75 @@ const fixThemeDOM = () => {
 }
 
 /**
- * Whether to force dark mode
- * @returns {boolean} Whether to force dark mode
- * @description If `BLOG.APPEARANCE` is set to `'auto'`, this function will return `true` if:
- * - The system is in dark mode
- * - The current time is between `BLOG.APPEARANCE_DARK_TIME[0]` and `BLOG.APPEARANCE_DARK_TIME[1]`
+ * 初始化主题 , 优先级 query > cookies > systemPrefer
+ * @param isDarkMode
+ * @param updateDarkMode 更改主题ChangeState函数
+ * @description 读取cookie中存的用户主题
  */
-export const shouldDefaultDarkMode = () => {
+export const initDarkMode = (updateDarkMode, defaultDarkMode) => {
+  // 查看用户设备浏览器是否深色模型
+  let newDarkMode = isPreferDark()
+
+  // 查看localStorage中用户记录的是否深色模式
+  const userDarkMode = loadDarkModeFromLocalStorage()
+  if (userDarkMode) {
+    newDarkMode = userDarkMode === 'dark' || userDarkMode === 'true'
+    saveDarkModeToLocalStorage(newDarkMode) // 用户手动的才保存
+  }
+
+  // 如果站点强制设置默认深色，则优先级改过用
+  if (defaultDarkMode === 'true') {
+    newDarkMode = true
+  }
+
+  // url查询条件中是否深色模式
+  const queryMode = getQueryVariable('mode')
+  if (queryMode) {
+    newDarkMode = queryMode === 'dark'
+  }
+
+  updateDarkMode(newDarkMode)
+  document
+    .getElementsByTagName('html')[0]
+    .setAttribute('class', newDarkMode ? 'dark' : 'light')
+}
+
+/**
+ * 是否优先深色模式， 根据系统深色模式以及当前时间判断
+ * @returns {*}
+ */
+export function isPreferDark() {
+  if (BLOG.APPEARANCE === 'dark') {
+    return true
+  }
   if (BLOG.APPEARANCE === 'auto') {
     // 系统深色模式或时间是夜间时，强行置为夜间模式
     const date = new Date()
+    const prefersDarkMode = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches
     return (
-      BLOG.APPEARANCE_DARK_TIME &&
-      (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] ||
-        date.getHours() < BLOG.APPEARANCE_DARK_TIME[1])
+      prefersDarkMode ||
+      (BLOG.APPEARANCE_DARK_TIME &&
+        (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] ||
+          date.getHours() < BLOG.APPEARANCE_DARK_TIME[1]))
     )
   }
+  return false
+}
+
+/**
+ * 读取深色模式
+ * @returns {*}
+ */
+export const loadDarkModeFromLocalStorage = () => {
+  return localStorage.getItem('darkMode')
+}
+
+/**
+ * 保存深色模式
+ * @param newTheme
+ */
+export const saveDarkModeToLocalStorage = newTheme => {
+  localStorage.setItem('darkMode', newTheme)
 }

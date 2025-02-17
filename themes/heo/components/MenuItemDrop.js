@@ -11,22 +11,22 @@ export const MenuItemDrop = ({ link }) => {
 
   return (
     <div
-      onMouseOver={() => hasSubMenu && changeShow(true)}
-      onMouseOut={() => hasSubMenu && changeShow(false)}>
+      onMouseOver={() => changeShow(true)}
+      onMouseOut={() => changeShow(false)}>
       {/* 不含子菜单 */}
       {!hasSubMenu && (
         <Link
           target={link?.target}
           href={link?.href}
           className=' hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
-          {link?.icon && <i className={link?.icon} />} &nbsp; {link?.name}
+          {link?.icon && <i className={link?.icon} />} {link?.name}
         </Link>
       )}
       {/* 含子菜单的按钮 */}
       {hasSubMenu && (
         <>
           <div className='cursor-pointer  hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
-            {link?.icon && <i className={link?.icon} />} &nbsp; {link?.name}
+            {link?.icon && <i className={link?.icon} />} {link?.name}
           </div>
         </>
       )}
@@ -41,9 +41,9 @@ export const MenuItemDrop = ({ link }) => {
                 key={index}
                 className='cursor-pointer hover:bg-blue-600 dark:hover:bg-yellow-600 hover:text-white text-gray-900 dark:text-gray-100  tracking-widest transition-all duration-200 py-1 pr-6 pl-3'>
                 <Link href={sLink.href} target={link?.target}>
-                  <span className='text-sm text-nowrap font-light'>
+                  <span className='text-sm text-nowrap font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                    {sLink.name}
+                    {sLink.title}
                   </span>
                 </Link>
               </li>

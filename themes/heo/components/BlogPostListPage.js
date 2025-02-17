@@ -2,11 +2,8 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
-import { AdSlot } from '@/components/GoogleAdsense'
-import dynamic from 'next/dynamic'
-
-const BlogPostListEmpty = dynamic(() => import('./BlogPostListEmpty'))
-const PaginationNumber = dynamic(() => import('./PaginationNumber'))
+import BlogPostListEmpty from './BlogPostListEmpty'
+import PaginationNumber from './PaginationNumber'
 
 /**
  * 文章列表分页表格
@@ -27,7 +24,6 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   } else {
     return (
       <div id='container' className='w-full'>
-        {/*<AdSlot />*/}
         {/* 文章列表 */}
         <div
           className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-2'} grid-cols-1 gap-5`}>
@@ -40,7 +36,6 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
             />
           ))}
         </div>
-        <AdSlot />
 
         {showPagination && (
           <PaginationNumber page={page} totalPage={totalPage} />

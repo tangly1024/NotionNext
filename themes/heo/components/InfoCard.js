@@ -9,7 +9,7 @@ import Announcement from './Announcement'
 import Card from './Card'
 
 /**
- * 社交信息卡和公告栏
+ * 社交信息卡
  * @param {*} props
  * @returns
  */
@@ -46,17 +46,17 @@ export function InfoCard(props) {
       <Announcement post={notice} style={{ color: 'white !important' }} />
 
       <div className='flex justify-between'>
-        <div className='flex space-x-3'>
+        <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
           {/* 两个社交按钮 */}
           {url1 && (
-            <div className='hover:text-indigo-400 dark:hover:text-white w-10 text-center bg-indigo-400 p-2 rounded-full  transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
+            <div className='w-10 text-center bg-indigo-400 p-2 rounded-full  transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
               <Link href={url1}>
                 <i className={icon1} />
               </Link>
             </div>
           )}
           {url2 && (
-            <div className='hover:text-indigo-400 dark:hover:text-white bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
+            <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
               <Link href={url2}>
                 <i className={icon2} />
               </Link>
@@ -84,9 +84,13 @@ function MoreButton() {
     <Link href={url3}>
       <div
         className={
-          'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-indigo-400 dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
+          'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
         }>
-        <ArrowRightCircle className={'w-6 h-6 transition-all duration-100'} />
+        <ArrowRightCircle
+          className={
+            'group-hover:stroke-black dark:group-hover:stroke-white w-6 h-6 transition-all duration-100'
+          }
+        />
         <div className='font-bold'>{text3}</div>
       </div>
     </Link>

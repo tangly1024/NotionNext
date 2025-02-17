@@ -5,15 +5,11 @@ import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import DarkModeButton from './DarkModeButton'
 import Logo from './Logo'
-import MenuListTop from './MenuListTop'
+import { MenuListTop } from './MenuListTop'
 import RandomPostButton from './RandomPostButton'
 import ReadingProgress from './ReadingProgress'
 import SearchButton from './SearchButton'
-import dynamic from 'next/dynamic'
-import { useMediaQuery } from 'react-responsive'
-import tailwindBreakpoints from '../../../tailwind.screens'
-
-const SlideOver = dynamic(() => import('./SlideOver'))
+import SlideOver from './SlideOver'
 
 /**
  * 页头：顶部导航
@@ -25,15 +21,6 @@ const Header = props => {
   const [textWhite, setTextWhite] = useState(false)
   const [navBgWhite, setBgWhite] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
-
-  const [showSlideOver, setShowSlideOver] = useState(false)
-  const isLg = useMediaQuery({
-    query: `(min-width: ${tailwindBreakpoints.lg})`
-  })
-
-  useEffect(() => {
-    setShowSlideOver(!isLg)
-  }, [isLg])
 
   const router = useRouter()
   const slideOverRef = useRef()
@@ -53,6 +40,12 @@ const Header = props => {
         setFixedNav(false)
         setBgWhite(false)
         setTextWhite(false)
+
+        // 文章详情页特殊处理
+        if (document?.querySelector('#post-bg')) {
+          setFixedNav(true)
+          setTextWhite(true)
+        }
       } else {
         // 向下滚动后的导航样式
         setFixedNav(true)
@@ -61,6 +54,9 @@ const Header = props => {
       }
     }, 100)
   )
+  useEffect(() => {
+    scrollTrigger()
+  }, [router])
 
   // 监听滚动
   useEffect(() => {
@@ -137,7 +133,9 @@ const Header = props => {
       `}</style>
 
       {/* fixed时留白高度 */}
-      {fixedNav && <div className='h-16'></div>}
+      {fixedNav && !document?.querySelector('#post-bg') && (
+        <div className='h-16'></div>
+      )}
 
       {/* 顶部导航菜单栏 */}
       <nav
@@ -153,9 +151,9 @@ const Header = props => {
           {/* 中间菜单 */}
           <div
             id='nav-bar-swipe'
-            className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full w-full`}>
+            className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full relative w-full`}>
             <div
-              className={`transition-all duration-700 ${activeIndex === 0 ? 'opacity-100 mt-0' : '-mt-20 opacity-0 invisible'}`}>
+              className={`absolute transition-all duration-700 ${activeIndex === 0 ? 'opacity-100 mt-0' : '-mt-20 opacity-0 invisible'}`}>
               <MenuListTop {...props} />
             </div>
             <div
@@ -168,7 +166,7 @@ const Header = props => {
           </div>
 
           {/* 右侧固定 */}
-          <div className='flex flex-shrink-0 justify-end items-center'>
+          <div className='flex flex-shrink-0 justify-end items-center w-48'>
             <RandomPostButton {...props} />
             <SearchButton {...props} />
             {!JSON.parse(siteConfig('THEME_SWITCH')) && (
@@ -187,7 +185,7 @@ const Header = props => {
           </div>
 
           {/* 右边侧拉抽屉 */}
-          {showSlideOver && <SlideOver cRef={slideOverRef} {...props} />}
+          <SlideOver cRef={slideOverRef} {...props} />
         </div>
       </nav>
     </>

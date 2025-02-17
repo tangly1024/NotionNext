@@ -11,6 +11,7 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Features from './components/Features'
 import FeaturesBlocks from './components/FeaturesBlocks'
 import Footer from './components/Footer'
@@ -71,8 +72,29 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutSlug = props => {
+  const { post } = props
+
   // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(
+        () => {
+          if (isBrowser) {
+            const article = document.querySelector('#article-wrapper #notion-article')
+            if (!article) {
+              router.push('/404').then(() => {
+                console.warn('找不到页面', router.asPath)
+              })
+            }
+          }
+        },
+        waiting404
+      )
+    }
+  }, [post])
 
   if (
     JSON.parse(siteConfig('LANDING_POST_REDIRECT_ENABLE', null, CONFIG)) &&

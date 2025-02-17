@@ -3,7 +3,13 @@ import { useGlobal } from '@/lib/global'
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import {
+  Fragment,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState
+} from 'react'
 import { MenuListSide } from './MenuListSide'
 import TagGroups from './TagGroups'
 
@@ -16,7 +22,6 @@ export default function SlideOver(props) {
   const [open, setOpen] = useState(false)
   const { locale } = useGlobal()
   const router = useRouter()
-
   /**
    * 函数组件暴露方法useImperativeHandle
    **/
@@ -103,7 +108,7 @@ export default function SlideOver(props) {
 
                       <section className='space-y-2 flex flex-col'>
                         <div>{locale.COMMON.TAGS}</div>
-                        <TagGroups tags={tagOptions?.slice(0, 30) || []} />
+                        <TagGroups tags={tagOptions} />
                       </section>
                     </div>
                   </div>

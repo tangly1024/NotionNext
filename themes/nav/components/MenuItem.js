@@ -68,7 +68,7 @@ export const MenuItem = ({ link }) => {
                     <i
                       className={`text-xs mr-1 ${sLink?.icon ? sLink?.icon : sIsAnchor ? 'fas fa-hashtag' : ''}`}
                     />
-                    {sLink.name}
+                    {sLink.title}
                   </span>
                 </Link>
               </div>

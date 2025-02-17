@@ -46,7 +46,7 @@ export const MenuItemDrop = ({ link }) => {
                 <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                    {sLink.name}
+                    {sLink.title}
                   </span>
                 </Link>
               </li>

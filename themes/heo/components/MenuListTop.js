@@ -2,9 +2,8 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { MenuItemDrop } from './MenuItemDrop'
-import { memo } from 'react'
 
-export default memo(function MenuListTop(props) {
+export const MenuListTop = props => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
@@ -49,7 +48,7 @@ export default memo(function MenuListTop(props) {
     <>
       <nav
         id='nav-mobile'
-        className='leading-8 justify-center font-normal w-full flex'>
+        className='leading-8 justify-center font-light w-full flex'>
         {links?.map(
           (link, index) =>
             link && link.show && <MenuItemDrop key={index} link={link} />
@@ -57,4 +56,4 @@ export default memo(function MenuListTop(props) {
       </nav>
     </>
   )
-})
+}

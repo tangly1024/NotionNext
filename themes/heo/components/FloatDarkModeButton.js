@@ -1,30 +1,32 @@
+import { useGlobal } from '@/lib/global'
+import { saveDarkModeToLocalStorage } from '@/themes/theme'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
-import { useTheme } from 'next-themes'
 
-export default function FloatDarkModeButton() {
-  const { resolvedTheme, setTheme } = useTheme()
+export default function FloatDarkModeButton () {
+  const { isDarkMode, updateDarkMode } = useGlobal()
 
   if (!siteConfig('HEO_WIDGET_DARK_MODE', null, CONFIG)) {
     return <></>
   }
 
-  const isDarkMode = resolvedTheme === 'dark'
-
-  function handleChangeDarkMode() {
-    setTheme(isDarkMode ? 'light' : 'dark')
+  // 用户手动设置主题
+  const handleChangeDarkMode = () => {
+    const newStatus = !isDarkMode
+    saveDarkModeToLocalStorage(newStatus)
+    updateDarkMode(newStatus)
+    const htmlElement = document.getElementsByTagName('html')[0]
+    htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
+    htmlElement.classList?.add(newStatus ? 'dark' : 'light')
   }
 
   return (
     <div
       onClick={handleChangeDarkMode}
-      className={
-        'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'
-      }>
-      <i
-        id='darkModeButton'
-        className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}
-      />
+      className={'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'
+      }
+    >
+      <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}/>
     </div>
   )
 }

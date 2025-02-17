@@ -120,7 +120,7 @@ const LayoutPostList = props => {
       <div className='w-full p-2'>
         <WWAds className='w-full' orientation='horizontal' />
       </div>
-      {POST_LIST_STYLE === 'page' ? (
+      { POST_LIST_STYLE=== 'page' ? (
         <BlogListPage {...props} />
       ) : (
         <BlogListScroll {...props} />
@@ -136,13 +136,32 @@ const LayoutPostList = props => {
  */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
-
+  const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+  useEffect(() => {
+    // 404
+    if (!post) {
+      setTimeout(
+        () => {
+          if (isBrowser) {
+            const article = document.querySelector('#article-wrapper #notion-article')
+            if (!article) {
+              router.push('/404').then(() => {
+                console.warn('找不到页面', router.asPath)
+              })
+            }
+          }
+        },
+        waiting404
+      )
+    }
+  }, [post])
   return (
     <>
       {lock ? (
         <ArticleLock validPassword={validPassword} />
-      ) : (
-        post && <ArticleDetail {...props} />
+      ) : post && (
+        <ArticleDetail {...props} />
       )}
     </>
   )
@@ -208,21 +227,16 @@ const Layout404 = props => {
     }, 3000)
   }, [])
 
-  return (
-    <>
-      <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
-        <div className='dark:text-gray-200'>
-          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
-            <i className='mr-2 fas fa-spinner animate-spin' />
-            404
-          </h2>
-          <div className='inline-block text-left h-32 leading-10 items-center'>
-            <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
-          </div>
+  return <>
+        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+            <div className='dark:text-gray-200'>
+                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
+                <div className='inline-block text-left h-32 leading-10 items-center'>
+                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+                </div>
+            </div>
         </div>
-      </div>
     </>
-  )
 }
 
 /**

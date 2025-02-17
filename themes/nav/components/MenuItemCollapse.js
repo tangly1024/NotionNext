@@ -89,7 +89,7 @@ export const MenuItemCollapse = props => {
                     <div
                       className={`${sLink?.icon ? sLink?.icon : 'fas fa-hashtag'} text-center w-3 mr-2 text-xs`}
                     />
-                    {sLink.name}
+                    {sLink.title}
                   </div>
                 </Link>
               </div>

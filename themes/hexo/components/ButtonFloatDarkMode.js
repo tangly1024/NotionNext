@@ -1,20 +1,26 @@
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { saveDarkModeToLocalStorage } from '@/themes/theme'
 import CONFIG from '../config'
-import { useTheme } from 'next-themes'
 
 /**
  * 深色模式按钮
  */
 export default function ButtonDarkModeFloat() {
-  const { resolvedTheme, setTheme } = useTheme()
+  const { isDarkMode, updateDarkMode } = useGlobal()
 
   if (!siteConfig('HEXO_WIDGET_DARK_MODE', null, CONFIG)) {
     return <></>
   }
-  const isDarkMode = resolvedTheme === 'dark'
 
-  function handleChangeDarkMode() {
-    setTheme(isDarkMode ? 'light' : 'dark')
+  // 用户手动设置主题
+  const handleChangeDarkMode = () => {
+    const newStatus = !isDarkMode
+    saveDarkModeToLocalStorage(newStatus)
+    updateDarkMode(newStatus)
+    const htmlElement = document.getElementsByTagName('html')[0]
+    htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
+    htmlElement.classList?.add(newStatus ? 'dark' : 'light')
   }
 
   return (
