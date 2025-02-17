@@ -23,7 +23,7 @@ export default function ArticleCopyright () {
       <ul className="overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-2 border-red-500">
         <li>
           <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
-          <Link href={'/article/about'} className="hover:underline">
+          <Link href={'/about'} className="hover:underline">
             {siteConfig('AUTHOR')}
           </Link>
         </li>

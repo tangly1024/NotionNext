@@ -29,7 +29,7 @@ const CONFIG = {
   HEO_HERO_TITLE_1: '分享电子生活',
   HEO_HERO_TITLE_2: '尽己所能记录问题与解决方案',
   HEO_HERO_TITLE_3: 'from 2025',
-  HEO_HERO_TITLE_4: ' ',
+  HEO_HERO_TITLE_4: '新功能上线',
   HEO_HERO_TITLE_5: '我的个人朋友圈上线啦！',
   HEO_HERO_TITLE_LINK: 'https://www.barryzed.top/article/memos_brief',
   // 英雄区遮罩文字
