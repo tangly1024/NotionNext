@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
+import Image from 'next/image'
 
 /**
  * 顶部英雄区
@@ -64,13 +65,14 @@ function BannerGroup(props) {
 function Banner(props) {
   const router = useRouter()
   const { allNavPages } = props
+  const SUB_PATH = siteConfig('SUB_PATH', '')
   /**
    * 随机跳转文章
    */
   function handleClickBanner() {
     const randomIndex = Math.floor(Math.random() * allNavPages.length)
     const randomPost = allNavPages[randomIndex]
-    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+    router.push(`${SUB_PATH}/${randomPost?.slug}`)
   }
 
   // 遮罩文字
@@ -136,7 +138,6 @@ function TagsGroupBar() {
                   'tags-group-icon w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'
                 }>
                 <LazyImage
-                  priority={true}
                   src={g.img_1}
                   title={g.title_1}
                   className='w-2/3 hidden xl:block'
@@ -148,7 +149,6 @@ function TagsGroupBar() {
                   'tags-group-icon  mt-5 w-28 h-28 rounded-3xl flex items-center justify-center text-white text-lg font-bold shadow-md'
                 }>
                 <LazyImage
-                  priority={true}
                   src={g.img_2}
                   title={g.title_2}
                   className='w-2/3 hidden xl:block'
@@ -227,6 +227,7 @@ function TopGroup(props) {
 
   // 获取置顶推荐文章
   const topPosts = getTopPosts({ latestPosts, allNavPages })
+  const SUB_PATH = siteConfig('SUB_PATH', '')
 
   return (
     <div
@@ -239,13 +240,14 @@ function TopGroup(props) {
         className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
         {topPosts?.map((p, index) => {
           return (
-            <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
+            <Link href={`${SUB_PATH}/${p?.slug}`} key={index}>
               <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
-                <LazyImage
-                  priority={index === 0}
+                <Image
                   className='h-24 object-cover'
                   alt={p?.title}
                   src={p?.pageCoverThumbnail || siteInfo?.pageCover}
+                  width={220}
+                  height={96}
                 />
                 <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>
                   {p?.title}
@@ -394,13 +396,16 @@ function TodayCard({ cRef, siteInfo }) {
         </div>
 
         {/* 封面图 */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={siteInfo?.pageCover}
+        <Image
+          priority={true}
+          src={siteConfig('HEO_HERO_TITLE_COVER') || siteInfo?.pageCover}
           id='today-card-cover'
           className={`${
             isCoverUp ? '' : ' pointer-events-none'
           } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
+          layout='fill'
+          placeholder='blur'
+          blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
         />
       </div>
     </div>

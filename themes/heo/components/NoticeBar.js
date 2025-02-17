@@ -2,8 +2,9 @@ import { ArrowRightCircle } from '@/components/HeroIcons'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
-import Swipe from './Swipe'
+import dynamic from 'next/dynamic'
 
+const Swipe = dynamic(() => import('./Swipe'), { ssr: false })
 /**
  * 通知横幅
  */

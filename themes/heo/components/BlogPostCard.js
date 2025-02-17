@@ -1,9 +1,10 @@
-import LazyImage from '@/components/LazyImage'
+import Image from 'next/image'
 import NotionIcon from './NotionIcon'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
+import { md } from '../../../tailwind.screens'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
@@ -44,10 +45,15 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 (POST_TWO_COLS ? ' 2xl:w-full' : '') +
                 ' w-full md:w-5/12 overflow-hidden cursor-pointer select-none'
               }>
-              <LazyImage
+              <Image
                 priority={index === 0}
                 src={post?.pageCoverThumbnail}
                 alt={post?.title}
+                width={430}
+                height={210}
+                sizes={`(max-width: ${md}) 90vw,40vw`}
+                placeholder='blur'
+                blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
                 className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out' //宽高都调整为自适应,保证封面居中
               />
             </div>
@@ -58,17 +64,18 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         <div
           className={
             (POST_TWO_COLS ? '2xl:p-4 2xl:h-48 2xl:w-full' : '') +
-            ' flex p-6  flex-col justify-between h-48 md:h-full w-full md:w-7/12'
+            ' flex p-4 pl-5  flex-col justify-between h-48 md:h-full w-full md:w-7/12'
           }>
           <header>
             {/* 分类 */}
             {post?.category && (
               <div
-                className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
+                className={`flex mb-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
                 <Link
+                  prefetch={false}
                   passHref
                   href={`/category/${post.category}`}
-                  className='cursor-pointer text-xs font-normal menu-link '>
+                  className='cursor-pointer text-xs font-normal menu-link  px-3 py-1 rounded-lg  text-white bg-blue-500 hover:border-indigo-600 '>
                   {post.category}
                 </Link>
               </div>
@@ -83,9 +90,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               }>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon
-                icon={post.pageIcon}
-                className="heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]" // 专门为 Heo 主题的图标设置样式
-              />
+                  icon={post.pageIcon}
+                  className='heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]' // 专门为 Heo 主题的图标设置样式
+                />
               )}
               <span className='menu-link '>{post.title}</span>
             </Link>
@@ -93,7 +100,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && (
-            <main className='line-clamp-2 replace text-gray-700  dark:text-gray-300 text-sm font-light leading-tight'>
+            <main className='line-clamp-3 replace text-gray-700  dark:text-gray-300 text-sm font-light leading-tight'>
               {post.summary}
             </main>
           )}

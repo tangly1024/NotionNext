@@ -1,22 +1,16 @@
-import { useGlobal } from '@/lib/global'
-import { saveDarkModeToLocalStorage } from '@/themes/theme'
 import CONFIG from '../config'
+import { useTheme } from 'next-themes'
 
 export default function FloatDarkModeButton() {
-  const { isDarkMode, updateDarkMode } = useGlobal()
-
+  const { resolvedTheme, setTheme } = useTheme()
   if (!CONFIG.WIDGET_DARK_MODE) {
     return <></>
   }
 
-  // 用户手动设置主题
-  const handleChangeDarkMode = () => {
-    const newStatus = !isDarkMode
-    saveDarkModeToLocalStorage(newStatus)
-    updateDarkMode(newStatus)
-    const htmlElement = document.getElementsByTagName('html')[0]
-    htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
-    htmlElement.classList?.add(newStatus ? 'dark' : 'light')
+  const isDarkMode = resolvedTheme === 'dark'
+
+  function handleChangeDarkMode() {
+    setTheme(isDarkMode ? 'light' : 'dark')
   }
 
   return (

@@ -316,27 +316,6 @@ const LayoutSlug = props => {
       ? `${post?.title} | ${siteInfo?.description}`
       : `${post?.title} | ${siteInfo?.title}`
 
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-  useEffect(() => {
-    // 404
-    if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
-          }
-        },
-        waiting404
-      )
-    }
-  }, [post])
   return (
     <>
       <Head>
@@ -450,16 +429,21 @@ const Layout404 = props => {
     }, 3000)
   }, [])
 
-  return <>
-        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
-            <div className='dark:text-gray-200'>
-                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
-                <div className='inline-block text-left h-32 leading-10 items-center'>
-                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
-                </div>
-            </div>
+  return (
+    <>
+      <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+        <div className='dark:text-gray-200'>
+          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
+            <i className='mr-2 fas fa-spinner animate-spin' />
+            404
+          </h2>
+          <div className='inline-block text-left h-32 leading-10 items-center'>
+            <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+          </div>
         </div>
+      </div>
     </>
+  )
 }
 
 /**
@@ -608,18 +592,17 @@ const LayoutDashboard = props => {
 }
 
 export {
-    Layout404,
-    LayoutArchive,
-    LayoutBase,
-    LayoutCategoryIndex,
-    LayoutDashboard,
-    LayoutIndex,
-    LayoutPostList,
-    LayoutSearch,
-    LayoutSignIn,
-    LayoutSignUp,
-    LayoutSlug,
-    LayoutTagIndex,
-    CONFIG as THEME_CONFIG
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutDashboard,
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSignIn,
+  LayoutSignUp,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }
-

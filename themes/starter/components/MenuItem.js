@@ -79,7 +79,7 @@ export const MenuItem = ({ link }) => {
                 {/* 子菜单 SubMenuItem */}
                 <span className='text-md ml-2 whitespace-nowrap'>
                   {link?.icon && <i className={sLink.icon + ' mr-2 my-auto'} />}{' '}
-                  {sLink.title}
+                  {sLink.name}
                 </span>
               </Link>
             ))}

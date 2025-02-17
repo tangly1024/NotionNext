@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useState } from 'react'
+
 /**
  * 菜单
  * 支持二级展开的菜单
@@ -49,7 +50,7 @@ export const MenuItemDrop = ({ link }) => {
                 <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
-                    {sLink.title}
+                    {sLink.name}
                   </span>
                 </Link>
               </li>

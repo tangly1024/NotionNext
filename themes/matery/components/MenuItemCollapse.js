@@ -76,7 +76,7 @@ export const MenuItemCollapse = ({ link }) => {
                 <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm'>
                     <i className={`${sLink.icon} w-4 mr-3 text-center`} />
-                    {sLink.title}
+                    {sLink.name}
                   </span>
                 </Link>
               </div>

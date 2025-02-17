@@ -79,7 +79,7 @@ export const MenuItemCollapse = props => {
                         <i className={sLink.icon} />
                       </span>
                     )}
-                    {sLink.title}
+                    {sLink.name}
                   </span>
                 </Link>
               </div>

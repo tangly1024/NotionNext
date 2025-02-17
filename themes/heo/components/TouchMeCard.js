@@ -8,7 +8,7 @@ import CONFIG from '../config'
  * @returns
  */
 export default function TouchMeCard() {
-  if (!JSON.parse(siteConfig('HEO_SOCIAL_CARD', null, CONFIG))) {
+  if (!siteConfig('HEO_SOCIAL_CARD', null, CONFIG)) {
     return <></>
   }
   return (
@@ -23,12 +23,13 @@ export default function TouchMeCard() {
             <h3 className='pt-2'>
               {siteConfig('HEO_SOCIAL_CARD_TITLE_2', null, CONFIG)}
             </h3>
-            <div
+            <img
+              src='/images/heo/touch-me-card.webp'
               className='absolute left-0 top-0 w-full h-full'
-              style={{
-                background:
-                  'url(https://bu.dusays.com/2023/05/16/64633c4cd36a9.png) center center no-repeat'
-              }}></div>
+              loading='eager'
+              fetchpriority='high'
+              alt='touch-me-card'
+            />
           </div>
         }
         backContent={

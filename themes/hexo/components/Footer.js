@@ -22,6 +22,15 @@ const Footer = ({ title }) => {
           {siteConfig('AUTHOR')}
         </a>
         .<br />
+        {siteConfig('BEI_AN') && (
+          <>
+            <i className='fas fa-shield-alt' />
+            <a href={'https://icp.gov.moe/?keyword=' + siteConfig('BEI_AN').match(/\d+/g)} target='_blank' rel='noreferrer' className='mr-2'>
+              {siteConfig('BEI_AN')}
+            </a>
+            <br />
+          </>
+        )}
         <BeiAnSite />
         <BeiAnGongAn />
         <span className='hidden busuanzi_container_site_pv'>

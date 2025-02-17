@@ -1,11 +1,13 @@
 import { HashTag } from '@/components/HeroIcons'
-import LazyImage from '@/components/LazyImage'
+import Image from 'next/image'
 import NotionIcon from '@/components/NotionIcon'
-import WordCount from '@/components/WordCount'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
-import WavesArea from './WavesArea'
+import dynamic from 'next/dynamic'
+import WordCount from '@/components/WordCount'
+
+const WavesArea = dynamic(() => import('./WavesArea'), { ssr: false })
 
 /**
  * 文章页头
@@ -23,41 +25,40 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
     <div
       id='post-bg'
       className='md:mb-0 -mb-5 w-full h-[30rem] relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10'>
-      <style jsx>{`
-        .coverdiv:after {
-          position: absolute;
-          content: '';
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          box-shadow: 110px -130px 500px 100px
-            ${isDarkMode ? '#CA8A04' : '#0060e0'} inset;
-        }
-      `}</style>
-
       <div
-        className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}>
+        className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full flex justify-center items-center`}>
         {/* 文章背景图 */}
         <div
           id='post-cover-wrapper'
           style={{
-            filter: 'blur(15px)'
+            filter: 'blur(5px)'
           }}
-          className='coverdiv lg:opacity-50 lg:translate-x-96 lg:rotate-12'>
-          <LazyImage
+          className='coverdiv h-full lg:opacity-70 lg:translate-x-96'>
+          <Image
+            priority={true}
             id='post-cover'
             className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'
+            style={{
+              maskImage:
+                'radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 90%)'
+            }}
             src={headerImage}
+            alt={post.title}
+            width={100}
+            height={100}
+            placeholder='blur'
+            blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
           />
         </div>
 
         {/* 文章文字描述 */}
         <div
           id='post-info'
-          className='absolute top-48 z-10 flex flex-col space-y-4 lg:-mt-12 w-full max-w-[86rem] px-5'>
+          className='absolute top-38 z-10 flex flex-col space-y-4 lg:-mt-10 w-full max-w-[86rem] px-5'>
           {/* 分类+标签 */}
-          <div className='flex justify-center md:justify-start items-center gap-4'>
+          <div
+            style={{ fontSize: '95%' }}
+            className='flex justify-center md:justify-start items-center gap-4'>
             {post.category && (
               <>
                 <Link
@@ -82,7 +83,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                     className={
                       'cursor-pointer inline-block text-gray-50 hover:text-white duration-200 py-0.5 px-1 whitespace-nowrap '
                     }>
-                    <div className='font-light flex items-center'>
+                    <div className='hover:bg-opacity-20 hover:bg-white rounded-xl py-1 px-2 font-light flex items-center'>
                       <HashTag className='text-gray-200 stroke-2 mr-0.5 w-3 h-3' />{' '}
                       {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
                     </div>
@@ -93,15 +94,19 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           </div>
 
           {/* 文章Title */}
-          <div className='max-w-5xl font-bold text-3xl lg:text-5xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white'>
+          <div className='max-w-6xl font-bold text-3xl lg:text-4xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post.pageIcon} />
             )}
-            {post.title}
+            <span className='ml-3 line-clamp-4 leading-tight'>
+              {post.title}
+            </span>
           </div>
 
           {/* 标题底部补充信息 */}
-          <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
+          <section
+            style={{ fontSize: '95%' }}
+            className='flex-wrap dark:text-gray-200 text-opacity-80 shadow-text-md flex justify-center md:justify-start mt-4 text-white font-light leading-8'>
             <div className='flex justify-center '>
               <div className='mr-2'>
                 <WordCount

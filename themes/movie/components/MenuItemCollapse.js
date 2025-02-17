@@ -70,7 +70,7 @@ export const MenuItemCollapse = props => {
                 <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm ml-4 whitespace-nowrap'>
                     {link?.icon && <i className={sLink.icon + ' mr-2'} />}{' '}
-                    {sLink.title}
+                    {sLink.name}
                   </span>
                 </Link>
               </div>

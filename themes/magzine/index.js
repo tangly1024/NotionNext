@@ -158,25 +158,6 @@ const LayoutPostList = props => {
 const LayoutSlug = props => {
   const { post, recommendPosts, prev, next, lock, validPassword } = props
   const { locale } = useGlobal()
-  const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-  useEffect(() => {
-    // 404
-    if (!post && router?.route?.indexOf('/[prefix]') === 0) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const article = document.querySelector(
-            '#article-wrapper #notion-article'
-          )
-          if (!article) {
-            router.push('/404').then(() => {
-              console.warn('找不到页面', router.asPath)
-            })
-          }
-        }
-      }, waiting404)
-    }
-  }, [router])
 
   return (
     <>

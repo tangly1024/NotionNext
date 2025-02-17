@@ -7,27 +7,29 @@ import { useEffect, useState } from 'react'
 export default function WavesArea() {
   const { isDarkMode } = useGlobal()
   const color = isDarkMode ? '#18171d' : '#f7f9fe'
-  const [showWave, setShowWave] = useState(true)
+  const [showWave, setShowWave] = useState(false)
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 800) {
-        setShowWave(false)
-      } else {
-        setShowWave(true)
+    setTimeout(() => {
+      const handleResize = () => {
+        if (window.innerWidth < 800) {
+          setShowWave(false)
+        } else {
+          setShowWave(true)
+        }
       }
-    }
 
-    // Initial check
-    handleResize()
+      // Initial check
+      handleResize()
 
-    // Add event listener for window resize
-    window.addEventListener('resize', handleResize)
+      // Add event listener for window resize
+      window.addEventListener('resize', handleResize)
 
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
+      // Cleanup event listener on component unmount
+      return () => {
+        window.removeEventListener('resize', handleResize)
+      }
+    }, 1000)
   }, [])
 
   if (!showWave) {

@@ -64,7 +64,7 @@ const Catalog = ({ toc }) => {
   return (
     <div className='px-3 py-1 dark:text-white text-black'>
       <div className='w-full'>
-        <i className='mr-1 fas fa-stream' />
+        <i className='mr-1 fas fa-stream pr-1' />
         {locale.COMMON.TABLE_OF_CONTENTS}
       </div>
       <div

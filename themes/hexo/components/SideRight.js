@@ -1,4 +1,3 @@
-import Live2D from '@/components/Live2D'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
@@ -13,6 +12,7 @@ import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
+const Live2D = dynamic(() => import('@/components/Live2D'),{ ssr: false })
 const FaceBookPage = dynamic(
   () => {
     let facebook = <></>

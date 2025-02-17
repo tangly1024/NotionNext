@@ -61,6 +61,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                       <div
                         className={`flex items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-500 text-gray-600 `}>
                         <Link
+                          prefetch={false}
                           passHref
                           href={`/category/${post.category}`}
                           className='cursor-pointer text-xs font-normal menu-link hover:text-indigo-700  dark:text-gray-600 transform'>
