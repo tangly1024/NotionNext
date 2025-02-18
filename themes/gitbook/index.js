@@ -438,6 +438,7 @@ const LayoutArchive = props => {
  */
 const Layout404 = props => {
   const router = useRouter()
+  const { locale } = useGlobal()
   useEffect(() => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
@@ -455,7 +456,7 @@ const Layout404 = props => {
             <div className='dark:text-gray-200'>
                 <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
                 <div className='inline-block text-left h-32 leading-10 items-center'>
-                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+                <h2 className='m-0 p-0'>{locale.NAV.PAGE_NOT_FOUND_REDIRECT}</h2>
                 </div>
             </div>
         </div>
