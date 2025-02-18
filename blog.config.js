@@ -65,7 +65,9 @@ const BLOG = {
 
   // uuid重定向至 slug（不支持Notion配置！）
   UUID_REDIRECT: process.env.UUID_REDIRECT || false,
-  REDIRECT_CACHE_KEY: process.env.REDIRECT_CACHE_KEY || 'uuid_slug_map'
+  REDIRECT_CACHE_KEY:
+    process.env.REDIRECT_CACHE_KEY ||
+    `uuid_slug_map_${process.env.NOTION_PAGE_ID}`
 }
 
 module.exports = BLOG
