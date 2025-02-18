@@ -1,8 +1,13 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { checkStrIsNotionId, getLastPartOfUrl } from '@/lib/utils'
+import {
+  checkStrIsNotionId,
+  checkStrIsUuid,
+  getLastPartOfUrl
+} from '@/lib/utils'
 import { idToUuid } from 'notion-utils'
 import BLOG from './blog.config'
+import { upstashRedisClient } from '@/lib/cache/upstash_redis_cache'
 
 /**
  * Clerk 身份验证中间件
@@ -36,26 +41,59 @@ const isTenantAdminRoute = createRouteMatcher([
 const noAuthMiddleware = async (req: NextRequest, ev: any) => {
   // 如果没有配置 Clerk 相关环境变量，返回一个默认响应或者继续处理请求
   if (BLOG['UUID_REDIRECT']) {
-    let redirectJson: Record<string, string> = {}
-    try {
-      const response = await fetch(`${req.nextUrl.origin}/redirect.json`)
-      if (response.ok) {
-        redirectJson = (await response.json()) as Record<string, string>
-      }
-    } catch (err) {
-      console.error('Error fetching static file:', err)
-    }
     let lastPart = getLastPartOfUrl(req.nextUrl.pathname) as string
     if (checkStrIsNotionId(lastPart)) {
       lastPart = idToUuid(lastPart)
     }
-    if (lastPart && redirectJson[lastPart]) {
-      const redirectToUrl = req.nextUrl.clone()
-      redirectToUrl.pathname = '/' + redirectJson[lastPart]
-      console.log(
-        `redirect from ${req.nextUrl.pathname} to ${redirectToUrl.pathname}`
-      )
-      return NextResponse.redirect(redirectToUrl, 308)
+    if (checkStrIsUuid(lastPart)) {
+      let redirectJson: Record<string, string | null> = {}
+      if (upstashRedisClient) {
+        const redisResult = (await upstashRedisClient.hget(
+          BLOG.REDIRECT_CACHE_KEY,
+          lastPart
+        )) as string
+        redirectJson = {
+          [lastPart]: redisResult
+        }
+      } else if (BLOG.REDIS_URL) {
+        try {
+          const redisResponse = await fetch(
+            `${req.nextUrl.origin}/api/redirect`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                lastPart: lastPart
+              })
+            }
+          )
+          const redisResult = await redisResponse?.json()
+          redirectJson = {
+            [lastPart]: redisResult?.data
+          }
+        } catch (e) {
+          console.warn('读取Redis失败', e)
+        }
+      } else {
+        try {
+          const response = await fetch(`${req.nextUrl.origin}/redirect.json`)
+          if (response.ok) {
+            redirectJson = (await response.json()) as Record<string, string>
+          }
+        } catch (err) {
+          console.error('Error fetching static file:', err)
+        }
+      }
+      if (redirectJson[lastPart]) {
+        const redirectToUrl = req.nextUrl.clone()
+        redirectToUrl.pathname = '/' + redirectJson[lastPart]
+        console.log(
+          `redirect from ${req.nextUrl.pathname} to ${redirectToUrl.pathname}`
+        )
+        return NextResponse.redirect(redirectToUrl, 308)
+      }
     }
   }
   return NextResponse.next()
