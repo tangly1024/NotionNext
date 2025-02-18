@@ -243,7 +243,7 @@ function TopGroup(props) {
         {topPosts?.map((p, index) => {
           return (
             <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
-              <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
+              <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-[#1e1e1e] dark:text-white rounded-xl'>
                 <LazyImage
                   priority={index === 0}
                   className='h-24 object-cover'
