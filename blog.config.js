@@ -1,8 +1,10 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/article/how-to-config-notion-next#c4768010ae7d44609b744e79e2f9959a
+
 const BLOG = {
   // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID ||
+
     '1286a25a7060804a80eaec65eb5f0451,en:1286a25a7060804a80eaec65eb5f0451',
   PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 5, // 更新内容缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
@@ -47,88 +49,10 @@ const BLOG = {
 
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/my-favicon.ico-circle.png', // blog favicon 配置, 默认使用 /public/favicon.ico，写作'/favicon.ico'，支持在线图片，如 https://img.imesong.com/favicon.png
 
-  IMAGE_COMPRESS_WIDTH: process.env.NEXT_PUBLIC_IMAGE_COMPRESS_WIDTH || 800, // 图片压缩宽度默认值，作用于博客封面和文章内容 越小加载图片越快
-  IMAGE_ZOOM_IN_WIDTH: process.env.NEXT_PUBLIC_IMAGE_ZOOM_IN_WIDTH || 1200, // 文章图片点击放大后的画质宽度，不代表在网页中的实际展示宽度
-  RANDOM_IMAGE_URL: process.env.NEXT_PUBLIC_RANDOM_IMAGE_URL || '', // 随机图片API,如果未配置下面的关键字，主页封面，头像，文章封面图都会被替换为随机图片
-  RANDOM_IMAGE_REPLACE_TEXT:
-    process.env.NEXT_PUBLIC_RANDOM_IMAGE_NOT_REPLACE_TEXT ||
-    'images.unsplash.com', // 触发替换图片的 url 关键字(多个支持用英文逗号分开)，只有图片地址中包含此关键字才会替换为上方随机图片url
-  // eg: images.unsplash.com(notion图床的所有图片都会替换),如果你在 notion 里已经添加了一个随机图片 url，恰巧那个服务跑路或者挂掉，想一键切换所有配图可以将该 url 配置在这里
-  // 默认下会将你上传到 notion的主页封面图和头像也给替换，建议将主页封面图和头像放在其他图床，在 notion 里配置 link 即可。
 
-  // START ************网站字体*****************
-  // ['font-serif','font-sans'] 两种可选，分别是衬线和无衬线: 参考 https://www.jianshu.com/p/55e410bd2115
-  // 后面空格隔开的font-light的字体粗细，留空是默认粗细；参考 https://www.tailwindcss.cn/docs/font-weight
-  FONT_STYLE: process.env.NEXT_PUBLIC_FONT_STYLE || 'font-sans font-light',
-  // 字体CSS 例如 https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css
-  FONT_URL: [
-    // 'https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css',
-    'https://fonts.googleapis.com/css?family=Bitter&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300&display=swap',
-    'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&display=swap'
-  ],
-  // 无衬线字体 例如'"LXGW WenKai"'
-  FONT_SANS: [
-    // '"LXGW WenKai"',
-    '"PingFang SC"',
-    '-apple-system',
-    'BlinkMacSystemFont',
-    '"Hiragino Sans GB"',
-    '"Microsoft YaHei"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-    '"Segoe UI"',
-    '"Noto Sans SC"',
-    'HarmonyOS_Regular',
-    '"Helvetica Neue"',
-    'Helvetica',
-    '"Source Han Sans SC"',
-    'Arial',
-    'sans-serif',
-    '"Apple Color Emoji"'
-  ],
-  // 衬线字体 例如'"LXGW WenKai"'
-  FONT_SERIF: [
-    // '"LXGW WenKai"',
-    'Bitter',
-    '"Noto Serif SC"',
-    'SimSun',
-    '"Times New Roman"',
-    'Times',
-    'serif',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-    '"Apple Color Emoji"'
-  ],
-  FONT_AWESOME:
-    process.env.NEXT_PUBLIC_FONT_AWESOME_PATH ||
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', // font-awesome 字体图标地址; 可选 /css/all.min.css ， https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
+  // RSS订阅
+  ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
 
-  // END ************网站字体*****************
-
-  // 路径和组件映射，不同路径分别展示主题的什么组件
-  LAYOUT_MAPPINGS: {
-    '-1': 'LayoutBase',
-    '/': 'LayoutIndex',
-    '/archive': 'LayoutArchive',
-    '/page/[page]': 'LayoutPostList',
-    '/category/[category]': 'LayoutPostList',
-    '/category/[category]/page/[page]': 'LayoutPostList',
-    '/tag/[tag]': 'LayoutPostList',
-    '/tag/[tag]/page/[page]': 'LayoutPostList',
-    '/search': 'LayoutSearch',
-    '/search/[keyword]': 'LayoutSearch',
-    '/search/[keyword]/page/[page]': 'LayoutSearch',
-    '/404': 'Layout404',
-    '/tag': 'LayoutTagIndex',
-    '/category': 'LayoutCategoryIndex',
-    '/[prefix]': 'LayoutSlug',
-    '/[prefix]/[slug]': 'LayoutSlug',
-    '/[prefix]/[slug]/[...suffix]': 'LayoutSlug',
-    '/auth/result': 'LayoutAuth',
-    '/sign-in/[[...index]]': 'LayoutSignIn',
-    '/sign-up/[[...index]]': 'LayoutSignUp'
-  },
 
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
   // 自定义右键菜单
@@ -148,13 +72,21 @@ const BLOG = {
   CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG:
     process.env.NEXT_PUBLIC_CUSTOM_RIGHT_CLICK_CONTEXT_MENU_THEME_TAG || true, // 是否显示标签
 
+
   // 自定义外部脚本，外部样式
   CUSTOM_EXTERNAL_JS: [''], // e.g. ['http://xx.com/script.js','http://xx.com/script.js']
   CUSTOM_EXTERNAL_CSS: [''], // e.g. ['http://xx.com/style.css','http://xx.com/style.css']
 
+  // 自定义菜单
+  CUSTOM_MENU: process.env.NEXT_PUBLIC_CUSTOM_MENU || true, // 支持Menu类型的菜单，替代了3.12版本前的Page类型
+
+  // 文章列表相关设置
+  CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
+
   // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
   LAYOUT_SIDEBAR_REVERSE:
     process.env.NEXT_PUBLIC_LAYOUT_SIDEBAR_REVERSE || false,
+
 
   // 一个小插件展示你的facebook fan page~ @see https://tw.andys.pro/article/add-facebook-fanpage-notionnext
   FACEBOOK_PAGE_TITLE: process.env.NEXT_PUBLIC_FACEBOOK_PAGE_TITLE || null, // 邊欄 Facebook Page widget 的標題欄，填''則無標題欄 e.g FACEBOOK 粉絲團'
@@ -539,16 +471,9 @@ const BLOG = {
   DESCRIPTION:
     process.env.NEXT_PUBLIC_DESCRIPTION || 'Blog', // 站点描述，被notion中的页面描述覆盖
 
-  // 开发相关
-  NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
-  DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
-  ENABLE_CACHE:
-    process.env.ENABLE_CACHE ||
-    process.env.npm_lifecycle_event === 'build' ||
-    process.env.npm_lifecycle_event === 'export', // 在打包过程中默认开启缓存，开发或运行时开启此功能意义不大。
-  isProd: process.env.VERCEL_ENV === 'production' || process.env.EXPORT, // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
-  BUNDLE_ANALYZER: process.env.ANALYZE === 'true' || false, // 是否展示编译依赖内容与大小
-  VERSION: process.env.NEXT_PUBLIC_VERSION // 版本号
+
+  // uuid重定向至 slug
+  UUID_REDIRECT: process.env.UUID_REDIRECT || false
 }
 
 module.exports = BLOG

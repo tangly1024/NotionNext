@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import Link from 'next/link'
 
 /**
  * CTA，用于创建一个呼吁用户行动的部分（Call To Action，简称 CTA）。
@@ -25,15 +26,15 @@ export const CTA = () => {
                     </span>
                   </h2>
                   <p className='mx-auto mb-6 max-w-[515px] text-base leading-[1.5] text-white'>
-                    {siteConfig('STARTER_CTA_DESCRIOTN')}
+                    {siteConfig('STARTER_CTA_DESCRIPTION')}
                   </p>
                   {siteConfig('STARTER_CTA_BUTTON') && (
                     <>
-                      <a
-                        href={siteConfig('STARTER_CTA_BUTTON_URL')}
+                      <Link
+                        href={siteConfig('STARTER_CTA_BUTTON_URL', '')}
                         className='inline-block rounded-md border border-transparent bg-secondary px-7 py-3 text-base font-medium text-white transition hover:bg-[#0BB489]'>
                         {siteConfig('STARTER_CTA_BUTTON_TEXT')}
-                      </a>
+                      </Link>
                     </>
                   )}
                 </div>
