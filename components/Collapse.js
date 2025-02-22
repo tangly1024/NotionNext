@@ -2,18 +2,13 @@ import { useEffect, useImperativeHandle, useRef } from 'react'
 
 /**
  * 折叠面板组件，支持水平折叠、垂直折叠
- * @param {type:['horizontal','vertical'], isOpen} props
+ * @param {type:['horizontal','vertical'],isOpen} props
  * @returns
  */
-const Collapse = ({
-  type = 'vertical',
-  isOpen = false,
-  children,
-  onHeightChange,
-  className,
-  collapseRef
-}) => {
+const Collapse = props => {
+  const { collapseRef } = props
   const ref = useRef(null)
+  const type = props.type || 'vertical'
 
   useImperativeHandle(collapseRef, () => {
     return {
@@ -22,7 +17,7 @@ const Collapse = ({
        * @param {*} param0
        */
       updateCollapseHeight: ({ height, increase }) => {
-        if (isOpen) {
+        if (props.isOpen) {
           ref.current.style.height = ref.current.scrollHeight
           ref.current.style.height = 'auto'
         }
@@ -81,18 +76,18 @@ const Collapse = ({
   }
 
   useEffect(() => {
-    if (isOpen) {
+    if (props.isOpen) {
       expandSection(ref.current)
     } else {
       collapseSection(ref.current)
     }
     // 通知父组件高度变化
-    onHeightChange &&
-      onHeightChange({
+    props?.onHeightChange &&
+      props.onHeightChange({
         height: ref.current.scrollHeight,
-        increase: isOpen
+        increase: props.isOpen
       })
-  }, [isOpen])
+  }, [props.isOpen])
 
   return (
     <div
@@ -102,10 +97,11 @@ const Collapse = ({
           ? { height: '0px', willChange: 'height' }
           : { width: '0px', willChange: 'width' }
       }
-      className={`${className || ''} overflow-hidden duration-300`}>
-      {children}
+      className={`${props.className || ''} overflow-hidden duration-300`}>
+      {props.children}
     </div>
   )
 }
+Collapse.defaultProps = { isOpen: false }
 
 export default Collapse

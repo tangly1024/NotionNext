@@ -2,14 +2,19 @@ import BLOG from '@/blog.config'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
-import { DynamicLayout } from '@/themes/theme'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 const Index = props => {
   const { keyword } = props
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
   props = { ...props, currentSearch: keyword }
 
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
+  return <Layout {...props} />
 }
 
 /**
@@ -52,7 +57,7 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { keyword: 'NotionNext', page: '1' } }],
+    paths: [{ params: { keyword: BLOG.TITLE, page: '1' } }],
     fallback: true
   }
 }

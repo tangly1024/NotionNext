@@ -1,5 +1,5 @@
 :root {
-  --fg-color: rgb(0, 0, 0) !important;
+  --fg-color: rgb(0, 0, 0);
   --fg-color-0: rgba(55, 53, 47, 0.09);
   --fg-color-1: rgba(55, 53, 47, 0.16);
   --fg-color-2: rgba(55, 53, 47, 0.4);
@@ -555,7 +555,6 @@ summary > .notion-h {
   width: 100%;
   margin: 6px 0;
   padding: 0;
-  border-top: 1px solid #e5e7eb !important;
   /* border-bottom-width: 1px; */
 }
 
@@ -956,12 +955,6 @@ code[class*='language-'] {
   white-space: pre-wrap;
   word-break: break-word;
   overflow: hidden;
-}
-
-.notion-callout-text .notion-text{
-  padding: 0px 0px !important;
-  margin: 0px 0px !important;
-  line-height: normal !important;
 }
 
 .notion-toggle {
@@ -1459,6 +1452,7 @@ code[class*='language-'] {
 
 .notion-collection-card-property .notion-page-title-text {
   border-bottom: 0 none;
+  @apply dark:text-gray-200;
 }
 
 .notion-collection-card-property
@@ -1476,7 +1470,6 @@ code[class*='language-'] {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
-  @apply dark:text-gray-200;
 }
 
 .notion-collection-row {
@@ -1688,8 +1681,8 @@ code[class*='language-'] {
   color: inherit;
 }
 
-.notion-callout svg.notion-page-icon {
-  @apply hidden;
+svg.notion-page-icon {
+  /* @apply hidden;*/
 }
 
 svg + .notion-page-title-text {
@@ -1803,7 +1796,8 @@ svg + .notion-page-title-text {
   display: inline-block;
   width: 14px;
   height: 14px;
-  fill: var(--fg-color);
+  /* fill: var(--fg-color); */
+  fill: rgba(55, 53, 47);
   margin-right: 6px;
   @apply dark:fill-gray-200;
 }

@@ -1,9 +1,8 @@
 import Collapse from '@/components/Collapse'
 import DarkModeButton from '@/components/DarkModeButton'
-import DashboardButton from '@/components/ui/dashboard/DashboardButton'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -20,7 +19,7 @@ import { MenuItemDrop } from './MenuItemDrop'
  */
 export default function Header(props) {
   const { customNav, customMenu } = props
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, changeShow] = useState(false)
   const collapseRef = useRef(null)
   const lastScrollY = useRef(0) // 用于存储上一次的滚动位置
   const { locale } = useGlobal()
@@ -57,18 +56,17 @@ export default function Header(props) {
   let links = defaultLinks.concat(customNav)
 
   const toggleMenuOpen = () => {
-    setOpen(!isOpen)
+    changeShow(!isOpen)
   }
 
   // 向下滚动时，调整导航条高度
   useEffect(() => {
     scrollTrigger()
-    setOpen(false)
     window.addEventListener('scroll', scrollTrigger)
     return () => {
       window.removeEventListener('scroll', scrollTrigger)
     }
-  }, [router])
+  }, [])
 
   const throttleMs = 150
 
@@ -147,15 +145,15 @@ export default function Header(props) {
         {!showSearchInput && (
           <>
             {/* 左侧图标Logo */}
-            <div className='flex gap-x-2 lg:gap-x-4 h-full'>
-              <LogoBar {...props} className={'text-sm md:text-md lg:text-lg'} />
+            <div className='flex gap-x-8 h-full'>
+              <LogoBar {...props} />
               {/* 桌面端顶部菜单 */}
-              <ul className='hidden md:flex items-center gap-x-4 py-1 text-sm md:text-md'>
+              <div className='hidden md:flex items-center gap-x-3'>
                 {links &&
                   links?.map((link, index) => (
                     <MenuItemDrop key={index} link={link} />
                   ))}
-              </ul>
+              </div>
             </div>
           </>
         )}
@@ -201,10 +199,7 @@ export default function Header(props) {
                   </button>
                 </SignInButton>
               </SignedOut>
-              <SignedIn>
-                <UserButton />
-                <DashboardButton />
-              </SignedIn>
+              <UserButton />
             </>
           )}
         </div>
@@ -216,7 +211,7 @@ export default function Header(props) {
         collapseRef={collapseRef}
         isOpen={isOpen}
         className='md:hidden'>
-        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2'>
+        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
           <MenuBarMobile
             {...props}
             onHeightChange={param =>

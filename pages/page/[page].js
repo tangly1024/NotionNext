@@ -1,7 +1,8 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
-import { DynamicLayout } from '@/themes/theme'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 /**
  * 文章列表分页
@@ -9,8 +10,13 @@ import { DynamicLayout } from '@/themes/theme'
  * @returns
  */
 const Page = props => {
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
+
+  return <Layout {...props} />
 }
 
 export async function getStaticPaths({ locale }) {
@@ -28,9 +34,9 @@ export async function getStaticPaths({ locale }) {
   }
 }
 
-export async function getStaticProps({ params: { page }, locale }) {
+export async function getStaticProps({ params: { page } }) {
   const from = `page-${page}`
-  const props = await getGlobalData({ from, locale })
+  const props = await getGlobalData({ from })
   const { allPages } = props
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',

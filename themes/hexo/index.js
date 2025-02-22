@@ -263,14 +263,13 @@ const LayoutArchive = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.querySelector('#article-wrapper #notion-article')
+            const article = document.getElementById('notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -278,7 +277,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        waiting404
+        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
       )
     }
   }, [post])
@@ -287,7 +286,7 @@ const LayoutSlug = props => {
       <div className='w-full lg:hover:shadow lg:border rounded-t-xl lg:rounded-xl lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article'>
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && post && (
+        {!lock && (
           <div className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
             <article
               id='article-wrapper'
@@ -334,7 +333,7 @@ const Layout404 = props => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (isBrowser) {
-        const article = document.querySelector('#article-wrapper #notion-article')
+        const article = document.getElementById('notion-article')
         if (!article) {
           router.push('/').then(() => {
             // console.log('找不到页面', router.asPath)

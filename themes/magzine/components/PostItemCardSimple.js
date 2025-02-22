@@ -8,7 +8,7 @@ import CategoryItem from './CategoryItem'
  * @param {*} param0
  * @returns
  */
-const PostItemCardSimple = ({ post }) => {
+const PostItemCardSimple = ({ post, showSummary }) => {
   return (
     <div
       key={post.id}

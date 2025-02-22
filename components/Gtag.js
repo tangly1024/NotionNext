@@ -1,17 +1,12 @@
-import { siteConfig } from '@/lib/config'
-import * as gtag from '@/lib/plugins/gtag'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-/**
- * Google Analytics
- * @returns
- */
+import { useRouter } from 'next/router'
+import * as gtag from '@/lib/plugins/gtag'
+
 const Gtag = () => {
   const router = useRouter()
-  const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID')
   useEffect(() => {
     const gtagRouteChange = url => {
-      gtag.pageview(url, ANALYTICS_GOOGLE_ID)
+      gtag.pageview(url)
     }
     router.events.on('routeChangeComplete', gtagRouteChange)
     return () => {

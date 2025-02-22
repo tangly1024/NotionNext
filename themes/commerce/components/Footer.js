@@ -1,6 +1,3 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
-import BeiAnSite from '@/components/BeiAnSite'
-import CopyRightDate from '@/components/CopyRightDate'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
@@ -188,7 +185,14 @@ const Footer = props => {
           <div className='text-start space-y-1'>
             {/* 网站所有者 */}
             <div>
-              <CopyRightDate />
+              {' '}
+              Copyright <i className='fas fa-copyright' /> {`${copyrightDate}`}{' '}
+              <a
+                href={siteConfig('LINK')}
+                className='underline font-bold  dark:text-gray-300 '>
+                {siteConfig('AUTHOR')}
+              </a>{' '}
+              All Rights Reserved.
             </div>
 
             {/* 技术支持 */}
@@ -222,10 +226,14 @@ const Footer = props => {
             </h1>
             <h2> {siteConfig('DESCRIPTION')}</h2>
             {/* 可选备案信息 */}
-            <div className='flex flex-wrap'>
-              <BeiAnSite />
-              <BeiAnGongAn />
-            </div>
+            {siteConfig('BEI_AN') && (
+              <>
+                <i className='fas fa-shield-alt' />{' '}
+                <a href='https://beian.miit.gov.cn/' className='mr-2'>
+                  {siteConfig('BEI_AN')}
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>

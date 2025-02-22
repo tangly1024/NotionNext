@@ -99,15 +99,14 @@ export const Header = props => {
 
   return (
     <>
-      <header className='w-full px-8 h-20 z-20 flex lg:flex-row md:flex-col justify-between items-center'>
-        {/* 左侧Logo */}
+      <header className='w-full px-8 relative z-20 flex lg:flex-row md:flex-col justify-between items-center'>
         <Link
           href='/'
-          className='logo whitespace-nowrap text-2xl md:text-3xl font-bold text-gray-dark no-underline flex items-center'>
+          className='whitespace-nowrap py-6 text-2xl md:text-3xl font-bold text-gray-dark no-underline flex items-center'>
           {siteConfig('TITLE')}
         </Link>
 
-        <div className='md:w-auto text-center flex space-x-2'>
+        <div className='md:w-auto text-center flex'>
           {/* 右侧菜单 */}
           <>
             <nav
@@ -124,7 +123,6 @@ export const Header = props => {
               className='flex items-center cursor-pointer'>
               <i className='fas fa-search dark:text-white'></i>
             </div>
-
             <div
               className={`${showSearch ? 'top-16 visible opacity-100' : 'top-10 invisible opacity-0'} duration-200 transition-all max-w-md absolute  w-80 right-4 p-2 flex flex-col gap-2`}>
               <input
@@ -160,13 +158,11 @@ export const Header = props => {
         </div>
       </header>
 
-      <Collapse
-        className='block md:hidden'
-        collapseRef={collapseRef}
-        type='vertical'
-        isOpen={isOpen}>
+      <Collapse collapseRef={collapseRef} type='vertical' isOpen={isOpen}>
         {/* 移动端菜单 */}
-        <menu id='nav-menu-mobile' className='my-auto justify-start'>
+        <menu
+          id='nav-menu-mobile'
+          className='block md:hidden my-auto justify-start'>
           {links?.map(
             (link, index) =>
               link &&

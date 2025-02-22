@@ -14,7 +14,7 @@ import ArticleCopyright from './ArticleCopyright'
 import BlogAround from './BlogAround'
 import RecommendPosts from './RecommendPosts'
 import TagItem from './TagItem'
-import WordCount from '@/components/WordCount'
+import WordCount from './WordCount'
 
 /**
  *
@@ -92,7 +92,7 @@ export default function ArticleDetail(props) {
                 )}
               </div>
 
-              <WordCount wordCount={post.wordCount} readTime={post.readTime} />
+              <WordCount />
             </section>
           </header>
         )}

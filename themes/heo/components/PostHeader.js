@@ -31,8 +31,9 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           height: 100%;
           top: 0;
           left: 0;
-          box-shadow: 110px -130px 500px 100px
-            ${isDarkMode ? '#CA8A04' : '#0060e0'} inset;
+          box-shadow: 110px -130px 500px 100px ${isDarkMode
+              ? '#CA8A04'
+              : '#0060e0'} inset;
         }
       `}</style>
 
@@ -104,10 +105,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
             <div className='flex justify-center '>
               <div className='mr-2'>
-                <WordCount
-                  wordCount={post.wordCount}
-                  readTime={post.readTime}
-                />
+                <WordCount />
               </div>
               {post?.type !== 'Page' && (
                 <>

@@ -42,7 +42,6 @@ import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
-import AISummary from '@/components/AISummary'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -123,7 +122,7 @@ const LayoutBase = props => {
       </main>
 
       {/* 页脚 */}
-      <Footer />
+      <Footer title={siteConfig('TITLE')} />
 
       {HEO_LOADING_COVER && <LoadingCover />}
     </div>
@@ -195,7 +194,7 @@ const LayoutSearch = props => {
     }
   }, [])
   return (
-    <div currentSearch={currentSearch}>
+    <div {...props} currentSearch={currentSearch}>
       <div id='post-outer-wrapper' className='px-5  md:px-0'>
         {!currentSearch ? (
           <SearchNav {...props} />
@@ -268,16 +267,13 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
+            const article = document.getElementById('notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -285,7 +281,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        waiting404
+        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
       )
     }
   }, [post])
@@ -296,7 +292,7 @@ const LayoutSlug = props => {
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
-        {!lock && post && (
+        {!lock && (
           <div className='mx-auto md:w-full md:px-5'>
             {/* 文章主体 */}
             <article
@@ -307,7 +303,6 @@ const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
-                <AISummary aiSummary={post.aiSummary}/>
                 <WWAds orientation='horizontal' className='w-full' />
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />

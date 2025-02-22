@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
-import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
@@ -11,12 +10,10 @@ import { useEffect, useState } from 'react'
  * 站点图标
  * @returns
  */
-export const Logo = props => {
-  const { white, NOTION_CONFIG } = props
+export const Logo = ({ white }) => {
   const router = useRouter()
-  const logoWhite = siteConfig('STARTER_LOGO_WHITE')
-  const logoNormal = siteConfig('STARTER_LOGO')
   const { isDarkMode } = useGlobal()
+  const logoWhite = siteConfig('STARTER_LOGO_WHITE')
   const [logo, setLogo] = useState(logoWhite)
   const [logoTextColor, setLogoTextColor] = useState('text-white')
 
@@ -27,12 +24,11 @@ export const Logo = props => {
       const scrollY = window.scrollY
       // 何时显示浅色或白底的logo
       const homePageNavBar = router.route === '/' && scrollY < 10 // 在首页并且视窗在页面顶部
-
       if (white || isDarkMode || homePageNavBar) {
-        setLogo(logoWhite)
+        setLogo(siteConfig('STARTER_LOGO_WHITE'))
         setLogoTextColor('text-white')
       } else {
-        setLogo(logoNormal)
+        setLogo(siteConfig('STARTER_LOGO'))
         setLogoTextColor('text-black')
       }
     }, throttleMs)
@@ -49,14 +45,13 @@ export const Logo = props => {
       <div className='navbar-logo flex items-center w-full py-5 cursor-pointer'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {logo && (
-          <LazyImage
-            priority
+          <img
             onClick={() => {
               router.push('/')
             }}
             src={logo}
             alt='logo'
-            className='header-logo mr-1 h-8'
+            className='header-logo w-full'
           />
         )}
         {/* logo文字 */}
@@ -64,7 +59,7 @@ export const Logo = props => {
           onClick={() => {
             router.push('/')
           }}
-          className={`${logoTextColor} logo dark:text-white py-1.5 header-logo-text whitespace-nowrap text-2xl font-semibold`}>
+          className={`${logoTextColor} dark:text-white py-1.5 header-logo-text whitespace-nowrap text-2xl font-semibold`}>
           {siteConfig('TITLE')}
         </span>
       </div>
