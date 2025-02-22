@@ -1,7 +1,8 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
-import { DynamicLayout } from '@/themes/theme'
+import { getLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 /**
  * 分类页
@@ -9,8 +10,13 @@ import { DynamicLayout } from '@/themes/theme'
  * @returns
  */
 export default function Category(props) {
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
+
+  return <Layout {...props} />
 }
 
 export async function getStaticProps({ params: { category }, locale }) {

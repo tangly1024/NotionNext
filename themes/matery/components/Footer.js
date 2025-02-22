@@ -1,4 +1,3 @@
-import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 
 const Footer = ({ title }) => {
@@ -37,7 +36,6 @@ const Footer = ({ title }) => {
             <br />
           </>
         )}
-        <BeiAnGongAn />
         <span className='hidden busuanzi_container_site_pv'>
           <i className='fas fa-eye' />
           <span className='px-1 busuanzi_value_site_pv'> </span>{' '}

@@ -1,7 +1,7 @@
 import Collapse from '@/components/Collapse'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 /**
  * 折叠菜单
@@ -10,30 +10,25 @@ import { useEffect, useState } from 'react'
  */
 export const MenuItemCollapse = props => {
   const { link } = props
-  const [show, setShow] = useState(false)
+  const [show, changeShow] = useState(false)
   const hasSubMenu = link?.subMenus?.length > 0
 
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, changeIsOpen] = useState(false)
 
   const router = useRouter()
+
+  if (!link || !link.show) {
+    return null
+  }
 
   const selected = router.pathname === link.href || router.asPath === link.href
 
   const toggleShow = () => {
-    setShow(!show)
+    changeShow(!show)
   }
 
   const toggleOpenSubMenu = () => {
-    setOpen(!isOpen)
-  }
-
-  // 路由切换时菜单收起
-  useEffect(() => {
-    setOpen(false)
-  }, [router])
-
-  if (!link || !link.show) {
-    return null
+    changeIsOpen(!isOpen)
   }
 
   return (

@@ -44,8 +44,6 @@ export default function AlgoliaSearchModal({ cRef }) {
   const [useTime, setUseTime] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [isInputFocused, setIsInputFocused] = useState(false)
-
   const inputRef = useRef(null)
   const router = useRouter()
 
@@ -56,16 +54,13 @@ export default function AlgoliaSearchModal({ cRef }) {
     e.preventDefault()
     setIsModalOpen(true)
   })
-  // 修改快捷键的使用逻辑
+  // 方向键调整选中
   useHotkeys(
     'down',
     e => {
-      if (isInputFocused) {
-        // 只有在聚焦时才触发
-        e.preventDefault()
-        if (activeIndex < searchResults.length - 1) {
-          setActiveIndex(activeIndex + 1)
-        }
+      e.preventDefault()
+      if (activeIndex < searchResults.length - 1) {
+        setActiveIndex(activeIndex + 1)
       }
     },
     { enableOnFormTags: true }
@@ -73,40 +68,39 @@ export default function AlgoliaSearchModal({ cRef }) {
   useHotkeys(
     'up',
     e => {
-      if (isInputFocused) {
-        e.preventDefault()
-        if (activeIndex > 0) {
-          setActiveIndex(activeIndex - 1)
-        }
+      e.preventDefault()
+      if (activeIndex > 0) {
+        setActiveIndex(activeIndex - 1)
       }
     },
     { enableOnFormTags: true }
   )
+  // esc关闭
   useHotkeys(
     'esc',
     e => {
-      if (isInputFocused) {
-        e.preventDefault()
-        setIsModalOpen(false)
-      }
+      e.preventDefault()
+      setIsModalOpen(false)
     },
     { enableOnFormTags: true }
   )
-  useHotkeys(
-    'enter',
-    e => {
-      if (isInputFocused && searchResults.length > 0) {
-        onJumpSearchResult(index)
-      }
-    },
-    { enableOnFormTags: true }
-  )
+
   // 跳转Search结果
   const onJumpSearchResult = () => {
     if (searchResults.length > 0) {
       window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResults[activeIndex].slug}`
     }
   }
+  // enter跳转
+  useHotkeys(
+    'enter',
+    e => {
+      if (searchResults.length > 0) {
+        onJumpSearchResult(index)
+      }
+    },
+    { enableOnFormTags: true }
+  )
 
   const resetSearch = () => {
     setActiveIndex(0)
@@ -267,8 +261,6 @@ export default function AlgoliaSearchModal({ cRef }) {
           type='text'
           placeholder='在这里输入搜索关键词...'
           onChange={e => handleInputChange(e)}
-          onFocus={() => setIsInputFocused(true)} // 聚焦时
-          onBlur={() => setIsInputFocused(false)} // 失去焦点时
           className='text-black dark:text-gray-200 bg-gray-50 dark:bg-gray-600 outline-blue-500 w-full px-4 my-2 py-1 mb-4 border rounded-md'
           ref={inputRef}
         />

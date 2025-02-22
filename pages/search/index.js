@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
-import { DynamicLayout } from '@/themes/theme'
+import { getLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
 /**
@@ -11,6 +11,12 @@ import { useRouter } from 'next/router'
  */
 const Search = props => {
   const { posts } = props
+
+  // 根据页面路径加载不同Layout文件
+  const Layout = getLayoutByTheme({
+    theme: siteConfig('THEME'),
+    router: useRouter()
+  })
 
   const router = useRouter()
   const keyword = router?.query?.s
@@ -31,8 +37,7 @@ const Search = props => {
 
   props = { ...props, posts: filteredPosts }
 
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
+  return <Layout {...props} />
 }
 
 /**

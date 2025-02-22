@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  overflow-x: hidden;
-}
-
 .wrapper {
   min-height: 100vh;
   display: flex;
@@ -19,7 +15,6 @@ html {
   position: sticky;
   z-index: 10;
   top: -1px;
-  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   transition: all 0.5s cubic-bezier(0.4, 0, 0, 1);
   border-bottom-color: transparent;
@@ -75,7 +70,6 @@ nav {
 
 @supports not (backdrop-filter: none) {
   .sticky-nav {
-    -webkit-backdrop-filter: none;
     backdrop-filter: none;
     @apply bg-day dark:bg-gray-800;
   }

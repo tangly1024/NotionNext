@@ -76,14 +76,13 @@ const LayoutSlug = props => {
 
   // 如果 是 /article/[slug] 的文章路径则进行重定向到另一个域名
   const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.querySelector('#article-wrapper #notion-article')
+            const article = document.getElementById('notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -91,7 +90,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        waiting404
+        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
       )
     }
   }, [post])

@@ -71,9 +71,10 @@ const Player = () => {
           fixed='true'
           type='playlist'
           preload='auto'
+          lrc-type={siteConfig('MUSIC_PLAYER_METING_LRC_TYPE')}
           api={siteConfig(
             'MUSIC_PLAYER_METING_API',
-            'https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&r=:r'
+            'https://api.i-meto.com/meting/api'
           )}
           autoplay={autoPlay}
           order={siteConfig('MUSIC_PLAYER_ORDER')}
