@@ -313,30 +313,30 @@ const BLOG = {
     {
       name: 'Flower Dance',
       artist: 'DJOKAWARI',
-      url: 'https://sanye.ip-dynamic.org/sanye/Flower%20Dance%20-%20DJ%20OKAWARI.mp3',
+      url: 'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/Flower%20Dance%20-%20DJ%20OKAWARI.mp3',
       cover:
-        'https://sanye.ip-dynamic.org/sanye/Snipaste_2024-11-24_20-16-38.png'
+        'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/Snipaste_2024-11-24_20-16-38.png'
     },
     {
       name: '記憶',
       artist: '市川淳',
-      url: 'https://sanye.ip-dynamic.org/sanye/-%E8%A8%98%E6%86%B6-%20(%E8%AE%B0%E5%BF%86)%20-%20%E5%B8%82%E5%B7%9D%E6%B7%B3.mp3',
+      url: 'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/-%E8%A8%98%E6%86%B6-%20(%E8%AE%B0%E5%BF%86)%20-%20%E5%B8%82%E5%B7%9D%E6%B7%B3.mp3',
       cover:
-        'https://sanye.ip-dynamic.org/sanye/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(43).png'
+        'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE(43).png'
     },
     {
       name: '三葉のテ一マ',
       artist: 'RADWIMPS',
-      url: 'https://sanye.ip-dynamic.org/sanye/三葉のテーマ - RADWIMPS.mp3',
+      url: 'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/三葉のテーマ - RADWIMPS.mp3',
       cover:
-        'https://sanye.ip-dynamic.org/sanye/屏幕截图 2024-11-30 000838.png'
+        'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/屏幕截图 2024-11-30 000838.png'
     },
     {
       name: 'スパークル',
       artist: 'RADWIMPS',
-      url: 'https://sanye.ip-dynamic.org/sanye/スパークル (Movie ver.) - RADWIMPS.mp3',
+      url: 'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/スパークル (Movie ver.) - RADWIMPS.mp3',
       cover:
-        'https://sanye.ip-dynamic.org/sanye/屏幕截图 2024-11-30 000838.png'
+        'https://pub-1789f6ed028e4c81b31e6779c00a22de.r2.dev/sanye/屏幕截图 2024-11-30 000838.png'
     },
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
