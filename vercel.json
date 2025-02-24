@@ -1,14 +1,4 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [],
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node"
-    }
-  ],
-  "engines": {
-    "yarn": "1.22.19"
-  }
+  "trailingSlash": false
 }
