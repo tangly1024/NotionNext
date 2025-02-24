@@ -69,6 +69,6 @@
     "email": "tlyong1992@hotmail.com"
   },
   "engines": {
-  "yarn": "1.x"
-}
+    "yarn": "1.x"
+  }
 }
