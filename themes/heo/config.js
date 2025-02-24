@@ -51,9 +51,9 @@ const CONFIG = {
   // 个人资料底部按钮
   HEO_INFO_CARD_URL1: '/about',
   HEO_INFO_CARD_ICON1: 'fas fa-user',
-  HEO_INFO_CARD_URL2: 'https://github.com/tangly1024/NotionNext" target="_blank"',
+  HEO_INFO_CARD_URL2: 'https://github.com/tangly1024/NotionNext',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: 'https://www.notion.so/" target="_blank"',
+  HEO_INFO_CARD_URL3: 'https://www.notion.so',
   HEO_INFO_CARD_TEXT3: '编辑blog',
 
   // 用户技能图标
