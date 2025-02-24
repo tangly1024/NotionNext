@@ -67,5 +67,8 @@
   "bugs": {
     "url": "https://github.com/tangly/NotionNext/issues",
     "email": "tlyong1992@hotmail.com"
+  },
+  "engines": {
+    "yarn": "1.22.19"
   }
 }
