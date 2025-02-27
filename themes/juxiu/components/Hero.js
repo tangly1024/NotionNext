@@ -250,7 +250,7 @@ function TopGroup(props) {
                 <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>
                   {p?.title}
                 </div>
-                {/* hover 悬浮的 ‘荐’ 字 */}
+                {/* hover 悬浮的 '荐' 字 */}
                 <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
                   {locale.COMMON.RECOMMEND_BADGES}
                 </div>
@@ -277,7 +277,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
     return latestPosts
   }
 
-  // 显示包含‘推荐’标签的文章
+  // 显示包含'推荐'标签的文章
   let sortPosts = []
 
   // 排序方式
@@ -354,17 +354,15 @@ function TodayCard({ cRef, siteInfo }) {
   return (
     <div
       id='today-card'
-      className={`${
-        isCoverUp ? ' ' : 'pointer-events-none'
-      } overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
+      className={`${isCoverUp ? ' ' : 'pointer-events-none'
+        } overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
       <div
         id='card-body'
         onClick={handleCardClick}
-        className={`${
-          isCoverUp
-            ? 'opacity-100 cursor-pointer'
-            : 'opacity-0 transform scale-110 pointer-events-none'
-        } shadow transition-all duration-200 today-card h-full bg-black rounded-xl relative overflow-hidden flex items-end`}>
+        className={`${isCoverUp
+          ? 'opacity-100 cursor-pointer'
+          : 'opacity-0 transform scale-110 pointer-events-none'
+          } shadow transition-all duration-200 today-card h-full bg-black rounded-xl relative overflow-hidden flex items-end`}>
         {/* 卡片文字信息 */}
         <div
           id='today-card-info'
@@ -398,13 +396,15 @@ function TodayCard({ cRef, siteInfo }) {
         <img
           src={siteInfo?.pageCover}
           id='today-card-cover'
-          className={`${
-            isCoverUp ? '' : ' pointer-events-none'
-          } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
+          className={`${isCoverUp ? '' : ' pointer-events-none'
+            } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
         />
       </div>
     </div>
   )
 }
 
-export default Hero
+// export default Hero
+// 注释顶部英雄区
+const HeroComponent = () => (<></>)
+export default HeroComponent
