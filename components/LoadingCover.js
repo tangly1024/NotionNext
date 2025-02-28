@@ -30,7 +30,7 @@ export default function LoadingCover() {
     <div
       id='loading-cover'
       onClick={handleClick}
-      className={`dark:text-white text-black bg-white dark:bg-black transition-opacity duration-400 ${
+      className={`dark:text-white text-black bg-white dark:bg-black transition-opacity duration-600 ${
         onLoading ? 'opacity-100' : 'opacity-0'
       } flex flex-col justify-center z-50 w-full h-screen fixed top-0 left-0`}>
       <div className='mx-auto'>
