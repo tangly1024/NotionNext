@@ -22,7 +22,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
   return (
     <div
       id='post-bg'
-      className='md:mb-0 -mb-5 w-full h-[22rem] relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10'>
+      className='md:mb-0 -mb-5 w-full h-[18.5rem] md:h-[22rem] relative md:flex-shrink-0 overflow-hidden bg-cover bg-center bg-no-repeat z-10'>
       <style jsx>{`
         .coverdiv:after {
           position: absolute;
@@ -55,7 +55,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
         {/* 文章文字描述 */}
         <div
           id='post-info'
-          className='absolute top-48 z-10 flex flex-col space-y-4 lg:-mt-20 w-full max-w-[86rem] px-5'>
+          className='absolute top-20 md:top-48 z-10 flex flex-col space-y-4 lg:-mt-20 w-full max-w-[86rem] px-5'>
           {/* 分类+标签 */}
           <div className='flex justify-center md:justify-start items-center gap-4'>
             {post.category && (
@@ -102,7 +102,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
 
           {/* 标题底部补充信息 */}
           <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
-            <div className='flex justify-center '>
+            <div className='flex justify-center flex-wrap'>
               <div className='mr-2'>
                 <WordCount
                   wordCount={post.wordCount}
@@ -114,26 +114,25 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   <Link
                     href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                     passHref
-                    className='pl-1 mr-2 cursor-pointer hover:underline'>
+                    className='pl-1 mr-2 cursor-pointer hover:underline whitespace-nowrap'>
                     <i className='fa-regular fa-calendar'></i>{' '}
                     {post?.publishDay}
                   </Link>
                 </>
               )}
 
-              <div className='pl-1 mr-2'>
+              <div className='pl-1 mr-2 whitespace-nowrap'>
                 <i className='fa-regular fa-calendar-check'></i>{' '}
                 {post.lastEditedDay}
               </div>
+              {/* 阅读统计 */}
+              {ANALYTICS_BUSUANZI_ENABLE && (
+                <div className='busuanzi_container_page_pv font-light mr-2'>
+                  <i className='fa-solid fa-fire-flame-curved'></i>{' '}
+                  <span className='mr-2 busuanzi_value_page_pv' />
+                </div>
+              )}
             </div>
-
-            {/* 阅读统计 */}
-            {ANALYTICS_BUSUANZI_ENABLE && (
-              <div className='busuanzi_container_page_pv font-light mr-2'>
-                <i className='fa-solid fa-fire-flame-curved'></i>{' '}
-                <span className='mr-2 busuanzi_value_page_pv' />
-              </div>
-            )}
           </section>
         </div>
 
