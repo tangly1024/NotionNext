@@ -24,9 +24,9 @@ export function NoticeBar() {
         <div className='w-full h-full hover:text-indigo-600 dark:hover:text-yellow-600 flex justify-center items-center'>
           <Swipe items={notices} />
         </div>
-        <div>
-          <ArrowRightCircle className={'w-5 h-5'} />
-        </div>
+        {/* <div>
+        {notices.url?<ArrowRightCircle className={'w-5 h-5'} />:''}
+        </div> */}
       </div>
     </div>
   )

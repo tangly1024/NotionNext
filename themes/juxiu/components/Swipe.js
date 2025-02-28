@@ -1,5 +1,6 @@
 import { isBrowser } from '@/lib/utils'
 import { useEffect, useState } from 'react'
+import { ArrowRightCircle } from '@/components/HeroIcons'
 
 /**
  * 一个swipe组件
@@ -12,7 +13,7 @@ export function Swipe({ items }) {
 
   const handleClick = item => {
     if (isBrowser) {
-      window.open(item?.url)
+      item?.url&&window.open(item?.url)
     }
   }
 
@@ -35,6 +36,7 @@ export function Swipe({ items }) {
               : 'translate-y-full slide-out'
           }`}>
           {item.title}
+          {item?.url&&<ArrowRightCircle className={'w-5 h-5 ml-1'} />}
         </div>
       ))}
 
