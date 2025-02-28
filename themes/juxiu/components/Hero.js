@@ -404,7 +404,7 @@ function TodayCard({ cRef, siteInfo }) {
   )
 }
 
-// export default Hero
-// 注释顶部英雄区
-const HeroComponent = () => (<></>)
-export default HeroComponent
+export default Hero
+// // 注释顶部英雄区
+// const HeroComponent = () => (<></>)
+// export default HeroComponent
