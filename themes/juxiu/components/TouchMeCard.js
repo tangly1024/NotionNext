@@ -38,10 +38,10 @@ export default function TouchMeCard() {
               {siteConfig('HEO_SOCIAL_CARD_TITLE_3', null, CONFIG)}
             </div> */}
             <div
-              className='absolute left-0 top-0 w-full h-full'
+              className='absolute left-0 top-0 w-full h-full rounded-xl'
               style={{
                 background:
-                  'url(/images/juxiu/gongzhonghao-biao.png)  center center / 100% no-repeat'
+                  'url(/images/juxiu/gongzhonghao-biao.png)  center center / 105% no-repeat'
               }}></div>
           </Link>
         }
