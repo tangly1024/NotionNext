@@ -55,7 +55,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-next": "^13.1.1",
-    "eslint-config-prettier": "^5.1.3",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.23.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.1.3",
@@ -74,8 +74,5 @@
   "bugs": {
     "url": "https://github.com/tangly/NotionNext/issues",
     "email": "tlyong1992@hotmail.com"
-  },  // 这里添加一个逗号
-  "engines": {
-    "node": ">=18.1.0"
   }
 }
