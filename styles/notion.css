@@ -571,6 +571,7 @@ summary > .notion-h {
   border-radius: 4px;
   border:0 !important;
   transition: background-color 0.3s ease, color 0.3s ease, text-decoration-color 0.3s ease !important;
+  @apply dark:!text-[#63b3ff];
 }
 
 .notion-link:hover,
