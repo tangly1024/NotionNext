@@ -560,21 +560,26 @@ summary > .notion-h {
 }
 
 .notion-link {
-  color: inherit;
-  word-break: break-word;
-  text-decoration: inherit;
-  border-bottom: 0.05em solid !important;
-  border-color: var(--fg-color-2);
-  opacity: 0.7;
-  transition:
-    border-color 100ms ease-in,
-    opacity 100ms ease-in;
+  color: #0077cc !important;
+  border-bottom: 0.05em dashed #0077cc;
+  text-decoration-line: underline !important;
+  text-decoration-color: #0077cc !important;
+  text-decoration-style: dashed !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border:0 !important;
+  transition: background-color 0.3s ease, color 0.3s ease, text-decoration-color 0.3s ease !important;
 }
 
-.notion-link:hover {
-  border-color: var(--fg-color-6);
-  opacity: 1;
+.notion-link:hover,
+.notion-link:focus {
+  background-color: #e0f7ff;
+  text-decoration-color: transparent !important;
+  color: #005fa3;
 }
+
 
 .notion-blank {
   width: 100%;
