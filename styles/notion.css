@@ -1442,6 +1442,8 @@ code[class*='language-'] {
 
 .notion-collection-card {
   /* cursor: default !important; */
+  margin: 0 3px;
+  @apply !rounded-lg;
 }
 
 .notion-collection-card-property .notion-link {
