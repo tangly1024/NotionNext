@@ -1,4 +1,5 @@
-name: Deploy
+name: Deploy to Deno Deploy
+
 on:
   push:
     branches: main
@@ -40,5 +41,4 @@ jobs:
           project: "dxs1256-notionnext-19"
           entrypoint: "jsr:@deno/nextjs-start"
           root: "."
-          include: .next, public
-          
+          include: .next/**/*, public  # 修改了这里
