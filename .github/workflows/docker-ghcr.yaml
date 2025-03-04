@@ -5,10 +5,10 @@ name: Docker ghcr.io
 # separate terms of service, privacy policy, and support
 # documentation.
 
-# on:
+on:
   push:
     branches: [main]
-    Publish semver tags as releases.
+    # Publish semver tags as releases.
     tags: ["v*.*.*"]
   pull_request:
     branches: [main]
