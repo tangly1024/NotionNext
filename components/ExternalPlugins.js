@@ -165,7 +165,7 @@ const ExternalPlugin = props => {
     }
 
     setTimeout(() => {
-      // 映射url
+      // 将notion-id格式的url转成自定义slug
       convertInnerUrl(props?.allNavPages)
     }, 500)
   }, [router])
