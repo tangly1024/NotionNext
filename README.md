@@ -5,7 +5,7 @@
 
 ## 关于 NotionNext
 
-NotionNext 是一个基于 NextJS 和 Notion API 构建的静态博客系统，可以方便地部署在 Vercel 上。 它专为 Notion 用户和内容创作者设计，提供了多种灵活的部署方案。
+NotionNext 是一个基于 NextJS 和 Notion API 构建的静态博客系统，可以方便地部署在 Vercel 上。 它专为 Notion 用户和内容创作者设计，提供了多种灵活的部署方案
 
 *   **技术栈：**
     *   前端框架: Next.js
