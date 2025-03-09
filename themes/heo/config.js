@@ -22,7 +22,7 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '与IT趣事',
   HEO_HERO_TITLE_3: 'https://www.nextdaddy.cn',
   HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: ' Jesus I am a fucking front-end coder',
+  HEO_HERO_TITLE_5: 'Hi Whats up Bro',
   HEO_HERO_TITLE_LINK: 'https://nextjs.org',
 
   // 英雄区显示三个置顶分类
