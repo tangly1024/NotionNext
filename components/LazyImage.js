@@ -18,6 +18,7 @@ export default function LazyImage({
   height,
   title,
   onLoad,
+  onClick,
   style
 }) {
   const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH')
@@ -40,6 +41,10 @@ export default function LazyImage({
     if (typeof onLoad === 'function') {
       onLoad() // 触发传递的onLoad回调函数
     }
+    // 移除占位符类名
+    if (imageRef.current) {
+      imageRef.current.classList.remove('lazy-image-placeholder')
+    }
   }
   /**
    * 图片加载失败回调
@@ -52,6 +57,10 @@ export default function LazyImage({
       } else {
         imageRef.current.src = defaultPlaceholderSrc
       }
+      // 移除占位符类名
+      if (imageRef.current) {
+        imageRef.current.classList.remove('lazy-image-placeholder')
+      }
     }
   }
 
@@ -59,32 +68,28 @@ export default function LazyImage({
     const adjustedImageSrc =
       adjustImgSize(src, maxWidth) || defaultPlaceholderSrc
 
-    // 加载原图
-    const img = new Image()
-    img.src = adjustedImageSrc
-    img.onload = () => {
-      setCurrentSrc(adjustedImageSrc)
-      handleImageLoaded(adjustedImageSrc)
-    }
-    img.onerror = handleImageError
-
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const lazyImage = entry.target
-            lazyImage.src = adjustedImageSrc
-            observer.unobserve(lazyImage)
+            // 拉取图片
+            const img = new Image()
+            img.src = adjustedImageSrc
+            img.onload = () => {
+              setCurrentSrc(adjustedImageSrc)
+              handleImageLoaded(adjustedImageSrc)
+            }
+            img.onerror = handleImageError
+
+            observer.unobserve(entry.target)
           }
         })
       },
-      { rootMargin: '50px 0px' } // Adjust the rootMargin as needed to trigger the loading earlier or later
+      { rootMargin: '50px 0px' } // 轻微提前加载
     )
-
     if (imageRef.current) {
       observer.observe(imageRef.current)
     }
-
     return () => {
       if (imageRef.current) {
         observer.unobserve(imageRef.current)
@@ -96,31 +101,22 @@ export default function LazyImage({
   const imgProps = {
     ref: imageRef,
     src: currentSrc,
-    alt: alt,
-    onLoad: handleThumbnailLoaded, // 缩略图加载完成
-    onError: handleImageError // 添加onError处理函数
+    'data-src': src, // 存储原始图片地址
+    alt: alt || 'Lazy loaded image',
+    onLoad: handleThumbnailLoaded,
+    onError: handleImageError,
+    className: `${className || ''} lazy-image-placeholder`,
+    style,
+    width: width || 'auto',
+    height: height || 'auto',
+    onClick
   }
 
-  if (id) {
-    imgProps.id = id
-  }
+  if (id) imgProps.id = id
+  if (title) imgProps.title = title
 
-  if (title) {
-    imgProps.title = title
-  }
-
-  if (width && width !== 'auto') {
-    imgProps.width = width
-  }
-
-  if (height && height !== 'auto') {
-    imgProps.height = height
-  }
-  if (className) {
-    imgProps.className = className
-  }
-  if (style) {
-    imgProps.style = style
+  if (!src) {
+    return null
   }
 
   return (
@@ -133,6 +129,20 @@ export default function LazyImage({
           <link rel='preload' as='image' href={adjustImgSize(src, maxWidth)} />
         </Head>
       )}
+      <style>
+        {` 
+        .lazy-image-placeholder{
+            background: 
+                linear-gradient(90deg,#0001 33%,#0005 50%,#0001 66%)
+                #f2f2f2;
+            background-size:300% 100%;
+            animation: l1 1s infinite linear;
+            }
+            @keyframes l1 {
+            0% {background-position: right}
+        }
+        `}
+      </style>
     </>
   )
 }

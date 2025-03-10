@@ -90,7 +90,7 @@ export default function PostNavAround({ prev, next }) {
         className={`${isShow ? 'mb-5 opacity-100' : '-mb-24 opacity-0'} hidden md:block fixed z-40 right-10 bottom-4 duration-200 transition-all`}>
         <Link
           href={`/${next.slug}`}
-          className='text-sm block p-4 w-72 h-28 cursor-pointer drop-shadow-xl duration transition-all dark:bg-[#1e1e1e] border dark:border-gray-600 bg-white dark:text-gray-300 dark:hover:text-yellow-600 hover:font-bold hover:text-green-600'>
+          className='text-sm block p-4 w-72 h-28 cursor-pointer drop-shadow-xl duration transition-all dark:bg-[#1e1e1e] border dark:border-gray-800 bg-white dark:text-gray-300 dark:hover:text-yellow-600 hover:font-bold hover:text-green-600'>
           <div className='font-semibold'>{locale.COMMON.NEXT_POST}</div>
           <hr className='mt-2 mb-3' />
           <div className='line-clamp-2'>{next?.title}</div>

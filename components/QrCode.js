@@ -1,4 +1,3 @@
-import { siteConfig } from '@/lib/config'
 import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
 
@@ -6,7 +5,9 @@ import { useEffect } from 'react'
  * 二维码生成
  */
 export default function QrCode({ value }) {
-  const qrCodeCDN = siteConfig('QR_CODE_CDN')
+  const qrCodeCDN =
+    process.env.NEXT_PUBLIC_QR_CODE_CDN ||
+    'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'
 
   useEffect(() => {
     let qrcode
@@ -34,5 +35,5 @@ export default function QrCode({ value }) {
     }
   }, [])
 
-  return <div id="qrcode"></div>
+  return <div id='qrcode'></div>
 }
