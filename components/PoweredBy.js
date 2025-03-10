@@ -11,7 +11,7 @@ export default function PoweredBy(props) {
       <a
         href='https://juejin.cn/user/1086748304878360'
         className='underline justify-start'>
-        NotionNext {siteConfig('VERSION')}
+        CCBlog {siteConfig('VERSION')}
       </a>
       .
     </div>
