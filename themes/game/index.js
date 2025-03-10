@@ -30,6 +30,7 @@ import SideBarContent from './components/SideBarContent'
 import SideBarDrawer from './components/SideBarDrawer'
 import CONFIG from './config'
 import { Style } from './style'
+import { useRouter } from 'next/router'
 
 // const AlgoliaSearchModal = dynamic(() => import('@/components/AlgoliaSearchModal'), { ssr: false })
 
@@ -44,7 +45,15 @@ export const useGameGlobal = () => useContext(ThemeGlobalGame)
  * @constructor
  */
 const LayoutBase = props => {
-  const { allNavPages, children, siteInfo } = props
+  const {
+    allNavPages,
+    children,
+    siteInfo,
+    tagOptions,
+    currentTag,
+    categoryOptions,
+    currentCategory
+  } = props
   const searchModal = useRef(null)
   // 在列表中进行实时过滤
   const [filterKey, setFilterKey] = useState('')
@@ -107,6 +116,23 @@ const LayoutBase = props => {
           {/* 右侧 */}
           <main className='flex-grow w-full h-full flex flex-col min-h-screen overflow-x-auto md:p-2'>
             <div className='flex-grow h-full'>{children}</div>
+            {/* 广告 */}
+            <div className='w-full py-4'>
+              <AdSlot type='in-article' />
+            </div>
+
+            {/* 主区域下方 导览 */}
+            <div className='w-full bg-white dark:bg-hexo-black-gray rounded-lg p-2'>
+              {/* 标签汇总             */}
+              <GroupCategory
+                categoryOptions={categoryOptions}
+                currentCategory={currentCategory}
+              />
+              <hr />
+              <GroupTag tagOptions={tagOptions} currentTag={currentTag} />
+              {/* 站点公告信息 */}
+              <Announcement {...props} className='p-2' />
+            </div>
             <Footer />
           </main>
         </div>
@@ -130,8 +156,7 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
-  const { tagOptions, currentTag, categoryOptions, currentCategory, siteInfo } =
-    props
+  const { siteInfo } = props
   return (
     <>
       {/* 首页移动端顶部导航 */}
@@ -142,24 +167,6 @@ const LayoutIndex = props => {
       <GameListRecent />
       {/* 游戏列表 */}
       <LayoutPostList {...props} />
-
-      {/* 广告 */}
-      <div className='w-full'>
-        <AdSlot type='in-article' />
-      </div>
-
-      {/* 主区域下方 导览 */}
-      <div className='w-full bg-white dark:bg-hexo-black-gray rounded-lg p-2'>
-        {/* 标签汇总             */}
-        <GroupCategory
-          categoryOptions={categoryOptions}
-          currentCategory={currentCategory}
-        />
-        <hr />
-        <GroupTag tagOptions={tagOptions} currentTag={currentTag} />
-        {/* 站点公告信息 */}
-        <Announcement {...props} className='p-2' />
-      </div>
     </>
   )
 }
@@ -301,7 +308,7 @@ const LayoutSlug = props => {
     <>
       {lock && <ArticleLock validPassword={validPassword} />}
 
-      {!lock && (
+      {!lock && post && (
         <div id='article-wrapper'>
           <div className='game-detail-wrapper w-full grow flex'>
             <div className={`w-full md:py-2`}>
@@ -346,7 +353,29 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = props => {
-  return <>404 Not found.</>
+  const router = useRouter()
+  useEffect(() => {
+    // 延时3秒如果加载失败就返回首页
+    setTimeout(() => {
+      const article = isBrowser && document.getElementById('article-wrapper')
+      if (!article) {
+        router.push('/').then(() => {
+          // console.log('找不到页面', router.asPath)
+        })
+      }
+    }, 3000)
+  }, [])
+
+  return <>
+        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+            <div className='dark:text-gray-200'>
+                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
+                <div className='inline-block text-left h-32 leading-10 items-center'>
+                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+                </div>
+            </div>
+        </div>
+    </>
 }
 
 /**

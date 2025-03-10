@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
+import CONFIG from '../config'
 
 /**
  * 文字广告Banner
@@ -8,13 +9,14 @@ import Link from 'next/link'
  */
 export default function BannerItem() {
   // 首屏信息栏按钮文字
-  const banner = siteConfig('MAGZINE_HOME_BANNER_ENABLE')
-  const button = siteConfig('MAGZINE_HOME_BUTTON')
-  const text = siteConfig('MAGZINE_HOME_BUTTON_TEXT')
-  const url = siteConfig('MAGZINE_HOME_BUTTON_URL')
-  const title = siteConfig('MAGZINE_HOME_TITLE')
-  const description = siteConfig('MAGZINE_HOME_DESCRIPTION')
-  const tips = siteConfig('MAGZINE_HOME_TIPS')
+  const banner = siteConfig('MAGZINE_HOME_BANNER_ENABLE', null, CONFIG)
+  const button = siteConfig('MAGZINE_HOME_BUTTON', null, CONFIG)
+  const text = siteConfig('MAGZINE_HOME_BUTTON_TEXT', null, CONFIG)
+  const url = siteConfig('MAGZINE_HOME_BUTTON_URL', null, CONFIG)
+  const title = siteConfig('MAGZINE_HOME_TITLE', null, CONFIG)
+  const description = siteConfig('MAGZINE_HOME_DESCRIPTION', null, CONFIG)
+  const tips = siteConfig('MAGZINE_HOME_TIPS', null, CONFIG)
+
   if (!banner) {
     return null
   }
