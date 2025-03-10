@@ -98,6 +98,22 @@ const NotionPage = ({ post, className }) => {
         })
       })
     }
+
+    // 查找所有具有 'notion-collection-page-properties' 类的元素,删除notion自带的页面properties
+    const timer = setTimeout(() => {
+      // 查找所有具有 'notion-collection-page-properties' 类的元素
+      const elements = document.querySelectorAll(
+        '.notion-collection-page-properties'
+      )
+
+      // 遍历这些元素并将其从 DOM 中移除
+      elements?.forEach(element => {
+        element?.remove()
+      })
+    }, 1000) // 1000 毫秒 = 1 秒
+
+    // 清理定时器，防止组件卸载时执行
+    return () => clearTimeout(timer)
   }, [post])
 
   return (
