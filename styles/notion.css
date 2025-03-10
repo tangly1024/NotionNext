@@ -1682,8 +1682,8 @@ code[class*='language-'] {
   color: inherit;
 }
 
-svg.notion-page-icon {
-  /* @apply hidden;*/
+notion-callout svg.notion-page-icon {
+  @apply hidden;
 }
 
 svg + .notion-page-title-text {
