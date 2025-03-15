@@ -20,10 +20,10 @@ export async function getStaticProps({ params: { keyword }, locale }) {
     locale
   })
   const { allPages } = props
-  const allPosts = allPages?.filter(
+  const allPublishedPosts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
-  props.posts = await filterByMemCache(allPosts, keyword)
+  props.posts = await filterByMemCache(allPublishedPosts, keyword)
   props.postCount = props.posts.length
   const POST_LIST_STYLE = siteConfig(
     'POST_LIST_STYLE',
@@ -104,16 +104,16 @@ const isIterable = obj =>
 
 /**
  * 在内存缓存中进行全文索引
- * @param {*} allPosts
+ * @param {*} allPublishedPosts
  * @param keyword 关键词
  * @returns
  */
-async function filterByMemCache(allPosts, keyword) {
+async function filterByMemCache(allPublishedPosts, keyword) {
   const filterPosts = []
   if (keyword) {
     keyword = keyword.trim().toLowerCase()
   }
-  for (const post of allPosts) {
+  for (const post of allPublishedPosts) {
     const cacheKey = 'page_block_' + post.id
     const page = await getDataFromCache(cacheKey, true)
     const tagContent =
