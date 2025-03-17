@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { siteConfig } from '@/lib/config'
-import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import { deepClone } from '@/lib/utils'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -43,12 +42,11 @@ const GameItem = ({ item }) => {
   const { title } = item
   const img = item.pageCoverThumbnail
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug) ? sliceUrlFromHttp(item.slug) : `${siteConfig('SUB_PATH', '')}/${item.slug}`
   const video = item?.ext?.video
 
   return (
     <Link
-      href={`${url}`}
+      href={`${item?.href}`}
       onMouseOver={() => {
         setShowType('video')
       }}
@@ -58,17 +56,27 @@ const GameItem = ({ item }) => {
       title={title}
       className={`card-single h-28 w-28 relative shadow rounded-md overflow-hidden flex justify-center items-center 
                 group   hover:border-purple-400`}>
-      <div className='absolute text-sm bottom-2 transition-all duration-200 text-white z-30'>{title}</div>
+      <div className='absolute text-sm bottom-2 transition-all duration-200 text-white z-30'>
+        {title}
+      </div>
       <div className='h-1/2 w-full absolute left-0 bottom-0 z-20 opacity-75 transition-all duration-200'>
         <div className='h-full w-full absolute bg-gradient-to-b from-transparent to-black'></div>
       </div>
 
       {showType === 'video' && (
-        <video className='z-10 object-cover w-auto h-28 absolute overflow-hidden' loop='true' autoPlay preload='none'>
+        <video
+          className='z-10 object-cover w-auto h-28 absolute overflow-hidden'
+          loop='true'
+          autoPlay
+          preload='none'>
           <source src={video} type='video/mp4' />
         </video>
       )}
-      <img className='w-full h-full absolute object-cover' src={img} alt={title} />
+      <img
+        className='w-full h-full absolute object-cover'
+        src={img}
+        alt={title}
+      />
     </Link>
   )
 }

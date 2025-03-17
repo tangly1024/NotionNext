@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { AdSlot } from '@/components/GoogleAdsense'
+import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import { checkContainHttp, deepClone, sliceUrlFromHttp } from '@/lib/utils'
+import { deepClone } from '@/lib/utils'
 import Link from 'next/link'
 import { useState } from 'react'
 import CONFIG from '../config'
@@ -88,8 +89,8 @@ export const GameListIndexCombine = ({ posts }) => {
   }
 
   return (
-    <div className='game-list-wrapper flex justify-center w-full px-2'>
-      <div className='game-grid mx-auto w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2'>
+    <div className='game-list-wrapper flex justify-center w-full'>
+      <div className='game-grid mx-auto w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 px-2 md:p-0'>
         {components?.map((ItemComponent, index) => {
           return ItemComponent
         })}
@@ -104,20 +105,24 @@ export const GameListIndexCombine = ({ posts }) => {
  */
 const GameAd = () => {
   return (
-    <div className='card-group border border-gray-600 rounded game-ad h-[20rem] w-full overflow-hidden'>
+    <div className='card-group relative rounded-lg game-ad h-80 w-full overflow-hidden'>
       <AdSlot type='flow' />
+      <div className='absolute left-0 right-0 w-full h-full flex flex-col justify-center items-center bg-white'>
+        <p className='text-2xl'>{siteConfig('TITLE')}</p>
+        <p>{siteConfig('DESCRIPTION')}</p>
+      </div>
     </div>
   )
 }
 
 /**
- * 4卡组成一个大卡
+ * 大卡由2行2列小卡构成
  * @param {*} param0
  * @returns
  */
 const GameItemGroup = ({ items }) => {
   return (
-    <div className='card-group h-[20rem] w-full grid grid-cols-2 grid-rows-2 gap-2'>
+    <div className='card-group h-80 w-full grid grid-cols-2 grid-rows-2 gap-3'>
       {items.map((item, index) => (
         <GameItem key={index} item={item} />
       ))}
@@ -134,44 +139,43 @@ const GameItem = ({ item, isLargeCard }) => {
   const { title } = item
   const img = item.pageCoverThumbnail
   const [showType, setShowType] = useState('img') // img or video
-  const url = checkContainHttp(item.slug)
-    ? sliceUrlFromHttp(item.slug)
-    : `${siteConfig('SUB_PATH', '')}/${item.slug}`
+
   const video = item?.ext?.video
   return (
     <Link
-      href={`${url}`}
+      title={title}
+      href={`${item?.href}`}
+      className={`card-single ${isLargeCard ? 'h-80 ' : 'h-full text-xs'} w-full transition-all duration-200 shadow-md md:hover:scale-105 md:hover:shadow-lg relative rounded-lg overflow-hidden flex justify-center items-center
+      group hover:border-purple-400`}
       onMouseOver={() => {
         setShowType('video')
       }}
       onMouseOut={() => {
         setShowType('img')
-      }}
-      title={title}
-      className={`card-single ${
-        isLargeCard ? 'h-[20rem]' : 'h-full'
-      } w-full relative shadow rounded-md overflow-hidden flex justify-center items-center
-                group   hover:border-purple-400`}>
+      }}>
       <div className='text-center absolute bottom-0 invisible group-hover:bottom-2 group-hover:visible transition-all duration-200 text-white z-30'>
         {title}
       </div>
-      <div className='h-1/2 w-full absolute left-0 bottom-0 z-20 opacity-0 group-hover:opacity-75 transition-all duration-200'>
+
+      <div className='h-2/3 w-full absolute left-0 bottom-0 z-20 opacity-0 group-hover:opacity-75 transition-all duration-200'>
         <div className='h-full w-full absolute bg-gradient-to-b from-transparent to-black'></div>
       </div>
 
       {showType === 'video' && (
         <video
-          className={`z-10 object-cover w-full ${isLargeCard ? 'h-[20rem]' : 'h-full'} absolute overflow-hidden`}
+          className={`z-10 object-cover w-full ${isLargeCard ? 'h-80' : 'h-full'} absolute overflow-hidden`}
           loop='true'
           autoPlay
           preload='none'>
           <source src={video} type='video/mp4' />
         </video>
       )}
-      <img
+      <LazyImage
         className='w-full h-full absolute object-cover group-hover:scale-105 duration-100 transition-all'
         src={img}
+        priority
         alt={title}
+        fill='full'
       />
     </Link>
   )

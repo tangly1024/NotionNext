@@ -12,11 +12,18 @@ export const BlogListScroll = props => {
   const [page, updatePage] = useState(1)
 
   let hasMore = false
-  const postsToShow = posts ? Object.assign(posts).slice(0, parseInt(siteConfig('POSTS_PER_PAGE')) * page) : []
+  const postsToShow = posts
+    ? Object.assign(posts).slice(
+        0,
+        parseInt(siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)) * page
+      )
+    : []
 
   if (posts) {
     const totalCount = posts.length
-    hasMore = page * parseInt(siteConfig('POSTS_PER_PAGE')) < totalCount
+    hasMore =
+      page * parseInt(siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)) <
+      totalCount
   }
   const handleGetMore = () => {
     if (!hasMore) return
@@ -29,7 +36,11 @@ export const BlogListScroll = props => {
   const scrollTrigger = useCallback(
     throttle(() => {
       const scrollS = window.scrollY + window.outerHeight
-      const clientHeight = targetRef ? (targetRef.current ? targetRef.current.clientHeight : 0) : 0
+      const clientHeight = targetRef
+        ? targetRef.current
+          ? targetRef.current.clientHeight
+          : 0
+        : 0
       if (scrollS > clientHeight + 100) {
         handleGetMore()
       }
@@ -46,12 +57,17 @@ export const BlogListScroll = props => {
   })
 
   return (
-    <div id='posts-wrapper' className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'}} mb-12`} ref={targetRef}>
+    <div
+      id='posts-wrapper'
+      className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'}} mb-12`}
+      ref={targetRef}>
       {postsToShow?.map(post => (
         <BlogPostCard key={post.id} post={post} />
       ))}
 
-      <div onClick={handleGetMore} className='w-full my-4 py-4 text-center cursor-pointer '>
+      <div
+        onClick={handleGetMore}
+        className='w-full my-4 py-4 text-center cursor-pointer '>
         {' '}
         {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
       </div>

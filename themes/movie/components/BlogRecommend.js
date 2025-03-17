@@ -1,7 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { checkContainHttp, sliceUrlFromHttp } from '@/lib/utils'
 import Link from 'next/link'
 import CONFIG from '../config'
 
@@ -13,7 +12,11 @@ import CONFIG from '../config'
 export default function BlogRecommend(props) {
   const { recommendPosts, siteInfo } = props
   const { locale } = useGlobal()
-  if (!siteConfig('MOVIE_ARTICLE_RECOMMEND', null, CONFIG) || !recommendPosts || recommendPosts.length === 0) {
+  if (
+    !siteConfig('MOVIE_ARTICLE_RECOMMEND', null, CONFIG) ||
+    !recommendPosts ||
+    recommendPosts.length === 0
+  ) {
     return <></>
   }
 
@@ -27,21 +30,22 @@ export default function BlogRecommend(props) {
       </div>
       <div className='flex flex-nowrap gap-4'>
         {recommendPosts.map(post => {
-          const headerImage = post?.pageCoverThumbnail ? post.pageCoverThumbnail : siteInfo?.pageCover
-          const url = checkContainHttp(post.slug)
-            ? sliceUrlFromHttp(post.slug)
-            : `${siteConfig('SUB_PATH', '')}/${post.slug}`
+          const headerImage = post?.pageCoverThumbnail
+            ? post.pageCoverThumbnail
+            : siteInfo?.pageCover
 
           return (
             <Link
               key={post.id}
               title={post.title}
-              href={url}
+              href={post?.href}
               passHref
               className='flex rounded-lg h-60 w-48 cursor-pointer overflow-hidden'>
               <div className='h-full w-full relative group shadow-movie'>
                 <div className='absolute bottom-4 w-full z-20 duration-300 '>
-                  <div className='z-10 text-lg px-4 font-bold text-white shadow-text select-none'>{post.title}</div>
+                  <div className='z-10 text-lg px-4 font-bold text-white shadow-text select-none'>
+                    {post.title}
+                  </div>
                 </div>
                 {/* 卡片的阴影遮罩，为了凸显图片上的文字 */}
                 <div className='h-3/4 w-full absolute left-0 bottom-0 z-10'>

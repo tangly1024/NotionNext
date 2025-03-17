@@ -9,7 +9,7 @@ import Logo from './Logo'
 /**
  * 侧拉抽屉的内容
  */
-export default function SideBarContent({ allNavPages }) {
+export default function SideBarContent({ allNavPages, siteInfo }) {
   const { sideBarVisible, setSideBarVisible, filterGames, setFilterGames } =
     useGameGlobal()
   const inputRef = useRef(null) // 创建对输入框的引用
@@ -37,9 +37,9 @@ export default function SideBarContent({ allNavPages }) {
     const filtered = allGames?.filter(item => {
       return (
         item.title.toLowerCase().includes(search.toLowerCase()) ||
-        item.id.toLowerCase().includes(search.toLowerCase()) ||
-        item.id
-          .toLowerCase()
+        item.short_id?.toLowerCase().includes(search.toLowerCase()) ||
+        item.short_id
+          ?.toLowerCase()
           .replace('-', '')
           .includes(search.toLowerCase().replace('-', ''))
       )
@@ -50,7 +50,7 @@ export default function SideBarContent({ allNavPages }) {
   return (
     <div className='px-3'>
       <div className='py-2 flex justify-between'>
-        <Logo />
+        <Logo siteInfo={siteInfo} />
         <button
           onClick={() => {
             setSideBarVisible(false)

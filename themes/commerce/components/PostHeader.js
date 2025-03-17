@@ -29,7 +29,7 @@ export default function PostHeader({ post }) {
 
           {/* 文章Title */}
           <div className="leading-snug font-bold xs:text-4xl sm:text-4xl md:text-5xl md:leading-snug text-4xl shadow-text-md flex justify-center text-center text-white">
-            <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' /><div className='text-4xl mx-1'>{post.title}</div>
+            {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} className='text-4xl mx-1' />}<div className='text-4xl mx-1'>{post.title}</div>
           </div>
 
         </div>

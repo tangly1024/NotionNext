@@ -2,16 +2,14 @@ import BLOG from '@/blog.config'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
-import { getLayoutByTheme } from '@/themes/theme'
-import { useRouter } from 'next/router'
+import { DynamicLayout } from '@/themes/theme'
 
 const Index = props => {
   const { keyword } = props
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({ theme: siteConfig('THEME'), router: useRouter() })
   props = { ...props, currentSearch: keyword }
 
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }
 
 /**
@@ -19,29 +17,42 @@ const Index = props => {
  * @param {*} param0
  * @returns
  */
-export async function getStaticProps({ params: { keyword, page } }) {
+export async function getStaticProps({ params: { keyword, page }, locale }) {
   const props = await getGlobalData({
     from: 'search-props',
-    pageType: ['Post']
+    pageType: ['Post'],
+    locale
   })
   const { allPages } = props
-  const allPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
   // 处理分页
-  props.posts = props.posts.slice(siteConfig('POSTS_PER_PAGE') * (page - 1), siteConfig('POSTS_PER_PAGE') * page)
+  props.posts = props.posts.slice(
+    POSTS_PER_PAGE * (page - 1),
+    POSTS_PER_PAGE * page
+  )
   props.keyword = keyword
   props.page = page
   delete props.allPages
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { keyword: BLOG.TITLE, page: '1' } }],
+    paths: [{ params: { keyword: 'NotionNext', page: '1' } }],
     fallback: true
   }
 }
@@ -87,7 +98,8 @@ function getTextContent(textArray) {
  * @param {*} obj
  * @returns
  */
-const isIterable = obj => obj != null && typeof obj[Symbol.iterator] === 'function'
+const isIterable = obj =>
+  obj != null && typeof obj[Symbol.iterator] === 'function'
 
 /**
  * 在内存缓存中进行全文索引
@@ -103,8 +115,12 @@ async function filterByMemCache(allPosts, keyword) {
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
     const page = await getDataFromCache(cacheKey, true)
-    const tagContent = post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
-    const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
+    const tagContent =
+      post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
+    const categoryContent =
+      post.category && Array.isArray(post.category)
+        ? post.category.join(' ')
+        : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.indexOf(keyword) > -1
     let indexContent = [post.summary]
