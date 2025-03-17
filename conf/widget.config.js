@@ -38,8 +38,8 @@ module.exports = {
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
       name: 'ほのかに暗い日曜日',
-      artist: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VlWUxXWExGZ1A1Q29sU0h3YW5VbWZzQkhRV2FkU3BqSWR1aTRpV3hzR2kxeXc.mp3',
-      url: 'ほのかに暗い日曜日',
+      artist: 'Takashi Waraya',
+      url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VlWUxXWExGZ1A1Q29sU0h3YW5VbWZzQkhRV2FkU3BqSWR1aTRpV3hzR2kxeXc.mp3',
       cover: 'https://i.postimg.cc/dVgHS3j0/IMG-9772-20230406-022739.jpg'
     },
     {
