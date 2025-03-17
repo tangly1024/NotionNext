@@ -41,7 +41,6 @@ const BLOG = {
 
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
 
-=======
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '之华', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '一名在学生，很快就是研究生了', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://zhihua.vip', // 网站地址
