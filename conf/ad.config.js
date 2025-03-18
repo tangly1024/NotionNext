@@ -10,7 +10,7 @@ module.exports = {
   ADSENSE_GOOGLE_SLOT_FLOW:
     process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_SLOT_FLOW || '3450066518', // Google AdScene>广告>按单元广告>新建信息流广告
   ADSENSE_GOOGLE_SLOT_NATIVE:
-    process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_SLOT_NATIVE || '4980048999', // Google AdScene>广告>按单元广告>新建原生广告
+    process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_SLOT_NATIVE || '3234406100', // Google AdScene>广告>按单元广告>新建原生广告
   ADSENSE_GOOGLE_SLOT_AUTO:
     process.env.NEXT_PUBLIC_ADSENSE_GOOGLE_SLOT_AUTO || '8030936203', // Google AdScene>广告>按单元广告>新建展示广告 （自动广告）
 
