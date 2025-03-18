@@ -64,7 +64,10 @@ const BLOG = {
     'Hi，我是TY，歡迎光臨🫶🏻',
 
   // uuid重定向至 slug
-  UUID_REDIRECT: process.env.UUID_REDIRECT || false
+  UUID_REDIRECT: process.env.UUID_REDIRECT || false,
+
+  // Chatbase
+  CHATBASE_ID: process.env.NEXT_PUBLIC_CHATBASE_ID || 'RQUgZA9NX9iowybGnidGz' // 是否显示chatbase机器人 https://www.chatbase.co/
 }
 
 module.exports = BLOG
