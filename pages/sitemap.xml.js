@@ -1,4 +1,4 @@
-// pages/sitemap.xml.js
+// pages/sitemap.xml.js/
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
@@ -110,3 +110,4 @@ function getUniqueFields(fields) {
 }
 
 export default () => {}
+
