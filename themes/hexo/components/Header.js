@@ -61,51 +61,64 @@ const Header = props => {
     }
   }
   const throttleMs = 200
-  const scrollTrigger = useCallback(throttle(() => {
-    if (screen.width <= 768) {
-      return
-    }
+  const scrollTrigger = useCallback(
+    throttle(() => {
+      if (screen.width <= 768) {
+        return
+      }
 
-    const scrollS = window.scrollY
-    // 自动滚动
-    if ((scrollS > windowTop) & (scrollS < window.innerHeight) && !autoScroll
-    ) {
-      autoScroll = true
-      window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
-      autoScrollEnd()
-    }
-    if ((scrollS < windowTop) && (scrollS < window.innerHeight) && !autoScroll) {
-      autoScroll = true
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      autoScrollEnd()
-    }
-    windowTop = scrollS
-  }, throttleMs))
+      const scrollS = window.scrollY
+      // 自动滚动
+      if (
+        (scrollS > windowTop) & (scrollS < window.innerHeight) &&
+        !autoScroll
+      ) {
+        autoScroll = true
+        window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+        autoScrollEnd()
+      }
+      if (scrollS < windowTop && scrollS < window.innerHeight && !autoScroll) {
+        autoScroll = true
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        autoScrollEnd()
+      }
+      windowTop = scrollS
+    }, throttleMs)
+  )
 
   return (
-        <header id="header" style={{ zIndex: 1 }} className="w-full h-screen relative" >
+    <header
+      id="header"
+      style={{ zIndex: 1 }}
+      className="w-full h-screen relative"
+    >
+      <div
+        id="header-cover"
+        style={{ backgroundImage: `url('${siteInfo.pageCover}')` }}
+        className={`header-cover bg-center w-full h-screen bg-cover ${
+          CONFIG_HEXO.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''
+        }`}
+      />
 
-            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo.pageCover}')` }}
-                className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG_HEXO.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`}/>
+      <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
+        <div className="text-4xl md:text-5xl shadow-text">生活在别处</div>
+        <div className="mt-2 h-12 items-center text-center shadow-text text-lg">
+          <span id="typed" />
+        </div>
 
-            <div className="text-white absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
-                <div className='text-4xl md:text-5xl shadow-text'>{siteInfo?.title}</div>
-                <div className='mt-2 h-12 items-center text-center shadow-text text-lg'>
-                    <span id='typed' />
-                </div>
+        {/* 首页导航插件 */}
+        {CONFIG_HEXO.HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
+      </div>
 
-                {/* 首页导航插件 */}
-                {CONFIG_HEXO.HOME_NAV_BUTTONS && <NavButtonGroup {...props} />}
-
-            </div>
-
-            <div
-                onClick={() => { window.scrollTo({ top: wrapperTop, behavior: 'smooth' }) }}
-                className="cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white"
-            >
-                <i className='animate-bounce fas fa-angle-down' />
-            </div>
-        </header>
+      <div
+        onClick={() => {
+          window.scrollTo({ top: wrapperTop, behavior: 'smooth' })
+        }}
+        className="cursor-pointer w-full text-center py-4 text-3xl absolute bottom-10 text-white"
+      >
+        <i className="animate-bounce fas fa-angle-down" />
+      </div>
+    </header>
   )
 }
 
