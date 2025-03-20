@@ -28,7 +28,7 @@ export const MenuItemCollapse = ({ link }) => {
   return (
     <>
       <div
-        className='select-none w-full px-2 py-2 border rounded-xl text-left dark:bg-hexo-black-gray'
+        className='select-none w-full p-2 border dark:border-gray-600 rounded-lg text-left dark:bg-[#1e1e1e]'
         onClick={toggleShow}>
         {!hasSubMenu && (
           <Link
@@ -62,7 +62,7 @@ export const MenuItemCollapse = ({ link }) => {
             return (
               <div
                 key={index}
-                className='dark:bg-black dark:text-gray-200 text-left px-3 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  py-3 pr-6'>
+                className='dark:bg-hexo-black-gray dark:text-gray-200 text-left px-3 justify-start bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  py-3 pr-6'>
                 <Link href={sLink.href} target={link?.target}>
                   <span className='text-sm ml-4 whitespace-nowrap'>
                     {link?.icon && <i className={sLink.icon + ' mr-2'} />}{' '}

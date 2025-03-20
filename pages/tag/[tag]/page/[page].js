@@ -1,16 +1,11 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
-import { getLayoutByTheme } from '@/themes/theme'
-import { useRouter } from 'next/router'
+import { DynamicLayout } from '@/themes/theme'
 
 const Tag = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
 export async function getStaticProps({ params: { tag, page }, locale }) {
@@ -22,10 +17,11 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
     .filter(post => post && post?.tags && post?.tags.includes(tag))
   // 处理文章数
   props.postCount = props.posts.length
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
   // 处理分页
   props.posts = props.posts.slice(
-    siteConfig('POSTS_PER_PAGE') * (page - 1),
-    siteConfig('POSTS_PER_PAGE') * page
+    POSTS_PER_PAGE * (page - 1),
+    POSTS_PER_PAGE * page
   )
 
   props.tag = tag
@@ -33,17 +29,19 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
   delete props.allPages
   return {
     props,
-    revalidate: siteConfig(
-      'NEXT_REVALIDATE_SECOND',
-      BLOG.NEXT_REVALIDATE_SECOND,
-      props.NOTION_CONFIG
-    )
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 
 export async function getStaticPaths() {
   const from = 'tag-page-static-path'
-  const { tagOptions, allPages } = await getGlobalData({ from })
+  const { tagOptions, allPages, NOTION_CONFIG } = await getGlobalData({ from })
   const paths = []
   tagOptions?.forEach(tag => {
     // 过滤状态类型
@@ -52,7 +50,9 @@ export async function getStaticPaths() {
       .filter(post => post && post?.tags && post?.tags.includes(tag.name))
     // 处理文章页数
     const postCount = tagPosts.length
-    const totalPages = Math.ceil(postCount / siteConfig('POSTS_PER_PAGE'))
+    const totalPages = Math.ceil(
+      postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
+    )
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {
         paths.push({ params: { tag: tag.name, page: '' + i } })

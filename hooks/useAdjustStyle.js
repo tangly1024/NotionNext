@@ -6,8 +6,8 @@ import { useEffect } from 'react';
  */
 const useAdjustStyle = () => {
   /**
-     * 避免 callout 含有图片时溢出撑开父容器
-     */
+   * 避免 callout 含有图片时溢出撑开父容器
+   */
   const adjustCalloutImg = () => {
     const callOuts = document.querySelectorAll('.notion-callout-text');
     callOuts.forEach((callout) => {

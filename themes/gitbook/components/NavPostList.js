@@ -3,6 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
+import BlogPostCard from './BlogPostCard'
 import NavPostItem from './NavPostItem'
 
 /**
@@ -30,16 +31,17 @@ const NavPostList = props => {
     CONFIG
   )
 
-  // 展开文件夹
   useEffect(() => {
+    // 展开文件夹
     setTimeout(() => {
-      // 默认展开一个
+      const currentPath = decodeURIComponent(router.asPath.split('?')[0])
       const defaultOpenIndex = getDefaultOpenIndexByPath(
         categoryFolders,
-        decodeURIComponent(router.asPath.split('?')[0])
+        currentPath
       )
       setExpandedGroups([defaultOpenIndex])
     }, 500)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, filteredNavPages])
 
   // 折叠项切换，当折叠或展开数组时会调用
@@ -80,11 +82,22 @@ const NavPostList = props => {
       </div>
     )
   }
+  // 如果href
+  const href = siteConfig('GITBOOK_INDEX_PAGE') + ''
+
+  const homePost = {
+    id: '-1',
+    title: siteConfig('DESCRIPTION'),
+    href: href.indexOf('/') !== 0 ? '/' + href : href
+  }
 
   return (
     <div
       id='posts-wrapper'
-      className='w-full flex-grow space-y-0.5 tracking-wider'>
+      className='w-full flex-grow space-y-0.5 pr-4 tracking-wider'>
+      {/* 当前文章 */}
+      <BlogPostCard className='mb-4' post={homePost} />
+
       {/* 文章列表 */}
       {categoryFolders?.map((group, index) => (
         <NavPostItem
@@ -105,6 +118,7 @@ function groupArticles(filteredNavPages) {
     return []
   }
   const groups = []
+  const AUTO_SORT = siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)
 
   for (let i = 0; i < filteredNavPages.length; i++) {
     const item = filteredNavPages[i]
@@ -112,7 +126,7 @@ function groupArticles(filteredNavPages) {
 
     let existingGroup = null
     // 开启自动分组排序；将同分类的自动归到同一个文件夹，忽略Notion中的排序
-    if (siteConfig('GITBOOK_AUTO_SORT', true, CONFIG)) {
+    if (AUTO_SORT) {
       existingGroup = groups.find(group => group.category === categoryName) // 搜索同名的最后一个分组
     } else {
       existingGroup = groups[groups.length - 1] // 获取最后一个分组
@@ -136,19 +150,16 @@ function groupArticles(filteredNavPages) {
  * @returns {number} 返回需要展开的菜单索引
  */
 function getDefaultOpenIndexByPath(categoryFolders, path) {
-  // 默认展开第一个索引
-  let defaultIndex = 0
-
   // 查找满足条件的第一个索引
   const index = categoryFolders.findIndex(group => {
-    return group.items.some(post => path === '/' + post.slug)
+    return group.items.some(post => path === post.href)
   })
 
   // 如果找到满足条件的索引，则设置为该索引
   if (index !== -1) {
-    defaultIndex = index
+    return index
   }
 
-  return defaultIndex
+  return 0
 }
 export default NavPostList

@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
-import { isBrowser } from '@/lib/utils'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
@@ -17,6 +17,7 @@ const NotionPage = ({ post, className }) => {
   // 是否关闭数据库和画册的点击跳转
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
+  const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
 
   const zoom =
     isBrowser &&
@@ -27,11 +28,11 @@ const NotionPage = ({ post, className }) => {
     })
 
   const zoomRef = useRef(zoom ? zoom.clone() : null)
-
+  const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
   // 页面首次打开时执行的勾子
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
-    autoScrollToTarget()
+    autoScrollToHash()
   }, [])
 
   // 页面文章发生变化时会执行的勾子
@@ -46,9 +47,6 @@ const NotionPage = ({ post, className }) => {
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl()
     }
-
-    // 若url是本站域名，则之间在当前窗口打开、不开新窗口
-    processPageUrl()
 
     /**
      * 放大查看图片时替换成高清图像
@@ -67,7 +65,7 @@ const NotionPage = ({ post, className }) => {
               //   替换为更高清的图像
               mutation?.target?.setAttribute(
                 'src',
-                compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200))
+                compressImage(src, IMAGE_ZOOM_IN_WIDTH)
               )
             }, 800)
           }
@@ -85,6 +83,37 @@ const NotionPage = ({ post, className }) => {
     return () => {
       observer.disconnect()
     }
+  }, [post])
+
+  useEffect(() => {
+    // Spoiler文本功能
+    if (SPOILER_TEXT_TAG) {
+      import('lodash/escapeRegExp').then(escapeRegExp => {
+        Promise.all([
+          loadExternalResource('/js/spoilerText.js', 'js'),
+          loadExternalResource('/css/spoiler-text.css', 'css')
+        ]).then(() => {
+          window.textToSpoiler &&
+            window.textToSpoiler(escapeRegExp.default(SPOILER_TEXT_TAG))
+        })
+      })
+    }
+
+    // 查找所有具有 'notion-collection-page-properties' 类的元素,删除notion自带的页面properties
+    const timer = setTimeout(() => {
+      // 查找所有具有 'notion-collection-page-properties' 类的元素
+      const elements = document.querySelectorAll(
+        '.notion-collection-page-properties'
+      )
+
+      // 遍历这些元素并将其从 DOM 中移除
+      elements?.forEach(element => {
+        element?.remove()
+      })
+    }, 1000) // 1000 毫秒 = 1 秒
+
+    // 清理定时器，防止组件卸载时执行
+    return () => clearTimeout(timer)
   }, [post])
 
   return (
@@ -147,38 +176,16 @@ const processGalleryImg = zoom => {
 }
 
 /**
- * 处理页面内连接跳转
- * 如果链接就是当网站，则不打开新窗口访问
+ * 根据url参数自动滚动到锚位置
  */
-const processPageUrl = () => {
-  if (isBrowser) {
-    const currentURL = window.location.origin + window.location.pathname
-    const allAnchorTags = document.getElementsByTagName('a') // 或者使用 document.querySelectorAll('a') 获取 NodeList
-    for (const anchorTag of allAnchorTags) {
-      if (anchorTag?.target === '_blank') {
-        const hrefWithoutQueryHash = anchorTag.href.split('?')[0].split('#')[0]
-        const hrefWithRelativeHash =
-          currentURL.split('#')[0] + anchorTag.href.split('#')[1]
-
-        if (
-          currentURL === hrefWithoutQueryHash ||
-          currentURL === hrefWithRelativeHash
-        ) {
-          anchorTag.target = '_self'
-        }
-      }
-    }
-  }
-}
-/**
- * 根据url参数自动滚动到指定区域
- */
-const autoScrollToTarget = () => {
+const autoScrollToHash = () => {
   setTimeout(() => {
     // 跳转到指定标题
-    const needToJumpToTitle = window.location.hash
+    const hash = window?.location?.hash
+    const needToJumpToTitle = hash && hash.length > 0
     if (needToJumpToTitle) {
-      const tocNode = document.getElementById(window.location.hash.substring(1))
+      console.log('jump to hash', hash)
+      const tocNode = document.getElementById(hash.substring(1))
       if (tocNode && tocNode?.className?.indexOf('notion') > -1) {
         tocNode.scrollIntoView({ block: 'start', behavior: 'smooth' })
       }
@@ -238,13 +245,16 @@ const Equation = dynamic(
   { ssr: false }
 )
 
-// 文档
-const Pdf = dynamic(
-  () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
-  {
-    ssr: false
-  }
-)
+// 原版文档
+// const Pdf = dynamic(
+//   () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
+//   {
+//     ssr: false
+//   }
+// )
+const Pdf = dynamic(() => import('@/components/Pdf').then(m => m.Pdf), {
+  ssr: false
+})
 
 // 美化代码 from: https://github.com/txs
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {

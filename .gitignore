@@ -25,7 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-# .env.local # 版本号放在此环境变量中
+.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -45,7 +45,7 @@ yarn-error.log*
 /public/robots.txt
 /public/sitemap.xml
 /public/rss/*
-
+/sitemap.xml
 
 # yarn
 package-lock.json

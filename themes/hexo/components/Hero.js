@@ -26,10 +26,7 @@ const Hero = props => {
     updateHeaderHeight()
 
     if (!typed && window && document.getElementById('typed')) {
-      loadExternalResource(
-        'https://cdn.jsdelivr.net/npm/typed.js@2.0.12',
-        'js'
-      ).then(() => {
+      loadExternalResource('/js/typed.min.js', 'js').then(() => {
         if (window.Typed) {
           changeType(
             new window.Typed('#typed', {
@@ -92,6 +89,7 @@ const Hero = props => {
 
       <LazyImage
         id='header-cover'
+        alt={siteInfo?.title}
         src={siteInfo?.pageCover}
         className={`header-cover w-full h-screen object-cover object-center ${siteConfig('HEXO_HOME_NAV_BACKGROUND_IMG_FIXED', null, CONFIG) ? 'fixed' : ''}`}
       />

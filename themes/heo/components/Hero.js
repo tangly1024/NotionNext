@@ -2,6 +2,7 @@
 import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
@@ -62,22 +63,27 @@ function BannerGroup(props) {
  */
 function Banner(props) {
   const router = useRouter()
-  const { latestPosts } = props
+  const { allNavPages } = props
   /**
    * 随机跳转文章
    */
   function handleClickBanner() {
-    const randomIndex = Math.floor(Math.random() * latestPosts.length)
-    const randomPost = latestPosts[randomIndex]
+    const randomIndex = Math.floor(Math.random() * allNavPages.length)
+    const randomPost = allNavPages[randomIndex]
     router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
+
+  // 遮罩文字
+  const coverTitle = siteConfig('HEO_HERO_COVER_TITLE')
 
   return (
     <div
       id='banners'
       onClick={handleClickBanner}
       className='hidden xl:flex xl:flex-col group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative overflow-hidden'>
-      <div id='banner-title' className='flex flex-col absolute top-10 left-10'>
+      <div
+        id='banner-title'
+        className='z-10 flex flex-col absolute top-10 left-10'>
         <div className='text-4xl font-bold mb-3  dark:text-white'>
           {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
           <br />
@@ -96,10 +102,10 @@ function Banner(props) {
         id='banner-cover'
         style={{ backdropFilter: 'blur(15px)' }}
         className={
-          'rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] dark:bg-[#dca846] dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'
+          'z-20 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] dark:bg-[#dca846] dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'
         }>
         <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
-          <div className='text-7xl text-white font-extrabold'>随便逛逛</div>
+          <div className='text-7xl text-white font-extrabold'>{coverTitle}</div>
           <div className='-ml-3 text-gray-300'>
             <ArrowSmallRight className={'w-24 h-24 stroke-2'} />
           </div>
@@ -114,10 +120,10 @@ function Banner(props) {
  * 英雄区左上角banner条中斜向滚动的图标
  */
 function TagsGroupBar() {
-  const groupIcons = siteConfig('HEO_GROUP_ICONS', null, CONFIG).concat(
-    siteConfig('HEO_GROUP_ICONS', null, CONFIG)
-  )
-
+  let groupIcons = siteConfig('HEO_GROUP_ICONS', null, CONFIG)
+  if (groupIcons) {
+    groupIcons = groupIcons.concat(groupIcons)
+  }
   return (
     <div className='tags-group-all flex -rotate-[30deg] h-full'>
       <div className='tags-group-wrapper flex flex-nowrap absolute top-16'>
@@ -161,13 +167,20 @@ function TagsGroupBar() {
  * @returns
  */
 function GroupMenu() {
+  const url_1 = siteConfig('HEO_HERO_CATEGORY_1', {}, CONFIG)?.url || ''
+  const title_1 = siteConfig('HEO_HERO_CATEGORY_1', {}, CONFIG)?.title || ''
+  const url_2 = siteConfig('HEO_HERO_CATEGORY_2', {}, CONFIG)?.url || ''
+  const title_2 = siteConfig('HEO_HERO_CATEGORY_2', {}, CONFIG)?.title || ''
+  const url_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.url || ''
+  const title_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.title || ''
+
   return (
     <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
       <Link
-        href={siteConfig('HEO_HERO_CATEGORY_1', null, CONFIG)?.url}
+        href={url_1}
         className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg  pl-5 relative -mt-2'>
-          {siteConfig('HEO_HERO_CATEGORY_1', null, CONFIG)?.title}
+          {title_1}
           <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
         </div>
         <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -175,10 +188,10 @@ function GroupMenu() {
         </div>
       </Link>
       <Link
-        href={siteConfig('HEO_HERO_CATEGORY_2', null, CONFIG)?.url}
+        href={url_2}
         className='group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg pl-5 relative -mt-2'>
-          {siteConfig('HEO_HERO_CATEGORY_2', null, CONFIG)?.title}
+          {title_2}
           <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
         </div>
         <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -187,10 +200,10 @@ function GroupMenu() {
       </Link>
       {/* 第三个标签在小屏上不显示 */}
       <Link
-        href={siteConfig('HEO_HERO_CATEGORY_3', null, CONFIG)?.url}
+        href={url_3}
         className='group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold text-lg pl-5 relative -mt-2'>
-          {siteConfig('HEO_HERO_CATEGORY_3', null, CONFIG)?.title}
+          {title_3}
           <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
         </div>
         <div className='absolute right-6 duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -206,6 +219,7 @@ function GroupMenu() {
  */
 function TopGroup(props) {
   const { latestPosts, allNavPages, siteInfo } = props
+  const { locale } = useGlobal()
   const todayCardRef = useRef()
   function handleMouseLeave() {
     todayCardRef.current.coverUp()
@@ -238,13 +252,14 @@ function TopGroup(props) {
                 </div>
                 {/* hover 悬浮的 ‘荐’ 字 */}
                 <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
-                  荐
+                  {locale.COMMON.RECOMMEND_BADGES}
                 </div>
               </div>
             </Link>
           )
         })}
       </div>
+      {/* 一个大的跳转文章卡片 */}
       <TodayCard cRef={todayCardRef} siteInfo={siteInfo} />
     </div>
   )
@@ -304,6 +319,7 @@ function getTopPosts({ latestPosts, allNavPages }) {
 function TodayCard({ cRef, siteInfo }) {
   const router = useRouter()
   const link = siteConfig('HEO_HERO_TITLE_LINK', null, CONFIG)
+  const { locale } = useGlobal()
   // 卡牌是否盖住下层
   const [isCoverUp, setIsCoverUp] = useState(true)
 
@@ -319,10 +335,10 @@ function TodayCard({ cRef, siteInfo }) {
   })
 
   /**
-   * 点击更多
+   * 查看更多
    * @param {*} e
    */
-  function handleClickMore(e) {
+  function handleClickShowMore(e) {
     e.stopPropagation()
     setIsCoverUp(false)
   }
@@ -348,10 +364,11 @@ function TodayCard({ cRef, siteInfo }) {
           isCoverUp
             ? 'opacity-100 cursor-pointer'
             : 'opacity-0 transform scale-110 pointer-events-none'
-        } shadow transition-all duration-200 today-card h-full bg-[#0E57D5] rounded-xl relative overflow-hidden flex items-end`}>
+        } shadow transition-all duration-200 today-card h-full bg-black rounded-xl relative overflow-hidden flex items-end`}>
+        {/* 卡片文字信息 */}
         <div
           id='today-card-info'
-          className='z-10 flex justify-between w-full relative text-white p-10 items-end'>
+          className='flex justify-between w-full relative text-white p-10 items-end'>
           <div className='flex flex-col'>
             <div className='text-xs font-light'>
               {siteConfig('HEO_HERO_TITLE_4', null, CONFIG)}
@@ -360,27 +377,31 @@ function TodayCard({ cRef, siteInfo }) {
               {siteConfig('HEO_HERO_TITLE_5', null, CONFIG)}
             </div>
           </div>
+          {/* 查看更多的按钮 */}
           <div
-            onClick={handleClickMore}
-            className={`'${
-              isCoverUp ? '' : 'hidden pointer-events-none '
-            } flex items-center px-3 h-10 justify-center bg-[#425aef] hover:bg-[#4259efcb] transition-colors duration-100 rounded-3xl`}>
+            onClick={handleClickShowMore}
+            className={`'${isCoverUp ? '' : 'hidden pointer-events-none'} z-10 group flex items-center px-3 h-10 justify-center  rounded-3xl
+            glassmorphism transition-colors duration-100 `}>
             <PlusSmall
-              className={'w-6 h-6 mr-2 bg-white rounded-full stroke-indigo-400'}
+              className={
+                'group-hover:rotate-180 duration-500 transition-all w-6 h-6 mr-2 bg-white rounded-full stroke-black'
+              }
             />
             <div id='more' className='select-none'>
-              更多推荐
+              {locale.COMMON.RECOMMEND_POSTS}
             </div>
           </div>
         </div>
-        <div
+
+        {/* 封面图 */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={siteInfo?.pageCover}
           id='today-card-cover'
           className={`${
             isCoverUp ? '' : ' pointer-events-none'
-          } cursor-pointer today-card-cover absolute w-full h-full top-0`}
-          style={{
-            background: `url('${siteInfo?.pageCover}') no-repeat center /cover`
-          }}></div>
+          } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
+        />
       </div>
     </div>
   )

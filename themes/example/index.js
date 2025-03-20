@@ -2,7 +2,6 @@
 
 import Comment from '@/components/Comment'
 import replaceSearchResult from '@/components/Mark'
-import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
@@ -21,6 +20,7 @@ import { PostLock } from './components/PostLock'
 import { PostMeta } from './components/PostMeta'
 import SearchInput from './components/SearchInput'
 import { SideBar } from './components/SideBar'
+import TitleBar from './components/TitleBar'
 import CONFIG from './config'
 import { Style } from './style'
 
@@ -32,36 +32,15 @@ import { Style } from './style'
  * @constructor
  */
 const LayoutBase = props => {
-  const { children } = props
+  const { children, post } = props
   const { onLoading, fullWidth, locale } = useGlobal()
-  const router = useRouter()
-  const { post, category, tag } = props
 
-  const title = post?.title || siteConfig('TITLE')
-  const description = post?.description || siteConfig('AUTHOR')
+  // 文章详情页左右布局改为上下布局
+  const LAYOUT_VERTICAL =
+    post && siteConfig('EXAMPLE_ARTICLE_LAYOUT_VERTICAL', false, CONFIG)
 
-  // 顶部如果是按照分类或标签查看文章列表，列表顶部嵌入一个横幅
-  // 如果是搜索，则列表顶部嵌入 搜索框
-  let slotTop = null
-  if (category) {
-    slotTop = (
-      <div className='pb-12'>
-        <i className='mr-1 fas fa-folder-open' />
-        {category}
-      </div>
-    )
-  } else if (tag) {
-    slotTop = <div className='pb-12'>#{tag}</div>
-  } else if (props.slotTop) {
-    slotTop = props.slotTop
-  } else if (router.route === '/search') {
-    // 嵌入一个搜索框在顶部
-    slotTop = (
-      <div className='pb-12'>
-        <SearchInput {...props} />
-      </div>
-    )
-  }
+  // 网站左右布局颠倒
+  const LAYOUT_SIDEBAR_REVERSE = siteConfig('LAYOUT_SIDEBAR_REVERSE', false)
 
   return (
     <div
@@ -71,33 +50,20 @@ const LayoutBase = props => {
 
       {/* 页头 */}
       <Header {...props} />
+      {/* 标题栏 */}
+      <TitleBar {...props} />
 
       {/* 主体 */}
       <div id='container-inner' className='w-full relative z-10'>
-        {/* 标题栏 */}
-        {!fullWidth && (
-          <div className='text-center px-6 py-12 mb-6 bg-gray-100 dark:bg-hexo-black-gray dark:border-hexo-black-gray border-b'>
-            <h1 className='text-xl md:text-4xl pb-4'>
-              {siteConfig('POST_TITLE_ICON') && (
-                <NotionIcon icon={post?.pageIcon} />
-              )}
-              {title}
-            </h1>
-            <p className='leading-loose text-gray-dark'>{description}</p>
-          </div>
-        )}
-
         <div
           id='container-wrapper'
-          className={
-            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
-              ? 'flex-row-reverse'
-              : '') +
-            'relative container mx-auto justify-center md:flex items-start py-8 px-2'
-          }>
+          className={`relative mx-auto justify-center md:flex py-8 px-2
+          ${LAYOUT_SIDEBAR_REVERSE ? 'flex-row-reverse' : ''} 
+          ${LAYOUT_VERTICAL ? 'items-center flex-col' : 'items-start'} 
+          `}>
           {/* 内容 */}
           <div
-            className={`w-full ${fullWidth ? '' : 'max-w-3xl'} xl:px-14 lg:px-4`}>
+            className={`${fullWidth ? '' : LAYOUT_VERTICAL ? 'max-w-5xl' : 'max-w-3xl'} w-full xl:px-14 lg:px-4`}>
             <Transition
               show={!onLoading}
               appear={true}
@@ -109,13 +75,22 @@ const LayoutBase = props => {
               leaveTo='opacity-0 -translate-y-16'
               unmount={false}>
               {/* 嵌入模块 */}
-              {slotTop}
+              {props.slotTop}
               {children}
             </Transition>
           </div>
 
           {/* 侧边栏 */}
-          {!fullWidth && <SideBar {...props} />}
+          {!fullWidth && (
+            <div
+              className={`${
+                LAYOUT_VERTICAL
+                  ? 'flex space-x-0 md:space-x-2 md:flex-row flex-col w-full max-w-5xl justify-center xl:px-14 lg:px-4'
+                  : 'md:w-64 sticky top-8'
+              }`}>
+              <SideBar {...props} />
+            </div>
+          )}
         </div>
       </div>
 
@@ -150,8 +125,20 @@ const LayoutIndex = props => {
  * @returns
  */
 const LayoutPostList = props => {
+  const { category, tag } = props
+
   return (
     <>
+      {/* 显示分类 */}
+      {category && (
+        <div className='pb-12'>
+          <i className='mr-1 fas fa-folder-open' />
+          {category}
+        </div>
+      )}
+      {/* 显示标签 */}
+      {tag && <div className='pb-12'>#{tag}</div>}
+
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogListPage {...props} />
       ) : (
@@ -169,13 +156,14 @@ const LayoutPostList = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
       setTimeout(
         () => {
           if (isBrowser) {
-            const article = document.getElementById('notion-article')
+            const article = document.querySelector('#article-wrapper #notion-article')
             if (!article) {
               router.push('/404').then(() => {
                 console.warn('找不到页面', router.asPath)
@@ -183,7 +171,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
@@ -191,11 +179,13 @@ const LayoutSlug = props => {
     <>
       {lock ? (
         <PostLock validPassword={validPassword} />
-      ) : (
-        <div id='article-wrapper' className='px-2'>
+      ) : post && (
+        <div>
           <PostMeta post={post} />
-          <NotionPage post={post} />
-          <ShareBar post={post} />
+          <div id='article-wrapper'>
+            <NotionPage post={post} />
+            <ShareBar post={post} />
+          </div>
           <Comment frontMatter={post} />
         </div>
       )}
@@ -209,7 +199,29 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = props => {
-  return <>404 Not found.</>
+  const router = useRouter()
+  useEffect(() => {
+    // 延时3秒如果加载失败就返回首页
+    setTimeout(() => {
+      const article = isBrowser && document.getElementById('article-wrapper')
+      if (!article) {
+        router.push('/').then(() => {
+          // console.log('找不到页面', router.asPath)
+        })
+      }
+    }, 3000)
+  }, [])
+
+  return <>
+        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+            <div className='dark:text-gray-200'>
+                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
+                <div className='inline-block text-left h-32 leading-10 items-center'>
+                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+                </div>
+            </div>
+        </div>
+    </>
 }
 
 /**
@@ -237,7 +249,14 @@ const LayoutSearch = props => {
     }
   }, [router])
 
-  return <LayoutPostList {...props} />
+  return (
+    <>
+      <div className='pb-12'>
+        <SearchInput {...props} />
+      </div>
+      <LayoutPostList {...props} />
+    </>
+  )
 }
 
 /**

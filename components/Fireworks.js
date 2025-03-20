@@ -18,7 +18,7 @@ const Fireworks = () => {
     // 异步加载
     async function loadFireworks() {
       loadExternalResource(
-        'https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js',
+        'https://cdnjs.snrat.com/ajax/libs/animejs/3.2.1/anime.min.js',
         'js'
       ).then(() => {
         loadExternalResource('/js/fireworks.js', 'js').then(() => {
@@ -35,7 +35,11 @@ const Fireworks = () => {
     loadFireworks()
 
     return () => {
-      // 在组件卸载时清理资源（如果需要）
+      // 在组件卸载时清理资源
+      const fireworksElements = document.getElementsByClassName('fireworks')
+      while (fireworksElements.length > 0) {
+        fireworksElements[0].parentNode.removeChild(fireworksElements[0])
+      }
     }
   }, [])
 

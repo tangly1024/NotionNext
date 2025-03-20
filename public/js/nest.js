@@ -5,9 +5,9 @@
  * @param config
  */
 
-const id = '__next'
+const idNest = '__nest'
 function createNest() {
-  const e = document.getElementById('__next')
+  const e = document.getElementById(idNest)
   if(!e) return
   function n(e, n, t) {
     return e.getAttribute(n) || t
@@ -108,8 +108,8 @@ function createNest() {
 }
 
 function destroyNest() {
-  const nest = document.getElementById(id)
-  if(nest && nest.parentNode){
+  const nest = document.getElementById(idNest)
+  if (nest && nest.parentNode && nest.parentNode.contains(nest)) {
     nest.parentNode.removeChild(nest)
   }
 }

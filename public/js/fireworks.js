@@ -57,10 +57,10 @@ function createFireworks({ config, anime }) {
   function updateCoords(e) {
     pointerX =
       e.clientX ||
-      (e.touches[0] ? e.touches[0].clientX : e.changedTouches[0].clientX)
+      (e?.touches[0] ? e.touches[0].clientX : e.changedTouches[0].clientX)
     pointerY =
       e.clientY ||
-      (e.touches[0] ? e.touches[0].clientY : e.changedTouches[0].clientY)
+      (e?.touches[0] ? e.touches[0].clientY : e.changedTouches[0].clientY)
   }
 
   function setParticuleDirection(p) {

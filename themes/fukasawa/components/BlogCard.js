@@ -1,6 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
@@ -10,7 +11,8 @@ import TagItemMini from './TagItemMini'
  * @param {*} param0
  * @returns
  */
-const BlogCard = ({ index, post, showSummary, siteInfo }) => {
+const BlogCard = ({ showAnimate, post, showSummary }) => {
+const {siteInfo} =useGlobal()
   const showPreview =
     siteConfig('FUKASAWA_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   // fukasawa 强制显示图片
@@ -24,11 +26,12 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
   const showPageCover =
     siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) &&
     post?.pageCoverThumbnail
+    
   const FUKASAWA_POST_LIST_ANIMATION = siteConfig(
     'FUKASAWA_POST_LIST_ANIMATION',
     null,
     CONFIG
-  )
+  ) || showAnimate 
 
   // 动画样式  首屏卡片不用，后面翻出来的加动画
   const aosProps = FUKASAWA_POST_LIST_ANIMATION

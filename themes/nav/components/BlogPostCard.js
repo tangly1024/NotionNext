@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { checkContainHttp } from '@/lib/utils'
+import { checkStartWithHttp } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import NotionIcon from './NotionIcon'
@@ -23,7 +23,7 @@ const BlogPostCard = ({ post, className }) => {
   return (
     <Link
       href={post?.href}
-      target={checkContainHttp(post.slug) ? '_blank' : '_self'}
+      target={checkStartWithHttp(post.slug) ? '_blank' : '_self'}
       passHref>
       <div
         key={post.id}

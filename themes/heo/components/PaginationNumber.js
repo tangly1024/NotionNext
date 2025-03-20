@@ -21,6 +21,7 @@ const PaginationNumber = ({ page, totalPage }) => {
     .split('?')[0]
     .replace(/\/page\/[1-9]\d*/, '')
     .replace(/\/$/, '')
+    .replace('.html', '')
   const pages = generatePages(pagePrefix, page, currentPage, totalPage)
 
   const [value, setValue] = useState('')
@@ -44,7 +45,7 @@ const PaginationNumber = ({ page, totalPage }) => {
   return (
     <>
       {/* pc端分页按钮 */}
-      <div className="hidden lg:flex justify-between items-end mt-10 mb-5 font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2 overflow-x-auto">
+      <div className='hidden lg:flex justify-between items-end mt-10 font-medium text-black duration-500 dark:text-gray-300 pt-3 space-x-2 overflow-x-auto'>
         {/* 上一页 */}
         <Link
           href={{
@@ -54,32 +55,29 @@ const PaginationNumber = ({ page, totalPage }) => {
                 : `${pagePrefix}/page/${currentPage - 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
-          rel="prev"
-          className={`${currentPage === 1 ? 'invisible' : 'block'}`}
-        >
-          <div className="relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-lg cursor-pointer group">
-            <i className="fas fa-angle-left mr-2 transition-all duration-200 transform group-hover:-translate-x-4" />
-            <div className="absolute translate-x-4 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
+          rel='prev'
+          className={`${currentPage === 1 ? 'invisible' : 'block'}`}>
+          <div className='hover:border-indigo-600 dark:hover:border-yellow-600 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
+            <i className='fas fa-angle-left mr-2 transition-all duration-200 transform group-hover:-translate-x-4' />
+            <div className='absolute translate-x-4 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0'>
               {locale.PAGINATION.PREV}
             </div>
           </div>
         </Link>
 
         {/* 分页 */}
-        <div className="flex items-center space-x-2">
+        <div className='flex items-center space-x-2'>
           {pages}
 
           {/* 跳转页码 */}
-          <div className="bg-white hover:bg-gray-100 dark:hover:bg-yellow-600  dark:bg-[#1e1e1e]  h-10 border flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200">
+          <div className='bg-white hover:bg-gray-100 dark:hover:bg-yellow-600  dark:bg-[#1e1e1e]  h-10 border dark:border-gray-600 flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200'>
             <input
               value={value}
-              className="w-0 group-hover:w-20 group-hover:px-3 transition-all duration-200 bg-gray-100 border-none outline-none h-full rounded-lg"
-              onInput={handleInputChange}
-            ></input>
+              className='w-0 group-hover:w-20 group-hover:px-3 transition-all duration-200 bg-gray-100 border-none outline-none h-full rounded-lg'
+              onInput={handleInputChange}></input>
             <div
               onClick={jumpToPage}
-              className="cursor-pointer hover:bg-indigo-600  dark:bg-[#1e1e1e] dark:hover:bg-yellow-600 hover:text-white px-4 py-2 group-hover:px-2 group-hover:mx-1 group-hover:rounded bg-white"
-            >
+              className='cursor-pointer hover:bg-indigo-600  dark:bg-[#1e1e1e] dark:hover:bg-yellow-600 hover:text-white px-4 py-2 group-hover:px-2 group-hover:mx-1 group-hover:rounded bg-white'>
               <ChevronDoubleRight className={'w-4 h-4'} />
             </div>
           </div>
@@ -91,12 +89,11 @@ const PaginationNumber = ({ page, totalPage }) => {
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
-          rel="next"
-          className={`${+showNext ? 'block' : 'invisible'} `}
-        >
-          <div className="relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-lg cursor-pointer group">
-            <i className="fas fa-angle-right mr-2 transition-all duration-200 transform group-hover:translate-x-6" />
-            <div className="absolute -translate-x-10 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:-translate-x-2">
+          rel='next'
+          className={`${+showNext ? 'block' : 'invisible'} `}>
+          <div className='hover:border-indigo-600 dark:hover:border-yellow-600 relative w-24 h-10 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border dark:border-gray-600 rounded-lg cursor-pointer group'>
+            <i className='fas fa-angle-right mr-2 transition-all duration-200 transform group-hover:translate-x-6' />
+            <div className='absolute -translate-x-10 ml-2 opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:-translate-x-2'>
               {locale.PAGINATION.NEXT}
             </div>
           </div>
@@ -105,7 +102,7 @@ const PaginationNumber = ({ page, totalPage }) => {
 
       {/* 移动端分页 */}
 
-      <div className="lg:hidden w-full flex flex-row">
+      <div className='lg:hidden w-full flex flex-row'>
         {/* 上一页 */}
         <Link
           href={{
@@ -115,13 +112,12 @@ const PaginationNumber = ({ page, totalPage }) => {
                 : `${pagePrefix}/page/${currentPage - 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
-          rel="prev"
-          className={`${showPrev ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}
-        >
+          rel='prev'
+          className={`${showPrev ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
           {locale.PAGINATION.PREV}
         </Link>
 
-        {showPrev && showNext && <div className="w-12"></div>}
+        {showPrev && showNext && <div className='w-12'></div>}
 
         {/* 下一页 */}
         <Link
@@ -129,9 +125,8 @@ const PaginationNumber = ({ page, totalPage }) => {
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
-          rel="next"
-          className={`${+showNext ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}
-        >
+          rel='next'
+          className={`${+showNext ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
           {locale.PAGINATION.NEXT}
         </Link>
       </div>
@@ -161,8 +156,7 @@ function getPageElement(page, currentPage, pagePrefix) {
           ? 'bg-indigo-600 dark:bg-yellow-600 text-white '
           : 'dark:bg-[#1e1e1e] bg-white') +
         ' hover:border-indigo-600 dark:hover:bg-yellow-600 dark:border-gray-600 px-4 border py-2 rounded-lg drop-shadow-sm duration-200 transition-colors'
-      }
-    >
+      }>
       {page}
     </Link>
   )
@@ -195,7 +189,7 @@ function generatePages(pagePrefix, page, currentPage, totalPage) {
     }
     if (startPage > 2) {
       pages.push(
-        <div key={-1} className="-mt-2 mx-1">
+        <div key={-1} className='-mt-2 mx-1'>
           ...{' '}
         </div>
       )

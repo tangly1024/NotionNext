@@ -39,12 +39,10 @@ function requestAd(ads) {
 // 获取节点或其子节点中包含 adsbygoogle 类的节点
 function getNodesWithAdsByGoogleClass(node) {
   const adsNodes = []
+
   // 检查节点及其子节点是否包含 adsbygoogle 类
   function checkNodeForAds(node) {
-    if (
-      node.nodeType === Node.ELEMENT_NODE &&
-      node.classList.contains('adsbygoogle')
-    ) {
+    if (node.tagName === 'INS' && node.classList.contains('adsbygoogle')) {
       adsNodes.push(node)
     } else {
       // 递归检查子节点
@@ -53,6 +51,7 @@ function getNodesWithAdsByGoogleClass(node) {
       }
     }
   }
+
   checkNodeForAds(node)
   return adsNodes
 }
@@ -61,15 +60,15 @@ function getNodesWithAdsByGoogleClass(node) {
  * 初始化谷歌广告
  * @returns
  */
-export const initGoogleAdsense = async () => {
+export const initGoogleAdsense = async ADSENSE_GOOGLE_ID => {
   console.log('Load Adsense')
   loadExternalResource(
-    `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig('ADSENSE_GOOGLE_ID')}`,
+    `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_GOOGLE_ID}`,
     'js'
   ).then(url => {
     setTimeout(() => {
       // 页面加载完成后加载一次广告
-      const ads = document.getElementsByClassName('adsbygoogle')
+      const ads = document.querySelectorAll('ins.adsbygoogle')
       if (window.adsbygoogle && ads.length > 0) {
         requestAd(Array.from(ads))
       }
@@ -97,7 +96,11 @@ export const initGoogleAdsense = async () => {
       }
 
       // 启动 MutationObserver
-      observer.observe(document.body, observerConfig)
+      observer.observe(
+        document.querySelector('#article-wrapper #notion-article') ||
+          document.body,
+        observerConfig
+      )
     }, 100)
   })
 }
@@ -109,7 +112,9 @@ export const initGoogleAdsense = async () => {
  * 添加 可以在本地调试
  */
 const AdSlot = ({ type = 'show' }) => {
-  if (!siteConfig('ADSENSE_GOOGLE_ID')) {
+  const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
+  const ADSENSE_GOOGLE_TEST = siteConfig('ADSENSE_GOOGLE_TEST')
+  if (!ADSENSE_GOOGLE_ID) {
     return null
   }
   // 文章内嵌广告
@@ -120,8 +125,8 @@ const AdSlot = ({ type = 'show' }) => {
         style={{ display: 'block', textAlign: 'center' }}
         data-ad-layout='in-article'
         data-ad-format='fluid'
-        data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
-        data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
+        data-adtest={ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
+        data-ad-client={ADSENSE_GOOGLE_ID}
         data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_IN_ARTICLE')}></ins>
     )
   }
@@ -134,8 +139,8 @@ const AdSlot = ({ type = 'show' }) => {
         data-ad-format='fluid'
         data-ad-layout-key='-5j+cz+30-f7+bf'
         style={{ display: 'block' }}
-        data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
-        data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
+        data-adtest={ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
+        data-ad-client={ADSENSE_GOOGLE_ID}
         data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_FLOW')}></ins>
     )
   }
@@ -147,8 +152,8 @@ const AdSlot = ({ type = 'show' }) => {
         className='adsbygoogle'
         style={{ display: 'block', textAlign: 'center' }}
         data-ad-format='autorelaxed'
-        data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
-        data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
+        data-adtest={ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
+        data-ad-client={ADSENSE_GOOGLE_ID}
         data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_NATIVE')}></ins>
     )
   }
@@ -158,8 +163,8 @@ const AdSlot = ({ type = 'show' }) => {
     <ins
       className='adsbygoogle'
       style={{ display: 'block' }}
-      data-ad-client={siteConfig('ADSENSE_GOOGLE_ID')}
-      data-adtest={siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'}
+      data-ad-client={ADSENSE_GOOGLE_ID}
+      data-adtest={ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
       data-ad-slot={siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')}
       data-ad-format='auto'
       data-full-width-responsive='true'></ins>
@@ -172,31 +177,29 @@ const AdSlot = ({ type = 'show' }) => {
  * @param {*} props
  */
 const AdEmbed = () => {
+  const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
+  const ADSENSE_GOOGLE_TEST = siteConfig('ADSENSE_GOOGLE_TEST')
+  const ADSENSE_GOOGLE_SLOT_AUTO = siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')
   useEffect(() => {
     setTimeout(() => {
       // 找到所有 class 为 notion-text 且内容为 '<ins/>' 的 div 元素
-      const notionTextElements = document.querySelectorAll('div.notion-text')
-
+      const notionTextElements = document.querySelectorAll(
+        '#article-wrapper #notion-article div.notion-text'
+      )
       // 遍历找到的元素
       notionTextElements?.forEach(element => {
         // 检查元素的内容是否为 '<ins/>'
-        if (element.innerHTML.trim() === '&lt;ins/&gt;') {
+        if (element.textContent.trim() === '<ins/>') {
           // 创建新的 <ins> 元素
           const newInsElement = document.createElement('ins')
           newInsElement.className = 'adsbygoogle w-full py-1'
           newInsElement.style.display = 'block'
-          newInsElement.setAttribute(
-            'data-ad-client',
-            siteConfig('ADSENSE_GOOGLE_ID')
-          )
+          newInsElement.setAttribute('data-ad-client', ADSENSE_GOOGLE_ID)
           newInsElement.setAttribute(
             'data-adtest',
-            siteConfig('ADSENSE_GOOGLE_TEST') ? 'on' : 'off'
+            ADSENSE_GOOGLE_TEST ? 'on' : 'off'
           )
-          newInsElement.setAttribute(
-            'data-ad-slot',
-            siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')
-          )
+          newInsElement.setAttribute('data-ad-slot', ADSENSE_GOOGLE_SLOT_AUTO)
           newInsElement.setAttribute('data-ad-format', 'auto')
           newInsElement.setAttribute('data-full-width-responsive', 'true')
 
@@ -204,8 +207,6 @@ const AdEmbed = () => {
           element?.parentNode?.replaceChild(newInsElement, element)
         }
       })
-
-      requestAd()
     }, 1000)
   }, [])
   return <></>
