@@ -38,6 +38,11 @@ export const getServerSideProps = async ctx => {
 }
 
 function generateLocalesSitemap(link, allPages, locale) {
+  // 确保链接不以斜杠结尾
+  if (link && link.endsWith('/')) {
+    link = link.slice(0, -1)
+  }
+
   if (locale && locale.length > 0 && locale.indexOf('/') !== 0) {
     locale = '/' + locale
   }
