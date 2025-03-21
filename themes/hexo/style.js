@@ -98,6 +98,35 @@ const Style = () => {
         scrollbar-color: #DAB88B transparent
     }
     
+    /* 分页组件相关样式 */
+    /* 分页容器样式 */
+    .pagination-container {
+        color: #DAB88B;
+    }
+    
+    /* 页码和前后图标的基本样式 */
+    .pagination-item {
+        color: #DAB88B;
+        border-color: #DAB88B;
+    }
+    
+    /* 当前选中页码的样式 */
+    .pagination-item-active {
+        background-color: #DAB88B;
+        color: white;
+    }
+    
+    /* 当前选中页码的悬浮样式 */
+    .pagination-item-active:hover {
+        background-color: #C9A77B; /* 稍深一点的颜色用于悬停效果 */
+    }
+    
+    /* 页码和前后图标的悬浮样式 */
+    a.pagination-item:hover {
+        background-color: #DAB88B;
+        border-color: #DAB88B;
+        color: white;
+    }
 
   `}</style>)
 }
