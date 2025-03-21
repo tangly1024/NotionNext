@@ -1,7 +1,7 @@
 ## 帮助与说明
 
 *   **帮助文档：** 访问 [NotionNext 帮助手册](https://docs.tangly1024.com/) 获取详细使用指南。请注意，本教程为免费资源，仅供个人学习使用，禁止任何商业行为。
-*   **Notion 进阶：** 如果您希望深入掌握 Notion 的各项功能，可以考虑购买[《Notion 笔记从入门到精通进阶课程》](https://docs.tangly1024.com/article/notion-tutorial)。
+*   **Notion 进阶：** 如果您希望深入掌握 Notion 的各项功能，可以考虑购买[《Notion 笔记从入门到精通进阶课程》](https://docs.tangly1024.com/article/notion-tutorial)
 
 ## 关于 NotionNext
 
