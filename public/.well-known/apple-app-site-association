@@ -7,6 +7,10 @@
                     {
                         "/": "/apps/todo*",
                         "comment": ""
+                    },
+                    {
+                        "/": "/apps/shitking*",
+                        "comment": ""
                     }
                 ]
             }
