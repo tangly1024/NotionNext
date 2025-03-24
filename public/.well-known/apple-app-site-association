@@ -2,12 +2,17 @@
     "applinks": {
         "details": [
             {
-                "appIDs": ["BAAG9986TH.com.simo54.todo","BAAG9986TH.com.simo54.shitking"],
+                "appIDs": ["BAAG9986TH.com.simo54.todo"],
                 "components": [
                     {
                         "/": "/apps/todo*",
                         "comment": ""
-                    },
+                    }
+                ]
+            },
+            {
+                "appIDs": ["BAAG9986TH.com.simo54.shitking"],
+                "components": [
                     {
                         "/": "/apps/shitking*",
                         "comment": ""
