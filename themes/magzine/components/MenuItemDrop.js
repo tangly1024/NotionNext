@@ -52,7 +52,7 @@ export const MenuItemDrop = ({ link }) => {
       {/* 子菜单 */}
       {hasSubMenu && (
         <ul
-          className={`${show ? 'visible opacity-100 top-14' : 'invisible opacity-0 top-20'} p-1 absolute border bg-white dark:bg-black dark:border-gray-800 transition-all duration-150 z-20 block rounded-lg drop-shadow-lg`}>
+          className={`${show ? 'visible opacity-100 top-14 pointer-events-auto' : 'invisible opacity-0 top-20 pointer-events-none'} p-1 absolute border bg-white dark:bg-black dark:border-gray-800 transition-all duration-150 z-20 block rounded-lg drop-shadow-lg`}>
           {link?.subMenus?.map(sLink => {
             return (
               <li
