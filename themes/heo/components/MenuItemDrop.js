@@ -28,9 +28,9 @@ export const MenuItemDrop = ({ link }) => {
           <div className='cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest relative'>
             {link?.icon && <i className={link?.icon} />} {link?.name}
             {/* 主菜单下方的安全区域 */}
-            {
+            {show && (
               <div className='absolute w-full h-4 -bottom-4 left-0 bg-transparent z-30'></div>
-            }
+            )}
           </div>
         </>
       )}
