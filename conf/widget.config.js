@@ -40,7 +40,7 @@ module.exports = {
       name: 'ほのかに暗い日曜日',
       artist: 'Takashi Waraya',
       url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VlWUxXWExGZ1A1Q29sU0h3YW5VbWZzQkhRV2FkU3BqSWR1aTRpV3hzR2kxeXc.mp3',
-      cover: 'https://postimg.cc/ZB8Ntg3Y'
+      cover: 'https://img.picui.cn/free/2025/03/26/67e2e0ac3a8f2.jpg'
     },
     {
       name: '国王的心',
