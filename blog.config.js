@@ -57,7 +57,7 @@ const BLOG = {
 
   // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
   LAYOUT_SIDEBAR_REVERSE:
-    process.env.NEXT_PUBLIC_LAYOUT_SIDEBAR_REVERSE || false,
+    process.env.NEXT_PUBLIC_LAYOUT_SIDEBAR_REVERSE || true,
 
   // 欢迎语打字效果,Hexo,Matery主题支持, 英文逗号隔开多个欢迎语。
   GREETING_WORDS:

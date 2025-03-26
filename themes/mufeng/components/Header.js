@@ -7,10 +7,13 @@ import CONFIG from '../config'
  */
 export default function Header(props) {
   return (
-    <header className='text-center bg-white dark:bg-black relative z-10 border-b border-gray-100 dark:border-gray-800'>
+    <header className='w-full text-center bg-white dark:bg-black relative z-10 border-b border-gray-100 dark:border-gray-800'>
       <div className='max-w-3xl mx-auto'>
-        {/* 精简的头部区域 */}
-        <div className='h-2'></div>
+        <div className='py-2'>
+          <div className='text-lg font-bold dark:text-white'>
+            {siteConfig('TITLE')}
+          </div>
+        </div>
       </div>
     </header>
   )
