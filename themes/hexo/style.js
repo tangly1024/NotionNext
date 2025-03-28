@@ -70,7 +70,7 @@ const Style = () => {
     }
     
 
-  `}</style>)
+  }</style>)
 }
 
 export { Style }
