@@ -17,7 +17,7 @@ const Style = () => {
     /*  菜单下划线动画 */
     #theme-hexo .menu-link {
         text-decoration: none;
-        background-image: linear-gradient(#ff0000, #ff0000);
+        background-image: linear-gradient(#928CEE, #928CEE);
         background-repeat: no-repeat;
         background-position: bottom center;
         background-size: 0 2px;
@@ -26,7 +26,7 @@ const Style = () => {
     
     #theme-hexo .menu-link:hover {
         background-size: 100% 2px;
-        color: #ff0000;
+        color: #928CEE;
     }
 
     /* 设置了从上到下的渐变黑色 */
@@ -47,7 +47,7 @@ const Style = () => {
 
     // 选中字体颜色
     ::selection {
-        background: rgba(255, 0, 0, 0.3);
+        background: rgba(45, 170, 219, 0.3);
     }
 
     // 自定义滚动条
@@ -61,16 +61,16 @@ const Style = () => {
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: #ff0000;
+        background-color: #49b1f5;
     }
 
     * {
         scrollbar-width:thin;
-        scrollbar-color: #ff0000 transparent
+        scrollbar-color: #49b1f5 transparent
     }
     
 
-  }</style>)
+  `}</style>)
 }
 
 export { Style }
