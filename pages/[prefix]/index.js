@@ -67,20 +67,6 @@ const Slug = props => {
     }
   }, [post])
 
-  // 文章加载
-  useEffect(() => {
-    if (lock) {
-      return
-    }
-    // 文章解锁后生成目录与内容
-    if (post?.blockMap?.block) {
-      post.content = Object.keys(post.blockMap.block).filter(
-        key => post.blockMap.block[key]?.value?.parent_id === post.id
-      )
-      post.toc = getPageTableOfContents(post, post.blockMap)
-    }
-  }, [router, lock])
-
   props = { ...props, lock, validPassword }
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return (
@@ -145,6 +131,13 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     props.post = null
   } else {
     await processPostData(props, from)
+    // 在服务器端生成目录
+    if (props.post?.blockMap?.block) {
+      props.post.content = Object.keys(props.post.blockMap.block).filter(
+        key => props.post.blockMap.block[key]?.value?.parent_id === props.post.id
+      )
+      props.post.toc = getPageTableOfContents(props.post, props.post.blockMap)
+    }
   }
   return {
     props,

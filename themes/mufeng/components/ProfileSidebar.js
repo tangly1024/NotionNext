@@ -4,6 +4,7 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import SocialButton from './SocialButton'
 import Header from './Header'
+import Catalog from './Catalog'
 
 /**
  * 侧边栏个人资料组件
@@ -11,7 +12,7 @@ import Header from './Header'
  * @returns
  */
 export default function ProfileSidebar(props) {
-  const { siteInfo } = props
+  const { siteInfo, post } = props
 
   return (
     <div className='sticky top-6 flex flex-col items-center'>
@@ -49,6 +50,9 @@ export default function ProfileSidebar(props) {
         <div className='text-xs mt-3 text-gray-500 dark:text-gray-300 text-center px-2'>
           {siteConfig('DESCRIPTION')}
         </div>
+
+        {/* 文章目录 */}
+        {post && <Catalog post={post} />}
       </div>
     </div>
   )
