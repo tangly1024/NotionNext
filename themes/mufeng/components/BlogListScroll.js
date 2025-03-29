@@ -54,14 +54,14 @@ export default function BlogListScroll(props) {
   })
 
   return (
-    <div id='posts-wrapper' className='w-full md:pr-8 mb-12' ref={targetRef}>
+    <div id='posts-wrapper' className='w-full md:pr-8 mb-2' ref={targetRef}>
       {postsToShow.map(p => (
         <BlogItem key={p.id} post={p} />
       ))}
 
       <div
         onClick={handleGetMore}
-        className='w-full my-4 py-4 text-center cursor-pointer '>
+        className='w-full my-2 py-2 text-center cursor-pointer'>
         {' '}
         {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE} 😰`}{' '}
       </div>
