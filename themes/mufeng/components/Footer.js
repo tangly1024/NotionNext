@@ -18,7 +18,7 @@ export default function Footer(props) {
   const { locale } = useGlobal()
 
   return (
-    <footer className='relative w-full bg-black px-6 border-t mt-4'>
+    <footer className='relative w-full bg-black px-6 border-t mt-2 md:mt-4'>
       {/* 深色模式按钮 */}
       <div className='flex justify-center -mt-5'>
         <div className='bg-gray-100 dark:bg-gray-700 p-2 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300'>
@@ -26,7 +26,7 @@ export default function Footer(props) {
         </div>
       </div>
 
-      <div className='container mx-auto max-w-4xl py-6'>
+      <div className='container mx-auto max-w-4xl py-4 md:py-6'>
         {/* 版权信息 */}
         <div className='flex flex-col md:flex-row justify-between items-center border-b border-gray-800 pb-6 mb-6'>
           <div className='mb-4 md:mb-0'>

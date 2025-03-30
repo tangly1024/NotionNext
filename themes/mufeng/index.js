@@ -12,6 +12,7 @@ import { createContext, useContext, useEffect, useRef } from 'react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
+import Catalog from './components/Catalog'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -93,7 +94,7 @@ const LayoutBase = props => {
           className={
             (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
               ? 'flex-row-reverse'
-              : '') + ' w-full flex-1 flex items-start max-w-5xl mx-auto pt-3 px-4'
+              : '') + ' w-full flex-1 flex items-start max-w-5xl mx-auto pt-2 md:pt-3 px-3 md:px-4'
           }>
           <div id='container-inner' className='w-full flex-grow min-h-fit'>
             <Transition
@@ -116,7 +117,7 @@ const LayoutBase = props => {
           {fullWidth ? null : (
             <div
               id='right-sidebar'
-              className='hidden xl:block flex-none w-72 border-l dark:border-gray-800 pl-6 border-gray-100'>
+              className='hidden xl:block flex-none w-72 border-l dark:border-gray-800 pl-4 md:pl-6 border-gray-100 overflow-hidden'>
               <ProfileSidebar {...props} />
             </div>
           )}
@@ -214,7 +215,7 @@ const LayoutArchive = props => {
 }
 
 /**
- * 文章详情
+ * 博客详情页
  * @param {*} props
  * @returns
  */
@@ -227,12 +228,12 @@ const LayoutSlug = props => {
       {lock && <ArticleLock validPassword={validPassword} />}
 
       {!lock && post && (
-        <div className={`px-2  ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+        <div className={`px-2 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
           {/* 文章信息 */}
           <ArticleInfo post={post} />
 
           {/* 广告嵌入 */}
-          {/* <AdSlot type={'in-article'} /> */}
+          <AdSlot type={'in-article'} />
           <WWAds orientation='horizontal' className='w-full' />
 
           <div id='article-wrapper'>
