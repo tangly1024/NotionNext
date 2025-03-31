@@ -40,127 +40,127 @@ module.exports = {
       name: 'ほのかに暗い日曜日',
       artist: 'Takashi Waraya',
       url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VlWUxXWExGZ1A1Q29sU0h3YW5VbWZzQkhRV2FkU3BqSWR1aTRpV3hzR2kxeXc.mp3',
-      cover: 'https://img.picui.cn/free/2025/03/26/67e2e0ac3a8f2.jpg'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: '国王的心',
       artist: '安东尼亚诺小合唱团',
       url: 'http://music.163.com/song/media/outer/url?id=1300423464.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Reminiscence',
       artist: '佐藤天平',
       url: 'http://music.163.com/song/media/outer/url?id=2065497496.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Dignity (feat. Cassie Wei)',
       artist: 'Mili / Yamato Kasai / Cassie Wei',
       url: 'http://music.163.com/song/media/outer/url?id=2669311296.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Nostalgia',
       artist: '佐藤天平',
       url: 'http://music.163.com/song/media/outer/url?id=1416570762.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: '灰色の水曜日',
       artist: 'トリプルH',
       url: 'http://music.163.com/song/media/outer/url?id=22813882.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Freak',
       artist: 'ichika Nito',
       url: 'http://music.163.com/song/media/outer/url?id=2606425151.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Be What You Wanna Be',
       artist: 'Darin',
       url: 'https://ri-sycdn.kuwo.cn/a155bfa6fa8dc7238145f11273e9131a/6749b033/resource/n2/80/89/2000571795.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: '華の乱',
       artist: '石田勝範',
       url: 'http://music.163.com/song/media/outer/url?id=4881802.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Valse di Fantastica',
       artist: '下村 陽子',
       url: 'http://music.163.com/song/media/outer/url?id=461544436.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'he des Alizes (原曲:衛星カフェテラス)',
       artist: 'Foxtail-Grass Studio',
       url: 'http://music.163.com/song/media/outer/url?id=41416746.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: '明日有明天',
       artist: '陈慧娴',
       url: 'http://music.163.com/song/media/outer/url?id=110865.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'The First Layer',
       artist: 'Kevin Penkin',
       url: 'http://music.163.com/song/media/outer/url?id=509106635.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'I Miss You (Extended)',
       artist: 'ichika Nito',
       url: 'http://music.163.com/song/media/outer/url?id=1808027556.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Morena',
       artist: ' ',
       url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VWQ1F6NTFlT081Q3Q3SF96TmtubkowQm9oSjVyLXk1RE9FYTRCZldRUG5qSlE.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: '穢土',
       artist: 'Iwamizu',
       url: 'http://music.163.com/song/media/outer/url?id=1828198418.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: '余韻叙情(E-6)',
       artist: '鷺巣詩郎',
       url: 'http://music.163.com/song/media/outer/url?id=27552522.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'Forest Mixtape',
       artist: 'Christina Kuong',
       url: 'http://music.163.com/song/media/outer/url?id=1908182683.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.pngg'
     },
     {
       name: '再见',
       artist: 'ヤマモトガク',
       url: 'http://music.163.com/song/media/outer/url?id=2098082874.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: '文豪とアルケミスト ～Piano ver.～',
       artist: '坂本英城',
       url: 'http://music.163.com/song/media/outer/url?id=490637049.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
       name: 'PIMP',
       artist: 'Bacao Rhythm & Steel Band',
       url: 'http://music.163.com/song/media/outer/url?id=1409490569.mp3',
-      cover: 'https://postimg.cc/K43P8k5g'
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
