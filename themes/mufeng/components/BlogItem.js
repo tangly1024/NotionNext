@@ -18,7 +18,7 @@ export const BlogItem = props => {
   return (
     <div
       key={post.id}
-      className='h-42 my-6 pb-12 border-b dark:border-gray-800'>
+      className='h-42 my-4 md:my-6 pb-6 md:pb-12 border-b dark:border-gray-800'>
       {/* 文章标题 */}
 
       <div className='flex'>
@@ -49,7 +49,7 @@ export const BlogItem = props => {
           </h2>
 
           {/* 文章信息 */}
-          <header className='mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6'>
+          <header className='mb-3 md:mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6'>
             <div className='space-x-2'>
               <span>
                 {' '}
@@ -95,7 +95,7 @@ export const BlogItem = props => {
             </div>
           </header>
 
-          <main className='text-gray-700 dark:text-gray-300 leading-normal mb-6'>
+          <main className='text-gray-700 dark:text-gray-300 leading-normal mb-4 md:mb-6'>
             {!showPreview && (
               <>
                 {post.summary}
@@ -105,7 +105,7 @@ export const BlogItem = props => {
             {showPreview && post?.blockMap && (
               <div className='overflow-ellipsis truncate'>
                 <NotionPage post={post} />
-                <hr className='border-dashed py-4' />
+                <hr className='border-dashed py-2 md:py-4' />
               </div>
             )}
           </main>
@@ -115,7 +115,7 @@ export const BlogItem = props => {
       <div className='block'>
         <Link
           href={post.href}
-          className='inline-block rounded-sm text-blue-600 dark:text-blue-300  text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+          className='inline-block rounded-sm text-blue-600 dark:text-blue-300  text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-8 md:h-9 leading-7 md:leading-8 px-4 md:px-5'>
           Continue Reading{' '}
           <i className='fa-solid fa-angle-right align-middle'></i>
         </Link>

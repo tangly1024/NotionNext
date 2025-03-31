@@ -150,7 +150,14 @@ const AdSlot = ({ type = 'show' }) => {
     return (
       <ins
         className='adsbygoogle'
-        style={{ display: 'block', textAlign: 'center' }}
+        style={{ 
+          display: 'block', 
+          textAlign: 'center',
+          maxHeight: '200px',
+          overflow: 'hidden',
+          margin: '0 auto',
+          padding: '0.5rem'
+        }}
         data-ad-format='autorelaxed'
         data-adtest={ADSENSE_GOOGLE_TEST ? 'on' : 'off'}
         data-ad-client={ADSENSE_GOOGLE_ID}
