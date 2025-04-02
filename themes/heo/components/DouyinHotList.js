@@ -17,7 +17,7 @@ const DouyinHotList = () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch('https://api.98dou.cn/api/hotlist/dy?apiKey=c45bd7e842be4bc34acf1da24cc051f0');
+                const response = await fetch('https://api.98dou.cn/api/hotlist/dy?apiKey=8ae0b66d01072f0466b95d8a47cbc6c7');
                 console.log('API Response:', response);
 
                 if (!response.ok) {
