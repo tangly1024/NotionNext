@@ -8,6 +8,7 @@ import { getServerSideSitemap } from 'next-sitemap'
 export const getServerSideProps = async ctx => {
   let fields = []
   const siteIds = BLOG.NOTION_PAGE_ID.split(',')
+
   for (let index = 0; index < siteIds.length; index++) {
     const siteId = siteIds[index]
     const id = extractLangId(siteId)
@@ -26,6 +27,8 @@ export const getServerSideProps = async ctx => {
     fields = fields.concat(localeFields)
   }
 
+  fields = getUniqueFields(fields);
+
   // 缓存
   ctx.res.setHeader(
     'Cache-Control',
@@ -38,40 +41,41 @@ function generateLocalesSitemap(link, allPages, locale) {
   if (locale && locale.length > 0 && locale.indexOf('/') !== 0) {
     locale = '/' + locale
   }
+  const dateNow = new Date().toISOString().split('T')[0]
   const defaultFields = [
     {
       loc: `${link}${locale}`,
-      lastmod: new Date().toISOString().split('T')[0],
+      lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
     },
     {
       loc: `${link}${locale}/archive`,
-      lastmod: new Date().toISOString().split('T')[0],
+      lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
     },
     {
       loc: `${link}${locale}/category`,
-      lastmod: new Date().toISOString().split('T')[0],
+      lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
     },
     {
       loc: `${link}${locale}/rss/feed.xml`,
-      lastmod: new Date().toISOString().split('T')[0],
+      lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
     },
     {
       loc: `${link}${locale}/search`,
-      lastmod: new Date().toISOString().split('T')[0],
+      lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
     },
     {
       loc: `${link}${locale}/tag`,
-      lastmod: new Date().toISOString().split('T')[0],
+      lastmod: dateNow,
       changefreq: 'daily',
       priority: '0.7'
     }
@@ -92,6 +96,20 @@ function generateLocalesSitemap(link, allPages, locale) {
       }) ?? []
 
   return defaultFields.concat(postFields)
+}
+
+function getUniqueFields(fields) {
+  const uniqueFieldsMap = new Map();
+
+  fields.forEach(field => {
+    const existingField = uniqueFieldsMap.get(field.loc);
+
+    if (!existingField || new Date(field.lastmod) > new Date(existingField.lastmod)) {
+      uniqueFieldsMap.set(field.loc, field);
+    }
+  });
+
+  return Array.from(uniqueFieldsMap.values());
 }
 
 export default () => {}

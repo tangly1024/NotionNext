@@ -17,55 +17,112 @@ import WebWhiz from './Webwhiz'
  * @returns
  */
 const ExternalPlugin = props => {
-  const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN')
-  const THEME_SWITCH = siteConfig('THEME_SWITCH')
-  const DEBUG = siteConfig('DEBUG')
-  const ANALYTICS_ACKEE_TRACKER = siteConfig('ANALYTICS_ACKEE_TRACKER')
-  const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL')
-  const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
-  const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID')
-  const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
-  const FACEBOOK_PAGE_ID = siteConfig('FACEBOOK_PAGE_ID')
-  const FIREWORKS = siteConfig('FIREWORKS')
-  const SAKURA = siteConfig('SAKURA')
-  const STARRY_SKY = siteConfig('STARRY_SKY')
-  const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER')
-  const NEST = siteConfig('NEST')
-  const FLUTTERINGRIBBON = siteConfig('FLUTTERINGRIBBON')
-  const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig('COMMENT_TWIKOO_COUNT_ENABLE')
-  const RIBBON = siteConfig('RIBBON')
-  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU = siteConfig(
-    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU'
+  // 读取自Notion的配置
+  const { NOTION_CONFIG } = props
+  const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
+  const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
+  const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
+  const ANALYTICS_ACKEE_TRACKER = siteConfig(
+    'ANALYTICS_ACKEE_TRACKER',
+    null,
+    NOTION_CONFIG
   )
-  const CAN_COPY = siteConfig('CAN_COPY')
-  const WEB_WHIZ_ENABLED = siteConfig('WEB_WHIZ_ENABLED')
-  const AD_WWADS_BLOCK_DETECT = siteConfig('AD_WWADS_BLOCK_DETECT')
-  const CHATBASE_ID = siteConfig('CHATBASE_ID')
-  const COMMENT_DAO_VOICE_ID = siteConfig('COMMENT_DAO_VOICE_ID')
-  const AD_WWADS_ID = siteConfig('AD_WWADS_ID')
-  const COMMENT_ARTALK_SERVER = siteConfig('COMMENT_ARTALK_SERVER')
-  const COMMENT_ARTALK_JS = siteConfig('COMMENT_ARTALK_JS')
-  const COMMENT_TIDIO_ID = siteConfig('COMMENT_TIDIO_ID')
-  const COMMENT_GITTER_ROOM = siteConfig('COMMENT_GITTER_ROOM')
-  const ANALYTICS_BAIDU_ID = siteConfig('ANALYTICS_BAIDU_ID')
-  const ANALYTICS_CNZZ_ID = siteConfig('ANALYTICS_CNZZ_ID')
-  const ANALYTICS_GOOGLE_ID = siteConfig('ANALYTICS_GOOGLE_ID')
-  const MATOMO_HOST_URL = siteConfig('MATOMO_HOST_URL')
-  const MATOMO_SITE_ID = siteConfig('MATOMO_SITE_ID')
-  const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID')
-  const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK')
-  const DIFY_CHATBOT_ENABLED = siteConfig('DIFY_CHATBOT_ENABLED')
-  const TIANLI_KEY = siteConfig('TianliGPT_KEY')
-  const GLOBAL_JS = siteConfig('GLOBAL_JS', '')
-  const CLARITY_ID = siteConfig('CLARITY_ID')
-  const IMG_SHADOW = siteConfig('IMG_SHADOW')
-  const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
-  const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW')
-  const CUSTOM_EXTERNAL_CSS = siteConfig('CUSTOM_EXTERNAL_CSS')
-  const CUSTOM_EXTERNAL_JS = siteConfig('CUSTOM_EXTERNAL_JS')
+  const ANALYTICS_VERCEL = siteConfig('ANALYTICS_VERCEL', null, NOTION_CONFIG)
+  const ANALYTICS_BUSUANZI_ENABLE = siteConfig(
+    'ANALYTICS_BUSUANZI_ENABLE',
+    null,
+    NOTION_CONFIG
+  )
+  const ADSENSE_GOOGLE_ID = siteConfig('ADSENSE_GOOGLE_ID', null, NOTION_CONFIG)
+  const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID', null, NOTION_CONFIG)
+  const FACEBOOK_PAGE_ID = siteConfig('FACEBOOK_PAGE_ID', null, NOTION_CONFIG)
+  const FIREWORKS = siteConfig('FIREWORKS', null, NOTION_CONFIG)
+  const SAKURA = siteConfig('SAKURA', null, NOTION_CONFIG)
+  const STARRY_SKY = siteConfig('STARRY_SKY', null, NOTION_CONFIG)
+  const MUSIC_PLAYER = siteConfig('MUSIC_PLAYER', null, NOTION_CONFIG)
+  const NEST = siteConfig('NEST', null, NOTION_CONFIG)
+  const FLUTTERINGRIBBON = siteConfig('FLUTTERINGRIBBON', null, NOTION_CONFIG)
+  const COMMENT_TWIKOO_COUNT_ENABLE = siteConfig(
+    'COMMENT_TWIKOO_COUNT_ENABLE',
+    null,
+    NOTION_CONFIG
+  )
+  const RIBBON = siteConfig('RIBBON', null, NOTION_CONFIG)
+  const CUSTOM_RIGHT_CLICK_CONTEXT_MENU = siteConfig(
+    'CUSTOM_RIGHT_CLICK_CONTEXT_MENU',
+    null,
+    NOTION_CONFIG
+  )
+  const CAN_COPY = siteConfig('CAN_COPY', null, NOTION_CONFIG)
+  const WEB_WHIZ_ENABLED = siteConfig('WEB_WHIZ_ENABLED', null, NOTION_CONFIG)
+  const AD_WWADS_BLOCK_DETECT = siteConfig(
+    'AD_WWADS_BLOCK_DETECT',
+    null,
+    NOTION_CONFIG
+  )
+  const CHATBASE_ID = siteConfig('CHATBASE_ID', null, NOTION_CONFIG)
+  const COMMENT_DAO_VOICE_ID = siteConfig(
+    'COMMENT_DAO_VOICE_ID',
+    null,
+    NOTION_CONFIG
+  )
+  const AD_WWADS_ID = siteConfig('AD_WWADS_ID', null, NOTION_CONFIG)
+  const COMMENT_ARTALK_SERVER = siteConfig(
+    'COMMENT_ARTALK_SERVER',
+    null,
+    NOTION_CONFIG
+  )
+  const COMMENT_ARTALK_JS = siteConfig('COMMENT_ARTALK_JS', null, NOTION_CONFIG)
+  const COMMENT_TIDIO_ID = siteConfig('COMMENT_TIDIO_ID', null, NOTION_CONFIG)
+  const COMMENT_GITTER_ROOM = siteConfig(
+    'COMMENT_GITTER_ROOM',
+    null,
+    NOTION_CONFIG
+  )
+  const ANALYTICS_BAIDU_ID = siteConfig(
+    'ANALYTICS_BAIDU_ID',
+    null,
+    NOTION_CONFIG
+  )
+  const ANALYTICS_CNZZ_ID = siteConfig('ANALYTICS_CNZZ_ID', null, NOTION_CONFIG)
+  const ANALYTICS_GOOGLE_ID = siteConfig(
+    'ANALYTICS_GOOGLE_ID',
+    null,
+    NOTION_CONFIG
+  )
+  const MATOMO_HOST_URL = siteConfig('MATOMO_HOST_URL', null, NOTION_CONFIG)
+  const MATOMO_SITE_ID = siteConfig('MATOMO_SITE_ID', null, NOTION_CONFIG)
+  const ANALYTICS_51LA_ID = siteConfig('ANALYTICS_51LA_ID', null, NOTION_CONFIG)
+  const ANALYTICS_51LA_CK = siteConfig('ANALYTICS_51LA_CK', null, NOTION_CONFIG)
+  const DIFY_CHATBOT_ENABLED = siteConfig(
+    'DIFY_CHATBOT_ENABLED',
+    null,
+    NOTION_CONFIG
+  )
+  const TIANLI_KEY = siteConfig('TianliGPT_KEY', null, NOTION_CONFIG)
+  const GLOBAL_JS = siteConfig('GLOBAL_JS', '', NOTION_CONFIG)
+  const CLARITY_ID = siteConfig('CLARITY_ID', null, NOTION_CONFIG)
+  const IMG_SHADOW = siteConfig('IMG_SHADOW', null, NOTION_CONFIG)
+  const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL', null, NOTION_CONFIG)
+  const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW', null, NOTION_CONFIG)
+  const CUSTOM_EXTERNAL_CSS = siteConfig(
+    'CUSTOM_EXTERNAL_CSS',
+    null,
+    NOTION_CONFIG
+  )
+  const CUSTOM_EXTERNAL_JS = siteConfig(
+    'CUSTOM_EXTERNAL_JS',
+    null,
+    NOTION_CONFIG
+  )
   // 默认关闭NProgress
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
   const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
+  const HILLTOP_ADS_META_ID = siteConfig(
+    'HILLTOP_ADS_META_ID',
+    null,
+    NOTION_CONFIG
+  )
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -108,7 +165,7 @@ const ExternalPlugin = props => {
     }
 
     setTimeout(() => {
-      // 映射url
+      // 将notion-id格式的url转成自定义slug
       convertInnerUrl(props?.allNavPages)
     }, 500)
   }, [router])
@@ -251,6 +308,13 @@ const ExternalPlugin = props => {
             }}
           />
         </>
+      )}
+
+      {/* HILLTOP广告验证 */}
+      {HILLTOP_ADS_META_ID && (
+        <Head>
+          <meta name={HILLTOP_ADS_META_ID} content={HILLTOP_ADS_META_ID} />
+        </Head>
       )}
 
       {AD_WWADS_ID && (
