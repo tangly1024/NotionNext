@@ -132,6 +132,38 @@ const Style = () => {
     --tw-gradient-to: transparent;
   }
 
+  /* 标签和分类样式 */
+  .hover\:bg-red-50:hover {
+    background-color: rgba(254, 226, 226, 0.5);
+  }
+
+  .dark .dark\:hover\:bg-gray-700:hover {
+    background-color: rgba(55, 65, 81, 0.7);
+  }
+
+  /* 阅读次数动画 */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* 数字变化动画 */
+  .number-transition {
+    transition: all 0.5s ease;
+  }
+
+  .number-transition:hover {
+    color: #ef4444;
+  }
+
   `}</style>
 }
 

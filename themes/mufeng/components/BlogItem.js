@@ -7,10 +7,11 @@ import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
 import CONFIG from '../config'
+import RealTimeViewCount from './RealTimeViewCount'
 
 export const BlogItem = props => {
   const { post } = props
-  const { NOTION_CONFIG } = useGlobal()
+  const { locale, NOTION_CONFIG } = useGlobal()
   const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
   const showPreview =
     siteConfig('POST_LIST_PREVIEW', false, NOTION_CONFIG) && post.blockMap
@@ -49,37 +50,41 @@ export const BlogItem = props => {
           </h2>
 
           {/* 文章信息 */}
-          <header className='mb-3 md:mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6'>
-            <div className='space-x-2'>
-              <span>
-                {' '}
-                <a
-                  href={siteConfig('SIMPLE_AUTHOR_LINK', null, CONFIG)}
-                  className='p-1 hover:text-red-400 transition-all duration-200'>
-                  <i className='fa-regular fa-user'></i> {siteConfig('AUTHOR')}
-                </a>
-              </span>
-              <span>
-                <Link
-                  className='p-1 hover:text-red-400 transition-all duration-200'
-                  href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}>
-                  <i className='fa-regular fa-clock' />{' '}
-                  {post.date?.start_date || post.createdTime}
-                </Link>
-              </span>
-              <span>
+          <header className='mb-3 md:mb-5 flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 leading-tight'>
+            <div className='flex items-center space-x-3'>
+              <Link
+                href={siteConfig('SIMPLE_AUTHOR_LINK', null, CONFIG)}
+                className='flex items-center hover:text-red-400 transition-all duration-200'>
+                <i className='fas fa-user-edit mr-1'></i> {siteConfig('AUTHOR')}
+              </Link>
+              
+              <span className='w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full'></span>
+              
+              <Link
+                className='flex items-center hover:text-red-400 transition-all duration-200'
+                href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}>
+                <i className='fas fa-calendar-alt mr-1' />{' '}
+                {post.date?.start_date || post.createdTime}
+              </Link>
+              
+              <span className='w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full'></span>
+              
+              <span className='flex items-center'>
                 <TwikooCommentCount post={post} />
               </span>
+              
+              <span className='w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full'></span>
+              
+              <RealTimeViewCount post={post} />
             </div>
 
-            <div>
+            <div className='flex items-center mt-2 md:mt-0 md:ml-3'>
               {post.category && (
-                <Link href={`/category/${post.category}`} className='p-1'>
-                  {' '}
-                  <span className='hover:text-red-400 transition-all duration-200'>
-                    <i className='fa-regular fa-folder mr-0.5' />
-                    {post.category}
-                  </span>
+                <Link 
+                  href={`/category/${post.category}`} 
+                  className='flex items-center text-xs bg-gray-100 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-gray-700 px-2 py-1 rounded-md hover:text-red-400 transition-all duration-200'>
+                  <i className='fas fa-folder-open mr-1'></i>
+                  {post.category}
                 </Link>
               )}
               {post?.tags &&
@@ -88,8 +93,8 @@ export const BlogItem = props => {
                   <Link
                     key={t}
                     href={`/tag/${t}`}
-                    className=' hover:text-red-400 transition-all duration-200'>
-                    <span> /{t}</span>
+                    className='ml-2 flex items-center text-xs bg-gray-100 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-gray-700 px-2 py-1 rounded-md hover:text-red-400 transition-all duration-200'>
+                    <i className='fas fa-tag mr-1'></i> {t}
                   </Link>
                 ))}
             </div>
@@ -123,3 +128,4 @@ export const BlogItem = props => {
     </div>
   )
 }
+
