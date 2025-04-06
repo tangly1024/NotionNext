@@ -91,13 +91,16 @@ const MyApp = ({ Component, pageProps }) => {
     // 处理路由变化，增加页面访问计数
     const handleRouteChange = async (url) => {
       // 只记录文章页面访问，可以根据路由模式判断
-      // 例如：/posts/[slug] 或 /article/[id] 等模式
       if (url.includes('/post/') || url.includes('/article/')) {
-        // 从URL中提取文章标识符作为统计ID
-        const path = url.split('/').pop()
-        if (path) {
+        // 从URL中提取文章标识符，只保留最后一段作为ID
+        const segments = url.split('/')
+        const path = segments[segments.length - 1]
+        
+        // 确保有有效的路径
+        if (path && path.length > 5) {
           // 异步增加访问计数
           try {
+            console.log('Incrementing page view for ID:', path)
             await incrementPageView(path)
           } catch (error) {
             console.error('Failed to track page view:', error)

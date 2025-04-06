@@ -58,36 +58,53 @@ export default async function handler(req, res) {
   res.setHeader('Pragma', 'no-cache')
   res.setHeader('Expires', '0')
   
+  // 打印完整的请求URL和查询参数，用于调试
+  console.log('Received views request with query:', req.query, 'URL:', req.url)
+  
   const { path: pagePath, increment } = req.query
   
   if (!pagePath) {
+    console.error('Missing path parameter in query')
     return res.status(400).json({ error: 'Path parameter is required' })
   }
+  
+  // 确保使用的是干净的ID，没有路径前缀
+  let cleanPath = pagePath
+  if (cleanPath.includes('/')) {
+    cleanPath = cleanPath.split('/').pop()
+    console.log('Cleaned path from:', pagePath, 'to:', cleanPath)
+  }
+  
+  console.log('Fetching view count for path:', cleanPath)
   
   try {
     // 读取当前数据
     const viewsData = readViewsData()
     
     // 如果该路径不存在，初始化为0
-    if (!viewsData[pagePath]) {
-      viewsData[pagePath] = {
+    if (!viewsData[cleanPath]) {
+      console.log('Path not found in data, initializing to 0:', cleanPath)
+      viewsData[cleanPath] = {
         count: 0,
         lastUpdated: new Date().toISOString()
       }
+    } else {
+      console.log('Found existing count for path:', cleanPath, 'Count:', viewsData[cleanPath].count)
     }
     
     // 如果请求包含increment=true参数，增加访问计数
     if (increment === 'true' && req.method === 'POST') {
-      viewsData[pagePath].count += 1
-      viewsData[pagePath].lastUpdated = new Date().toISOString()
+      viewsData[cleanPath].count += 1
+      viewsData[cleanPath].lastUpdated = new Date().toISOString()
+      console.log('Incremented count for path:', cleanPath, 'New count:', viewsData[cleanPath].count)
       writeViewsData(viewsData)
     }
     
     // 返回结果
     return res.status(200).json({ 
-      path: pagePath,
-      count: viewsData[pagePath].count,
-      lastUpdated: viewsData[pagePath].lastUpdated,
+      path: cleanPath,
+      count: viewsData[cleanPath].count,
+      lastUpdated: viewsData[cleanPath].lastUpdated,
       timestamp: new Date().toISOString()
     })
   } catch (error) {

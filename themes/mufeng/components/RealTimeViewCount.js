@@ -21,14 +21,34 @@ const RealTimeViewCount = ({ post, simple = false }) => {
       try {
         setLoading(true)
         
-        // 使用页面路径作为唯一标识
-        const postPath = post.slug || post.id
+        // 使用页面路径作为唯一标识，确保获取正确的ID
+        let postPath = post.slug || post.id
+        
+        // 如果是Notion文章，可能需要处理特殊格式的ID
+        if (!postPath && post.idInDBs) {
+          postPath = post.idInDBs
+        }
+        
+        // 如果仍未获取到有效ID，尝试从URL中提取
+        if (!postPath) {
+          const pathSegments = window.location.pathname.split('/')
+          postPath = pathSegments[pathSegments.length - 1]
+        }
+        
+        // 确保只使用ID部分，移除可能的路径前缀
+        if (postPath.includes('/')) {
+          const segments = postPath.split('/')
+          postPath = segments[segments.length - 1]
+        }
+        
+        console.log('Fetching view count for article ID:', postPath)
         
         // 获取文章访问次数
         const data = await fetchPageViews(postPath)
         
         // 如果成功获取到数据，更新计数
         if (data && typeof data.count === 'number') {
+          console.log('Received view count:', data.count)
           setViewCount(data.count)
         } else {
           console.warn('Failed to get view count for:', postPath)
