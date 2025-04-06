@@ -18,10 +18,9 @@ const RecommendPosts = ({ recommendPosts }) => {
         <ul className="font-light text-sm">
           {recommendPosts.map(post => (
             <li className="py-1" key={post.id}>
+              {/* 文章链接：链接到[postSlug].js路由 */}
               <Link href={`/${post.slug}`} className="cursor-pointer hover:underline">
-
                 {post.title}
-
               </Link>
             </li>
           ))}

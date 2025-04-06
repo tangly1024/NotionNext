@@ -75,7 +75,7 @@ export const BlogItem = props => {
               
               <span className='w-1 h-1 bg-gray-300 dark:bg-gray-600 rounded-full'></span>
               
-              <RealTimeViewCount post={post} />
+              <RealTimeViewCount post={post} simple={true} />
             </div>
 
             <div className='flex items-center mt-2 md:mt-0 md:ml-3'>

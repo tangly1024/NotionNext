@@ -1,42 +1,37 @@
 import { useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
+import { fetchPageViews } from '@/lib/utils/pageViewTracker'
 
 /**
  * 实时文章阅读次数统计组件
- * 不使用缓存，每次都实时获取最新数据
+ * 显示文章被点击访问的真实次数
+ * @param {Object} post - 文章对象
+ * @param {Boolean} simple - 简洁模式，为true时只显示数字，不显示"次查看"文本
  */
-const RealTimeViewCount = ({ post }) => {
+const RealTimeViewCount = ({ post, simple = false }) => {
   const { locale } = useGlobal()
   const [viewCount, setViewCount] = useState('--')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // 确保在客户端执行
-    if (typeof window === 'undefined') return
+    // 确保在客户端执行且有有效的post
+    if (typeof window === 'undefined' || !post) return
     
-    const fetchViewCount = async () => {
+    const getViewCount = async () => {
       try {
         setLoading(true)
         
-        // 构建请求路径，包含随机参数以避免缓存
-        const timestamp = new Date().getTime()
+        // 使用页面路径作为唯一标识
         const postPath = post.slug || post.id
-        const apiUrl = `/api/views?path=${postPath}&t=${timestamp}`
         
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache',
-            'Expires': '0'
-          }
-        })
+        // 获取文章访问次数
+        const data = await fetchPageViews(postPath)
         
-        if (response.ok) {
-          const data = await response.json()
-          setViewCount(data.count || 0)
+        // 如果成功获取到数据，更新计数
+        if (data && typeof data.count === 'number') {
+          setViewCount(data.count)
         } else {
-          console.error('Failed to fetch view count')
+          console.warn('Failed to get view count for:', postPath)
           setViewCount('--')
         }
       } catch (error) {
@@ -47,10 +42,11 @@ const RealTimeViewCount = ({ post }) => {
       }
     }
     
-    fetchViewCount()
+    // 获取初始数据
+    getViewCount()
     
-    // 可选：每30秒刷新一次数据
-    const intervalId = setInterval(fetchViewCount, 30000)
+    // 定期刷新数据 (每30秒)
+    const intervalId = setInterval(getViewCount, 30000)
     
     return () => clearInterval(intervalId)
   }, [post])
@@ -58,10 +54,11 @@ const RealTimeViewCount = ({ post }) => {
   if (!post) return null
 
   return (
-    <span className='flex items-center transition-all duration-200'>
+    <span className='flex items-center group transition-all duration-200'>
       <i className='fas fa-eye mr-1 text-gray-500 group-hover:text-red-400'></i>
       <span className={`number-transition ${loading ? 'animate-pulse' : ''}`}>
-        {viewCount} <span className='text-xs'>{locale.COMMON.VIEWS}</span>
+        <span className='font-medium'>{viewCount}</span>
+        {!simple && <span className='text-xs ml-1'>{locale.COMMON.VIEWS}</span>}
       </span>
     </span>
   )

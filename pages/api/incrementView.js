@@ -49,19 +49,24 @@ function writeViewsData(data) {
 }
 
 /**
- * API路由：获取或更新文章阅读次数
- * 每次请求都会获取最新数据，不使用缓存
+ * API路由：增加文章阅读次数
+ * 只接受POST请求
  */
 export default async function handler(req, res) {
+  // 只允许POST请求
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed. Use POST instead.' })
+  }
+  
   // 设置响应头，防止缓存
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
   res.setHeader('Pragma', 'no-cache')
   res.setHeader('Expires', '0')
-  
-  const { path: pagePath, increment } = req.query
+
+  const { path: pagePath } = req.body
   
   if (!pagePath) {
-    return res.status(400).json({ error: 'Path parameter is required' })
+    return res.status(400).json({ error: 'Path parameter is required in request body' })
   }
   
   try {
@@ -76,11 +81,15 @@ export default async function handler(req, res) {
       }
     }
     
-    // 如果请求包含increment=true参数，增加访问计数
-    if (increment === 'true' && req.method === 'POST') {
-      viewsData[pagePath].count += 1
-      viewsData[pagePath].lastUpdated = new Date().toISOString()
-      writeViewsData(viewsData)
+    // 增加访问计数
+    viewsData[pagePath].count += 1
+    viewsData[pagePath].lastUpdated = new Date().toISOString()
+    
+    // 保存数据
+    const success = writeViewsData(viewsData)
+    
+    if (!success) {
+      return res.status(500).json({ error: 'Failed to update view count' })
     }
     
     // 返回结果
@@ -91,7 +100,7 @@ export default async function handler(req, res) {
       timestamp: new Date().toISOString()
     })
   } catch (error) {
-    console.error('Error handling views request:', error)
-    return res.status(500).json({ error: 'Failed to process view count' })
+    console.error('Error incrementing view count:', error)
+    return res.status(500).json({ error: 'Failed to increment view count' })
   }
 } 
