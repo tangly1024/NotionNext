@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
 
 /**
  * 社交联系方式按钮组
@@ -17,12 +18,7 @@ const SocialButton = () => {
   const ENABLE_RSS = siteConfig('ENABLE_RSS')
 
   const emailIcon = useRef(null)
-  useEffect(() => {
-    if (CONTACT_EMAIL && emailIcon.current) {
-      emailIcon.current.href =
-        'mailto:' + decodeURIComponent(escape(atob(CONTACT_EMAIL)))
-    }
-  }, [CONTACT_EMAIL])
+
   return (
     <div className='space-x-3 text-xl text-gray-600 dark:text-gray-400 flex-wrap flex justify-center '>
       {CONTACT_GITHUB && (
@@ -81,11 +77,10 @@ const SocialButton = () => {
       )}
       {CONTACT_EMAIL && (
         <a
-          ref={emailIcon}
-          target='_blank'
-          rel='noreferrer'
-          title={'email'}
-          href={CONTACT_EMAIL}>
+          onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)}
+          title='email'
+          className='cursor-pointer'
+          ref={emailIcon}>
           <i className='fas fa-envelope transform hover:scale-125 duration-150 hover:text-green-600' />
         </a>
       )}
