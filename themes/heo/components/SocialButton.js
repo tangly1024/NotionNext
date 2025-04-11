@@ -82,7 +82,7 @@ const SocialButton = () => {
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-        {JSON.parse(ENABLE_RSS) && (
+        {ENABLE_RSS && (
           <a
             target='_blank'
             rel='noreferrer'
