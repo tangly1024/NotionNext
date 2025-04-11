@@ -1,5 +1,7 @@
 import { siteConfig } from '@/lib/config'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
+
 /**
  * 社交联系方式按钮组
  * @returns {JSX.Element}
@@ -18,12 +20,7 @@ const SocialButton = () => {
   const CONTACT_YOUTUBE = siteConfig('CONTACT_YOUTUBE')
 
   const emailIcon = useRef(null)
-  useEffect(() => {
-    if (CONTACT_EMAIL && emailIcon.current) {
-      emailIcon.current.href =
-        'mailto:' + decodeURIComponent(escape(atob(CONTACT_EMAIL)))
-    }
-  }, [CONTACT_EMAIL])
+
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-3 text-xl text-gray-600 dark:text-gray-300 '>
@@ -83,11 +80,10 @@ const SocialButton = () => {
         )}
         {CONTACT_EMAIL && (
           <a
-            ref={emailIcon}
-            target='_blank'
-            rel='noreferrer'
-            title={'email'}
-            href={CONTACT_EMAIL}>
+            onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)}
+            title='email'
+            className='cursor-pointer'
+            ref={emailIcon}>
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-red-400 hover:text-red-600' />
           </a>
         )}

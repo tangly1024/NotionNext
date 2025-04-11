@@ -32,6 +32,9 @@ const SocialButton = () => {
     setQrCodeShow(false)
   }
 
+  const emailIcon = useRef(null)
+
+
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-3 text-xl flex items-center text-gray-600 dark:text-gray-300 '>
@@ -91,10 +94,10 @@ const SocialButton = () => {
         )}
         {CONTACT_EMAIL && (
           <a
-            target='_blank'
-            rel='noreferrer'
-            title={'email'}
-            href={`mailto:${CONTACT_EMAIL}`}>
+            onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)}
+            title='email'
+            className='cursor-pointer'
+            ref={emailIcon}>
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-green-400 hover:text-green-600' />
           </a>
         )}

@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 /**
  * 社交联系方式按钮组 可折叠的组件
@@ -24,12 +24,7 @@ const SocialButton = () => {
   const CONTACT_YOUTUBE = siteConfig('CONTACT_YOUTUBE')
 
   const emailIcon = useRef(null)
-  useEffect(() => {
-    if (CONTACT_EMAIL && emailIcon.current) {
-      emailIcon.current.href =
-        'mailto:' + decodeURIComponent(escape(atob(CONTACT_EMAIL)))
-    }
-  }, [CONTACT_EMAIL])
+
 
   return (
     <div className='flex flex-col transform hover:scale-105 duration-200 text-white text-center bg-indigo-700 rounded-full dark:bg-black cursor-pointer py-2.5'>
