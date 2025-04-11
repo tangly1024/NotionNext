@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "42905929",
+      "name": "橘猫",
+      "font_class": "jumao",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "42905930",
+      "name": "更多猫宠",
+      "font_class": "gengduomaochong",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "42905931",
+      "name": "蓝猫",
+      "font_class": "lanmao",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    }
+  ]
+}

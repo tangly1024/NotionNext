@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1744356386863') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jumao:before {
+  content: "\e647";
+}
+
+.icon-gengduomaochong:before {
+  content: "\e648";
+}
+
+.icon-lanmao:before {
+  content: "\e649";
+}
+
