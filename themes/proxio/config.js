@@ -2,11 +2,7 @@
  * 另一个落地页主题
  */
 const CONFIG = {
-    // 默认只展示Logo文字，如果设置了logo图片，会在文字左侧显示图标
-    PROXIO_LOGO: '', // 普通logo图片 示例：/images/starter/logo/logo.svg
-    PROXIO_LOGO_WHITE: '', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
-
-    // MENU ， 菜单部分不在此处配置，请在Notion数据库中添加MENU
+    PROXIO_WELCOME_TEXT:'欢迎来到此网站，点击任意位置进入', // 欢迎文字，留空则不启用
 
     // 英雄区块导航
     PROXIO_HERO_ENABLE: true, // 开启英雄区
@@ -205,16 +201,16 @@ const CONFIG = {
     PROXIO_ABOUT_TEXT_1: '我们的开发者团队',
     PROXIO_ABOUT_TEXT_2:
         'NotionNext 由众多开源技术爱好者们共同合作完成，感谢每一位<a className="underline" href="https://github.com/tangly1024/NotionNext/graphs/contributors">贡献者</a>',
-    PROXIO_ABOUT_PHOTO_URL:'',
-    PROXIO_ABOUT_KEY_1:'经验年限',
-    PROXIO_ABOUT_VAL_1:'10年+',
-    PROXIO_ABOUT_KEY_2:'客户',
-    PROXIO_ABOUT_VAL_2:'1000+',
-    PROXIO_ABOUT_KEY_3:'交付项目',
-    PROXIO_ABOUT_VAL_3:'5000+',
-    PROXIO_ABOUT_KEY_4:'累积创作时长（小时）',
-    PROXIO_ABOUT_VAL_4:'10000+',
-    
+    PROXIO_ABOUT_PHOTO_URL: '',
+    PROXIO_ABOUT_KEY_1: '经验年限',
+    PROXIO_ABOUT_VAL_1: '10年+',
+    PROXIO_ABOUT_KEY_2: '客户',
+    PROXIO_ABOUT_VAL_2: '1000+',
+    PROXIO_ABOUT_KEY_3: '交付项目',
+    PROXIO_ABOUT_VAL_3: '5000+',
+    PROXIO_ABOUT_KEY_4: '累积创作时长（小时）',
+    PROXIO_ABOUT_VAL_4: '10000+',
+
 
     // 联系模块
     PROXIO_CONTACT_ENABLE: true, // 联系模块开关
@@ -274,54 +270,43 @@ const CONFIG = {
     PROXIO_FOOTER_SLOGAN: '我们通过技术为品牌和公司创造数字体验。',
 
     // 页脚三列菜单组
-    PROXIO_FOOTER_LINK_GROUP: [
+    // 页脚菜单
+    PROXIO_FOOTER_LINKS: [
         {
-            TITLE: '关于我们',
-            LINK_GROUP: [
-                { TITLE: '官方主页', URL: '/#home' },
-                { TITLE: '操作文档', URL: 'https://docs.tangly1024.com/about' },
+            name: '友情链接',
+            menus: [
                 {
-                    TITLE: '帮助支持',
-                    URL: 'https://docs.tangly1024.com/article/how-to-question'
+                    title: 'Tangly的学习笔记',
+                    href: 'https://blog.tangly1024.com'
                 },
                 {
-                    TITLE: '合作申请',
-                    URL: 'https://docs.tangly1024.com/article/my-service'
+                    title: 'NotionNext',
+                    href: 'https://www.tangly1024.com'
                 }
             ]
         },
         {
-            TITLE: '功能特性',
-            LINK_GROUP: [
+            name: '开发者',
+            menus: [
+                { title: 'Github', href: 'https://github.com/tangly1024/NotionNext' },
                 {
-                    TITLE: '部署指南',
-                    URL: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next'
+                    title: '开发帮助',
+                    href: 'https://docs.tangly1024.com/article/how-to-develop-with-notion-next'
                 },
                 {
-                    TITLE: '升级指南',
-                    URL: 'https://docs.tangly1024.com/article/how-to-update-notionnext'
-                },
-                { TITLE: '最新版本', URL: 'https://docs.tangly1024.com/article/latest' }
-            ]
-        },
-        {
-            TITLE: 'Notion写作',
-            LINK_GROUP: [
-                {
-                    TITLE: 'Notion开始写作',
-                    URL: 'https://docs.tangly1024.com/article/start-to-write'
+                    title: '功能反馈',
+                    href: 'https://github.com/tangly1024/NotionNext/issues/new/choose'
                 },
                 {
-                    TITLE: '快捷键提升效率',
-                    URL: 'https://docs.tangly1024.com/article/notion-short-key'
+                    title: '技术讨论',
+                    href: 'https://github.com/tangly1024/NotionNext/discussions'
                 },
                 {
-                    TITLE: '中国大陆使用Notion',
-                    URL: 'https://docs.tangly1024.com/article/notion-faster'
+                    title: '关于作者',
+                    href: 'https://blog.tangly1024.com/about'
                 }
             ]
-        }
-    ],
+        }],
 
     PROXIO_FOOTER_BLOG_LATEST_TITLE: '最新文章',
 

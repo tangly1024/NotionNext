@@ -12,12 +12,10 @@ import { useEffect, useState } from 'react'
  * @returns
  */
 export const Logo = props => {
-  const { white, NOTION_CONFIG } = props
+  const { siteInfo, white } = props
   const router = useRouter()
-  const logoWhite = siteConfig('PROXIO_LOGO_WHITE')
-  const logoNormal = siteConfig('PROXIO_LOGO')
+
   const { isDarkMode } = useGlobal()
-  const [logo, setLogo] = useState(logoWhite)
   const [logoTextColor, setLogoTextColor] = useState('text-white')
 
   useEffect(() => {
@@ -29,10 +27,8 @@ export const Logo = props => {
       const homePageNavBar = router.route === '/' && scrollY < 10 // 在首页并且视窗在页面顶部
 
       if (white || isDarkMode || homePageNavBar) {
-        setLogo(logoWhite)
         setLogoTextColor('text-white')
       } else {
-        setLogo(logoNormal)
         setLogoTextColor('text-black')
       }
     }, throttleMs)
@@ -47,18 +43,14 @@ export const Logo = props => {
   return (
     <div className='w-60 max-w-full px-4'>
       <div className='navbar-logo flex items-center w-full py-5 cursor-pointer'>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        {logo && (
-          <LazyImage
-            priority
-            onClick={() => {
-              router.push('/')
-            }}
-            src={logo}
-            alt='logo'
-            className='header-logo mr-1 h-8'
-          />
-        )}
+        <LazyImage
+          priority
+          src={siteInfo?.icon}
+          width={24}
+          height={20}
+          alt={siteConfig('AUTHOR')}
+          className='mr-2 hidden md:inline-block'
+        />
         {/* logo文字 */}
         <span
           onClick={() => {

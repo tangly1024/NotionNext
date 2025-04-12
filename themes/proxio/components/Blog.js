@@ -15,7 +15,7 @@ export const Blog = ({ posts }) => {
       <section className='bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
         <div className='container mx-auto'>
           {/* 区块标题文字 */}
-          <div className='-mx-4 flex flex-wrap justify-center'>
+          <div className='-mx-4 flex flex-wrap justify-center wow fadeInUp' data-wow-delay='.2s'>
             <div className='w-full px-4'>
               <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
                 <span className='mb-2 block text-lg font-semibold text-primary'>
@@ -33,21 +33,25 @@ export const Blog = ({ posts }) => {
               return (
                 <div key={index} className='w-full px-4'>
                   <div
-                    className='wow fadeInUp group mb-10'
+                    className='wow fadeInUp group mb-10 relative overflow-hidden rounded-[10px]'
                     data-wow-delay='.1s'>
-                    <div className='mb-8 overflow-hidden rounded-[5px]'>
+                    {/* 图片部分 */}
+                    <div className='relative'>
                       {item.pageCoverThumbnail && (
                         <Link href={item?.href} className='block'>
                           <LazyImage
                             src={item.pageCoverThumbnail}
                             alt={item.title}
-                            className='w-full h-80 object-cover transition group-hover:rotate-6 group-hover:scale-125'
+                            className='w-full h-80 object-cover transition-transform duration-500'
                           />
                         </Link>
                       )}
+                      {/* 遮罩层，仅覆盖图片部分 */}
+                      <div className='absolute inset-0 bg-gray-100 dark:bg-hexo-black-gray transition-opacity duration-500 group-hover:opacity-0'></div>
                     </div>
-                    <div>
-                      <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
+                    {/* 内容部分 */}
+                    <div className='relative z-10 p-4'>
+                      <span className='mb-6 inline-block rounded-[10px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
                         {item.publishDay}
                       </span>
                       <h3>

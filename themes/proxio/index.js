@@ -42,6 +42,8 @@ import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
 import Lenis from '@/components/Lenis'
 import Announcement from './components/Announcement'
+import CursorDot from '@/components/CursorDot'
+import LoadingCover from './components/LoadingCover'
 
 /**
  * 布局框架
@@ -77,9 +79,10 @@ const LayoutBase = props => {
             {/* 悬浮按钮 */}
             <BackToTopButton />
 
-            {/* 鼠标阻尼效果 */}
+            {/* 鼠标阻尼动画 */}
             <Lenis />
-
+            {/* 鼠标跟随动画 */}
+            <CursorDot />
             {/* <MadeWithButton/> */}
         </div>
     )
@@ -118,6 +121,7 @@ const LayoutIndex = props => {
                 className={
                     'announncement text-center py-16'
                 }
+                
             />}
 
             {/* 团队介绍 */}
@@ -128,13 +132,13 @@ const LayoutIndex = props => {
 
             {/* 产品特性 */}
             {siteConfig('PROXIO_FEATURE_ENABLE', true, CONFIG) && <Features />}
+            
             {/* 生涯 */}
             {siteConfig('PROXIO_CAREER_ENABLE', true, CONFIG) && <About />}
 
 
             {/* 价格 */}
             {/* {siteConfig('PROXIO_PRICING_ENABLE', true, CONFIG) && <Pricing />} */}
-
 
 
             {/* 评价展示 */}
@@ -147,6 +151,8 @@ const LayoutIndex = props => {
 
             {/* 行动呼吁 */}
             {siteConfig('PROXIO_CTA_ENABLE', true, CONFIG) && <CTA />}
+
+            <LoadingCover/>
         </>
     )
 }

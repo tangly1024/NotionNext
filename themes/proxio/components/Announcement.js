@@ -13,7 +13,7 @@ const Announcement = ({ post, className }) => {
       <div className={className}>
         <section
           id='announcement-wrapper'
-          className='rounded-xl px-2'>
+          className='rounded-xl px-2  wow fadeInUp' data-wow-delay='.2s'>
           {/* <div><i className='mr-2 fas fa-bullhorn' />{locale.COMMON.ANNOUNCEMENT}</div> */}
           {post && (
             <div id='announcement-content'>

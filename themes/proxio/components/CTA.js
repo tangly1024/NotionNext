@@ -13,26 +13,26 @@ export const CTA = () => {
   return (
     <>
       {/* <!-- ====== CTA Section Start --> */}
-      <section className='relative z-10 overflow-hidden bg-primary py-20 lg:py-[115px]'>
+      <section className='relative z-10 overflow-hidden bg-gray-1 dark:bg-dark-2 py-20 lg:py-[115px]'>
         <div className='container mx-auto'>
           <div className='relative overflow-hidden'>
             <div className='-mx-4 flex flex-wrap items-stretch'>
-              <div className='w-full px-4'>
+              <div className='w-full px-4 mb-2'>
                 <div className='mx-auto max-w-[570px] text-center'>
-                  <h2 className='mb-2.5 text-3xl font-bold text-white md:text-[38px] md:leading-[1.44]'>
+                  <h2 className='mb-2.5 text-3xl font-bold dark:text-white md:text-[38px] md:leading-[1.44]'>
                     <span>{siteConfig('PROXIO_CTA_TITLE')}</span>
                     <span className='text-3xl font-normal md:text-[40px]'>
                       {siteConfig('PROXIO_CTA_TITLE_2')}
                     </span>
                   </h2>
-                  <p className='mx-auto mb-6 max-w-[515px] text-base leading-[1.5] text-white'>
+                  <p className='mx-auto mb-6 max-w-[515px] text-base leading-[1.5] dark:text-white'>
                     {siteConfig('PROXIO_CTA_DESCRIPTION')}
                   </p>
                   {siteConfig('PROXIO_CTA_BUTTON') && (
                     <>
                       <Link
                         href={siteConfig('PROXIO_CTA_BUTTON_URL', '')}
-                        className='inline-block rounded-md border border-transparent bg-secondary px-7 py-3 text-base font-medium text-white transition hover:bg-[#0BB489]'>
+                        className='inline-flex items-center justify-center rounded-2xl bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2'>
                         {siteConfig('PROXIO_CTA_BUTTON_TEXT')}
                       </Link>
                     </>
