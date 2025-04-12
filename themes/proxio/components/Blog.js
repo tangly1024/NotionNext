@@ -33,16 +33,16 @@ export const Blog = ({ posts }) => {
               return (
                 <div key={index} className='w-full px-4'>
                   <div
-                    className='wow fadeInUp group mb-10 relative overflow-hidden rounded-[10px]'
+                    className='wow fadeInUp group mb-10 relative overflow-hidden'
                     data-wow-delay='.1s'>
                     {/* 图片部分 */}
-                    <div className='relative'>
+                    <div className='relative rounded-xl border overflow-hidden shadow-md dark:border-gray-700 dark:bg-gray-800'>
                       {item.pageCoverThumbnail && (
                         <Link href={item?.href} className='block'>
                           <LazyImage
                             src={item.pageCoverThumbnail}
                             alt={item.title}
-                            className='w-full h-80 object-cover transition-transform duration-500'
+                            className='w-full h-80 object-cover transition-transform duration-500 rounded-xl'
                           />
                         </Link>
                       )}
@@ -51,7 +51,7 @@ export const Blog = ({ posts }) => {
                     </div>
                     {/* 内容部分 */}
                     <div className='relative z-10 p-4'>
-                      <span className='mb-6 inline-block rounded-[10px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
+                      <span className='mb-6 inline-block bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
                         {item.publishDay}
                       </span>
                       <h3>
