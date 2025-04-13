@@ -8,6 +8,14 @@
 const Style = () => {
     return <style jsx global>{`
 
+    // 底色
+    body{
+        background-color: white;
+    }
+    .dark body{
+        background-color: black;
+    }
+
     #theme-proxio .bg-primary {
         --tw-bg-opacity: 1;
         background-color: #121212;
