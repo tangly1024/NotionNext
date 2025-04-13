@@ -160,28 +160,8 @@ const CONFIG = {
     PROXIO_ABOUT_KEY_3: '交付项目',
     PROXIO_ABOUT_VAL_3: '5000+',
     PROXIO_ABOUT_KEY_4: '累积创作时长（小时）',
-    PROXIO_ABOUT_VAL_4: '10000+',
+    PROXIO_ABOUT_VAL_4: '10000+', 
 
-
-    // 联系模块
-    PROXIO_CONTACT_ENABLE: true, // 联系模块开关
-    PROXIO_CONTACT_TITLE: '联系我们',
-    PROXIO_CONTACT_TEXT: '告诉我们您遇到的问题',
-    PROXIO_CONTACT_LOCATION_TITLE: '我们的位置',
-    PROXIO_CONTACT_LOCATION_TEXT: '中国，福建',
-    PROXIO_CONTACT_EMAIL_TITLE: '我们如何帮助您？',
-    PROXIO_CONTACT_EMAIL_TEXT: 'mail@tangly1024.com',
-
-    // 嵌入外部表单
-    PROXIO_CONTACT_MSG_EXTERNAL_URL: 'https://noteforms.com/forms/yfctc7', // 基于NoteForm创建，将留言数据存在Notion中
-    //   自定义留言表单，以下几个配置暂时废弃
-    //   PROXIO_CONTACT_MSG_TITLE: '向我们留言',
-    //   PROXIO_CONTACT_MSG_NAME: '姓名',
-    //   PROXIO_CONTACT_MSG_EMAIL: '邮箱地址',
-    //   PROXIO_CONTACT_MSG_PHONE: '联系电话',
-    //   PROXIO_CONTACT_MSG_TEXT: '消息内容',
-    //   PROXIO_CONTACT_MSG_SEND: '发送消息',
-    //   PROXIO_CONTACT_MSG_THANKS: '感谢您的留言',
 
     // 横向滚动文字
     PROXIO_BRANDS_ENABLE: true, // 滚动文字
@@ -252,7 +232,7 @@ const CONFIG = {
     // 页面底部的行动呼吁模块
     PROXIO_CTA_ENABLE: true,
     PROXIO_CTA_TITLE: '与我建立联系',
-    PROXIO_CTA_TITLE_2: '让我们开始链接并尽快启动您的项目',
+    PROXIO_CTA_TITLE_2: '让我们立刻启动您的项目',
     PROXIO_CTA_DESCRIPTION:
         '访问NotionNext的操作文档，我们提供了详细的教程，帮助你即刻搭建站点',
     PROXIO_CTA_BUTTON: true, // 是否显示按钮

@@ -13,7 +13,7 @@ export const Team = () => {
             <section
                 id='team'
                 className='overflow-hidden pb-12 pt-20 lg:pb-[90px] lg:pt-[120px]'>
-                <div className='container mx-auto'>
+                <div className='container mx-auto wow fadeInUp' data-wow-delay='.2s'>
                     <div className='flex flex-col md:flex-row -mx-4 justify-between'>
                         {/* 左边肖像图 */}
                         <div className='mx-6 mb-6 max-w-96 border-gray-200 dark:border-[#333333] dark:bg-dark-1 border rounded-2xl overflow-hidden'>

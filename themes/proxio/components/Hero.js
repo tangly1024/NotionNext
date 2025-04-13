@@ -34,7 +34,7 @@ export const Hero = props => {
 
             </div>
             {/* 文字标题等 */}
-            <div className='w-full py-20 dark:text-white'>
+            <div className='w-full pb-15 dark:text-white'>
                 <div className='container -mx-4 flex flex-wrap items-center'>
                     <div className='w-full px-4'>
                         <div

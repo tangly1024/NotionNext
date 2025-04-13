@@ -12,7 +12,6 @@ import { Career } from './components/Career'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
 import { Brand } from './components/Brand'
-import { Contact } from './components/Contact'
 import { FAQ } from './components/FAQ'
 import { Features } from './components/Features'
 import { Footer } from './components/Footer'
@@ -135,10 +134,6 @@ const LayoutIndex = props => {
 
             {/* 产品特性 */}
             {siteConfig('PROXIO_FEATURE_ENABLE', true, CONFIG) && <Features />}
-
-            {/* 价格 */}
-            {/* {siteConfig('PROXIO_PRICING_ENABLE', true, CONFIG) && <Pricing />} */}
-
 
             {/* 评价展示 */}
             {siteConfig('PROXIO_TESTIMONIALS_ENABLE', true, CONFIG) && (

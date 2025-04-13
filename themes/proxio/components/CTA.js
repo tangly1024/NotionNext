@@ -7,8 +7,9 @@ import Link from 'next/link'
  * 用户的公告栏内容将在此显示
  **/
 export const CTA = () => {
-  if (!siteConfig('PROXIO_CTA_ENABLE')) {
-    return <></>
+  const enable = siteConfig('PROXIO_CTA_ENABLE')
+  if (!enable) {
+    return null
   }
   return (
     <>
@@ -18,8 +19,7 @@ export const CTA = () => {
           <div className='relative overflow-hidden'>
             <div className='-mx-4 flex flex-wrap items-stretch'>
               <div className='w-full px-4 mb-2'>
-                <div className='mx-auto max-w-[570px] text-center'>
-
+                <div className='mx-auto max-w-[570px] text-center wow fadeInUp' data-wow-delay='.2s'>
                   <div>
                     <span className='px-3 py-0.5 rounded-2xl dark:bg-dark-1 border border-gray-200 dark:border-[#333333] dark:text-white'>
                       {siteConfig('PROXIO_CTA_TITLE')}

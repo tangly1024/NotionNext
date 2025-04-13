@@ -21,8 +21,6 @@ export const Header = props => {
         router.route === '/' ? 'text-white' : ''
     )
 
-    const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-
     useEffect(() => {
         if (isDarkMode || router.route === '/') {
             setColor('text-white')
@@ -30,27 +28,27 @@ export const Header = props => {
             setColor('')
         }
         // ======= Sticky
-        window.addEventListener('scroll', navBarScollListener)
-        return () => {
-            window.removeEventListener('scroll', navBarScollListener)
-        }
+        // window.addEventListener('scroll', navBarScollListener)
+        // return () => {
+        //     window.removeEventListener('scroll', navBarScollListener)
+        // }
     }, [isDarkMode])
 
     // 滚动监听
     const throttleMs = 200
-    const navBarScollListener = useCallback(
-        throttle(() => {
-            // eslint-disable-next-line camelcase
-            const ud_header = document.querySelector('.ud-header')
-            const scrollY = window.scrollY
-            // 控制台输出当前滚动位置和 sticky 值
-            if (scrollY > 0) {
-                ud_header?.classList?.add('sticky')
-            } else {
-                ud_header?.classList?.remove('sticky')
-            }
-        }, throttleMs)
-    )
+    // const navBarScollListener = useCallback(
+    //     throttle(() => {
+    //         // eslint-disable-next-line camelcase
+    //         const ud_header = document.querySelector('.ud-header')
+    //         const scrollY = window.scrollY
+    //         // 控制台输出当前滚动位置和 sticky 值
+    //         if (scrollY > 0) {
+    //             ud_header?.classList?.add('sticky')
+    //         } else {
+    //             ud_header?.classList?.remove('sticky')
+    //         }
+    //     }, throttleMs)
+    // )
 
     return (
         <>

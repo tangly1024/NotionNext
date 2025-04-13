@@ -19,7 +19,7 @@ export const FAQ = () => {
     <>
       {/* <!-- ====== FAQ Section Start --> */}
       <section className="relative overflow-hidden bg-white pb-8 pt-20 dark:bg-dark lg:pb-[50px] lg:pt-[120px]">
-        <div className="max-w-2xl mx-auto">
+        <div className='max-w-2xl mx-auto wow fadeInUp' data-wow-delay='.2s'>
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto mb-[60px] max-w-[520px] text-center flex flex-col space-y-4">
@@ -39,7 +39,7 @@ export const FAQ = () => {
           </div>
 
           {/* FAQ 列表 */}
-          <div className="-mx-4 flex flex-wrap space-y-4">
+          <div className='-mx-4 flex flex-wrap space-y-4 wow fadeInUp' data-wow-delay='.2s'>
             {FAQS?.map((faq, index) => (
               <div
                 key={index}

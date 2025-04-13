@@ -15,7 +15,7 @@ export const Features = () => {
       <section className='pb-8 pt-20 dark:bg-dark lg:pb-[40px] lg:pt-[120px]'>
         <div className='container'>
 
-          <div className='-mx-4 flex flex-wrap'>
+          <div className='-mx-4 flex flex-wrap wow fadeInUp' data-wow-delay='.2s'>
             <div className='w-full px-4'>
               <div className='mx-auto mb-12 lg:mb-[40px]'>
                 <span className='px-3 py-0.5 rounded-2xl dark:bg-dark-1 border border-gray-200 dark:border-[#333333] dark:text-white'>

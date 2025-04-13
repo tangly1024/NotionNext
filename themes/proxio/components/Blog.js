@@ -34,7 +34,7 @@ export const Blog = ({ posts }) => {
               return (
                 <div key={index} className='w-full px-4'>
                   <div
-                    className='wow fadeInUp group mb-10 relative overflow-hidden'
+                    className='wow fadeInUp group mb-10 relative overflow-hidden blog'
                     data-wow-delay='.1s'>
                     <div className='relative rounded-xl border overflow-hidden shadow-md dark:border-gray-700 dark:bg-gray-800'>
                       {item.pageCoverThumbnail && (
