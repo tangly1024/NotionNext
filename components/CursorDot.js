@@ -1,6 +1,9 @@
+import { RouteMatcher } from 'next/dist/server/future/route-matchers/route-matcher';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 const CursorDot = () => {
+    const router = useRouter();
     useEffect(() => {
         // 创建小白点元素
         const dot = document.createElement('div');
@@ -61,7 +64,7 @@ const CursorDot = () => {
             });
             document.body.removeChild(dot);
         };
-    }, []);
+    }, [router]);
 
     return (
         <style jsx global>{`
