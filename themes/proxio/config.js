@@ -101,7 +101,7 @@ const CONFIG = {
             PROXIO_TESTIMONIALS_ITEM_TEXT:
                 '呜呜呜，经过一个下午的努力，终于把博客部署好啦，非常感谢Tangly1024大佬的框架和教程，这是我有生之年用过的最好用的博客框架┭┮﹏┭┮。从今之后，我就可以在自己的博客里bb啦，( •̀ ω •́ )y ',
             PROXIO_TESTIMONIALS_ITEM_AVATAR:
-                'https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F6c096b44-beb9-48ee-8f92-1efdde47f3a3%2F338962f1-d352-49c7-9a1b-746e35a7005c%2Fhf.png?table=block&id=ce5a48a9-d77a-4843-a3d9-a78cd4f794ce&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+                '/avatar.png',
             PROXIO_TESTIMONIALS_ITEM_NICKNAME: 'DWIND',
             PROXIO_TESTIMONIALS_ITEM_DESCRIPTION: '且听风吟 站长',
             PROXIO_TESTIMONIALS_ITEM_URL: 'https://www.dwind.top/'
@@ -119,7 +119,7 @@ const CONFIG = {
             PROXIO_TESTIMONIALS_ITEM_TEXT:
                 '灰常感谢大佬的博客项目，能将博客和notion结合起来，这一直是我挺期待的博客模式。',
             PROXIO_TESTIMONIALS_ITEM_AVATAR:
-                'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fafb21381-f51b-4fd0-9998-800dbeb64dbe%2Favatar.png?table=block&id=195935d2-0d8d-49fc-bd81-1db42ee50840&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+                '/avatar.png',
             PROXIO_TESTIMONIALS_ITEM_NICKNAME: 'AnJhon',
             PROXIO_TESTIMONIALS_ITEM_DESCRIPTION: 'Anjhon`s Blog 站长',
             PROXIO_TESTIMONIALS_ITEM_URL: 'https://www.anjhon.top'
@@ -127,7 +127,7 @@ const CONFIG = {
         {
             PROXIO_TESTIMONIALS_ITEM_TEXT: '用好久了，太感谢了',
             PROXIO_TESTIMONIALS_ITEM_AVATAR:
-                'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe4f391d7-7d65-4c05-a82c-c6e2c40f06e4%2Fa2a7641a26b367608c6ef28ce9b7e983_(2).png?table=block&id=a386eb0e-4c07-4b18-9ece-bba4e79ce21c&spaceId=6c096b44-beb9-48ee-8f92-1efdde47f3a3&width=100&userId=27074aef-7216-41ed-baef-d9b53addd870&cache=v2',
+                '/avatar.png',
             PROXIO_TESTIMONIALS_ITEM_NICKNAME: 'LUCEN',
             PROXIO_TESTIMONIALS_ITEM_DESCRIPTION: 'LUCEN考验辅导 站长',
             PROXIO_TESTIMONIALS_ITEM_URL: 'https://www.lucenczz.top/'
