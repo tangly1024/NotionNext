@@ -9,6 +9,17 @@ import Link from 'next/link'
  * @returns
  */
 export const Blog = ({ posts }) => {
+  const enable = siteConfig('PROXIO_BLOG_ENABLE')
+  if (!enable) {
+    return null
+  }
+
+  // 博客列表默认显示summary文字，当鼠标指向时显示文章封面。这里可选把summary文字替换成图片占位符。
+  const PROXIO_BLOG_PLACEHOLDER_IMG_URL_1 = siteConfig('PROXIO_BLOG_PLACEHOLDER_IMG_URL_1')
+  const PROXIO_BLOG_PLACEHOLDER_IMG_URL_2 = siteConfig('PROXIO_BLOG_PLACEHOLDER_IMG_URL_2')
+  const PROXIO_BLOG_PLACEHOLDER_IMG_URL_3 = siteConfig('PROXIO_BLOG_PLACEHOLDER_IMG_URL_3')
+  const PROXIO_BLOG_PLACEHOLDER_IMG_URL_4 = siteConfig('PROXIO_BLOG_PLACEHOLDER_IMG_URL_4')
+
   return (
     <>
       {/* <!-- ====== Blog Section Start --> */}
@@ -31,6 +42,17 @@ export const Blog = ({ posts }) => {
           {/* 博客列表 此处优先展示3片文章 */}
           <div className='-mx-4 grid md:grid-cols-2 grid-cols-1'>
             {posts?.map((item, index) => {
+              // 文章封面图片，默认使用占位符 根据index 判断获取的时哪一张图片
+              let coverImg = PROXIO_BLOG_PLACEHOLDER_IMG_URL_1
+              if (index === 0) {
+                coverImg = PROXIO_BLOG_PLACEHOLDER_IMG_URL_1
+              } else if (index === 1) {
+                coverImg = PROXIO_BLOG_PLACEHOLDER_IMG_URL_2
+              } else if (index === 2) {
+                coverImg = PROXIO_BLOG_PLACEHOLDER_IMG_URL_3
+              } else if (index === 3) {
+                coverImg = PROXIO_BLOG_PLACEHOLDER_IMG_URL_4
+              }
               return (
                 <div key={index} className='w-full px-4'>
                   <div
@@ -51,9 +73,11 @@ export const Blog = ({ posts }) => {
                       <div className='absolute inset-0 bg-gray-100 dark:bg-hexo-black-gray transition-all duration-500 group-hover:opacity-50 group-hover:bg-black' />
                       {/* 鼠标悬停时显示的文字内容 */}
                       <div className='absolute inset-0 flex items-center justify-center group-hover:scale-110 duration-200 group-hover:text-white'>
-                        <p className='max-w-[370px] text-base text-body-color dark:text-dark-6 flex items-center justify-center duration-200 group-hover:text-white '>
+                        {!coverImg && <p className='max-w-[370px] text-base text-body-color dark:text-dark-6 flex items-center justify-center duration-200 group-hover:text-white '>
                           {item.summary}
-                        </p></div>
+                        </p>}
+                        <LazyImage src={coverImg} className='absolute' />
+                      </div>
                     </div>
                     {/* 内容部分 */}
                     <div className='relative z-10 p-4'>

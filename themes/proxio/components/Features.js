@@ -4,6 +4,7 @@ import { SVGEssential } from './svg/SVGEssential'
 import { SVGGifts } from './svg/SVGGifts'
 import { SVGTemplate } from './svg/SVGTemplate'
 import Link from 'next/link'
+import LazyImage from '@/components/LazyImage'
 /**
  * 产品特性相关，将显示在首页中
  * @returns
@@ -36,8 +37,9 @@ export const Features = () => {
             <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
               <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
                 <div className='flex w-12 h-12'>
-                  <div className='w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
-                    <i class={siteConfig('PROXIO_FEATURE_1_ICON_CLASS')}></i>
+                  <div className='overflow-hidden w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
+                    <i className={siteConfig('PROXIO_FEATURE_1_ICON_CLASS') + ' absolute'}></i>
+                    <LazyImage src={siteConfig('PROXIO_FEATURE_1_ICON_IMG_URL')} className='z-10' />
                   </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
@@ -52,8 +54,9 @@ export const Features = () => {
             <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
               <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
                 <div className='flex w-12 h-12'>
-                  <div className='w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
+                  <div className='overflow-hidden w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
                     <i class={siteConfig('PROXIO_FEATURE_2_ICON_CLASS')}></i>
+                    <LazyImage src={siteConfig('PROXIO_FEATURE_2_ICON_IMG_URL')} className='z-10' />
                   </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
@@ -68,8 +71,9 @@ export const Features = () => {
             <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
               <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
                 <div className='flex w-12 h-12'>
-                  <div className='w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
+                  <div className='overflow-hidden w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
                     <i class={siteConfig('PROXIO_FEATURE_3_ICON_CLASS')}></i>
+                    <LazyImage src={siteConfig('PROXIO_FEATURE_3_ICON_IMG_URL')} className='z-10' />
                   </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
