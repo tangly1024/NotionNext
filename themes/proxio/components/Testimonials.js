@@ -1,147 +1,146 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
-
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
-import { useEffect } from 'react'
-import { SVGLeftArrow } from './svg/SVGLeftArrow'
-import { SVGRightArrow } from './svg/SVGRightArrow'
+import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 
 /**
- * 一些外部js
+ * 用户反馈
+ * @returns
  */
-const loadExternal = async () => {
-  await loadExternalResource(
-    'https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css',
-    'css'
-  )
-  await loadExternalResource(
-    'https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js',
-    'js'
-  )
-
-  const Swiper = window.Swiper
-  if (!Swiper) {
-    return
-  }
-  // Testimonial
-  // eslint-disable-next-line no-unused-vars
-  const testimonialSwiper = new Swiper('.testimonial-carousel', {
-    slidesPerView: 1,
-    spaceBetween: 30,
-
-    // Navigation arrows
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
-
-    breakpoints: {
-      640: {
-        slidesPerView: 2,
-        spaceBetween: 30
-      },
-      1024: {
-        slidesPerView: 3,
-        spaceBetween: 30
-      },
-      1280: {
-        slidesPerView: 3,
-        spaceBetween: 30
-      }
-    }
-  })
-}
-
 export const Testimonials = () => {
+  const PROXIO_TESTIMONIALS_ITEMS = siteConfig('PROXIO_TESTIMONIALS_ITEMS', [])
+
+  const scrollContainerRef = useRef(null)
+
   useEffect(() => {
-    loadExternal()
+    const scrollContainer = scrollContainerRef.current
+    let scrollAmount = 0
+    const scrollSpeed = 1 // 滚动速度
+
+    const scroll = () => {
+      if (scrollContainer) {
+        scrollAmount += scrollSpeed
+        scrollContainer.scrollTop = scrollAmount
+
+        // 如果滚动到内容的一半，立即重置滚动位置
+        if (scrollAmount >= scrollContainer.scrollHeight / 2) {
+          scrollAmount = 0
+        }
+      }
+      requestAnimationFrame(scroll)
+    }
+
+    scroll()
+
+    return () => cancelAnimationFrame(scroll)
   }, [])
-  // 用户评分
-  const ratings = [1, 2, 3, 4, 5]
-  const PROXIO_TESTIMONIALS_ITEMS = siteConfig('PROXIO_TESTIMONIALS_ITEMS')
+
   return (
     <>
       {/* <!-- ====== Testimonial Section Start --> */}
       <section
-        id='testimonials'
-        className='overflow-hidden bg-gray-1 py-20 dark:bg-dark-2 md:py-[120px]'>
-        <div className='container mx-auto'>
-          <div className='-mx-4 flex flex-wrap justify-center'>
-            <div className='w-full px-4'>
-              <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
-                <span className='mb-2 block text-lg font-semibold text-primary'>
-                  {siteConfig('PROXIO_TESTIMONIALS_TITLE')}
-                </span>
-                <h2 className='mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]'>
-                  {siteConfig('PROXIO_TESTIMONIALS_TEXT_1')}
-                </h2>
-                <p className='text-base text-body-color dark:text-dark-6'>
-                  {siteConfig('PROXIO_TESTIMONIALS_TEXT_2')}
-                </p>
-              </div>
+        id="testimonials"
+        className="overflow-hidden bg-gray-1 py-20 dark:bg-black md:py-[60px]"
+      >
+        <div className="container mx-auto flex flex-col md:flex-row items-start gap-10">
+          {/* 左侧标题和描述 */}
+          <div className="flex flex-col space-y-8 w-full md:w-1/2 text-center md:text-left">
+
+            <div>
+              <span className='px-3 py-0.5 rounded-2xl dark:bg-dark-1 border border-gray-200 dark:border-[#333333] dark:text-white'>
+                {siteConfig('PROXIO_TESTIMONIALS_TITLE')}
+              </span>
+            </div>
+            <h2 className="text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]">
+              {siteConfig('PROXIO_TESTIMONIALS_TEXT_1')}
+            </h2>
+            <p className="text-base text-body-color dark:text-dark-6">
+              {siteConfig('PROXIO_TESTIMONIALS_TEXT_2')}
+            </p>
+
+            <div className='mt-8 w-full flex justify-start items-center'>
+              <Link
+                href={siteConfig('PROXIO_TESTIMONIALS_BUTTON_URL', '')}
+                className='px-4 py-2 rounded-3xl border dark:border-gray-200 border-[#333333] text-base font-medium text-dark hover:bg-gray-100 dark:text-white dark:hover:bg-white dark:hover:text-black duration-200'>
+                {siteConfig('PROXIO_TESTIMONIALS_BUTTON_TEXT')}
+                <i className="pl-4 fa-solid fa-arrow-right"></i>
+              </Link>
             </div>
           </div>
 
-          <div className='-m-5'>
-            <div className='swiper testimonial-carousel common-carousel p-5'>
-              <div className='swiper-wrapper'>
-                {/* 用户评价卡牌 */}
-                {PROXIO_TESTIMONIALS_ITEMS?.map((item, index) => {
-                  return (
-                    <div key={index} className='swiper-slide'>
-                      <div className='rounded-xl bg-white px-4 py-[30px] shadow-testimonial dark:bg-dark sm:px-[30px]'>
-                        <div className='mb-[18px] flex items-center gap-[2px]'>
-                          {ratings.map((rating, index) => (
-                            <img
-                              key={index}
-                              alt='star icon' // 为每个图片设置唯一的 key 属性
-                              src={siteConfig('PROXIO_TESTIMONIALS_STAR_ICON')}
-                            />
-                          ))}
-                        </div>
 
-                        <p className='mb-6 text-base text-body-color dark:text-dark-6'>
-                          “{item.PROXIO_TESTIMONIALS_ITEM_TEXT}”
-                        </p>
-
-                        <a
-                          href={item.PROXIO_TESTIMONIALS_ITEM_URL}
-                          className='flex items-center gap-4'>
-                          <div className='h-[50px] w-[50px] overflow-hidden rounded-full'>
-                            <img
-                              src={item.PROXIO_TESTIMONIALS_ITEM_AVATAR}
-                              alt='author'
-                              className='h-[50px] w-[50px] overflow-hidden rounded-full object-cover'
-                            />
-                          </div>
-
-                          <div>
-                            <h3 className='text-sm font-semibold text-dark dark:text-white'>
-                              {item.PROXIO_TESTIMONIALS_ITEM_NICKNAME}
-                            </h3>
-                            <p className='text-xs text-body-secondary'>
-                              {item.PROXIO_TESTIMONIALS_ITEM_DESCRIPTION}
-                            </p>
-                          </div>
-                        </a>
-                      </div>
+          {/* 右侧用户评价卡牌 */}
+          <div
+            className="w-full md:w-1/2 h-[600px] overflow-hidden relative"
+            ref={scrollContainerRef}
+          >
+            <div className="absolute top-0 left-0 w-full">
+              {PROXIO_TESTIMONIALS_ITEMS?.map((item, index) => (
+                <div
+                  key={index}
+                  className="mb-6 rounded-xl bg-white px-4 py-[30px] shadow-testimonial border dark:bg-[#0E0E0E] sm:px-[30px] dark:border-[#333333] "
+                >
+                  <p className="mb-6 text-base text-body-color dark:text-dark-6">
+                    “{item.PROXIO_TESTIMONIALS_ITEM_TEXT}”
+                  </p>
+                  <a
+                    href={item.PROXIO_TESTIMONIALS_ITEM_URL}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="h-[50px] w-[50px] overflow-hidden rounded-full">
+                      <img
+                        src={item.PROXIO_TESTIMONIALS_ITEM_AVATAR}
+                        alt="author"
+                        className="h-[50px] w-[50px] overflow-hidden rounded-full object-cover"
+                      />
                     </div>
-                  )
-                })}
-              </div>
-
-              {/* 切换按钮  */}
-              <div className='mt-[60px] flex items-center justify-center gap-1'>
-                <div className='swiper-button-prev'>
-                  <SVGLeftArrow />
+                    <div>
+                      <h3 className="text-sm font-semibold text-dark dark:text-white">
+                        {item.PROXIO_TESTIMONIALS_ITEM_NICKNAME}
+                      </h3>
+                      <p className="text-xs text-body-secondary">
+                        {item.PROXIO_TESTIMONIALS_ITEM_DESCRIPTION}
+                      </p>
+                    </div>
+                  </a>
                 </div>
-                <div className='swiper-button-next'>
-                  <SVGRightArrow />
+              ))}
+              {/* 克隆一份内容，用于无缝滚动 */}
+              {PROXIO_TESTIMONIALS_ITEMS?.map((item, index) => (
+                <div
+                  key={`clone-${index}`}
+                  className="mb-6 rounded-xl bg-white px-4 py-[30px] shadow-testimonial border dark:bg-[#0E0E0E] sm:px-[30px] dark:border-[#333333] "
+                >
+                  <p className="mb-6 text-base text-body-color dark:text-dark-6">
+                    “{item.PROXIO_TESTIMONIALS_ITEM_TEXT}”
+                  </p>
+                  <a
+                    href={item.PROXIO_TESTIMONIALS_ITEM_URL}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="h-[50px] w-[50px] overflow-hidden rounded-full">
+                      <img
+                        src={item.PROXIO_TESTIMONIALS_ITEM_AVATAR}
+                        alt="author"
+                        className="h-[50px] w-[50px] overflow-hidden rounded-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-dark dark:text-white">
+                        {item.PROXIO_TESTIMONIALS_ITEM_NICKNAME}
+                      </h3>
+                      <p className="text-xs text-body-secondary">
+                        {item.PROXIO_TESTIMONIALS_ITEM_DESCRIPTION}
+                      </p>
+                    </div>
+                  </a>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
+
+
         </div>
       </section>
       {/* <!-- ====== Testimonial Section End --> */}

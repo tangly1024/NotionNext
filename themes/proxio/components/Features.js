@@ -12,15 +12,16 @@ export const Features = () => {
   return (
     <>
       {/* <!-- ====== Features Section Start --> */}
-      <section className='pb-8 pt-20 dark:bg-dark lg:pb-[70px] lg:pt-[120px]'>
+      <section className='pb-8 pt-20 dark:bg-dark lg:pb-[40px] lg:pt-[120px]'>
         <div className='container'>
+
           <div className='-mx-4 flex flex-wrap'>
             <div className='w-full px-4'>
-              <div className='mx-auto mb-12 max-w-[485px] text-center lg:mb-[70px]'>
-                <span className='mb-2 block text-lg font-semibold text-primary'>
+              <div className='mx-auto mb-12 lg:mb-[40px]'>
+                <span className='px-3 py-0.5 rounded-2xl dark:bg-dark-1 border border-gray-200 dark:border-[#333333] dark:text-white'>
                   {siteConfig('PROXIO_FEATURE_TITLE')}
                 </span>
-                <h2 className='mb-3 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
+                <h2 className='my-5 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
                   {siteConfig('PROXIO_FEATURE_TEXT_1')}
                 </h2>
                 <p className='text-base text-body-color dark:text-dark-6'>
@@ -29,12 +30,15 @@ export const Features = () => {
               </div>
             </div>
           </div>
-          <div className='-mx-4 flex flex-wrap'>
-            <div className='w-full px-4 md:w-1/2 lg:w-1/4'>
-              <div className='wow fadeInUp group mb-12' data-wow-delay='.1s'>
-                <div className='relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary'>
-                  <span className='absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45'></span>
-                  <SVGGifts />
+          {/* 支持三个特性 */}
+          <div className='-mx-4 flex flex-col md:flex-row gap-4 px-4'>
+
+            <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
+              <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
+                <div className='flex w-12 h-12'>
+                  <div className='w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
+                    <i class={siteConfig('PROXIO_FEATURE_1_ICON_CLASS')}></i>
+                  </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
                   {siteConfig('PROXIO_FEATURE_1_TITLE_1')}
@@ -42,18 +46,15 @@ export const Features = () => {
                 <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
                   {siteConfig('PROXIO_FEATURE_1_TEXT_1')}
                 </p>
-                <Link
-                  href={siteConfig('PROXIO_FEATURE_1_BUTTON_URL', '')}
-                  className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
-                  {siteConfig('PROXIO_FEATURE_1_BUTTON_TEXT')}
-                </Link>
               </div>
             </div>
-            <div className='w-full px-4 md:w-1/2 lg:w-1/4'>
-              <div className='wow fadeInUp group mb-12' data-wow-delay='.15s'>
-                <div className='relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary'>
-                  <span className='absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45'></span>
-                  <SVGTemplate />
+
+            <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
+              <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
+                <div className='flex w-12 h-12'>
+                  <div className='w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
+                    <i class={siteConfig('PROXIO_FEATURE_2_ICON_CLASS')}></i>
+                  </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
                   {siteConfig('PROXIO_FEATURE_2_TITLE_1')}
@@ -61,18 +62,15 @@ export const Features = () => {
                 <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
                   {siteConfig('PROXIO_FEATURE_2_TEXT_1')}
                 </p>
-                <Link
-                  href={siteConfig('PROXIO_FEATURE_2_BUTTON_URL', '')}
-                  className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
-                  {siteConfig('PROXIO_FEATURE_2_BUTTON_TEXT')}
-                </Link>
               </div>
             </div>
-            <div className='w-full px-4 md:w-1/2 lg:w-1/4'>
-              <div className='wow fadeInUp group mb-12' data-wow-delay='.2s'>
-                <div className='relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary'>
-                  <span className='absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45'></span>
-                  <SVGDesign />
+
+            <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
+              <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
+                <div className='flex w-12 h-12'>
+                  <div className='w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
+                    <i class={siteConfig('PROXIO_FEATURE_3_ICON_CLASS')}></i>
+                  </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
                   {siteConfig('PROXIO_FEATURE_3_TITLE_1')}
@@ -80,32 +78,18 @@ export const Features = () => {
                 <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
                   {siteConfig('PROXIO_FEATURE_3_TEXT_1')}
                 </p>
-                <Link
-                  href={siteConfig('PROXIO_FEATURE_3_BUTTON_URL', '')}
-                  className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
-                  {siteConfig('PROXIO_FEATURE_3_BUTTON_TEXT')}
-                </Link>
               </div>
             </div>
-            <div className='w-full px-4 md:w-1/2 lg:w-1/4'>
-              <div className='wow fadeInUp group mb-12' data-wow-delay='.25s'>
-                <div className='relative z-10 mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-[14px] bg-primary'>
-                  <span className='absolute left-0 top-0 -z-[1] mb-8 flex h-[70px] w-[70px] rotate-[25deg] items-center justify-center rounded-[14px] bg-primary bg-opacity-20 duration-300 group-hover:rotate-45'></span>
-                  <SVGEssential />
-                </div>
-                <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
-                  {siteConfig('PROXIO_FEATURE_4_TITLE_1')}
-                </h4>
-                <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
-                  {siteConfig('PROXIO_FEATURE_4_TEXT_1')}
-                </p>
-                <Link
-                  href={siteConfig('PROXIO_FEATURE_4_BUTTON_URL', '')}
-                  className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
-                  {siteConfig('PROXIO_FEATURE_3_BUTTON_TEXT')}
-                </Link>
-              </div>
-            </div>
+
+          </div>
+
+          <div className='mt-8 w-full flex justify-center items-center'>
+            <Link
+              href={siteConfig('PROXIO_FEATURE_BUTTON_URL', '')}
+              className='px-4 py-2 rounded-3xl border dark:border-gray-200 border-[#333333] text-base font-medium text-dark hover:bg-gray-100 dark:text-white dark:hover:bg-white dark:hover:text-black duration-200'>
+              {siteConfig('PROXIO_FEATURE_BUTTON_TEXT')}
+              <i className="pl-4 fa-solid fa-arrow-right"></i>
+            </Link>
           </div>
         </div>
       </section>

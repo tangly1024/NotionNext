@@ -1,41 +1,64 @@
 /* eslint-disable @next/next/no-img-element */
 import { siteConfig } from '@/lib/config'
-import { SVGAvatarBG } from './svg/SVGAvatarBG'
-
+import LazyImage from '@/components/LazyImage'
+/**
+ * 作者团队
+ * @returns 
+ */
 export const Team = () => {
-    const PROXIO_TEAM_ITEMS = siteConfig('PROXIO_TEAM_ITEMS', [])
+    const PROXIO_ABOUT_PHOTO_URL = siteConfig('PROXIO_ABOUT_PHOTO_URL')
     return (
         <>
             {/* <!-- ====== Team Section Start --> */}
             <section
                 id='team'
-                className='overflow-hidden bg-gray-1 pb-12 pt-20 dark:bg-dark-2 lg:pb-[90px] lg:pt-[120px]'>
+                className='overflow-hidden pb-12 pt-20 lg:pb-[90px] lg:pt-[120px]'>
                 <div className='container mx-auto'>
-                    <div className='flex -mx-4 '>
-                        <div className='flex flex-col'>
-                            <div className='mx-auto mb-[60px] max-w-[485px]'>
-                                <span className='mb-2 block text-lg font-semibold text-primary'>
+                    <div className='flex flex-col md:flex-row -mx-4 justify-between'>
+                        {/* 左边肖像图 */}
+                        <div className='mx-6 mb-6 max-w-96 border-gray-200 dark:border-[#333333] dark:bg-dark-1 border rounded-2xl overflow-hidden'>
+                            <LazyImage src={PROXIO_ABOUT_PHOTO_URL} className='object-cover h-full' />
+                        </div>
+                        {/* 右侧文字说明 */}
+                        <div className='flex flex-col px-4 space-y-4 mx-auto justify-between max-w-[485px]'>
+                            <div>
+                                <span className='px-3 py-0.5 mb-2 dark:bg-dark-1 rounded-2xl border border-gray-200 dark:border-[#333333] dark:text-white'>
                                     {siteConfig('PROXIO_ABOUT_TITLE')}
                                 </span>
-                                <h2 className='mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]'>
-                                    {siteConfig('PROXIO_ABOUT_TEXT_1')}
-                                </h2>
-                                <p
-                                    dangerouslySetInnerHTML={{
-                                        __html: siteConfig('PROXIO_ABOUT_TEXT_2')
-                                    }}
-                                    className='text-base text-body-color dark:text-dark-6'></p>
+                            </div>
+                            <h2 className='mb-3 text-2xl leading-[1.2] dark:text-white md:text-[40px]'>
+                                {siteConfig('PROXIO_ABOUT_TEXT_1')}
+                            </h2>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: siteConfig('PROXIO_ABOUT_TEXT_2')
+                                }}
+                                className='text-base text-body-color dark:text-dark-6'></p>
+                            {/* 数值四宫格 */}
+                            <div className='grid grid-cols-2 grid-rows-2 pt-6 gap-4'>
+                                <KeyVal k={siteConfig('PROXIO_ABOUT_KEY_1')} v={siteConfig('PROXIO_ABOUT_VAL_1')} />
+                                <KeyVal k={siteConfig('PROXIO_ABOUT_KEY_2')} v={siteConfig('PROXIO_ABOUT_VAL_2')} />
+                                <KeyVal k={siteConfig('PROXIO_ABOUT_KEY_3')} v={siteConfig('PROXIO_ABOUT_VAL_3')} />
+                                <KeyVal k={siteConfig('PROXIO_ABOUT_KEY_4')} v={siteConfig('PROXIO_ABOUT_VAL_4')} />
                             </div>
                         </div>
-                        <div>
-                            
-                        </div>
                     </div>
-
-
                 </div>
             </section>
             {/* <!-- ====== Team Section End --> */}
         </>
+    )
+}
+
+// 显示一组键值对
+const KeyVal = ({ k, v }) => {
+    if (!k) {
+        return null;
+    }
+    return (
+        <div className='space-y-2'>
+            <div className='dark:text-dark-6'>{k}</div>
+            <div className='dark:text-white text-2xl font-semibold'>{v}</div>
+        </div>
     )
 }

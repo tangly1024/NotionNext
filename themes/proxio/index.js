@@ -8,7 +8,7 @@ import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { About } from './components/About'
+import { Career } from './components/Career'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
 import { Brand } from './components/Brand'
@@ -115,14 +115,13 @@ const LayoutIndex = props => {
                 </>
             )}
 
-            {/* 短留言公告 */}
+            {/* 公告 */}
             {siteConfig('PROXIO_ANNOUNCEMENT_ENABLE', true, CONFIG) && <Announcement
                 post={props?.notice}
                 className={
                     'announncement text-center py-16'
+                } />
                 }
-                
-            />}
 
             {/* 团队介绍 */}
             {siteConfig('PROXIO_ABOUT_ENABLE', true, CONFIG) && <Team />}
@@ -130,12 +129,12 @@ const LayoutIndex = props => {
             {/* 合作伙伴 */}
             {siteConfig('PROXIO_BRANDS_ENABLE', true, CONFIG) && <Brand />}
 
+
+            {/* 生涯 */}
+            {siteConfig('PROXIO_CAREER_ENABLE', true, CONFIG) && <Career />}
+
             {/* 产品特性 */}
             {siteConfig('PROXIO_FEATURE_ENABLE', true, CONFIG) && <Features />}
-            
-            {/* 生涯 */}
-            {siteConfig('PROXIO_CAREER_ENABLE', true, CONFIG) && <About />}
-
 
             {/* 价格 */}
             {/* {siteConfig('PROXIO_PRICING_ENABLE', true, CONFIG) && <Pricing />} */}
@@ -152,7 +151,7 @@ const LayoutIndex = props => {
             {/* 行动呼吁 */}
             {siteConfig('PROXIO_CTA_ENABLE', true, CONFIG) && <CTA />}
 
-            <LoadingCover/>
+            {siteConfig('PROXIO_WELCOME_COVER_ENABLE', false, CONFIG) && <LoadingCover />}
         </>
     )
 }

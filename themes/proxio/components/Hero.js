@@ -39,7 +39,7 @@ export const Hero = props => {
                     <div className='w-full px-4'>
                         <div
                             className='hero-content wow fadeInUp mx-auto max-w-[780px] text-center'
-                            data-wow-delay='.2s'>
+                            data-wow-delay='0.5s'>
                             {/* 主标题 */}
                             <h1 className='mb-6 text-3xl font-bold leading-snug sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]'>
                                 {siteConfig('PROXIO_HERO_TITLE_1', null, config)}

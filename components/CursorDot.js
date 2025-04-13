@@ -26,12 +26,12 @@ const CursorDot = () => {
             dot.classList.remove('cursor-dot-hover'); // 移除放大样式
         };
 
-       
+
         // 为所有可点击元素和包含 hover 或 group-hover 类名的元素添加事件监听
         const clickableElements = document.querySelectorAll(
-            'a, button, [role="button"], [onclick], [cursor="pointer"], [class*="hover"], [class*="group-hover"]'
+            'a, button, [role="button"], [onclick], [cursor="pointer"], [class*="hover"], [class*="group-hover"], [class*="cursor-pointer"]'
         );
-                clickableElements.forEach((el) => {
+        clickableElements.forEach((el) => {
             el.addEventListener('mouseenter', handleMouseEnter);
             el.addEventListener('mouseleave', handleMouseLeave);
         });

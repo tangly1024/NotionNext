@@ -8,6 +8,11 @@
 const Style = () => {
     return <style jsx global>{`
 
+    #theme-proxio .bg-primary {
+        --tw-bg-opacity: 1;
+        background-color: #121212;
+    }
+    
     @media (min-width: 540px) {
         #theme-proxio .container {
             max-width: 540px;
