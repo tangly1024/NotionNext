@@ -26,7 +26,7 @@ const LoadingCover = ({ onFinishLoading }) => {
             document.body.appendChild(ripple);
 
             // 添加页面缩放 + 模糊动画
-            pageContainer.classList.add('page-clicked');
+            pageContainer?.classList?.add('page-clicked');
 
             // 模拟加载完成，调用回调函数
             setTimeout(() => {
@@ -55,7 +55,7 @@ const LoadingCover = ({ onFinishLoading }) => {
 
     return (
         <div className="welcome" id="pageContainer">
-            <div className="welcome-text" id="welcomeText">
+            <div className="welcome-text px-2" id="welcomeText">
                 {welcomeText}
             </div>
             <style jsx>
