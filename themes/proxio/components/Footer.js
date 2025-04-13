@@ -75,7 +75,7 @@ export const Footer = ({ title }) => {
             <PoweredBy />
           </div>
 
-          <DarkModeButton className='text-white' />
+          <DarkModeButton className='dark:text-white' />
 
           <div className='flex justify-between items-center gap-x-2'>
             <div className='flex items-center gap-x-4'>
