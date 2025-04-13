@@ -28,6 +28,13 @@ const CONFIG = {
     PROXIO_BLOG_COUNT: 4, // 首页博文区块展示前4篇文章
     PROXIO_BLOG_TEXT_1: '我的最新动态',
 
+    // 区块默认内容显示文章的summary文本，但也支持用自定义图片或logo德国替换掉占位显示内容
+    PROXIO_BLOG_PLACEHOLDER_IMG_URL_1: '', // 填写要替换成的图片，支持图床或直接上传到项目中，示例  /images/feature-1.webp
+    PROXIO_BLOG_PLACEHOLDER_IMG_URL_2: '',
+    PROXIO_BLOG_PLACEHOLDER_IMG_URL_3: '',
+    PROXIO_BLOG_PLACEHOLDER_IMG_URL_4: '',
+
+
     PROXIO_ANNOUNCEMENT_ENABLE: true, //公告文字区块
 
     // 特性区块
@@ -39,14 +46,17 @@ const CONFIG = {
 
     // 特性1
     PROXIO_FEATURE_1_ICON_CLASS: 'fa-solid fa-stopwatch', // fas图标
+    PROXIO_FEATURE_1_ICON_IMG_URL: '', // 图片图标选填，默认是fas图标，如果需要图片图标可以填写图片地址，示例/avatar.png
     PROXIO_FEATURE_1_TITLE_1: '高效工作流程',
     PROXIO_FEATURE_1_TEXT_1: '精简的设计流程确保快速交付，在紧迫的工期下仍能保证品质与细节不打折扣。',
 
     PROXIO_FEATURE_2_ICON_CLASS: 'fa-solid fa-comments',
+    PROXIO_FEATURE_2_ICON_IMG_URL: '', 
     PROXIO_FEATURE_2_TITLE_1: '协作式流程',
     PROXIO_FEATURE_2_TEXT_1: '与你紧密合作，融合反馈意见，打造超越预期的设计',
 
     PROXIO_FEATURE_3_ICON_CLASS: 'fa-solid fa-search',
+    PROXIO_FEATURE_2_ICON_IMG_URL: '',
     PROXIO_FEATURE_3_TITLE_1: '细节把控',
     PROXIO_FEATURE_3_TEXT_1: '精益求精雕琢每个元素，确保成品精致统一，令人过目难忘',
 
@@ -160,8 +170,10 @@ const CONFIG = {
     PROXIO_ABOUT_KEY_3: '交付项目',
     PROXIO_ABOUT_VAL_3: '5000+',
     PROXIO_ABOUT_KEY_4: '累积创作时长（小时）',
-    PROXIO_ABOUT_VAL_4: '10000+', 
+    PROXIO_ABOUT_VAL_4: '10000+',
 
+    PROXIO_ABOUT_BUTTON_URL: '/about',
+    PROXIO_ABOUT_BUTTON_TEXT: '关于我',
 
     // 横向滚动文字
     PROXIO_BRANDS_ENABLE: true, // 滚动文字
