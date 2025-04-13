@@ -1,4 +1,6 @@
+import QrCode from '@/components/QrCode'
 import { siteConfig } from '@/lib/config'
+import { useState } from 'react'
 
 /**
  * 社交联系方式按钮组
@@ -6,6 +8,7 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const SocialButton = () => {
+
   return <div className='w-full justify-center flex-wrap flex'>
     <div className='space-x-3 text-xl text-gray-600 dark:text-gray-300 '>
       {siteConfig('CONTACT_GITHUB') && <a target='_blank' rel='noreferrer' title={'github'} href={siteConfig('CONTACT_GITHUB')} >
@@ -44,7 +47,8 @@ const SocialButton = () => {
       {siteConfig('CONTACT_TAOBAO') && <a target='_blank' rel='noreferrer' title={'淘宝'} href={siteConfig('CONTACT_TAOBAO')} >
         <i className='transform hover:scale-125 duration-150 fa-solid fa-cart-shopping dark:hover:text-indigo-400 hover:text-indigo-600'/>
       </a>}
+      
     </div>
-  </div>
+  )
 }
 export default SocialButton

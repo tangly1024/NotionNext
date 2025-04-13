@@ -15,8 +15,11 @@ const Utterances = ({ issueTerm, layout }) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const script = document.createElement('script');
     const anchor = document.getElementById('comments');
+    if (!anchor) {
+      return
+    }
+    const script = document.createElement('script');
     script.onload = () => setLoading(false);
     script.setAttribute('src', 'https://utteranc.es/client.js');
     script.setAttribute('crossorigin', 'anonymous');
@@ -25,7 +28,7 @@ const Utterances = ({ issueTerm, layout }) => {
     script.setAttribute('issue-term', 'title');
     // 初始主题
     script.setAttribute('theme', isDarkMode ? 'github-dark' : 'github-light');
-    anchor.appendChild(script);
+    anchor?.appendChild(script);
 
     return () => {
       // anchor.innerHTML = ''

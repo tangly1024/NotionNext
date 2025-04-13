@@ -1,17 +1,42 @@
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import CONFIG from '../config'
 import { MenuItemDrop } from './MenuItemDrop'
-import { siteConfig } from '@/lib/config'
-
-export const MenuListTop = (props) => {
+/**
+ * 菜单列表
+ * 顶部导航栏用
+ * @param {*} props
+ * @returns
+ */
+export const MenuListTop = props => {
   const { customNav, customMenu } = props
   const { locale } = useGlobal()
 
   let links = [
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: siteConfig('MATERY_MENU_ARCHIVE', null, CONFIG) },
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: siteConfig('MATERY_MENU_SEARCH', null, CONFIG) },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: siteConfig('MATERY_MENU_CATEGORY', null, CONFIG) },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: siteConfig('MATERY_MENU_TAG', null, CONFIG) }
+    {
+      icon: 'fas fa-archive',
+      name: locale.NAV.ARCHIVE,
+      href: '/archive',
+      show: siteConfig('MATERY_MENU_ARCHIVE', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-search',
+      name: locale.NAV.SEARCH,
+      href: '/search',
+      show: siteConfig('MATERY_MENU_SEARCH', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-folder',
+      name: locale.COMMON.CATEGORY,
+      href: '/category',
+      show: siteConfig('MATERY_MENU_CATEGORY', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-tag',
+      name: locale.COMMON.TAGS,
+      href: '/tag',
+      show: siteConfig('MATERY_MENU_TAG', null, CONFIG)
+    }
   ]
 
   if (customNav) {
@@ -29,7 +54,9 @@ export const MenuListTop = (props) => {
 
   return (
     <nav id='nav' className='leading-8 flex justify-center  font-light w-full'>
-      {links?.map((link, index) => <MenuItemDrop key={index} link={link}/>)}
+      {links?.map((link, index) => (
+        <MenuItemDrop key={index} link={link} />
+      ))}
     </nav>
   )
 }
