@@ -76,7 +76,7 @@ export const Blog = ({ posts }) => {
                         {!coverImg && <p className='max-w-[370px] text-base text-body-color dark:text-dark-6 flex items-center justify-center duration-200 group-hover:text-white '>
                           {item.summary}
                         </p>}
-                        <LazyImage src={coverImg} className='absolute' />
+                        <LazyImage src={coverImg} className='absolute max-h-full object-cover' />
                       </div>
                     </div>
                     {/* 内容部分 */}

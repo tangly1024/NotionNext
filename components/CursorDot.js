@@ -1,6 +1,11 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-
+/**
+ * 白点鼠标跟随
+ * @returns 
+ */
 const CursorDot = () => {
+    const router = useRouter();
     useEffect(() => {
         // 创建小白点元素
         const dot = document.createElement('div');
@@ -28,13 +33,15 @@ const CursorDot = () => {
 
 
         // 为所有可点击元素和包含 hover 或 group-hover 类名的元素添加事件监听
-        const clickableElements = document.querySelectorAll(
-            'a, button, [role="button"], [onclick], [cursor="pointer"], [class*="hover"], [class*="group-hover"], [class*="cursor-pointer"]'
-        );
-        clickableElements.forEach((el) => {
-            el.addEventListener('mouseenter', handleMouseEnter);
-            el.addEventListener('mouseleave', handleMouseLeave);
-        });
+        setTimeout(() => {
+            const clickableElements = document.querySelectorAll(
+                'a, button, [role="button"], [onclick], [cursor="pointer"], [class*="hover"], [class*="group-hover"], [class*="cursor-pointer"]'
+            );
+            clickableElements.forEach((el) => {
+                el.addEventListener('mouseenter', handleMouseEnter);
+                el.addEventListener('mouseleave', handleMouseLeave);
+            });
+        }, 200); // 延时 200ms 执行
 
         // 动画循环：延迟更新小白点位置
         const updateDotPosition = () => {
@@ -55,13 +62,16 @@ const CursorDot = () => {
         // 清理函数
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
+            const clickableElements = document.querySelectorAll(
+                'a, button, [role="button"], [onclick], [cursor="pointer"], [class*="hover"], [class*="group-hover"], [class*="cursor-pointer"]'
+            );
             clickableElements.forEach((el) => {
                 el.removeEventListener('mouseenter', handleMouseEnter);
                 el.removeEventListener('mouseleave', handleMouseLeave);
             });
             document.body.removeChild(dot);
         };
-    }, []);
+    }, [router]);
 
     return (
         <style jsx global>{`
