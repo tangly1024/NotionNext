@@ -56,6 +56,18 @@ const PrismMac = () => {
     })
   }, [router, isDarkMode])
 
+  useEffect(() => {
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          renderCustomCode();
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
   return <></>
 }
 
@@ -74,7 +86,7 @@ const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, pri
       PRISM_PREVIOUS = prismThemeDarkPath
     }
     const previousTheme = document.querySelector(`link[href="${PRISM_PREVIOUS}"]`)
-    if (previousTheme && previousTheme.parentNode && previousTheme.parentNode.contains(previousTheme)) {
+    if (previousTheme) {
       previousTheme.parentNode.removeChild(previousTheme)
     }
     loadExternalResource(PRISM_THEME, 'css')
@@ -83,7 +95,7 @@ const loadPrismThemeCSS = (isDarkMode, prismThemeSwitch, prismThemeDarkPath, pri
   }
 }
 
-/*
+/**
  * 将代码块转为可折叠对象
  */
 const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
@@ -93,7 +105,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
   const codeBlocks = document.querySelectorAll('.code-toolbar')
   for (const codeBlock of codeBlocks) {
     // 判断当前元素是否被包裹
-    if (codeBlock.closest('.collapse-wrapper')) {
+    if (codeBlock.closest('.collapse-wrapper') || containsCustomCodeBlock(codeBlock)) {
       continue // 如果被包裹了，跳过当前循环
     }
 
@@ -139,7 +151,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
 /**
  * 将mermaid语言 渲染成图片
  */
-const renderMermaid = async(mermaidCDN) => {
+const renderMermaid = async (mermaidCDN) => {
   const observer = new MutationObserver(async mutationsList => {
     for (const m of mutationsList) {
       if (m.target.className === 'notion-code language-mermaid') {
@@ -175,6 +187,113 @@ const renderMermaid = async(mermaidCDN) => {
     observer.observe(document.querySelector('#notion-article'), { attributes: true, subtree: true })
   }
 }
+
+/**
+ * @author https://github.com/chenyqthu, 基于 RylanBot
+ * 代码块类型为 Html, CSS, JS
+ * 且第一行出现注释 <!-- custom -->, \* custom *\, // custom
+ * (第二个对应 css 注释写法, 这里无法正常打出, notion 代码块中正常使用左斜杠 / 即可)
+ * (空格不能少)
+ * 则自动替换，将内容替换为实际代码执行
+ */
+const containsCustomCodeBlock = (block) => {
+  const textContent = block.textContent || '';
+  return (
+    textContent.includes('<!-- custom -->') ||
+    textContent.includes('/* custom */') ||
+    textContent.includes('/* custom-link */') ||
+    textContent.includes('// custom')
+  );
+};
+
+const renderCustomCode = () => {
+  const toolbars = document.querySelectorAll('div.code-toolbar');
+
+  toolbars.forEach((toolbarEl) => {
+    const codeElements = toolbarEl.querySelectorAll('code');
+    codeElements.forEach(codeElement => {
+      const language = codeElement.className.replace('language-', '');
+      const firstChild = codeElement.firstChild;
+      if (firstChild) {
+        const firstComment = firstChild.textContent || '';
+        const isCustomLink = {
+          css: firstComment.includes('/* custom-link */'),
+          javascript: firstComment.includes('// custom-link')
+        }[language]; 
+        const isCustom = {
+          html: firstComment.includes('<!-- custom -->'),
+          css: firstComment.includes('/* custom */'),
+          javascript: firstComment.includes('// custom')
+        }[language];
+        let originalCode = codeElement.textContent;
+        const toolbarParent = codeElement.closest('div.code-toolbar').parentNode;
+
+        if (isCustomLink || isCustom) {
+          // 移除 custom 注释
+          originalCode = originalCode.replace(/(\/\/ custom-link)|(\/\* custom-link \*\/)|(<!-- custom -->)|(\/\* custom \*\/)|(\/\/ custom)/, '').trim();
+
+          switch (language) {
+            case 'html': {
+              const htmlContainer = document.createElement('div');
+              htmlContainer.innerHTML = originalCode;
+              Array.from(htmlContainer.childNodes).forEach(node => {
+                toolbarParent.insertBefore(node.cloneNode(true), toolbarEl);
+              });
+              break;
+            }
+            case 'css': {
+              if (isCustomLink) {
+                // 将原始代码按行分割，每行视为一个独立的CSS链接
+                const urls = originalCode.split('\n').filter(line => line.trim() !== '');
+                urls.forEach(url => {
+                  const linkElement = document.createElement('link');
+                  linkElement.rel = 'stylesheet';
+                  linkElement.href = url.trim();
+                  document.head.appendChild(linkElement);
+                });
+              } else {
+                const styleElement = document.createElement('style');
+                styleElement.textContent = originalCode;
+                document.head.appendChild(styleElement);
+              }
+              break;
+            }
+            case 'javascript': {
+              if (isCustomLink) {
+                const scriptContainer = document.createElement('div');
+                scriptContainer.innerHTML = originalCode;
+                Array.from(scriptContainer.querySelectorAll('script')).forEach(script => {
+                  const newScript = document.createElement('script');
+                  if (script.src) {
+                    newScript.src = script.src;
+                    if (script.defer) newScript.defer = true;
+                    if (script.async) newScript.async = true;
+                  } else {
+                    newScript.textContent = script.textContent;
+                  }
+
+                  const insertIntoHead = script.getAttribute('head') !== null;
+                  if (insertIntoHead) {
+                    document.head.appendChild(newScript);
+                  } else {
+                    document.body.appendChild(newScript);
+                  }
+                });
+              } else {
+                const scriptElement = document.createElement('script');
+                scriptElement.textContent = originalCode;
+                document.body.appendChild(scriptElement);
+              }
+              break;
+            }
+          }
+          // 移除原始代码块容器
+          toolbarParent.removeChild(toolbarEl);
+        }
+      }
+    });
+  });
+};
 
 function renderPrismMac(codeLineNumbers) {
   const container = document?.getElementById('notion-article')
