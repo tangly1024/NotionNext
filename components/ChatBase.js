@@ -10,10 +10,32 @@ export default function ChatBase() {
     return <></>
   }
 
-  return <iframe
-        src={`https://www.chatbase.co/chatbot-iframe/${siteConfig('CHATBASE_ID')}`}
-        width="100%"
-        style={{ height: '100%', minHeight: '700px' }}
-        frameborder="0"
-    ></iframe>
+   return (
+    <div>
+      <script>
+        {`
+          window.difyChatbotConfig = {
+            token: 'tpn8UiMlmLEnZq2x',
+            baseUrl: 'https://sknote.skillre.online:44335'
+          }
+        `}
+      </script>
+      <script
+        src="https://sknote.skillre.online:44335/embed.min.js"
+        id="tpn8UiMlmLEnZq2x"
+        defer
+      ></script>
+      <style>
+        {`
+          #dify-chatbot-bubble-button {
+            background-color: #1C64F2 !important;
+          }
+          #dify-chatbot-bubble-window {
+            width: 24rem !important;
+            height: 40rem !important;
+          }
+        `}
+      </style>
+    </div>
+  );
 }
