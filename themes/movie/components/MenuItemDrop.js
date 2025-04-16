@@ -37,7 +37,7 @@ export const MenuItemDrop = ({ link }) => {
       {hasSubMenu && (
         <ul
           style={{ backdropFilter: 'blur(3px)' }}
-          className={`${show ? 'visible opacity-100 top-14' : 'invisible opacity-0 top-20'} drop-shadow-md overflow-hidden rounded-md text-black dark:text-white bg-white dark:bg-black transition-all duration-300 z-30 absolute block  `}>
+          className={`${show ? 'visible opacity-100 top-14 pointer-events-auto' : 'invisible opacity-0 top-20 pointer-events-none'} drop-shadow-md overflow-hidden rounded-md text-black dark:text-white bg-white dark:bg-black transition-all duration-300 z-30 absolute block  `}>
           {link.subMenus.map((sLink, index) => {
             return (
               <li
