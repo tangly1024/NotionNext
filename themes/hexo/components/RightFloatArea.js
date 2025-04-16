@@ -12,19 +12,22 @@ export default function RightFloatArea({ floatSlot }) {
   const [showFloatButton, switchShow] = useState(false)
 
   const scrollListener = useCallback(() => {
-    const targetRef = document.getElementById('wrapper') || document.documentElement
+    const targetRef =
+      document.getElementById('wrapper') || document.documentElement
     const clientHeight = targetRef?.clientHeight || 0
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0
-    
+    const scrollY =
+      window.pageYOffset || document.documentElement.scrollTop || 0
+    const viewportHeight =
+      window.innerHeight || document.documentElement.clientHeight || 0
+
     const fullHeight = Math.max(1, clientHeight - viewportHeight)
-    
+
     let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
-    
+
     // 完整的边界处理
     if (isNaN(per) || per < 0) per = 0
     if (per > 100) per = 100
-    
+
     const shouldShow = scrollY > 100 && per > 0
 
     // 右下角显示悬浮按钮
@@ -39,12 +42,12 @@ export default function RightFloatArea({ floatSlot }) {
         scrollListener()
       })
     }
-    
+
     window.addEventListener('scroll', throttledScroll)
-    
+
     // 初始调用一次检查初始状态
     scrollListener()
-    
+
     return () => window.removeEventListener('scroll', throttledScroll)
   }, [scrollListener])
 
