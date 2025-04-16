@@ -8,7 +8,9 @@ export const ArticleInfo = props => {
 
   return (
     <section className='w-full mx-auto mb-4'>
-      <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
+      <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>
+        {post?.title}
+      </h2>
 
       <div className='flex gap-3 font-semibold text-sm items-center justify-center'>
         <Link
@@ -20,7 +22,10 @@ export const ArticleInfo = props => {
 
         {post?.type !== 'Page' && (
           <>
-            <Link href={`/category/${post?.category}`} passHref className='cursor-pointer text-md mr-2 text-green-500'>
+            <Link
+              href={`/category/${post?.category}`}
+              passHref
+              className='cursor-pointer text-md mr-2 text-green-500'>
               {post?.category}
             </Link>
           </>
@@ -34,7 +39,10 @@ export const ArticleInfo = props => {
           )}
           {post?.tags?.map(tag => {
             return (
-              <Link href={`/tag/${tag}`} key={tag} className='text-yellow-500 mr-2'>
+              <Link
+                href={`/tag/${tag}`}
+                key={tag}
+                className='text-yellow-500 mr-2'>
                 {tag}
               </Link>
             )

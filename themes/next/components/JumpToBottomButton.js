@@ -24,7 +24,7 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     const clientHeight = targetRef?.clientHeight
     const scrollY = window.pageYOffset
     const fullHeight = clientHeight - window.outerHeight
-    let per = parseFloat(((scrollY / fullHeight * 100)).toFixed(0))
+    let per = parseFloat(((scrollY / fullHeight) * 100).toFixed(0))
     if (per > 100) per = 100
     const shouldShow = scrollY > 100 && per > 0
     if (shouldShow !== show) {
@@ -33,7 +33,7 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     changePercent(per)
   }
 
-  function scrollToBottom () {
+  function scrollToBottom() {
     const targetRef = document.getElementById('wrapper')
     window.scrollTo({ top: targetRef.clientHeight, behavior: 'smooth' })
   }
@@ -42,12 +42,18 @@ const JumpToBottomButton = ({ showPercent = false }) => {
     return <></>
   }
 
-  return (<div className='flex space-x-1 transform hover:scale-105 duration-200 py-2 px-3' onClick={scrollToBottom} >
-    <div className='dark:text-gray-200' >
-      <i className='fas fa-arrow-down' />
+  return (
+    <div
+      className='flex space-x-1 transform hover:scale-105 duration-200 py-2 px-3'
+      onClick={scrollToBottom}>
+      <div className='dark:text-gray-200'>
+        <i className='fas fa-arrow-down' />
+      </div>
+      {showPercent && (
+        <div className='dark:text-gray-200 block lg:hidden'>{percent}%</div>
+      )}
     </div>
-    {showPercent && (<div className='dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
-  </div>)
+  )
 }
 
 export default JumpToBottomButton

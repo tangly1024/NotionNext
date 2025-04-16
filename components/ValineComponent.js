@@ -29,7 +29,7 @@ const ValineComponent = ({ path }) => {
     loadValine()
   }, [])
 
-  return <div id="valine"></div>
+  return <div id='valine'></div>
 
   //   const updateValine = url => {
   //     // 移除旧的评论区，否则会重复渲染。
@@ -51,9 +51,9 @@ const ValineComponent = ({ path }) => {
   //     }
   //   }, [])
 
-//   return <div id='v-wrapper'>
-//       <div id='v-comments'></div>
-//   </div>
+  //   return <div id='v-wrapper'>
+  //       <div id='v-comments'></div>
+  //   </div>
 }
 
 export default ValineComponent

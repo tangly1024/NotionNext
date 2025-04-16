@@ -75,28 +75,27 @@ export default function AdBlockerDetect() {
 
   return (
     <>
-      <div className="fixed w-screen h-screen z-40 flex justify-center items-center bg-black bg-opacity-75 top-0 left-0">
-        <div className="fc-dialog-content z-50 bg-white rounded-md p-4 max-w-md">
-          <div className="fc-dialog-headline">
-            <h1 className="fc-dialog-headline-text text-3xl">
+      <div className='fixed w-screen h-screen z-40 flex justify-center items-center bg-black bg-opacity-75 top-0 left-0'>
+        <div className='fc-dialog-content z-50 bg-white rounded-md p-4 max-w-md'>
+          <div className='fc-dialog-headline'>
+            <h1 className='fc-dialog-headline-text text-3xl'>
               Please allow ads on our site
             </h1>
           </div>
-          <hr className="my-4" />
-          <div className="fc-dialog-body">
-            <p className="fc-dialog-body-text  text-xl">
+          <hr className='my-4' />
+          <div className='fc-dialog-body'>
+            <p className='fc-dialog-body-text  text-xl'>
               {
                 "Looks like you're using an ad blocker. We rely on advertising to help fund our site."
               }
             </p>
           </div>
-          <div className="flex justify-center mt-4">
+          <div className='flex justify-center mt-4'>
             <button
               onClick={() => {
                 setIsAdBlocker(false)
               }}
-              className="px-12 py-2 gap-2 bg-green-600 rounded text-white "
-            >
+              className='px-12 py-2 gap-2 bg-green-600 rounded text-white '>
               OK ({noticeCountdown})
             </button>
           </div>

@@ -12,7 +12,7 @@ import BlogPostListEmpty from './BlogPostListEmpty'
  * @returns {JSX.Element}
  * @constructor
  */
-const BlogPostListAll = (props) => {
+const BlogPostListAll = props => {
   const { customMenu } = props
   const { filteredNavPages, setFilteredNavPages, allNavPages } = useNavGlobal()
 
@@ -23,14 +23,22 @@ const BlogPostListAll = (props) => {
   // for循环遍历数组
   links?.map((link, i) => {
     const linkTitle = link.title + ''
-    filterLinks[linkTitle] = { title: link.title, icon: link.icon, pageIcon: link.pageIcon }
+    filterLinks[linkTitle] = {
+      title: link.title,
+      icon: link.icon,
+      pageIcon: link.pageIcon
+    }
     if (link?.subMenus) {
       link.subMenus?.map((group, index) => {
         const subMenuTitle = group?.title + ''
         // 自定义分类图标与post的category共用
         // 判断自定义分类与Post中category同名的项，将icon的值传递给post
         // filterLinks[subMenuTitle] = group
-        filterLinks[subMenuTitle] = { title: group.title, icon: group.icon, pageIcon: group.pageIcon }
+        filterLinks[subMenuTitle] = {
+          title: group.title,
+          icon: group.icon,
+          pageIcon: group.pageIcon
+        }
       })
     }
   })
@@ -38,7 +46,9 @@ const BlogPostListAll = (props) => {
   const selectedSth = false
   const groupedArray = filteredNavPages?.reduce((groups, item) => {
     const categoryName = item?.category ? item?.category : '' // 将category转换为字符串
-    const categoryIcon = filterLinks[categoryName]?.icon ? filterLinks[categoryName]?.icon : '' // 将pageIcon转换为字符串
+    const categoryIcon = filterLinks[categoryName]?.icon
+      ? filterLinks[categoryName]?.icon
+      : '' // 将pageIcon转换为字符串
     let existingGroup = null
     // 开启自动分组排序
     if (JSON.parse(siteConfig('NAV_AUTO_SORT', null, CONFIG))) {
@@ -57,7 +67,7 @@ const BlogPostListAll = (props) => {
   }, [])
 
   // 处理是否选中
-  groupedArray?.map((group) => {
+  groupedArray?.map(group => {
     // 自定义分类图标与post的category共用
     // 判断自定义分类与Post中category同名的项，将icon的值传递给post
 
@@ -75,12 +85,22 @@ const BlogPostListAll = (props) => {
   if (!groupedArray || groupedArray.length === 0) {
     return <BlogPostListEmpty />
   } else {
-    return <div id='posts-wrapper' className='stack-list w-full mx-auto justify-center'>
-            {/* 文章列表 */}
-            {groupedArray?.map((group, index) => <BlogPostItem key={index} group={group} filterLinks={filterLinks} onHeightChange={props.onHeightChange}/>)}
-        </div>
+    return (
+      <div
+        id='posts-wrapper'
+        className='stack-list w-full mx-auto justify-center'>
+        {/* 文章列表 */}
+        {groupedArray?.map((group, index) => (
+          <BlogPostItem
+            key={index}
+            group={group}
+            filterLinks={filterLinks}
+            onHeightChange={props.onHeightChange}
+          />
+        ))}
+      </div>
+    )
   }
-
 }
 
 export default BlogPostListAll

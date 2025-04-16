@@ -10,7 +10,12 @@ export default function LA51() {
   useEffect(() => {
     const LA = window.LA
     if (LA) {
-      LA.init({ id: `${ANALYTICS_51LA_ID}`, ck: `${ANALYTICS_51LA_CK}`, hashMode: true, autoTrack: true })
+      LA.init({
+        id: `${ANALYTICS_51LA_ID}`,
+        ck: `${ANALYTICS_51LA_CK}`,
+        hashMode: true,
+        autoTrack: true
+      })
     }
   }, [])
 

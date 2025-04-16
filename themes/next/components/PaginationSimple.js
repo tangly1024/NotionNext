@@ -13,15 +13,18 @@ const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
-  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath
+    .split('?')[0]
+    .replace(/\/page\/[1-9]\d*/, '')
+    .replace(/\/$/, '')
 
   return (
     <div
-        data-aos="fade-down"
-        data-aos-duration="300"
-        data-aos-once="false"
-        data-aos-anchor-placement="top-bottom"
-        className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
+      data-aos='fade-down'
+      data-aos-duration='300'
+      data-aos-once='false'
+      data-aos-anchor-placement='top-bottom'
+      className='my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2'>
       <Link
         href={{
           pathname:
@@ -33,11 +36,10 @@ const PaginationSimple = ({ page, showNext }) => {
         passHref
         legacyBehavior>
         <button
-          rel="prev"
+          rel='prev'
           className={`${
             currentPage === 1 ? 'invisible' : 'block'
-          } w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
-        >
+          } w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}>
           ← {locale.PAGINATION.PREV}
         </button>
       </Link>
@@ -49,11 +51,10 @@ const PaginationSimple = ({ page, showNext }) => {
         passHref
         legacyBehavior>
         <button
-          rel="next"
+          rel='next'
           className={`${
             +showNext ? 'block' : 'invisible'
-          } w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}
-        >
+          } w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}>
           {locale.PAGINATION.NEXT} →
         </button>
       </Link>

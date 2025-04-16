@@ -5,7 +5,7 @@ import Link from 'next/link'
  * @param {prev,next} param0
  * @returns
  */
-export default function ArticleAround ({ prev, next }) {
+export default function ArticleAround({ prev, next }) {
   if (!prev || !next) {
     return <></>
   }
@@ -15,9 +15,8 @@ export default function ArticleAround ({ prev, next }) {
         href={`/${prev.slug}`}
         passHref
         className='text-sm cursor-pointer justify-center items-center flex w-full h-full bg-white bg-opacity-40 hover:bg-hexo-black-gray dark:bg-hexo-black-gray dark:text-gray-200 hover:text-white duration-300'>
-
-        <i className='mr-1 fas fa-angle-double-left' />{prev.title}
-
+        <i className='mr-1 fas fa-angle-double-left' />
+        {prev.title}
       </Link>
       <Link
         href={`/${next.slug}`}
@@ -25,8 +24,7 @@ export default function ArticleAround ({ prev, next }) {
         className='text-sm  cursor-pointer justify-center items-center flex w-full h-full bg-white bg-opacity-40 hover:bg-hexo-black-gray dark:bg-hexo-black-gray dark:text-gray-200 hover:text-white duration-300'>
         {next.title}
         <i className='ml-1 my-1 fas fa-angle-double-right' />
-
       </Link>
     </section>
-  );
+  )
 }

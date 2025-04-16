@@ -28,8 +28,8 @@ const Artalk = ({ siteInfo }) => {
       darkMode: document.documentElement.classList.contains('dark')
     })
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
         if (mutation.attributeName === 'class') {
           const isDark = document.documentElement.classList.contains('dark')
           artalk?.setDarkMode(isDark)
@@ -45,7 +45,7 @@ const Artalk = ({ siteInfo }) => {
     return () => observer.disconnect()
   }
 
-  return <div id="artalk"></div>
+  return <div id='artalk'></div>
 }
 
 export default Artalk

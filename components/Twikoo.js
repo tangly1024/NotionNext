@@ -51,7 +51,7 @@ const Twikoo = ({ isDarkMode }) => {
     }, 1000)
     return () => clearInterval(interval)
   }, [isDarkMode])
-  return <div id="twikoo"></div>
+  return <div id='twikoo'></div>
 }
 
 export default Twikoo

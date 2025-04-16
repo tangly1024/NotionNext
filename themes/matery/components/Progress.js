@@ -11,7 +11,8 @@ const Progress = ({ targetRef, showPercent = true }) => {
   const [percent, changePercent] = useState(0)
   const scrollListener = () => {
     requestAnimationFrame(() => {
-      const target = currentRef || (isBrowser && document.getElementById('article-wrapper'))
+      const target =
+        currentRef || (isBrowser && document.getElementById('article-wrapper'))
       if (target) {
         const clientHeight = target.clientHeight
         const scrollY = window.pageYOffset
@@ -30,13 +31,12 @@ const Progress = ({ targetRef, showPercent = true }) => {
   }, [])
 
   return (
-    <div className="h-4 w-full shadow-2xl bg-gray-400 ">
+    <div className='h-4 w-full shadow-2xl bg-gray-400 '>
       <div
-        className="h-4 bg-indigo-400 duration-200"
-        style={{ width: `${percent}%` }}
-      >
+        className='h-4 bg-indigo-400 duration-200'
+        style={{ width: `${percent}%` }}>
         {showPercent && (
-          <div className="text-right text-white text-xs">{percent}%</div>
+          <div className='text-right text-white text-xs'>{percent}%</div>
         )}
       </div>
     </div>

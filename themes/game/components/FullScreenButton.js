@@ -13,7 +13,9 @@ export default function FullScreenButton() {
       inline: 'nearest'
     })
     document?.getElementById('game-wrapper')?.contentWindow?.toggleFullScreen &&
-      document?.getElementById('game-wrapper')?.contentWindow?.toggleFullScreen()
+      document
+        ?.getElementById('game-wrapper')
+        ?.contentWindow?.toggleFullScreen()
   }
 
   return (
@@ -25,7 +27,9 @@ export default function FullScreenButton() {
         title='full screen'
         className='cursor-pointer fas fa-expand group-hover:scale-125 transition-all duration-150 '
       />
-      <span className='h-full flex mx-2 md:hidden items-center select-none'>FullScreen</span>
+      <span className='h-full flex mx-2 md:hidden items-center select-none'>
+        FullScreen
+      </span>
     </div>
   )
 }

@@ -15,8 +15,9 @@ export const Features = () => {
       {/* <!-- ====== Features Section Start --> */}
       <section className='pb-8 pt-20 dark:bg-dark lg:pb-[40px] lg:pt-[120px]'>
         <div className='container'>
-
-          <div className='-mx-4 flex flex-wrap wow fadeInUp' data-wow-delay='.2s'>
+          <div
+            className='-mx-4 flex flex-wrap wow fadeInUp'
+            data-wow-delay='.2s'>
             <div className='w-full px-4'>
               <div className='mx-auto mb-12 lg:mb-[40px]'>
                 <span className='px-3 py-0.5 rounded-2xl dark:bg-dark-1 border border-gray-200 dark:border-[#333333] dark:text-white'>
@@ -33,13 +34,20 @@ export const Features = () => {
           </div>
           {/* 支持三个特性 */}
           <div className='-mx-4 flex flex-col md:flex-row gap-4 px-4'>
-
             <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
-              <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
+              <div
+                className='wow fadeInUp group flex-col space-y-2 flex'
+                data-wow-delay='.1s'>
                 <div className='flex w-12 h-12'>
                   <div className='overflow-hidden w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
-                    <i className={siteConfig('PROXIO_FEATURE_1_ICON_CLASS') + ' absolute'}></i>
-                    <LazyImage src={siteConfig('PROXIO_FEATURE_1_ICON_IMG_URL')} className='z-10' />
+                    <i
+                      className={
+                        siteConfig('PROXIO_FEATURE_1_ICON_CLASS') + ' absolute'
+                      }></i>
+                    <LazyImage
+                      src={siteConfig('PROXIO_FEATURE_1_ICON_IMG_URL')}
+                      className='z-10'
+                    />
                   </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
@@ -52,11 +60,16 @@ export const Features = () => {
             </div>
 
             <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
-              <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
+              <div
+                className='wow fadeInUp group flex-col space-y-2 flex'
+                data-wow-delay='.1s'>
                 <div className='flex w-12 h-12'>
                   <div className='overflow-hidden w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
                     <i class={siteConfig('PROXIO_FEATURE_2_ICON_CLASS')}></i>
-                    <LazyImage src={siteConfig('PROXIO_FEATURE_2_ICON_IMG_URL')} className='z-10' />
+                    <LazyImage
+                      src={siteConfig('PROXIO_FEATURE_2_ICON_IMG_URL')}
+                      className='z-10'
+                    />
                   </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
@@ -69,11 +82,16 @@ export const Features = () => {
             </div>
 
             <div className='w-full p-6 rounded-xl border border-gray-200 dark:border-[#333333]'>
-              <div className='wow fadeInUp group flex-col space-y-2 flex' data-wow-delay='.1s'>
+              <div
+                className='wow fadeInUp group flex-col space-y-2 flex'
+                data-wow-delay='.1s'>
                 <div className='flex w-12 h-12'>
                   <div className='overflow-hidden w-full flex justify-center items-center rounded-xl border border-gray-200 dark:border-[#333333] dark:text-white'>
                     <i class={siteConfig('PROXIO_FEATURE_3_ICON_CLASS')}></i>
-                    <LazyImage src={siteConfig('PROXIO_FEATURE_3_ICON_IMG_URL')} className='z-10' />
+                    <LazyImage
+                      src={siteConfig('PROXIO_FEATURE_3_ICON_IMG_URL')}
+                      className='z-10'
+                    />
                   </div>
                 </div>
                 <h4 className='mb-3 text-xl font-bold text-dark dark:text-white'>
@@ -84,7 +102,6 @@ export const Features = () => {
                 </p>
               </div>
             </div>
-
           </div>
 
           <div className='mt-8 w-full flex justify-center items-center'>
@@ -92,7 +109,7 @@ export const Features = () => {
               href={siteConfig('PROXIO_FEATURE_BUTTON_URL', '')}
               className='px-4 py-2 rounded-3xl border dark:border-gray-200 border-[#333333] text-base font-medium text-dark hover:bg-gray-100 dark:text-white dark:hover:bg-white dark:hover:text-black duration-200'>
               {siteConfig('PROXIO_FEATURE_BUTTON_TEXT')}
-              <i className="pl-4 fa-solid fa-arrow-right"></i>
+              <i className='pl-4 fa-solid fa-arrow-right'></i>
             </Link>
           </div>
         </div>

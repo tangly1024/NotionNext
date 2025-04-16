@@ -13,10 +13,13 @@ const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
-  const pagePrefix =  router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath
+    .split('?')[0]
+    .replace(/\/page\/[1-9]\d*/, '')
+    .replace(/\/$/, '')
 
   return (
-    <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
+    <div className='my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2'>
       <Link
         href={{
           pathname:
@@ -26,12 +29,11 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-        rel="prev"
+        rel='prev'
         className={`${
           currentPage === 1 ? 'invisible' : 'visible'
         } text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}>
         ←{locale.PAGINATION.PREV}
-
       </Link>
       <Link
         href={{
@@ -39,11 +41,10 @@ const PaginationSimple = ({ page, showNext }) => {
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref
-        rel="next"
+        rel='next'
         className={`${
           showNext ? 'visible' : 'invisible'
         } text-center w-full duration-200 px-4 py-2 hover:border-black border-b-2 hover:font-bold`}>
-
         {locale.PAGINATION.NEXT}→
       </Link>
     </div>

@@ -7,9 +7,7 @@ const StarrySky = () => {
       window.renderStarrySky && window.renderStarrySky()
     })
   }, [])
-  return (
-    <></>
-  )
+  return <></>
 }
 
 export default StarrySky

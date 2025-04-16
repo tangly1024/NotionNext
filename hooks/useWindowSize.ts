@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 interface WindowSize {
-  width: number,
+  width: number
   height: number
 }
 
