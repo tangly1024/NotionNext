@@ -13,5 +13,5 @@ export default function WebWhiz() {
     baseUrl: siteConfig('WEB_WHIZ_BASE_URL'),
     chatbotId: siteConfig('WEB_WHIZ_CHAT_BOT_ID')
   }
-  return <ExternalScript {...props}/>
+  return <ExternalScript {...props} />
 }

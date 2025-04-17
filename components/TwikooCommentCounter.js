@@ -10,7 +10,7 @@ import { useEffect } from 'react'
  * @constructor
  */
 
-const TwikooCommentCounter = (props) => {
+const TwikooCommentCounter = props => {
   let commentsData = []
   const { theme } = useGlobal()
   const router = useRouter()
@@ -35,25 +35,28 @@ const TwikooCommentCounter = (props) => {
    * 加载外部twikoojs
    * @param {*} posts
    */
-  const fetchTwikooData = async (posts) => {
+  const fetchTwikooData = async posts => {
     posts.forEach(post => {
       post.slug = post.slug.startsWith('/') ? post.slug : `/${post.slug}`
     })
     try {
       await loadExternalResource(twikooCDNURL, 'js')
       const twikoo = window.twikoo
-      twikoo.getCommentsCount({
-        envId: twikooENVID, // 环境 ID
-        // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，如果您的环境地域不是上海，需传此参数
-        urls: posts?.map(post => post.slug), // 不包含协议、域名、参数的文章路径列表，必传参数
-        includeReply: true // 评论数是否包括回复，默认：false
-      }).then(function (res) {
-        commentsData = res
-        updateCommentCount()
-      }).catch(function (err) {
-        // 发生错误
-        console.error(err)
-      })
+      twikoo
+        .getCommentsCount({
+          envId: twikooENVID, // 环境 ID
+          // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，如果您的环境地域不是上海，需传此参数
+          urls: posts?.map(post => post.slug), // 不包含协议、域名、参数的文章路径列表，必传参数
+          includeReply: true // 评论数是否包括回复，默认：false
+        })
+        .then(function (res) {
+          commentsData = res
+          updateCommentCount()
+        })
+        .catch(function (err) {
+          // 发生错误
+          console.error(err)
+        })
     } catch (error) {
       console.error('twikoo 加载失败', error)
     }
@@ -67,12 +70,16 @@ const TwikooCommentCounter = (props) => {
       const matchingRes = commentsData.find(r => r.url === post.slug)
       if (matchingRes) {
         // 修改评论数量div
-        const textElements = document.querySelectorAll(`.comment-count-text-${post.id}`)
+        const textElements = document.querySelectorAll(
+          `.comment-count-text-${post.id}`
+        )
         textElements.forEach(element => {
           element.innerHTML = matchingRes.count
         })
         // 取消隐藏
-        const wrapperElements = document.querySelectorAll(`.comment-count-wrapper-${post.id}`)
+        const wrapperElements = document.querySelectorAll(
+          `.comment-count-wrapper-${post.id}`
+        )
         wrapperElements.forEach(element => {
           element.classList.remove('hidden')
         })

@@ -7,7 +7,14 @@ import { useEffect, useImperativeHandle } from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const SideBarDrawer = ({ post, cRef, tags, slot, categories, currentCategory }) => {
+const SideBarDrawer = ({
+  post,
+  cRef,
+  tags,
+  slot,
+  categories,
+  currentCategory
+}) => {
   // 暴露给父组件 通过cRef.current.handleMenuClick 调用
   useImperativeHandle(cRef, () => {
     return {
@@ -32,9 +39,11 @@ const SideBarDrawer = ({ post, cRef, tags, slot, categories, currentCategory }) 
   }, [router.events])
 
   // 点击按钮更改侧边抽屉状态
-  const switchSideDrawerVisible = (showStatus) => {
+  const switchSideDrawerVisible = showStatus => {
     const sideBarDrawer = window.document.getElementById('sidebar-drawer')
-    const sideBarDrawerBackground = window.document.getElementById('sidebar-drawer-background')
+    const sideBarDrawerBackground = window.document.getElementById(
+      'sidebar-drawer-background'
+    )
 
     if (showStatus) {
       sideBarDrawer.classList.replace('-ml-80', 'ml-0')
@@ -45,13 +54,28 @@ const SideBarDrawer = ({ post, cRef, tags, slot, categories, currentCategory }) 
     }
   }
 
-  return <div id='sidebar-wrapper' className='hidden'>
-    <div id='sidebar-drawer' className='-ml-80 bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-40'>
-      <SideBar tags={tags} post={post} slot={slot} categories={categories} currentCategory={currentCategory} />
+  return (
+    <div id='sidebar-wrapper' className='hidden'>
+      <div
+        id='sidebar-drawer'
+        className='-ml-80 bg-white dark:bg-gray-900 flex flex-col duration-300 fixed h-full left-0 overflow-y-scroll scroll-hidden top-0 z-40'>
+        <SideBar
+          tags={tags}
+          post={post}
+          slot={slot}
+          categories={categories}
+          currentCategory={currentCategory}
+        />
+      </div>
+      {/* 背景蒙版 */}
+      <div
+        id='sidebar-drawer-background'
+        onClick={() => {
+          switchSideDrawerVisible(false)
+        }}
+        className='hidden animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-30 w-full h-full glassmorphism'
+      />
     </div>
-    {/* 背景蒙版 */}
-    <div id='sidebar-drawer-background' onClick={() => { switchSideDrawerVisible(false) }} className='hidden animate__animated animate__fadeIn fixed top-0 duration-300 left-0 z-30 w-full h-full glassmorphism' />
-
-  </div>
+  )
 }
 export default SideBarDrawer

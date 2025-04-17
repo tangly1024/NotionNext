@@ -7,7 +7,7 @@ import { siteConfig } from '@/lib/config'
  * @param {prev,next} param0
  * @returns
  */
-export default function ArticleAdjacent ({ prev, next }) {
+export default function ArticleAdjacent({ prev, next }) {
   if (!prev || !next || !siteConfig('HEXO_ARTICLE_ADJACENT', null, CONFIG)) {
     return <></>
   }
@@ -17,9 +17,8 @@ export default function ArticleAdjacent ({ prev, next }) {
         href={`/${prev.slug}`}
         passHref
         className='py-1  cursor-pointer hover:underline justify-start items-center dark:text-white flex w-full h-full duration-200'>
-
-        <i className='mr-1 fas fa-angle-left' />{prev.title}
-
+        <i className='mr-1 fas fa-angle-left' />
+        {prev.title}
       </Link>
       <Link
         href={`/${next.slug}`}
@@ -27,7 +26,6 @@ export default function ArticleAdjacent ({ prev, next }) {
         className='py-1 cursor-pointer hover:underline justify-end items-center dark:text-white flex w-full h-full duration-200'>
         {next.title}
         <i className='ml-1 my-1 fas fa-angle-right' />
-
       </Link>
     </section>
   )

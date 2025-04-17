@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 let path = ''
 
-export default function Busuanzi () {
+export default function Busuanzi() {
   const { theme } = useGlobal()
   const router = useRouter()
   router.events.on('routeChangeComplete', (url, option) => {

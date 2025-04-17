@@ -1,5 +1,4 @@
 const CONFIG = {
-
   // 菜单配置
   NOBELIUM_MENU_CATEGORY: false, // 显示分类
   NOBELIUM_MENU_TAG: true, // 显示标签
@@ -8,6 +7,5 @@ const CONFIG = {
   NOBELIUM_MENU_RSS: false, // 显示订阅
 
   NOBELIUM_NAV_NOTION_ICON: true // 是否读取Notion图标作为站点头像
-
 }
 export default CONFIG

@@ -160,7 +160,7 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
 /**
  * 将mermaid语言 渲染成图片
  */
-const renderMermaid = async(mermaidCDN) => {
+const renderMermaid = async mermaidCDN => {
   const observer = new MutationObserver(async mutationsList => {
     for (const m of mutationsList) {
       if (m.target.className === 'notion-code language-mermaid') {

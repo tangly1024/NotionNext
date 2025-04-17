@@ -21,14 +21,15 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
       setLoadingState(true)
       location.href = '/search/' + key
     } else {
-      router.push({ pathname: '/' }).then(r => {
-      })
+      router.push({ pathname: '/' }).then(r => {})
     }
   }
-  const handleKeyUp = (e) => {
-    if (e.keyCode === 13) { // 回车
+  const handleKeyUp = e => {
+    if (e.keyCode === 13) {
+      // 回车
       handleSearch(searchInputRef.current.value)
-    } else if (e.keyCode === 27) { // ESC
+    } else if (e.keyCode === 27) {
+      // ESC
       cleanSearch()
     }
   }
@@ -37,7 +38,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
   }
 
   const [showClean, setShowClean] = useState(false)
-  const updateSearchKey = (val) => {
+  const updateSearchKey = val => {
     if (lock) {
       return
     }
@@ -49,38 +50,48 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
       setShowClean(false)
     }
   }
-  function lockSearchInput () {
+  function lockSearchInput() {
     lock = true
   }
 
-  function unLockSearchInput () {
+  function unLockSearchInput() {
     lock = false
   }
 
-  return <div className={'flex w-full bg-gray-100 ' + className}>
-    <input
-      ref={searchInputRef}
-      type='text'
-      className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
-      onKeyUp={handleKeyUp}
-      onCompositionStart={lockSearchInput}
-      onCompositionUpdate={lockSearchInput}
-      onCompositionEnd={unLockSearchInput}
-      onChange={e => updateSearchKey(e.target.value)}
-      defaultValue={currentSearch}
-    />
+  return (
+    <div className={'flex w-full bg-gray-100 ' + className}>
+      <input
+        ref={searchInputRef}
+        type='text'
+        className={
+          'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'
+        }
+        onKeyUp={handleKeyUp}
+        onCompositionStart={lockSearchInput}
+        onCompositionUpdate={lockSearchInput}
+        onCompositionEnd={unLockSearchInput}
+        onChange={e => updateSearchKey(e.target.value)}
+        defaultValue={currentSearch}
+      />
 
-    <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
-      onClick={handleSearch}>
-        <i className={`hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'} `} />
-    </div>
-
-    {(showClean &&
-      <div className='-ml-12 cursor-pointer float-right items-center justify-center py-2'>
-        <i className='fas fa-times hover:text-black transform duration-200 text-gray-400 cursor-pointer   dark:hover:text-gray-300' onClick={cleanSearch} />
+      <div
+        className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
+        onClick={handleSearch}>
+        <i
+          className={`hover:text-black transform duration-200 text-gray-500  dark:hover:text-gray-300 cursor-pointer fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-search'} `}
+        />
       </div>
+
+      {showClean && (
+        <div className='-ml-12 cursor-pointer float-right items-center justify-center py-2'>
+          <i
+            className='fas fa-times hover:text-black transform duration-200 text-gray-400 cursor-pointer   dark:hover:text-gray-300'
+            onClick={cleanSearch}
+          />
+        </div>
       )}
-  </div>
+    </div>
+  )
 }
 
 export default SearchInput

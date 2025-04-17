@@ -12,7 +12,7 @@ import TagItemMini from './TagItemMini'
  * @returns
  */
 const BlogCard = ({ showAnimate, post, showSummary }) => {
-const {siteInfo} =useGlobal()
+  const { siteInfo } = useGlobal()
   const showPreview =
     siteConfig('FUKASAWA_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   // fukasawa 强制显示图片
@@ -26,12 +26,9 @@ const {siteInfo} =useGlobal()
   const showPageCover =
     siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) &&
     post?.pageCoverThumbnail
-    
-  const FUKASAWA_POST_LIST_ANIMATION = siteConfig(
-    'FUKASAWA_POST_LIST_ANIMATION',
-    null,
-    CONFIG
-  ) || showAnimate 
+
+  const FUKASAWA_POST_LIST_ANIMATION =
+    siteConfig('FUKASAWA_POST_LIST_ANIMATION', null, CONFIG) || showAnimate
 
   // 动画样式  首屏卡片不用，后面翻出来的加动画
   const aosProps = FUKASAWA_POST_LIST_ANIMATION

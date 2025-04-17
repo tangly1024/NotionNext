@@ -12,11 +12,13 @@ export default function InformationButton() {
     slideOversRef.current.toggleSlideOvers()
   }
 
-  return <>
-        <div className='cursor-pointer' onClick={toggleCollapsed}>
-            <InformationCircle className={'w-5 h-5'} />
-        </div>
+  return (
+    <>
+      <div className='cursor-pointer' onClick={toggleCollapsed}>
+        <InformationCircle className={'w-5 h-5'} />
+      </div>
 
-        <SlideOvers cRef={slideOversRef} />
+      <SlideOvers cRef={slideOversRef} />
     </>
+  )
 }

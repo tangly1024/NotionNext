@@ -55,11 +55,11 @@ const SearchInput = props => {
       setShowClean(false)
     }
   }
-  function lockSearchInput () {
+  function lockSearchInput() {
     lock = true
   }
 
-  function unLockSearchInput () {
+  function unLockSearchInput() {
     lock = false
   }
 
@@ -67,7 +67,7 @@ const SearchInput = props => {
     <div className={'flex w-full rounded-lg ' + className}>
       <input
         ref={searchInputRef}
-        type="text"
+        type='text'
         className={
           'outline-none w-full text-sm pl-5 rounded-lg transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-white dark:bg-gray-500'
         }
@@ -81,9 +81,8 @@ const SearchInput = props => {
       />
 
       <div
-        className="-ml-8 cursor-pointer  float-right items-center justify-center py-2"
-        onClick={handleSearch}
-      >
+        className='-ml-8 cursor-pointer  float-right items-center justify-center py-2'
+        onClick={handleSearch}>
         <i
           className={`hover:text-black transform duration-200 text-gray-500 dark:text-gray-200 cursor-pointer fas ${
             onLoading ? 'fa-spinner animate-spin' : 'fa-search'
@@ -92,9 +91,9 @@ const SearchInput = props => {
       </div>
 
       {showClean && (
-        <div className="-ml-12 cursor-pointer float-right items-center justify-center py-2">
+        <div className='-ml-12 cursor-pointer float-right items-center justify-center py-2'>
           <i
-            className="hover:text-black transform duration-200 text-gray-400 dark:text-gray-300 cursor-pointer fas fa-times"
+            className='hover:text-black transform duration-200 text-gray-400 dark:text-gray-300 cursor-pointer fas fa-times'
             onClick={cleanSearch}
           />
         </div>

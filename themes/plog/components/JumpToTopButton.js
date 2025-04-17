@@ -10,9 +10,14 @@ import { useGlobal } from '@/lib/global'
  */
 const JumpToTopButton = () => {
   const { locale } = useGlobal()
-  return <div title={locale.POST.TOP} className='cursor-pointer p-2 text-center' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-    ><i className='fas fa-angle-up text-2xl' />
+  return (
+    <div
+      title={locale.POST.TOP}
+      className='cursor-pointer p-2 text-center'
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+      <i className='fas fa-angle-up text-2xl' />
     </div>
+  )
 }
 
 export default JumpToTopButton

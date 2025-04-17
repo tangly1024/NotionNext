@@ -83,9 +83,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               }>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon
-                icon={post.pageIcon}
-                className="heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]" // 专门为 Heo 主题的图标设置样式
-              />
+                  icon={post.pageIcon}
+                  className='heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]' // 专门为 Heo 主题的图标设置样式
+                />
               )}
               <span className='menu-link '>{post.title}</span>
             </Link>
