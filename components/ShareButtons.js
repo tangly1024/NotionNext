@@ -37,6 +37,8 @@ import {
   TumblrShareButton,
   TwitterIcon,
   TwitterShareButton,
+  ThreadsIcon,
+  ThreadsShareButton,
   ViberIcon,
   ViberShareButton,
   VKIcon,
@@ -311,6 +313,16 @@ const ShareButtons = ({ post }) => {
                 className='mx-1'>
                 <HatenaIcon size={32} round />
               </HatenaShareButton>
+            )
+          case 'threads':
+            return (
+              <ThreadsShareButton
+                key={singleService}
+                url={shareUrl}
+                title={titleWithSiteInfo}
+                className='mx-1'>
+                <ThreadsIcon size={32} round />
+              </ThreadsShareButton>
             )
           case 'qq':
             return (
