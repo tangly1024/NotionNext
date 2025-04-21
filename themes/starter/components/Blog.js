@@ -40,13 +40,15 @@ export const Blog = ({ posts }) => {
                     className='wow fadeInUp group mb-10'
                     data-wow-delay='.1s'>
                     <div className='mb-8 overflow-hidden rounded-[5px]'>
-                      <Link href={item?.href} className='block'>
-                        <img
-                          src={item.pageCoverThumbnail}
-                          alt={item.title}
-                          className='w-full transition group-hover:rotate-6 group-hover:scale-125'
-                        />
-                      </Link>
+                      {item.pageCoverThumbnail && (
+                        <Link href={item?.href} className='block'>
+                          <img
+                            src={item.pageCoverThumbnail}
+                            alt={item.title}
+                            className='w-full transition group-hover:rotate-6 group-hover:scale-125'
+                          />
+                        </Link>
+                      )}
                     </div>
                     <div>
                       <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
