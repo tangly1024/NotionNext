@@ -61,16 +61,18 @@ const preBuild = (function () {
  * @returns
  */
 function scanSubdirectories(directory) {
+  // 只保留四个主题
+  const allowedThemes = ['heo', 'magazine', 'proxio', 'landing']
   const subdirectories = []
 
   fs.readdirSync(directory).forEach(file => {
-    const fullPath = path.join(directory, file)
-    const stats = fs.statSync(fullPath)
-    if (stats.isDirectory()) {
-      subdirectories.push(file)
+    if (allowedThemes.includes(file)) {
+      const fullPath = path.join(directory, file)
+      const stats = fs.statSync(fullPath)
+      if (stats.isDirectory()) {
+        subdirectories.push(file)
+      }
     }
-
-    // subdirectories.push(file)
   })
 
   return subdirectories
