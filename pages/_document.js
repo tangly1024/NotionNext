@@ -33,23 +33,7 @@ class MyDocument extends Document {
             })();
           `}} />
 
-          {/* 预加载字体 */}
-          {BLOG.FONT_AWESOME && (
-            <>
-              <link
-                rel='preload'
-                href={BLOG.FONT_AWESOME}
-                as='style'
-                crossOrigin='anonymous'
-              />
-              <link
-                rel='stylesheet'
-                href={BLOG.FONT_AWESOME}
-                crossOrigin='anonymous'
-                referrerPolicy='no-referrer'
-              />
-            </>
-          )}
+          {/* FontAwesome已移至FontAwesomeLazy组件中懒加载 */}
         </Head>
 
         <body>

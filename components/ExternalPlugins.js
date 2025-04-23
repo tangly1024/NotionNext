@@ -12,6 +12,7 @@ import ExternalScript from './ExternalScript'
 import WebWhiz from './Webwhiz'
 import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
+import FontAwesomeLazy from './FontAwesomeLazy'
 
 
 /**
@@ -190,6 +191,7 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
+      <FontAwesomeLazy />
       {ENABLE_ICON_FONT && <IconFont />}
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
