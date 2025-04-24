@@ -329,7 +329,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           </div>
           <div className='text-gray-600 dark:text-gray-300  text-right'>
             <span>
-              <i className='fa-brands fa-algolia'></i> Algolia 提供搜尋服務
+              <i className='fa-brands fa-algolia'></i> Algolia 搜尋
             </span>
           </div>
         </div>
