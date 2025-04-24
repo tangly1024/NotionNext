@@ -43,7 +43,7 @@
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.5.0",
     "react-notion-x": "6.16.0",
-    "react-share": "^5.5.2",
+    "react-share": "^4.4.1",
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
