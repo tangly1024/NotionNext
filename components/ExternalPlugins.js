@@ -14,7 +14,6 @@ import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
 import FontAwesomeLazy from './FontAwesomeLazy'
 
-
 /**
  * 各种插件脚本
  * @param {*} props
@@ -23,7 +22,7 @@ import FontAwesomeLazy from './FontAwesomeLazy'
 const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
-  const {lang} = useGlobal()
+  const { lang } = useGlobal()
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
@@ -173,7 +172,7 @@ const ExternalPlugin = props => {
 
     setTimeout(() => {
       // 映射url
-      convertInnerUrl({ allPages:props?.allNavPages, lang:lang })
+      convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
     }, 500)
   }, [router])
 
@@ -191,7 +190,7 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
-      <FontAwesomeLazy />
+      {siteConfig('FONT_AWESOME') && <FontAwesomeLazy />}
       {ENABLE_ICON_FONT && <IconFont />}
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
