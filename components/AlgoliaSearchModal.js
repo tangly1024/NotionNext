@@ -323,7 +323,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           <div>
             {totalHit > 0 && (
               <p>
-                共搜索到 {totalHit} 条结果，用时 {useTime} 毫秒
+                共搜尋到 {totalHit} 筆結果，用時 {useTime} 毫秒
               </p>
             )}
           </div>
