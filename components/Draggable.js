@@ -143,4 +143,3 @@ export const Draggable = ({ children, stick }) => {
   )
 }
 
-Draggable.defaultProps = { left: 0, top: 0 }
