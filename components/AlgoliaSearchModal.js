@@ -17,15 +17,15 @@ import { useHotkeys } from 'react-hotkeys-hook'
 const ShortCutActions = [
   {
     key: '↑ ↓',
-    action: '选择'
+    action: '選擇'
   },
   {
     key: 'Enter',
-    action: '跳转'
+    action: '跳轉'
   },
   {
     key: 'Esc',
-    action: '关闭'
+    action: '關閉'
   }
 ]
 
@@ -265,7 +265,7 @@ export default function AlgoliaSearchModal({ cRef }) {
 
         <input
           type='text'
-          placeholder='在这里输入搜索关键词...'
+          placeholder='輸入搜尋關鍵字在...'
           onChange={e => handleInputChange(e)}
           onFocus={() => setIsInputFocused(true)} // 聚焦时
           onBlur={() => setIsInputFocused(false)} // 失去焦点时
@@ -329,7 +329,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           </div>
           <div className='text-gray-600 dark:text-gray-300  text-right'>
             <span>
-              <i className='fa-brands fa-algolia'></i> Algolia 提供搜索服务
+              <i className='fa-brands fa-algolia'></i> Algolia 提供搜尋服務
             </span>
           </div>
         </div>
