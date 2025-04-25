@@ -281,8 +281,8 @@ export default function AlgoliaSearchModal({ cRef }) {
           <div>
             <p className=' text-slate-600 text-center my-4 text-base'>
               {' '}
-              無法找到相關資料
-              <span className='font-semibold'>&quot;{keyword}&quot;</span>
+              無法找到
+              <span className='font-semibold'>&nbsp;&quot;{keyword}&quot;&nbsp;</span>相關資料
             </p>
           </div>
         )}
