@@ -1,47 +1,39 @@
-import { useEffect } from 'react'
+import Script from 'next/script'
+import BLOG from '@/blog.config'
 
 /**
  * FontAwesome懒加载组件
- * 用于客户端动态加载FontAwesome字体图标
+ * 使用Next.js的Script组件，确保在浏览器空闲时才加载FontAwesome
  */
 export default function FontAwesomeLazy() {
-  useEffect(() => {
-    // 检查是否在浏览器环境中
-    const isBrowser = typeof window !== 'undefined'
-    if (!isBrowser) return
+  // 如果没有配置FontAwesome，则不加载
+  if (!BLOG.FONT_AWESOME) {
+    return null
+  }
 
-    // 获取配置
-    const BLOG = require('@/blog.config')
-    if (!BLOG.FONT_AWESOME) return
+  return (
+    <Script
+      id="font-awesome"
+      strategy="lazyOnload"
+      dangerouslySetInnerHTML={{
+        __html: `
+          (function() {
+            // 检查是否已经存在FontAwesome元素，避免重复加载
+            if (document.getElementById('font-awesome-css')) return;
 
-    // 检查是否已经存在FontAwesome元素，避免重复加载
-    const existingLink = document.getElementById('font-awesome')
-    if (existingLink) return
+            // 创建link元素
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '${BLOG.FONT_AWESOME}';
+            link.id = 'font-awesome-css';
+            link.crossOrigin = 'anonymous';
+            link.referrerPolicy = 'no-referrer';
 
-    // 创建link元素
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = BLOG.FONT_AWESOME
-    link.id = 'font-awesome'
-    link.crossOrigin = 'anonymous'
-    link.referrerPolicy = 'no-referrer'
-
-    // 添加到head
-    document.head.appendChild(link)
-
-    // 清理函数 - 在实际应用中可能不需要移除FontAwesome
-    // 因为其他组件可能仍需要使用它，所以注释掉
-    /*
-    return () => {
-      const linkElm = document.getElementById('font-awesome')
-      if (linkElm) {
-        linkElm.remove()
-      }
-    }
-    */
-
-    // 空依赖数组是有意为之，我们希望这个副作用只在组件挂载时执行一次
-  }, [])
-
-  return null
+            // 添加到head
+            document.head.appendChild(link);
+          })();
+        `
+      }}
+    />
+  )
 }
