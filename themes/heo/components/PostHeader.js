@@ -18,7 +18,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
   }
   // 文章头图
   const headerImage = post?.pageCover ? post.pageCover : siteInfo?.pageCover
-  const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
+  //const ANALYTICS_BUSUANZI_ENABLE = siteConfig('ANALYTICS_BUSUANZI_ENABLE')
   return (
     <div
       id='post-bg'
@@ -126,8 +126,6 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                 {post.lastEditedDay}
               </div>
             </div>
-
-            
           </section>
         </div>
 
