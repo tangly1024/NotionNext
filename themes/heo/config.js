@@ -8,7 +8,8 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '新建博客正在施工，评论系统即将上线', url: 'https://blog.985864.xyz/' },
+    { title: '4.26休息一天，从Ld修补备份一些老文章', url: 'https://blog.985864.xyz/' },
+    { title: '27日下午会更新，敬请期待', url: 'https://blog.985864.xyz/' },
     { title: '希望您天天开心', url: 'https://blog.985864.xyz/' }
   ],
 
