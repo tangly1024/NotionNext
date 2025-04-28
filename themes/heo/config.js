@@ -8,8 +8,11 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '4.26休息一天，从Ld修补备份一些老文章', url: 'https://blog.985864.xyz/' },
-    { title: '27日下午会更新，敬请期待', url: 'https://blog.985864.xyz/' },
+    { title: '正在修复博客bug...', url: 'https://blog.985864.xyz/' },
+    {
+      title: '即将上线全天候配置系统，敬请期待！',
+      url: 'https://blog.985864.xyz/'
+    },
     { title: '希望您天天开心', url: 'https://blog.985864.xyz/' }
   ],
 
@@ -24,7 +27,8 @@ const CONFIG = {
   HEO_HERO_TITLE_3: 'BLOG.985864.XYZ',
   HEO_HERO_TITLE_4: 'Kai金融时报',
   HEO_HERO_TITLE_5: '每日更新全球资产报告 市场消息与独立观点',
-  HEO_HERO_TITLE_LINK: 'https://blog.985864.xyz/category/%E9%87%91%E8%9E%8D%E6%97%B6%E6%8A%A5',
+  HEO_HERO_TITLE_LINK:
+    'https://blog.985864.xyz/category/%E9%87%91%E8%9E%8D%E6%97%B6%E6%8A%A5',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随意逛逛',
 
