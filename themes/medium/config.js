@@ -15,7 +15,7 @@ const CONFIG = {
   MEDIUM_MENU_CATEGORY: true, // 显示分类
   MEDIUM_MENU_TAG: true, // 显示标签
   MEDIUM_MENU_ARCHIVE: true, // 显示归档
-  MEDIUM_MENU_SEARCH: true, // 显示搜索
+  MEDIUM_MENU_SEARCH: false, // 显示搜索
 
   // Widget
   MEDIUM_WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
