@@ -7,7 +7,7 @@ export default function LogoBar(props) {
 
   return (
     <div id='top-wrapper' className='w-full flex items-center space-x-4'>
-      <Link href='/' className='logo flex items-center text-md md:text-2xl dark:text-gray-200'>
+     <Link href='/' className='logo flex items-center text-lg md:text-2xl dark:text-gray-200'>
         {/* 如果有头像，则显示 */}
         {avatar && (
           <img
