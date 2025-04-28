@@ -23,11 +23,6 @@ class MyDocument extends Document {
             }}
           />
           {/* End Google Tag Manager */}
-          {/* Bing Webmaster Tools Verification */}
-          <meta
-            name='msvalidate.01'
-            content='09D1FAFEB961DD94FEFE68C7FD974192'
-          />
           {/* FontAwesome已移至FontAwesomeLazy组件中懒加载 */}
         </Head>
 

@@ -102,9 +102,21 @@ const SEO = props => {
     <Head>
       {/* 预连接到必要的来源 */}
       <link rel='preconnect' href='https://notion.so' crossOrigin='anonymous' />
-      <link rel='preconnect' href='https://www.notion.so' crossOrigin='anonymous' />
-      <link rel='preconnect' href='https://notionusercontent.com' crossOrigin='anonymous' />
-      <link rel='preconnect' href='https://img.notionusercontent.com' crossOrigin='anonymous' />
+      <link
+        rel='preconnect'
+        href='https://www.notion.so'
+        crossOrigin='anonymous'
+      />
+      <link
+        rel='preconnect'
+        href='https://notionusercontent.com'
+        crossOrigin='anonymous'
+      />
+      <link
+        rel='preconnect'
+        href='https://img.notionusercontent.com'
+        crossOrigin='anonymous'
+      />
 
       {/* DNS预获取 */}
       <link rel='dns-prefetch' href='https://notion.so' />
@@ -133,6 +145,8 @@ const SEO = props => {
           content={SEO_BAIDU_SITE_VERIFICATION}
         />
       )}
+      {/* Bing Webmaster Tools Verification */}
+      <meta name='msvalidate.01' content='09D1FAFEB961DD94FEFE68C7FD974192' />
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
       <meta property='og:locale' content={lang} />
@@ -145,9 +159,6 @@ const SEO = props => {
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
-
-
-
 
       <link rel='icon' href={BLOG_FAVICON} />
 
