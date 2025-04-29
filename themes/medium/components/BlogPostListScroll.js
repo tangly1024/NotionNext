@@ -73,7 +73,7 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
     return (
       <div id='posts-wrapper' ref={targetRef} className='w-full'>
         {/* 文章列表 */}
-        <div className='space-y-1 lg:space-y-4'>
+        <div className='w-full max-w-[680px] px-4 space-y-1 lg:space-y-4'>
           {postsToShow?.map(post => (
             <BlogPostCard key={post.id} post={post} showSummary={true} />
           ))}

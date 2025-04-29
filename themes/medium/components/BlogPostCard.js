@@ -10,9 +10,9 @@ import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
 
 const BlogPostCard = ({ post, showSummary }) => {
-  const showPreview =
-    siteConfig('MEDIUM_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  const showPreview = siteConfig('MEDIUM_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
   const { locale } = useGlobal()
+
   return (
     <div
       key={post.id}
@@ -20,71 +20,66 @@ const BlogPostCard = ({ post, showSummary }) => {
       data-aos-duration='300'
       data-aos-once='false'
       data-aos-anchor-placement='top-bottom'
-      className='mb-6 max-w-7xl border-b dark:border-gray-800 '>
-      <header className='lg:py-8 py-4 flex flex-col w-full'>
-        <Link
-          href={post?.href}
-          passHref
-          className={
-            'cursor-pointer font-bold  hover:underline text-3xl leading-tight text-gray-700 dark:text-gray-300 hover:text-green-500 dark:hover:text-green-400'
-          }>
-          <h2>
-            {siteConfig('MEDIUM_POST_LIST_COVER', null, CONFIG) && (
-              <div className='w-full max-h-96 object-cover overflow-hidden mb-2'>
-                <LazyImage
-                  src={post.pageCoverThumbnail}
-                  style={post.pageCoverThumbnail ? {} : { height: '0px' }}
-                  className='w-full max-h-96 object-cover hover:scale-125 duration-150'
-                />
-              </div>
-            )}
-            {siteConfig('POST_TITLE_ICON') && (
-              <NotionIcon icon={post.pageIcon} />
-            )}
-            {post.title}
-          </h2>
-        </Link>
+      className='mb-8 w-full border-b pb-6 dark:border-gray-800'>
 
-        <div
-          className={
-            'flex mt-2 items-center justify-start flex-wrap space-x-3 text-gray-400'
-          }>
-          <div className='text-sm py-1'>{post.date?.start_date}</div>
-          {siteConfig('MEDIUM_POST_LIST_CATEGORY', null, CONFIG) && (
-            <CategoryItem category={post.category} />
+      {/* Meta信息行 */}
+      <div className='flex flex-wrap items-center text-sm text-gray-500 space-x-3 mb-2'>
+        <div>{post.date?.start_date}</div>
+        {siteConfig('MEDIUM_POST_LIST_CATEGORY', null, CONFIG) && (
+          <CategoryItem category={post.category} />
+        )}
+        {siteConfig('MEDIUM_POST_LIST_TAG', null, CONFIG) &&
+          post?.tagItems?.map(tag => (
+            <TagItemMini key={tag.name} tag={tag} />
+          ))}
+        <TwikooCommentCount post={post} />
+      </div>
+
+      {/* 主体：左文字右缩略图 */}
+      <div className='flex flex-row justify-between items-start'>
+
+        {/* 左边：文字区域 */}
+        <div className='flex flex-col w-[72%] pr-4'>
+
+          {/* 标题 */}
+          <Link
+            href={post?.href}
+            passHref
+            className='cursor-pointer font-bold text-base md:text-xl text-gray-800 dark:text-gray-200 hover:text-green-500'>
+            <h2 className='leading-snug'>
+              {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}
+              {post.title}
+            </h2>
+          </Link>
+
+          {/* 摘要 */}
+          {(!showPreview || showSummary) && (
+         <div className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
+  {post.summary.length > 50
+    ? post.summary.slice(0, 50) + '...'
+    : post.summary}
+</div>
+
           )}
-          {siteConfig('MEDIUM_POST_LIST_TAG', null, CONFIG) &&
-            post?.tagItems?.map(tag => (
-              <TagItemMini key={tag.name} tag={tag} />
-            ))}
-          <TwikooCommentCount post={post} className='hover:underline' />
         </div>
 
-        <div className='flex'></div>
+        {/* 右边：缩略图 */}
+        {siteConfig('MEDIUM_POST_LIST_COVER', null, CONFIG) && post.pageCoverThumbnail && (
+<Link
+  href={post?.href}
+  passHref
+  className='w-[26%] md:w-[22%] lg:w-[18%] flex-shrink-0'>
+  <div className='w-full aspect-[4/3] overflow-hidden rounded-[2px] md:rounded-[4px]'>
+    <LazyImage
+      src={post.pageCoverThumbnail}
+      className='object-cover w-full h-full hover:scale-105 transition-transform duration-300'
+      alt={post.title}
+    />
+  </div>
+</Link>
 
-        {(!showPreview || showSummary) && (
-          <main className='my-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7'>
-            {post.summary}
-          </main>
         )}
-
-        {showPreview && (
-          <div className='overflow-ellipsis truncate'>
-            <NotionPage post={post} />
-            <div className='pointer-events-none border-t pt-8 border-dashed'>
-              <div className='w-full justify-start flex'>
-                <Link
-                  href={post?.href}
-                  passHref
-                  className='hover:bg-opacity-100 hover:scale-105 duration-200 pointer-events-auto transform font-bold text-green-500 cursor-pointer'>
-                  {locale.COMMON.ARTICLE_DETAIL}
-                  <i className='ml-1 fas fa-angle-right' />
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
+      </div>
     </div>
   )
 }
