@@ -25,9 +25,12 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
     <div className='w-full justify-center'>
       <div id='posts-wrapper'>
         {/* 文章列表 */}
-        {posts?.map(post => (
-          <BlogPostCard key={post.id} post={post} />
-        ))}
+      {posts
+  .filter(post => post.category !== 'Neurodivergent') // 先筛掉不要的分类
+  .map(post => (
+    <BlogPostCard key={post.id} post={post} />
+))}
+
       </div>
       <PaginationSimple page={page} totalPage={totalPage} />
     </div>
