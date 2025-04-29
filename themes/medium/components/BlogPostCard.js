@@ -8,6 +8,8 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import CategoryItem from './CategoryItem'
 import TagItemMini from './TagItemMini'
+import dayjs from 'dayjs'
+
 
 const BlogPostCard = ({ post, showSummary }) => {
   const showPreview = siteConfig('MEDIUM_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
@@ -24,7 +26,14 @@ const BlogPostCard = ({ post, showSummary }) => {
 
       {/* Meta信息行 */}
       <div className='flex flex-wrap items-center text-sm text-gray-500 space-x-3 mb-2'>
-        <div>{post.date?.start_date}</div>
+        {post.date?.start_date && (
+  <div>
+    {dayjs(post.date.start_date).year() === dayjs().year()
+      ? dayjs(post.date.start_date).format('MMM D')
+      : dayjs(post.date.start_date).format('MMM D, YYYY')}
+  </div>
+)}
+
         {siteConfig('MEDIUM_POST_LIST_CATEGORY', null, CONFIG) && (
           <CategoryItem category={post.category} />
         )}

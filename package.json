@@ -30,6 +30,7 @@
     "@vercel/analytics": "^1.0.0",
     "algoliasearch": "^4.18.0",
     "axios": "^1.7.2",
+    "dayjs": "^1.11.13",
     "feed": "^4.2.2",
     "ioredis": "^5.4.2",
     "js-md5": "^0.7.3",
