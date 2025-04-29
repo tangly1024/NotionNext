@@ -19,6 +19,9 @@ const CONFIG = {
 
   // Widget
   MEDIUM_WIDGET_REVOLVER_MAPS: process.env.NEXT_PUBLIC_WIDGET_REVOLVER_MAPS || 'false', // 地图插件
-  MEDIUM_WIDGET_TO_TOP: false // 跳回顶部
+  MEDIUM_WIDGET_TO_TOP: false, // 跳回顶部
+
+  // 排除显示的分类
+  EXCLUDED_CATEGORIES: ['Neurodivergent']
 }
 export default CONFIG
