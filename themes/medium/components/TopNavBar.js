@@ -7,6 +7,8 @@ import LogoBar from './LogoBar'
 import { MenuBarMobile } from './MenuBarMobile'
 import { MenuItemDrop } from './MenuItemDrop'
 
+import { useRouter } from 'next/router' // 加这一行
+
 /**
  * 顶部导航栏 + 菜单
  * @param {} param0
@@ -14,6 +16,10 @@ import { MenuItemDrop } from './MenuItemDrop'
  */
 export default function TopNavBar(props) {
   const { className, customNav, customMenu } = props
+const router = useRouter()
+const isACategoryPage = router.asPath.startsWith('/category/ND') // A是你想隐藏导航栏的分类slug
+
+  
   const [isOpen, changeShow] = useState(false)
   const collapseRef = useRef(null)
 
@@ -61,50 +67,53 @@ export default function TopNavBar(props) {
     return null
   }
 
-  return (
-    <div
-      id='top-nav'
-      className={'sticky top-0 lg:relative w-full z-40 ' + className}>
-      {/* 移动端折叠菜单 */}
-      <Collapse
-        type='vertical'
-        collapseRef={collapseRef}
-        isOpen={isOpen}
-        className='md:hidden'>
-        <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
-          <MenuBarMobile
-            {...props}
-            onHeightChange={param =>
-              collapseRef.current?.updateCollapseHeight(param)
-            }
-          />
-        </div>
-      </Collapse>
+ return (
+  <>
+    {!isACategoryPage && (
+      <div
+        id='top-nav'
+        className={'sticky top-0 lg:relative w-full z-40 ' + className}>
+        {/* 移动端折叠菜单 */}
+        <Collapse
+          type='vertical'
+          collapseRef={collapseRef}
+          isOpen={isOpen}
+          className='md:hidden'>
+          <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 lg:hidden '>
+            <MenuBarMobile
+              {...props}
+              onHeightChange={param =>
+                collapseRef.current?.updateCollapseHeight(param)
+              }
+            />
+          </div>
+        </Collapse>
 
-      {/* 导航栏菜单 */}
-      <div className='flex w-full h-20 border-b bg-white dark:bg-hexo-black-gray px-7 items-between'>
-        {/* 左侧图标Logo */}
-        <LogoBar {...props} />
+        {/* 导航栏菜单 */}
+        <div className='flex w-full h-20 border-b bg-white dark:bg-hexo-black-gray px-7 items-between'>
+          {/* 左侧图标Logo */}
+          <LogoBar {...props} />
 
-        {/* 折叠按钮、仅移动端显示 */}
-        <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
-          <div onClick={toggleMenuOpen} className='cursor-pointer'>
-            {isOpen ? (
-              <i className='fas fa-times' />
-            ) : (
-              <i className='fas fa-bars' />
-            )}
+          {/* 折叠按钮、仅移动端显示 */}
+          <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
+            <div onClick={toggleMenuOpen} className='cursor-pointer'>
+              {isOpen ? (
+                <i className='fas fa-times' />
+              ) : (
+                <i className='fas fa-bars' />
+              )}
+            </div>
+          </div>
+
+          {/* 桌面端顶部菜单 */}
+          <div className='hidden md:flex'>
+            {links &&
+              links?.map((link, index) => (
+                <MenuItemDrop key={index} link={link} />
+              ))}
           </div>
         </div>
-
-        {/* 桌面端顶部菜单 */}
-        <div className='hidden md:flex'>
-          {links &&
-            links?.map((link, index) => (
-              <MenuItemDrop key={index} link={link} />
-            ))}
-        </div>
       </div>
-    </div>
-  )
-}
+    )}
+  </>
+)
