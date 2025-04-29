@@ -397,7 +397,7 @@ const ExternalPlugin = props => {
         />
       )}
 
-      {/* 谷歌统计 */}
+      {/* 谷歌统计 现在独立编写代码，改用第一方模式
       {ANALYTICS_GOOGLE_ID && (
         <>
           <script
@@ -419,7 +419,7 @@ const ExternalPlugin = props => {
           />
         </>
       )}
-
+*/}
       {/* Matomo 统计 */}
       {MATOMO_HOST_URL && MATOMO_SITE_ID && (
         <script
