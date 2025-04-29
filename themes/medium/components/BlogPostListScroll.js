@@ -18,12 +18,8 @@ const BlogPostListScroll = ({ posts = [], currentSearch }) => {
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
   const [page, updatePage] = useState(1)
   const router = useRouter()
-// 先克隆一份posts
-let filteredPosts = Object.assign(posts)
-
-// 先排除指定分类，比如 Neurodivergent
-filteredPosts = filteredPosts.filter(post => post.category !== 'Neurodivergent')
-
+  
+  let filteredPosts = Object.assign(posts)
   const searchKey = router?.query?.s || null
   if (searchKey) {
     filteredPosts = posts.filter(post => {
