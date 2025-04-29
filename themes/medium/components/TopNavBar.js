@@ -17,7 +17,7 @@ import { useRouter } from 'next/router' // 加这一行
 export default function TopNavBar(props) {
   const { className, customNav, customMenu } = props
 const router = useRouter()
-const isACategoryPage = router.asPath.startsWith('/category/ND') // A是你想隐藏导航栏的分类slug
+const isACategoryPage = router.asPath.startsWith('/category/Neurodivergent') // A是你想隐藏导航栏的分类slug
 
   
   const [isOpen, changeShow] = useState(false)
