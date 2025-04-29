@@ -3,6 +3,8 @@ import { useGlobal } from '@/lib/global'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import PaginationSimple from './PaginationSimple'
+import CONFIG from '../themes/medium/config' // 根据你的目录
+
 
 /**
  * 文章列表分页表格
@@ -25,9 +27,12 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
     <div className='w-full justify-center'>
       <div id='posts-wrapper'>
         {/* 文章列表 */}
-{posts?.map(post => (
-  <BlogPostCard key={post.id} post={post} />
+{posts
+  .filter(post => !CONFIG.EXCLUDED_CATEGORIES.includes(post.category))
+  .map(post => (
+    <BlogPostCard key={post.id} post={post} />
 ))}
+
 
 
       </div>
