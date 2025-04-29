@@ -3,7 +3,8 @@ import { useGlobal } from '@/lib/global'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import PaginationSimple from './PaginationSimple'
-import CONFIG from '../themes/medium/config' // 根据你的目录
+import CONFIG from '../config'
+
 
 
 /**
