@@ -52,7 +52,7 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { keyword: BLOG.TITLE, page: '1' } }],
+    paths: [{ params: { keyword: 'NotionNext', page: '1' } }],
     fallback: true
   }
 }

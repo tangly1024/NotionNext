@@ -2,12 +2,11 @@ import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
 import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
+import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getPasswordQuery } from '@/lib/password'
-import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { checkSlugHasNoSlash, getRecommendPost } from '@/lib/utils/post'
+import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
@@ -141,59 +140,12 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       props.post = post
     }
   }
-  // 无法获取文章
   if (!props?.post) {
+    // 无法获取文章
     props.post = null
-    return {
-      props,
-      revalidate: process.env.EXPORT
-        ? undefined
-        : siteConfig(
-            'NEXT_REVALIDATE_SECOND',
-            BLOG.NEXT_REVALIDATE_SECOND,
-            props.NOTION_CONFIG
-          )
-    }
-  }
-
-  // 文章内容加载
-  if (!props?.post?.blockMap) {
-    props.post.blockMap = await getPostBlocks(props.post.id, from)
-  }
-
-  // 目录默认加载
-  if (props.post?.blockMap?.block) {
-    props.post.content = Object.keys(props.post.blockMap.block).filter(
-      key => props.post.blockMap.block[key]?.value?.parent_id === props.post.id
-    )
-    props.post.toc = getPageTableOfContents(props.post, props.post.blockMap)
-  }
-
-  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
-  if (BLOG.ALGOLIA_APP_ID) {
-    uploadDataToAlgolia(props?.post)
-  }
-
-  // 推荐关联文章处理
-  const allPosts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
-  )
-  if (allPosts && allPosts.length > 0) {
-    const index = allPosts.indexOf(props.post)
-    props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
-    props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-    props.recommendPosts = getRecommendPost(
-      props.post,
-      allPosts,
-      siteConfig('POST_RECOMMEND_COUNT')
-    )
   } else {
-    props.prev = null
-    props.next = null
-    props.recommendPosts = []
+    await processPostData(props, from)
   }
-
-  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT

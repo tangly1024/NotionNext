@@ -6,9 +6,11 @@ import NotionPage from '@/components/NotionPage'
 import { PWA as initialPWA } from '@/components/PWA'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { deepClone, isBrowser, shuffleArray } from '@/lib/utils'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Announcement from './components/Announcement'
 import { ArticleLock } from './components/ArticleLock'
@@ -352,7 +354,35 @@ const LayoutSlug = props => {
  * @returns
  */
 const Layout404 = props => {
-  return <>404 Not found.</>
+  const router = useRouter()
+  const { locale } = useGlobal()
+  useEffect(() => {
+    // 延时3秒如果加载失败就返回首页
+    setTimeout(() => {
+      const article = isBrowser && document.getElementById('article-wrapper')
+      if (!article) {
+        router.push('/').then(() => {
+          // console.log('找不到页面', router.asPath)
+        })
+      }
+    }, 3000)
+  }, [])
+
+  return (
+    <>
+      <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+        <div className='dark:text-gray-200'>
+          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
+            <i className='mr-2 fas fa-spinner animate-spin' />
+            404
+          </h2>
+          <div className='inline-block text-left h-32 leading-10 items-center'>
+            <h2 className='m-0 p-0'>{locale.NAV.PAGE_NOT_FOUND_REDIRECT}</h2>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
 
 /**
