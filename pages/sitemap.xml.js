@@ -3,12 +3,9 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
+import { getServerSideSitemap } from 'next-sitemap'
 
 export const getServerSideProps = async ctx => {
-  // 设置正确的Content-Type和禁用样式注入
-  ctx.res.setHeader('Content-Type', 'application/xml; charset=utf-8')
-  ctx.res.setHeader('X-Content-Type-Options', 'nosniff')
-
   let fields = []
   const siteIds = BLOG.NOTION_PAGE_ID.split(',')
 
@@ -30,24 +27,14 @@ export const getServerSideProps = async ctx => {
     fields = fields.concat(localeFields)
   }
 
-  fields = getUniqueFields(fields)
-
-  // 生成XML
-  const xml = generateSitemapXml(fields)
+  fields = getUniqueFields(fields);
 
   // 缓存
   ctx.res.setHeader(
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=59'
   )
-
-  // 直接返回XML
-  ctx.res.write(xml)
-  ctx.res.end()
-
-  return {
-    props: {}
-  }
+  return getServerSideSitemap(ctx, fields)
 }
 
 function generateLocalesSitemap(link, allPages, locale) {
@@ -117,43 +104,17 @@ function generateLocalesSitemap(link, allPages, locale) {
 }
 
 function getUniqueFields(fields) {
-  const uniqueFieldsMap = new Map()
+  const uniqueFieldsMap = new Map();
 
   fields.forEach(field => {
-    const existingField = uniqueFieldsMap.get(field.loc)
+    const existingField = uniqueFieldsMap.get(field.loc);
 
-    if (
-      !existingField ||
-      new Date(field.lastmod) > new Date(existingField.lastmod)
-    ) {
-      uniqueFieldsMap.set(field.loc, field)
+    if (!existingField || new Date(field.lastmod) > new Date(existingField.lastmod)) {
+      uniqueFieldsMap.set(field.loc, field);
     }
-  })
+  });
 
-  return Array.from(uniqueFieldsMap.values())
+  return Array.from(uniqueFieldsMap.values());
 }
 
-function generateSitemapXml(fields) {
-  const xmlItems = fields
-    .map(
-      field => `
-    <url>
-      <loc>${field.loc}</loc>
-      <lastmod>${field.lastmod}</lastmod>
-      <changefreq>${field.changefreq}</changefreq>
-      <priority>${field.priority}</priority>
-    </url>
-  `
-    )
-    .join('')
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${xmlItems}
-    </urlset>`
-}
-
-// 导出空组件
-export default function Sitemap() {
-  return null
-}
+export default () => {}
