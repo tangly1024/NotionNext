@@ -25,7 +25,7 @@ export default function NavBar(props) {
 
   const onKeyUp = e => {
     if (e.keyCode === 13) {
-      const search = document.getElementById('simple-search').innerText
+      const search = document.getElementById('simple-search').value
       if (search) {
         router.push({ pathname: '/search/' + search })
       }

@@ -29,10 +29,14 @@ export const MenuItemDrop = ({ link }) => {
 
       {hasSubMenu && (
         <>
-          <div className='cursor-pointer menu-link pl-2 pr-4  no-underline tracking-widest pb-1'>
+          <div className='cursor-pointer menu-link pl-2 pr-4 no-underline tracking-widest pb-1 relative'>
             {link?.icon && <i className={link?.icon} />} {link?.name}
             <i
               className={`px-2 fa fa-angle-down duration-300  ${show ? 'rotate-180' : 'rotate-0'}`}></i>
+            {/* 主菜单下方的安全区域 */}
+            {show && (
+              <div className='absolute w-full h-3 -bottom-1 left-0 bg-transparent z-30'></div>
+            )}
           </div>
         </>
       )}
@@ -41,7 +45,7 @@ export const MenuItemDrop = ({ link }) => {
       {hasSubMenu && (
         <ul
           style={{ backdropFilter: 'blur(3px)' }}
-          className={`${show ? 'visible opacity-100 top-12' : 'invisible opacity-0 top-20'} drop-shadow-md overflow-hidden rounded-md text-black dark:text-white bg-white dark:bg-black transition-all duration-300 z-20 absolute block  `}>
+          className={`${show ? 'visible opacity-100 top-12 pointer-events-auto' : 'invisible opacity-0 top-20 pointer-events-none'} drop-shadow-md overflow-hidden rounded-md text-black dark:text-white bg-white dark:bg-black transition-all duration-300 z-20 absolute block  `}>
           {link.subMenus.map((sLink, index) => {
             return (
               <li
