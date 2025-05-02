@@ -374,7 +374,7 @@
 }
 
 .notion b {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .notion-title {
@@ -545,10 +545,24 @@ summary > .notion-h {
   width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  border-left: 3px solid currentcolor;
-  padding: 0.2em 0.9em;
-  margin: 6px 0;
-  font-size: 1.2em;
+  overflow-wrap: break-word;
+  box-sizing: inherit;
+  margin: 0;
+  margin-left: -20px;
+  padding-left: 23px;
+  font-size: 1em;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.8);
+  box-shadow: rgb(36, 36, 36) 3px 0px 0px 0px inset;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-family: medium-content-sans-serif-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.dark-mode .notion-quote {
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: rgb(255, 255, 255) 3px 0px 0px 0px inset;
 }
 
 .notion-hr {

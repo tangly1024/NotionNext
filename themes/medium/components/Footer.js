@@ -11,17 +11,21 @@ const Footer = ({ title }) => {
 
   return (
     <footer className='z-10 dark:bg-hexo-black-gray flex-shrink-0 justify-center text-center m-auto w-full leading-6 text-sm p-6 relative'>
-      <DarkModeButton />
-      <i className='fas fa-copyright' /> {`${copyrightDate}`}
+      
+      
+      {/*<i className='fas fa-copyright' /> {`${copyrightDate}`} */}
       <span>
-        <i className='mx-1 animate-pulse fas fa-heart' />
+        <h1>{title} 2025 by Louis Kaho</h1> 
+       {/*  <i className='mx-1 animate-pulse fas' />
         <a
           href={siteConfig('LINK')}
           className='underline font-bold text-gray-500 dark:text-gray-300 '>
           {siteConfig('AUTHOR')}
-        </a>
-        .<br />
-        {siteConfig('BEI_AN') && (
+        </a> */}
+        
+        {/* <DarkModeButton /> */}
+        
+        {/* {siteConfig('BEI_AN') && (
           <>
             <i className='fas fa-shield-alt' />
             <a href={siteConfig('BEI_AN_LINK')} className='mr-2'>
@@ -38,9 +42,9 @@ const Footer = ({ title }) => {
         <span className='pl-2 hidden busuanzi_container_site_uv'>
           <i className='fas fa-users' />
           <span className='px-1 busuanzi_value_site_uv'> </span>
-        </span>
-        <br />
-        <h1>{title}</h1>
+        </span> <br /> */}
+      
+        
 
       </span>
     </footer>
