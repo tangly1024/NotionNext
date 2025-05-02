@@ -142,7 +142,7 @@ const SEO = props => {
       {SEO_BAIDU_SITE_VERIFICATION && (
         <meta
           name='baidu-site-verification'
-          content={SEO_BAIDU_SITE_VERIFICATION}
+          content='codeva-h3kANK7e6T'
         />
       )}
       {/* Bing Webmaster Tools Verification */}
@@ -156,11 +156,6 @@ const SEO = props => {
       <meta property='og:image' content={image} />
       <meta property='og:site_name' content={title} />
       <meta property='og:type' content={type} />
-      <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:description' content={description} />
-      <meta name='twitter:title' content={title} />
-      <script src="https://fullkaires.985864.xyz/cdn-cgi/zaraz/i.js"></script>
-
       <link rel='icon' href={BLOG_FAVICON} />
 
       {COMMENT_WEBMENTION_ENABLE && (
