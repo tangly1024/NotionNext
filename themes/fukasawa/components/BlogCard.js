@@ -1,56 +1,109 @@
-import BLOG from '@/blog.config'
+import LazyImage from '@/components/LazyImage'
+import NotionIcon from '@/components/NotionIcon'
+import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import React from 'react'
-import CONFIG_FUKA from '../config_fuka'
+import CONFIG from '../config'
+import TagItemMini from './TagItemMini'
 
-const BlogCard = ({ index, post, showSummary, siteInfo }) => {
-  const showPreview = CONFIG_FUKA.POST_LIST_PREVIEW && post.blockMap
-  // matery 主题默认强制显示图片
-  if (post && !post.page_cover) {
-    post.page_cover = siteInfo?.pageCover
+/**
+ * 文章列表卡片
+ * @param {*} param0
+ * @returns
+ */
+const BlogCard = ({ showAnimate, post, showSummary }) => {
+const {siteInfo} =useGlobal()
+  const showPreview =
+    siteConfig('FUKASAWA_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+  // fukasawa 强制显示图片
+  if (
+    siteConfig('FUKASAWA_POST_LIST_COVER_FORCE', null, CONFIG) &&
+    post &&
+    !post.pageCover
+  ) {
+    post.pageCoverThumbnail = siteInfo?.pageCover
   }
-  const showPageCover = CONFIG_FUKA.POST_LIST_COVER && post?.page_cover
+  const showPageCover =
+    siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) &&
+    post?.pageCoverThumbnail
+    
+  const FUKASAWA_POST_LIST_ANIMATION = siteConfig(
+    'FUKASAWA_POST_LIST_ANIMATION',
+    null,
+    CONFIG
+  ) || showAnimate 
+
+  // 动画样式  首屏卡片不用，后面翻出来的加动画
+  const aosProps = FUKASAWA_POST_LIST_ANIMATION
+    ? {
+        'data-aos': 'fade-up',
+        'data-aos-duration': '300',
+        'data-aos-once': 'true',
+        'data-aos-anchor-placement': 'top-bottom'
+      }
+    : {}
 
   return (
-    <div data-aos="fade-up" data-aos-duration="500" data-aos-once="true"
-         className='w-full lg:max-w-sm p-2 h-full overflow-auto'>
-        <section className="shadow mb-4 p-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg duration-200">
-            <div className="flex flex-col-reverse justify-between duration-300">
-            <div className="p-2 flex flex-col w-full">
-            <Link
-                href={`${BLOG.SUB_PATH}/${post.slug}`}
-                passHref
-                className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'}
-                leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
-
-                {post.title}
-
-            </Link>
-
-            {(!showPreview || showSummary) && (
-                <p className="mt-4 mb-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7 overflow-hidden">
-                {post.summary}
-                </p>
-            )}
+    <article
+      {...aosProps}
+      style={{ maxHeight: '60rem' }}
+      className='w-full lg:max-w-sm p-3 shadow mb-4 mx-2 bg-white dark:bg-hexo-black-gray hover:shadow-lg duration-200'>
+      <div className='flex flex-col justify-between h-full'>
+        {/* 封面图 */}
+        {showPageCover && (
+          <Link href={post?.href} passHref legacyBehavior>
+            <div className='flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden'>
+              <LazyImage
+                src={post?.pageCoverThumbnail}
+                alt={post?.title || siteConfig('TITLE')}
+                className='object-cover w-full h-full hover:scale-125 transform duration-500'
+              />
             </div>
+          </Link>
+        )}
 
-            {showPageCover && (
-            <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
-                <div className="h-40 w-full relative duration-200 cursor-pointer transform overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    src={post?.page_cover}
-                    alt={post.title}
-                    className="w-full hover:scale-125 transform duration-500"
-                ></img>
-                {/* <Image className='hover:scale-105 transform duration-500' src={post?.page_cover} alt={post.title} layout='fill' objectFit='cover' loading='lazy' /> */}
-                </div>
+        {/* 文字部分 */}
+        <div className='flex flex-col w-full'>
+          <h2>
+            <Link
+              passHref
+              href={post?.href}
+              className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
+              {siteConfig('POST_TITLE_ICON') && (
+                <NotionIcon icon={post.pageIcon} />
+              )}{' '}
+              {post.title}
             </Link>
-            )}
-        </div>
-      </section>
-    </div>
+          </h2>
 
+          {(!showPreview || showSummary) && (
+            <main className='my-2 tracking-wide line-clamp-3 text-gray-800 dark:text-gray-300 text-md font-light leading-6'>
+              {post.summary}
+            </main>
+          )}
+
+          {/* 分类标签 */}
+          <div className='mt-auto justify-between flex'>
+            {post.category && (
+              <Link
+                href={`/category/${post.category}`}
+                passHref
+                className='cursor-pointer dark:text-gray-300 font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform'>
+                <i className='mr-1 far fa-folder' />
+                {post.category}
+              </Link>
+            )}
+            <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
+              <div>
+                {post.tagItems?.map(tag => (
+                  <TagItemMini key={tag.name} tag={tag} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
   )
 }
 

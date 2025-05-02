@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
-import React from 'react'
-import CONFIG_MATERY from '../config_matery'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 跳转到网页顶部
@@ -13,7 +13,7 @@ import CONFIG_MATERY from '../config_matery'
 const JumpToTopButton = ({ showPercent = true, percent }) => {
   const { locale } = useGlobal()
 
-  if (!CONFIG_MATERY.WIDGET_TO_TOP) {
+  if (!siteConfig('MATERY_WIDGET_TO_TOP', null, CONFIG)) {
     return <></>
   }
 

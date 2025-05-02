@@ -3,7 +3,6 @@ import InfoCard from './InfoCard'
 import TagGroups from './TagGroups'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import React from 'react'
 
 /**
  * 侧边栏
@@ -36,7 +35,7 @@ const SideBar = (props) => {
               <Link
                 href={'/category'}
                 passHref
-                className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                className='mb-3 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
 
                 {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
 
@@ -54,7 +53,7 @@ const SideBar = (props) => {
               <Link
                 href={'/tag'}
                 passHref
-                className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+                className='text-gray-500 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
 
                 {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
 
@@ -70,18 +69,7 @@ const SideBar = (props) => {
 
       </div>
 
-      <section className='bg-white dark:bg-gray-900'>
-        {/* 信息流广告 */}
-        <ins className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-adtest="on"
-        data-ad-format="fluid"
-        data-ad-layout-key="-5j+cz+30-f7+bf"
-        data-ad-client="ca-pub-2708419466378217"
-        data-ad-slot="1510444138"/>
-      </section>
-
     </aside>
-  );
+  )
 }
 export default SideBar

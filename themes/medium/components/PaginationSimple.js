@@ -14,7 +14,7 @@ const PaginationSimple = ({ page, totalPage }) => {
   const router = useRouter()
   const currentPage = +page
   const showNext = currentPage < totalPage
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
     <div className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">

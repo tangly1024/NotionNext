@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import CONFIG_HEXO from '../config_hexo'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 上一篇，下一篇文章
@@ -7,11 +8,11 @@ import CONFIG_HEXO from '../config_hexo'
  * @returns
  */
 export default function ArticleAdjacent ({ prev, next }) {
-  if (!prev || !next || !CONFIG_HEXO.ARTICLE_ADJACENT) {
+  if (!prev || !next || !siteConfig('HEXO_ARTICLE_ADJACENT', null, CONFIG)) {
     return <></>
   }
   return (
-    <section className='text-gray-800 items-center text-xs md:text-sm flex justify-between m-1 '>
+    <section className='pt-8 text-gray-800 items-center text-xs md:text-sm flex justify-between m-1 '>
       <Link
         href={`/${prev.slug}`}
         passHref
@@ -29,5 +30,5 @@ export default function ArticleAdjacent ({ prev, next }) {
 
       </Link>
     </section>
-  );
+  )
 }

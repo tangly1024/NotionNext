@@ -1,78 +1,74 @@
-import BLOG from 'blog.config'
-import React, { useEffect } from 'react'
-import dynamic from 'next/dynamic'
-
-import 'animate.css'
+// import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
-import '@/styles/nprogress.css'
+import '@/styles/utility-patterns.css'
 
 // core styles shared by all of react-notion-x (required)
-import 'react-notion-x/src/styles.css'
-import '@/styles/notion.css' //  重写部分样式
+import '@/styles/notion.css' //  重写部分notion样式
+import 'react-notion-x/src/styles.css' // 原版的react-notion-x
 
+import useAdjustStyle from '@/hooks/useAdjustStyle'
 import { GlobalContextProvider } from '@/lib/global'
-import { DebugPanel } from '@/components/DebugPanel'
-import { ThemeSwitch } from '@/components/ThemeSwitch'
-import { Fireworks } from '@/components/Fireworks'
-import { Nest } from '@/components/Nest'
-import { FlutteringRibbon } from '@/components/FlutteringRibbon'
-import { Ribbon } from '@/components/Ribbon'
-import { Sakura } from '@/components/Sakura'
-import { StarrySky } from '@/components/StarrySky'
-import MusicPlayer from '@/components/MusicPlayer'
-import ExternalScript from '@/components/ExternalScript'
-import smoothscroll from 'smoothscroll-polyfill'
-import { Analytics } from '@vercel/analytics/react'
+import { getBaseLayoutByTheme } from '@/themes/theme'
+import { useRouter } from 'next/router'
+import { useCallback, useMemo } from 'react'
+import { getQueryParam } from '../lib/utils'
 
-import AOS from 'aos'
-import 'aos/dist/aos.css' // You can also use <link> for styles
-import { isMobile } from '@/lib/utils'
-import TwikooCommentCounter from '@/components/TwikooCommentCounter'
+// 各种扩展插件 这个要阻塞引入
+import BLOG from '@/blog.config'
+import ExternalPlugins from '@/components/ExternalPlugins'
+import SEO from '@/components/SEO'
+import { zhCN } from '@clerk/localizations'
+import dynamic from 'next/dynamic'
+// import { ClerkProvider } from '@clerk/nextjs'
+const ClerkProvider = dynamic(() =>
+  import('@clerk/nextjs').then(m => m.ClerkProvider)
+)
 
-const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
-const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
-const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
-const GoogleAdsense = dynamic(() => import('@/components/GoogleAdsense'), {
-  ssr: false
-})
-const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
-  ssr: false
-})
-
+/**
+ * App挂载DOM 入口文件
+ * @param {*} param0
+ * @returns
+ */
 const MyApp = ({ Component, pageProps }) => {
-  // 外部插件
-  const externalPlugins = <>
-        {JSON.parse(BLOG.THEME_SWITCH) && <ThemeSwitch />}
-        {JSON.parse(BLOG.DEBUG) && <DebugPanel />}
-        {BLOG.ANALYTICS_ACKEE_TRACKER && <Ackee />}
-        {BLOG.ANALYTICS_GOOGLE_ID && <Gtag />}
-        {BLOG.ANALYTICS_VERCEL && <Analytics />}
-        {JSON.parse(BLOG.ANALYTICS_BUSUANZI_ENABLE) && <Busuanzi />}
-        {BLOG.ADSENSE_GOOGLE_ID && <GoogleAdsense />}
-        {BLOG.FACEBOOK_APP_ID && BLOG.FACEBOOK_PAGE_ID && <Messenger />}
-        {JSON.parse(BLOG.FIREWORKS) && <Fireworks />}
-        {JSON.parse(BLOG.SAKURA) && <Sakura />}
-        {JSON.parse(BLOG.STARRY_SKY) && <StarrySky />}
-        {JSON.parse(BLOG.MUSIC_PLAYER) && <MusicPlayer />}
-        {JSON.parse(BLOG.NEST) && <Nest />}
-        {JSON.parse(BLOG.FLUTTERINGRIBBON) && <FlutteringRibbon />}
-        {JSON.parse(BLOG.COMMENT_TWIKOO_COUNT_ENABLE) && <TwikooCommentCounter {...pageProps}/>}
-        {JSON.parse(BLOG.RIBBON) && <Ribbon />}
-        <ExternalScript/>
-    </>
+  // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
+  useAdjustStyle()
 
-  useEffect(() => {
-    AOS.init()
-    if (isMobile()) {
-      smoothscroll.polyfill()
-    }
-  }, [])
+  const route = useRouter()
+  const theme = useMemo(() => {
+    return (
+      getQueryParam(route.asPath, 'theme') ||
+      pageProps?.NOTION_CONFIG?.THEME ||
+      BLOG.THEME
+    )
+  }, [route])
 
+  // 整体布局
+  const GLayout = useCallback(
+    props => {
+      const Layout = getBaseLayoutByTheme(theme)
+      return <Layout {...props} />
+    },
+    [theme]
+  )
+
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const content = (
+    <GlobalContextProvider {...pageProps}>
+      <GLayout {...pageProps}>
+        <SEO {...pageProps} />
+        <Component {...pageProps} />
+      </GLayout>
+      <ExternalPlugins {...pageProps} />
+    </GlobalContextProvider>
+  )
   return (
-        <GlobalContextProvider>
-            <Component {...pageProps} />
-            {externalPlugins}
-        </GlobalContextProvider>
+    <>
+      {enableClerk ? (
+        <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
+      ) : (
+        content
+      )}
+    </>
   )
 }
 

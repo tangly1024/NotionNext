@@ -1,43 +1,37 @@
 import { useGlobal } from '@/lib/global'
-import { ReactCusdis } from 'react-cusdis'
-import BLOG from '@/blog.config'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { loadExternalResource } from '@/lib/utils'
+import { siteConfig } from '@/lib/config'
 
 const CusdisComponent = ({ frontMatter }) => {
-  const { locale } = useGlobal()
   const router = useRouter()
-  const { isDarkMode } = useGlobal()
+  const { isDarkMode, lang } = useGlobal()
+  const src = siteConfig('COMMENT_CUSDIS_SCRIPT_SRC')
+  const i18nForCusdis = siteConfig('LANG').toLowerCase().indexOf('zh') === 0 ? siteConfig('LANG').toLowerCase() : siteConfig('LANG').toLowerCase().substring(0, 2)
+  const langCDN = siteConfig('COMMENT_CUSDIS_LANG_SRC', `https://cusdis.com/js/widget/lang/${i18nForCusdis}.js`)
 
   //   处理cusdis主题
   useEffect(() => {
-    const cusdisThread = document?.getElementById('cusdis_thread')
-    const cusdisIframe = cusdisThread?.getElementsByTagName('iframe')
-    if (cusdisIframe) {
-      const cusdisWrapper = cusdisIframe[0]?.contentDocument?.getElementById('root')
-      if (isDarkMode) {
-        cusdisWrapper?.classList?.remove('light')
-        cusdisWrapper?.classList?.add('dark')
-      } else {
-        cusdisWrapper?.classList?.remove('dark')
-        cusdisWrapper?.classList?.add('light')
-      }
-      if (!cusdisWrapper?.firstElementChild?.classList?.contains('dark:text-gray-100')) {
-        cusdisWrapper?.firstElementChild?.classList?.add('dark:text-gray-100')
-      }
-    }
-  })
+    loadCusdis()
+  }, [isDarkMode, lang])
 
-  return <ReactCusdis
-    lang={locale.LOCALE.toLowerCase()}
-    attrs={{
-      host: BLOG.COMMENT_CUSDIS_HOST,
-      appId: BLOG.COMMENT_CUSDIS_APP_ID,
-      pageId: frontMatter.id,
-      pageTitle: frontMatter.title,
-      pageUrl: BLOG.LINK + router.asPath
-    }}
-  />
+  const loadCusdis = async () => {
+    await loadExternalResource(langCDN, 'js')
+    await loadExternalResource(src, 'js')
+
+    window?.CUSDIS?.initial()
+  }
+
+  return <div id="cusdis_thread"
+        lang={lang.toLowerCase()}
+        data-host={siteConfig('COMMENT_CUSDIS_HOST')}
+        data-app-id={siteConfig('COMMENT_CUSDIS_APP_ID')}
+        data-page-id={frontMatter.id}
+        data-page-url={siteConfig('LINK') + router.asPath}
+        data-page-title={frontMatter.title}
+        data-theme={isDarkMode ? 'dark' : 'light'}
+    ></div>
 }
 
 export default CusdisComponent

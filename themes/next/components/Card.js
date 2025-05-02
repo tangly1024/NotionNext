@@ -1,14 +1,15 @@
-const Card = ({ children, headerSlot, className }) => {
-  return <div
-    data-aos="fade-down"
-    data-aos-duration="300"
-    data-aos-once="true"
-    data-aos-anchor-placement="top-bottom"
-    className={className}>
-    <>{headerSlot}</>
-    <section className="shadow px-2 py-4 bg-white dark:bg-hexo-black-gray hover:shadow-xl duration-200">
-        {children}
-    </section>
-  </div>
+/**
+ * 卡片组件
+ * @param {*} param0
+ * @returns
+ */
+const Card = (props) => {
+  const { children, headerSlot, className } = props
+  return <div className={className}>
+        <>{headerSlot}</>
+        <section className="shadow px-2 py-4 bg-white dark:bg-hexo-black-gray hover:shadow-xl duration-200">
+            {children}
+        </section>
+    </div>
 }
 export default Card

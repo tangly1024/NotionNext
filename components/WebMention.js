@@ -1,7 +1,7 @@
-import BLOG from '@/blog.config'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 评论插件
@@ -78,7 +78,7 @@ const WebmentionReplies = ({ target }) => {
   const [mentions, setMentions] = useState([])
   const fetchMentions = async (target) =>
     fetch(
-      `https://webmention.io/api/mentions.jf2?per-page=500&target=${encodeURIComponent(target)}&token=${BLOG.COMMENT_WEBMENTION.TOKEN}`
+      `https://webmention.io/api/mentions.jf2?per-page=500&target=${encodeURIComponent(target)}&token=${siteConfig('COMMENT_WEBMENTION_TOKEN')}`
     ).then((response) => (response.json ? response.json() : response))
   useEffect(() => {
     async function getMentions() {
@@ -137,8 +137,8 @@ const WebmentionReplies = ({ target }) => {
 
 const WebMentionBlock = ({ frontMatter }) => {
   const router = useRouter()
-  const url = `https://${BLOG.COMMENT_WEBMENTION.HOSTNAME}${router.asPath}`
-  const tweet = `${frontMatter.title} by @${BLOG.COMMENT_WEBMENTION.TWITTER_USERNAME} ${url}`
+  const url = `https://${siteConfig('COMMENT_WEBMENTION_HOSTNAME')}${router.asPath}`
+  const tweet = `${frontMatter.title} by @${siteConfig('COMMENT_WEBMENTION_TWITTER_USERNAME')} ${url}`
 
   return (
     <div className='webmention-block'>

@@ -1,8 +1,8 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import React from 'react'
-import { useGlobal } from '@/lib/global'
-import * as ThemeMap from '@/themes'
 import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { DynamicLayout } from '@/themes/theme'
+import { useRouter } from 'next/router'
 
 /**
  * 标签首页
@@ -10,27 +10,26 @@ import BLOG from '@/blog.config'
  * @returns
  */
 const TagIndex = props => {
-  const { theme } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
-  const { locale } = useGlobal()
-  const { siteInfo } = props
-  const meta = {
-    title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-    description: siteInfo?.description,
-    image: siteInfo?.pageCover,
-    slug: 'tag',
-    type: 'website'
-  }
-  return <ThemeComponents.LayoutTagIndex {...props} meta={meta} />
+  const router = useRouter()
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutTagIndex' {...props} />
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(req) {
+  const { locale } = req
+
   const from = 'tag-index-props'
-  const props = await getGlobalNotionData({ from })
+  const props = await getGlobalData({ from, locale })
   delete props.allPages
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 

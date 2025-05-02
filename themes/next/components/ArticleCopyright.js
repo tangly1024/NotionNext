@@ -1,12 +1,13 @@
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function ArticleCopyright ({ author, url }) {
-  if (!CONFIG_NEXT.ARTICLE_COPYRIGHT) {
+  const { locale } = useGlobal()
+  if (!siteConfig('NEXT_ARTICLE_COPYRIGHT', null, CONFIG)) {
     return <></>
   }
-  const { locale } = useGlobal()
   return (
     <section className="dark:text-gray-300 mt-6">
       <ul className="overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-700 bg-gray-100 p-5 leading-8 border-l-2 border-blue-500">
@@ -28,5 +29,5 @@ export default function ArticleCopyright ({ author, url }) {
         </li>
       </ul>
     </section>
-  );
+  )
 }
