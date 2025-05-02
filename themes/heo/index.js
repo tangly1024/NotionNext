@@ -303,6 +303,13 @@ const LayoutSlug = props => {
               id='article-wrapper'
               itemScope
               itemType='https://schema.org/Article'>
+              {/* 添加结构化数据属性，与OpenGraph标签保持一致 */}
+              <meta itemProp='headline' content={post.title} />
+              <meta itemProp='author' content={siteConfig('AUTHOR')} />
+              <meta itemProp='image' content={post.pageCoverThumbnail || post.page_cover} />
+              <meta itemProp='datePublished' content={post.publishDay || post.createdTime} />
+              <meta itemProp='dateModified' content={post.lastEditedDay} />
+              <meta itemProp='url' content={`${siteConfig('LINK')}/${post.slug}`} />
               {/* Notion文章主体 */}
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
