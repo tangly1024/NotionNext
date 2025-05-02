@@ -64,9 +64,10 @@ const BlogPostCard = ({ post, showSummary }) => {
           {/* 摘要 */}
           {(!showPreview || showSummary) && (
          <div className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
-  {post.summary.length > 50
-    ? post.summary.slice(0, 50) + '...'
-    : post.summary}
+{post.summary && post.summary.length > 50
+  ? post.summary.slice(0, 50) + '...'
+  : post.summary}
+
 </div>
 
           )}
