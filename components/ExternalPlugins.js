@@ -172,7 +172,7 @@ const ExternalPlugin = props => {
 
     setTimeout(() => {
       // 映射url
-      convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
+      convertInnerUrl({ allPages:props?.allNavPages, lang:lang })
     }, 500)
   }, [router])
 
@@ -367,7 +367,7 @@ const ExternalPlugin = props => {
         </>
       )}
 
-      {/* 百度统计 */}
+      {/* 百度统计
       {ANALYTICS_BAIDU_ID && (
         <script
           async
@@ -384,8 +384,8 @@ const ExternalPlugin = props => {
           }}
         />
       )}
-
-      {/* 站长统计 */}
+*/}
+      {/* 站长统计
       {ANALYTICS_CNZZ_ID && (
         <script
           async
@@ -396,7 +396,7 @@ const ExternalPlugin = props => {
           }}
         />
       )}
-
+*/}
       {/* 谷歌统计 现在独立编写代码，改用第一方模式
       {ANALYTICS_GOOGLE_ID && (
         <>
@@ -420,7 +420,7 @@ const ExternalPlugin = props => {
         </>
       )}
 */}
-      {/* Matomo 统计 */}
+      {/* Matomo 统计
       {MATOMO_HOST_URL && MATOMO_SITE_ID && (
         <script
           async
@@ -439,7 +439,7 @@ const ExternalPlugin = props => {
             `
           }}
         />
-      )}
+      )}*/}
     </>
   )
 }

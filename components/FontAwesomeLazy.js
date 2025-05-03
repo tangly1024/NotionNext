@@ -6,10 +6,6 @@ import BLOG from '@/blog.config'
  * 使用Next.js的Script组件，确保在浏览器空闲时才加载FontAwesome
  */
 export default function FontAwesomeLazy() {
-  // 如果没有配置FontAwesome，则不加载
-  if (!BLOG.FONT_AWESOME) {
-    return null
-  }
 
   return (
     <Script
