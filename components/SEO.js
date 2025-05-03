@@ -101,7 +101,22 @@ const SEO = props => {
   return (
     <Head>
       {/* 预连接到必要的来源 */}
-
+      <link rel='preconnect' href='https://notion.so' crossOrigin='anonymous' />
+      <link
+        rel='preconnect'
+        href='https://www.notion.so'
+        crossOrigin='anonymous'
+      />
+      <link
+        rel='preconnect'
+        href='https://notionusercontent.com'
+        crossOrigin='anonymous'
+      />
+      <link
+        rel='preconnect'
+        href='https://img.notionusercontent.com'
+        crossOrigin='anonymous'
+      />
 
       {/* DNS预获取 */}
       <link rel='dns-prefetch' href='https://notion.so' />
