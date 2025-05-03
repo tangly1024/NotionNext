@@ -105,17 +105,17 @@ const SEO = props => {
       <link
         rel='preconnect'
         href='https://www.notion.so'
-        crossOrigin='anonymous'
+        crossOrigin='use-credentials'
       />
       <link
         rel='preconnect'
         href='https://notionusercontent.com'
-        crossOrigin='anonymous'
+        crossOrigin='use-credentials'
       />
       <link
         rel='preconnect'
         href='https://img.notionusercontent.com'
-        crossOrigin='anonymous'
+        crossOrigin='use-credentials'
       />
 
       {/* DNS预获取 */}
