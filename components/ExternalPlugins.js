@@ -12,7 +12,7 @@ import ExternalScript from './ExternalScript'
 import WebWhiz from './Webwhiz'
 import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
-import FontAwesomeLazy from './FontAwesomeLazy'
+
 
 /**
  * 各种插件脚本
@@ -22,7 +22,7 @@ import FontAwesomeLazy from './FontAwesomeLazy'
 const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
-  const { lang } = useGlobal()
+  const {lang} = useGlobal()
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
@@ -172,7 +172,7 @@ const ExternalPlugin = props => {
 
     setTimeout(() => {
       // 映射url
-      convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
+      convertInnerUrl({ allPages:props?.allNavPages, lang:lang })
     }, 500)
   }, [router])
 
@@ -190,7 +190,6 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
-      {siteConfig('FONT_AWESOME') && <FontAwesomeLazy />}
       {ENABLE_ICON_FONT && <IconFont />}
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
@@ -367,7 +366,7 @@ const ExternalPlugin = props => {
         </>
       )}
 
-      {/* 百度统计 */}
+      {/* 百度统计
       {ANALYTICS_BAIDU_ID && (
         <script
           async
@@ -384,8 +383,8 @@ const ExternalPlugin = props => {
           }}
         />
       )}
-
-      {/* 站长统计 */}
+*/}
+      {/* 站长统计
       {ANALYTICS_CNZZ_ID && (
         <script
           async
@@ -396,7 +395,7 @@ const ExternalPlugin = props => {
           }}
         />
       )}
-
+*/}
       {/* 谷歌统计 现在独立编写代码，改用第一方模式
       {ANALYTICS_GOOGLE_ID && (
         <>
@@ -420,7 +419,7 @@ const ExternalPlugin = props => {
         </>
       )}
 */}
-      {/* Matomo 统计 */}
+      {/* Matomo 统计
       {MATOMO_HOST_URL && MATOMO_SITE_ID && (
         <script
           async
@@ -439,7 +438,7 @@ const ExternalPlugin = props => {
             `
           }}
         />
-      )}
+      )}*/}
     </>
   )
 }

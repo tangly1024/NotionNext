@@ -20,19 +20,10 @@ const BLOG = {
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'kai, 博客,blog,金融时报,小作文,段子', // 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
-  BEI_AN_LINK:
-    process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
+  BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
 
   // RSS订阅
   ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
-
-  // 分类映射配置 - 将中文分类映射为英文URL
-  POST_URL_PREFIX_MAPPING_CATEGORY: {
-    知行合一: 'learning',
-    技术分享: 'technology',
-    心情随笔: 'essay',
-    金融时报: 'financial'
-  },
 
   // 其它复杂配置
   // 原配置文件过长，且并非所有人都会用到，故此将配置拆分到/conf/目录下, 按需找到对应文件并修改即可

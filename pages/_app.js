@@ -68,7 +68,6 @@ const MyApp = ({ Component, pageProps }) => {
       ) : (
         content
       )}
-
     </>
   )
 }

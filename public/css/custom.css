@@ -1,12 +1,29 @@
 /* 静态文件导入 自定义样式*/
 
 /* 使用内联SVG替代FontAwesome图标 */
-.custom-info-icon {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.--%3E%3Cpath d='M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+.fa-info::before {
+  content: ''; /* 必须设置为空字符串或其他，以渲染伪元素 */
+  display: inline-block; /* 使其可以设置宽高和背景 */
+  width: 1em;  /* 设置宽度，1em 通常会随字体大小缩放 */
+  height: 1em; /* 设置高度 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='currentColor' d='M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-144c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain; /* 确保 SVG 图标适应容器大小 */
+  background-position: center;
+  vertical-align: middle; /* 调整垂直对齐方式，可能需要根据具体情况微调 */
+  /* 图标颜色将继承父元素的 color 属性。
+     如果需要，也可以直接在这里设置颜色: */
+  /* color: blue; */
+  /* Font Awesome 字体通常会覆盖一些默认样式，
+     如果 SVG 显示不正确，可能需要取消一些继承的字体样式 */
+  /* font-family: initial; */
+  /* font-weight: normal; */
 }
+/* 如果 .fa-info 元素本身不应显示文本内容（例如 <i> 或 <span> 仅用作图标容器），
+   可能需要添加以下样式来隐藏潜在的文本节点或确保只有背景可见 */
+/*
+.fa-info {
+  font-size: 0;  或 color: transparent;
+}
+*/
+/* 但是，由于我们修改的是 ::before 伪元素，通常不需要直接修改 .fa-info 本身 */
