@@ -4,7 +4,7 @@ const BLOG = {
   // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID ||
-    '8c64d3871ab44bff872ab7eaa59beb07',
+    '8c64d3871ab44bff872ab7eaa59beb07',en:'8c64d3871ab44bff872ab7eaa59beb07',
   THEME: process.env.NEXT_PUBLIC_THEME || 'heo', // 当前主题，只支持 heo, magazine, proxio, landing 四个主题
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2025, // e.g if leave this empty, current year will be used.
@@ -25,14 +25,6 @@ const BLOG = {
 
   // RSS订阅
   ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
-
-  // 分类映射配置 - 将中文分类映射为英文URL
-  POST_URL_PREFIX_MAPPING_CATEGORY: {
-    知行合一: 'learning',
-    技术分享: 'technology',
-    心情随笔: 'essay',
-    金融时报: 'financial'
-  },
 
   // 其它复杂配置
   // 原配置文件过长，且并非所有人都会用到，故此将配置拆分到/conf/目录下, 按需找到对应文件并修改即可
