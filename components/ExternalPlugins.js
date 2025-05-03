@@ -12,7 +12,7 @@ import ExternalScript from './ExternalScript'
 import WebWhiz from './Webwhiz'
 import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
-import FontAwesomeLazy from './FontAwesomeLazy'
+
 
 /**
  * 各种插件脚本
