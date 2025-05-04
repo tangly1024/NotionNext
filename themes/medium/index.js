@@ -227,9 +227,9 @@ const LayoutSlug = props => {
             {/* 分享 */}
             <ShareBar post={post} />
             {/* 文章分类和标签信息 */}
-            <div className='flex justify-between'>
-              {siteConfig('MEDIUM_POST_DETAIL_CATEGORY', null, CONFIG) &&
-                post?.category && <CategoryItem category={post?.category} />}
+            <div className='flex justify-between mt-6'>
+             {/*  {siteConfig('MEDIUM_POST_DETAIL_CATEGORY', null, CONFIG) &&
+                post?.category && <CategoryItem category={post?.category} />} */}
               <div>
                 {siteConfig('MEDIUM_POST_DETAIL_TAG', null, CONFIG) &&
                   post?.tagItems?.map(tag => (

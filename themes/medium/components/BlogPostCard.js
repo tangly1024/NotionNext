@@ -69,26 +69,26 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && (
-            <div className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
+         <div className='mt-2 text-sm text-gray-600 dark:text-gray-400'>
               {post.summary && truncateText(post.summary, 52)}
-            </div>
+</div>
           )}
         </div>
 
         {/* 右边：缩略图 */}
         {siteConfig('MEDIUM_POST_LIST_COVER', null, CONFIG) && post.pageCoverThumbnail && (
-          <Link
-            href={post?.href}
-            passHref
-            className='w-[26%] md:w-[22%] lg:w-[18%] flex-shrink-0'>
-            <div className='w-full aspect-[4/3] overflow-hidden rounded-[2px] md:rounded-[4px]'>
-              <LazyImage
-                src={post.pageCoverThumbnail}
-                className='object-cover w-full h-full hover:scale-105 transition-transform duration-300'
-                alt={post.title}
-              />
-            </div>
-          </Link>
+<Link
+  href={post?.href}
+  passHref
+  className='w-[26%] md:w-[22%] lg:w-[18%] flex-shrink-0'>
+  <div className='w-full aspect-[4/3] overflow-hidden rounded-[2px] md:rounded-[4px]'>
+    <LazyImage
+      src={post.pageCoverThumbnail}
+      className='object-cover w-full h-full hover:scale-105 transition-transform duration-300'
+      alt={post.title}
+    />
+  </div>
+</Link>
         )}
       </div>
 
