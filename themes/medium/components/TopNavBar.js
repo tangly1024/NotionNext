@@ -89,7 +89,7 @@ const isACategoryPage = router.asPath.startsWith('/category/Neurodivergent') // 
       </Collapse>
 
       {/* 导航栏菜单 */}
-      <div className='flex w-full h-20 border-b bg-white dark:bg-hexo-black-gray px-7 items-between'>
+      <div className='flex w-full h-20 border-b bg-white dark:bg-hexo-black-gray px-4 items-between'>
         {/* 左侧图标Logo */}
         <LogoBar {...props} />
 
