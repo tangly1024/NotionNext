@@ -208,7 +208,7 @@ const LayoutSlug = props => {
   }, [post])
 
   return (
-    <div>
+    <div class="px-4">
       {/* 文章锁 */}
       {lock && <ArticleLock validPassword={validPassword} />}
 
