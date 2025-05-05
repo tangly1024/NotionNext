@@ -92,7 +92,7 @@ const LayoutBase = props => {
 
           <div
   id='container-inner'
-  className={`px-7 mt-5 ${fullWidth ? '' : 'max-w-5xl'} justify-center mx-auto min-h-screen`}>
+  className={`px-0 mt-5 ${fullWidth ? '' : 'max-w-5xl'} justify-center mx-auto min-h-screen`}>
 
               <Transition
                 show={!onLoading}
@@ -218,7 +218,7 @@ const LayoutSlug = props => {
           <ArticleInfo {...props} />
 
           {/* Notion文章主体 */}
-          <article id='article-wrapper' className='px-1 max-w-4xl'>
+          <article id='article-wrapper' className='max-w-4xl'>
             {post && <NotionPage post={post} />}
           </article>
 
