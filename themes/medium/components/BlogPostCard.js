@@ -48,7 +48,7 @@ const BlogPostCard = ({ post, showSummary }) => {
       data-aos-duration='300'
       data-aos-once='false'
       data-aos-anchor-placement='top-bottom'
-      className='mb-8 w-full border-b border-gray-150 pb-6 dark:border-gray-800'>
+      className='mb-8 w-full border-b border-gray-100 pb-6 dark:border-gray-800'>
 
       {/* 主体：左文字右缩略图 */}
       <div className='flex px-4 flex-row justify-between items-start'>
