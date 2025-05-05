@@ -56,9 +56,9 @@ export default function ArticleInfo(props) {
             <span className="mx-1">· {post.wordCount} words</span>
           )}
           {/* 阅读数 */}
-          <span className="mx-1 busuanzi_container_page_pv">
+         {/*  <span className="mx-1 busuanzi_container_page_pv">
             · <span className="busuanzi_value_page_pv" /> views
-          </span>
+          </span> */}
         </div>
 
         {/* meta */}
