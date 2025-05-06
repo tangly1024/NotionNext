@@ -18,6 +18,7 @@ import { ArticleLock } from './components/ArticleLock'
 import BlogArchiveItem from './components/BlogArchiveItem'
 import BlogPostBar from './components/BlogPostBar'
 import BlogPostListPage from './components/BlogPostListPage'
+import BlogPostCard from './components/BlogPostCard'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import BottomMenuBar from './components/BottomMenuBar'
 import Catalog from './components/Catalog'
@@ -238,7 +239,34 @@ const LayoutSlug = props => {
               </div>
             </div>
             {/* 上一篇下一篇文章 */}
-            {post?.type === 'Post' && <ArticleAround prev={prev} next={next} />}
+            {post?.type === 'Post' && (
+  <div className="mt-10 border-t pt-6 space-y-6">
+ {prev && (
+  <div>
+    <div className="text-gray-400 text-xs mb-2 flex items-center justify-start space-x-1">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
+        <path d="M8.3685 12L13.1162 3.03212L14.8838 3.9679L10.6315 12L14.8838 20.0321L13.1162 20.9679L8.3685 12Z"></path>
+      </svg>
+      <span>Previous</span>
+    </div>
+    <BlogPostCard post={prev} showSummary={true} />
+  </div>
+)}
+
+{next && (
+  <div>
+    <div className="text-gray-400 text-xs mb-2 flex items-center justify-end space-x-1">
+      <span>Next</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
+        <path d="M15.6315 12L10.8838 3.03212L9.11622 3.9679L13.3685 12L9.11622 20.0321L10.8838 20.9679L15.6315 12Z"></path>
+      </svg>
+    </div>
+    <BlogPostCard post={next} showSummary={true} />
+  </div>
+)}
+  </div>
+)}
+
             {/* 评论区 */}
             <Comment frontMatter={post} />
           </section>

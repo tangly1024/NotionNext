@@ -51,7 +51,8 @@ const BlogPostCard = ({ post, showSummary }) => {
       className='mb-8 w-full border-b border-gray-100 pb-6 dark:border-gray-800'>
 
       {/* 主体：左文字右缩略图 */}
-      <div className='flex px-4 flex-row justify-between items-start'>
+      
+      <div className='flex flex-row justify-between items-start'>
 
         {/* 左边：文字区域 */}
         <div className='flex flex-col w-[72%] pr-4'>
@@ -93,7 +94,7 @@ const BlogPostCard = ({ post, showSummary }) => {
       </div>
 
       {/* Meta信息行 - 移到底部 */}
-      <div className='flex px-4 flex-wrap items-center text-sm text-gray-500 space-x-3 mt-4'>
+      <div className='flex flex-wrap items-center text-sm text-gray-500 space-x-3 mt-4'>
         {post.date?.start_date && (
           <div>
             {dayjs(post.date.start_date).year() === dayjs().year()
@@ -111,6 +112,7 @@ const BlogPostCard = ({ post, showSummary }) => {
           ))}
         <TwikooCommentCount post={post} />
       </div>
+  
     </div>
   )
 }

@@ -25,7 +25,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
   }
 
   return (
-    <div className='w-full justify-center'>
+    <div className='w-full justify-center px-4'>
       <div id='posts-wrapper'>
         {/* 文章列表 */}
 {posts
