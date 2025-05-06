@@ -6,18 +6,20 @@ export default function LogoBar(props) {
   const title = siteConfig('TITLE')   // 取出标题
 
   return (
-    <div id='top-wrapper' className='w-full flex items-center space-x-4'>
-     <Link href='/' className='logo flex items-center text-lg md:text-2xl dark:text-gray-200'>
-        {/* 如果有头像，则显示 */}
-        {avatar && (
-          <img
-            src={avatar}
-            alt='logo'
-            className='w-10 h-10 mr-3'
-          />
-        )}
-        <span>{title}</span>
-      </Link>
+<div id='top-wrapper' className='w-full flex items-center space-x-4'>
+  <Link href='/' className='logo flex items-center space-x-3'>
+    {avatar && (
+      <img
+        src={avatar}
+        alt='logo'
+        className='w-10 h-10'
+      />
+    )}
+    <div className="flex flex-col">
+      <span className="text-xl md:text-3xl text-gray-800 dark:text-gray-200">{title}</span>
+      <span className="text-[11px] text-gray-300 dark:text-gray-400">Louis, quietly ongoing</span>
     </div>
+  </Link>
+</div>
   )
 }

@@ -94,12 +94,25 @@ const isACategoryPage = router.asPath.startsWith('/category/Neurodivergent') // 
         <LogoBar {...props} />
 
         {/* 折叠按钮、仅移动端显示 */}
-        <div className='mr-1 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
+        <div className='mr-0 flex md:hidden justify-end items-center text-sm space-x-4 font-serif dark:text-gray-200'>
           <div onClick={toggleMenuOpen} className='cursor-pointer'>
             {isOpen ? (
-              <i className='fas fa-times' />
-            ) : (
-              <i className='fas fa-bars' />
+           <svg
+           xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 24 24"
+           fill="currentColor"
+           className="w-5 h-5 text-gray-800 dark:text-gray-200">
+           <path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z" />
+         </svg>
+         ) : (
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-5 h-5 text-gray-800 dark:text-gray-200"
+        >
+          <path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z" />
+        </svg>
             )}
           </div>
         </div>
