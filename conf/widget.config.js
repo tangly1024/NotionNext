@@ -37,6 +37,12 @@ module.exports = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
+      name: 'Lucioles en ré mineur',
+      artist: 'Chris Garneau',
+      url: 'http://music.163.com/song/media/outer/url?id=16966395.mp3',
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
+    },
+    {
       name: '彷徨人の詩',
       artist: '佐藤天平',
       url: 'http://music.163.com/song/media/outer/url?id=2122173291.mp3',
