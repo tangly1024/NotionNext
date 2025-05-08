@@ -17,7 +17,7 @@ export default function LogoBar(props) {
     )}
     <div className="flex flex-col">
       <span className="text-xl md:text-3xl text-gray-800 dark:text-gray-200">{title}</span>
-      <span className="text-[11px] text-gray-300 dark:text-gray-400">Louis, a slice of life</span>
+      <span className="text-[12px] text-gray-300 dark:text-gray-400">Louis, a slice of life</span>
     </div>
   </Link>
 </div>

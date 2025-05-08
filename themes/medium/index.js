@@ -33,8 +33,10 @@ import TagGroups from './components/TagGroups'
 import TagItemMini from './components/TagItemMini'
 import TocDrawer from './components/TocDrawer'
 import TopNavBar from './components/TopNavBar'
+import EmojiReaction from './components/EmojiReaction'
 import CONFIG from './config'
 import { Style } from './style'
+
 
 // 主题全局状态
 const ThemeGlobalMedium = createContext()
@@ -227,6 +229,10 @@ const LayoutSlug = props => {
           <section>
             {/* 分享 */}
             <ShareBar post={post} />
+
+           {/* 👍 插入 Emoji 区块 */}
+      <EmojiReaction slug={router.asPath} />
+
             {/* 文章分类和标签信息 */}
             <div className='flex justify-between mt-6'>
              {/*  {siteConfig('MEDIUM_POST_DETAIL_CATEGORY', null, CONFIG) &&
