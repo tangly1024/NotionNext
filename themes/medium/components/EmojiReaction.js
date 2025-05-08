@@ -45,7 +45,7 @@ const EmojiReaction = ({ slug }) => {
   }
 
   return (
-    <div className="flex w-full mt-14 mb-8">
+    <div className="flex w-full mt-14 mb-8"> 
       {EMOJIS.map(({ icon, label }) => (
         <button
           key={label}
