@@ -242,11 +242,7 @@ const LayoutSlug = props => {
                   post?.tagItems?.map(tag => (
                     <TagItemMini key={tag.name} tag={tag} />
                   ))}
-
-                                    {/* 评论区 */}
-            <Comment frontMatter={post} />
               </div>
-        
             </div>
             {/* 上一篇下一篇文章 */}
             {post?.type === 'Post' && (
@@ -277,7 +273,8 @@ const LayoutSlug = props => {
   </div>
 )}
 
-
+            {/* 评论区 */}
+            <Comment frontMatter={post} />
           </section>
 
           {/* 移动端目录 */}
