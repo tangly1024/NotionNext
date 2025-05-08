@@ -232,7 +232,7 @@ const LayoutSlug = props => {
 
            {/* 👍 插入 Emoji 区块 */}
       <EmojiReaction slug={router.asPath} />
-      
+
         {/* 评论区 */}
         <Comment frontMatter={post} />
 
@@ -275,9 +275,6 @@ const LayoutSlug = props => {
 )}
   </div>
 )}
-
-            {/* 评论区 */}
-            <Comment frontMatter={post} />
           </section>
 
           {/* 移动端目录 */}
