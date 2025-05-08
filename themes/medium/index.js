@@ -232,6 +232,9 @@ const LayoutSlug = props => {
 
            {/* 👍 插入 Emoji 区块 */}
       <EmojiReaction slug={router.asPath} />
+      
+        {/* 评论区 */}
+        <Comment frontMatter={post} />
 
             {/* 文章分类和标签信息 */}
             <div className='flex justify-between mt-6'>
