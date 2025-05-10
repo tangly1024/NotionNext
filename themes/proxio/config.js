@@ -7,15 +7,17 @@ const CONFIG = {
 
     // 英雄区块导航
     PROXIO_HERO_ENABLE: true, // 开启英雄区
-    PROXIO_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
-    PROXIO_HERO_TITLE_2: '通过笔记无感知地建站、成倍放大您的价值', // 英雄区文字
+    //PROXIO_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
+    PROXIO_HERO_TITLE_1: 'Notion搭建', // 英雄区文字
+    PROXIO_HERO_TITLE_2: '分享我的日常', // 英雄区文字
     // 英雄区两个按钮，如果TEXT留空则隐藏按钮
-    PROXIO_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
+    //PROXIO_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
+    PROXIO_HERO_BUTTON_1_TEXT: 'komorebi', // 英雄区按钮
     PROXIO_HERO_BUTTON_1_URL:
-        'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
-    PROXIO_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
-    PROXIO_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
-    PROXIO_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
+        'komorebi.001412.xyz', // 英雄区按钮
+    //PROXIO_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
+    //PROXIO_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
+    //PROXIO_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
 
     // 英雄区配图，如需隐藏，改为空值即可 ''
     PROXIO_HERO_BANNER_IMAGE: '', // hero区背景，默认是获取Notion背景，如需另外配置图片可以填写在这里
@@ -38,6 +40,7 @@ const CONFIG = {
     PROXIO_ANNOUNCEMENT_ENABLE: true, //公告文字区块
 
     // 特性区块
+    /*
     PROXIO_FEATURE_ENABLE: true, // 特性区块开关
     PROXIO_FEATURE_TITLE: '为什么选我',
     PROXIO_FEATURE_TEXT_1: '我能让您的项目焕发光彩',
@@ -155,8 +158,10 @@ const CONFIG = {
         { q: '站点部署失败，更新失败？', a: '通常是配置修改错误导致，请检查配置或者重试操作步骤，或者通过Vercel后台的Deployments中找到错误日志，并向网友求助' },
         { q: '文章没有实时同步？', a: '先检查Notion_Page_ID是否正确配置，其次由于博客的每个页面都有独立缓存，刷新网页后即可解决' },
     ],
+    */
 
     // 关于作者区块
+    /*
     PROXIO_ABOUT_ENABLE: true, // 关于作者区块区块开关
     PROXIO_ABOUT_TITLE: '关于作者',
     PROXIO_ABOUT_TEXT_1: 'I am an Architect Turned Into a Product Designer',
@@ -171,6 +176,7 @@ const CONFIG = {
     PROXIO_ABOUT_VAL_3: '5000+',
     PROXIO_ABOUT_KEY_4: '累积创作时长（小时）',
     PROXIO_ABOUT_VAL_4: '10000+',
+    
 
     PROXIO_ABOUT_BUTTON_URL: '/about',
     PROXIO_ABOUT_BUTTON_TEXT: '关于我',
@@ -235,6 +241,7 @@ const CONFIG = {
 
     PROXIO_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: '服务协议',
     PROXIO_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: '/terms-of-use',
+    */
 
     // 404页面的提示语
     PROXIO_404_TITLE: '我们似乎找不到您要找的页面。',
