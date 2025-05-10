@@ -23,7 +23,7 @@ const Hero = ({ posts }) => {
         {/* 右侧 */}
         <div className='basis-1/2 flex flex-col gap-y-4'>
           {/* 首屏宣传小Banner */}
-          {/*<BannerItem />/}
+          <BannerItem />
 
           {/* 两篇次要文章 */}
           <div className='py-4 px-2 lg:px-0 flex flex-col gap-y-6'>
