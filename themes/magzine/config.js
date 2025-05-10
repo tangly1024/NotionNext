@@ -1,6 +1,6 @@
 const CONFIG = {
   // 首屏信息栏按钮文字
-  MAGZINE_HOME_BANNER_ENABLE: true, // 首屏右上角的宣传位
+  MAGZINE_HOME_BANNER_ENABLE: false, // 首屏右上角的宣传位
   MAGZINE_HOME_BUTTON: true,
   MAGZINE_HOME_BUTTON_URL: '/about',
   MAGZINE_HOME_BUTTON_TEXT: '了解更多',
