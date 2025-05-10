@@ -107,7 +107,7 @@ const LayoutIndex = props => {
   return (
     <div className='pt-10 md:pt-18'>
       {/* 首屏宣传区块 */}
-      <Hero posts={posts} />
+     {/* <Hero posts={posts} />*/}
 
       {/* 最新文章区块 */}
       <PostSimpleListHorizontal
