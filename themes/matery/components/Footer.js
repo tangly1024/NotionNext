@@ -27,7 +27,8 @@ const Footer = ({ title }) => {
           className='underline font-bold  dark:text-gray-300 '>
           {siteConfig('AUTHOR')}
         </a>
-        .<br />
+        // .<br />
+                           <br />
         {siteConfig('BEI_AN') && (
           <>
             <i className='fas fa-shield-alt' />{' '}
@@ -46,16 +47,16 @@ const Footer = ({ title }) => {
           <i className='fas fa-users' />{' '}
           <span className='px-1 busuanzi_value_site_uv'> </span>{' '}
         </span>
-        <br />
-        <h1>{title}</h1>
-        <span className='text-xs '>
-          Powered by{' '}
-          <a
-            href='https://github.com/tangly1024/NotionNext'
-            className='underline dark:text-gray-300'>
-            NotionNext {siteConfig('VERSION')}
-          </a>
-          .
+        // <br />
+        // <h1>{title}</h1>
+        // <span className='text-xs '>
+        //   Powered by{' '}
+        //   <a
+        //     href='https://github.com/tangly1024/NotionNext'
+        //     className='underline dark:text-gray-300'>
+        //     NotionNext {siteConfig('VERSION')}
+        //   </a>
+          // .
         </span>
       </span>
       <br />
