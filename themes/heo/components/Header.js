@@ -1,5 +1,4 @@
 import { siteConfig } from '@/lib/config'
-import { isBrowser } from '@/lib/utils'
 import throttle from 'lodash.throttle'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -10,6 +9,7 @@ import RandomPostButton from './RandomPostButton'
 import ReadingProgress from './ReadingProgress'
 import SearchButton from './SearchButton'
 import SlideOver from './SlideOver'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 页头：顶部导航

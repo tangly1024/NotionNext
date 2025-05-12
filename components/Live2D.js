@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isMobile, loadExternalResource } from '@/lib/utils'
+import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
+import { isMobile } from '@/lib/utils/envUtils'
 
 /**
  * 网页动画

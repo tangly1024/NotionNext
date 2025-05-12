@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -12,6 +12,7 @@ import ExternalScript from './ExternalScript'
 import WebWhiz from './Webwhiz'
 import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 
 /**
