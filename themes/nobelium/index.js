@@ -5,7 +5,6 @@ import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { deepClone } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -27,6 +26,7 @@ import SearchNavBar from './components/SearchNavBar'
 import CONFIG from './config'
 import { Style } from './style'
 import { isBrowser } from '@/lib/utils/envUtils'
+import { deepClone } from '@/lib/utils/objectUtils'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),

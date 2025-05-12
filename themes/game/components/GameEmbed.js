@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { Draggable } from '@/components/Draggable'
 import { siteConfig } from '@/lib/config'
-import { deepClone } from '@/lib/utils'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import DownloadButton from './DownloadButton'
 import FullScreenButton from './FullScreenButton'
+import { deepClone } from '@/lib/utils/objectUtils'
 
 /**
  * 嵌入游戏

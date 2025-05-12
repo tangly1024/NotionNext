@@ -2,10 +2,10 @@
 import { AdSlot } from '@/components/GoogleAdsense'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import { deepClone } from '@/lib/utils'
 import Link from 'next/link'
 import { useState } from 'react'
 import CONFIG from '../config'
+import { deepClone } from '@/lib/utils/objectUtils'
 
 /**
  * 游戏列表
