@@ -35,7 +35,7 @@ const Slug = props => {
     if (!post) {
       return false
     }
-    const encrypt = sha256Digest(post?.slug + passInput)
+    const encrypt = sha256Digest(passInput)
     if (passInput && encrypt === post?.password) {
       setLock(false)
       // 输入密码存入localStorage，下次自动提交
