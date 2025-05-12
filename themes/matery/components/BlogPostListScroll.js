@@ -5,7 +5,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
-import { getListByPage } from '@/lib/utils/post'
+
+import { getListByPage } from '@/lib/utils'
 
 /**
  * 博客列表滚动分页
