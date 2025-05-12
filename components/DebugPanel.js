@@ -1,10 +1,11 @@
 import { siteConfigMap } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { getQueryParam } from '@/lib/utils'
 import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Select from './Select'
+
+import { getQueryParam } from '@/lib/utils/url'
 
 /**
  *

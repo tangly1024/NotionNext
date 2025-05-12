@@ -3,7 +3,8 @@ import * as ThemeComponents from '@theme-components'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
+import { isBrowser } from '../lib/utils'
+import { getQueryParam, getQueryVariable } from '@/lib/utils/url'
 
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
