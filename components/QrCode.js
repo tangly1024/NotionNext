@@ -1,5 +1,5 @@
-import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 二维码生成

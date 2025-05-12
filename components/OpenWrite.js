@@ -1,9 +1,9 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { isBrowser } from '@/lib/utils/envUtils'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 /**
  * OpenWrite公众号导流插件
  * 使用介绍：https://openwrite.cn/guide/readmore/readmore.html#%E4%BA%8C%E3%80%81%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8

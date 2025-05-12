@@ -1,9 +1,9 @@
 'use strict'
 
 import { useEffect } from 'react'
-import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { siteConfig } from '@/lib/config'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 const Ackee = () => {
   const router = useRouter()
   const server = siteConfig('ANALYTICS_ACKEE_DATA_SERVER')

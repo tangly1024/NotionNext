@@ -1,4 +1,4 @@
-import { loadExternalResource } from '@/lib/utils'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 将搜索结果的关键词高亮

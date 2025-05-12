@@ -10,10 +10,10 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // mermaid图
-import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useGlobal } from '@/lib/global'
 import { siteConfig } from '@/lib/config'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 代码美化相关

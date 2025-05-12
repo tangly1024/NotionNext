@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 // import anime from 'animejs'
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
+
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 鼠标跟随特效

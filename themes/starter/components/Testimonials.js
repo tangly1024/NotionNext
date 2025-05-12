@@ -2,10 +2,10 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
 import { SVGLeftArrow } from './svg/SVGLeftArrow'
 import { SVGRightArrow } from './svg/SVGRightArrow'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 一些外部js
