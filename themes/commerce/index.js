@@ -5,7 +5,6 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { scanAndConvertToLinks } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -28,6 +27,7 @@ import TagItemMini from './components/TagItemMini'
 import TocDrawer from './components/TocDrawer'
 import { Style } from './style'
 import { isBrowser } from '@/lib/utils/envUtils'
+import { scanAndConvertToLinks } from '@/lib/utils/domUtils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
