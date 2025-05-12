@@ -1,8 +1,8 @@
 import { siteConfig } from '@/lib/config'
-import { checkStartWithHttp } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import NotionIcon from './NotionIcon'
+import { checkStartWithHttp } from '@/lib/utils/stringUtils'
 
 /**
  * 博客卡牌
