@@ -39,7 +39,10 @@ const Slug = props => {
     if (passInput && encrypt === post?.password) {
       setLock(false)
       // 输入密码存入localStorage，下次自动提交
-      localStorage.setItem('password_' + router.asPath, passInput)
+      localStorage.setItem(
+        'password_' + router.asPath.split(/[?#]/)[0],
+        passInput
+      )
       showNotification(locale.COMMON.ARTICLE_UNLOCK_TIPS) // 设置解锁成功提示显示
       return true
     }
