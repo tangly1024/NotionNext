@@ -6,13 +6,15 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
-
+import MediumDivider from '../components/MediumDivider' // 或使用 @ 前提是你的路径别名配置好了
 /**
  * 整个站点的核心组件
  * 将Notion数据渲染成网页
  * @param {*} param0
  * @returns
  */
+
+
 const NotionPage = ({ post, className }) => {
   // 是否关闭数据库和画册的点击跳转
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
@@ -130,7 +132,8 @@ const NotionPage = ({ post, className }) => {
           Equation,
           Modal,
           Pdf,
-          Tweet
+          Tweet,
+          divider: MediumDivider // ← 这才是 Notion Divider 的正确渲染替换
         }}
       />
 

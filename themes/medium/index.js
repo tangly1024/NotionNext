@@ -1,4 +1,5 @@
 import Comment from '@/components/Comment'
+import MediumDivider from '@/components/MediumDivider'
 import Live2D from '@/components/Live2D'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
@@ -36,6 +37,8 @@ import TopNavBar from './components/TopNavBar'
 import EmojiReaction from './components/EmojiReaction'
 import CONFIG from './config'
 import { Style } from './style'
+
+
 
 
 // 主题全局状态
@@ -222,7 +225,7 @@ const LayoutSlug = props => {
 
           {/* Notion文章主体 */}
           <article id='article-wrapper' className='max-w-4xl'>
-            {post && <NotionPage post={post} />}
+            {post && <NotionPage post={post} components={{ divider: MediumDivider }} />}
           </article>
 
           {/* 文章底部区域  */}
