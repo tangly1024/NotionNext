@@ -112,18 +112,21 @@ export const Footer = props => {
                     </Link>
                     <Link
                       href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL', ''
+                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL',
+                        ''
                       )}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig('STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT')}
                     </Link>
                     <Link
                       href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL', ''
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL',
+                        ''
                       )}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT', ''
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT',
+                        ''
                       )}
                     </Link>
                   </div>

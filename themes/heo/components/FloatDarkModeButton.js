@@ -3,7 +3,7 @@ import { saveDarkModeToLocalStorage } from '@/themes/theme'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 
-export default function FloatDarkModeButton () {
+export default function FloatDarkModeButton() {
   const { isDarkMode, updateDarkMode } = useGlobal()
 
   if (!siteConfig('HEO_WIDGET_DARK_MODE', null, CONFIG)) {
@@ -23,10 +23,13 @@ export default function FloatDarkModeButton () {
   return (
     <div
       onClick={handleChangeDarkMode}
-      className={'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'
-      }
-    >
-      <i id="darkModeButton" className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}/>
+      className={
+        'justify-center items-center w-7 h-7 text-center transform hover:scale-105 duration-200'
+      }>
+      <i
+        id='darkModeButton'
+        className={`${isDarkMode ? 'fa-sun' : 'fa-moon'} fas text-xs`}
+      />
     </div>
   )
 }

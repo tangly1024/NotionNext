@@ -15,12 +15,20 @@ const JumpToTopButton = ({ showPercent = true, percent }) => {
   if (!siteConfig('NEXT_WIDGET_TO_TOP', null, CONFIG)) {
     return <></>
   }
-  return (<div className='flex space-x-1 items-center transform hover:scale-105 duration-200 py-2 px-3' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
-        <div className='dark:text-gray-200' title={locale.POST.TOP} >
-          <i className='fa-arrow-up fas' />
+  return (
+    <div
+      className='flex space-x-1 items-center transform hover:scale-105 duration-200 py-2 px-3'
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+      <div className='dark:text-gray-200' title={locale.POST.TOP}>
+        <i className='fa-arrow-up fas' />
+      </div>
+      {showPercent && (
+        <div className='text-xs dark:text-gray-200 block lg:hidden'>
+          {percent}%
         </div>
-        {showPercent && (<div className='text-xs dark:text-gray-200 block lg:hidden'>{percent}%</div>)}
-    </div>)
+      )}
+    </div>
+  )
 }
 
 export default JumpToTopButton

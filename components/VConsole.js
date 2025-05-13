@@ -8,15 +8,17 @@ const VConsole = () => {
 
   const loadVConsole = async () => {
     try {
-      const url = await loadExternalResource('https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js', 'js')
+      const url = await loadExternalResource(
+        'https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js',
+        'js'
+      )
       if (!url) {
         return
       }
       const VConsole = window.VConsole
       const vConsole = new VConsole()
       return vConsole
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   useEffect(() => {
@@ -26,15 +28,21 @@ const VConsole = () => {
       const centerX = window.innerWidth / 2
       const centerY = window.innerHeight / 2
       const range = 50
-      const inRange = (event.clientX >= centerX - range && event.clientX <= centerX + range) &&
-                        (event.clientY >= centerY - range && event.clientY <= centerY + range)
+      const inRange =
+        event.clientX >= centerX - range &&
+        event.clientX <= centerX + range &&
+        event.clientY >= centerY - range &&
+        event.clientY <= centerY + range
 
       if (!inRange) {
         return
       }
 
       // 如果在1秒内连续点击了8次
-      if (now - lastClickTimeRef.current < 1000 && clickCountRef.current + 1 === 8) {
+      if (
+        now - lastClickTimeRef.current < 1000 &&
+        clickCountRef.current + 1 === 8
+      ) {
         loadVConsole()
         clickCountRef.current = 0 // 重置计数器
         clearTimeout(timerRef.current) // 清除定时器

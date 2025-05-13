@@ -17,7 +17,7 @@ const TeX = ({
   ...props
 }) => {
   const Component = asComponent || (block ? 'div' : 'span')
-  const content = (children ?? math)
+  const content = children ?? math
   const [state, setState] = useState({ innerHtml: '' })
 
   useEffect(() => {

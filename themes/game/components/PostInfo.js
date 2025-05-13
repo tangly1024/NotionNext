@@ -26,7 +26,9 @@ export default function PostInfo(props) {
         </div>
 
         <h1 className='font-bold text-3xl text-black dark:text-white'>
-          {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}
+          {siteConfig('POST_TITLE_ICON') && (
+            <NotionIcon icon={post?.pageIcon} />
+          )}
           {post?.title}
         </h1>
 

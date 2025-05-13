@@ -1,0 +1,43 @@
+# 构建输出
+.next/
+out/
+build/
+dist/
+
+# 依赖
+node_modules/
+
+# 日志
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 缓存目录
+.npm
+.eslintcache
+.vercel
+
+# 特定项目文件
+public/
+.github/
+lib/plugins/
+
+# 包锁文件
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 静态资源
+*.svg
+*.ico
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.pdf
+*.ttf
+*.woff
+*.woff2 

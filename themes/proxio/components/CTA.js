@@ -19,14 +19,15 @@ export const CTA = () => {
           <div className='relative overflow-hidden'>
             <div className='-mx-4 flex flex-wrap items-stretch'>
               <div className='w-full px-4 mb-2'>
-                <div className='mx-auto max-w-[570px] text-center wow fadeInUp' data-wow-delay='.2s'>
+                <div
+                  className='mx-auto max-w-[570px] text-center wow fadeInUp'
+                  data-wow-delay='.2s'>
                   <div>
                     <span className='px-3 py-0.5 rounded-2xl dark:bg-dark-1 border border-gray-200 dark:border-[#333333] dark:text-white'>
                       {siteConfig('PROXIO_CTA_TITLE')}
                     </span>
                   </div>
                   <h2 className='mb-2.5 text-3xl font-bold dark:text-white md:text-[38px] md:leading-[1.44]'>
-
                     <span className='text-3xl font-normal md:text-[40px]'>
                       {siteConfig('PROXIO_CTA_TITLE_2')}
                     </span>
@@ -48,7 +49,6 @@ export const CTA = () => {
             </div>
           </div>
         </div>
-
       </section>
       {/* <!-- ====== CTA Section End --> */}
     </>

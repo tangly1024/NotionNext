@@ -117,13 +117,17 @@ export default function CustomContextMenu(props) {
   function handleCopy() {
     const selectedText = document.getSelection().toString()
     if (selectedText) {
-      const tempInput = document.createElement('input');
-      tempInput.value = selectedText;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      if (tempInput && tempInput.parentNode && tempInput.parentNode.contains(tempInput)) {
-        tempInput.parentNode.removeChild(tempInput);
+      const tempInput = document.createElement('input')
+      tempInput.value = selectedText
+      document.body.appendChild(tempInput)
+      tempInput.select()
+      document.execCommand('copy')
+      if (
+        tempInput &&
+        tempInput.parentNode &&
+        tempInput.parentNode.contains(tempInput)
+      ) {
+        tempInput.parentNode.removeChild(tempInput)
       }
       // alert("Text copied: " + selectedText);
     } else {

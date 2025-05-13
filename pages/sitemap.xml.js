@@ -27,7 +27,7 @@ export const getServerSideProps = async ctx => {
     fields = fields.concat(localeFields)
   }
 
-  fields = getUniqueFields(fields);
+  fields = getUniqueFields(fields)
 
   // 缓存
   ctx.res.setHeader(
@@ -104,17 +104,20 @@ function generateLocalesSitemap(link, allPages, locale) {
 }
 
 function getUniqueFields(fields) {
-  const uniqueFieldsMap = new Map();
+  const uniqueFieldsMap = new Map()
 
   fields.forEach(field => {
-    const existingField = uniqueFieldsMap.get(field.loc);
+    const existingField = uniqueFieldsMap.get(field.loc)
 
-    if (!existingField || new Date(field.lastmod) > new Date(existingField.lastmod)) {
-      uniqueFieldsMap.set(field.loc, field);
+    if (
+      !existingField ||
+      new Date(field.lastmod) > new Date(existingField.lastmod)
+    ) {
+      uniqueFieldsMap.set(field.loc, field)
     }
-  });
+  })
 
-  return Array.from(uniqueFieldsMap.values());
+  return Array.from(uniqueFieldsMap.values())
 }
 
 export default () => {}

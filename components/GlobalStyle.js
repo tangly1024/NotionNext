@@ -10,11 +10,11 @@ import { siteConfig } from '@/lib/config'
 const GlobalStyle = () => {
   // 从NotionConfig中读取样式
   const GLOBAL_CSS = siteConfig('GLOBAL_CSS')
-  return (<style jsx global>{`
-
-    ${GLOBAL_CSS}
-
-  `}</style>)
+  return (
+    <style jsx global>{`
+      ${GLOBAL_CSS}
+    `}</style>
+  )
 }
 
 export { GlobalStyle }

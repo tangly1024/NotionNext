@@ -75,7 +75,7 @@ const OpenWrite = () => {
   useEffect(() => {
     const isInYellowList = isPathInList(router.asPath, yellowList)
     const isInWhiteList = isPathInList(router.asPath, whiteList)
-  
+
     // 优先判断黄名单
     if (yellowList && yellowList.length > 0) {
       if (!isInYellowList) {
@@ -87,22 +87,22 @@ const OpenWrite = () => {
       console.log('当前路径在白名单中，放行')
       return
     }
-  
+
     if (isSignedIn) {
       // 用户已登录免检
       console.log('用户已登录，放行')
       return
     }
-  
+
     if (process.env.NODE_ENV === 'development') {
       // 开发环境免检
       console.log('开发环境:屏蔽OpenWrite')
       return
     }
-  
+
     if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
-  
+
       // 检查是否已加载
       const readMoreWrap = document.getElementById('read-more-wrap')
       if (!readMoreWrap) {

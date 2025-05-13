@@ -8,34 +8,38 @@ export default function Messenger() {
   const language = siteConfig('LANG').replace('-', '_')
 
   // 新增一个状态变量用于追踪是否已经滚动过
-  const [showMessenger, setShowMessenger] = useState(false);
+  const [showMessenger, setShowMessenger] = useState(false)
 
   const showTheComponent = () => {
-    window.removeEventListener('scroll', showTheComponent);
+    window.removeEventListener('scroll', showTheComponent)
     if (!showMessenger) {
-      setShowMessenger(true);
+      setShowMessenger(true)
     }
-  };
+  }
 
   // 延时7秒，或页面滚动时加载该组件
   useEffect(() => {
-    window.addEventListener('scroll', showTheComponent);
+    window.addEventListener('scroll', showTheComponent)
     setTimeout(() => {
       showTheComponent()
-    }, 7000);
+    }, 7000)
     return () => {
-      window.removeEventListener('scroll', showTheComponent);
-    };
-  }, []);
+      window.removeEventListener('scroll', showTheComponent)
+    }
+  }, [])
 
-  return <>
-        {showMessenger && <MessengerCustomerChat
-            pageId={pageId}
-            appId={appId}
-            language={language}
-            shouldShowDialog={true}
-        />}
+  return (
+    <>
+      {showMessenger && (
+        <MessengerCustomerChat
+          pageId={pageId}
+          appId={appId}
+          language={language}
+          shouldShowDialog={true}
+        />
+      )}
     </>
+  )
 }
 
 /**
@@ -51,8 +55,8 @@ class MessengerCustomerChat extends Component {
   }
 
   /**
-     * 初始化
-     */
+   * 初始化
+   */
   componentDidMount() {
     this.setFbAsyncInit()
     this.reloadSDKAsynchronously()
@@ -61,19 +65,19 @@ class MessengerCustomerChat extends Component {
   componentDidUpdate(prevProps) {
     if (
       prevProps.pageId !== this.props.pageId ||
-            prevProps.appId !== this.props.appId ||
-            prevProps.shouldShowDialog !== this.props.shouldShowDialog ||
-            prevProps.htmlRef !== this.props.htmlRef ||
-            prevProps.minimized !== this.props.minimized ||
-            prevProps.themeColor !== this.props.themeColor ||
-            prevProps.loggedInGreeting !== this.props.loggedInGreeting ||
-            prevProps.loggedOutGreeting !== this.props.loggedOutGreeting ||
-            prevProps.greetingDialogDisplay !== this.props.greetingDialogDisplay ||
-            prevProps.greetingDialogDelay !== this.props.greetingDialogDelay ||
-            prevProps.autoLogAppEvents !== this.props.autoLogAppEvents ||
-            prevProps.xfbml !== this.props.xfbml ||
-            prevProps.version !== this.props.version ||
-            prevProps.language !== this.props.language
+      prevProps.appId !== this.props.appId ||
+      prevProps.shouldShowDialog !== this.props.shouldShowDialog ||
+      prevProps.htmlRef !== this.props.htmlRef ||
+      prevProps.minimized !== this.props.minimized ||
+      prevProps.themeColor !== this.props.themeColor ||
+      prevProps.loggedInGreeting !== this.props.loggedInGreeting ||
+      prevProps.loggedOutGreeting !== this.props.loggedOutGreeting ||
+      prevProps.greetingDialogDisplay !== this.props.greetingDialogDisplay ||
+      prevProps.greetingDialogDelay !== this.props.greetingDialogDelay ||
+      prevProps.autoLogAppEvents !== this.props.autoLogAppEvents ||
+      prevProps.xfbml !== this.props.xfbml ||
+      prevProps.version !== this.props.version ||
+      prevProps.language !== this.props.language
     ) {
       this.setFbAsyncInit()
       this.reloadSDKAsynchronously()
@@ -87,8 +91,8 @@ class MessengerCustomerChat extends Component {
   }
 
   /**
-     * 初始化
-     */
+   * 初始化
+   */
   setFbAsyncInit() {
     const { appId, autoLogAppEvents, xfbml, version } = this.props
 
@@ -105,24 +109,24 @@ class MessengerCustomerChat extends Component {
   }
 
   loadSDKAsynchronously() {
-    const { language } = this.props;
+    const { language } = this.props
     /* eslint-disable */
-        (function (d, s, id) {
-            var js,
-                fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = `https://connect.facebook.net/${language}/sdk/xfbml.customerchat.js`;
-            if (fjs && fjs.parentNode && fjs.parentNode.contains(fjs)) {
-              fjs.parentNode.insertBefore(js, fjs);
-            } else {
-              document.body.appendChild(js);
-            }
-        })(document, 'script', 'facebook-jssdk');
-        /* eslint-enable */
+    ;(function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0]
+      if (d.getElementById(id)) {
+        return
+      }
+      js = d.createElement(s)
+      js.id = id
+      js.src = `https://connect.facebook.net/${language}/sdk/xfbml.customerchat.js`
+      if (fjs && fjs.parentNode && fjs.parentNode.contains(fjs)) {
+        fjs.parentNode.insertBefore(js, fjs)
+      } else {
+        document.body.appendChild(js)
+      }
+    })(document, 'script', 'facebook-jssdk')
+    /* eslint-enable */
   }
 
   removeFacebookSDK() {
@@ -178,25 +182,25 @@ class MessengerCustomerChat extends Component {
 
     const refAttribute = htmlRef !== undefined ? `ref="${htmlRef}"` : ''
     const minimizedAttribute =
-            minimized !== undefined ? `minimized="${minimized}"` : ''
+      minimized !== undefined ? `minimized="${minimized}"` : ''
     const themeColorAttribute =
-            themeColor !== undefined ? `theme_color="${themeColor}"` : ''
+      themeColor !== undefined ? `theme_color="${themeColor}"` : ''
     const loggedInGreetingAttribute =
-            loggedInGreeting !== undefined
-              ? `logged_in_greeting="${loggedInGreeting}"`
-              : ''
+      loggedInGreeting !== undefined
+        ? `logged_in_greeting="${loggedInGreeting}"`
+        : ''
     const loggedOutGreetingAttribute =
-            loggedOutGreeting !== undefined
-              ? `logged_out_greeting="${loggedOutGreeting}"`
-              : ''
+      loggedOutGreeting !== undefined
+        ? `logged_out_greeting="${loggedOutGreeting}"`
+        : ''
     const greetingDialogDisplayAttribute =
-            greetingDialogDisplay !== undefined
-              ? `greeting_dialog_display="${greetingDialogDisplay}"`
-              : ''
+      greetingDialogDisplay !== undefined
+        ? `greeting_dialog_display="${greetingDialogDisplay}"`
+        : ''
     const greetingDialogDelayAttribute =
-            greetingDialogDelay !== undefined
-              ? `greeting_dialog_delay="${greetingDialogDelay}"`
-              : ''
+      greetingDialogDelay !== undefined
+        ? `greeting_dialog_delay="${greetingDialogDelay}"`
+        : ''
 
     return {
       __html: `<div
@@ -219,12 +223,12 @@ class MessengerCustomerChat extends Component {
     if (fbLoaded && shouldShowDialog !== this.props.shouldShowDialog) {
       document.addEventListener(
         'DOMNodeInserted',
-        (event) => {
+        event => {
           const element = event.target
           if (
             element.className &&
-                        typeof element.className === 'string' &&
-                        element.className.includes('fb_dialog')
+            typeof element.className === 'string' &&
+            element.className.includes('fb_dialog')
           ) {
             this.controlPlugin()
           }
@@ -239,8 +243,8 @@ class MessengerCustomerChat extends Component {
   }
 }
 
-const removeElementByIds = (ids) => {
-  ids.forEach((id) => {
+const removeElementByIds = ids => {
+  ids.forEach(id => {
     const element = document.getElementById(id)
     if (element && element.parentNode) {
       element.parentNode.removeChild(element)
