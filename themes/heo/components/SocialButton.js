@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import { useEffect, useRef } from 'react'
 
 /**
  * 社交联系方式按钮组
@@ -16,6 +17,15 @@ const SocialButton = () => {
   const ENABLE_RSS = siteConfig('ENABLE_RSS')
   const CONTACT_BILIBILI = siteConfig('CONTACT_BILIBILI')
   const CONTACT_YOUTUBE = siteConfig('CONTACT_YOUTUBE')
+
+  const emailIcon = useRef(null)
+  useEffect(() => {
+    if (CONTACT_EMAIL && emailIcon.current) {
+      emailIcon.current.href =
+        'mailto:' + decodeURIComponent(escape(atob(CONTACT_EMAIL)))
+    }
+  }, [CONTACT_EMAIL])
+
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-12 text-3xl text-gray-600 dark:text-gray-300 '>
@@ -75,14 +85,15 @@ const SocialButton = () => {
         )}
         {CONTACT_EMAIL && (
           <a
+            ref={emailIcon}
             target='_blank'
             rel='noreferrer'
             title={'email'}
-            href={`mailto:${CONTACT_EMAIL}`}>
+            href={CONTACT_EMAIL}>
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-        {JSON.parse(ENABLE_RSS) && (
+        {ENABLE_RSS && (
           <a
             target='_blank'
             rel='noreferrer'
