@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * Giscus评论 @see https://giscus.app/zh-CN

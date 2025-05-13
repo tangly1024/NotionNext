@@ -1,6 +1,6 @@
-import { deepClone } from '@/lib/utils'
 import { useNavGlobal } from '@/themes/nav'
 import { useImperativeHandle, useRef, useState } from 'react'
+import { deepClone } from '@/lib/utils/objectUtils'
 let lock = false
 
 const SearchInput = ({ currentSearch, cRef, className }) => {

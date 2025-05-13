@@ -6,7 +6,6 @@ import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -23,6 +22,7 @@ import { SideBar } from './components/SideBar'
 import TitleBar from './components/TitleBar'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 基础布局框架

@@ -1,8 +1,8 @@
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { loadExternalResource } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 const CusdisComponent = ({ frontMatter }) => {
   const router = useRouter()

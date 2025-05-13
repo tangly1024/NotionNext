@@ -1,10 +1,10 @@
 import { compressImage } from '@/lib/notion/mapImage'
 import Link from 'next/link'
 import { usePlogGlobal } from '..'
-import { isMobile } from '@/lib/utils'
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
+import { isMobile } from '@/lib/utils/envUtils'
 
 /**
  * 博客照片卡牌

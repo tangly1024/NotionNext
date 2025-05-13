@@ -4,7 +4,6 @@ import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -21,6 +20,7 @@ import Header from './components/Nav'
 import SearchNavBar from './components/SearchNavBar'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 // 主题全局状态
 const ThemeGlobalPlog = createContext()

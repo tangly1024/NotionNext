@@ -2,7 +2,6 @@ import DarkModeButton from '@/components/DarkModeButton'
 import { AdSlot } from '@/components/GoogleAdsense'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import CONFIG from '@/themes/fukasawa/config'
 import { debounce } from 'lodash'
 import { useRouter } from 'next/router'
@@ -17,6 +16,7 @@ import { MenuList } from './MenuList'
 import SearchInput from './SearchInput'
 import SiteInfo from './SiteInfo'
 import SocialButton from './SocialButton'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 侧边栏

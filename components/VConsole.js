@@ -1,5 +1,5 @@
-import { loadExternalResource } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 const VConsole = () => {
   const clickCountRef = useRef(0) // 点击次数

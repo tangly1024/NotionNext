@@ -9,7 +9,6 @@
 import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
-import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Features from './components/Features'
@@ -21,6 +20,7 @@ import Newsletter from './components/Newsletter'
 import { Pricing } from './components/Pricing'
 import Testimonials from './components/Testimonials'
 import CONFIG from './config'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 布局框架

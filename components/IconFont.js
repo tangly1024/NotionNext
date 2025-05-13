@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * iconfont

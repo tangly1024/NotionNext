@@ -1,5 +1,4 @@
 import { useGlobal } from '@/lib/global'
-import { getQueryParam } from '@/lib/utils'
 import { THEMES } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -7,6 +6,9 @@ import DarkModeButton from './DarkModeButton'
 import { Draggable } from './Draggable'
 import LazyImage from './LazyImage'
 import SideBarDrawer from './SideBarDrawer'
+
+import { getQueryParam } from '@/lib/utils/url'
+
 /**
  *
  * @returns 主题切换

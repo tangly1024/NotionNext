@@ -4,7 +4,6 @@ import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -33,6 +32,7 @@ import TocDrawer from './components/TocDrawer'
 import TocDrawerButton from './components/TocDrawerButton'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),

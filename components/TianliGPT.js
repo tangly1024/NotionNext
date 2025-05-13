@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 /**
  * TianliGpt AI文章摘要生成工具 @see https://docs_s.tianli0.top/
  * @returns {JSX.Element}

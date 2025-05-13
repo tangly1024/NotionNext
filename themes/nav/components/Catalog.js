@@ -1,7 +1,7 @@
-import { isBrowser } from '@/lib/utils'
 import throttle from 'lodash.throttle'
 import { uuidToId } from 'notion-utils'
 import { useCallback, useEffect, useState } from 'react'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 目录导航组件

@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 请求广告元素

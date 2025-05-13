@@ -1,10 +1,10 @@
 import { siteConfig } from '@/lib/config'
-import { deepClone } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
 import { useGameGlobal } from '..'
 import CONFIG from '../config'
 import { GameListNormal } from './GameListNormal'
 import Logo from './Logo'
+import { deepClone } from '@/lib/utils/objectUtils'
 
 /**
  * 侧拉抽屉的内容

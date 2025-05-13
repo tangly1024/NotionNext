@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { deepClone } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useGameGlobal } from '..'
+import { deepClone } from '@/lib/utils/objectUtils'
 
 /**
  * 游戏列表- 最近游戏

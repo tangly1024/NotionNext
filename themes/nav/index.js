@@ -13,7 +13,6 @@ import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -36,6 +35,7 @@ import TocDrawer from './components/TocDrawer'
 import TopNavBar from './components/TopNavBar'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 
