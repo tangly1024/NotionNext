@@ -8,8 +8,12 @@ module.exports = {
   BACKGROUND_LIGHT: '#eeeeee', // use hex value, don't forget '#' e.g #fffefc
   BACKGROUND_DARK: '#000000', // use hex value, don't forget '#'
 
-  // Redis 缓存数据库地址
+  // Redis 缓存数据库地址 （警告：缓存时间使用了NEXT_REVALIDATE_SECOND，且无法从Notion获取）
   REDIS_URL: process.env.REDIS_URL || '',
+
+  // UpStash Redis 缓存数据库地址（支持RESTful API调用，中间件可用）
+  UPSTASH_REDIS_URL: process.env.UPSTASH_REDIS_URL || '',
+  UPSTASH_REDIS_TOKEN: process.env.UPSTASH_REDIS_TOKEN || '',
 
   ENABLE_CACHE:
     process.env.ENABLE_CACHE ||
