@@ -5,10 +5,9 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
-import { getPasswordQuery } from '@/lib/password'
+import { getPasswordQuery, sha256Digest } from '@/lib/password'
 import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
-import md5 from 'js-md5'
 import { useRouter } from 'next/router'
 import { idToUuid } from 'notion-utils'
 import { useEffect, useState } from 'react'
@@ -36,11 +35,14 @@ const Slug = props => {
     if (!post) {
       return false
     }
-    const encrypt = md5(post?.slug + passInput)
+    const encrypt = sha256Digest(passInput)
     if (passInput && encrypt === post?.password) {
       setLock(false)
       // 输入密码存入localStorage，下次自动提交
-      localStorage.setItem('password_' + router.asPath, passInput)
+      localStorage.setItem(
+        'password_' + router.asPath.split(/[?#]/)[0],
+        passInput
+      )
       showNotification(locale.COMMON.ARTICLE_UNLOCK_TIPS) // 设置解锁成功提示显示
       return true
     }
