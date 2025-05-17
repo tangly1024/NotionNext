@@ -41,28 +41,28 @@ module.exports = {
       artist: '米津玄師',
       url: 'https://music.163.com/song/media/outer/url?id=536622304.mp3',
       cover:
-        'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+        'https://p1.music.126.net/jtPZRUFrSS-nRCjW_LYowQ==/109951166521931227.jpg'
     },
     {
       name: 'monster',
       artist: 'YOASOBI',
       url: 'https://music.163.com/song/media/outer/url?id=1893590233.mp3',
       cover:
-        'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+        'https://p2.music.126.net/Nwwpjbdyj6qM66WGwKBM_Q==/109951166603574539.jpg'
     },
     {
       name: 'touch',
       artist: '岩崎良美',
       url: 'https://music.163.com/song/media/outer/url?id=26386494.mp3',
       cover:
-        'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+        'https://p1.music.126.net/n8x3a4S1q65PahHc9LNBdQ==/2422224116047058.jpg'
     },
     {
       name: '群青',
       artist: 'YOASOBI',
       url: 'https://music.163.com/song/media/outer/url?id=1500151581.mp3',
       cover:
-        'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+        'http://p1.music.126.net/r3HQ2Na5Z-CvnDGHmcl9-A==/109951165515346936.jpg'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
