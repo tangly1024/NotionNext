@@ -62,7 +62,7 @@ const BLOG = {
   // 欢迎语打字效果,Hexo,Matery主题支持, 英文逗号隔开多个欢迎语。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
-    'Hi，我是一个算法驯兽师, Hi，我是一个数据炼金术士,Hi，我是一个GPU燃烧者,欢迎来到我的AI实验室🎉',
+    'Hi，我是一个充满好奇的探索者, Hi，我是一个热爱挑战的冒险者,Hi，我是一个虔诚的AGI信仰者,欢迎来到我的AI陋室🎉',
 
   // uuid重定向至 slug
   UUID_REDIRECT: process.env.UUID_REDIRECT || false
