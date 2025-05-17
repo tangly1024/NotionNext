@@ -60,7 +60,7 @@ module.exports = {
     {
       name: '群青',
       artist: 'YOASOBI',
-      url: 'https://media300.melon365.com/other/2022/9-7/mp33519694fb8c31bad99e42fe94eb54123853b242300.mp3',
+      url: 'https://media85.melon365.com/other/2021/1-16/mp31905073344b286561cab4d548900c2b31d76582e85.mp3',
       cover:
         'http://p1.music.126.net/r3HQ2Na5Z-CvnDGHmcl9-A==/109951165515346936.jpg'
     },
