@@ -39,14 +39,14 @@ module.exports = {
     {
       name: 'Lemon',
       artist: '米津玄師',
-      url: 'https://music.163.com/song/media/outer/url?id=536622304.mp3',
+      url: 'https://media85.melon365.com/other/2018/6-9/mp32199925948595dffa1142b4b75e247a9a131b5685.mp3',
       cover:
         'https://p1.music.126.net/jtPZRUFrSS-nRCjW_LYowQ==/109951166521931227.jpg'
     },
     {
       name: 'monster',
       artist: 'YOASOBI',
-      url: 'https://media85.melon365.com/other/2018/6-9/mp32199925948595dffa1142b4b75e247a9a131b5685.mp3',
+      url: 'https://media85.melon365.com/other/2021/1-16/mp31905073344b286561cab4d548900c2b31d76582e85.mp3',
       cover:
         'https://p2.music.126.net/Nwwpjbdyj6qM66WGwKBM_Q==/109951166603574539.jpg'
     },
