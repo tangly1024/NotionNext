@@ -29,11 +29,11 @@ module.exports = {
   MUSIC_PLAYER_VISIBLE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_VISIBLE || true, // 是否在左下角显示播放和切换，如果使用播放器，打开自动播放再隐藏，就会以类似背景音乐的方式播放，无法取消和暂停
   MUSIC_PLAYER_AUTO_PLAY:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || true, // 是否自动播放，不过自动播放时常不生效（移动设备不支持自动播放）
-  MUSIC_PLAYER_LRC_TYPE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_LRC_TYPE || '0', // 歌词显示类型，可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）（前提是有配置歌词路径，对 meting 无效）
+  MUSIC_PLAYER_LRC_TYPE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_LRC_TYPE || '1', // 歌词显示类型，可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）（前提是有配置歌词路径，对 meting 无效）
   MUSIC_PLAYER_CDN_URL:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_CDN_URL ||
     'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js',
-  MUSIC_PLAYER_ORDER: process.env.NEXT_PUBLIC_MUSIC_PLAYER_ORDER || 'list', // 默认播放方式，顺序 list，随机 random
+  MUSIC_PLAYER_ORDER: process.env.NEXT_PUBLIC_MUSIC_PLAYER_ORDER || 'random', // 默认播放方式，顺序 list，随机 random
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
@@ -46,7 +46,7 @@ module.exports = {
     {
       name: 'monster',
       artist: 'YOASOBI',
-      url: 'https://music.163.com/song/media/outer/url?id=1893590233.mp3',
+      url: 'https://media85.melon365.com/other/2018/6-9/mp32199925948595dffa1142b4b75e247a9a131b5685.mp3',
       cover:
         'https://p2.music.126.net/Nwwpjbdyj6qM66WGwKBM_Q==/109951166603574539.jpg'
     },
@@ -60,7 +60,7 @@ module.exports = {
     {
       name: '群青',
       artist: 'YOASOBI',
-      url: 'https://music.163.com/song/media/outer/url?id=1500151581.mp3',
+      url: 'https://media300.melon365.com/other/2022/4-19/mp312598915198e002c5b34f47308827d0c65165469e300.mp3',
       cover:
         'http://p1.music.126.net/r3HQ2Na5Z-CvnDGHmcl9-A==/109951165515346936.jpg'
     },
@@ -74,7 +74,7 @@ module.exports = {
     {
       name: '僕が死のうと思ったのは',
       artist: '中島美嘉',
-      url: 'https://music.163.com/song/media/outer/url?id=26830207.mp3',
+      url: 'https://media200.melon365.com/other/2021/10-10/mp3779102420c766d2d4856249f1b16eb47394d6c4e2200.mp3',
       cover:
         'https://p2.music.126.net/CM5a_RkJfD3B6v_HyQmsSA==/109951170423101269.jpg'
     },
