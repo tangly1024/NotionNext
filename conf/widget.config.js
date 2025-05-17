@@ -63,6 +63,34 @@ module.exports = {
       url: 'https://music.163.com/song/media/outer/url?id=1500151581.mp3',
       cover:
         'http://p1.music.126.net/r3HQ2Na5Z-CvnDGHmcl9-A==/109951165515346936.jpg'
+    },
+    {
+      name: 'ラブ・ストーリーは突然に',
+      artist: '小田和正',
+      url: 'https://music.163.com/song/media/outer/url?id=486806.mp3',
+      cover:
+        'https://p1.music.126.net/BfyKODeeK6yz9GyHNTOJpQ==/109951163650423394.jpg'
+    },
+    {
+      name: '僕が死のうと思ったのは',
+      artist: '中島美嘉',
+      url: 'https://music.163.com/song/media/outer/url?id=26830207.mp3',
+      cover:
+        'https://p2.music.126.net/CM5a_RkJfD3B6v_HyQmsSA==/109951170423101269.jpg'
+    },
+    {
+      name: '砂塵の迷図',
+      artist: '清水咲斗子',
+      url: 'https://music.163.com/song/media/outer/url?id=28029573.mp3',
+      cover:
+        'https://p2.music.126.net/VNKAjbaQ27BQkB8aVuswlw==/5649290743644352.jpg'
+    },
+    {
+      name: 'Step',
+      artist: 'a·chi-a·chi',
+      url: 'https://music.163.com/song/media/outer/url?id=29023323.mp3',
+      cover:
+        'https://p2.music.126.net/Z7vGud7yjN8n4voiuDonVw==/6671836557484184.jpg'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
