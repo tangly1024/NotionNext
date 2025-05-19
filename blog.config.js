@@ -64,8 +64,11 @@ const BLOG = {
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
     'Hi，我是一个程序员, Hi，我是一个打工人,Hi，我是一个干饭人,欢迎来到我的博客🎉',
 
-  // uuid重定向至 slug
-  UUID_REDIRECT: process.env.UUID_REDIRECT || false
+  // uuid重定向至 slug（不支持Notion配置！）
+  UUID_REDIRECT: process.env.UUID_REDIRECT || false,
+  REDIRECT_CACHE_KEY:
+    process.env.REDIRECT_CACHE_KEY ||
+    `uuid_slug_map_${process.env.NOTION_PAGE_ID}`
 }
 
 module.exports = BLOG

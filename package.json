@@ -30,6 +30,7 @@
     "@clerk/nextjs": "^5.1.5",
     "@headlessui/react": "^1.7.15",
     "@next/bundle-analyzer": "^12.1.1",
+    "@upstash/redis": "^1.34.3",
     "@vercel/analytics": "^1.0.0",
     "algoliasearch": "^4.18.0",
     "axios": "^1.7.2",
