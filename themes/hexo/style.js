@@ -42,6 +42,62 @@ const Style = () => {
         color: var(--theme-color);
       }
 
+      /* 下拉菜单悬浮背景色 */
+      li[class*='hover:bg-indigo-500']:hover {
+        background-color: var(--theme-color) !important;
+      }
+
+      /* tag标签悬浮背景色 */
+      a[class*='hover:bg-indigo-400']:hover {
+        background-color: var(--theme-color) !important;
+      }
+
+      /* 社交按钮悬浮颜色 */
+      i[class*='hover:text-indigo-600']:hover {
+        color: var(--theme-color) !important;
+      }
+      .dark i[class*='dark:hover:text-indigo-400']:hover {
+        color: var(--theme-color) !important;
+      }
+
+      /* MenuGroup 悬浮颜色 */
+      #theme-hexo #nav div[class*='hover:text-indigo-600']:hover {
+        color: var(--theme-color) !important;
+      }
+      .dark #theme-hexo #nav div[class*='dark:hover:text-indigo-400']:hover {
+        color: var(--theme-color) !important;
+      }
+
+      /* 最新发布文章悬浮颜色 */
+      div[class*='hover:text-indigo-600']:hover,
+      div[class*='hover:text-indigo-400']:hover {
+        color: var(--theme-color) !important;
+      }
+
+      /* 分页组件颜色 */
+      .text-indigo-400 {
+        color: var(--theme-color) !important;
+      }
+      .border-indigo-400 {
+        border-color: var(--theme-color) !important;
+      }
+      a[class*='hover:bg-indigo-400']:hover {
+        background-color: var(--theme-color) !important;
+        color: white !important;
+      }
+      .bg-indigo-400 {
+        background-color: var(--theme-color) !important;
+      }
+      a[class*='hover:bg-indigo-600']:hover {
+        background-color: var(--theme-color) !important;
+        color: white !important;
+      }
+
+      /* 右下角悬浮按钮背景色 */
+      .bg-indigo-500 {
+        background-color: var(--theme-color) !important;
+      }
+
       /* 设置了从上到下的渐变黑色 */
       #theme-hexo .header-cover::before {
         content: '';
