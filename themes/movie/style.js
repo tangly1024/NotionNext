@@ -38,7 +38,7 @@ const Style = () => {
       }
 
       .notion-carousel-route div:hover {
-        text-decoration: underline; 
+        text-decoration: underline;
       }
 
       .notion-carousel div {

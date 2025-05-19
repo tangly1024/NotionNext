@@ -62,16 +62,18 @@ const handleAckee = async function (pathname, environment, options = {}) {
   const instance = ackeeTracker?.create(environment.server, options)
 
   if (instance == null) {
-    console.warn('Skipped record creation because useAckee has been called in a non-browser environment')
+    console.warn(
+      'Skipped record creation because useAckee has been called in a non-browser environment'
+    )
     return
   }
 
-  const hasPathname = (
-    pathname != null && pathname !== ''
-  )
+  const hasPathname = pathname != null && pathname !== ''
 
   if (hasPathname === false) {
-    console.warn('Skipped record creation because useAckee has been called without pathname')
+    console.warn(
+      'Skipped record creation because useAckee has been called without pathname'
+    )
     return
   }
 

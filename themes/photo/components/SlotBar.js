@@ -12,7 +12,10 @@ export default function SlotBar(props) {
   if (tag) {
     return (
       <div className='cursor-pointer px-3 py-2 mb-2 '>
-        <div className={'inline-block rounded duration-200 mr-2  px-1 text-xl whitespace-nowrap '}>
+        <div
+          className={
+            'inline-block rounded duration-200 mr-2  px-1 text-xl whitespace-nowrap '
+          }>
           <div className=' dark:text-white dark:hover:text-white text-5xl py-5'>
             {locale.COMMON.TAGS} : {tag}{' '}
           </div>

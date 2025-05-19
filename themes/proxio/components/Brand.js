@@ -42,14 +42,12 @@ export const Brand = () => {
       <section id='brand' className='py-12 dark:bg-dark'>
         <div
           className='overflow-hidden whitespace-nowrap container mx-auto p-3 border rounded-2xl border-gray-200 dark:border-[#333333]'
-          ref={scrollContainerRef}
-        >
+          ref={scrollContainerRef}>
           <div className='inline-block'>
             {brands?.map((item, index) => (
               <span
                 key={index}
-                className='mx-8 text-lg font-semibold text-gray-700 dark:text-gray-300'
-              >
+                className='mx-8 text-lg font-semibold text-gray-700 dark:text-gray-300'>
                 {item}
               </span>
             ))}
@@ -57,8 +55,7 @@ export const Brand = () => {
             {brands.map((item, index) => (
               <span
                 key={`clone-${index}`}
-                className='mx-8 text-lg font-semibold text-gray-700 dark:text-gray-300'
-              >
+                className='mx-8 text-lg font-semibold text-gray-700 dark:text-gray-300'>
                 {item}
               </span>
             ))}

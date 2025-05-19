@@ -22,9 +22,9 @@ export const Career = () => {
                 <span className='px-3 py-0.5 rounded-2xl dark:bg-dark-1 border border-gray-200 dark:border-[#333333] dark:text-white'>
                   {siteConfig('PROXIO_CAREER_TITLE')}
                 </span>
-                <h2
-                  className='mb-10 text-3xl font-semibold leading-relaxed dark:text-dark-6'
-                >{siteConfig('PROXIO_CAREER_TEXT')}</h2>
+                <h2 className='mb-10 text-3xl font-semibold leading-relaxed dark:text-dark-6'>
+                  {siteConfig('PROXIO_CAREER_TEXT')}
+                </h2>
               </div>
             </div>
 
@@ -41,22 +41,21 @@ export const Career = () => {
   )
 }
 
-
 // 生涯内容
 const CareerItem = ({ title, bio, text }) => {
-  return <div className='w-full border-b mb-6 border-gray-200 dark:border-[#333333] px-4 flex justify-between wow fadeInUp'>
-    <div className='flex item-start flex-col items-start w-full' data-wow-delay='.1s'>
-      <h4 className='mb-3 text-xl text-dark dark:text-white'>
-        <span className='font-bold mr-4'>{title}</span>
-        <span className='text-sm'>{bio}</span>
-      </h4>
-
+  return (
+    <div className='w-full border-b mb-6 border-gray-200 dark:border-[#333333] px-4 flex justify-between wow fadeInUp'>
+      <div
+        className='flex item-start flex-col items-start w-full'
+        data-wow-delay='.1s'>
+        <h4 className='mb-3 text-xl text-dark dark:text-white'>
+          <span className='font-bold mr-4'>{title}</span>
+          <span className='text-sm'>{bio}</span>
+        </h4>
+      </div>
+      <div className='w-full'>
+        <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>{text}</p>
+      </div>
     </div>
-    <div className='w-full'>
-      <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
-        {text}
-      </p>
-    </div>
-  </div>
-
+  )
 }
