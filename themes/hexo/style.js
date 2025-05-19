@@ -42,6 +42,14 @@ const Style = () => {
         color: var(--theme-color);
       }
 
+      /* 文章列表中标题行悬浮时的文字颜色 */
+      h2:hover .menu-link {
+        color: var(--theme-color) !important;
+      }
+      .dark h2:hover .menu-link {
+        color: var(--theme-color) !important;
+      }
+
       /* 下拉菜单悬浮背景色 */
       li[class*='hover:bg-indigo-500']:hover {
         background-color: var(--theme-color) !important;
