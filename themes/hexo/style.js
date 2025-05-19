@@ -102,7 +102,6 @@ const Style = () => {
       .bg-indigo-600 {
         background-color: var(--theme-color) !important;
       }
-
       /* 当前浏览位置标题高亮颜色 */
       .border-indigo-800 {
         border-color: var(--theme-color) !important;
@@ -116,7 +115,6 @@ const Style = () => {
       .dark .dark\:border-indigo-400 {
         border-color: var(--theme-color) !important;
       }
-
       /* 目录项悬浮时的字体颜色 */
       a[class*='hover:text-indigo-800']:hover {
         color: var(--theme-color) !important;
@@ -125,6 +123,22 @@ const Style = () => {
       /* 文章底部版权声明组件左侧边框线颜色 */
       .border-indigo-500 {
         border-color: var(--theme-color) !important;
+      }
+
+      /* 归档页面文章列表项悬浮时左侧边框线颜色 */
+      li[class*='hover:border-indigo-500']:hover {
+        border-color: var(--theme-color) !important;
+      }
+      .dark li[class*='dark:hover:border-indigo-300']:hover {
+        border-color: var(--theme-color) !important;
+      }
+      /* 深色模式下，归档页面文章列表项默认状态左侧边框线颜色 */
+      .dark li[class*='dark:border-indigo-400'] {
+        border-color: var(--theme-color) !important;
+      }
+      /* 深色模式下，归档页面文章标题悬浮时的文字颜色 */
+      .dark a[class*='dark:hover:text-indigo-300']:hover {
+        color: var(--theme-color) !important;
       }
 
       /* 设置了从上到下的渐变黑色 */
