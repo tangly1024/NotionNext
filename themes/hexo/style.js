@@ -98,6 +98,35 @@ const Style = () => {
         background-color: var(--theme-color) !important;
       }
 
+      /* 文章浏览进度条颜色 */
+      .bg-indigo-600 {
+        background-color: var(--theme-color) !important;
+      }
+
+      /* 当前浏览位置标题高亮颜色 */
+      .border-indigo-800 {
+        border-color: var(--theme-color) !important;
+      }
+      .text-indigo-800 {
+        color: var(--theme-color) !important;
+      }
+      .dark .dark\:text-indigo-400 {
+        color: var(--theme-color) !important;
+      }
+      .dark .dark\:border-indigo-400 {
+        border-color: var(--theme-color) !important;
+      }
+
+      /* 目录项悬浮时的字体颜色 */
+      a[class*='hover:text-indigo-800']:hover {
+        color: var(--theme-color) !important;
+      }
+
+      /* 文章底部版权声明组件左侧边框线颜色 */
+      .border-indigo-500 {
+        border-color: var(--theme-color) !important;
+      }
+
       /* 设置了从上到下的渐变黑色 */
       #theme-hexo .header-cover::before {
         content: '';
