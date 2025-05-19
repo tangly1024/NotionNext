@@ -123,9 +123,24 @@ const Style = () => {
       .dark .dark\:border-indigo-400 {
         border-color: var(--theme-color) !important;
       }
+      .dark .dark\:border-white {
+        border-color: var(--theme-color) !important;
+      }
       /* 目录项悬浮时的字体颜色 */
       a[class*='hover:text-indigo-800']:hover {
         color: var(--theme-color) !important;
+      }
+      /* 深色模式下目录项的默认文字颜色和边框线颜色 */
+      .dark .catalog-item {
+        color: white !important;
+        border-color: white !important;
+      }
+      .dark .catalog-item:hover {
+        color: var(--theme-color) !important;
+      }
+      /* 深色模式下当前高亮标题的边框线颜色 */
+      .dark .catalog-item.font-bold {
+        border-color: var(--theme-color) !important;
       }
 
       /* 文章底部版权声明组件左侧边框线颜色 */
