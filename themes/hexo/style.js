@@ -16,6 +16,7 @@ const Style = () => {
       :root {
         --theme-color: ${themeColor};
       }
+
       // 底色
       body {
         background-color: #f5f5f5;
@@ -151,6 +152,11 @@ const Style = () => {
       /* 归档页面文章列表项悬浮时左侧边框线颜色 */
       li[class*='hover:border-indigo-500']:hover {
         border-color: var(--theme-color) !important;
+      }
+
+      /* 自定义右键菜单悬浮高亮颜色 */
+      .hover\:bg-blue-600:hover {
+        background-color: var(--theme-color) !important;
       }
       .dark li[class*='dark:hover:border-indigo-300']:hover {
         border-color: var(--theme-color) !important;
