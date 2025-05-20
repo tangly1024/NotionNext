@@ -3,6 +3,9 @@
   "version": "4.8.4",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/tangly1024/NotionNext.git"
