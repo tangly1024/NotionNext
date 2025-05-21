@@ -15,12 +15,9 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
   // 获取当前路径
   const currentPath = useRouter().asPath
   const { locale } = useGlobal()
+  const SUB_PATH = siteConfig('SUB_PATH', '')
 
-  if (!latestPosts) {
-    return <></>
-  }
-
-  return (
+  return latestPosts ? (
     <>
       <div className=' mb-2 px-1 flex flex-nowrap justify-between'>
         <div>
@@ -30,7 +27,7 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
       </div>
       {latestPosts.map(post => {
         const selected =
-          currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
+          currentPath === `${SUB_PATH}/${post.slug}`
         const headerImage = post?.pageCoverThumbnail
           ? post.pageCoverThumbnail
           : siteInfo?.pageCover
@@ -63,5 +60,5 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
         )
       })}
     </>
-  )
+  ) : null
 }

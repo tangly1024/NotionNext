@@ -1,13 +1,13 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
+import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
+import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
 import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getPasswordQuery } from '@/lib/password'
-import { uploadDataToAlgolia } from '@/lib/plugins/algolia'
-import { checkSlugHasNoSlash, getRecommendPost } from '@/lib/utils/post'
-import { getLayoutByTheme } from '@/themes/theme'
+import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
+import { DynamicLayout } from '@/themes/theme'
 import md5 from 'js-md5'
 import { useRouter } from 'next/router'
 import { idToUuid } from 'notion-utils'
@@ -30,7 +30,7 @@ const Slug = props => {
 
   /**
    * 验证文章密码
-   * @param {*} result
+   * @param {*} passInput
    */
   const validPassword = passInput => {
     if (!post) {
@@ -54,12 +54,6 @@ const Slug = props => {
       setLock(true)
     } else {
       setLock(false)
-      if (!lock && post?.blockMap?.block) {
-        post.content = Object.keys(post.blockMap.block).filter(
-          key => post.blockMap.block[key]?.value?.parent_id === post.id
-        )
-        post.toc = getPageTableOfContents(post, post.blockMap)
-      }
     }
 
     // 读取上次记录 自动提交密码
@@ -87,16 +81,16 @@ const Slug = props => {
     }
   }, [router, lock])
 
-  props = { ...props, lock, setLock, validPassword }
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
+  props = { ...props, lock, validPassword }
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return (
     <>
-      <Layout {...props} />
+      {/* 文章布局 */}
+      <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
+      {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
+      {/* 导流工具 */}
+      <OpenWrite />
     </>
   )
 }
@@ -129,7 +123,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       fullSlug += '.html'
     }
   }
-  
+
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
     return (
@@ -146,51 +140,12 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       props.post = post
     }
   }
-  // 无法获取文章
   if (!props?.post) {
+    // 无法获取文章
     props.post = null
-    return {
-      props,
-      revalidate: process.env.EXPORT
-        ? undefined
-        : siteConfig(
-            'NEXT_REVALIDATE_SECOND',
-            BLOG.NEXT_REVALIDATE_SECOND,
-            props.NOTION_CONFIG
-          )
-    }
-  }
-
-  // 文章内容加载
-  if (!props?.post?.blockMap) {
-    props.post.blockMap = await getPostBlocks(props.post.id, from)
-  }
-
-  // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
-  if (BLOG.ALGOLIA_APP_ID) {
-    uploadDataToAlgolia(props?.post)
-  }
-
-  // 推荐关联文章处理
-  const allPosts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
-  )
-  if (allPosts && allPosts.length > 0) {
-    const index = allPosts.indexOf(props.post)
-    props.prev = allPosts.slice(index - 1, index)[0] ?? allPosts.slice(-1)[0]
-    props.next = allPosts.slice(index + 1, index + 2)[0] ?? allPosts[0]
-    props.recommendPosts = getRecommendPost(
-      props.post,
-      allPosts,
-      siteConfig('POST_RECOMMEND_COUNT')
-    )
   } else {
-    props.prev = null
-    props.next = null
-    props.recommendPosts = []
+    await processPostData(props, from)
   }
-
-  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT

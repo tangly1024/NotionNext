@@ -3,8 +3,9 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateRss } from '@/lib/rss'
-import { getLayoutByTheme } from '@/themes/theme'
-import { useRouter } from 'next/router'
+import { generateSitemapXml } from '@/lib/sitemap.xml'
+import { DynamicLayout } from '@/themes/theme'
+import { generateRedirectJson } from '@/lib/redirect'
 
 /**
  * 首页布局
@@ -12,12 +13,8 @@ import { useRouter } from 'next/router'
  * @returns
  */
 const Index = props => {
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme({
-    theme: siteConfig('THEME'),
-    router: useRouter()
-  })
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
 }
 
 /**
@@ -62,6 +59,12 @@ export async function getStaticProps(req) {
   generateRobotsTxt(props)
   // 生成Feed订阅
   generateRss(props)
+  // 生成
+  generateSitemapXml(props)
+  if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
+    // 生成重定向 JSON
+    generateRedirectJson(props)
+  }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
