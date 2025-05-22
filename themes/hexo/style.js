@@ -94,6 +94,13 @@ const Style = () => {
         background-color: var(--theme-color) !important;
         color: white !important;
       }
+      /* 移动设备下，搜索组件中选中分类的高亮背景色 */
+      div[class*='hover:bg-indigo-400']:hover {
+        background-color: var(--theme-color) !important;
+      }
+      .hover\:bg-indigo-400:hover {
+        background-color: var(--theme-color) !important;
+      }
       .bg-indigo-400 {
         background-color: var(--theme-color) !important;
       }
