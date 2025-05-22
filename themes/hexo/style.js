@@ -106,6 +106,16 @@ const Style = () => {
       .bg-indigo-500 {
         background-color: var(--theme-color) !important;
       }
+      .dark .dark\:bg-indigo-500 {
+        background-color: var(--theme-color) !important;
+      }
+      /* 移动设备菜单栏背景色 */
+      .hover\:bg-indigo-500:hover {
+        background-color: var(--theme-color) !important;
+      }
+      .dark .dark\:hover\:bg-indigo-500:hover {
+        background-color: var(--theme-color) !important;
+      }
 
       /* 文章浏览进度条颜色 */
       .bg-indigo-600 {
