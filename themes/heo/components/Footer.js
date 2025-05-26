@@ -33,7 +33,7 @@ const Footer = () => {
         <div id='footer-bottom-left' className='text-center lg:text-start'>
           <PoweredBy />
           <div className='flex gap-x-1'>
-            <CopyRightDate />
+            
             <a
               href={'/about'}
               className='underline font-semibold dark:text-gray-300 '>
