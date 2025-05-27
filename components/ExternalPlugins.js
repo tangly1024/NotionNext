@@ -13,7 +13,6 @@ import WebWhiz from './Webwhiz'
 import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
 
-
 /**
  * 各种插件脚本
  * @param {*} props
@@ -22,7 +21,7 @@ import IconFont from './IconFont'
 const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
-  const {lang} = useGlobal()
+  const { lang } = useGlobal()
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
@@ -172,7 +171,7 @@ const ExternalPlugin = props => {
 
     setTimeout(() => {
       // 映射url
-      convertInnerUrl({ allPages:props?.allNavPages, lang:lang })
+      convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
     }, 500)
   }, [router])
 
@@ -474,7 +473,7 @@ const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
 })
 const Analytics = dynamic(
   () =>
-    import('@vercel/analytics/react').then(async m => {
+    import('@vercel/analytics/react').then(m => {
       return m.Analytics
     }),
   { ssr: false }

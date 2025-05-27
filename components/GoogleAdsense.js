@@ -60,7 +60,7 @@ function getNodesWithAdsByGoogleClass(node) {
  * 初始化谷歌广告
  * @returns
  */
-export const initGoogleAdsense = async ADSENSE_GOOGLE_ID => {
+export const initGoogleAdsense = ADSENSE_GOOGLE_ID => {
   console.log('Load Adsense')
   loadExternalResource(
     `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_GOOGLE_ID}`,

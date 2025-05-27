@@ -228,7 +228,7 @@ function getMediumZoomMargin() {
 // 代码
 const Code = dynamic(
   () =>
-    import('react-notion-x/build/third-party/code').then(async m => {
+    import('react-notion-x/build/third-party/code').then(m => {
       return m.Code
     }),
   { ssr: false }

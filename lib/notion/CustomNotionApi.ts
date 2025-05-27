@@ -1,16 +1,29 @@
-const axios = require('axios')
+import axios from 'axios'
+
+// 定义内容项的接口
+interface ContentItem {
+  type: string
+  content: string
+}
+
+// 定义Notion块的接口
+interface NotionBlock {
+  object: string
+  type: string
+  [key: string]: unknown
+}
 
 // 发送 Notion API 请求
 async function postNotion(
-  properties: any,
+  properties: Record<string, unknown>,
   databaseId: string,
-  listContentMain: any[],
+  listContentMain: ContentItem[],
   token: string
-) {
+): Promise<{ status: number; data: Record<string, unknown> }> {
   const url = 'https://api.notion.com/v1/pages'
 
   const children = listContentMain
-    .map(contentMain => {
+    .map((contentMain: ContentItem): NotionBlock | null => {
       if (contentMain.type === 'paragraph') {
         return {
           object: 'block',
@@ -51,14 +64,21 @@ async function postNotion(
   try {
     const response = await axios.post(url, payload, { headers })
     return response
-  } catch (error: any) {
+  } catch (error) {
     console.error('写入Notion异常', error)
-    throw new Error(`Error posting to Notion: ${error.message}`)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    throw new Error(`Error posting to Notion: ${errorMessage}`)
   }
 }
 
+// 定义响应结果的接口
+interface NotionResponse {
+  status: number
+  data: Record<string, unknown>
+}
+
 // 处理响应结果
-function responseResult(response: { status: number; data: any }) {
+function responseResult(response: NotionResponse): void {
   if (response.status === 200) {
     console.log('成功...')
     console.log(response.data)
@@ -68,15 +88,25 @@ function responseResult(response: { status: number; data: any }) {
   }
 }
 
+// 定义用户属性的接口
+interface UserProperties {
+  id: string
+  avatar: string
+  name: string
+  mail: string
+  lastLoginTime: string
+  token: string
+}
+
 // 准备属性字段
 function notionProperty(
-  id: any,
-  avatar: any,
-  name: any,
-  mail: any,
-  lastLoginTime: any,
-  token: any
-) {
+  id: string,
+  avatar: string,
+  name: string,
+  mail: string,
+  lastLoginTime: string,
+  token: string
+): Record<string, unknown> {
   return {
     id: {
       rich_text: [
