@@ -38,7 +38,7 @@ module.exports = {
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
       name: '来吧，请跨越这千年的时光。',
-      artist: '深川',
+      artist: '深 川',
       url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VTb3FsZnowQ3NOTW9QaHBNR05YUWI0QkEzMDkwTHZjRTFGWWVUUUZVSmNyVXc.mp3',
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
