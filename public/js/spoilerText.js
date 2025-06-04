@@ -14,17 +14,18 @@ function escapeRegExp(string) {
  * @param className
  */
 function convertTextToSpoilerSpan(regex, node, className) {
-  const wholeText = node.wholeText
+  // 使用 textContent 替代 wholeText 以确保类型安全
+  const textContent = node.textContent
   let outerSpan = document.createElement('span')
   const fragments = []
   let lastIndex = 0
   let match
-  while ((match = regex.exec(wholeText)) !== null) {
-    console.log('符合要求的文字' + wholeText)
+  while ((match = regex.exec(textContent)) !== null) {
+    console.log('符合要求的文字' + textContent)
     // 添加前面未匹配的部分
     if (match.index > lastIndex) {
       outerSpan.appendChild(
-        document.createTextNode(wholeText.slice(lastIndex, match.index))
+        document.createTextNode(textContent.slice(lastIndex, match.index))
       )
     }
 
@@ -40,8 +41,10 @@ function convertTextToSpoilerSpan(regex, node, className) {
   }
   if (outerSpan.childNodes.length) {
     // 添加剩余未匹配的部分
-    if (lastIndex < wholeText.length) {
-      outerSpan.appendChild(document.createTextNode(wholeText.slice(lastIndex)))
+    if (lastIndex < textContent.length) {
+      outerSpan.appendChild(
+        document.createTextNode(textContent.slice(lastIndex))
+      )
     }
     node.replaceWith(outerSpan)
   }
@@ -57,9 +60,12 @@ function processTextNodes(root, className, spoilerTag) {
   const regex = new RegExp(`${spoilerTag}(.*?)${spoilerTag}`, 'g')
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode: function (node) {
-      return regex.test(node.wholeText)
-        ? NodeFilter.FILTER_ACCEPT
-        : NodeFilter.FILTER_REJECT
+      if (node.nodeType === Node.TEXT_NODE) {
+        return regex.test(node.textContent)
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT
+      }
+      return NodeFilter.FILTER_REJECT
     }
   })
   const waitProcessNodes = []
