@@ -76,18 +76,8 @@ const LayoutBase = props => {
   // 右侧栏 用户信息+标签列表
 
  const slotRight =
-  router.route === '/404' || fullWidth ? null : (
-    <>
-      <SideRight {...props} />
-      <img 
-        width="400" 
-        height="140" 
-        src="https://card.yuy1n.io/card/76561198314348996/dark,en,badge,group"
-        alt="Steam Profile Card"
-        className="mt-4"
-      />
-    </>
-  )
+    router.route === '/404' || fullWidth ? null : <SideRight {...props} />
+
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
   const HEO_HERO_BODY_REVERSE = siteConfig(
@@ -129,6 +119,14 @@ const LayoutBase = props => {
           <div className='hidden xl:block'>
             {/* 主区快右侧 */}
             {slotRight}
+           <div className="mt-4 p-4 bg-white dark:bg-[#1e1e1e] rounded-lg">
+            <img 
+            src="https://card.yuy1n.io/card/76561198314348996/dark,en,badge,group"
+            alt="Steam Profile Card"
+            className="w-full rounded-lg"
+            />
+            </div>
+
           </div>
         </div>
       </main>
