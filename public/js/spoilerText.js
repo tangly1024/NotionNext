@@ -1,4 +1,13 @@
 /**
+ * 转义正则表达式中的特殊字符
+ * @param {string} string 需要转义的字符串
+ * @returns {string} 转义后的字符串
+ */
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/**
  * 将Node文本中的指定标签内容转换为带有指定类名的span
  * @param regex
  * @param node
@@ -60,6 +69,47 @@ function processTextNodes(root, className, spoilerTag) {
   }
   for (const waitProcessNode of waitProcessNodes) {
     convertTextToSpoilerSpan(regex, waitProcessNode, className)
+  }
+
+  // 处理跨节点的 spoiler 标记
+  processCrossNodeSpoilers(root, className, spoilerTag)
+}
+
+/**
+ * 处理跨节点的 spoiler 标记
+ * @param {Element} root 要处理的根元素
+ * @param {string} className 应用于 spoiler 内容的类名
+ * @param {string} spoilerTag spoiler 标记符号
+ */
+function processCrossNodeSpoilers(root, className, spoilerTag) {
+  if (root.nodeType !== Node.ELEMENT_NODE) return
+
+  const html = root.innerHTML
+
+  // 处理原始标签，如果是已经转义过的，则去除转义
+  let originalTag = spoilerTag
+  if (spoilerTag.startsWith('\\') || spoilerTag.includes('\\[')) {
+    originalTag = spoilerTag.replace(/\\/g, '')
+  }
+
+  // 创建正则表达式，直接匹配原始标签
+  const regex = new RegExp(`\\${originalTag}([\\s\\S]*?)\\${originalTag}`, 'g')
+
+  const hasMatch = regex.test(html)
+
+  if (!hasMatch) return
+
+  // 重置正则表达式
+  regex.lastIndex = 0
+
+  // 替换匹配项
+  const newHtml = html.replace(regex, function (match, content) {
+    return `<span class="${className}">${content}</span>`
+  })
+
+  // 如果内容有变化，更新 DOM
+  if (newHtml !== html) {
+    root.innerHTML = newHtml
   }
 }
 
