@@ -58,6 +58,13 @@ export default function SideRight(props) {
         </div>
 
         {rightAreaSlot}
+            <div className="mt-4 p-4 bg-white dark:bg-[#1e1e1e] rounded-lg">
+            <img
+            src="https://card.yuy1n.io/card/76561198314348996/dark,en,badge,group"
+            alt="Steam Profile Card"
+            className="w-full rounded-lg"
+            />
+            </div>
 
         <FaceBookPage />
         <Live2D />
