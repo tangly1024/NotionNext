@@ -119,13 +119,7 @@ const LayoutBase = props => {
           <div className='hidden xl:block'>
             {/* 主区快右侧 */}
             {slotRight}
-           <div className="mt-4 p-4 bg-white dark:bg-[#1e1e1e] rounded-lg">
-            <img 
-            src="https://card.yuy1n.io/card/76561198314348996/dark,en,badge,group"
-            alt="Steam Profile Card"
-            className="w-full rounded-lg"
-            />
-            </div>
+         
 
           </div>
         </div>
