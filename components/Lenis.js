@@ -12,7 +12,9 @@ const Lenis = () => {
   useEffect(() => {
     // 异步加载
     async function loadLenis() {
-      loadExternalResource('/js/lenis.js', 'js').then(() => {
+      try {
+        await loadExternalResource('/js/lenis.js', 'js')
+
         // console.log('Lenis', window.Lenis)
         if (!window.Lenis) {
           console.error('Lenis not loaded')
@@ -23,14 +25,14 @@ const Lenis = () => {
         // 创建 Lenis 实例
         const lenis = new Lenis({
           duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+          easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
           direction: 'vertical', // vertical, horizontal
           gestureDirection: 'vertical', // vertical, horizontal, both
           smooth: true,
           mouseMultiplier: 1,
           smoothTouch: false,
           touchMultiplier: 2,
-          infinite: false,
+          infinite: false
         })
 
         // 存储实例到 ref
@@ -48,7 +50,9 @@ const Lenis = () => {
         }
 
         requestAnimationFrame(raf)
-      })
+      } catch (error) {
+        console.error('Failed to load Lenis:', error)
+      }
     }
 
     loadLenis()
