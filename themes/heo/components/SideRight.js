@@ -35,6 +35,17 @@ export default function SideRight(props) {
   return (
     <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
       <InfoCard {...props} className='w-72 wow fadeInUp' />
+    
+           <div
+             className={
+          'mt-4 border wow fadeInUp hover:border-indigo-600 dark:hover:border-yellow-600 duration-200 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white rounded-xl lg:p-6 p-4 bg-white'
+          }>
+            <img
+            src="https://card.yuy1n.io/card/76561198314348996/dark,en,badge,group"
+            alt="Steam Profile Card"
+            className="w-full rounded-lg"
+            />
+            </div>
 
       <div className='sticky top-20 space-y-4'>
         {/* 文章页显示目录 */}
@@ -48,6 +59,8 @@ export default function SideRight(props) {
         <div className='wow fadeInUp'>
           <TouchMeCard />
         </div>
+     
+
 
         {/* 最新文章列表 */}
         <div
@@ -58,17 +71,7 @@ export default function SideRight(props) {
         </div>
 
         {rightAreaSlot}
-          <div
-             className={
-          'mt-4 border wow fadeInUp hover:border-indigo-600 dark:hover:border-yellow-600 duration-200 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white rounded-xl lg:p-6 p-4 bg-white'
-          }>
-            <img
-            src="https://card.yuy1n.io/card/76561198314348996/dark,en,badge,group"
-            alt="Steam Profile Card"
-            className="w-full rounded-lg"
-            />
-            </div>
-
+     
         <FaceBookPage />
        <Live2D />
 
