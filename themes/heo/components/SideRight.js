@@ -69,7 +69,7 @@ export default function SideRight(props) {
             </div>
 
         <FaceBookPage />
-       
+       <Live2D />
 
         {/* 标签和成绩 */}
         <Card
