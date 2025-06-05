@@ -56,7 +56,9 @@ export default function SideRight(props) {
           }>
           <LatestPostsGroupMini {...props} />
         </div>
-    {rightAreaSlot}
+
+        {rightAreaSlot}
+        <div
              className={
           'mt-4 border wow fadeInUp hover:border-indigo-600 dark:hover:border-yellow-600 duration-200 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white rounded-xl lg:p-6 p-4 bg-white'
         }>
