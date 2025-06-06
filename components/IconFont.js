@@ -12,7 +12,7 @@ export default function IconFont() {
     useEffect(() => {
         loadExternalResource('/webfonts/iconfont.js')
             .then(u => {
-                console.log('iconfont loaded');
+                console.log('iconfont loaded:', u);
 
                 // 查找所有 <i> 标签且 class 包含 'icon-'
                 const iElements = document.querySelectorAll('i[class*="icon-"]');
@@ -30,7 +30,7 @@ export default function IconFont() {
 
                         // 替换原来的 <i> 元素
                         element.replaceWith(svgElement);
-                        console.log(`Replaced <i> with class "${className}" to <svg>`);
+                        // console.log(`Replaced <i> with class "${className}" to <svg>`);
                     }
                 });
             })
