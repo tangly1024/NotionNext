@@ -14,7 +14,7 @@ const SideBar = (props) => {
 
   return (
       <div id='side-bar'>
-          <div className="mh-48 w-full bg-indigo-700">
+          <div className="mh-48 w-full bg-blue-700">
               <div className='mx-5 pt-6 pb-2'>
                   <LazyImage src={siteInfo?.icon} className='cursor-pointer rounded-full' width={80} alt={siteConfig('AUTHOR')} />
                   <div className='text-white text-xl my-1'>{siteConfig('TITLE')}</div>
