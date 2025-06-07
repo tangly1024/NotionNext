@@ -42,6 +42,12 @@ module.exports = {
       url: 'http://music.163.com/song/media/outer/url?id=466770307.mp3',
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
+    {
+      name: '圣诞钟',
+      artist: '帕海贝尔',
+      url: 'http://music.163.com/song/media/outer/url?id=27890739.mp3',
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
+    },
      {
       name: '来吧，请跨越这千年的时光。',
       artist: '深川',
