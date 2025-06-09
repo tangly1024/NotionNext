@@ -12,6 +12,7 @@ import { createContext, useContext, useEffect, useRef } from 'react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
+import Catalog from './components/Catalog'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -19,9 +20,7 @@ const AlgoliaSearchModal = dynamic(
 )
 
 // 主题组件
-const BlogListScroll = dynamic(() => import('./components/BlogListScroll'), {
-  ssr: false
-})
+
 const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), {
   ssr: false
 })
@@ -35,9 +34,7 @@ const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 const ArticleAround = dynamic(() => import('./components/ArticleAround'), {
   ssr: false
 })
-const ShareBar = dynamic(() => import('@/components/ShareBar'), { ssr: false })
 const TopBar = dynamic(() => import('./components/TopBar'), { ssr: false })
-const Header = dynamic(() => import('./components/Header'), { ssr: false })
 const NavBar = dynamic(() => import('./components/NavBar'), { ssr: false })
 const JumpToTopButton = dynamic(() => import('./components/JumpToTopButton'), {
   ssr: false
@@ -66,9 +63,11 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
  */
 const LayoutBase = props => {
   const { children, slotTop } = props
-  const { onLoading, fullWidth } = useGlobal()
+  // const { onLoading, fullWidth } = useGlobal()
+  const onLoading = true
   const searchModal = useRef(null)
 
+  console.log('aa', props)
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div
@@ -78,13 +77,19 @@ const LayoutBase = props => {
 
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
 
-        <div className='flex flex-1 gap-24 mx-auto overflow-hidden p-8 md:p-0 md:max-w-7xl md:w-8/12 w-screen'>
+        <div className='flex flex-1 mx-auto overflow-hidden p-8 md:p-0 md:max-w-7xl md:w-8/12 w-screen'>
           {/* 主体 - 使用 flex 布局 */}
-          <div className='overflow-hidden'>
+          {/* 文章详情才显示 */}
+          {props.post && (
+            <div className='mt-20 hidden md:block'>
+              <Catalog {...props} />
+            </div>
+          )}
+          <div className='overflow-hidden mt-20'>
             {/* 左侧内容区域 - 可滚动 */}
             <div
               id='container-inner'
-              className='flex-1 h-full w-full overflow-y-auto scroll-hidden'>
+              className='flex-1 h-full w-full px-24 overflow-y-auto scroll-hidden'>
               {/* 移动端导航 - 显示在顶部 */}
               <div className='md:hidden'>
                 <NavBar {...props} />
@@ -103,6 +108,17 @@ const LayoutBase = props => {
 
                 {children}
               </Transition>
+
+              {onLoading && (
+                <div className="flex flex-col justify-center items-center min-h-[50vh]">
+                  <div className="flex space-x-2">
+                    <div className="w-2 h-2 bg-gray-500 dark:bg-gray-300 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                    <div className="w-2 h-2 bg-gray-500 dark:bg-gray-300 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                    <div className="w-2 h-2 bg-gray-500 dark:bg-gray-300 rounded-full animate-bounce"></div>
+                  </div>
+                  <div className="text-xl font-medium text-gray-600 dark:text-gray-300">别着急，坐和放宽</div>
+                </div>
+              )}
               <AdSlot type='native' />
               {/* 移动端页脚 - 显示在底部 */}
               <div className='md:hidden  z-30  dark:bg-black'>
@@ -110,6 +126,7 @@ const LayoutBase = props => {
               </div>
             </div>
           </div>
+
           {/* 右侧导航和页脚 - 固定不滚动 */}
           <div className='hidden md:flex md:flex-col md:flex-shrink-0 md:h-[100vh] sticky top-20'>
             <NavBar {...props} />
@@ -217,7 +234,7 @@ const LayoutSlug = props => {
 
       {!lock && post && (
         <div
-          className={`px-2 md:pt-20 pt-3 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+          className={`px-2 pt-3 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
           {/* 文章信息 */}
           <ArticleInfo post={post} />
 

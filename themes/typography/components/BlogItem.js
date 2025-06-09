@@ -14,7 +14,6 @@ export const BlogItem = props => {
   const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
   const showPreview =
     siteConfig('POST_LIST_PREVIEW', false, NOTION_CONFIG) && post.blockMap
-  console.log(post);
   return (
     <div
       key={post.id}

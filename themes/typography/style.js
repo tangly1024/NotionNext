@@ -39,7 +39,7 @@ const Style = () => {
       #theme-typography {
         --primary-color: #2e405b;
         background-color: rgb(255 255 255) / 1;
-        color: rgb(46, 64, 91);
+        color: #2e405b;
         background-size: 7px 7px;
         text-shadow: 1px 1px 1px rgb(0 0 0 / 0.04);
         background-image: linear-gradient(
