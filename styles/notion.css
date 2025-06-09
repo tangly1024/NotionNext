@@ -1982,7 +1982,7 @@ svg + .notion-page-title-text {
   border-left: 10px solid;
   padding: 0.2em 0.9em;
   margin: 6px 0;
-  font-size: 1em;
+  font-size: 0.8em;
   /* color: var(--notion-gray); */
 }
 
