@@ -110,8 +110,7 @@ const nextConfig = {
       'source.unsplash.com',
       'p1.qhimg.com',
       'webmention.io',
-      'ko-fi.com',
-      'image.linyunlink.top',
+      'ko-fi.com'
     ]
   },
 
