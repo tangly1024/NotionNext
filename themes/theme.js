@@ -79,17 +79,17 @@ export const getBaseLayoutByTheme = theme => {
  */
 export const DynamicLayout = props => {
   const { theme, layoutName } = props
-  const SelectedLayout = useLayoutByTheme({ layoutName, theme })
+  const SelectedLayout = getLayoutByTheme({ layoutName, theme })
   return <SelectedLayout {...props} />
 }
 
 /**
  * 加载主题文件
- * @param {*} layoutName
+ * @param {*} router
  * @param {*} theme
  * @returns
  */
-export const useLayoutByTheme = ({ layoutName, theme }) => {
+export const getLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
     ThemeComponents[layoutName] || ThemeComponents.LayoutSlug

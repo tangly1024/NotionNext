@@ -110,14 +110,15 @@ const nextConfig = {
       'source.unsplash.com',
       'p1.qhimg.com',
       'webmention.io',
-      'ko-fi.com'
+      'ko-fi.com',
+      'image.linyunlink.top',
     ]
   },
 
   // 默认将feed重定向至 /public/rss/feed.xml
   redirects: process.env.EXPORT
     ? undefined
-    : () => {
+    : async () => {
         return [
           {
             source: '/feed',
@@ -129,7 +130,7 @@ const nextConfig = {
   // 重写url
   rewrites: process.env.EXPORT
     ? undefined
-    : () => {
+    : async () => {
         // 处理多语言重定向
         const langsRewrites = []
         if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
@@ -176,7 +177,7 @@ const nextConfig = {
       },
   headers: process.env.EXPORT
     ? undefined
-    : () => {
+    : async () => {
         return [
           {
             source: '/:path*{/}?',
@@ -217,7 +218,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true
   },
-  exportPathMap: function (
+  exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {

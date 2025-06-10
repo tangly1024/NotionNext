@@ -51,6 +51,10 @@ export const MenuList = props => {
     links = customMenu
   }
 
+  if (!links || links.length === 0) {
+    return null
+  }
+
   const toggleMenu = () => {
     setShowMenu(!showMenu) // 切换菜单状态
   }
@@ -58,10 +62,6 @@ export const MenuList = props => {
   useEffect(() => {
     setShowMenu(false)
   }, [router])
-
-  if (!links || links.length === 0) {
-    return null
-  }
 
   return (
     <div>

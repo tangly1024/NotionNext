@@ -1,29 +1,16 @@
-import axios from 'axios'
-
-// 定义内容项的接口
-interface ContentItem {
-  type: string
-  content: string
-}
-
-// 定义Notion块的接口
-interface NotionBlock {
-  object: string
-  type: string
-  [key: string]: unknown
-}
+const axios = require('axios')
 
 // 发送 Notion API 请求
 async function postNotion(
-  properties: Record<string, unknown>,
+  properties: any,
   databaseId: string,
-  listContentMain: ContentItem[],
+  listContentMain: any[],
   token: string
-): Promise<{ status: number; data: Record<string, unknown> }> {
+) {
   const url = 'https://api.notion.com/v1/pages'
 
   const children = listContentMain
-    .map((contentMain: ContentItem): NotionBlock | null => {
+    .map(contentMain => {
       if (contentMain.type === 'paragraph') {
         return {
           object: 'block',
@@ -64,21 +51,14 @@ async function postNotion(
   try {
     const response = await axios.post(url, payload, { headers })
     return response
-  } catch (error) {
+  } catch (error: any) {
     console.error('写入Notion异常', error)
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    throw new Error(`Error posting to Notion: ${errorMessage}`)
+    throw new Error(`Error posting to Notion: ${error.message}`)
   }
 }
 
-// 定义响应结果的接口
-interface NotionResponse {
-  status: number
-  data: Record<string, unknown>
-}
-
 // 处理响应结果
-function responseResult(response: NotionResponse): void {
+function responseResult(response: { status: number; data: any }) {
   if (response.status === 200) {
     console.log('成功...')
     console.log(response.data)
@@ -88,25 +68,15 @@ function responseResult(response: NotionResponse): void {
   }
 }
 
-// 定义用户属性的接口
-interface UserProperties {
-  id: string
-  avatar: string
-  name: string
-  mail: string
-  lastLoginTime: string
-  token: string
-}
-
 // 准备属性字段
 function notionProperty(
-  id: string,
-  avatar: string,
-  name: string,
-  mail: string,
-  lastLoginTime: string,
-  token: string
-): Record<string, unknown> {
+  id: any,
+  avatar: any,
+  name: any,
+  mail: any,
+  lastLoginTime: any,
+  token: any
+) {
   return {
     id: {
       rich_text: [

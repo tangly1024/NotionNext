@@ -62,10 +62,7 @@ export default async function handler(
       }
 
       // 这里将用户数据写入到Notion数据库
-      res.redirect(
-        302,
-        `/auth/result?${new URLSearchParams(redirectQuery).toString()}`
-      )
+      res.redirect(302, `/auth/result?${new URLSearchParams(redirectQuery)}`)
     } else {
       const redirectQuery = { msg: params?.statusText || '请求异常' }
       res.redirect(

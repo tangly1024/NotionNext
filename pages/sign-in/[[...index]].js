@@ -37,7 +37,7 @@ export async function getStaticProps(req) {
  * catch-all route for clerk
  * @returns
  */
-export function getStaticPaths() {
+export async function getStaticPaths() {
   return {
     paths: [
       { params: { index: [] } }, // 使 /sign-in 路径可访问
