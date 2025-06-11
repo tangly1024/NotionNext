@@ -20,7 +20,7 @@ const BLOG = {
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Notion, Blog', // 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
-  BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || '', // 备案查询链接，如果用了萌备等备案请在这里填写
+  BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn', // 备案查询链接，如果用了萌备等备案请在这里填写
   POST_LIST_STYLE: 'page', // ['page','scroll] 文章列表样式:页码分页、单页滚动加载
   POST_LIST_PREVIEW: process.env.NEXT_PUBLIC_POST_PREVIEW || 'false', //  是否在列表加载文章预览
   POSTS_PER_PAGE: 12, // post counts per page
