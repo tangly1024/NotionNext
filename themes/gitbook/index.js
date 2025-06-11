@@ -256,26 +256,24 @@ const LayoutIndex = props => {
         setHasRedirected(true) // 更新状态，防止多次执行
 
         // 重定向到指定文章
-        router.push(index).then(() => {
-          setTimeout(() => {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              console.log(
-                '请检查您的Notion数据库中是否包含此slug页面： ',
-                index
-              )
+        await router.push(index)
 
-              // 显示错误信息
-              const containerInner = document.querySelector(
-                '#theme-gitbook #container-inner'
-              )
-              const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
-              containerInner?.insertAdjacentHTML('afterbegin', newHTML)
-            }
-          }, 2000)
-        })
+        // 使用setTimeout检查页面加载情况
+        setTimeout(() => {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            console.log('请检查您的Notion数据库中是否包含此slug页面： ', index)
+
+            // 显示错误信息
+            const containerInner = document.querySelector(
+              '#theme-gitbook #container-inner'
+            )
+            const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
+            containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+          }
+        }, 2000)
       }
     }
 
@@ -320,21 +318,18 @@ const LayoutSlug = props => {
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
           }
-        },
-        waiting404
-      )
+        }
+      }, waiting404)
     }
   }, [post])
   return (
@@ -451,16 +446,21 @@ const Layout404 = props => {
     }, 3000)
   }, [])
 
-  return <>
-        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
-            <div className='dark:text-gray-200'>
-                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
-                <div className='inline-block text-left h-32 leading-10 items-center'>
-                <h2 className='m-0 p-0'>{locale.NAV.PAGE_NOT_FOUND_REDIRECT}</h2>
-                </div>
-            </div>
+  return (
+    <>
+      <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+        <div className='dark:text-gray-200'>
+          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
+            <i className='mr-2 fas fa-spinner animate-spin' />
+            404
+          </h2>
+          <div className='inline-block text-left h-32 leading-10 items-center'>
+            <h2 className='m-0 p-0'>{locale.NAV.PAGE_NOT_FOUND_REDIRECT}</h2>
+          </div>
         </div>
+      </div>
     </>
+  )
 }
 
 /**
@@ -609,18 +609,17 @@ const LayoutDashboard = props => {
 }
 
 export {
-    Layout404,
-    LayoutArchive,
-    LayoutBase,
-    LayoutCategoryIndex,
-    LayoutDashboard,
-    LayoutIndex,
-    LayoutPostList,
-    LayoutSearch,
-    LayoutSignIn,
-    LayoutSignUp,
-    LayoutSlug,
-    LayoutTagIndex,
-    CONFIG as THEME_CONFIG
+  Layout404,
+  LayoutArchive,
+  LayoutBase,
+  LayoutCategoryIndex,
+  LayoutDashboard,
+  LayoutIndex,
+  LayoutPostList,
+  LayoutSearch,
+  LayoutSignIn,
+  LayoutSignUp,
+  LayoutSlug,
+  LayoutTagIndex,
+  CONFIG as THEME_CONFIG
 }
-
