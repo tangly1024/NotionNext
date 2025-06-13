@@ -32,6 +32,10 @@ const Style = () => {
           rgba(0, 0, 0, 0.5) 100%
         );
       }
+      #theme-matery .notion-quote{
+        font-size: 0.8rem;
+      }
+      
       //theme color #4338ca
       
       // 自定义滚动条
