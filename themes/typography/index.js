@@ -63,11 +63,10 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
  */
 const LayoutBase = props => {
   const { children, slotTop } = props
-  // const { onLoading, fullWidth } = useGlobal()
-  const onLoading = true
+  const { onLoading, fullWidth } = useGlobal()
+  // const onLoading = true
   const searchModal = useRef(null)
 
-  console.log('aa', props)
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div
@@ -77,47 +76,33 @@ const LayoutBase = props => {
 
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
 
-        <div className='flex flex-1 mx-auto overflow-hidden p-8 md:p-0 md:max-w-7xl md:w-8/12 w-screen'>
+        <div className='flex flex-1 mx-auto overflow-hidden py-8 md:p-0 md:max-w-7xl md:px-24 w-screen'>
           {/* 主体 - 使用 flex 布局 */}
           {/* 文章详情才显示 */}
-          {props.post && (
-            <div className='mt-20 hidden md:block'>
+          {/* {props.post && (
+            <div className='mt-20 hidden md:block md:fixed md:left-5 md:w-[300px]'>
               <Catalog {...props} />
             </div>
-          )}
-          <div className='overflow-hidden mt-20'>
+          )} */}
+          <div className='overflow-hidden md:mt-20 flex-1 '>
             {/* 左侧内容区域 - 可滚动 */}
             <div
               id='container-inner'
-              className='flex-1 h-full w-full px-24 overflow-y-auto scroll-hidden'>
+              className='h-full w-full md:px-24 overflow-y-auto scroll-hidden relative'>
               {/* 移动端导航 - 显示在顶部 */}
               <div className='md:hidden'>
                 <NavBar {...props} />
               </div>
-              <Transition
-                show={!onLoading}
-                appear={true}
-                enter='transition ease-in-out duration-700 transform order-first'
-                enterFrom='opacity-0 translate-y-16'
-                enterTo='opacity-100'
-                leave='transition ease-in-out duration-300 transform'
-                leaveFrom='opacity-100 translate-y-0'
-                leaveTo='opacity-0 -translate-y-16'
-                unmount={false}>
-                {slotTop}
-
-                {children}
-              </Transition>
-
-              {onLoading && (
-                <div className="flex flex-col justify-center items-center min-h-[50vh]">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-gray-500 dark:bg-gray-300 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                    <div className="w-2 h-2 bg-gray-500 dark:bg-gray-300 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                    <div className="w-2 h-2 bg-gray-500 dark:bg-gray-300 rounded-full animate-bounce"></div>
-                  </div>
-                  <div className="text-xl font-medium text-gray-600 dark:text-gray-300">别着急，坐和放宽</div>
+              {onLoading ? (
+                // loading 时显示 spinner
+                <div className='flex items-center justify-center min-h-[500px] w-full'>
+                  <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900'></div>
                 </div>
+              ) : (
+                <>
+                  {slotTop}
+                  {children}
+                </>
               )}
               <AdSlot type='native' />
               {/* 移动端页脚 - 显示在底部 */}
@@ -206,7 +191,7 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <>
-      <div className='mb-10 pb-20 md:py-12 p-3  min-h-screen w-full'>
+      <div className='mb-10 pb-20 md:pb-12 p-3  min-h-screen w-full'>
         {Object.keys(archivePosts).map(archiveTitle => (
           <BlogArchiveItem
             key={archiveTitle}

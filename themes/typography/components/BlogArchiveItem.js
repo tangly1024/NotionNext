@@ -7,8 +7,8 @@ import Link from 'next/link'
  */
 export default function BlogArchiveItem({ archiveTitle, archivePosts }) {
   return (
-    <div key={archiveTitle}>
-      <div id={archiveTitle} className='pt-16 pb-4 text-3xl dark:text-gray-300'>
+    <div key={archiveTitle} className='pb-16'>
+      <div id={archiveTitle} className='pb-2 text-3xl dark:text-gray-300'>
         {archiveTitle}
       </div>
 
