@@ -18,19 +18,11 @@ export default function Footer(props) {
     <footer>
       <DarkModeButton className='pt-4' />
 
-      <div className='font-bold text-[var(--primary-color)] py-6 text-sm flex flex-col gap-2 items-center'>
+      <div className='font-bold text-[var(--primary-color)] dark:text-white py-6 text-sm flex flex-col gap-2 items-center'>
         <div>
           &copy;{`${copyrightDate}`} {siteConfig('AUTHOR')}.
         </div>
         <div>All rights reserved.</div>
-        <div>
-          Powered by
-          <a
-            href='https://github.com/tangly1024/NotionNext'
-            className=' hover:underline'>
-            NotionNext {siteConfig('VERSION')}
-          </a>
-        </div>
       </div>
     </footer>
   )

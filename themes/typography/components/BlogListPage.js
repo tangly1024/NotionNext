@@ -35,7 +35,7 @@ export default function BlogListPage(props) {
     .replace('.html', '')
 
   return (
-    <div className='w-full md:pr-8 mb-12'>
+    <div className='w-full md:pr-8 mb-12 px-5'>
       <div id='posts-wrapper'>
         {posts?.map((p, index) => (
           <div key={p.id}>

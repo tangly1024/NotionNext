@@ -15,9 +15,7 @@ export const BlogItem = props => {
   const showPreview =
     siteConfig('POST_LIST_PREVIEW', false, NOTION_CONFIG) && post.blockMap
   return (
-    <div
-      key={post.id}
-      className='h-42 my-6 pb-7'>
+    <div key={post.id} className='h-42 my-6 pb-7'>
       {/* 文章标题 */}
 
       <div className='flex'>
@@ -39,7 +37,7 @@ export const BlogItem = props => {
           <h2 className='mb-2'>
             <Link
               href={post.href}
-              className='text-xl underline decoration-2 font-bold text-[var(--primary-color)]'>
+              className='text-xl underline decoration-2 font-bold text-[var(--primary-color)] dark:text-white dark:hover:bg-white dark:hover:text-[var(--primary-color)] px-2 duration-200 transition-all rounded-sm'>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon icon={post.pageIcon} />
               )}
@@ -99,7 +97,6 @@ export const BlogItem = props => {
           </main>
         </article>
       </div>
-
     </div>
   )
 }

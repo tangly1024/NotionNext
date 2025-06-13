@@ -19,7 +19,7 @@ module.exports = {
   BUNDLE_ANALYZER: process.env.ANALYZE === 'true' || false, // 是否展示编译依赖内容与大小
   VERSION: (() => {
     try {
-      // 优先使用环境变量，否则从package.json中获取版本号
+      // 优先使用环境变量，否则从 package.json 中获取版本号
       return (
         process.env.NEXT_PUBLIC_VERSION || require('../package.json').version
       )

@@ -13,7 +13,7 @@ export const MenuItemDrop = ({ link }) => {
       <Link
         href={link?.href}
         target={link?.target}
-        className=' menu-link underline decoration-2 hover:no-underline hover:bg-[#2E405B] hover:text-white text-[var(--primary-color)]  dark:text-gray-200 tracking-widest pb-1 font-bold'>
+        className='dark:hover:text-[var(--primary-color)] dark:hover:bg-white menu-link underline decoration-2 hover:no-underline hover:bg-[#2E405B] hover:text-white text-[var(--primary-color)]  dark:text-gray-200 tracking-widest pb-1 font-bold'>
         {link?.name}
       </Link>
     </div>

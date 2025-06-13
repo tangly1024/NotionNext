@@ -27,13 +27,22 @@ const Style = () => {
       }
       // 底色
       .dark body {
-        background-color: black;
+        background-color: rgb(35, 34, 34);
       }
       // 文本不可选取
       .forbid-copy {
         user-select: none;
         -webkit-user-select: none;
         -ms-user-select: none;
+      }
+
+      .dark #theme-typography {
+        background-image: linear-gradient(
+              to right,
+              rgb(255 255 255 / 0.04) 1px,
+              transparent 1px
+            ),
+            linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
       }
 
       #theme-typography {
