@@ -33,7 +33,7 @@ const Style = () => {
         );
       }
       #theme-matery .notion-quote{
-        font-size: 0.8rem;
+        font-size: 0.8em;
       }
       
       //theme color #4338ca
