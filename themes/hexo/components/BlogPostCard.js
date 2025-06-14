@@ -27,7 +27,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         key={post.id}
         data-aos='fade-up'
         data-aos-easing='ease-in-out'
-        data-aos-duration='800'
+        data-aos-duration='500'
         data-aos-once='false'
         data-aos-anchor-placement='top-bottom'
         id='blog-post-card'

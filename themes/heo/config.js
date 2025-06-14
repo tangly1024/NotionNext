@@ -1,4 +1,7 @@
 const CONFIG = {
+  HEO_HOME_POST_TWO_COLS: true, // 首页博客两列显示，若为false则只显示一列
+  HEO_LOADING_COVER: true, // 页面加载的遮罩动画
+
   HEO_HOME_BANNER_ENABLE: true,
 
   HEO_SITE_CREATE_TIME: '2024-07-3', // 建站日期，用于计算网站运行的第几天
@@ -19,8 +22,11 @@ const CONFIG = {
   HEO_HERO_TITLE_2: '免费分享',
   HEO_HERO_TITLE_3: 'hhzy.us.kg',
   HEO_HERO_TITLE_4: '新版上线',
-  HEO_HERO_TITLE_5: '请勿贩卖资源',
-  HEO_HERO_TITLE_LINK: 'https://hhzy.us.kg/',
+
+  HEO_HERO_TITLE_5: '口合',
+  HEO_HERO_TITLE_LINK: 'https://hhzyw.ggff.net',
+  // 英雄区遮罩文字
+  HEO_HERO_COVER_TITLE: '随便逛逛',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/必看精选' },
@@ -116,6 +122,12 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
   HEO_SOCIAL_CARD_URL: 'https://hhzy.us.kg/',
+
+  // 底部统计面板文案
+  HEO_POST_COUNT_TITLE: '文章数:',
+  HEO_SITE_TIME_TITLE: '建站天数:',
+  HEO_SITE_VISIT_TITLE: '访问量:',
+  HEO_SITE_VISITOR_TITLE: '访客数:',
 
   // *****  以下配置无效，只是预留开发 ****
   // 菜单配置

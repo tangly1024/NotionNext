@@ -13,7 +13,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 QUOTA = 100
 
 
-def parse_stiemap(site):
+def parse_sitemap(site):
     site = f'{site}/sitemap.xml'
     try:
         result = requests.get(site)
@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     if args.url:
         # 解析urls
-        urls = parse_stiemap(args.url)
+        urls = parse_sitemap(args.url)
         if urls is not None:
             # 判断当前urls数量是否超过额度，若超过则取当日最大值，默认为100，可根据实际情况修改
             if len(urls) > QUOTA:

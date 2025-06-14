@@ -116,7 +116,11 @@ class MessengerCustomerChat extends Component {
             js = d.createElement(s);
             js.id = id;
             js.src = `https://connect.facebook.net/${language}/sdk/xfbml.customerchat.js`;
-            fjs.parentNode.insertBefore(js, fjs);
+            if (fjs && fjs.parentNode && fjs.parentNode.contains(fjs)) {
+              fjs.parentNode.insertBefore(js, fjs);
+            } else {
+              document.body.appendChild(js);
+            }
         })(document, 'script', 'facebook-jssdk');
         /* eslint-enable */
   }

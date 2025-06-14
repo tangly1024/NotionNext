@@ -1,17 +1,16 @@
 import { siteConfig } from '@/lib/config'
 import SocialButton from '@/themes/fukasawa/components/SocialButton'
-import CONFIG from '../config'
 import { Logo } from './Logo'
 import { SVGFooterCircleBG } from './svg/SVGFooterCircleBG'
+import Link from 'next/link'
 
 /* eslint-disable @next/next/no-img-element */
 export const Footer = props => {
-  const latestPosts = props?.latestPosts ? props?.latestPosts.slice(0, 2) : []
-  const STARTER_FOOTER_LINK_GROUP = siteConfig(
-    'STARTER_FOOTER_LINK_GROUP',
-    [],
-    CONFIG
-  )
+  const footerPostCount = siteConfig('STARTER_FOOTER_POST_COUNT', 2)
+  const latestPosts = props?.latestPosts
+    ? props?.latestPosts.slice(0, footerPostCount)
+    : []
+  const STARTER_FOOTER_LINK_GROUP = siteConfig('STARTER_FOOTER_LINK_GROUP', [])
   return (
     <>
       {/* <!-- ====== Footer Section Start --> */}
@@ -26,7 +25,7 @@ export const Footer = props => {
                   <Logo white={true} />
                 </a>
                 <p className='mb-8 max-w-[270px] text-base text-gray-7'>
-                  {siteConfig('STARTER_FOOTER_SLOGAN', null, CONFIG)}
+                  {siteConfig('STARTER_FOOTER_SLOGAN')}
                 </p>
                 <div className='-mx-3 flex items-center'>
                   <div className='mx-3'>
@@ -50,11 +49,11 @@ export const Footer = props => {
                       {item?.LINK_GROUP?.map((l, i) => {
                         return (
                           <li key={i}>
-                            <a
+                            <Link
                               href={l.URL}
                               className='mb-3 inline-block text-base text-gray-7 hover:text-primary'>
                               {l.TITLE}
-                            </a>
+                            </Link>
                           </li>
                         )
                       })}
@@ -68,23 +67,28 @@ export const Footer = props => {
             <div className='w-full px-4 md:w-2/3 lg:w-6/12 xl:w-3/12'>
               <div className='mb-10 w-full'>
                 <h4 className='mb-9 text-lg font-semibold text-white'>
-                  {siteConfig('STARTER_FOOTER_BLOG_LATEST_TITLE', null, CONFIG)}
+                  {siteConfig('STARTER_FOOTER_BLOG_LATEST_TITLE')}
                 </h4>
                 {/* 展示两条最新博客文章 */}
                 <div className='flex flex-col gap-8'>
                   {latestPosts?.map((item, index) => {
                     return (
-                      <a
+                      <Link
                         key={index}
                         href={item?.href}
                         className='group flex items-center gap-[22px]'>
-                        <div className='overflow-hidden rounded w-20 h-12'>
-                          <img src={item.pageCoverThumbnail} alt={item.title} />
-                        </div>
+                        {item.pageCoverThumbnail && (
+                          <div className='overflow-hidden rounded w-20 h-12'>
+                            <img
+                              src={item.pageCoverThumbnail}
+                              alt={item.title}
+                            />
+                          </div>
+                        )}
                         <span className='line-clamp-2 max-w-[180px] text-base text-gray-7 group-hover:text-white'>
                           {item.title}
                         </span>
-                      </a>
+                      </Link>
                     )
                   })}
                 </div>
@@ -101,45 +105,27 @@ export const Footer = props => {
               <div className='w-full px-4 md:w-2/3 lg:w-1/2'>
                 <div className='my-1'>
                   <div className='-mx-3 flex items-center justify-center md:justify-start'>
-                    <a
+                    <Link
+                      href={siteConfig('STARTER_FOOTER_PRIVACY_POLICY_URL', '')}
+                      className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
+                      {siteConfig('STARTER_FOOTER_PRIVACY_POLICY_TEXT')}
+                    </Link>
+                    <Link
                       href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_POLICY_URL',
-                        null,
-                        CONFIG
+                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL', ''
+                      )}
+                      className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
+                      {siteConfig('STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT')}
+                    </Link>
+                    <Link
+                      href={siteConfig(
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL', ''
                       )}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig(
-                        'STARTER_FOOTER_PRIVACY_POLICY_TEXT',
-                        null,
-                        CONFIG
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT', ''
                       )}
-                    </a>
-                    <a
-                      href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL',
-                        null,
-                        CONFIG
-                      )}
-                      className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
-                      {siteConfig(
-                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT',
-                        null,
-                        CONFIG
-                      )}
-                    </a>
-                    <a
-                      href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL',
-                        null,
-                        CONFIG
-                      )}
-                      className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
-                      {siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT',
-                        null,
-                        CONFIG
-                      )}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
