@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import Link from 'next/link'
 
 /**
  * 价格板块
@@ -10,7 +11,7 @@ export const Pricing = () => {
       {/* <!-- ====== Pricing Section Start --> */}
       <section
         id='pricing'
-        className='relative z-20 overflow-hidden bg-white pb-12 pt-20 dark:bg-dark lg:pb-[90px] lg:pt-[120px]'>
+        className='relative overflow-hidden bg-white pb-12 pt-20 dark:bg-dark lg:pb-[90px] lg:pt-[120px]'>
         <div className='container mx-auto'>
           <div className='-mx-4 flex flex-wrap'>
             <div className='w-full px-4'>
@@ -65,11 +66,11 @@ export const Pricing = () => {
                       })}
                   </div>
                 </div>
-                <a
-                  href={siteConfig('STARTER_PRICING_1_BUTTON_URL')}
+                <Link
+                  href={siteConfig('STARTER_PRICING_1_BUTTON_URL', '')}
                   className='inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark'>
                   {siteConfig('STARTER_PRICING_1_BUTTON_TEXT')}
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -117,11 +118,11 @@ export const Pricing = () => {
                       })}
                   </div>
                 </div>
-                <a
-                  href={siteConfig('STARTER_PRICING_2_BUTTON_URL')}
+                <Link
+                  href={siteConfig('STARTER_PRICING_2_BUTTON_URL', '')}
                   className='inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark'>
                   {siteConfig('STARTER_PRICING_2_BUTTON_TEXT')}
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -161,11 +162,11 @@ export const Pricing = () => {
                       })}
                   </div>
                 </div>
-                <a
-                  href={siteConfig('STARTER_PRICING_3_BUTTON_URL')}
+                <Link
+                  href={siteConfig('STARTER_PRICING_3_BUTTON_URL', '')}
                   className='inline-block rounded-md bg-primary px-7 py-3 text-center text-base font-medium text-white transition hover:bg-blue-dark'>
                   {siteConfig('STARTER_PRICING_3_BUTTON_TEXT')}
-                </a>
+                </Link>
               </div>
             </div>
           </div>

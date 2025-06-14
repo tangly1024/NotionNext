@@ -6,56 +6,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import Artalk from './Artalk'
 
-const WalineComponent = dynamic(
-  () => {
-    return import('@/components/WalineComponent')
-  },
-  { ssr: false }
-)
-
-const CusdisComponent = dynamic(
-  () => {
-    return import('@/components/CusdisComponent')
-  },
-  { ssr: false }
-)
-
-const TwikooCompenent = dynamic(
-  () => {
-    return import('@/components/Twikoo')
-  },
-  { ssr: false }
-)
-
-const GitalkComponent = dynamic(
-  () => {
-    return import('@/components/Gitalk')
-  },
-  { ssr: false }
-)
-const UtterancesComponent = dynamic(
-  () => {
-    return import('@/components/Utterances')
-  },
-  { ssr: false }
-)
-const GiscusComponent = dynamic(
-  () => {
-    return import('@/components/Giscus')
-  },
-  { ssr: false }
-)
-const WebMentionComponent = dynamic(
-  () => {
-    return import('@/components/WebMention')
-  },
-  { ssr: false }
-)
-
-const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
-  ssr: false
-})
-
 /**
  * 评论组件
  * 只有当前组件在浏览器可见范围内才会加载内容
@@ -114,10 +64,10 @@ const Comment = ({ frontMatter, className }) => {
   }
 
   if (!frontMatter) {
-    return <>Loading...</>
+    return null
   }
 
-  if (isSearchEngineBot()) {
+  if (isSearchEngineBot) {
     return null
   }
 
@@ -203,5 +153,55 @@ const Comment = ({ frontMatter, className }) => {
     </div>
   )
 }
+
+const WalineComponent = dynamic(
+  () => {
+    return import('@/components/WalineComponent')
+  },
+  { ssr: false }
+)
+
+const CusdisComponent = dynamic(
+  () => {
+    return import('@/components/CusdisComponent')
+  },
+  { ssr: false }
+)
+
+const TwikooCompenent = dynamic(
+  () => {
+    return import('@/components/Twikoo')
+  },
+  { ssr: false }
+)
+
+const GitalkComponent = dynamic(
+  () => {
+    return import('@/components/Gitalk')
+  },
+  { ssr: false }
+)
+const UtterancesComponent = dynamic(
+  () => {
+    return import('@/components/Utterances')
+  },
+  { ssr: false }
+)
+const GiscusComponent = dynamic(
+  () => {
+    return import('@/components/Giscus')
+  },
+  { ssr: false }
+)
+const WebMentionComponent = dynamic(
+  () => {
+    return import('@/components/WebMention')
+  },
+  { ssr: false }
+)
+
+const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
+  ssr: false
+})
 
 export default Comment
