@@ -9,7 +9,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     // https://blog.tangly1024.com 域名
-    { title: '欢迎来到我的博客', url: 'https://blog.tangly1024.com' },
+    { title: '欢迎来到我的博客', url: 'https://hexo.levsongsw.com' },
     //{ title: '访问文档中心获取更多帮助', url: 'https://docs.tangly1024.com' }
   ],
 
@@ -26,7 +26,7 @@ const CONFIG = {
   HEO_HERO_TITLE_4: '新版上线',
   HEO_HERO_TITLE_5: '不爱吃香菜的萌新',
   // https://tangly1024.com 域名
-  HEO_HERO_TITLE_LINK: 'https://tangly1024.com',
+  HEO_HERO_TITLE_LINK: 'https://hexo.levsongsw.com',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
 
@@ -57,7 +57,7 @@ const CONFIG = {
   HEO_INFO_CARD_URL2: 'https://github.com/tangly1024',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
   // https://www.tangly1024.com  域名
-  HEO_INFO_CARD_URL3: 'https://www.tangly1024.com',
+  HEO_INFO_CARD_URL3: 'https://hexo.levsongsw.com',
   HEO_INFO_CARD_TEXT3: '了解更多',
 
   // 用户技能图标
