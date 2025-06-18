@@ -4,7 +4,6 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -40,9 +39,6 @@ const JumpToTopButton = dynamic(() => import('./components/JumpToTopButton'), {
   ssr: false
 })
 const Footer = dynamic(() => import('./components/Footer'), { ssr: false })
-const SearchInput = dynamic(() => import('./components/SearchInput'), {
-  ssr: false
-})
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
 const BlogListPage = dynamic(() => import('./components/BlogListPage'), {
   ssr: false
@@ -96,7 +92,7 @@ const LayoutBase = props => {
               {onLoading ? (
                 // loading 时显示 spinner
                 <div className='flex items-center justify-center min-h-[500px] w-full'>
-                  <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900'></div>
+                  <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900 dark:border-white'></div>
                 </div>
               ) : (
                 <>
@@ -106,7 +102,7 @@ const LayoutBase = props => {
               )}
               <AdSlot type='native' />
               {/* 移动端页脚 - 显示在底部 */}
-              <div className='md:hidden  z-30  dark:bg-black'>
+              <div className='md:hidden  z-30  '>
                 <Footer {...props} />
               </div>
             </div>
@@ -175,9 +171,6 @@ const LayoutSearch = props => {
     }
   }, [])
 
-  const slotTop = siteConfig('ALGOLIA_APP_ID') ? null : (
-    <SearchInput {...props} />
-  )
 
   return <LayoutPostList {...props} slotTop={slotTop} />
 }
@@ -219,7 +212,7 @@ const LayoutSlug = props => {
 
       {!lock && post && (
         <div
-          className={`px-2 pt-3 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
+          className={`px-5 pt-3 ${fullWidth ? '' : 'xl:max-w-4xl 2xl:max-w-6xl'}`}>
           {/* 文章信息 */}
           <ArticleInfo post={post} />
 

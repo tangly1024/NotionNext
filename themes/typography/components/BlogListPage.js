@@ -20,8 +20,8 @@ export default function BlogListPage(props) {
   const currentPage = +page
 
   // 博客列表嵌入广告
-  const SIMPLE_POST_AD_ENABLE = siteConfig(
-    'SIMPLE_POST_AD_ENABLE',
+  const TYPOGRAPHY_POST_AD_ENABLE = siteConfig(
+    'TYPOGRAPHY_POST_AD_ENABLE',
     false,
     CONFIG
   )
@@ -39,10 +39,10 @@ export default function BlogListPage(props) {
       <div id='posts-wrapper'>
         {posts?.map((p, index) => (
           <div key={p.id}>
-            {SIMPLE_POST_AD_ENABLE && (index + 1) % 3 === 0 && (
+            {TYPOGRAPHY_POST_AD_ENABLE && (index + 1) % 3 === 0 && (
               <AdSlot type='in-article' />
             )}
-            {SIMPLE_POST_AD_ENABLE && index + 1 === 4 && <AdSlot type='flow' />}
+            {TYPOGRAPHY_POST_AD_ENABLE && index + 1 === 4 && <AdSlot type='flow' />}
             <BlogItem post={p} />
           </div>
         ))}

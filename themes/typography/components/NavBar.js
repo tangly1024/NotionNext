@@ -18,11 +18,11 @@ export default function NavBar(props) {
         <Link href='/'>
           <div className='flex flex-col-reverse md:flex-col items-center md:items-start'>
             <div className='font-bold text-4xl text-center' id='blog-name'>
-              山野
+              {siteConfig('TYPOGRAPHY_BLOG_NAME')}
             </div>
-            {/* <div className='font-bold text-xl text-center' id='blog-name-en'>
-              Blog
-            </div> */}
+            <div className='font-bold text-xl text-center' id='blog-name-en'>
+              {siteConfig('TYPOGRAPHY_BLOG_NAME_EN')}
+            </div>
           </div>
         </Link>
       </header>

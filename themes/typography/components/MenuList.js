@@ -29,24 +29,23 @@ export const MenuList = ({ customNav, customMenu }) => {
   })
 
   let links = [
-   
     {
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       href: '/archive',
-      show: siteConfig('SIMPLE_MENU_ARCHIVE', null, CONFIG)
+      show: siteConfig('TYPOGRAPHY_MENU_ARCHIVE', null, CONFIG)
     },
     {
       icon: 'fas fa-folder',
       name: locale.COMMON.CATEGORY,
       href: '/category',
-      show: siteConfig('SIMPLE_MENU_CATEGORY', null, CONFIG)
+      show: siteConfig('TYPOGRAPHY_MENU_CATEGORY', null, CONFIG)
     },
     {
       icon: 'fas fa-tag',
       name: locale.COMMON.TAGS,
       href: '/tag',
-      show: siteConfig('SIMPLE_MENU_TAG', null, CONFIG)
+      show: siteConfig('TYPOGRAPHY_MENU_TAG', null, CONFIG)
     }
   ]
 
