@@ -58,7 +58,7 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
  * @returns
  */
 const LayoutBase = props => {
-  const { children, slotTop } = props
+  const { children } = props
   const { onLoading, fullWidth } = useGlobal()
   // const onLoading = true
   const searchModal = useRef(null)
@@ -96,7 +96,6 @@ const LayoutBase = props => {
                 </div>
               ) : (
                 <>
-                  {slotTop}
                   {children}
                 </>
               )}
