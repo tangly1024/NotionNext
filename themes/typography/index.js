@@ -171,7 +171,7 @@ const LayoutSearch = props => {
   }, [])
 
 
-  return <LayoutPostList {...props} slotTop={slotTop} />
+  return <LayoutPostList {...props} />
 }
 
 /**
