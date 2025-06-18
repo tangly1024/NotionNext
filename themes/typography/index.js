@@ -183,7 +183,7 @@ const LayoutArchive = props => {
   const { archivePosts } = props
   return (
     <>
-      <div className='mb-10 pb-20 md:pb-12 p-3  min-h-screen w-full'>
+      <div className='mb-10 pb-20 md:pb-12 p-5  min-h-screen w-full'>
         {Object.keys(archivePosts).map(archiveTitle => (
           <BlogArchiveItem
             key={archiveTitle}
@@ -283,7 +283,7 @@ const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   return (
     <>
-      <div id='category-list' className='duration-200 flex flex-wrap'>
+      <div id='category-list' className='px-5 duration-200 flex flex-wrap'>
         {categoryOptions?.map(category => {
           return (
             <Link
@@ -315,7 +315,7 @@ const LayoutTagIndex = props => {
   const { tagOptions } = props
   return (
     <>
-      <div id='tags-list' className='duration-200 flex flex-wrap'>
+      <div id='tags-list' className='px-5 duration-200 flex flex-wrap'>
         {tagOptions.map(tag => {
           return (
             <div key={tag.name} className='p-2'>
