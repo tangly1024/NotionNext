@@ -32,6 +32,10 @@ const Footer = ({ title }) => {
           <i className='fas fa-users' />
           <span className='px-1 busuanzi_value_site_uv'> </span>
         </span>
+             <a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="_blank" rel="noopener nofollow" style="display: inline-flex; align-items: center; text-decoration: none; color: inherit;">
+    <img style="position:relative; top:-2.5px; margin-right: 5px;" src="https://cdn.jsdelivr.net/gh/caibhh/CDN/img/blog/%E5%8F%88%E6%8B%8D%E4%BA%91_logo5.webp" align="absmiddle" width="60" height="30" alt="又拍云logo">
+    提供加速服务
+            </a>
         <h1 className='text-xs pt-4 text-light-400 dark:text-gray-400'>
           {title} {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
         </h1>
