@@ -37,6 +37,12 @@ module.exports = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
+      name: 'sevenfour',
+      artist: 'Kris',
+      url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0ViYUZFa0RlWXExSGx1c1dWdjJ0cndVQnN2Sk5lNUloNWw2cW5CS25JdHg3Smc.mp3',
+      cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
+    },
+    {
       name: 'Gyaa Ha ha!',
       artist: 'toby fox',
       url: 'http://music.163.com/song/media/outer/url?id=2711378632.mp3',
