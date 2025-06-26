@@ -39,7 +39,7 @@ module.exports = {
     {
       name: 'Charm and Rules',
       artist: '',
-      url: 'http://music.163.com/song/media/outer/url?id=4680502.mp3',
+      url: 'http://music.163.com/song/media/outer/url?id=2708402260.mp3',
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
