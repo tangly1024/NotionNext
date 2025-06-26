@@ -39,7 +39,7 @@ module.exports = {
     {
       name: 'Charm and Rules',
       artist: '',
-      url: 'http://music.163.com/song/media/outer/url?id=2708402260.mp3',
+      url: 'https://courageous-coffee-leyqzgg8cj.edgeone.app/charm%20and%20rules.mp3',
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
