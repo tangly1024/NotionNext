@@ -1,6 +1,7 @@
-import BLOG from '@/blog.config'
 import LazyImage from '@/components/LazyImage'
 import Link from 'next/link'
+import { siteConfig } from '@/lib/config'
+import NotionIcon from '@/components/NotionIcon'
 
 /**
  * 文章详情页介绍
@@ -12,7 +13,7 @@ export default function ArticleInfo(props) {
 
   return (<>
         {/* title */}
-        <h1 className="text-3xl pt-12  dark:text-gray-300">{post?.title}</h1>
+        <h1 className="text-3xl pt-12  dark:text-gray-300">{siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}{post?.title}</h1>
 
         {/* meta */}
         <section className="py-2 items-center text-sm  px-1">
@@ -26,10 +27,10 @@ export default function ArticleInfo(props) {
             </div>
             <Link href="/about" passHref legacyBehavior>
                 <div className='flex pt-2'>
-                    <LazyImage src={siteInfo?.icon} className='rounded-full cursor-pointer' width={22} alt={BLOG.AUTHOR} />
+                    <LazyImage src={siteInfo?.icon} className='rounded-full cursor-pointer' width={22} alt={siteConfig('AUTHOR')} />
 
                     <div className="mr-3 ml-2 my-auto text-green-500 cursor-pointer">
-                        {BLOG.AUTHOR}
+                        {siteConfig('AUTHOR')}
                     </div>
                 </div>
             </Link>

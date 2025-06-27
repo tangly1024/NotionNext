@@ -3,7 +3,6 @@ import InfoCard from './InfoCard'
 import TagGroups from './TagGroups'
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
-import React from 'react'
 
 /**
  * 侧边栏
@@ -36,7 +35,7 @@ const SideBar = (props) => {
               <Link
                 href={'/category'}
                 passHref
-                className='mb-3 text-gray-400 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
+                className='mb-3 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:underline cursor-pointer'>
 
                 {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
 
@@ -54,7 +53,7 @@ const SideBar = (props) => {
               <Link
                 href={'/tag'}
                 passHref
-                className='text-gray-400 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
+                className='text-gray-500 hover:text-black  dark:hover:text-white hover:underline cursor-pointer'>
 
                 {locale.COMMON.MORE} <i className='fas fa-angle-double-right'/>
 

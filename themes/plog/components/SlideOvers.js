@@ -2,7 +2,7 @@ import { Fragment, useRef, useImperativeHandle, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Footer } from './Footer'
 import SocialButton from './SocialButton'
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 侧拉抽屉
@@ -61,8 +61,8 @@ export default function SlideOvers({ children, cRef }) {
                                         leaveTo="opacity-0 transition-y-32"
                                     >
                                         <div className='max-w-7xl mx-auto space-y-6'>
-                                            <h2 className='text-4xl text-gray-200'>关于{BLOG.AUTHOR}</h2>
-                                            <h2 className='text-2xl text-gray-400'>{BLOG.BIO}</h2>
+                                            <h2 className='text-4xl text-gray-200'>关于{siteConfig('AUTHOR')}</h2>
+                                            <h2 className='text-2xl text-gray-400'>{siteConfig('BIO')}</h2>
                                             <h2 className='text-4xl text-gray-200'>联系我</h2>
                                             <SocialButton/>
                                             <Footer/>

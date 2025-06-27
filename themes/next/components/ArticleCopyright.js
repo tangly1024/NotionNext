@@ -1,10 +1,11 @@
 import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 export default function ArticleCopyright ({ author, url }) {
   const { locale } = useGlobal()
-  if (!CONFIG.ARTICLE_COPYRIGHT) {
+  if (!siteConfig('NEXT_ARTICLE_COPYRIGHT', null, CONFIG)) {
     return <></>
   }
   return (

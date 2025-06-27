@@ -1,28 +1,12 @@
-import { getGlobalData } from '@/lib/notion/getNotionData'
-import { useGlobal } from '@/lib/global'
-import { getDataFromCache } from '@/lib/cache/cache_manager'
 import BLOG from '@/blog.config'
-import { useRouter } from 'next/router'
-import { getLayoutByTheme } from '@/themes/theme'
+import { getDataFromCache } from '@/lib/cache/cache_manager'
+import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { DynamicLayout } from '@/themes/theme'
 
 const Index = props => {
-  const { keyword, siteInfo } = props
-  const { locale } = useGlobal()
-
-  // 根据页面路径加载不同Layout文件
-  const Layout = getLayoutByTheme(useRouter())
-
-  const meta = {
-    title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-    description: siteInfo?.title,
-    image: siteInfo?.pageCover,
-    slug: 'search/' + (keyword || ''),
-    type: 'website'
-  }
-
-  props = { ...props, meta }
-
-  return <Layout {...props} />
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }
 
 /**
@@ -30,31 +14,46 @@ const Index = props => {
  * @param {*} param0
  * @returns
  */
-export async function getStaticProps({ params: { keyword } }) {
+export async function getStaticProps({ params: { keyword }, locale }) {
   const props = await getGlobalData({
     from: 'search-props',
-    pageType: ['Post']
+    locale
   })
   const { allPages } = props
-  const allPosts = allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
+  const allPosts = allPages?.filter(
+    page => page.type === 'Post' && page.status === 'Published'
+  )
   props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
+  const POST_LIST_STYLE = siteConfig(
+    'POST_LIST_STYLE',
+    'Page',
+    props?.NOTION_CONFIG
+  )
+  const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
+
   // 处理分页
-  if (BLOG.POST_LIST_STYLE === 'scroll') {
-    // 滚动列表 给前端返回所有数据
-  } else if (BLOG.POST_LIST_STYLE === 'page') {
-    props.posts = props.posts?.slice(0, BLOG.POSTS_PER_PAGE)
+  if (POST_LIST_STYLE === 'scroll') {
+    // 滚动列表默认给前端返回所有数据
+  } else if (POST_LIST_STYLE) {
+    props.posts = props.posts?.slice(0, POSTS_PER_PAGE)
   }
   props.keyword = keyword
   return {
     props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND)
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
   }
 }
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { keyword: BLOG.TITLE } }],
+    paths: [{ params: { keyword: 'NotionNext' } }],
     fallback: true
   }
 }
@@ -112,13 +111,17 @@ const isIterable = obj =>
 async function filterByMemCache(allPosts, keyword) {
   const filterPosts = []
   if (keyword) {
-    keyword = keyword.trim()
+    keyword = keyword.trim().toLowerCase()
   }
   for (const post of allPosts) {
     const cacheKey = 'page_block_' + post.id
     const page = await getDataFromCache(cacheKey, true)
-    const tagContent = post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
-    const categoryContent = post.category && Array.isArray(post.category) ? post.category.join(' ') : ''
+    const tagContent =
+      post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''
+    const categoryContent =
+      post.category && Array.isArray(post.category)
+        ? post.category.join(' ')
+        : ''
     const articleInfo = post.title + post.summary + tagContent + categoryContent
     let hit = articleInfo.toLowerCase().indexOf(keyword) > -1
     const indexContent = getPageContentText(post, page)
@@ -130,7 +133,7 @@ async function filterByMemCache(allPosts, keyword) {
       if (!c) {
         continue
       }
-      const index = c.toLowerCase().indexOf(keyword.toLowerCase())
+      const index = c.toLowerCase().indexOf(keyword)
       if (index > -1) {
         hit = true
         hitCount += 1

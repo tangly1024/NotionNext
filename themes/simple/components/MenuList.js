@@ -1,5 +1,5 @@
-import BLOG from '@/blog.config'
 import Collapse from '@/components/Collapse'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -18,7 +18,7 @@ export const MenuList = ({ customNav, customMenu }) => {
   const toggleIsOpen = () => {
     changeIsOpen(!isOpen)
   }
-  const closeMenu = (e) => {
+  const closeMenu = e => {
     changeIsOpen(false)
   }
   const router = useRouter()
@@ -29,10 +29,30 @@ export const MenuList = ({ customNav, customMenu }) => {
   })
 
   let links = [
-    { icon: 'fas fa-search', name: locale.NAV.SEARCH, to: '/search', show: CONFIG.MENU_SEARCH },
-    { icon: 'fas fa-archive', name: locale.NAV.ARCHIVE, to: '/archive', show: CONFIG.MENU_ARCHIVE },
-    { icon: 'fas fa-folder', name: locale.COMMON.CATEGORY, to: '/category', show: CONFIG.MENU_CATEGORY },
-    { icon: 'fas fa-tag', name: locale.COMMON.TAGS, to: '/tag', show: CONFIG.MENU_TAG }
+    {
+      icon: 'fas fa-search',
+      name: locale.NAV.SEARCH,
+      href: '/search',
+      show: siteConfig('SIMPLE_MENU_SEARCH', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-archive',
+      name: locale.NAV.ARCHIVE,
+      href: '/archive',
+      show: siteConfig('SIMPLE_MENU_ARCHIVE', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-folder',
+      name: locale.COMMON.CATEGORY,
+      href: '/category',
+      show: siteConfig('SIMPLE_MENU_CATEGORY', null, CONFIG)
+    },
+    {
+      icon: 'fas fa-tag',
+      name: locale.COMMON.TAGS,
+      href: '/tag',
+      show: siteConfig('SIMPLE_MENU_TAG', null, CONFIG)
+    }
   ]
 
   if (customNav) {
@@ -40,7 +60,7 @@ export const MenuList = ({ customNav, customMenu }) => {
   }
 
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
-  if (BLOG.CUSTOM_MENU) {
+  if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
   }
 
@@ -48,25 +68,46 @@ export const MenuList = ({ customNav, customMenu }) => {
     return null
   }
 
-  return (<>
-        {/* 大屏模式菜单 */}
-        <div id='nav-menu-pc' className='hidden md:flex my-auto'>
-            {links?.map(link => <MenuItemDrop key={link?.id} link={link} />)}
+  return (
+    <>
+      {/* 大屏模式菜单 */}
+      <div id='nav-menu-pc' className='hidden md:flex my-auto'>
+        {links?.map((link, index) => (
+          <MenuItemDrop key={index} link={link} />
+        ))}
+      </div>
+      {/* 移动端小屏菜单 */}
+      <div
+        id='nav-menu-mobile'
+        className='flex md:hidden my-auto justify-start'>
+        <div
+          onClick={toggleIsOpen}
+          className='cursor-pointer hover:text-red-400 transition-all duration-200'>
+          <i
+            className={`${isOpen && 'rotate-90'} transition-all duration-200 fa fa-bars mr-3`}
+          />
+          <span>{!isOpen ? 'MENU' : 'CLOSE'}</span>
         </div>
-        {/* 移动端小屏菜单 */}
-        <div id='nav-menu-mobile' className='flex md:hidden my-auto justify-start'>
-            <div onClick={toggleIsOpen} className='cursor-pointer hover:text-red-400 transition-all duration-200'>
-                <i className={`${isOpen && 'rotate-90'} transition-all duration-200 fa fa-bars mr-3`} />
-                <span>{!isOpen ? 'MENU' : 'CLOSE'}</span>
-            </div>
 
-            <Collapse collapseRef={collapseRef} className='absolute w-full top-12 left-0' isOpen={isOpen}>
-                <div id='menu-wrap' className='bg-white dark:border-hexo-black-gray border'>
-                {links?.map(link => <MenuItemCollapse key={link?.id} link={link} onHeightChange={(param) => collapseRef.current?.updateCollapseHeight(param)}/>)}
-                </div>
-            </Collapse>
-        </div>
+        <Collapse
+          collapseRef={collapseRef}
+          className='absolute w-full top-12 left-0'
+          isOpen={isOpen}>
+          <div
+            id='menu-wrap'
+            className='bg-white dark:border-hexo-black-gray border'>
+            {links?.map((link, index) => (
+              <MenuItemCollapse
+                key={index}
+                link={link}
+                onHeightChange={param =>
+                  collapseRef.current?.updateCollapseHeight(param)
+                }
+              />
+            ))}
+          </div>
+        </Collapse>
+      </div>
     </>
-
   )
 }

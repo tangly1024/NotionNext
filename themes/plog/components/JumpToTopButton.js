@@ -1,5 +1,4 @@
 import { useGlobal } from '@/lib/global'
-import React from 'react'
 
 /**
  * 跳转到网页顶部

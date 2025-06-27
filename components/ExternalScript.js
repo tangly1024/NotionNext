@@ -7,7 +7,7 @@ import { isBrowser } from '@/lib/utils'
  * 传入参数将转为 <script>标签。
  * @returns
  */
-const ExternalScript = (props) => {
+const ExternalScript = props => {
   const { src } = props
   if (!isBrowser || !src) {
     return null
@@ -22,7 +22,7 @@ const ExternalScript = (props) => {
     script.setAttribute(key, value)
   })
   document.head.appendChild(script)
-  console.log('加载外部脚本', props, script)
+  // console.log('加载外部脚本', props, script)
   return null
 }
 

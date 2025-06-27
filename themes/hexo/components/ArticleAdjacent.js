@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 上一篇，下一篇文章
@@ -7,7 +8,7 @@ import CONFIG from '../config'
  * @returns
  */
 export default function ArticleAdjacent ({ prev, next }) {
-  if (!prev || !next || !CONFIG.ARTICLE_ADJACENT) {
+  if (!prev || !next || !siteConfig('HEXO_ARTICLE_ADJACENT', null, CONFIG)) {
     return <></>
   }
   return (
