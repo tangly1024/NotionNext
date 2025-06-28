@@ -43,9 +43,9 @@ module.exports = {
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
-      name: 'sevenfour',
+      name: '无人演奏会',
       artist: 'Kris',
-      url: 'https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0ViYUZFa0RlWXExSGx1c1dWdjJ0cndVQnN2Sk5lNUloNWw2cW5CS25JdHg3Smc.mp3',
+      url: 'https://lucky-apricot-mosykgqymi.edgeone.app/小克弹钢琴八分钟.mp3',
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
