@@ -15,7 +15,7 @@ export const BlogItem = props => {
   const showPreview =
     siteConfig('POST_LIST_PREVIEW', false, NOTION_CONFIG) && post.blockMap
   return (
-    <div key={post.id} className='h-42 my-6 pb-7'>
+    <div key={post.id} className='h-42 mt-6 mb-10'>
       {/* 文章标题 */}
 
       <div className='flex'>
@@ -46,7 +46,7 @@ export const BlogItem = props => {
           </h2>
 
           {/* 文章信息 */}
-          <header className='mb-5 text-md text-[var(--primary-color)] dark:text-gray-300 flex-wrap flex items-center leading-6'>
+          <header className='text-md text-[var(--primary-color)] dark:text-gray-300 flex-wrap flex items-center leading-6'>
             <div className='space-x-2'>
               <span className='text-sm'>
                 发布于
@@ -81,7 +81,7 @@ export const BlogItem = props => {
             </div>
           </header>
 
-          <main className='text-[var(--primary-color)] dark:text-gray-300 mb-6 line-clamp-4 overflow-hidden text-ellipsis relative leading-[1.7]'>
+          <main className='text-[var(--primary-color)] dark:text-gray-300 line-clamp-4 overflow-hidden text-ellipsis relative leading-[1.7]'>
             {!showPreview && (
               <>
                 {post.summary}
