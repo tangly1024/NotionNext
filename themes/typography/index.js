@@ -95,9 +95,7 @@ const LayoutBase = props => {
                   <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900 dark:border-white'></div>
                 </div>
               ) : (
-                <>
-                  {children}
-                </>
+                <>{children}</>
               )}
               <AdSlot type='native' />
               {/* 移动端页脚 - 显示在底部 */}
@@ -170,9 +168,31 @@ const LayoutSearch = props => {
     }
   }, [])
 
-
   return <LayoutPostList {...props} />
 }
+
+ function groupArticlesByYearArray(articles) {
+  const grouped = {};
+
+  for (const article of articles) {
+    const year = new Date(article.publishDate).getFullYear().toString();
+    if (!grouped[year]) {
+      grouped[year] = [];
+    }
+    grouped[year].push(article);
+  }
+
+  for (const year in grouped) {
+    grouped[year].sort((a, b) => b.publishDate - a.publishDate);
+  }
+
+  // 转成数组并按年份倒序
+  return Object.entries(grouped)
+    .sort(([a], [b]) => b - a)
+    .map(([year, posts]) => ({ year, posts }));
+}
+
+
 
 /**
  * 归档页
@@ -180,15 +200,16 @@ const LayoutSearch = props => {
  * @returns
  */
 const LayoutArchive = props => {
-  const { archivePosts } = props
+  const { posts } = props
+  const sortPosts = groupArticlesByYearArray(posts)
   return (
     <>
       <div className='mb-10 pb-20 md:pb-12 p-5  min-h-screen w-full'>
-        {Object.keys(archivePosts).map(archiveTitle => (
+        {sortPosts.map(p => (
           <BlogArchiveItem
-            key={archiveTitle}
-            archiveTitle={archiveTitle}
-            archivePosts={archivePosts}
+            key={p.year}
+            archiveTitle={p.year}
+            archivePosts={p.posts}
           />
         ))}
       </div>
