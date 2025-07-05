@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
+import NotByAI from '@/components/NotByAI'
 
 /**
  * 版权声明
@@ -42,6 +43,9 @@ export default function PostCopyright() {
         <li>
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
           {locale.COMMON.COPYRIGHT_NOTICE}
+        </li>
+        <li>
+          <NotByAI />
         </li>
       </ul>
     </section>
