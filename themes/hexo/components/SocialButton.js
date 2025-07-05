@@ -1,6 +1,6 @@
 import QrCode from '@/components/QrCode'
 import { siteConfig } from '@/lib/config'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * 社交联系方式按钮组
@@ -32,6 +32,15 @@ const SocialButton = () => {
   const closePopover = () => {
     setQrCodeShow(false)
   }
+
+  const emailIcon = useRef(null)
+  useEffect(() => {
+    if (CONTACT_EMAIL && emailIcon.current) {
+      emailIcon.current.href =
+        'mailto:' + decodeURIComponent(escape(atob(CONTACT_EMAIL)))
+    }
+  }, [CONTACT_EMAIL])
+
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-3 text-xl flex items-center text-gray-600 dark:text-gray-300 '>
@@ -91,10 +100,11 @@ const SocialButton = () => {
         )}
         {CONTACT_EMAIL && (
           <a
+            ref={emailIcon}
             target='_blank'
             rel='noreferrer'
             title={'email'}
-            href={`mailto:${CONTACT_EMAIL}`}>
+            href={CONTACT_EMAIL}>
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
