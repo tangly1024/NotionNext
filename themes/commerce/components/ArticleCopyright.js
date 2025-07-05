@@ -15,7 +15,7 @@ export default function ArticleCopyright() {
 
   const { locale } = useGlobal()
 
-  if (!CONFIG.ARTICLE_COPYRIGHT) {
+  if (!siteConfig('COMMERCE_ARTICLE_COPYRIGHT', null, CONFIG)) {
     return <></>
   }
 
@@ -40,7 +40,7 @@ export default function ArticleCopyright() {
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
           {locale.COMMON.COPYRIGHT_NOTICE}
         </li>
-        {siteConfig('ARTICLE_NOT_BY_AI', false, CONFIG) && (
+        {siteConfig('COMMERCE_ARTICLE_NOT_BY_AI', false, CONFIG) && (
           <li>
             <NotByAI />
           </li>
