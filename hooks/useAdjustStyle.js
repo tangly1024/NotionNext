@@ -1,5 +1,5 @@
-import { isBrowser } from '@/lib/utils';
 import { useEffect } from 'react';
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 样式调整的补丁

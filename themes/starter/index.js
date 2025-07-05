@@ -5,7 +5,6 @@
 import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
-import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { About } from './components/About'
@@ -40,6 +39,7 @@ import SearchInput from './components/SearchInput'
 import { SignInForm } from './components/SignInForm'
 import { SignUpForm } from './components/SignUpForm'
 import { SVG404 } from './components/svg/SVG404'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 布局框架

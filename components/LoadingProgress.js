@@ -1,6 +1,6 @@
-import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 加载进度条

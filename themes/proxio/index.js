@@ -5,7 +5,6 @@
 import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
-import { isBrowser } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { Career } from './components/Career'
@@ -43,6 +42,7 @@ import Lenis from '@/components/Lenis'
 import Announcement from './components/Announcement'
 import CursorDot from '@/components/CursorDot'
 import LoadingCover from './components/LoadingCover'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 布局框架

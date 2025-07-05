@@ -1,8 +1,8 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { loadExternalResource } from '@/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 获取博客的评论数，用与在列表中展示

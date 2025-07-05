@@ -1,10 +1,11 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { getListByPage } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import ProductCard from './ProductCard'
+
+import { getListByPage } from '@/lib/utils'
 
 /**
  * 博客列表滚动分页

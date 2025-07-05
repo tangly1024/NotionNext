@@ -6,7 +6,6 @@ import replaceSearchResult from '@/components/Mark'
 import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -22,6 +21,7 @@ import Header from './components/Header'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 

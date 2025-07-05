@@ -8,7 +8,6 @@ import ShareBar from '@/components/ShareBar'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
@@ -32,6 +31,7 @@ import TagGroups from './components/TagGroups'
 import TagItem from './components/TagItem'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 // 主题全局状态
 const ThemeGlobalPhoto = createContext()

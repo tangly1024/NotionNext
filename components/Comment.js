@@ -1,10 +1,10 @@
 import Tabs from '@/components/Tabs'
 import { siteConfig } from '@/lib/config'
-import { isBrowser, isSearchEngineBot } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import Artalk from './Artalk'
+import { isBrowser, isSearchEngineBot } from '@/lib/utils/envUtils'
 
 /**
  * 评论组件

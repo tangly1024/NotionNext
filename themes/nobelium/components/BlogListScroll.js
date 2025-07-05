@@ -1,9 +1,9 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { deepClone } from '@/lib/utils'
 import throttle from 'lodash.throttle'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { deepClone } from '@/lib/utils/objectUtils'
 
 export const BlogListScroll = props => {
   const { posts } = props

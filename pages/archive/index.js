@@ -1,10 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
-import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
 import { useEffect } from 'react'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 归档首页

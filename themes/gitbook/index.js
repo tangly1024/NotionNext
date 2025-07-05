@@ -11,7 +11,6 @@ import DashboardBody from '@/components/ui/dashboard/DashboardBody'
 import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import { getShortId } from '@/lib/utils/pageId'
 import { SignIn, SignUp } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
@@ -38,6 +37,7 @@ import RevolverMaps from './components/RevolverMaps'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),

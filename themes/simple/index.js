@@ -3,7 +3,6 @@ import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -12,6 +11,7 @@ import { createContext, useContext, useEffect, useRef } from 'react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),

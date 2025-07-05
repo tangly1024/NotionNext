@@ -1,5 +1,5 @@
-import { isBrowser } from '@/lib/utils'
 import { useEffect, useState } from 'react'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 一个swipe组件

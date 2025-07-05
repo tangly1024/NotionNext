@@ -1,5 +1,5 @@
-import { isBrowser } from '@/lib/utils'
 import React, { useState } from 'react'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 /**
  * 全屏按钮

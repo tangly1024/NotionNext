@@ -1,7 +1,6 @@
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { isBrowser } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -27,6 +26,7 @@ import TocDrawerButton from './components/TocDrawerButton'
 import TopNav from './components/TopNav'
 import CONFIG from './config'
 import { Style } from './style'
+import { isBrowser } from '@/lib/utils/envUtils'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),

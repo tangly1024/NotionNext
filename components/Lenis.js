@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { loadExternalResource } from '@/lib/utils'
+
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 /**
  * 滚动阻尼特效

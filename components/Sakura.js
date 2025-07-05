@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { useEffect } from 'react'
-import { loadExternalResource } from '@/lib/utils'
+
+import { loadExternalResource } from '@/lib/utils/resourceLoader'
 
 const Sakura = () => {
   useEffect(() => {
