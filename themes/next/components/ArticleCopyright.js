@@ -28,9 +28,11 @@ export default function ArticleCopyright({ author, url }) {
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
           {locale.COMMON.COPYRIGHT_NOTICE}
         </li>
-        <li>
-          <NotByAI />
-        </li>
+        {siteConfig('NEXT_ARTICLE_NOT_BY_AI', false, CONFIG) && (
+          <li>
+            <NotByAI />
+          </li>
+        )}
       </ul>
     </section>
   )

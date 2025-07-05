@@ -44,9 +44,11 @@ export default function PostCopyright() {
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
           {locale.COMMON.COPYRIGHT_NOTICE}
         </li>
-        <li>
-          <NotByAI />
-        </li>
+        {siteConfig('HEO_ARTICLE_NOT_BY_AI', false, CONFIG) && (
+          <li>
+            <NotByAI />
+          </li>
+        )}
       </ul>
     </section>
   )
