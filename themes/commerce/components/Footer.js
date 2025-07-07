@@ -6,6 +6,7 @@ import Link from 'next/link'
 import CONFIG from '../config'
 import { decryptEmail, handleEmailClick } from '@/lib/plugins/mailEncrypt'
 import { useRef } from 'react'
+import CanvasEmail from '@/components/CanvasEmail'
 
 /**
  * 页脚
@@ -143,7 +144,7 @@ const Footer = props => {
                         className='cursor-pointer'
                         ref={emailIcon}>
                         <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-red-400 hover:text-red-600' />{' '}
-                        {decryptEmail(CONTACT_EMAIL)}
+                        <CanvasEmail email={decryptEmail(CONTACT_EMAIL)} />
                       </a>
                     )}
                   </div>
