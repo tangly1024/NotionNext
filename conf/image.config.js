@@ -16,7 +16,7 @@ module.exports = {
   // 网站图片
   IMG_LAZY_LOAD_PLACEHOLDER:
     process.env.NEXT_PUBLIC_IMG_LAZY_LOAD_PLACEHOLDER ||
-    'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', // 懒加载占位图片地址，支持base64或url
+    'https://file.notion.so/f/f/200fdff7-802b-4318-a362-2a52f185b10b/72bcffb2-2e42-4780-a777-059b46328a50/image.png?table=block&id=22974725-0b4d-80e7-9c7f-f4f88877350d&spaceId=200fdff7-802b-4318-a362-2a52f185b10b&expirationTimestamp=1751932800000&signature=CN2lYAMW509JAAeU7xgPCCSXQfYHvkX4Ca4bttvTSFE&downloadName=image.png', // 懒加载占位图片地址，支持base64或url
   IMG_URL_TYPE: process.env.NEXT_PUBLIC_IMG_TYPE || 'Notion', // 此配置已失效，请勿使用；AMAZON方案不再支持，仅支持Notion方案。 ['Notion','AMAZON'] 站点图片前缀 默认 Notion:(https://notion.so/images/xx) ， AMAZON(https://s3.us-west-2.amazonaws.com/xxx)
   IMG_SHADOW: process.env.NEXT_PUBLIC_IMG_SHADOW || false, // 文章图片是否自动添加阴影
   IMG_COMPRESS_WIDTH: process.env.NEXT_PUBLIC_IMG_COMPRESS_WIDTH || 800 // Notion图片压缩宽度
