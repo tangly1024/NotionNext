@@ -29,7 +29,7 @@ module.exports = {
   POSTS_PER_PAGE: process.env.NEXT_PUBLIC_POST_PER_PAGE || 12, // post counts per page
   POSTS_SORT_BY: process.env.NEXT_PUBLIC_POST_SORT_BY || 'notion', // 排序方式 'date'按时间,'notion'由notion控制
 
-  // 文章过期提醒配置
+  // 文章过期提醒配置 p.s. 目前此功能暂时只适用于heo主题
   ARTICLE_EXPIRATION_DAYS:
     process.env.NEXT_PUBLIC_ARTICLE_EXPIRATION_DAYS || 90, // 文章过期提醒阈值（天）
   ARTICLE_EXPIRATION_MESSAGE:
