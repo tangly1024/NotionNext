@@ -148,7 +148,7 @@ export default function Header(props) {
           <>
             {/* 左侧图标Logo */}
             <div className='flex gap-x-2 lg:gap-x-4 h-full'>
-              <LogoBar className={'text-sm md:text-md lg:text-lg'} />
+              <LogoBar {...props} className={'text-sm md:text-md lg:text-lg'} />
               {/* 桌面端顶部菜单 */}
               <ul className='hidden md:flex items-center gap-x-4 py-1 text-sm md:text-md'>
                 {links &&

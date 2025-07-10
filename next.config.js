@@ -15,7 +15,7 @@ const themes = scanSubdirectories(path.resolve(__dirname, 'themes'))
 const locales = (function () {
   // 根据BLOG_NOTION_PAGE_ID 检查支持多少种语言数据.
   // 支持如下格式配置多个语言的页面id xxx,zh:xxx,en:xxx
-  const langs = [BLOG.LANG.slice(0, 2)]
+  const langs = [BLOG.LANG]
   if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
     const siteIds = BLOG.NOTION_PAGE_ID.split(',')
     for (let index = 0; index < siteIds.length; index++) {
@@ -84,15 +84,19 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
-  output: process.env.EXPORT ? 'export' : process.env.NEXT_BUILD_STANDALONE === 'true' ? 'standalone' : undefined,
+  output: process.env.EXPORT
+    ? 'export'
+    : process.env.NEXT_BUILD_STANDALONE === 'true'
+      ? 'standalone'
+      : undefined,
   staticPageGenerationTimeout: 120,
   // 多语言， 在export时禁用
   i18n: process.env.EXPORT
     ? undefined
     : {
-        defaultLocale: BLOG.LANG.slice(0, 2),
+        defaultLocale: BLOG.LANG,
         // 支持的所有多语言,按需填写即可
-        locales
+        locales: locales
       },
   images: {
     // 图片压缩
@@ -113,7 +117,7 @@ const nextConfig = {
   // 默认将feed重定向至 /public/rss/feed.xml
   redirects: process.env.EXPORT
     ? undefined
-    : async () => {
+    : () => {
         return [
           {
             source: '/feed',
@@ -125,7 +129,7 @@ const nextConfig = {
   // 重写url
   rewrites: process.env.EXPORT
     ? undefined
-    : async () => {
+    : () => {
         // 处理多语言重定向
         const langsRewrites = []
         if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
@@ -172,7 +176,7 @@ const nextConfig = {
       },
   headers: process.env.EXPORT
     ? undefined
-    : async () => {
+    : () => {
         return [
           {
             source: '/:path*{/}?',
@@ -213,7 +217,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true
   },
-  exportPathMap: async function (
+  exportPathMap: function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {

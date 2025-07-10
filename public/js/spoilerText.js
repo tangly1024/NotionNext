@@ -1,21 +1,31 @@
 /**
+ * 转义正则表达式中的特殊字符
+ * @param {string} string 需要转义的字符串
+ * @returns {string} 转义后的字符串
+ */
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/**
  * 将Node文本中的指定标签内容转换为带有指定类名的span
  * @param regex
  * @param node
  * @param className
  */
 function convertTextToSpoilerSpan(regex, node, className) {
-  const wholeText = node.wholeText
+  // 使用 textContent 替代 wholeText 以确保类型安全
+  const textContent = node.textContent
   let outerSpan = document.createElement('span')
   const fragments = []
   let lastIndex = 0
   let match
-  while ((match = regex.exec(wholeText)) !== null) {
-    console.log('符合要求的文字' + wholeText)
+  while ((match = regex.exec(textContent)) !== null) {
+    console.log('符合要求的文字' + textContent)
     // 添加前面未匹配的部分
     if (match.index > lastIndex) {
       outerSpan.appendChild(
-        document.createTextNode(wholeText.slice(lastIndex, match.index))
+        document.createTextNode(textContent.slice(lastIndex, match.index))
       )
     }
 
@@ -31,8 +41,10 @@ function convertTextToSpoilerSpan(regex, node, className) {
   }
   if (outerSpan.childNodes.length) {
     // 添加剩余未匹配的部分
-    if (lastIndex < wholeText.length) {
-      outerSpan.appendChild(document.createTextNode(wholeText.slice(lastIndex)))
+    if (lastIndex < textContent.length) {
+      outerSpan.appendChild(
+        document.createTextNode(textContent.slice(lastIndex))
+      )
     }
     node.replaceWith(outerSpan)
   }
@@ -48,9 +60,12 @@ function processTextNodes(root, className, spoilerTag) {
   const regex = new RegExp(`${spoilerTag}(.*?)${spoilerTag}`, 'g')
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode: function (node) {
-      return regex.test(node.wholeText)
-        ? NodeFilter.FILTER_ACCEPT
-        : NodeFilter.FILTER_REJECT
+      if (node.nodeType === Node.TEXT_NODE) {
+        return regex.test(node.textContent)
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT
+      }
+      return NodeFilter.FILTER_REJECT
     }
   })
   const waitProcessNodes = []
@@ -60,6 +75,47 @@ function processTextNodes(root, className, spoilerTag) {
   }
   for (const waitProcessNode of waitProcessNodes) {
     convertTextToSpoilerSpan(regex, waitProcessNode, className)
+  }
+
+  // 处理跨节点的 spoiler 标记
+  processCrossNodeSpoilers(root, className, spoilerTag)
+}
+
+/**
+ * 处理跨节点的 spoiler 标记
+ * @param {Element} root 要处理的根元素
+ * @param {string} className 应用于 spoiler 内容的类名
+ * @param {string} spoilerTag spoiler 标记符号
+ */
+function processCrossNodeSpoilers(root, className, spoilerTag) {
+  if (root.nodeType !== Node.ELEMENT_NODE) return
+
+  const html = root.innerHTML
+
+  // 处理原始标签，如果是已经转义过的，则去除转义
+  let originalTag = spoilerTag
+  if (spoilerTag.startsWith('\\') || spoilerTag.includes('\\[')) {
+    originalTag = spoilerTag.replace(/\\/g, '')
+  }
+
+  // 创建正则表达式，直接匹配原始标签
+  const regex = new RegExp(`\\${originalTag}([\\s\\S]*?)\\${originalTag}`, 'g')
+
+  const hasMatch = regex.test(html)
+
+  if (!hasMatch) return
+
+  // 重置正则表达式
+  regex.lastIndex = 0
+
+  // 替换匹配项
+  const newHtml = html.replace(regex, function (match, content) {
+    return `<span class="${className}">${content}</span>`
+  })
+
+  // 如果内容有变化，更新 DOM
+  if (newHtml !== html) {
+    root.innerHTML = newHtml
   }
 }
 

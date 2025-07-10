@@ -71,7 +71,7 @@ export async function getStaticProps({ locale }) {
   }
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = () => {
   return {
     paths: [
       { params: { index: [] } }, // 对应首页路径
