@@ -50,34 +50,49 @@ import { SVG404 } from './components/svg/SVG404'
  * @returns
  */
 const LayoutBase = props => {
-  const { children } = props
+    const { children } = props
+    // 极简模式，会隐藏掉页头页脚等组件，便于嵌入网页等功能 
+    const { isLiteMode } = useGlobal()
+    const router = useRouter()
 
-  // 加载wow动画
-  useEffect(() => {
-    loadWowJS()
-  }, [])
+    // 加载wow动画
+    useEffect(() => {
+        loadWowJS()
+    }, [])
 
-  return (
-    <div
-      id='theme-starter'
-      className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
-      <Style />
-      {/* 页头 */}
-      <Header {...props} />
+    // 特殊简化布局，如果识别到路由中有 ?lite=true，则给网页添加一些自定义的css样式，例如背景改成黑色
+    useEffect(() => {
+        const isLiteMode = router.query.lite === 'true'
+        console.log(router.query.lite, isLiteMode)
+        if (isLiteMode) {
+            document.body.style.backgroundColor = 'black'
+            document.body.style.color = 'white'
+        }
+    }, [])
 
-      <div id='main-wrapper' className='grow'>
-        {children}
-      </div>
+    return (
+        <div
+            id='theme-starter'
+            className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
+            <Style />
 
-      {/* 页脚 */}
-      <Footer {...props} />
+            {/* 页头 */}
+            {isLiteMode ? <></> : <Header {...props} />}
 
-      {/* 悬浮按钮 */}
-      <BackToTopButton />
+            <div id='main-wrapper' className='grow'>
+                {children}
+            </div>
 
-      {/* <MadeWithButton/> */}
-    </div>
-  )
+            {/* 页脚 */}
+            
+            {isLiteMode ? <></> : <Footer {...props} />}
+
+            {/* 悬浮按钮 */}
+            {isLiteMode ? <></> : <BackToTopButton />}
+
+            {/* <MadeWithButton/> */}
+        </div>
+    )
 }
 
 /**
