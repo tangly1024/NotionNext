@@ -1,0 +1,36 @@
+{
+  "AUTHOR": "您的名字",
+  "BIO": "您的个人简介",
+  "LINK": "https://yourdomain.com",
+  "KEYWORDS": "博客, 技术, 分享",
+  "THEME": "hexo",
+  "LANG": "zh-CN",
+  
+  "HEXO_HOME_BANNER_ENABLE": true,
+  "HEXO_HOME_BANNER_GREETINGS": [
+    "Hi，我是",
+    "一名开发者",
+    "欢迎来到我的博客"
+  ],
+  
+  "COMMENT_ENABLE": true,
+  "COMMENT_GISCUS_ENABLE": true,
+  "COMMENT_GISCUS_REPO": "your-username/your-repo",
+  "COMMENT_GISCUS_REPO_ID": "your-repo-id",
+  "COMMENT_GISCUS_CATEGORY_ID": "your-category-id",
+  
+  "ANALYTICS_GOOGLE_ID": "G-XXXXXXXXXX",
+  "ANALYTICS_BUSUANZI_ENABLE": true,
+  
+  "SEO_GOOGLE_SITE_VERIFICATION": "your-verification-code",
+  "SEO_BAIDU_SITE_VERIFICATION": "your-baidu-code",
+  
+  "SOCIAL_GITHUB": "https://github.com/yourusername",
+  "SOCIAL_TWITTER": "https://twitter.com/yourusername",
+  "SOCIAL_EMAIL": "your@email.com",
+  
+  "HEXO_MENU_CATEGORY": true,
+  "HEXO_MENU_TAG": true,
+  "HEXO_MENU_ARCHIVE": true,
+  "HEXO_MENU_SEARCH": true
+}
