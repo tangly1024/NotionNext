@@ -104,7 +104,8 @@ export default function AlgoliaSearchModal({ cRef }) {
   // 跳转Search结果
   const onJumpSearchResult = () => {
     if (searchResults.length > 0) {
-      window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResults[activeIndex].slug}`
+      const searchResult = searchResults[activeIndex]
+      window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResult.slug || searchResult.objectID}`
     }
   }
 
