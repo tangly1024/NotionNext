@@ -27,12 +27,7 @@ export default function Header(props) {
           {/* 左侧：新的Logo */}
           <Link href='/' passHref legacyBehavior>
             <a className='flex items-center gap-3 cursor-pointer'>
-              <Image
-                src='/favicon.ico'
-                alt='StudyGPT Logo'
-                width={28}
-                height={28}
-              />
+            
               <span className='font-bold text-xl hidden md:block'>StudyGPT</span>
             </a>
           </Link>
