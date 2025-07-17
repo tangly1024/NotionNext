@@ -3,12 +3,12 @@
  */
 const CONFIG = {
     PROXIO_WELCOME_COVER_ENABLE: true, //是否显示页面进入的欢迎文字
-    PROXIO_WELCOME_TEXT: '欢迎来到此网站，点击任意位置进入', // 欢迎文字，留空则不启用
+    PROXIO_WELCOME_TEXT: '欢迎来到GrowGoodGalaxy，点击任意位置进入好好宇宙無限俱楽部', // 欢迎文字，留空则不启用
 
     // 英雄区块导航
     PROXIO_HERO_ENABLE: true, // 开启英雄区
-    PROXIO_HERO_TITLE_1: '开源且免费的基于 Notion 笔记的网站构建工具', // 英雄区文字
-    PROXIO_HERO_TITLE_2: '通过笔记无感知地建站、成倍放大您的价值', // 英雄区文字
+    PROXIO_HERO_TITLE_1: 'GrowGoodGalaxy｜好好宇宙無限俱楽部', // 英雄区文字
+    PROXIO_HERO_TITLE_2: '为独立的创造者与创业者打造的都市灵感策源地。在东京新宿的腹地，「好好宇宙」不仅仅是一个物理地址，它是一个精心策展的社群，专为那些在各自领域独立思考、积极创造的创业者、艺术家和专业人士而设。我们相信，最有价值的链接并非源于偶然，而是源于共享的价值观和精心营造的环境。因此，我们致力于打造一个能激发深度对话、促进有意义合作，并能在高压都市生活中滋养身心的“第三空间”。在这里，工作与生活、商业与艺术、独处与社交的界限被重新定义，只为给您带来最高品质的体验。', // 英雄区文字
     // 英雄区两个按钮，如果TEXT留空则隐藏按钮
     PROXIO_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
     PROXIO_HERO_BUTTON_1_URL:
