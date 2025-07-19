@@ -8,7 +8,7 @@ export const MenuItemDrop = ({ link }) => {
   return (
     <li
       onMouseOver={() => changeShow(true)}
-      // onMouseOut={() => changeShow(false)}
+      onMouseOut={() => changeShow(false)}
       className='relative py-1.5 px-5 duration-300 text-base justify-between hover:bg-gray-700 hover:text-white hover:shadow-lg cursor-pointer font-light flex flex-nowrap items-center '>
       {!hasSubMenu && (
         <Link
