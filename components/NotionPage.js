@@ -152,7 +152,7 @@ const NotionPage = ({ post, className }) => {
           Equation,
           Modal,
           Pdf,
-          Tweet
+          Tweet,
           nextImage: true, // 建议开启以获得更好的图片性能
           nextLink: true // 建议开启以获得更好的链接性能
         }}
