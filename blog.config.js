@@ -9,15 +9,15 @@ const BLOG = {
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2021, // e.g if leave this empty, current year will be used.
 
-  PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || false, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
+  PSEUDO_STATIC: process.env.NEXT_PUBLIC_PSEUDO_STATIC || true, // 伪静态路径，开启后所有文章URL都以 .html 结尾。
   NEXT_REVALIDATE_SECOND: process.env.NEXT_PUBLIC_REVALIDATE_SECOND || 5, // 更新缓存间隔 单位(秒)；即每个页面有5秒的纯静态期、此期间无论多少次访问都不会抓取notion数据；调大该值有助于节省Vercel资源、同时提升访问速率，但也会使文章更新有延迟。
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '分享之王', // 您的昵称 例如 tangly1024
-  BIO: process.env.NEXT_PUBLIC_BIO || '分享之王是一个专注于分享高价值学习资源的网站，覆盖英语启蒙、职场技能、办公效率工具、AI应用等多个热门领域。我们致力于为学习者提供实用、优质的内容，帮助用户高效获取干货知识，提升个人竞争力与成长速度。每日持续更新，适合学生、职场新人、自我提升者等各类用户，是您提升自学效率的不二之选。', // 作者简介
+  BIO: process.env.NEXT_PUBLIC_BIO || '分享之王是一个专注于分享高价值学习资源的网站，覆盖英语学习、职场技能、办公效率工具、考公考研资料、AI应用等多个热门领域。我们致力于为学习者提供实用、优质的内容，帮助用户高效获取干货知识，提升个人竞争力与成长速度。每日持续更新，适合学生、职场新人、自我提升者等各类用户，是您提升自学效率的不二之选。', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.shareking.vip', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '资源,分享,下载' ,// 网站关键词 英文逗号隔开
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '英语学习,考公资料,考研资料,网盘资源,职业技能教程，影视资源, 效率工具, AI应用, 资源分享网站, 干货下载, 分享之王' ,// 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
