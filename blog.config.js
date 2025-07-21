@@ -15,7 +15,7 @@ const BLOG = {
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '分享之王', // 您的昵称 例如 tangly1024
-  BIO: process.env.NEXT_PUBLIC_BIO || '一个爱好资源分享的干饭人🍚', // 作者简介
+  BIO: process.env.NEXT_PUBLIC_BIO || '分享之王是一个专注于分享高价值学习资源的网站，覆盖英语启蒙、职场技能、办公效率工具、AI应用等多个热门领域。我们致力于为学习者提供实用、优质的内容，帮助用户高效获取干货知识，提升个人竞争力与成长速度。每日持续更新，适合学生、职场新人、自我提升者等各类用户，是您提升自学效率的不二之选。', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.shareking.vip', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '资源,分享,下载' ,// 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
