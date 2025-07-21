@@ -5,6 +5,12 @@
  * 默认下会将你上传到 notion的主页封面图和头像也给替换，建议将主页封面图和头像放在其他图床，在 notion 里配置 link 即可。
  */
 module.exports = {
+  BLOG_TITLE: '分享之王',
+  BLOG_AUTHOR: 'Billy Wang',
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico',
+  // 其他配置项……
+};
+module.exports = {
   NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
   IMAGE_COMPRESS_WIDTH: process.env.NEXT_PUBLIC_IMAGE_COMPRESS_WIDTH || 800, // 图片压缩宽度默认值，作用于博客封面和文章内容 越小加载图片越快
   IMAGE_ZOOM_IN_WIDTH: process.env.NEXT_PUBLIC_IMAGE_ZOOM_IN_WIDTH || 1200, // 文章图片点击放大后的画质宽度，不代表在网页中的实际展示宽度
@@ -19,5 +25,5 @@ module.exports = {
     'https://file.notion.so/f/f/200fdff7-802b-4318-a362-2a52f185b10b/72bcffb2-2e42-4780-a777-059b46328a50/image.png?table=block&id=22974725-0b4d-80e7-9c7f-f4f88877350d&spaceId=200fdff7-802b-4318-a362-2a52f185b10b&expirationTimestamp=1751932800000&signature=CN2lYAMW509JAAeU7xgPCCSXQfYHvkX4Ca4bttvTSFE&downloadName=image.png', // 懒加载占位图片地址，支持base64或url
   IMG_URL_TYPE: process.env.NEXT_PUBLIC_IMG_TYPE || 'Notion', // 此配置已失效，请勿使用；AMAZON方案不再支持，仅支持Notion方案。 ['Notion','AMAZON'] 站点图片前缀 默认 Notion:(https://notion.so/images/xx) ， AMAZON(https://s3.us-west-2.amazonaws.com/xxx)
   IMG_SHADOW: process.env.NEXT_PUBLIC_IMG_SHADOW || false, // 文章图片是否自动添加阴影
-  IMG_COMPRESS_WIDTH: process.env.NEXT_PUBLIC_IMG_COMPRESS_WIDTH || 800 // Notion图片压缩宽度
+  IMG_COMPRESS_WIDTH: process.env.NEXT_PUBLIC_IMG_COMPRESS_WIDTH || 800, // Notion图片压缩宽度
 }
