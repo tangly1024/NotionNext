@@ -8,7 +8,6 @@ import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import { Image as NotionImage, useNotionContext } from 'react-notion-x'
-import { siteConfig } from '@/lib/config'
 import { deepClone } from '@/lib/utils'
 
 /**
