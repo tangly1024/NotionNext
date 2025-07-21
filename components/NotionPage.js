@@ -1,3 +1,4 @@
+
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
@@ -6,6 +7,9 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
+import { Image as NotionImage, useNotionContext } from 'react-notion-x'
+import { siteConfig } from '@/lib/config'
+import { deepClone } from '@/lib/utils'
 
 /**
  * 整个站点的核心组件
@@ -13,6 +17,23 @@ import { NotionRenderer } from 'react-notion-x'
  * @param {*} param0
  * @returns
  */
+/**
+ * SEO优化：自定义图片组件
+ * @param {*} props
+ * @returns
+ */
+const CustomImage = (props) => {
+    const { block, post } = props
+    const { recordMap } = useNotionContext()
+    const blockMap = deepClone(recordMap)
+
+    // 智能提取alt文本：优先使用图片说明(caption)，其次用文章标题，最后用网站标题
+    const caption = block?.properties?.caption?.[0]?.[0]
+    const alt = caption || post?.title || siteConfig('TITLE')
+
+    // 返回原始NotionImage组件，但注入了我们自定义的alt属性
+    return <NotionImage {...props} alt={alt} />
+}
 const NotionPage = ({ post, className }) => {
   // 是否关闭数据库和画册的点击跳转
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
@@ -125,12 +146,15 @@ const NotionPage = ({ post, className }) => {
         mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
+          Image: (imageProps) => <CustomImage {...imageProps} post={post} />,
           Code,
           Collection,
           Equation,
           Modal,
           Pdf,
           Tweet
+          nextImage: true, // 建议开启以获得更好的图片性能
+          nextLink: true // 建议开启以获得更好的链接性能
         }}
       />
 
