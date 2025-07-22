@@ -1,7 +1,7 @@
 {
   "name": "notion-next",
-  "version": "4.8.5",
-  "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "version": "4.8.6",
+  "homepage": "https://github.com/tylin23/Website-Portfolio.git",
   "license": "MIT",
   "engines": {
     "node": ">=20"
