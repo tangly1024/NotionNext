@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>http://preview.tangly1024.com/sitemap-pages.xml</loc>
+    <lastmod>2025-07-22T19:34:30.998Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://preview.tangly1024.com/sitemap-posts.xml</loc>
+    <lastmod>2025-07-22T19:34:30.998Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://preview.tangly1024.com/sitemap-images.xml</loc>
+    <lastmod>2025-07-22T19:34:30.998Z</lastmod>
+  </sitemap>
+</sitemapindex>
