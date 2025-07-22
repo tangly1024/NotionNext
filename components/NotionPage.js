@@ -7,7 +7,7 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
-import { Image as NotionImage, useNotionContext } from 'react-notion-x'
+import { useNotionContext } from 'react-notion-x'
 import { deepClone } from '@/lib/utils'
 
 /**
@@ -30,8 +30,19 @@ const CustomImage = (props) => {
     const caption = block?.properties?.caption?.[0]?.[0]
     const alt = caption || post?.title || siteConfig('TITLE')
 
-    // 返回原始NotionImage组件，但注入了我们自定义的alt属性
-    return <NotionImage {...props} alt={alt} />
+    // 使用标准的img标签，并添加自定义的alt属性
+    const { src, className, style } = props
+    return (
+        <img 
+            {...props} 
+            alt={alt}
+            src={src}
+            className={className}
+            style={style}
+            loading="lazy"
+            decoding="async"
+        />
+    )
 }
 const NotionPage = ({ post, className }) => {
   // 是否关闭数据库和画册的点击跳转
