@@ -15,7 +15,8 @@ const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG, useEnhanced = false } = props
   
   // 如果启用增强版SEO，使用SEOEnhanced组件
-  if (useEnhanced || siteConfig('SEO_ENHANCED_MODE', false, NOTION_CONFIG)) {
+  // 默认启用增强版SEO以确保最佳SEO效果
+  if (useEnhanced || siteConfig('SEO_ENHANCED_MODE', true, NOTION_CONFIG)) {
     return <SEOEnhanced {...props} />
   }
   const PATH = siteConfig('PATH')

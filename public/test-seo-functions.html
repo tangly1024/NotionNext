@@ -1,675 +1,587 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO分析工具功能测试</title>
+    <title>SEO功能测试验证页面</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
         }
-
         .container {
             background: white;
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 12px;
-        }
-
         .test-section {
-            margin: 30px 0;
+            margin-bottom: 30px;
             padding: 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-        }
-
-        .test-section h2 {
-            color: #495057;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-
-        .result-box {
-            background: #f8f9fa;
-            padding: 15px;
+            border: 1px solid #e0e0e0;
             border-radius: 6px;
-            margin: 10px 0;
-            border-left: 4px solid #007bff;
         }
-
-        .error-box {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 10px 0;
-            border-left: 4px solid #dc3545;
-        }
-
-        .success-box {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 10px 0;
-            border-left: 4px solid #28a745;
-        }
-
-        button {
-            background: #007bff;
+        .test-button {
+            background: #007cba;
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             margin: 5px;
         }
-
-        button:hover {
-            background: #0056b3;
+        .test-button:hover {
+            background: #005a87;
         }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #007bff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .score-circle {
-            display: inline-block;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 60px;
-            color: white;
-            font-weight: bold;
-            margin: 10px;
-        }
-
-        .score-excellent {
-            background: #28a745;
-        }
-
-        .score-good {
-            background: #007bff;
-        }
-
-        .score-fair {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .score-poor {
-            background: #fd7e14;
-        }
-
-        .score-very-poor {
-            background: #dc3545;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        pre {
-            background: #f8f9fa;
+        .test-result {
+            margin-top: 15px;
             padding: 15px;
-            border-radius: 6px;
-            overflow-x: auto;
-            font-size: 14px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
         }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #007cba;
+            padding-bottom: 10px;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-success { background: #28a745; }
+        .status-error { background: #dc3545; }
+        .status-warning { background: #ffc107; }
+        .status-info { background: #17a2b8; }
     </style>
 </head>
-
 <body>
-    <div class="header">
-        <h1>🔍 SEO内容分析工具功能测试</h1>
-        <p>测试和验证SEO分析工具的各项功能</p>
-    </div>
-
     <div class="container">
+        <h1>🔍 SEO功能测试验证页面</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            点击下方按钮测试各个SEO功能模块，验证系统是否正常工作
+        </p>
+
+        <!-- 基础SEO测试 -->
         <div class="test-section">
-            <h2>📊 综合SEO分析测试</h2>
-            <p>测试完整的SEO内容分析功能，包括关键词、标题、可读性和链接分析。</p>
-            <button onclick="testFullAnalysis()">开始综合分析</button>
-            <div id="fullAnalysisResult"></div>
+            <h2><span class="status-indicator status-info"></span>基础SEO功能测试</h2>
+            <p>测试meta标签、标题、描述等基础SEO元素</p>
+            <button class="test-button" onclick="testBasicSEO()">测试基础SEO</button>
+            <button class="test-button" onclick="testMetaTags()">检查Meta标签</button>
+            <button class="test-button" onclick="testStructuredData()">验证结构化数据</button>
+            <div id="basic-seo-result" class="test-result" style="display: none;"></div>
         </div>
 
+        <!-- API接口测试 -->
         <div class="test-section">
-            <h2>🔤 关键词密度分析测试</h2>
-            <p>测试关键词密度计算和优化建议功能。</p>
-            <button onclick="testKeywordAnalysis()">测试关键词分析</button>
-            <div id="keywordResult"></div>
+            <h2><span class="status-indicator status-warning"></span>API接口测试</h2>
+            <p>测试SEO相关的API接口是否正常响应</p>
+            <button class="test-button" onclick="testSEOTestAPI()">SEO测试API</button>
+            <button class="test-button" onclick="testKeywordAPI()">关键词排名API</button>
+            <button class="test-button" onclick="testSubmissionAPI()">搜索引擎提交API</button>
+            <button class="test-button" onclick="test404API()">404监控API</button>
+            <div id="api-result" class="test-result" style="display: none;"></div>
         </div>
 
+        <!-- 静态文件测试 -->
         <div class="test-section">
-            <h2>📝 标题结构检查测试</h2>
-            <p>测试HTML标题层级结构的检查功能。</p>
-            <button onclick="testHeadingStructure()">测试标题结构</button>
-            <div id="headingResult"></div>
+            <h2><span class="status-indicator status-success"></span>静态文件测试</h2>
+            <p>检查robots.txt、sitemap.xml等重要SEO文件</p>
+            <button class="test-button" onclick="testRobotsTxt()">检查robots.txt</button>
+            <button class="test-button" onclick="testSitemap()">检查sitemap.xml</button>
+            <button class="test-button" onclick="testImageSitemap()">检查图片sitemap</button>
+            <div id="static-files-result" class="test-result" style="display: none;"></div>
         </div>
 
+        <!-- 性能测试 -->
         <div class="test-section">
-            <h2>📖 可读性分析测试</h2>
-            <p>测试内容可读性评估和Flesch评分计算。</p>
-            <button onclick="testReadability()">测试可读性分析</button>
-            <div id="readabilityResult"></div>
+            <h2><span class="status-indicator status-info"></span>性能优化测试</h2>
+            <p>测试页面性能优化功能和Core Web Vitals</p>
+            <button class="test-button" onclick="testWebVitals()">测试Web Vitals</button>
+            <button class="test-button" onclick="testResourceOptimization()">资源优化检查</button>
+            <button class="test-button" onclick="testCacheHeaders()">缓存策略检查</button>
+            <div id="performance-result" class="test-result" style="display: none;"></div>
         </div>
 
+        <!-- 管理界面测试 -->
         <div class="test-section">
-            <h2>🔗 内部链接分析测试</h2>
-            <p>测试内部链接密度和质量分析功能。</p>
-            <button onclick="testLinkAnalysis()">测试链接分析</button>
-            <div id="linkResult"></div>
+            <h2><span class="status-indicator status-warning"></span>管理界面测试</h2>
+            <p>测试SEO管理界面的可访问性</p>
+            <button class="test-button" onclick="testAdminPages()">检查管理页面</button>
+            <button class="test-button" onclick="testDashboard()">SEO仪表板</button>
+            <div id="admin-result" class="test-result" style="display: none;"></div>
         </div>
-    </div>
 
-    <div class="container">
-        <h2>📋 测试用例说明</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>测试内容特点</h3>
-                <ul>
-                    <li>包含多层级标题结构</li>
-                    <li>故意的SEO问题（用于测试检测能力）</li>
-                    <li>不同长度的句子和段落</li>
-                    <li>各种类型的内部链接</li>
-                    <li>中英文混合内容</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>预期检测问题</h3>
-                <ul>
-                    <li>关键词密度过高</li>
-                    <li>标题层级跳跃</li>
-                    <li>句子过长影响可读性</li>
-                    <li>空锚文本链接</li>
-                    <li>非描述性链接文本</li>
-                </ul>
-            </div>
+        <!-- 综合测试 */
+        <div class="test-section">
+            <h2><span class="status-indicator status-error"></span>综合功能测试</h2>
+            <p>运行完整的SEO功能集成测试</p>
+            <button class="test-button" onclick="runFullTest()" style="background: #28a745;">🚀 运行完整测试</button>
+            <button class="test-button" onclick="generateReport()">生成测试报告</button>
+            <div id="full-test-result" class="test-result" style="display: none;"></div>
         </div>
     </div>
 
     <script>
-        // 测试用的HTML内容
-        const testContent = `
-            <h1>SEO优化完整指南：提升网站搜索排名的终极策略</h1>
+        let testResults = {};
+
+        // 显示结果的辅助函数
+        function showResult(elementId, content, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `test-result ${type}`;
+            element.textContent = content;
+        }
+
+        // 基础SEO测试
+        async function testBasicSEO() {
+            showResult('basic-seo-result', '正在测试基础SEO功能...', 'loading');
             
-            <p>SEO搜索引擎优化是现代网站成功的关键。SEO技术可以显著提高网站在搜索引擎中的排名。本文将详细介绍SEO的各个方面，包括SEO关键词优化、SEO内容策略、SEO技术实施等重要的SEO概念。通过学习这些SEO技巧，你可以大幅提升网站的SEO表现。</p>
+            try {
+                // 检查当前页面的基础SEO元素
+                const title = document.title;
+                const metaDescription = document.querySelector('meta[name="description"]');
+                const metaKeywords = document.querySelector('meta[name="keywords"]');
+                const canonical = document.querySelector('link[rel="canonical"]');
+                
+                let result = '基础SEO检查结果:\n\n';
+                result += `✓ 页面标题: ${title}\n`;
+                result += `${metaDescription ? '✓' : '✗'} Meta描述: ${metaDescription ? metaDescription.content : '未找到'}\n`;
+                result += `${metaKeywords ? '✓' : '○'} Meta关键词: ${metaKeywords ? metaKeywords.content : '未设置'}\n`;
+                result += `${canonical ? '✓' : '✗'} Canonical URL: ${canonical ? canonical.href : '未找到'}\n`;
+                
+                testResults.basicSEO = { status: 'success', details: result };
+                showResult('basic-seo-result', result, 'success');
+            } catch (error) {
+                const errorMsg = `基础SEO测试失败: ${error.message}`;
+                testResults.basicSEO = { status: 'error', details: errorMsg };
+                showResult('basic-seo-result', errorMsg, 'error');
+            }
+        }
 
-            <h2>什么是SEO及其重要性</h2>
-            <p>搜索引擎优化（Search Engine Optimization，简称SEO）是一种通过优化网站内容和结构来提高搜索引擎排名的策略。</p>
+        // Meta标签测试
+        async function testMetaTags() {
+            showResult('basic-seo-result', '正在检查Meta标签...', 'loading');
+            
+            const metaTags = document.querySelectorAll('meta');
+            let result = 'Meta标签检查结果:\n\n';
+            
+            const importantMetas = [
+                'description', 'keywords', 'author', 'viewport',
+                'og:title', 'og:description', 'og:image', 'og:type',
+                'twitter:card', 'twitter:title', 'twitter:description'
+            ];
+            
+            importantMetas.forEach(name => {
+                const meta = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
+                result += `${meta ? '✓' : '○'} ${name}: ${meta ? meta.content : '未设置'}\n`;
+            });
+            
+            showResult('basic-seo-result', result, 'info');
+        }
 
-            <h3>SEO的核心要素</h3>
-            <p>SEO包含多个重要要素：关键词研究、内容优化、技术SEO、链接建设等。</p>
+        // 结构化数据测试
+        async function testStructuredData() {
+            showResult('basic-seo-result', '正在验证结构化数据...', 'loading');
+            
+            const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+            let result = `结构化数据检查结果:\n\n找到 ${jsonLdScripts.length} 个JSON-LD结构化数据\n\n`;
+            
+            jsonLdScripts.forEach((script, index) => {
+                try {
+                    const data = JSON.parse(script.textContent);
+                    result += `${index + 1}. 类型: ${data['@type'] || '未知'}\n`;
+                    if (data.name) result += `   名称: ${data.name}\n`;
+                    if (data.headline) result += `   标题: ${data.headline}\n`;
+                    result += '\n';
+                } catch (e) {
+                    result += `${index + 1}. 解析错误: ${e.message}\n\n`;
+                }
+            });
+            
+            showResult('basic-seo-result', result, jsonLdScripts.length > 0 ? 'success' : 'error');
+        }
 
-            <h6>这是一个跳级的H6标题</h6>
-            <p>这个标题违反了层级规则，应该被检测出来。</p>
-
-            <h2>关键词研究与优化策略</h2>
-            <p>关键词研究是SEO的基础工作。正确的关键词策略可以帮助网站获得更好的搜索排名。</p>
-
-            <p>这是一个故意写得非常长的句子，它包含了大量的从句和复杂的语法结构，目的是为了测试可读性分析工具是否能够准确识别出句子过长的问题，并且能够给出相应的优化建议，这样的长句在实际的内容写作中应该尽量避免，因为它会严重影响读者的阅读体验和内容的整体可读性。</p>
-
-            <h2>内部链接优化</h2>
-            <p>内部链接对SEO非常重要。以下是一些内部链接示例：</p>
-            <ul>
-                <li><a href="/seo-guide">完整SEO指南</a></li>
-                <li><a href="/keyword-research">关键词研究工具</a></li>
-                <li><a href="/content-optimization">内容优化技巧</a></li>
-                <li><a href="/empty-link"></a></li>
-                <li><a href="/click-here">点击这里</a></li>
-            </ul>
-
-            <h2>总结</h2>
-            <p>SEO是一个复杂但重要的领域。通过系统学习和实践，可以掌握有效的SEO技巧。</p>
-        `;
-
-        const testKeywords = ['SEO', '搜索引擎优化', '关键词', '网站优化', '排名'];
-
-        // 模拟SEO分析器类（简化版本，用于演示）
-        class MockSEOAnalyzer {
-            analyzeKeywords(content, keywords) {
-                const words = content.replace(/<[^>]*>/g, '').split(/\s+/);
-                const totalWords = words.length;
-
-                const analysis = keywords.map(keyword => {
-                    const regex = new RegExp(keyword, 'gi');
-                    const matches = content.match(regex) || [];
-                    const count = matches.length;
-                    const density = ((count / totalWords) * 100).toFixed(2);
-
-                    let recommendation;
-                    if (density < 0.5) {
-                        recommendation = { level: 'low', message: '关键词密度过低，建议适当增加' };
-                    } else if (density > 3) {
-                        recommendation = { level: 'high', message: '关键词密度过高，可能被视为关键词堆砌' };
-                    } else {
-                        recommendation = { level: 'optimal', message: '关键词密度适中' };
-                    }
-
-                    return { keyword, count, density: parseFloat(density), recommendation };
+        // SEO测试API
+        async function testSEOTestAPI() {
+            showResult('api-result', '正在测试SEO测试API...', 'loading');
+            
+            try {
+                const response = await fetch('/api/admin/seo-test', {
+                    method: 'GET'
                 });
-
-                return {
-                    totalWords,
-                    keywordAnalysis: analysis,
-                    overallScore: Math.round(analysis.reduce((sum, item) => {
-                        if (item.recommendation.level === 'optimal') return sum + 100;
-                        if (item.recommendation.level === 'low') return sum + 60;
-                        return sum + 30;
-                    }, 0) / analysis.length)
-                };
-            }
-
-            analyzeHeadings(content) {
-                const headingRegex = /<h([1-6])[^>]*>(.*?)<\/h[1-6]>/gi;
-                const headings = [];
-                let match;
-
-                while ((match = headingRegex.exec(content)) !== null) {
-                    headings.push({
-                        level: parseInt(match[1]),
-                        text: match[2].replace(/<[^>]*>/g, '').trim()
-                    });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const result = `SEO测试API响应成功:\n\n${JSON.stringify(data, null, 2)}`;
+                    testResults.seoTestAPI = { status: 'success', details: result };
+                    showResult('api-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-
-                const issues = [];
-                const h1Count = headings.filter(h => h.level === 1).length;
-
-                if (h1Count === 0) {
-                    issues.push({ type: 'missing_h1', severity: 'high', message: '缺少H1标签' });
-                } else if (h1Count > 1) {
-                    issues.push({ type: 'multiple_h1', severity: 'high', message: `发现${h1Count}个H1标签` });
-                }
-
-                // 检查层级跳跃
-                for (let i = 1; i < headings.length; i++) {
-                    if (headings[i].level - headings[i - 1].level > 1) {
-                        issues.push({
-                            type: 'heading_skip',
-                            severity: 'medium',
-                            message: `标题层级跳跃：从H${headings[i - 1].level}跳到H${headings[i].level}`
-                        });
-                    }
-                }
-
-                return {
-                    headings,
-                    issues,
-                    score: Math.max(0, 100 - issues.length * 15)
-                };
-            }
-
-            analyzeReadability(content) {
-                const cleanText = content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                const sentences = cleanText.split(/[.!?。！？]+/).filter(s => s.trim().length > 5);
-                const words = cleanText.split(/\s+/).filter(w => w.length > 0);
-                const paragraphs = content.split(/\n\s*\n|<\/p>|<br\s*\/?>/i).filter(p => p.trim().length > 10);
-
-                const avgWordsPerSentence = sentences.length > 0 ? words.length / sentences.length : 0;
-                const readingTime = Math.ceil(words.length / 200);
-
-                const recommendations = [];
-                if (avgWordsPerSentence > 20) {
-                    recommendations.push({ message: '句子过长，建议拆分为短句' });
-                }
-                if (paragraphs.length > 0 && sentences.length / paragraphs.length > 5) {
-                    recommendations.push({ message: '段落过长，建议分解' });
-                }
-
-                return {
-                    metrics: {
-                        wordCount: words.length,
-                        sentenceCount: sentences.length,
-                        paragraphCount: paragraphs.length,
-                        averageWordsPerSentence: Math.round(avgWordsPerSentence * 10) / 10,
-                        readingTime
-                    },
-                    recommendations,
-                    score: Math.max(0, 100 - recommendations.length * 20)
-                };
-            }
-
-            analyzeLinks(content) {
-                const linkRegex = /<a[^>]+href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi;
-                const links = [];
-                let match;
-
-                while ((match = linkRegex.exec(content)) !== null) {
-                    links.push({
-                        href: match[1],
-                        anchorText: match[2].replace(/<[^>]*>/g, '').trim()
-                    });
-                }
-
-                const emptyAnchors = links.filter(link => !link.anchorText).length;
-                const totalWords = content.replace(/<[^>]*>/g, '').split(/\s+/).length;
-                const linkDensity = totalWords > 0 ? ((links.length / totalWords) * 100).toFixed(2) : 0;
-
-                const suggestions = [];
-                if (emptyAnchors > 0) {
-                    suggestions.push({ message: `发现${emptyAnchors}个空锚文本链接` });
-                }
-                if (linkDensity > 5) {
-                    suggestions.push({ message: '链接密度过高' });
-                } else if (linkDensity < 1) {
-                    suggestions.push({ message: '链接密度过低' });
-                }
-
-                return {
-                    links,
-                    metrics: {
-                        totalInternalLinks: links.length,
-                        linkDensity: parseFloat(linkDensity),
-                        emptyAnchorTexts: emptyAnchors
-                    },
-                    suggestions,
-                    score: Math.max(0, 100 - suggestions.length * 20)
-                };
-            }
-
-            analyzeContent(options) {
-                const { content, keywords } = options;
-
-                const keywordAnalysis = this.analyzeKeywords(content, keywords);
-                const headingAnalysis = this.analyzeHeadings(content);
-                const readabilityAnalysis = this.analyzeReadability(content);
-                const linkAnalysis = this.analyzeLinks(content);
-
-                const overallScore = Math.round(
-                    (keywordAnalysis.overallScore + headingAnalysis.score +
-                        readabilityAnalysis.score + linkAnalysis.score) / 4
-                );
-
-                return {
-                    overallScore,
-                    detailed: {
-                        keywords: keywordAnalysis,
-                        headings: headingAnalysis,
-                        readability: readabilityAnalysis,
-                        links: linkAnalysis
-                    }
-                };
+            } catch (error) {
+                const errorMsg = `SEO测试API失败: ${error.message}`;
+                testResults.seoTestAPI = { status: 'error', details: errorMsg };
+                showResult('api-result', errorMsg, 'error');
             }
         }
 
-        const analyzer = new MockSEOAnalyzer();
-
-        function showLoading(elementId) {
-            document.getElementById(elementId).innerHTML = '<div class="loading"></div> 分析中...';
-        }
-
-        function getScoreClass(score) {
-            if (score >= 90) return 'score-excellent';
-            if (score >= 80) return 'score-good';
-            if (score >= 70) return 'score-fair';
-            if (score >= 60) return 'score-poor';
-            return 'score-very-poor';
-        }
-
-        function testFullAnalysis() {
-            showLoading('fullAnalysisResult');
-
-            setTimeout(() => {
-                try {
-                    const result = analyzer.analyzeContent({
-                        content: testContent,
-                        keywords: testKeywords
-                    });
-
-                    const html = `
-                        <div class="success-box">
-                            <h4>✅ 综合分析完成</h4>
-                            <div class="score-circle ${getScoreClass(result.overallScore)}">
-                                ${result.overallScore}
-                            </div>
-                            <p><strong>综合评分：</strong>${result.overallScore}/100</p>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 15px;">
-                                <div>关键词: ${result.detailed.keywords.overallScore}/100</div>
-                                <div>标题结构: ${result.detailed.headings.score}/100</div>
-                                <div>可读性: ${result.detailed.readability.score}/100</div>
-                                <div>内部链接: ${result.detailed.links.score}/100</div>
-                            </div>
-                        </div>
-                    `;
-
-                    document.getElementById('fullAnalysisResult').innerHTML = html;
-                } catch (error) {
-                    document.getElementById('fullAnalysisResult').innerHTML =
-                        `<div class="error-box">❌ 分析失败: ${error.message}</div>`;
+        // 关键词API测试
+        async function testKeywordAPI() {
+            showResult('api-result', '正在测试关键词排名API...', 'loading');
+            
+            try {
+                const response = await fetch('/api/seo/keyword-ranking?action=stats');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const result = `关键词排名API响应成功:\n\n${JSON.stringify(data, null, 2)}`;
+                    testResults.keywordAPI = { status: 'success', details: result };
+                    showResult('api-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            }, 1000);
+            } catch (error) {
+                const errorMsg = `关键词排名API失败: ${error.message}`;
+                testResults.keywordAPI = { status: 'error', details: errorMsg };
+                showResult('api-result', errorMsg, 'error');
+            }
         }
 
-        function testKeywordAnalysis() {
-            showLoading('keywordResult');
-
-            setTimeout(() => {
-                try {
-                    const result = analyzer.analyzeKeywords(testContent, testKeywords);
-
-                    let html = `
-                        <div class="success-box">
-                            <h4>✅ 关键词分析完成</h4>
-                            <p><strong>总词数：</strong>${result.totalWords}</p>
-                            <p><strong>评分：</strong>${result.overallScore}/100</p>
-                        </div>
-                        <div class="result-box">
-                            <h5>关键词密度详情：</h5>
-                    `;
-
-                    result.keywordAnalysis.forEach(item => {
-                        const levelColor = item.recommendation.level === 'optimal' ? '#28a745' :
-                            item.recommendation.level === 'low' ? '#ffc107' : '#dc3545';
-                        html += `
-                            <div style="margin: 10px 0; padding: 10px; border-left: 4px solid ${levelColor}; background: #f8f9fa;">
-                                <strong>${item.keyword}:</strong> ${item.count}次 (${item.density}%)
-                                <br><small>${item.recommendation.message}</small>
-                            </div>
-                        `;
-                    });
-
-                    html += '</div>';
-                    document.getElementById('keywordResult').innerHTML = html;
-                } catch (error) {
-                    document.getElementById('keywordResult').innerHTML =
-                        `<div class="error-box">❌ 分析失败: ${error.message}</div>`;
+        // 搜索引擎提交API测试
+        async function testSubmissionAPI() {
+            showResult('api-result', '正在测试搜索引擎提交API...', 'loading');
+            
+            try {
+                const response = await fetch('/api/seo/search-engine-submission');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const result = `搜索引擎提交API响应成功:\n\n${JSON.stringify(data, null, 2)}`;
+                    testResults.submissionAPI = { status: 'success', details: result };
+                    showResult('api-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            }, 800);
+            } catch (error) {
+                const errorMsg = `搜索引擎提交API失败: ${error.message}`;
+                testResults.submissionAPI = { status: 'error', details: errorMsg };
+                showResult('api-result', errorMsg, 'error');
+            }
         }
 
-        function testHeadingStructure() {
-            showLoading('headingResult');
-
-            setTimeout(() => {
-                try {
-                    const result = analyzer.analyzeHeadings(testContent);
-
-                    let html = `
-                        <div class="success-box">
-                            <h4>✅ 标题结构分析完成</h4>
-                            <p><strong>评分：</strong>${result.score}/100</p>
-                            <p><strong>发现标题：</strong>${result.headings.length}个</p>
-                        </div>
-                    `;
-
-                    if (result.headings.length > 0) {
-                        html += '<div class="result-box"><h5>标题列表：</h5>';
-                        result.headings.forEach(heading => {
-                            html += `<div style="margin: 5px 0; padding-left: ${(heading.level - 1) * 20}px;">
-                                H${heading.level}: ${heading.text}
-                            </div>`;
-                        });
-                        html += '</div>';
-                    }
-
-                    if (result.issues.length > 0) {
-                        html += '<div class="result-box"><h5>发现的问题：</h5>';
-                        result.issues.forEach(issue => {
-                            const severityColor = issue.severity === 'high' ? '#dc3545' :
-                                issue.severity === 'medium' ? '#ffc107' : '#007bff';
-                            html += `
-                                <div style="margin: 5px 0; padding: 8px; border-left: 4px solid ${severityColor}; background: #f8f9fa;">
-                                    <strong>${issue.severity.toUpperCase()}:</strong> ${issue.message}
-                                </div>
-                            `;
-                        });
-                        html += '</div>';
-                    }
-
-                    document.getElementById('headingResult').innerHTML = html;
-                } catch (error) {
-                    document.getElementById('headingResult').innerHTML =
-                        `<div class="error-box">❌ 分析失败: ${error.message}</div>`;
+        // 404监控API测试
+        async function test404API() {
+            showResult('api-result', '正在测试404监控API...', 'loading');
+            
+            try {
+                const response = await fetch('/api/seo/404-report');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const result = `404监控API响应成功:\n\n${JSON.stringify(data, null, 2)}`;
+                    testResults.api404 = { status: 'success', details: result };
+                    showResult('api-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            }, 600);
+            } catch (error) {
+                const errorMsg = `404监控API失败: ${error.message}`;
+                testResults.api404 = { status: 'error', details: errorMsg };
+                showResult('api-result', errorMsg, 'error');
+            }
         }
 
-        function testReadability() {
-            showLoading('readabilityResult');
-
-            setTimeout(() => {
-                try {
-                    const result = analyzer.analyzeReadability(testContent);
-
-                    let html = `
-                        <div class="success-box">
-                            <h4>✅ 可读性分析完成</h4>
-                            <p><strong>评分：</strong>${result.score}/100</p>
-                        </div>
-                        <div class="result-box">
-                            <h5>内容指标：</h5>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-                                <div>词数: ${result.metrics.wordCount}</div>
-                                <div>句子数: ${result.metrics.sentenceCount}</div>
-                                <div>段落数: ${result.metrics.paragraphCount}</div>
-                                <div>平均句长: ${result.metrics.averageWordsPerSentence}词</div>
-                                <div>阅读时间: ${result.metrics.readingTime}分钟</div>
-                            </div>
-                        </div>
-                    `;
-
-                    if (result.recommendations.length > 0) {
-                        html += '<div class="result-box"><h5>优化建议：</h5>';
-                        result.recommendations.forEach(rec => {
-                            html += `<div style="margin: 5px 0; padding: 8px; background: #fff3cd; border-left: 4px solid #ffc107;">
-                                ${rec.message}
-                            </div>`;
-                        });
-                        html += '</div>';
-                    }
-
-                    document.getElementById('readabilityResult').innerHTML = html;
-                } catch (error) {
-                    document.getElementById('readabilityResult').innerHTML =
-                        `<div class="error-box">❌ 分析失败: ${error.message}</div>`;
+        // robots.txt测试
+        async function testRobotsTxt() {
+            showResult('static-files-result', '正在检查robots.txt...', 'loading');
+            
+            try {
+                const response = await fetch('/robots.txt');
+                
+                if (response.ok) {
+                    const content = await response.text();
+                    const result = `robots.txt检查成功:\n\n${content}`;
+                    testResults.robotsTxt = { status: 'success', details: result };
+                    showResult('static-files-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            }, 700);
+            } catch (error) {
+                const errorMsg = `robots.txt检查失败: ${error.message}`;
+                testResults.robotsTxt = { status: 'error', details: errorMsg };
+                showResult('static-files-result', errorMsg, 'error');
+            }
         }
 
-        function testLinkAnalysis() {
-            showLoading('linkResult');
-
-            setTimeout(() => {
-                try {
-                    const result = analyzer.analyzeLinks(testContent);
-
-                    let html = `
-                        <div class="success-box">
-                            <h4>✅ 链接分析完成</h4>
-                            <p><strong>评分：</strong>${result.score}/100</p>
-                        </div>
-                        <div class="result-box">
-                            <h5>链接指标：</h5>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-                                <div>内部链接: ${result.metrics.totalInternalLinks}个</div>
-                                <div>链接密度: ${result.metrics.linkDensity}%</div>
-                                <div>空锚文本: ${result.metrics.emptyAnchorTexts}个</div>
-                            </div>
-                        </div>
-                    `;
-
-                    if (result.links.length > 0) {
-                        html += '<div class="result-box"><h5>链接列表：</h5>';
-                        result.links.forEach(link => {
-                            const anchorText = link.anchorText || '(空锚文本)';
-                            const textColor = link.anchorText ? '#007bff' : '#dc3545';
-                            html += `
-                                <div style="margin: 5px 0; padding: 8px; background: #f8f9fa; border-radius: 4px;">
-                                    <strong style="color: ${textColor};">${anchorText}</strong>
-                                    <br><small style="color: #6c757d;">${link.href}</small>
-                                </div>
-                            `;
-                        });
-                        html += '</div>';
-                    }
-
-                    if (result.suggestions.length > 0) {
-                        html += '<div class="result-box"><h5>优化建议：</h5>';
-                        result.suggestions.forEach(suggestion => {
-                            html += `<div style="margin: 5px 0; padding: 8px; background: #fff3cd; border-left: 4px solid #ffc107;">
-                                ${suggestion.message}
-                            </div>`;
-                        });
-                        html += '</div>';
-                    }
-
-                    document.getElementById('linkResult').innerHTML = html;
-                } catch (error) {
-                    document.getElementById('linkResult').innerHTML =
-                        `<div class="error-box">❌ 分析失败: ${error.message}</div>`;
+        // sitemap测试
+        async function testSitemap() {
+            showResult('static-files-result', '正在检查sitemap.xml...', 'loading');
+            
+            try {
+                const response = await fetch('/sitemap.xml');
+                
+                if (response.ok) {
+                    const content = await response.text();
+                    const urlCount = (content.match(/<url>/g) || []).length;
+                    const result = `sitemap.xml检查成功:\n\n找到 ${urlCount} 个URL\n\n${content.substring(0, 500)}${content.length > 500 ? '...' : ''}`;
+                    testResults.sitemap = { status: 'success', details: result };
+                    showResult('static-files-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            }, 900);
+            } catch (error) {
+                const errorMsg = `sitemap.xml检查失败: ${error.message}`;
+                testResults.sitemap = { status: 'error', details: errorMsg };
+                showResult('static-files-result', errorMsg, 'error');
+            }
         }
 
-        // 页面加载完成后的提示
-        window.addEventListener('load', function () {
-            console.log('SEO分析工具测试页面加载完成');
-            console.log('可以开始测试各项功能');
+        // 图片sitemap测试
+        async function testImageSitemap() {
+            showResult('static-files-result', '正在检查图片sitemap...', 'loading');
+            
+            try {
+                const response = await fetch('/api/sitemap/images?format=json');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const result = `图片sitemap API响应成功:\n\n${JSON.stringify(data, null, 2)}`;
+                    testResults.imageSitemap = { status: 'success', details: result };
+                    showResult('static-files-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                const errorMsg = `图片sitemap检查失败: ${error.message}`;
+                testResults.imageSitemap = { status: 'error', details: errorMsg };
+                showResult('static-files-result', errorMsg, 'error');
+            }
+        }
+
+        // Web Vitals测试
+        async function testWebVitals() {
+            showResult('performance-result', '正在测试Web Vitals...', 'loading');
+            
+            if ('PerformanceObserver' in window) {
+                let result = 'Web Vitals测试结果:\n\n';
+                
+                // 获取性能指标
+                const navigation = performance.getEntriesByType('navigation')[0];
+                if (navigation) {
+                    result += `页面加载时间: ${Math.round(navigation.loadEventEnd - navigation.fetchStart)}ms\n`;
+                    result += `DOM内容加载: ${Math.round(navigation.domContentLoadedEventEnd - navigation.fetchStart)}ms\n`;
+                }
+                
+                // 检查是否支持新的性能API
+                result += `\n支持的性能API:\n`;
+                result += `✓ Performance Observer: ${!!window.PerformanceObserver}\n`;
+                result += `✓ Navigation Timing: ${!!window.performance.getEntriesByType}\n`;
+                result += `✓ Resource Timing: ${!!window.performance.getEntriesByType('resource')}\n`;
+                
+                testResults.webVitals = { status: 'success', details: result };
+                showResult('performance-result', result, 'success');
+            } else {
+                const errorMsg = 'Web Vitals测试失败: 浏览器不支持Performance Observer';
+                testResults.webVitals = { status: 'error', details: errorMsg };
+                showResult('performance-result', errorMsg, 'error');
+            }
+        }
+
+        // 资源优化检查
+        async function testResourceOptimization() {
+            showResult('performance-result', '正在检查资源优化...', 'loading');
+            
+            let result = '资源优化检查结果:\n\n';
+            
+            // 检查预加载资源
+            const preloadLinks = document.querySelectorAll('link[rel="preload"]');
+            result += `预加载资源: ${preloadLinks.length} 个\n`;
+            
+            // 检查预取资源
+            const prefetchLinks = document.querySelectorAll('link[rel="prefetch"]');
+            result += `预取资源: ${prefetchLinks.length} 个\n`;
+            
+            // 检查DNS预解析
+            const dnsLinks = document.querySelectorAll('link[rel="dns-prefetch"]');
+            result += `DNS预解析: ${dnsLinks.length} 个\n`;
+            
+            // 检查图片懒加载
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            result += `懒加载图片: ${lazyImages.length} 个\n`;
+            
+            testResults.resourceOptimization = { status: 'success', details: result };
+            showResult('performance-result', result, 'success');
+        }
+
+        // 缓存策略检查
+        async function testCacheHeaders() {
+            showResult('performance-result', '正在检查缓存策略...', 'loading');
+            
+            try {
+                const response = await fetch(window.location.href, { method: 'HEAD' });
+                
+                let result = '缓存策略检查结果:\n\n';
+                result += `Cache-Control: ${response.headers.get('cache-control') || '未设置'}\n`;
+                result += `ETag: ${response.headers.get('etag') || '未设置'}\n`;
+                result += `Last-Modified: ${response.headers.get('last-modified') || '未设置'}\n`;
+                result += `Expires: ${response.headers.get('expires') || '未设置'}\n`;
+                
+                testResults.cacheHeaders = { status: 'success', details: result };
+                showResult('performance-result', result, 'success');
+            } catch (error) {
+                const errorMsg = `缓存策略检查失败: ${error.message}`;
+                testResults.cacheHeaders = { status: 'error', details: errorMsg };
+                showResult('performance-result', errorMsg, 'error');
+            }
+        }
+
+        // 管理页面测试
+        async function testAdminPages() {
+            showResult('admin-result', '正在检查管理页面...', 'loading');
+            
+            const adminPages = [
+                '/admin/seo-dashboard',
+                '/admin/seo-settings',
+                '/admin/keyword-ranking',
+                '/admin/search-engine-submission',
+                '/admin/404-monitor',
+                '/admin/web-vitals-dashboard'
+            ];
+            
+            let result = '管理页面检查结果:\n\n';
+            
+            for (const page of adminPages) {
+                try {
+                    const response = await fetch(page, { method: 'HEAD' });
+                    result += `${response.ok ? '✓' : '✗'} ${page}: ${response.status}\n`;
+                } catch (error) {
+                    result += `✗ ${page}: 连接失败\n`;
+                }
+            }
+            
+            testResults.adminPages = { status: 'success', details: result };
+            showResult('admin-result', result, 'info');
+        }
+
+        // 仪表板测试
+        async function testDashboard() {
+            showResult('admin-result', '正在测试SEO仪表板...', 'loading');
+            
+            try {
+                const response = await fetch('/admin/seo-dashboard', { method: 'HEAD' });
+                
+                if (response.ok) {
+                    const result = `SEO仪表板检查成功:\n\n状态码: ${response.status}\n内容类型: ${response.headers.get('content-type')}`;
+                    testResults.dashboard = { status: 'success', details: result };
+                    showResult('admin-result', result, 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                const errorMsg = `SEO仪表板检查失败: ${error.message}`;
+                testResults.dashboard = { status: 'error', details: errorMsg };
+                showResult('admin-result', errorMsg, 'error');
+            }
+        }
+
+        // 运行完整测试
+        async function runFullTest() {
+            showResult('full-test-result', '正在运行完整的SEO功能测试，请稍候...', 'loading');
+            
+            const tests = [
+                testBasicSEO,
+                testSEOTestAPI,
+                testKeywordAPI,
+                testRobotsTxt,
+                testSitemap,
+                testWebVitals,
+                testAdminPages
+            ];
+            
+            let completedTests = 0;
+            const totalTests = tests.length;
+            
+            for (const test of tests) {
+                try {
+                    await test();
+                    completedTests++;
+                    showResult('full-test-result', 
+                        `正在运行完整测试... (${completedTests}/${totalTests})\n\n已完成的测试:\n${Object.keys(testResults).join('\n')}`, 
+                        'loading'
+                    );
+                } catch (error) {
+                    console.error('Test failed:', error);
+                }
+            }
+            
+            // 生成最终报告
+            generateReport();
+        }
+
+        // 生成测试报告
+        function generateReport() {
+            const totalTests = Object.keys(testResults).length;
+            const successfulTests = Object.values(testResults).filter(r => r.status === 'success').length;
+            const failedTests = totalTests - successfulTests;
+            
+            let report = `📊 SEO功能测试报告\n`;
+            report += `=====================================\n\n`;
+            report += `测试时间: ${new Date().toLocaleString('zh-CN')}\n`;
+            report += `总测试数: ${totalTests}\n`;
+            report += `成功: ${successfulTests}\n`;
+            report += `失败: ${failedTests}\n`;
+            report += `成功率: ${totalTests > 0 ? Math.round((successfulTests / totalTests) * 100) : 0}%\n\n`;
+            
+            report += `详细结果:\n`;
+            report += `=====================================\n`;
+            
+            Object.entries(testResults).forEach(([testName, result]) => {
+                report += `\n${result.status === 'success' ? '✅' : '❌'} ${testName}:\n`;
+                report += `${result.details}\n`;
+                report += `-------------------------------------\n`;
+            });
+            
+            showResult('full-test-result', report, totalTests > 0 && failedTests === 0 ? 'success' : 'error');
+        }
+
+        // 页面加载时自动运行基础检查
+        window.addEventListener('load', function() {
+            console.log('SEO功能测试页面已加载');
+            console.log('点击相应按钮开始测试各个功能模块');
         });
     </script>
 </body>
-
 </html>

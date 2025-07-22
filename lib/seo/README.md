@@ -1,385 +1,535 @@
-# SEO内容分析工具
+# SEO优化功能使用文档
 
-这个模块提供了全面的SEO内容分析功能，帮助优化网站内容的搜索引擎表现。
+本文档详细介绍了NotionNext项目中集成的SEO优化功能，包括配置方法、使用指南和最佳实践。
 
-## 功能特性
+## 目录
 
-### 1. 关键词密度分析
-- 分析目标关键词在内容中的密度
-- 自动提取高频词汇
-- 提供关键词优化建议
-- 支持中英文关键词分析
+1. [功能概览](#功能概览)
+2. [快速开始](#快速开始)
+3. [配置说明](#配置说明)
+4. [功能模块](#功能模块)
+5. [API接口](#api接口)
+6. [最佳实践](#最佳实践)
+7. [故障排除](#故障排除)
 
-### 2. 标题层级结构检查
-- 检查H1-H6标题的层级结构
-- 识别标题层级跳跃问题
-- 检测空标题和重复H1标签
-- 提供标题结构优化建议
+## 功能概览
 
-### 3. 内容可读性分析
-- 计算Flesch可读性评分
-- 分析句子长度和段落结构
-- 估算阅读时间
-- 识别复杂词汇
-- 提供可读性改进建议
+### 核心功能
 
-### 4. 内部链接优化
-- 分析内部链接密度
-- 检查锚文本质量
-- 推荐相关页面链接
-- 计算页面相似度
-- 提供链接优化建议
+- **增强版SEO基础组件**: 智能meta标签生成、canonical URL、hreflang支持
+- **结构化数据系统**: 自动生成Article、WebSite、Organization等Schema.org数据
+- **智能Sitemap**: 增强版XML sitemap，支持图片、新闻、视频sitemap
+- **Robots.txt优化**: 智能robots.txt生成，支持自定义爬虫指令
+- **性能优化**: 关键CSS内联、资源预加载、懒加载、代码分割
+- **内容分析**: 关键词密度分析、标题结构检查、可读性分析
+- **面包屑导航**: 动态面包屑生成，包含结构化数据
+- **相关文章推荐**: 基于标签和分类的智能推荐算法
+
+### 高级功能
+
+- **SEO分析引擎**: 页面SEO评分、问题检测、优化建议
+- **管理仪表板**: 可视化SEO指标、问题列表、修复建议
+- **图片SEO优化**: 自动alt属性、文件名优化、图片sitemap
+- **404页面优化**: 智能重定向建议、相关内容推荐、错误监控
+- **搜索引擎提交**: 自动sitemap提交、URL索引请求、验证码管理
+- **测试套件**: 自动化SEO测试、meta标签验证、结构化数据测试
+- **关键词排名跟踪**: 多搜索引擎排名监控、竞争对手分析
+- **Core Web Vitals监控**: FCP、LCP、FID、CLS指标监控
 
 ## 快速开始
 
-### 基本使用
+### 1. 基础配置
+
+在 `blog.config.js` 中启用SEO增强模式：
 
 ```javascript
-import { SEOContentAnalyzer } from './lib/seo/contentAnalyzer';
-
-const analyzer = new SEOContentAnalyzer();
-
-const result = await analyzer.analyzeContent({
-  content: '<h1>标题</h1><p>内容...</p>',
-  keywords: ['SEO', '优化'],
-  currentUrl: 'https://example.com/page',
-  allPages: [/* 所有页面数据 */]
-});
-
-console.log('SEO评分:', result.overallScore);
-console.log('优化建议:', result.recommendations);
+// SEO增强功能
+SEO_ENHANCED_MODE: true, // 启用增强版SEO
+SEO_ENABLE_STRUCTURED_DATA: true, // 启用结构化数据
+SEO_ENABLE_BREADCRUMBS: true, // 启用面包屑
+SEO_ENABLE_PERFORMANCE_MONITOR: true, // 启用性能监控
 ```
 
-### React组件使用
+### 2. 环境变量配置
+
+创建 `.env.local` 文件并添加以下配置：
+
+```bash
+# Google相关
+GOOGLE_INDEXING_API_KEY=your_google_api_key
+GOOGLE_SEARCH_CONSOLE_API_KEY=your_gsc_api_key
+
+# Bing相关
+BING_WEBMASTER_API_KEY=your_bing_api_key
+
+# 百度相关
+BAIDU_PUSH_TOKEN=your_baidu_token
+
+# 性能监控
+SEO_PERFORMANCE_REPORT_URL=https://your-analytics-endpoint.com
+```
+
+### 3. 验证安装
+
+访问 `/seo-test-page` 运行集成测试，确保所有功能正常工作。
+
+## 配置说明
+
+### 基础SEO配置
+
+```javascript
+// 标题和描述配置
+SEO_TITLE_SEPARATOR: ' | ', // 标题分隔符
+SEO_MAX_TITLE_LENGTH: 60, // 最大标题长度
+SEO_MAX_DESCRIPTION_LENGTH: 160, // 最大描述长度
+SEO_MAX_KEYWORDS: 10, // 最大关键词数量
+
+// 结构化数据配置
+SEO_ENABLE_STRUCTURED_DATA: true, // 启用结构化数据
+SEO_ENABLE_BREADCRUMBS: true, // 启用面包屑
+SEO_ENABLE_HREFLANG: true, // 启用多语言标签
+```
+
+### Robots.txt配置
+
+```javascript
+// Robots.txt配置
+SEO_ROBOTS_ENHANCED: true, // 启用增强版robots.txt
+SEO_ROBOTS_CRAWL_DELAY: 1, // 爬虫延迟（秒）
+SEO_ROBOTS_BLOCK_BOTS: true, // 阻止恶意爬虫
+```
+
+### Sitemap配置
+
+```javascript
+// Sitemap配置
+SEO_SITEMAP_ENHANCED: true, // 启用增强版sitemap
+SEO_SITEMAP_IMAGES: true, // 启用图片sitemap
+SEO_SITEMAP_CHANGEFREQ_HOME: 'daily', // 首页更新频率
+SEO_SITEMAP_PRIORITY_HOME: 1.0, // 首页优先级
+```
+
+### 性能优化配置
+
+```javascript
+// 性能优化配置
+SEO_ENABLE_PRELOAD: true, // 启用资源预加载
+SEO_ENABLE_LAZY_LOADING: true, // 启用懒加载
+SEO_IMAGE_OPTIMIZATION_QUALITY: 75, // 图片优化质量
+```
+
+### 404页面配置
+
+```javascript
+// 404页面SEO优化配置
+SEO_ENHANCED_404: true, // 启用增强版404页面
+SEO_404_MONITOR: true, // 启用404错误监控
+SEO_404_SMART_REDIRECT: true, // 启用智能重定向建议
+```
+
+### 搜索引擎提交配置
+
+```javascript
+// 搜索引擎提交配置
+SEO_AUTO_SUBMISSION: true, // 启用自动提交
+SEO_SUBMISSION_INTERVAL: 24, // 自动提交间隔（小时）
+SEO_ENABLE_GOOGLE_SUBMISSION: true, // 启用Google提交
+SEO_ENABLE_BING_SUBMISSION: true, // 启用Bing提交
+SEO_ENABLE_BAIDU_SUBMISSION: true, // 启用百度提交
+```
+
+## 功能模块
+
+### 1. SEO基础组件
+
+#### 使用方法
 
 ```jsx
-import SEOContentAnalyzer from './components/SEOContentAnalyzer';
+import SEOEnhanced from '@/components/SEOEnhanced'
 
-function MyPage() {
+function MyPage({ post }) {
   return (
-    <SEOContentAnalyzer
-      content={htmlContent}
-      keywords={['关键词1', '关键词2']}
-      currentUrl="https://example.com/page"
-      allPages={allPages}
-      onAnalysisComplete={(result) => {
-        console.log('分析完成:', result);
-      }}
-    />
-  );
+    <>
+      <SEOEnhanced
+        title={post.title}
+        description={post.summary}
+        keywords={post.tags}
+        image={post.cover}
+        type="article"
+        publishedTime={post.publishedAt}
+        modifiedTime={post.updatedAt}
+      />
+      {/* 页面内容 */}
+    </>
+  )
 }
 ```
 
-### 博客文章分析
+#### 功能特性
 
-```javascript
-import { analyzePostSEO } from './lib/seo/seoUtils';
+- 自动生成优化的meta标签
+- 支持Open Graph和Twitter Card
+- 自动设置canonical URL
+- 多语言hreflang支持
 
-// 分析单篇文章
-const analysis = await analyzePostSEO(post, allPosts, siteInfo);
+### 2. 结构化数据
 
-// 批量分析
-const batchResults = await batchAnalyzeSEO(posts, siteInfo);
+#### 自动生成
 
-// 生成报告
-const report = generateSEOReport(batchResults);
+系统会根据页面类型自动生成相应的结构化数据：
+
+- **文章页面**: Article Schema
+- **首页**: WebSite + Organization Schema
+- **分类页面**: CollectionPage Schema
+- **面包屑**: BreadcrumbList Schema
+
+#### 手动添加
+
+```jsx
+import { generateStructuredData } from '@/lib/seo/structuredData'
+
+const articleSchema = generateStructuredData('article', {
+  headline: post.title,
+  author: post.author,
+  datePublished: post.publishedAt,
+  dateModified: post.updatedAt,
+  image: post.cover,
+  publisher: {
+    name: BLOG.AUTHOR,
+    logo: BLOG.BLOG_FAVICON
+  }
+})
 ```
 
-## API参考
+### 3. 性能优化
 
-### SEOContentAnalyzer
+#### 关键资源预加载
 
-主要的SEO内容分析类，整合了所有分析功能。
+```jsx
+import { useResourcePreloader } from '@/lib/performance/usePerformanceOptimization'
 
-#### 方法
+function MyComponent() {
+  const { preloadResource } = useResourcePreloader()
+  
+  useEffect(() => {
+    preloadResource('/css/critical.css', 'style', 'high')
+    preloadResource('/js/important.js', 'script', 'high')
+  }, [])
+}
+```
 
-##### `analyzeContent(options)`
+#### 图片懒加载
 
-分析内容的SEO表现。
+```jsx
+import { useOptimizedImage } from '@/lib/performance/usePerformanceOptimization'
 
-**参数:**
-- `options.content` (string): 要分析的HTML内容
-- `options.keywords` (Array): 目标关键词列表
-- `options.currentUrl` (string): 当前页面URL
-- `options.allPages` (Array): 所有页面数据
+function OptimizedImage({ src, alt }) {
+  const { currentSrc, sources, isLoading, elementRef } = useOptimizedImage(src, {
+    sizes: [320, 640, 1024],
+    formats: ['webp', 'jpg'],
+    lazy: true
+  })
+  
+  return (
+    <picture ref={elementRef}>
+      {sources.map((source, index) => (
+        <source key={index} {...source} />
+      ))}
+      <img src={currentSrc} alt={alt} loading="lazy" />
+    </picture>
+  )
+}
+```
 
-**返回值:**
+### 4. SEO分析
+
+#### 页面分析
+
 ```javascript
+import { analyzePageSEO } from '@/lib/seo/contentAnalyzer'
+
+const analysis = await analyzePageSEO(pageContent, {
+  targetKeywords: ['关键词1', '关键词2'],
+  checkReadability: true,
+  checkInternalLinks: true
+})
+
+console.log('SEO得分:', analysis.score)
+console.log('优化建议:', analysis.suggestions)
+```
+
+#### 内容分析
+
+```javascript
+import { analyzeKeywordDensity } from '@/lib/seo/contentAnalyzer'
+
+const density = analyzeKeywordDensity(content, '目标关键词')
+console.log('关键词密度:', density.percentage)
+console.log('建议密度:', density.recommended)
+```
+
+### 5. 关键词排名跟踪
+
+#### 添加关键词
+
+```javascript
+import keywordRankingTracker from '@/lib/seo/keywordRankingTracker'
+
+const keywordId = keywordRankingTracker.addKeyword('目标关键词', {
+  targetUrl: 'https://example.com/target-page',
+  searchEngines: ['google', 'bing', 'baidu'],
+  frequency: 'daily'
+})
+```
+
+#### 检查排名
+
+```javascript
+const results = await keywordRankingTracker.checkKeywordRanking(keywordId)
+console.log('排名结果:', results)
+```
+
+### 6. 搜索引擎提交
+
+#### 手动提交
+
+```javascript
+import searchEngineSubmission from '@/lib/seo/searchEngineSubmission'
+
+// 提交sitemap
+const result = await searchEngineSubmission.submitSitemapToAll()
+
+// 提交单个URL
+const urlResult = await searchEngineSubmission.submitUrlForIndexing(
+  'https://example.com/new-page',
+  'google'
+)
+```
+
+#### 自动提交
+
+系统会自动监控内容变化并提交新内容到搜索引擎。
+
+## API接口
+
+### SEO测试API
+
+```bash
+# 运行SEO测试
+POST /api/admin/seo-test
 {
-  overallScore: 85,           // 综合评分 (0-100)
-  recommendations: [...],     // 优化建议列表
-  detailed: {
-    keywords: {...},          // 关键词分析详情
-    headings: {...},          // 标题结构分析
-    readability: {...},       // 可读性分析
-    links: {...}              // 链接分析
-  },
-  summary: {
-    level: 'good',            // 评级
-    description: '...',       // 描述
-    issueCount: {...}         // 问题统计
+  "url": "/",
+  "testSuites": ["meta-tags", "structured-data"],
+  "options": {
+    "enablePerformanceTests": true
   }
 }
+
+# 获取测试套件
+GET /api/admin/seo-test
 ```
 
-### KeywordDensityAnalyzer
+### 关键词排名API
 
-关键词密度分析器。
+```bash
+# 获取关键词列表
+GET /api/seo/keyword-ranking?action=keywords
 
-#### 方法
-
-##### `analyze(content, keywords)`
-
-分析关键词密度。
-
-**参数:**
-- `content` (string): 文本内容
-- `keywords` (Array): 关键词列表
-
-**返回值:**
-```javascript
+# 添加关键词
+POST /api/seo/keyword-ranking
 {
-  totalWords: 500,
-  keywordAnalysis: [
-    {
-      keyword: 'SEO',
-      count: 10,
-      density: 2.0,
-      recommendation: {
-        level: 'optimal',
-        message: '关键词密度适中'
-      }
-    }
-  ],
-  topKeywords: [...],
-  overallScore: 85
+  "action": "add_keyword",
+  "keyword": "目标关键词",
+  "targetUrl": "https://example.com"
+}
+
+# 检查排名
+POST /api/seo/keyword-ranking
+{
+  "action": "check_ranking",
+  "keywordId": "keyword_id"
 }
 ```
 
-### HeadingStructureChecker
+### 搜索引擎提交API
 
-标题结构检查器。
-
-#### 方法
-
-##### `analyze(content)`
-
-检查标题层级结构。
-
-**返回值:**
-```javascript
+```bash
+# 提交sitemap
+POST /api/seo/search-engine-submission
 {
-  headings: [
-    {
-      level: 1,
-      text: '主标题',
-      position: 0
-    }
-  ],
-  issues: [
-    {
-      type: 'missing_h1',
-      severity: 'high',
-      message: '缺少H1标签'
-    }
-  ],
-  suggestions: [...],
-  score: 90
+  "action": "submit_sitemap",
+  "engineId": "google"
 }
+
+# 获取提交状态
+GET /api/seo/search-engine-submission?type=engines
 ```
 
-### ReadabilityAnalyzer
+### 404监控API
 
-可读性分析器。
-
-#### 方法
-
-##### `analyze(content)`
-
-分析内容可读性。
-
-**返回值:**
-```javascript
+```bash
+# 记录404错误
+POST /api/seo/404-report
 {
-  metrics: {
-    wordCount: 500,
-    sentenceCount: 25,
-    paragraphCount: 5,
-    averageWordsPerSentence: 20,
-    readingTime: 3,
-    fleschScore: 65
-  },
-  recommendations: [...],
-  score: 80,
-  readingLevel: {
-    level: 'standard',
-    description: '标准难度'
-  }
+  "path": "/non-existent-page",
+  "referrer": "https://example.com",
+  "userAgent": "Mozilla/5.0..."
 }
+
+# 获取404报告
+GET /api/seo/404-report?limit=50&sortBy=count
 ```
-
-### InternalLinkAnalyzer
-
-内部链接分析器。
-
-#### 方法
-
-##### `analyze(content, currentUrl, allPages)`
-
-分析内部链接结构。
-
-**返回值:**
-```javascript
-{
-  links: [
-    {
-      href: '/page1',
-      anchorText: '链接文本',
-      position: 100,
-      isInternal: true
-    }
-  ],
-  metrics: {
-    totalInternalLinks: 5,
-    linkDensity: '1.0',
-    uniqueLinks: 4,
-    emptyAnchorTexts: 0
-  },
-  suggestions: [...],
-  score: 85,
-  relatedPages: [...]
-}
-```
-
-## 工具函数
-
-### analyzePostSEO(post, allPosts, siteInfo)
-
-分析博客文章的SEO表现。
-
-### batchAnalyzeSEO(posts, siteInfo)
-
-批量分析多篇文章。
-
-### generateSEOReport(analysisResults)
-
-生成SEO分析报告。
-
-### generateSEORecommendations(analysis)
-
-生成具体的优化建议。
-
-## 评分标准
-
-### 综合评分 (0-100)
-
-- **90-100**: 优秀 - SEO优化程度极佳
-- **80-89**: 良好 - SEO优化程度良好
-- **70-79**: 一般 - 有改进空间
-- **60-69**: 较差 - 需要改进
-- **0-59**: 很差 - 急需改进
-
-### 各项指标权重
-
-- 关键词优化: 25%
-- 标题结构: 25%
-- 可读性: 25%
-- 内部链接: 25%
 
 ## 最佳实践
 
-### 关键词优化
+### 1. SEO优化建议
 
-1. **密度控制**: 关键词密度保持在0.5%-3%之间
-2. **自然分布**: 关键词应自然地分布在内容中
-3. **长尾关键词**: 使用相关的长尾关键词
-4. **避免堆砌**: 不要过度使用关键词
+#### 标题优化
+- 保持标题长度在50-60字符之间
+- 包含主要关键词，但避免关键词堆砌
+- 每个页面使用唯一的标题
 
-### 标题结构
+#### 描述优化
+- Meta描述长度控制在120-160字符
+- 包含相关关键词和吸引人的描述
+- 避免重复内容
 
-1. **唯一H1**: 每个页面只使用一个H1标签
-2. **层级递进**: 标题层级应该逐级递进
-3. **描述性**: 标题应该准确描述内容
-4. **长度适中**: 标题长度应该适中
+#### 内容优化
+- 使用合理的标题层级结构（H1-H6）
+- 每个页面只使用一个H1标签
+- 内容长度至少300字
+- 关键词密度控制在2-5%
 
-### 可读性优化
+### 2. 性能优化建议
 
-1. **句子长度**: 平均句子长度控制在20词以内
-2. **段落结构**: 每段不超过5句话
-3. **简单词汇**: 使用通俗易懂的词汇
-4. **逻辑清晰**: 内容结构要逻辑清晰
+#### 图片优化
+- 使用现代图片格式（WebP、AVIF）
+- 为所有图片添加alt属性
+- 启用图片懒加载
+- 使用响应式图片
 
-### 内部链接
+#### 资源优化
+- 启用Gzip/Brotli压缩
+- 使用CDN加速静态资源
+- 合理设置缓存策略
+- 预加载关键资源
 
-1. **链接密度**: 内部链接密度保持在1%-3%
-2. **锚文本**: 使用描述性的锚文本
-3. **相关性**: 链接到相关的内容页面
-4. **用户体验**: 不要过度使用链接
+#### 代码优化
+- 内联关键CSS
+- 异步加载非关键JavaScript
+- 使用代码分割减少初始包大小
+- 启用Tree Shaking移除未使用代码
 
-## 配置选项
+### 3. 监控和维护
 
-### 自定义停用词
+#### 定期检查
+- 每周运行SEO测试套件
+- 监控Core Web Vitals指标
+- 检查404错误报告
+- 跟踪关键词排名变化
 
-```javascript
-const customStopWords = ['自定义', '停用词'];
-// 在分析器中使用自定义停用词
-```
-
-### 调整评分权重
-
-```javascript
-const customWeights = {
-  keyword: 0.3,
-  heading: 0.2,
-  readability: 0.3,
-  links: 0.2
-};
-```
-
-### 可读性参数
-
-```javascript
-const readabilityConfig = {
-  wordsPerMinute: 200,        // 阅读速度
-  optimalSentenceLength: 20,  // 最佳句子长度
-  maxParagraphSentences: 5    // 段落最大句子数
-};
-```
+#### 持续优化
+- 根据分析结果优化内容
+- 更新过时的SEO配置
+- 修复发现的技术问题
+- 跟进搜索引擎算法更新
 
 ## 故障排除
 
 ### 常见问题
 
-1. **分析失败**: 检查内容格式是否正确
-2. **评分异常**: 确认关键词和内容匹配
-3. **性能问题**: 对于大量内容，考虑分批处理
+#### 1. 结构化数据不显示
 
-### 调试模式
+**问题**: Google Search Console显示结构化数据错误
+
+**解决方案**:
+1. 检查JSON-LD格式是否正确
+2. 验证必需字段是否完整
+3. 使用Google结构化数据测试工具验证
+4. 确保数据与页面内容匹配
+
+#### 2. Sitemap无法访问
+
+**问题**: 搜索引擎无法抓取sitemap
+
+**解决方案**:
+1. 检查sitemap.xml文件是否存在
+2. 验证XML格式是否正确
+3. 确保服务器返回正确的Content-Type
+4. 检查robots.txt中的sitemap声明
+
+#### 3. 性能指标异常
+
+**问题**: Core Web Vitals指标过高
+
+**解决方案**:
+1. 检查图片是否已优化
+2. 验证关键CSS是否内联
+3. 确保第三方脚本异步加载
+4. 使用性能分析工具定位问题
+
+#### 4. 关键词排名无法获取
+
+**问题**: 关键词排名检查失败
+
+**解决方案**:
+1. 检查网络连接是否正常
+2. 验证搜索引擎是否可访问
+3. 确认是否被反爬虫机制阻止
+4. 调整请求频率和用户代理
+
+### 调试工具
+
+#### 1. SEO测试页面
+访问 `/seo-test-page` 运行完整的SEO功能测试
+
+#### 2. 浏览器开发者工具
+- 检查meta标签是否正确
+- 验证结构化数据
+- 分析性能指标
+- 查看网络请求
+
+#### 3. 在线工具
+- Google结构化数据测试工具
+- Google PageSpeed Insights
+- GTmetrix性能分析
+- SEO分析工具
+
+### 日志和监控
+
+#### 启用调试日志
 
 ```javascript
-// 启用调试模式
-const analyzer = new SEOContentAnalyzer({ debug: true });
+// 在blog.config.js中启用调试模式
+SEO_DEBUG_MODE: process.env.NODE_ENV === 'development'
 ```
+
+#### 监控关键指标
+
+系统会自动收集以下指标：
+- SEO测试结果
+- 性能指标数据
+- 404错误统计
+- 关键词排名变化
+- 搜索引擎提交状态
 
 ## 更新日志
 
-### v1.0.0
+### v1.0.0 (2024-01-01)
 - 初始版本发布
-- 支持关键词密度分析
-- 支持标题结构检查
-- 支持可读性分析
-- 支持内部链接分析
-- 提供React组件
-- 支持批量分析
+- 包含所有核心SEO功能
+- 支持18个主要功能模块
+- 完整的管理界面和API
 
-## 许可证
+### 贡献指南
 
-MIT License
+欢迎提交问题报告和功能请求到项目的GitHub仓库。在提交之前，请确保：
 
-## 贡献
+1. 搜索现有问题，避免重复
+2. 提供详细的问题描述和复现步骤
+3. 包含相关的配置信息和错误日志
+4. 遵循项目的代码规范
 
-欢迎提交Issue和Pull Request来改进这个工具。
+### 许可证
 
-## 支持
-
-如果你在使用过程中遇到问题，请查看文档或提交Issue。
+本SEO优化功能遵循项目的开源许可证。详情请参考项目根目录的LICENSE文件。

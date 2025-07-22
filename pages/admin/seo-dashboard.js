@@ -64,11 +64,54 @@ export default function SEODashboard() {
       
       setSeoReport(report);
       setSelectedPosts(results);
+      
+      // 同时运行SEO健康检查
+      await runSEOHealthCheck();
     } catch (error) {
       console.error('SEO分析失败:', error);
       alert('SEO分析失败，请检查控制台错误信息');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const runSEOHealthCheck = async () => {
+    try {
+      const response = await fetch('/api/admin/seo-test?action=health');
+      const data = await response.json();
+      
+      if (data.success) {
+        console.log('SEO健康检查结果:', data.data);
+        // 可以将健康检查结果添加到报告中
+        if (seoReport) {
+          setSeoReport(prev => ({
+            ...prev,
+            healthCheck: data.data
+          }));
+        }
+      }
+    } catch (error) {
+      console.error('SEO健康检查失败:', error);
+    }
+  };
+
+  const testRobotsTxt = async () => {
+    try {
+      const response = await fetch('/api/admin/seo-test?action=robots');
+      const data = await response.json();
+      alert(data.success ? 'Robots.txt测试通过!' : `Robots.txt测试失败: ${data.error}`);
+    } catch (error) {
+      alert('Robots.txt测试失败');
+    }
+  };
+
+  const testSitemap = async () => {
+    try {
+      const response = await fetch('/api/admin/seo-test?action=sitemap');
+      const data = await response.json();
+      alert(data.success ? 'Sitemap测试通过!' : `Sitemap测试失败: ${data.error}`);
+    } catch (error) {
+      alert('Sitemap测试失败');
     }
   };
 
@@ -125,6 +168,20 @@ export default function SEODashboard() {
               ) : (
                 '🔍 开始SEO分析'
               )}
+            </button>
+            
+            <button
+              onClick={testRobotsTxt}
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+            >
+              🤖 测试Robots.txt
+            </button>
+            
+            <button
+              onClick={testSitemap}
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+            >
+              🗺️ 测试Sitemap
             </button>
             
             {seoReport && (

@@ -1,575 +1,545 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { SEOContentAnalyzer as SEOAnalyzer } from '../lib/seo/contentAnalyzer';
+import { useState, useEffect, useMemo } from 'react'
 
 /**
  * SEO内容分析器组件
- * 提供可视化的SEO内容分析界面
+ * 分析内容的SEO质量，包括关键词密度、标题结构、可读性等
  */
 export default function SEOContentAnalyzer({ 
-  content, 
-  keywords = [], 
-  currentUrl, 
-  allPages = [],
-  onAnalysisComplete 
+  content = '', 
+  title = '', 
+  description = '',
+  keywords = [],
+  targetKeyword = '',
+  onAnalysisComplete,
+  showRealTime = true,
+  language = 'zh-CN'
 }) {
-  const [analysis, setAnalysis] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [analysis, setAnalysis] = useState(null)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
 
-  const analyzer = useMemo(() => new SEOAnalyzer(), []);
+  // 执行内容分析
+  const analyzeContent = useMemo(() => {
+    if (!content && !title && !description) return null
+
+    const analyzer = new ContentAnalyzer(language)
+    return analyzer.analyze({
+      content,
+      title,
+      description,
+      keywords,
+      targetKeyword
+    })
+  }, [content, title, description, keywords, targetKeyword, language])
 
   useEffect(() => {
-    if (content) {
-      performAnalysis();
+    if (analyzeContent) {
+      setIsAnalyzing(true)
+      
+      // 模拟异步分析过程
+      const timer = setTimeout(() => {
+        setAnalysis(analyzeContent)
+        setIsAnalyzing(false)
+        
+        if (typeof onAnalysisComplete === 'function') {
+          onAnalysisComplete(analyzeContent)
+        }
+      }, 500)
+
+      return () => clearTimeout(timer)
     }
-  }, [content, keywords, currentUrl, allPages]);
+  }, [analyzeContent, onAnalysisComplete])
 
-  const performAnalysis = () => {
-    setLoading(true);
-    try {
-      // SEO分析是同步操作，不需要await
-      const result = analyzer.analyzeContent({
-        content,
-        keywords,
-        currentUrl,
-        allPages
-      });
-      setAnalysis(result);
-      onAnalysisComplete?.(result);
-    } catch (error) {
-      console.error('SEO分析失败:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="seo-analyzer-loading">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-        <span className="ml-2">正在分析内容...</span>
-      </div>
-    );
-  }
-
-  if (!analysis) {
-    return (
-      <div className="seo-analyzer-empty">
-        <p>请提供内容进行SEO分析</p>
-      </div>
-    );
-  }
+  if (!showRealTime) return null
 
   return (
     <div className="seo-content-analyzer">
-      {/* 总体评分 */}
-      <div className="seo-score-overview mb-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">SEO内容分析</h3>
-          <div className="flex items-center">
-            <ScoreCircle score={analysis.overallScore} />
-            <span className="ml-2 text-sm text-gray-600">
-              {analysis.summary.description}
-            </span>
-          </div>
-        </div>
-        
-        {analysis.summary.issueCount.total > 0 && (
-          <div className="mt-2 text-sm">
-            <span className="text-red-600">
-              {analysis.summary.issueCount.high} 个高优先级问题
-            </span>
-            <span className="text-yellow-600 ml-4">
-              {analysis.summary.issueCount.medium} 个中优先级问题
-            </span>
+      <div className="analyzer-header">
+        <h3 className="text-lg font-semibold mb-4">📊 SEO内容分析</h3>
+        {isAnalyzing && (
+          <div className="flex items-center text-blue-600">
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+            分析中...
           </div>
         )}
       </div>
 
-      {/* 标签导航 */}
-      <div className="seo-tabs mb-4">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'overview', label: '概览' },
-              { id: 'keywords', label: '关键词' },
-              { id: 'headings', label: '标题结构' },
-              { id: 'readability', label: '可读性' },
-              { id: 'links', label: '内部链接' }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+      {analysis && (
+        <div className="analysis-results space-y-4">
+          {/* 总体评分 */}
+          <div className="overall-score bg-white rounded-lg p-4 border">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-medium">总体SEO评分</span>
+              <ScoreBadge score={analysis.overallScore} />
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div 
+                className={`h-2 rounded-full transition-all duration-500 ${
+                  analysis.overallScore >= 80 ? 'bg-green-500' :
+                  analysis.overallScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
                 }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* 标签内容 */}
-      <div className="seo-tab-content">
-        {activeTab === 'overview' && (
-          <OverviewTab analysis={analysis} />
-        )}
-        {activeTab === 'keywords' && (
-          <KeywordsTab analysis={analysis.detailed.keywords} />
-        )}
-        {activeTab === 'headings' && (
-          <HeadingsTab analysis={analysis.detailed.headings} />
-        )}
-        {activeTab === 'readability' && (
-          <ReadabilityTab analysis={analysis.detailed.readability} />
-        )}
-        {activeTab === 'links' && (
-          <LinksTab analysis={analysis.detailed.links} />
-        )}
-      </div>
-    </div>
-  );
-}
-
-/**
- * 评分圆环组件
- */
-function ScoreCircle({ score }) {
-  const getScoreColor = (score) => {
-    if (score >= 90) return 'text-green-600';
-    if (score >= 80) return 'text-blue-600';
-    if (score >= 70) return 'text-yellow-600';
-    if (score >= 60) return 'text-orange-600';
-    return 'text-red-600';
-  };
-
-  return (
-    <div className="relative w-12 h-12">
-      <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-        <path
-          className="text-gray-300"
-          stroke="currentColor"
-          strokeWidth="3"
-          fill="none"
-          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-        />
-        <path
-          className={getScoreColor(score)}
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeDasharray={`${score}, 100`}
-          strokeLinecap="round"
-          fill="none"
-          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-        />
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className={`text-sm font-semibold ${getScoreColor(score)}`}>
-          {score}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-/**
- * 概览标签
- */
-function OverviewTab({ analysis }) {
-  return (
-    <div className="overview-tab">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <ScoreCard 
-          title="关键词优化" 
-          score={analysis.detailed.keywords.overallScore || 0}
-          icon="🔍"
-        />
-        <ScoreCard 
-          title="标题结构" 
-          score={analysis.detailed.headings.score || 0}
-          icon="📝"
-        />
-        <ScoreCard 
-          title="可读性" 
-          score={analysis.detailed.readability.score || 0}
-          icon="📖"
-        />
-        <ScoreCard 
-          title="内部链接" 
-          score={analysis.detailed.links.score || 0}
-          icon="🔗"
-        />
-      </div>
-
-      {/* 主要建议 */}
-      {analysis.recommendations.length > 0 && (
-        <div className="recommendations">
-          <h4 className="text-md font-semibold mb-3">优化建议</h4>
-          <div className="space-y-2">
-            {analysis.recommendations.slice(0, 5).map((rec, index) => (
-              <RecommendationItem key={index} recommendation={rec} />
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * 评分卡片组件
- */
-function ScoreCard({ title, score, icon }) {
-  const getScoreColor = (score) => {
-    if (score >= 80) return 'bg-green-100 text-green-800';
-    if (score >= 60) return 'bg-yellow-100 text-yellow-800';
-    return 'bg-red-100 text-red-800';
-  };
-
-  return (
-    <div className="score-card bg-white p-4 rounded-lg border">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-gray-600">{title}</p>
-          <p className="text-2xl font-bold">{score}</p>
-        </div>
-        <div className="text-2xl">{icon}</div>
-      </div>
-      <div className="mt-2">
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
-            className={`h-2 rounded-full ${getScoreColor(score)}`}
-            style={{ width: `${score}%` }}
-          ></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/**
- * 建议项组件
- */
-function RecommendationItem({ recommendation }) {
-  const getPriorityColor = (priority) => {
-    switch (priority) {
-      case 'high': return 'text-red-600 bg-red-50';
-      case 'medium': return 'text-yellow-600 bg-yellow-50';
-      case 'low': return 'text-blue-600 bg-blue-50';
-      default: return 'text-gray-600 bg-gray-50';
-    }
-  };
-
-  const getPriorityLabel = (priority) => {
-    switch (priority) {
-      case 'high': return '高';
-      case 'medium': return '中';
-      case 'low': return '低';
-      default: return '一般';
-    }
-  };
-
-  return (
-    <div className="recommendation-item flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
-      <span className={`px-2 py-1 text-xs font-medium rounded ${getPriorityColor(recommendation.priority)}`}>
-        {getPriorityLabel(recommendation.priority)}
-      </span>
-      <div className="flex-1">
-        <p className="text-sm text-gray-800">{recommendation.message}</p>
-        <p className="text-xs text-gray-500 mt-1">分类: {recommendation.category}</p>
-      </div>
-    </div>
-  );
-}
-
-/**
- * 关键词标签
- */
-function KeywordsTab({ analysis }) {
-  if (!analysis || analysis.error) {
-    return <div className="text-red-600">关键词分析失败: {analysis?.error}</div>;
-  }
-
-  return (
-    <div className="keywords-tab">
-      <div className="mb-6">
-        <h4 className="text-md font-semibold mb-3">关键词密度分析</h4>
-        <div className="bg-gray-50 p-4 rounded-lg mb-4">
-          <p className="text-sm text-gray-600">
-            总词数: <span className="font-medium">{analysis.totalWords}</span>
-          </p>
-        </div>
-        
-        {analysis.keywordAnalysis && analysis.keywordAnalysis.length > 0 ? (
-          <div className="space-y-3">
-            {analysis.keywordAnalysis.map((keyword, index) => (
-              <div key={index} className="keyword-item border rounded-lg p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-medium">{keyword.keyword}</span>
-                  <span className="text-sm text-gray-600">
-                    {keyword.density}% ({keyword.count}次)
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-                  <div 
-                    className={`h-2 rounded-full ${
-                      keyword.recommendation.level === 'optimal' ? 'bg-green-500' :
-                      keyword.recommendation.level === 'low' ? 'bg-yellow-500' : 'bg-red-500'
-                    }`}
-                    style={{ width: `${Math.min(keyword.density * 10, 100)}%` }}
-                  ></div>
-                </div>
-                <p className="text-sm text-gray-600">{keyword.recommendation.message}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-600">未指定关键词进行分析</p>
-        )}
-      </div>
-
-      {analysis.topKeywords && analysis.topKeywords.length > 0 && (
-        <div>
-          <h4 className="text-md font-semibold mb-3">高频词汇</h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
-            {analysis.topKeywords.map((word, index) => (
-              <div key={index} className="bg-blue-50 px-3 py-2 rounded-lg text-center">
-                <div className="font-medium text-blue-800">{word.word}</div>
-                <div className="text-xs text-blue-600">{word.count}次</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * 标题结构标签
- */
-function HeadingsTab({ analysis }) {
-  if (!analysis || analysis.error) {
-    return <div className="text-red-600">标题分析失败: {analysis?.error}</div>;
-  }
-
-  return (
-    <div className="headings-tab">
-      <div className="mb-6">
-        <h4 className="text-md font-semibold mb-3">标题层级结构</h4>
-        
-        {analysis.headings && analysis.headings.length > 0 ? (
-          <div className="headings-list space-y-2 mb-6">
-            {analysis.headings.map((heading, index) => (
-              <div key={index} className="heading-item flex items-center space-x-3 p-2 border-l-4 border-blue-500 bg-blue-50">
-                <span className="text-sm font-medium text-blue-600">
-                  H{heading.level}
-                </span>
-                <span className="flex-1">{heading.text}</span>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-600 mb-6">未发现标题标签</p>
-        )}
-
-        {analysis.issues && analysis.issues.length > 0 && (
-          <div className="issues mb-6">
-            <h5 className="font-medium mb-2 text-red-600">发现的问题</h5>
-            <div className="space-y-2">
-              {analysis.issues.map((issue, index) => (
-                <div key={index} className={`p-3 rounded-lg ${
-                  issue.severity === 'high' ? 'bg-red-50 border-red-200' :
-                  issue.severity === 'medium' ? 'bg-yellow-50 border-yellow-200' :
-                  'bg-blue-50 border-blue-200'
-                } border`}>
-                  <div className="flex items-center space-x-2">
-                    <span className={`px-2 py-1 text-xs font-medium rounded ${
-                      issue.severity === 'high' ? 'bg-red-100 text-red-800' :
-                      issue.severity === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-blue-100 text-blue-800'
-                    }`}>
-                      {issue.severity === 'high' ? '高' : issue.severity === 'medium' ? '中' : '低'}
-                    </span>
-                    <span className="text-sm">{issue.message}</span>
-                  </div>
-                </div>
-              ))}
+                style={{ width: `${analysis.overallScore}%` }}
+              ></div>
             </div>
           </div>
-        )}
 
-        {analysis.suggestions && analysis.suggestions.length > 0 && (
-          <div className="suggestions">
-            <h5 className="font-medium mb-2 text-green-600">优化建议</h5>
-            <ul className="space-y-1">
-              {analysis.suggestions.map((suggestion, index) => (
-                <li key={index} className="text-sm text-gray-700 flex items-start space-x-2">
-                  <span className="text-green-500 mt-1">•</span>
-                  <span>{suggestion}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+          {/* 关键词分析 */}
+          <AnalysisSection
+            title="🔍 关键词分析"
+            items={analysis.keywordAnalysis}
+            type="keyword"
+          />
+
+          {/* 标题结构分析 */}
+          <AnalysisSection
+            title="📝 标题结构"
+            items={analysis.headingStructure}
+            type="heading"
+          />
+
+          {/* 可读性分析 */}
+          <AnalysisSection
+            title="📖 可读性分析"
+            items={analysis.readability}
+            type="readability"
+          />
+
+          {/* 内容质量 */}
+          <AnalysisSection
+            title="✨ 内容质量"
+            items={analysis.contentQuality}
+            type="quality"
+          />
+
+          {/* 建议 */}
+          {analysis.suggestions.length > 0 && (
+            <div className="suggestions bg-blue-50 rounded-lg p-4 border border-blue-200">
+              <h4 className="font-medium text-blue-900 mb-2">💡 优化建议</h4>
+              <ul className="space-y-1">
+                {analysis.suggestions.map((suggestion, index) => (
+                  <li key={index} className="text-sm text-blue-800 flex items-start">
+                    <span className="text-blue-500 mr-2">•</span>
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      <style jsx>{`
+        .seo-content-analyzer {
+          max-width: 100%;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+      `}</style>
     </div>
-  );
+  )
 }
 
 /**
- * 可读性标签
+ * 分析结果区块组件
  */
-function ReadabilityTab({ analysis }) {
-  if (!analysis || analysis.error) {
-    return <div className="text-red-600">可读性分析失败: {analysis?.error}</div>;
-  }
+function AnalysisSection({ title, items, type }) {
+  if (!items || items.length === 0) return null
 
   return (
-    <div className="readability-tab">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">总词数</h5>
-          <p className="text-2xl font-bold text-blue-600">{analysis.metrics.wordCount}</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">句子数</h5>
-          <p className="text-2xl font-bold text-green-600">{analysis.metrics.sentenceCount}</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">段落数</h5>
-          <p className="text-2xl font-bold text-purple-600">{analysis.metrics.paragraphCount}</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">平均句长</h5>
-          <p className="text-2xl font-bold text-orange-600">{analysis.metrics.averageWordsPerSentence}</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">阅读时间</h5>
-          <p className="text-2xl font-bold text-red-600">{analysis.metrics.readingTime}分钟</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">可读性评分</h5>
-          <p className="text-2xl font-bold text-indigo-600">{Math.round(analysis.metrics.fleschScore)}</p>
-        </div>
+    <div className="analysis-section bg-white rounded-lg p-4 border">
+      <h4 className="font-medium mb-3">{title}</h4>
+      <div className="space-y-2">
+        {items.map((item, index) => (
+          <AnalysisItem key={index} item={item} type={type} />
+        ))}
       </div>
-
-      {analysis.readingLevel && (
-        <div className="reading-level mb-6 p-4 bg-gray-50 rounded-lg">
-          <h5 className="font-medium mb-2">阅读难度等级</h5>
-          <p className="text-lg font-semibold text-blue-600">{analysis.readingLevel.description}</p>
-        </div>
-      )}
-
-      {analysis.recommendations && analysis.recommendations.length > 0 && (
-        <div className="readability-recommendations">
-          <h5 className="font-medium mb-3 text-yellow-600">可读性建议</h5>
-          <div className="space-y-2">
-            {analysis.recommendations.map((rec, index) => (
-              <div key={index} className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <p className="text-sm text-gray-800">{rec.message}</p>
-                <p className="text-xs text-gray-500 mt-1">类型: {rec.type}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
-  );
+  )
 }
 
 /**
- * 内部链接标签
+ * 分析项目组件
  */
-function LinksTab({ analysis }) {
-  if (!analysis || analysis.error) {
-    return <div className="text-red-600">链接分析失败: {analysis?.error}</div>;
+function AnalysisItem({ item, type }) {
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'good': return 'text-green-600 bg-green-50'
+      case 'warning': return 'text-yellow-600 bg-yellow-50'
+      case 'error': return 'text-red-600 bg-red-50'
+      default: return 'text-gray-600 bg-gray-50'
+    }
+  }
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'good': return '✅'
+      case 'warning': return '⚠️'
+      case 'error': return '❌'
+      default: return 'ℹ️'
+    }
   }
 
   return (
-    <div className="links-tab">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">内部链接数</h5>
-          <p className="text-2xl font-bold text-blue-600">{analysis.metrics.totalInternalLinks}</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">链接密度</h5>
-          <p className="text-2xl font-bold text-green-600">{analysis.metrics.linkDensity}%</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">唯一链接</h5>
-          <p className="text-2xl font-bold text-purple-600">{analysis.metrics.uniqueLinks}</p>
-        </div>
-        <div className="metric-card bg-white p-4 rounded-lg border">
-          <h5 className="font-medium text-gray-700">空锚文本</h5>
-          <p className="text-2xl font-bold text-red-600">{analysis.metrics.emptyAnchorTexts}</p>
+    <div className={`flex items-start justify-between p-2 rounded ${getStatusColor(item.status)}`}>
+      <div className="flex items-start flex-1">
+        <span className="mr-2">{getStatusIcon(item.status)}</span>
+        <div>
+          <div className="font-medium text-sm">{item.label}</div>
+          {item.description && (
+            <div className="text-xs opacity-75 mt-1">{item.description}</div>
+          )}
         </div>
       </div>
-
-      {analysis.links && analysis.links.length > 0 && (
-        <div className="links-list mb-6">
-          <h5 className="font-medium mb-3">内部链接列表</h5>
-          <div className="space-y-2 max-h-60 overflow-y-auto">
-            {analysis.links.map((link, index) => (
-              <div key={index} className="link-item p-3 bg-gray-50 rounded-lg">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <p className="font-medium text-blue-600">{link.anchorText || '(空锚文本)'}</p>
-                    <p className="text-sm text-gray-600">{link.href}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {analysis.suggestions && analysis.suggestions.length > 0 && (
-        <div className="link-suggestions mb-6">
-          <h5 className="font-medium mb-3 text-orange-600">链接优化建议</h5>
-          <div className="space-y-2">
-            {analysis.suggestions.map((suggestion, index) => (
-              <div key={index} className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                <p className="text-sm text-gray-800">{suggestion.message}</p>
-                {suggestion.relatedPages && (
-                  <div className="mt-2">
-                    <p className="text-xs text-gray-600 mb-1">推荐相关页面:</p>
-                    <div className="space-y-1">
-                      {suggestion.relatedPages.map((page, pageIndex) => (
-                        <div key={pageIndex} className="text-xs text-blue-600">
-                          {page.title} (相似度: {page.similarity}%)
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {analysis.relatedPages && analysis.relatedPages.length > 0 && (
-        <div className="related-pages">
-          <h5 className="font-medium mb-3 text-green-600">相关页面推荐</h5>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {analysis.relatedPages.slice(0, 6).map((page, index) => (
-              <div key={index} className="related-page p-3 bg-green-50 border border-green-200 rounded-lg">
-                <p className="font-medium text-green-800">{page.title}</p>
-                <p className="text-sm text-green-600">相似度: {page.similarity}%</p>
-                {page.summary && (
-                  <p className="text-xs text-gray-600 mt-1">{page.summary.substring(0, 100)}...</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+      {item.value !== undefined && (
+        <div className="text-sm font-mono ml-2">{item.value}</div>
       )}
     </div>
-  );
+  )
+}
+
+/**
+ * 评分徽章组件
+ */
+function ScoreBadge({ score }) {
+  const getScoreColor = (score) => {
+    if (score >= 80) return 'bg-green-100 text-green-800'
+    if (score >= 60) return 'bg-yellow-100 text-yellow-800'
+    return 'bg-red-100 text-red-800'
+  }
+
+  return (
+    <span className={`px-2 py-1 rounded-full text-sm font-medium ${getScoreColor(score)}`}>
+      {score}/100
+    </span>
+  )
+}
+
+/**
+ * 内容分析器类
+ */
+class ContentAnalyzer {
+  constructor(language = 'zh-CN') {
+    this.language = language
+    this.stopWords = this.getStopWords(language)
+  }
+
+  analyze({ content, title, description, keywords, targetKeyword }) {
+    const analysis = {
+      overallScore: 0,
+      keywordAnalysis: [],
+      headingStructure: [],
+      readability: [],
+      contentQuality: [],
+      suggestions: []
+    }
+
+    // 分析关键词
+    analysis.keywordAnalysis = this.analyzeKeywords(content, title, description, targetKeyword, keywords)
+    
+    // 分析标题结构
+    analysis.headingStructure = this.analyzeHeadingStructure(content)
+    
+    // 分析可读性
+    analysis.readability = this.analyzeReadability(content)
+    
+    // 分析内容质量
+    analysis.contentQuality = this.analyzeContentQuality(content, title, description)
+    
+    // 生成建议
+    analysis.suggestions = this.generateSuggestions(analysis)
+    
+    // 计算总体评分
+    analysis.overallScore = this.calculateOverallScore(analysis)
+
+    return analysis
+  }
+
+  analyzeKeywords(content, title, description, targetKeyword, keywords) {
+    const results = []
+    const fullText = `${title} ${description} ${content}`.toLowerCase()
+    const wordCount = this.getWordCount(content)
+
+    if (targetKeyword) {
+      const density = this.calculateKeywordDensity(fullText, targetKeyword)
+      const inTitle = title.toLowerCase().includes(targetKeyword.toLowerCase())
+      const inDescription = description.toLowerCase().includes(targetKeyword.toLowerCase())
+      
+      results.push({
+        label: `目标关键词: "${targetKeyword}"`,
+        value: `${density.toFixed(1)}%`,
+        status: this.getKeywordDensityStatus(density),
+        description: `在标题中: ${inTitle ? '是' : '否'}, 在描述中: ${inDescription ? '是' : '否'}`
+      })
+    }
+
+    // 分析其他关键词
+    keywords.forEach(keyword => {
+      if (keyword !== targetKeyword) {
+        const density = this.calculateKeywordDensity(fullText, keyword)
+        results.push({
+          label: `关键词: "${keyword}"`,
+          value: `${density.toFixed(1)}%`,
+          status: this.getKeywordDensityStatus(density),
+          description: `出现频率分析`
+        })
+      }
+    })
+
+    // 关键词分布分析
+    if (wordCount > 0) {
+      results.push({
+        label: '内容长度',
+        value: `${wordCount} 字`,
+        status: wordCount >= 300 ? 'good' : wordCount >= 150 ? 'warning' : 'error',
+        description: '建议文章长度至少300字'
+      })
+    }
+
+    return results
+  }
+
+  analyzeHeadingStructure(content) {
+    const results = []
+    const headings = this.extractHeadings(content)
+    
+    // 检查H1标签
+    const h1Count = headings.filter(h => h.level === 1).length
+    results.push({
+      label: 'H1标题',
+      value: `${h1Count} 个`,
+      status: h1Count === 1 ? 'good' : h1Count === 0 ? 'error' : 'warning',
+      description: h1Count === 1 ? '正确使用一个H1标题' : 
+                   h1Count === 0 ? '缺少H1标题' : '存在多个H1标题'
+    })
+
+    // 检查标题层级
+    const hasProperHierarchy = this.checkHeadingHierarchy(headings)
+    results.push({
+      label: '标题层级',
+      status: hasProperHierarchy ? 'good' : 'warning',
+      description: hasProperHierarchy ? '标题层级结构合理' : '标题层级可能存在跳跃'
+    })
+
+    // 标题数量
+    const totalHeadings = headings.length
+    results.push({
+      label: '标题总数',
+      value: `${totalHeadings} 个`,
+      status: totalHeadings >= 3 ? 'good' : totalHeadings >= 1 ? 'warning' : 'error',
+      description: '适当的标题数量有助于内容结构化'
+    })
+
+    return results
+  }
+
+  analyzeReadability(content) {
+    const results = []
+    const sentences = this.getSentences(content)
+    const words = this.getWords(content)
+    const paragraphs = this.getParagraphs(content)
+
+    // 平均句子长度
+    const avgSentenceLength = words.length / sentences.length || 0
+    results.push({
+      label: '平均句子长度',
+      value: `${avgSentenceLength.toFixed(1)} 字`,
+      status: avgSentenceLength <= 20 ? 'good' : avgSentenceLength <= 30 ? 'warning' : 'error',
+      description: '建议句子长度控制在20字以内'
+    })
+
+    // 段落长度
+    const avgParagraphLength = words.length / paragraphs.length || 0
+    results.push({
+      label: '平均段落长度',
+      value: `${avgParagraphLength.toFixed(0)} 字`,
+      status: avgParagraphLength <= 150 ? 'good' : avgParagraphLength <= 250 ? 'warning' : 'error',
+      description: '建议段落长度控制在150字以内'
+    })
+
+    // 可读性评分（简化版）
+    const readabilityScore = this.calculateReadabilityScore(content)
+    results.push({
+      label: '可读性评分',
+      value: `${readabilityScore}/100`,
+      status: readabilityScore >= 70 ? 'good' : readabilityScore >= 50 ? 'warning' : 'error',
+      description: '基于句子长度和词汇复杂度的评分'
+    })
+
+    return results
+  }
+
+  analyzeContentQuality(content, title, description) {
+    const results = []
+
+    // 标题长度
+    const titleLength = title.length
+    results.push({
+      label: '标题长度',
+      value: `${titleLength} 字符`,
+      status: titleLength >= 30 && titleLength <= 60 ? 'good' : 
+              titleLength >= 20 && titleLength <= 80 ? 'warning' : 'error',
+      description: '建议标题长度30-60字符'
+    })
+
+    // 描述长度
+    const descLength = description.length
+    results.push({
+      label: '描述长度',
+      value: `${descLength} 字符`,
+      status: descLength >= 120 && descLength <= 160 ? 'good' : 
+              descLength >= 80 && descLength <= 200 ? 'warning' : 'error',
+      description: '建议描述长度120-160字符'
+    })
+
+    // 内容原创性（简单检查）
+    const uniqueWords = new Set(this.getWords(content.toLowerCase())).size
+    const totalWords = this.getWords(content).length
+    const uniqueRatio = uniqueWords / totalWords || 0
+    
+    results.push({
+      label: '词汇丰富度',
+      value: `${(uniqueRatio * 100).toFixed(1)}%`,
+      status: uniqueRatio >= 0.6 ? 'good' : uniqueRatio >= 0.4 ? 'warning' : 'error',
+      description: '词汇多样性反映内容丰富程度'
+    })
+
+    // 内部链接检查
+    const internalLinks = (content.match(/\[.*?\]\((?!http)/g) || []).length
+    results.push({
+      label: '内部链接',
+      value: `${internalLinks} 个`,
+      status: internalLinks >= 2 ? 'good' : internalLinks >= 1 ? 'warning' : 'error',
+      description: '适当的内部链接有助于SEO'
+    })
+
+    return results
+  }
+
+  generateSuggestions(analysis) {
+    const suggestions = []
+
+    // 基于分析结果生成建议
+    analysis.keywordAnalysis.forEach(item => {
+      if (item.status === 'error' && item.label.includes('目标关键词')) {
+        suggestions.push('增加目标关键词在内容中的使用频率')
+      }
+    })
+
+    analysis.headingStructure.forEach(item => {
+      if (item.status === 'error' && item.label === 'H1标题') {
+        suggestions.push('添加一个H1标题来明确文章主题')
+      }
+    })
+
+    analysis.readability.forEach(item => {
+      if (item.status === 'error' && item.label === '平均句子长度') {
+        suggestions.push('缩短句子长度，提高内容可读性')
+      }
+    })
+
+    analysis.contentQuality.forEach(item => {
+      if (item.status === 'error' && item.label === '内部链接') {
+        suggestions.push('添加相关的内部链接，提升页面权重')
+      }
+    })
+
+    return suggestions
+  }
+
+  calculateOverallScore(analysis) {
+    let totalScore = 0
+    let totalItems = 0
+
+    const sections = [analysis.keywordAnalysis, analysis.headingStructure, analysis.readability, analysis.contentQuality]
+    
+    sections.forEach(section => {
+      section.forEach(item => {
+        totalItems++
+        switch (item.status) {
+          case 'good': totalScore += 100; break
+          case 'warning': totalScore += 60; break
+          case 'error': totalScore += 20; break
+          default: totalScore += 50; break
+        }
+      })
+    })
+
+    return totalItems > 0 ? Math.round(totalScore / totalItems) : 0
+  }
+
+  // 辅助方法
+  calculateKeywordDensity(text, keyword) {
+    const keywordCount = (text.match(new RegExp(keyword.toLowerCase(), 'g')) || []).length
+    const totalWords = this.getWords(text).length
+    return totalWords > 0 ? (keywordCount / totalWords) * 100 : 0
+  }
+
+  getKeywordDensityStatus(density) {
+    if (density >= 1 && density <= 3) return 'good'
+    if (density >= 0.5 && density <= 5) return 'warning'
+    return 'error'
+  }
+
+  extractHeadings(content) {
+    const headingRegex = /^(#{1,6})\s+(.+)$/gm
+    const headings = []
+    let match
+
+    while ((match = headingRegex.exec(content)) !== null) {
+      headings.push({
+        level: match[1].length,
+        text: match[2].trim()
+      })
+    }
+
+    return headings
+  }
+
+  checkHeadingHierarchy(headings) {
+    for (let i = 1; i < headings.length; i++) {
+      const prevLevel = headings[i - 1].level
+      const currentLevel = headings[i].level
+      
+      // 检查是否跳跃了层级（如从H1直接到H3）
+      if (currentLevel > prevLevel + 1) {
+        return false
+      }
+    }
+    return true
+  }
+
+  getWordCount(text) {
+    return this.getWords(text).length
+  }
+
+  getWords(text) {
+    return text.match(/[\u4e00-\u9fa5]|\b\w+\b/g) || []
+  }
+
+  getSentences(text) {
+    return text.split(/[。！？.!?]+/).filter(s => s.trim().length > 0)
+  }
+
+  getParagraphs(text) {
+    return text.split(/\n\s*\n/).filter(p => p.trim().length > 0)
+  }
+
+  calculateReadabilityScore(content) {
+    const sentences = this.getSentences(content)
+    const words = this.getWords(content)
+    const avgSentenceLength = words.length / sentences.length || 0
+    
+    // 简化的可读性评分
+    let score = 100
+    if (avgSentenceLength > 20) score -= (avgSentenceLength - 20) * 2
+    if (avgSentenceLength > 30) score -= (avgSentenceLength - 30) * 3
+    
+    return Math.max(0, Math.min(100, Math.round(score)))
+  }
+
+  getStopWords(language) {
+    const stopWords = {
+      'zh-CN': ['的', '了', '在', '是', '我', '有', '和', '就', '不', '人', '都', '一', '一个', '上', '也', '很', '到', '说', '要', '去', '你', '会', '着', '没有', '看', '好', '自己', '这'],
+      'en-US': ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should']
+    }
+    return stopWords[language] || stopWords['en-US']
+  }
 }

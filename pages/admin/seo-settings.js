@@ -1,367 +1,373 @@
-import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
+import { useState, useEffect } from 'react'
+import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
 
 /**
- * SEO设置管理页面
- * 提供SEO配置选项和设置管理功能
+ * SEO设置和测试管理页面
  */
 export default function SEOSettings() {
-  const [settings, setSettings] = useState({
-    siteName: '',
-    siteDescription: '',
-    siteUrl: '',
-    defaultKeywords: '',
-    enableStructuredData: true,
-    enableBreadcrumbs: true,
-    enableSitemap: true,
-    enableRobotsTxt: true,
-    googleAnalyticsId: '',
-    googleSearchConsoleId: '',
-    bingWebmasterToolsId: '',
-    socialMedia: {
-      twitter: '',
-      facebook: '',
-      linkedin: '',
-      instagram: ''
-    }
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [testSuites, setTestSuites] = useState([])
+  const [testResults, setTestResults] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [testUrl, setTestUrl] = useState('')
+  const [selectedSuites, setSelectedSuites] = useState([])
+  const [testOptions, setTestOptions] = useState({
+    enablePerformanceTests: true,
+    enableAccessibilityTests: true,
+    enableStructuredDataTests: true
+  })
 
   useEffect(() => {
-    // 加载现有设置
-    loadSettings();
-  }, []);
+    fetchTestSuites()
+    setTestUrl(siteConfig('LINK', BLOG.LINK))
+  }, [])
 
-  const loadSettings = async () => {
+  const fetchTestSuites = async () => {
     try {
-      // 这里应该从API或配置文件加载设置
-      // 暂时使用默认值
-      setSettings(prev => ({
-        ...prev,
-        siteName: 'NotionNext博客',
-        siteDescription: '基于Notion的现代化博客系统',
-        siteUrl: 'https://example.com'
-      }));
-    } catch (error) {
-      console.error('加载设置失败:', error);
-    }
-  };
-
-  const handleSave = async () => {
-    setLoading(true);
-    setSaved(false);
-    
-    try {
-      // 这里应该保存设置到API或配置文件
-      await new Promise(resolve => setTimeout(resolve, 1000)); // 模拟保存
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
-    } catch (error) {
-      console.error('保存设置失败:', error);
-      alert('保存失败，请重试');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleInputChange = (field, value) => {
-    setSettings(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleSocialMediaChange = (platform, value) => {
-    setSettings(prev => ({
-      ...prev,
-      socialMedia: {
-        ...prev.socialMedia,
-        [platform]: value
+      const response = await fetch('/api/admin/seo-test')
+      const data = await response.json()
+      
+      if (data.success) {
+        setTestSuites(data.testSuites)
       }
-    }));
-  };
+    } catch (error) {
+      console.error('Error fetching test suites:', error)
+    }
+  }
+
+  const runTests = async () => {
+    if (!testUrl) {
+      alert('请输入测试URL')
+      return
+    }
+
+    setLoading(true)
+    setTestResults(null)
+
+    try {
+      const response = await fetch('/api/admin/seo-test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          url: testUrl,
+          testSuites: selectedSuites,
+          options: testOptions
+        })
+      })
+
+      const data = await response.json()
+      
+      if (data.success) {
+        setTestResults(data.results)
+      } else {
+        alert('测试失败：' + data.error)
+      }
+    } catch (error) {
+      alert('测试失败：' + error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const toggleTestSuite = (suiteId) => {
+    setSelectedSuites(prev => 
+      prev.includes(suiteId) 
+        ? prev.filter(id => id !== suiteId)
+        : [...prev, suiteId]
+    )
+  }
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'PASS':
+        return 'text-green-600 bg-green-100'
+      case 'FAIL':
+        return 'text-red-600 bg-red-100'
+      case 'WARN':
+        return 'text-yellow-600 bg-yellow-100'
+      case 'INFO':
+        return 'text-blue-600 bg-blue-100'
+      case 'ERROR':
+        return 'text-purple-600 bg-purple-100'
+      default:
+        return 'text-gray-600 bg-gray-100'
+    }
+  }
+
+  const getScoreColor = (score) => {
+    if (score >= 90) return 'text-green-600'
+    if (score >= 70) return 'text-yellow-600'
+    return 'text-red-600'
+  }
 
   return (
-    <>
-      <Head>
-        <title>SEO设置 - NotionNext</title>
-        <meta name="description" content="配置网站SEO设置和优化选项" />
-        <meta name="robots" content="noindex, nofollow" />
-      </Head>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        {/* 页面标题 */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            SEO测试套件
+          </h1>
+          <p className="text-gray-600">
+            全面测试网站的SEO优化状况，包括meta标签、结构化数据、性能等
+          </p>
+        </div>
 
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          {/* 页面标题 */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">SEO设置</h1>
-            <p className="mt-2 text-gray-600">配置网站的SEO优化选项和参数</p>
+        {/* 测试配置 */}
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+          <h2 className="text-lg font-semibold mb-4">测试配置</h2>
+          
+          {/* URL输入 */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              测试URL
+            </label>
+            <input
+              type="url"
+              value={testUrl}
+              onChange={(e) => setTestUrl(e.target.value)}
+              placeholder="https://example.com"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
 
-          <div className="space-y-8">
-            {/* 基本设置 */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-6">🌐 基本设置</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    网站名称
-                  </label>
+          {/* 测试套件选择 */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              测试套件 (留空则运行所有测试)
+            </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {testSuites.map((suite) => (
+                <label key={suite.id} className="flex items-center">
                   <input
-                    type="text"
-                    value={settings.siteName}
-                    onChange={(e) => handleInputChange('siteName', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="输入网站名称"
+                    type="checkbox"
+                    checked={selectedSuites.includes(suite.id)}
+                    onChange={() => toggleTestSuite(suite.id)}
+                    className="mr-2"
                   />
+                  <span className="text-sm">
+                    {suite.name} ({suite.testCount}项测试)
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* 测试选项 */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              测试选项
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={testOptions.enablePerformanceTests}
+                  onChange={(e) => setTestOptions({
+                    ...testOptions,
+                    enablePerformanceTests: e.target.checked
+                  })}
+                  className="mr-2"
+                />
+                <span className="text-sm">启用性能测试</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={testOptions.enableAccessibilityTests}
+                  onChange={(e) => setTestOptions({
+                    ...testOptions,
+                    enableAccessibilityTests: e.target.checked
+                  })}
+                  className="mr-2"
+                />
+                <span className="text-sm">启用可访问性测试</span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={testOptions.enableStructuredDataTests}
+                  onChange={(e) => setTestOptions({
+                    ...testOptions,
+                    enableStructuredDataTests: e.target.checked
+                  })}
+                  className="mr-2"
+                />
+                <span className="text-sm">启用结构化数据测试</span>
+              </label>
+            </div>
+          </div>
+
+          {/* 运行测试按钮 */}
+          <button
+            onClick={runTests}
+            disabled={loading}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          >
+            {loading ? '测试中...' : '运行SEO测试'}
+          </button>
+        </div>
+
+        {/* 测试结果 */}
+        {testResults && (
+          <div className="space-y-6">
+            {/* 测试摘要 */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-lg font-semibold mb-4">测试摘要</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div className="text-center">
+                  <div className={`text-2xl font-bold ${getScoreColor(testResults.summary.score)}`}>
+                    {testResults.summary.score}
+                  </div>
+                  <div className="text-sm text-gray-600">SEO得分</div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    网站URL
-                  </label>
-                  <input
-                    type="url"
-                    value={settings.siteUrl}
-                    onChange={(e) => handleInputChange('siteUrl', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="https://example.com"
-                  />
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-gray-900">
+                    {testResults.totalTests}
+                  </div>
+                  <div className="text-sm text-gray-600">总测试数</div>
                 </div>
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    网站描述
-                  </label>
-                  <textarea
-                    value={settings.siteDescription}
-                    onChange={(e) => handleInputChange('siteDescription', e.target.value)}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="输入网站描述，用于meta description"
-                  />
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-600">
+                    {testResults.passedTests}
+                  </div>
+                  <div className="text-sm text-gray-600">通过</div>
                 </div>
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    默认关键词
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.defaultKeywords}
-                    onChange={(e) => handleInputChange('defaultKeywords', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="关键词1, 关键词2, 关键词3"
-                  />
-                  <p className="text-sm text-gray-500 mt-1">用逗号分隔多个关键词</p>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-red-600">
+                    {testResults.failedTests}
+                  </div>
+                  <div className="text-sm text-gray-600">失败</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-yellow-600">
+                    {testResults.warningTests}
+                  </div>
+                  <div className="text-sm text-gray-600">警告</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-gray-600">
+                    {Math.round(testResults.executionTime / 1000)}s
+                  </div>
+                  <div className="text-sm text-gray-600">执行时间</div>
                 </div>
               </div>
             </div>
 
-            {/* SEO功能开关 */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-6">⚙️ SEO功能</h2>
+            {/* 详细测试结果 */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="text-lg font-semibold">详细测试结果</h2>
+              </div>
+              
+              <div className="divide-y divide-gray-200">
+                {testResults.results.map((result, index) => (
+                  <div key={index} className="px-6 py-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <h3 className="font-medium text-gray-900 capitalize">
+                          {result.test.replace(/-/g, ' ')}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {result.message}
+                        </p>
+                        {result.details && (
+                          <div className="text-xs text-gray-500 mt-2 bg-gray-50 p-2 rounded">
+                            {typeof result.details === 'object' 
+                              ? JSON.stringify(result.details, null, 2)
+                              : result.details
+                            }
+                          </div>
+                        )}
+                      </div>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ml-4 ${getStatusColor(result.status)}`}>
+                        {result.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 优化建议 */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-lg font-semibold mb-4">优化建议</h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-900">结构化数据</h3>
-                    <p className="text-sm text-gray-500">为页面添加JSON-LD结构化数据</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.enableStructuredData}
-                      onChange={(e) => handleInputChange('enableStructuredData', e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-900">面包屑导航</h3>
-                    <p className="text-sm text-gray-500">显示页面层级导航</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.enableBreadcrumbs}
-                      onChange={(e) => handleInputChange('enableBreadcrumbs', e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-900">XML Sitemap</h3>
-                    <p className="text-sm text-gray-500">自动生成网站地图</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.enableSitemap}
-                      onChange={(e) => handleInputChange('enableSitemap', e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-900">Robots.txt</h3>
-                    <p className="text-sm text-gray-500">生成搜索引擎爬虫指令文件</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.enableRobotsTxt}
-                      onChange={(e) => handleInputChange('enableRobotsTxt', e.target.checked)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                  </label>
-                </div>
+                {testResults.results
+                  .filter(result => result.status === 'FAIL' || result.status === 'WARN')
+                  .map((result, index) => (
+                    <div key={index} className="border-l-4 border-yellow-400 pl-4">
+                      <h3 className="font-medium text-gray-900 capitalize">
+                        {result.test.replace(/-/g, ' ')}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {result.message}
+                      </p>
+                      <div className="text-sm text-blue-600 mt-1">
+                        {getOptimizationSuggestion(result.test, result.status)}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
+          </div>
+        )}
 
-            {/* 搜索引擎工具 */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-6">🔍 搜索引擎工具</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Google Analytics ID
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.googleAnalyticsId}
-                    onChange={(e) => handleInputChange('googleAnalyticsId', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="G-XXXXXXXXXX"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Google Search Console
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.googleSearchConsoleId}
-                    onChange={(e) => handleInputChange('googleSearchConsoleId', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="验证代码"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Bing Webmaster Tools
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.bingWebmasterToolsId}
-                    onChange={(e) => handleInputChange('bingWebmasterToolsId', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="验证代码"
-                  />
-                </div>
+        {/* 测试套件说明 */}
+        <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
+          <h2 className="text-lg font-semibold mb-4">测试套件说明</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {testSuites.map((suite) => (
+              <div key={suite.id} className="border border-gray-200 rounded-lg p-4">
+                <h3 className="font-medium text-gray-900 mb-2">{suite.name}</h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  包含 {suite.testCount} 项测试
+                </p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {suite.tests.slice(0, 5).map((test, index) => (
+                    <li key={index} className="capitalize">
+                      • {test.replace(/([A-Z])/g, ' $1').toLowerCase()}
+                    </li>
+                  ))}
+                  {suite.tests.length > 5 && (
+                    <li className="text-gray-500">
+                      ... 还有 {suite.tests.length - 5} 项测试
+                    </li>
+                  )}
+                </ul>
               </div>
-            </div>
-
-            {/* 社交媒体设置 */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-6">📱 社交媒体</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Twitter
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.socialMedia.twitter}
-                    onChange={(e) => handleSocialMediaChange('twitter', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="@username"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Facebook
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.socialMedia.facebook}
-                    onChange={(e) => handleSocialMediaChange('facebook', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="页面URL"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    LinkedIn
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.socialMedia.linkedin}
-                    onChange={(e) => handleSocialMediaChange('linkedin', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="公司页面URL"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Instagram
-                  </label>
-                  <input
-                    type="text"
-                    value={settings.socialMedia.instagram}
-                    onChange={(e) => handleSocialMediaChange('instagram', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="@username"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* 保存按钮 */}
-            <div className="flex justify-end">
-              <button
-                onClick={handleSave}
-                disabled={loading}
-                className={`px-6 py-3 rounded-lg font-medium ${
-                  loading
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : saved
-                    ? 'bg-green-600 hover:bg-green-700'
-                    : 'bg-blue-600 hover:bg-blue-700'
-                } text-white transition-colors`}
-              >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2 inline-block"></div>
-                    保存中...
-                  </>
-                ) : saved ? (
-                  <>
-                    ✅ 已保存
-                  </>
-                ) : (
-                  '💾 保存设置'
-                )}
-              </button>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-    </>
-  );
+    </div>
+  )
 }
 
-// 静态生成页面
-export async function getStaticProps() {
-  return {
-    props: {},
-    revalidate: 3600 // 1小时重新验证
-  };
+/**
+ * 获取优化建议
+ */
+function getOptimizationSuggestion(testName, status) {
+  const suggestions = {
+    'title': '确保每个页面都有唯一且描述性的标题，长度控制在50-60字符',
+    'meta-description': '为每个页面添加独特的meta描述，长度控制在120-160字符',
+    'meta-keywords': '现代SEO中meta keywords不是必需的，可以移除或保持简洁',
+    'canonical': '为每个页面设置canonical URL以避免重复内容问题',
+    'open-graph': '添加Open Graph标签以优化社交媒体分享效果',
+    'twitter-card': '添加Twitter Card标签以优化Twitter分享效果',
+    'json-ld': '添加JSON-LD结构化数据以帮助搜索引擎理解页面内容',
+    'article-schema': '为文章页面添加Article结构化数据',
+    'website-schema': '为网站添加WebSite结构化数据',
+    'page-load-time': '优化页面加载速度，压缩资源，使用CDN',
+    'image-optimization': '优化图片格式和大小，使用WebP/AVIF格式',
+    'https': '启用HTTPS以提高安全性和SEO排名',
+    'robots-txt': '检查robots.txt文件配置，确保不会阻止重要页面',
+    'sitemap': '创建并提交XML sitemap到搜索引擎',
+    'heading-structure': '使用合理的标题层级结构，每页只有一个H1',
+    'content-length': '确保页面有足够的高质量内容'
+  }
+
+  return suggestions[testName] || '请查看具体测试结果并进行相应优化'
 }

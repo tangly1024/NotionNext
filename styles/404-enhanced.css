@@ -1,0 +1,168 @@
+/* 增强404页面样式 */
+.enhanced-404-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+}
+
+.enhanced-404-page .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* 404数字动画 */
+.enhanced-404-page .text-9xl {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* 搜索框样式 */
+.enhanced-404-page input[type="search"] {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.enhanced-404-page input[type="search"]:focus {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* 内容卡片样式 */
+.enhanced-404-page .bg-white {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.enhanced-404-page .bg-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* 快速导航卡片 */
+.enhanced-404-page .bg-blue-50,
+.enhanced-404-page .bg-green-50,
+.enhanced-404-page .bg-purple-50,
+.enhanced-404-page .bg-orange-50 {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.enhanced-404-page .bg-blue-50:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(102, 126, 234, 0.2);
+}
+
+.enhanced-404-page .bg-green-50:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(34, 197, 94, 0.2);
+}
+
+.enhanced-404-page .bg-purple-50:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(147, 51, 234, 0.2);
+}
+
+.enhanced-404-page .bg-orange-50:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(249, 115, 22, 0.2);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .enhanced-404-page .text-9xl {
+    font-size: 6rem;
+  }
+  
+  .enhanced-404-page .text-4xl {
+    font-size: 2rem;
+  }
+  
+  .enhanced-404-page .text-xl {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .enhanced-404-page .text-9xl {
+    font-size: 4rem;
+  }
+  
+  .enhanced-404-page .text-4xl {
+    font-size: 1.5rem;
+  }
+  
+  .enhanced-404-page .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* 加载状态 */
+.enhanced-404-page button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 内容类型标签 */
+.enhanced-404-page .inline-block {
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+/* 链接悬停效果 */
+.enhanced-404-page a {
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.enhanced-404-page a:hover {
+  text-decoration: none;
+}
+
+/* 背景装饰 */
+.enhanced-404-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 滚动条样式 */
+.enhanced-404-page::-webkit-scrollbar {
+  width: 8px;
+}
+
+.enhanced-404-page::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.enhanced-404-page::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.enhanced-404-page::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}

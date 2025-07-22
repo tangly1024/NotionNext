@@ -3,152 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO内容分析工具测试页面</title>
+    <title>SEO功能快速验证</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
-        h2 { color: #34495e; margin-top: 30px; }
-        h3 { color: #7f8c8d; }
-        .highlight { background-color: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
-        .code { background-color: #f8f9fa; padding: 15px; border-radius: 4px; font-family: monospace; }
-        .link-example { color: #3498db; text-decoration: none; }
-        .link-example:hover { text-decoration: underline; }
-        .stats { display: flex; justify-content: space-between; margin: 20px 0; }
-        .stat { text-align: center; padding: 10px; background: #ecf0f1; border-radius: 4px; }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-item { margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .warning { background: #fff3cd; border-color: #ffeaa7; }
+        button { background: #007cba; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #005a87; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>SEO内容分析工具完整测试页面</h1>
-        
-        <p>这是一个专门用于测试SEO内容分析工具的示例页面。本页面包含了各种SEO元素，用于验证分析工具的功能是否正常工作。SEO优化是网站成功的关键因素之一。</p>
+    <h1>🔍 SEO功能快速验证</h1>
+    
+    <div class="test-item">
+        <h3>1. 基础文件检查</h3>
+        <button onclick="checkBasicFiles()">检查基础文件</button>
+        <div id="basic-files-result"></div>
+    </div>
 
-        <div class="highlight">
-            <strong>重要提示：</strong>这个页面故意包含了一些SEO问题，用于测试分析工具的检测能力。在实际使用中，应该避免这些问题。
-        </div>
+    <div class="test-item">
+        <h3>2. API接口检查</h3>
+        <button onclick="checkAPIs()">检查API接口</button>
+        <div id="api-result"></div>
+    </div>
 
-        <h2>关键词密度测试</h2>
-        <p>SEO优化需要合理的关键词密度。SEO工具可以帮助分析关键词在内容中的分布情况。过度使用SEO关键词可能被搜索引擎视为关键词堆砌，这对SEO排名是不利的。因此，SEO专家建议将SEO关键词密度控制在合理范围内。</p>
+    <div class="test-item">
+        <h3>3. 页面SEO元素检查</h3>
+        <button onclick="checkPageSEO()">检查页面SEO</button>
+        <div id="page-seo-result"></div>
+    </div>
 
-        <h2>标题层级结构测试</h2>
-        <p>正确的标题层级对SEO非常重要。以下是一些标题层级的示例：</p>
+    <div class="test-item">
+        <h3>4. 配置检查</h3>
+        <button onclick="checkConfig()">检查配置</button>
+        <div id="config-result"></div>
+    </div>
 
-        <h3>这是一个H3标题</h3>
-        <p>H3标题应该在H2标题之后使用，这样可以保持良好的层级结构。</p>
-
-        <h4>这是一个H4标题</h4>
-        <p>H4标题进一步细分内容，帮助搜索引擎理解内容结构。</p>
-
-        <!-- 故意的标题层级跳跃问题 -->
-        <h6>这是一个跳级的H6标题</h6>
-        <p>这个H6标题直接跟在H4后面，违反了标题层级规则，SEO分析工具应该能检测到这个问题。</p>
-
-        <h2>可读性测试内容</h2>
-        <p>这是一个测试可读性的段落。句子长度适中。内容清晰易懂。用词简单明了。</p>
-        
-        <p>这是一个故意写得很长很复杂的句子，包含了许多从句和复杂的词汇，目的是测试可读性分析工具是否能够检测出句子过长的问题，并给出相应的优化建议，这样的句子在实际写作中应该避免，因为它会降低内容的可读性，影响用户体验和SEO效果。</p>
-
-        <p>短句。简洁。清晰。</p>
-
-        <h2>内部链接测试</h2>
-        <p>内部链接对SEO很重要。以下是一些内部链接的示例：</p>
-        
-        <ul>
-            <li><a href="/seo-guide" class="link-example">SEO优化指南</a> - 详细的SEO优化教程</li>
-            <li><a href="/keyword-research" class="link-example">关键词研究方法</a> - 如何进行有效的关键词研究</li>
-            <li><a href="/content-optimization" class="link-example">内容优化技巧</a> - 提高内容质量的方法</li>
-            <li><a href="/link-building" class="link-example">链接建设策略</a> - 建立高质量外链的技巧</li>
-        </ul>
-
-        <p>这里有一个<a href="/empty-anchor" class="link-example"></a>空锚文本链接，SEO分析工具应该能检测到这个问题。</p>
-
-        <p>还有一个<a href="/click-here" class="link-example">点击这里</a>的非描述性链接，这也不是好的SEO实践。</p>
-
-        <h2>内容质量测试</h2>
-        <p>高质量的内容是SEO成功的基础。内容应该：</p>
-        
-        <ul>
-            <li>提供有价值的信息</li>
-            <li>满足用户搜索意图</li>
-            <li>结构清晰，易于阅读</li>
-            <li>包含相关的关键词</li>
-            <li>定期更新和维护</li>
-        </ul>
-
-        <h3>复杂词汇测试</h3>
-        <p>这个段落包含一些复杂的词汇，如：sophisticated（复杂的）、comprehensive（全面的）、optimization（优化）、implementation（实施）、methodology（方法论）。可读性分析工具应该能识别这些复杂词汇。</p>
-
-        <h2>统计信息</h2>
-        <div class="stats">
-            <div class="stat">
-                <strong>预估词数</strong><br>
-                约400词
-            </div>
-            <div class="stat">
-                <strong>预估阅读时间</strong><br>
-                2-3分钟
-            </div>
-            <div class="stat">
-                <strong>标题数量</strong><br>
-                8个标题
-            </div>
-            <div class="stat">
-                <strong>内部链接</strong><br>
-                6个链接
-            </div>
-        </div>
-
-        <h2>测试用代码示例</h2>
-        <div class="code">
-            // JavaScript代码示例
-            function analyzeSEO(content) {
-                const analyzer = new SEOContentAnalyzer();
-                return analyzer.analyzeContent({
-                    content: content,
-                    keywords: ['SEO', '优化', '搜索引擎'],
-                    currentUrl: window.location.href
-                });
-            }
-        </div>
-
-        <h2>结论</h2>
-        <p>这个测试页面包含了各种SEO元素和一些故意的问题，用于全面测试SEO内容分析工具的功能。通过分析这个页面，可以验证工具是否能够：</p>
-        
-        <ol>
-            <li>正确计算关键词密度</li>
-            <li>检测标题层级问题</li>
-            <li>评估内容可读性</li>
-            <li>分析内部链接质量</li>
-            <li>提供有用的优化建议</li>
-        </ol>
-
-        <div class="highlight">
-            <strong>注意：</strong>在实际的SEO优化中，应该避免本页面中故意包含的问题，如关键词过度使用、标题层级跳跃、空锚文本等。
-        </div>
-
-        <p>最后，记住SEO是一个持续的过程，需要不断地监控、分析和优化。使用专业的SEO分析工具可以帮助你更好地理解和改进网站的搜索引擎表现。</p>
+    <div class="test-item">
+        <h3>5. 运行完整验证</h3>
+        <button onclick="runFullVerification()" style="background: #28a745;">🚀 完整验证</button>
+        <div id="full-result"></div>
     </div>
 
     <script>
-        // 简单的页面加载统计
+        // 检查基础文件
+        async function checkBasicFiles() {
+            const resultDiv = document.getElementById('basic-files-result');
+            resultDiv.innerHTML = '<p>正在检查...</p>';
+            
+            const files = [
+                { url: '/robots.txt', name: 'robots.txt' },
+                { url: '/sitemap.xml', name: 'sitemap.xml' },
+                { url: '/favicon.ico', name: 'favicon.ico' }
+            ];
+            
+            let results = '<h4>基础文件检查结果:</h4>';
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(file.url, { method: 'HEAD' });
+                    const status = response.ok ? '✅' : '❌';
+                    results += `<p>${status} ${file.name}: ${response.status}</p>`;
+                } catch (error) {
+                    results += `<p>❌ ${file.name}: 连接失败</p>`;
+                }
+            }
+            
+            resultDiv.innerHTML = results;
+            resultDiv.className = 'success';
+        }
+
+        // 检查API接口
+        async function checkAPIs() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = '<p>正在检查API...</p>';
+            
+            const apis = [
+                { url: '/api/admin/seo-test', name: 'SEO测试API' },
+                { url: '/api/seo/keyword-ranking?action=stats', name: '关键词排名API' },
+                { url: '/api/seo/search-engine-submission', name: '搜索引擎提交API' },
+                { url: '/api/seo/404-report', name: '404监控API' },
+                { url: '/api/analytics/web-vitals', name: 'Web Vitals API' }
+            ];
+            
+            let results = '<h4>API接口检查结果:</h4>';
+            
+            for (const api of apis) {
+                try {
+                    const response = await fetch(api.url);
+                    const status = response.ok ? '✅' : '❌';
+                    results += `<p>${status} ${api.name}: ${response.status}</p>`;
+                } catch (error) {
+                    results += `<p>❌ ${api.name}: 连接失败</p>`;
+                }
+            }
+            
+            resultDiv.innerHTML = results;
+            resultDiv.className = 'warning';
+        }
+
+        // 检查页面SEO元素
+        function checkPageSEO() {
+            const resultDiv = document.getElementById('page-seo-result');
+            
+            let results = '<h4>页面SEO元素检查:</h4>';
+            
+            // 检查基础元素
+            const title = document.title;
+            const metaDesc = document.querySelector('meta[name="description"]');
+            const canonical = document.querySelector('link[rel="canonical"]');
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            const jsonLd = document.querySelectorAll('script[type="application/ld+json"]');
+            
+            results += `<p>✅ 页面标题: ${title}</p>`;
+            results += `<p>${metaDesc ? '✅' : '❌'} Meta描述: ${metaDesc ? '已设置' : '未设置'}</p>`;
+            results += `<p>${canonical ? '✅' : '❌'} Canonical URL: ${canonical ? '已设置' : '未设置'}</p>`;
+            results += `<p>${ogTitle ? '✅' : '❌'} Open Graph: ${ogTitle ? '已设置' : '未设置'}</p>`;
+            results += `<p>${jsonLd.length > 0 ? '✅' : '❌'} 结构化数据: ${jsonLd.length} 个</p>`;
+            
+            resultDiv.innerHTML = results;
+            resultDiv.className = 'success';
+        }
+
+        // 检查配置
+        function checkConfig() {
+            const resultDiv = document.getElementById('config-result');
+            
+            let results = '<h4>配置检查结果:</h4>';
+            results += '<p>ℹ️ 配置检查需要在服务器端进行</p>';
+            results += '<p>请检查 blog.config.js 中的SEO相关配置</p>';
+            
+            // 检查一些客户端可以检测的配置效果
+            const hasPreload = document.querySelectorAll('link[rel="preload"]').length > 0;
+            const hasLazyImages = document.querySelectorAll('img[loading="lazy"]').length > 0;
+            
+            results += `<p>${hasPreload ? '✅' : '❌'} 资源预加载: ${hasPreload ? '已启用' : '未检测到'}</p>`;
+            results += `<p>${hasLazyImages ? '✅' : '❌'} 图片懒加载: ${hasLazyImages ? '已启用' : '未检测到'}</p>`;
+            
+            resultDiv.innerHTML = results;
+            resultDiv.className = 'warning';
+        }
+
+        // 运行完整验证
+        async function runFullVerification() {
+            const resultDiv = document.getElementById('full-result');
+            resultDiv.innerHTML = '<p>正在运行完整验证...</p>';
+            
+            // 依次运行所有检查
+            await checkBasicFiles();
+            await checkAPIs();
+            checkPageSEO();
+            checkConfig();
+            
+            let summary = '<h4>🎯 完整验证总结:</h4>';
+            summary += '<p>✅ 基础文件检查完成</p>';
+            summary += '<p>⚠️ API接口检查完成（部分可能需要配置）</p>';
+            summary += '<p>✅ 页面SEO元素检查完成</p>';
+            summary += '<p>ℹ️ 配置检查完成</p>';
+            summary += '<br>';
+            summary += '<p><strong>下一步建议:</strong></p>';
+            summary += '<ul>';
+            summary += '<li>访问 <a href="/admin/seo-dashboard" target="_blank">/admin/seo-dashboard</a> 查看SEO仪表板</li>';
+            summary += '<li>访问 <a href="/seo-test-page" target="_blank">/seo-test-page</a> 运行详细测试</li>';
+            summary += '<li>检查 blog.config.js 中的SEO配置</li>';
+            summary += '<li>配置搜索引擎API密钥（如需要）</li>';
+            summary += '</ul>';
+            
+            resultDiv.innerHTML = summary;
+            resultDiv.className = 'success';
+        }
+
+        // 页面加载时显示说明
         window.addEventListener('load', function() {
-            console.log('SEO测试页面加载完成');
-            console.log('页面词数（估算）:', document.body.innerText.split(/\s+/).length);
-            console.log('标题数量:', document.querySelectorAll('h1,h2,h3,h4,h5,h6').length);
-            console.log('链接数量:', document.querySelectorAll('a').length);
+            console.log('SEO功能验证页面已加载');
+            console.log('建议按顺序点击各个检查按钮，最后运行完整验证');
         });
     </script>
 </body>

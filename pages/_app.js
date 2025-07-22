@@ -24,6 +24,21 @@ const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
 )
 
+// Web Vitals监控组件
+const WebVitalsMonitor = dynamic(() => import('@/components/WebVitalsMonitor'), {
+  ssr: false
+})
+
+// 图片SEO优化组件
+const ImageSEOOptimizer = dynamic(() => import('@/components/ImageSEOOptimizer'), {
+  ssr: false
+})
+
+// 404错误跟踪组件
+const NotFoundErrorTracker = dynamic(() => import('@/components/NotFoundErrorTracker'), {
+  ssr: false
+})
+
 /**
  * App挂载DOM 入口文件
  * @param {*} param0
@@ -59,6 +74,9 @@ const MyApp = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </GLayout>
       <ExternalPlugins {...pageProps} />
+      <WebVitalsMonitor />
+      <ImageSEOOptimizer />
+      <NotFoundErrorTracker />
     </GlobalContextProvider>
   )
   return (

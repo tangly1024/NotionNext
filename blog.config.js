@@ -62,6 +62,25 @@ const BLOG = {
   SEO_ENABLE_LAZY_LOADING: process.env.NEXT_PUBLIC_SEO_ENABLE_LAZY_LOADING || true, // 启用懒加载
   SEO_ENABLE_VIRTUAL_SCROLL: process.env.NEXT_PUBLIC_SEO_ENABLE_VIRTUAL_SCROLL || false, // 启用虚拟滚动
 
+  // 404页面SEO优化配置
+  SEO_ENHANCED_404: process.env.NEXT_PUBLIC_SEO_ENHANCED_404 || true, // 启用增强版404页面
+  SEO_404_MONITOR: process.env.NEXT_PUBLIC_SEO_404_MONITOR || true, // 启用404错误监控
+  SEO_404_SMART_REDIRECT: process.env.NEXT_PUBLIC_SEO_404_SMART_REDIRECT || true, // 启用智能重定向建议
+  SEO_404_RELATED_CONTENT: process.env.NEXT_PUBLIC_SEO_404_RELATED_CONTENT || true, // 显示相关内容推荐
+  SEO_404_SEARCH_INTEGRATION: process.env.NEXT_PUBLIC_SEO_404_SEARCH_INTEGRATION || true, // 集成搜索功能
+  SEO_404_ANALYTICS_TRACKING: process.env.NEXT_PUBLIC_SEO_404_ANALYTICS_TRACKING || true, // 404页面分析跟踪
+
+  // 搜索引擎提交配置
+  SEO_AUTO_SUBMISSION: process.env.NEXT_PUBLIC_SEO_AUTO_SUBMISSION || true, // 启用自动提交
+  SEO_SUBMISSION_INTERVAL: process.env.NEXT_PUBLIC_SEO_SUBMISSION_INTERVAL || 24, // 自动提交间隔（小时）
+  SEO_GOOGLE_INDEXING_API_KEY: process.env.GOOGLE_INDEXING_API_KEY || '', // Google Indexing API密钥
+  SEO_BING_WEBMASTER_API_KEY: process.env.BING_WEBMASTER_API_KEY || '', // Bing Webmaster API密钥
+  SEO_BAIDU_PUSH_TOKEN: process.env.BAIDU_PUSH_TOKEN || '', // 百度推送Token
+  SEO_ENABLE_GOOGLE_SUBMISSION: process.env.NEXT_PUBLIC_SEO_ENABLE_GOOGLE_SUBMISSION || true, // 启用Google提交
+  SEO_ENABLE_BING_SUBMISSION: process.env.NEXT_PUBLIC_SEO_ENABLE_BING_SUBMISSION || true, // 启用Bing提交
+  SEO_ENABLE_BAIDU_SUBMISSION: process.env.NEXT_PUBLIC_SEO_ENABLE_BAIDU_SUBMISSION || true, // 启用百度提交
+  SEO_ENABLE_YANDEX_SUBMISSION: process.env.NEXT_PUBLIC_SEO_ENABLE_YANDEX_SUBMISSION || false, // 启用Yandex提交
+
   // 其它复杂配置
   // 原配置文件过长，且并非所有人都会用到，故此将配置拆分到/conf/目录下, 按需找到对应文件并修改即可
   ...require('./conf/comment.config'), // 评论插件
