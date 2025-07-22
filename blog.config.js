@@ -25,6 +25,43 @@ const BLOG = {
   // RSS订阅
   ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
 
+  // SEO增强功能
+  SEO_ENHANCED_MODE: process.env.NEXT_PUBLIC_SEO_ENHANCED_MODE || true, // 是否启用增强版SEO
+  SEO_TITLE_SEPARATOR: process.env.NEXT_PUBLIC_SEO_TITLE_SEPARATOR || ' | ', // 标题分隔符
+  SEO_MAX_TITLE_LENGTH: process.env.NEXT_PUBLIC_SEO_MAX_TITLE_LENGTH || 60, // 最大标题长度
+  SEO_MAX_DESCRIPTION_LENGTH: process.env.NEXT_PUBLIC_SEO_MAX_DESCRIPTION_LENGTH || 160, // 最大描述长度
+  SEO_MAX_KEYWORDS: process.env.NEXT_PUBLIC_SEO_MAX_KEYWORDS || 10, // 最大关键词数量
+  SEO_ENABLE_STRUCTURED_DATA: process.env.NEXT_PUBLIC_SEO_ENABLE_STRUCTURED_DATA || true, // 启用结构化数据
+  SEO_ENABLE_BREADCRUMBS: process.env.NEXT_PUBLIC_SEO_ENABLE_BREADCRUMBS || true, // 启用面包屑
+  SEO_ENABLE_HREFLANG: process.env.NEXT_PUBLIC_SEO_ENABLE_HREFLANG || true, // 启用多语言标签
+  SEO_BING_SITE_VERIFICATION: process.env.NEXT_PUBLIC_SEO_BING_SITE_VERIFICATION || '', // Bing网站验证
+  
+  // Robots.txt配置
+  SEO_ROBOTS_ENHANCED: process.env.NEXT_PUBLIC_SEO_ROBOTS_ENHANCED || true, // 启用增强版robots.txt
+  SEO_ROBOTS_CRAWL_DELAY: process.env.NEXT_PUBLIC_SEO_ROBOTS_CRAWL_DELAY || 1, // 爬虫延迟（秒）
+  SEO_ROBOTS_BLOCK_BOTS: process.env.NEXT_PUBLIC_SEO_ROBOTS_BLOCK_BOTS || true, // 阻止恶意爬虫
+  
+  // Sitemap配置
+  SEO_SITEMAP_ENHANCED: process.env.NEXT_PUBLIC_SEO_SITEMAP_ENHANCED || true, // 启用增强版sitemap
+  SEO_SITEMAP_IMAGES: process.env.NEXT_PUBLIC_SEO_SITEMAP_IMAGES || true, // 启用图片sitemap
+  SEO_SITEMAP_NEWS: process.env.NEXT_PUBLIC_SEO_SITEMAP_NEWS || false, // 启用新闻sitemap
+  SEO_SITEMAP_VIDEOS: process.env.NEXT_PUBLIC_SEO_SITEMAP_VIDEOS || false, // 启用视频sitemap
+  SEO_SITEMAP_CHANGEFREQ_HOME: process.env.NEXT_PUBLIC_SEO_SITEMAP_CHANGEFREQ_HOME || 'daily', // 首页更新频率
+  SEO_SITEMAP_CHANGEFREQ_POSTS: process.env.NEXT_PUBLIC_SEO_SITEMAP_CHANGEFREQ_POSTS || 'weekly', // 文章更新频率
+  SEO_SITEMAP_PRIORITY_HOME: process.env.NEXT_PUBLIC_SEO_SITEMAP_PRIORITY_HOME || 1.0, // 首页优先级
+  SEO_SITEMAP_PRIORITY_POSTS: process.env.NEXT_PUBLIC_SEO_SITEMAP_PRIORITY_POSTS || 0.8, // 文章优先级
+  
+  // 性能优化配置
+  SEO_ENABLE_PERFORMANCE_MONITOR: process.env.NEXT_PUBLIC_SEO_ENABLE_PERFORMANCE_MONITOR || false, // 启用性能监控
+  SEO_ENABLE_PRELOAD: process.env.NEXT_PUBLIC_SEO_ENABLE_PRELOAD || true, // 启用资源预加载
+  SEO_ENABLE_PREFETCH: process.env.NEXT_PUBLIC_SEO_ENABLE_PREFETCH || true, // 启用资源预取
+  SEO_ENABLE_PRECONNECT: process.env.NEXT_PUBLIC_SEO_ENABLE_PRECONNECT || true, // 启用预连接
+  SEO_ENABLE_DNS_PREFETCH: process.env.NEXT_PUBLIC_SEO_ENABLE_DNS_PREFETCH || true, // 启用DNS预解析
+  SEO_PERFORMANCE_REPORT_URL: process.env.NEXT_PUBLIC_SEO_PERFORMANCE_REPORT_URL || '', // 性能数据上报URL
+  SEO_IMAGE_OPTIMIZATION_QUALITY: process.env.NEXT_PUBLIC_SEO_IMAGE_OPTIMIZATION_QUALITY || 75, // 图片优化质量
+  SEO_ENABLE_LAZY_LOADING: process.env.NEXT_PUBLIC_SEO_ENABLE_LAZY_LOADING || true, // 启用懒加载
+  SEO_ENABLE_VIRTUAL_SCROLL: process.env.NEXT_PUBLIC_SEO_ENABLE_VIRTUAL_SCROLL || false, // 启用虚拟滚动
+
   // 其它复杂配置
   // 原配置文件过长，且并非所有人都会用到，故此将配置拆分到/conf/目录下, 按需找到对应文件并修改即可
   ...require('./conf/comment.config'), // 评论插件

@@ -304,14 +304,7 @@ const LayoutSlug = props => {
               itemScope
               itemType='https://schema.org/Article'>
 
-               {/* SEO: 为文章的结构化数据添加隐藏的元信息 */}
-                {post && <>
-                  <meta itemProp="headline" content={post.title} />
-                  <meta itemProp="author" content={siteConfig('AUTHOR')} />
-                  <meta itemProp="datePublished" content={post.publishDate} />
-                  <meta itemProp="dateModified" content={post.lastEditedDate} />
-                  <meta itemProp="image" content={post.pageCover} />
-                </>}
+               {/* 结构化数据现在由SEOEnhanced组件统一处理 */}
               {/* Notion文章主体 */}
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
