@@ -8,7 +8,9 @@ import {
   generateHreflangData,
   extractOptimizedKeywords,
   generateOgImageUrl,
-  getTwitterCardType
+  getTwitterCardType,
+  generateDynamicKeywords,
+  formatKeywordsString
 } from '@/lib/seo/seoUtils'
 import {
   generateArticleSchema,
@@ -18,6 +20,10 @@ import {
   generateBlogSchema,
   combineSchemas
 } from '@/lib/seo/structuredData'
+import {
+  generateImageStructuredData,
+  extractImagesFromContent
+} from '@/lib/seo/imageSEO'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo } from 'react'
@@ -92,13 +98,25 @@ const SEOEnhanced = props => {
       baseUrl
     )
     
-    // 关键词优化
-    const contentKeywords = extractOptimizedKeywords(
-      post?.summary || rawDescription,
-      post?.tags || [],
-      10
+    // 动态关键词生成（优化版）
+    const pageData = {
+      title: pageTitle,
+      summary: rawDescription,
+      tags: post?.tags || [],
+      category: post?.category?.[0] || meta?.category,
+      content: post?.content || post?.summary || '',
+      keyword: router.query?.s || router.query?.keyword,
+      tag: router.query?.tag,
+      category: router.query?.category
+    }
+    
+    const dynamicKeywords = generateDynamicKeywords(
+      pageData, 
+      siteInfo, 
+      meta?.type === 'Post' ? 'post' : getPageTypeFromRoute(router.route)
     )
-    const keywords = customMeta.keywords || contentKeywords.join(', ') || KEYWORDS
+    
+    const keywords = customMeta.keywords || formatKeywordsString(dynamicKeywords, 120) || KEYWORDS
     
     // 多语言支持
     const locales = router.locales || [LANG]
@@ -119,6 +137,36 @@ const SEOEnhanced = props => {
     // 文章结构化数据
     if (post && meta?.type === 'Post') {
       schemas.push(generateArticleSchema(post, siteInfo, baseUrl))
+      
+      // 为文章添加图片结构化数据
+      if (post.content || post.summary) {
+        const content = post.content || post.summary || ''
+        const images = extractImagesFromContent(content, baseUrl)
+        
+        // 添加文章封面图片
+        if (post.pageCover || post.pageCoverThumbnail) {
+          images.unshift({
+            src: post.pageCover || post.pageCoverThumbnail,
+            alt: post.title || '',
+            title: post.title || '',
+            caption: post.summary || '',
+            format: 'jpg'
+          })
+        }
+        
+        if (images.length > 0) {
+          const imageSchema = generateImageStructuredData(images, {
+            title: post.title,
+            author: AUTHOR,
+            publishDate: post.publishDay,
+            category: post.category?.[0]
+          })
+          
+          if (imageSchema) {
+            schemas.push(imageSchema)
+          }
+        }
+      }
     }
     
     // 面包屑结构化数据
@@ -293,6 +341,22 @@ const SEOEnhanced = props => {
       {children}
     </Head>
   )
+}
+
+/**
+ * 根据路由获取页面类型
+ * @param {string} route - Next.js路由
+ * @returns {string} 页面类型
+ */
+const getPageTypeFromRoute = (route) => {
+  if (route === '/') return 'home'
+  if (route === '/archive') return 'archive'
+  if (route.startsWith('/category')) return 'category'
+  if (route.startsWith('/tag')) return 'tag'
+  if (route.startsWith('/search')) return 'search'
+  if (route.startsWith('/page')) return 'pagination'
+  if (route === '/404') return 'error'
+  return 'website'
 }
 
 /**

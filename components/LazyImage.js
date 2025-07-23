@@ -27,6 +27,44 @@ export default function LazyImage({
   const [currentSrc, setCurrentSrc] = useState(
     placeholderSrc || defaultPlaceholderSrc
   )
+  const [generatedAlt, setGeneratedAlt] = useState('')
+
+  // 自动生成ALT属性
+  useEffect(() => {
+    const generateSmartAlt = async () => {
+      // 如果已经有alt属性，就不需要生成
+      if (alt && alt.trim()) {
+        return
+      }
+
+      // 如果启用了自动ALT生成
+      if (siteConfig('SEO_AUTO_GENERATE_ALT', true)) {
+        try {
+          const { generateImageAlt } = await import('@/lib/seo/imageSEO')
+          
+          const context = {
+            siteName: siteConfig('TITLE'),
+            url: typeof window !== 'undefined' ? window.location.href : '',
+            title: typeof document !== 'undefined' ? document.title : ''
+          }
+
+          const smartAlt = await generateImageAlt(src, context)
+          if (smartAlt && smartAlt.trim()) {
+            setGeneratedAlt(smartAlt)
+          }
+        } catch (error) {
+          console.warn('Failed to generate smart alt for LazyImage:', error)
+        }
+      }
+    }
+
+    if (src) {
+      generateSmartAlt()
+    }
+  }, [src, alt])
+
+  // 最终的alt属性
+  const finalAlt = alt || generatedAlt || title || ''
 
   /**
    * 占位图加载成功
@@ -102,7 +140,7 @@ export default function LazyImage({
     ref: imageRef,
     src: currentSrc,
     'data-src': src, // 存储原始图片地址
-    alt: alt || 'Lazy loaded image',
+    alt: finalAlt || '',
     onLoad: handleThumbnailLoaded,
     onError: handleImageError,
     className: `${className || ''} lazy-image-placeholder`,

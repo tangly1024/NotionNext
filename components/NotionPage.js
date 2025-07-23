@@ -5,7 +5,7 @@ import { isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import { useNotionContext } from 'react-notion-x'
 import { deepClone } from '@/lib/utils'
@@ -24,23 +24,69 @@ import { deepClone } from '@/lib/utils'
 const CustomImage = (props) => {
     const { block, post } = props
     const { recordMap } = useNotionContext()
-    const blockMap = deepClone(recordMap)
+    const [generatedAlt, setGeneratedAlt] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     // 智能提取alt文本：优先使用图片说明(caption)，其次用文章标题，最后用网站标题
     const caption = block?.properties?.caption?.[0]?.[0]
-    const alt = caption || post?.title || siteConfig('TITLE')
+    const basicAlt = caption || post?.title || siteConfig('TITLE')
+
+    // 动态导入图片SEO功能
+    useEffect(() => {
+        const generateSmartAlt = async () => {
+            // 如果已经有caption，就不需要生成
+            if (caption && caption.trim()) {
+                return
+            }
+
+            // 如果启用了自动ALT生成
+            if (siteConfig('SEO_AUTO_GENERATE_ALT', true)) {
+                setIsLoading(true)
+                try {
+                    const { generateImageAlt } = await import('@/lib/seo/imageSEO')
+                    
+                    const context = {
+                        title: post?.title || '',
+                        category: post?.category || '',
+                        tags: post?.tags || [],
+                        author: post?.author || '',
+                        siteName: siteConfig('TITLE'),
+                        url: typeof window !== 'undefined' ? window.location.href : '',
+                        surroundingText: post?.summary || post?.title || ''
+                    }
+
+                    const smartAlt = await generateImageAlt(props.src, context)
+                    if (smartAlt && smartAlt.trim()) {
+                        setGeneratedAlt(smartAlt)
+                    }
+                } catch (error) {
+                    console.warn('Failed to generate smart alt for image:', error)
+                } finally {
+                    setIsLoading(false)
+                }
+            }
+        }
+
+        if (props.src) {
+            generateSmartAlt()
+        }
+    }, [props.src, caption, post])
+
+    // 最终的alt属性：优先使用caption，然后是生成的alt，最后是基础alt
+    const finalAlt = caption || generatedAlt || basicAlt
 
     // 使用标准的img标签，并添加自定义的alt属性
     const { src, className, style } = props
     return (
         <img 
             {...props} 
-            alt={alt}
+            alt={finalAlt}
             src={src}
             className={className}
             style={style}
             loading="lazy"
             decoding="async"
+            title={finalAlt} // 同时设置title属性
         />
     )
 }

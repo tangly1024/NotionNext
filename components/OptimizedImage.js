@@ -40,34 +40,56 @@ export default function OptimizedImage({
     webp: false
   })
 
-  // 检测浏览器支持的图片格式
+  // 检测浏览器支持的图片格式（优化版）
   useEffect(() => {
     const checkFormatSupport = async () => {
       const formats = { avif: false, webp: false }
       
-      // 检测AVIF支持
-      try {
-        const avifCanvas = document.createElement('canvas')
-        avifCanvas.width = 1
-        avifCanvas.height = 1
-        const avifSupported = avifCanvas.toDataURL('image/avif').indexOf('data:image/avif') === 0
-        formats.avif = avifSupported
-      } catch (e) {
-        formats.avif = false
+      // 使用更可靠的格式检测方法
+      const checkFormat = (format) => {
+        return new Promise((resolve) => {
+          const img = new Image()
+          img.onload = () => resolve(true)
+          img.onerror = () => resolve(false)
+          
+          // 使用1x1像素的测试图片
+          const testImages = {
+            webp: 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA',
+            avif: 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEAwgMg8f8D///8WfhwB8+ErK42A='
+          }
+          
+          img.src = testImages[format]
+        })
       }
-
-      // 检测WebP支持
-      try {
-        const webpCanvas = document.createElement('canvas')
-        webpCanvas.width = 1
-        webpCanvas.height = 1
-        const webpSupported = webpCanvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
-        formats.webp = webpSupported
-      } catch (e) {
-        formats.webp = false
-      }
-
+      
+      // 并行检测格式支持
+      const [webpSupported, avifSupported] = await Promise.all([
+        checkFormat('webp'),
+        checkFormat('avif')
+      ])
+      
+      formats.webp = webpSupported
+      formats.avif = avifSupported
+      
       setSupportedFormats(formats)
+      
+      // 缓存检测结果
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('imageFormats', JSON.stringify(formats))
+      }
+    }
+
+    // 尝试从缓存获取结果
+    if (typeof window !== 'undefined') {
+      const cached = sessionStorage.getItem('imageFormats')
+      if (cached) {
+        try {
+          setSupportedFormats(JSON.parse(cached))
+          return
+        } catch (e) {
+          // 缓存无效，继续检测
+        }
+      }
     }
 
     checkFormatSupport()
