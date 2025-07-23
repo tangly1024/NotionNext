@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { siteConfig } from '@/lib/config'
 
 /**
@@ -58,32 +58,48 @@ export default function WebVitalsMonitor({
     return 'poor'
   }, [])
 
-  // 更新指标
+  // 更新指标 - 使用useRef避免无限循环
+  const lastReportedRef = useRef({})
+  
   const updateMetric = useCallback((name, value) => {
+    // 避免重复更新相同的值
+    if (lastReportedRef.current[name] === value) {
+      return
+    }
+    
+    lastReportedRef.current[name] = value
+    
     setMetrics(prev => {
       const updated = { ...prev, [name]: value }
-      
-      // 计算新的性能评分
-      const grade = calculateGrade(updated)
-      setPerformanceGrade(grade)
-      
-      // 回调通知
-      if (onMetricsUpdate) {
-        onMetricsUpdate({
-          metrics: updated,
-          grade,
-          timestamp: Date.now()
-        })
-      }
-
-      // 控制台日志
-      if (enableConsoleLog) {
-        console.log(`Web Vital ${name}:`, value, `(Grade: ${grade})`)
-      }
-
       return updated
     })
-  }, [calculateGrade, onMetricsUpdate, enableConsoleLog])
+    
+    // 控制台日志（限制频率）
+    if (enableConsoleLog) {
+      console.log(`Web Vital ${name}:`, value)
+    }
+  }, [enableConsoleLog])
+
+  // 单独的useEffect来计算和更新性能评分
+  useEffect(() => {
+    const grade = calculateGrade(metrics)
+    setPerformanceGrade(prevGrade => {
+      if (prevGrade !== grade) {
+        // 异步回调通知，避免在渲染过程中更新状态
+        setTimeout(() => {
+          if (onMetricsUpdate) {
+            onMetricsUpdate({
+              metrics,
+              grade,
+              timestamp: Date.now()
+            })
+          }
+        }, 0)
+        return grade
+      }
+      return prevGrade
+    })
+  }, [metrics, calculateGrade, onMetricsUpdate])
 
   // 发送指标到分析服务
   const reportMetrics = useCallback((metric) => {

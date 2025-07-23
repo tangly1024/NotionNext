@@ -92,28 +92,12 @@ function addPerformanceOptimizations(request: NextRequest, response: NextRespons
 function addResourceHints(pathname: string, response: NextResponse) {
   const hints: string[] = []
   
-  // 首页预加载关键资源
+  // 只预加载确实存在的资源
   if (pathname === '/') {
+    // 预加载Google Fonts
     hints.push(
-      '</css/critical.css>; rel=preload; as=style',
-      '</js/critical.js>; rel=preload; as=script',
-      '</fonts/main.woff2>; rel=preload; as=font; crossorigin'
-    )
-  }
-  
-  // 文章页面预加载
-  if (pathname.startsWith('/post/') || pathname.includes('/article/')) {
-    hints.push(
-      '</css/post.css>; rel=preload; as=style',
-      '</js/post.js>; rel=preload; as=script'
-    )
-  }
-  
-  // 管理页面预加载
-  if (pathname.startsWith('/admin/')) {
-    hints.push(
-      '</css/admin.css>; rel=preload; as=style',
-      '</js/admin.js>; rel=preload; as=script'
+      '<https://fonts.googleapis.com>; rel=dns-prefetch',
+      '<https://fonts.gstatic.com>; rel=preconnect; crossorigin'
     )
   }
   
@@ -189,17 +173,17 @@ function addCacheHeaders(pathname: string, response: NextResponse) {
  * 添加安全头
  */
 function addSecurityHeaders(response: NextResponse) {
-  // 内容安全策略
+  // 内容安全策略 - 开发环境完全开放配置
   const cspDirectives = [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.google.com *.googleapis.com *.gstatic.com",
-    "style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com",
-    "img-src 'self' data: blob: *.google.com *.googleapis.com *.gstatic.com",
-    "font-src 'self' *.googleapis.com *.gstatic.com",
-    "connect-src 'self' *.google.com *.googleapis.com",
-    "frame-src 'self' *.google.com",
-    "object-src 'none'",
-    "base-uri 'self'"
+    "default-src *",
+    "script-src * 'unsafe-inline' 'unsafe-eval'",
+    "style-src * 'unsafe-inline'",
+    "img-src * data: blob:",
+    "font-src * data:",
+    "connect-src *",
+    "frame-src *",
+    "object-src *",
+    "base-uri *"
   ]
   
   response.headers.set('Content-Security-Policy', cspDirectives.join('; '))

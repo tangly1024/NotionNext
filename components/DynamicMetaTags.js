@@ -235,8 +235,10 @@ function renderPageSpecificMeta(metaData, post, siteInfo) {
           
           {/* 阅读时间估算 */}
           {post?.content && (
-            <meta name="twitter:label1" content="阅读时间" />
-            <meta name="twitter:data1" content={`${Math.ceil((post.content.length || 0) / 500)} 分钟`} />
+            <>
+              <meta name="twitter:label1" content="阅读时间" />
+              <meta name="twitter:data1" content={`${Math.ceil((post.content.length || 0) / 500)} 分钟`} />
+            </>
           )}
         </>
       )

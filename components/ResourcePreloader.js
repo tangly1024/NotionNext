@@ -14,7 +14,6 @@ export default function ResourcePreloader({
   enableDNSPrefetch = true,
   enablePreconnect = true 
 }) {
-  const [preloadedResources, setPreloadedResources] = useState(new Set())
   const preloadRef = useRef(new Set())
 
   // 默认需要预加载的资源
@@ -203,17 +202,12 @@ export default function ResourcePreloader({
     return links
   }
 
-  // 更新预加载资源状态
+  // 清理预加载缓存（仅在组件卸载时）
   useEffect(() => {
-    const newResources = new Set([
-      ...allResources.images.map(img => typeof img === 'string' ? img : img.src),
-      ...allResources.fonts.map(font => typeof font === 'string' ? font : font.href),
-      ...allResources.scripts.map(script => typeof script === 'string' ? script : script.src),
-      ...allResources.styles.map(style => typeof style === 'string' ? style : style.href)
-    ].filter(Boolean))
-
-    setPreloadedResources(newResources)
-  }, [images, fonts, scripts, styles])
+    return () => {
+      preloadRef.current.clear()
+    }
+  }, [])
 
   return (
     <Head>

@@ -191,6 +191,41 @@ const nextConfig = {
                 key: 'Access-Control-Allow-Headers',
                 value:
                   'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+              },
+              {
+                key: 'X-Content-Type-Options',
+                value: 'nosniff'
+              },
+              {
+                key: 'X-Frame-Options',
+                value: 'DENY'
+              },
+              {
+                key: 'X-XSS-Protection',
+                value: '1; mode=block'
+              },
+              {
+                key: 'Referrer-Policy',
+                value: 'strict-origin-when-cross-origin'
+              },
+              {
+                key: 'Cache-Control',
+                value: 'public, max-age=31536000, immutable'
+              },
+              {
+                key: 'Content-Security-Policy',
+                value: [
+                  "default-src 'self'",
+                  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://cdnjs.cloudflare.com",
+                  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
+                  "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:",
+                  "img-src 'self' data: blob: https: *.notion.so file.notion.so",
+                  "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com",
+                  "frame-src 'self' https:",
+                  "object-src 'none'",
+                  "base-uri 'self'",
+                  "form-action 'self'"
+                ].join('; ')
               }
             ]
           }

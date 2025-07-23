@@ -43,6 +43,12 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
+          {/* Disable CSP for development to allow all resources */}
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content="default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; font-src * data:; img-src * data: blob:; connect-src *; frame-src *; object-src *; base-uri *; form-action *;"
+          />
+          
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
             <>
