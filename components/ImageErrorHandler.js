@@ -23,6 +23,12 @@ export default function ImageErrorHandler({
   const [hasError, setHasError] = useState(false)
   const [retryCount, setRetryCount] = useState(0)
   const [errorMessage, setErrorMessage] = useState('')
+  const [isClient, setIsClient] = useState(false)
+
+  // 客户端检测
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // 重置状态当src改变时
   useEffect(() => {
@@ -92,7 +98,7 @@ export default function ImageErrorHandler({
       
       if (newRetryCount === 1) {
         // 第一次重试：使用代理
-        newSrc = convertToProxyUrl(src, baseUrl)
+        newSrc = convertToProxyUrl(src)
         console.log('Retrying with proxy URL:', newSrc)
       } else if (newRetryCount === 2) {
         // 第二次重试：添加时间戳强制刷新
@@ -101,7 +107,7 @@ export default function ImageErrorHandler({
         console.log('Retrying with timestamp:', newSrc)
       } else {
         // 第三次重试：再次使用代理但添加时间戳
-        const proxySrc = convertToProxyUrl(src, baseUrl)
+        const proxySrc = convertToProxyUrl(src)
         const separator = proxySrc.includes('?') ? '&' : '?'
         newSrc = `${proxySrc}${separator}_t=${Date.now()}`
         console.log('Final retry with proxy + timestamp:', newSrc)
@@ -321,8 +327,7 @@ export function useImageErrorHandler(src, options = {}) {
       // 重试逻辑
       let newSrc = src
       if (isNotionImageUrl(src)) {
-        const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
-        newSrc = convertToProxyUrl(src, baseUrl)
+        newSrc = convertToProxyUrl(src)
       } else {
         const separator = src.includes('?') ? '&' : '?'
         newSrc = `${src}${separator}_t=${Date.now()}`

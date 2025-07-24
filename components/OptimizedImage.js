@@ -1,6 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { generateImageAlt } from '@/lib/seo/imageSEO'
 import { isNotionImageUrl, convertToProxyUrl, isNotionImageExpiring } from '@/lib/utils/imageProxy'
+import { useClientOnly, useStorage } from '@/lib/hooks/useClientOnly'
 import Head from 'next/head'
 import { useEffect, useRef, useState, useCallback } from 'react'
 
@@ -40,11 +41,23 @@ export default function OptimizedImage({
     avif: false,
     webp: false
   })
+  
+  const isClient = useClientOnly()
+  const { getItem, setItem } = useStorage('sessionStorage')
 
-  // 检测浏览器支持的图片格式（优化版）
+  // 检测浏览器支持的图片格式（优化版，避免水合错误）
   useEffect(() => {
+    if (!isClient) return // 只在客户端运行
+    
     const checkFormatSupport = async () => {
       const formats = { avif: false, webp: false }
+      
+      // 尝试从缓存获取结果
+      const cached = getItem('imageFormats')
+      if (cached) {
+        setSupportedFormats(cached)
+        return
+      }
       
       // 使用更可靠的格式检测方法
       const checkFormat = (format) => {
@@ -75,26 +88,11 @@ export default function OptimizedImage({
       setSupportedFormats(formats)
       
       // 缓存检测结果
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('imageFormats', JSON.stringify(formats))
-      }
-    }
-
-    // 尝试从缓存获取结果
-    if (typeof window !== 'undefined') {
-      const cached = sessionStorage.getItem('imageFormats')
-      if (cached) {
-        try {
-          setSupportedFormats(JSON.parse(cached))
-          return
-        } catch (e) {
-          // 缓存无效，继续检测
-        }
-      }
+      setItem('imageFormats', formats)
     }
 
     checkFormatSupport()
-  }, [])
+  }, [isClient]) // 移除getItem和setItem依赖，避免无限循环
 
   // 生成优化后的图片URL
   const getOptimizedImageUrl = useCallback((originalSrc, targetWidth, format = null) => {
@@ -104,8 +102,7 @@ export default function OptimizedImage({
     if (isNotionImageUrl(originalSrc)) {
       // 如果是Notion图片且即将过期，使用代理
       if (isNotionImageExpiring(originalSrc, 48)) { // 48小时内过期就使用代理
-        const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
-        return convertToProxyUrl(originalSrc, baseUrl)
+        return convertToProxyUrl(originalSrc)
       }
       // 如果还没过期，直接使用原URL
       return originalSrc
@@ -155,7 +152,12 @@ export default function OptimizedImage({
   const getBestImageSrc = useCallback(() => {
     if (!src) return null
 
-    // 优先使用AVIF，其次WebP，最后原格式
+    // 在服务端渲染时，使用原格式避免水合错误
+    if (!isClient) {
+      return getOptimizedImageUrl(src, width)
+    }
+
+    // 客户端优先使用AVIF，其次WebP，最后原格式
     if (supportedFormats.avif) {
       return getOptimizedImageUrl(src, width, 'avif')
     } else if (supportedFormats.webp) {
@@ -163,7 +165,7 @@ export default function OptimizedImage({
     } else {
       return getOptimizedImageUrl(src, width)
     }
-  }, [src, width, supportedFormats, getOptimizedImageUrl])
+  }, [src, width, supportedFormats, getOptimizedImageUrl, isClient])
 
   // 生成占位符
   const getPlaceholderSrc = useCallback(() => {
@@ -202,8 +204,7 @@ export default function OptimizedImage({
     // 如果是Notion图片加载失败，尝试使用代理
     if (imageRef.current && isNotionImageUrl(src)) {
       const currentSrc = imageRef.current.src
-      const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
-      const proxySrc = convertToProxyUrl(src, baseUrl)
+      const proxySrc = convertToProxyUrl(src)
       
       // 如果当前不是代理URL，尝试使用代理
       if (!currentSrc.includes('/api/image-proxy') && proxySrc !== currentSrc) {
@@ -279,13 +280,15 @@ export default function OptimizedImage({
   const [generatedAlt, setGeneratedAlt] = useState('')
   
   useEffect(() => {
-    if (!alt && src && siteConfig('SEO_AUTO_GENERATE_ALT', true)) {
-      generateImageAlt(src, {
-        title: typeof document !== 'undefined' ? document.title : '',
-        url: typeof window !== 'undefined' ? window.location.href : ''
-      }).then(setGeneratedAlt).catch(() => setGeneratedAlt(''))
+    if (!isClient || alt || !src || !siteConfig('SEO_AUTO_GENERATE_ALT', true)) {
+      return
     }
-  }, [alt, src])
+    
+    generateImageAlt(src, {
+      title: document.title || '',
+      url: window.location.href || ''
+    }).then(setGeneratedAlt).catch(() => setGeneratedAlt(''))
+  }, [alt, src, isClient])
 
   // 构建图片属性
   const finalAlt = alt || generatedAlt || ''

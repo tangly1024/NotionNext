@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+// NextResponse removed as it's not used in this API route
 
 /**
  * 图片代理API - 解决Notion图片URL过期419错误
@@ -19,9 +19,17 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing url parameter' })
   }
 
+  // 添加调试信息
+  console.log('Received URL:', url)
+  console.log('Is Notion URL:', isNotionImageUrl(url))
+
   // 验证是否为Notion图片URL
   if (!isNotionImageUrl(url)) {
-    return res.status(400).json({ error: 'Invalid Notion image URL' })
+    return res.status(400).json({ 
+      error: 'Invalid Notion image URL',
+      receivedUrl: url,
+      debug: 'URL validation failed'
+    })
   }
 
   try {

@@ -13,18 +13,18 @@ export default function TestImage419Fix() {
   const [isLoading, setIsLoading] = useState(false)
   const [report, setReport] = useState(null)
 
-  // 测试用的Notion图片URL（包含一些可能过期的）
+  // 测试用的图片URL（移除了过期的Notion图片）
   const testImages = [
-    'https://file.notion.so/f/f/200fdff7-802b-4318-a362-2a52f185b10b/72bcffb2-2e42-4780-a777-059b46328a50/image.png?table=block&id=22974725-0b4d-80e7-9c7f-f4f88877350d&spaceId=200fdff7-802b-4318-a362-2a52f185b10b&expirationTimestamp=1751932800000&signature=CN2lYAMW509JAAeU7xgPCCSXQfYHvkX4Ca4bttvTSFE&downloadName=image.png',
     'https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&q=50&fm=webp&crop=entropy&cs=srgb&width=800&fmt=webp',
-    'https://file.notion.so/f/f/test-expired-image.png?expirationTimestamp=1000000000000', // 已过期的测试URL
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&q=50&fm=webp&crop=entropy&cs=srgb&width=800&fmt=webp',
+    'https://file.notion.so/f/f/12345678-1234-1234-1234-123456789abc/test-expired-image.png?table=block&id=12345678-1234-1234-1234-123456789abc&spaceId=12345678-1234-1234-1234-123456789abc&expirationTimestamp=1000000000000&signature=test', // 已过期的测试URL（用于测试错误处理）
   ]
 
   // 运行图片检查测试
   const runImageTest = async () => {
     setIsLoading(true)
     try {
-      const baseUrl = window.location.origin
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
       
       // 创建测试内容
       const testContent = testImages.map(url => 
@@ -50,7 +50,7 @@ export default function TestImage419Fix() {
           original: url,
           isNotion: isNotionImageUrl(url),
           isExpiring: isNotionImageUrl(url) ? isNotionImageExpiring(url, 48) : false,
-          proxyUrl: isNotionImageUrl(url) ? convertToProxyUrl(url, baseUrl) : null
+          proxyUrl: isNotionImageUrl(url) ? convertToProxyUrl(url) : null
         }))
       })
       
@@ -249,7 +249,7 @@ export default function TestImage419Fix() {
           <p>测试图片代理API的功能：</p>
           
           {testImages.filter(url => isNotionImageUrl(url)).map((imageUrl, index) => {
-            const proxyUrl = convertToProxyUrl(imageUrl, typeof window !== 'undefined' ? window.location.origin : '')
+            const proxyUrl = convertToProxyUrl(imageUrl)
             
             return (
               <div key={index} style={{ 

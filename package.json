@@ -27,7 +27,9 @@
     "pre-deploy": "node scripts/pre-deploy-check.js",
     "build:production": "cross-env NODE_ENV=production next build",
     "lint:fix": "next lint --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "clean-expired-images": "node scripts/clean-expired-images.js",
+    "check-images": "node scripts/clean-expired-images.js"
   },
   "dependencies": {
     "@clerk/localizations": "^3.0.4",
