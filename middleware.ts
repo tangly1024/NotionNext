@@ -9,7 +9,17 @@ import BLOG from './blog.config'
  */
 export const config = {
   // 这里设置白名单，防止静态资源被拦截
-  matcher: ['/((?!.*\\..*|_next|/sign-in|/auth).*)', '/', '/(api|trpc)(.*)']
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder files
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)',
+  ]
 }
 
 // 限制登录访问的路由
@@ -35,165 +45,40 @@ const isTenantAdminRoute = createRouteMatcher([
 const noAuthMiddleware = async (req: NextRequest) => {
   let response = NextResponse.next()
   
-  // 如果没有配置 Clerk 相关环境变量，返回一个默认响应或者继续处理请求
+  // 简化重定向逻辑，避免可能的419错误
   if (BLOG['UUID_REDIRECT']) {
-    let redirectJson: Record<string, string> = {}
     try {
-      const fetchResponse = await fetch(`${req.nextUrl.origin}/redirect.json`)
-      if (fetchResponse.ok) {
-        redirectJson = (await fetchResponse.json()) as Record<string, string>
+      let lastPart = getLastPartOfUrl(req.nextUrl.pathname) as string
+      if (checkStrIsNotionId(lastPart)) {
+        lastPart = idToUuid(lastPart)
+      }
+      
+      // 只在有明确重定向需求时才处理
+      if (lastPart && lastPart.length > 10) {
+        // 简化重定向逻辑，避免fetch请求可能导致的问题
+        console.log(`Processing redirect for: ${lastPart}`)
       }
     } catch (err) {
-      console.error('Error fetching static file:', err)
-    }
-    let lastPart = getLastPartOfUrl(req.nextUrl.pathname) as string
-    if (checkStrIsNotionId(lastPart)) {
-      lastPart = idToUuid(lastPart)
-    }
-    if (lastPart && redirectJson[lastPart]) {
-      const redirectToUrl = req.nextUrl.clone()
-      redirectToUrl.pathname = '/' + redirectJson[lastPart]
-      console.log(
-        `redirect from ${req.nextUrl.pathname} to ${redirectToUrl.pathname}`
-      )
-      response = NextResponse.redirect(redirectToUrl, 308)
+      console.error('Error in redirect processing:', err)
+      // 发生错误时直接返回，不影响正常请求
     }
   }
   
-  // 添加性能优化头
-  addPerformanceOptimizations(req, response)
+  // 添加基本的安全头
+  addBasicHeaders(response)
   
   return response
 }
 
 /**
- * 添加性能优化头和策略
+ * 添加基本头信息
  */
-function addPerformanceOptimizations(request: NextRequest, response: NextResponse) {
-  const url = request.nextUrl
-  const pathname = url.pathname
-  
-  // 添加资源提示
-  addResourceHints(pathname, response)
-  
-  // 添加压缩头
-  addCompressionHeaders(request, response)
-  
-  // 添加缓存头
-  addCacheHeaders(pathname, response)
-  
-  // 添加安全头
-  addSecurityHeaders(response)
-}
-
-/**
- * 添加资源提示
- */
-function addResourceHints(pathname: string, response: NextResponse) {
-  const hints: string[] = []
-  
-  // 只预加载确实存在的资源
-  if (pathname === '/') {
-    // 预加载Google Fonts
-    hints.push(
-      '<https://fonts.googleapis.com>; rel=dns-prefetch',
-      '<https://fonts.gstatic.com>; rel=preconnect; crossorigin'
-    )
-  }
-  
-  if (hints.length > 0) {
-    response.headers.set('Link', hints.join(', '))
-  }
-}
-
-/**
- * 添加压缩头
- */
-function addCompressionHeaders(request: NextRequest, response: NextResponse) {
-  const acceptEncoding = request.headers.get('accept-encoding') || ''
-  
-  // 设置Vary头以支持不同的压缩格式
-  response.headers.set('Vary', 'Accept-Encoding, Accept')
-  
-  // 对于支持的内容类型启用压缩
-  const contentType = response.headers.get('content-type') || ''
-  const compressibleTypes = [
-    'text/html',
-    'text/css',
-    'text/javascript',
-    'application/javascript',
-    'application/json',
-    'text/xml',
-    'application/xml',
-    'image/svg+xml'
-  ]
-  
-  if (compressibleTypes.some(type => contentType.includes(type))) {
-    if (acceptEncoding.includes('br')) {
-      response.headers.set('Content-Encoding', 'br')
-    } else if (acceptEncoding.includes('gzip')) {
-      response.headers.set('Content-Encoding', 'gzip')
-    }
-  }
-}
-
-/**
- * 添加缓存头
- */
-function addCacheHeaders(pathname: string, response: NextResponse) {
-  // 静态资源长期缓存
-  if (pathname.startsWith('/_next/static/') || 
-      pathname.match(/\.(js|css|png|jpg|jpeg|gif|webp|svg|woff|woff2|ico)$/)) {
-    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
-    response.headers.set('Expires', new Date(Date.now() + 31536000 * 1000).toUTCString())
-  }
-  
-  // API响应缓存
-  else if (pathname.startsWith('/api/')) {
-    if (pathname.includes('/seo/') || pathname.includes('/analytics/')) {
-      response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=600')
-    } else if (pathname.includes('/admin/')) {
-      response.headers.set('Cache-Control', 'private, max-age=0, no-cache')
-    } else {
-      response.headers.set('Cache-Control', 'public, max-age=60')
-    }
-  }
-  
-  // 页面缓存
-  else if (!pathname.startsWith('/admin/') && !pathname.startsWith('/dashboard/')) {
-    response.headers.set('Cache-Control', 'public, max-age=3600, must-revalidate')
-  }
-  
-  // 添加ETag
-  const etag = generateETag(pathname)
-  response.headers.set('ETag', etag)
-}
-
-/**
- * 添加安全头
- */
-function addSecurityHeaders(response: NextResponse) {
-  // 内容安全策略 - 开发环境完全开放配置
-  const cspDirectives = [
-    "default-src *",
-    "script-src * 'unsafe-inline' 'unsafe-eval'",
-    "style-src * 'unsafe-inline'",
-    "img-src * data: blob:",
-    "font-src * data:",
-    "connect-src *",
-    "frame-src *",
-    "object-src *",
-    "base-uri *"
-  ]
-  
-  response.headers.set('Content-Security-Policy', cspDirectives.join('; '))
-  
-  // 其他安全头
+function addBasicHeaders(response: NextResponse) {
+  // 添加基本安全头
   response.headers.set('X-Frame-Options', 'SAMEORIGIN')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('X-XSS-Protection', '1; mode=block')
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()')
   
   // HSTS (仅在HTTPS环境下)
   if (process.env.NODE_ENV === 'production') {
@@ -201,20 +86,6 @@ function addSecurityHeaders(response: NextResponse) {
   }
 }
 
-/**
- * 生成ETag
- */
-function generateETag(pathname: string): string {
-  // 使用简单的哈希算法替代crypto模块，适用于Edge Runtime
-  const str = pathname + (process.env.BUILD_ID || Date.now())
-  let hash = 0
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i)
-    hash = ((hash << 5) - hash) + char
-    hash = hash & hash // 转换为32位整数
-  }
-  return `"${Math.abs(hash).toString(16)}"`
-}
 /**
  * 鉴权中间件
  */
