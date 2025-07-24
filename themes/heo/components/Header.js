@@ -161,12 +161,12 @@ const Header = props => {
               <div className='font-bold text-center text-light-400 dark:text-gray-400'>
                 {/* 如果是文章详情页面，显示文章标题；否则显示网站标题和描述 */}
                 {props.post?.title && (router.route === '/[prefix]/[slug]' || router.route === '/[prefix]') ? (
-                  props.post.title
+                  <div>{props.post.title}</div>
                 ) : (
-                  <>
+                  <div>
                     {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
                     {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
-                  </>
+                  </div>
                 )}
               </div>
             </div>

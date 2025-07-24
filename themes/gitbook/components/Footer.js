@@ -57,8 +57,8 @@ const Footer = ({ siteInfo }) => {
           NotionNext {siteConfig('VERSION')}
         </a>
       </div>
-      {/* SEO title */}
-      <h1 className='pt-1 hidden'>{siteConfig('TITLE')}</h1>
+      {/* SEO title - 改为div避免多个h1标签 */}
+      <div className='pt-1 hidden'>{siteConfig('TITLE')}</div>
     </footer>
   )
 }
