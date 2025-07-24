@@ -5,11 +5,11 @@ import { useEffect } from 'react'
  * SEO质量增强组件
  * 解决辅助功能、兼容性、性能和安全性问题
  */
-export default function SEOQualityEnhancer({ 
+export default function SEOQualityEnhancer({
   themeColor = '#000000',
   enableAccessibilityFixes = true,
   enableCompatibilityFixes = true,
-  enablePerformanceOptimizations = true 
+  enablePerformanceOptimizations = true
 }) {
 
   // 修复协议相对URL问题
@@ -31,7 +31,7 @@ export default function SEOQualityEnhancer({
         linksWithoutTitle.forEach(link => {
           const text = link.textContent?.trim()
           const href = link.getAttribute('href')
-          
+
           if (!text && href) {
             // 如果链接没有文本，添加aria-label
             link.setAttribute('aria-label', `链接到 ${href}`)
@@ -57,22 +57,22 @@ export default function SEOQualityEnhancer({
       {/* 主题颜色支持 */}
       <meta name="theme-color" content={themeColor} />
       <meta name="msapplication-TileColor" content={themeColor} />
-      
+
       {/* 移动端优化 */}
       <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
       <meta name="format-detection" content="telephone=no" />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      
+
       {/* DNS预解析优化 */}
       <link rel="dns-prefetch" href="//fonts.googleapis.com" />
       <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       <link rel="dns-prefetch" href="//www.google-analytics.com" />
-      
+
       {/* 预连接优化 */}
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      
+
       {/* 兼容性和性能优化样式 */}
       <style jsx global>{`
         /* 兼容性修复 */

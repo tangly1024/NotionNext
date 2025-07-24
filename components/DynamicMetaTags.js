@@ -5,6 +5,7 @@ import {
   optimizeMetaDescription,
   optimizePageTitle
 } from '@/lib/seo/seoUtils'
+import { generateCanonicalUrl, ensureAbsoluteUrl } from '@/lib/seo/urlUtils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
@@ -48,8 +49,8 @@ export default function DynamicMetaTags({
       customMeta.description || pageData.description
     )
     
-    // 生成canonical URL
-    const canonicalUrl = `${baseUrl}${router.asPath.split('?')[0]}`
+    // 使用URL工具函数生成规范的canonical URL
+    const canonicalUrl = generateCanonicalUrl(router.asPath, baseUrl)
     
     return {
       title: optimizedTitle,
@@ -61,6 +62,14 @@ export default function DynamicMetaTags({
     }
   }, [router, post, siteInfo, pageType, customMeta, category, tag, keyword, page])
   
+  // 最后验证所有URL格式
+  const validatedCanonicalUrl = metaData.canonicalUrl
+  
+  // 记录URL生成过程（仅在开发环境）
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Generated Canonical URL:', validatedCanonicalUrl)
+  }
+  
   return (
     <Head>
       {/* 基础Meta标签 */}
@@ -69,7 +78,7 @@ export default function DynamicMetaTags({
       <meta name="keywords" content={metaData.keywords} />
       
       {/* Canonical URL */}
-      <link rel="canonical" href={metaData.canonicalUrl} />
+      <link rel="canonical" href={validatedCanonicalUrl} />
       
       {/* 页面类型特定的Meta标签 */}
       {renderPageSpecificMeta(metaData, post, siteInfo)}
@@ -279,7 +288,12 @@ function renderPageSpecificMeta(metaData, post, siteInfo) {
  */
 function renderOpenGraphMeta(metaData, post, siteInfo) {
   const baseUrl = siteConfig('LINK')?.replace(/\/$/, '') || 'https://example.com'
-  const ogImage = post?.pageCoverThumbnail || post?.pageCover || siteInfo?.pageCover || `${baseUrl}/bg_image.jpg`
+  
+  // 使用URL工具函数确保图片URL是绝对URL
+  const ogImage = ensureAbsoluteUrl(
+    post?.pageCoverThumbnail || post?.pageCover || siteInfo?.pageCover || '/bg_image.jpg',
+    baseUrl
+  )
   
   return (
     <>
@@ -322,7 +336,12 @@ function renderOpenGraphMeta(metaData, post, siteInfo) {
  */
 function renderTwitterCardMeta(metaData, post, siteInfo) {
   const baseUrl = siteConfig('LINK')?.replace(/\/$/, '') || 'https://example.com'
-  const twitterImage = post?.pageCoverThumbnail || post?.pageCover || siteInfo?.pageCover || `${baseUrl}/bg_image.jpg`
+  
+  // 使用URL工具函数确保图片URL是绝对URL
+  const twitterImage = ensureAbsoluteUrl(
+    post?.pageCoverThumbnail || post?.pageCover || siteInfo?.pageCover || '/bg_image.jpg',
+    baseUrl
+  )
   const twitterHandle = siteConfig('TWITTER_HANDLE')
   
   return (
