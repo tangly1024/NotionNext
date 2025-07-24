@@ -91,8 +91,19 @@ const SEOEnhanced = props => {
     const optimizedTitle = optimizePageTitle(pageTitle, siteTitle)
     const optimizedDescription = optimizeMetaDescription(rawDescription)
     
-    // 生成URLs
-    const canonicalUrl = generateCanonicalUrl(baseUrl, slug)
+    // 生成URLs - 使用router.asPath而不是slug
+    console.log('[SEO调试] SEOEnhanced组件:', {
+      baseUrl,
+      slug,
+      routerAsPath: router.asPath,
+      meta
+    })
+    
+    // 直接使用router.asPath生成canonical URL
+    const cleanPath = router.asPath.split('?')[0]
+    const canonicalUrl = cleanPath === '/' ? baseUrl : `${baseUrl}${cleanPath}`
+    
+    console.log('[SEO调试] SEOEnhanced生成的URL:', canonicalUrl)
     const ogImageUrl = generateOgImageUrl(
       customMeta.image || meta?.image || post?.pageCoverThumbnail || siteInfo?.pageCover,
       baseUrl
