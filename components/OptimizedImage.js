@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { generateImageAlt } from '@/lib/seo/imageSEO'
+import { isNotionImageUrl, convertToProxyUrl, isNotionImageExpiring } from '@/lib/utils/imageProxy'
 import Head from 'next/head'
 import { useEffect, useRef, useState, useCallback } from 'react'
 
@@ -99,6 +100,17 @@ export default function OptimizedImage({
   const getOptimizedImageUrl = useCallback((originalSrc, targetWidth, format = null) => {
     if (!originalSrc) return null
 
+    // 检查是否为Notion图片URL
+    if (isNotionImageUrl(originalSrc)) {
+      // 如果是Notion图片且即将过期，使用代理
+      if (isNotionImageExpiring(originalSrc, 48)) { // 48小时内过期就使用代理
+        const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
+        return convertToProxyUrl(originalSrc, baseUrl)
+      }
+      // 如果还没过期，直接使用原URL
+      return originalSrc
+    }
+
     // 如果是外部URL，尝试添加格式参数
     if (originalSrc.startsWith('http')) {
       let optimizedUrl = originalSrc
@@ -185,6 +197,22 @@ export default function OptimizedImage({
 
   // 图片加载失败回调
   const handleImageError = useCallback(() => {
+    console.warn('Image loading failed:', imageRef.current?.src)
+    
+    // 如果是Notion图片加载失败，尝试使用代理
+    if (imageRef.current && isNotionImageUrl(src)) {
+      const currentSrc = imageRef.current.src
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
+      const proxySrc = convertToProxyUrl(src, baseUrl)
+      
+      // 如果当前不是代理URL，尝试使用代理
+      if (!currentSrc.includes('/api/image-proxy') && proxySrc !== currentSrc) {
+        console.log('Retrying with proxy URL:', proxySrc)
+        imageRef.current.src = proxySrc
+        return // 不设置错误状态，给代理一次机会
+      }
+    }
+    
     setIsError(true)
     
     if (imageRef.current) {
@@ -197,7 +225,7 @@ export default function OptimizedImage({
       imageRef.current.classList.remove('lazy-image-placeholder')
       imageRef.current.classList.add('lazy-image-error')
     }
-  }, [getPlaceholderSrc])
+  }, [src, getPlaceholderSrc])
 
   // 懒加载逻辑
   useEffect(() => {
