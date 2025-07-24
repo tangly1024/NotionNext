@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { checkSlugHasOneSlash, processPostData } from '@/lib/utils/post'
+import { parseCustomUrl, isCustomCategoryPath, getAllCustomCategoryPaths } from '@/lib/utils/categoryMapping'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
 
@@ -26,17 +27,46 @@ export async function getStaticPaths() {
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
 
-  // 根据slug中的 / 分割成prefix和slug两个字段 ; 例如 article/test
-  // 最终用户可以通过  [domain]/[prefix]/[slug] 路径访问，即这里的 [domain]/article/test
-  const paths = allPages
+  const paths = []
+
+  // 1. 原有的 prefix/slug 路径（例如 article/test）
+  const originalPaths = allPages
     ?.filter(row => checkSlugHasOneSlash(row))
     .map(row => ({
       params: { prefix: row.slug.split('/')[0], slug: row.slug.split('/')[1] }
     }))
+  
+  if (originalPaths) {
+    paths.push(...originalPaths)
+  }
 
-  // 增加一种访问路径 允许通过 [category]/[slug] 访问文章
-  // 例如文章slug 是 test ，然后文章的分类category是 production
-  // 则除了 [domain]/[slug] 以外，还支持分类名访问: [domain]/[category]/[slug]
+  // 2. 自定义分类路径（例如 movie/qiwushi）
+  const customCategoryPaths = getAllCustomCategoryPaths()
+  const postsWithCategory = allPages?.filter(page => 
+    page.type === 'Post' && 
+    page.status === 'Published' && 
+    page.category
+  )
+
+  postsWithCategory?.forEach(post => {
+    const { category, slug: postSlug } = parseCustomUrl('', '')
+    
+    // 为每个有分类的文章生成自定义URL路径
+    customCategoryPaths.forEach(categoryPath => {
+      // 检查这个文章的分类是否匹配当前的自定义分类路径
+      const { category: mappedCategory } = parseCustomUrl(categoryPath, '')
+      
+      if (post.category === mappedCategory) {
+        const slug = post.slug?.split('/').pop() || post.id
+        paths.push({
+          params: { 
+            prefix: categoryPath, 
+            slug: slug 
+          }
+        })
+      }
+    })
+  })
 
   return {
     paths: paths,
@@ -45,26 +75,49 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
-  const fullSlug = prefix + '/' + slug
-  const from = `slug-props-${fullSlug}`
+  const from = `slug-props-${prefix}-${slug}`
   const props = await getGlobalData({ from, locale })
 
-  // 在列表内查找文章
-  props.post = props?.allPages?.find(p => {
-    return (
-      p.type.indexOf('Menu') < 0 &&
-      (p.slug === slug || p.slug === fullSlug || p.id === idToUuid(fullSlug))
-    )
-  })
+  let post = null
 
-  // 处理非列表内文章的内信息
-  if (!props?.post) {
+  // 检查是否为自定义分类路径
+  if (isCustomCategoryPath(prefix)) {
+    // 解析自定义URL
+    const { category: chineseCategory } = parseCustomUrl(prefix, slug)
+    
+    // 根据分类和slug查找文章
+    post = props?.allPages?.find(p => {
+      return (
+        p.type === 'Post' &&
+        p.status === 'Published' &&
+        p.category === chineseCategory &&
+        (p.slug === slug || 
+         p.slug?.endsWith('/' + slug) || 
+         p.id === slug ||
+         p.id === idToUuid(slug))
+      )
+    })
+  } else {
+    // 原有逻辑：处理 prefix/slug 格式
+    const fullSlug = prefix + '/' + slug
+    
+    post = props?.allPages?.find(p => {
+      return (
+        p.type.indexOf('Menu') < 0 &&
+        (p.slug === slug || p.slug === fullSlug || p.id === idToUuid(fullSlug))
+      )
+    })
+  }
+
+  // 处理非列表内文章的信息
+  if (!post) {
     const pageId = slug.slice(-1)[0]
-    if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+    if (pageId && pageId.length >= 32) {
+      post = await getPost(pageId)
     }
   }
+
+  props.post = post
 
   if (!props?.post) {
     // 无法获取文章
@@ -72,6 +125,7 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   } else {
     await processPostData(props, from)
   }
+
   return {
     props,
     revalidate: process.env.EXPORT

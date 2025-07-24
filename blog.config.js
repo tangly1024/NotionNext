@@ -48,6 +48,16 @@ const BLOG = {
   SEO_SITEMAP_VIDEOS: process.env.NEXT_PUBLIC_SEO_SITEMAP_VIDEOS || false, // 启用视频sitemap
   SEO_SITEMAP_CHANGEFREQ_HOME: process.env.NEXT_PUBLIC_SEO_SITEMAP_CHANGEFREQ_HOME || 'daily', // 首页更新频率
   SEO_SITEMAP_CHANGEFREQ_POSTS: process.env.NEXT_PUBLIC_SEO_SITEMAP_CHANGEFREQ_POSTS || 'weekly', // 文章更新频率
+
+  // 自定义分类URL映射
+  CUSTOM_CATEGORY_MAPPING: process.env.NEXT_PUBLIC_CUSTOM_CATEGORY_MAPPING || true, // 启用自定义分类URL映射
+  CATEGORY_URL_MAPPING: {
+    '影视资源': 'movie',
+    '软件资源': 'software', 
+    '教程资源': 'tutorials',
+    '游戏资源': 'games',
+    '书籍资源': 'books'
+  }, // 分类URL映射配置
   SEO_SITEMAP_PRIORITY_HOME: process.env.NEXT_PUBLIC_SEO_SITEMAP_PRIORITY_HOME || 1.0, // 首页优先级
   SEO_SITEMAP_PRIORITY_POSTS: process.env.NEXT_PUBLIC_SEO_SITEMAP_PRIORITY_POSTS || 0.8, // 文章优先级
   
