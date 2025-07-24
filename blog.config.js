@@ -15,9 +15,9 @@ const BLOG = {
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '分享之王', // 您的昵称 例如 tangly1024
-  BIO: process.env.NEXT_PUBLIC_BIO || '一个专注于分享高价值资源的网站', // 作者简介
+  BIO: process.env.NEXT_PUBLIC_BIO || '专注于整理和分享高价值资料的平台。定期更新涵盖学习、职场、生活、工具、影视等多个领域的精选资源，帮助你节省时间，快速获取内容。', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.shareking.vip', // 网站地址
-  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '英语学习,考公资料,考研资料,网盘资源,职业技能教程，影视资源, 效率工具, AI应用, 资源分享网站, 干货下载, 分享之王' ,// 网站关键词 英文逗号隔开
+  KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '分享之王, 学习资源, 职场技能, AI工具, 高价值资料, 效率软件, 网盘资源, 免费资源, 技能提升, 考研资料, 影视资源, 软件分享',// 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
@@ -33,14 +33,14 @@ const BLOG = {
   SEO_MAX_KEYWORDS: process.env.NEXT_PUBLIC_SEO_MAX_KEYWORDS || 10, // 最大关键词数量
   SEO_ENABLE_STRUCTURED_DATA: process.env.NEXT_PUBLIC_SEO_ENABLE_STRUCTURED_DATA || true, // 启用结构化数据
   SEO_ENABLE_BREADCRUMBS: process.env.NEXT_PUBLIC_SEO_ENABLE_BREADCRUMBS || true, // 启用面包屑
-  SEO_ENABLE_HREFLANG: process.env.NEXT_PUBLIC_SEO_ENABLE_HREFLANG || true, // 启用多语言标签
+  SEO_ENABLE_HREFLANG: process.env.NEXT_PUBLIC_SEO_ENABLE_HREFLANG || false, // 启用多语言标签
   SEO_BING_SITE_VERIFICATION: process.env.NEXT_PUBLIC_SEO_BING_SITE_VERIFICATION || '', // Bing网站验证
-  
+
   // Robots.txt配置
   SEO_ROBOTS_ENHANCED: process.env.NEXT_PUBLIC_SEO_ROBOTS_ENHANCED || true, // 启用增强版robots.txt
   SEO_ROBOTS_CRAWL_DELAY: process.env.NEXT_PUBLIC_SEO_ROBOTS_CRAWL_DELAY || 1, // 爬虫延迟（秒）
   SEO_ROBOTS_BLOCK_BOTS: process.env.NEXT_PUBLIC_SEO_ROBOTS_BLOCK_BOTS || true, // 阻止恶意爬虫
-  
+
   // Sitemap配置
   SEO_SITEMAP_ENHANCED: process.env.NEXT_PUBLIC_SEO_SITEMAP_ENHANCED || true, // 启用增强版sitemap
   SEO_SITEMAP_IMAGES: process.env.NEXT_PUBLIC_SEO_SITEMAP_IMAGES || true, // 启用图片sitemap
@@ -53,14 +53,14 @@ const BLOG = {
   CUSTOM_CATEGORY_MAPPING: process.env.NEXT_PUBLIC_CUSTOM_CATEGORY_MAPPING || true, // 启用自定义分类URL映射
   CATEGORY_URL_MAPPING: {
     '影视资源': 'movie',
-    '软件资源': 'software', 
+    '软件资源': 'software',
     '教程资源': 'tutorials',
     '游戏资源': 'games',
     '书籍资源': 'books'
   }, // 分类URL映射配置
   SEO_SITEMAP_PRIORITY_HOME: process.env.NEXT_PUBLIC_SEO_SITEMAP_PRIORITY_HOME || 1.0, // 首页优先级
   SEO_SITEMAP_PRIORITY_POSTS: process.env.NEXT_PUBLIC_SEO_SITEMAP_PRIORITY_POSTS || 0.8, // 文章优先级
-  
+
   // 性能优化配置
   SEO_ENABLE_PERFORMANCE_MONITOR: process.env.NEXT_PUBLIC_SEO_ENABLE_PERFORMANCE_MONITOR || false, // 启用性能监控
   SEO_ENABLE_PRELOAD: process.env.NEXT_PUBLIC_SEO_ENABLE_PRELOAD || true, // 启用资源预加载
