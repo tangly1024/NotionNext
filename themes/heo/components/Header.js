@@ -158,7 +158,7 @@ const Header = props => {
             </div>
             <div
               className={`absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'}`}>
-              <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>
+              <div className='font-bold text-center text-light-400 dark:text-gray-400'>
                 {/* 如果是文章详情页面，显示文章标题；否则显示网站标题和描述 */}
                 {props.post?.title && (router.route === '/[prefix]/[slug]' || router.route === '/[prefix]') ? (
                   props.post.title
@@ -168,7 +168,7 @@ const Header = props => {
                     {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
                   </>
                 )}
-              </h1>
+              </div>
             </div>
           </div>
 
