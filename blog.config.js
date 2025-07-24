@@ -14,7 +14,7 @@ const BLOG = {
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'auto', // ['light', 'dark', 'auto'], // light 日间模式 ， dark夜间模式， auto根据时间和主题自动夜间模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
-  AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '分享之王', // 您的昵称 例如 tangly1024
+  //AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || '分享之王', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '专注于整理和分享高价值资料的平台。定期更新涵盖学习、职场、生活、工具、影视等多个领域的精选资源，帮助你节省时间，快速获取内容。', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.shareking.vip', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || '分享之王, 学习资源, 职场技能, AI工具, 高价值资料, 效率软件, 网盘资源, 免费资源, 技能提升, 考研资料, 影视资源, 软件分享',// 网站关键词 英文逗号隔开
