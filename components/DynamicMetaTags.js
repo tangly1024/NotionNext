@@ -6,6 +6,7 @@ import {
   optimizePageTitle
 } from '@/lib/seo/seoUtils'
 import { generateCanonicalUrl, ensureAbsoluteUrl } from '@/lib/seo/urlUtils'
+import { safeCheckUrl, forceFixUrl } from '@/lib/seo/urlSafetyCheck'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
@@ -30,6 +31,10 @@ export default function DynamicMetaTags({
   const metaData = useMemo(() => {
     const baseUrl = siteConfig('LINK')?.replace(/\/$/, '') || 'https://example.com'
     
+    // 记录调试信息
+    console.log('[SEO调试] 基础URL:', baseUrl)
+    console.log('[SEO调试] 当前路径:', router.asPath)
+    
     // 根据页面类型生成页面数据
     const pageData = generatePageData(router, post, siteInfo, { category, tag, keyword, page })
     
@@ -50,7 +55,9 @@ export default function DynamicMetaTags({
     )
     
     // 使用URL工具函数生成规范的canonical URL
+    console.log('[SEO调试] 生成URL前:', { baseUrl, path: router.asPath })
     const canonicalUrl = generateCanonicalUrl(router.asPath, baseUrl)
+    console.log('[SEO调试] 生成URL后:', canonicalUrl)
     
     return {
       title: optimizedTitle,
@@ -63,11 +70,25 @@ export default function DynamicMetaTags({
   }, [router, post, siteInfo, pageType, customMeta, category, tag, keyword, page])
   
   // 最后验证所有URL格式
-  const validatedCanonicalUrl = metaData.canonicalUrl
+  let validatedCanonicalUrl = metaData.canonicalUrl
+  
+  // 强制修复已知的错误格式
+  validatedCanonicalUrl = forceFixUrl(validatedCanonicalUrl)
+  
+  // 安全检查，确保URL格式正确
+  const baseUrl = siteConfig('LINK')?.replace(/\/$/, '') || 'https://example.com'
+  validatedCanonicalUrl = safeCheckUrl(validatedCanonicalUrl, baseUrl)
   
   // 记录URL生成过程（仅在开发环境）
   if (process.env.NODE_ENV === 'development') {
-    console.log('Generated Canonical URL:', validatedCanonicalUrl)
+    console.log('[SEO调试] 最终Canonical URL:', validatedCanonicalUrl)
+  }
+  
+  // 硬编码修复 - 如果仍然有问题，直接使用正确的格式
+  if (router.asPath.startsWith('/article/') && validatedCanonicalUrl.includes('/http')) {
+    const articleSlug = router.asPath.split('/').pop()
+    validatedCanonicalUrl = `${baseUrl}/article/${articleSlug}`
+    console.log('[SEO修复] 硬编码修复文章URL:', validatedCanonicalUrl)
   }
   
   return (
@@ -295,11 +316,25 @@ function renderOpenGraphMeta(metaData, post, siteInfo) {
     baseUrl
   )
   
+  // 强制修复og:url
+  let ogUrl = metaData.canonicalUrl
+  
+  // 检测并修复错误格式
+  if (ogUrl.includes('/http')) {
+    const matches = ogUrl.match(/^(.*?)\/(https?:\/\/.*?)$/)
+    if (matches && matches.length >= 3) {
+      const path = matches[1]
+      const domain = matches[2]
+      ogUrl = `${domain}/${path}`
+      console.log('[SEO修复] 强制修复og:url:', ogUrl)
+    }
+  }
+  
   return (
     <>
       <meta property="og:title" content={metaData.title} />
       <meta property="og:description" content={metaData.description} />
-      <meta property="og:url" content={metaData.canonicalUrl} />
+      <meta property="og:url" content={ogUrl} />
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
