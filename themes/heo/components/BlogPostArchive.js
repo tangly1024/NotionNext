@@ -48,6 +48,7 @@ const BlogPostArchive = ({ posts = [], archiveTitle, siteInfo }) => {
                       <LazyImage
                         className={'rounded-xl bg-center bg-cover w-40 h-24'}
                         src={post?.pageCoverThumbnail}
+                        alt={post?.title || '文章封面'}
                       />
                     </Link>
                   </div>

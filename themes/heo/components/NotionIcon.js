@@ -12,7 +12,7 @@ const NotionIcon = ({ icon, className = 'w-8 h-8 my-auto inline mr-1' }) => {
 
   if (icon.startsWith('http') || icon.startsWith('data:')) {
     // 这里优先使用传入的 className
-    return <LazyImage src={icon} className={className} />
+    return <LazyImage src={icon} alt="图标" className={className} />
   }
 
   // 对于 emoji 或 svg，设置默认 className，也可以传递不同的样式

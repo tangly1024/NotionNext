@@ -389,7 +389,8 @@ const Layout404 = props => {
                 className='error-img h-60 md:h-full p-4'
                 src={
                   'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'
-                }></LazyImage>
+                }
+                alt="404错误页面插图"></LazyImage>
 
               {/* 右侧文字 */}
               <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>

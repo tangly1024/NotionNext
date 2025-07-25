@@ -142,6 +142,7 @@ function TagsGroupBar() {
                 <LazyImage
                   priority={true}
                   src={g.img_1}
+                  alt={g.title_1}
                   title={g.title_1}
                   className='w-2/3 hidden xl:block'
                 />
@@ -154,6 +155,7 @@ function TagsGroupBar() {
                 <LazyImage
                   priority={true}
                   src={g.img_2}
+                  alt={g.title_2}
                   title={g.title_2}
                   className='w-2/3 hidden xl:block'
                 />

@@ -53,6 +53,7 @@ export default function PostRecommend({ recommendPosts, siteInfo }) {
                 </div>
                 <LazyImage
                   src={headerImage}
+                  alt={post?.title || '推荐文章'}
                   className='absolute top-0 w-full h-full object-cover object-center group-hover:scale-110 group-hover:brightness-50 transform duration-200'
                 />
                 {/* 卡片的阴影遮罩，为了凸显图片上的文字 */}
