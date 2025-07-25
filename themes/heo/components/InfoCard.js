@@ -42,6 +42,11 @@ export function InfoCard(props) {
 
       <h2 className='text-3xl font-extrabold mt-3'>{siteConfig('AUTHOR')}</h2>
 
+      {/* 简短介绍 */}
+      <div className='text-sm text-white/80 mt-2 mb-3'>
+        {siteConfig('BIO_SHORT') || siteConfig('BIO')}
+      </div>
+
       {/* 公告栏 */}
       <Announcement post={notice} style={{ color: 'white !important' }} />
 

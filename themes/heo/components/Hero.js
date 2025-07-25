@@ -84,12 +84,16 @@ function Banner(props) {
       <div
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
-        <div className='text-4xl font-bold mb-3  dark:text-white'>
+        {/* SEO优化的H1标签 */}
+        <h1 className='text-4xl font-bold mb-3 dark:text-white'>
+          欢迎来到分享之王 - 精选高价值资源平台
+        </h1>
+        <div className='text-3xl font-bold mb-3 dark:text-white'>
           {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
           <br />
           {siteConfig('HEO_HERO_TITLE_2', null, CONFIG)}
         </div>
-        <div className='text-xs text-gray-600  dark:text-gray-200'>
+        <div className='text-xs text-gray-600 dark:text-gray-200'>
           {siteConfig('HEO_HERO_TITLE_3', null, CONFIG)}
         </div>
       </div>

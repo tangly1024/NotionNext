@@ -112,7 +112,7 @@ function generatePageData(router, post, siteInfo, { category, tag, keyword, page
   switch (route) {
     case '/':
       return {
-        title: `${siteInfo?.title} | 精选学习、职场、AI高价值资源`,
+        title: '精选学习、职场、AI高价值资源分享平台 - 提升思维认知',
         description: siteInfo?.description,
         keywords: siteInfo?.keywords?.split(',') || [],
         type: 'homepage'

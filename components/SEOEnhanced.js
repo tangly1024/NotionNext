@@ -384,7 +384,7 @@ const getSEOMeta = (props, router, locale) => {
   switch (router.route) {
     case '/':
       return {
-        title: `${siteInfo?.title} | 精选学习、职场、AI高价值资源`,
+        title: '精选学习、职场、AI高价值资源分享平台 - 提升思维认知',
         description: siteInfo?.description,
         image: siteInfo?.pageCover,
         slug: '',

@@ -165,7 +165,7 @@ const Header = props => {
                 ) : (
                   <div>
                     {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
-                    {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
+                    {(siteConfig('BIO_SHORT') || siteConfig('BIO')) && <>|</>} {siteConfig('BIO_SHORT') || siteConfig('BIO')}
                   </div>
                 )}
               </div>
