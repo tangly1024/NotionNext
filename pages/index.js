@@ -17,7 +17,7 @@ const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return (
     <>
-      Analytics
+      <Analytics />
       <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
     </>
   )
