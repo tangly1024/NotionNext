@@ -1,10 +1,7 @@
 const CONFIG = {
   NEXT_HOME_BANNER: true, // 首页是否显示大图及标语 [true,false]
   NEXT_HOME_BANNER_STRINGS: [
-    'Hi，我是一个程序员',
-    'Hi，我是一个打工人',
-    'Hi，我是一个干饭人',
-    '欢迎来到我的博客🎉'
+    '欢迎来到灵魂创作新世界'
   ], // 首页大图标语文字
 
   NEXT_NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
@@ -21,7 +18,7 @@ const CONFIG = {
   NEXT_RIGHT_BAR: true, // 是否显示右侧栏
   NEXT_RIGHT_LATEST_POSTS: true, // 右侧栏最新文章
   NEXT_RIGHT_CATEGORY_LIST: true, // 右侧边栏文章分类列表
-  NEXT_RIGHT_TAG_LIST: true, // 右侧边栏标签分类列表
+  NEXT_RIGHT_TAG_LIST: false, // 右侧边栏标签分类列表
   NEXT_RIGHT_AD: false, // 右侧广告
 
   // 菜单
@@ -33,7 +30,7 @@ const CONFIG = {
 
   NEXT_WIDGET_TO_TOP: true, // 是否显示回顶
   NEXT_WIDGET_TO_BOTTOM: false, // 显示回底
-  NEXT_WIDGET_DARK_MODE: false, // 显示日间/夜间模式切换
+  NEXT_WIDGET_DARK_MODE: true, // 显示日间/夜间模式切换
   NEXT_WIDGET_TOC: true, // 移动端显示悬浮目录
 
   NEXT_ARTICLE_RELATE_POSTS: true, // 相关文章推荐
