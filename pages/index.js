@@ -6,6 +6,7 @@ import { generateRss } from '@/lib/rss'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/redirect'
+import { Analytics } from "@vercel/analytics/next"
 
 /**
  * 首页布局
@@ -14,7 +15,13 @@ import { generateRedirectJson } from '@/lib/redirect'
  */
 const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
+  return (
+    <>
+      Analytics
+      <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
+    </>
+  )
+
 }
 
 /**
