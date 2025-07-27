@@ -1,6 +1,6 @@
 import QrCode from '@/components/QrCode'
 import { siteConfig } from '@/lib/config'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
 
 /**
