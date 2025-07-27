@@ -51,7 +51,7 @@ export const MenuItemDrop = ({ link }) => {
                   target={link?.target}
                   className='my-auto h-9 pl-4 items-center justify-start flex not:last-child:border-b-0 border-b text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 '>
                   {sLink.icon && (
-                    <i className={`${sLink.icon} w-4 text-center`} />
+                    <i className={`${sLink.icon} w-4 mr-2 text-center`} />
                   )}
                   {sLink.name}
                   {sLink.slot}
