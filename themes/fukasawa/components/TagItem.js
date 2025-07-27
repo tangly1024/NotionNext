@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useGlobal } from '@/lib/global'
 
 const TagItem = ({ tag, selected }) => {
@@ -7,7 +7,7 @@ const TagItem = ({ tag, selected }) => {
     <div> { locale.COMMON.NOTAG } </div>
   }
   return (
-    <Link
+    <SmartLink
       href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
       passHref
       legacyBehavior>
@@ -19,7 +19,7 @@ const TagItem = ({ tag, selected }) => {
           {selected && <i className='mr-1 fas fa-tag'/>} {`${tag.name} `} {tag.count ? `(${tag.count})` : ''}
         </div>
       </li>
-    </Link>
+    </SmartLink>
   );
 }
 

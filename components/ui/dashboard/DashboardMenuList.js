@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 仪表盘菜单
@@ -43,12 +43,12 @@ export default function DashboardMenuList() {
             className={`rounded-lg cursor-pointer block ${
               isActive ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
             }`}>
-            <Link
+            <SmartLink
               href={item.href}
               className='block py-2 px-4 w-full items-center justify-center'>
               <i className={`${item.icon} w-6 mr-2`}></i>
               <span className='whitespace-nowrap'>{item.title}</span>
-            </Link>
+            </SmartLink>
           </li>
         )
       })}
