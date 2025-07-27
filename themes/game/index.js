@@ -9,7 +9,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { deepClone, isBrowser, shuffleArray } from '@/lib/utils'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Announcement from './components/Announcement'
@@ -400,7 +400,7 @@ const LayoutCategoryIndex = props => {
         className='duration-200 flex flex-wrap my-4 gap-2'>
         {categoryOptions?.map(category => {
           return (
-            <Link
+            <SmartLink
               key={category.name}
               href={`/category/${category.name}`}
               passHref
@@ -412,7 +412,7 @@ const LayoutCategoryIndex = props => {
                 {/* <i className='mr-4 fas fa-folder' /> */}
                 {category.name}({category.count})
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>
@@ -433,14 +433,14 @@ const LayoutTagIndex = props => {
         <div id='tags-list' className='duration-200 flex flex-wrap my-4 gap-2'>
           {tagOptions.map(tag => {
             return (
-              <Link
+              <SmartLink
                 key={tag.name}
                 href={`/tag/${encodeURIComponent(tag.name)}`}
                 passHref
                 className={` select-none cursor-pointer flex bg-white rounded-lg hover:bg-gray-500 hover:text-white duration-200 mr-2 py-1 px-2 text-xs whitespace-nowrap dark:hover:text-white  hover:shadow-xl  dark:bg-gray-800`}>
                 <i className='mr-1 fas fa-tag' />{' '}
                 {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
-              </Link>
+              </SmartLink>
             )
           })}
         </div>
