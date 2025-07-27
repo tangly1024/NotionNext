@@ -32,7 +32,7 @@ import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { SignIn, SignUp } from '@clerk/nextjs'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { ArticleLock } from './components/ArticleLock'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
@@ -50,34 +50,49 @@ import { SVG404 } from './components/svg/SVG404'
  * @returns
  */
 const LayoutBase = props => {
-  const { children } = props
+    const { children } = props
+    // 极简模式，会隐藏掉页头页脚等组件，便于嵌入网页等功能 
+    const { isLiteMode } = useGlobal()
+    const router = useRouter()
 
-  // 加载wow动画
-  useEffect(() => {
-    loadWowJS()
-  }, [])
+    // 加载wow动画
+    useEffect(() => {
+        loadWowJS()
+    }, [])
 
-  return (
-    <div
-      id='theme-starter'
-      className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
-      <Style />
-      {/* 页头 */}
-      <Header {...props} />
+    // 特殊简化布局，如果识别到路由中有 ?lite=true，则给网页添加一些自定义的css样式，例如背景改成黑色
+    useEffect(() => {
+        const isLiteMode = router.query.lite === 'true'
+        console.log(router.query.lite, isLiteMode)
+        if (isLiteMode) {
+            document.body.style.backgroundColor = 'black'
+            document.body.style.color = 'white'
+        }
+    }, [])
 
-      <div id='main-wrapper' className='grow'>
-        {children}
-      </div>
+    return (
+        <div
+            id='theme-starter'
+            className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-[#212b36] scroll-smooth`}>
+            <Style />
 
-      {/* 页脚 */}
-      <Footer {...props} />
+            {/* 页头 */}
+            {isLiteMode ? <></> : <Header {...props} />}
 
-      {/* 悬浮按钮 */}
-      <BackToTopButton />
+            <div id='main-wrapper' className='grow'>
+                {children}
+            </div>
 
-      {/* <MadeWithButton/> */}
-    </div>
-  )
+            {/* 页脚 */}
+            
+            {isLiteMode ? <></> : <Footer {...props} />}
+
+            {/* 悬浮按钮 */}
+            {isLiteMode ? <></> : <BackToTopButton />}
+
+            {/* <MadeWithButton/> */}
+        </div>
+    )
 }
 
 /**
@@ -114,10 +129,10 @@ const LayoutIndex = props => {
         <>
           <Blog posts={posts} />
           <div className='container mx-auto flex justify-end mb-4'>
-            <Link className='text-lg underline' href={'/archive'}>
+            <SmartLink className='text-lg underline' href={'/archive'}>
               <span>{locale.COMMON.MORE}</span>
               <i className='ml-2 fas fa-arrow-right' />
-            </Link>
+            </SmartLink>
           </div>
         </>
       )}
@@ -283,11 +298,11 @@ const Layout404 = props => {
                 <p className='mb-8 text-base text-body-color dark:text-dark-6'>
                   {siteConfig('STARTER_404_TEXT')}
                 </p>
-                <Link
+                <SmartLink
                   href='/'
                   className='py-3 text-base font-medium text-white transition rounded-md bg-dark px-7 hover:bg-primary'>
                   {siteConfig('STARTER_404_BACK')}
-                </Link>
+                </SmartLink>
               </div>
             </div>
           </div>
@@ -347,24 +362,24 @@ const LayoutPostList = props => {
                     className='wow fadeInUp group mb-10'
                     data-wow-delay='.1s'>
                     <div className='mb-8 overflow-hidden rounded-[5px]'>
-                      <Link href={item?.href} className='block'>
+                      <SmartLink href={item?.href} className='block'>
                         <img
                           src={item.pageCoverThumbnail}
                           alt={item.title}
                           className='w-full transition group-hover:rotate-6 group-hover:scale-125'
                         />
-                      </Link>
+                      </SmartLink>
                     </div>
                     <div>
                       <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
                         {item.publishDay}
                       </span>
                       <h3>
-                        <Link
+                        <SmartLink
                           href={item?.href}
                           className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
                           {item.title}
-                        </Link>
+                        </SmartLink>
                       </h3>
                       <p className='max-w-[370px] text-base text-body-color dark:text-dark-6'>
                         {item.summary}
@@ -400,7 +415,7 @@ const LayoutCategoryIndex = props => {
           className='duration-200 flex flex-wrap justify-center items-center '>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -412,7 +427,7 @@ const LayoutCategoryIndex = props => {
                   <i className='mr-4 fas fa-folder' />
                   {category.name}({category.count})
                 </h2>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>
@@ -441,7 +456,7 @@ const LayoutTagIndex = props => {
           {tagOptions.map(tag => {
             return (
               <div key={tag.name} className='p-2'>
-                <Link
+                <SmartLink
                   key={tag}
                   href={`/tag/${encodeURIComponent(tag.name)}`}
                   passHref
@@ -450,7 +465,7 @@ const LayoutTagIndex = props => {
                     <i className='mr-1 fas fa-tag' />{' '}
                     {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
                   </div>
-                </Link>
+                </SmartLink>
               </div>
             )
           })}
