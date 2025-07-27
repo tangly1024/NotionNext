@@ -2,7 +2,7 @@ import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import BeiAnSite from '@/components/BeiAnSite'
 import CopyRightDate from '@/components/CopyRightDate'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 /**
@@ -40,13 +40,13 @@ const Footer = props => {
                 className={'flex flex-col space-y-2 text-start'}>
                 {categoryOptions?.map(category => {
                   return (
-                    <Link
+                    <SmartLink
                       key={`${category.name}`}
                       title={`${category.name}`}
                       href={`/category/${category.name}`}
                       passHref>
                       {category.name}
-                    </Link>
+                    </SmartLink>
                   )
                 })}
               </nav>
@@ -62,13 +62,13 @@ const Footer = props => {
                 className={'flex flex-col space-y-2 text-start'}>
                 {customMenu?.map(menu => {
                   return (
-                    <Link
+                    <SmartLink
                       key={`${menu.name}`}
                       title={`${menu.name}`}
                       href={`${menu.href}`}
                       passHref>
                       {menu.name}
-                    </Link>
+                    </SmartLink>
                   )
                 })}
               </nav>

@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import algoliasearch from 'algoliasearch'
 import throttle from 'lodash/throttle'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import {
   Fragment,
@@ -357,7 +357,7 @@ function TagGroups() {
     <div id='tags-group' className='dark:border-gray-700 space-y-2'>
       {firstTenTags?.map((tag, index) => {
         return (
-          <Link
+          <SmartLink
             passHref
             key={index}
             href={`/tag/${encodeURIComponent(tag.name)}`}
@@ -373,7 +373,7 @@ function TagGroups() {
                 <></>
               )}
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </div>
