@@ -1,5 +1,5 @@
 import LazyImage from '@/components/LazyImage'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 最新文章列表
@@ -22,7 +22,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
           : siteInfo?.pageCover
 
         return (
-          <Link
+          <SmartLink
             key={post.id}
             passHref
             title={post.title}
@@ -42,7 +42,7 @@ const LatestPostsGroup = ({ latestPosts, siteInfo }) => {
               }>
               <div className='line-clamp-2 menu-link'>{post.title}</div>
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </div>
