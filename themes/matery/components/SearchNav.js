@@ -2,7 +2,7 @@
 import SearchInput from './SearchInput'
 import TagItemMini from './TagItemMini'
 import Card from './Card'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useEffect, useRef } from 'react'
 import { useGlobal } from '@/lib/global'
 
@@ -34,11 +34,11 @@ export default function SearchNave(props) {
                 <div id="category-list" className="duration-200 flex flex-wrap mx-8">
                     {categoryOptions?.map(category => {
                       return (
-                            <Link key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
+                            <SmartLink key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
                                 <div className={' duration-300 dark:hover:text-white rounded-lg px-5 cursor-pointer py-2 hover:bg-indigo-400 hover:text-white'}>
                                     <i className="mr-4 fas fa-folder" /> {category.name}({category.count})
                                 </div>
-                            </Link>
+                            </SmartLink>
                       )
                     })}
                 </div>

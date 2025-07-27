@@ -1,5 +1,5 @@
 import Collapse from '@/components/Collapse'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 
 /**
@@ -32,7 +32,7 @@ export const MenuItemCollapse = props => {
         className='w-full px-8 py-3 text-left border-b dark:bg-hexo-black-gray dark:border-black'
         onClick={toggleShow}>
         {!hasSubMenu && (
-          <Link
+          <SmartLink
             href={link?.href}
             target={link?.target}
             className='items-center flex justify-between pl-2 pr-4 dark:text-gray-200 no-underline tracking-widest pb-1'>
@@ -44,7 +44,7 @@ export const MenuItemCollapse = props => {
               )}
               {link?.name}
             </span>
-          </Link>
+          </SmartLink>
         )}
         {hasSubMenu && (
           <div
@@ -72,7 +72,7 @@ export const MenuItemCollapse = props => {
               <div
                 key={index}
                 className='dark:bg-black text-left px-10 justify-start text-blue-600 dark:text-blue-300 bg-gray-50 hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200 border-b dark:border-gray-800 py-3 pr-6'>
-                <Link href={sLink.href} target={link?.target}>
+                <SmartLink href={sLink.href} target={link?.target}>
                   <span className='ml-4 text-sm'>
                     {sLink?.icon && (
                       <span className='mr-2 w-4'>
@@ -81,7 +81,7 @@ export const MenuItemCollapse = props => {
                     )}
                     {sLink.title}
                   </span>
-                </Link>
+                </SmartLink>
               </div>
             )
           })}
