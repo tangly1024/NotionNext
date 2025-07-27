@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 export const MenuItemNormal = props => {
@@ -8,7 +8,7 @@ export const MenuItemNormal = props => {
   const selected = router.pathname === link.href || router.asPath === link.href
 
   return (
-    <Link
+    <SmartLink
       key={link.href}
       title={link.href}
       href={link.href}
@@ -23,6 +23,6 @@ export const MenuItemNormal = props => {
         <div>{link.name}</div>
       </div>
       {link.slot}
-    </Link>
+    </SmartLink>
   )
 }

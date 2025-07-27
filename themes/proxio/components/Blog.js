@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 博文列表
@@ -69,7 +69,7 @@ export const Blog = ({ posts }) => {
                     className='wow fadeInUp group mb-10 relative overflow-hidden blog'
                     data-wow-delay='.1s'>
                     <div className='relative rounded-xl border overflow-hidden shadow-md dark:border-gray-700 dark:bg-gray-800'>
-                      <Link href={item?.href} className='block'>
+                      <SmartLink href={item?.href} className='block'>
                         {item.pageCoverThumbnail && (
                           // 图片半透明
                           <LazyImage
@@ -92,7 +92,7 @@ export const Blog = ({ posts }) => {
                             className='absolute max-h-full object-cover'
                           />
                         </div>
-                      </Link>
+                      </SmartLink>
                     </div>
                     {/* 内容部分 */}
                     <div className='relative z-10 p-4'>
@@ -100,11 +100,11 @@ export const Blog = ({ posts }) => {
                         {item.publishDay}
                       </span>
                       <h3>
-                        <Link
+                        <SmartLink
                           href={item?.href}
                           className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
                           {item.title}
-                        </Link>
+                        </SmartLink>
                       </h3>
                     </div>
                   </div>
