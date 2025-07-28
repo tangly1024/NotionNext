@@ -1,6 +1,6 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
 
@@ -45,7 +45,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         {/* 图片封面 */}
         {showPageCover && (
           <div className='md:w-5/12 overflow-hidden'>
-            <Link href={post?.href}>
+            <SmartLink href={post?.href}>
               <>
                 <LazyImage
                   priority={index === 1}
@@ -54,7 +54,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                   className='h-56 w-full object-cover object-center group-hover:scale-110 duration-500'
                 />
               </>
-            </Link>
+            </SmartLink>
           </div>
         )}
       </div>
