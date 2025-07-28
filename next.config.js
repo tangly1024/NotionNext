@@ -256,9 +256,9 @@ const nextConfig = {
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {
-    // export 静态导出时 忽略/pages/sitemap.xml.js ， 否则和getServerSideProps这个动态文件冲突
+    // 保留sitemap.xml.js的动态生成功能
     const pages = { ...defaultPathMap }
-    delete pages['/sitemap.xml']
+    // 只删除auth相关页面，保留sitemap
     delete pages['/auth']
     return pages
   },
