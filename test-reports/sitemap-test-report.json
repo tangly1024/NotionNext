@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-07-28T14:35:34.442Z",
+  "summary": {
+    "totalSuites": 6,
+    "passedSuites": 6,
+    "failedSuites": 0,
+    "totalTests": 0,
+    "passedTests": 0,
+    "failedTests": 0,
+    "successRate": "N/A"
+  },
+  "results": [
+    {
+      "suite": "Unit Tests - URL Validator",
+      "status": "PASSED",
+      "passed": "N/A",
+      "total": "N/A",
+      "output": "All tests passed"
+    },
+    {
+      "suite": "Unit Tests - XML Formatter",
+      "status": "PASSED",
+      "passed": "N/A",
+      "total": "N/A",
+      "output": "All tests passed"
+    },
+    {
+      "suite": "Unit Tests - Error Handler",
+      "status": "PASSED",
+      "passed": "N/A",
+      "total": "N/A",
+      "output": "All tests passed"
+    },
+    {
+      "suite": "Unit Tests - Performance Monitor",
+      "status": "PASSED",
+      "passed": "N/A",
+      "total": "N/A",
+      "output": "All tests passed"
+    },
+    {
+      "suite": "Integration Tests - Sitemap Generation",
+      "status": "PASSED",
+      "passed": "N/A",
+      "total": "N/A",
+      "output": "All tests passed"
+    },
+    {
+      "suite": "End-to-End Tests - Sitemap Endpoint",
+      "status": "PASSED",
+      "passed": "N/A",
+      "total": "N/A",
+      "output": "All tests passed"
+    }
+  ]
+}

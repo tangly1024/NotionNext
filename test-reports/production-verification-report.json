@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-07-28T14:12:45.237Z",
+  "domain": "https://your-domain.com",
+  "summary": {
+    "totalChecks": 8,
+    "passedChecks": 2,
+    "failedChecks": 6,
+    "successRate": "25.0"
+  },
+  "results": [
+    {
+      "name": "Sitemap Accessibility",
+      "success": false,
+      "details": "HTTP 302: Found"
+    },
+    {
+      "name": "XML Format Validation",
+      "success": false,
+      "details": "Missing XML declaration"
+    },
+    {
+      "name": "Content Analysis",
+      "success": false,
+      "details": "No URLs found in sitemap"
+    },
+    {
+      "name": "URL Validation",
+      "success": false,
+      "details": "No URLs found to validate"
+    },
+    {
+      "name": "Response Headers",
+      "success": false,
+      "details": "✗ Content-Type: text/html; charset=UTF-8, ✗ No Cache-Control header, ✗ No Last-Modified header"
+    },
+    {
+      "name": "Performance Test",
+      "success": true,
+      "details": "Response time: 614ms, Size: 0.00KB"
+    },
+    {
+      "name": "Enhanced Sitemap Check",
+      "success": true,
+      "details": "Enhanced sitemaps: ✗ sitemap-posts.xml (302), ✗ sitemap-pages.xml (302), ✗ sitemap-index.xml (302)"
+    },
+    {
+      "name": "robots.txt Integration",
+      "success": false,
+      "details": "robots.txt missing sitemap reference"
+    }
+  ]
+}
