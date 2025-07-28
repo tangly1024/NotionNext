@@ -8,6 +8,11 @@
 const Style = () => {
     return <style jsx global>{`
 
+    // 在这里或文件末尾添加以下规则：关闭主题切换
+    #themeSwitcher {
+        display: none !important;
+    }
+    
     // 底色
     body{
         background-color: white;
