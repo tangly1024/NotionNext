@@ -2,7 +2,7 @@ import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 /**
@@ -20,14 +20,14 @@ const BlogItem = ({ post }) => {
       className={`${showPageCover ? 'flex md:flex-row flex-col-reverse' : ''} replace mb-12 `}>
       <div className={`${showPageCover ? 'md:w-7/12' : ''}`}>
         <h2 className='mb-4'>
-          <Link
+          <SmartLink
             href={post?.href}
             className='text-black dark:text-gray-100 text-xl md:text-2xl no-underline hover:underline'>
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post.pageIcon} />
             )}
             {post?.title}
-          </Link>
+          </SmartLink>
         </h2>
 
         <div className='mb-4 text-sm text-gray-700 dark:text-gray-300'>
@@ -40,11 +40,11 @@ const BlogItem = ({ post }) => {
           {post.category && (
             <>
               <span className='font-bold mx-1'> | </span>
-              <Link
+              <SmartLink
                 href={`/category/${post.category}`}
                 className='text-gray-700 dark:text-gray-300 hover:underline'>
                 {post.category}
-              </Link>
+              </SmartLink>
             </>
           )}
           {/* <span className="font-bold mx-1"> | </span> */}
@@ -68,12 +68,12 @@ const BlogItem = ({ post }) => {
       {/* 图片封面 */}
       {showPageCover && (
         <div className='md:w-5/12 w-full h-44 overflow-hidden p-1'>
-          <Link href={post?.href} passHref legacyBehavior>
+          <SmartLink href={post?.href} passHref legacyBehavior>
             <LazyImage
               src={post?.pageCoverThumbnail}
               className='w-full bg-cover hover:scale-110 duration-200'
             />
-          </Link>
+          </SmartLink>
         </div>
       )}
     </article>

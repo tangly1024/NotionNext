@@ -1,7 +1,7 @@
 import Collapse from '@/components/Collapse'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useMovieGlobal } from '..'
@@ -101,11 +101,11 @@ export const Header = props => {
     <>
       <header className='w-full px-8 h-20 z-20 flex lg:flex-row md:flex-col justify-between items-center'>
         {/* 左侧Logo */}
-        <Link
+        <SmartLink
           href='/'
           className='logo whitespace-nowrap text-2xl md:text-3xl font-bold text-gray-dark no-underline flex items-center'>
           {siteConfig('TITLE')}
-        </Link>
+        </SmartLink>
 
         <div className='md:w-auto text-center flex space-x-2'>
           {/* 右侧菜单 */}
