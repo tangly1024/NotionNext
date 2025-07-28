@@ -106,6 +106,48 @@ export default function ResourcePreloader({
     }
   }
 
+  // 判断是否应该预加载图片
+  const shouldPreloadImage = (imageUrl) => {
+    if (!imageUrl) return false
+    
+    try {
+      // 避免预加载过大的图片
+      let url, params
+      
+      if (typeof window !== 'undefined') {
+        url = new URL(imageUrl, window.location.origin)
+        params = new URLSearchParams(url.search)
+      } else {
+        // 服务端渲染时的简单URL解析
+        const urlParts = imageUrl.split('?')
+        if (urlParts.length > 1) {
+          params = new URLSearchParams(urlParts[1])
+        } else {
+          params = new URLSearchParams()
+        }
+      }
+      
+      const width = params.get('w') || params.get('width')
+      
+      // 如果图片宽度超过1200px，不预加载
+      if (width && parseInt(width) > 1200) {
+        return false
+      }
+      
+      // 只预加载首屏可能用到的图片格式
+      const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.avif']
+      const hasAllowedExtension = allowedExtensions.some(ext => 
+        imageUrl.toLowerCase().includes(ext)
+      )
+      
+      return hasAllowedExtension || imageUrl.includes('images/') || imageUrl.includes('avatar')
+    } catch (error) {
+      // URL解析失败时，使用保守策略
+      console.warn('Failed to parse image URL for preload check:', imageUrl, error)
+      return imageUrl.includes('logo') || imageUrl.includes('avatar')
+    }
+  }
+
   // 生成预加载链接
   const generatePreloadLinks = () => {
     const links = []
@@ -128,14 +170,19 @@ export default function ResourcePreloader({
       })
     }
 
-    // 图片预加载（只预加载高优先级图片）
+    // 图片预加载（只预加载首屏关键图片，避免预加载警告）
     const prioritizedImages = prioritizeResources(deduplicateResources(allResources.images), 'images')
-    prioritizedImages.slice(0, 3).forEach((image, index) => { // 限制预加载数量
+    const criticalImages = prioritizedImages.filter(image => {
+      const priority = getPriority(image, 'images')
+      return priority >= 90 // 只预加载优先级90以上的图片（logo、hero图等）
+    })
+    
+    criticalImages.slice(0, 2).forEach((image, index) => { // 进一步限制为2张
       const imageUrl = typeof image === 'string' ? image : image.src
       const imageSizes = typeof image === 'object' ? image.sizes : undefined
       const imageSrcSet = typeof image === 'object' ? image.srcSet : undefined
       
-      if (imageUrl) {
+      if (imageUrl && shouldPreloadImage(imageUrl)) {
         links.push(
           <link
             key={`image-${imageUrl}-${index}`}

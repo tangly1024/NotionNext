@@ -161,14 +161,84 @@ export default function LazyImage({
     <>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img {...imgProps} />
-      {/* 预加载 */}
-      {priority && (
+      {/* 预加载关键图片 - 只预加载真正关键的首屏图片，避免预加载警告 */}
+      {priority && typeof window !== 'undefined' && shouldPreloadImage(src) && (
         <Head>
-          <link rel='preload' as='image' href={adjustImgSize(src, maxWidth)} />
+          <link 
+            rel='preload' 
+            as='image' 
+            href={adjustImgSize(src, maxWidth)}
+            // 添加媒体查询，只在合适的屏幕尺寸下预加载
+            media={width && height ? `(max-width: ${Math.max(width * 2, 1200)}px)` : undefined}
+          />
         </Head>
       )}
     </>
   )
+}
+
+/**
+ * 判断是否应该预加载图片
+ * 避免预加载过多图片导致浏览器警告
+ * @param {string} src - 图片源地址
+ * @returns {boolean} 是否应该预加载
+ */
+const shouldPreloadImage = (src) => {
+  if (!src) return false
+  
+  const srcLower = src.toLowerCase()
+  
+  // 排除明确不应该预加载的图片类型
+  const excludePatterns = [
+    '/images/heo/', // 排除heo主题的内容图片
+    'thumbnail', // 排除缩略图
+    'pageCover', // 排除页面封面
+    '/20', // 排除年份路径的图片（通常是内容图片）
+    'notion', // 排除notion图片
+    'unsplash', // 排除unsplash图片
+    'pixabay', // 排除其他图片服务
+    'pexels'
+  ]
+  
+  // 如果匹配排除模式，不预加载
+  if (excludePatterns.some(pattern => srcLower.includes(pattern))) {
+    return false
+  }
+  
+  // 只预加载真正关键的图片类型（更严格的条件）
+  const criticalKeywords = [
+    'logo', 'avatar', 'icon'  // 只保留最关键的图片类型
+  ]
+  
+  const isCritical = criticalKeywords.some(keyword => 
+    srcLower.includes(keyword)
+  )
+  
+  // 如果不是关键图片，不预加载
+  if (!isCritical) return false
+  
+  try {
+    // 检查图片尺寸参数，避免预加载大图
+    const url = new URL(src, window.location.origin)
+    const params = new URLSearchParams(url.search)
+    const width = params.get('w') || params.get('width')
+    
+    // 如果图片宽度超过200px，不预加载（更严格的限制）
+    if (width && parseInt(width) > 200) {
+      return false
+    }
+    
+    // 检查文件大小相关参数
+    const quality = params.get('q') || params.get('quality')
+    if (quality && parseInt(quality) > 60) {
+      return false // 更严格的质量限制
+    }
+    
+    return true
+  } catch (error) {
+    // URL解析失败时，只预加载明确的logo和icon
+    return srcLower.includes('logo') || srcLower.includes('icon')
+  }
 }
 
 /**

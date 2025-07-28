@@ -28,6 +28,7 @@ const BLOG = {
 
   // SEO增强功能
   SEO_ENHANCED_MODE: process.env.NEXT_PUBLIC_SEO_ENHANCED_MODE || true, // 是否启用增强版SEO
+  SEO_DEBUG_MODE: process.env.NEXT_PUBLIC_SEO_DEBUG_MODE || false, // 是否启用SEO调试日志
   SEO_TITLE_SEPARATOR: process.env.NEXT_PUBLIC_SEO_TITLE_SEPARATOR || ' | ', // 标题分隔符
   SEO_MAX_TITLE_LENGTH: process.env.NEXT_PUBLIC_SEO_MAX_TITLE_LENGTH || 60, // 最大标题长度
   SEO_MAX_DESCRIPTION_LENGTH: process.env.NEXT_PUBLIC_SEO_MAX_DESCRIPTION_LENGTH || 160, // 最大描述长度

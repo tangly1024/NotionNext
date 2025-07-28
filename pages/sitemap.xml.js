@@ -3,7 +3,6 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
-import { getServerSideSitemap } from 'next-sitemap'
 
 export const getServerSideProps = async ctx => {
   let fields = []
@@ -20,7 +19,7 @@ export const getServerSideProps = async ctx => {
     })
     const link = siteConfig(
       'LINK',
-      siteData?.siteInfo?.link,
+      'https://www.shareking.vip', // 强制使用正确的域名
       siteData.NOTION_CONFIG
     )
     const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
@@ -29,12 +28,22 @@ export const getServerSideProps = async ctx => {
 
   fields = getUniqueFields(fields);
 
-  // 缓存
+  // 生成标准的XML sitemap
+  const xml = generateSitemapXML(fields)
+
+  // 设置正确的内容类型和缓存
+  ctx.res.setHeader('Content-Type', 'application/xml')
   ctx.res.setHeader(
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=59'
   )
-  return getServerSideSitemap(ctx, fields)
+  
+  ctx.res.write(xml)
+  ctx.res.end()
+
+  return {
+    props: {}
+  }
 }
 
 function generateLocalesSitemap(link, allPages, locale) {
@@ -115,6 +124,76 @@ function getUniqueFields(fields) {
   });
 
   return Array.from(uniqueFieldsMap.values());
+}
+
+/**
+ * 生成标准的XML sitemap格式
+ */
+function generateSitemapXML(fields) {
+  // 过滤和清理URL
+  const cleanFields = fields.filter(field => {
+    // 确保URL是有效的
+    if (!field.loc || typeof field.loc !== 'string') return false
+    
+    // 移除包含其他域名的错误URL
+    if (field.loc.includes('https://www.netdiskso.xyz') || 
+        field.loc.includes('https://shareking.vip/about')) {
+      return false
+    }
+    
+    // 移除包含片段标识符的URL
+    if (field.loc.includes('#')) {
+      return false
+    }
+    
+    // 确保URL是绝对路径
+    if (!field.loc.startsWith('http')) {
+      return false
+    }
+    
+    return true
+  }).map(field => {
+    // 清理和标准化字段
+    return {
+      loc: escapeXml(field.loc),
+      lastmod: field.lastmod || new Date().toISOString().split('T')[0],
+      changefreq: field.changefreq || 'weekly',
+      priority: field.priority || '0.5'
+    }
+  })
+
+  // 生成XML内容
+  let urlsXml = ''
+  cleanFields.forEach(field => {
+    urlsXml += `  <url>
+    <loc>${field.loc}</loc>
+    <lastmod>${field.lastmod}</lastmod>
+    <changefreq>${field.changefreq}</changefreq>
+    <priority>${field.priority}</priority>
+  </url>
+`
+  })
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${urlsXml}</urlset>`
+}
+
+/**
+ * XML转义函数
+ */
+function escapeXml(str) {
+  if (!str) return ''
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
 }
 
 export default () => {}

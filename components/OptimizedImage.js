@@ -45,6 +45,37 @@ export default function OptimizedImage({
   const isClient = useClientOnly()
   const { getItem, setItem } = useStorage('sessionStorage')
 
+  // 判断是否应该预加载这张图片
+  const shouldPreloadThisImage = useCallback((imageSrc, isPriority) => {
+    if (!imageSrc || !isPriority) return false
+    
+    // 只预加载真正关键的图片
+    const criticalKeywords = ['logo', 'avatar', 'hero', 'banner', 'cover']
+    const isCritical = criticalKeywords.some(keyword => 
+      imageSrc.toLowerCase().includes(keyword)
+    )
+    
+    // 避免预加载过多图片
+    if (!isCritical) return false
+    
+    // 检查图片尺寸，避免预加载大图
+    try {
+      const url = new URL(imageSrc, typeof window !== 'undefined' ? window.location.origin : 'http://localhost')
+      const params = new URLSearchParams(url.search)
+      const width = params.get('w') || params.get('width')
+      
+      // 如果图片宽度超过800px，不预加载
+      if (width && parseInt(width) > 800) {
+        return false
+      }
+    } catch (error) {
+      // URL解析失败，使用保守策略
+      return isCritical
+    }
+    
+    return true
+  }, [])
+
   // 检测浏览器支持的图片格式（优化版，避免水合错误）
   useEffect(() => {
     if (!isClient) return // 只在客户端运行
@@ -329,15 +360,18 @@ export default function OptimizedImage({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img {...imgProps} />
       
-      {/* 预加载关键图片 */}
-      {priority && (
+      {/* 预加载关键图片 - 只预加载首屏关键图片，避免预加载警告 */}
+      {priority && isClient && shouldPreloadThisImage(src, priority) && (
         <Head>
           <link 
             rel="preload" 
             as="image" 
             href={getBestImageSrc()} 
             imageSizes={sizes}
-            imageSrcSet={generateSrcSet(src, supportedFormats)}
+            // 移除srcSet以减少预加载资源数量
+            // imageSrcSet={generateSrcSet(src, supportedFormats)}
+            // 添加媒体查询，只在合适的屏幕尺寸下预加载
+            media={width && height ? `(max-width: ${Math.max(width * 2, 1200)}px)` : undefined}
           />
         </Head>
       )}
