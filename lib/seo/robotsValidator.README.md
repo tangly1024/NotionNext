@@ -1,52 +1,22 @@
-# Robots.txt 验证器
+# Robots.txt 验证器使用文档
 
-一个全面的 robots.txt 验证系统，用于确保 NotionNext 项目的 robots.txt 文件符合 RFC 9309 标准、搜索引擎要求和 SEO 最佳实践。
+## 概述
+
+Robots.txt 验证器是一个全面的 robots.txt 文件验证系统，用于确保您的 robots.txt 文件符合行业标准、搜索引擎要求和 SEO 最佳实践。
 
 ## 功能特性
 
-- ✅ **格式验证** - 检查文件格式、编码、语法结构
-- ✅ **内容验证** - 验证指令内容、URL 格式、路径规则
-- ✅ **标准合规** - 检查 RFC 9309 标准合规性
-- ✅ **SEO 优化** - 检查 SEO 最佳实践和搜索引擎特定规则
-- ✅ **多格式报告** - 支持控制台、JSON、HTML 格式输出
-- ✅ **CLI 工具** - 命令行界面，支持 CI/CD 集成
-- ✅ **可配置** - 灵活的配置选项和规则引擎
+- ✅ **格式验证** - 检查文件编码、语法结构和指令格式
+- ✅ **内容验证** - 验证 User-agent、Allow/Disallow 规则、Sitemap 声明等
+- ✅ **标准合规** - 确保符合 RFC 9309 标准
+- ✅ **SEO 优化** - 提供搜索引擎优化建议
+- ✅ **AI 机器人屏蔽** - 验证 AI 训练机器人的屏蔽配置
+- ✅ **多种输出格式** - 支持控制台、JSON、HTML 报告
+- ✅ **详细建议** - 提供可操作的改进建议
 
 ## 快速开始
 
-### 使用 npm 脚本
-
-```bash
-# 基本验证
-npm run validate:robots
-
-# JSON 格式输出
-npm run validate:robots:json
-
-# 严格模式
-npm run validate:robots:strict
-```
-
-### 使用 CLI 工具
-
-```bash
-# 基本验证
-node scripts/validate-robots.js
-
-# 指定文件
-node scripts/validate-robots.js --file custom-robots.txt
-
-# JSON 输出
-node scripts/validate-robots.js --format json
-
-# 静默模式
-node scripts/validate-robots.js --quiet
-
-# 查看帮助
-node scripts/validate-robots.js --help
-```
-
-### 编程接口
+### 基本使用
 
 ```javascript
 import { RobotsValidator } from './lib/seo/robotsValidator.js'
@@ -54,205 +24,808 @@ import { RobotsValidator } from './lib/seo/robotsValidator.js'
 // 创建验证器实例
 const validator = new RobotsValidator({
   filePath: 'public/robots.txt',
-  outputFormat: 'json',
-  strict: false
+  verbose: true
 })
 
 // 执行验证
 const result = await validator.validate()
 
 // 生成报告
-const report = validator.generateReport(result)
+const report = validator.generateReport()
 console.log(report)
 ```
 
-## 配置选项
+### 自定义配置
 
-### 基本配置
-
-- `filePath` - robots.txt 文件路径（默认：'public/robots.txt'）
-- `strict` - 严格模式（默认：false）
-- `outputFormat` - 输出格式：'console', 'json', 'html'（默认：'console'）
-- `verbose` - 详细输出（默认：true）
-
-### 验证选项
-
-- `checkAccessibility` - 检查 URL 可访问性（默认：true）
-- `validateSitemaps` - 验证 sitemap 文件（默认：true）
-- `checkSEO` - SEO 检查（默认：true）
-
-### 网络配置
-
-- `timeout` - 网络请求超时时间（默认：5000ms）
-- `userAgent` - 用户代理字符串（默认：'RobotsValidator/1.0'）
-
-## 验证类别
-
-### 1. 格式验证
-- 文件编码检查（UTF-8）
-- 行结束符验证
-- 语法结构检查
-- 指令格式验证
-
-### 2. 内容验证
-- User-agent 指令验证
-- Allow/Disallow 规则检查
-- Sitemap URL 验证
-- Host 声明检查
-
-### 3. 标准合规
-- RFC 9309 合规性检查
-- 指令优先级验证
-- 规则冲突检测
-
-### 4. SEO 优化
-- 搜索引擎特定规则
-- AI 机器人屏蔽检查
-- 重要路径可访问性
-
-## 报告格式
-
-### 控制台报告
-```
-============================================================
-🤖 ROBOTS.TXT 验证报告
-============================================================
-✅ 验证状态: 通过
-📊 总分: 85/100
-📈 统计: 8 通过, 2 警告, 0 错误
-
-✅ 格式验证 (100/100)
-  ✓ 文件存在性检查: robots.txt 文件存在且不为空
-  ✓ User-agent 指令检查: 找到 User-agent 指令
-  ✓ 访问规则检查: 找到访问控制规则
-============================================================
-```
-
-### JSON 报告
-```json
-{
-  "timestamp": "2025-07-28T14:54:23.314Z",
-  "validator": "RobotsValidator",
-  "version": "1.0.0",
-  "result": {
-    "isValid": true,
-    "score": 85,
-    "summary": {
-      "totalChecks": 10,
-      "passed": 8,
-      "warnings": 2,
-      "errors": 0
-    },
-    "categories": { ... },
-    "recommendations": [ ... ],
-    "metadata": { ... }
-  }
-}
-```
-
-## 数据模型
-
-### ValidationResult
-验证结果的主要数据结构，包含：
-- `isValid` - 验证是否通过
-- `score` - 总分（0-100）
-- `summary` - 统计摘要
-- `categories` - 各验证类别结果
-- `recommendations` - 改进建议
-- `metadata` - 元数据信息
-
-### ValidationCategory
-验证类别，包含：
-- `name` - 类别名称
-- `passed` - 是否通过
-- `score` - 类别分数
-- `checks` - 检查项列表
-
-### ValidationCheck
-单个验证检查，包含：
-- `id` - 检查ID
-- `name` - 检查名称
-- `status` - 状态：'pass', 'warning', 'error'
-- `message` - 检查消息
-- `suggestion` - 修复建议
-- `severity` - 严重程度
-
-## CI/CD 集成
-
-### GitHub Actions 示例
-
-```yaml
-name: Validate Robots.txt
-on: [push, pull_request]
-
-jobs:
-  validate-robots:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - run: npm install
-      - run: npm run validate:robots
-```
-
-### 退出代码
-- `0` - 验证通过
-- `1` - 验证失败或发生错误
-
-## 扩展性
-
-### 自定义验证规则
-```javascript
-// 将在后续任务中实现
-class CustomValidator {
-  validate(content, context) {
-    // 自定义验证逻辑
-  }
-}
-
-validator.addPlugin(new CustomValidator())
-```
-
-### 规则配置
 ```javascript
 const validator = new RobotsValidator({
-  rules: {
-    'require-host': { enabled: true, severity: 'warning' },
-    'https-sitemaps': { enabled: true, severity: 'error' },
-    'block-ai-bots': { enabled: true, severity: 'info' }
+  // 文件配置
+  filePath: 'public/robots.txt',
+  
+  // 验证选项
+  strict: true,
+  checkAccessibility: true,
+  validateSitemaps: true,
+  checkSEO: true,
+  
+  // 输出配置
+  outputFormat: 'json', // console, json, html
+  verbose: true,
+  colors: true,
+  
+  // 网络配置
+  timeout: 10000,
+  userAgent: 'MyValidator/1.0',
+  
+  // 报告配置
+  includeRecommendations: true,
+  includeSuggestions: true
+})
+```
+
+## API 参考
+
+### RobotsValidator 类
+
+#### 构造函数选项
+
+| 选项 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| `filePath` | string | `'public/robots.txt'` | robots.txt 文件路径 |
+| `strict` | boolean | `false` | 是否启用严格模式 |
+| `outputFormat` | string | `'console'` | 输出格式：console, json, html |
+| `verbose` | boolean | `true` | 是否显示详细信息 |
+| `colors` | boolean | `true` | 是否使用颜色输出 |
+| `checkAccessibility` | boolean | `true` | 是否检查可访问性 |
+| `validateSitemaps` | boolean | `true` | 是否验证 sitemap |
+| `checkSEO` | boolean | `true` | 是否进行 SEO 检查 |
+| `timeout` | number | `5000` | 网络请求超时时间（毫秒） |
+| `userAgent` | string | `'RobotsValidator/1.0'` | 用户代理字符串 |
+| `includeRecommendations` | boolean | `true` | 是否包含建议 |
+| `includeSuggestions` | boolean | `true` | 是否包含改进建议 |
+
+#### 主要方法
+
+##### `validate()`
+
+执行完整的验证流程。
+
+```javascript
+const result = await validator.validate()
+```
+
+**返回值**: `Promise<ValidationResult>` - 验证结果对象
+
+##### `generateReport(result?)`
+
+生成验证报告。
+
+```javascript
+const report = validator.generateReport()
+```
+
+**参数**:
+- `result` (可选): ValidationResult 对象，如果不提供则使用最后一次验证结果
+
+**返回值**: `string|Object` - 根据 outputFormat 返回相应格式的报告
+
+### ValidationResult 对象
+
+验证结果包含以下属性：
+
+```javascript
+{
+  isValid: boolean,        // 是否通过验证
+  score: number,           // 总分 (0-100)
+  summary: {
+    totalChecks: number,   // 总检查项数
+    passed: number,        // 通过的检查项数
+    warnings: number,      // 警告数
+    errors: number         // 错误数
+  },
+  categories: {
+    format: ValidationCategory,    // 格式验证结果
+    content: ValidationCategory,   // 内容验证结果
+    standards: ValidationCategory, // 标准合规结果
+    seo: ValidationCategory       // SEO 优化结果
+  },
+  metadata: {
+    validatedAt: Date,     // 验证时间
+    fileSize: number       // 文件大小
+  }
+}
+```
+
+## 使用示例
+
+### 示例 1: 基本验证
+
+```javascript
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+async function validateRobots() {
+  const validator = new RobotsValidator()
+  
+  try {
+    const result = await validator.validate()
+    
+    if (result.isValid) {
+      console.log('✅ robots.txt 验证通过！')
+      console.log(`总分: ${result.score}/100`)
+    } else {
+      console.log('❌ robots.txt 验证失败')
+      console.log(`错误数: ${result.summary.errors}`)
+      console.log(`警告数: ${result.summary.warnings}`)
+    }
+    
+  } catch (error) {
+    console.error('验证过程中发生错误:', error.message)
+  }
+}
+
+validateRobots()
+```
+
+### 示例 2: 生成 JSON 报告
+
+```javascript
+import fs from 'fs'
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+async function generateJSONReport() {
+  const validator = new RobotsValidator({
+    outputFormat: 'json',
+    verbose: false
+  })
+  
+  const result = await validator.validate()
+  const jsonReport = validator.generateReport()
+  
+  // 保存报告到文件
+  fs.writeFileSync('robots-validation-report.json', JSON.stringify(jsonReport, null, 2))
+  console.log('JSON 报告已保存到 robots-validation-report.json')
+}
+
+generateJSONReport()
+```
+
+### 示例 3: 生成 HTML 报告
+
+```javascript
+import fs from 'fs'
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+async function generateHTMLReport() {
+  const validator = new RobotsValidator({
+    outputFormat: 'html'
+  })
+  
+  const result = await validator.validate()
+  const htmlReport = validator.generateReport()
+  
+  // 保存 HTML 报告
+  fs.writeFileSync('robots-validation-report.html', htmlReport)
+  console.log('HTML 报告已保存到 robots-validation-report.html')
+}
+
+generateHTMLReport()
+```
+
+### 示例 4: 自定义验证规则
+
+```javascript
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+async function customValidation() {
+  const validator = new RobotsValidator({
+    strict: true,
+    allowedUserAgents: ['Googlebot', 'Bingbot'],
+    blockedUserAgents: ['BadBot'],
+    requiredSitemaps: ['https://example.com/sitemap.xml'],
+    timeout: 10000
+  })
+  
+  const result = await validator.validate()
+  
+  // 检查特定类别的结果
+  const formatResult = result.categories.format
+  const contentResult = result.categories.content
+  const seoResult = result.categories.seo
+  
+  console.log(`格式验证: ${formatResult.passed ? '通过' : '失败'} (${formatResult.score}/100)`)
+  console.log(`内容验证: ${contentResult.passed ? '通过' : '失败'} (${contentResult.score}/100)`)
+  console.log(`SEO 优化: ${seoResult.passed ? '通过' : '失败'} (${seoResult.score}/100)`)
+}
+
+customValidation()
+```
+
+### 示例 5: 批量验证多个文件
+
+```javascript
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+async function batchValidation() {
+  const files = [
+    'public/robots.txt',
+    'staging/robots.txt',
+    'production/robots.txt'
+  ]
+  
+  const results = []
+  
+  for (const filePath of files) {
+    console.log(`\n验证文件: ${filePath}`)
+    
+    const validator = new RobotsValidator({
+      filePath,
+      verbose: false
+    })
+    
+    try {
+      const result = await validator.validate()
+      results.push({
+        file: filePath,
+        valid: result.isValid,
+        score: result.score,
+        errors: result.summary.errors,
+        warnings: result.summary.warnings
+      })
+      
+      console.log(`${result.isValid ? '✅' : '❌'} ${filePath}: ${result.score}/100`)
+      
+    } catch (error) {
+      console.log(`❌ ${filePath}: 验证失败 - ${error.message}`)
+      results.push({
+        file: filePath,
+        valid: false,
+        error: error.message
+      })
+    }
+  }
+  
+  // 输出汇总
+  console.log('\n=== 批量验证汇总 ===')
+  results.forEach(result => {
+    if (result.error) {
+      console.log(`❌ ${result.file}: 错误 - ${result.error}`)
+    } else {
+      console.log(`${result.valid ? '✅' : '❌'} ${result.file}: ${result.score}/100 (${result.errors} 错误, ${result.warnings} 警告)`)
+    }
+  })
+}
+
+batchValidation()
+```
+
+## 集成到现有项目
+
+### 与 Next.js 集成
+
+```javascript
+// scripts/validate-robots.js
+import { RobotsValidator } from '../lib/seo/robotsValidator.js'
+
+async function validateRobotsForNextJS() {
+  const validator = new RobotsValidator({
+    filePath: 'public/robots.txt',
+    outputFormat: 'console',
+    verbose: true
+  })
+  
+  const result = await validator.validate()
+  
+  if (!result.isValid) {
+    console.error('❌ robots.txt 验证失败，构建中止')
+    process.exit(1)
+  }
+  
+  console.log('✅ robots.txt 验证通过')
+}
+
+validateRobotsForNextJS()
+```
+
+在 `package.json` 中添加脚本：
+
+```json
+{
+  "scripts": {
+    "validate-robots": "node scripts/validate-robots.js",
+    "prebuild": "npm run validate-robots"
+  }
+}
+```
+
+### 与 CI/CD 集成
+
+```yaml
+# .github/workflows/validate-robots.yml
+name: Validate Robots.txt
+
+on:
+  push:
+    paths:
+      - 'public/robots.txt'
+  pull_request:
+    paths:
+      - 'public/robots.txt'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Validate robots.txt
+      run: |
+        node -e "
+        import('./lib/seo/robotsValidator.js').then(async ({ RobotsValidator }) => {
+          const validator = new RobotsValidator({
+            filePath: 'public/robots.txt',
+            outputFormat: 'json'
+          });
+          
+          const result = await validator.validate();
+          
+          if (!result.isValid) {
+            console.error('robots.txt validation failed');
+            process.exit(1);
+          }
+          
+          console.log('robots.txt validation passed');
+        });
+        "
+```
+
+### 与 Express.js 集成
+
+```javascript
+// routes/admin.js
+import express from 'express'
+import { RobotsValidator } from '../lib/seo/robotsValidator.js'
+
+const router = express.Router()
+
+router.get('/validate-robots', async (req, res) => {
+  try {
+    const validator = new RobotsValidator({
+      filePath: 'public/robots.txt',
+      outputFormat: 'json'
+    })
+    
+    const result = await validator.validate()
+    const report = validator.generateReport()
+    
+    res.json({
+      success: true,
+      validation: report
+    })
+    
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    })
+  }
+})
+
+export default router
+```
+
+## CLI 工具使用
+
+### 创建 CLI 脚本
+
+```javascript
+#!/usr/bin/env node
+// bin/validate-robots.js
+
+import { program } from 'commander'
+import { RobotsValidator } from '../lib/seo/robotsValidator.js'
+
+program
+  .version('1.0.0')
+  .description('Robots.txt 验证工具')
+  .option('-f, --file <path>', 'robots.txt 文件路径', 'public/robots.txt')
+  .option('-o, --output <format>', '输出格式 (console|json|html)', 'console')
+  .option('-v, --verbose', '显示详细信息', false)
+  .option('-s, --strict', '启用严格模式', false)
+  .option('--no-colors', '禁用颜色输出')
+  .option('--timeout <ms>', '网络请求超时时间', '5000')
+
+program.parse()
+
+const options = program.opts()
+
+async function main() {
+  try {
+    const validator = new RobotsValidator({
+      filePath: options.file,
+      outputFormat: options.output,
+      verbose: options.verbose,
+      strict: options.strict,
+      colors: options.colors,
+      timeout: parseInt(options.timeout)
+    })
+    
+    console.log(`🤖 验证文件: ${options.file}`)
+    
+    const result = await validator.validate()
+    const report = validator.generateReport()
+    
+    if (options.output === 'console') {
+      console.log(report)
+    } else {
+      console.log(JSON.stringify(report, null, 2))
+    }
+    
+    // 设置退出代码
+    process.exit(result.isValid ? 0 : 1)
+    
+  } catch (error) {
+    console.error('❌ 验证失败:', error.message)
+    process.exit(1)
+  }
+}
+
+main()
+```
+
+### CLI 使用示例
+
+```bash
+# 基本验证
+node bin/validate-robots.js
+
+# 指定文件路径
+node bin/validate-robots.js -f /path/to/robots.txt
+
+# 生成 JSON 报告
+node bin/validate-robots.js -o json > report.json
+
+# 生成 HTML 报告
+node bin/validate-robots.js -o html > report.html
+
+# 启用严格模式和详细输出
+node bin/validate-robots.js -s -v
+
+# 自定义超时时间
+node bin/validate-robots.js --timeout 10000
+```
+
+## 配置文件支持
+
+### 创建配置文件
+
+```javascript
+// robots-validator.config.js
+export default {
+  // 基本配置
+  filePath: 'public/robots.txt',
+  strict: false,
+  
+  // 验证选项
+  checkAccessibility: true,
+  validateSitemaps: true,
+  checkSEO: true,
+  
+  // 输出配置
+  outputFormat: 'console',
+  verbose: true,
+  colors: true,
+  
+  // 网络配置
+  timeout: 5000,
+  userAgent: 'RobotsValidator/1.0',
+  
+  // 规则配置
+  allowedUserAgents: [
+    'Googlebot',
+    'Bingbot',
+    'Slurp',
+    'DuckDuckBot'
+  ],
+  
+  blockedUserAgents: [
+    'BadBot',
+    'SpamBot'
+  ],
+  
+  requiredSitemaps: [
+    'https://example.com/sitemap.xml',
+    'https://example.com/sitemap-images.xml'
+  ],
+  
+  // 报告配置
+  reportPath: './reports',
+  includeRecommendations: true,
+  includeSuggestions: true,
+  
+  // AI 机器人配置
+  aiProtection: {
+    enabled: true,
+    blockHighRisk: true,
+    allowLowRisk: false
+  }
+}
+```
+
+### 使用配置文件
+
+```javascript
+import config from './robots-validator.config.js'
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+const validator = new RobotsValidator(config)
+const result = await validator.validate()
+```
+
+## 故障排除
+
+### 常见问题
+
+#### 1. 文件不存在错误
+
+```
+错误: robots.txt 文件不存在: /path/to/robots.txt
+```
+
+**解决方案**:
+- 检查文件路径是否正确
+- 确保文件存在且有读取权限
+- 使用绝对路径或相对于当前工作目录的路径
+
+#### 2. 网络超时错误
+
+```
+错误: 网络请求超时
+```
+
+**解决方案**:
+- 增加超时时间设置
+- 检查网络连接
+- 验证 sitemap URL 是否可访问
+
+```javascript
+const validator = new RobotsValidator({
+  timeout: 10000 // 增加到 10 秒
+})
+```
+
+#### 3. 编码问题
+
+```
+警告: 文件编码不是 UTF-8
+```
+
+**解决方案**:
+- 将文件转换为 UTF-8 编码
+- 检查文件是否包含 BOM 标记
+
+#### 4. 权限错误
+
+```
+错误: 无法读取文件，权限被拒绝
+```
+
+**解决方案**:
+- 检查文件读取权限
+- 在 Unix 系统上使用 `chmod 644 robots.txt`
+
+### 调试技巧
+
+#### 启用详细输出
+
+```javascript
+const validator = new RobotsValidator({
+  verbose: true,
+  colors: true
+})
+```
+
+#### 使用严格模式
+
+```javascript
+const validator = new RobotsValidator({
+  strict: true // 启用更严格的验证规则
+})
+```
+
+#### 检查特定类别
+
+```javascript
+const result = await validator.validate()
+
+// 只检查格式问题
+const formatIssues = result.categories.format.checks.filter(
+  check => check.status !== 'pass'
+)
+
+console.log('格式问题:', formatIssues)
+```
+
+## 最佳实践
+
+### 1. 定期验证
+
+建议在以下情况下验证 robots.txt：
+- 网站内容结构变更时
+- 添加新的 sitemap 时
+- 修改爬虫访问规则时
+- 部署前的自动化检查
+
+### 2. 版本控制
+
+将 robots.txt 纳入版本控制，并在 CI/CD 流程中添加验证步骤。
+
+### 3. 监控和报告
+
+定期生成验证报告，监控 robots.txt 的健康状况。
+
+```javascript
+// 定期验证脚本
+import cron from 'node-cron'
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+// 每天凌晨 2 点执行验证
+cron.schedule('0 2 * * *', async () => {
+  const validator = new RobotsValidator({
+    outputFormat: 'json'
+  })
+  
+  const result = await validator.validate()
+  
+  if (!result.isValid) {
+    // 发送告警通知
+    console.error('robots.txt 验证失败，需要检查')
   }
 })
 ```
 
-## 开发状态
+### 4. 环境特定配置
 
-当前实现了核心验证器架构和基础功能：
+为不同环境使用不同的验证配置：
 
-- ✅ 核心验证器类 `RobotsValidator`
-- ✅ 数据模型类（ValidationResult, ValidationCategory, ValidationCheck, Recommendation）
-- ✅ 基础配置管理和选项处理
-- ✅ 验证流程框架和错误处理机制
-- ✅ 多格式报告生成（控制台、JSON、HTML）
-- ✅ CLI 工具和 npm 脚本集成
-- ✅ 完整的单元测试套件
+```javascript
+const config = {
+  development: {
+    strict: false,
+    checkAccessibility: false
+  },
+  production: {
+    strict: true,
+    checkAccessibility: true,
+    validateSitemaps: true
+  }
+}
 
-### 后续任务
-- 🔄 格式验证器实现
-- 🔄 内容验证器实现
-- 🔄 标准合规验证器实现
-- 🔄 SEO 优化验证器实现
-- 🔄 高级功能和性能优化
+const validator = new RobotsValidator(config[process.env.NODE_ENV])
+```
+
+## 扩展和自定义
+
+### 自定义验证规则
+
+```javascript
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+class CustomRobotsValidator extends RobotsValidator {
+  async _runCustomValidation(content) {
+    // 添加自定义验证逻辑
+    const customChecks = []
+    
+    // 示例：检查是否包含特定的用户代理
+    if (!content.includes('MyCustomBot')) {
+      customChecks.push({
+        id: 'missing-custom-bot',
+        name: '自定义机器人检查',
+        status: 'warning',
+        message: '未找到 MyCustomBot 的配置',
+        suggestion: '添加 MyCustomBot 的访问规则'
+      })
+    }
+    
+    return customChecks
+  }
+}
+```
+
+### 插件系统
+
+```javascript
+// 创建插件
+const myPlugin = {
+  name: 'MyCustomPlugin',
+  validate: async (content, options) => {
+    // 插件验证逻辑
+    return []
+  }
+}
+
+// 使用插件
+const validator = new RobotsValidator({
+  plugins: [myPlugin]
+})
+```
+
+## 性能优化
+
+### 缓存验证结果
+
+```javascript
+import { RobotsValidator } from './lib/seo/robotsValidator.js'
+
+class CachedRobotsValidator extends RobotsValidator {
+  constructor(options) {
+    super(options)
+    this.cache = new Map()
+  }
+  
+  async validate() {
+    const fileStats = fs.statSync(this.options.filePath)
+    const cacheKey = `${this.options.filePath}-${fileStats.mtime.getTime()}`
+    
+    if (this.cache.has(cacheKey)) {
+      return this.cache.get(cacheKey)
+    }
+    
+    const result = await super.validate()
+    this.cache.set(cacheKey, result)
+    
+    return result
+  }
+}
+```
+
+### 并行验证
+
+```javascript
+async function parallelValidation(files) {
+  const promises = files.map(filePath => {
+    const validator = new RobotsValidator({ filePath })
+    return validator.validate()
+  })
+  
+  const results = await Promise.all(promises)
+  return results
+}
+```
+
+## 更新日志
+
+### v1.0.0
+- 初始版本发布
+- 支持基本的格式和内容验证
+- 提供控制台、JSON、HTML 输出格式
+- 包含 AI 机器人屏蔽验证
+- 支持 RFC 9309 标准检查
 
 ## 许可证
 
-MIT License - 详见 LICENSE 文件
+MIT License
 
 ## 贡献
 
-欢迎提交 Issue 和 Pull Request！
+欢迎提交 Issue 和 Pull Request 来改进这个验证器。
+
+## 支持
+
+如果您在使用过程中遇到问题，请：
+
+1. 查看本文档的故障排除部分
+2. 检查 GitHub Issues
+3. 提交新的 Issue 描述问题
 
 ---
 
-**NotionNext Robots.txt Validator v1.0.0**
+*最后更新: 2024年*

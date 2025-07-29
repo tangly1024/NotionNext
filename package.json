@@ -41,8 +41,13 @@
     "test:performance": "jest --testPathPatterns=performance",
     "test:xml-validation": "jest --testPathPatterns=xml",
     "validate:robots": "node scripts/validate-robots.js",
-    "validate:robots:json": "node scripts/validate-robots.js --format json",
-    "validate:robots:strict": "node scripts/validate-robots.js --strict"
+    "validate:robots:json": "node scripts/validate-robots.js --output json",
+    "validate:robots:strict": "node scripts/validate-robots.js --strict",
+    "validate:robots:verbose": "node scripts/validate-robots.js --verbose",
+    "validate:robots:report": "node scripts/validate-robots.js --save-report reports/robots-validation.json",
+    "validate:robots:html": "node scripts/validate-robots.js --output html --save-report reports/robots-validation.html",
+    "examples:basic": "node examples/basic-validation.js",
+    "examples:integration": "node examples/integration-examples.js"
   },
   "dependencies": {
     "@clerk/localizations": "^3.0.4",

@@ -243,32 +243,444 @@ Disallow: /private/`
     })
   })
 
-  describe('占位符验证', () => {
-    test('应该显示路径规则验证占位符', async () => {
+  describe('Allow/Disallow规则验证', () => {
+    test('应该验证路径规则统计', async () => {
       const content = 'User-agent: *\nDisallow: /admin/'
       const checks = await validator.validate(content)
       
-      const pathPlaceholderCheck = checks.find(c => c.id === 'path-rules-placeholder')
-      expect(pathPlaceholderCheck).toBeDefined()
-      expect(pathPlaceholderCheck.status).toBe('info')
+      const pathStatsCheck = checks.find(c => c.id === 'path-rules-statistics')
+      expect(pathStatsCheck).toBeDefined()
+      expect(pathStatsCheck.status).toBe('pass')
+      expect(pathStatsCheck.message).toContain('1个路径规则')
     })
 
-    test('应该显示Sitemap验证占位符', async () => {
-      const content = 'User-agent: *\nDisallow: /admin/'
+    test('应该检测空路径规则', async () => {
+      const content = 'User-agent: *\nDisallow:'
       const checks = await validator.validate(content)
       
-      const sitemapPlaceholderCheck = checks.find(c => c.id === 'sitemap-validation-placeholder')
-      expect(sitemapPlaceholderCheck).toBeDefined()
-      expect(sitemapPlaceholderCheck.status).toBe('info')
+      const emptyDisallowCheck = checks.find(c => c.id === 'empty-disallow-allow-all')
+      expect(emptyDisallowCheck).toBeDefined()
+      expect(emptyDisallowCheck.status).toBe('pass')
     })
 
-    test('应该显示Host验证占位符', async () => {
+    test('应该检测无效路径格式', async () => {
+      const content = 'User-agent: *\nDisallow: admin'
+      const checks = await validator.validate(content)
+      
+      const invalidPathCheck = checks.find(c => c.id === 'invalid-path-format')
+      expect(invalidPathCheck).toBeDefined()
+      expect(invalidPathCheck.status).toBe('error')
+      expect(invalidPathCheck.message).toContain('必须以"/"开头')
+    })
+
+    test('应该验证通配符使用', async () => {
+      const content = 'User-agent: *\nDisallow: /admin/*'
+      const checks = await validator.validate(content)
+      
+      const wildcardCheck = checks.find(c => c.id === 'valid-wildcard-usage')
+      expect(wildcardCheck).toBeDefined()
+      expect(wildcardCheck.status).toBe('pass')
+    })
+
+    test('应该检测多个通配符', async () => {
+      const content = 'User-agent: *\nDisallow: /*/admin/*'
+      const checks = await validator.validate(content)
+      
+      const multipleWildcardCheck = checks.find(c => c.id === 'multiple-wildcards')
+      expect(multipleWildcardCheck).toBeDefined()
+      expect(multipleWildcardCheck.status).toBe('warning')
+    })
+
+    test('应该验证结束锚点', async () => {
+      const content = 'User-agent: *\nDisallow: /admin.html$'
+      const checks = await validator.validate(content)
+      
+      const endAnchorCheck = checks.find(c => c.id === 'valid-end-anchor')
+      expect(endAnchorCheck).toBeDefined()
+      expect(endAnchorCheck.status).toBe('pass')
+    })
+
+    test('应该检测路径中的特殊字符', async () => {
+      const content = 'User-agent: *\nDisallow: /admin<script>'
+      const checks = await validator.validate(content)
+      
+      const specialCharsCheck = checks.find(c => c.id === 'special-characters-in-path')
+      expect(specialCharsCheck).toBeDefined()
+      expect(specialCharsCheck.status).toBe('warning')
+    })
+
+    test('应该检测管理路径阻止', async () => {
       const content = 'User-agent: *\nDisallow: /admin/'
       const checks = await validator.validate(content)
       
-      const hostPlaceholderCheck = checks.find(c => c.id === 'host-validation-placeholder')
-      expect(hostPlaceholderCheck).toBeDefined()
-      expect(hostPlaceholderCheck.status).toBe('info')
+      const adminBlockedCheck = checks.find(c => c.id === 'admin-path-blocked')
+      expect(adminBlockedCheck).toBeDefined()
+      expect(adminBlockedCheck.status).toBe('pass')
+    })
+
+    test('应该警告静态资源被阻止', async () => {
+      const content = 'User-agent: *\nDisallow: /css/'
+      const checks = await validator.validate(content)
+      
+      const staticBlockedCheck = checks.find(c => c.id === 'static-resources-blocked')
+      expect(staticBlockedCheck).toBeDefined()
+      expect(staticBlockedCheck.status).toBe('warning')
+    })
+
+    test('应该检测规则冲突', async () => {
+      const content = `User-agent: *
+Allow: /admin/
+Disallow: /admin/`
+      const checks = await validator.validate(content)
+      
+      const conflictCheck = checks.find(c => c.id === 'path-rule-conflict')
+      expect(conflictCheck).toBeDefined()
+      expect(conflictCheck.status).toBe('warning')
+      expect(conflictCheck.message).toContain('冲突')
+    })
+
+    test('应该检测重复规则', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Disallow: /admin/`
+      const checks = await validator.validate(content)
+      
+      const duplicateCheck = checks.find(c => c.id === 'path-rule-conflict')
+      expect(duplicateCheck).toBeDefined()
+      expect(duplicateCheck.status).toBe('warning')
+      expect(duplicateCheck.message).toContain('重复')
+    })
+
+    test('应该警告禁止根路径', async () => {
+      const content = 'User-agent: *\nDisallow: /'
+      const checks = await validator.validate(content)
+      
+      const rootDisallowCheck = checks.find(c => c.id === 'disallow-all-paths')
+      expect(rootDisallowCheck).toBeDefined()
+      expect(rootDisallowCheck.status).toBe('warning')
+    })
+
+    test('应该检测重要路径被阻止', async () => {
+      const content = `User-agent: Googlebot
+Disallow: /sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const importantPathCheck = checks.find(c => c.id === 'important-path-blocked')
+      expect(importantPathCheck).toBeDefined()
+      expect(importantPathCheck.status).toBe('warning')
+    })
+  })
+
+  describe('Sitemap声明验证', () => {
+    test('应该警告缺少Sitemap声明', async () => {
+      const content = 'User-agent: *\nDisallow: /admin/'
+      const checks = await validator.validate(content)
+      
+      const noSitemapCheck = checks.find(c => c.id === 'no-sitemap-declared')
+      expect(noSitemapCheck).toBeDefined()
+      expect(noSitemapCheck.status).toBe('warning')
+    })
+
+    test('应该验证有效的HTTPS Sitemap', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: https://example.com/sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const httpsCheck = checks.find(c => c.id === 'sitemap-https-ok')
+      expect(httpsCheck).toBeDefined()
+      expect(httpsCheck.status).toBe('pass')
+      
+      const countCheck = checks.find(c => c.id === 'sitemap-count-ok')
+      expect(countCheck).toBeDefined()
+      expect(countCheck.status).toBe('pass')
+    })
+
+    test('应该检测空的Sitemap URL', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap:`
+      const checks = await validator.validate(content)
+      
+      const emptyUrlCheck = checks.find(c => c.id === 'empty-sitemap-url')
+      expect(emptyUrlCheck).toBeDefined()
+      expect(emptyUrlCheck.status).toBe('error')
+    })
+
+    test('应该检测无效的URL格式', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: not-a-valid-url`
+      const checks = await validator.validate(content)
+      
+      const invalidUrlCheck = checks.find(c => c.id === 'invalid-sitemap-url-format')
+      expect(invalidUrlCheck).toBeDefined()
+      expect(invalidUrlCheck.status).toBe('error')
+    })
+
+    test('应该警告HTTP而非HTTPS', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: http://example.com/sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const httpWarningCheck = checks.find(c => c.id === 'sitemap-not-https')
+      expect(httpWarningCheck).toBeDefined()
+      expect(httpWarningCheck.status).toBe('warning')
+    })
+
+    test('应该检测缺少协议', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: example.com/sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const missingProtocolCheck = checks.find(c => c.id === 'sitemap-missing-protocol')
+      expect(missingProtocolCheck).toBeDefined()
+      expect(missingProtocolCheck.status).toBe('error')
+    })
+
+    test('应该识别常见的sitemap文件名', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: https://example.com/sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const commonFilenameCheck = checks.find(c => c.id === 'sitemap-common-filename')
+      expect(commonFilenameCheck).toBeDefined()
+      expect(commonFilenameCheck.status).toBe('pass')
+    })
+
+    test('应该标记自定义文件名', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: https://example.com/my-custom-sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const customFilenameCheck = checks.find(c => c.id === 'sitemap-custom-filename')
+      expect(customFilenameCheck).toBeDefined()
+      expect(customFilenameCheck.status).toBe('info')
+    })
+
+    test('应该验证有效的文件扩展名', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: https://example.com/sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const validExtensionCheck = checks.find(c => c.id === 'sitemap-valid-extension')
+      expect(validExtensionCheck).toBeDefined()
+      expect(validExtensionCheck.status).toBe('pass')
+    })
+
+    test('应该警告本地域名', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: https://localhost/sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const localDomainCheck = checks.find(c => c.id === 'sitemap-local-domain')
+      expect(localDomainCheck).toBeDefined()
+      expect(localDomainCheck.status).toBe('error')
+    })
+
+    test('应该检测重复的Sitemap', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap.xml`
+      const checks = await validator.validate(content)
+      
+      const duplicateCheck = checks.find(c => c.id === 'duplicate-sitemap')
+      expect(duplicateCheck).toBeDefined()
+      expect(duplicateCheck.status).toBe('warning')
+    })
+
+    test('应该警告过多的Sitemap', async () => {
+      const sitemaps = Array.from({length: 12}, (_, i) => 
+        `Sitemap: https://example.com/sitemap${i}.xml`
+      ).join('\n')
+      
+      const content = `User-agent: *
+Disallow: /admin/
+${sitemaps}`
+      const checks = await validator.validate(content)
+      
+      const tooManyCheck = checks.find(c => c.id === 'too-many-sitemaps')
+      expect(tooManyCheck).toBeDefined()
+      expect(tooManyCheck.status).toBe('warning')
+    })
+  })
+
+  describe('Host声明验证', () => {
+    test('应该提示缺少Host声明', async () => {
+      const content = 'User-agent: *\nDisallow: /admin/'
+      const checks = await validator.validate(content)
+      
+      const noHostCheck = checks.find(c => c.id === 'no-host-declared')
+      expect(noHostCheck).toBeDefined()
+      expect(noHostCheck.status).toBe('info')
+    })
+
+    test('应该验证有效的Host声明', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com`
+      const checks = await validator.validate(content)
+      
+      const singleHostCheck = checks.find(c => c.id === 'single-host-ok')
+      expect(singleHostCheck).toBeDefined()
+      expect(singleHostCheck.status).toBe('pass')
+      
+      const formatValidCheck = checks.find(c => c.id === 'host-format-valid')
+      expect(formatValidCheck).toBeDefined()
+      expect(formatValidCheck.status).toBe('pass')
+    })
+
+    test('应该检测空的Host值', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host:`
+      const checks = await validator.validate(content)
+      
+      const emptyHostCheck = checks.find(c => c.id === 'empty-host-value')
+      expect(emptyHostCheck).toBeDefined()
+      expect(emptyHostCheck.status).toBe('error')
+    })
+
+    test('应该检测Host包含协议', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: https://example.com`
+      const checks = await validator.validate(content)
+      
+      const protocolCheck = checks.find(c => c.id === 'host-contains-protocol')
+      expect(protocolCheck).toBeDefined()
+      expect(protocolCheck.status).toBe('error')
+    })
+
+    test('应该检测Host包含路径', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com/path`
+      const checks = await validator.validate(content)
+      
+      const pathCheck = checks.find(c => c.id === 'host-contains-path')
+      expect(pathCheck).toBeDefined()
+      expect(pathCheck.status).toBe('error')
+    })
+
+    test('应该检测Host包含查询参数', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com?param=value`
+      const checks = await validator.validate(content)
+      
+      const queryCheck = checks.find(c => c.id === 'host-contains-query')
+      expect(queryCheck).toBeDefined()
+      expect(queryCheck.status).toBe('error')
+    })
+
+    test('应该检测无效的Host格式', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: invalid..domain`
+      const checks = await validator.validate(content)
+      
+      // 应该检测到域名格式无效
+      const invalidFormatCheck = checks.find(c => c.id === 'invalid-host-format')
+      expect(invalidFormatCheck).toBeDefined()
+      expect(invalidFormatCheck.status).toBe('error')
+    })
+
+    test('应该警告IPv4地址', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: 192.168.1.1`
+      const checks = await validator.validate(content)
+      
+      const ipv4Check = checks.find(c => c.id === 'host-is-ipv4')
+      expect(ipv4Check).toBeDefined()
+      expect(ipv4Check.status).toBe('warning')
+    })
+
+    test('应该检测本地地址', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: localhost`
+      const checks = await validator.validate(content)
+      
+      const localCheck = checks.find(c => c.id === 'host-is-local')
+      expect(localCheck).toBeDefined()
+      expect(localCheck.status).toBe('error')
+    })
+
+    test('应该验证常见顶级域名', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com`
+      const checks = await validator.validate(content)
+      
+      const commonTldCheck = checks.find(c => c.id === 'host-common-tld')
+      expect(commonTldCheck).toBeDefined()
+      expect(commonTldCheck.status).toBe('pass')
+    })
+
+    test('应该标记不常见顶级域名', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.xyz`
+      const checks = await validator.validate(content)
+      
+      const uncommonTldCheck = checks.find(c => c.id === 'host-uncommon-tld')
+      expect(uncommonTldCheck).toBeDefined()
+      expect(uncommonTldCheck.status).toBe('info')
+    })
+
+    test('应该验证端口号', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com:8080`
+      const checks = await validator.validate(content)
+      
+      const customPortCheck = checks.find(c => c.id === 'host-custom-port')
+      expect(customPortCheck).toBeDefined()
+      expect(customPortCheck.status).toBe('pass')
+    })
+
+    test('应该检测无效端口号', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com:99999`
+      const checks = await validator.validate(content)
+      
+      const portRangeCheck = checks.find(c => c.id === 'host-port-out-of-range')
+      expect(portRangeCheck).toBeDefined()
+      expect(portRangeCheck.status).toBe('error')
+    })
+
+    test('应该警告多个Host声明', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com
+Host: www.example.com`
+      const checks = await validator.validate(content)
+      
+      const multipleHostsCheck = checks.find(c => c.id === 'multiple-hosts-declared')
+      expect(multipleHostsCheck).toBeDefined()
+      expect(multipleHostsCheck.status).toBe('warning')
+    })
+
+    test('应该检测重复的Host', async () => {
+      const content = `User-agent: *
+Disallow: /admin/
+Host: example.com
+Host: example.com`
+      const checks = await validator.validate(content)
+      
+      const duplicateHostCheck = checks.find(c => c.id === 'duplicate-host')
+      expect(duplicateHostCheck).toBeDefined()
+      expect(duplicateHostCheck.status).toBe('warning')
     })
   })
 

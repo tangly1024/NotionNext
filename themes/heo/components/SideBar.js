@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import LazyImage from '@/components/LazyImage'
+import OptimizedImage from '@/components/OptimizedImage'
 import { useRouter } from 'next/router'
 import MenuGroupCard from './MenuGroupCard'
 import { MenuListSide } from './MenuListSide'
@@ -21,7 +21,7 @@ const SideBar = (props) => {
                     <div onClick={() => { router.push('/') }}
                         className='justify-center items-center flex hover:rotate-45 py-6 hover:scale-105 dark:text-gray-100  transform duration-200 cursor-pointer'>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <LazyImage src={siteInfo?.icon} className='rounded-full' width={80} alt={siteConfig('AUTHOR')} />
+                        <OptimizedImage src={siteInfo?.icon} className='rounded-full' width={80} alt={siteConfig('AUTHOR')} />
                     </div>
                     <MenuGroupCard {...props} />
                 </div>
