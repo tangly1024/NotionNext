@@ -3,7 +3,7 @@
  */
 const CONFIG = {
     PROXIO_WELCOME_COVER_ENABLE: true, //是否显示页面进入的欢迎文字
-    PROXIO_WELCOME_TEXT: '欢迎来到此网站，点击任意位置进入', // 欢迎文字，留空则不启用
+    PROXIO_WELCOME_TEXT: '', // 欢迎文字，留空则不启用
 
     // 英雄区块导航
     PROXIO_HERO_ENABLE: true, // 开启英雄区
@@ -38,7 +38,7 @@ const CONFIG = {
     PROXIO_ANNOUNCEMENT_ENABLE: true, //公告文字区块
 
     // 特性区块
-    PROXIO_FEATURE_ENABLE: true, // 特性区块开关
+    PROXIO_FEATURE_ENABLE: false, // 特性区块开关
     PROXIO_FEATURE_TITLE: '为什么选我',
     PROXIO_FEATURE_TEXT_1: '我能让您的项目焕发光彩',
     PROXIO_FEATURE_TEXT_2:
@@ -64,7 +64,7 @@ const CONFIG = {
     PROXIO_FEATURE_BUTTON_URL: 'https://github.com/tangly1024/NotionNext', // 按钮跳转
 
     // 首页生涯区块
-    PROXIO_CAREER_ENABLE: true, // 区块开关
+    PROXIO_CAREER_ENABLE: false, // 区块开关
     PROXIO_CAREER_TITLE: '生涯',
     PROXIO_CAREER_TEXT:
         '以下是我的职业生涯',
@@ -77,7 +77,7 @@ const CONFIG = {
     ],
 
     // 首页用户测评区块
-    PROXIO_TESTIMONIALS_ENABLE: true, // 测评区块开关
+    PROXIO_TESTIMONIALS_ENABLE: false, // 测评区块开关
     PROXIO_TESTIMONIALS_TITLE: '用户反馈',
     PROXIO_TESTIMONIALS_TEXT_1: '我们的用户怎么说',
     PROXIO_TESTIMONIALS_TEXT_2:
@@ -145,7 +145,7 @@ const CONFIG = {
     ],
 
     //   FAQ 常见问题模块
-    PROXIO_FAQ_ENABLE: true, // 常见问题模块开关
+    PROXIO_FAQ_ENABLE: false, // 常见问题模块开关
     PROXIO_FAQ_TITLE: '常见问题解答',
     PROXIO_FAQ_TEXT_1: '有任何问题吗？请看这里',
     PROXIO_FAQ_TEXT_2: '我们收集了常见的用户疑问',
@@ -178,13 +178,13 @@ const CONFIG = {
     // 横向滚动文字
     PROXIO_BRANDS_ENABLE: true, // 滚动文字
     PROXIO_BRANDS: [
-        'Web Design',
-        'Logo Design',
-        'Mobile App Design',
-        'Product Design'
+        'Be the story',
+        'Shape the words',
+        'Let life grow',
+    
     ],
 
-    PROXIO_FOOTER_SLOGAN: '我们通过技术为品牌和公司创造数字体验。',
+    PROXIO_FOOTER_SLOGAN: '身份即方法，语言即系统，生命即复利。',
 
     // 页脚三列菜单组
     // 页脚菜单
@@ -247,7 +247,7 @@ const CONFIG = {
     PROXIO_CTA_TITLE_2: '让我们立刻启动您的项目',
     PROXIO_CTA_DESCRIPTION:
         '访问NotionNext的操作文档，我们提供了详细的教程，帮助你即刻搭建站点',
-    PROXIO_CTA_BUTTON: true, // 是否显示按钮
+    PROXIO_CTA_BUTTON: false, // 是否显示按钮
     PROXIO_CTA_BUTTON_URL:
         '/about',
     PROXIO_CTA_BUTTON_TEXT: '联系我',
