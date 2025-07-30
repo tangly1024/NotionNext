@@ -86,6 +86,29 @@ const LayoutBase = props => {
         </div>
     )
 }
+const LayoutBase = props => {
+    const { children } = props
+
+    // 加载wow动画 (这是原有的代码)
+    useEffect(() => {
+        loadWowJS()
+    }, [])
+
+    // 添加下面这段代码来强制开启暗黑模式
+    useEffect(() => {
+        // 找到html根元素并强制添加 'dark' 类
+        document.documentElement.classList.add('dark');
+    }, [])
+
+
+    return (
+        <div
+            id='theme-proxio'
+            className={`${siteConfig('FONT_STYLE')} min-h-screen flex flex-col dark:bg-dark scroll-smooth`}>
+            {/* ... 其他代码保持不变 ... */}
+        </div>
+    )
+}
 
 /**
  * 首页布局
