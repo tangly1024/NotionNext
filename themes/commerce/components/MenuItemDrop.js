@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -22,13 +22,13 @@ export const MenuItemDrop = ({ link }) => {
       onMouseOut={() => changeShow(false)}
       className='h-full'>
       {!hasSubMenu && (
-        <Link
+        <SmartLink
           href={link?.href}
           target={link?.target}
           className={`${selected && 'border-b-2 border-[#D2232A]'} h-full flex space-x-1 whitespace-nowrap items-center font-sans menu-link pl-2 pr-4  dark:text-gray-200 no-underline tracking-widest pb-1`}>
           {link?.icon && <i className={link?.icon} />} <div>{link?.name}</div>
           {/* {hasSubMenu && <i className='px-2 fa fa-angle-down'></i>} */}
-        </Link>
+        </SmartLink>
       )}
 
       {hasSubMenu && (
@@ -50,12 +50,12 @@ export const MenuItemDrop = ({ link }) => {
               <li
                 key={index}
                 className='cursor-pointer hover:bg-red-300 text-gray-900 hover:text-black tracking-widest transition-all duration-200 dark:border-gray-800  py-1 pr-6 pl-3'>
-                <Link href={sLink.href} target={link?.target}>
+                <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
                     {sLink.title}
                   </span>
-                </Link>
+                </SmartLink>
               </li>
             )
           })}

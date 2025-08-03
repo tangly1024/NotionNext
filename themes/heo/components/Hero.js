@@ -3,7 +3,7 @@ import { ArrowSmallRight, PlusSmall } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
@@ -179,7 +179,7 @@ function GroupMenu() {
 
   return (
     <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
-      <Link
+      <SmartLink
         href={url_1}
         className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg  pl-5 relative -mt-2'>
@@ -189,8 +189,8 @@ function GroupMenu() {
         <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
           <i className='fa-solid fa-star text-4xl'></i>
         </div>
-      </Link>
-      <Link
+      </SmartLink>
+      <SmartLink
         href={url_2}
         className='group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg pl-5 relative -mt-2'>
@@ -200,9 +200,9 @@ function GroupMenu() {
         <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
           <i className='fa-solid fa-fire-flame-curved text-4xl'></i>
         </div>
-      </Link>
+      </SmartLink>
       {/* 第三个标签在小屏上不显示 */}
-      <Link
+      <SmartLink
         href={url_3}
         className='group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold text-lg pl-5 relative -mt-2'>
@@ -212,7 +212,7 @@ function GroupMenu() {
         <div className='absolute right-6 duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
           <i className='fa-solid fa-book-bookmark text-4xl '></i>
         </div>
-      </Link>
+      </SmartLink>
     </div>
   )
 }
@@ -242,8 +242,8 @@ function TopGroup(props) {
         className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
         {topPosts?.map((p, index) => {
           return (
-            <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
-              <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-[#1e1e1e] dark:text-white rounded-xl'>
+            <SmartLink href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
+              <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
                 <LazyImage
                   priority={index === 0}
                   className='h-24 object-cover'
@@ -258,7 +258,7 @@ function TopGroup(props) {
                   {locale.COMMON.RECOMMEND_BADGES}
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>
