@@ -54,7 +54,7 @@ const CONFIG = {
   PROXIO_FEATURE_2_TEXT_1: '与你紧密合作，融合反馈意见，打造超越预期的设计',
 
   PROXIO_FEATURE_3_ICON_CLASS: 'fa-solid fa-search',
-  PROXIO_FEATURE_2_ICON_IMG_URL: '',
+  PROXIO_FEATURE_3_ICON_IMG_URL: '',
   PROXIO_FEATURE_3_TITLE_1: '细节把控',
   PROXIO_FEATURE_3_TEXT_1:
     '精益求精雕琢每个元素，确保成品精致统一，令人过目难忘',
