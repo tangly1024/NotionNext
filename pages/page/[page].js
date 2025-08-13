@@ -2,6 +2,8 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import CONFIG_NEXT from '@/themes/next/config'
+import { sortPostsByTopTag } from '@/lib/utils/post'
 
 /**
  * 文章列表分页
@@ -41,9 +43,17 @@ export async function getStaticProps({ params: { page }, locale }) {
   const allPosts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+
+  // NEXT 主题：按置顶标签重排
+  const currentTheme = siteConfig('THEME', BLOG.THEME, props?.NOTION_CONFIG)
+  const defaultNextTopTag = siteConfig('NEXT_TOP_TAG', '', CONFIG_NEXT)
+  const nextTopTag = siteConfig('NEXT_TOP_TAG', defaultNextTopTag, props?.NOTION_CONFIG)
+  const sortedPosts = currentTheme === 'next' && nextTopTag
+    ? sortPostsByTopTag(allPosts, nextTopTag)
+    : allPosts
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
   // 处理分页
-  props.posts = allPosts.slice(
+  props.posts = sortedPosts.slice(
     POSTS_PER_PAGE * (page - 1),
     POSTS_PER_PAGE * page
   )
