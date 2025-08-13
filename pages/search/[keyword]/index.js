@@ -6,8 +6,6 @@ import { DynamicLayout } from '@/themes/theme'
 import { getPageContentText } from '@/lib/notion/getPageContentText'
 import CONFIG_NEXT from '@/themes/next/config'
 import { sortPostsByTopTag } from '@/lib/utils/post'
-import CONFIG_NEXT from '@/themes/next/config'
-import { sortPostsByTopTag } from '@/lib/utils/post'
 
 const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
