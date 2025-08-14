@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
-import { checkStartWithHttp } from '@/lib/utils'
-import Link from 'next/link'
+import { isHttpLink } from '@/lib/utils'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import NotionIcon from './NotionIcon'
 
@@ -21,9 +21,9 @@ const BlogPostCard = ({ post, className }) => {
       ? post.pageIcon + '&width=88'
       : post.pageIcon
   return (
-    <Link
+    <SmartLink
       href={post?.href}
-      target={checkStartWithHttp(post.slug) ? '_blank' : '_self'}
+      target={isHttpLink(post.slug) ? '_blank' : '_self'}
       passHref>
       <div
         key={post.id}
@@ -44,7 +44,7 @@ const BlogPostCard = ({ post, className }) => {
           </div>
         </div>
       </div>
-    </Link>
+    </SmartLink>
   )
 }
 

@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
   if (!categories || categories.length === 0) return <></>
@@ -11,7 +11,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
         {categoryOptions.map(category => {
           const selected = currentCategory === category.name
           return (
-            <Link
+            <SmartLink
               key={category.name}
               href={`/category/${category.name}`}
               passHref
@@ -25,7 +25,7 @@ const CategoryGroup = ({ currentCategory, categories }) => {
                 className={`${selected ? 'text-white fa-folder-open ' : 'text-gray-500 fa-folder '} mr-2 fas`}
               />
               {category.name}({category.count})
-            </Link>
+            </SmartLink>
           )
         })}
       </div>
