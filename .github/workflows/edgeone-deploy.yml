@@ -1,0 +1,15 @@
+name: Scheduled EdgeOne Deploy
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"  # 每3小时触发一次
+  workflow_dispatch:       # 允许手动运行
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger EdgeOne Deploy Hook
+        run: |
+          curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
