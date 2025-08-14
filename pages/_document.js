@@ -43,6 +43,8 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7901026683522605"
+     crossOrigin="anonymous"></script>
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
             <>
