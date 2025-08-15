@@ -23,6 +23,16 @@ export default function Footer(props) {
           &copy;{`${copyrightDate}`} {siteConfig('AUTHOR')}.
         </div>
         <div>All rights reserved.</div>
+        {siteConfig('BEI_AN') && (
+          <a
+            href={siteConfig('BEI_AN_LINK')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text dark:text-white mt-2"
+          >
+            {siteConfig('BEI_AN')}
+          </a>
+        )}
       </div>
     </footer>
   )
