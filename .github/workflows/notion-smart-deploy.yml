@@ -1,51 +1,41 @@
-name: Deploy NotionNext
+name: Notion Auto Update
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # 每 30 分钟检查一次
-  workflow_dispatch:        # 手动触发
+    - cron: "*/10 * * * *"  # 每10分钟执行一次
+  workflow_dispatch:
 
 jobs:
-  check-and-deploy:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: ⬇️ Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0   # 保留完整提交历史，避免冲突
-
-      - name: 🔍 Check Notion page hash and deploy if changed
+      - name: Check Notion Updates and Trigger Build
         run: |
-          set -euo pipefail
-          mkdir -p .cache
+          # === 配置区 ===
+          NOTION_TOKEN="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"
+          NOTION_DATABASE_ID="24ee6481ffbd80e299a8c77c37baf01b"
+          EDGEONE_WEBHOOK="https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e"
+          # =============
 
-          echo "🔄 Pull latest repo to ensure .cache sync..."
-          git pull --ff-only || true
+          echo "Checking Notion for updates..."
+          LAST_EDITED=$(curl -s "https://api.notion.com/v1/databases/$NOTION_DATABASE_ID/query" \
+            -H "Authorization: Bearer $NOTION_TOKEN" \
+            -H "Notion-Version: 2022-06-28" \
+            -H "Content-Type: application/json" \
+            | jq -r '.results[0].last_edited_time')
 
-          echo "🧾 Calculating current hash..."
-          current_hash=$(curl -s https://notion-api.splitbee.io/v1/page/24ee6481ffbd80e299a8c77c37baf01b | md5sum | cut -d ' ' -f1)
-          echo "$current_hash" > .cache/current.md5
+          echo "Last edited: $LAST_EDITED"
 
-          echo "📦 Fetching previous hash..."
-          if [ ! -f .cache/previous.md5 ]; then
-            echo "⚠️ No previous hash found. This is the first run."
+          if [ -f last_update.txt ]; then
+            PREV_EDITED=$(cat last_update.txt)
+          else
+            PREV_EDITED=""
           fi
 
-          if [ -f .cache/previous.md5 ] && cmp -s .cache/current.md5 .cache/previous.md5; then
-            echo "✅ No content change. Skipping deploy."
-            exit 0
+          if [ "$LAST_EDITED" != "$PREV_EDITED" ]; then
+            echo "Detected change in Notion. Triggering EdgeOne build..."
+            curl -X POST "$EDGEONE_WEBHOOK"
+            echo "$LAST_EDITED" > last_update.txt
+          else
+            echo "No change detected. Skipping build."
           fi
-
-          echo "🚀 Content changed. Triggering EdgeOne deploy..."
-          curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
-
-          echo "📝 Saving new hash to repo..."
-          cp .cache/current.md5 .cache/previous.md5
-
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@users.noreply.github.com"
-
-          git add .cache
-          git commit -m "🔄 Update previous.md5 after deploy" || echo "No changes to commit"
-          git push
