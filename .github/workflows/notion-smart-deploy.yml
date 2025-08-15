@@ -1,53 +1,50 @@
-name: Deploy NotionNext
+name: Notion smart deploy
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 每 30 分钟检查一次
-  workflow_dispatch:        # 支持手动触发
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
 
 jobs:
-  check-and-deploy:
+  check_notion_and_deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: ⬇️ Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: 🧰 Set up Git
+      - name: Detect changes and deploy
+        shell: bash
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          set -euo pipefail
 
-      - name: 🔍 Check Notion page hash and deploy if changed
-        run: |
           mkdir -p .cache
 
-          echo "🔍 Calculating current hash..."
-          current_hash=$(curl -s https://notion-api.splitbee.io/v1/page/24ee6481ffbd80e299a8c77c37baf01b | md5sum | cut -d ' ' -f1)
-          echo "$current_hash" > .cache/current.md5
+          echo "📥 Fetch previous hash (if exists)"
+          curl -s -o .cache/previous.md5 https://raw.githubusercontent.com/ThereChenSnow/NotionNext/main/.cache/previous.md5 || true
 
-          echo "📦 Fetching previous hash from GitHub..."
-          curl -s -o .cache/previous.md5 https://raw.githubusercontent.com/ThereChenSnow/NotionNext/main/.cache/previous.md5
+          echo "🧾 Fetch Notion page and compute current hash"
+          curl -s "https://buttered-fortnight-727.notion.site/24ee6481ffbd80e299a8c77c37baf01b?v=24ee6481ffbd812b9822000cf768a14c" > notion.html
+          md5sum notion.html | awk '{print $1}' > current.md5
 
-          if [ ! -s .cache/previous.md5 ]; then
-            echo "⚠️ No previous hash found. Assuming first run. Skipping deploy."
+          if [ -f .cache/previous.md5 ] && cmp -s current.md5 .cache/previous.md5; then
+            echo "✅ No changes in Notion content. Skipping deploy."
             exit 0
           fi
 
-          previous_hash=$(cat .cache/previous.md5)
-          if [ "$current_hash" != "$previous_hash" ]; then
-            echo "🚀 Content changed. Triggering EdgeOne deploy..."
-            curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
-          
-            # 更新 previous.md5
-            cp .cache/current.md5 .cache/previous.md5
-            git add .cache/previous.md5
-            git commit -m "🔄 Update previous.md5 after deploy"
-            git push
-          else
-            echo "✅ No content change. Skipping deploy."
-          fi
+          echo "🚀 Content changed. Triggering EdgeOne deploy..."
+          curl -X POST "https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e"
 
+          echo "📝 Update previous.md5 and commit"
+          cp current.md5 .cache/previous.md5
 
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
 
+          # 确保 main 分支最新，避免偶发冲突
+          git pull --ff-only || true
 
+          git add .cache/previous.md5
+          git commit -m "Update Notion hash [skip ci]" || echo "No changes to commit"
+          git push
