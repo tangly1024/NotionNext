@@ -13,12 +13,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Restore previous hash from cache
-        id: cache-restore
-        uses: actions/cache@v3
-        with:
-          path: previous.md5
-          key: notion-md5-cache
+      - name: Restore previous hash from artifact
+        id: restore-hash
+        run: |
+          mkdir -p .cache
+          curl -s -o .cache/previous.md5 https://raw.githubusercontent.com/${{ github.repository }}/main/.cache/previous.md5 || echo "No previous hash found"
 
       - name: Fetch Notion Page
         run: |
@@ -26,20 +25,25 @@ jobs:
 
       - name: Generate current hash
         run: |
-          md5sum notion.html > current.md5
+          md5sum notion.html | awk '{print $1}' > current.md5
 
       - name: Compare hashes and deploy if changed
         run: |
-          if [ -f previous.md5 ] && cmp -s current.md5 previous.md5; then
+          if [ -f .cache/previous.md5 ] && cmp -s current.md5 .cache/previous.md5; then
             echo "✅ No changes in Notion content. Skipping deploy."
           else
             echo "🚀 Content changed. Triggering EdgeOne deploy..."
             curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
-            cp current.md5 previous.md5
+            cp current.md5 .cache/previous.md5
           fi
 
-      - name: Save updated hash to cache
-        uses: actions/cache@v3
-        with:
-          path: previous.md5
-          key: notion-md5-cache
+      - name: Commit updated hash
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git pull
+          mkdir -p .cache
+          cp .cache/previous.md5 .cache/previous.md5
+          git add .cache/previous.md5
+          git commit -m "Update Notion hash [skip ci]" || echo "No changes to commit"
+          git push
