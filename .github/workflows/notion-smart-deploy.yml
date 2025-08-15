@@ -1,50 +1,27 @@
-name: Notion smart deploy
+- name: 检测并部署
+  run: |
+    set -euo pipefail
+    mkdir -p .cache
 
-on:
-  schedule:
-    - cron: '*/30 * * * *'
-  workflow_dispatch:
+    echo "生成当前 hash..."
+    curl -s https://notion-api.splitbee.io/v1/page/24ee6481ffbd80e299a8c77c37baf01b | md5sum | cut -d ' ' -f1 > .cache/current.md5
 
-jobs:
-  check_notion_and_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+    echo "获取之前的 hash..."
+    curl -s -o .cache/previous.md5 https://raw.githubusercontent.com/ThereChenSnow/NotionNext/main/.cache/previous.md5 || true
 
-      - name: Detect changes and deploy
-        shell: bash
-        run: |
-          set -euo pipefail
+    if [ -s .cache/previous.md5 ] && cmp -s .cache/current.md5 .cache/previous.md5; then
+      echo "✅ 内容无变化，跳过部署"
+      exit 0
+    fi
 
-          mkdir -p .cache
+    echo "🚀 检测到更新，调用 EdgeOne webhook..."
+    curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
 
-          echo "📥 Fetch previous hash (if exists)"
-          curl -s -o .cache/previous.md5 https://raw.githubusercontent.com/ThereChenSnow/NotionNext/main/.cache/previous.md5 || true
-
-          echo "🧾 Fetch Notion page and compute current hash"
-          curl -s "https://buttered-fortnight-727.notion.site/24ee6481ffbd80e299a8c77c37baf01b?v=24ee6481ffbd812b9822000cf768a14c" > notion.html
-          md5sum notion.html | awk '{print $1}' > current.md5
-
-          if [ -f .cache/previous.md5 ] && cmp -s current.md5 .cache/previous.md5; then
-            echo "✅ No changes in Notion content. Skipping deploy."
-            exit 0
-          fi
-
-          echo "🚀 Content changed. Triggering EdgeOne deploy..."
-          curl -X POST "https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e"
-
-          echo "📝 Update previous.md5 and commit"
-          cp current.md5 .cache/previous.md5
-
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@users.noreply.github.com"
-
-          # 确保 main 分支最新，避免偶发冲突
-          git pull --ff-only || true
-
-          git add .cache/previous.md5
-          git commit -m "Update Notion hash [skip ci]" || echo "No changes to commit"
-          git push
+    echo "更新并提交 hash..."
+    cp .cache/current.md5 .cache/previous.md5
+    git config --global user.name "github-actions"
+    git config --global user.email "github-actions@users.noreply.github.com"
+    git pull --ff-only || true
+    git add .cache/previous.md5
+    git commit -m "更新 Notion hash [skip ci]" || echo "无改动可提交"
+    git push || true
