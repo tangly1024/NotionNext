@@ -1,27 +1,51 @@
-- name: 检测并部署
-  run: |
-    set -euo pipefail
-    mkdir -p .cache
+name: Deploy NotionNext
 
-    echo "生成当前 hash..."
-    curl -s https://notion-api.splitbee.io/v1/page/24ee6481ffbd80e299a8c77c37baf01b | md5sum | cut -d ' ' -f1 > .cache/current.md5
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # 每 30 分钟检查一次
+  workflow_dispatch:        # 手动触发
 
-    echo "获取之前的 hash..."
-    curl -s -o .cache/previous.md5 https://raw.githubusercontent.com/ThereChenSnow/NotionNext/main/.cache/previous.md5 || true
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
 
-    if [ -s .cache/previous.md5 ] && cmp -s .cache/current.md5 .cache/previous.md5; then
-      echo "✅ 内容无变化，跳过部署"
-      exit 0
-    fi
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # 保留完整提交历史，避免冲突
 
-    echo "🚀 检测到更新，调用 EdgeOne webhook..."
-    curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
+      - name: 🔍 Check Notion page hash and deploy if changed
+        run: |
+          set -euo pipefail
+          mkdir -p .cache
 
-    echo "更新并提交 hash..."
-    cp .cache/current.md5 .cache/previous.md5
-    git config --global user.name "github-actions"
-    git config --global user.email "github-actions@users.noreply.github.com"
-    git pull --ff-only || true
-    git add .cache/previous.md5
-    git commit -m "更新 Notion hash [skip ci]" || echo "无改动可提交"
-    git push || true
+          echo "🔄 Pull latest repo to ensure .cache sync..."
+          git pull --ff-only || true
+
+          echo "🧾 Calculating current hash..."
+          current_hash=$(curl -s https://notion-api.splitbee.io/v1/page/24ee6481ffbd80e299a8c77c37baf01b | md5sum | cut -d ' ' -f1)
+          echo "$current_hash" > .cache/current.md5
+
+          echo "📦 Fetching previous hash..."
+          if [ ! -f .cache/previous.md5 ]; then
+            echo "⚠️ No previous hash found. This is the first run."
+          fi
+
+          if [ -f .cache/previous.md5 ] && cmp -s .cache/current.md5 .cache/previous.md5; then
+            echo "✅ No content change. Skipping deploy."
+            exit 0
+          fi
+
+          echo "🚀 Content changed. Triggering EdgeOne deploy..."
+          curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
+
+          echo "📝 Saving new hash to repo..."
+          cp .cache/current.md5 .cache/previous.md5
+
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+
+          git add .cache
+          git commit -m "🔄 Update previous.md5 after deploy" || echo "No changes to commit"
+          git push
