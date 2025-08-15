@@ -3,7 +3,7 @@ name: Deploy NotionNext
 on:
   schedule:
     - cron: '0 * * * *'  # 每 30 分钟检查一次
-  workflow_dispatch:        # 支持手动触发
+  workflow_dispatch:        # 手动触发
 
 jobs:
   check-and-deploy:
@@ -38,10 +38,10 @@ jobs:
 
           if [ "$current_hash" != "$previous_hash" ]; then
             echo "🚀 Content changed. Triggering EdgeOne deploy..."
-
             curl -X POST https://pages-api.edgeone.ai/v1/webhook/32d294f9005676799bb75b8f806a098799f96995e80a9cd1c924f8515c3eba5e
 
-            echo "$current_hash" > .cache/previous.md5
+            # 更新 previous.md5
+            cp .cache/current.md5 .cache/previous.md5
             git add .cache/previous.md5
             git commit -m "🔄 Update previous.md5 after deploy"
             git push
