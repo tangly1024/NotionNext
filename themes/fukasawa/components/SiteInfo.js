@@ -1,4 +1,4 @@
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 
 function SiteInfo({ title }) {
@@ -22,13 +22,13 @@ function SiteInfo({ title }) {
         {siteConfig('BEI_AN') && (
           <>
             <i className='fas fa-shield-alt' />
-            <a href='https://beian.miit.gov.cn/' className='mr-2'>
+            <a href={siteConfig('BEI_AN_LINK')} className='mr-2'>
               {siteConfig('BEI_AN')}
             </a>
             <br />
           </>
         )}
-        <GongAnBeiAn />
+        <BeiAnGongAn />
         <span className='hidden busuanzi_container_site_pv'>
           <i className='fas fa-eye' />
           <span className='px-1 busuanzi_value_site_pv'> </span>

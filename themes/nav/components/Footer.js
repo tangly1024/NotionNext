@@ -1,4 +1,4 @@
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 
 const Footer = ({ siteInfo }) => {
@@ -37,13 +37,13 @@ const Footer = ({ siteInfo }) => {
       {siteConfig('BEI_AN') && (
         <>
           <i className='fas fa-shield-alt' />{' '}
-          <a href='https://beian.miit.gov.cn/' className='mr-2'>
+          <a href={siteConfig('BEI_AN_LINK')} className='mr-2'>
             {siteConfig('BEI_AN')}
           </a>
           <br />
         </>
       )}
-      <GongAnBeiAn />
+      <BeiAnGongAn />
 
       <span className='hidden busuanzi_container_site_pv'>
         <i className='text-xs fas fa-eye' />

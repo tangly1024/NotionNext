@@ -1,3 +1,4 @@
+'user client'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 /**
@@ -13,8 +14,7 @@ export default function LoadingCover() {
     if (onLoading) {
       setIsVisible(true)
     } else {
-      const timeout = setTimeout(() => setIsVisible(false), 1500) // 等待淡出动画结束
-      return () => clearTimeout(timeout)
+      setIsVisible(false)
     }
   }, [onLoading])
 
@@ -36,33 +36,39 @@ export default function LoadingCover() {
       <div className='mx-auto'>
         <style global>
           {`
-      .loader {
-        width: 20px;
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background: #000;
-        box-shadow: 0 0 0 0 #0004;
-        animation: l2 1.5s infinite linear;
-        position: relative;
-      }
-      .loader:before,
-      .loader:after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        box-shadow: 0 0 0 0 #0004;
-        animation: inherit;
-        animation-delay: -0.5s;
-      }
-      .loader:after {
-        animation-delay: -1s;
-      }
-      @keyframes l2 {
-        100% {
-          box-shadow: 0 0 0 40px #0000;
-        }
-      }`}
+          .loader {
+            width: 20px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: #000;
+            box-shadow: 0 0 0 0 #0004;
+            animation: l2 1.5s infinite linear;
+            position: relative;
+          }
+          .loader:before,
+          .loader:after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            box-shadow: 0 0 0 0 #0004;
+            animation: inherit;
+            animation-delay: -0.5s;
+          }
+          .loader:after {
+            animation-delay: -1s;
+          }
+            /* 深色模式下的样式 */
+          .dark .loader {
+            background: #fff; /* 白色或灰色 */
+            box-shadow: 0 0 0 0 #fff4; /* 使用白色阴影 */
+          }
+          @keyframes l2 {
+            100% {
+              box-shadow: 0 0 0 40px #0000;
+            }
+          }
+      `}
         </style>
         <div className='loader'></div>
       </div>

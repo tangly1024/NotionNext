@@ -1,5 +1,5 @@
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import DarkModeButton from '@/components/DarkModeButton'
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
 import { siteConfig } from '@/lib/config'
 
 const Footer = ({ title }) => {
@@ -24,13 +24,13 @@ const Footer = ({ title }) => {
         {siteConfig('BEI_AN') && (
           <>
             <i className='fas fa-shield-alt' />
-            <a href='https://beian.miit.gov.cn/' className='mr-2'>
+            <a href={siteConfig('BEI_AN_LINK')} className='mr-2'>
               {siteConfig('BEI_AN')}
             </a>
             <br />
           </>
         )}
-        <GongAnBeiAn />
+        <BeiAnGongAn />
         <span className='hidden busuanzi_container_site_pv'>
           <i className='fas fa-eye' />
           <span className='px-1 busuanzi_value_site_pv'> </span>

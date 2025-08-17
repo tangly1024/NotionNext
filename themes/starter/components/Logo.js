@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
+import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import throttle from 'lodash.throttle'
@@ -10,10 +11,12 @@ import { useEffect, useState } from 'react'
  * 站点图标
  * @returns
  */
-export const Logo = ({ white }) => {
+export const Logo = props => {
+  const { white, NOTION_CONFIG } = props
   const router = useRouter()
-  const { isDarkMode } = useGlobal()
   const logoWhite = siteConfig('STARTER_LOGO_WHITE')
+  const logoNormal = siteConfig('STARTER_LOGO')
+  const { isDarkMode } = useGlobal()
   const [logo, setLogo] = useState(logoWhite)
   const [logoTextColor, setLogoTextColor] = useState('text-white')
 
@@ -24,11 +27,12 @@ export const Logo = ({ white }) => {
       const scrollY = window.scrollY
       // 何时显示浅色或白底的logo
       const homePageNavBar = router.route === '/' && scrollY < 10 // 在首页并且视窗在页面顶部
+
       if (white || isDarkMode || homePageNavBar) {
-        setLogo(siteConfig('STARTER_LOGO_WHITE'))
+        setLogo(logoWhite)
         setLogoTextColor('text-white')
       } else {
-        setLogo(siteConfig('STARTER_LOGO'))
+        setLogo(logoNormal)
         setLogoTextColor('text-black')
       }
     }, throttleMs)
@@ -45,13 +49,14 @@ export const Logo = ({ white }) => {
       <div className='navbar-logo flex items-center w-full py-5 cursor-pointer'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {logo && (
-          <img
+          <LazyImage
+            priority
             onClick={() => {
               router.push('/')
             }}
             src={logo}
             alt='logo'
-            className='header-logo w-full'
+            className='header-logo mr-1 h-8'
           />
         )}
         {/* logo文字 */}
