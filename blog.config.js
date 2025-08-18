@@ -18,7 +18,7 @@ const BLOG = {
   BIO: process.env.NEXT_PUBLIC_BIO || 'AI·XR·多模态交互研究者｜CharliiAI 创作者｜分享AI应用与增长实践', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.charliiai.com', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'AI, XR, 多模态, 数字人, 生成式AI, 提示工程, 博客, 教程, CharliiAI', // 网站关键词 英文逗号隔开
-  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://img.fy6b.com/2025/08/18/cebef50370b8a.ico', // blog favicon 配置, 默认使用外部图标链接
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
 
