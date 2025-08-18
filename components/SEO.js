@@ -171,8 +171,49 @@ const SEO = props => {
           <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
           <meta property='article:publisher' content={FACEBOOK_PAGE} />
+          
+          {/* 添加文章的结构化数据 */}
+          <script type="application/ld+json">{`
+            {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": "${title}",
+              "image": "${image}",
+              "author": {
+                "@type": "Person",
+                "name": "${AUTHOR}"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "${title}",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "${BLOG_FAVICON}"
+                }
+              },
+              "datePublished": "${meta.publishDay}",
+              "description": "${description}"
+            }
+          `}</script>
         </>
       )}
+      
+      {/* 添加网站的结构化数据 */}
+      <script type="application/ld+json">{`
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "${title}",
+          "url": "${url}",
+          "description": "${description}",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "${url}/search?keyword={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      `}</script>
+      
       {children}
     </Head>
   )
