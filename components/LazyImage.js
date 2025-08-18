@@ -102,7 +102,7 @@ export default function LazyImage({
     ref: imageRef,
     src: currentSrc,
     'data-src': src, // 存储原始图片地址
-    alt: alt || 'Lazy loaded image',
+    alt: alt || title || 'Image in ' + (typeof window !== 'undefined' ? window.location.pathname.split('/').pop() || 'homepage' : 'article'),
     onLoad: handleThumbnailLoaded,
     onError: handleImageError,
     className: `${className || ''} lazy-image-placeholder`,
