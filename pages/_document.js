@@ -43,6 +43,13 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
+          {/* Google AdSense 代码 */}
+          <script 
+            async 
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1754169107752451"
+            crossOrigin="anonymous"
+          />
+          
           {/* Google Analytics 跟踪代码 */}
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0HRSCJJ3S"></script>
           <script
