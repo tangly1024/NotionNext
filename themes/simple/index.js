@@ -217,7 +217,8 @@ const LayoutArchive = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, lock, validPassword, prev, next, recommendPosts } = props
+  // 第1处修改：在这里解构出 allPages
+  const { post, lock, validPassword, prev, next, recommendPosts, allPages } = props
   const { fullWidth } = useGlobal()
 
   return (
@@ -235,7 +236,8 @@ const LayoutSlug = props => {
 
           <div id='article-wrapper'>
             {/* Notion文章主体 */}
-            {!lock && <NotionPage post={post} />}
+            {/* 第2处修改：把 allPages 传递给 NotionPage */}
+            {!lock && <NotionPage post={post} allPages={allPages} />}
           </div>
 
           {/* 分享 */}
