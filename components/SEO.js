@@ -140,9 +140,12 @@ const SEO = props => {
       <meta property='og:image' content={image} />
       <meta property='og:site_name' content={title} />
       <meta property='og:type' content={type} />
+      {/* Twitter Card 标签 */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:description' content={description} />
+      <meta name='twitter:site' content='@charlilai' />
       <meta name='twitter:title' content={title} />
+      <meta name='twitter:description' content={description} />
+      <meta name='twitter:image' content={image} />
 
       <link rel='icon' href={BLOG_FAVICON} />
 
@@ -232,7 +235,7 @@ const getSEOMeta = (props, router, locale) => {
   switch (router.route) {
     case '/':
       return {
-        title: `${siteInfo?.title} | ${siteInfo?.description}`,
+        title: `${siteInfo?.title} - ${siteInfo?.description} | 专业内容分享平台`,
         description: `${siteInfo?.description}`,
         image: `${siteInfo?.pageCover}`,
         slug: '',
@@ -240,24 +243,24 @@ const getSEOMeta = (props, router, locale) => {
       }
     case '/archive':
       return {
-        title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title} - 查看所有历史文章和内容`,
+        description: `浏览${siteInfo?.title}的完整文章归档，按时间顺序整理的所有历史内容，方便您查找感兴趣的主题和文章。包含各类专业知识、教程和最新研究成果。`,
         image: `${siteInfo?.pageCover}`,
         slug: 'archive',
         type: 'website'
       }
     case '/page/[page]':
       return {
-        title: `${page} | Page | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        title: `第${page}页 | ${siteInfo?.title} - 探索更多精彩内容`,
+        description: `浏览${siteInfo?.title}的第${page}页内容，这里汇集了AI、XR、多模态交互等领域的专业文章、教程和研究成果，帮助您了解最新技术动态和应用实践。`,
         image: `${siteInfo?.pageCover}`,
         slug: 'page/' + page,
         type: 'website'
       }
     case '/category/[category]':
       return {
-        title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        title: `${category}分类 | ${siteInfo?.title} - 专业内容分类浏览`,
+        description: `浏览${siteInfo?.title}中关于"${category}"的所有文章和资源，这里汇集了该主题下的专业知识、教程和研究成果，帮助您深入了解${category}领域的最新动态和实践应用。`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -273,16 +276,16 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag/[tag]':
     case '/tag/[tag]/page/[page]':
       return {
-        title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        title: `${tag}标签 | ${siteInfo?.title} - 相关主题内容汇总`,
+        description: `浏览${siteInfo?.title}中标记为"${tag}"的所有文章和资源，这里汇集了与${tag}相关的专业知识、教程和研究成果，帮助您深入了解该领域的最新动态和实践应用。`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
         type: 'website'
       }
     case '/search':
       return {
-        title: `${keyword || ''}${keyword ? ' | ' : ''}${locale.NAV.SEARCH} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        title: `${keyword || '站内搜索'}${keyword ? ' | 搜索结果' : ''} | ${siteInfo?.title} - 找到您需要的内容`,
+        description: `在${siteInfo?.title}中搜索${keyword ? `"${keyword}"相关的` : '您感兴趣的'}内容，我们提供全站内容检索，帮助您快速找到所需的文章、教程和资源，提升您的阅读和学习体验。`,
         image: `${siteInfo?.pageCover}`,
         slug: 'search',
         type: 'website'
@@ -298,7 +301,8 @@ const getSEOMeta = (props, router, locale) => {
       }
     case '/404':
       return {
-        title: `${siteInfo?.title} | ${locale.NAV.PAGE_NOT_FOUND}`,
+        title: `页面未找到 | ${siteInfo?.title} - 返回首页继续浏览`,
+        description: `您访问的页面不存在或已被移除，请返回${siteInfo?.title}首页继续浏览其他内容，或使用搜索功能查找您需要的信息。`,
         image: `${siteInfo?.pageCover}`
       }
     case '/tag':
