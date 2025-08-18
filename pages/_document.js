@@ -43,6 +43,9 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
+          {/* X-Robots-Tag 备用方案 */}
+          <meta name="robots" content="follow, index" />
+          
           {/* Google AdSense 代码 */}
           <script 
             async 
