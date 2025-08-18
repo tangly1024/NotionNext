@@ -15,7 +15,10 @@ const SEO = props => {
   const PATH = siteConfig('PATH')
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
-  let url = PATH?.length ? `${LINK}/${SUB_PATH}` : LINK
+  // 确保 URL 格式正确，避免双斜杠
+  let url = PATH?.length ? `${LINK}${LINK.endsWith('/') ? '' : '/'}${SUB_PATH}` : LINK
+  // 确保 URL 末尾没有斜杠
+  url = url.endsWith('/') ? url.slice(0, -1) : url
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -47,9 +50,15 @@ const SEO = props => {
     keywords = post?.tags?.join(',')
   }
   if (meta) {
-    url = `${url}/${meta.slug}`
+    // 只有当 meta.slug 不为空时才添加
+    if (meta.slug) {
+      url = `${url}/${meta.slug}`
+    }
     image = meta.image || '/bg_image.jpg'
   }
+  
+  // 确保规范链接格式正确
+  const canonicalUrl = url.endsWith('/') ? url : `${url}/`
   const TITLE = siteConfig('TITLE')
   const title = meta?.title || TITLE
   const description = meta?.description || `${siteInfo?.description}`
@@ -127,7 +136,7 @@ const SEO = props => {
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta property='og:url' content={url} />
-      <link rel='canonical' href={url} />
+      <link rel='canonical' href={canonicalUrl} />
       <meta property='og:image' content={image} />
       <meta property='og:site_name' content={title} />
       <meta property='og:type' content={type} />
