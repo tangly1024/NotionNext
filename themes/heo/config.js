@@ -21,7 +21,7 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '探索 AI',
-  HEO_HERO_TITLE_2: '与 XR 未来',
+  HEO_HERO_TITLE_2: '与 自动化 未来',
   HEO_HERO_TITLE_3: 'CHARLIIAI.COM',
   HEO_HERO_TITLE_4: '数字智能助手',
   HEO_HERO_TITLE_5: '打造属于你的 AI 领导力',
