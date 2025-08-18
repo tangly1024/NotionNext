@@ -127,6 +127,7 @@ const SEO = props => {
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta property='og:url' content={url} />
+      <link rel='canonical' href={url} />
       <meta property='og:image' content={image} />
       <meta property='og:site_name' content={title} />
       <meta property='og:type' content={type} />
