@@ -41,7 +41,7 @@ function SiteInfo({ title }) {
         <span className='text-xs font-serif'>
           Powered by
           <a
-            href='https://github.com/tangly1024/NotionNext'
+            href='https://github.com/ashlandy79/AshBlog'
             className='underline'>
             NotionNext {siteConfig('VERSION')}
           </a>
