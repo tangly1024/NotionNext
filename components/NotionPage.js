@@ -13,7 +13,7 @@ import { NotionRenderer } from 'react-notion-x'
  * @param {*} param0
  * @returns
  */
-const NotionPage = ({ post, className, allPages }) => {
+const NotionPage = ({ post, className }) => {
   // 是否关闭数据库和画册的点击跳转
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
@@ -199,17 +199,8 @@ const autoScrollToHash = () => {
  * @returns
  */
 const mapPageUrl = id => {
-  if (!allPages) {
-    // 在allPages加载出来前，先用id跳转，而不是slug
-    return '/' + id.replace(/-/g, '')
-  }
-  const page = allPages.find(p => p.id === id)
-  if (page) {
-    return '/' + page.slug
-  } else {
-    // 如果在列表中找不到，说明这个页面没有被发布，仍然返回 Notion 原始链接
-    return 'https://www.notion.so/' + id.replace(/-/g, '')
-  }
+  // return 'https://www.notion.so/' + id.replace(/-/g, '')
+  return '/' + id.replace(/-/g, '')
 }
 
 /**
