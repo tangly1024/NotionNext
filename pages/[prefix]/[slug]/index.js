@@ -84,5 +84,4 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   }
 }
 
-export default PrefixSlug```
-
+export default PrefixSlug
