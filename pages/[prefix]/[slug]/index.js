@@ -84,4 +84,10 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   }
 }
 
-export default PrefixSlug
+export default PrefixSlug```
+
+---
+
+现在，您项目中的 `pages/[prefix]/[slug]/index.js` 文件也已恢复到最初状态。
+
+当您准备好时，解决问题的最终方案仍然是只修改 `themes/simple/index.js` 中的 `LayoutSlug` 组件。我随时待命。
