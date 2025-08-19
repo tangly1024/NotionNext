@@ -51,9 +51,6 @@ GitHub Fork Repository
 # 添加上游仓库
 git remote add upstream https://github.com/tangly1024/NotionNext.git
 
-# 设置上游仓库为只读（防止误推送）
-git remote set-url --push upstream no_push
-
 # 验证配置
 git remote -v
 ```
@@ -63,7 +60,7 @@ git remote -v
 origin    https://github.com/[你的用户名]/NotionNext.git (fetch)
 origin    https://github.com/[你的用户名]/NotionNext.git (push)
 upstream  https://github.com/tangly1024/NotionNext.git (fetch)
-upstream  no_push (push)
+upstream  https://github.com/tangly1024/NotionNext.git (push)
 ```
 
 > ⚠️ 如果没有看到 upstream 行，说明上游仓库未成功添加
