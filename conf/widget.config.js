@@ -49,9 +49,9 @@ module.exports = {
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
-      name: 'Gyaa Ha ha!',
-      artist: 'toby fox',
-      url: 'http://music.163.com/song/media/outer/url?id=2711378632.mp3',
+      name: '荒诞儿戏',
+      artist: '在虚无中永存,
+      url: 'http://music.163.com/song/media/outer/url?id=2725948142.mp3',
       cover: 'https://i.postimg.cc/gcKQkbPT/IMG-8489.png'
     },
     {
