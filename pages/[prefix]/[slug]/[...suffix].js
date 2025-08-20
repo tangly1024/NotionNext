@@ -29,15 +29,32 @@ export async function getStaticPaths() {
 
   const from = 'slug-paths'
   const { allPages } = await getGlobalData({ from })
+
+  // 【关键修复1】添加健壮性检查，防止 allPages 为空时构建崩溃
+  if (!allPages || allPages.length === 0) {
+    return {
+      paths: [],
+      fallback: true
+    }
+  }
+
   const paths = allPages
-    ?.filter(row => checkSlugHasMorThanTwoSlash(row))
-    .map(row => ({
-      params: {
-        prefix: row.slug.split('/')[0],
-        slug: row.slug.split('/')[1],
-        suffix: row.slug.split('/').slice(2)
+    .filter(row => checkSlugHasMorThanTwoSlash(row))
+    .map(row => {
+      const slugParts = row.slug.split('/');
+      if (slugParts.length >= 3) {
+        return {
+          params: {
+            prefix: slugParts[0],
+            slug: slugParts[1],
+            suffix: slugParts.slice(2)
+          }
+        };
       }
-    }))
+      return null;
+    })
+    .filter(Boolean); // 过滤掉无效路径
+
   return {
     paths: paths,
     fallback: true
@@ -53,7 +70,7 @@ export async function getStaticProps({
   params: { prefix, slug, suffix },
   locale
 }) {
-  const fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
+  const fullSlug = [prefix, slug, ...(suffix || [])].join('/');
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalData({ from, locale })
 
@@ -61,19 +78,24 @@ export async function getStaticProps({
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
-      (p.slug === suffix ||
-        p.slug === fullSlug.substring(fullSlug.lastIndexOf('/') + 1) ||
+      (p.slug === suffix.join('/') ||
         p.slug === fullSlug ||
         p.id === idToUuid(fullSlug))
     )
   })
 
-  // 处理非列表内文章的内信息
+  // 【关键修复2】修正提取 pageId 的逻辑
+  // 处理非列表内文章的信息
   if (!props?.post) {
-    const pageId = fullSlug.slice(-1)[0]
-    if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+    // pageId 应该是 URL 的最后一部分
+    const pageId = suffix?.length > 0 ? suffix[suffix.length - 1] : null;
+    if (pageId && pageId.length >= 32) {
+      try {
+        const post = await getPost(pageId)
+        props.post = post
+      } catch (error) {
+          console.error('Failed to get post by pageId', pageId, error)
+      }
     }
   }
 
