@@ -33,8 +33,8 @@ export async function getStaticPaths() {
     ?.filter(row => checkSlugHasMorThanTwoSlash(row))
     .map(row => ({
       params: {
-        prefix: row.slug.split('/'),
-        slug: row.slug.split('/'),
+        prefix: row.slug.split('/')[0],
+        slug: row.slug.split('/')[1],
         suffix: row.slug.split('/').slice(2)
       }
     }))
@@ -70,7 +70,7 @@ export async function getStaticProps({
 
   // 处理非列表内文章的内信息
   if (!props?.post) {
-    const pageId = fullSlug.slice(-1)
+    const pageId = fullSlug.slice(-1)[0]
     if (pageId.length >= 32) {
       const post = await getPost(pageId)
       props.post = post
