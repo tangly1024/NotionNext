@@ -1,8 +1,11 @@
 {
   "name": "notion-next",
-  "version": "4.8.3",
+  "version": "4.8.6",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/tangly1024/NotionNext.git"
@@ -36,17 +39,18 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "next": "14.2.4",
-    "notion-client": "6.15.6",
-    "notion-utils": "6.15.6",
+    "notion-client": "7.3.0",
+    "notion-utils": "7.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.5.0",
-    "react-notion-x": "6.16.0",
-    "react-share": "^4.4.1",
+    "react-notion-x": "7.3.0",
+    "react-share": "^5.2.2",
     "react-tweet-embed": "~2.0.0"
   },
   "devDependencies": {
+    "@types/node": "22.15.3",
     "@types/react": "18.3.10",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
