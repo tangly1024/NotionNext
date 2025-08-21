@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 博客归档列表
@@ -27,12 +27,12 @@ const BlogPostArchive = ({ posts = [], archiveTitle }) => {
                 <div id={post?.publishDay}>
                   <span className='text-gray-400'>{post.date?.start_date}</span>{' '}
                   &nbsp;
-                  <Link
+                  <SmartLink
                     href={post?.href}
                     passHref
                     className='dark:text-gray-400  dark:hover:text-indigo-300 overflow-x-hidden hover:underline cursor-pointer text-gray-600'>
                     {post.title}
-                  </Link>
+                  </SmartLink>
                 </div>
               </li>
             )

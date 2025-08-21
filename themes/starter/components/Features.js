@@ -3,7 +3,7 @@ import { SVGDesign } from './svg/SVGDesign'
 import { SVGEssential } from './svg/SVGEssential'
 import { SVGGifts } from './svg/SVGGifts'
 import { SVGTemplate } from './svg/SVGTemplate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 /**
  * 产品特性相关，将显示在首页中
  * @returns
@@ -42,11 +42,11 @@ export const Features = () => {
                 <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
                   {siteConfig('STARTER_FEATURE_1_TEXT_1')}
                 </p>
-                <Link
+                <SmartLink
                   href={siteConfig('STARTER_FEATURE_1_BUTTON_URL', '')}
                   className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
                   {siteConfig('STARTER_FEATURE_1_BUTTON_TEXT')}
-                </Link>
+                </SmartLink>
               </div>
             </div>
             <div className='w-full px-4 md:w-1/2 lg:w-1/4'>
@@ -61,11 +61,11 @@ export const Features = () => {
                 <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
                   {siteConfig('STARTER_FEATURE_2_TEXT_1')}
                 </p>
-                <Link
+                <SmartLink
                   href={siteConfig('STARTER_FEATURE_2_BUTTON_URL', '')}
                   className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
                   {siteConfig('STARTER_FEATURE_2_BUTTON_TEXT')}
-                </Link>
+                </SmartLink>
               </div>
             </div>
             <div className='w-full px-4 md:w-1/2 lg:w-1/4'>
@@ -80,11 +80,11 @@ export const Features = () => {
                 <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
                   {siteConfig('STARTER_FEATURE_3_TEXT_1')}
                 </p>
-                <Link
+                <SmartLink
                   href={siteConfig('STARTER_FEATURE_3_BUTTON_URL', '')}
                   className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
                   {siteConfig('STARTER_FEATURE_3_BUTTON_TEXT')}
-                </Link>
+                </SmartLink>
               </div>
             </div>
             <div className='w-full px-4 md:w-1/2 lg:w-1/4'>
@@ -99,11 +99,11 @@ export const Features = () => {
                 <p className='mb-8 text-body-color dark:text-dark-6 lg:mb-9'>
                   {siteConfig('STARTER_FEATURE_4_TEXT_1')}
                 </p>
-                <Link
+                <SmartLink
                   href={siteConfig('STARTER_FEATURE_4_BUTTON_URL', '')}
                   className='text-base font-medium text-dark hover:text-primary dark:text-white dark:hover:text-primary'>
                   {siteConfig('STARTER_FEATURE_3_BUTTON_TEXT')}
-                </Link>
+                </SmartLink>
               </div>
             </div>
           </div>

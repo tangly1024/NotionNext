@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import algoliasearch from 'algoliasearch'
 import throttle from 'lodash/throttle'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import {
   Fragment,
@@ -104,7 +104,8 @@ export default function AlgoliaSearchModal({ cRef }) {
   // 跳转Search结果
   const onJumpSearchResult = () => {
     if (searchResults.length > 0) {
-      window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResults[activeIndex].slug}`
+      const searchResult = searchResults[activeIndex]
+      window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResult.slug || searchResult.objectID}`
     }
   }
 
@@ -246,12 +247,12 @@ export default function AlgoliaSearchModal({ cRef }) {
       id='search-wrapper'
       className={`${
         isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
-      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-12 flex items-start justify-center mt-0`}>
+      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-[10vh] flex items-start justify-center mt-0`}>
       {/* 模态框 */}
       <div
         className={`${
           isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-        } flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
+        } max-h-[80vh] flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
         <div className='flex justify-between items-center'>
           <div className='text-2xl text-blue-600 dark:text-yellow-600 font-bold'>
             搜索
@@ -356,7 +357,7 @@ function TagGroups() {
     <div id='tags-group' className='dark:border-gray-700 space-y-2'>
       {firstTenTags?.map((tag, index) => {
         return (
-          <Link
+          <SmartLink
             passHref
             key={index}
             href={`/tag/${encodeURIComponent(tag.name)}`}
@@ -372,7 +373,7 @@ function TagGroups() {
                 <></>
               )}
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </div>
