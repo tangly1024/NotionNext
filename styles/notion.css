@@ -2082,3 +2082,8 @@ figure.notion-asset-wrapper.notion-asset-wrapper-video > div {
   height: 100% !important;
   width: 100% !important;
 }
+
+/* 画廊左右边线不展示Bug */
+.notion-gallery {
+  padding: 0 16px;
+}

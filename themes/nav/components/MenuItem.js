@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 import Collapse from './Collapse'
 
@@ -43,14 +43,14 @@ export const MenuItem = ({ link }) => {
             </div>
           </>
         ) : (
-          <Link
+          <SmartLink
             href={url}
             className='dark:text-neutral-400 dark:hover:text-white font-bold w-full display-block'>
             <i
               className={`text-base ${link?.icon ? link?.icon : isAnchor ? 'fas fa-hashtag' : ''} mr-1`}
             />
             {link?.title}
-          </Link>
+          </SmartLink>
         )}
       </div>
 
@@ -63,14 +63,14 @@ export const MenuItem = ({ link }) => {
             const sUrl = sIsAnchor ? `#${sLink.name}` : sLink.href
             return (
               <div key={index} className='nav-submenu'>
-                <Link href={sUrl}>
+                <SmartLink href={sUrl}>
                   <span className='dark:text-neutral-400 text-gray-500 hover:text-black dark:hover:text-white text-xs font-bold'>
                     <i
                       className={`text-xs mr-1 ${sLink?.icon ? sLink?.icon : sIsAnchor ? 'fas fa-hashtag' : ''}`}
                     />
                     {sLink.title}
                   </span>
-                </Link>
+                </SmartLink>
               </div>
             )
           })}
