@@ -1,14 +1,14 @@
 {
   "name": "notion-next",
   "version": "4.8.6",
-  "homepage": "https://github.com/tangly1024/NotionNext.git",
+  "homepage": "https://github.com/ashlandy79/AshBlog.git",
   "license": "MIT",
   "engines": {
     "node": ">=20"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tangly1024/NotionNext.git"
+    "url": "https://github.com/ashlandy79/AshBlog.git"
   },
   "author": {
     "name": "tangly",

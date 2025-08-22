@@ -12,10 +12,10 @@ Notion是一个能让效率暴涨的生产力引擎，可以帮你书写文档�
 # NotionNext
 
 <p>
-  <a aria-label="GitHub commit activity" href="https://github.com/tangly1024/NotionNext/commits/main" title="GitHub commit activity">
+  <a aria-label="GitHub commit activity" href="https://github.com/ashlandy79/AshBlog/commits/main" title="GitHub commit activity">
     <img src="https://img.shields.io/github/commit-activity/m/tangly1024/NotionNext?style=for-the-badge"/>
   </a>
-  <a aria-label="GitHub contributors" href="https://github.com/tangly1024/NotionNext/graphs/contributors" title="GitHub contributors">
+  <a aria-label="GitHub contributors" href="https://github.com/ashlandy79/AshBlog/graphs/contributors" title="GitHub contributors">
     <img src="https://img.shields.io/github/contributors/tangly1024/NotionNext?color=orange&style=for-the-badge"/>
   </a>
   <a aria-label="Build status" href="#" title="Build status">
@@ -54,7 +54,7 @@ Notion是一个能让效率暴涨的生产力引擎，可以帮你书写文档�
 
 感谢所有为 NotionNext 做出贡献的人！
 
-[![Contributors](https://contrib.rocks/image?repo=tangly1024/NotionNext)](https://github.com/tangly1024/NotionNext/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=tangly1024/NotionNext)](https://github.com/ashlandy79/AshBlog/graphs/contributors)
 
 ## 引用技术
 

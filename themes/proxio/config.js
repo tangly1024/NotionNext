@@ -14,7 +14,7 @@ const CONFIG = {
     PROXIO_HERO_BUTTON_1_URL:
         'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
     PROXIO_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
-    PROXIO_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
+    PROXIO_HERO_BUTTON_2_URL: 'https://github.com/ashlandy79/AshBlog', // 英雄区按钮
     PROXIO_HERO_BUTTON_2_ICON: '/images/starter/github.svg', // 英雄区按钮2的图标，不需要则留空
 
     // 英雄区配图，如需隐藏，改为空值即可 ''
@@ -61,7 +61,7 @@ const CONFIG = {
     PROXIO_FEATURE_3_TEXT_1: '精益求精雕琢每个元素，确保成品精致统一，令人过目难忘',
 
     PROXIO_FEATURE_BUTTON_TEXT: '了解更多', // 按钮文字
-    PROXIO_FEATURE_BUTTON_URL: 'https://github.com/tangly1024/NotionNext', // 按钮跳转
+    PROXIO_FEATURE_BUTTON_URL: 'https://github.com/ashlandy79/AshBlog', // 按钮跳转
 
     // 首页生涯区块
     PROXIO_CAREER_ENABLE: true, // 区块开关
@@ -205,18 +205,18 @@ const CONFIG = {
         {
             name: '开发者',
             menus: [
-                { title: 'Github', href: 'https://github.com/tangly1024/NotionNext' },
+                { title: 'Github', href: 'https://github.com/ashlandy79/AshBlog' },
                 {
                     title: '开发帮助',
                     href: 'https://docs.tangly1024.com/article/how-to-develop-with-notion-next'
                 },
                 {
                     title: '功能反馈',
-                    href: 'https://github.com/tangly1024/NotionNext/issues/new/choose'
+                    href: 'https://github.com/ashlandy79/AshBlog/issues/new/choose'
                 },
                 {
                     title: '技术讨论',
-                    href: 'https://github.com/tangly1024/NotionNext/discussions'
+                    href: 'https://github.com/ashlandy79/AshBlog/discussions'
                 },
                 {
                     title: '关于作者',

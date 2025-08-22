@@ -36,7 +36,7 @@ export default function Live2D() {
 
   function handleClick() {
     if (petSwitchTheme) {
-      switchTheme()
+      // switchTheme()
     }
   }
 
