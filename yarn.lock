@@ -2589,10 +2589,10 @@ keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
-ky@^1.7.5:
-  version "1.8.1"
-  resolved "https://registry.npmmirror.com/ky/-/ky-1.8.1.tgz#b1adaa473bc30aced2bab4c408ec177b78d198f0"
-  integrity sha512-7Bp3TpsE+L+TARSnnDpk3xg8Idi8RwSLdj6CMbNWoOARIrGrbuLGusV0dYwbZOm4bB3jHNxSw8Wk/ByDqJEnDw==
+ky@^1.8.1:
+  version "1.9.0"
+  resolved "https://registry.npmmirror.com/ky/-/ky-1.9.0.tgz#338e29a39c550ad4d9c17252d489d1aca09d0b52"
+  integrity sha512-NgBeR/cu7kuC4BAeF1rnXhfoI2uQ9RBe8zl5vo87ASsf1iIQoCeOxyt6Io6K4Ki++5ItCavXAtbEWWCGFciQ6g==
 
 language-subtag-registry@^0.3.20:
   version "0.3.23"
@@ -2905,30 +2905,30 @@ normalize-url@^8.0.1:
   resolved "https://registry.npmmirror.com/normalize-url/-/normalize-url-8.0.1.tgz#9b7d96af9836577c58f5883e939365fa15623a4a"
   integrity sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==
 
-notion-client@7.3.0:
-  version "7.3.0"
-  resolved "https://registry.npmmirror.com/notion-client/-/notion-client-7.3.0.tgz#c81147eeaf26ebbfa4b13b871612591820ff9146"
-  integrity sha512-628RezgVPDWgk0Z5j+1o13DMM+N/WV4+42cG+zW/mfih6XqNvssGx3kcOxU/sCv+y2YjxbqVTzFaZEkFiXUv7Q==
+notion-client@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.npmmirror.com/notion-client/-/notion-client-7.4.3.tgz#df2a2c53ad9fa1c09138ec810d20201e9c6a28a6"
+  integrity sha512-gMSGUVSzJyqGmZi1X6vkfoeCziLgApIDaqxjoVpUyZ5MUwi4mtYeE15mJP9/6XOYnlTleDop/4DWiZQGU4mI0Q==
   dependencies:
-    ky "^1.7.5"
-    notion-types "7.3.0"
-    notion-utils "7.3.0"
+    ky "^1.8.1"
+    notion-types "7.4.3"
+    notion-utils "7.4.3"
     p-map "^7.0.3"
 
-notion-types@7.3.0:
-  version "7.3.0"
-  resolved "https://registry.npmmirror.com/notion-types/-/notion-types-7.3.0.tgz#2a6152eb7c72f1d019a734dd74d77c8cf867ad75"
-  integrity sha512-XAS9vZPRPoPEs95UXEeuQp1OsfWeVSruG6qujnDOEHA7aRMHiuSv/Oqm2wZfpDHz+nnUyPIX3JZhcmNnjc3jlQ==
+notion-types@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.npmmirror.com/notion-types/-/notion-types-7.4.3.tgz#eaea518055fc7bbcfb78958199063d430a737716"
+  integrity sha512-rIztAJLqzLLlpsL9SNr9SpmTiwXpADzpUIgKmc2phbD42DQl0Z8lB+rr2+NbkZxaP0zbvAek8wtPRrOU+ynU2A==
 
-notion-utils@7.3.0:
-  version "7.3.0"
-  resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-7.3.0.tgz#f52eae28c6879bbeddf98c4583e4146e8a34e8d2"
-  integrity sha512-+ifyB8SmSzB/MID/2fly338ZRTR7Ug8RNp7XyK3TlvM5iJZbo+YyAOTfDv41y342NleCibx50iBLQAJwb+GD6Q==
+notion-utils@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-7.4.3.tgz#22213875d818474f90d884b6e562d18ac8e08f69"
+  integrity sha512-BtMqjZhegN7RNXpyq8QyTLpHB6rGpmBC/xTQAGQm+pVw9/GbGZhN+dNSfjL4GbL9t/0EChjPke4+G8FWnPZjCw==
   dependencies:
     is-url-superb "^6.1.0"
     memoize "^10.1.0"
     normalize-url "^8.0.1"
-    notion-types "7.3.0"
+    notion-types "7.4.3"
     p-queue "^8.1.0"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
@@ -3354,16 +3354,16 @@ react-modal@^3.16.3:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
-react-notion-x@7.3.0:
-  version "7.3.0"
-  resolved "https://registry.npmmirror.com/react-notion-x/-/react-notion-x-7.3.0.tgz#6d73f1dc43d71bbc36a10658604d57147319c227"
-  integrity sha512-0gUPN8cGHod4DXc3u/zXRTJTcb90sReL5uLfp6QA5LBV33axPL+6WFphAaMECL5d2U6XiDpDJoK9UCNnMNvr3A==
+react-notion-x@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.npmmirror.com/react-notion-x/-/react-notion-x-7.4.3.tgz#460f7afffa8920dbaa1938ab84970d874bd7cd22"
+  integrity sha512-oxRb467AAOxJIddKqwHchR/N4djIo+acvOZY63tSpLn5pkePh3vHFXcK8E/DL7K/wr5W7LV3nREiOUZ41jzcgQ==
   dependencies:
     "@fisch0920/medium-zoom" "^1.0.7"
     "@matejmazur/react-katex" "^3.1.3"
     katex "^0.16.21"
-    notion-types "7.3.0"
-    notion-utils "7.3.0"
+    notion-types "7.4.3"
+    notion-utils "7.4.3"
     prismjs "^1.30.0"
     react-fast-compare "^3.2.0"
     react-hotkeys-hook "^4.5.1"
@@ -3720,8 +3720,16 @@ streamsearch@^1.1.0:
   resolved "https://registry.npmmirror.com/streamsearch/-/streamsearch-1.1.0.tgz"
   integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
-  name string-width-cjs
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.npmmirror.com/string-width/-/string-width-4.2.3.tgz"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0:
   version "4.2.3"
   resolved "https://registry.npmmirror.com/string-width/-/string-width-4.2.3.tgz"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -3809,7 +3817,14 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.npmmirror.com/strip-ansi/-/strip-ansi-6.0.1.tgz"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmmirror.com/strip-ansi/-/strip-ansi-6.0.1.tgz"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
