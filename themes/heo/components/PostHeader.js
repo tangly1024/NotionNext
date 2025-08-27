@@ -135,6 +135,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
               </div>
             )}
           </section>
+          <section className='flex justify-center text-white'>{post?.summary}</section>
         </div>
 
         <WavesArea />
