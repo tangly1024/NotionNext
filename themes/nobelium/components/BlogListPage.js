@@ -24,9 +24,15 @@ export const BlogListPage = props => {
   return (
     <div className='w-full md:pr-12 my-6'>
       <div id='posts-wrapper'>
-        {posts?.map(post => (
-          <BlogPost key={post.id} post={post} />
-        ))}
+        {posts?.map((post, index) => (
+           <div key={post.id}>
+             <BlogPost post={post} />
+             {/* 不是最后一篇时加分隔线 */}
+             {index !== posts.length - 1 && (
+                <hr className="my-8 border-gray-200 dark:border-gray-700" />
+             )}
+      </div>
+   ))}
       </div>
 
       <div className='flex justify-between text-xs'>
