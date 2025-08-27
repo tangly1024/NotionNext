@@ -29,7 +29,7 @@ export const BlogListPage = props => {
              <BlogPost post={post} />
              {/* 不是最后一篇时加分隔线 */}
              {index !== posts.length - 1 && (
-                <hr className="my-8 border-gray-200 dark:border-gray-700" />
+                <hr className="my-4 border-gray-200 dark:border-gray-700" />
              )}
       </div>
    ))}
