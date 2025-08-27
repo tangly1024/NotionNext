@@ -77,7 +77,7 @@
     "@types/react": "18.3.10",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@waline/client": "^2.15.8",
+    "@waline/client": "^3.6.0",
     "autoprefixer": "^10.4.21",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
