@@ -37,8 +37,8 @@ const BLOG = {
     NOTION_HOST: process.env.NEXT_PUBLIC_NOTION_HOST || 'https://www.notion.so', // Notion域名，您可以选择用自己的域名进行反向代理，如果不懂得什么是反向代理，请勿修改此项
   
     BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
-    BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '萌ICP备20250086号', // 备案号 闽ICP备XXXXXX
-    BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://icp.gov.moe/?keyword=20250086', // 备案查询链接，如果用了萌备等备案请在这里填写
+    BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '沪ICP备2025140604号-1', // 备案号 闽ICP备XXXXXX
+    BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
   
     // RSS订阅
     ENABLE_RSS: process.env.NEXT_PUBLIC_ENABLE_RSS || true, // 是否开启RSS订阅功能
