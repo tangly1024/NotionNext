@@ -3,7 +3,7 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
-
+import dayjs from 'dayjs'
 const BlogPost = ({ post }) => {
   const { NOTION_CONFIG } = useGlobal()
   const showPreview =
@@ -20,7 +20,9 @@ const BlogPost = ({ post }) => {
             {post.title}
           </h2>
           <time className='flex-shrink-0 text-gray-600 dark:text-gray-400'>
-            {post?.publishDay}
+            {post?.publishDay
+              ? dayjs(post.publishDay).format('MM / DD')
+              : ''}
           </time>
         </header>
         <main>
