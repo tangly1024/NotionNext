@@ -1,3 +1,4 @@
+// components/SideRight.js
 import Live2D from '@/components/Live2D'
 import dynamic from 'next/dynamic'
 import { AnalyticsCard } from './AnalyticsCard'
@@ -7,6 +8,7 @@ import { InfoCard } from './InfoCard'
 import LatestPostsGroupMini from './LatestPostsGroupMini'
 import TagGroups from './TagGroups'
 import TouchMeCard from './TouchMeCard'
+import DouyinHotList from './DouyinHotList.js' // 引入 DouyinHotList 组件
 
 const FaceBookPage = dynamic(
   () => {
@@ -30,10 +32,10 @@ export default function SideRight(props) {
   const { post, tagOptions, currentTag, rightAreaSlot } = props
 
   // 只摘取标签的前60个，防止右侧过长
-  const sortedTags = tagOptions?.slice(0, 60) || []
-
+  const sortedTags = tagOptions?.slice(0, 24) || []
+    console.log('SideRight 组件被渲染， props:', props)  //调试信息
   return (
-    <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
+    <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full  overflow-y-auto'> {/* 移除边框 */}
       <InfoCard {...props} className='w-72 wow fadeInUp' />
 
       <div className='sticky top-20 space-y-4'>
@@ -50,17 +52,20 @@ export default function SideRight(props) {
         </div>
 
         {/* 最新文章列表 */}
-        <div
-          className={
-            'border wow fadeInUp  hover:border-indigo-600  dark:hover:border-yellow-600 duration-200 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white rounded-xl lg:p-6 p-4 hidden lg:block bg-white'
-          }>
-          <LatestPostsGroupMini {...props} />
-        </div>
+         <DouyinHotList/> {/* 渲染 DouyinHotList 组件  放在  LatestPostsGroupMini 组件之前*/}
+
 
         {rightAreaSlot}
 
         <FaceBookPage />
+        <div
+          className={
+            'border wow fadeInUp  hover:border-indigo-600  dark:hover:border-yellow-600 duration-200 dark:border-gray-700 dark:bg-[#1e1e1e] dark:text-white rounded-xl lg:p-6 p-4 hidden lg:block bg-white'
+          }>
+          <LatestPostsGroupMini {...props} /> {/* 渲染  LatestPostsGroupMini 组件 放在 DouyinHotList 组件之后 */}
+        </div>
         <Live2D />
+
 
         {/* 标签和成绩 */}
         <Card

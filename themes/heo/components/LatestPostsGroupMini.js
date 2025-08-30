@@ -1,10 +1,11 @@
+// components/LatestPostsGroupMini.jsx
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-
+import Card from './Card'
 /**
  * 最新文章列表
  * @param posts 所有文章数据
@@ -18,11 +19,11 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
   const SUB_PATH = siteConfig('SUB_PATH', '')
 
   return latestPosts ? (
-    <>
-      <div className=' mb-2 px-1 flex flex-nowrap justify-between'>
+     <Card className='bg-white dark:bg-[#1e1e1e]  dark:border-gray-700 rounded-xl'>
+      <div className=' mb-2 px-1 flex flex-nowrap justify-between p-4  border-b dark:border-gray-700'> {/* 使用和抖音热点榜相同的标题样式 */}
         <div>
-          <i className='mr-2 fas fas fa-history' />
-          {locale.COMMON.LATEST_POSTS}
+           <i className='mr-2 fas fas fa-history' />
+           <span className="text-xl font-bold">{locale.COMMON.LATEST_POSTS}</span> {/* 添加样式 */}
         </div>
       </div>
       {latestPosts.map(post => {
@@ -59,6 +60,6 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
           </SmartLink>
         )
       })}
-    </>
+    </Card>
   ) : null
 }

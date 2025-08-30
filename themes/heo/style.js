@@ -40,9 +40,6 @@ const Style = () => {
         display: none;
       }
 
-      .scroll-hidden::-webkit-scrollbar {
-        display: none;
-      }
 
       * {
         box-sizing: border-box;
@@ -61,9 +58,13 @@ const Style = () => {
           transform: translateX(-50%);
         }
       }
+
+       /* 添加以下 CSS */
+    html body ::-webkit-scrollbar {
+      display: none;
+    }
     `}</style>
   )
 }
 
 export { Style }
-
