@@ -1,10 +1,10 @@
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /* eslint-disable @next/next/no-html-link-for-pages */
 export default function Logo({ siteInfo }) {
   return (
-    <Link
+    <SmartLink
       passHref
       href='/'
       className='logo rounded cursor-pointer flex flex-col items-center'>
@@ -16,6 +16,6 @@ export default function Logo({ siteInfo }) {
           {siteConfig('BIO')}
         </h2>
       </div>
-    </Link>
+    </SmartLink>
   )
 }
