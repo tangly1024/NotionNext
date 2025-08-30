@@ -3,7 +3,7 @@ import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import Card from './Card'
 /**
@@ -34,7 +34,7 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
           : siteInfo?.pageCover
 
         return (
-          <Link
+          <SmartLink
             key={post.id}
             title={post.title}
             href={post?.href}
@@ -57,7 +57,7 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
                 <div className='text-gray-400'>{post.lastEditedDay}</div>
               </div>
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </Card>

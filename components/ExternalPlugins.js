@@ -10,6 +10,8 @@ import { initGoogleAdsense } from './GoogleAdsense'
 import Head from 'next/head'
 import ExternalScript from './ExternalScript'
 import WebWhiz from './Webwhiz'
+import { useGlobal } from '@/lib/global'
+import IconFont from './IconFont'
 
 /**
  * 各种插件脚本
@@ -19,6 +21,7 @@ import WebWhiz from './Webwhiz'
 const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
+  const { lang } = useGlobal()
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
@@ -124,6 +127,11 @@ const ExternalPlugin = props => {
     NOTION_CONFIG
   )
 
+  const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
+
+  const UMAMI_HOST = siteConfig('UMAMI_HOST', null, NOTION_CONFIG)
+  const UMAMI_ID = siteConfig('UMAMI_ID', null, NOTION_CONFIG)
+
   // 自定义样式css和js引入
   if (isBrowser) {
     // 初始化AOS动画
@@ -165,16 +173,19 @@ const ExternalPlugin = props => {
     }
 
     setTimeout(() => {
-      // 将notion-id格式的url转成自定义slug
-      convertInnerUrl(props?.allNavPages)
+      // 映射url
+      convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
     }, 500)
   }, [router])
 
   useEffect(() => {
     // 执行注入脚本
     // eslint-disable-next-line no-eval
+    if (GLOBAL_JS && GLOBAL_JS.trim() !== '') {
+      console.log('Inject JS:', GLOBAL_JS);
+    }
     eval(GLOBAL_JS)
-  }, [])
+  })
 
   if (DISABLE_PLUGIN) {
     return null
@@ -184,6 +195,7 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
+      {ENABLE_ICON_FONT && <IconFont />}
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
@@ -389,6 +401,11 @@ const ExternalPlugin = props => {
         />
       )}
 
+      {/* UMAMI 统计 */}
+      {UMAMI_ID && (
+        <script async defer src={UMAMI_HOST} data-website-id={UMAMI_ID}></script>
+      )}
+
       {/* 谷歌统计 */}
       {ANALYTICS_GOOGLE_ID && (
         <>
@@ -467,7 +484,7 @@ const DifyChatbot = dynamic(() => import('@/components/DifyChatbot'), {
 })
 const Analytics = dynamic(
   () =>
-    import('@vercel/analytics/react').then(async m => {
+    import('@vercel/analytics/react').then(m => {
       return m.Analytics
     }),
   { ssr: false }
