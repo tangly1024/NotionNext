@@ -1,4 +1,6 @@
 import { siteConfig } from '@/lib/config'
+import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
+import { useRef } from 'react'
 
 /**
  * 社交联系方式按钮组
@@ -6,6 +8,9 @@ import { siteConfig } from '@/lib/config'
  * @constructor
  */
 const SocialButton = () => {
+  const emailIcon = useRef(null)
+  const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
+
   return (
     <div className='w-52 justify-center flex-wrap flex my-2'>
       <div className='space-x-5 md:text-xl text-3xl text-gray-600 dark:text-gray-400 text-center'>
@@ -63,12 +68,14 @@ const SocialButton = () => {
             <i className='fab fa-instagram transform hover:scale-125 duration-150' />
           </a>
         )}
-        {siteConfig('CONTACT_EMAIL') && (
+        {CONTACT_EMAIL && (
           <a
+            onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)}
             target='_blank'
+            className='cursor-pointer'
             rel='noreferrer'
             title={'email'}
-            href={`mailto:${siteConfig('CONTACT_EMAIL')}`}>
+            ref={emailIcon}>
             <i className='fas fa-envelope transform hover:scale-125 duration-150' />
           </a>
         )}
