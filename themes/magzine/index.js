@@ -99,34 +99,34 @@ const LayoutBase = props => {
  * @param {*} props
  * @returns
  */
-const LayoutIndex = props => {
-  const { posts } = props
-  // 最新文章 从第4个元素开始截取出4个
-  const newPosts = posts.slice(3, 7)
+// const LayoutIndex = props => {
+//   const { posts } = props
+//   // 最新文章 从第4个元素开始截取出4个
+//   const newPosts = posts.slice(3, 7)
 
-  return (
-    <div className='pt-10 md:pt-18'>
-      {/* 首屏宣传区块 */}
-      <Hero posts={posts} />
+//   return (
+//     <div className='pt-10 md:pt-18'>
+//       {/* 首屏宣传区块 */}
+//       <Hero posts={posts} />
 
-      {/* 最新文章区块 */}
-      <PostSimpleListHorizontal
-        title='最新文章'
-        href='/archive'
-        posts={newPosts}
-      />
+//       {/* 最新文章区块 */}
+//       <PostSimpleListHorizontal
+//         title='最新文章'
+//         href='/archive'
+//         posts={newPosts}
+//       />
 
-      {/* 文章分类陈列区 */}
-      <PostBannerGroupByCategory {...props} />
+//       {/* 文章分类陈列区 */}
+//       <PostBannerGroupByCategory {...props} />
 
-      {/* 文章推荐  */}
-      <PostListRecommend {...props} />
+//       {/* 文章推荐  */}
+//       <PostListRecommend {...props} />
 
-      {/* 行动呼吁 */}
-      <CTA {...props} />
-    </div>
-  )
-}
+//       {/* 行动呼吁 */}
+//       <CTA {...props} />
+//     </div>
+//   )
+// }
 
 /**
  * 博客列表
@@ -550,7 +550,7 @@ export {
   LayoutBase,
   LayoutCategoryIndex,
   LayoutDashboard,
-  LayoutIndex,
+  // LayoutIndex,
   LayoutPostList,
   LayoutSearch,
   LayoutSignIn,
