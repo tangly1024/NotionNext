@@ -132,270 +132,270 @@ const LayoutBase = props => {
  * 博客列表
  * @returns
  */
-const LayoutPostList = props => {
-  // 当前筛选的分类或标签
-  const { category, tag, NOTION_CONFIG } = props
+// const LayoutPostList = props => {
+//   // 当前筛选的分类或标签
+//   const { category, tag, NOTION_CONFIG } = props
 
-  return (
-    <div className=' max-w-screen-3xl mx-auto w-full px-2 lg:px-0'>
-      {/* 一个顶部条 */}
-      <h2 className='py-8 text-2xl font-bold'>{category || tag}</h2>
+//   return (
+//     <div className=' max-w-screen-3xl mx-auto w-full px-2 lg:px-0'>
+//       {/* 一个顶部条 */}
+//       <h2 className='py-8 text-2xl font-bold'>{category || tag}</h2>
 
-      {siteConfig('POST_LIST_STYLE', 'page', NOTION_CONFIG) === 'page' ? (
-        <PostListPage {...props} />
-      ) : (
-        <PostListScroll {...props} />
-      )}
-    </div>
-  )
-}
+//       {siteConfig('POST_LIST_STYLE', 'page', NOTION_CONFIG) === 'page' ? (
+//         <PostListPage {...props} />
+//       ) : (
+//         <PostListScroll {...props} />
+//       )}
+//     </div>
+//   )
+// }
 
 /**
  * 文章详情
  * @param {*} props
  * @returns
  */
-const LayoutSlug = props => {
-  const { post, recommendPosts, prev, next, lock, validPassword } = props
-  const { locale } = useGlobal()
-  const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-  useEffect(() => {
-    // 404
-    if (!post && router?.route?.indexOf('/[prefix]') === 0) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const article = document.querySelector(
-            '#article-wrapper #notion-article'
-          )
-          if (!article) {
-            router.push('/404').then(() => {
-              console.warn('找不到页面', router.asPath)
-            })
-          }
-        }
-      }, waiting404)
-    }
-  }, [router])
+// const LayoutSlug = props => {
+//   const { post, recommendPosts, prev, next, lock, validPassword } = props
+//   const { locale } = useGlobal()
+//   const router = useRouter()
+//   const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+//   useEffect(() => {
+//     // 404
+//     if (!post && router?.route?.indexOf('/[prefix]') === 0) {
+//       setTimeout(() => {
+//         if (isBrowser) {
+//           const article = document.querySelector(
+//             '#article-wrapper #notion-article'
+//           )
+//           if (!article) {
+//             router.push('/404').then(() => {
+//               console.warn('找不到页面', router.asPath)
+//             })
+//           }
+//         }
+//       }, waiting404)
+//     }
+//   }, [router])
 
-  return (
-    <>
-      <div className='w-full mx-auto max-w-screen-3xl'>
-        {/* 广告位 */}
-        <WWAds orientation='horizontal' />
+//   return (
+//     <>
+//       <div className='w-full mx-auto max-w-screen-3xl'>
+//         {/* 广告位 */}
+//         <WWAds orientation='horizontal' />
 
-        {/* 文章锁 */}
-        {lock && <ArticleLock validPassword={validPassword} />}
+//         {/* 文章锁 */}
+//         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && (
-          <div className='w-full max-w-screen-3xl mx-auto'>
-            {post && (
-              <>
-                {/* 文章信息 */}
-                <ArticleInfo {...props} />
+//         {!lock && (
+//           <div className='w-full max-w-screen-3xl mx-auto'>
+//             {post && (
+//               <>
+//                 {/* 文章信息 */}
+//                 <ArticleInfo {...props} />
 
-                {/* 文章区块分为三列 */}
-                <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
-                  <div className='h-full lg:col-span-1 hidden lg:block'>
-                    <Catalog
-                      post={post}
-                      toc={post?.toc || []}
-                      className='sticky top-20'
-                    />
-                  </div>
+//                 {/* 文章区块分为三列 */}
+//                 <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 py-12'>
+//                   <div className='h-full lg:col-span-1 hidden lg:block'>
+//                     <Catalog
+//                       post={post}
+//                       toc={post?.toc || []}
+//                       className='sticky top-20'
+//                     />
+//                   </div>
 
-                  {/* Notion文章主体 */}
-                  <article className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
-                    <div id='article-wrapper'>
-                      <NotionPage post={post} />
-                    </div>
+//                   {/* Notion文章主体 */}
+//                   <article className='max-w-3xl lg:col-span-3 w-full mx-auto px-2 lg:px-0'>
+//                     <div id='article-wrapper'>
+//                       <NotionPage post={post} />
+//                     </div>
 
-                    {/* 文章底部区域  */}
-                    <section>
-                      <div className='py-2 flex justify-end'>
-                        {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
-                          post?.tagItems?.map(tag => (
-                            <TagItemMini key={tag.name} tag={tag} />
-                          ))}
-                      </div>
-                      {/* 分享 */}
-                      <ShareBar post={post} />
-                      {/* 上一篇下一篇 */}
-                      <PostNavAround prev={prev} next={next} />
+//                     {/* 文章底部区域  */}
+//                     <section>
+//                       <div className='py-2 flex justify-end'>
+//                         {siteConfig('MAGZINE_POST_DETAIL_TAG') &&
+//                           post?.tagItems?.map(tag => (
+//                             <TagItemMini key={tag.name} tag={tag} />
+//                           ))}
+//                       </div>
+//                       {/* 分享 */}
+//                       <ShareBar post={post} />
+//                       {/* 上一篇下一篇 */}
+//                       <PostNavAround prev={prev} next={next} />
 
-                      {/* 评论区 */}
-                      <Comment frontMatter={post} />
-                    </section>
-                  </article>
+//                       {/* 评论区 */}
+//                       <Comment frontMatter={post} />
+//                     </section>
+//                   </article>
 
-                  <div className='lg:col-span-1 flex flex-col justify-between px-2 lg:px-0 space-y-2 lg:space-y-0'>
-                    {/* meta信息 */}
-                    <section className='text-lg gap-y-6 text-center lg:text-left'>
-                      <div className='text-gray-500 py-1 dark:text-gray-600 '>
-                        {/* <div className='whitespace-nowrap'>
-          <i className='far fa-calendar mr-2' />
-          {post?.publishDay}
-        </div> */}
-                        <div className='whitespace-nowrap mr-2'>
-                          <i className='far fa-calendar-check mr-2' />
-                          {post?.lastEditedDay}
-                        </div>
-                        <div className='hidden busuanzi_container_page_pv  mr-2 whitespace-nowrap'>
-                          <i className='mr-1 fas fa-fire' />
-                          <span className='busuanzi_value_page_pv' />
-                        </div>
-                      </div>
-                    </section>
+//                   <div className='lg:col-span-1 flex flex-col justify-between px-2 lg:px-0 space-y-2 lg:space-y-0'>
+//                     {/* meta信息 */}
+//                     <section className='text-lg gap-y-6 text-center lg:text-left'>
+//                       <div className='text-gray-500 py-1 dark:text-gray-600 '>
+//                         {/* <div className='whitespace-nowrap'>
+//           <i className='far fa-calendar mr-2' />
+//           {post?.publishDay}
+//         </div> */}
+//                         <div className='whitespace-nowrap mr-2'>
+//                           <i className='far fa-calendar-check mr-2' />
+//                           {post?.lastEditedDay}
+//                         </div>
+//                         <div className='hidden busuanzi_container_page_pv  mr-2 whitespace-nowrap'>
+//                           <i className='mr-1 fas fa-fire' />
+//                           <span className='busuanzi_value_page_pv' />
+//                         </div>
+//                       </div>
+//                     </section>
 
-                    {/* 最新文章区块 */}
-                    <div>
-                      <PostGroupLatest {...props} vertical={true} />
-                    </div>
+//                     {/* 最新文章区块 */}
+//                     <div>
+//                       <PostGroupLatest {...props} vertical={true} />
+//                     </div>
 
-                    {/* Adsense */}
-                    <div>
-                      <AdSlot />
-                    </div>
+//                     {/* Adsense */}
+//                     <div>
+//                       <AdSlot />
+//                     </div>
 
-                    {/* 留白 */}
-                    <div></div>
+//                     {/* 留白 */}
+//                     <div></div>
 
-                    {/* 文章分类区块 */}
-                    <div>
-                      <CategoryGroup {...props} />
-                    </div>
+//                     {/* 文章分类区块 */}
+//                     <div>
+//                       <CategoryGroup {...props} />
+//                     </div>
 
-                    <div>
-                      <TouchMeCard />
-                    </div>
+//                     <div>
+//                       <TouchMeCard />
+//                     </div>
 
-                    <div>
-                      <WWAds />
-                    </div>
+//                     <div>
+//                       <WWAds />
+//                     </div>
 
-                    {/* 底部留白 */}
-                    <div></div>
-                  </div>
-                </div>
+//                     {/* 底部留白 */}
+//                     <div></div>
+//                   </div>
+//                 </div>
 
-                {/* 移动端目录 */}
-                <CatalogFloat {...props} />
-              </>
-            )}
+//                 {/* 移动端目录 */}
+//                 <CatalogFloat {...props} />
+//               </>
+//             )}
 
-            {!post && (
-              <div className='flex justify-center items-center w-full py-40'>
-                Loading...
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+//             {!post && (
+//               <div className='flex justify-center items-center w-full py-40'>
+//                 Loading...
+//               </div>
+//             )}
+//           </div>
+//         )}
+//       </div>
 
-      <div>
-        {/* 广告醒图 */}
-        <BannerFullWidth />
-        {/* 推荐关联文章 */}
-        {recommendPosts && recommendPosts.length > 0 && (
-          <PostSimpleListHorizontal
-            title={locale.COMMON.RELATE_POSTS}
-            posts={recommendPosts}
-          />
-        )}
-      </div>
-    </>
-  )
-}
+//       <div>
+//         {/* 广告醒图 */}
+//         <BannerFullWidth />
+//         {/* 推荐关联文章 */}
+//         {recommendPosts && recommendPosts.length > 0 && (
+//           <PostSimpleListHorizontal
+//             title={locale.COMMON.RELATE_POSTS}
+//             posts={recommendPosts}
+//           />
+//         )}
+//       </div>
+//     </>
+//   )
+// }
 
 /**
  * 搜索
  * @param {*} props
  * @returns
  */
-const LayoutSearch = props => {
-  const { locale } = useGlobal()
-  const { keyword } = props
-  const router = useRouter()
-  const currentSearch = keyword || router?.query?.s
+// const LayoutSearch = props => {
+//   const { locale } = useGlobal()
+//   const { keyword } = props
+//   const router = useRouter()
+//   const currentSearch = keyword || router?.query?.s
 
-  useEffect(() => {
-    if (isBrowser) {
-      replaceSearchResult({
-        doms: document.getElementById('posts-wrapper'),
-        search: keyword,
-        target: {
-          element: 'span',
-          className: 'text-red-500 border-b border-dashed'
-        }
-      })
-    }
-  }, [])
+//   useEffect(() => {
+//     if (isBrowser) {
+//       replaceSearchResult({
+//         doms: document.getElementById('posts-wrapper'),
+//         search: keyword,
+//         target: {
+//           element: 'span',
+//           className: 'text-red-500 border-b border-dashed'
+//         }
+//       })
+//     }
+//   }, [])
 
-  return (
-    <div className='max-w-screen-3xl w-full mx-auto'>
-      {/* 搜索导航栏 */}
-      <div className='py-12'>
-        <div className='pb-4 w-full'>{locale.NAV.SEARCH}</div>
-        {!currentSearch && (
-          <>
-            <TagGroups {...props} />
-            <CategoryGroup {...props} />
-          </>
-        )}
-      </div>
+//   return (
+//     <div className='max-w-screen-3xl w-full mx-auto'>
+//       {/* 搜索导航栏 */}
+//       <div className='py-12'>
+//         <div className='pb-4 w-full'>{locale.NAV.SEARCH}</div>
+//         {!currentSearch && (
+//           <>
+//             <TagGroups {...props} />
+//             <CategoryGroup {...props} />
+//           </>
+//         )}
+//       </div>
 
-      {/* 文章列表 */}
-      {currentSearch && (
-        <div>
-          {siteConfig('POST_LIST_STYLE') === 'page' ? (
-            <PostListPage {...props} />
-          ) : (
-            <PostListScroll {...props} />
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
+//       {/* 文章列表 */}
+//       {currentSearch && (
+//         <div>
+//           {siteConfig('POST_LIST_STYLE') === 'page' ? (
+//             <PostListPage {...props} />
+//           ) : (
+//             <PostListScroll {...props} />
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   )
+// }
 
 /**
  * 归档
  * @param {*} props
  * @returns
  */
-const LayoutArchive = props => {
-  const { archivePosts } = props
-  return (
-    <>
-      <div className='w-full max-w-screen-3xl mx-auto mt-14 min-h-full'>
-        {Object.keys(archivePosts)?.map(archiveTitle => (
-          <PostGroupArchive
-            key={archiveTitle}
-            archiveTitle={archiveTitle}
-            posts={archivePosts[archiveTitle]}
-          />
-        ))}
-      </div>
-    </>
-  )
-}
+// const LayoutArchive = props => {
+//   const { archivePosts } = props
+//   return (
+//     <>
+//       <div className='w-full max-w-screen-3xl mx-auto mt-14 min-h-full'>
+//         {Object.keys(archivePosts)?.map(archiveTitle => (
+//           <PostGroupArchive
+//             key={archiveTitle}
+//             archiveTitle={archiveTitle}
+//             posts={archivePosts[archiveTitle]}
+//           />
+//         ))}
+//       </div>
+//     </>
+//   )
+// }
 
 /**
  * 404
  * @param {*} props
  * @returns
  */
-const Layout404 = props => {
-  return (
-    <>
-      <div className='w-full py-40 flex justify-center items-center'>
-        404 Not found.
-      </div>
-      {/* 文章推荐  */}
-      <PostListRecommend {...props} />
-    </>
-  )
-}
+// const Layout404 = props => {
+//   return (
+//     <>
+//       <div className='w-full py-40 flex justify-center items-center'>
+//         404 Not found.
+//       </div>
+//       {/* 文章推荐  */}
+//       <PostListRecommend {...props} />
+//     </>
+//   )
+// }
 
 /**
  * 分类列表
@@ -441,81 +441,81 @@ const LayoutCategoryIndex = props => {
  * @param {*} props
  * @returns
  */
-const LayoutTagIndex = props => {
-  const { tagOptions } = props
-  const { locale } = useGlobal()
-  return (
-    <div className='w-full max-w-screen-3xl mx-auto min-h-96'>
-      <div className='bg-white dark:bg-gray-700 py-10'>
-        <div className='dark:text-gray-200 mb-5  text-2xl font-bold'>
-          {/* <i className='mr-4 fas fa-tag' /> */}
-          {locale.COMMON.TAGS}:
-        </div>
-        <div id='tags-list' className='duration-200 flex flex-wrap'>
-          {tagOptions?.map(tag => {
-            return (
-              <div key={tag.name} className='p-2'>
-                <TagItemMini key={tag.name} tag={tag} />
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </div>
-  )
-}
+// const LayoutTagIndex = props => {
+//   const { tagOptions } = props
+//   const { locale } = useGlobal()
+//   return (
+//     <div className='w-full max-w-screen-3xl mx-auto min-h-96'>
+//       <div className='bg-white dark:bg-gray-700 py-10'>
+//         <div className='dark:text-gray-200 mb-5  text-2xl font-bold'>
+//           {/* <i className='mr-4 fas fa-tag' /> */}
+//           {locale.COMMON.TAGS}:
+//         </div>
+//         <div id='tags-list' className='duration-200 flex flex-wrap'>
+//           {tagOptions?.map(tag => {
+//             return (
+//               <div key={tag.name} className='p-2'>
+//                 <TagItemMini key={tag.name} tag={tag} />
+//               </div>
+//             )
+//           })}
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
 /**
  * 登录页面
  * @param {*} props
  * @returns
  */
-const LayoutSignIn = props => {
-  const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+// const LayoutSignIn = props => {
+//   const { post } = props
+//   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-  return (
-    <>
-      <div className='grow mt-20'>
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignIn />
-          </div>
-        )}
-        <div id='article-wrapper'>
-          <NotionPage post={post} />
-        </div>
-      </div>
-    </>
-  )
-}
+//   return (
+//     <>
+//       <div className='grow mt-20'>
+//         {/* clerk预置表单 */}
+//         {enableClerk && (
+//           <div className='flex justify-center py-6'>
+//             <SignIn />
+//           </div>
+//         )}
+//         <div id='article-wrapper'>
+//           <NotionPage post={post} />
+//         </div>
+//       </div>
+//     </>
+//   )
+// }
 
 /**
  * 注册页面
  * @param {*} props
  * @returns
  */
-const LayoutSignUp = props => {
-  const { post } = props
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+// const LayoutSignUp = props => {
+//   const { post } = props
+//   const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-  return (
-    <>
-      <div className='grow mt-20'>
-        {/* clerk预置表单 */}
-        {enableClerk && (
-          <div className='flex justify-center py-6'>
-            <SignUp />
-          </div>
-        )}
-        <div id='article-wrapper'>
-          <NotionPage post={post} />
-        </div>
-      </div>
-    </>
-  )
-}
+//   return (
+//     <>
+//       <div className='grow mt-20'>
+//         {/* clerk预置表单 */}
+//         {enableClerk && (
+//           <div className='flex justify-center py-6'>
+//             <SignUp />
+//           </div>
+//         )}
+//         <div id='article-wrapper'>
+//           <NotionPage post={post} />
+//         </div>
+//       </div>
+//     </>
+//   )
+// }
 
 /**
  * 仪表盘
@@ -545,17 +545,17 @@ const LayoutDashboard = props => {
   )
 }
 export {
-  Layout404,
-  LayoutArchive,
+  // Layout404,
+  // LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
-  LayoutDashboard,
+  // LayoutDashboard,
   // LayoutIndex,
-  LayoutPostList,
-  LayoutSearch,
-  LayoutSignIn,
-  LayoutSignUp,
-  LayoutSlug,
-  LayoutTagIndex,
+  // LayoutPostList,
+  // LayoutSearch,
+  // LayoutSignIn,
+  // LayoutSignUp,
+  // LayoutSlug,
+  // LayoutTagIndex,
   CONFIG as THEME_CONFIG
 }
