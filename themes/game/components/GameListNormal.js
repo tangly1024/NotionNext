@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { deepClone } from '@/lib/utils'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useState } from 'react'
 
 /**
@@ -45,7 +45,7 @@ const GameItem = ({ item }) => {
   const video = item?.ext?.video
 
   return (
-    <Link
+    <SmartLink
       href={`${item?.href}`}
       onMouseOver={() => {
         setShowType('video')
@@ -77,6 +77,6 @@ const GameItem = ({ item }) => {
         src={img}
         alt={title}
       />
-    </Link>
+    </SmartLink>
   )
 }

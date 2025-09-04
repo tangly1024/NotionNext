@@ -7,7 +7,7 @@ import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import CONFIG from '../config'
 import ArticleCopyright from './ArticleCopyright'
@@ -69,7 +69,7 @@ export default function ArticleDetail(props) {
               <div className='flex flex-wrap justify-center'>
                 {post?.type !== 'Page' && (
                   <>
-                    <Link
+                    <SmartLink
                       href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                       passHref
                       legacyBehavior>
@@ -77,7 +77,7 @@ export default function ArticleDetail(props) {
                         <i className='far fa-calendar mr-1' />{' '}
                         {post?.publishDay}
                       </div>
-                    </Link>
+                    </SmartLink>
                     <span className='mr-2'>
                       {' '}
                       | <i className='far fa-calendar-check mr-2' />
@@ -127,12 +127,12 @@ export default function ArticleDetail(props) {
               {post.category && (
                 <>
                   <div className='cursor-pointer my-auto text-md mr-2 hover:text-black dark:hover:text-white border-b dark:text-gray-500 border-dashed'>
-                    <Link href={`/category/${post.category}`} legacyBehavior>
+                    <SmartLink href={`/category/${post.category}`} legacyBehavior>
                       <a>
                         <i className='mr-1 far fa-folder-open' />{' '}
                         {post.category}
                       </a>
-                    </Link>
+                    </SmartLink>
                   </div>
                 </>
               )}
