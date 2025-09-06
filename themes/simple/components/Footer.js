@@ -33,6 +33,10 @@ export default function Footer(props) {
             </a>
           )}
           <BeiAnGongAn />
+          {/* 将IPv6支持提示移动到Powered by左侧 */}
+          <span className='no-underline ml-4'>
+            本网站已支持IPv6访问！
+          </span>
           <span className='no-underline ml-4'>
             Powered by
             <a
@@ -40,10 +44,6 @@ export default function Footer(props) {
               className=' hover:underline'>
               NotionNext {siteConfig('VERSION')}
             </a>
-          </span>
-          {/* 新增IPv6支持提示，匹配现有样式 */}
-          <span className='no-underline ml-4'>
-            本网站已支持IPv6访问！
           </span>
         </div>
       </div>
