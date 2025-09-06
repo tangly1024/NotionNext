@@ -25,7 +25,6 @@ export default function Footer(props) {
         </div>
         <div className='md:p-0 text-center md:text-right text-xs'>
           {/* 右侧链接 */}
-          {/* <a href="#" className="text-black no-underline hover:underline">Privacy Policy</a> */}
           {siteConfig('BEI_AN') && (
             <a
               href={siteConfig('BEI_AN_LINK')}
@@ -41,6 +40,10 @@ export default function Footer(props) {
               className=' hover:underline'>
               NotionNext {siteConfig('VERSION')}
             </a>
+          </span>
+          {/* 新增IPv6支持提示，匹配现有样式 */}
+          <span className='no-underline ml-4'>
+            本网站已支持IPv6访问！
           </span>
         </div>
       </div>
