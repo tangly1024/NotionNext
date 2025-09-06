@@ -52,7 +52,7 @@ Notion是一个能让效率暴涨的生产力引擎，可以帮你书写文档�
 
 ## 贡献者
 
-感谢所有为 NotionNext 做出贡献的人！
+致敬每一位开发者！
 
 [![Contributors](https://contrib.rocks/image?repo=tangly1024/NotionNext)](https://github.com/tangly1024/NotionNext/graphs/contributors)
 
