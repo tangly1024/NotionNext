@@ -102,13 +102,10 @@ export default function CustomContextMenu(props) {
   }
 
   /**
-   * 切换主题
+   * 切换主题功能已禁用
    */
   function handleChangeTheme() {
-    const randomTheme = THEMES[Math.floor(Math.random() * THEMES.length)] // 从THEMES数组中 随机取一个主题
-    const query = router.query
-    query.theme = randomTheme
-    router.push({ pathname: router.pathname, query })
+    console.log('主题切换功能已禁用')
   }
 
   /**

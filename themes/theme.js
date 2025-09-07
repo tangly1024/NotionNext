@@ -10,16 +10,16 @@ export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
 
 /**
  * 获取主题配置
- * @param {string} themeQuery - 主题查询参数（支持多个主题用逗号分隔）
+ * @param {string} theme - 主题名称
  * @returns {Promise<object>} 主题配置对象
  */
-export const getThemeConfig = async themeQuery => {
-  // 如果 themeQuery 存在且不等于默认主题，处理多主题情况
-  if (typeof themeQuery === 'string' && themeQuery.trim()) {
-    // 取 themeQuery 中第一个主题（以逗号为分隔符）
-    const themeName = themeQuery.split(',')[0].trim()
+export const getThemeConfig = async theme => {
+  // 如果 theme 存在且不等于默认主题，处理多主题情况
+  if (typeof theme === 'string' && theme.trim()) {
+    // 取 theme 中第一个主题（以逗号为分隔符）
+    const themeName = theme.split(',')[0].trim()
 
-    // 如果 themeQuery 不等于当前默认主题，则加载指定主题的配置
+    // 如果 theme 不等于当前默认主题，则加载指定主题的配置
     if (themeName !== BLOG.THEME) {
       try {
         // 动态导入主题配置
@@ -51,7 +51,7 @@ export const getThemeConfig = async themeQuery => {
     }
   }
 
-  // 如果没有 themeQuery 或 themeQuery 与默认主题相同，返回默认主题配置
+  // 如果没有 theme 或 theme 与默认主题相同，返回默认主题配置
   return ThemeComponents?.THEME_CONFIG
 }
 
@@ -91,23 +91,22 @@ export const DynamicLayout = props => {
  */
 export const useLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
-  const LayoutComponents =
+  const LayoutComponents = 
     ThemeComponents[layoutName] || ThemeComponents.LayoutSlug
 
-  const router = useRouter()
-  const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
-  const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
+  // 不再从URL参数获取theme，只使用传入的theme参数
+  const isDefaultTheme = !theme || theme === BLOG.THEME
 
   // 加载非当前默认主题
   if (!isDefaultTheme) {
     const loadThemeComponents = componentsSource => {
-      const components =
+      const components = 
         componentsSource[layoutName] || componentsSource.LayoutSlug
       setTimeout(fixThemeDOM, 500)
       return components
     }
     return dynamic(
-      () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
+      () => import(`@/themes/${theme}`).then(m => loadThemeComponents(m)),
       { ssr: true }
     )
   }

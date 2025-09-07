@@ -1,10 +1,6 @@
 import { siteConfigMap } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { getQueryParam } from '@/lib/utils'
-import { THEMES } from '@/themes/theme'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Select from './Select'
 
 /**
  *
@@ -12,13 +8,9 @@ import Select from './Select'
  */
 const DebugPanel = () => {
   const [show, setShow] = useState(false)
-  const { theme, switchTheme, locale } = useGlobal()
-  const router = useRouter()
-  const currentTheme = getQueryParam(router.asPath, 'theme') || theme
+  const { theme, locale } = useGlobal()
+  const currentTheme = theme
   const [siteConfig, updateSiteConfig] = useState({})
-
-  // 主题下拉框
-  const themeOptions = THEMES?.map(t => ({ value: t, text: t }))
 
   useEffect(() => {
     updateSiteConfig(Object.assign({}, siteConfigMap()))
@@ -28,13 +20,14 @@ const DebugPanel = () => {
     setShow(!show)
   }
 
+  // 主题切换功能已禁用
   function handleChangeDebugTheme() {
-    switchTheme()
+    console.log('主题切换功能已禁用')
   }
 
+  // 主题切换功能已禁用
   function handleUpdateDebugTheme(newTheme) {
-    const query = { ...router.query, theme: newTheme }
-    router.push({ pathname: router.pathname, query })
+    console.log('主题切换功能已禁用')
   }
 
   function filterResult(text) {
@@ -70,17 +63,10 @@ const DebugPanel = () => {
         className={` ${show ? 'shadow-card w-96 right-0 ' : '-right-96 invisible w-0'} overflow-y-scroll h-full p-5 bg-white fixed bottom-0 z-50 duration-200`}>
         <div className='flex justify-between space-x-1 my-5'>
           <div className='flex-col px-5'>
-            <Select
-              label={locale.COMMON.THEME_SWITCH}
-              value={currentTheme}
-              options={themeOptions}
-              onChange={handleUpdateDebugTheme}
-            />
-            <div
-              className='p-2 cursor-pointer'
-              onClick={handleChangeDebugTheme}>
-              <i className='fas fa-sync' />
-            </div>
+            <div className='flex items-center space-x-2'>
+            <span className='text-sm'>{locale.COMMON.THEME}:</span>
+            <span className='font-bold'>{currentTheme}</span>
+          </div>
           </div>
 
           <div className='p-2'>

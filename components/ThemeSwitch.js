@@ -1,7 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import { getQueryParam } from '@/lib/utils'
 import { THEMES } from '@/themes/theme'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import DarkModeButton from './DarkModeButton'
 import { Draggable } from './Draggable'
@@ -13,14 +11,15 @@ import SideBarDrawer from './SideBarDrawer'
  */
 const ThemeSwitch = () => {
   const { theme, locale, isDarkMode, toggleDarkMode } = useGlobal()
-  const router = useRouter()
-  const currentTheme = getQueryParam(router.asPath, 'theme') || theme
   const [sideBarVisible, setSideBarVisible] = useState(false)
 
+  // 不再从URL参数获取主题
+  const currentTheme = theme
+
+  // 由于移除了URL参数切换主题功能，此按钮可以考虑禁用或移除
   const changeTheme = newTheme => {
-    const query = router.query
-    query.theme = newTheme
-    router.push({ pathname: router.pathname, query }).then(() => {})
+    // 可以在这里添加其他逻辑，比如提示用户无法切换主题
+    console.log('主题切换功能已禁用')
   }
 
   return (
