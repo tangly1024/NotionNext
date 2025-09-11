@@ -2458,7 +2458,7 @@ keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
-ky@^1.7.5:
+ky@^1.8.1:
   version "1.8.1"
   resolved "https://registry.npmmirror.com/ky/-/ky-1.8.1.tgz"
   integrity sha512-7Bp3TpsE+L+TARSnnDpk3xg8Idi8RwSLdj6CMbNWoOARIrGrbuLGusV0dYwbZOm4bB3jHNxSw8Wk/ByDqJEnDw==
@@ -2761,14 +2761,14 @@ normalize-url@^8.0.1:
   resolved "https://registry.npmmirror.com/normalize-url/-/normalize-url-8.0.1.tgz"
   integrity sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==
 
-notion-client@7.3.0:
-  version "7.3.0"
-  resolved "https://registry.npmmirror.com/notion-client/-/notion-client-7.3.0.tgz"
-  integrity sha512-628RezgVPDWgk0Z5j+1o13DMM+N/WV4+42cG+zW/mfih6XqNvssGx3kcOxU/sCv+y2YjxbqVTzFaZEkFiXUv7Q==
+notion-client@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.npmjs.org/notion-client/-/notion-client-7.4.3.tgz"
+  integrity sha512-gMSGUVSzJyqGmZi1X6vkfoeCziLgApIDaqxjoVpUyZ5MUwi4mtYeE15mJP9/6XOYnlTleDop/4DWiZQGU4mI0Q==
   dependencies:
-    ky "^1.7.5"
-    notion-types "7.3.0"
-    notion-utils "7.3.0"
+    ky "^1.8.1"
+    notion-types "7.4.3"
+    notion-utils "7.4.3"
     p-map "^7.0.3"
 
 notion-types@7.3.0:
@@ -2776,15 +2776,31 @@ notion-types@7.3.0:
   resolved "https://registry.npmmirror.com/notion-types/-/notion-types-7.3.0.tgz"
   integrity sha512-XAS9vZPRPoPEs95UXEeuQp1OsfWeVSruG6qujnDOEHA7aRMHiuSv/Oqm2wZfpDHz+nnUyPIX3JZhcmNnjc3jlQ==
 
+notion-types@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.npmjs.org/notion-types/-/notion-types-7.4.3.tgz"
+  integrity sha512-rIztAJLqzLLlpsL9SNr9SpmTiwXpADzpUIgKmc2phbD42DQl0Z8lB+rr2+NbkZxaP0zbvAek8wtPRrOU+ynU2A==
+
 notion-utils@7.3.0:
   version "7.3.0"
-  resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-7.3.0.tgz"
+  resolved "https://registry.npmjs.org/notion-utils/-/notion-utils-7.3.0.tgz"
   integrity sha512-+ifyB8SmSzB/MID/2fly338ZRTR7Ug8RNp7XyK3TlvM5iJZbo+YyAOTfDv41y342NleCibx50iBLQAJwb+GD6Q==
   dependencies:
     is-url-superb "^6.1.0"
     memoize "^10.1.0"
     normalize-url "^8.0.1"
     notion-types "7.3.0"
+    p-queue "^8.1.0"
+
+notion-utils@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.npmjs.org/notion-utils/-/notion-utils-7.4.3.tgz"
+  integrity sha512-BtMqjZhegN7RNXpyq8QyTLpHB6rGpmBC/xTQAGQm+pVw9/GbGZhN+dNSfjL4GbL9t/0EChjPke4+G8FWnPZjCw==
+  dependencies:
+    is-url-superb "^6.1.0"
+    memoize "^10.1.0"
+    normalize-url "^8.0.1"
+    notion-types "7.4.3"
     p-queue "^8.1.0"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
