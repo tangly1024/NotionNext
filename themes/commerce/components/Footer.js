@@ -2,8 +2,11 @@ import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import BeiAnSite from '@/components/BeiAnSite'
 import CopyRightDate from '@/components/CopyRightDate'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
+import { decryptEmail, handleEmailClick } from '@/lib/plugins/mailEncrypt'
+import { useRef } from 'react'
+import CanvasEmail from '@/components/CanvasEmail'
 
 /**
  * 页脚
@@ -17,6 +20,10 @@ const Footer = props => {
   const copyrightDate =
     parseInt(since) < currentYear ? since + '-' + currentYear : currentYear
   const { categoryOptions, customMenu } = props
+
+  const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
+
+  const emailIcon = useRef(null)
 
   return (
     <footer
@@ -40,13 +47,13 @@ const Footer = props => {
                 className={'flex flex-col space-y-2 text-start'}>
                 {categoryOptions?.map(category => {
                   return (
-                    <Link
+                    <SmartLink
                       key={`${category.name}`}
                       title={`${category.name}`}
                       href={`/category/${category.name}`}
                       passHref>
                       {category.name}
-                    </Link>
+                    </SmartLink>
                   )
                 })}
               </nav>
@@ -62,13 +69,13 @@ const Footer = props => {
                 className={'flex flex-col space-y-2 text-start'}>
                 {customMenu?.map(menu => {
                   return (
-                    <Link
+                    <SmartLink
                       key={`${menu.name}`}
                       title={`${menu.name}`}
                       href={`${menu.href}`}
                       passHref>
                       {menu.name}
-                    </Link>
+                    </SmartLink>
                   )
                 })}
               </nav>
@@ -128,14 +135,16 @@ const Footer = props => {
                   </div>
                   <div className='text-lg'>
                     {' '}
-                    {siteConfig('CONTACT_EMAIL') && (
+                    {CONTACT_EMAIL && (
                       <a
-                        target='_blank'
-                        rel='noreferrer'
-                        title={'email'}
-                        href={`mailto:${siteConfig('CONTACT_EMAIL')}`}>
+                        onClick={e =>
+                          handleEmailClick(e, emailIcon, CONTACT_EMAIL)
+                        }
+                        title='email'
+                        className='cursor-pointer'
+                        ref={emailIcon}>
                         <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-red-400 hover:text-red-600' />{' '}
-                        {siteConfig('CONTACT_EMAIL')}
+                        <CanvasEmail email={decryptEmail(CONTACT_EMAIL)} />
                       </a>
                     )}
                   </div>
