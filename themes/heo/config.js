@@ -28,7 +28,7 @@ const CONFIG = {
   HEO_HERO_COVER_TITLE: '',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '每日学习日记', url: '/tag/dailylearingdiary' },
+  HEO_HERO_CATEGORY_1: { title: '学习日记', url: '/tag/dailylearingdiary' },
   HEO_HERO_CATEGORY_2: { title: '', url: '/tag/2' },
   HEO_HERO_CATEGORY_3: { title: '', url: '/tag/3' },
 
