@@ -13,6 +13,9 @@ const CONFIG = {
 
   SIMPLE_ARTICLE_RECOMMEND_POSTS: process.env.NEXT_PUBLIC_SIMPLE_ARTICLE_RECOMMEND_POSTS || true, // 文章详情底部显示推荐
 
+  // 暗黑模式
+  SIMPLE_DARK_MODE: process.env.NEXT_PUBLIC_SIMPLE_DARK_MODE !== 'false', // 是否显示暗黑模式切换按钮
+
   // 菜单配置
   SIMPLE_MENU_CATEGORY: true, // 显示分类
   SIMPLE_MENU_TAG: true, // 显示标签

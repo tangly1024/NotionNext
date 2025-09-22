@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useSimpleGlobal } from '..'
 import { MenuList } from './MenuList'
+import DarkModeButton from './DarkModeButton'
 
 /**
  * 菜单导航
@@ -55,15 +56,20 @@ export default function NavBar(props) {
           {!showSearchInput && <MenuList {...props} />}
         </div>
 
-        <div className='absolute right-12 h-full text-center px-2 flex items-center text-blue-400  cursor-pointer'>
-          {/* <!-- extra links --> */}
-          <i
-            className={
-              showSearchInput
-                ? 'fa-regular fa-circle-xmark'
-                : 'fa-solid fa-magnifying-glass' + ' align-middle'
-            }
-            onClick={toggleShowSearchInput}></i>
+        <div className='absolute right-12 h-full text-center px-2 flex items-center space-x-2'>
+          {/* 暗黑模式切换按钮 */}
+          <DarkModeButton />
+          
+          {/* 搜索按钮 */}
+          <div className='text-blue-400 cursor-pointer'>
+            <i
+              className={
+                showSearchInput
+                  ? 'fa-regular fa-circle-xmark'
+                  : 'fa-solid fa-magnifying-glass' + ' align-middle'
+              }
+              onClick={toggleShowSearchInput}></i>
+          </div>
         </div>
       </div>
     </nav>
