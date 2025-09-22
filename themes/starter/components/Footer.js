@@ -2,11 +2,15 @@ import { siteConfig } from '@/lib/config'
 import SocialButton from '@/themes/fukasawa/components/SocialButton'
 import { Logo } from './Logo'
 import { SVGFooterCircleBG } from './svg/SVGFooterCircleBG'
+import SmartLink from '@/components/SmartLink'
 
 /* eslint-disable @next/next/no-img-element */
 export const Footer = props => {
-  const latestPosts = props?.latestPosts ? props?.latestPosts.slice(0, 2) : []
-  const STARTER_FOOTER_LINK_GROUP = siteConfig('STARTER_FOOTER_LINK_GROUP')
+  const footerPostCount = siteConfig('STARTER_FOOTER_POST_COUNT', 2)
+  const latestPosts = props?.latestPosts
+    ? props?.latestPosts.slice(0, footerPostCount)
+    : []
+  const STARTER_FOOTER_LINK_GROUP = siteConfig('STARTER_FOOTER_LINK_GROUP', [])
   return (
     <>
       {/* <!-- ====== Footer Section Start --> */}
@@ -45,11 +49,11 @@ export const Footer = props => {
                       {item?.LINK_GROUP?.map((l, i) => {
                         return (
                           <li key={i}>
-                            <a
+                            <SmartLink
                               href={l.URL}
                               className='mb-3 inline-block text-base text-gray-7 hover:text-primary'>
                               {l.TITLE}
-                            </a>
+                            </SmartLink>
                           </li>
                         )
                       })}
@@ -69,17 +73,22 @@ export const Footer = props => {
                 <div className='flex flex-col gap-8'>
                   {latestPosts?.map((item, index) => {
                     return (
-                      <a
+                      <SmartLink
                         key={index}
                         href={item?.href}
                         className='group flex items-center gap-[22px]'>
-                        <div className='overflow-hidden rounded w-20 h-12'>
-                          <img src={item.pageCoverThumbnail} alt={item.title} />
-                        </div>
+                        {item.pageCoverThumbnail && (
+                          <div className='overflow-hidden rounded w-20 h-12'>
+                            <img
+                              src={item.pageCoverThumbnail}
+                              alt={item.title}
+                            />
+                          </div>
+                        )}
                         <span className='line-clamp-2 max-w-[180px] text-base text-gray-7 group-hover:text-white'>
                           {item.title}
                         </span>
-                      </a>
+                      </SmartLink>
                     )
                   })}
                 </div>
@@ -96,27 +105,27 @@ export const Footer = props => {
               <div className='w-full px-4 md:w-2/3 lg:w-1/2'>
                 <div className='my-1'>
                   <div className='-mx-3 flex items-center justify-center md:justify-start'>
-                    <a
-                      href={siteConfig('STARTER_FOOTER_PRIVACY_POLICY_URL')}
+                    <SmartLink
+                      href={siteConfig('STARTER_FOOTER_PRIVACY_POLICY_URL', '')}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig('STARTER_FOOTER_PRIVACY_POLICY_TEXT')}
-                    </a>
-                    <a
+                    </SmartLink>
+                    <SmartLink
                       href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL'
+                        'STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_URL', ''
                       )}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig('STARTER_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT')}
-                    </a>
-                    <a
+                    </SmartLink>
+                    <SmartLink
                       href={siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL'
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL', ''
                       )}
                       className='px-3 text-base text-gray-7 hover:text-white hover:underline'>
                       {siteConfig(
-                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT'
+                        'STARTER_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT', ''
                       )}
-                    </a>
+                    </SmartLink>
                   </div>
                 </div>
               </div>

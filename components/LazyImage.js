@@ -18,6 +18,7 @@ export default function LazyImage({
   height,
   title,
   onLoad,
+  onClick,
   style
 }) {
   const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH')
@@ -40,6 +41,10 @@ export default function LazyImage({
     if (typeof onLoad === 'function') {
       onLoad() // 触发传递的onLoad回调函数
     }
+    // 移除占位符类名
+    if (imageRef.current) {
+      imageRef.current.classList.remove('lazy-image-placeholder')
+    }
   }
   /**
    * 图片加载失败回调
@@ -52,6 +57,10 @@ export default function LazyImage({
       } else {
         imageRef.current.src = defaultPlaceholderSrc
       }
+      // 移除占位符类名
+      if (imageRef.current) {
+        imageRef.current.classList.remove('lazy-image-placeholder')
+      }
     }
   }
 
@@ -59,26 +68,56 @@ export default function LazyImage({
     const adjustedImageSrc =
       adjustImgSize(src, maxWidth) || defaultPlaceholderSrc
 
-    // 加载原图
-    const img = new Image()
-    img.src = adjustedImageSrc
-    img.onload = () => {
-      setCurrentSrc(adjustedImageSrc)
-      handleImageLoaded(adjustedImageSrc)
+    // 如果是优先级图片，直接加载
+    if (priority) {
+      const img = new Image()
+      img.src = adjustedImageSrc
+      img.onload = () => {
+        setCurrentSrc(adjustedImageSrc)
+        handleImageLoaded(adjustedImageSrc)
+      }
+      img.onerror = handleImageError
+      return
     }
-    img.onerror = handleImageError
+
+    // 检查浏览器是否支持IntersectionObserver
+    if (!window.IntersectionObserver) {
+      // 降级处理：直接加载图片
+      const img = new Image()
+      img.src = adjustedImageSrc
+      img.onload = () => {
+        setCurrentSrc(adjustedImageSrc)
+        handleImageLoaded(adjustedImageSrc)
+      }
+      img.onerror = handleImageError
+      return
+    }
 
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const lazyImage = entry.target
-            lazyImage.src = adjustedImageSrc
-            observer.unobserve(lazyImage)
+            // 预加载图片
+            const img = new Image()
+            // 设置图片解码优先级
+            if ('decoding' in img) {
+              img.decoding = 'async'
+            }
+            img.src = adjustedImageSrc
+            img.onload = () => {
+              setCurrentSrc(adjustedImageSrc)
+              handleImageLoaded(adjustedImageSrc)
+            }
+            img.onerror = handleImageError
+
+            observer.unobserve(entry.target)
           }
         })
       },
-      { rootMargin: '50px 0px' } // Adjust the rootMargin as needed to trigger the loading earlier or later
+      {
+        rootMargin: siteConfig('LAZY_LOAD_THRESHOLD', '200px'),
+        threshold: 0.1
+      }
     )
 
     if (imageRef.current) {
@@ -90,37 +129,34 @@ export default function LazyImage({
         observer.unobserve(imageRef.current)
       }
     }
-  }, [src, maxWidth])
+  }, [src, maxWidth, priority])
 
   // 动态添加width、height和className属性，仅在它们为有效值时添加
   const imgProps = {
     ref: imageRef,
     src: currentSrc,
-    alt: alt,
-    onLoad: handleThumbnailLoaded, // 缩略图加载完成
-    onError: handleImageError // 添加onError处理函数
+    'data-src': src, // 存储原始图片地址
+    alt: alt || 'Lazy loaded image',
+    onLoad: handleThumbnailLoaded,
+    onError: handleImageError,
+    className: `${className || ''} lazy-image-placeholder`,
+    style,
+    width: width || 'auto',
+    height: height || 'auto',
+    onClick,
+    // 性能优化属性
+    loading: priority ? 'eager' : 'lazy',
+    decoding: 'async',
+    // 现代图片格式支持
+    ...(siteConfig('WEBP_SUPPORT') && { 'data-webp': true }),
+    ...(siteConfig('AVIF_SUPPORT') && { 'data-avif': true })
   }
 
-  if (id) {
-    imgProps.id = id
-  }
+  if (id) imgProps.id = id
+  if (title) imgProps.title = title
 
-  if (title) {
-    imgProps.title = title
-  }
-
-  if (width && width !== 'auto') {
-    imgProps.width = width
-  }
-
-  if (height && height !== 'auto') {
-    imgProps.height = height
-  }
-  if (className) {
-    imgProps.className = className
-  }
-  if (style) {
-    imgProps.style = style
+  if (!src) {
+    return null
   }
 
   return (

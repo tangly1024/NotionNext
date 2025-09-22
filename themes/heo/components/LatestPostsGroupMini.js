@@ -2,7 +2,7 @@ import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 // import Image from 'next/image'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 /**
@@ -15,12 +15,9 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
   // 获取当前路径
   const currentPath = useRouter().asPath
   const { locale } = useGlobal()
+  const SUB_PATH = siteConfig('SUB_PATH', '')
 
-  if (!latestPosts) {
-    return <></>
-  }
-
-  return (
+  return latestPosts ? (
     <>
       <div className=' mb-2 px-1 flex flex-nowrap justify-between'>
         <div>
@@ -30,13 +27,13 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
       </div>
       {latestPosts.map(post => {
         const selected =
-          currentPath === `${siteConfig('SUB_PATH', '')}/${post.slug}`
+          currentPath === `${SUB_PATH}/${post.slug}`
         const headerImage = post?.pageCoverThumbnail
           ? post.pageCoverThumbnail
           : siteInfo?.pageCover
 
         return (
-          <Link
+          <SmartLink
             key={post.id}
             title={post.title}
             href={post?.href}
@@ -59,9 +56,9 @@ export default function LatestPostsGroupMini({ latestPosts, siteInfo }) {
                 <div className='text-gray-400'>{post.lastEditedDay}</div>
               </div>
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </>
-  )
+  ) : null
 }

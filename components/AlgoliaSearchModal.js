@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import algoliasearch from 'algoliasearch'
 import throttle from 'lodash/throttle'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import {
   Fragment,
@@ -44,6 +44,8 @@ export default function AlgoliaSearchModal({ cRef }) {
   const [useTime, setUseTime] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
+  const [isInputFocused, setIsInputFocused] = useState(false)
+
   const inputRef = useRef(null)
   const router = useRouter()
 
@@ -54,13 +56,16 @@ export default function AlgoliaSearchModal({ cRef }) {
     e.preventDefault()
     setIsModalOpen(true)
   })
-  // 方向键调整选中
+  // 修改快捷键的使用逻辑
   useHotkeys(
     'down',
     e => {
-      e.preventDefault()
-      if (activeIndex < searchResults.length - 1) {
-        setActiveIndex(activeIndex + 1)
+      if (isInputFocused) {
+        // 只有在聚焦时才触发
+        e.preventDefault()
+        if (activeIndex < searchResults.length - 1) {
+          setActiveIndex(activeIndex + 1)
+        }
       }
     },
     { enableOnFormTags: true }
@@ -68,39 +73,41 @@ export default function AlgoliaSearchModal({ cRef }) {
   useHotkeys(
     'up',
     e => {
-      e.preventDefault()
-      if (activeIndex > 0) {
-        setActiveIndex(activeIndex - 1)
+      if (isInputFocused) {
+        e.preventDefault()
+        if (activeIndex > 0) {
+          setActiveIndex(activeIndex - 1)
+        }
       }
     },
     { enableOnFormTags: true }
   )
-  // esc关闭
   useHotkeys(
     'esc',
     e => {
-      e.preventDefault()
-      setIsModalOpen(false)
+      if (isInputFocused) {
+        e.preventDefault()
+        setIsModalOpen(false)
+      }
     },
     { enableOnFormTags: true }
   )
-
-  // 跳转Search结果
-  const onJumpSearchResult = () => {
-    if (searchResults.length > 0) {
-      window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResults[activeIndex].slug}`
-    }
-  }
-  // enter跳转
   useHotkeys(
     'enter',
     e => {
-      if (searchResults.length > 0) {
+      if (isInputFocused && searchResults.length > 0) {
         onJumpSearchResult(index)
       }
     },
     { enableOnFormTags: true }
   )
+  // 跳转Search结果
+  const onJumpSearchResult = () => {
+    if (searchResults.length > 0) {
+      const searchResult = searchResults[activeIndex]
+      window.location.href = `${siteConfig('SUB_PATH', '')}/${searchResult.slug || searchResult.objectID}`
+    }
+  }
 
   const resetSearch = () => {
     setActiveIndex(0)
@@ -240,12 +247,12 @@ export default function AlgoliaSearchModal({ cRef }) {
       id='search-wrapper'
       className={`${
         isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
-      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-12 flex items-start justify-center mt-0`}>
+      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-[10vh] flex items-start justify-center mt-0`}>
       {/* 模态框 */}
       <div
         className={`${
           isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-        } flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
+        } max-h-[80vh] flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
         <div className='flex justify-between items-center'>
           <div className='text-2xl text-blue-600 dark:text-yellow-600 font-bold'>
             搜索
@@ -261,6 +268,8 @@ export default function AlgoliaSearchModal({ cRef }) {
           type='text'
           placeholder='在这里输入搜索关键词...'
           onChange={e => handleInputChange(e)}
+          onFocus={() => setIsInputFocused(true)} // 聚焦时
+          onBlur={() => setIsInputFocused(false)} // 失去焦点时
           className='text-black dark:text-gray-200 bg-gray-50 dark:bg-gray-600 outline-blue-500 w-full px-4 my-2 py-1 mb-4 border rounded-md'
           ref={inputRef}
         />
@@ -348,7 +357,7 @@ function TagGroups() {
     <div id='tags-group' className='dark:border-gray-700 space-y-2'>
       {firstTenTags?.map((tag, index) => {
         return (
-          <Link
+          <SmartLink
             passHref
             key={index}
             href={`/tag/${encodeURIComponent(tag.name)}`}
@@ -364,7 +373,7 @@ function TagGroups() {
                 <></>
               )}
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </div>
