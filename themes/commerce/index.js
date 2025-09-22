@@ -7,7 +7,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser, scanAndConvertToLinks } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import { ArticleLock } from './components/ArticleLock'
@@ -246,7 +246,7 @@ const LayoutSlug = props => {
       <div className='w-full max-w-screen-xl mx-auto lg:hover:shadow lg:border lg:px-2 lg:py-4 bg-white dark:bg-hexo-black-gray dark:border-black article'>
         {lock && <ArticleLock validPassword={validPassword} />}
 
-        {!lock && (
+        {!lock && post && (
           <div
             id='article-wrapper'
             className='overflow-x-auto flex-grow mx-auto md:w-full md:px-5 '>
@@ -304,7 +304,7 @@ const Layout404 = props => {
     // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (isBrowser) {
-        const article = document.getElementById('notion-article')
+        const article = document.querySelector('#article-wrapper #notion-article')
         if (!article) {
           router.push('/').then(() => {
             // console.log('找不到页面', router.asPath)
@@ -346,7 +346,7 @@ const LayoutCategoryIndex = props => {
         <div id='category-list' className='duration-200 flex flex-wrap mx-8'>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -358,7 +358,7 @@ const LayoutCategoryIndex = props => {
                   <i className='mr-4 fas fa-folder' /> {category.name}(
                   {category.count})
                 </div>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>

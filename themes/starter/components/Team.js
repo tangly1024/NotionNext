@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { SVGAvatarBG } from './svg/SVGAvatarBG'
 
 export const Team = () => {
-  const STARTER_TEAM_ITEMS = siteConfig('STARTER_TEAM_ITEMS')
+  const STARTER_TEAM_ITEMS = siteConfig('STARTER_TEAM_ITEMS', [])
   return (
     <>
       {/* <!-- ====== Team Section Start --> */}

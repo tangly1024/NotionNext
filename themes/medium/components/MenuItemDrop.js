@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -45,9 +45,9 @@ export const MenuItemDrop = ({ link }) => {
               ? 'bg-green-600 text-white hover:text-white'
               : 'hover:text-green-600')
           }>
-          <Link href={link?.href} target={link?.target}>
+          <SmartLink href={link?.href} target={link?.target}>
             {link?.icon && <i className={link?.icon} />} {link?.name}
-          </Link>
+          </SmartLink>
         </div>
       )}
 
@@ -60,12 +60,12 @@ export const MenuItemDrop = ({ link }) => {
               <li
                 key={sLink.id}
                 className='not:last-child:border-b-0 border-b text-gray-700 dark:text-gray-200  hover:bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200  dark:border-gray-800 py-3 pr-6 pl-3'>
-                <Link href={sLink.href} target={link?.target}>
+                <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-xs font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}
                     {sLink.title}
                   </span>
-                </Link>
+                </SmartLink>
               </li>
             )
           })}

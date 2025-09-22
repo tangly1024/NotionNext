@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 博文列表
@@ -40,24 +40,26 @@ export const Blog = ({ posts }) => {
                     className='wow fadeInUp group mb-10'
                     data-wow-delay='.1s'>
                     <div className='mb-8 overflow-hidden rounded-[5px]'>
-                      <Link href={item?.href} className='block'>
-                        <img
-                          src={item.pageCoverThumbnail}
-                          alt={item.title}
-                          className='w-full transition group-hover:rotate-6 group-hover:scale-125'
-                        />
-                      </Link>
+                      {item.pageCoverThumbnail && (
+                        <SmartLink href={item?.href} className='block'>
+                          <img
+                            src={item.pageCoverThumbnail}
+                            alt={item.title}
+                            className='w-full transition group-hover:rotate-6 group-hover:scale-125'
+                          />
+                        </SmartLink>
+                      )}
                     </div>
                     <div>
                       <span className='mb-6 inline-block rounded-[5px] bg-primary px-4 py-0.5 text-center text-xs font-medium leading-loose text-white'>
                         {item.publishDay}
                       </span>
                       <h3>
-                        <Link
+                        <SmartLink
                           href={item?.href}
                           className='mb-4 inline-block text-xl font-semibold text-dark hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl'>
                           {item.title}
-                        </Link>
+                        </SmartLink>
                       </h3>
                       <p className='max-w-[370px] text-base text-body-color dark:text-dark-6'>
                         {item.summary}

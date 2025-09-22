@@ -7,13 +7,16 @@ import LoadingCover from '@/components/LoadingCover'
 import NotionIcon from '@/components/NotionIcon'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
+import DashboardBody from '@/components/ui/dashboard/DashboardBody'
+import DashboardHeader from '@/components/ui/dashboard/DashboardHeader'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { getShortId } from '@/lib/utils/pageId'
 import { SignIn, SignUp } from '@clerk/nextjs'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import Head from 'next/head'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Announcement from './components/Announcement'
@@ -75,7 +78,7 @@ function getNavPagesWithLatest(allNavPages, latestPosts, post) {
     }
     // 属于最新文章通常6篇 && (无阅读记录 || 最近更新时间大于上次阅读时间)
     if (
-      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 0) &&
+      latestPosts.some(post => post?.id.indexOf(item?.short_id) === 14) &&
       (!postReadTime[item.short_id] ||
         postReadTime[item.short_id] < new Date(item.lastEditedDate).getTime())
     ) {
@@ -253,24 +256,24 @@ const LayoutIndex = props => {
         setHasRedirected(true) // 更新状态，防止多次执行
 
         // 重定向到指定文章
-        router.push(index).then(() => {
-          setTimeout(() => {
-            const article = document.getElementById('notion-article')
-            if (!article) {
-              console.log(
-                '请检查您的Notion数据库中是否包含此slug页面： ',
-                index
-              )
+        await router.push(index)
 
-              // 显示错误信息
-              const containerInner = document.querySelector(
-                '#theme-gitbook #container-inner'
-              )
-              const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
-              containerInner?.insertAdjacentHTML('afterbegin', newHTML)
-            }
-          }, 2000)
-        })
+        // 使用setTimeout检查页面加载情况
+        setTimeout(() => {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            console.log('请检查您的Notion数据库中是否包含此slug页面： ', index)
+
+            // 显示错误信息
+            const containerInner = document.querySelector(
+              '#theme-gitbook #container-inner'
+            )
+            const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
+            containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+          }
+        }, 2000)
       }
     }
 
@@ -301,28 +304,40 @@ const LayoutPostList = props => {
  * @returns
  */
 const LayoutSlug = props => {
-  const { post, prev, next, lock, validPassword } = props
+  const { post, prev, next, siteInfo, lock, validPassword } = props
   const router = useRouter()
+  // 如果是文档首页文章，则修改浏览器标签
+  const index = siteConfig('GITBOOK_INDEX_PAGE', 'about', CONFIG)
+  const basePath = router.asPath.split('?')[0]
+  const title =
+    basePath?.indexOf(index) > 0
+      ? `${post?.title} | ${siteInfo?.description}`
+      : `${post?.title} | ${siteInfo?.title}`
+
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.getElementById('notion-article')
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
+      setTimeout(() => {
+        if (isBrowser) {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            router.push('/404').then(() => {
+              console.warn('找不到页面', router.asPath)
+            })
           }
-        },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-      )
+        }
+      }, waiting404)
     }
   }, [post])
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+
       {/* 文章锁 */}
       {lock && <ArticleLock validPassword={validPassword} />}
 
@@ -362,8 +377,8 @@ const LayoutSlug = props => {
                 <ArticleAround prev={prev} next={next} />
               )}
 
-              <AdSlot />
-              <WWAds className='w-full' orientation='horizontal' />
+              {/* <AdSlot />
+              <WWAds className='w-full' orientation='horizontal' /> */}
 
               <Comment frontMatter={post} />
             </section>
@@ -412,13 +427,39 @@ const LayoutArchive = props => {
 }
 
 /**
- * 404
+ * 404 页面
+ * @param {*} props
+ * @returns
  */
 const Layout404 = props => {
+  const router = useRouter()
+  const { locale } = useGlobal()
+  useEffect(() => {
+    // 延时3秒如果加载失败就返回首页
+    setTimeout(() => {
+      const article = isBrowser && document.getElementById('article-wrapper')
+      if (!article) {
+        router.push('/').then(() => {
+          // console.log('找不到页面', router.asPath)
+        })
+      }
+    }, 3000)
+  }, [])
+
   return (
-    <div className='w-full h-96 py-80 flex justify-center items-center'>
-      404 Not found.
-    </div>
+    <>
+      <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+        <div className='dark:text-gray-200'>
+          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
+            <i className='mr-2 fas fa-spinner animate-spin' />
+            404
+          </h2>
+          <div className='inline-block text-left h-32 leading-10 items-center'>
+            <h2 className='m-0 p-0'>{locale.NAV.PAGE_NOT_FOUND_REDIRECT}</h2>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -438,7 +479,7 @@ const LayoutCategoryIndex = props => {
         <div id='category-list' className='duration-200 flex flex-wrap'>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -450,7 +491,7 @@ const LayoutCategoryIndex = props => {
                   <i className='mr-4 fas fa-folder' />
                   {category.name}({category.count})
                 </div>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>
@@ -539,11 +580,40 @@ const LayoutSignUp = props => {
   )
 }
 
+/**
+ * 仪表盘
+ * @param {*} props
+ * @returns
+ */
+const LayoutDashboard = props => {
+  const { post } = props
+
+  return (
+    <>
+      <div className='container grow'>
+        <div className='flex flex-wrap justify-center -mx-4'>
+          <div id='container-inner' className='w-full p-4'>
+            {post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* 仪表盘 */}
+      <DashboardHeader />
+      <DashboardBody />
+    </>
+  )
+}
+
 export {
   Layout404,
   LayoutArchive,
   LayoutBase,
   LayoutCategoryIndex,
+  LayoutDashboard,
   LayoutIndex,
   LayoutPostList,
   LayoutSearch,
