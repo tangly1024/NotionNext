@@ -9,7 +9,7 @@ const CONFIG = {
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
     { title: '欢迎来到奇怪的博客', url: 'https://blog.stavmb.me' },
-    { title: '可以点点查看站主的信息喵～', url: 'https://blog.stavmb.me/about' }
+    { title: '可以点点查看站主的信息喵～', url: 'https://blog.stavmb.me/about' },
     { title: '可以随便逛逛呀～', url: 'https://blog.stavmb.me/links' }
   ],
 
