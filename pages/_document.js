@@ -43,6 +43,8 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
+          {/* 网站 favicon */}
+          <link rel="icon" href="/favicon.ico" />
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
             <>
