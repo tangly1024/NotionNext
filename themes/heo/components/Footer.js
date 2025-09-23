@@ -1,8 +1,10 @@
+import { useGlobal } from '@/lib/global'
 import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import CopyRightDate from '@/components/CopyRightDate'
 import PoweredBy from '@/components/PoweredBy'
 import { siteConfig } from '@/lib/config'
 import SocialButton from './SocialButton'
+
 /**
  * 页脚
  * @returns
@@ -12,11 +14,11 @@ const Footer = () => {
   const BEI_AN_LINK = siteConfig('BEI_AN_LINK')
   const BIO = siteConfig('BIO')
   return (
-    <footer className='relative flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'>
+    <footer className='relative flex-shrink-0 bg-white dark:bg-[#8B3A5B] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'>
       {/* 颜色过度区 */}
       <div
         id='color-transition'
-        className='h-32 bg-gradient-to-b from-[#f7f9fe] to-white  dark:bg-[#1a191d] dark:from-inherit dark:to-inherit'
+        className='h-32 bg-gradient-to-b from-[#FFE4E6] to-[#FFE4E6]  dark:bg-[#8B3A5B] dark:from-inherit dark:to-inherit'
       />
 
       {/* 社交按钮 */}
@@ -29,7 +31,7 @@ const Footer = () => {
       {/* 底部页面信息 */}
       <div
         id='footer-bottom'
-        className='w-full h-20 flex flex-col p-3 lg:flex-row justify-between px-6 items-center bg-[#f1f3f7] dark:bg-[#21232A] border-t dark:border-t-[#3D3D3F]'>
+        className='w-full h-20 flex flex-col p-3 lg:flex-row justify-between px-6 items-center bg-[#FFE4E6] dark:bg-[#7B2C4C] border-t dark:border-t-[#7B2C4C]'>
         <div id='footer-bottom-left' className='text-center lg:text-start'>
           <PoweredBy />
           <div className='flex gap-x-1'>
