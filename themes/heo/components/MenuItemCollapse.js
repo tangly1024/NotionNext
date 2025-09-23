@@ -28,7 +28,7 @@ export const MenuItemCollapse = ({ link }) => {
   return (
     <>
       <div
-        className='select-none w-full p-2 border dark:border-gray-600 rounded-lg text-left dark:bg-[#1e1e1e]'
+  className='select-none w-full p-2 border dark:border-gray-600 rounded-lg text-left dark:bg-[#701E49]'
         onClick={toggleShow}>
         {!hasSubMenu && (
           <SmartLink
