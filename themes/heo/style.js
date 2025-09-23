@@ -21,11 +21,11 @@ const Style = () => {
 
       // 公告栏中的字体固定白色
       #theme-heo #announcement-content .notion {
-        color: white;
+        color: rgba(220, 41, 65, 1);
       }
 
       ::-webkit-scrollbar-thumb {
-        background: rgba(60, 60, 67, 0.4);
+        background: rgba(131, 45, 114, 0.4);
         border-radius: 8px;
         cursor: pointer;
       }
