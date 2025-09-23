@@ -34,9 +34,9 @@ const CONFIG = {
   HEO_HERO_CATEGORY_3: { title: '生活记录', url: '/tag/diary' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
-  HEO_HERO_RECOMMEND_POST_TAG: 'suggest',
-  HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: false, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
-  //   HERO_RECOMMEND_COVER: 'https://cdn.pixabay.com/photo/2015/10/30/20/13/sunrise-1014712_1280.jpg', // 英雄区右侧图片
+  HEO_HERO_RECOMMEND_POST_TAG: '',
+  HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: true, // 推荐文章排序，为`true`时将强制按最后修改时间倒序
+  HERO_RECOMMEND_COVER: 'https://www.dmoe.cc/random.php', // 英雄区右侧图片
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
@@ -60,36 +60,36 @@ const CONFIG = {
   // 用户技能图标
   HEO_GROUP_ICONS: [
     {
-      title_1: 'Image',
-      img_1: 'public/images/heo/image.png',
-  color_1: '#FFD9EF',
-      title_2: 'Image2',
-      img_2: 'public/images/heo/image (2).png',
-  color_2: '#FFF0F8'
+      title_1: 'face-smile-solid-full',
+      img_1: '/images/heo/icon/face-smile-solid-full.svg',
+      color_1: '#FFD9EF',
+      title_2: 'bilibili-brands-solid-full',
+      img_2: '/images/heo/icon/bilibili-brands-solid-full.svg',
+      color_2: '#FFF0F8'
     },
     {
-      title_1: 'Image',
-      img_1: 'public/images/heo/image.png',
-  color_1: '#FFB8E3',
-      title_2: 'Image1',
-      img_2: 'public/images/heo/image (1).png',
-  color_2: '#F76FC2'
+      title_1: 'envelope-solid-full',
+      img_1: '/images/heo/icon/envelope-solid-full.svg',
+      color_1: '#FFB8E3',
+      title_2: 'shield-cat-solid-full',
+      img_2: '/images/heo/icon/shield-cat-solid-full.svg',
+      color_2: '#F76FC2'
     },
     {
-      title_1: 'Image1',
-      img_1: 'public/images/heo/image (1).png',
-  color_1: '#FFF0F8',
-      title_2: 'Image2',
-      img_2: 'public/images/heo/image (2).png',
-  color_2: '#FFF0F8'
+      title_1: 'trophy-solid-full',
+      img_1: '/images/heo/icon/trophy-solid-full.svg',
+      color_1: '#FFF0F8',
+      title_2: 'gamepad-solid-full',
+      img_2: '/images/heo/icon/gamepad-solid-full.svg',
+      color_2: '#FFF0F8'
     },
     {
-      title_1: 'Git',
-      img_1: '/images/heo/2023ffa5707c4e25b6beb3e6a3d286ede4c6071102.webp',
-  color_1: '#FFB8E3',
-      title_2: 'Rhino',
-      img_2: '/images/heo/20231ca53fa0b09a3ff1df89acd7515e9516173302.webp',
-  color_2: '#2E031B'
+      title_1: 'heart-solid-full',
+      img_1: '/images/heo/icon/heart-solid-full.svg',
+      color_1: '#FFB8E3',
+      title_2: 'heart-regular-full',
+      img_2: '/images/heo/icon/heart-regular-full.svg',
+      color_2: '#2E031B'
     }
   ],
 
