@@ -4,15 +4,15 @@ const CONFIG = {
   LANDING_HEADER_BUTTON_1_URL: 'https://github.com/tangly1024/NotionNext',
 
   LANDING_HEADER_BUTTON_2_TITLE: '作者博客',
-  LANDING_HEADER_BUTTON_2_URL: 'https://blog.tangly1024.com/',
+  LANDING_HEADER_BUTTON_2_URL: 'https://blog.stavmb.me/',
 
   // 首页大图英雄板块
   LANDING_HERO_TITLE_1: 'NotionNext',
   LANDING_HERO_P_1: '快速搭建独立站、轻松放大品牌价值！',
   LANDING_HERO_BUTTON_1_TEXT: '开始体验',
-  LANDING_HERO_BUTTON_1_LINK: 'https://docs.tangly1024.com/article/vercel-deploy-notion-next',
+  LANDING_HERO_BUTTON_1_LINK: 'https://blog.stavmb.me/article/vercel-deploy-notion-next',
   LANDING_HERO_BUTTON_2_TEXT: '了解更多',
-  LANDING_HERO_BUTTON_2_LINK: 'https://docs.tangly1024.com/about',
+  LANDING_HERO_BUTTON_2_LINK: 'https://blog.stavmb.me/about',
   LANDING_HERO_VIDEO_IMAGE: '/images/home.png',
   //   HERO_VIDEO_URL: '/videos/video.mp4',
   LANDING_HERO_VIDEO_IFRAME: '//player.bilibili.com/player.html?aid=913088616&bvid=BV1fM4y1L7Qi&cid=1187218697&page=1&&high_quality=1',
@@ -58,7 +58,7 @@ const CONFIG = {
   LANDING_TESTIMONIALS_WORD: '“ 感谢大佬的方法。之前尝试过Super、Potion等国外的第三方平台，实现效果一般，个性化程度远不如这个方法，已经用起来了！ “',
 
   LANDING_POST_REDIRECT_ENABLE: process.env.NEXT_PUBLIC_POST_REDIRECT_ENABLE || false, // 是否开启文章地址重定向 ； 用于迁移旧网站域名
-  LANDING_POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://blog.tangly1024.com', // 重定向网站地址
+  LANDING_POST_REDIRECT_URL: process.env.NEXT_PUBLIC_POST_REDIRECT_URL || 'https://blog.stavmb.me', // 重定向网站地址
 
   LANDING_PRICING_TITLE: '价格表',
   LANDING_PRICING_P: 'NotionNext开源免费，此处仅演示订阅付费功能！请勿购买！',
@@ -67,7 +67,7 @@ const CONFIG = {
   LANDING_PRICING_1_PRICE: '免费',
   LANDING_PRICING_1_CONTENT: '项目源代码,部署教程,不定时技术答疑',
   LANDING_PRICING_1_BUTTON: '开始体验',
-  LANDING_PRICING_1_URL: 'https://docs.tangly1024.com/about',
+  LANDING_PRICING_1_URL: 'https://blog.stavmb.me/about',
 
   LANDING_PRICING_2_TITLE: '捐赠版',
   LANDING_PRICING_2_PRICE: '$9.9/月',
@@ -81,6 +81,6 @@ const CONFIG = {
   LANDING_PRICING_3_BUTTON: '立即购买',
   LANDING_PRICING_3_URL: 'https://tangly1024.lemonsqueezy.com/checkout/buy/df924d66-09dc-42a4-a632-a6b0c5cc4f28',
 
-  LANDING_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
+  LANDING_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_LANDING_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://blog.stavmb.me/article/notion-next-mailchimp
 }
 export default CONFIG

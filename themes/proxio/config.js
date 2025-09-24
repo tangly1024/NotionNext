@@ -12,7 +12,7 @@ const CONFIG = {
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   PROXIO_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
   PROXIO_HERO_BUTTON_1_URL:
-    'https://docs.tangly1024.com/article/vercel-deploy-notion-next', // 英雄区按钮
+  'https://blog.stavmb.me/article/vercel-deploy-notion-next', // 英雄区按钮
   PROXIO_HERO_BUTTON_2_TEXT: '在Github上关注', // 英雄区按钮
   PROXIO_HERO_BUTTON_2_URL: 'https://github.com/tangly1024/NotionNext', // 英雄区按钮
   PROXIO_HERO_BUTTON_2_ICON: '/images/starter/github-mark.svg', // 英雄区按钮2的图标，不需要则留空
@@ -159,11 +159,11 @@ const CONFIG = {
   PROXIO_FAQS: [
     {
       q: 'NotionNext有帮助文档吗？',
-      a: 'NotionNext提供了<a href="https://docs.tangly1024.com/about" className="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" className="underline">演示视频</a>，以及<a href="https://docs.tangly1024.com/article/chat-community" className="underline">交流社群</a>来协助您完成网站的搭建部署'
+  a: 'NotionNext提供了<a href="https://blog.stavmb.me/about" className="underline">帮助文档</a>，操作<a href="https://www.bilibili.com/video/BV1fM4y1L7Qi/" className="underline">演示视频</a>，以及<a href="https://blog.stavmb.me/article/chat-community" className="underline">交流社群</a>来协助您完成网站的搭建部署'
     },
     {
       q: '部署后要如何编写文章？',
-      a: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a className="underline" href="https://docs.tangly1024.com/article/start-to-write">《帮助文档》</a>'
+  a: '您可以在Notion中之间添加或修改类型为Post的页面，内容将被实时同步在站点中，详情参考<a className="underline" href="https://blog.stavmb.me/article/start-to-write">《帮助文档》</a>'
     },
     {
       q: '站点部署失败，更新失败？',
@@ -213,11 +213,11 @@ const CONFIG = {
       menus: [
         {
           title: 'Tangly的学习笔记',
-          href: 'https://blog.tangly1024.com'
+          href: 'https://blog.stavmb.me'
         },
         {
           title: 'NotionNext',
-          href: 'https://www.tangly1024.com'
+          href: 'https://blog.stavmb.me'
         }
       ]
     },
@@ -227,7 +227,7 @@ const CONFIG = {
         { title: 'Github', href: 'https://github.com/tangly1024/NotionNext' },
         {
           title: '开发帮助',
-          href: 'https://docs.tangly1024.com/article/how-to-develop-with-notion-next'
+          href: 'https://blog.stavmb.me/article/how-to-develop-with-notion-next'
         },
         {
           title: '功能反馈',
@@ -239,7 +239,7 @@ const CONFIG = {
         },
         {
           title: '关于作者',
-          href: 'https://blog.tangly1024.com/about'
+          href: 'https://blog.stavmb.me/about'
         }
       ]
     }
@@ -272,7 +272,7 @@ const CONFIG = {
   PROXIO_CTA_BUTTON_TEXT: '联系我',
 
   PROXIO_POST_REDIRECT_ENABLE: true, // 默認開啟重定向
-  PROXIO_POST_REDIRECT_URL: 'https://blog.tangly1024.com', // 重定向域名
-  PROXIO_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_PROXIO_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
+  PROXIO_POST_REDIRECT_URL: 'https://blog.stavmb.me', // 重定向域名
+  PROXIO_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_PROXIO_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://blog.stavmb.me/article/notion-next-mailchimp
 }
 export default CONFIG
