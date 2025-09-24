@@ -6,6 +6,7 @@ import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
 import { getServerSideSitemap } from 'next-sitemap'
 
 export const getServerSideProps = async ctx => {
+
   let fields = []
   const siteIds = BLOG.NOTION_PAGE_ID.split(',')
 
@@ -13,16 +14,12 @@ export const getServerSideProps = async ctx => {
     const siteId = siteIds[index]
     const id = extractLangId(siteId)
     const locale = extractLangPrefix(siteId)
-    // 第一个id站点默认语言
+    // 直接写死 link
+    const link = 'https://blog.stavmb.me'
     const siteData = await getGlobalData({
       pageId: id,
       from: 'sitemap.xml'
     })
-    const link = siteConfig(
-      'LINK',
-      siteData?.siteInfo?.link,
-      siteData.NOTION_CONFIG
-    )
     const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
     fields = fields.concat(localeFields)
   }
