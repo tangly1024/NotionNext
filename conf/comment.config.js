@@ -17,7 +17,6 @@ module.exports = {
 
   // twikoo
   CCOMMENT_TWIKOO_ENV_ID: process.env.NEXT_PUBLIC_COMMENT_ENV_ID || 'cloud1-9gt33iged738e5f4',
-COMMENT_TWIKOO_COUNT_ENABLE: process.env.NEXT_PUBLIC_COMMENT_TWIKOO_COUNT_ENABLE || false,
 COMMENT_TWIKOO_REGION: process.env.NEXT_PUBLIC_TWIKOO_REGION || 'ap-shanghai',
     process.env.NEXT_PUBLIC_COMMENT_TWIKOO_COUNT_ENABLE || false, // 博客列表是否显示评论数
   COMMENT_TWIKOO_CDN_URL:
