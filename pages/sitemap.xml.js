@@ -1,6 +1,6 @@
 // pages/sitemap.xml.js
-import BLOG from '@/blog.config'
-import { siteConfig } from '@/lib/config'
+// import BLOG from '@/blog.config'
+// import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
 import { getServerSideSitemap } from 'next-sitemap'
@@ -8,22 +8,16 @@ import { getServerSideSitemap } from 'next-sitemap'
 export const getServerSideProps = async ctx => {
 
   let fields = []
-  const siteIds = BLOG.NOTION_PAGE_ID.split(',')
-
-  for (let index = 0; index < siteIds.length; index++) {
-    const siteId = siteIds[index]
-    const id = extractLangId(siteId)
-    const locale = extractLangPrefix(siteId)
-    // 直接写死 link
-    const link = 'https://blog.stavmb.me'
-    const siteData = await getGlobalData({
-      pageId: id,
-      from: 'sitemap.xml'
-    })
-    const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
-    fields = fields.concat(localeFields)
-  }
-
+  // 只用一个主站点，link写死
+  const link = 'https://blog.stavmb.me'
+  const siteId = 'main'
+  const locale = 'zh-CN'
+  const siteData = await getGlobalData({
+    pageId: siteId,
+    from: 'sitemap.xml'
+  })
+  const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
+  fields = fields.concat(localeFields)
   fields = getUniqueFields(fields);
 
   // 缓存
