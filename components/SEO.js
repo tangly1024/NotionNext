@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
   const PATH = siteConfig('PATH')
-  const LINK = siteConfig('LINK')
+  const LINK = 'https://blog.stavmb.me'
   const SUB_PATH = siteConfig('SUB_PATH', '')
   let url = PATH?.length ? `${LINK}/${SUB_PATH}` : LINK
   let image
