@@ -26,7 +26,9 @@ export default function Coze() {
           title: title
         } ,
         auth: {
-          type: 'token'
+          type: 'token',
+          token: 'cztei_h0obhItPuUAPhyE3Al24AdvcQzsXz7RkJwRLZsstfT05zgu5RgDc6QlbXEz07L3I6',
+          onRefreshToken: async () => 'token'
         }
       })
       console.log('coze', cozeClient)
