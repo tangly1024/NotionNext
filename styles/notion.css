@@ -2035,6 +2035,10 @@ code.language-mermaid {
   display: none;
 }
 
+.mermaid .invisible{
+  visibility: inherit;
+}
+
 .code-toolbar {
   @apply w-full shadow-md pb-0;
 }
@@ -2085,4 +2089,9 @@ code.language-mermaid {
 figure.notion-asset-wrapper.notion-asset-wrapper-video > div {
   height: 100% !important;
   width: 100% !important;
+}
+
+/* 画廊左右边线不展示Bug */
+.notion-gallery {
+  padding: 0 16px;
 }

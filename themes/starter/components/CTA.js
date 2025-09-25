@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * CTA，用于创建一个呼吁用户行动的部分（Call To Action，简称 CTA）。
@@ -30,11 +30,11 @@ export const CTA = () => {
                   </p>
                   {siteConfig('STARTER_CTA_BUTTON') && (
                     <>
-                      <Link
+                      <SmartLink
                         href={siteConfig('STARTER_CTA_BUTTON_URL', '')}
                         className='inline-block rounded-md border border-transparent bg-secondary px-7 py-3 text-base font-medium text-white transition hover:bg-[#0BB489]'>
                         {siteConfig('STARTER_CTA_BUTTON_TEXT')}
-                      </Link>
+                      </SmartLink>
                     </>
                   )}
                 </div>
