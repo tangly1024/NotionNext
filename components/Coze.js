@@ -24,6 +24,9 @@ export default function Coze() {
         },
         componentProps: {
           title: title
+        } ,
+        auth: {
+          type: 'token'
         }
       })
       console.log('coze', cozeClient)
