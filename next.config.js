@@ -140,18 +140,19 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
 
-  // 默认将feed重定向至 /public/rss/feed.xml
-  redirects: process.env.EXPORT
-    ? undefined
-    : () => {
-        return [
-          {
-            source: '/feed',
-            destination: '/rss/feed.xml',
-            permanent: true
-          }
-        ]
-      },
+  // [临时修复] 注释掉 feed 的 redirects，避免 /feed 路由导致 feed.xml 404 问题
+  // 相关讨论见 https://github.com/tangly1024/NotionNext/issues/3156
+  // redirects: process.env.EXPORT
+  //   ? undefined
+  //   : () => {
+  //       return [
+  //         {
+  //           source: '/feed',
+  //           destination: '/rss/feed.xml',
+  //           permanent: true
+  //         }
+  //       ]
+  //     },
   // 重写url
   rewrites: process.env.EXPORT
     ? undefined
