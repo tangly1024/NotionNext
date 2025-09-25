@@ -20,7 +20,8 @@ export default function Coze() {
     if (CozeWebSDK) {
       const cozeClient = new CozeWebSDK.WebChatClient({
         config: {
-          bot_id: botId
+          bot_id: botId,
+          type: 'bot'
         },
         componentProps: {
           title: title
