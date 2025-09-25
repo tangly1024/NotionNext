@@ -65,6 +65,8 @@ class MyDocument extends Document {
 
           {/* 预先设置深色模式，避免闪烁 */}
           <script dangerouslySetInnerHTML={{ __html: darkModeScript }} />
+          {/* Umami Analytics */}
+          <script defer src="https://cloud.umami.is/script.js" data-website-id="e492efc8-5bbe-4c33-980c-001f0323578f"></script>
         </Head>
 
         <body>
