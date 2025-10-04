@@ -1,0 +1,149 @@
+- let comments = theme.comments
+#post-info
+  h1.post-title= page.title || _p('no_title')
+    if theme.post_edit.enable
+      a.post-edit-link(href=theme.post_edit.url + page.source title=_p('post.edit') target="_blank")
+        i.fas.fa-pencil-alt
+
+  #post-meta
+    .meta-firstline
+      if theme.post_meta.post.date_type
+        span.post-meta-date
+          if theme.post_meta.post.date_type === 'both'
+            i.far.fa-calendar-alt.fa-fw.post-meta-icon
+            span.post-meta-label= _p('post.created')
+            time.post-meta-date-created(datetime=date_xml(page.date) title=_p('post.created') + ' ' + full_date(page.date))= date(page.date, config.date_format)
+            span.post-meta-separator |
+            i.fas.fa-history.fa-fw.post-meta-icon
+            span.post-meta-label= _p('post.updated')
+            time.post-meta-date-updated(datetime=date_xml(page.updated) title=_p('post.updated') + ' ' + full_date(page.updated))= date(page.updated, config.date_format)
+          else
+            - let data_type_update = theme.post_meta.post.date_type === 'updated'
+            - let date_type = data_type_update ? 'updated' : 'date'
+            - let date_icon = data_type_update ? 'fas fa-history' : 'far fa-calendar-alt'
+            - let date_title = data_type_update ? _p('post.updated') : _p('post.created')
+            i.fa-fw.post-meta-icon(class=date_icon)
+            span.post-meta-label= date_title
+            time(datetime=date_xml(page[date_type]) title=date_title + ' ' + full_date(page[date_type]))= date(page[date_type], config.date_format)
+      if theme.post_meta.post.categories && page.categories.data.length > 0
+        span.post-meta-categories
+          if theme.post_meta.post.date_type
+            span.post-meta-separator |
+          each item, index in page.categories.data
+            i.fas.fa-inbox.fa-fw.post-meta-icon
+            a(href=url_for(item.path)).post-meta-categories #[=item.name]
+            if index < page.categories.data.length - 1
+              i.fas.fa-angle-right.post-meta-separator
+
+    .meta-secondline
+      - let postWordcount = theme.wordcount.enable && (theme.wordcount.post_wordcount || theme.wordcount.min2read)
+      if postWordcount
+        span.post-meta-separator |
+        span.post-meta-wordcount
+          if theme.wordcount.post_wordcount
+            i.far.fa-file-word.fa-fw.post-meta-icon
+            span.post-meta-label= _p('post.wordcount') + ':'
+            span.word-count= wordcount(page.content)
+            if theme.wordcount.min2read
+              span.post-meta-separator |
+          if theme.wordcount.min2read
+            i.far.fa-clock.fa-fw.post-meta-icon
+            span.post-meta-label= _p('post.min2read') + ':'
+            span= min2read(page.content, {cn: 350, en: 160}) + _p('post.min2read_unit')
+
+      //- for pv and count
+      mixin pvBlock(parent_id, parent_class, parent_title)
+        span.post-meta-separator |
+        span(class=parent_class id=parent_id data-flag-title=parent_title)
+          i.far.fa-eye.fa-fw.post-meta-icon
+          span.post-meta-label= _p('post.page_pv') + ':'
+          if block
+            block
+
+      mixin otherPV()
+        if theme.umami_analytics.enable && theme.umami_analytics.UV_PV.page_pv
+          +pvBlock('', '', '')
+            span#umamiPV(data-path=url_for(page.path))
+              i.fa-solid.fa-spinner.fa-spin
+        else if theme.busuanzi.page_pv
+          +pvBlock('', 'post-meta-pv-cv', '')
+            span#busuanzi_value_page_pv
+              i.fa-solid.fa-spinner.fa-spin
+
+      - const commentUse = comments.use && comments.use[0]
+      if page.comments !== false && commentUse && !comments.lazyload
+        if commentUse === 'Valine' && theme.valine.visitor
+          +pvBlock(url_for(page.path), 'leancloud_visitors', page.title)
+            span.leancloud-visitors-count
+              i.fa-solid.fa-spinner.fa-spin
+        else if commentUse === 'Waline' && theme.waline.pageview
+          +pvBlock('', '', '')
+            span.waline-pageview-count(data-path=url_for(page.path))
+              i.fa-solid.fa-spinner.fa-spin
+        else if commentUse === 'Twikoo' && theme.twikoo.visitor
+          +pvBlock('', '', '')
+            span#twikoo_visitors
+              i.fa-solid.fa-spinner.fa-spin
+        else if commentUse === 'Artalk' && theme.artalk.visitor
+          +pvBlock('', '', '')
+            span#ArtalkPV
+              i.fa-solid.fa-spinner.fa-spin
+        else
+          +otherPV()
+      else
+        +otherPV()
+
+      if comments.count && !comments.lazyload && page.comments !== false && comments.use
+        - var whichCount = comments.use[0]
+
+        mixin countBlock
+          span.post-meta-separator |
+          span.post-meta-commentcount
+            i.far.fa-comments.fa-fw.post-meta-icon
+            span.post-meta-label= _p('post.comments') + ':'
+            if block
+              block
+
+        case whichCount
+          when 'Disqus'
+            +countBlock
+              a.disqus-comment-count(href=full_url_for(page.path) + '#post-comment')
+                i.fa-solid.fa-spinner.fa-spin
+          when 'Disqusjs'
+            +countBlock
+              a.disqusjs-comment-count(href=full_url_for(page.path) + '#post-comment')
+                i.fa-solid.fa-spinner.fa-spin
+          when 'Valine'
+            +countBlock
+              a(href=url_for(page.path) + '#post-comment' itemprop="discussionUrl")
+                span.valine-comment-count(data-xid=url_for(page.path) itemprop="commentCount")
+                  i.fa-solid.fa-spinner.fa-spin
+          when 'Waline'
+            +countBlock
+              a(href=url_for(page.path) + '#post-comment')
+                span.waline-comment-count(data-path=url_for(page.path))
+                  i.fa-solid.fa-spinner.fa-spin
+          when 'Gitalk'
+            +countBlock
+              a(href=url_for(page.path) + '#post-comment')
+                span.gitalk-comment-count
+                  i.fa-solid.fa-spinner.fa-spin
+          when 'Twikoo'
+            +countBlock
+              a(href=url_for(page.path) + '#post-comment')
+                span#twikoo-count
+                  i.fa-solid.fa-spinner.fa-spin
+          when 'Facebook Comments'
+            +countBlock
+              a(href=url_for(page.path) + '#post-comment')
+                span.fb-comments-count(data-href=urlNoIndex())
+          when 'Remark42'
+            +countBlock
+              a(href=url_for(page.path) + '#post-comment')
+                span.remark42__counter(data-url=urlNoIndex())
+                  i.fa-solid.fa-spinner.fa-spin
+          when 'Artalk'
+            +countBlock
+              a(href=url_for(page.path) + '#post-comment')
+                span#ArtalkCount
+                  i.fa-solid.fa-spinner.fa-spin

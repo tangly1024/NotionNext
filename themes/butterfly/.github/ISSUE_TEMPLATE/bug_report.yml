@@ -1,0 +1,83 @@
+name: Bug report
+description: Create a report to help us improve
+title: '[Bug]: '
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        重要：請依照該模板來提交 
+        Important: Please follow the template to create a new issue
+
+  - type: input
+    id: butterfly-ver
+    attributes:
+      label: 使用的 Butterfly 版本？ | What version of Butterfly are you using?
+      description: 檢視主題的 package.json | Check the theme's package.json
+    validations:
+      required: true
+
+  - type: dropdown
+    id: modify
+    attributes:
+      label: 是否修改過主題文件？ | Has the theme files been modified?
+      options:
+        - 是 (Yes)
+        - 否 (No)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: 使用的瀏覽器？ | What browser are you using?
+      options:
+        - Chrome
+        - Edge
+        - Safari
+        - Opera
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 使用的系統？ | What operating system are you using?
+      options:
+        - Windows
+        - macOS 
+        - Linux
+        - Android
+        - iOS
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: 依賴插件 | Package dependencies information
+      description: 在 Hexo 根目錄下執行 `npm ls --depth 0` | Run `npm ls --depth 0` in Hexo root directory
+      render: Text
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 問題描述 | Describe the bug
+      description: 請描述你的問題現象 | A clear and concise description of what the bug is.
+      placeholder: 請儘量提供截圖來定位問題 | If applicable, add screenshots to help explain your problem
+      value:
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: 出現問題的網站 | Website with the issue
+      description: 請提供可復現問題的網站地址 | Please provide a website URL where the problem can be reproduced.
+      placeholder: 請填寫具體的網址，不要填寫 localhost 網站 | Please provide a specific URL, do not use localhost. 
+    validations:
+      required: true

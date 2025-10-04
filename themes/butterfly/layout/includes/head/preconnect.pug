@@ -1,0 +1,35 @@
+-
+  const { internal_provider, third_party_provider, custom_format } = theme.CDN
+  const providers = {
+    'jsdelivr': '//cdn.jsdelivr.net',
+    'cdnjs': '//cdnjs.cloudflare.com',
+    'unpkg': '//unpkg.com',
+    'custom': custom_format && custom_format.match(/^((https?:)?(\/\/[^/]+)|([^/]+))(\/|$)/)[1]
+  }
+-
+
+if internal_provider === third_party_provider && internal_provider !== 'local'
+  link(rel="preconnect" href=providers[internal_provider])
+else
+  if internal_provider !== 'local'
+    link(rel="preconnect" href=providers[internal_provider])
+  if third_party_provider !== 'local'
+  link(rel="preconnect" href=providers[third_party_provider])
+
+if theme.google_analytics
+  link(rel="preconnect" href="//www.google-analytics.com" crossorigin='')
+
+if theme.baidu_analytics
+  link(rel="preconnect" href="//hm.baidu.com")
+
+if theme.cloudflare_analytics
+  link(rel="preconnect" href="//static.cloudflareinsights.com")
+
+if theme.microsoft_clarity
+  link(rel="preconnect" href="//www.clarity.ms")
+
+if theme.blog_title_font && theme.blog_title_font.font_link && theme.blog_title_font.font_link.indexOf('//fonts.googleapis.com') != -1
+  link(rel="preconnect" href="//fonts.googleapis.com" crossorigin='')
+
+if !theme.asset.busuanzi && (theme.busuanzi.site_uv || theme.busuanzi.site_pv || theme.busuanzi.page_pv)
+  link(rel="preconnect" href="//busuanzi.ibruce.info")

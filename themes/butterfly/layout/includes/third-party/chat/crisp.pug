@@ -1,0 +1,32 @@
+script.
+  (() => {
+    window.$crisp = ['safe', true]
+    window.CRISP_WEBSITE_ID = "!{theme.crisp.website_id}"
+
+    btf.getScript('https://client.crisp.chat/l.js').then(() => {
+      const isChatBtn = !{theme.chat.rightside_button}
+      const isChatHideShow = !{theme.chat.button_hide_show}
+
+      if (isChatBtn) {
+        const open = () => {
+          $crisp.push(["do", "chat:show"])
+          $crisp.push(["do", "chat:open"])
+        }
+
+        const close = () => $crisp.push(["do", "chat:hide"])
+
+        close()
+
+        $crisp.push(["on", "chat:closed", close])
+
+        window.chatBtnFn = () => $crisp.is("chat:visible") ? close() : open()
+
+        document.getElementById('chat-btn').style.display = 'block'
+      } else if (isChatHideShow) {
+        window.chatBtn = {
+          hide: () => $crisp.push(["do", "chat:hide"]),
+          show: () => $crisp.push(["do", "chat:show"])
+        }
+      }
+    })
+  })()

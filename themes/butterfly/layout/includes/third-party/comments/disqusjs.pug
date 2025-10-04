@@ -1,0 +1,87 @@
+- let disqusjsPageTitle = page.title && page.title.replace(/'/ig,"\\'")
+- const { shortname:dqShortname, apikey:dqApikey, option:dqOption } = theme.disqusjs
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'== 'shuoshuo'
+    const dqOption = !{JSON.stringify(dqOption)}
+
+    const destroyDisqusjs = () => {
+      disqusjs.destroy()
+      window.disqusjs = null
+    }
+
+    const themeChange = (el, path) => {
+      destroyDisqusjs()
+      initDisqusjs(el, path)
+    }
+
+    const initDisqusjs = (el = document, path) => {
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyDisqusjs = () => {
+          destroyDisqusjs()
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      disqusjs = new DisqusJS({
+        shortname: '!{dqShortname}',
+        title: '!{ disqusjsPageTitle }',
+        apikey: '!{dqApikey}',
+        ...dqOption,
+        identifier: isShuoshuo ? path : (dqOption && dqOption.identifier) || '!{ url_for(page.path) }',
+        url: isShuoshuo ? location.origin + path : (dqOption && dqOption.url) || '!{ page.permalink }'
+      })
+
+      disqusjs.render(el.querySelector('#disqusjs-wrap'))
+
+      btf.addGlobalFn('themeChange', () => themeChange(el, path), 'disqusjs')
+    }
+
+    const loadDisqusjs = async(el, path) => {
+      if (window.disqusJsLoad) initDisqusjs(el, path)
+      else {
+        await btf.getCSS('!{url_for(theme.asset.disqusjs_css)}')
+        await btf.getScript('!{url_for(theme.asset.disqusjs)}')
+        initDisqusjs(el, path)
+        window.disqusJsLoad = true
+      }
+    }
+
+    const getCount = async() => {
+      try {
+        const eleGroup = document.querySelector('#post-meta .disqusjs-comment-count')
+        if (!eleGroup) return
+        const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+        const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=!{dqShortname}&api_key=!{dqApikey}&thread:link=${cleanedLinks}`,{
+          method: 'GET'
+        })
+        const result = await res.json()
+        const count = result.response.length ? result.response[0].posts : 0
+        eleGroup.textContent = count
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    if (isShuoshuo) {
+      '!{theme.comments.use[0]}' === 'Disqusjs'
+        ? window.shuoshuoComment = { loadComment: loadDisqusjs }
+        : window.loadOtherComment = loadDisqusjs
+      return
+    }
+
+    if ('!{theme.comments.use[0]}' === 'Disqusjs' || !!{theme.comments.lazyload}) {
+      if (!{theme.comments.lazyload}) btf.loadComment(document.getElementById('disqusjs-wrap'), loadDisqusjs)
+      else {
+        loadDisqusjs()
+        !{ theme.comments.count ? `GLOBAL_CONFIG_SITE.pageType === 'post' && getCount()` : '' }
+      }
+    } else {
+      window.loadOtherComment = loadDisqusjs
+    }
+  })()

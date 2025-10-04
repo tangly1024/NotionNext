@@ -1,0 +1,87 @@
+.container
+  .flink
+    margin-bottom: 20px
+
+    .flink-list
+      overflow: auto
+      padding: 10px 10px 0
+      text-align: center
+
+      & > .flink-list-item
+        position: relative
+        float: left
+        overflow: hidden
+        margin: 15px 7px
+        width: calc(100% / 3 - 15px)
+        height: 90px
+        line-height: 17px
+        -webkit-transform: translateZ(0)
+        addBorderRadius(8)
+
+        +maxWidth1024()
+          width: calc(50% - 15px) !important
+
+        +maxWidth600()
+          width: calc(100% - 15px) !important
+
+        &:hover
+          .flink-item-icon
+            margin-left: -10px
+            width: 0
+
+        &:before
+          position: absolute
+          top: 0
+          right: 0
+          bottom: 0
+          left: 0
+          z-index: -1
+          background: var(--text-bg-hover)
+          content: ''
+          transition: transform .3s ease-out
+          transform: scale(0)
+
+        &:hover:before,
+        &:focus:before,
+        &:active:before
+          transform: scale(1)
+
+        a
+          color: var(--font-color)
+          text-decoration: none
+
+          .flink-item-icon
+            float: left
+            overflow: hidden
+            margin: 15px 10px
+            width: 60px
+            height: 60px
+            border-radius: 7px
+            transition: width .3s ease-out
+
+            img
+              width: 100%
+              height: 100%
+              transition: filter 375ms ease-in .2s, transform .3s
+              object-fit: cover
+
+          .img-alt
+            display: none
+
+    .flink-item-name
+      @extend .limit-one-line
+      padding: 16px 10px 0 0
+      height: 40px
+      font-weight: bold
+      font-size: 1.43em
+
+    .flink-item-desc
+      @extend .limit-one-line
+      padding: 16px 10px 16px 0
+      height: 50px
+      font-size: .93em
+
+    .flink-name
+      margin-bottom: 5px
+      font-weight: bold
+      font-size: 1.5em

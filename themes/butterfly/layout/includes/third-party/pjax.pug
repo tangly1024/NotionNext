@@ -1,0 +1,74 @@
+- var pjaxExclude = 'a:not([target="_blank"])'
+if theme.pjax.exclude
+  each val in theme.pjax.exclude
+    - pjaxExclude += `:not([href="${val}"])`
+
+- let pjaxSelectors = ['head > title', '#config-diff', '#body-wrap', '#rightside-config-hide', '#rightside-config-show', '.js-pjax']
+
+- let choose = theme.comments.use
+if choose
+  if choose.includes('Livere') || choose.includes('Utterances') || choose.includes('Giscus')
+    - pjaxSelectors.unshift('link[rel="canonical"]')
+    if theme.Open_Graph_meta.enable
+      - pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]', 'meta[property="og:description"]')
+    else
+      - pjaxSelectors.unshift('meta[name="description"]')
+
+script(src=url_for(theme.asset.pjax))
+script.
+  (() => {
+    const pjaxSelectors = !{JSON.stringify(pjaxSelectors)}
+
+    window.pjax = new Pjax({
+      elements: '!{pjaxExclude}',
+      selectors: pjaxSelectors,
+      cacheBust: false,
+      analytics: !{theme.google_analytics ? true : false},
+      scrollRestoration: false
+    })
+
+    const triggerPjaxFn = (val) => {
+      if (!val) return
+      Object.values(val).forEach(fn => {
+        try {
+          fn()
+        } catch (err) {
+          console.debug('Pjax callback failed:', err)
+        }
+      })
+    }
+
+    document.addEventListener('pjax:send', () => {
+      // removeEventListener
+      btf.removeGlobalFnEvent('pjaxSendOnce')
+      btf.removeGlobalFnEvent('themeChange')
+
+      // reset readmode
+      const $bodyClassList = document.body.classList
+      if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+      triggerPjaxFn(window.globalFn.pjaxSend)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+      btf.removeGlobalFnEvent('pjaxCompleteOnce')
+      document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+      })
+
+      triggerPjaxFn(window.globalFn.pjaxComplete)
+    })
+
+    document.addEventListener('pjax:error', e => {
+      if (e.request.status === 404) {
+        const usePjax = !{theme.pjax && theme.pjax.enable}
+        !{theme.error_404 && theme.error_404.enable}
+          ? (usePjax ? pjax.loadUrl('!{url_for("/404.html")}') : window.location.href = '!{url_for("/404.html")}')
+          : window.location.href = e.request.responseURL
+      }
+    })
+  })()

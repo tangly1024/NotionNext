@@ -1,0 +1,129 @@
+-
+  let algolia = 'undefined'
+  if (theme.search.use === 'algolia_search') {
+    const { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME } = process.env
+    const { appId, applicationID, apiKey, indexName } = config.algolia
+    algolia = JSON.stringify({
+      appId: ALGOLIA_APP_ID || appId || applicationID,
+      apiKey: ALGOLIA_API_KEY || apiKey,
+      indexName: ALGOLIA_INDEX_NAME || indexName,
+      hitsPerPage: theme.search.algolia_search.hitsPerPage,
+      // search languages
+      languages: {
+        hits_empty: _p("search.algolia_search.hits_empty"),
+        hits_stats: _p("search.algolia_search.hits_stats"),
+      }
+    })
+  }
+
+  let localSearch = 'undefined'
+  if (theme.search.use === 'local_search') {
+    const { CDN, preload, top_n_per_article, pagination, unescape } = theme.search.local_search
+    localSearch = JSON.stringify({
+      path: CDN || config.root + config.search.path,
+      preload,
+      top_n_per_article,
+      unescape,
+      pagination: {
+        enable: pagination.enable,
+        hitsPerPage: pagination.hitsPerPage
+      },
+      languages: {
+        // search languages
+        hits_empty: _p("search.local_search.hits_empty"),
+        hits_stats: _p("search.local_search.hits_stats"),
+      }
+    })
+  }
+
+  let translate = 'undefined'
+  if (theme.translate && theme.translate.enable){
+    translate = JSON.stringify({
+      defaultEncoding: theme.translate.defaultEncoding,
+      translateDelay: theme.translate.translateDelay,
+      msgToTraditionalChinese: theme.translate.msgToTraditionalChinese,
+      msgToSimplifiedChinese: theme.translate.msgToSimplifiedChinese
+    })
+  }
+
+  let copyright = 'undefined'
+  if (theme.copy.enable && theme.copy.copyright.enable){
+    copyright = JSON.stringify({
+      limitCount: theme.copy.copyright.limit_count,
+      languages: {
+        author: _p("copy_copyright.author") + ': ' + config.author,
+        link: _p("copy_copyright.link") + ': ',
+        source: _p("copy_copyright.source") + ': ' + config.title,
+        info: _p("copy_copyright.info")
+      }
+    })
+  }
+
+  let Snackbar = 'undefined'
+  if (theme.snackbar && theme.snackbar.enable) {
+    Snackbar = JSON.stringify({
+      chs_to_cht: _p("Snackbar.chs_to_cht"),
+      cht_to_chs: _p("Snackbar.cht_to_chs"),
+      day_to_night: _p("Snackbar.day_to_night"),
+      night_to_day: _p("Snackbar.night_to_day"),
+      bgLight: theme.snackbar.bg_light,
+      bgDark: theme.snackbar.bg_dark,
+      position: theme.snackbar.position,
+    })
+  }
+
+  let highlight = 'undefined'
+  let syntaxHighlighter = config.syntax_highlighter
+  let highlightEnable = syntaxHighlighter ? ['highlight.js', 'prismjs'].includes(syntaxHighlighter) : (config.highlight.enable || config.prismjs.enable)
+  if (highlightEnable) {
+    const { copy, language, height_limit, fullpage, macStyle } = theme.code_blocks
+    highlight = JSON.stringify({
+      plugin: syntaxHighlighter ? syntaxHighlighter : config.highlight.enable ? 'highlight.js' : 'prismjs',
+      highlightCopy: copy,
+      highlightLang: language,
+      highlightHeightLimit: height_limit,
+      highlightFullpage: fullpage,
+      highlightMacStyle: macStyle
+    })
+  }
+
+script.
+  const GLOBAL_CONFIG = {
+    root: '!{config.root}',
+    algolia: !{algolia},
+    localSearch: !{localSearch},
+    translate: !{translate},
+    highlight: !{highlight},
+    copy: {
+      success: '!{_p("copy.success")}',
+      error: '!{_p("copy.error")}',
+      noSupport: '!{_p("copy.noSupport")}'
+    },
+    relativeDate: {
+      homepage: !{theme.post_meta.page.date_format === 'relative'},
+      post: !{theme.post_meta.post.date_format === 'relative'}
+    },
+    runtime: '!{theme.aside.card_webinfo.runtime_date ? _p("aside.card_webinfo.runtime.unit") : ""}',
+    dateSuffix: {
+      just: '!{_p("date_suffix.just")}',
+      min: '!{_p("date_suffix.min")}',
+      hour: '!{_p("date_suffix.hour")}',
+      day: '!{_p("date_suffix.day")}',
+      month: '!{_p("date_suffix.month")}'
+    },
+    copyright: !{copyright},
+    lightbox: '!{ theme.lightbox || 'null' }',
+    Snackbar: !{Snackbar},
+    infinitegrid: {
+      js: '!{url_for(theme.asset.egjs_infinitegrid)}',
+      buttonText: '!{_p("load_more")}'
+    },
+    isPhotoFigcaption: !{theme.photofigcaption},
+    islazyloadPlugin: !{theme.lazyload.enable && !theme.lazyload.native},
+    isAnchor: !{theme.anchor.auto_update || false},
+    percent: {
+      toc: !{theme.toc.scroll_percent},
+      rightside: !{theme.rightside_scroll_percent},
+    },
+    autoDarkmode: !{theme.darkmode.enable && theme.darkmode.autoChangeMode === 1}
+  }

@@ -1,0 +1,38 @@
+if page.total !== 1
+  -
+    var options = {
+      prev_text: '<i class="fas fa-chevron-left fa-fw"></i>',
+      next_text: '<i class="fas fa-chevron-right fa-fw"></i>',
+      mid_size: 1,
+      escape: false
+    }
+
+  if globalPageType === 'post'
+    - let paginationOrder = theme.post_pagination === 2 ? { prev: page.prev, next: page.next } : { prev: page.next, next: page.prev }
+
+    nav#pagination.pagination-post
+      each direction, key in paginationOrder
+        if direction
+          - const getPostDesc = direction.postDesc || postDesc(direction)
+          - let className = key === 'prev' ? (paginationOrder.next ? '' : 'full-width') : (paginationOrder.prev ? '' : 'full-width')
+          - className = getPostDesc ? className : className + ' no-desc'
+
+          a.pagination-related(class=className href=url_for(direction.path) title=direction.title)
+            if direction.cover_type === 'img'
+              img.cover(src=url_for(direction.cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt=`cover of ${key === 'prev' ? 'previous' : 'next'} post`)
+            else
+              .cover(style=`background: ${direction.cover || 'var(--default-bg-color)'}`)
+
+            .info(class=key === 'prev' ? '' : 'text-right')
+              .info-1
+                .info-item-1=_p(`pagination.${key}`)
+                .info-item-2!=direction.title
+              if getPostDesc
+                .info-2
+                  .info-item-1!=getPostDesc
+  else
+    nav#pagination
+      .pagination
+        if globalPageType === 'home'
+          - options.format = 'page/%d/#content-inner'
+        !=paginator(options)

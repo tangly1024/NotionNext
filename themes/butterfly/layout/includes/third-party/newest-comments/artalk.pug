@@ -1,0 +1,67 @@
+- const { server, site, option } = theme.artalk
+- const avatarCdn = (option !== null && option.gravatar && option.gravatar.mirror) || ''
+- const avatarDefault = (option !== null && option.gravatar && (option.gravatar.params || option.gravatar.default)) || ''
+
+!= partial("includes/third-party/newest-comments/common.pug", {}, { cache: true })
+
+script.
+  window.addEventListener('load', () => {
+    const keyName = 'artalk-newest-comments'
+    const { changeContent, generateHtml, run } = window.newestComments
+
+    const getAvatarValue = async () => {
+      const predefinedAvatarCdn = '!{avatarCdn}'
+      const predefinedAvatarDefault = '!{avatarDefault}'
+
+      const avatarDefaultFormat = e => e.startsWith('d=') ? e : `d=${e}`
+
+      if (predefinedAvatarCdn && predefinedAvatarDefault) {
+        return { avatarCdn: predefinedAvatarCdn, avatarDefault: avatarDefaultFormat(predefinedAvatarDefault) }
+      }
+
+      try {
+        const res = await fetch('!{server}/api/v2/conf')
+        const result = await res.json()
+        const { mirror, params, default: defaults } = result.frontend_conf.gravatar
+        const avatarCdn = predefinedAvatarCdn || mirror
+        let avatarDefault = avatarDefaultFormat(predefinedAvatarDefault || params || defaults)
+        return { avatarCdn, avatarDefault}
+      } catch (e) {
+        console.error(e)
+        return { avatarCdn: predefinedAvatarCdn, avatarDefault: avatarDefaultFormat(predefinedAvatarDefault) }
+      }
+    }
+
+    const searchParams = new URLSearchParams({
+      'site_name': '!{site}',
+      'limit': '!{newestCommentsLimit * 2}', // Fetch more comments to filter pending comments
+    })
+
+    const getComment = async (ele) => {
+      try {
+        const res = await fetch(`!{server}/api/v2/stats/latest_comments?${searchParams}`)
+        const result = await res.json()
+        const { avatarCdn, avatarDefault } = await getAvatarValue()
+        const artalk = result.data
+          .filter(e => !e.is_pending) // Filter pending comments
+          .slice(0, !{newestCommentsLimit}) // Limit the number of comments
+          .map(e => {
+            const avatar = avatarCdn && e.email_encrypted ? `${avatarCdn}${e.email_encrypted}?${avatarDefault}` : ''
+            return {
+              'avatar': avatar,
+              'content': changeContent(e.content_marked),
+              'nick': e.nick,
+              'url': e.page_url,
+              'date': e.date,
+            }
+          })
+        btf.saveToLocal.set(keyName, JSON.stringify(artalk), !{theme.aside.card_newest_comments.storage}/(60*24))
+        generateHtml(artalk, ele)
+      } catch (e) {
+        console.log(e)
+        ele.textContent= "!{_p('aside.card_newest_comments.error')}"
+      }
+    }
+
+    run(keyName, getComment)
+  })

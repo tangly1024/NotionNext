@@ -1,0 +1,61 @@
+script.
+  window.newestComments = {
+    changeContent: content => {
+      if (content === '') return content
+
+      content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[!{_p("aside.card_newest_comments.image")}]') // replace image link
+      content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[!{_p("aside.card_newest_comments.link")}]') // replace url
+      content = content.replace(/<pre><code>.*?<\/pre>/gi, '[!{_p("aside.card_newest_comments.code")}]') // replace code
+      content = content.replace(/<code>.*?<\/code>/gi, '[!{_p("aside.card_newest_comments.code")}]') // replace code
+      content = content.replace(/<[^>]+>/g, "") // remove html tag
+
+      if (content.length > 150) {
+        content = content.substring(0, 150) + '...'
+      }
+      return content
+    },
+
+    generateHtml: (array, ele) => {
+      let result = ''
+
+      if (array.length) {
+        for (let i = 0; i < array.length; i++) {
+          result += '<div class="aside-list-item">'
+
+          if (!{theme.aside.card_newest_comments.avatar} && array[i].avatar) {
+            const imgAttr = '!{theme.lazyload.enable && !theme.lazyload.native ? "data-lazy-src" : "src"}'
+            const lazyloadNative = '!{theme.lazyload.enable && theme.lazyload.native ? "loading=\"lazy\"" : ""}'
+            result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}" ${lazyloadNative}></a>`
+          }
+
+          result += `<div class="content">
+          <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+          <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+          </div></div>`
+        }
+      } else {
+        result += '!{_p("aside.card_newest_comments.zero")}'
+      }
+
+      ele.innerHTML = result
+      window.lazyLoadInstance && window.lazyLoadInstance.update()
+      window.pjax && window.pjax.refresh(ele)
+    },
+
+    newestCommentInit: (name, getComment) => {
+      const $dom = document.querySelector('#card-newest-comments .aside-list')
+      if ($dom) {
+        const data = btf.saveToLocal.get(name)
+        if (data) {
+          newestComments.generateHtml(JSON.parse(data), $dom)
+        } else {
+          getComment($dom)
+        }
+      }
+    },
+
+    run: (name, getComment) => {
+      newestComments.newestCommentInit(name, getComment)
+      btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+    }
+  }

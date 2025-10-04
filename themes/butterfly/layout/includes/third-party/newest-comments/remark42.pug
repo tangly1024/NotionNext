@@ -1,0 +1,31 @@
+- const { host, siteId } = theme.remark42
+!= partial("includes/third-party/newest-comments/common.pug", {}, { cache: true })
+
+script.
+  window.addEventListener('load', () => {
+    const keyName = 'remark42-newest-comments'
+    const { changeContent, generateHtml, run } = window.newestComments
+
+    const getComment = ele => {
+      fetch('!{host}/api/v1/last/!{newestCommentsLimit}?site=!{siteId}')
+        .then(response => response.json())
+        .then(data => {
+          const remark42 = data.map(e => {
+            return {
+              'avatar': e.user.picture,
+              'content': changeContent(e.text),
+              'nick': e.user.name,
+              'url': e.locator.url,
+              'date': e.time,
+            }
+          })
+          btf.saveToLocal.set(keyName, JSON.stringify(remark42), !{theme.aside.card_newest_comments.storage}/(60*24))
+          generateHtml(remark42, ele)
+        }).catch(e => {
+          console.error(e)
+          ele.textContent= "!{_p('aside.card_newest_comments.error')}"
+        })
+    }
+
+    run(keyName, getComment)
+  })

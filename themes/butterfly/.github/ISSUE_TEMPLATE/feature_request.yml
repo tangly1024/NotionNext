@@ -1,0 +1,14 @@
+name: Feature request
+description: Suggest an idea for this project
+title: '[Feature]: '
+
+body:
+  - type: textarea
+    id: feature-request
+    attributes:
+      label: 想要的功能 | What feature do you want?
+      description: 請描述你需要的新功能 | A clear and concise description of what the feature is.
+      placeholder:
+      value:
+    validations:
+      require: true

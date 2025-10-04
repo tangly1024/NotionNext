@@ -1,0 +1,23 @@
+if theme.post_copyright.enable && page.copyright !== false
+  - const author = page.copyright_author || config.author
+  - const authorHref = page.copyright_author_href || theme.post_copyright.author_href || config.url
+  - const url = page.copyright_url || page.permalink
+  - const info = page.copyright_info || _p('post.copyright.copyright_content', theme.post_copyright.license_url, theme.post_copyright.license, config.url, config.title)
+  .post-copyright
+    .post-copyright__author
+      span.post-copyright-meta
+        i.fas.fa-circle-user.fa-fw
+        = _p('post.copyright.author') + ": "
+      span.post-copyright-info
+        a(href=authorHref)= author
+    .post-copyright__type
+      span.post-copyright-meta
+        i.fas.fa-square-arrow-up-right.fa-fw
+        = _p('post.copyright.link') + ": "
+      span.post-copyright-info
+        a(href=url_for(url))= theme.post_copyright.decode ? decodeURI(url) : url
+    .post-copyright__notice
+      span.post-copyright-meta
+        i.fas.fa-circle-exclamation.fa-fw
+        = _p('post.copyright.copyright_notice') + ": "
+      span.post-copyright-info!= info

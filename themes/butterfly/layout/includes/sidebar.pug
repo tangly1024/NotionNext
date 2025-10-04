@@ -1,0 +1,18 @@
+if theme.menu
+  #sidebar
+    #menu-mask
+    #sidebar-menus
+      .avatar-img.text-center
+        img(src=url_for(theme.avatar.img) onerror=`this.onerror=null;this.src='${url_for(theme.error_img.flink)}'` alt="avatar")
+      .site-data.text-center
+        a(href=`${url_for(config.archive_dir)}/`)
+          .headline= _p('aside.articles')
+          .length-num= site.posts.length
+        a(href=`${url_for(config.tag_dir)}/`)
+          .headline= _p('aside.tags')
+          .length-num= site.tags.length
+        a(href=`${url_for(config.category_dir)}/`)
+          .headline= _p('aside.categories')
+          .length-num= site.categories.length
+
+      != partial('includes/header/menu_item', {}, { cache: true })

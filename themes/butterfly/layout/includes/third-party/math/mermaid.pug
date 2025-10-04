@@ -1,0 +1,51 @@
+script.
+  (() => {
+    const runMermaid = ele => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '!{theme.mermaid.theme.dark}' : '!{theme.mermaid.theme.light}'
+
+      ele.forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+        const mermaidID = `mermaid-${index}`
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+        const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+        const renderMermaid = svg => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        }
+
+        // mermaid v9 and v10 compatibility
+        typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+      })
+    }
+
+    const codeToMermaid = () => {
+      const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+      if (codeMermaidEle.length === 0) return
+
+      codeMermaidEle.forEach(ele => {
+        const preEle = document.createElement('pre')
+        preEle.className = 'mermaid-src'
+        preEle.hidden = true
+        preEle.textContent = ele.textContent
+        const newEle = document.createElement('div')
+        newEle.className = 'mermaid-wrap'
+        newEle.appendChild(preEle)
+        ele.parentNode.replaceWith(newEle)
+      })
+    }
+
+    const loadMermaid = () => {
+      if (!{theme.mermaid.code_write}) codeToMermaid()
+      const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+      if ($mermaid.length === 0) return
+
+      const runMermaidFn = () => runMermaid($mermaid)
+      btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+      window.loadMermaid ? runMermaidFn() : btf.getScript('!{url_for(theme.asset.mermaid)}').then(runMermaidFn)
+    }
+
+    btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  })()

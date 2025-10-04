@@ -1,0 +1,45 @@
+script.
+  (() => {
+    btf.getScript('//code.tidio.co/!{theme.tidio.public_key}.js').then(() => {
+      const isChatBtn = !{theme.chat.rightside_button}
+      const isChatHideShow = !{theme.chat.button_hide_show}
+
+      if (isChatBtn) {
+        let isShow = false
+        const close = () => {
+          window.tidioChatApi.hide()
+          isShow = false
+        }
+        
+        const open = () => {
+          window.tidioChatApi.open()
+          window.tidioChatApi.show()
+          isShow = true
+        }
+
+        const onTidioChatApiReady = () => {
+          window.tidioChatApi.hide()
+          window.tidioChatApi.on("close", close)
+        }
+        if (window.tidioChatApi) {
+          window.tidioChatApi.on("ready", onTidioChatApiReady)
+        } else {
+          document.addEventListener("tidioChat-ready", onTidioChatApiReady)
+        }
+
+        window.chatBtnFn = () => {
+          if (!window.tidioChatApi) return
+          isShow ? close() : open()
+        }
+
+        document.getElementById('chat-btn').style.display = 'block'
+
+      } else if (isChatHideShow) {
+        window.chatBtn = {
+          hide: () => window.tidioChatApi && window.tidioChatApi.hide(),
+          show: () => window.tidioChatApi && window.tidioChatApi.show()
+        }
+      }
+    })
+  })()
+

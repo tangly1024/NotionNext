@@ -1,0 +1,185 @@
+if hexo-config('readmode')
+  .read-mode
+    --font-color: #4c4948
+    --readmode-light-color: #fff
+    --white: #4c4948
+    --light-grey: #4c4948
+    --gray: #d6dbdf
+    --hr-border: #d6dbdf
+    --hr-before-color: darken(#d6dbdf, 10)
+    --highlight-bg: #f7f7f7
+    --exit-btn-bg: #C0C0C0
+    --exit-btn-color: #fff
+    --exit-btn-hover: darken(#C0C0C0, 20)
+    --pseudo-hover: none
+
+  [data-theme='dark']
+    .read-mode
+      --font-color: rgba(255, 255, 255, .7)
+      --readmode-light-color: #0d0d0d
+      --white: rgba(255, 255, 255, .9)
+      --light-grey: rgba(255, 255, 255, .7)
+      --gray: rgba(255, 255, 255, .7)
+      --hr-border: rgba(255, 255, 255, .5)
+      --hr-before-color: rgba(255, 255, 255, .7)
+      --highlight-bg: #171717
+      --exit-btn-bg: #1f1f1f
+      --exit-btn-color: rgba(255, 255, 255, .9)
+      --exit-btn-hover: lighten(#1f1f1f, 20)
+
+  .read-mode
+    background: var(--readmode-light-color)
+
+    .exit-readmode
+      position: fixed
+      top: 30px
+      right: 30px
+      z-index: 100
+      width: 40px
+      height: 40px
+      background: var(--exit-btn-bg)
+      color: var(--exit-btn-color)
+      font-size: 16px
+      transition: background .3s
+      addBorderRadius(8)
+
+      +maxWidth768()
+        top: initial
+        bottom: 30px
+
+      &:hover
+        background: var(--exit-btn-hover)
+
+    #aside-content
+      display: none
+
+    #page-header.post-bg
+      background: none !important
+
+      &:before
+        opacity: 0
+
+      & > #post-info
+        text-align: center
+
+    #post
+      margin: 0 auto
+      background: transparent
+      box-shadow: none
+
+      &:hover
+        box-shadow: none
+
+    & > canvas
+      display: none !important
+
+    .highlight-tools,
+    #footer,
+    #post > *:not(#post-info):not(.post-content),
+    #nav,
+    #post-outdate-notice,
+    #web_bg,
+    #rightside,
+    .not-top-img
+      display: none !important
+
+    .container
+      a
+        color: #99a9bf
+
+      pre,
+      .highlight:not(.js-file-line-container)
+        background: var(--highlight-bg) !important
+
+        *
+          color: var(--font-color) !important
+
+      figure.highlight
+        border-radius: 0 !important
+        box-shadow: none !important
+
+        & > :not(.highlight-tools)
+          display: block !important
+
+        .line:before
+          color: var(--font-color) !important
+
+        .hljs
+          background: var(--highlight-bg) !important
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6
+        padding: 0
+
+        &:before
+          content: ''
+
+        &:hover
+          padding: 0
+
+      ul,
+      li,
+      ol
+        &:hover:before
+          transform: none !important
+
+      ol,
+      li
+        &:before
+          background: transparent !important
+          color: var(--font-color) !important
+
+      ul
+        >li
+          &:before
+            border-color: var(--gray) !important
+
+      .tabs
+        border: 2px solid var(--tab-border-color)
+
+        > .nav-tabs
+          background: transparent
+
+          > .tab
+            border-top: none !important
+
+        > .tab-contents .tab-item-content.active
+          animation: none
+
+      code
+        color: var(--font-color)
+
+      blockquote
+        border-color: var(--gray)
+        background-color: var(--readmode-light-color)
+
+      kbd
+        border: 1px solid var(--gray)
+        background-color: transparent
+        box-shadow: none
+        color: var(--font-color)
+
+      .hide-toggle
+        border: 1px solid var(--gray) !important
+
+      .hide-button,
+      .btn-beautify,
+      .hl-label
+        border: 1px solid var(--gray) !important
+        background: var(--readmode-light-color) !important
+        color: var(--font-color) !important
+
+      .note
+        border: 2px solid var(--gray)
+        border-left-color: var(--gray) !important
+        filter: none
+        background-color: var(--readmode-light-color) !important
+        color: var(--font-color)
+
+        &:before,
+        .note-icon
+          color: var(--font-color)

@@ -1,0 +1,39 @@
+script.
+  (() => {
+    const getCommentUrl = () => {
+      const eleGroup = document.querySelectorAll('#recent-posts .article-title')
+      let urlArray = []
+      eleGroup.forEach(i=>{
+        urlArray.push(i.getAttribute('href'))
+      })
+      return urlArray
+    }
+
+    const getCount = () => {
+      const runTwikoo = () => {
+        twikoo.getCommentsCount({
+          envId: '!{theme.twikoo.envId}',
+          region: '!{theme.twikoo.region}',
+          urls: getCommentUrl(),
+          includeReply: false
+        }).then(function (res) {
+          document.querySelectorAll('#recent-posts .twikoo-count').forEach((item,index) => {
+            if (res[index]) {
+              item.textContent = res[index].count
+            }
+          })
+        }).catch(function (err) {
+          console.log(err)
+        })
+      }
+
+        if (typeof twikoo === 'object') {
+          runTwikoo()
+        } else {
+          btf.getScript('!{url_for(theme.asset.twikoo)}').then(runTwikoo)
+        }
+    }
+
+    window.pjax ? getCount() : window.addEventListener('load', getCount)
+
+  })()

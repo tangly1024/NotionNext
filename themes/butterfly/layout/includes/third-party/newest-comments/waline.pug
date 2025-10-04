@@ -1,0 +1,32 @@
+- const serverURL = theme.waline.serverURL.replace(/\/$/, '')
+
+!= partial("includes/third-party/newest-comments/common.pug", {}, { cache: true })
+
+script.
+  window.addEventListener('load', () => {
+    const keyName = 'waline-newest-comments'
+    const { changeContent, generateHtml, run } = window.newestComments
+
+    const getComment = async (ele) => {
+      try {
+        const res = await fetch('!{serverURL}/api/comment?type=recent&count=!{newestCommentsLimit}')
+        const result = await res.json()
+        const walineArray = result.data.map(e => {
+          return {
+            'content': changeContent(e.comment),
+            'avatar': e.avatar,
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.time || e.insertedAt
+          }
+        })
+        btf.saveToLocal.set(keyName, JSON.stringify(walineArray), !{theme.aside.card_newest_comments.storage}/(60*24))
+        generateHtml(walineArray, ele)
+      } catch (err) {
+        console.error(err)
+        ele.textContent= "!{_p('aside.card_newest_comments.error')}"
+      }
+    }
+
+    run(keyName, getComment)
+  })

@@ -1,0 +1,18 @@
+- const fbSDKVer = 'v20.0'
+- const fbSDK = `https://connect.facebook.net/${theme.facebook_comments.lang}/sdk.js#xfbml=1&version=${fbSDKVer}`
+
+script.
+  (()=>{
+    function loadFBComment () {
+      if (typeof FB === 'object') FB.XFBML.parse(document.getElementById('recent-posts'))
+      else {
+        let ele = document.createElement('script')
+        ele.setAttribute('src','!{fbSDK}')
+        ele.setAttribute('async', 'true')
+        ele.setAttribute('defer', 'true')
+        ele.setAttribute('crossorigin', 'anonymous')
+        document.body.appendChild(ele)
+      }
+    }
+    window.pjax ? loadFBComment() : window.addEventListener('load', loadFBComment)
+  })()

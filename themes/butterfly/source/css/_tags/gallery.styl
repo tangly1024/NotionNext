@@ -1,0 +1,218 @@
+.container
+  figure.gallery-group
+    position: relative
+    float: left
+    overflow: hidden
+    margin: 6px 4px
+    width: calc(50% - 8px)
+    height: 250px
+    border-radius: 10px
+    background: $dark-black
+    -webkit-transform: translate3d(0, 0, 0)
+
+    +maxWidth600()
+      width: calc(100% - 8px)
+
+    +minWidth1024()
+      width: calc(100% / 3 - 8px)
+
+    &:hover
+      img
+        opacity: .4
+        transform: translate3d(0, 0, 0)
+
+      .gallery-group-name::after
+        transform: translate3d(0, 0, 0)
+
+      p
+        opacity: 1
+        transform: translate3d(0, 0, 0)
+
+    img
+      position: relative
+      margin: 0
+      max-width: none
+      width: calc(100% + 20px)
+      height: 250px
+      backface-visibility: hidden
+      opacity: .8
+      transition: all .3s, filter 375ms ease-in .2s
+      transform: translate3d(-10px, 0, 0)
+      object-fit: cover
+
+    figcaption
+      position: absolute
+      top: 0
+      left: 0
+      padding: 30px
+      width: 100%
+      height: 100%
+      color: $gallery-color
+      text-transform: uppercase
+      backface-visibility: hidden
+
+      & > a
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        z-index: 1000
+        opacity: 0
+
+    p
+      @extend .limit-more-line
+      margin: 0
+      padding: 8px 0 0
+      letter-spacing: 1px
+      font-size: 1.1em
+      line-height: 1.5
+      opacity: 0
+      transition: opacity .35s, transform .35s
+      transform: translate3d(100%, 0, 0)
+      -webkit-line-clamp: 4
+
+    .gallery-group-name
+      @extend .limit-more-line
+      position: relative
+      margin: 0
+      padding: 8px 0
+      font-weight: bold
+      font-size: 1.65em
+      line-height: 1.5
+      -webkit-line-clamp: 2
+
+      &:after
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+        height: 2px
+        background: $gallery-color
+        content: ''
+        transition: transform .35s
+        transform: translate3d(-100%, 0, 0)
+
+  .gallery-group-main
+    overflow: auto
+    padding: 0 0 16px
+
+  .gallery-container
+    margin: 0 0 20px
+    text-align: center
+    opacity: 0
+
+    &.loaded
+      opacity: 1
+
+    img
+      display: initial
+      margin: 0
+      width: 100%
+      height: 100%
+
+    .gallery-data
+      display: none
+
+    button
+      margin-top: 25px
+      padding: 8px 14px
+      background: var(--btn-bg)
+      color: var(--btn-color)
+      font-weight: bold
+      font-size: 1.1em
+      transition: all .3s
+      addBorderRadius(5)
+
+      &:hover
+        background: var(--btn-hover-color)
+
+        i
+          margin-left: 8px
+
+      i
+        margin-left: 4px
+        transition: all .3s
+
+  .loading-container
+    display: inline-block
+    overflow: hidden
+    width: 154px
+    height: 154px
+
+    .loading-item
+      position: relative
+      width: 100%
+      height: 100%
+      backface-visibility: hidden
+      transform: translateZ(0) scale(1)
+      transform-origin: 0 0
+
+      div
+        position: absolute
+        width: 30.8px
+        height: 30.8px
+        border-radius: 50%
+        background: #e15b64
+        transform: translate(61.6px, 61.6px) scale(1)
+        animation: loading-ball 1.92s infinite cubic-bezier(0, .5, .5, 1)
+
+        &:nth-child(1)
+          background: #f47e60
+          transform: translate(113.96px, 61.6px) scale(1)
+          animation: loading-ball-r .48s infinite cubic-bezier(0, .5, .5, 1), loading-ball-c 1.92s infinite step-start
+
+        &:nth-child(2)
+          background: #e15b64
+          animation-delay: -.48s
+
+        &:nth-child(3)
+          background: #f47e60
+          animation-delay: -.96s
+
+        &:nth-child(4)
+          background: #f8b26a
+          animation-delay: -1.44s
+
+        &:nth-child(5)
+          background: #abbd81
+          animation-delay: -1.92s
+
+@keyframes loading-ball
+  0%
+    transform: translate(9.24px, 61.6px) scale(0)
+
+  25%
+    transform: translate(9.24px, 61.6px) scale(0)
+
+  50%
+    transform: translate(9.24px, 61.6px) scale(1)
+
+  75%
+    transform: translate(61.6px, 61.6px) scale(1)
+
+  100%
+    transform: translate(113.96px, 61.6px) scale(1)
+
+@keyframes loading-ball-r
+  0%
+    transform: translate(113.96px, 61.6px) scale(1)
+
+  100%
+    transform: translate(113.96px, 61.6px) scale(0)
+
+@keyframes loading-ball-c
+  0%
+    background: #e15b64
+
+  25%
+    background: #abbd81
+
+  50%
+    background: #f8b26a
+
+  75%
+    background: #f47e60
+
+  100%
+    background: #e15b64

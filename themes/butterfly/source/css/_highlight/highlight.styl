@@ -1,0 +1,281 @@
+$highlight_theme = hexo-config('code_blocks.theme')
+$highlight_macstyle = hexo-config('code_blocks.macStyle')
+wordWrap = $highlight_enable && !$highlight_line_number && hexo-config('code_blocks.word_wrap')
+
+@require 'theme'
+
+:root
+  --hl-color: $highlight-foreground
+  --hl-bg: $highlight-background
+  --hltools-bg: $highlight-tools.bg-color
+  --hltools-color: $highlight-tools.color
+  --hlnumber-bg: $highlight-gutter.bg-color
+  --hlnumber-color: $highlight-gutter.color
+  --hlscrollbar-bg: $highlight-scrollbar
+  --hlexpand-bg: linear-gradient(180deg, rgba($highlight-background, .6), rgba($highlight-background, .9))
+
+[data-theme='dark']
+  --hl-color: alpha(#FFFFFF, .7)
+  --hl-bg: lighten(#121212, 2)
+  --hltools-bg: lighten(#121212, 3)
+  --hltools-color: #90a4ae
+  --hlnumber-bg: lighten(#121212, 2)
+  --hlnumber-color: alpha(#FFFFFF, .4)
+  --hlscrollbar-bg: lighten(#121212, 5)
+  --hlexpand-bg: linear-gradient(180deg, rgba(lighten(#121212, 2), .6), rgba(lighten(#121212, 2), .9))
+
+if $highlight_enable
+  @require 'highlight/index'
+
+if $prismjs_enable
+  @require 'prismjs/index'
+
+$code-block
+  overflow: auto
+  margin: 0 0 20px
+  padding: 0
+  background: var(--hl-bg)
+  color: var(--hl-color)
+  line-height: $line-height-code-block
+
+  if wordWrap
+    counter-reset: line
+    white-space: pre-wrap
+
+.container
+  pre,
+  code
+    font-size: $code-font-size
+    font-family: $code-font-family !important
+    addBorderRadius()
+
+  code
+    padding: 2px 5px
+    background: $code-background
+    color: $code-foreground
+
+  pre
+    @extend $code-block
+    padding: 10px 20px
+
+    code
+      padding: 0
+      background: none
+      color: var(--hl-color)
+      text-shadow: none
+
+  figure.highlight
+    @extend $code-block
+    position: relative
+    addBorderRadius()
+
+    pre
+      margin: 0
+      padding: 8px 0
+      border: none
+
+    figcaption,
+    .caption
+      padding: 6px 0 2px 14px
+      font-size: $code-font-size
+      line-height: 1em
+
+      a
+        float: right
+        padding-right: 10px
+        color: var(--hl-color)
+
+        &:hover
+          border-bottom-color: var(--hl-color)
+
+    &.copy-true
+      user-select: all
+      -webkit-user-select: all
+
+      & > table,
+      & > pre
+        display: block !important
+        opacity: 0
+
+  .highlight-tools
+    display: flex
+    align-items: center
+    padding: 0 8px
+    min-height: 24px
+    height: 2.15em
+    background: var(--hltools-bg)
+    color: var(--hltools-color)
+    font-size: $code-font-size
+    overflow: hidden
+
+    & > *
+      padding: 5px
+
+    i
+      cursor: pointer
+      transition: all .3s
+
+      &:hover
+        color: $theme-color
+
+    &.closed
+      & ~ *
+        display: none
+
+      .expand
+        transform: rotate(-90deg)
+
+    if !$highlight_macstyle
+      & > .macStyle
+        padding: 0
+
+    .code-lang
+      flex: 1
+      text-transform: uppercase
+      font-weight: bold
+      font-size: 1.15em
+      user-select: none
+      -webkit-user-select: none
+      padding 2px
+
+    .copy-notice
+      padding-right: 2px
+      opacity: 0
+      transition: opacity .4s
+
+    if hexo-config('code_blocks.language')
+      .code-lang
+        flex: 1
+    else if (!$highlight_macstyle && hexo-config('code_blocks.shrink') != 'none')
+      & > div:nth-child(2)
+        flex: 1
+    else
+      .macStyle
+        flex: 1
+
+  .gutter
+    user-select: none
+    -webkit-user-select: none
+
+  .gist table
+    width: auto
+
+    td
+      border: none
+
+if $highlight_macstyle
+  .container
+    figure.highlight
+      margin: 0 0 24px
+      border-radius: 7px
+      box-shadow: 0 5px 10px 0 $highlight-mac-border
+      -webkit-transform: translateZ(0)
+
+      .highlight-tools
+        .macStyle
+          display: flex
+
+          & > *
+            margin-right: 8px
+            width: 12px
+            height: 12px
+            border-radius: 50%
+
+          & > :last-child
+            margin-right: 5px
+
+          .mac-close
+            background: #fc625d
+
+          .mac-minimize
+            background: #fdbc40
+
+          .mac-maximize
+            background: #35cd4b
+
+        if hexo-config('code_blocks.shrink') != 'none'
+          & > :nth-child(2)
+            order: 8
+
+          &.closed
+            .expand
+              transform: rotate(90deg)
+
+if hexo-config('code_blocks.height_limit')
+  .container
+    .code-expand-btn
+      position: absolute
+      bottom: 0
+      z-index: 10
+      width: 100%
+      background: var(--hlexpand-bg)
+      text-align: center
+      font-size: $code-font-size
+      cursor: pointer
+
+      i
+        padding: 6px 0
+        color: var(--hlnumber-color)
+        animation: code-expand-key 1.2s infinite
+
+      &.expand-done
+        & > i
+          transform: rotate(180deg)
+
+        & + table,
+        & + pre
+          margin-bottom: 1.8em
+
+      &:not(.expand-done)
+        & ~ table,
+        & ~ pre
+          overflow: hidden
+          height: unit(hexo-config('code_blocks.height_limit'), px)
+  
+  @keyframes code-expand-key
+    0%
+      opacity: .6
+
+    50%
+      opacity: .1
+
+    100%
+      opacity: .6
+
+if hexo-config('code_blocks.fullpage')
+  .container
+    figure.highlight.code-fullpage
+      position: fixed
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      z-index: 9999
+      margin: 0
+      border-radius: 0
+      animation: code-fullpage .3s
+
+      .code-expand-btn,
+      .expand
+        display: none
+
+      .highlight-tools
+        & ~ pre,
+        & ~ table
+          display: block
+          overflow: auto
+          height: calc(100vh - 2.15em)
+          margin-bottom: 0
+
+  @keyframes code-fullpage
+    0%,
+    100%
+      transform: translateX(0)
+
+    20%,
+    60%
+      transform: translateX(-5px)
+
+    40%,
+    80%
+      transform: translateX(5px)

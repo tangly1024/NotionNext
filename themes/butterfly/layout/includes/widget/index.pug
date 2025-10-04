@@ -1,0 +1,36 @@
+#aside-content.aside-content
+  //- post
+  if globalPageType === 'post'
+    - const tocStyle = page.toc_style_simple
+    - const tocStyleVal = tocStyle === true || tocStyle === false ? tocStyle : theme.toc.style_simple
+    if showToc && tocStyleVal
+      .sticky_layout
+        include ./card_post_toc.pug
+    else
+      !=partial('includes/widget/card_author', {}, {cache: true})
+      !=partial('includes/widget/card_announcement', {}, {cache: true})
+      !=partial('includes/widget/card_top_self', {}, {cache: true})
+      .sticky_layout
+        if showToc
+          include ./card_post_toc.pug
+        if page.series
+          include ./card_post_series.pug
+        !=partial('includes/widget/card_recent_post', {}, {cache: true})
+        !=partial('includes/widget/card_ad', {}, {cache: true})
+  else
+    //- page
+    !=partial('includes/widget/card_author', {}, {cache: true})
+    !=partial('includes/widget/card_announcement', {}, {cache: true})
+    !=partial('includes/widget/card_top_self', {}, {cache: true})
+
+    .sticky_layout
+      if showToc
+        include ./card_post_toc.pug
+      !=partial('includes/widget/card_recent_post', {}, {cache: true})
+      !=partial('includes/widget/card_ad', {}, {cache: true})
+      !=partial('includes/widget/card_newest_comment', {}, {cache: true})
+      !=partial('includes/widget/card_categories', {}, {cache: true})
+      !=partial('includes/widget/card_tags', {}, {cache: true})
+      !=partial('includes/widget/card_archives', {}, {cache: true})
+      !=partial('includes/widget/card_webinfo', {}, {cache: true})
+      !=partial('includes/widget/card_bottom_self', {}, {cache: true})

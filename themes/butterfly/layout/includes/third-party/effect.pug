@@ -1,0 +1,35 @@
+if theme.fireworks && theme.fireworks.enable
+  canvas.fireworks(mobile=`${theme.fireworks.mobile}`)
+  script(src=url_for(theme.asset.fireworks))
+
+if (theme.canvas_ribbon && theme.canvas_ribbon.enable)
+  script(defer id="ribbon" src=url_for(theme.asset.canvas_ribbon) size=theme.canvas_ribbon.size
+  alpha=theme.canvas_ribbon.alpha zIndex=theme.canvas_ribbon.zIndex mobile=`${theme.canvas_ribbon.mobile}` data-click=`${theme.canvas_ribbon.click_to_change}`)
+
+if (theme.canvas_fluttering_ribbon && theme.canvas_fluttering_ribbon.enable)
+  script(defer id="fluttering_ribbon" mobile=`${theme.canvas_fluttering_ribbon.mobile}` src=url_for(theme.asset.canvas_fluttering_ribbon))
+
+if (theme.canvas_nest && theme.canvas_nest.enable)
+  script#canvas_nest(defer color=theme.canvas_nest.color opacity=theme.canvas_nest.opacity zIndex=theme.canvas_nest.zIndex count=theme.canvas_nest.count mobile=`${theme.canvas_nest.mobile}` src=url_for(theme.asset.canvas_nest))
+
+if theme.activate_power_mode.enable
+  script(src=url_for(theme.asset.activate_power_mode))
+  script.
+    POWERMODE.colorful = !{theme.activate_power_mode.colorful};
+    POWERMODE.shake = !{theme.activate_power_mode.shake};
+    POWERMODE.mobile = !{theme.activate_power_mode.mobile};
+    document.body.addEventListener('input', POWERMODE);
+
+//- 鼠標特效
+if theme.click_heart && theme.click_heart.enable
+  script#click-heart(src=url_for(theme.asset.click_heart) async mobile=`${theme.click_heart.mobile}`)
+
+if theme.clickShowText && theme.clickShowText.enable
+  script#click-show-text(
+    src= url_for(theme.asset.clickShowText)
+    data-mobile= `${theme.clickShowText.mobile}`
+    data-text= theme.clickShowText.text.join(",")
+    data-fontsize= theme.clickShowText.fontSize
+    data-random= `${theme.clickShowText.random}`
+    async
+  )

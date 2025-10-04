@@ -1,0 +1,25 @@
+-
+  const titleVal = pageTitle.replace(/'/ig,"\\'")
+
+  let isHighlightShrink
+  if (theme.code_blocks.shrink == 'none') isHighlightShrink = 'undefined'
+  else if (typeof page.highlight_shrink == 'boolean') isHighlightShrink = page.highlight_shrink
+  else isHighlightShrink = theme.code_blocks.shrink
+
+  var showToc = false
+  if (theme.aside.enable && page.aside !== false) {
+    let tocEnable = false
+    if (globalPageType === 'post' && theme.toc.post) tocEnable = true
+    else if (globalPageType === 'page' && theme.toc.page) tocEnable = true
+    const pageToc = typeof page.toc === 'boolean' ? page.toc : tocEnable
+    showToc = pageToc && (toc(page.content) !== '' || page.encrypt === true)
+  }
+-
+
+script#config-diff.
+  var GLOBAL_CONFIG_SITE = {
+    title: '!{titleVal}',
+    isHighlightShrink: !{isHighlightShrink},
+    isToc: !{showToc},
+    pageType: '!{page.type == 'shuoshuo' ? 'shuoshuo' : globalPageType}'
+  }

@@ -1,0 +1,9 @@
+if (theme.google_adsense && theme.google_adsense.enable)
+  script(async src=theme.google_adsense.js)
+
+  if theme.google_adsense.auto_ads
+    script.
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: '!{theme.google_adsense.client}',
+        enable_page_level_ads: '!{theme.google_adsense.enable_page_level_ads}'
+      });

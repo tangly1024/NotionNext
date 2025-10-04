@@ -1,0 +1,12 @@
+script.
+  window.paceOptions = {
+    restartOnPushState: false
+  }
+
+  btf.addGlobalFn('pjaxSend', () => {
+    Pace.restart()
+  }, 'pace_restart')
+
+
+link(rel="stylesheet", href=url_for(theme.preloader.pace_css_url || theme.asset.pace_default_css))
+script(src=url_for(theme.asset.pace_js))

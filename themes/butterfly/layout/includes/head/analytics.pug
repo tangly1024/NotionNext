@@ -1,0 +1,45 @@
+if theme.baidu_analytics
+  script.
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?!{theme.baidu_analytics}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    btf.addGlobalFn('pjaxComplete', () => {
+      _hmt.push(['_trackPageview',window.location.pathname])
+    }, 'baidu_analytics')
+
+if theme.google_analytics
+  script(async src=`https://www.googletagmanager.com/gtag/js?id=${theme.google_analytics}`)
+  script.
+    window.dataLayer = window.dataLayer || []
+    function gtag(){dataLayer.push(arguments)}
+    gtag('js', new Date())
+    gtag('config', '!{theme.google_analytics}')
+    btf.addGlobalFn('pjaxComplete', () => {
+      gtag('config', '!{theme.google_analytics}', {'page_path': window.location.pathname})
+    }, 'google_analytics')
+
+if theme.cloudflare_analytics
+  script(defer data-pjax src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon=`{"token": "${theme.cloudflare_analytics}"}`)
+
+if theme.microsoft_clarity
+  script.
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "!{theme.microsoft_clarity}");
+
+if (theme.google_tag_manager && theme.google_tag_manager.tag_id)
+  script.
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    "!{theme.google_tag_manager.domain ? theme.google_tag_manager.domain : 'https://www.googletagmanager.com'}/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','!{theme.google_tag_manager.tag_id}');
+    btf.addGlobalFn('pjaxComplete', () => {
+      dataLayer.push({'event': 'pjaxComplete', 'page_title': document.title, 'page_location': location.href, 'page_path': window.location.pathname})
+    }, 'google_tag_manager')

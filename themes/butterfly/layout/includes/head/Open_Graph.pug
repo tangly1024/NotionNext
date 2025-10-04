@@ -1,0 +1,16 @@
+if theme.Open_Graph_meta.enable
+  -
+    const coverVal = page.cover_type === 'img' ? page.cover : theme.avatar.img
+    let ogOption = Object.assign({
+      type: globalPageType === 'post' ? 'article' : 'website',
+      image: coverVal ? full_url_for(coverVal) : '',
+      fb_admins: theme.facebook_comments.user_id || '',
+      fb_app_id: theme.facebook_comments.app_id || '',
+    }, theme.Open_Graph_meta.option)
+  -
+  != open_graph(ogOption)
+else
+  - const description = page.description || page.content || page.title || config.description
+  if description
+    meta(name="description" content=truncate(description, 150))
+

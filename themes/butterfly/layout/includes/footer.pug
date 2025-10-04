@@ -1,0 +1,39 @@
+- const { nav, owner, copyright, custom_text } = theme.footer
+
+if nav
+  .footer-flex
+    for block in nav
+      .footer-flex-items(style=`${ block.width ? 'flex-grow:' + block.width : '' }`)
+        for blockItem in block.content
+          .footer-flex-item
+            .footer-flex-title= blockItem.title
+            .footer-flex-content
+              for subitem in blockItem.item
+                if subitem.html
+                  div!= subitem.html
+                else if subitem.url
+                  a(href=url_for(subitem.url), target='_blank' title=subitem.title)= subitem.title
+                else if subitem.title
+                  div!= subitem.title
+.footer-other
+  .footer-copyright
+    if owner.enable
+      - const currentYear = new Date().getFullYear()
+      - const sinceYear = owner.since
+      span.copyright
+        if sinceYear && sinceYear != currentYear
+          != `&copy;&nbsp;${sinceYear} - ${currentYear} By ${config.author}`
+        else
+          != `&copy;&nbsp;${currentYear} By ${config.author}`
+    if copyright.enable
+      - const v = copyright.version ? getVersion() : false
+      span.framework-info
+        if owner.enable && nav
+          span.footer-separator |
+        span= _p('footer.framework') + ' '
+        a(href='https://hexo.io')= `Hexo${ v ? ' ' + v.hexo : '' }`
+        span.footer-separator |
+        span= _p('footer.theme') + ' '
+        a(href='https://github.com/jerryc127/hexo-theme-butterfly')= `Butterfly${ v ? ' ' + v.theme : '' }`
+  if theme.footer.custom_text
+    .footer_custom_text!= theme.footer.custom_text

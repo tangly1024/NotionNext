@@ -1,0 +1,116 @@
+mixin indexPostUI()
+  - const indexLayout = theme.index_layout
+  - const masonryLayoutClass = (indexLayout === 6 || indexLayout === 7) ? 'masonry' : ''
+  #recent-posts.recent-posts.nc(class=masonryLayoutClass)
+    .recent-post-items
+      each article, index in page.posts.data
+        .recent-post-item
+          - const link = article.link || article.path
+          - const title = article.title || _p('no_title')
+          - const leftOrRight = indexLayout === 3 ? (index % 2 === 0 ? 'left' : 'right') : (indexLayout === 2 ? 'right' : '')
+          - const post_cover = article.cover
+          - const no_cover = article.cover === false || !theme.cover.index_enable ? 'no-cover' : ''
+
+          if post_cover && theme.cover.index_enable
+            .post_cover(class=leftOrRight)
+              a(href=url_for(link) title=title)
+                if article.cover_type === 'img'
+                  img.post-bg(src=url_for(post_cover) onerror=`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'` alt=title)
+                else
+                  div.post-bg(style=`background: ${post_cover}`)
+          .recent-post-info(class=no_cover)
+            a.article-title(href=url_for(link) title=title)
+              if globalPageType === 'home' && (article.top || article.sticky > 0)
+                i.fas.fa-thumbtack.sticky
+              = title
+            .article-meta-wrap
+              if theme.post_meta.page.date_type
+                span.post-meta-date
+                  if theme.post_meta.page.date_type === 'both'
+                    i.far.fa-calendar-alt
+                    span.article-meta-label=_p('post.created')
+                    time.post-meta-date-created(datetime=date_xml(article.date) title=_p('post.created') + ' ' + full_date(article.date))= date(article.date, config.date_format)
+                    span.article-meta-separator |
+                    i.fas.fa-history
+                    span.article-meta-label=_p('post.updated')
+                    time.post-meta-date-updated(datetime=date_xml(article.updated) title=_p('post.updated') + ' ' + full_date(article.updated))= date(article.updated, config.date_format)
+                  else
+                    - const data_type_updated = theme.post_meta.page.date_type === 'updated'
+                    - const date_type = data_type_updated ? 'updated' : 'date'
+                    - const date_icon = data_type_updated ? 'fas fa-history' : 'far fa-calendar-alt'
+                    - const date_title = data_type_updated ? _p('post.updated') : _p('post.created')
+                    i(class=date_icon)
+                    span.article-meta-label= date_title
+                    time(datetime=date_xml(article[date_type]) title=date_title + ' ' + full_date(article[date_type]))= date(article[date_type], config.date_format)
+              if theme.post_meta.page.categories && article.categories.data.length > 0
+                span.article-meta
+                  span.article-meta-separator |
+                  each item, index in article.categories.data
+                    i.fas.fa-inbox
+                    a(href=url_for(item.path)).article-meta__categories #[=item.name]
+                    if index < article.categories.data.length - 1
+                      i.fas.fa-angle-right.article-meta-link
+              if theme.post_meta.page.tags && article.tags.length > 0
+                span.article-meta.tags
+                  span.article-meta-separator |
+                  each item, index in article.tags.data
+                    i.fas.fa-tag
+                    a(href=url_for(item.path)).article-meta__tags #[=item.name]
+                    if index < article.tags.data.length - 1
+                      span.article-meta-link #[='•']
+
+              mixin countBlockInIndex
+                - needLoadCountJs = true
+                span.article-meta
+                  span.article-meta-separator |
+                  i.fas.fa-comments
+                  if block
+                    block
+                  span.article-meta-label= ' ' + _p('card_post_count')
+
+              if theme.comments.card_post_count && theme.comments.use
+                case theme.comments.use[0]
+                  when 'Disqus'
+                  when 'Disqusjs'
+                    +countBlockInIndex
+                      a.disqus-count(href=full_url_for(link) + '#post-comment')
+                        i.fa-solid.fa-spinner.fa-spin
+                  when 'Valine'
+                    +countBlockInIndex
+                      a(href=url_for(link) + '#post-comment')
+                        span.valine-comment-count(data-xid=url_for(link))
+                          i.fa-solid.fa-spinner.fa-spin
+                  when 'Waline'
+                    +countBlockInIndex
+                      a(href=url_for(link) + '#post-comment')
+                        span.waline-comment-count(data-path=url_for(link))
+                          i.fa-solid.fa-spinner.fa-spin
+                  when 'Twikoo'
+                    +countBlockInIndex
+                      a.twikoo-count(href=url_for(link) + '#post-comment')
+                        i.fa-solid.fa-spinner.fa-spin
+                  when 'Facebook Comments'
+                    +countBlockInIndex
+                      a(href=url_for(link) + '#post-comment')
+                        span.fb-comments-count(data-href=urlNoIndex(article.permalink))
+                  when 'Remark42'
+                    +countBlockInIndex
+                      a(href=url_for(link) + '#post-comment')
+                        span.remark42__counter(data-url=urlNoIndex(article.permalink))
+                          i.fa-solid.fa-spinner.fa-spin
+                  when 'Artalk'
+                    +countBlockInIndex
+                      a(href=url_for(link) + '#post-comment')
+                        span.artalk-count(data-page-key=url_for(link))
+                          i.fa-solid.fa-spinner.fa-spin
+
+            //- Display the article introduction on homepage
+            - const content = postDesc(article)
+            if content
+              .content!=content
+
+        if theme.ad && theme.ad.index
+          if (index + 1) % 3 === 0
+            .recent-post-item.ads-wrap!= theme.ad.index
+
+    include ../pagination.pug

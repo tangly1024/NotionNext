@@ -1,0 +1,91 @@
+- const { fontColor, borderColor, scale_ticks_backdropColor } = theme.chartjs
+
+script.
+  (() => {
+    const applyThemeDefaultsConfig = theme => {
+      if (theme === 'dark-mode') {
+        Chart.defaults.color = "!{fontColor.dark}"
+        Chart.defaults.borderColor = "!{borderColor.dark}"
+        Chart.defaults.scale.ticks.backdropColor = "!{scale_ticks_backdropColor.dark}"
+      } else {
+        Chart.defaults.color = "!{fontColor.light}"
+        Chart.defaults.borderColor = "!{borderColor.light}"
+        Chart.defaults.scale.ticks.backdropColor = "!{scale_ticks_backdropColor.light}"
+      }
+    }
+
+    // Recursively traverse the config object and automatically apply theme-specific color schemes
+    const applyThemeConfig = (obj, theme) => {
+      if (typeof obj !== 'object' || obj === null) return
+
+      Object.keys(obj).forEach(key => {
+        const value = obj[key]
+        // If the property is an object and has theme-specific options, apply them
+        if (typeof value === 'object' && value !== null) {
+          if (value[theme]) {
+            obj[key] = value[theme] // Apply the value for the current theme
+          } else {
+            // Recursively process child objects
+            applyThemeConfig(value, theme)
+          }
+        }
+      })
+    }
+
+    const runChartJS = ele => {
+      window.loadChartJS = true
+
+      Array.from(ele).forEach((item, index) => {
+        const chartSrc = item.firstElementChild
+        const chartID = item.getAttribute('data-chartjs-id') || ('chartjs-' + index) // Use custom ID or default ID
+        const width = item.getAttribute('data-width')
+        const existingCanvas = document.getElementById(chartID)
+
+        // If a canvas already exists, remove it to avoid rendering duplicates
+        if (existingCanvas) {
+            existingCanvas.parentNode.remove()
+        }
+
+        const chartDefinition = chartSrc.textContent
+        const canvas = document.createElement('canvas')
+        canvas.id = chartID
+
+        const div = document.createElement('div')
+        div.className = 'chartjs-wrap'
+
+        if (width) {
+          div.style.width = width
+        }
+
+        div.appendChild(canvas)
+        chartSrc.insertAdjacentElement('afterend', div)
+
+        const ctx = document.getElementById(chartID).getContext('2d')
+
+        const config = JSON.parse(chartDefinition)
+
+        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark-mode' : 'light-mode'
+
+        // Set default styles (initial setup)
+        applyThemeDefaultsConfig(theme)
+
+        // Automatically traverse the config and apply dual-mode color schemes
+        applyThemeConfig(config, theme)
+
+        new Chart(ctx, config)
+      })
+    }
+
+    const loadChartJS = () => {
+      const chartJSEle = document.querySelectorAll('#article-container .chartjs-container')
+      if (chartJSEle.length === 0) return
+
+      window.loadChartJS ? runChartJS(chartJSEle) : btf.getScript('!{url_for(theme.asset.chartjs)}').then(() => runChartJS(chartJSEle))
+    }
+
+    // Listen for theme change events
+    btf.addGlobalFn('themeChange', loadChartJS, 'chartjs')
+    btf.addGlobalFn('encrypt', loadChartJS, 'chartjs')
+
+    window.pjax ? loadChartJS() : document.addEventListener('DOMContentLoaded', loadChartJS)
+  })()

@@ -1,0 +1,9 @@
+// chat
+if hexo-config('chat.rightside_button') == true
+  if hexo-config('chat.use') == 'chatra'
+    #chatra:not(.chatra--expanded)
+      visibility: hidden !important
+      width: 1px !important
+      height: 1px !important
+      opacity: 0 !important
+      pointer-events: none

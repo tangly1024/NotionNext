@@ -1,0 +1,81 @@
+figure.highlight
+  table
+    // scrollbar - firefox
+    @-moz-document url-prefix()
+      scrollbar-color: var(--hlscrollbar-bg) transparent
+
+    &::-webkit-scrollbar-thumb
+      background: var(--hlscrollbar-bg)
+
+  pre .deletion
+    color: $highlight-deletion
+
+  pre .addition
+    color: $highlight-addition
+
+  pre .meta
+    color: $highlight-purple
+
+  pre
+    .comment
+      color: $highlight-comment
+
+    .variable,
+    .attribute,
+    .regexp,
+    .ruby .constant,
+    .xml .tag .title,
+    .xml .pi,
+    .xml .doctype,
+    .html .doctype,
+    .css .id,
+    .tag .name,
+    .css .class,
+    .css .pseudo
+      color: $highlight-red
+
+    .tag
+      color: $highlight-aqua
+
+    .number,
+    .preprocessor,
+    .literal,
+    .params,
+    .constant,
+    .command
+      color: $highlight-orange
+
+    .built_in
+      color: $highlight-yellow
+
+    .ruby .class .title,
+    .css .rules .attribute,
+    .string,
+    .value,
+    .inheritance,
+    .header,
+    .ruby .symbol,
+    .xml .cdata,
+    .special,
+    .number,
+    .formula
+      color: $highlight-green
+
+    .keyword,
+    .title,
+    .css .hexcolor
+      color: $highlight-aqua
+
+    .function,
+    .python .decorator,
+    .python .title,
+    .ruby .function .title,
+    .ruby .title .keyword,
+    .perl .sub,
+    .javascript .title,
+    .coffeescript .title
+      color: $highlight-blue
+
+    .tag .attr,
+    .javascript .function
+      color: $highlight-purple

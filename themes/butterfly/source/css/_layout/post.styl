@@ -1,0 +1,264 @@
+beautify()
+  headStyle(fontsize)
+    padding-left: unit(fontsize + 8, 'px')
+
+    &:before
+      font-size: unit(fontsize - 2, 'px')
+
+    &:hover
+      padding-left: unit(fontsize + 12, 'px')
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6
+    transition: all .2s ease-out
+
+    &:before
+      position: absolute
+      top: calc(50% - 7px)
+      left: 0
+      color: $title-prefix-icon-color
+      content: $title-prefix-icon
+      line-height: 1
+      transition: all .2s ease-out
+      @extend .fontawesomeIcon
+
+    &:hover
+      &:before
+        color: $light-blue
+
+  h1
+    headStyle(20)
+
+  h2
+    headStyle(18)
+
+  h3
+    headStyle(16)
+
+  h4
+    headStyle(14)
+
+  h5
+    headStyle(12)
+
+  h6
+    headStyle(12)
+
+  ol,
+  ul
+    p
+      margin: 0 0 8px
+
+  li
+    &::marker
+      color: $light-blue
+      font-weight: 600
+      font-size: 1.05em
+
+    &:hover
+      &::marker
+        color: var(--pseudo-hover)
+
+  ul > li
+    list-style-type: circle
+
+  hr
+    @extend .custom-hr
+
+.container
+  word-wrap: break-word
+  overflow-wrap: break-word
+
+  if hexo-config('text_align_justify')
+    text-align: justify
+
+  a
+    color: $theme-link-color
+
+    &:hover
+      text-decoration: underline
+
+  img
+    display: block
+    margin: 0 auto 20px
+    max-width: 100%
+    transition: filter 375ms ease-in .2s
+    addBorderRadius()
+
+  p
+    margin: 0 0 16px
+
+  iframe
+    margin: 0 0 20px
+
+  kbd
+    margin: 0 3px
+    padding: 3px 5px
+    border: 1px solid #b4b4b4
+    background-color: #f8f8f8
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25), 0 2px 1px 0 rgba(255, 255, 255, .6) inset
+    color: #34495e
+    white-space: nowrap
+    font-weight: 600
+    font-size: .9em
+    font-family: Monaco, 'Ubuntu Mono', monospace
+    line-height: 1em
+    addBorderRadius(3)
+
+  if hexo-config('anchor.click_to_scroll')
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6
+      width: fit-content
+
+      a:not(.headerlink)
+        position: relative
+        z-index: 10
+
+      a.headerlink
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        width: 100%
+        height: 100%
+
+  ol,
+  ul
+    ol,
+    ul
+      padding-left: 20px
+
+    li
+      margin: 4px 0
+
+    p
+      margin: 0 0 8px
+
+  > :last-child
+    margin-bottom: 0 !important
+
+  hr
+    margin: 20px 0
+
+  if hexo-config('beautify.enable')
+    if hexo-config('beautify.field') == 'site'
+      beautify()
+    else if hexo-config('beautify.field') == 'post'
+      &.post-content
+        beautify()
+
+#post
+  .tag_share
+    &:after
+      display: block
+      clear: both
+      content: ''
+
+    .post-meta
+      &__tag-list
+        display: inline-block
+
+      &__tags
+        display: inline-block
+        margin: 8px 8px 8px 0
+        padding: 0 12px
+        width: fit-content
+        border: 1px solid $light-blue
+        border-radius: 12px
+        color: $light-blue
+        font-size: .85em
+        transition: all .2s ease-in-out
+
+        &:hover
+          background: $light-blue
+          color: var(--white)
+
+    .post-share
+      display: inline-block
+      float: right
+      margin: 8px 0 0
+      width: fit-content
+
+      .social-share
+        font-size: .85em
+
+        .social-share-icon
+          margin: 0 4px
+          width: w = 1.85em
+          height: w
+          font-size: 1.2em
+          line-height: w
+
+  .post-copyright
+    position: relative
+    margin: 40px 0 10px
+    padding: 10px 16px
+    border: 1px solid var(--light-grey)
+    transition: box-shadow .3s ease-in-out
+    addBorderRadius()
+
+    &:before
+      @extend .fontawesomeIcon
+      position: absolute
+      top: 2px
+      right: 12px
+      color: $theme-color
+      content: '\f1f9'
+      font-size: 1.3em
+
+    &:hover
+      box-shadow: 0 0 8px 0 rgba(232, 237, 250, .6), 0 2px 4px 0 rgba(232, 237, 250, .5)
+
+    .post-copyright
+      &-meta
+        color: $light-blue
+        font-weight: bold
+
+        i
+          margin-right: 3px
+
+      &-info
+        padding-left: 6px
+
+        a
+          text-decoration: underline
+          word-break: break-word
+
+          &:hover
+            text-decoration: none
+
+  #post-outdate-notice
+    position: relative
+    margin: 0 0 20px
+    padding: .5em 1.2em
+    background-color: $noticeOutdate-bg
+    color: $noticeOutdate-color
+    addBorderRadius(3)
+
+    .num
+      padding: 0 4px
+
+    if hexo-config('noticeOutdate.style') == 'flat'
+      padding: .5em 1em .5em 2.6em
+      border-left: 5px solid $noticeOutdate-border
+
+      &:before
+        @extend .fontawesomeIcon
+        position: absolute
+        top: 50%
+        left: .9em
+        color: $noticeOutdate-border
+        content: '\f071'
+        transform: translateY(-50%)
+
+  .ads-wrap
+    margin: 40px 0

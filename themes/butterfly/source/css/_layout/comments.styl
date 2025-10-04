@@ -1,0 +1,81 @@
+#post-comment
+  .comment-head
+    margin-bottom: 20px
+
+    &:after
+      display: block
+      clear: both
+      content: ''
+
+    .comment-headline
+      display: inline-block
+      vertical-align: middle
+      font-weight: 700
+      font-size: 1.43em
+
+    .comment-switch
+      display: inline-block
+
+      if hexo-config('comments.text')
+        float: right
+        margin: 2px auto 0
+        padding: 4px 16px
+        width: max-content
+        border-radius: 8px
+        background: $comments-switch-bg
+      else
+        vertical-align: middle
+
+        > span
+          display: none
+
+      .first-comment
+        color: $comments-switch-first-text
+
+      .second-comment
+        color: $comments-switch-second-text
+
+      #switch-btn
+        position: relative
+        display: inline-block
+        margin: -4px 8px 0
+        width: 42px
+        height: 22px
+        border-radius: 34px
+        background-color: $comments-switch-first-text
+        vertical-align: middle
+        cursor: pointer
+        transition: .4s
+
+        &:before
+          position: absolute
+          bottom: 4px
+          left: 4px
+          width: 14px
+          height: 14px
+          border-radius: 50%
+          background-color: $comments-switch-round
+          content: ''
+          transition: .4s
+
+  .comment-wrap
+    > div
+      animation: tabshow .5s
+
+      &:nth-child(2)
+        display: none
+
+  &.move
+    #switch-btn
+      background-color: $comments-switch-second-text
+
+      &:before
+        transform: translateX(20px)
+
+    .comment-wrap
+      > div
+        &:first-child
+          display: none
+
+        &:last-child
+          display: block

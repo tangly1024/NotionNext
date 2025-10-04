@@ -1,0 +1,80 @@
+- const disqusPageTitle = page.title.replace(/'/ig,"\\'")
+- const { shortname, apikey } = theme.disqus
+- const { use, lazyload, count } = theme.comments
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+
+    const disqusReset = conf => {
+      window.DISQUS && window.DISQUS.reset({
+        reload: true,
+        config: conf
+      })
+    }
+
+    const loadDisqus = (el, path) => {
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyDisqus = () => {
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      window.disqus_identifier = isShuoshuo ? path : '!{ url_for(page.path) }'
+      window.disqus_url = isShuoshuo ? location.origin + path : '!{ page.permalink }'
+
+      const disqus_config = function () {
+        this.page.url = disqus_url
+        this.page.identifier = disqus_identifier
+        this.page.title = '!{ disqusPageTitle }'
+      }
+
+      if (window.DISQUS) disqusReset(disqus_config)
+      else {
+        const script = document.createElement('script')
+        script.src = 'https://!{shortname}.disqus.com/embed.js'
+        script.setAttribute('data-timestamp', +new Date())
+        document.head.appendChild(script)
+      }
+
+      btf.addGlobalFn('themeChange', () => disqusReset(disqus_config), 'disqus')
+    }
+
+    const getCount = async() => {
+      try {
+        const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+        if (!eleGroup) return
+        const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+        const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=!{shortname}&api_key=!{apikey}&thread:link=${cleanedLinks}`,{
+          method: 'GET'
+        })
+        const result = await res.json()
+
+        const count = result.response.length ? result.response[0].posts : 0
+        eleGroup.textContent = count
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    if (isShuoshuo) {
+      '!{use[0]}' === 'Disqus'
+        ? window.shuoshuoComment = { loadComment: loadDisqus }
+        : window.loadOtherComment = loadDisqus
+      return
+    }
+
+    if ('!{use[0]}' === 'Disqus' || !!{lazyload}) {
+      if (!{lazyload}) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+      else {
+        loadDisqus()
+        !{ count ? `GLOBAL_CONFIG_SITE.pageType === 'post' && getCount()` : '' }
+      }
+    } else {
+      window.loadOtherComment = loadDisqus
+    }
+  })()

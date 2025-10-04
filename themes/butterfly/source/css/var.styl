@@ -1,0 +1,233 @@
+// color
+$bright-blue = #49B1F5
+$strong-cyan = #00c4b6
+$light-orange = #FF7242
+$light-red = #F47466
+$themeColorEnable = hexo-config('theme_color') && hexo-config('theme_color.enable')
+$theme-color = $themeColorEnable && hexo-config('theme_color.main') ? convert(hexo-config('theme_color.main')) : $bright-blue
+$theme-paginator-color = $themeColorEnable && hexo-config('theme_color.paginator') ? convert(hexo-config('theme_color.paginator')) : $strong-cyan
+$theme-text-selection-color = $themeColorEnable && hexo-config('theme_color.text_selection') ? convert(hexo-config('theme_color.text_selection')) : $strong-cyan
+$theme-link-color = $themeColorEnable && hexo-config('theme_color.link_color') ? convert(hexo-config('theme_color.link_color')) : $bright-blue
+$theme-hr-color = $themeColorEnable && hexo-config('theme_color.hr_color') ? convert(hexo-config('theme_color.hr_color')) : $bright-blue
+$code-foreground = $themeColorEnable && hexo-config('theme_color.code_foreground') ? convert(hexo-config('theme_color.code_foreground')) : $light-red
+$code-background = $themeColorEnable && hexo-config('theme_color.code_background') ? convert(hexo-config('theme_color.code_background')) : rgba(27, 31, 35, .05)
+$theme-toc-color = $themeColorEnable && hexo-config('theme_color.toc_color') ? convert(hexo-config('theme_color.toc_color')) : $strong-cyan
+// font
+$chineseFont = $language == 'zh-CN' ? 'Microsoft YaHei' : 'Microsoft JhengHei'
+$default-font-family = -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', $chineseFont, sans-serif
+$default-code-font = consolas, Menlo, monospace, 'PingFang SC', $chineseFont, sans-serif
+$font-family = hexo-config('font.font_family') ? unquote(hexo-config('font.font_family')) : $default-font-family
+$code-font-family = hexo-config('font.code_font_family') ? unquote(hexo-config('font.code_font_family')) : $default-code-font
+$site-name-font = hexo-config('blog_title_font.font_family') && unquote(hexo-config('blog_title_font.font_family'))
+// hr
+$hrEnable = hexo-config('hr_icon') && hexo-config('hr_icon.enable')
+$hr-icon = $hrEnable && hexo-config('hr_icon.icon') ? hexo-config('hr_icon.icon') : '\f0c4'
+$hr-icon-top = $hrEnable && hexo-config('hr_icon.icon_top') ? convert(hexo-config('hr_icon.icon_top')) : -10px
+// page beautify
+$beautifyEnable = hexo-config('beautify.enable')
+$title-prefix-icon = $beautifyEnable && hexo-config('beautify.title_prefix_icon') ? hexo-config('beautify.title_prefix_icon') : '\f0c1'
+$title-prefix-icon-color = $beautifyEnable && hexo-config('beautify.title_prefix_icon_color') ? convert(hexo-config('beautify.title_prefix_icon_color')) : $light-red
+// Global Variables
+$font-size = hexo-config('font.global_font_size') ? convert(hexo-config('font.global_font_size')) : 14px
+$code-font-size = hexo-config('font.code_font_size') ? convert(hexo-config('font.code_font_size')) : var(--global-font-size)
+$font-color = #1F2D3D
+$text-line-height = 2
+$index_top_img_height = hexo-config('index_top_img_height') ? convert(hexo-config('index_top_img_height')) : 100vh
+$index_site_info_top = hexo-config('index_site_info_top') ? convert(hexo-config('index_site_info_top')) : 43%
+// Global color & SVG
+$light-blue = $theme-color
+$dark-black = #000000
+$light-grey = #EEEEEE
+$grey = #858585
+$dark-grey = #cacaca
+$white = #FFFFFF
+$whitesmoke = #f5f5f5
+$font-black = #4C4948
+$card-bg = $white
+$text-highlight-color = $font-color
+$text-hover = $theme-color
+$text-bg-hover = $theme-color
+// code
+$line-height-code-block = 1.6
+$blockquote-color = #6a737d
+$blockquote-padding-color = $themeColorEnable && hexo-config('theme_color.blockquote_padding_color') ? convert(hexo-config('theme_color.blockquote_padding_color')) : #49B1F5
+$blockquote-background-color = $themeColorEnable && hexo-config('theme_color.blockquote_background_color') ? alpha(convert(hexo-config('theme_color.blockquote_background_color')), .1) : alpha($blockquote-padding-color, .1)
+// page
+$body-bg = #fff
+$a-link-color = #99a9bf
+$sticky-color = $light-orange
+$theme-meta-color = $themeColorEnable && hexo-config('theme_color.meta_color') ? convert(hexo-config('theme_color.meta_color')) : #858585
+// sidebar
+$sidebar-background = #f6f8fa
+$sidebar-width = 330px
+// aside
+$toc-link-color = #666261
+$toc-mobile-width = calc(100% - 80px)
+$toc-mobile-maxWidth = 380px
+$toc-active-color = #fff
+// Button
+$button-color = #fff
+$button-hover-color = $themeColorEnable && hexo-config('theme_color.button_hover') ? convert(hexo-config('theme_color.button_hover')) : $light-orange
+$button-bg = $theme-color
+$pseudo-hover = $button-hover-color
+// scrollbar
+$scrollbar-color = $themeColorEnable && hexo-config('theme_color.scrollbar_color') ? convert(hexo-config('theme_color.scrollbar_color')) : $theme-color
+// table
+$table-thead-bg = #99a9bf
+// reward
+$reward-pop-up-bg = #f5f5f5
+$reward-pop-up-color = #858585
+// search
+$search-bg = #f6f8fa
+$search-input-color = $font-black
+$search-color = $theme-color
+$search-keyword-highlight = #F47466
+$search-a-color = $font-black
+// comments
+$comments-switch-first-text = $bright-blue
+$comments-switch-second-text = $light-orange
+$comments-switch-round = #fff
+$comments-switch-bg = #f6f8fa
+// noticeOutdate
+$noticeOutdate-bg = #ffe6e6
+$noticeOutdate-color = #ff6666
+$noticeOutdate-border = #ff8080
+// gallery
+$gallery-color = #fff
+// tag-hide
+$tag-hide-bg = $theme-color
+$tag-hide-toggle-bg = #f0f0f0
+// preloader
+$preloader-bg = #37474f
+$preloader-word-color = #fff
+// rightside
+$rightside-bottom = hexo-config('rightside_bottom') ? convert(hexo-config('rightside_bottom')) : 40px
+// fireworks
+$fireworks-zIndex = hexo-config('fireworks.zIndex') ? hexo-config('fireworks.zIndex') : 99999
+// Tag Plugins - Note
+hexo-config('note.light_bg_offset') is a 'unit' ? ($lbg = unit(hexo-config('note.light_bg_offset'), '%')) : ($lbg = 0)
+$note-types = 'default' 'primary' 'info' 'success' 'warning' 'danger'
+// Default
+$note-default-border = #777
+$note-default-bg = lighten(spin($note-default-border, 0), 94% + $lbg)
+$note-default-text = $note-default-border
+$note-default-icon = '\f0a9'
+$note-modern-default-border = #e1e1e1
+$note-modern-default-bg = lighten(spin($note-modern-default-border, 10), 60% + ($lbg * 4))
+$note-modern-default-text = #666
+$note-modern-default-hover = darken(spin($note-modern-default-text, -10), 32%)
+// Primary
+$note-primary-border = #6f42c1
+$note-primary-bg = lighten(spin($note-primary-border, 10), 92% + $lbg)
+$note-primary-text = $note-primary-border
+$note-primary-icon = '\f055'
+$note-modern-primary-border = #e1c2ff
+$note-modern-primary-bg = lighten(spin($note-modern-primary-border, 10), 40% + ($lbg * 4))
+$note-modern-primary-text = #6f42c1
+$note-modern-primary-hover = darken(spin($note-modern-primary-text, -10), 22%)
+// Info
+$note-info-border = #428bca
+$note-info-bg = lighten(spin($note-info-border, -10), 91% + $lbg)
+$note-info-text = $note-info-border
+$note-info-icon = '\f05a'
+$note-modern-info-border = #b3e5ef
+$note-modern-info-bg = lighten(spin($note-modern-info-border, 10), 50% + ($lbg * 4))
+$note-modern-info-text = #31708f
+$note-modern-info-hover = darken(spin($note-modern-info-text, -10), 32%)
+// Success
+$note-success-border = #5cb85c
+$note-success-bg = lighten(spin($note-success-border, 10), 90% + $lbg)
+$note-success-text = $note-success-border
+$note-success-icon = '\f058'
+$note-modern-success-border = #d0e6be
+$note-modern-success-bg = lighten(spin($note-modern-success-border, 10), 40% + ($lbg * 4))
+$note-modern-success-text = #3c763d
+$note-modern-success-hover = darken(spin($note-modern-success-text, -10), 27%)
+// Warning
+$note-warning-border = #f0ad4e
+$note-warning-bg = lighten(spin($note-warning-border, 10), 88% + $lbg)
+$note-warning-text = $note-warning-border
+$note-warning-icon = '\f06a'
+$note-modern-warning-border = #fae4cd
+$note-modern-warning-bg = lighten(spin($note-modern-warning-border, 10), 43% + ($lbg * 4))
+$note-modern-warning-text = #8a6d3b
+$note-modern-warning-hover = darken(spin($note-modern-warning-text, -10), 18%)
+// Danger
+$note-danger-border = #d9534f
+$note-danger-bg = lighten(spin($note-danger-border, -10), 92% + $lbg)
+$note-danger-text = $note-danger-border
+$note-danger-icon = '\f056'
+$note-modern-danger-border = #ebcdd2
+$note-modern-danger-bg = lighten(spin($note-modern-danger-border, 10), 35% + ($lbg * 4))
+$note-modern-danger-text = #a94442
+$note-modern-danger-hover = darken(spin($note-modern-danger-text, -10), 22%)
+// Tag Plugins - Button/note
+$color-types = 'blue' 'pink' 'red' 'purple' 'orange' 'green'
+$btn-color = #fff
+$btn-default-color = #777
+$tagsP-blue-color = #428bca
+$tagsP-pink-color = #FF69B4
+$tagsP-red-color = #FF0000
+$tagsP-orange-color = #FF8C00
+$tagsP-purple-color = #6f42c1
+$tagsP-green-color = #5cb85c
+// Tag Plugins - Tab
+$tab-border-color = #f0f0f0
+$tab-button-bg = #f0f0f0
+$tab-button-color = $font-color
+$tab-button-hover-bg = darken($tab-border-color, 8)
+$tab-active-border-color = $theme-color
+$tab-button-active-bg = $card-bg
+$tab-to-top-color = #99a9bf
+$tab-to-top-hover-color = $theme-color
+// Tag Plugins - timeline
+$timeline-default-color = $theme-color
+// note - darkmode
+// Default
+$note-dark-default-border = #5a5a5a
+$note-dark-default-bg = #2b2b2b
+$note-dark-default-text = #b3b3b3
+$note-dark-modern-default-border = #9a9a9a
+$note-dark-modern-default-bg = #353535
+$note-dark-modern-default-text = #c4c4c4
+$note-dark-modern-default-hover = #d0d0d0
+// Primary
+$note-dark-primary-border = #5935a1
+$note-dark-primary-bg = #2e1c3e
+$note-dark-primary-text = #a47dd4
+$note-dark-modern-primary-border = #9985cc
+$note-dark-modern-primary-bg = #3c2d4c
+$note-dark-modern-primary-text = #b693e6
+$note-dark-modern-primary-hover = #c9a8f0
+// Info
+$note-dark-info-border = #346fa2
+$note-dark-info-bg = #1f2e3b
+$note-dark-info-text = #7bb3db
+$note-dark-modern-info-border = #7ca8b5
+$note-dark-modern-info-bg = #2b3c44
+$note-dark-modern-info-text = #8fc6e0
+$note-dark-modern-info-hover = #a3d4ea
+// Success
+$note-dark-success-border = #4a944a
+$note-dark-success-bg = #202e20
+$note-dark-success-text = #82c682
+$note-dark-modern-success-border = #8bb087
+$note-dark-modern-success-bg = #2c3d2c
+$note-dark-modern-success-text = #96d196
+$note-dark-modern-success-hover = #a8dca8
+// Warning
+$note-dark-warning-border = #c08a3e
+$note-dark-warning-bg = #3e301f
+$note-dark-warning-text = #e6ba6b
+$note-dark-modern-warning-border = #b8a285
+$note-dark-modern-warning-bg = #4b3c2b
+$note-dark-modern-warning-text = #d4b373
+$note-dark-modern-warning-hover = #e0c080
+// Danger
+$note-dark-danger-border = #b34440
+$note-dark-danger-bg = #3b201f
+$note-dark-danger-text = #e67572
+$note-dark-modern-danger-border = #c7898c
+$note-dark-modern-danger-bg = #4d2b2e
+$note-dark-modern-danger-text = #d98b8e
+$note-dark-modern-danger-hover = #e59fa2

@@ -1,0 +1,78 @@
+//- Mathjax 4/5
+- const { tags, enableMenu } = theme.math.mathjax
+script.
+  (() => {
+    const loadMathjax = () => {
+      if (!window.MathJax) {
+        window.MathJax = {
+          loader: {
+            load: [
+              // Four font extension packages (optional)
+              //- '[tex]/bbm',
+              //- '[tex]/bboldx',
+              //- '[tex]/dsfont',
+              '[tex]/mhchem'
+            ],
+            paths: {
+              'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+              //- // Four font extension packages (optional)
+              //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+              //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+              //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+              'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+            }
+          },
+          output: {
+            font: 'mathjax-newcm',
+          },
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            tags: '!{tags}',
+            packages: {
+              '[+]': [
+                'mhchem'
+              ]
+            }
+          },
+          chtml: {
+            scale: 1.1
+          },
+          options: {
+            enableMenu: !{enableMenu},
+            menuOptions: {
+              settings: {
+                enrich: false  // Turn off Braille and voice narration text automatic generation
+              }
+            },
+            renderActions: {
+              findScript: [10, doc => {
+                for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                  const display = !!node.type.match(/; *mode=display/)
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                  const text = document.createTextNode('')
+                  node.parentNode.replaceChild(text, node)
+                  math.start = {node: text, delim: '', n: 0}
+                  math.end = {node: text, delim: '', n: 0}
+                  doc.math.push(math)
+                }
+              }, '']
+            }
+          }
+        }
+
+        const script = document.createElement('script')
+        script.src = '!{url_for(theme.asset.mathjax)}'
+        script.id = 'MathJax-script'
+        script.async = true
+        document.head.appendChild(script)
+      } else {
+        MathJax.startup.document.state(0)
+        MathJax.texReset()
+        MathJax.typesetPromise()
+      }
+    }
+
+    btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+    window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+  })()

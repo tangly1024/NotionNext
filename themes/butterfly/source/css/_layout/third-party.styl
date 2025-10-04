@@ -1,0 +1,187 @@
+#vcomment
+  font-size: 1.1em
+
+  .vbtn
+    border: none
+    background: var(--btn-bg)
+    color: var(--btn-color)
+
+    &:hover
+      background: var(--btn-hover-color)
+
+  .vimg
+    transition: all .3s
+
+    &:hover
+      transform: rotate(360deg)
+
+  .vcards .vcard .vcontent.expand
+    &:before,
+    &:after
+      z-index: 22
+
+#waline-wrap
+  --waline-font-size: 1.1em
+  --waline-theme-color: $button-bg
+  --waline-active-color: $button-hover-color
+
+  .wl-comment-actions > button:not(last-child)
+    padding-right: 4px
+
+if hexo-config('valine.bg')
+  #vcomment
+    textarea
+      background: url(hexo-config('valine.bg')) 100% 100% no-repeat
+
+      &:focus
+        background-image: none
+
+if hexo-config('waline.bg')
+  #waline-wrap
+    textarea
+      background: url(hexo-config('waline.bg')) 100% 100% no-repeat
+
+      &:focus
+        background-image: none
+
+.twikoo
+  .tk-content
+    p
+      margin: 3px 0
+
+.fireworks
+  position: fixed
+  top: 0
+  left: 0
+  z-index: $fireworks-zIndex
+  pointer-events: none
+
+.medium-zoom-image--opened
+  z-index: 99999 !important
+  margin: 0 !important
+
+.medium-zoom-overlay
+  z-index: 99999 !important
+
+if hexo-config('mermaid.enable')
+  .mermaid-wrap
+    margin: 0 0 20px
+    text-align: center
+
+    & > svg
+      height: 100%
+
+  if hexo-config('mermaid.code_write')
+    pre > code.mermaid
+      display: none
+
+if hexo-config('chartjs.enable')
+  .chartjs-container
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin: 0 0 20px
+    text-align: center
+    gap: 20px
+
+    +maxWidth600()
+      .chartjs-wrap
+        width: 100% !important
+
+    &.chartjs-abreast
+      flex-direction: row
+
+      +maxWidth600()
+        flex-direction: column
+
+    .chartjs-wrap
+      width: -webkit-fill-available
+
+    canvas
+      display: inline-block !important
+
+.utterances,
+.fb-comments iframe
+  width: 100% !important
+
+#gitalk-container
+  .gt-meta
+    margin: 0 0 .8em
+    padding: 6px 0 16px
+
+if hexo-config('math.use')
+  .katex-display
+    overflow: auto hidden
+    padding: 5px
+
+    .katex-show
+      display: block
+
+  .katex
+    display: none
+
+    &.katex-show
+      display: inline
+
+  if hexo-config('math.hide_scrollbar')
+    .katex-display,
+    mjx-container
+      scrollbar-width: none
+
+      &::-webkit-scrollbar
+        display: none
+
+  // Mathjax
+  mjx-container
+    overflow-x: auto
+    overflow-y: hidden
+    padding-bottom: 4px
+    max-width: 100%
+
+    &[display]
+      display: block !important
+      min-width: auto !important
+
+    &:not([display])
+      display: inline-grid !important
+
+  mjx-assistive-mml
+    right: 0
+    bottom: 0
+
+.aplayer
+  color: $font-black
+
+.container
+  .aplayer
+    margin: 0 0 20px
+
+    if hexo-config('beautify.enable')
+      ol,
+      ul
+        margin: 0
+        padding: 0
+
+        li
+          margin: 0
+          padding: 0 15px
+
+          &:before
+            content: none
+
+.snackbar-container.snackbar-css
+  addBorderRadius(5)
+  opacity: .85 !important
+
+.abc-music-sheet
+  margin: 0 0 20px
+  opacity: 0
+  transition: opacity .3s
+
+  &.abcjs-container
+    opacity: 1
+
++maxWidth768()
+  .fancybox__toolbar__column.is-middle
+    display: none

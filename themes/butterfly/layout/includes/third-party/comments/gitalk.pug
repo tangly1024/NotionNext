@@ -1,0 +1,64 @@
+- const { client_id, client_secret, repo, owner, admin, option } = theme.gitalk
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+    const option = !{JSON.stringify(option)}
+
+    const commentCount = n => {
+      const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+      if (isCommentCount) {
+        isCommentCount.textContent= n
+      }
+    }
+
+    const initGitalk = (el, path) => {
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyGitalk = () => {
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      const gitalk = new Gitalk({
+        clientID: '!{client_id}',
+        clientSecret: '!{client_secret}',
+        repo: '!{repo}',
+        owner: '!{owner}',
+        admin: ['!{admin}'],
+        updateCountCallback: commentCount,
+        ...option,
+        id: isShuoshuo ? path : (option && option.id) || '!{md5(page.path)}'
+      })
+
+      gitalk.render('gitalk-container')
+    }
+
+    const loadGitalk = async(el, path) => {
+      if (typeof Gitalk === 'function') initGitalk(el, path)
+      else {
+        await btf.getCSS('!{url_for(theme.asset.gitalk_css)}')
+        await btf.getScript('!{url_for(theme.asset.gitalk)}')
+        initGitalk(el, path)
+      }
+    }
+
+    if (isShuoshuo) {
+      '!{theme.comments.use[0]}' === 'Gitalk'
+        ? window.shuoshuoComment = { loadComment: loadGitalk }
+        : window.loadOtherComment = loadGitalk
+      return
+    }
+
+    if ('!{theme.comments.use[0]}' === 'Gitalk' || !!{theme.comments.lazyload}) {
+      if (!{theme.comments.lazyload}) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+      else loadGitalk()
+    } else {
+      window.loadOtherComment = loadGitalk
+    }
+  })()
+
+
+

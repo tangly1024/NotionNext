@@ -1,0 +1,240 @@
+.search-dialog
+  position: fixed
+  top: 10%
+  left: 50%
+  z-index: 1001
+  display: none
+  margin-left: -300px
+  padding: 20px
+  width: 600px
+  background: var(--search-bg)
+  --search-height: 100vh
+  addBorderRadius(8)
+
+  +maxWidth768()
+    top: 0
+    left: 0
+    margin: 0
+    width: 100%
+    height: 100%
+    border-radius: 0
+
+  .search-nav
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 14px
+    color: $search-color
+    font-size: 1.4em
+    line-height: 1
+
+    .search-dialog-title
+      margin-right: 4px
+
+    #loading-status
+      &[hidden]
+        display: none !important
+
+    .search-close-button
+      flex: 1
+      color: $grey
+      text-align: right
+      transition: all .2s ease
+
+      &:hover
+        color: $search-color
+
+  .local-search-input,
+  #algolia-search-input
+    margin: 0 auto
+    max-width: 100%
+    width: 100%
+
+    input,
+    .ais-SearchBox-input
+      padding: 5px 14px
+      width: 100%
+      outline: none
+      border: 2px solid $search-color
+      border-radius: 40px
+      background: var(--search-bg)
+      color: var(--search-input-color)
+      -webkit-appearance: none
+
+      &::placeholder
+        color: var(--text-color)
+
+  .search-result-list,
+  .ais-Hits-list
+    overflow-y: overlay
+    margin: 0 -20px
+    padding: 0 22px
+    max-height: calc(80vh - 220px)
+
+    .local-search-hit-item,
+    .ais-Hits-item
+      display: flex
+      align-items: flex-start
+      margin: 3px 0
+      line-height: 1.8
+      transition: all .2s ease-in-out
+
+      &:hover
+        transform: translateY(-1px)
+
+      &:not([value])::before
+        display: none
+
+      &[value]::before
+        display: inline-flex
+        flex-shrink: 0
+        justify-content: center
+        align-items: center
+        margin-right: 6px
+        margin-top: 3px
+        min-width: 24px
+        color: $search-color
+        content: attr(value) '.'
+        font-weight: bold
+        font-style: italic
+        font-size: .9em
+
+      &::marker
+        content: none
+
+      a
+        flex: 1
+        color: var(--search-a-color)
+
+        &:hover
+          color: $search-color
+
+      .search-result-title,
+      .algolia-hits-item-title
+        font-weight: 600
+
+      .search-result,
+      .algolia-hit-item-content
+        margin: 0 0 8px
+        word-break: break-all
+        font-size: .9em
+
+  .ais-Pagination
+    margin: 15px 0 0
+    padding: 0
+    text-align: center
+
+    .ais-Pagination-list
+      display: flex
+      flex-wrap: wrap
+      justify-content: center
+      align-items: center
+      margin: 0
+      padding: 0
+      list-style: none
+      gap: 6px
+
+    .ais-Pagination-item
+      display: flex
+      padding: 0
+
+      &:not(.ais-Pagination-item--selected):not(.ais-Pagination-item--ellipsis):not(.ais-Pagination-item--disabled)
+        .ais-Pagination-link:hover
+          background: var(--btn-hover-color)
+          transform: translateY(-1px)
+
+      .ais-Pagination-link
+        display: inline-flex
+        justify-content: center
+        align-items: center
+        padding: 4px 8px
+        min-width: 28px
+        height: 28px
+        border-radius: 6px
+        background: var(--btn-bg)
+        color: var(--btn-color)
+        transition: all .2s ease
+
+        &.ais-Pagination-link--disabled
+          opacity: .3
+          cursor: not-allowed
+
+        i
+          font-size: 12px
+
+    .ais-Pagination-item--selected
+      .ais-Pagination-link
+        background: $theme-paginator-color
+        font-weight: 600
+        cursor: default
+
+    .ais-Pagination-item--ellipsis
+      .ais-Pagination-link
+        padding: 4px 2px
+        border: none
+        background: transparent
+        color: var(--text-color)
+        cursor: default
+
+        &:hover
+          background: transparent
+          transform: none
+
+    .ais-Pagination-item--disabled
+      .ais-Pagination-link
+        opacity: .4
+
+    +maxWidth768()
+      .ais-Pagination-list
+        gap: 4px
+
+  hr
+    margin: 15px auto
+    @extend .custom-hr
+
+#search-mask
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 1000
+  display: none
+  background: rgba($dark-black, .6)
+
+.search-result-stats,
+.ais-Stats-text
+  margin: 15px 0 0
+  color: var(--text-color)
+  text-align: center
+  font-size: .9em
+
+.search-keyword
+  background: transparent
+  color: $search-keyword-highlight
+  font-weight: 600
+
+.search-loading
+  display: flex
+  justify-content: center
+  align-items: center
+  padding: 20px
+  color: var(--text-color)
+
+  &::before
+    width: 16px
+    height: 16px
+    border: 2px solid var(--text-color)
+    border-top-color: transparent
+    border-radius: 50%
+    content: ''
+    animation: spin 1s linear infinite
+
+@keyframes spin
+  to
+    transform: rotate(360deg)
+
+if hexo-config('search.use') == 'algolia_search'
+  @require 'algolia'
+else if hexo-config('search.use') == 'local_search'
+  @require 'local-search'

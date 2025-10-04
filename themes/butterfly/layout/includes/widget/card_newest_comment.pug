@@ -1,0 +1,7 @@
+if theme.aside.card_newest_comments.enable && theme.comments.use && !['Livere','Facebook Comments','Giscus'].includes(theme.comments.use[0])
+  .card-widget#card-newest-comments
+    .item-headline
+      i.fas.fa-comment-dots
+      span= _p('aside.card_newest_comments.headline')
+    .aside-list
+      span= _p('aside.card_newest_comments.loading_text')

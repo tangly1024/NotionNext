@@ -1,0 +1,4 @@
+if theme.aside.card_categories.enable
+  if site.categories.length
+    .card-widget.card-categories
+      !=aside_categories({ limit: theme.aside.card_categories.limit === 0 ? 0 : theme.aside.card_categories.limit || 8 , expand: theme.aside.card_categories.expand })

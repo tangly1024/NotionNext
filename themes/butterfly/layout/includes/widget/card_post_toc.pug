@@ -1,0 +1,14 @@
+- let tocNumber = typeof page.toc_number === 'boolean' ? page.toc_number : theme.toc.number
+- let tocExpand = typeof page.toc_expand === 'boolean' ? page.toc_expand : theme.toc.expand
+- let tocExpandClass = tocExpand ? 'is-expand' : ''
+
+#card-toc.card-widget
+  .item-headline
+    i.fas.fa-stream
+    span= _p('aside.card_toc')
+    span.toc-percentage
+
+  if (page.encrypt == true)
+    .toc-content.toc-div-class(class=tocExpandClass style="display:none")!=toc(page.origin, {list_number: tocNumber})
+  else
+    .toc-content(class=tocExpandClass)!=toc(page.content, {list_number: tocNumber})

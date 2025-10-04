@@ -1,0 +1,18 @@
+#local-search
+  .search-dialog
+    .search-result-list
+      +maxWidth768()
+        if hexo-config('search.local_search.pagination.enable')
+          min-height: calc(var(--search-height) - 255px) !important
+        else
+          max-height: calc(var(--search-height) - 200px) !important
+
+  #local-search-stats
+    .search-result-stats
+      text-align: left
+
+  .search-keyword
+    font-weight: 600
+
+  #loading-database ~ *
+    visibility: hidden

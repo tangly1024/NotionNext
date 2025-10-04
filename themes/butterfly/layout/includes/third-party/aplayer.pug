@@ -1,0 +1,23 @@
+link(rel='stylesheet' href=url_for(theme.asset.aplayer_css) media="print" onload="this.media='all'")
+script(src=url_for(theme.asset.aplayer_js))
+script(src=url_for(theme.asset.meting_js))
+if theme.pjax.enable
+  script.
+    (() => {
+      const destroyAplayer = () => {
+        if (window.aplayers) {
+          for (let i = 0; i < window.aplayers.length; i++) {
+            if (!window.aplayers[i].options.fixed) {
+              window.aplayers[i].destroy()
+            }
+          }
+        }
+      }
+
+      const runMetingJS = () => {
+        typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+      }
+
+      btf.addGlobalFn('pjaxSend', destroyAplayer, 'destroyAplayer')
+      btf.addGlobalFn('pjaxComplete', loadMeting, 'runMetingJS')
+    })()

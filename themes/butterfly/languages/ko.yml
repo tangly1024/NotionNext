@@ -1,0 +1,123 @@
+footer:
+  framework: 프레임워크
+  theme: 테마
+
+copy:
+  success: 복사 성공
+  error: 복사 실패
+  noSupport: 브라우저가 지원되지 않음
+
+page:
+  articles: 모든 글
+  tag: 태그
+  category: 카테고리
+  archives: 아카이브
+
+card_post_count: 댓글 수
+
+no_title: 제목 없음
+
+post:
+  created: 작성일
+  updated: 수정일
+  wordcount: 총 글자 수
+  min2read: 읽기 시간
+  min2read_unit: 분
+  page_pv: 조회수
+  comments: 댓글
+  copyright:
+    author: 작성자
+    link: 링크
+    copyright_notice: 저작권 고지
+    copyright_content: '이 블로그의 모든 글은 <a href="%s">%s</a> 라이선스를 따르며, 별도로 명시되지 않는 한 모든 권리를 보유합니다. 재배포 시 출처를 명시해 주세요: <a href="%s">%s</a>.'
+  recommend: 관련 글
+  edit: 편집
+  back_to_home: 홈으로 돌아가기
+
+search:
+  title: 검색
+  load_data: 데이터베이스 로드 중
+  input_placeholder: 글 검색
+  algolia_search:
+    hits_empty: '${query}에 대한 결과를 찾을 수 없습니다.'
+    hits_stats: '${hits}개의 결과를 ${time}ms 만에 찾음'
+  local_search:
+    hits_empty: '${query}에 대한 결과를 찾을 수 없습니다.'
+    hits_stats: '${hits}개의 글을 찾음'
+
+pagination:
+  prev: 이전
+  next: 다음
+  page_info: '${current} 페이지 / 총 ${total} 페이지'
+
+comment: 댓글
+
+aside:
+  articles: 글
+  tags: 태그
+  categories: 카테고리
+  card_announcement: 공지
+  card_categories: 카테고리
+  card_tags: 태그
+  card_archives: 아카이브
+  card_recent_post: 최근 글
+  card_webinfo:
+    headline: 사이트 정보
+    article_name: 글 수
+    runtime:
+      name: 운영 시간
+      unit: 일
+    last_push_date:
+      name: 마지막 업데이트
+    site_wordcount: 총 글자 수
+    site_uv_name: 방문자 수
+    site_pv_name: 총 조회수
+  more_button: 더 보기
+  card_newest_comments:
+    headline: 최신 댓글
+    loading_text: 로딩 중...
+    error: 댓글을 가져올 수 없습니다. 설정을 확인해 주세요.
+    zero: 댓글 없음
+    image: 이미지
+    link: 링크
+    code: 코드
+  card_toc: 목차
+  card_post_series: 시리즈 글
+
+date_suffix:
+  just: 방금
+  min: 분 전
+  hour: 시간 전
+  day: 일 전
+  month: 달 전
+
+donate: 후원
+share: 공유
+
+rightside:
+  readmode_title: 읽기 모드
+  translate_title: 번체와 간체 전환
+  night_mode_title: 라이트/다크 모드 전환
+  back_to_top: 맨 위로
+  toc: 목차
+  scroll_to_comment: 댓글로 이동
+  setting: 설정
+  aside: 단일/이중 열 전환
+  chat: 채팅
+
+copy_copyright:
+  author: 작성자
+  link: 링크
+  source: 출처
+  info: 저작권은 작성자에게 있습니다. 상업적 사용을 위해서는 작성자의 허가를 받아야 하며, 비상업적 사용 시에는 출처를 명시해 주세요.
+
+Snackbar:
+  chs_to_cht: 번체로 전환되었습니다.
+  cht_to_chs: 간체로 전환되었습니다.
+  day_to_night: 다크 모드로 전환되었습니다.
+  night_to_day: 라이트 모드로 전환되었습니다.
+
+loading: 로딩 중...
+load_more: 더 보기
+
+error404: 페이지를 찾을 수 없습니다.

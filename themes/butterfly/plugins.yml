@@ -1,0 +1,207 @@
+abcjs_basic_js:
+  name: abcjs
+  file: dist/abcjs-basic-min.js
+  version: 6.5.2
+activate_power_mode:
+  name: butterfly-extsrc
+  file: dist/activate-power-mode.min.js
+  version: 1.1.6
+algolia_search:
+  name: algoliasearch
+  file: dist/lite/builds/browser.umd.js
+  version: 5.39.0
+aplayer_css:
+  name: aplayer
+  file: dist/APlayer.min.css
+  version: 1.10.1
+aplayer_js:
+  name: aplayer
+  file: dist/APlayer.min.js
+  version: 1.10.1
+artalk_css:
+  name: artalk
+  file: dist/Artalk.css
+  version: 2.9.1
+artalk_js:
+  name: artalk
+  file: dist/Artalk.js
+  version: 2.9.1
+blueimp_md5:
+  name: blueimp-md5
+  file: js/md5.min.js
+  version: 2.19.0
+canvas_fluttering_ribbon:
+  name: butterfly-extsrc
+  file: dist/canvas-fluttering-ribbon.min.js
+  version: 1.1.6
+canvas_nest:
+  name: butterfly-extsrc
+  file: dist/canvas-nest.min.js
+  version: 1.1.6
+canvas_ribbon:
+  name: butterfly-extsrc
+  file: dist/canvas-ribbon.min.js
+  version: 1.1.6
+chartjs:
+  name: chart.js
+  file: dist/chart.umd.js
+  version: 4.5.0
+clickShowText:
+  name: butterfly-extsrc
+  file: dist/click-show-text.min.js
+  version: 1.1.6
+click_heart:
+  name: butterfly-extsrc
+  file: dist/click-heart.min.js
+  version: 1.1.6
+disqusjs:
+  name: disqusjs
+  file: dist/browser/disqusjs.es2015.umd.min.js
+  version: 3.1.1
+disqusjs_css:
+  name: disqusjs
+  file: dist/browser/styles/disqusjs.css
+  version: 3.1.1
+docsearch_css:
+  name: '@docsearch/css'
+  other_name: docsearch-css
+  file: dist/style.css
+  version: 4.1.0
+docsearch_js:
+  name: '@docsearch/js'
+  other_name: docsearch-js
+  file: dist/umd/index.js
+  version: 4.1.0
+egjs_infinitegrid:
+  name: '@egjs/infinitegrid'
+  other_name: egjs-infinitegrid
+  file: dist/infinitegrid.min.js
+  version: 4.12.0
+fancybox:
+  name: '@fancyapps/ui'
+  file: dist/fancybox/fancybox.umd.js
+  version: 6.0.33
+  other_name: fancyapps-ui
+fancybox_css:
+  name: '@fancyapps/ui'
+  file: dist/fancybox/fancybox.css
+  version: 6.0.33
+  other_name: fancyapps-ui
+fireworks:
+  name: butterfly-extsrc
+  file: dist/fireworks.min.js
+  version: 1.1.6
+fontawesome:
+  name: '@fortawesome/fontawesome-free'
+  file: css/all.min.css
+  other_name: font-awesome
+  version: 7.1.0
+gitalk:
+  name: gitalk
+  file: dist/gitalk.min.js
+  version: 1.8.0
+gitalk_css:
+  name: gitalk
+  file: dist/gitalk.css
+  version: 1.8.0
+instantpage:
+  name: instant.page
+  file: instantpage.js
+  version: 5.2.0
+katex:
+  name: katex
+  file: dist/katex.min.css
+  other_name: KaTeX
+  version: 0.16.22
+katex_copytex:
+  name: katex
+  file: dist/contrib/copy-tex.min.js
+  other_name: KaTeX
+  version: 0.16.22
+lazyload:
+  name: vanilla-lazyload
+  file: dist/lazyload.iife.min.js
+  version: 19.1.3
+mathjax:
+  name: mathjax
+  file: tex-mml-chtml.js
+  version: 4.0.0
+medium_zoom:
+  name: medium-zoom
+  file: dist/medium-zoom.min.js
+  version: 1.1.0
+mermaid:
+  name: mermaid
+  file: dist/mermaid.min.js
+  version: 11.12.0
+meting_js:
+  name: butterfly-extsrc
+  file: metingjs/dist/Meting.min.js
+  version: 1.1.6
+pace_default_css:
+  name: pace-js
+  other_name: pace
+  file: themes/blue/pace-theme-minimal.css
+  version: 1.2.4
+pace_js:
+  name: pace-js
+  other_name: pace
+  file: pace.min.js
+  version: 1.2.4
+pjax:
+  name: pjax
+  file: pjax.min.js
+  version: 0.2.8
+prismjs_autoloader:
+  name: prismjs
+  file: plugins/autoloader/prism-autoloader.min.js
+  other_name: prism
+  version: 1.30.0
+prismjs_js:
+  name: prismjs
+  file: prism.js
+  other_name: prism
+  version: 1.30.0
+prismjs_lineNumber_js:
+  name: prismjs
+  file: plugins/line-numbers/prism-line-numbers.min.js
+  other_name: prism
+  version: 1.30.0
+sharejs:
+  name: butterfly-extsrc
+  file: sharejs/dist/js/social-share.min.js
+  version: 1.1.6
+sharejs_css:
+  name: butterfly-extsrc
+  file: sharejs/dist/css/share.min.css
+  version: 1.1.6
+snackbar:
+  name: node-snackbar
+  file: dist/snackbar.min.js
+  version: 0.1.16
+snackbar_css:
+  name: node-snackbar
+  file: dist/snackbar.min.css
+  version: 0.1.16
+twikoo:
+  name: twikoo
+  file: dist/twikoo.all.min.js
+  version: 1.6.44
+typed:
+  name: typed.js
+  file: dist/typed.umd.js
+  version: 2.1.0
+valine:
+  name: valine
+  file: dist/Valine.min.js
+  version: 1.5.3
+waline_css:
+  name: '@waline/client'
+  file: dist/waline.css
+  other_name: waline
+  version: 3.6.0
+waline_js:
+  name: '@waline/client'
+  file: dist/waline.js
+  other_name: waline
+  version: 3.6.0

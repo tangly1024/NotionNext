@@ -1,0 +1,62 @@
+!= partial("includes/third-party/newest-comments/common.pug", {}, { cache: true })
+
+script.
+  window.addEventListener('load', () => {
+    const keyName = 'github-newest-comments'
+    const { changeContent, generateHtml, run } = window.newestComments
+
+    const findTrueUrl = (array, ele) => {
+      Promise.all(array.map(item =>
+        fetch(item.url).then(resp => resp.json()).then(data => {
+          let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+          if (!Array.isArray(urlArray) || urlArray.length === 0) {
+            urlArray = [`${data.html_url}`]
+          }
+          if (data.user.login === 'utterances-bot') {
+            return urlArray.pop()
+          } else {
+            return urlArray.shift()
+          }
+        })
+      )).then(res => {
+          array = array.map((i,index)=> {
+            return {
+              ...i,
+              url: res[index]
+            }
+          })
+
+          btf.saveToLocal.set(keyName, JSON.stringify(array), !{theme.aside.card_newest_comments.storage}/(60*24))
+          generateHtml(array, ele)
+      });
+    }
+
+    const getComment = ele => {
+      fetch('https://api.github.com/repos/!{userRepo}/issues/comments?sort=updated&direction=desc&per_page=!{newestCommentsLimit}&page=1',{
+        "headers": {
+          Accept: 'application/vnd.github.v3.html+json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          const githubArray = data.map(item => {
+            return {
+              'avatar': item.user.avatar_url,
+              'content': changeContent(item.body_html || item.body),
+              'nick': item.user.login,
+              'url': item.issue_url,
+              'date': item.updated_at
+            }
+          })
+          findTrueUrl(githubArray, ele)
+        }).catch(e => {
+          console.error(e)
+          ele.textContent= "!{_p('aside.card_newest_comments.error')}"
+        })
+    }
+    run(keyName, getComment)
+  })
+
+
+
+

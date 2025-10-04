@@ -1,0 +1,10 @@
+.addtoany
+  .a2a_kit.a2a_kit_size_32.a2a_default_style
+    - let addtoanyItem = theme.share.addtoany.item.split(',')
+    each name in addtoanyItem
+      a(class="a2a_button_" + name)
+
+    a.a2a_dd(href="https://www.addtoany.com/share")
+script(async src='https://static.addtoany.com/menu/page.js')
+
+

@@ -1,0 +1,23 @@
+- const { prismjs_js, prismjs_autoloader, prismjs_lineNumber_js } = theme.asset
+- const { prismjs, syntax_highlighter } = config
+- const { enable, preprocess, line_number } = prismjs
+
+if (syntax_highlighter === 'prismjs' || enable) && !preprocess
+  script.
+    (() => {
+      window.Prism = window.Prism || {}
+      window.Prism.manual = true
+
+      const highlightAll = () => {
+        window.Prism.highlightAll()
+      }
+
+      window.addEventListener('load', highlightAll)
+      btf.addGlobalFn('pjaxComplete', highlightAll, 'prismjs')
+      btf.addGlobalFn('encrypt', highlightAll, 'prismjs')
+    })()
+
+  script(src=url_for(prismjs_js))
+  script(src=url_for(prismjs_autoloader))
+  if (line_number)
+    script(src=url_for(prismjs_lineNumber_js))

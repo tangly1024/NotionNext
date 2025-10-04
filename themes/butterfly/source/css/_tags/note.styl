@@ -1,0 +1,125 @@
+.note
+  $note-icons = hexo-config('note.icons')
+  position: relative
+  margin: 0 0 20px
+  padding: 15px
+
+  if hexo-config('note.border_radius') is a 'unit'
+    border-radius: unit(hexo-config('note.border_radius'), px)
+
+  &.icon-padding
+    padding-left: 3em
+
+  & > .note-icon
+    position: absolute
+    top: calc(50% - .5em)
+    left: .8em
+    font-size: larger
+
+  for $type in $color-types
+    &.{$type}
+      &:not(.disabled)
+        border-left-color: unquote('var(--tags-' + $type + '-color)') !important
+
+        &.modern
+          border-left-color: transparent !important
+          color: unquote('var(--tags-' + $type + '-color)')
+
+        &:not(.simple)
+          background: unquote('var(--tags-' + $type + '-color-lighten)')
+
+      & > .note-icon
+        color: unquote('var(--tags-' + $type + '-color)')
+
+  &.simple
+    border: 1px solid var(--note-default-border)
+    border-left-width: 5px
+
+  &.modern
+    border: 1px solid transparent !important
+    background-color: var(--note-modern-default-bg)
+    color: var(--note-modern-default-text)
+
+  &.flat
+    border: initial
+    border-left: 5px solid var(--note-default-border)
+    background-color: var(--note-default-bg)
+    color: var(--note-default-text)
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6
+    if $note-icons
+      margin-top: 3px
+    else
+      margin-top: 0
+
+    margin-bottom: 0
+    padding-top: 0 !important
+    border-bottom: initial
+
+  p,
+  ul,
+  ol,
+  table,
+  pre,
+  blockquote,
+  img
+    &:first-child
+      margin-top: 0 !important
+
+    &:last-child
+      margin-bottom: 0 !important
+
+  .img-alt
+    margin: 5px 0 10px
+
+  if $note-icons
+    &:not(.no-icon)
+      padding-left: 3em
+
+      &::before
+        position: absolute
+        top: calc(50% - .95em)
+        left: .8em
+        font-size: larger
+        @extend .fontawesomeIcon
+
+  for $type in $note-types
+    &.{$type}
+      &.flat
+        background: unquote('var(--note-' + $type + '-bg)')
+        color: var(--font-color)
+
+      &.modern
+        border-color: unquote('var(--note-modern-' + $type + '-border)') !important
+        background: unquote('var(--note-modern-' + $type + '-bg)')
+        color: unquote('var(--note-modern-' + $type + '-text)')
+
+        a
+          &:not(.btn)
+            color: unquote('var(--note-modern-' + $type + '-text)')
+
+            &:hover
+              color: unquote('var(--note-modern-' + $type + '-hover)')
+
+      &:not(.modern)
+        border-left-color: unquote('var(--note-' + $type + '-border)')
+
+        h2,
+        h3,
+        h4,
+        h5,
+        h6
+          color: unquote('var(--note-' + $type + '-text)')
+
+      if $note-icons
+        &:not(.no-icon)
+          &::before
+            content: lookup('$note-' + $type + '-icon')
+
+          &:not(.modern)
+            &::before
+              color: unquote('var(--note-' + $type + '-text)')

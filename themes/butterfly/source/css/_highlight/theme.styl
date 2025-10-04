@@ -1,0 +1,121 @@
+if $highlight_theme == 'darker'
+  $highlight-background = #212121
+  $highlight-selection = #61616150
+  $highlight-foreground = #EEFFFF
+  $highlight-mac-border = rgba(0, 0, 0, .4)
+  $highlight-gutter = {
+    color: alpha($highlight-foreground, .5),
+    bg-color: $highlight-background
+  }
+  $highlight-tools = {
+    color: alpha($highlight-foreground, .8),
+    bg-color: darken($highlight-background, 2)
+  }
+  $highlight-scrollbar = lighten($highlight-background, 8)
+
+  if $highlight_enable
+    $highlight-comment = #969896
+    $highlight-red = #FF5370
+    $highlight-orange = #F78C6C
+    $highlight-yellow = #FFCB6B
+    $highlight-green = #C3E88D
+    $highlight-aqua = #89DDFF
+    $highlight-blue = #82AAFF
+    $highlight-purple = #C792EA
+    $highlight-deletion = #BF42BF
+    $highlight-addition = #105EDE
+
+if $highlight_theme == 'pale night'
+  $highlight-background = #292D3E
+  $highlight-selection = #717CB450
+  $highlight-foreground = #A6ACCD
+  $highlight-mac-border = rgba($highlight-background, .4)
+  $highlight-gutter = {
+    color: alpha($highlight-foreground, .5),
+    bg-color: $highlight-background
+  }
+  $highlight-tools = {
+    color: $highlight-foreground,
+    bg-color: darken($highlight-background, 2)
+  }
+  $highlight-scrollbar = lighten($highlight-background, 8)
+
+  if $highlight_enable
+    $highlight-comment = #676E95
+    $highlight-red = #FF5370
+    $highlight-orange = #F78C6C
+    $highlight-yellow = #FFCB6B
+    $highlight-green = #C3E88D
+    $highlight-aqua = #89DDFF
+    $highlight-blue = #82AAFF
+    $highlight-purple = #C792EA
+    $highlight-deletion = #BF42BF
+    $highlight-addition = #105EDE
+
+if $highlight_theme == 'ocean'
+  $highlight-background = #0F111A
+  $highlight-selection = #717CB450
+  $highlight-foreground = #8F93A2
+  $highlight-mac-border = rgba($highlight-background, .4)
+  $highlight-gutter = {
+    color: alpha($highlight-foreground, .5),
+    bg-color: $highlight-background
+  }
+  $highlight-tools = {
+    color: $highlight-foreground,
+    bg-color: darken($highlight-background, 2)
+  }
+  $highlight-scrollbar = lighten($highlight-background, 8)
+
+  if $highlight_enable
+    $highlight-comment = rgba(101, 115, 126, .8)
+    $highlight-red = #FF5370
+    $highlight-orange = #F78C6C
+    $highlight-yellow = #FFCB6B
+    $highlight-green = #C3E88D
+    $highlight-aqua = #89DDFF
+    $highlight-blue = #82AAFF
+    $highlight-purple = #C792EA
+    $highlight-deletion = #BF42BF
+    $highlight-addition = #105EDE
+
+if $highlight_theme == 'light'
+  $highlight-background = #F6F8FA
+  $highlight-selection = #80CBC440
+  $highlight-foreground = #90A4AE
+  $highlight-mac-border = rgba(144, 164, 174, .4)
+  $highlight-tools = {
+    color: $highlight-foreground,
+    bg-color: darken($highlight-background, 5)
+  }
+  $highlight-gutter = {
+    color: alpha($highlight-foreground, .5),
+    bg-color: $highlight-background
+  }
+  $highlight-scrollbar = darken($highlight-background, 8)
+
+  if $highlight_enable
+    $highlight-comment = rgba(149, 165, 166, .8)
+    $highlight-red = #E53935
+    $highlight-orange = #F76D47
+    $highlight-yellow = #FFB62C
+    $highlight-green = #91B859
+    $highlight-aqua = #39ADB5
+    $highlight-blue = #6182B8
+    $highlight-purple = #7C4DFF
+    $highlight-deletion = #BF42BF
+    $highlight-addition = #105EDE
+
+if $highlight_theme == false
+  $highlight-background = #F6F8FA
+  $highlight-foreground = #90A4AE
+  $highlight-selection = #80CBC440
+  $highlight-gutter = {
+    color: alpha($highlight-foreground, .5),
+    bg-color: $highlight-background
+  }
+  $highlight-tools = {
+    color: $highlight-foreground,
+    bg-color: darken($highlight-background, 5)
+  }
+  $highlight-scrollbar = darken($highlight-background, 8)

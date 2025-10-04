@@ -1,0 +1,31 @@
+- const { server, site } = theme.artalk
+
+script.
+  (() => {
+    const getArtalkCount = async() => {
+      try {
+        const eleGroup = document.querySelectorAll('#recent-posts .artalk-count')
+        const keyArray = Array.from(eleGroup).map(i => i.getAttribute('data-page-key'))
+
+        const headerList = {
+          method: 'GET',
+        }
+
+        const searchParams = new URLSearchParams({
+          'site_name': '!{site}',
+          'page_keys': keyArray
+        })
+
+        const res = await fetch(`!{server}/api/v2/stats/page_comment?${searchParams}`, headerList)
+        const result = await res.json()
+
+        keyArray.forEach((key, index) => {
+          eleGroup[index].textContent = result.data[key] || 0
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    window.pjax ? getArtalkCount() : window.addEventListener('load', getArtalkCount)
+  })()

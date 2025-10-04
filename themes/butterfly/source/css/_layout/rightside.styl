@@ -1,0 +1,109 @@
+#rightside
+  position: fixed
+  right: -48px
+  bottom: $rightside-bottom
+  z-index: 100
+  opacity: 0
+  transition: all .5s
+
+  &.rightside-show
+    opacity: .8
+    transform: translate(-58px, 0)
+
+  #rightside-config-hide
+    height: 0
+    opacity: 0
+    transition: transform .4s
+    transform: translate(45px, 0)
+
+    &.show
+      height: auto
+      opacity: 1
+      transform: translate(0, 0)
+
+    &.status
+      height: auto
+      opacity: 1
+
+  & > div
+    & > button,
+    & > a
+      display: block
+      margin-bottom: 5px
+      width: w = 35px
+      height: w
+      background-color: var(--btn-bg)
+      color: var(--btn-color)
+      text-align: center
+      font-size: 16px
+      line-height: w
+      addBorderRadius(5)
+      @extend .btn-effects
+
+      &:hover
+        background-color: var(--btn-hover-color)
+      
+      i
+        vertical-align: baseline
+
+  #mobile-toc-button
+    display: none
+
+    +maxWidth900()
+      display: block
+
+  +maxWidth900()
+    #hide-aside-btn
+      display: none
+
+  if hexo-config('rightside_scroll_percent')
+    #go-up
+      position: relative
+
+      .scroll-percent
+        position: absolute
+        top: 0
+        left: 0
+        display: none
+        width: 100%
+        height: 100%
+        opacity: 0
+        transition: all .4s cubic-bezier(.4, 0, .2, 1)
+        transform: scale(.8)
+
+      i
+        position: relative
+        z-index: 1
+        width: 100%
+        opacity: 1
+        transition: all .4s cubic-bezier(.4, 0, .2, 1)
+        transform: scale(1)
+
+      &.show-percent
+        .scroll-percent
+          display: block
+          opacity: 1
+          transform: scale(1)
+          animation: fadeInScale .4s ease-out
+
+        i
+          opacity: 0
+          transform: scale(.8)
+
+      &:hover.show-percent
+        .scroll-percent
+          opacity: 0
+          transform: scale(.8)
+
+        i
+          opacity: 1 !important
+          transform: scale(1) !important
+
+@keyframes fadeInScale
+  from
+    opacity: 0
+    transform: scale(.8)
+
+  to
+    opacity: 1
+    transform: scale(1)

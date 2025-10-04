@@ -1,0 +1,24 @@
+#local-search
+  .search-dialog
+    nav.search-nav
+      span.search-dialog-title= _p('search.title')
+      i.fas.fa-spinner.fa-pulse#loading-status(hidden)
+      button.search-close-button
+        i.fas.fa-times
+
+    #loading-database.text-center
+      i.fas.fa-spinner.fa-pulse
+      span= '  ' + _p("search.load_data")
+
+    .local-search-input
+      input(placeholder=theme.search.placeholder || _p("search.input_placeholder") type="text")
+
+    hr
+
+    #local-search-results
+    #local-search-pagination.ais-Pagination(style="display:none;")
+      ul.ais-Pagination-list
+    #local-search-stats
+
+  #search-mask
+  script(src=url_for(theme.asset.local_search))

@@ -1,0 +1,434 @@
+#aside-content
+  width: 26%
+
+  +minWidth900()
+    if hexo-config('aside.position') == 'right'
+      padding-left: 15px
+    else
+      padding-right: 15px
+
+  +maxWidth900()
+    margin-top: 20px
+    width: 100%
+
+  .card-widget
+    @extend .cardHover
+    position: relative
+    overflow: hidden
+    margin-bottom: 20px
+    padding: 20px 24px
+
+    if hexo-config('aside.mobile') == false
+      +maxWidth768()
+        &:not(#card-toc)
+          display: none
+
+    // &:last-child
+    //   margin-bottom: 0
+
+  .card-info
+    .author-info
+      &-name
+        font-weight: 500
+        font-size: 1.57em
+
+      &-description
+        margin-top: -.42em
+
+    .site-data
+      margin: 14px 0 4px
+
+    .card-info-social-icons
+      margin: 6px 0 -6px
+
+      .social-icon
+        margin: 0 10px
+        color: var(--font-color)
+        font-size: 1.4em
+
+      i
+        transition: all .3s
+
+        &:hover
+          transform: rotate(360deg)
+
+    #card-info-btn
+      display: block
+      margin-top: 14px
+      background-color: var(--btn-bg)
+      color: var(--btn-color)
+      text-align: center
+      line-height: 2.4
+      addBorderRadius(7)
+      @extend .btn-effects
+
+      &:hover
+        background-color: var(--btn-hover-color)
+
+      span
+        padding-left: 10px
+
+  .item-headline
+    padding-bottom: 6px
+    font-size: 1.2em
+
+    span
+      margin-left: 6px
+
+  .sticky_layout
+    +minWidth900()
+      position: sticky
+      position: -webkit-sticky
+      top: 20px
+      transition: top .3s
+
+  .card-tag-cloud
+    a
+      display: inline-block
+      padding: 0 4px
+      line-height: 1.8
+
+      &:hover
+        color: $text-hover !important
+
+  .aside-list
+    & > span
+      display: block
+      margin-bottom: 10px
+      text-align: center
+
+    & > .aside-list-item
+      display: flex
+      align-items: center
+      padding: 6px 0
+
+      &:first-child
+        padding-top: 0
+
+      &:not(:last-child)
+        border-bottom: 1px dashed #f5f5f5
+
+      &:last-child
+        padding-bottom: 0
+
+      .thumbnail
+        overflow: hidden
+        width: w = 4em
+        height: w
+        addBorderRadius()
+
+        :first-child
+          @extend .imgHover
+
+      .content
+        flex: 1
+        padding-left: 10px
+        word-break: break-all
+
+        & > .name
+          @extend .limit-more-line
+          -webkit-line-clamp: 1
+
+        & > time,
+        & > .name
+          display: block
+          color: var(--card-meta)
+          font-size: .85em
+
+        & > .title,
+        & > .comment
+          @extend .limit-more-line
+          color: var(--font-color)
+          // font-size: 95%
+          line-height: 1.5
+          -webkit-line-clamp: 2
+
+          &:hover
+            color: $text-hover
+
+      &.no-cover
+        min-height: 4.4em
+
+  .card-archives ul.card-archive-list,
+  .card-categories ul.card-category-list
+    margin: 0
+    padding: 0
+    list-style: none
+
+  .card-archives ul.card-archive-list > .card-archive-list-item,
+  .card-categories ul.card-category-list > .card-category-list-item
+    a
+      display: flex
+      flex-direction: row
+      margin: 2px 0
+      padding: 2px 8px
+      color: var(--font-color)
+      transition: all .3s
+      addBorderRadius()
+
+      &:hover
+        padding: 2px 12px
+        background-color: var(--text-bg-hover)
+        color: var(--white)
+
+      span
+        @extend .limit-one-line
+
+        &:first-child
+          flex: 1
+
+  .card-categories
+    .card-category-list
+      &.child
+        padding: 0 0 0 16px
+        overflow: hidden
+        max-height: 0
+        opacity: 0
+        visibility: hidden
+        transition: max-height .3s ease, opacity .3s ease
+
+      > .parent
+        > a
+          &.expand
+            i
+              transform: rotate(-90deg)
+
+            & + .child
+              max-height: 1000px
+              opacity: 1
+              visibility: visible
+
+          .card-category-list
+            &-name
+              width: 70% !important
+
+            &-count
+              width: calc(100% - 70% - 20px)
+              text-align: right
+
+          i
+            float: right
+            margin-right: -.5em
+            padding: .5em
+            transition: transform .3s
+            transform: rotate(0)
+
+        if hexo-config('aside.card_categories.expand') == false
+          > .child
+            max-height: 0
+            opacity: 0
+            visibility: hidden
+
+  .card-webinfo
+    .webinfo
+      .webinfo-item
+        display: flex
+        align-items: center
+        padding: 2px 10px 0
+
+        div
+          &:first-child
+            flex: 1
+            padding-right: 20px
+
+  // toc
+  #card-toc
+    +minWidth901()
+      right: 0 !important
+
+    +maxWidth900()
+      position: fixed
+      right: 55px
+      bottom: 30px
+      z-index: 100
+      max-width: $toc-mobile-maxWidth
+      max-height: calc(100% - 60px)
+      width: $toc-mobile-width
+      transition: none
+      transform: scale(0)
+      transform-origin: right bottom
+
+      &.open
+        transform: scale(1)
+
+    .toc-percentage
+      float: right
+      margin-top: -9px
+      color: #a9a9a9
+      font-style: italic
+      font-size: 140%
+
+    .toc-content
+      overflow-y: scroll
+      overflow-y: overlay
+      margin: 0 -24px
+      max-height: calc(100vh - 120px)
+      width: calc(100% + 48px)
+
+      +maxWidth900()
+        max-height: calc(100vh - 140px)
+
+      & > *
+        margin: 0 20px !important
+
+        & > .toc-item > .toc-child
+          margin-left: 10px
+          padding-left: 10px
+          border-left: 1px solid var(--dark-grey)
+
+      &:not(.is-expand)
+        .toc-child
+          display: none
+
+          +maxWidth900()
+            display: block !important
+
+        .toc-item
+          &.active
+            .toc-child
+              display: block
+
+      ol,
+      li
+        list-style: none
+
+      > ol
+        padding: 0 !important
+
+      ol
+        margin: 0
+        padding-left: 18px
+
+      .toc-link
+        display: block
+        margin: 4px 0
+        padding: 1px 8px
+        color: var(--toc-link-color)
+        transition: all .2s ease-in-out
+        addBorderRadius()
+
+        &:hover
+          color: $theme-color
+
+        &.active
+          background: $theme-toc-color
+          color: $toc-active-color
+
+  .sticky_layout:only-child
+    > :first-child
+      margin-top: 0
+
+  .card-more-btn
+    float: right
+    color: inherit
+
+    &:hover
+      animation: more-btn-move 1s infinite
+
+  .card-announcement
+    .item-headline
+      i
+        color: #FF0000
+
+.avatar-img
+  overflow: hidden
+  margin: 0 auto
+  width: 110px
+  height: 110px
+  border-radius: 70px
+
+  img
+    width: 100%
+    height: 100%
+    transition: filter 375ms ease-in .2s, transform .3s
+    object-fit: cover
+
+    &:hover
+      transform: rotate(360deg)
+
+.site-data
+  display: table
+  width: 100%
+  table-layout: fixed
+
+  & > a
+    display: table-cell
+
+    div
+      transition: all .3s
+
+    &:hover
+      div
+        color: $theme-color !important
+
+    .headline
+      @extend .limit-one-line
+      color: var(--font-color)
+      font-size: .95em
+
+    .length-num
+      margin-top: -.45em
+      color: var(--text-highlight-color)
+      font-size: 1.2em
+
+@keyframes more-btn-move
+  0%,
+  100%
+    transform: translateX(0)
+
+  50%
+    transform: translateX(3px)
+
+@keyframes toc-open
+  0%
+    transform: scale(.7)
+
+  100%
+    transform: scale(1)
+
+@keyframes toc-close
+  0%
+    transform: scale(1)
+
+  100%
+    transform: scale(.7)
+
++minWidth900()
+  html.hide-aside
+    .layout
+      justify-content: center
+
+      > .aside-content
+        display: none
+
+      > div:first-child
+        width: 80%
+
+.page
+  .sticky_layout
+    display: flex
+    flex-direction: column
+
+  if hexo-config('aside.card_recent_post.sort_order')
+    .card-recent-post
+      order: hexo-config('aside.card_recent_post.sort_order')
+
+  if hexo-config('aside.card_newest_comments.sort_order')
+    #card-newest-comments
+      order: hexo-config('aside.card_newest_comments.sort_order')
+
+  if hexo-config('aside.card_categories.sort_order')
+    .card-categories
+      order: hexo-config('aside.card_categories.sort_order')
+
+  if hexo-config('aside.card_tags.sort_order')
+    .card-tags
+      order: hexo-config('aside.card_tags.sort_order')
+
+  if hexo-config('aside.card_archives.sort_order')
+    .card-archives
+      order: hexo-config('aside.card_archives.sort_order')
+
+  if hexo-config('aside.card_webinfo.sort_order')
+    .card-webinfo
+      order: hexo-config('aside.card_webinfo.sort_order')
