@@ -2,6 +2,8 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import CONFIG_NEXT from '@/themes/next/config'
+import { sortPostsByTopTag } from '@/lib/utils/post'
 
 /**
  * 标签下的文章列表
@@ -21,6 +23,14 @@ export async function getStaticProps({ params: { tag }, locale }) {
   props.posts = props.allPages
     ?.filter(page => page.type === 'Post' && page.status === 'Published')
     .filter(post => post && post?.tags && post?.tags.includes(tag))
+
+  // NEXT 主题：按置顶标签重排
+  const currentTheme = siteConfig('THEME', BLOG.THEME, props?.NOTION_CONFIG)
+  const defaultNextTopTag = siteConfig('NEXT_TOP_TAG', '', CONFIG_NEXT)
+  const nextTopTag = siteConfig('NEXT_TOP_TAG', defaultNextTopTag, props?.NOTION_CONFIG)
+  if (currentTheme === 'next' && nextTopTag) {
+    props.posts = sortPostsByTopTag(props.posts, nextTopTag)
+  }
 
   // 处理文章页数
   props.postCount = props.posts.length
