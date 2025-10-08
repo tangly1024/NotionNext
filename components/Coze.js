@@ -9,10 +9,11 @@ import { useEffect } from 'react'
 export default function Coze() {
   const cozeSrc = siteConfig(
     'COZE_SRC_URL',
-    'https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/0.1.0-beta.6/libs/cn/index.js'
+    'https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.10/libs/cn/index.js'
   )
   const title = siteConfig('COZE_TITLE', 'NotionNext助手')
   const botId = siteConfig('COZE_BOT_ID')
+  const token = siteConfig('COZE_TOKEN')
 
   const loadCoze = async () => {
     await loadExternalResource(cozeSrc)
@@ -20,10 +21,16 @@ export default function Coze() {
     if (CozeWebSDK) {
       const cozeClient = new CozeWebSDK.WebChatClient({
         config: {
-          bot_id: botId
+          bot_id: botId,
+          type: 'bot'
         },
         componentProps: {
           title: title
+        } ,
+        auth: {
+          type: 'token',
+          token: token,
+          onRefreshToken: async () => 'token'
         }
       })
       console.log('coze', cozeClient)
