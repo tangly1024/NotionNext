@@ -1,0 +1,66 @@
+if hexo-config('error_404.enable')
+  .type-404
+    .error-content
+      @extend .cardHover
+      overflow: hidden
+      margin: 0 20px
+      height: 360px
+
+      +maxWidth768()
+        margin: 0
+        height: 500px
+
+      .error-img
+        display: inline-block
+        overflow: hidden
+        width: 50%
+        height: 100%
+
+        +maxWidth768()
+          width: 100%
+          height: 45%
+
+        img
+          @extend .imgHover
+          background-color: $theme-color
+
+      .error-info
+        display: inline-flex
+        flex-direction: column
+        justify-content: center
+        align-content: center
+        width: 50%
+        height: 100%
+        vertical-align: top
+        text-align: center
+
+        if $site-name-font
+          font-family: $site-name-font
+
+        +maxWidth768()
+          width: 100%
+          height: 55%
+
+        .error_title
+          margin-top: -.6em
+          font-size: 9em
+
+          +maxWidth768()
+            font-size: 8em
+
+        .error_subtitle
+          @extend .limit-more-line
+          margin-top: -3em
+          word-break: break-word
+          font-size: 1.6em
+          -webkit-line-clamp: 2
+
+    .nc
+      margin-top: 5%
+      padding: 0 20px
+
+    #footer
+      display: none
+
+    & + #rightside
+      display: none

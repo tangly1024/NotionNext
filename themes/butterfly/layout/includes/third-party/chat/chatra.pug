@@ -1,0 +1,38 @@
+//- https://chatra.io/help/api/
+script.
+  (() => {
+    window.ChatraID = '#{theme.chatra.id}'
+    window.Chatra = window.Chatra || function() {
+      (window.Chatra.q = window.Chatra.q || []).push(arguments)
+    }
+
+    btf.getScript('https://call.chatra.io/chatra.js').then(() => {
+      const isChatBtn = !{theme.chat.rightside_button}
+      const isChatHideShow = !{theme.chat.button_hide_show}
+
+      if (isChatBtn) {
+        const close = () => {
+          Chatra('minimizeWidget')
+          Chatra('hide')
+        }
+
+        const open = () => {
+          Chatra('openChat', true)
+          Chatra('show')
+        }
+
+        window.ChatraSetup = { startHidden: true }
+      
+        window.chatBtnFn = () => document.getElementById('chatra').classList.contains('chatra--expanded') ? close() : open()
+
+        document.getElementById('chat-btn').style.display = 'block'
+      } else if (isChatHideShow) {
+        window.chatBtn = {
+          hide: () => Chatra('hide'),
+          show: () => Chatra('show')
+        }
+      }
+    })
+  })()
+
+

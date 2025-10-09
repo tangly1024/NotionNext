@@ -1,0 +1,27 @@
+if theme.menu
+  .menus_items
+    each value, label in theme.menu
+      if typeof value !== 'object'
+        .menus_item
+          - const [link, icon] = value.split('||').map(part => trim(part))
+          a.site-page(href=url_for(link))
+            if icon
+              i.fa-fw(class=icon)
+            span= ' ' + label
+      else
+        .menus_item
+          - const [groupLabel, groupIcon, groupClass] = label.split('||').map(part => trim(part))
+          - const hideClass = groupClass === 'hide' ? 'hide' : ''
+          span.site-page.group(class=hideClass)
+            if groupIcon
+              i.fa-fw(class=groupIcon)
+            span= ' ' + groupLabel
+            i.fas.fa-chevron-down
+          ul.menus_item_child
+            each val, lab in value
+              - const [childLink, childIcon] = val.split('||').map(part => trim(part))
+              li
+                a.site-page.child(href=url_for(childLink))
+                  if childIcon
+                    i.fa-fw(class=childIcon)
+                  span= ' ' + lab

@@ -1,0 +1,110 @@
+- let { serverURL, script_name, website_id, option, UV_PV } = theme.umami_analytics
+- const isServerURL = !!serverURL
+- const baseURL = serverURL ? serverURL.replace(/\/$/, '') : 'https://cloud.umami.is'
+- const apiUrl = serverURL ? serverURL.replace(/\/$/, '') + '/api' : 'https://api.umami.is/v1'
+
+script.
+  (() => {
+    const option = !{JSON.stringify(option)}
+    const config = !{JSON.stringify(UV_PV)}
+
+    const runTrack = () => {
+      if (typeof umami !== 'undefined' && typeof umami.track === 'function') {
+        umami.track(props => ({ ...props, url: window.location.pathname, title: GLOBAL_CONFIG_SITE.title }))
+      } else {
+        console.warn('Umami Analytics: umami.track is not available')
+      }
+    }
+
+    const loadUmamiJS = () => {
+      btf.getScript('!{baseURL}/!{script_name}', {
+        'data-website-id': '!{website_id}',
+        'data-auto-track': 'false',
+        ...option
+      }).then(() => {
+        runTrack()
+      }).catch(error => {
+        console.error('Umami Analytics: Error loading script', error)
+      })
+    }
+
+    const getData = async (isPost) => {
+      try {
+        const now = Date.now()
+        const keyUrl = isPost ? `&url=${window.location.pathname}` : ''
+        const headerList = { 'Accept': 'application/json' }
+
+        if (!{isServerURL}) {
+          headerList['Authorization'] = `Bearer ${config.token}`
+        } else {
+          headerList['x-umami-api-key'] = config.token
+        }
+
+        const res = await fetch(`!{apiUrl}/websites/!{website_id}/stats?startAt=0000000000&endAt=${now}${keyUrl}`, {
+          method: "GET",
+          headers: headerList
+        })
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`)
+        }
+
+        return await res.json()
+      } catch (error) {
+        console.error('Umami Analytics: Failed to fetch data', error)
+        throw error
+      }
+    }
+
+    const insertData = async () => {
+      try {
+        if (GLOBAL_CONFIG_SITE.pageType === 'post' && config.page_pv) {
+          const pagePV = document.getElementById('umamiPV')
+          if (pagePV) {
+            const data = await getData(true)
+            if (data && data.pageviews && typeof data.pageviews.value !== 'undefined') {
+              pagePV.textContent = data.pageviews.value
+            } else {
+              console.warn('Umami Analytics: Invalid page view data received')
+            }
+          }
+        }
+
+        if (config.site_uv || config.site_pv) {
+          const data = await getData(false)
+
+          if (config.site_uv) {
+            const siteUV = document.getElementById('umami-site-uv')
+            if (siteUV && data && data.visitors && typeof data.visitors.value !== 'undefined') {
+              siteUV.textContent = data.visitors.value
+            } else if (siteUV) {
+              console.warn('Umami Analytics: Invalid site UV data received')
+            }
+          }
+
+          if (config.site_pv) {
+            const sitePV = document.getElementById('umami-site-pv')
+            if (sitePV && data && data.pageviews && typeof data.pageviews.value !== 'undefined') {
+              sitePV.textContent = data.pageviews.value
+            } else if (sitePV) {
+              console.warn('Umami Analytics: Invalid site PV data received')
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Umami Analytics: Failed to insert data', error)
+      }
+    }
+
+    btf.addGlobalFn('pjaxComplete', runTrack, 'umami_analytics_run_track')
+    btf.addGlobalFn('pjaxComplete', insertData, 'umami_analytics_insert')
+
+
+    loadUmamiJS()
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', insertData)
+    } else {
+      setTimeout(insertData, 100)
+    }
+  })()

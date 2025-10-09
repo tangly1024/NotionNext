@@ -1,0 +1,68 @@
+.container
+  .timeline
+    margin: 0 10px 20px
+    padding: 14px 0 5px 20px
+    border-left: 2px solid var(--timeline-color, $theme-color)
+
+    for $type in $color-types
+      &.{$type}
+        --timeline-color: lookup('$tagsP-' + $type + '-color')
+        --timeline-bg: s('rgba(%s,%s,%s, 0.2)', red(lookup('$tagsP-' + $type + '-color')), green(lookup('$tagsP-' + $type + '-color')), blue(lookup('$tagsP-' + $type + '-color')))
+
+    .timeline-item
+      margin: 0 0 15px
+
+      &:hover
+        .item-circle
+          &:before
+            border-color: var(--timeline-color, $theme-color)
+
+      &.headline
+        .timeline-item-title
+          .item-circle
+            > p
+              font-weight: 600
+              font-size: 1.2em
+
+            &:before
+              left: -28px
+              border: 4px solid var(--timeline-color, $theme-color)
+
+        &:hover
+          .item-circle
+            &:before
+              border-color: var(--pseudo-hover)
+
+      .timeline-item-title
+        position: relative
+
+      .item-circle
+        &:before
+          position: absolute
+          top: 50%
+          left: -27px
+          width: 6px
+          height: 6px
+          border: 3px solid var(--pseudo-hover)
+          border-radius: 50%
+          background: var(--card-bg)
+          content: ''
+          transition: all .3s
+          transform: translate(0, -50%)
+
+        > p
+          margin: 0 0 8px
+          font-weight: 500
+
+      .timeline-item-content
+        position: relative
+        padding: 12px 15px
+        border-radius: 8px
+        background: var(--timeline-bg, lighten($theme-color, 85%))
+        font-size: .93em
+
+        & > :last-child
+          margin-bottom: 0
+
+    & + .timeline
+      margin-top: -20px

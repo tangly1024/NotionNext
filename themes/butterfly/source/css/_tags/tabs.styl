@@ -1,0 +1,77 @@
+
+.container
+  .tabs
+    position: relative
+    margin: 0 0 20px
+    border-right: 1px solid var(--tab-border-color)
+    border-bottom: 1px solid var(--tab-border-color)
+    border-left: 1px solid var(--tab-border-color)
+    addBorderRadius()
+    overflow: hidden
+
+    > .nav-tabs
+      display: flex
+      flex-wrap: wrap
+      margin: 0
+      padding: 0
+      background: var(--tab-button-bg)
+
+      > .tab
+        flex-grow: 1
+        padding: 8px 18px
+        border-top: 2px solid var(--tab-border-color)
+        background: var(--tab-button-bg)
+        color: var(--tab-button-color)
+        line-height: 2
+        transition: all .4s
+
+        i
+          width: 1.5em
+
+        &.active
+          border-top: 2px solid $tab-active-border-color
+          background: var(--tab-button-active-bg)
+          cursor: default
+
+        &:not(.active)
+          &:hover
+            border-top: 2px solid var(--tab-button-hover-bg)
+            background: var(--tab-button-hover-bg)
+
+      &.no-default
+        & ~ .tab-to-top
+          display: none
+
+    > .tab-contents
+      .tab-item-content
+        position: relative
+        display: none
+        padding: 36px 24px 10px
+
+        +maxWidth768()
+          padding: 24px 14px
+
+        &.active
+          display: block
+          animation: tabshow .5s
+
+        > :last-child
+          margin-bottom: 0
+
+    > .tab-to-top
+      padding: 0 16px 10px 0
+      width: 100%
+      text-align: right
+
+      button
+        color: $tab-to-top-color
+
+        &:hover
+          color: $tab-to-top-hover-color
+
+@keyframes tabshow
+  0%
+    transform: translateY(15px)
+
+  100%
+    transform: translateY(0)

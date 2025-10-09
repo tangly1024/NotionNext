@@ -1,0 +1,4 @@
+- const coverVal = page.cover_type === 'img' ? page.cover : theme.avatar.img
+.social-share(data-image=url_for(coverVal) data-sites= theme.share.sharejs.sites)
+link(rel='stylesheet' href=url_for(theme.asset.sharejs_css) media="print" onload="this.media='all'")
+script(src=url_for(theme.asset.sharejs) defer)

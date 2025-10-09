@@ -1,0 +1,204 @@
+if hexo-config('darkmode.enable') || hexo-config('display_mode') == 'dark'
+  [data-theme='dark']
+    --global-bg: darken(#121212, 2)
+    --font-color: alpha(#FFFFFF, .7)
+    --hr-border: alpha(#FFFFFF, .4)
+    --hr-before-color: alpha(#FFFFFF, .7)
+    --search-bg: #121212
+    --search-input-color: alpha(#FFFFFF, .7)
+    --search-a-color: alpha(#FFFFFF, .7)
+    --preloader-bg: darken(#121212, 2)
+    --preloader-color: alpha(#FFFFFF, .7)
+    --tab-border-color: #2c2c2c
+    --tab-button-bg: #2c2c2c
+    --tab-button-color: alpha(#FFFFFF, .7)
+    --tab-button-hover-bg: lighten(#121212, 15)
+    --tab-button-active-bg: #121212
+    --card-bg: #121212
+    --sidebar-bg: #121212
+    --sidebar-menu-bg: lighten(#121212, 5)
+    --btn-hover-color: lighten(#121212, 40)
+    --btn-color: alpha(#FFFFFF, .7)
+    --btn-bg: lighten(#121212, 5)
+    --text-bg-hover: lighten(#121212, 15)
+    --light-grey: alpha(#FFFFFF, .7)
+    --dark-grey: alpha(#FFFFFF, .2)
+    --white: alpha(#FFFFFF, .9)
+    --text-highlight-color: alpha(#FFFFFF, .9)
+    --blockquote-color: alpha(#FFFFFF, .7)
+    --blockquote-bg: lighten(#121212, 10)
+    --reward-pop: lighten(#121212, 10)
+    --toc-link-color: alpha(#FFFFFF, .6)
+    --scrollbar-color: lighten(#121212, 25)
+    --timeline-bg: lighten(#121212, 5)
+    --zoom-bg: #121212
+    --mark-bg: alpha($dark-black, .6)
+    --btn-color: darken($btn-color, 20%)
+    --btn-default-color: lighten($btn-default-color, 20%)
+    --tags-blue-color: desaturate(darken($tagsP-blue-color, 20%), 25%)
+    --tags-blue-color-lighten: rgba(66, 139, 202, .15)
+    --tags-pink-color: desaturate(darken($tagsP-pink-color, 22%), 30%)
+    --tags-pink-color-lighten: rgba(255, 105, 180, .15)
+    --tags-red-color: desaturate(darken($tagsP-red-color, 25%), 28%)
+    --tags-red-color-lighten: rgba(255, 0, 0, .15)
+    --tags-orange-color: desaturate(darken($tagsP-orange-color, 22%), 32%)
+    --tags-orange-color-lighten: rgba(255, 140, 0, .15)
+    --tags-purple-color: desaturate(darken($tagsP-purple-color, 18%), 30%)
+    --tags-purple-color-lighten: rgba(111, 66, 193, .15)
+    --tags-green-color: desaturate(darken($tagsP-green-color, 20%), 28%)
+    --tags-green-color-lighten: rgba(92, 184, 92, .15)
+    --note-default-border: $note-dark-default-border
+    --note-default-bg: $note-dark-default-bg
+    --note-default-text: $note-dark-default-text
+    --note-modern-default-border: $note-dark-modern-default-border
+    --note-modern-default-bg: $note-dark-modern-default-bg
+    --note-modern-default-text: $note-dark-modern-default-text
+    --note-primary-border: $note-dark-primary-border
+    --note-primary-bg: $note-dark-primary-bg
+    --note-primary-text: $note-dark-primary-text
+    --note-modern-primary-border: $note-dark-modern-primary-border
+    --note-modern-primary-bg: $note-dark-modern-primary-bg
+    --note-modern-primary-text: $note-dark-modern-primary-text
+    --note-info-border: $note-dark-info-border
+    --note-info-bg: $note-dark-info-bg
+    --note-info-text: $note-dark-info-text
+    --note-modern-info-border: $note-dark-modern-info-border
+    --note-modern-info-bg: $note-dark-modern-info-bg
+    --note-modern-info-text: $note-dark-modern-info-text
+    --note-success-border: $note-dark-success-border
+    --note-success-bg: $note-dark-success-bg
+    --note-success-text: $note-dark-success-text
+    --note-modern-success-border: $note-dark-modern-success-border
+    --note-modern-success-bg: $note-dark-modern-success-bg
+    --note-modern-success-text: $note-dark-modern-success-text
+    --note-warning-border: $note-dark-warning-border
+    --note-warning-bg: $note-dark-warning-bg
+    --note-warning-text: $note-dark-warning-text
+    --note-modern-warning-border: $note-dark-modern-warning-border
+    --note-modern-warning-bg: $note-dark-modern-warning-bg
+    --note-modern-warning-text: $note-dark-modern-warning-text
+    --note-danger-border: $note-dark-danger-border
+    --note-danger-bg: $note-dark-danger-bg
+    --note-danger-text: $note-dark-danger-text
+    --note-modern-danger-border: $note-dark-modern-danger-border
+    --note-modern-danger-bg: $note-dark-modern-danger-bg
+    --note-modern-danger-text: $note-dark-modern-danger-text
+
+    #web_bg:before
+      position: absolute
+      width: 100%
+      height: 100%
+      background-color: alpha($dark-black, .7)
+      content: ''
+
+    .container
+      code
+        background: #2c2c2c
+
+      pre > code
+        background: lighten(#121212, 2)
+
+      figure.highlight
+        box-shadow: none
+
+      .note
+        code
+          background: $code-background
+
+      .aplayer
+        filter: brightness(.8)
+
+      kbd
+        border-color: #696969
+        background-color: #525252
+        color: #e2f1ff
+
+    // 頭部
+    #page-header
+      &.nav-fixed > #nav,
+      &.not-top-img > #nav
+        background: alpha(#121212, .8)
+        box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0)
+
+    #post-comment
+      .comment-switch
+        if hexo-config('comments.text')
+          background: #2c2c2c !important
+
+        #switch-btn
+          filter: brightness(.8)
+
+    // hide-tags
+    .hide-button,
+    #post-outdate-notice,
+    .error-img,
+    .container iframe,
+    .gist,
+    .ads-wrap,
+    .tag-cloud-list > a
+      filter: brightness(.8)
+
+    img:not(.cover)
+      if hexo-config('lazyload.enable') && hexo-config('lazyload.blur') && !hexo-config('lazyload.placeholder')
+        filter: blur(0) brightness(.8)
+      else
+        filter: brightness(.8)
+
+    #aside-content .aside-list > .aside-list-item:not(:last-child)
+      border-bottom: 1px dashed alpha(#FFFFFF, .1)
+
+    // Gitalk
+    #gitalk-container
+      filter: brightness(.8)
+
+      svg
+        fill: alpha(#FFFFFF, .9) !important
+
+    // Disqusjs 反代模式下的適配
+    #disqusjs
+      #dsqjs
+        &:hover,
+        &:focus,
+        .dsqjs-tab-active,
+        .dsqjs-no-comment
+          color: alpha(#FFFFFF, .7)
+
+        .dsqjs-order-label
+          background-color: lighten(#121212, 5)
+
+        .dsqjs-post-body
+          color: alpha(#FFFFFF, .7)
+
+          code,
+          pre
+            background: #2c2c2c
+
+          blockquote
+            color: alpha(#FFFFFF, .7)
+
+    #artitalk_main #lazy
+      background: #121212
+
+    #operare_artitalk .c2
+      background: #121212
+
+    #card-toc
+      +maxWidth900()
+        background: lighten(#121212, 5)
+
+    // artalk
+    .artalk.atk-dark-mode,
+    .atk-layer-wrap.atk-dark-mode
+      --at-color-font: alpha(#FFFFFF, .7)
+      --at-color-meta: alpha(#FFFFFF, .7)
+      --at-color-grey: alpha(#FFFFFF, .7)
+
+    .atk-send-btn,
+    .atk-badge
+      color: alpha(#FFFFFF, .7) !important
+
+    // waline
+    #waline-wrap
+      --waline-color: alpha(#FFFFFF, .7)
+      --waline-dark-grey: alpha(#FFFFFF, .7)
+      --waline-info-color: alpha(#FFFFFF, .5)

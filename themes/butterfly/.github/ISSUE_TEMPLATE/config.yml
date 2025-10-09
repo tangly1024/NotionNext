@@ -1,0 +1,18 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions about Butterfly
+    url: https://github.com/jerryc127/hexo-theme-butterfly/discussions
+    about: 一些使用問題請到 Discussion 詢問。 Please ask questions in Discussion.
+
+  - name: Butterfly Q&A
+    url: https://butterfly.js.org/posts/98d20436/
+    about: Butterfly Q&A
+
+  - name: Telegram
+    url: https://t.me/bu2fly
+    about: 'Official Telegram Group'
+
+  - name: QQ 群
+    url: https://jq.qq.com/?_wv=1027&k=KU9105XR
+    about: '群號 1070540070'
+

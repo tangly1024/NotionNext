@@ -1,0 +1,63 @@
+- const { use, lazyload } = theme.comments
+- const { repo, issue_term, light_theme, dark_theme, js, option } = theme.utterances
+- const utterancesUrl = js || 'https://utteranc.es/client.js'
+- const utterancesOriginUrl = new URL(utterancesUrl).origin
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+    const option = !{JSON.stringify(option)}
+    const getUtterancesTheme = theme => theme === 'dark' ? '#{dark_theme}' : '#{light_theme}'
+
+    const loadUtterances = (el = document, key) => {
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyUtterances = () => {
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      const config = {
+        src: '!{utterancesUrl}',
+        repo: '!{repo}',
+        theme: getUtterancesTheme(document.documentElement.getAttribute('data-theme')),
+        crossorigin: 'anonymous',
+        async: true,
+        ...option,
+        'issue-term': isShuoshuo ? key : (option && option['issue-term']) || '!{issue_term}'
+      }
+
+      const ele = document.createElement('script')
+      Object.entries(config).forEach(([key, value]) => ele.setAttribute(key, value))
+      el.querySelector('#utterances-wrap').appendChild(ele)
+    }
+
+    const changeUtterancesTheme = theme => {
+      const iframe = document.querySelector('#utterances-wrap iframe')
+      if (iframe) {
+        const message = {
+          type: 'set-theme',
+          theme: getUtterancesTheme(theme)
+        };
+        iframe.contentWindow.postMessage(message, '!{utterancesOriginUrl}')
+      }
+    }
+
+    btf.addGlobalFn('themeChange', changeUtterancesTheme, 'utterances')
+
+    if (isShuoshuo) {
+      '!{use[0]}' === 'Utterances'
+        ? window.shuoshuoComment = { loadComment: loadUtterances }
+        : window.loadOtherComment = loadUtterances
+      return
+    }
+    
+    if ('!{use[0]}' === 'Utterances' || !!{lazyload}) {
+      if (!{lazyload}) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+      else loadUtterances()
+    } else {
+      window.loadOtherComment = loadUtterances
+    }
+  })()

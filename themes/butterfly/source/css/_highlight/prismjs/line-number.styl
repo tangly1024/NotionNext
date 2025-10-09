@@ -1,0 +1,42 @@
+.container
+  pre[class*='language-']
+    &.line-numbers
+      position: relative
+      padding-left: 3.8em
+      counter-reset: linenumber
+      line-height: $line-height-code-block
+
+      > code
+        position: relative
+        line-height: $line-height-code-block
+
+        if hexo-config('code_blocks.word_wrap')
+          white-space: pre-wrap
+        else
+          white-space: inherit
+          word-wrap: normal
+          word-break: normal
+          overflow-wrap: normal
+
+      .line-numbers-rows
+        position: absolute
+        top: 0
+        left: -3.8em
+        width: 3em
+        letter-spacing: -1px
+        font-size: 100%
+        pointer-events: none
+        user-select: none
+        -webkit-user-select: none
+
+        & > span
+          display: block
+          counter-increment: linenumber
+          pointer-events: none
+
+          &:before
+            display: block
+            padding-right: .8em
+            color: var(--hlnumber-color)
+            content: counter(linenumber)
+            text-align: right

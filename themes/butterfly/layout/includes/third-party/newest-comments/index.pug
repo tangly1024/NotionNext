@@ -1,0 +1,34 @@
+- let { use } = theme.comments
+
+if use
+  -
+    let forum,apiKey,userRepo
+    let { limit:newestCommentsLimit } = theme.aside.card_newest_comments
+    if (newestCommentsLimit > 10 || newestCommentsLimit < 1) newestCommentsLimit = 6
+
+  case use[0]
+    when 'Valine'
+      include ./valine.pug
+    when 'Waline'
+      include ./waline.pug
+    when 'Twikoo'
+      include ./twikoo-comment.pug
+    when 'Disqus'
+      - forum = theme.disqus.shortname
+      - apiKey = theme.disqus.apikey
+      include ./disqus-comment.pug
+    when 'Disqusjs'
+      - forum = theme.disqusjs.shortname
+      - apiKey = theme.disqusjs.apikey
+      include ./disqus-comment.pug
+    when 'Gitalk'
+      - let { repo,owner } = theme.gitalk
+      - userRepo = owner + '/' + repo
+      include ./github-issues.pug
+    when 'Utterances'
+      - userRepo = theme.utterances.repo
+      include ./github-issues.pug
+    when 'Remark42'
+      include ./remark42.pug
+    when 'Artalk'
+      include ./artalk.pug

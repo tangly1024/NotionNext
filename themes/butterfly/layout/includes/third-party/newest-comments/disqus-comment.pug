@@ -1,0 +1,34 @@
+!= partial("includes/third-party/newest-comments/common.pug", {}, { cache: true })
+
+script.
+  window.addEventListener('load', () => {
+    const keyName = 'disqus-newest-comments'
+    const { changeContent, generateHtml, run } = window.newestComments
+
+    const getComment = ele => {
+      fetch('https://disqus.com/api/3.0/forums/listPosts.json?forum=!{forum}&related=thread&limit=!{newestCommentsLimit}&api_key=!{apiKey}')
+        .then(response => response.json())
+        .then(data => {
+          const disqusArray = data.response.map(item => {
+            return {
+              'avatar': item.author.avatar.cache,
+              'content': changeContent(item.message),
+              'nick': item.author.name,
+              'url': item.url,
+              'date': item.createdAt
+            }
+          })
+
+          btf.saveToLocal.set(keyName, JSON.stringify(disqusArray), !{theme.aside.card_newest_comments.storage}/(60*24))
+          generateHtml(disqusArray, ele)
+        }).catch(e => {
+          console.error(e)
+          ele.textContent= "!{_p('aside.card_newest_comments.error')}"
+        })
+    }
+
+    run(keyName, getComment)
+  })
+
+
+

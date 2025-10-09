@@ -1,0 +1,8 @@
+each url, icon in theme.social
+  -
+    const [link, title, color] = url.split('||').map(i => trim(i))
+    const href = url_for(link)
+    const iconStyle = color ? `color: ${color.replace(/[\'\"]/g, '')};` : ''
+    const iconTitle = title || ''
+  a.social-icon(href=href target="_blank" title=iconTitle)
+    i(class=icon style=iconStyle)

@@ -1,0 +1,21 @@
+- const serverURL = theme.waline.serverURL.replace(/\/$/, '')
+script.
+  (() => {
+    async function loadWaline () {
+      try {
+        const eleGroup = document.querySelectorAll('#recent-posts .waline-comment-count')
+        const keyArray = Array.from(eleGroup).map(i => i.getAttribute('data-path'))
+
+        const res = await fetch(`!{serverURL}/api/comment?type=count&url=${keyArray}`, { method: 'GET' })
+        const result = await res.json()
+        
+        result.data.forEach((count, index) => {
+          eleGroup[index].textContent = count
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    window.pjax ? loadWaline() : window.addEventListener('load', loadWaline)
+  })()

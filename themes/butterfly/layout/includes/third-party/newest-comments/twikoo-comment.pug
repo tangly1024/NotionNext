@@ -1,0 +1,45 @@
+!= partial("includes/third-party/newest-comments/common.pug", {}, { cache: true })
+
+script.
+  window.addEventListener('load', () => {
+    const keyName = 'twikoo-newest-comments'
+    const { changeContent, generateHtml, run } = window.newestComments
+
+    const getComment = ele => {
+      const runTwikoo = () => {
+        twikoo.getRecentComments({
+          envId: '!{theme.twikoo.envId}',
+          region: '!{theme.twikoo.region}',
+          pageSize: !{newestCommentsLimit},
+          includeReply: true
+        }).then(res => {
+          const twikooArray = res.map(e => {
+            return {
+              'content': changeContent(e.comment),
+              'avatar': e.avatar,
+              'nick': e.nick,
+              'url': e.url + '#' + e.id,
+              'date': new Date(e.created).toISOString()
+            }
+          })
+
+          btf.saveToLocal.set(keyName, JSON.stringify(twikooArray), !{theme.aside.card_newest_comments.storage}/(60*24))
+          generateHtml(twikooArray, ele)
+        }).catch(err => {
+          console.error(err)
+          ele.textContent= "!{_p('aside.card_newest_comments.error')}"
+        })
+      }
+
+      if (typeof twikoo === 'object') {
+        runTwikoo()
+      } else {
+        btf.getScript('!{url_for(theme.asset.twikoo)}').then(runTwikoo)
+      }
+    }
+
+    run(keyName, getComment)
+  })
+
+
+

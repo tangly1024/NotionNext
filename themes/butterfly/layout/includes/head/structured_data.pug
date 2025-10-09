@@ -1,0 +1,67 @@
+if theme.structured_data
+  if page.layout === 'post'
+    -
+      // https://developers.google.com/search/docs/appearance/structured-data/article
+
+      const title = page.title
+      const url = page.permalink
+      const imageVal = page.cover_type === 'img' ? page.cover : theme.avatar.img
+      const image = imageVal ? full_url_for(imageVal) : ''
+      const datePublished = page.date.toISOString()
+      const dateModified = (page.updated || page.date).toISOString()
+      const author = page.copyright_author || config.author
+      const authorHrefVal = page.copyright_author_href || theme.post_copyright.author_href || config.url
+      const authorHref = full_url_for(authorHrefVal)
+
+      const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": title,
+        "url": url,
+        "image": image,
+        "datePublished": datePublished,
+        "dateModified": dateModified,
+        "author": [{
+          "@type": "Person",
+          "name": author,
+          "url": authorHref
+        }]
+      }
+
+      jsonLdScript = JSON.stringify(jsonLd, null, 2)
+    -
+
+  else if is_home() && (!page.current || page.current === 1)
+    -
+      // https://developers.google.com/search/docs/appearance/site-names#website
+
+      const baseUrl = config.url;
+      const currentPath = url_for('/');
+      const isRootOrSubdomain = currentPath.split('/').filter(Boolean).length === 0;
+
+      if (isRootOrSubdomain) {
+        const domain = new URL(config.url).hostname;
+        const alternateNames = theme.structured_data.alternate_name || [];
+
+        if (config.subtitle) {
+          alternateNames.push(config.subtitle);
+        }
+
+        if (domain) {
+          alternateNames.push(domain);
+        }
+
+        const jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": config.title,
+          "alternateName": alternateNames,
+          "url": full_url_for('/'),
+        }
+
+        jsonLdScript = JSON.stringify(jsonLd, null, 2)
+      }
+    -
+
+  script(type="application/ld+json").
+    !{jsonLdScript}

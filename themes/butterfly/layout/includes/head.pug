@@ -1,0 +1,77 @@
+- var pageTitle
+- globalPageType === 'archive' ? page.title = findArchivesTitle(page, theme.menu, date) : ''
+case globalPageType
+  when 'tag'
+    - pageTitle = _p('page.tag') + ': ' + page.tag
+  when 'category'
+    - pageTitle = _p('page.category') + ': ' + page.category
+  when '404'
+    - pageTitle = _p('error404')
+  default
+    - pageTitle = page.title || config.title || ''
+
+
+- var isSubtitle = config.subtitle ? ' - ' + config.subtitle : ''
+- var tabTitle = globalPageType === 'home' || !pageTitle ? config.title + isSubtitle : pageTitle + ' | ' + config.title
+- var pageAuthor = config.email ? config.author + ',' + config.email : config.author
+- var pageCopyright = config.copyright || config.author
+- var themeColorLight = theme.theme_color && theme.theme_color.enable && theme.theme_color.meta_theme_color_light || '#ffffff'
+- var themeColorDark = theme.theme_color && theme.theme_color.enable && theme.theme_color.meta_theme_color_dark || '#0d0d0d'
+- var themeColor = theme.display_mode === 'dark' ? themeColorDark : themeColorLight
+
+meta(charset='UTF-8')
+meta(http-equiv="X-UA-Compatible" content="IE=edge")
+meta(name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover")
+title= tabTitle
+meta(name="author" content=pageAuthor)
+meta(name="copyright" content=pageCopyright)
+meta(name ="format-detection" content="telephone=no")
+meta(name="theme-color" content=themeColor)
+
+//- Open_Graph
+include ./head/Open_Graph.pug
+
+//- Structured Data
+include ./head/structured_data.pug
+
+!=favicon_tag(theme.favicon || config.favicon)
+link(rel="canonical" href=urlNoIndex(null,config.pretty_urls.trailing_index,config.pretty_urls.trailing_html))
+
+//- 預解析
+!=partial('includes/head/preconnect', {}, {cache: true})
+
+//- 網站驗證
+!=partial('includes/head/site_verification', {}, {cache: true})
+
+//- PWA
+if (theme.pwa && theme.pwa.enable)
+  !=partial('includes/head/pwa', {}, {cache: true})
+
+//- main css
+link(rel='stylesheet', href=url_for(theme.asset.main_css))
+link(rel='stylesheet', href=url_for(theme.asset.fontawesome))
+
+if (theme.snackbar && theme.snackbar.enable)
+  link(rel='stylesheet', href=url_for(theme.asset.snackbar_css) media="print" onload="this.media='all'")
+
+if theme.lightbox === 'fancybox'
+  link(rel='stylesheet' href=url_for(theme.asset.fancybox_css) media="print" onload="this.media='all'")
+
+!=fragment_cache('injectHeadJs', function(){return inject_head_js()})
+
+//- google_adsense
+!=partial('includes/head/google_adsense', {}, {cache: true})
+
+//- analytics
+!=partial('includes/head/analytics', {}, {cache: true})
+
+//- font
+if theme.blog_title_font && theme.blog_title_font.font_link
+  link(rel='stylesheet' href=url_for(theme.blog_title_font.font_link) media="print" onload="this.media='all'")
+
+//- global config
+!=partial('includes/head/config', {}, {cache: true})
+
+include ./head/config_site.pug
+
+!=fragment_cache('injectHead', function(){return injectHtml(theme.inject.head)})

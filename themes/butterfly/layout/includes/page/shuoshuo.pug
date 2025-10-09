@@ -1,0 +1,301 @@
+//- - author:
+//-   avatar:
+//-   date:
+//-   content:
+//-   tags:
+//-     - tag1
+//-     - tag2
+
+- page.toc = false
+
+#article-container
+  if page.shuoshuo_url || (site.data.shuoshuo && site.data.shuoshuo.length)
+    if page.comments !== false && theme.comments.use
+      - commentsJsLoad = true
+
+      script.
+        (() => {
+          const commentDiv = `!{partial('includes/third-party/comments/index', {}, {cache: true})}`
+
+          const runDestroy = (shuoshuoComment) => {
+            if (!shuoshuoComment) return
+
+            for (const [key, fn] of Object.entries(shuoshuoComment)) {
+              if (key.startsWith('destroy')) fn()
+            }
+          }
+
+          window.addCommentToShuoshuo = e => {
+            const btn = e.target.closest('.shuoshuo-comment-btn')
+            if (!btn) return
+
+            const ele = btn.closest('.container').nextElementSibling
+            const { shuoshuoComment } = window
+            const isInclude = ele.classList.contains('no-comment')
+            runDestroy(shuoshuoComment)
+            if (isInclude) {
+              ele.classList.remove('no-comment')
+              ele.innerHTML = commentDiv
+              const key = `${location.pathname.replace(/\/$/, '')}?key=${ele.getAttribute('data-key')}`
+              btf.switchComments(ele, key)
+              shuoshuoComment.loadComment && shuoshuoComment.loadComment(ele, key)
+            }
+          }
+        })()
+
+
+    - const localDate = page.shuoshuo_url ? [] : shuoshuoFN(site.data.shuoshuo, page)
+
+    if !page.shuoshuo_url
+      script(type='application/json' id='shuoshuo-data')!= safeJSON(localDate)
+
+    script.
+      (() => {
+        const limitConfig = !{ JSON.stringify(page.limit || {}) }
+
+        const sortDataByDate = data => data.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+        const filterDataByLimit = (data, limit) => {
+          if (!limit || !limit.type) return data
+          if (limit.type === 'num') return data.slice(0, limit.value)
+          if (limit.type === 'date') {
+            const limitDate = new Date(limit.value)
+            return data.filter(item => new Date(item.date) >= limitDate)
+          }
+          return data
+        };
+
+        const formatToTimeZone = (date) => {
+          const fullDate = date.length === 10 ? `${date} 00:00:00` : date
+          const visitorTimeZone = '#{config.timezone}' || Intl.DateTimeFormat().resolvedOptions().timeZone
+          const options = {
+            timeZone: visitorTimeZone,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          }
+          const [day, month, year, hour, minute, second] = new Intl.DateTimeFormat('en-GB', options)
+            .format(new Date(fullDate))
+            .match(/\d+/g)
+          return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+        }
+
+        let currentPage = 1
+        const itemsPerPage = 8
+        let totalPages = 0
+        let data = []
+        let inputEventsAttached = false // Flag to mark if input event listeners have been added
+
+        const renderData = (dataSlice) => {
+          const content = dataSlice.map(item => {
+            const formattedDate = formatToTimeZone(item.date)
+            const tags = item.tags && item.tags.map(tag => `<span class="shuoshuo-tag">${tag}</span>`).join('') || ''
+            const commentButton = item.key && !{commentsJsLoad}
+              ? `<div class="shuoshuo-comment-btn" onclick="addCommentToShuoshuo(event)">
+                  <i class="fa-solid fa-comments"></i>
+                </div>`
+              : ''
+            const commentContainer = item.key
+              ? `<div class="shuoshuo-comment no-comment" data-key="${item.key}"></div>`
+              : ''
+
+            return `
+              <div class="shuoshuo-item">
+                <div class="container">
+                  <div class="shuoshuo-item-header">
+                    <div class="shuoshuo-avatar">
+                      <img class="no-lightbox" src="${item.avatar || '!{url_for(theme.avatar.img)}'}">
+                    </div>
+                    <div class="shuoshuo-info">
+                      <div class="shuoshuo-author">${item.author || '!{config.author}'}</div>
+                      <time class="shuoshuo-date" title="${formattedDate}">
+                        ${btf.diffDate(formattedDate, true)}
+                      </time>
+                    </div>
+                  </div>
+                  <div class="shuoshuo-content">${item.content}</div>
+                  <div class="shuoshuo-footer ${tags ? 'flex-between' : 'flex-end'}">
+                    ${tags ? `<div class="shuoshuo-tags">${tags}</div>` : ''}
+                    ${commentButton}
+                  </div>
+                </div>
+                ${commentContainer}
+              </div>`
+          }).join('')
+
+          const container = document.getElementById('article-container')
+          container.innerHTML = content
+
+          window.lazyLoadInstance && window.lazyLoadInstance.update()
+          btf.loadLightbox(document.querySelectorAll('#article-container img:not(.no-lightbox)'))
+        }
+
+        const renderNavigation = () => {
+          const container = document.getElementById('article-container')
+          const existingNav = container.nextElementSibling
+          if (existingNav && existingNav.classList.contains('shuoshuo-navigation')) {
+            existingNav.remove()
+          }
+
+          const pageInfoTemplate = '#{__('pagination.page_info')}'
+          const pageInfoText = pageInfoTemplate
+            .replace(/\$\{current}/g, currentPage)
+            .replace(/\$\{total}/g, totalPages)
+
+          const navHtml = `
+            <div class="shuoshuo-navigation">
+              <button onclick="window.shuoshuoPrevPage()" ${currentPage === 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left"></i></button>
+              <span class="shuoshuo-page-info">${pageInfoText}</span>
+              <input type="number" class="shuoshuo-page-input" min="1" max="${totalPages}" placeholder="${currentPage}" onkeydown="window.shuoshuoHandleKeyDown(event)">
+              <button onclick="window.shuoshuoNextPage()" ${currentPage === totalPages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          `
+          container.insertAdjacentHTML('afterend', navHtml)
+
+          // Add input validation event listeners (only once)
+          if (!inputEventsAttached) {
+            setTimeout(() => {
+              const input = document.querySelector('.shuoshuo-page-input')
+              if (input) {
+                // Clear placeholder when clicking the input box
+                input.addEventListener('focus', (event) => {
+                  event.target.placeholder = ''
+                })
+
+                // Restore placeholder if no content when losing focus
+                input.addEventListener('blur', (event) => {
+                  if (!event.target.value.trim()) {
+                    event.target.placeholder = currentPage
+                  }
+                })
+
+                input.addEventListener('input', (event) => {
+                  const value = parseInt(event.target.value) || 0
+                  let wasInvalid = false
+
+                  if (value > totalPages) {
+                    event.target.value = totalPages
+                    wasInvalid = true
+                  } else if (value < 1 && event.target.value !== '') {
+                    event.target.value = 1
+                    wasInvalid = true
+                  }
+
+                  // If value is corrected, show red and shake effect
+                  if (wasInvalid) {
+                    event.target.classList.add('invalid')
+                    setTimeout(() => {
+                      event.target.classList.remove('invalid')
+                    }, 500)
+                  }
+                })
+
+                inputEventsAttached = true // Mark that event listeners have been added
+              }
+            }, 0)
+          }
+        }
+
+        const renderPage = (page) => {
+          const start = (page - 1) * itemsPerPage
+          const end = start + itemsPerPage
+          const pageData = data.slice(start, end)
+          renderData(pageData)
+          renderNavigation()
+        }
+
+        window.shuoshuoPrevPage = () => {
+          if (currentPage > 1) {
+            currentPage--
+            renderPage(currentPage)
+          }
+        }
+
+        window.shuoshuoNextPage = () => {
+          if (currentPage < totalPages) {
+            currentPage++
+            renderPage(currentPage)
+          }
+        }
+
+        window.shuoshuoGoToPage = (page) => {
+          if (typeof page === 'number') {
+            // Directly jump to the specified page
+            if (page >= 1 && page <= totalPages && page !== currentPage) {
+              currentPage = page
+              renderPage(currentPage)
+            }
+          } else {
+            // Get page from input box
+            const input = document.querySelector('.shuoshuo-page-input')
+            const inputValue = input.value.trim()
+            const inputPage = inputValue === '' ? currentPage : parseInt(inputValue)
+            if (inputPage >= 1 && inputPage <= totalPages && inputPage !== currentPage) {
+              currentPage = inputPage
+              renderPage(currentPage)
+            } else if (inputValue === '') {
+              // If input box is empty, re-render current page (update placeholder)
+              renderPage(currentPage)
+            }
+          }
+        }
+
+        window.shuoshuoHandleKeyDown = (event) => {
+          const input = event.target
+          const value = input.value + event.key
+
+          // Allow delete, arrow keys, backspace, etc.
+          if (event.key === 'Enter' || event.key === 'Backspace' || event.key === 'Delete' ||
+              event.key === 'ArrowLeft' || event.key === 'ArrowRight' ||
+              event.key === 'Tab' || event.ctrlKey || event.metaKey) {
+            if (event.key === 'Enter') {
+              window.shuoshuoGoToPage()
+            }
+            return
+          }
+
+          // Only allow numbers
+          if (!/^\d$/.test(event.key)) {
+            event.preventDefault()
+            return
+          }
+
+          // Check if the value after input exceeds the range
+          const newValue = parseInt(value) || 0
+          if (newValue > totalPages || (value.length > 1 && newValue === 0)) {
+            event.preventDefault()
+            // Add red and shake effect
+            input.classList.add('invalid')
+            setTimeout(() => {
+              input.classList.remove('invalid')
+            }, 500)
+          }
+        }
+
+        const loadShuoshuo = async () => {
+          try {
+            let originData = []
+            if (!{Boolean(page.shuoshuo_url)}) {
+              const response = await fetch('!{url_for(page.shuoshuo_url)}')
+              originData = await response.json()
+            } else {
+              const dataElement = document.getElementById('shuoshuo-data')
+              originData = dataElement ? JSON.parse(dataElement.textContent) : []
+            }
+
+            data = filterDataByLimit(sortDataByDate(originData), limitConfig)
+
+            totalPages = Math.ceil(data.length / itemsPerPage)
+
+            renderPage(currentPage)
+          } catch (error) {
+            console.error(error)
+          }
+        };
+
+        window.pjax ? loadShuoshuo() : window.addEventListener('load', loadShuoshuo)
+      })()

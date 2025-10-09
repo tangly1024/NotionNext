@@ -1,0 +1,12 @@
+.post-reward
+  .reward-button
+    i.fas.fa-qrcode
+    = theme.reward.text || _p('donate')
+  .reward-main
+    ul.reward-all
+      each item in theme.reward.QR_code
+        - const clickTo = item.link || item.img
+        li.reward-item
+          a(href=url_for(clickTo) target='_blank')
+            img.post-qr-code-img(src=url_for(item.img) alt=item.text)
+          .post-qr-code-desc=item.text

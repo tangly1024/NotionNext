@@ -1,0 +1,18 @@
+- const { host, siteId, option } = theme.remark42
+
+script.
+  (()=>{
+    window.remark_config = Object.assign({
+      host: '!{host}',
+      site_id: '!{siteId}',
+    },!{JSON.stringify(option)})
+
+    function getCount () {
+      const s = document.createElement('script')
+      s.src = remark_config.host + '/web/counter.js'
+      s.defer = true
+      document.head.appendChild(s)
+    }
+
+    window.pjax ? getCount() : window.addEventListener('load', getCount)
+  })()

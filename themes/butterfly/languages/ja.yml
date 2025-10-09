@@ -1,0 +1,123 @@
+footer:
+  framework: フレームワーク
+  theme: テーマ
+
+copy:
+  success: コピー成功
+  error: コピー失敗
+  noSupport: ブラウザが対応していません
+
+page:
+  articles: 記事一覧
+  tag: タグ
+  category: カテゴリ
+  archives: アーカイブ
+
+card_post_count: コメント数
+
+no_title: タイトルなし
+
+post:
+  created: 作成日
+  updated: 更新日
+  wordcount: 総文字数
+  min2read: 読む時間
+  min2read_unit: 分
+  page_pv: 閲覧数
+  comments: コメント数
+  copyright:
+    author: 著者
+    link: リンク
+    copyright_notice: 著作権表示
+    copyright_content: 'このブログのすべての記事は、<a href="%s">%s</a> ライセンスの下で提供されており、特に明記されていない限り、すべての権利を留保します。転載時には出典を明記してください: <a href="%s">%s</a>。'
+  recommend: 関連記事
+  edit: 編集
+  back_to_home: ホームに戻る
+
+search:
+  title: 検索
+  load_data: データベースを読み込んでいます
+  input_placeholder: 記事を検索
+  algolia_search:
+    hits_empty: '${query} の検索結果が見つかりませんでした。'
+    hits_stats: '${hits} 件の結果が ${time}ms で見つかりました'
+  local_search:
+    hits_empty: '${query} の検索結果が見つかりませんでした。'
+    hits_stats: '${hits} 件の記事が見つかりました'
+
+pagination:
+  prev: 前へ
+  next: 次へ
+  page_info: '${current} ページ / 合計 ${total} ページ'
+
+comment: コメント
+
+aside:
+  articles: 記事
+  tags: タグ
+  categories: カテゴリ
+  card_announcement: お知らせ
+  card_categories: カテゴリ
+  card_tags: タグ
+  card_archives: アーカイブ
+  card_recent_post: 最近の記事
+  card_webinfo:
+    headline: サイト情報
+    article_name: 記事数
+    runtime:
+      name: 稼働時間
+      unit: 日
+    last_push_date:
+      name: 最終更新日
+    site_wordcount: 総文字数
+    site_uv_name: ユーザー数
+    site_pv_name: ページビュー数
+  more_button: もっと見る
+  card_newest_comments:
+    headline: 最新コメント
+    loading_text: ローディング中...
+    error: コメントを取得できませんでした。設定を確認してください。
+    zero: コメントがありません
+    image: 画像
+    link: リンク
+    code: コード
+  card_toc: 目次
+  card_post_series: シリーズ記事
+
+date_suffix:
+  just: たった今
+  min: 分前
+  hour: 時間前
+  day: 日前
+  month: ヶ月前
+
+donate: 寄付
+share: 共有
+
+rightside:
+  readmode_title: 読書モード
+  translate_title: 簡体字と繁体字の切り替え
+  night_mode_title: ライトモード/ダークモード切り替え
+  back_to_top: トップに戻る
+  toc: 目次
+  scroll_to_comment: コメントへ移動
+  setting: 設定
+  aside: シングルカラムとダブルカラムの切り替え
+  chat: チャット
+
+copy_copyright:
+  author: 著者
+  link: リンク
+  source: ソース
+  info: 著作権は著者に帰属します。商業的利用の場合は著者に連絡して許可を得てください。非商業的利用の場合は出典を明記してください。
+
+Snackbar:
+  chs_to_cht: 繁体字に切り替えました
+  cht_to_chs: 簡体字に切り替えました
+  day_to_night: ダークモードに切り替えました
+  night_to_day: ライトモードに切り替えました
+
+loading: ローディング中...
+load_more: もっと見る
+
+error404: ページが見つかりません

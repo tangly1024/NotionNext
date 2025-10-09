@@ -1,0 +1,47 @@
+- const { use, lazyload } = theme.comments
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+
+    const loadLivere = (el, path) => {
+      window.livereOptions = {
+        refer: path || location.pathname
+      }
+
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyLivere = () => {
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      if (typeof LivereTower === 'object') window.LivereTower.init()
+      else {
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') { return; }
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+      }
+    }
+
+    if (isShuoshuo) {
+      '!{use[0]}' === 'Livere'
+        ? window.shuoshuoComment = { loadComment: loadLivere }
+        : window.loadOtherComment = loadLivere
+      return
+    }
+
+    if ('!{use[0]}' === 'Livere' || !!{lazyload}) {
+      if (!{lazyload}) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+      else loadLivere()
+    } else {
+      window.loadOtherComment = loadLivere
+    }
+  })()

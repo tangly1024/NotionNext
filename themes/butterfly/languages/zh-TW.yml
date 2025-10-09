@@ -1,0 +1,123 @@
+footer:
+  framework: 框架
+  theme: 主題
+
+copy:
+  success: 複製成功
+  error: 複製失敗
+  noSupport: 瀏覽器不支援
+
+page:
+  articles: 所有文章
+  tag: 標籤
+  category: 分類
+  archives: 歸檔
+
+card_post_count: 則評論
+
+no_title: 無標題
+
+post:
+  created: 發表於
+  updated: 更新於
+  wordcount: 總字數
+  min2read: 閱讀時間
+  min2read_unit: 分鐘
+  page_pv: 瀏覽量
+  comments: 評論數
+  copyright:
+    author: 文章作者
+    link: 文章連結
+    copyright_notice: 版權聲明
+    copyright_content: '本部落格所有文章除特別聲明外，均採用<a href="%s" target="_blank">%s</a> 授權協議。轉載請註明來源 <a href="%s" target="_blank">%s</a>！'
+  recommend: 相關推薦
+  edit: 編輯
+  back_to_home: 返回首頁
+
+search:
+  title: 搜尋
+  load_data: 資料載入中
+  input_placeholder: 搜尋文章
+  algolia_search:
+    hits_empty: '找不到符合您查詢的內容：${query}'
+    hits_stats: '找到 ${hits} 筆結果，耗時 ${time} 毫秒'
+  local_search:
+    hits_empty: '找不到符合您查詢的內容：${query}'
+    hits_stats: '共找到 ${hits} 篇文章'
+
+pagination:
+  prev: 上一篇
+  next: 下一篇
+  page_info: '第 ${current} 頁 / 共 ${total} 頁'
+
+comment: 評論
+
+aside:
+  articles: 文章
+  tags: 標籤
+  categories: 分類
+  card_announcement: 公告
+  card_categories: 分類
+  card_tags: 標籤
+  card_archives: 歸檔
+  card_recent_post: 最新文章
+  card_webinfo:
+    headline: 網站資訊
+    article_name: 文章數量
+    runtime:
+      name: 運行時間
+      unit: 天
+    last_push_date:
+      name: 最後更新時間
+    site_wordcount: 總字數
+    site_uv_name: 訪客數
+    site_pv_name: 總瀏覽量
+  more_button: 檢視更多
+  card_newest_comments:
+    headline: 最新評論
+    loading_text: 載入中...
+    error: 無法獲取評論，請確認相關配置是否正確
+    zero: 尚無評論
+    image: 圖片
+    link: 連結
+    code: 程式碼
+  card_toc: 目錄
+  card_post_series: 系列文章
+
+date_suffix:
+  just: 剛剛
+  min: 分鐘前
+  hour: 小時前
+  day: 天前
+  month: 個月前
+
+donate: 贊助
+share: 分享
+
+rightside:
+  readmode_title: 閱讀模式
+  translate_title: 繁簡轉換
+  night_mode_title: 日夜模式切換
+  back_to_top: 回到頂端
+  toc: 目錄
+  scroll_to_comment: 前往評論
+  setting: 設定
+  aside: 單欄和雙欄切換
+  chat: 聊天
+
+copy_copyright:
+  author: 作者
+  link: 連結
+  source: 來源
+  info: 著作權歸作者所有。如需商業轉載，請聯絡作者獲得授權，非商業轉載請註明出處。
+
+Snackbar:
+  chs_to_cht: 已切換為繁體中文
+  cht_to_chs: 已切換為簡體中文
+  day_to_night: 已切換為深色模式
+  night_to_day: 已切換為淺色模式
+
+loading: 載入中...
+load_more: 載入更多
+
+error404: 找不到頁面

@@ -1,0 +1,25 @@
+- const { shortname, apikey } = theme.disqus
+script.
+  (() => {
+    const getCount = async () => {
+      try {
+        const eleGroup = document.querySelectorAll('#recent-posts .disqus-count')
+        const cleanedLinks = Array.from(eleGroup).map(i => `thread:link=${i.href.replace(/#post-comment$/, '')}`);
+
+        const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=!{shortname}&api_key=!{apikey}&${cleanedLinks.join('&')}`,{
+          method: 'GET'
+        })
+        const result = await res.json()
+
+        eleGroup.forEach(i => {
+          const cleanedLink = i.href.replace(/#post-comment$/, '')
+          const urlData = result.response.find(data => data.link === cleanedLink) || { posts: 0 }
+          i.textContent = urlData.posts
+        })
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    window.pjax ? getCount() : window.addEventListener('load', getCount)
+  })()

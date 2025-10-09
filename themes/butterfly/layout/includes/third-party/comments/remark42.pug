@@ -1,0 +1,78 @@
+- const { host, siteId, option } = theme.remark42
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+    const options = !{JSON.stringify(option)}
+
+    const loadScript = src => {
+      const script = document.createElement('script')
+      script.src = src
+      script.defer = true
+      document.head.appendChild(script)
+    }
+
+    const addRemark42 = () => loadScript('!{host}/web/embed.js')
+
+    const getCount = () => document.querySelector('.remark42__counter') && loadScript('!{host}/web/count.js')
+
+    const destroyRemark42 = () => window.remark42Instance && window.remark42Instance.destroy()
+
+    const initRemark42 = remark_config => {
+      if (window.REMARK42) {
+        destroyRemark42()
+        window.remark42Instance = window.REMARK42.createInstance({
+          ...remark_config
+        })
+      }
+    }
+
+    const loadRemark42 = (el, path) => {
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyRemark42 = () => {
+          destroyRemark42()
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      window.remark_config = {
+        host: '!{host}',
+        site_id: '!{siteId}',
+        theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light',
+        ...options,
+        url: isShuoshuo ? window.location.origin + path : (options && options.url) || window.location.origin + window.location.pathname
+      }
+
+      if (window.REMARK42) {
+        initRemark42(remark_config)
+        getCount()
+      } else {
+        addRemark42()
+        window.addEventListener('REMARK42::ready', () => {
+          initRemark42(remark_config)
+          getCount()
+        })
+      }
+    }
+
+    const remarkChangeMode = theme => window.REMARK42 && window.REMARK42.changeTheme(theme)
+
+    btf.addGlobalFn('themeChange', remarkChangeMode, 'remark42')
+
+    if (isShuoshuo) {
+      '!{theme.comments.use[0]}' === 'Remark42'
+        ? window.shuoshuoComment = { loadComment: loadRemark42 }
+        : window.loadOtherComment = loadRemark42
+      return
+    }
+
+    if ('!{theme.comments.use[0]}' === 'Remark42' || !!{theme.comments.lazyload}) {
+      if (!{theme.comments.lazyload}) btf.loadComment(document.getElementById('remark42'), loadRemark42)
+      else loadRemark42()
+    } else {
+      window.loadOtherComment = loadRemark42
+    }
+  })()

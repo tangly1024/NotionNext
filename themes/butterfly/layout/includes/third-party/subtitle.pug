@@ -1,0 +1,113 @@
+- const { effect, source, sub, typed_option } = theme.subtitle
+- let subContent = sub || new Array()
+
+script.
+  window.typedJSFn = {
+    init: str => {
+      window.typed = new Typed('#subtitle', Object.assign({
+        strings: str,
+        startDelay: 300,
+        typeSpeed: 150,
+        loop: true,
+        backSpeed: 50,
+      }, !{JSON.stringify(typed_option)}))
+    },
+    run: subtitleType => {
+      if (!{effect}) {
+        if (typeof Typed === 'function') {
+          subtitleType()
+        } else {
+          btf.getScript('!{url_for(theme.asset.typed)}').then(subtitleType)
+        }
+      } else {
+        subtitleType()
+      }
+    },
+    processSubtitle: (content, extraContents = []) => {
+      if (!{effect}) {
+        const sub = !{JSON.stringify(subContent)}.slice()
+
+        if (extraContents.length > 0) {
+          sub.unshift(...extraContents)
+        }
+
+        if (typeof content === 'string') {
+          sub.unshift(content)
+        } else if (Array.isArray(content)) {
+          sub.unshift(...content)
+        }
+
+        sub.length > 0 && typedJSFn.init(sub)
+      } else {
+        document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+          (Array.isArray(content) && content.length > 0 ? content[0] : '')
+      }
+    }
+  }
+  btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+
+case source
+  when 1
+    script.
+      function subtitleType () {
+        fetch('https://v1.hitokoto.cn')
+          .then(response => response.json())
+          .then(data => {
+            const from = '出自 ' + data.from
+            typedJSFn.processSubtitle(data.hitokoto, [from])
+          })
+          .catch(err => {
+            console.error('Failed to get the Hitokoto API:', err)
+            typedJSFn.processSubtitle(!{JSON.stringify(subContent)})
+          })
+      }
+      typedJSFn.run(subtitleType)
+
+  when 2
+    script.
+      function subtitleType () {
+        fetch('https://v.api.aa1.cn/api/yiyan/index.php')
+          .then(response => response.text())
+          .then(data => {
+            const reg = /<p>(.*?)<\/p>/g
+            const result = reg.exec(data)
+            if (result && result[1]) {
+              typedJSFn.processSubtitle(result[1])
+            } else {
+              throw new Error('Failed to parse the return value of the Yiyan API')
+            }
+          })
+          .catch(err => {
+            console.error('Failed to get the Yiyan API:', err)
+            typedJSFn.processSubtitle(!{JSON.stringify(subContent.length)})
+          })
+      }
+      typedJSFn.run(subtitleType)
+
+  when 3
+    script.
+      function subtitleType () {
+        btf.getScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js')
+          .then(() => {
+            jinrishici.load(result => {
+              if (result && result.data && result.data.content) {
+                typedJSFn.processSubtitle(result.data.content)
+              } else {
+                throw new Error('Failed to parse the return value of Jinrishici API')
+              }
+            })
+          })
+          .catch(err => {
+            console.error('Failed to get the Jinrishici API:', err)
+            typedJSFn.processSubtitle(!{JSON.stringify(subContent.length)})
+          })
+      }
+      typedJSFn.run(subtitleType)
+
+  default
+    if subContent.length > 0
+      script.
+        function subtitleType () {
+          typedJSFn.processSubtitle(!{JSON.stringify(subContent)})
+        }
+        typedJSFn.run(subtitleType)

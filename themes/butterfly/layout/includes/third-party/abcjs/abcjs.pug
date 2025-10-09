@@ -1,0 +1,46 @@
+script.
+  (() => {
+    const abcjsInit = () => {
+      const abcjsFn = () => {
+        setTimeout(() => {
+          const sheets = document.querySelectorAll(".abc-music-sheet")
+          for (let i = 0; i < sheets.length; i++) {
+            const ele = sheets[i]
+            if (ele.children.length > 0) continue
+
+            // Parse parameters from data-params attribute
+            let params = {}
+            const dp = ele.getAttribute("data-params")
+            if (dp) {
+              try {
+                params = JSON.parse(dp)
+              } catch (e) {
+                console.error("Failed to parse data-params:", e)
+              }
+            }
+
+            // Merge parsed parameters with the responsive option
+            // Ensures params content appears before responsive
+            const options = { ...params, responsive: "resize" }
+
+            // Render the music score using ABCJS.renderAbc
+            ABCJS.renderAbc(ele, ele.innerHTML, options)
+          }
+        }, 100)
+      }
+
+      if (typeof ABCJS === "object") {
+        abcjsFn()
+      } else {
+        btf.getScript("!{url_for(theme.asset.abcjs_basic_js)}").then(abcjsFn)
+      }
+    }
+
+    if (window.pjax) {
+      abcjsInit()
+    } else {
+      window.addEventListener("load", abcjsInit)
+    }
+
+    btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+  })()

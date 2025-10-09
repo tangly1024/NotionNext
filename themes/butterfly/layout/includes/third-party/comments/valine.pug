@@ -1,0 +1,60 @@
+- const { use, lazyload } = theme.comments
+- const { appId, appKey, avatar, serverURLs, visitor, option } = theme.valine
+
+- let emojiMaps = '""'
+if site.data.valine
+  - emojiMaps = JSON.stringify(site.data.valine)
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+    const option = !{JSON.stringify(option)}
+
+    const initValine = (el, path) => {
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyValine = () => {
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      const valineConfig = {
+        el: '#vcomment',
+        appId: '#{appId}',
+        appKey: '#{appKey}',
+        avatar: '#{avatar}',
+        serverURLs: '#{serverURLs}',
+        emojiMaps: !{emojiMaps},
+        visitor: #{visitor},
+        ...option,
+        path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+      }
+
+      new Valine(valineConfig)
+    }
+
+    const loadValine = async (el, path) => {
+      if (typeof Valine === 'function') {
+        initValine(el, path)
+      } else {
+        await btf.getScript('!{url_for(theme.asset.valine)}')
+        initValine(el, path)
+      }
+    }
+
+    if (isShuoshuo) {
+      '!{use[0]}' === 'Valine'
+        ? window.shuoshuoComment = { loadComment: loadValine }
+        : window.loadOtherComment = loadValine
+      return
+    }
+
+    if ('!{use[0]}' === 'Valine' || !!{lazyload}) {
+      if (!{lazyload}) btf.loadComment(document.getElementById('vcomment'),loadValine)
+      else setTimeout(loadValine, 0)
+    } else {
+      window.loadOtherComment = loadValine
+    }
+  })()

@@ -1,0 +1,64 @@
+- const { envId, region, option } = theme.twikoo
+- const { use, lazyload, count } = theme.comments
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+    const option = !{JSON.stringify(option)}
+
+    const getCount = () => {
+      const countELement = document.getElementById('twikoo-count')
+      if(!countELement) return
+      twikoo.getCommentsCount({
+        envId: '!{envId}',
+        region: '!{region}',
+        urls: [window.location.pathname],
+        includeReply: false
+      }).then(res => {
+        countELement.textContent = res[0].count
+      }).catch(err => {
+        console.error(err)
+      })
+    }
+
+    const init = (el = document, path = location.pathname) => {
+      twikoo.init({
+        el: el.querySelector('#twikoo-wrap'),
+        envId: '!{envId}',
+        region: '!{region}',
+        onCommentLoaded: () => {
+          btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+        },
+        ...option,
+        path: isShuoshuo ? path : (option && option.path) || path
+      })
+
+      !{count ? `GLOBAL_CONFIG_SITE.pageType === 'post' && getCount()` : ''}
+
+      isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      })
+    }
+
+    const loadTwikoo = (el, path) => {
+      if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+      else btf.getScript('!{url_for(theme.asset.twikoo)}').then(() => init(el, path))
+    }
+
+    if (isShuoshuo) {
+      '!{use[0]}' === 'Twikoo'
+        ? window.shuoshuoComment = { loadComment: loadTwikoo }
+        : window.loadOtherComment = loadTwikoo
+      return
+    }
+
+    if ('!{use[0]}' === 'Twikoo' || !!{lazyload}) {
+      if (!{lazyload}) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+      else loadTwikoo()
+    } else {
+      window.loadOtherComment = loadTwikoo
+    }
+  })()

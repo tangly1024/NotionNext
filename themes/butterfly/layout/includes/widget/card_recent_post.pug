@@ -1,0 +1,27 @@
+if theme.aside.card_recent_post.enable
+  .card-widget.card-recent-post
+    .item-headline
+      i.fas.fa-history
+      span= _p('aside.card_recent_post')
+    .aside-list
+      - let postLimit = theme.aside.card_recent_post.limit === 0 ? site.posts.length : theme.aside.card_recent_post.limit || 5
+      - let sort = theme.aside.card_recent_post.sort === 'updated' ? 'updated' : 'date'
+      - site.posts.sort(sort, -1).limit(postLimit).each(function(article){
+        - let link = article.link || article.path
+        - let title = article.title || _p('no_title')
+        - let no_cover = article.cover === false || !theme.cover.aside_enable ? 'no-cover' : ''
+        - let post_cover = article.cover
+        .aside-list-item(class=no_cover)
+          if post_cover && theme.cover.aside_enable
+            a.thumbnail(href=url_for(link) title=title)
+              if article.cover_type === 'img'
+                img(src=url_for(post_cover) onerror=`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'` alt=title)
+              else
+                div(style=`background: ${post_cover}`)
+          .content
+            a.title(href=url_for(link) title=title)= title
+            if theme.aside.card_recent_post.sort === 'updated'
+              time(datetime=date_xml(article.updated) title=_p('post.updated') + ' ' + full_date(article.updated)) #[=date(article.updated, config.date_format)]
+            else
+              time(datetime=date_xml(article.date) title=_p('post.created') + ' ' + full_date(article.date)) #[=date(article.date, config.date_format)]
+      - })

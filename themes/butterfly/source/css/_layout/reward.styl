@@ -1,0 +1,81 @@
+.post-reward
+  position: relative
+  margin-top: 80px
+  width: 100%
+  text-align: center
+  pointer-events: none
+
+  & > *
+    pointer-events: auto
+
+  .reward-button
+    display: inline-block
+    padding: 4px 24px
+    background: var(--btn-bg)
+    color: var(--btn-color)
+    cursor: pointer
+    addBorderRadius()
+    @extend .btn-effects
+    @extend .btn-effects-large
+
+    i
+      margin-right: 5px
+      vertical-align: baseline
+
+  &:hover
+    .reward-button
+      background: var(--btn-hover-color)
+
+    & > .reward-main
+      display: block
+
+  .reward-main
+    position: absolute
+    bottom: 50px
+    left: 0
+    z-index: 100
+    display: none
+    padding: 0 0 15px
+    width: 100%
+    addBorderRadius()
+
+    .reward-all
+      display: inline-block
+      margin: 0
+      padding: 20px 10px
+      background: var(--reward-pop)
+
+      &:before
+        position: absolute
+        bottom: -10px
+        left: 0
+        width: 100%
+        height: 20px
+        content: ''
+
+      &:after
+        position: absolute
+        right: 0
+        bottom: 2px
+        left: 0
+        margin: 0 auto
+        width: 0
+        height: 0
+        border-top: 13px solid var(--reward-pop)
+        border-right: 13px solid transparent
+        border-left: 13px solid transparent
+        content: ''
+
+      .reward-item
+        display: inline-block
+        padding: 0 8px
+        list-style-type: none
+        vertical-align: top
+
+        img
+          width: 130px
+          height: 130px
+
+        .post-qr-code-desc
+          width: 130px
+          color: $reward-pop-up-color

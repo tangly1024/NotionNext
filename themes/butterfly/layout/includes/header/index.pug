@@ -1,0 +1,52 @@
+-
+  const returnTopImg = img => img !== false ? img || theme.default_top_img : false
+  const isFixedClass = theme.nav.fixed ? ' fixed' : ''
+  var top_img = false
+  let headerClassName = 'not-top-img'
+  var bg_img = ''
+
+if !theme.disable_top_img && page.top_img !== false
+  case globalPageType
+    when 'post'
+      - top_img = page.top_img || page.cover || theme.default_top_img
+    when 'page'
+      - top_img = page.top_img || theme.default_top_img
+    when 'tag'
+      - top_img = theme.tag_per_img && theme.tag_per_img[page.tag] || returnTopImg(theme.tag_img)
+    when 'category'
+      - top_img = theme.category_per_img && theme.category_per_img[page.category] || returnTopImg(theme.category_img)
+    when 'home'
+      - top_img = returnTopImg(theme.index_img)
+    when 'archive'
+      - top_img = returnTopImg(theme.archive_img)
+    default
+      - top_img = page.top_img || theme.default_top_img
+
+  if top_img !== false
+    - bg_img = getBgPath(top_img)
+    - headerClassName = globalPageType === 'home' ? 'full_page' : globalPageType === 'post' ? 'post-bg' : 'not-home-page'
+
+header#page-header(class=`${headerClassName + isFixedClass}` style=bg_img)
+  include ./nav.pug
+  if top_img !== false
+    if globalPageType === 'post'
+      include ./post-info.pug
+    else if globalPageType === 'home'
+      #site-info
+        h1#site-title=config.title
+        if theme.subtitle.enable
+          - var loadSubJs = true
+          #site-subtitle
+            span#subtitle
+        if theme.social
+          #site_social_icons
+            !=partial('includes/header/social', {}, {cache: true})
+      #scroll-down
+        i.fas.fa-angle-down.scroll-down-effects
+    else
+      #page-site-info
+        h1#site-title=page.title || page.tag || page.category
+  else
+    //- improve seo
+    if globalPageType !== 'post'
+      h1.title-seo=page.title || page.tag || page.category || config.title

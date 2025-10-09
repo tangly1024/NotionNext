@@ -1,0 +1,49 @@
+// tag-hide
+.hide-inline,
+.hide-block
+  & > .hide-button
+    display: inline-block
+    padding: 5px 18px
+    background: $tag-hide-bg
+    color: var(--white)
+    addBorderRadius()
+    @extend .btn-effects
+
+    &:hover
+      background-color: var(--btn-hover-color)
+
+    &.open
+      display: none
+
+      & + div
+        display: block
+
+      & + span
+        display: inline
+
+  & > .hide-content
+    display: none
+
+.hide-inline
+  & > .hide-button
+    margin: 0 6px
+
+  & > .hide-content
+    margin: 0 6px
+
+.hide-block
+  margin: 0 0 16px
+
+.toggle
+  margin-bottom: 20px
+  border: 1px solid $tag-hide-toggle-bg
+  addBorderRadius(5, true)
+
+  & > .toggle-button
+    padding: 6px 15px
+    background: $tag-hide-toggle-bg
+    color: #1F2D3D
+    cursor: pointer
+
+  & > .toggle-content
+    margin: 30px 24px

@@ -1,0 +1,31 @@
+.relatedPosts
+  margin-top: 40px
+
+  & > .headline
+    margin-bottom: 5px
+    font-weight: 700
+    font-size: 1.43em
+
+  & > .relatedPosts-list
+    & > a
+      margin: 3px
+      width: calc(33.333% - 6px)
+      height: 200px
+      addBorderRadius()
+
+      +maxWidth768()
+        margin: 2px
+        width: calc(50% - 4px)
+        height: 150px
+
+      +maxWidth600()
+        width: calc(100% - 4px)
+
+    .info
+      .info-1
+        .info-item-2
+          -webkit-line-clamp: 2
+
+      .info-2
+        .info-item-1
+          -webkit-line-clamp: 3

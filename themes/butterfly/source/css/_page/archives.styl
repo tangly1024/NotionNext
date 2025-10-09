@@ -1,0 +1,115 @@
+.article-sort
+  margin-left: 10px
+  padding-left: 20px
+  border-left: 2px solid lighten($light-blue, 20)
+
+  &-title
+    position: relative
+    margin-left: 10px
+    padding-bottom: 20px
+    padding-left: 20px
+    font-size: 1.72em
+
+    &:hover
+      &:before
+        border-color: var(--pseudo-hover)
+
+    &:before
+      position: absolute
+      top: calc(((100% - 36px) / 2))
+      left: -9px
+      z-index: 1
+      width: w = 10px
+      height: h = w
+      border: .5 * w solid $light-blue
+      border-radius: w
+      background: var(--card-bg)
+      content: ''
+      line-height: h
+      transition: all .2s ease-in-out
+
+    &:after
+      position: absolute
+      bottom: 0
+      left: 0
+      z-index: 0
+      width: 2px
+      height: 1.5em
+      background: lighten($light-blue, 20)
+      content: ''
+
+  &-item
+    position: relative
+    display: flex
+    align-items: center
+    margin: 0 0 20px 10px
+    transition: all .2s ease-in-out
+
+    &:hover
+      &:before
+        border-color: var(--pseudo-hover)
+
+    &:before
+      $w = 6px
+      position: absolute
+      left: calc(-20px - 17px)
+      width: w = $w
+      height: h = w
+      border: .5 * w solid $light-blue
+      border-radius: w
+      background: var(--card-bg)
+      content: ''
+      transition: all .2s ease-in-out
+
+    &.no-article-cover
+      height: 80px
+
+      .article-sort-item-info
+        padding: 0
+
+    &.year
+      font-size: 1.43em
+      margin-bottom: 10px
+
+      &:hover
+        &:before
+          border-color: $light-blue
+
+      &:before
+        border-color: var(--pseudo-hover)
+
+    &-time
+      color: var(--card-meta)
+      font-size: .85em
+
+      time
+        padding-left: 6px
+        cursor: default
+
+    &-title
+      @extend .limit-more-line
+      color: var(--font-color)
+      font-size: 1.05em
+      transition: all .3s
+      -webkit-line-clamp: 2
+
+      &:hover
+        color: $text-hover
+        transform: translateX(10px)
+
+    &-img
+      overflow: hidden
+      width: 100px
+      height: 70px
+      addBorderRadius()
+
+      +maxWidth768()
+        width: 70px
+        height: 70px
+
+      :first-child
+        @extend .imgHover
+
+    &-info
+      flex: 1
+      padding: 0 16px

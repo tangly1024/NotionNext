@@ -1,0 +1,13 @@
+- const { manifest, theme_color, apple_touch_icon, favicon_32_32, favicon_16_16, mask_icon } = theme.pwa
+
+link(rel="manifest" href=url_for(manifest))
+if theme_color
+  meta(name="msapplication-TileColor" content=theme_color)
+if apple_touch_icon
+  link(rel="apple-touch-icon" sizes="180x180" href=url_for(apple_touch_icon))
+if favicon_32_32
+  link(rel="icon" type="image/png" sizes="32x32" href=url_for(favicon_32_32))
+if favicon_16_16
+  link(rel="icon" type="image/png" sizes="16x16" href=url_for(favicon_16_16))
+if mask_icon
+  link(rel="mask-icon" href=url_for(mask_icon) color="#5bbad5")

@@ -1,0 +1,287 @@
+:root
+  --global-font-size: $font-size
+  --global-bg: $body-bg
+  --font-color: $font-black
+  --hr-border: lighten($theme-hr-color, 50%)
+  --hr-before-color: lighten($theme-hr-color, 30%)
+  --search-bg: $search-bg
+  --search-input-color: $search-input-color
+  --search-a-color: $search-a-color
+  --preloader-bg: $preloader-bg
+  --preloader-color: $preloader-word-color
+  --tab-border-color: $tab-border-color
+  --tab-button-bg: $tab-button-bg
+  --tab-button-color: $tab-button-color
+  --tab-button-hover-bg: $tab-button-hover-bg
+  --tab-button-active-bg: $tab-button-active-bg
+  --card-bg: $card-bg
+  --card-meta: $theme-meta-color
+  --sidebar-bg: $sidebar-background
+  --sidebar-menu-bg: $white
+  --btn-hover-color: $button-hover-color
+  --btn-color: $button-color
+  --btn-bg: $button-bg
+  --text-bg-hover: rgba($text-bg-hover, .7)
+  --light-grey: $light-grey
+  --dark-grey: $dark-grey
+  --white: $white
+  --text-highlight-color: $text-highlight-color
+  --blockquote-color: $blockquote-color
+  --blockquote-bg: $blockquote-background-color
+  --reward-pop: $reward-pop-up-bg
+  --toc-link-color: $toc-link-color
+  --card-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, .05)
+  --card-hover-box-shadow: 0 3px 8px 6px rgba(7, 17, 27, .09)
+  --pseudo-hover: $pseudo-hover
+  --headline-presudo: #a0a0a0
+  --scrollbar-color: $scrollbar-color
+  --default-bg-color: $theme-color
+  --zoom-bg: #fff
+  --mark-bg: alpha($dark-black, .3)
+
+// tags plugin
+:root
+  --btn-color: $btn-color
+  --btn-default-color: $btn-default-color
+  --tags-blue-color: $tagsP-blue-color
+  --tags-blue-color-lighten: lighten($tagsP-blue-color, 85%)
+  --tags-pink-color: $tagsP-pink-color
+  --tags-pink-color-lighten: lighten($tagsP-pink-color, 85%)
+  --tags-red-color: $tagsP-red-color
+  --tags-red-color-lighten: lighten($tagsP-red-color, 85%)
+  --tags-orange-color: $tagsP-orange-color
+  --tags-orange-color-lighten: lighten($tagsP-orange-color, 85%)
+  --tags-purple-color: $tagsP-purple-color
+  --tags-purple-color-lighten: lighten($tagsP-purple-color, 85%)
+  --tags-green-color: $tagsP-green-color
+  --tags-green-color-lighten: lighten($tagsP-green-color, 85%)
+  --note-default-border: $note-default-border
+  --note-default-bg: $note-default-bg
+  --note-default-text: $note-default-text
+  --note-modern-default-border: $note-modern-default-border
+  --note-modern-default-bg: $note-modern-default-bg
+  --note-modern-default-text: $note-modern-default-text
+  --note-modern-default-hover: $note-modern-default-hover
+  --note-primary-border: $note-primary-border
+  --note-primary-bg: $note-primary-bg
+  --note-primary-text: $note-primary-text
+  --note-modern-primary-border: $note-modern-primary-border
+  --note-modern-primary-bg: $note-modern-primary-bg
+  --note-modern-primary-text: $note-modern-primary-text
+  --note-modern-primary-hover: $note-modern-primary-hover
+  --note-info-border: $note-info-border
+  --note-info-bg: $note-info-bg
+  --note-info-text: $note-info-text
+  --note-modern-info-border: $note-modern-info-border
+  --note-modern-info-bg: $note-modern-info-bg
+  --note-modern-info-text: $note-modern-info-text
+  --note-modern-info-hover: $note-modern-info-hover
+  --note-success-border: $note-success-border
+  --note-success-bg: $note-success-bg
+  --note-success-text: $note-success-text
+  --note-modern-success-border: $note-modern-success-border
+  --note-modern-success-bg: $note-modern-success-bg
+  --note-modern-success-text: $note-modern-success-text
+  --note-modern-success-hover: $note-modern-success-hover
+  --note-warning-border: $note-warning-border
+  --note-warning-bg: $note-warning-bg
+  --note-warning-text: $note-warning-text
+  --note-modern-warning-border: $note-modern-warning-border
+  --note-modern-warning-bg: $note-modern-warning-bg
+  --note-modern-warning-text: $note-modern-warning-text
+  --note-modern-warning-hover: $note-modern-warning-hover
+  --note-danger-border: $note-danger-border
+  --note-danger-bg: $note-danger-bg
+  --note-danger-text: $note-danger-text
+  --note-modern-danger-border: $note-modern-danger-border
+  --note-modern-danger-bg: $note-modern-danger-bg
+  --note-modern-danger-text: $note-modern-danger-text
+  --note-modern-danger-hover: $note-modern-danger-hover
+
+body
+  position: relative
+  overflow-y: scroll
+  min-height: 100%
+  background: var(--global-bg)
+  color: var(--font-color)
+  font-size: var(--global-font-size)
+  font-family: $font-family
+  line-height: $text-line-height
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  scroll-behavior: smooth
+
+  if !hexo-config('copy.enable')
+    user-select: none
+    -webkit-user-select: none
+
+// scrollbar - firefox
+@-moz-document url-prefix()
+  *
+    scrollbar-width: thin
+    scrollbar-color: var(--scrollbar-color) transparent
+
+// scrollbar - chrome/safari
+*::-webkit-scrollbar
+  width: 5px
+  height: 5px
+
+*::-webkit-scrollbar-thumb
+  background: var(--scrollbar-color)
+
+*::-webkit-scrollbar-track
+  background-color: transparent
+
+input::placeholder
+  color: var(--font-color)
+
+if hexo-config('background')
+  #web_bg
+    position: fixed
+    z-index: -999
+    width: 100%
+    height: 100%
+    background-attachment: local
+    background-position: center
+    background-size: cover
+    background-repeat: no-repeat
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+  position: relative
+  margin: 20px 0 14px
+  color: var(--text-highlight-color)
+  font-weight: bold
+
+  code
+    font-size: inherit !important
+
+*
+  box-sizing: border-box
+
+.table-wrap
+  overflow-x: scroll
+  margin: 0 0 20px
+
+  if hexo-config('rounded_corners_ui')
+    $borderRadius = 5px
+    border-radius: $borderRadius
+
+    table
+      border-radius: $borderRadius
+
+      thead > tr:first-child
+        th:first-child
+          border-top-left-radius: $borderRadius
+
+        th:last-child
+          border-top-right-radius: $borderRadius
+
+      tbody > tr:last-child
+        td:first-child
+          border-bottom-left-radius: $borderRadius
+
+        td:last-child
+          border-bottom-right-radius: $borderRadius
+
+table
+  display: table
+  width: 100%
+  border-spacing: 0
+  border-collapse: separate
+  border-top: 1px solid var(--light-grey)
+  border-left: 1px solid var(--light-grey)
+  empty-cells: show
+
+  thead
+    background: alpha($table-thead-bg, 10%)
+
+  th,
+  td
+    padding: 6px 12px
+    border: 1px solid var(--light-grey)
+    border-top: none
+    border-left: none
+    vertical-align: middle
+
+*::selection
+  background: $theme-text-selection-color
+  color: #F7F7F7
+
+button
+  padding: 0
+  outline: 0
+  border: none
+  background: none
+  cursor: pointer
+  touch-action: manipulation
+
+a
+  color: $a-link-color
+  text-decoration: none
+  word-wrap: break-word
+  transition: all .2s
+  overflow-wrap: break-word
+
+  &:hover
+    color: $light-blue
+
+// font
+if $site-name-font
+  #site-title,
+  #site-subtitle,
+  .site-name,
+  #aside-content .author-info-name,
+  #aside-content .author-info-description
+    font-family: $site-name-font
+
+.text-center
+  text-align: center
+
+.text-right
+  text-align: right
+
+img
+  &[src=''],
+  &:not([src])
+    opacity: 0
+
+// lazyload blur
+if hexo-config('lazyload.enable') && hexo-config('lazyload.blur') && !hexo-config('lazyload.placeholder')
+  img
+    &[data-lazy-src]:not(.loaded)
+      filter: blur(8px) brightness(1)
+
+    &[data-lazy-src].error
+      filter: none
+
+.img-alt
+  margin: -10px 0 10px
+  color: #858585
+
+  &:hover
+    text-decoration: none !important
+
+blockquote
+  margin: 0 0 20px
+  padding: 7px 15px
+  border-left: 4px solid $blockquote-padding-color
+  background-color: var(--blockquote-bg)
+  color: var(--blockquote-color)
+  addBorderRadius()
+
+  footer
+    cite
+      &:before
+        padding: 0 5px
+        content: '—'
+
+  & > :last-child
+    margin-bottom: 0 !important
+
+.fa-fw
+  width: 1.25em
+  text-align: center

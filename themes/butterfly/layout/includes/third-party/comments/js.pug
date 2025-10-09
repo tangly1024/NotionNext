@@ -1,0 +1,26 @@
+each name in theme.comments.use
+  case name
+    when 'Valine'
+      !=partial('includes/third-party/comments/valine', {}, {cache: true})
+    when 'Disqus'
+      include ./disqus.pug
+    when 'Disqusjs'
+      include ./disqusjs.pug
+    when 'Livere'
+      !=partial('includes/third-party/comments/livere', {}, {cache: true})
+    when 'Gitalk'
+      include ./gitalk.pug
+    when 'Utterances'
+      !=partial('includes/third-party/comments/utterances', {}, {cache: true})
+    when 'Twikoo'
+      !=partial('includes/third-party/comments/twikoo', {}, {cache: true})
+    when 'Waline'
+      !=partial('includes/third-party/comments/waline', {}, {cache: true})
+    when 'Giscus'
+      !=partial('includes/third-party/comments/giscus', {}, {cache: true})
+    when 'Facebook Comments'
+      include ./facebook_comments.pug
+    when 'Remark42'
+      !=partial('includes/third-party/comments/remark42', {}, {cache: true})
+    when 'Artalk'
+      !=partial('includes/third-party/comments/artalk', {}, {cache: true})

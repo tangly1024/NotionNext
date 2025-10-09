@@ -1,0 +1,82 @@
+- const { use, lazyload } = theme.comments
+- const { repo, repo_id, category_id, light_theme, dark_theme, js, option } = theme.giscus
+- const giscusUrl = js || 'https://giscus.app/client.js'
+- const giscusOriginUrl = new URL(giscusUrl).origin
+
+script.
+  (() => {
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+    const option = !{JSON.stringify(option)}
+
+    const getGiscusTheme = theme => theme === 'dark' ? '!{dark_theme}' : '!{light_theme}'
+
+    const createScriptElement = config => {
+      const ele = document.createElement('script')
+      Object.entries(config).forEach(([key, value]) => {
+        ele.setAttribute(key, value)
+      })
+      return ele
+    }
+
+    const loadGiscus = (el = document, key) => {
+      const mappingConfig = isShuoshuo
+        ? { 'data-mapping': 'specific', 'data-term': key }
+        : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+      const giscusConfig = {
+        src: '!{giscusUrl}',
+        'data-repo': '!{repo}',
+        'data-repo-id': '!{repo_id}',
+        'data-category-id': '!{category_id}',
+        'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+        'data-reactions-enabled': '1',
+        crossorigin: 'anonymous',
+        async: true,
+        ...option,
+        ...mappingConfig
+      }
+
+      const scriptElement = createScriptElement(giscusConfig)
+
+      el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyGiscus = () => {
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+    }
+
+    const changeGiscusTheme = theme => {
+      const iframe = document.querySelector('#giscus-wrap iframe')
+      if (iframe) {
+        const message = {
+          giscus: {
+            setConfig: {
+              theme: getGiscusTheme(theme)
+            }
+          }
+        }
+        iframe.contentWindow.postMessage(message, '!{giscusOriginUrl}')
+      }
+    }
+
+    btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+    if (isShuoshuo) {
+      '!{use[0]}' === 'Giscus'
+        ? window.shuoshuoComment = { loadComment: loadGiscus }
+        : window.loadOtherComment = loadGiscus
+      return
+    }
+
+    if ('!{use[0]}' === 'Giscus' || !!{lazyload}) {
+      if (!{lazyload}) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+      else loadGiscus()
+    } else {
+      window.loadOtherComment = loadGiscus
+    }
+  })()

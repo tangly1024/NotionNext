@@ -1,0 +1,14 @@
+case theme.math.use
+  when 'mathjax'
+    if (theme.math.per_page && (['post','page'].includes(globalPageType))) || page.mathjax
+      include ./mathjax.pug
+
+  when 'katex'
+    if (theme.math.per_page && (['post','page'].includes(globalPageType))) || page.katex
+      include ./katex.pug
+
+if theme.mermaid.enable
+  include ./mermaid.pug
+
+if theme.chartjs.enable
+  include ./chartjs.pug

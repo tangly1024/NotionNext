@@ -1,0 +1,64 @@
+- const fbSDKVer = 'v20.0'
+- const fbSDK = `https://connect.facebook.net/${theme.facebook_comments.lang}/sdk.js#xfbml=1&version=${fbSDKVer}`
+
+script.
+  (()=>{
+    const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'== 'shuoshuo'
+
+    const loadFBComment = (el = document, path) => {
+      if (isShuoshuo) {
+        window.shuoshuoComment.destroyFB = () => {
+          if (el.children.length) {
+            el.innerHTML = ''
+            el.classList.add('no-comment')
+          }
+        }
+      }
+
+      document.getElementById('fb-root') ? '' : document.body.insertAdjacentHTML('afterend', '<div id="fb-root"></div>')
+
+      const themeNow = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
+      const $fbComment = el.getElementsByClassName('fb-comments')[0]
+      $fbComment.setAttribute('data-colorscheme',themeNow)
+      $fbComment.setAttribute('data-href', isShuoshuo ? '!{urlNoIndex(page.permalink)}' + '#' + path : '!{urlNoIndex(page.permalink)}')
+
+      if (typeof FB === 'object') {
+        FB.XFBML.parse(document.getElementsByClassName('post-meta-commentcount')[0])
+        FB.XFBML.parse(el.querySelector('#post-comment'))
+      }
+      else {
+        let ele = document.createElement('script')
+        ele.setAttribute('src','!{fbSDK}')
+        ele.setAttribute('async', 'true')
+        ele.setAttribute('defer', 'true')
+        ele.setAttribute('crossorigin', 'anonymous')
+        ele.setAttribute('id', 'facebook-jssdk')
+        document.getElementById('fb-root').insertAdjacentElement('afterbegin',ele)
+      }
+    }
+
+    const fbModeChange = theme => {
+      const $fbComment = document.getElementsByClassName('fb-comments')[0]
+      if ($fbComment && typeof FB === 'object') {
+        $fbComment.setAttribute('data-colorscheme',theme)
+        FB.XFBML.parse(document.getElementById('post-comment'))
+      }
+    }
+
+    btf.addGlobalFn('themeChange', fbModeChange, 'facebook_comments')
+
+    if (isShuoshuo) {
+      '!{theme.comments.use[0]}' === 'Facebook Comments'
+        ? window.shuoshuoComment = { loadComment: loadFBComment }
+        : window.loadOtherComment = loadFBComment
+      return
+    }
+
+    if ('!{theme.comments.use[0]}' === 'Facebook Comments' || !!{theme.comments.lazyload}) {
+      if (!{theme.comments.lazyload}) btf.loadComment(document.querySelector('#post-comment .fb-comments'), loadFBComment)
+      else loadFBComment()
+    } else {
+      window.loadOtherComment = loadFBComment
+    }
+  })()
+

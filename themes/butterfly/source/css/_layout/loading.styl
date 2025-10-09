@@ -1,0 +1,95 @@
+if hexo-config('preloader.enable') && hexo-config('preloader.source') == 1
+  .loading-bg
+    position: fixed
+    z-index: 1000
+    width: 50%
+    height: 100%
+    background-color: var(--preloader-bg)
+
+  #loading-box
+    .loading-left-bg
+      @extend .loading-bg
+
+    .loading-right-bg
+      @extend .loading-bg
+      right: 0
+
+    .spinner-box
+      position: fixed
+      z-index: 1001
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 100%
+      height: 100vh
+
+      .configure-border-1
+        position: absolute
+        padding: 3px
+        width: 115px
+        height: 115px
+        background: #ffab91
+        animation: configure-clockwise 3s ease-in-out 0s infinite alternate
+
+      .configure-border-2
+        left: -115px
+        padding: 3px
+        width: 115px
+        height: 115px
+        background: rgb(63, 249, 220)
+        transform: rotate(45deg)
+        animation: configure-xclockwise 3s ease-in-out 0s infinite alternate
+
+      .loading-word
+        position: absolute
+        color: var(--preloader-color)
+        font-size: 16px
+
+      .configure-core
+        width: 100%
+        height: 100%
+        background-color: var(--preloader-bg)
+
+    &.loaded
+      .loading-left-bg
+        transition: all .5s
+        transform: translate(-100%, 0)
+
+      .loading-right-bg
+        transition: all .5s
+        transform: translate(100%, 0)
+
+      .spinner-box
+        display: none
+
+  @keyframes configure-clockwise
+    0%
+      transform: rotate(0)
+
+    25%
+      transform: rotate(90deg)
+
+    50%
+      transform: rotate(180deg)
+
+    75%
+      transform: rotate(270deg)
+
+    100%
+      transform: rotate(360deg)
+
+  @keyframes configure-xclockwise
+    0%
+      transform: rotate(45deg)
+
+    25%
+      transform: rotate(-45deg)
+
+    50%
+      transform: rotate(-135deg)
+
+    75%
+      transform: rotate(-225deg)
+
+    100%
+      transform: rotate(-315deg)

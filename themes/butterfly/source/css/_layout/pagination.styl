@@ -1,0 +1,106 @@
+#pagination
+  .pagination
+    margin-top: 20px
+    text-align: center
+
+  .page-number
+    &.current
+      background: $theme-paginator-color
+      color: var(--white)
+
+  .full-width
+    width: 100% !important
+
+  .pagination-related
+    height: 150px
+
+    +minWidth768()
+      flex: 1
+
+    .info-1
+      .info-item-2
+        -webkit-line-clamp: 1
+
+    .info-2
+      .info-item-1
+        -webkit-line-clamp: 2
+
+  &.pagination-post
+    overflow: hidden
+    margin-top: 40px
+    width: 100%
+    addBorderRadius()
+    display: flex
+
+    +maxWidth768()
+      flex-direction: column
+
+.layout
+  .pagination
+    & > *
+      display: inline-block
+      margin: 0 6px
+      width: w = 2.5em
+      height: w
+      line-height: w
+
+    & > *:not(.space)
+      @extend .cardHover
+
+      &:hover
+        background: var(--btn-hover-color)
+        color: var(--btn-color)
+
+#archive
+  .pagination
+    margin-top: 30px
+
+    & > *:not(.space)
+      box-shadow: none
+
+.pagination-related
+  position: relative
+  display: inline-block
+  overflow: hidden
+  background: $dark-black
+  vertical-align: bottom
+  @extend .postImgHover
+
+  &.next-post
+    .info
+      text-align: right
+
+  .info
+    .info-1,
+    .info-2
+      @extend .verticalCenter
+      padding: 20px 40px
+      color: var(--white)
+      transition: transform .3s, opacity .3s
+
+    .info-1
+      .info-item-1
+        color: var(--light-grey)
+        text-transform: uppercase
+        font-size: 90%
+
+      .info-item-2
+        @extend .limit-more-line
+        color: var(--white)
+        font-weight: 500
+
+    .info-2
+      opacity: 0
+      transform: translate(0, 0)
+
+      .info-item-1
+        @extend .limit-more-line
+
+  &:not(.no-desc):hover
+    .info-1
+      opacity: 0
+      transform: translate(0, -100%)
+
+    .info-2
+      opacity: 1
+      transform: translate(0, -50%)

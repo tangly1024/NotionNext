@@ -1,0 +1,54 @@
+- const { readmode, translate, darkmode, aside, chat } = theme
+
+mixin rightsideItem(array)
+  each item in array
+    case item
+      when 'readmode'
+        if globalPageType === 'post' && readmode
+          button#readmode(type="button" title=_p('rightside.readmode_title'))
+            i.fas.fa-book-open
+      when 'translate'
+        if translate.enable
+          button#translateLink(type="button" title=_p('rightside.translate_title'))= translate.default
+      when 'darkmode'
+        if darkmode.enable && darkmode.button
+          button#darkmode(type="button" title=_p('rightside.night_mode_title'))
+            i.fas.fa-adjust
+      when 'hideAside'
+        if aside.enable && aside.button && page.aside !== false
+          button#hide-aside-btn(type="button" title=_p('rightside.aside'))
+            i.fas.fa-arrows-alt-h
+      when 'toc'
+        if showToc
+          button#mobile-toc-button.close(type="button" title=_p("rightside.toc"))
+            i.fas.fa-list-ul
+      when 'chat'
+        if chat.rightside_button && chat.use
+          button#chat-btn(type="button" title=_p("rightside.chat") style="display:none")
+            i.fas.fa-message
+      when 'comment'
+        if commentsJsLoad
+          a#to_comment(href="#post-comment" title=_p("rightside.scroll_to_comment"))
+            i.fas.fa-comments
+
+- const { enable, hide, show } = theme.rightside_item_order
+- const hideArray = enable && hide ? hide.split(',') : ['readmode','translate','darkmode','hideAside']
+- const showArray = enable && show ? show.split(',') : ['toc','chat','comment']
+- const needCogBtn = (enable && hide) || (!enable && ((globalPageType === 'post' && (readmode || translate.enable || (darkmode.enable && darkmode.button))) || (translate.enable || (darkmode.enable && darkmode.button))))
+
+#rightside
+  #rightside-config-hide
+    if hideArray.length
+      +rightsideItem(hideArray)
+
+  #rightside-config-show
+    if needCogBtn
+      button#rightside-config(type="button" title=_p("rightside.setting"))
+        i.fas.fa-cog(class=theme.rightside_config_animation ? 'fa-spin' : '')
+
+    if showArray.length
+      +rightsideItem(showArray)
+
+    button#go-up(type="button" title=_p("rightside.back_to_top"))
+      span.scroll-percent
+      i.fas.fa-arrow-up
