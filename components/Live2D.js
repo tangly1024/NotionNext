@@ -11,7 +11,8 @@ import { useEffect } from 'react'
 export default function Live2D() {
   const { theme, switchTheme } = useGlobal()
   const showPet = JSON.parse(siteConfig('WIDGET_PET'))
-  const petLink = siteConfig('WIDGET_PET_LINK')
+  const petLink = siteConfig('https://cdn.jsdelivr.net/npm/live2d-widget-model-koharu/assets/koharu.model.json
+')
   const petSwitchTheme = siteConfig('WIDGET_PET_SWITCH_THEME')
 
   useEffect(() => {
