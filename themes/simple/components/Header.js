@@ -12,7 +12,7 @@ export default function Header(props) {
   const { siteInfo } = props
 
   return (
-    <header className='text-center justify-between items-center px-6 bg-white h-80 dark:bg-black relative z-10'>
+    <header className='text-center justify-between items-center px-6 h-80 relative z-10' style={{backgroundImage: 'url(/bg_vector.svg)', backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <div className='float-none inline-block py-12'>
         <SmartLink href='/'>
           {/* 可使用一张单图作为logo */}
@@ -29,11 +29,11 @@ export default function Header(props) {
             </div>
 
             <div className='flex-col flex justify-center'>
-              <div className='text-2xl font-serif dark:text-white py-2 hover:scale-105 transform duration-200'>
+              <div className='text-2xl font-serif text-[#001BA0] py-2 hover:scale-105 transform duration-200'>
                 {siteConfig('AUTHOR')}
               </div>
               <div
-                className='font-light dark:text-white py-2 hover:scale-105 transform duration-200 text-center'
+                className='font-light text-[#001BA0] py-2 hover:scale-105 transform duration-200 text-center'
                 dangerouslySetInnerHTML={{
                   __html: siteConfig('SIMPLE_LOGO_DESCRIPTION', null, CONFIG)
                 }}
