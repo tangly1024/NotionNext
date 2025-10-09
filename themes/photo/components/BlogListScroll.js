@@ -46,7 +46,7 @@ export const BlogListScroll = props => {
       }
     }, 500)
   )
-  const showPageCover = siteConfig('MOVIE_POST_LIST_COVER', null, CONFIG)
+  const showPageCover = siteConfig('PHOTO_POST_LIST_COVER', null, CONFIG)
 
   useEffect(() => {
     window.addEventListener('scroll', scrollTrigger)

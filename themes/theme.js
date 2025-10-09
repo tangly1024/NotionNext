@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
 
 // 在next.config.js中扫描所有主题
-export const { THEMES = [] } = getConfig().publicRuntimeConfig
+export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
 
 /**
  * 获取主题配置
@@ -79,17 +79,17 @@ export const getBaseLayoutByTheme = theme => {
  */
 export const DynamicLayout = props => {
   const { theme, layoutName } = props
-  const SelectedLayout = getLayoutByTheme({ layoutName, theme })
+  const SelectedLayout = useLayoutByTheme({ layoutName, theme })
   return <SelectedLayout {...props} />
 }
 
 /**
  * 加载主题文件
- * @param {*} router
+ * @param {*} layoutName
  * @param {*} theme
  * @returns
  */
-export const getLayoutByTheme = ({ layoutName, theme }) => {
+export const useLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
     ThemeComponents[layoutName] || ThemeComponents.LayoutSlug

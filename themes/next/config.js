@@ -1,7 +1,10 @@
 const CONFIG = {
-
   NEXT_HOME_BANNER: true, // 首页是否显示大图及标语 [true,false]
-  NEXT_HOME_BANNER_STRINGS: ['凭何让彼此变一对雪人', '拥抱着等待决裂有声', '凝固那还未幻灭的风景'], // 首页大图标语文字
+  NEXT_HOME_BANNER_STRINGS: [
+    '凭何让彼此变一对雪人', 
+    '拥抱着等待决裂有声', 
+    '凝固那还未幻灭的风景'
+   ], // 首页大图标语文字
 
   NEXT_NAV_TYPE: 'normal', // ['fixed','autoCollapse','normal'] 分别是固定屏幕顶部并始终显示、固定屏幕顶部且滚动时隐藏，不固定屏幕顶部
 
@@ -9,7 +12,9 @@ const CONFIG = {
   NEXT_POST_LIST_PREVIEW: false, // 显示文章预览
   NEXT_POST_LIST_SUMMARY: true, // 显示用户自定义摘要，有预览时优先只展示预览
 
-  NEXT_POST_HEADER_IMAGE_VISIBLE: true, // 文章详情页是否显示封面图
+  NEXT_PREVIEW_TAG_COUNT: 16, // 首页最多展示的标签数量，0为不限制
+  NEXT_PREVIEW_CATEGORY_COUNT: 16, // 首页最多展示的分类数量，0为不限制
+  NEXT_POST_HEADER_IMAGE_VISIBLE: false, // 文章详情页是否显示封面图
 
   // 右侧组件
   NEXT_RIGHT_BAR: true, // 是否显示右侧栏
@@ -32,8 +37,8 @@ const CONFIG = {
 
   NEXT_ARTICLE_RELATE_POSTS: true, // 相关文章推荐
   NEXT_ARTICLE_COPYRIGHT: true, // 文章版权声明
+  NEXT_ARTICLE_NOT_BY_AI: false, // 显示非AI写作
   NEXT_ARTICLE_INFO: true // 显示文章信息
-
 }
 
 export default CONFIG
