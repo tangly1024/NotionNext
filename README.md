@@ -1,6 +1,15 @@
-# NotionNext
+# 帮助教程
 
-一个使用 NextJS + Notion API 实现的，部署在 Vercel 上的静态博客系统。为Notion和所有创作者设计。
+访问帮助：[NotionNext帮助手册](https://docs.tangly1024.com/)
+
+> 本项目教程为免费、公开资源，仅限个人学习使用，禁止利用本教程建立的博客发布非法内容、进行违法犯罪活动。严禁任何个人或组织将本教程用于商业用途，包括但不限于直接售卖、间接收费、或其他变相盈利行为。转载、复制或介绍本教程内容时，须保留作者信息并明确注明来源。 
+> 本项目仅提供由作者团队授权的付费咨询服务，请注意辨别，谨防诈骗行为。任何未经授权的收费服务均可能存在法律风险。
+
+Notion是一个能让效率暴涨的生产力引擎，可以帮你书写文档、管理笔记，搭建知识库，甚至可以为你规划项目、时间管理、组织团队、提高生产力、还有当前最强大的AI技术加持。
+
+> 如果希望进一步探索Notion的功能，欢迎购买《[Notion笔记从入门到精通进阶课程](https://docs.tangly1024.com/article/notion-tutorial)》
+
+# NotionNext
 
 <p>
   <a aria-label="GitHub commit activity" href="https://github.com/tangly1024/NotionNext/commits/main" title="GitHub commit activity">
@@ -17,117 +26,52 @@
   </a>
 </p>
 
-演示地址：[https://preview.tangly1024.com/](https://preview.tangly1024.com/)
+中文文档 | [README in English](./README_EN.md)
 
-## 继承自Nobelium的亮点 ✨ 
+<hr/>
 
-**🚀 &nbsp;秒开，设备全适配**
+一个使用 NextJS + Notion API 实现的，部署在 Vercel 上的静态博客系统。为Notion和所有创作者设计。
 
-- 快速的页面渲染和响应式设计
-- 高效编译器的快速静态页面生成
+支持多种部署方案
 
-**🤖 &nbsp;自动，无需重新部署**
+## 预览效果
 
-- 部署在免费、高速的 Vercel 平台
-- 支持增量式更新，更新文章后无需重复部署
+在线演示：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，点击左下角挂件可以切换主题，没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
 
-**🚙 &nbsp;全功能，完全不操心**
-
-- 评论、搜索、标签、分类
-- 订阅、网站统计
-- 本地化多语言
-- 服务端渲染、优秀的SEO
-
-**🎨 &nbsp;美观，轻松自定义**
-- 丰富的配置项，更支持多语言
-- 使用 Tailwind CSS，轻松实现二次开发
-
-## 特色
-- 支持更多的页面，功能，更多特性、欢迎移步[我的博客](https://tangly1024.com/article/notion-next)查看
-- 支持多主题切换
-
-| Next | Medium | Hexo | Fukasawa |
-|--|--|--|--|
-| <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
-
-*只需修改`blog.config.js`文件的`THEME`即可实现主题切换。* 没找到喜欢的主题？[贡献](/CONTRIBUTING.md)一个吧~
-
-
-
-## 快速起步
-
-- 给这个项目点个小星星 😉
-- 将 [这个 Notion 模板](https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5) 制作副本，并分享这个页面给所有人
-- [Fork](https://github.com/tangly1024/NotionNext/fork) 这个项目
-  - _(可选)_ 用自己的图片替换 `/public` 文件夹里的 `avatar.jpg`、`favicon.svg` 和 `favicon.ico`
-  - 在 `blog.config.js` 配置相关选项，`NOTION_PAGE_ID`: 你刚刚分享出去的 Notion 页面网址中的页面 ID，通常是网址中工作区地址后的 32 位字符串
-- 在 [Vercel](https://vercel.com)中部署项目
-- **稍微等等就可以访问了！** 简单吗?
-
-更多项目特性及配置的说明，请移步 [NotionNext文档](https://docs.tangly1024.com/zh) 查看，文档正在完善中,欢迎 [参与编辑](https://github.com/tangly1024/nextjs-docs-notion-next)
-
-## 快速开发
-- 需要安装Nodejs环境
-```bash
-yarn # 安装依赖
-yarn run dev # 本地开发
-yarn run build # 本地打包编译
-yarn run start # 本地启动NextJS服务
-```
-
-## 引用技术
-
-- **框架**: [Next.js](https://nextjs.org)
-- **样式**: [Tailwind CSS](https://www.tailwindcss.cn/) 和 `@tailwindcss/jit` compiler
-- **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
-- **评论**: [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://cusdis.com), [Utterances](https://utteranc.es)
-- **图标**：[fontawesome v5.15](https://fontawesome.com/v5.15/icons?d=gallery)
-
-## 更新日志
-请移步 [更新文档](https://docs.tangly1024.com/zh/changelog)查看
-
+| Next                                                                                                  | Medium                                                                                                      | Hexo                                                                                                  | Fukasawa                                                                                                          |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| <img src='./docs/theme-next.png' width='300'/> [预览NEXT](https://preview.tangly1024.com/?theme=next) | <img src='./docs/theme-medium.png' width='300'/> [预览MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [预览HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [预览FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
 
 ## 致谢
+
 感谢Craig Hart发起的Nobelium项目
+
 <table><tr align="left">
   <td align="center"><a href="https://github.com/craigary" title="Craig Hart"><img src="https://avatars.githubusercontent.com/u/10571717" width="64px;"alt="Craig Hart"/></a><br/><a href="https://github.com/craigary" title="Craig Hart">Craig Hart</a></td>
 </tr></table>
 
 ## 贡献者
 
-<table>
-  <tr align="left">
-  <td align="center"><a href="https://github.com/tangly1024"><img src="https://avatars.githubusercontent.com/u/15920488" width="64px;"alt="tangly1024"/><br/><sub><b>tangly1024</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=tangly1024" title="Owner" >🎫 🔧 🎨 🐛</a></td> 
-    
-  <td align="center"><a href="https://github.com/uWayLu"><img src="https://avatars.githubusercontent.com/u/21689326" width="64px;" alt="uWayLu"/><br/><sub><b>uWayLu</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=uWayLu" title="uWayLu" >🔧 🐛</a></td>
-    
-  <td align="center"><a href="https://github.com/txs"><img src="https://avatars.githubusercontent.com/u/554329" width="64px;" alt="txs"/><br/><sub><b>txs</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=txs" title="txs" >🔧 🐛</a></td>  
+致敬每一位开发者！
 
-  <td align="center"><a href="https://github.com/yuzhanglong"><img src="https://avatars.githubusercontent.com/u/56540811" width="64px;" alt="yuzhanglong"/><br/><sub><b>yuzhanglong</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=yuzhanglong" title="yuzhanglong" >🔧 🐛</a></td> 
-    
-  <td align="center"><a href="https://github.com/Hscpro"><img src="https://avatars.githubusercontent.com/u/13926044" width="64px;" alt="Hscpro"/><br/><sub><b>Hscpro</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Hscpro" title="Hscpro" >🔧 🐛</a></td> 
-    
-  <td align="center"><a href="https://github.com/JensonMiao"><img src="https://avatars.githubusercontent.com/u/46488783" width="64px;" alt="JensonMiao"/><br/><sub><b>JensonMiao</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=JensonMiao" title="JensonMiao" >🔧 🐛</a></td> 
-  
-  <td align="center"><a href="https://github.com/haixin1225"><img src="https://avatars.githubusercontent.com/u/28828438" width="64px;"  alt="haixin1225"/><br/><sub><b>haixin1225</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=haixin1225" title="haixin1225" >🔧 🐛</a></td>
+[![Contributors](https://contrib.rocks/image?repo=tangly1024/NotionNext)](https://github.com/tangly1024/NotionNext/graphs/contributors)
 
-  <td align="center"><a href="https://github.com/mouyase"><img src="https://avatars.githubusercontent.com/u/7844572" width="64px;"  alt="mouyase"/><br/><sub><b>mouyase</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=mouyase" title="mouyase" >🔧 🐛</a></td>
-  
-  <td align="center"><a href="https://github.com/qfdk"><img src="https://avatars.githubusercontent.com/u/2404478" width="64px;"  alt="qfdk"/><br/><sub><b>qfdk</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=qfdk" title="qfdk" >🔧 🐛</a></td>
-  
-  <td align="center"><a href="https://github.com/ifyz"><img src="https://avatars.githubusercontent.com/u/118271360" width="64px;"  alt="ifyz"/><br/><sub><b>ifyz</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=ifyz" title="ifyz" >🔧 🐛</a></td>
+## 引用技术
 
-  <td align="center"><a href="https://github.com/SwwweetOrange"><img src="https://avatars.githubusercontent.com/u/71168966" width="64px;"  alt="SwwweetOrange"/><br/><sub><b>SwwweetOrange</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=SwwweetOrange" title="SwwweetOrange" >🔧 🐛</a></td>
+- **框架**: [Next.js](https://nextjs.org)
+- **样式**: [Tailwind CSS](https://www.tailwindcss.cn/)
+- **渲染**: [React-notion-x](https://github.com/NotionX/react-notion-x)
+- **评论**: [Twikoo](https://github.com/imaegoo/twikoo), [Giscus](https://giscus.app/zh-CN), [Gitalk](https://gitalk.github.io), [Cusdis](https://cusdis.com), [Utterances](https://utteranc.es)
+- **图标**: [Fontawesome](https://fontawesome.com/v6/icons/)
 
-  <td align="center"><a href="https://github.com/Ylarod"><img src="https://avatars.githubusercontent.com/u/30978685" width="64px;"  alt="Ylarod"/><br/><sub><b>Ylarod</b></sub></a><br/><a href="https://github.com/tangly1024/NotionNext/commits?author=Ylarod" title="Ylarod" >🔧 🐛</a></td>
-v
+## 🔗 友情链接
 
-</tr>
-</table>
-
-十分期待你的[贡献](/CONTRIBUTING.md)，一起来完善这个项目~
-
+- [Elog](https://github.com/LetTTGACO/elog) Markdown 批量导出工具、开放式跨平台博客解决方案，随意组合写作平台(语雀/Notion/FlowUs/飞书)和博客平台(Hexo/Vitepress/Halo/Confluence/WordPress等)
 
 ## License
 
 The MIT License.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tangly1024/NotionNext&type=Date)](https://star-history.com/#tangly1024/NotionNext&Date)

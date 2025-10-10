@@ -1,13 +1,39 @@
-import React from 'react'
+import { useEffect, useImperativeHandle, useRef } from 'react'
 
 /**
  * 折叠面板组件，支持水平折叠、垂直折叠
- * @param {type:['horizontal','vertical'],isOpen} props
+ * @param {type:['horizontal','vertical'], isOpen} props
  * @returns
  */
-const Collapse = props => {
-  const collapseRef = React.useRef(null)
-  const type = props.type || 'vertical'
+const Collapse = ({
+  type = 'vertical',
+  isOpen = false,
+  children,
+  onHeightChange,
+  className,
+  collapseRef
+}) => {
+  const ref = useRef(null)
+
+  useImperativeHandle(collapseRef, () => {
+    return {
+      /**
+       * 当子元素高度变化时，可调用此方法更新折叠组件的高度
+       * @param {*} param0
+       */
+      updateCollapseHeight: ({ height, increase }) => {
+        if (isOpen) {
+          ref.current.style.height = ref.current.scrollHeight
+          ref.current.style.height = 'auto'
+        }
+      }
+    }
+  })
+
+  /**
+   * 折叠
+   * @param {*} element
+   */
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
     const sectionWidth = element.scrollWidth
@@ -54,21 +80,32 @@ const Collapse = props => {
     clearTimeout(clearTime)
   }
 
-  React.useEffect(() => {
-    const element = collapseRef.current
-    if (props.isOpen) {
-      expandSection(element)
+  useEffect(() => {
+    if (isOpen) {
+      expandSection(ref.current)
     } else {
-      collapseSection(element)
+      collapseSection(ref.current)
     }
-  }, [props.isOpen])
+    // 通知父组件高度变化
+    onHeightChange &&
+      onHeightChange({
+        height: ref.current.scrollHeight,
+        increase: isOpen
+      })
+  }, [isOpen])
 
   return (
-    <div ref={collapseRef} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={'overflow-hidden duration-200 ' + props.className }>
-      {props.children}
+    <div
+      ref={ref}
+      style={
+        type === 'vertical'
+          ? { height: '0px', willChange: 'height' }
+          : { width: '0px', willChange: 'width' }
+      }
+      className={`${className || ''} overflow-hidden duration-300`}>
+      {children}
     </div>
   )
 }
-Collapse.defaultProps = { isOpen: false }
 
 export default Collapse

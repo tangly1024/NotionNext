@@ -61,7 +61,7 @@ const SearchInput = ({ currentTag, currentSearch, cRef, className }) => {
     <input
       ref={searchInputRef}
       type='text'
-      className={'w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+      className={'outline-none w-full text-sm pl-2 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
       onKeyUp={handleKeyUp}
       onCompositionStart={lockSearchInput}
       onCompositionUpdate={lockSearchInput}

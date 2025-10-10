@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
-import React from 'react'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 跳转到网页顶部
@@ -11,10 +11,10 @@ import CONFIG_NEXT from '../config_next'
  * @constructor
  */
 const JumpToTopButton = ({ showPercent = true, percent }) => {
-  if (!CONFIG_NEXT.WIDGET_TO_TOP) {
+  const { locale } = useGlobal()
+  if (!siteConfig('NEXT_WIDGET_TO_TOP', null, CONFIG)) {
     return <></>
   }
-  const { locale } = useGlobal()
   return (<div className='flex space-x-1 items-center transform hover:scale-105 duration-200 py-2 px-3' onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
         <div className='dark:text-gray-200' title={locale.POST.TOP} >
           <i className='fa-arrow-up fas' />

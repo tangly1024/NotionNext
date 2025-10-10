@@ -1,10 +1,15 @@
-import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
+import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 
 let lock = false
 
-const SearchInput = ({ currentTag, currentSearch, cRef }) => {
+/**
+ * 搜索输入框
+ * @param {*} param0 
+ * @returns 
+ */
+const SearchInput = ({ currentTag, keyword, cRef }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const searchInputRef = useRef(null)
@@ -19,7 +24,6 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     const key = searchInputRef.current.value
     if (key && key !== '') {
       router.push({ pathname: '/search/' + key }).then(r => {
-        console.log('搜索', key)
       })
     } else {
       router.push({ pathname: '/' }).then(r => {
@@ -62,13 +66,13 @@ const SearchInput = ({ currentTag, currentSearch, cRef }) => {
     ref={searchInputRef}
     type='text'
     placeholder={currentTag ? `${locale.SEARCH.TAGS} #${currentTag}` : `${locale.SEARCH.ARTICLES}`}
-    className={'w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
+    className={'outline-none w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'}
     onKeyUp={handleKeyUp}
     onCompositionStart={lockSearchInput}
     onCompositionUpdate={lockSearchInput}
     onCompositionEnd={unLockSearchInput}
     onChange={e => updateSearchKey(e.target.value)}
-    defaultValue={currentSearch || ''}
+    defaultValue={keyword || ''}
   />
 
   <div className='-ml-8 cursor-pointer float-right items-center justify-center py-2'

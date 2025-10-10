@@ -1,7 +1,37 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
-import Document, { Html, Head, Main, NextScript } from 'next/document'
 import BLOG from '@/blog.config'
-import CommonScript from '@/components/CommonScript'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
+
+// 预先设置深色模式的脚本内容
+const darkModeScript = `
+(function() {
+  const darkMode = localStorage.getItem('darkMode')
+
+  const prefersDark =
+    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+
+  const defaultAppearance = '${BLOG.APPEARANCE || 'auto'}'
+
+  let shouldBeDark = darkMode === 'true' || darkMode === 'dark'
+
+  if (darkMode === null) {
+    if (defaultAppearance === 'dark') {
+      shouldBeDark = true
+    } else if (defaultAppearance === 'auto') {
+      // 检查是否在深色模式时间范围内
+      const date = new Date()
+      const hours = date.getHours()
+      const darkTimeStart = ${BLOG.APPEARANCE_DARK_TIME ? BLOG.APPEARANCE_DARK_TIME[0] : 18}
+      const darkTimeEnd = ${BLOG.APPEARANCE_DARK_TIME ? BLOG.APPEARANCE_DARK_TIME[1] : 6}
+      
+      shouldBeDark = prefersDark || (hours >= darkTimeStart || hours < darkTimeEnd)
+    }
+  }
+  
+  // 立即设置 html 元素的类
+  document.documentElement.classList.add(shouldBeDark ? 'dark' : 'light')
+})()
+`
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -11,20 +41,33 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG} className='test'>
+      <Html lang={BLOG.LANG}>
         <Head>
-          <link rel='icon' href='/favicon.ico' />
-          <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
-          { BLOG.CUSTOM_FONT
-            ? BLOG.CUSTOM_FONT_URL?.map(fontUrl =>
-                <link href={`${fontUrl}`} key={fontUrl} rel='stylesheet' />)
-            : <link href='https://fonts.font.im/css2?family=Noto+Serif+SC&display=swap' rel='stylesheet' /> }
-          <CommonScript />
+          {/* 预加载字体 */}
+          {BLOG.FONT_AWESOME && (
+            <>
+              <link
+                rel='preload'
+                href={BLOG.FONT_AWESOME}
+                as='style'
+                crossOrigin='anonymous'
+              />
+              <link
+                rel='stylesheet'
+                href={BLOG.FONT_AWESOME}
+                crossOrigin='anonymous'
+                referrerPolicy='no-referrer'
+              />
+            </>
+          )}
+
+          {/* 预先设置深色模式，避免闪烁 */}
+          <script dangerouslySetInnerHTML={{ __html: darkModeScript }} />
         </Head>
 
-        <body className={'tracking-wider subpixel-antialiased bg-day dark:bg-night'}>
-            <Main />
-            <NextScript />
+        <body>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     )
