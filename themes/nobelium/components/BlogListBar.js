@@ -7,7 +7,7 @@ export default function BlogListBar(props) {
     setFilterKey(val)
   }
   if (tag) {
-    return (<div className="mb-4">
+    return (<div className="mb-1">
             <div className='relative'>
                 <input
                     type="text"

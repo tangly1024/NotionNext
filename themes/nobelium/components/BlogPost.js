@@ -3,7 +3,6 @@ import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
-
 const BlogPost = ({ post }) => {
   const { NOTION_CONFIG } = useGlobal()
   const showPreview =
