@@ -2,7 +2,7 @@
 
 const BLOG = {
   // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
-  API_BASE_URL: process.env.API_BASE_URL || 'https://better-resonance-00b.notion.site/api/v3', // API默认请求地址 ,可配置成自己的 https://<xxxx>.notion.site/api/v3
+  API_BASE_URL: process.env.API_BASE_URL || 'https://happyhht.notion.site/api/v3', // API默认请求地址 ,可配置成自己的 https://<xxxx>.notion.site/api/v3
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID ||
     '89fbc8d32b5841ab9134c02a0d5f104b',
