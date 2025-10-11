@@ -1,5 +1,5 @@
 import Collapse from '@/components/Collapse'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -47,7 +47,7 @@ export const MenuItemCollapse = props => {
         }
         onClick={toggleShow}>
         {!hasSubMenu && (
-          <Link
+          <SmartLink
             href={link?.href}
             target={link?.target}
             className='py-2 w-full my-auto items-center justify-between flex  '>
@@ -55,7 +55,7 @@ export const MenuItemCollapse = props => {
               <div className={`${link.icon} text-center w-4 mr-4`} />
               {link.name}
             </div>
-          </Link>
+          </SmartLink>
         )}
 
         {hasSubMenu && (
@@ -84,14 +84,14 @@ export const MenuItemCollapse = props => {
                 className='
               not:last-child:border-b-0 border-b dark:border-gray-800 py-2 pl-12 cursor-pointer hover:bg-gray-100 dark:text-gray-200
               dark:bg-black text-left justify-start text-gray-600 bg-gray-50 dark:hover:bg-gray-900 tracking-widest transition-all duration-200'>
-                <Link href={sLink.href} target={link?.target}>
+                <SmartLink href={sLink.href} target={link?.target}>
                   <div>
                     <div
                       className={`${sLink.icon} text-center w-3 mr-3 text-xs`}
                     />
                     {sLink.title}
                   </div>
-                </Link>
+                </SmartLink>
               </div>
             )
           })}

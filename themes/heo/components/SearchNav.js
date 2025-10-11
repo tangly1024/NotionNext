@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useEffect, useRef } from 'react'
 import Card from './Card'
 import SearchInput from './SearchInput'
@@ -30,7 +30,7 @@ export default function SearchNav(props) {
             <div id="category-list" className="duration-200 flex flex-wrap mx-8">
                 {categoryOptions?.map(category => {
                   return (
-                      <Link
+                      <SmartLink
                           key={category.name}
                           href={`/category/${category.name}`}
                           passHref
@@ -43,7 +43,7 @@ export default function SearchNav(props) {
                               <i className="mr-4 fas fa-folder" />
                               {category.name}({category.count})
                           </div>
-                      </Link>
+                      </SmartLink>
                   )
                 })}
             </div>

@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 export const ArticleInfo = props => {
   const { post } = props
@@ -11,18 +11,18 @@ export const ArticleInfo = props => {
       <h2 className='text-5xl font-semibold py-10 dark:text-white text-center'>{post?.title}</h2>
 
       <div className='flex gap-3 font-semibold text-sm items-center justify-center'>
-        <Link
+        <SmartLink
           href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
           passHref
           className='pl-1 mr-2 cursor-pointer'>
           {post?.publishDay}
-        </Link>
+        </SmartLink>
 
         {post?.type !== 'Page' && (
           <>
-            <Link href={`/category/${post?.category}`} passHref className='cursor-pointer text-md mr-2 text-green-500'>
+            <SmartLink href={`/category/${post?.category}`} passHref className='cursor-pointer text-md mr-2 text-green-500'>
               {post?.category}
-            </Link>
+            </SmartLink>
           </>
         )}
 
@@ -34,9 +34,9 @@ export const ArticleInfo = props => {
           )}
           {post?.tags?.map(tag => {
             return (
-              <Link href={`/tag/${tag}`} key={tag} className='text-yellow-500 mr-2'>
+              <SmartLink href={`/tag/${tag}`} key={tag} className='text-yellow-500 mr-2'>
                 {tag}
-              </Link>
+              </SmartLink>
             )
           })}
         </div>

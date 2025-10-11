@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import CONFIG from '../config'
 import BlogItem from './BlogItem'
@@ -37,7 +37,7 @@ export const BlogListPage = props => {
       </div>
 
       <div className='flex justify-between text-xs'>
-        <Link
+        <SmartLink
           href={{
             pathname:
               currentPage - 1 === 1
@@ -47,15 +47,15 @@ export const BlogListPage = props => {
           }}
           className={`${showPrev ? 'bg-black dark:bg-hexo-black-gray' : 'bg-gray pointer-events-none invisible'} text-white no-underline py-2 px-3 rounded`}>
           {locale.PAGINATION.PREV}
-        </Link>
-        <Link
+        </SmartLink>
+        <SmartLink
           href={{
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
             query: router.query.s ? { s: router.query.s } : {}
           }}
           className={`${showNext ? 'bg-black dark:bg-hexo-black-gray ' : 'bg-gray pointer-events-none invisible'} text-white no-underline py-2 px-3 rounded`}>
           {locale.PAGINATION.NEXT}
-        </Link>
+        </SmartLink>
       </div>
     </div>
   )

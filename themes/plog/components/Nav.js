@@ -2,7 +2,7 @@ import Collapse from '@/components/Collapse'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRef, useState } from 'react'
 import CONFIG from '../config'
 import { MenuItemCollapse } from './MenuItemCollapse'
@@ -21,7 +21,7 @@ const Header = props => {
         className={`sticky-nav m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8  glassmorphism ${
           !fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
         }`}>
-        <Link
+        <SmartLink
           href='/'
           aria-label={siteConfig('title')}
           className='flex items-center'>
@@ -44,7 +44,7 @@ const Header = props => {
               {/* ,{' '}<span className="font-normal">{siteConfig('HOME_BANNER_IMAGE')}</span> */}
             </p>
           </>
-        </Link>
+        </SmartLink>
 
         <NavBar {...props} />
       </div>

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useGlobal } from '@/lib/global'
 import TagItemMiddle from './TagItemMiddle'
 import { formatDateFmt } from '@/lib/utils/formatDate'
@@ -24,13 +24,13 @@ export const ArticleInfo = props => {
       <div className='flex flex-wrap gap-3 mt-5 text-sm'>
         {post?.type !== 'Page' && (
           <>
-            <Link
+            <SmartLink
               href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
               passHref
               className='cursor-pointer whitespace-nowrap'>
               <i className='far fa-calendar-minus fa-fw' />{' '}
               {locale.COMMON.POST_TIME}: {post?.publishDay}
-            </Link>
+            </SmartLink>
             <span className='whitespace-nowrap'>
               <i className='far fa-calendar-check fa-fw' />
               {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}

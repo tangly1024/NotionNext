@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 const MenuGroupCard = props => {
@@ -39,7 +39,7 @@ const MenuGroupCard = props => {
         if (link.show) {
           return (
             <div key={index} className=''>
-              <Link
+              <SmartLink
                 title={link.href}
                 href={link.href}
                 target={link?.target}
@@ -50,7 +50,7 @@ const MenuGroupCard = props => {
                   <div>{link.name} :</div>
                   <div className='font-semibold'>{link.slot}</div>
                 </>
-              </Link>
+              </SmartLink>
             </div>
           )
         } else {

@@ -16,7 +16,7 @@ import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
 import Announcement from './components/Announcement'
@@ -408,7 +408,7 @@ const LayoutCategoryIndex = props => {
         <div id='category-list' className='duration-200 flex flex-wrap'>
           {categoryOptions?.map(category => {
             return (
-              <Link
+              <SmartLink
                 key={category.name}
                 href={`/category/${category.name}`}
                 passHref
@@ -420,7 +420,7 @@ const LayoutCategoryIndex = props => {
                   <i className='mr-4 fas fa-folder' />
                   {category.name}({category.count})
                 </div>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>

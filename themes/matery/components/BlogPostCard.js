@@ -3,7 +3,7 @@ import NotionIcon from '@/components/NotionIcon'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 
@@ -36,7 +36,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
       <header className='group flex flex-col h-80 justify-between'>
         {/* 头部图片 填充卡片 */}
         {showPageCover && (
-          <Link href={post?.href} passHref legacyBehavior>
+          <SmartLink href={post?.href} passHref legacyBehavior>
             <div className='flex flex-grow w-full relative duration-200 = rounded-t-md cursor-pointer transform overflow-hidden'>
               <LazyImage
                 src={post?.pageCoverThumbnail}
@@ -54,7 +54,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 <div className='h-full w-full absolute bg-gradient-to-b from-transparent to-black'></div>
               </div>
             </div>
-          </Link>
+          </SmartLink>
         )}
 
         {/* 文字描述 */}
@@ -69,25 +69,25 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
             <div className='text-gray-800 justify-between flex my-2  dark:text-gray-300'>
               <div>
-                <Link
+                <SmartLink
                   href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                   passHref
                   className='font-light hover:underline cursor-pointer text-sm leading-4 mr-3'>
                   <i className='far fa-clock mr-1' />
                   {post.date?.start_date || post.lastEditedDay}
-                </Link>
+                </SmartLink>
                 <TwikooCommentCount
                   post={post}
                   className='hover:underline cursor-pointer text-sm'
                 />
               </div>
-              <Link
+              <SmartLink
                 href={`/category/${post.category}`}
                 passHref
                 className='cursor-pointer font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform'>
                 <i className='mr-1 far fa-folder' />
                 {post.category}
-              </Link>
+              </SmartLink>
             </div>
           </div>
 

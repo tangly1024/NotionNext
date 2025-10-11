@@ -5,7 +5,7 @@ import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 export const BlogItem = props => {
@@ -26,26 +26,26 @@ export const BlogItem = props => {
           {/* 图片封面 */}
           {showPageCover && (
             <div className='overflow-hidden mr-2 w-56 h-full'>
-              <Link href={post.href} passHref legacyBehavior>
+              <SmartLink href={post.href} passHref legacyBehavior>
                 <LazyImage
                   src={post?.pageCoverThumbnail}
                   className='w-56 h-full object-cover object-center group-hover:scale-110 duration-500'
                 />
-              </Link>
+              </SmartLink>
             </div>
           )}
         </div>
 
         <article className='article-info'>
           <h2 className='mb-2'>
-            <Link
+            <SmartLink
               href={post.href}
               className='blog-item-title font-bold text-black text-2xl menu-link'>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon icon={post.pageIcon} />
               )}
               {post.title}
-            </Link>
+            </SmartLink>
           </h2>
 
           {/* 文章信息 */}
@@ -60,12 +60,12 @@ export const BlogItem = props => {
                 </a>
               </span>
               <span>
-                <Link
+                <SmartLink
                   className='p-1 hover:text-red-400 transition-all duration-200'
                   href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}>
                   <i className='fa-regular fa-clock' />{' '}
                   {post.date?.start_date || post.createdTime}
-                </Link>
+                </SmartLink>
               </span>
               <span>
                 <TwikooCommentCount post={post} />
@@ -74,23 +74,23 @@ export const BlogItem = props => {
 
             <div>
               {post.category && (
-                <Link href={`/category/${post.category}`} className='p-1'>
+                <SmartLink href={`/category/${post.category}`} className='p-1'>
                   {' '}
                   <span className='hover:text-red-400 transition-all duration-200'>
                     <i className='fa-regular fa-folder mr-0.5' />
                     {post.category}
                   </span>
-                </Link>
+                </SmartLink>
               )}
               {post?.tags &&
                 post?.tags?.length > 0 &&
                 post?.tags.map(t => (
-                  <Link
+                  <SmartLink
                     key={t}
                     href={`/tag/${t}`}
                     className=' hover:text-red-400 transition-all duration-200'>
                     <span> /{t}</span>
-                  </Link>
+                  </SmartLink>
                 ))}
             </div>
           </header>
@@ -113,12 +113,12 @@ export const BlogItem = props => {
       </div>
 
       <div className='block'>
-        <Link
+        <SmartLink
           href={post.href}
           className='inline-block rounded-sm text-blue-600 dark:text-blue-300  text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
           Continue Reading{' '}
           <i className='fa-solid fa-angle-right align-middle'></i>
-        </Link>
+        </SmartLink>
       </div>
     </div>
   )
