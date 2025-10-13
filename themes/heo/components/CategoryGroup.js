@@ -1,4 +1,5 @@
 import SmartLink from '@/components/SmartLink'
+import { chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
 
 const CategoryGroup = ({ currentCategory, categories }) => {
   if (!categories) {
@@ -8,10 +9,11 @@ const CategoryGroup = ({ currentCategory, categories }) => {
     <div id='category-list' className='dark:border-gray-700 flex flex-wrap  mx-4'>
       {categories.map(category => {
         const selected = currentCategory === category.name
+        const categorySlug = chineseToEnglishCategory(category.name)
         return (
           <SmartLink
             key={category.name}
-            href={`/category/${category.name}`}
+            href={`/category/${categorySlug}`}
             passHref
             className={(selected
               ? 'hover:text-white dark:hover:text-white bg-indigo-600 text-white '

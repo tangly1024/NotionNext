@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import { englishToChineseCategory, chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
 
 /**
  * 分类页
@@ -17,13 +18,16 @@ export async function getStaticProps({ params: { category }, locale }) {
   const from = 'category-props'
   let props = await getGlobalData({ from, locale })
 
+  // 将英文路径转换回中文分类名称进行匹配
+  const actualCategory = englishToChineseCategory(category)
+
   // 过滤状态
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
-  // 处理过滤
+  // 处理过滤 - 使用实际的中文分类名称进行匹配
   props.posts = props.posts.filter(
-    post => post && post.category && post.category.includes(category)
+    post => post && post.category && post.category.includes(actualCategory)
   )
   // 处理文章页数
   props.postCount = props.posts.length
@@ -39,7 +43,8 @@ export async function getStaticProps({ params: { category }, locale }) {
 
   delete props.allPages
 
-  props = { ...props, category }
+  // 传递实际的中文分类名称用于显示
+  props = { ...props, category: actualCategory }
 
   return {
     props,
@@ -58,7 +63,7 @@ export async function getStaticPaths() {
   const { categoryOptions } = await getGlobalData({ from })
   return {
     paths: Object.keys(categoryOptions).map(category => ({
-      params: { category: categoryOptions[category]?.name }
+      params: { category: chineseToEnglishCategory(categoryOptions[category]?.name) }
     })),
     fallback: true
   }

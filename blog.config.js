@@ -1,11 +1,13 @@
 // 注: process.env.XX是Vercel的环境变量，配置方式见：https://docs.tangly1024.com/article/how-to-config-notion-next#c4768010ae7d44609b744e79e2f9959a
 
 const BLOG = {
-  // Important page_id！！！Duplicate Template from  https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
+  // Important page_id！！！You need to create your own Notion database and replace this ID
+  // Follow the template at: https://www.notion.so/tanghh/02ab3b8678004aa69e9e415905ef32a5
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID ||
-    '02ab3b8678004aa69e9e415905ef32a5,en:7c1d570661754c8fbc568e00a01fd70e',
-  THEME: process.env.NEXT_PUBLIC_THEME || 'simple', // 当前主题，在themes文件夹下可找到所有支持的主题；主题名称就是文件夹名，例如 example,fukasawa,gitbook,heo,hexo,landing,matery,medium,next,nobelium,plog,simple
+    // Your personal Notion database ID
+    '2a2f7026d6674bd19c5aec3c94bfd453,en:13e00092b9778002a3e2d5278bab3cd9',
+  THEME: process.env.NEXT_PUBLIC_THEME || 'heo', // 当前主题，在themes文件夹下可找到所有支持的主题；主题名称就是文件夹名，例如 example,fukasawa,gitbook,heo,hexo,landing,matery,medium,next,nobelium,plog,simple
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // e.g 'zh-CN','en-US'  see /lib/lang.js for more.
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2024, // e.g if leave this empty, current year will be used.
 
@@ -16,7 +18,7 @@ const BLOG = {
 
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Charlii博士', // 您的昵称
   BIO: process.env.NEXT_PUBLIC_BIO || 'AI·XR·多模态交互研究者｜CharliiAI 创作者｜分享AI应用与增长实践', // 作者简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.charliiai.com', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'http://localhost:3007', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'AI, XR, 多模态, 数字人, 生成式AI, 提示工程, 博客, 教程, CharliiAI', // 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'https://img.fy6b.com/2025/08/18/cebef50370b8a.ico', // blog favicon 配置, 默认使用外部图标链接
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX

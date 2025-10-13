@@ -88,7 +88,7 @@ const NotionPage = ({ post, className }) => {
   useEffect(() => {
     // Spoiler文本功能
     if (SPOILER_TEXT_TAG) {
-      import('lodash/escapeRegExp').then(escapeRegExp => {
+      import('lodash.escaperegexp').then(escapeRegExp => {
         Promise.all([
           loadExternalResource('/js/spoilerText.js', 'js'),
           loadExternalResource('/css/spoiler-text.css', 'css')

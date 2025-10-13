@@ -4,6 +4,7 @@ import { siteConfig } from '@/lib/config'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
+import { chineseToEnglishCategory } from '@/lib/utils/categoryMapper'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
@@ -67,7 +68,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
                 <SmartLink
                   passHref
-                  href={`/category/${post.category}`}
+                  href={`/category/${chineseToEnglishCategory(post.category)}`}
                   className='cursor-pointer text-xs font-normal menu-link '>
                   {post.category}
                 </SmartLink>

@@ -36,12 +36,28 @@ const darkModeScript = `
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
+
+    // 检测语言，支持 /en 路径
+    const detectLangFromRequest = (ctx) => {
+      const path = ctx.req?.url || ctx.asPath || ''
+      if (path.startsWith('/en')) {
+        return 'en'
+      }
+      return ctx.locale || BLOG.LANG || 'zh-CN'
+    }
+
+    const detectedLang = detectLangFromRequest(ctx)
+
+    return {
+      ...initialProps,
+      lang: detectedLang
+    }
   }
 
   render() {
+    const { lang } = this.props
     return (
-      <Html lang={BLOG.LANG}>
+      <Html lang={lang || BLOG.LANG}>
         <Head>
           {/* X-Robots-Tag 备用方案 */}
           <meta name="robots" content="follow, index" />
