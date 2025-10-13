@@ -1,6 +1,6 @@
 {
   "name": "notion-next",
-  "version": "4.9.0",
+  "version": "4.9.2",
   "homepage": "https://github.com/tangly1024/NotionNext.git",
   "license": "MIT",
   "engines": {
@@ -17,10 +17,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cross-env BUILD_MODE=true next build",
     "start": "next start",
     "post-build": "next-sitemap --config next-sitemap.config.js",
-    "export": "cross-env EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
+    "export": "cross-env BUILD_MODE=true EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
     "bundle-report": "cross-env ANALYZE=true next build",
     "build-all-in-dev": "cross-env VERCEL_ENV=production next build",
     "version": "echo $npm_package_version",
@@ -62,13 +62,13 @@
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
     "next": "^14.2.30",
-    "notion-client": "7.3.0",
-    "notion-utils": "7.4.3",
+    "notion-client": "7.7.1",
+    "notion-utils": "7.7.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.6.2",
-    "react-notion-x": "7.4.2",
+    "react-notion-x": "7.7.1",
     "react-share": "^5.2.2",
     "react-tweet-embed": "~2.0.0"
   },
