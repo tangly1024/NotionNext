@@ -64,6 +64,8 @@ function BannerGroup(props) {
 function Banner(props) {
   const router = useRouter()
   const { allNavPages } = props
+  const { locale: currentLocale } = useGlobal()
+
   /**
    * 随机跳转文章
    */
@@ -73,8 +75,29 @@ function Banner(props) {
     router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
   }
 
-  // 遮罩文字
-  const coverTitle = siteConfig('HEO_HERO_COVER_TITLE')
+  // 多语言文本配置
+  const translations = {
+    'zh-CN': {
+      title1: '探索 AI',
+      title2: '与 自动化 未来',
+      title3: 'CHARLIIAI.COM',
+      coverTitle: 'AIGC · 效率 · 科创 · 落地 · AI创作'
+    },
+    'en': {
+      title1: 'Explore AI',
+      title2: '& Automation Future',
+      title3: 'CHARLIIAI.COM',
+      coverTitle: 'AIGC · Efficiency · Innovation · Practice · AI Creation'
+    },
+    'en-US': {
+      title1: 'Explore AI',
+      title2: '& Automation Future',
+      title3: 'CHARLIIAI.COM',
+      coverTitle: 'AIGC · Efficiency · Innovation · Practice · AI Creation'
+    }
+  }
+
+  const currentLang = translations[currentLocale?.locale || 'zh-CN'] || translations['zh-CN']
 
   return (
     <div
@@ -85,12 +108,12 @@ function Banner(props) {
         id='banner-title'
         className='z-10 flex flex-col absolute top-10 left-10'>
         <div className='text-4xl font-bold mb-3  dark:text-white'>
-          {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
+          {currentLang.title1}
           <br />
-          {siteConfig('HEO_HERO_TITLE_2', null, CONFIG)}
+          {currentLang.title2}
         </div>
         <div className='text-xs text-gray-600  dark:text-gray-200'>
-          {siteConfig('HEO_HERO_TITLE_3', null, CONFIG)}
+          {currentLang.title3}
         </div>
       </div>
 
@@ -105,7 +128,7 @@ function Banner(props) {
           'z-20 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] dark:bg-[#dca846] dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'
         }>
         <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
-          <div className='text-7xl text-white font-extrabold'>{coverTitle}</div>
+          <div className='text-7xl text-white font-extrabold'>{currentLang.coverTitle}</div>
           <div className='-ml-3 text-gray-300'>
             <ArrowSmallRight className={'w-24 h-24 stroke-2'} />
           </div>
@@ -167,12 +190,31 @@ function TagsGroupBar() {
  * @returns
  */
 function GroupMenu() {
+  const { locale: currentLocale } = useGlobal()
   const url_1 = siteConfig('HEO_HERO_CATEGORY_1', {}, CONFIG)?.url || ''
-  const title_1 = siteConfig('HEO_HERO_CATEGORY_1', {}, CONFIG)?.title || ''
   const url_2 = siteConfig('HEO_HERO_CATEGORY_2', {}, CONFIG)?.url || ''
-  const title_2 = siteConfig('HEO_HERO_CATEGORY_2', {}, CONFIG)?.title || ''
   const url_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.url || ''
-  const title_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.title || ''
+
+  // 多语言文本配置
+  const translations = {
+    'zh-CN': {
+      category1: 'AI精选',
+      category2: '效率与生产力工具',
+      category3: 'AI科创与落地'
+    },
+    'en': {
+      category1: 'AI Selection',
+      category2: 'Efficiency & Productivity Tools',
+      category3: 'AI Innovation & Practice'
+    },
+    'en-US': {
+      category1: 'AI Selection',
+      category2: 'Efficiency & Productivity Tools',
+      category3: 'AI Innovation & Practice'
+    }
+  }
+
+  const currentLang = translations[currentLocale?.locale || 'zh-CN'] || translations['zh-CN']
 
   return (
     <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
@@ -180,7 +222,7 @@ function GroupMenu() {
         href={url_1}
         className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg  pl-5 relative -mt-2'>
-          {title_1}
+          {currentLang.category1}
           <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
         </div>
         <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -191,7 +233,7 @@ function GroupMenu() {
         href={url_2}
         className='group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold lg:text-lg pl-5 relative -mt-2'>
-          {title_2}
+          {currentLang.category2}
           <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
         </div>
         <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -203,7 +245,7 @@ function GroupMenu() {
         href={url_3}
         className='group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
         <div className='font-bold text-lg pl-5 relative -mt-2'>
-          {title_3}
+          {currentLang.category3}
           <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
         </div>
         <div className='absolute right-6 duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
@@ -319,9 +361,27 @@ function getTopPosts({ latestPosts, allNavPages }) {
 function TodayCard({ cRef, siteInfo }) {
   const router = useRouter()
   const link = siteConfig('HEO_HERO_TITLE_LINK', null, CONFIG)
-  const { locale } = useGlobal()
+  const { locale: currentLocale } = useGlobal()
   // 卡牌是否盖住下层
   const [isCoverUp, setIsCoverUp] = useState(true)
+
+  // 多语言文本配置
+  const translations = {
+    'zh-CN': {
+      subtitle: '数字智能助手',
+      title: '打造属于你的 AI 领导力'
+    },
+    'en': {
+      subtitle: 'Digital AI Assistant',
+      title: 'Build Your AI Leadership'
+    },
+    'en-US': {
+      subtitle: 'Digital AI Assistant',
+      title: 'Build Your AI Leadership'
+    }
+  }
+
+  const currentLang = translations[currentLocale?.locale || 'zh-CN'] || translations['zh-CN']
 
   /**
    * 外部可以调用此方法
@@ -371,10 +431,10 @@ function TodayCard({ cRef, siteInfo }) {
           className='flex justify-between w-full relative text-white p-10 items-end'>
           <div className='flex flex-col'>
             <div className='text-xs font-light'>
-              {siteConfig('HEO_HERO_TITLE_4', null, CONFIG)}
+              {currentLang.subtitle}
             </div>
             <div className='text-3xl font-bold'>
-              {siteConfig('HEO_HERO_TITLE_5', null, CONFIG)}
+              {currentLang.title}
             </div>
           </div>
           {/* 查看更多的按钮 */}
@@ -388,7 +448,7 @@ function TodayCard({ cRef, siteInfo }) {
               }
             />
             <div id='more' className='select-none'>
-              {locale.COMMON.RECOMMEND_POSTS}
+              {currentLocale.COMMON.RECOMMEND_POSTS}
             </div>
           </div>
         </div>
