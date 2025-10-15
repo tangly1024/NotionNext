@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 首页的关于模块
@@ -28,11 +28,11 @@ export const About = () => {
                       __html: siteConfig('STARTER_ABOUT_TEXT')
                     }}></p>
 
-                  <Link
+                  <SmartLink
                     href={siteConfig('STARTER_ABOUT_BUTTON_URL', '')}
                     className='inline-flex items-center justify-center rounded-md border border-primary bg-primary px-7 py-3 text-center text-base font-medium text-white hover:border-blue-dark hover:bg-blue-dark'>
                     {siteConfig('STARTER_ABOUT_BUTTON_TEXT')}
-                  </Link>
+                  </SmartLink>
                 </div>
               </div>
 

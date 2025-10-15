@@ -20,7 +20,7 @@ import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
@@ -397,11 +397,11 @@ const Layout404 = props => {
                   404
                 </h1>
                 <div className='dark:text-white'>请尝试站内搜索寻找文章</div>
-                <Link href='/'>
+                <SmartLink href='/'>
                   <button className='bg-blue-500 py-2 px-4 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all'>
                     回到主页
                   </button>
-                </Link>
+                </SmartLink>
               </div>
             </div>
 
@@ -435,7 +435,7 @@ const LayoutCategoryIndex = props => {
         className='duration-200 flex flex-wrap m-10 justify-center'>
         {categoryOptions?.map(category => {
           return (
-            <Link
+            <SmartLink
               key={category.name}
               href={`/category/${category.name}`}
               passHref
@@ -450,7 +450,7 @@ const LayoutCategoryIndex = props => {
                   {category.count}
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>
@@ -477,7 +477,7 @@ const LayoutTagIndex = props => {
         className='duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center'>
         {tagOptions.map(tag => {
           return (
-            <Link
+            <SmartLink
               key={tag.name}
               href={`/tag/${tag.name}`}
               passHref
@@ -492,7 +492,7 @@ const LayoutTagIndex = props => {
                   {tag.count}
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>

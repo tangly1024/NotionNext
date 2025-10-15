@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
@@ -35,7 +35,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                     : siteInfo?.pageCover
 
                   return (
-                    (<Link
+                    (<SmartLink
                             key={post.id}
                             title={post.title}
                             href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
@@ -51,7 +51,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                                 <LazyImage src={headerImage} className='absolute top-0 w-full h-full object-cover object-center group-hover:scale-110 group-hover:brightness-50 transform duration-200' />
                             </div>
 
-                        </Link>)
+                        </SmartLink>)
                   )
                 })}
             </div>

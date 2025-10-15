@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import BlogPost from './BlogPost'
@@ -64,7 +64,7 @@ export const BlogListPage = props => {
       </div>
 
       <div className='flex justify-between text-xs'>
-        <Link
+        <SmartLink
           href={{
             pathname:
               currentPage - 1 === 1
@@ -76,8 +76,8 @@ export const BlogListPage = props => {
           <button rel='prev' className='block cursor-pointer'>
             ← {locale.PAGINATION.PREV}
           </button>
-        </Link>
-        <Link
+        </SmartLink>
+        <SmartLink
           href={{
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
             query: router.query.s ? { s: router.query.s } : {}
@@ -86,7 +86,7 @@ export const BlogListPage = props => {
           <button rel='next' className='block cursor-pointer'>
             {locale.PAGINATION.NEXT} →
           </button>
-        </Link>
+        </SmartLink>
       </div>
     </div>
   )

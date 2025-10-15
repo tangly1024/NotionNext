@@ -5,7 +5,7 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Image from 'next/image'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import Card from './Card'
 import TagItemMini from './TagItemMini'
@@ -32,7 +32,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
         className='flex flex-col-reverse justify-between duration-300'>
         <div className='lg:p-8 p-4 flex flex-col w-full'>
           {/* 文章标题 */}
-          <Link
+          <SmartLink
             {...aosProps}
             href={post?.href}
             passHref
@@ -41,7 +41,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
               <NotionIcon icon={post.pageIcon} />
             )}{' '}
             <span className='menu-link'>{post.title}</span>
-          </Link>
+          </SmartLink>
 
           <div
             {...aosProps}
@@ -49,22 +49,22 @@ const BlogPostCard = ({ post, index, showSummary }) => {
             <div>
               {post.category && (
                 <>
-                  <Link
+                  <SmartLink
                     href={`/category/${post.category}`}
                     passHref
                     className='hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-sm transform'>
                     <i className='mr-1 fas fa-folder' />
                     <span className='menu-link'>{post.category}</span>
-                  </Link>
+                  </SmartLink>
                   <span className='mx-2'>|</span>
                 </>
               )}
-              <Link
+              <SmartLink
                 href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                 passHref
                 className='hover:text-blue-500 dark:hover:text-blue-400 font-light cursor-pointer text-sm leading-4 mr-3'>
                 <span className='menu-link'>{post.date?.start_date}</span>
-              </Link>
+              </SmartLink>
             </div>
 
             <TwikooCommentCount
@@ -103,18 +103,18 @@ const BlogPostCard = ({ post, index, showSummary }) => {
           )}
 
           <div className='text-right border-t pt-8 border-dashed'>
-            <Link
+            <SmartLink
               href={post?.href}
               className='hover:bg-opacity-100 hover:underline transform duration-300 p-3 text-white bg-gray-800 cursor-pointer'>
               {locale.COMMON.ARTICLE_DETAIL}
               <i className='ml-1 fas fa-angle-right' />
-            </Link>
+            </SmartLink>
           </div>
         </div>
 
         {siteConfig('NEXT_POST_LIST_COVER', null, CONFIG) &&
           post?.pageCoverThumbnail && (
-            <Link href={post?.href} passHref legacyBehavior>
+            <SmartLink href={post?.href} passHref legacyBehavior>
               <div className='h-72 w-full relative duration-200 cursor-pointer transform overflow-hidden'>
                 <Image
                   className='hover:scale-105 transform duration-500'
@@ -125,7 +125,7 @@ const BlogPostCard = ({ post, index, showSummary }) => {
                   loading='lazy'
                 />
               </div>
-            </Link>
+            </SmartLink>
           )}
       </div>
     </Card>

@@ -2,7 +2,7 @@ import useWindowSize from '@/hooks/useWindowSize'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { THEMES, saveDarkModeToLocalStorage } from '@/themes/theme'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
@@ -198,23 +198,23 @@ export default function CustomContextMenu(props) {
           )}
 
           {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_CATEGORY && (
-            <Link
+            <SmartLink
               href='/category'
               title={locale.MENU.CATEGORY}
               className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
               <i className='fa-solid fa-square-minus mr-2' />
               <div className='whitespace-nowrap'>{locale.MENU.CATEGORY}</div>
-            </Link>
+            </SmartLink>
           )}
 
           {CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG && (
-            <Link
+            <SmartLink
               href='/tag'
               title={locale.MENU.TAGS}
               className='w-full px-2 h-10 flex justify-start items-center flex-nowrap cursor-pointer hover:bg-blue-600 hover:text-white rounded-lg duration-200 transition-all'>
               <i className='fa-solid fa-tag mr-2' />
               <div className='whitespace-nowrap'>{locale.MENU.TAGS}</div>
-            </Link>
+            </SmartLink>
           )}
         </div>
 

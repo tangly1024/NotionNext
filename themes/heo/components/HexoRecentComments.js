@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { RecentComments } from '@waline/client'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useEffect, useState } from 'react'
 
 /**
@@ -49,14 +49,14 @@ const HexoRecentComments = props => {
               dangerouslySetInnerHTML={{ __html: comment.comment }}
             />
             <div className='dark:text-gray-400 text-gray-400  text-sm text-right cursor-pointer hover:text-red-500 hover:underline pt-1 pr-2'>
-              <Link
+              <SmartLink
                 href={{
                   pathname: comment.url,
                   hash: comment.objectId,
                   query: { target: 'comment' }
                 }}>
                 --{comment.nick}
-              </Link>
+              </SmartLink>
             </div>
           </div>
         ))}

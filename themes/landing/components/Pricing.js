@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 价格收费表
@@ -21,9 +21,9 @@ export const Pricing = (props) => {
                     )}
                 </ul>
             </div>
-            <Link className="w-full" href={siteConfig('LANDING_PRICING_1_URL', null, CONFIG)}>
+            <SmartLink className="w-full" href={siteConfig('LANDING_PRICING_1_URL', null, CONFIG)}>
                 <button className="font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-md px-10 py-2 transition-colors w-full">{siteConfig('LANDING_PRICING_1_BUTTON', null, CONFIG)}</button>
-            </Link>
+            </SmartLink>
         </div>
         <div className="w-full md:w-1/3 md:max-w-none bg-white dark:bg-hexo-black-gray px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:-mx-3 md:mb-0 rounded-md shadow-lg shadow-gray-600 md:relative md:z-20 md:flex md:flex-col">
             <div className="w-full flex-grow dark:text-gray-400">
@@ -34,9 +34,9 @@ export const Pricing = (props) => {
                     )}
                 </ul>
             </div>
-            <Link className="w-full" target='_blank' href={siteConfig('LANDING_PRICING_2_URL', null, CONFIG)}>
+            <SmartLink className="w-full" target='_blank' href={siteConfig('LANDING_PRICING_2_URL', null, CONFIG)}>
                 <button className="font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-md px-10 py-2 transition-colors w-full">{siteConfig('LANDING_PRICING_2_BUTTON', null, CONFIG)}</button>
-            </Link>
+            </SmartLink>
         </div>
         <div className="w-full md:w-1/3 md:max-w-none bg-white dark:bg-hexo-black-gray px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:my-6 rounded-md shadow-lg shadow-gray-600 md:flex md:flex-col">
             <div className="w-full flex-grow dark:text-gray-400">
@@ -47,9 +47,9 @@ export const Pricing = (props) => {
                     )}
                 </ul>
             </div>
-            <Link className="w-full" target='_blank' href={siteConfig('LANDING_PRICING_3_URL', null, CONFIG)}>
+            <SmartLink className="w-full" target='_blank' href={siteConfig('LANDING_PRICING_3_URL', null, CONFIG)}>
                 <button className="font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-md px-10 py-2 transition-colors w-full">{siteConfig('LANDING_PRICING_3_BUTTON', null, CONFIG)}</button>
-            </Link>
+            </SmartLink>
         </div>
     </div>
 </div>

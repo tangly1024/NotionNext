@@ -1,7 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import Live2D from '@/components/Live2D'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import dynamic from 'next/dynamic'
 import Announcement from './Announcement'
 const ExampleRecentComments = dynamic(() => import('./ExampleRecentComments'))
@@ -19,13 +19,13 @@ export const SideBar = (props) => {
                     <ul className="list-reset leading-normal">
                         {categoryOptions?.map(category => {
                           return (
-                              <Link
+                              <SmartLink
                                   key={category.name}
                                   href={`/category/${category.name}`}
                                   passHref
                                   legacyBehavior>
                                     <li>  <a href={`/category/${category.name}`} className="text-gray-darkest text-sm">{category.name}({category.count})</a></li>
-                                </Link>
+                                </SmartLink>
                           )
                         })}
                     </ul>
@@ -40,9 +40,9 @@ export const SideBar = (props) => {
                     <ul className="list-reset leading-normal">
                         {latestPosts?.map(p => {
                           return (
-                              <Link key={p.id} href={`/${p.slug}`} passHref legacyBehavior>
+                              <SmartLink key={p.id} href={`/${p.slug}`} passHref legacyBehavior>
                                     <li>  <a href={`/${p.slug}`} className="text-gray-darkest text-sm">{p.title}</a></li>
-                                </Link>
+                                </SmartLink>
                           )
                         })}
                     </ul>

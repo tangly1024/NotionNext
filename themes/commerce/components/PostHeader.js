@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import NotionIcon from '@/components/NotionIcon'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
@@ -19,11 +19,11 @@ export default function PostHeader({ post }) {
         <div className='mt-10'>
             <div className='mb-3 flex justify-center'>
               {post.category && <>
-                <Link href={`/category/${post.category}`} passHref legacyBehavior>
+                <SmartLink href={`/category/${post.category}`} passHref legacyBehavior>
                   <div className="cursor-pointer px-2 py-1 mb-2 border rounded-sm dark:border-white text-sm font-medium hover:underline duration-200 shadow-text-md text-white">
                     {post.category}
                   </div>
-                </Link>
+                </SmartLink>
               </>}
             </div>
 

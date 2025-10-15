@@ -1,7 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import { useGlobal } from '@/lib/global'
 import formatDate from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import DashboardSignOutButton from './DashboardSignOutButton'
 
 /**
@@ -25,11 +25,11 @@ export default function DashboardHeader() {
           <div class='font-medium dark:text-white'>
             <div className='flex items-center gap-x-2'>
               <span>{user?.fullName}</span>
-              <Link href='/dashboard/membership'>
+              <SmartLink href='/dashboard/membership'>
                 <span class='bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300'>
                   普通用户
                 </span>
-              </Link>
+              </SmartLink>
             </div>
             <div className='text-sm text-gray-500 gap-x-2 flex dark:text-gray-400'>
               <span>{user?.username}</span>

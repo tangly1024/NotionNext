@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import CONFIG from '../config'
@@ -63,7 +63,7 @@ export default function PostAdjacent({ prev, next }) {
     <div id='article-end'>
       {/* 移动端 */}
       <section className='lg:hidden pt-8 text-gray-800 items-center text-xs md:text-sm flex flex-col m-1 '>
-        <Link
+        <SmartLink
           href={`/${prev.slug}`}
           passHref
           className='cursor-pointer justify-between space-y-1 px-5 py-6 rounded-t-xl dark:bg-[#1e1e1e] border dark:border-gray-600 border-b-0 items-center dark:text-white flex flex-col w-full h-18 duration-200'>
@@ -71,8 +71,8 @@ export default function PostAdjacent({ prev, next }) {
           <div className='flex justify-center items-center text-lg font-bold'>
             {prev.title}
           </div>
-        </Link>
-        <Link
+        </SmartLink>
+        <SmartLink
           href={`/${next.slug}`}
           passHref
           className='cursor-pointer justify-between space-y-1 px-5 py-6 rounded-b-xl dark:bg-[#1e1e1e] border dark:border-gray-600 items-center dark:text-white flex flex-col w-full h-18 duration-200'>
@@ -80,7 +80,7 @@ export default function PostAdjacent({ prev, next }) {
           <div className='flex justify-center items-center text-lg font-bold'>
             {next.title}
           </div>
-        </Link>
+        </SmartLink>
       </section>
 
       {/* 桌面端 */}
@@ -88,13 +88,13 @@ export default function PostAdjacent({ prev, next }) {
       <div
         id='pc-next-post'
         className={`${isShow ? 'mb-5 opacity-100' : '-mb-24 opacity-0'} hidden md:block fixed z-40 right-10 bottom-4 duration-200 transition-all`}>
-        <Link
+        <SmartLink
           href={`/${next.slug}`}
           className='text-sm block p-4 w-72 h-28 cursor-pointer drop-shadow-xl duration transition-all dark:bg-[#1e1e1e] border dark:border-gray-600 bg-white dark:text-gray-300 dark:hover:text-yellow-600 hover:font-bold hover:text-blue-600 rounded-lg'>
           <div className='font-semibold'>{locale.COMMON.NEXT_POST}</div>
           <hr className='mt-2 mb-3' />
           <div className='line-clamp-2'>{next?.title}</div>
-        </Link>
+        </SmartLink>
       </div>
     </div>
   )
