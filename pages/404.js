@@ -1,6 +1,7 @@
-import { getGlobalNotionData } from '@/lib/notion/getNotionData'
-import * as ThemeMap from '@/themes'
-import { useGlobal } from '@/lib/global'
+import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
+import { getGlobalData } from '@/lib/db/getSiteData'
+import { DynamicLayout } from '@/themes/theme'
 
 /**
  * 404
@@ -8,14 +9,14 @@ import { useGlobal } from '@/lib/global'
  * @returns
  */
 const NoFound = props => {
-  const { theme, siteInfo } = useGlobal()
-  const ThemeComponents = ThemeMap[theme]
-  const meta = { title: `${props?.siteInfo?.title} | 页面找不到啦`, image: siteInfo?.pageCover }
-  return <ThemeComponents.Layout404 {...props} meta={meta}/>
+  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+  return <DynamicLayout theme={theme} layoutName='Layout404' {...props} />
 }
 
-export async function getStaticProps () {
-  const props = (await getGlobalNotionData({ from: '404' })) || {}
+export async function getStaticProps(req) {
+  const { locale } = req
+
+  const props = (await getGlobalData({ from: '404', locale })) || {}
   return { props }
 }
 

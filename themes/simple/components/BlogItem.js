@@ -1,36 +1,125 @@
-import BLOG from '@/blog.config'
-import Link from 'next/link'
-import CONFIG_SIMPLE from '../config_simple'
+import LazyImage from '@/components/LazyImage'
+import NotionIcon from '@/components/NotionIcon'
+import NotionPage from '@/components/NotionPage'
+import TwikooCommentCount from '@/components/TwikooCommentCount'
+import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { formatDateFmt } from '@/lib/utils/formatDate'
+import SmartLink from '@/components/SmartLink'
+import CONFIG from '../config'
 
 export const BlogItem = props => {
   const { post } = props
+  const { NOTION_CONFIG } = useGlobal()
+  const showPageCover = siteConfig('SIMPLE_POST_COVER_ENABLE', false, CONFIG)
+  const showPreview =
+    siteConfig('POST_LIST_PREVIEW', false, NOTION_CONFIG) && post.blockMap
 
-  return <div key={post.id} className="mb-10 pb-12 border-b dark:border-gray-800" >
-        <h2 className="mb-5 ">
-            <Link
-                id='blog-item-title'
-                href={`/${post.slug}`}
-                className="font-bold text-black text-xl md:text-2xl no-underline hover:underline">
-                {post.title}
-            </Link>
-        </h2>
+  return (
+    <div
+      key={post.id}
+      className='h-42 my-6 pb-12 border-b dark:border-gray-800'>
+      {/* 文章标题 */}
 
-        <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
-            <span> <i className="fa-regular fa-user"></i> <a href={CONFIG_SIMPLE.AUTHOR_LINK}>{BLOG.AUTHOR}</a></span>
-            <span> - <i className="fa-regular fa-clock"></i> {post.date?.start_date || post.createdTime}</span>
-            {post.category && <span> - <i className="fa-regular fa-folder"></i> <a href={`/category/${post.category}`} className="hover:text-red-400 transition-all duration-200">{post.category}</a></span>}
-            {post.tags && post.tags?.length > 0 && post.tags.map(t => <span key={t}> / <Link href={`/tag/${t}`}><span className=' hover:text-red-400 transition-all duration-200'>{t}</span></Link></span>)}
+      <div className='flex'>
+        <div className='article-cover h-full'>
+          {/* 图片封面 */}
+          {showPageCover && (
+            <div className='overflow-hidden mr-2 w-56 h-full'>
+              <SmartLink href={post.href} passHref legacyBehavior>
+                <LazyImage
+                  src={post?.pageCoverThumbnail}
+                  className='w-56 h-full object-cover object-center group-hover:scale-110 duration-500'
+                />
+              </SmartLink>
+            </div>
+          )}
         </div>
 
-        <div className="text-gray-700 dark:text-gray-300 leading-normal mb-6">
-            {post.summary}
-            {post.summary && <span>...</span>}
-        </div>
+        <article className='article-info'>
+          <h2 className='mb-2'>
+            <SmartLink
+              href={post.href}
+              className='blog-item-title font-bold text-black text-2xl menu-link'>
+              {siteConfig('POST_TITLE_ICON') && (
+                <NotionIcon icon={post.pageIcon} />
+              )}
+              {post.title}
+            </SmartLink>
+          </h2>
 
-        <div className='block'>
-            <Link href={post.slug} className='inline-block rounded-sm text-blue-400 text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
-                Continue Reading <i className="fa-solid fa-angle-right align-middle"></i>
-            </Link>
-        </div>
+          {/* 文章信息 */}
+          <header className='mb-5 text-md text-gray-700 dark:text-gray-300 flex-wrap flex leading-6'>
+            <div className='space-x-2'>
+              <span>
+                {' '}
+                <a
+                  href={siteConfig('SIMPLE_AUTHOR_LINK', null, CONFIG)}
+                  className='p-1 hover:text-red-400 transition-all duration-200'>
+                  <i className='fa-regular fa-user'></i> {siteConfig('AUTHOR')}
+                </a>
+              </span>
+              <span>
+                <SmartLink
+                  className='p-1 hover:text-red-400 transition-all duration-200'
+                  href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}>
+                  <i className='fa-regular fa-clock' />{' '}
+                  {post.date?.start_date || post.createdTime}
+                </SmartLink>
+              </span>
+              <span>
+                <TwikooCommentCount post={post} />
+              </span>
+            </div>
+
+            <div>
+              {post.category && (
+                <SmartLink href={`/category/${post.category}`} className='p-1'>
+                  {' '}
+                  <span className='hover:text-red-400 transition-all duration-200'>
+                    <i className='fa-regular fa-folder mr-0.5' />
+                    {post.category}
+                  </span>
+                </SmartLink>
+              )}
+              {post?.tags &&
+                post?.tags?.length > 0 &&
+                post?.tags.map(t => (
+                  <SmartLink
+                    key={t}
+                    href={`/tag/${t}`}
+                    className=' hover:text-red-400 transition-all duration-200'>
+                    <span> /{t}</span>
+                  </SmartLink>
+                ))}
+            </div>
+          </header>
+
+          <main className='text-gray-700 dark:text-gray-300 leading-normal mb-6'>
+            {!showPreview && (
+              <>
+                {post.summary}
+                {post.summary && <span>...</span>}
+              </>
+            )}
+            {showPreview && post?.blockMap && (
+              <div className='overflow-ellipsis truncate'>
+                <NotionPage post={post} />
+                <hr className='border-dashed py-4' />
+              </div>
+            )}
+          </main>
+        </article>
+      </div>
+
+      <div className='block'>
+        <SmartLink
+          href={post.href}
+          className='inline-block rounded-sm text-blue-600 dark:text-blue-300  text-xs dark:border-gray-800 border hover:text-red-400 transition-all duration-200 hover:border-red-300 h-9 leading-8 px-5'>
+          Continue Reading{' '}
+          <i className='fa-solid fa-angle-right align-middle'></i>
+        </SmartLink>
+      </div>
     </div>
+  )
 }

@@ -1,69 +1,62 @@
-
-import BLOG from '@/blog.config'
+import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-
+import CONFIG from '../config'
+import BlogItem from './BlogItem'
+/**
+ * 使用分页插件的博客列表
+ * @param {*} props
+ * @returns
+ */
 export const BlogListPage = props => {
   const { page = 1, posts, postCount } = props
-  const { locale } = useGlobal()
+  const { locale, NOTION_CONFIG } = useGlobal()
   const router = useRouter()
-  const totalPage = Math.ceil(postCount / BLOG.POSTS_PER_PAGE)
+  const totalPage = Math.ceil(
+    postCount / siteConfig('POSTS_PER_PAGE', null, NOTION_CONFIG)
+  )
   const currentPage = +page
 
   const showPrev = currentPage > 1
   const showNext = page < totalPage
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath
+    .split('?')[0]
+    .replace(/\/page\/[1-9]\d*/, '')
+    .replace(/\/$/, '')
+    .replace('.html', '')
+
+  const showPageCover = siteConfig('EXAMPLE_POST_LIST_COVER', null, CONFIG)
 
   return (
-      <div className="w-full md:pr-12 mb-12">
+    <div className={`w-full ${showPageCover ? 'md:pr-2' : 'md:pr-12'} mb-12`}>
+      <div id='posts-wrapper'>
+        {posts?.map(post => (
+          <BlogItem key={post.id} post={post} />
+        ))}
+      </div>
 
-            <div id="container">
-                {posts?.map(p => (
-                    <article key={p.id} className="mb-12" >
-                        <h2 className="mb-4">
-                            <Link
-                                href={`/${p.slug}`}
-                                className="text-black dark:text-gray-100 text-xl md:text-2xl no-underline hover:underline">
-                                  {p.title}
-                            </Link>
-                        </h2>
-
-                        <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
-                            by <a href="#" className="text-gray-700 dark:text-gray-300">{BLOG.AUTHOR}</a> on {p.date?.start_date || p.createdTime}
-                            <span className="font-bold mx-1"> | </span>
-                            <a href={`/category${p.category}`} className="text-gray-700 dark:text-gray-300 hover:underline">{p.category}</a>
-                            {/* <span className="font-bold mx-1"> | </span> */}
-                            {/* <a href="#" className="text-gray-700">2 Comments</a> */}
-                        </div>
-
-                        <p className="text-gray-700 dark:text-gray-400 leading-normal">
-                            {p.summary}
-                        </p>
-                            {/* 搜索结果 */}
-                        {p.results && (
-                            <p className="mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
-                            {p.results.map(r => (
-                                <span key={r}>{r}</span>
-                            ))}
-                            </p>
-                        )}
-                    </article>
-                ))}
-            </div>
-
-            <div className="flex justify-between text-xs">
-                <Link
-                    href={{ pathname: currentPage - 1 === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${currentPage - 1}`, query: router.query.s ? { s: router.query.s } : {} }}
-                    className={`${showPrev ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>
-                    {locale.PAGINATION.PREV}
-                </Link>
-                <Link
-                    href={{ pathname: `${pagePrefix}/page/${currentPage + 1}`, query: router.query.s ? { s: router.query.s } : {} }}
-                    className={`${showNext ? 'bg-black ' : 'bg-gray pointer-events-none '} text-white no-underline py-2 px-3 rounded`}>
-                    {locale.PAGINATION.NEXT}
-                </Link>
-            </div>
-        </div>
+      <div className='flex justify-between text-xs'>
+        <SmartLink
+          href={{
+            pathname:
+              currentPage - 1 === 1
+                ? `${pagePrefix}/`
+                : `${pagePrefix}/page/${currentPage - 1}`,
+            query: router.query.s ? { s: router.query.s } : {}
+          }}
+          className={`${showPrev ? 'bg-black dark:bg-hexo-black-gray' : 'bg-gray pointer-events-none invisible'} text-white no-underline py-2 px-3 rounded`}>
+          {locale.PAGINATION.PREV}
+        </SmartLink>
+        <SmartLink
+          href={{
+            pathname: `${pagePrefix}/page/${currentPage + 1}`,
+            query: router.query.s ? { s: router.query.s } : {}
+          }}
+          className={`${showNext ? 'bg-black dark:bg-hexo-black-gray ' : 'bg-gray pointer-events-none invisible'} text-white no-underline py-2 px-3 rounded`}>
+          {locale.PAGINATION.NEXT}
+        </SmartLink>
+      </div>
+    </div>
   )
 }

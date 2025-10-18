@@ -1,16 +1,16 @@
-import React from 'react'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useGlobal } from '@/lib/global'
-import CONFIG_NEXT from '../config_next'
+import CONFIG from '../config'
+import { siteConfig } from '@/lib/config'
 
 /**
  * 展示文章推荐
  */
 const RecommendPosts = ({ recommendPosts }) => {
-  if (!CONFIG_NEXT.ARTICLE_RELATE_POSTS || !recommendPosts || recommendPosts.length < 1) {
+  const { locale } = useGlobal()
+  if (!siteConfig('NEXT_ARTICLE_RELATE_POSTS', null, CONFIG) || !recommendPosts || recommendPosts.length < 1) {
     return <></>
   }
-  const { locale } = useGlobal()
 
   return (
     <div className="pt-2 border pl-4 py-2 my-4 dark:text-gray-300 ">
@@ -18,15 +18,15 @@ const RecommendPosts = ({ recommendPosts }) => {
         <ul className="font-light text-sm">
           {recommendPosts.map(post => (
             <li className="py-1" key={post.id}>
-              <Link href={`/${post.slug}`} className="cursor-pointer hover:underline">
+              <SmartLink href={`/${post.slug}`} className="cursor-pointer hover:underline">
 
                 {post.title}
 
-              </Link>
+              </SmartLink>
             </li>
           ))}
         </ul>
     </div>
-  );
+  )
 }
 export default RecommendPosts

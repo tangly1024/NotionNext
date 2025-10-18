@@ -1,5 +1,4 @@
-import Link from 'next/link'
-import React from 'react'
+import SmartLink from '@/components/SmartLink'
 import { useGlobal } from '@/lib/global'
 
 const CategoryList = ({ currentCategory, categoryOptions }) => {
@@ -11,10 +10,10 @@ const CategoryList = ({ currentCategory, categoryOptions }) => {
   return (
     <ul className='flex py-1 space-x-3'>
       <li className='w-16 py-2 dark:text-gray-200 whitespace-nowrap'>{locale.COMMON.CATEGORY}</li>
-      {categoryOptions.map(category => {
+      {categoryOptions?.map(category => {
         const selected = category.name === currentCategory
         return (
-          <Link
+          <SmartLink
             key={category.name}
             href={`/category/${category.name}`}
             passHref
@@ -31,7 +30,7 @@ const CategoryList = ({ currentCategory, categoryOptions }) => {
                 {`${category.name} (${category.count})`}
               </a>
             </li>
-          </Link>
+          </SmartLink>
         )
       })}
     </ul>
