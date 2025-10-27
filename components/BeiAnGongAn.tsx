@@ -35,7 +35,7 @@ export const BeiAnGongAn: React.FC<BeiAnGongAnProps> = ({
     return null
   }
 
-  const href = `https://beian.mps.gov.cn/#/query/webSearch?code=${code}`
+  const href = `https://icp.gov.moe/?keyword=20250359`
 
   return (
     <div className={className}>
