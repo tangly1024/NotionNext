@@ -14,7 +14,7 @@ export default function ArticleExpirationNotice({
 }) {
   const articleExpirationEnabled = siteConfig(
     'ARTICLE_EXPIRATION_ENABLED',
-    false
+    true
   )
   if (!articleExpirationEnabled || !post?.lastEditedDay) {
     return null
