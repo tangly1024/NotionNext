@@ -10,6 +10,7 @@ import RandomPostButton from './RandomPostButton'
 import ReadingProgress from './ReadingProgress'
 import SearchButton from './SearchButton'
 import SlideOver from './SlideOver'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 /**
  * 页头：顶部导航
@@ -167,6 +168,14 @@ const Header = props => {
 
           {/* 右侧固定 */}
           <div className='flex flex-shrink-0 justify-end items-center w-48'>
+            <div className="mr-2">
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
             <RandomPostButton {...props} />
             <SearchButton {...props} />
             {!JSON.parse(siteConfig('THEME_SWITCH')) && (
