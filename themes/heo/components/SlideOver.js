@@ -12,6 +12,7 @@ import {
 } from 'react'
 import { MenuListSide } from './MenuListSide'
 import TagGroups from './TagGroups'
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 /**
  * 侧边抽屉
@@ -91,8 +92,17 @@ export default function SlideOver(props) {
                   <div className='flex h-full flex-col overflow-y-scroll bg-white dark:bg-[#2E031B] py-6 shadow-xl'>
                     <div className='relative mt-6 flex-1 flex-col space-y-3 px-4 sm:px-6 dark:text-white '>
                       <section className='space-y-2 flex flex-col'>
-                        {/* 切换深色模式 */}
-                        <DarkModeBlockButton />
+                        <div className="flex justify-between">
+                          <DarkModeBlockButton />
+                          <div className="p-2">
+                            <SignedOut>
+                              <SignInButton />
+                            </SignedOut>
+                            <SignedIn>
+                              <UserButton />
+                            </SignedIn>
+                          </div>
+                        </div>
                       </section>
 
                       <section className='space-y-2 flex flex-col'>
