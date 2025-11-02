@@ -29,6 +29,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env.local
 
 # vercel
 .vercel
@@ -43,3 +44,5 @@ yarn-error.log*
 # sitemap
 /public/robots.txt
 /public/sitemap.xml
+
+.claude
