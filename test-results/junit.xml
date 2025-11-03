@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="93" failures="8" errors="0" time="3.691">
+  <testsuite name="Validator" errors="0" failures="3" skipped="0" timestamp="2025-11-03T15:53:24" time="0.546" tests="24">
+    <testcase classname="Validator isValidEmail validates correct email addresses" name="Validator isValidEmail validates correct email addresses" time="0.005">
+    </testcase>
+    <testcase classname="Validator isValidEmail rejects invalid email addresses" name="Validator isValidEmail rejects invalid email addresses" time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+    at toBe (E:\gittensor-projects\NotionNext\__tests__\lib\utils\validation.test.js:30:47)
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.forEach (E:\gittensor-projects\NotionNext\__tests__\lib\utils\validation.test.js:29:21)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="Validator isValidUrl validates correct URLs" name="Validator isValidUrl validates correct URLs" time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+    at toBe (E:\gittensor-projects\NotionNext\__tests__\lib\utils\validation.test.js:45:43)
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.forEach (E:\gittensor-projects\NotionNext\__tests__\lib\utils\validation.test.js:44:17)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="Validator isValidUrl rejects invalid URLs" name="Validator isValidUrl rejects invalid URLs" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidSlug validates correct slugs" name="Validator isValidSlug validates correct slugs" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidSlug rejects invalid slugs" name="Validator isValidSlug rejects invalid slugs" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidNotionId validates correct Notion IDs" name="Validator isValidNotionId validates correct Notion IDs" time="0.006">
+    </testcase>
+    <testcase classname="Validator isValidNotionId rejects invalid Notion IDs" name="Validator isValidNotionId rejects invalid Notion IDs" time="0.004">
+    </testcase>
+    <testcase classname="Validator isValidLength validates string length correctly" name="Validator isValidLength validates string length correctly" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidLength rejects strings outside length range" name="Validator isValidLength rejects strings outside length range" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidNumber validates numbers in range" name="Validator isValidNumber validates numbers in range" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidNumber rejects numbers outside range" name="Validator isValidNumber rejects numbers outside range" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer stripHtml removes HTML tags" name="Sanitizer stripHtml removes HTML tags" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer stripHtml handles empty or null input" name="Sanitizer stripHtml handles empty or null input" time="0.002">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeXss removes XSS patterns" name="Sanitizer sanitizeXss removes XSS patterns" time="0.005">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: &quot;&quot;
+Received: &quot;alert(1)&quot;
+    at Object.toBe (E:\gittensor-projects\NotionNext\__tests__\lib\utils\validation.test.js:172:60)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="Sanitizer sanitizeXss preserves safe content" name="Sanitizer sanitizeXss preserves safe content" time="0.008">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeFilename removes illegal characters" name="Sanitizer sanitizeFilename removes illegal characters" time="0.004">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeFilename replaces spaces with underscores" name="Sanitizer sanitizeFilename replaces spaces with underscores" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeFilename removes leading and trailing dots" name="Sanitizer sanitizeFilename removes leading and trailing dots" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer escapeHtml escapes HTML entities" name="Sanitizer escapeHtml escapes HTML entities" time="0.001">
+    </testcase>
+    <testcase classname="RateLimiter allows requests within limit" name="RateLimiter allows requests within limit" time="0.003">
+    </testcase>
+    <testcase classname="RateLimiter blocks requests over limit" name="RateLimiter blocks requests over limit" time="0.001">
+    </testcase>
+    <testcase classname="RateLimiter resets after time window" name="RateLimiter resets after time window" time="0.004">
+    </testcase>
+    <testcase classname="RateLimiter handles different users separately" name="RateLimiter handles different users separately" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="ThemeSwitch Component" errors="0" failures="5" skipped="0" timestamp="2025-11-03T15:53:25" time="1.023" tests="5">
+    <testcase classname="ThemeSwitch Component renders theme switch button" name="ThemeSwitch Component renders theme switch button" time="0.11">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;on&apos;)
+    at on (E:\gittensor-projects\NotionNext\components\SideBarDrawer.js:23:19)
+    at commitHookEffectListMount (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:23189:26)
+    at commitPassiveMountOnFiber (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24970:11)
+    at commitPassiveMountEffects_complete (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24930:9)
+    at commitPassiveMountEffects_begin (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24917:7)
+    at commitPassiveMountEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24905:3)
+    at flushPassiveEffectsImpl (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27078:3)
+    at flushPassiveEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27023:14)
+    at E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:26808:9
+    at flushActQueue (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2667:24)
+    at act (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2582:11)
+    at E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\act-compat.js:47:25
+    at renderRoot (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:180:26)
+    at render (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:271:10)
+    at Object.&lt;anonymous&gt; (E:\gittensor-projects\NotionNext\__tests__\components\ThemeSwitch.test.js:41:11)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="ThemeSwitch Component displays current theme" name="ThemeSwitch Component displays current theme" time="0.054">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;on&apos;)
+    at on (E:\gittensor-projects\NotionNext\components\SideBarDrawer.js:23:19)
+    at commitHookEffectListMount (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:23189:26)
+    at commitPassiveMountOnFiber (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24970:11)
+    at commitPassiveMountEffects_complete (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24930:9)
+    at commitPassiveMountEffects_begin (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24917:7)
+    at commitPassiveMountEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24905:3)
+    at flushPassiveEffectsImpl (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27078:3)
+    at flushPassiveEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27023:14)
+    at E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:26808:9
+    at flushActQueue (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2667:24)
+    at act (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2582:11)
+    at E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\act-compat.js:47:25
+    at renderRoot (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:180:26)
+    at render (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:271:10)
+    at Object.&lt;anonymous&gt; (E:\gittensor-projects\NotionNext\__tests__\components\ThemeSwitch.test.js:47:11)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="ThemeSwitch Component opens sidebar when palette icon clicked" name="ThemeSwitch Component opens sidebar when palette icon clicked" time="0.039">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;on&apos;)
+    at on (E:\gittensor-projects\NotionNext\components\SideBarDrawer.js:23:19)
+    at commitHookEffectListMount (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:23189:26)
+    at commitPassiveMountOnFiber (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24970:11)
+    at commitPassiveMountEffects_complete (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24930:9)
+    at commitPassiveMountEffects_begin (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24917:7)
+    at commitPassiveMountEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24905:3)
+    at flushPassiveEffectsImpl (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27078:3)
+    at flushPassiveEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27023:14)
+    at E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:26808:9
+    at flushActQueue (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2667:24)
+    at act (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2582:11)
+    at E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\act-compat.js:47:25
+    at renderRoot (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:180:26)
+    at render (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:271:10)
+    at Object.&lt;anonymous&gt; (E:\gittensor-projects\NotionNext\__tests__\components\ThemeSwitch.test.js:52:11)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="ThemeSwitch Component displays all available themes" name="ThemeSwitch Component displays all available themes" time="0.037">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;on&apos;)
+    at on (E:\gittensor-projects\NotionNext\components\SideBarDrawer.js:23:19)
+    at commitHookEffectListMount (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:23189:26)
+    at commitPassiveMountOnFiber (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24970:11)
+    at commitPassiveMountEffects_complete (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24930:9)
+    at commitPassiveMountEffects_begin (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24917:7)
+    at commitPassiveMountEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24905:3)
+    at flushPassiveEffectsImpl (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27078:3)
+    at flushPassiveEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27023:14)
+    at E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:26808:9
+    at flushActQueue (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2667:24)
+    at act (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2582:11)
+    at E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\act-compat.js:47:25
+    at renderRoot (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:180:26)
+    at render (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:271:10)
+    at Object.&lt;anonymous&gt; (E:\gittensor-projects\NotionNext\__tests__\components\ThemeSwitch.test.js:62:11)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="ThemeSwitch Component changes theme when theme is clicked" name="ThemeSwitch Component changes theme when theme is clicked" time="0.028">
+      <failure>TypeError: Cannot read properties of undefined (reading &apos;on&apos;)
+    at on (E:\gittensor-projects\NotionNext\components\SideBarDrawer.js:23:19)
+    at commitHookEffectListMount (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:23189:26)
+    at commitPassiveMountOnFiber (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24970:11)
+    at commitPassiveMountEffects_complete (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24930:9)
+    at commitPassiveMountEffects_begin (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24917:7)
+    at commitPassiveMountEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:24905:3)
+    at flushPassiveEffectsImpl (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27078:3)
+    at flushPassiveEffects (E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:27023:14)
+    at E:\gittensor-projects\NotionNext\node_modules\react-dom\cjs\react-dom.development.js:26808:9
+    at flushActQueue (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2667:24)
+    at act (E:\gittensor-projects\NotionNext\node_modules\react\cjs\react.development.js:2582:11)
+    at E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\act-compat.js:47:25
+    at renderRoot (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:180:26)
+    at render (E:\gittensor-projects\NotionNext\node_modules\@testing-library\react\dist\pure.js:271:10)
+    at Object.&lt;anonymous&gt; (E:\gittensor-projects\NotionNext\__tests__\components\ThemeSwitch.test.js:72:11)
+    at Promise.then.completed (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:121:9)
+    at run (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (E:\gittensor-projects\NotionNext\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (E:\gittensor-projects\NotionNext\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="useWindowSize Hook" errors="0" failures="0" skipped="0" timestamp="2025-11-03T15:53:26" time="0.201" tests="3">
+    <testcase classname="useWindowSize Hook returns initial window size" name="useWindowSize Hook returns initial window size" time="0.004">
+    </testcase>
+    <testcase classname="useWindowSize Hook updates size on window resize" name="useWindowSize Hook updates size on window resize" time="0.001">
+    </testcase>
+    <testcase classname="useWindowSize Hook cleans up event listener on unmount" name="useWindowSize Hook cleans up event listener on unmount" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Utils - URL Functions" errors="0" failures="0" skipped="0" timestamp="2025-11-03T15:53:26" time="0.143" tests="31">
+    <testcase classname="Utils - URL Functions sliceUrlFromHttp extracts URL starting from http" name="Utils - URL Functions sliceUrlFromHttp extracts URL starting from http" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions sliceUrlFromHttp returns original string if no http found" name="Utils - URL Functions sliceUrlFromHttp returns original string if no http found" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions convertUrlStartWithOneSlash adds leading slash if missing" name="Utils - URL Functions convertUrlStartWithOneSlash adds leading slash if missing" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions convertUrlStartWithOneSlash removes duplicate leading slashes" name="Utils - URL Functions convertUrlStartWithOneSlash removes duplicate leading slashes" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions convertUrlStartWithOneSlash returns # for null or undefined" name="Utils - URL Functions convertUrlStartWithOneSlash returns # for null or undefined" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions isHttpLink identifies HTTP/HTTPS links" name="Utils - URL Functions isHttpLink identifies HTTP/HTTPS links" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions isHttpLink rejects non-HTTP links" name="Utils - URL Functions isHttpLink rejects non-HTTP links" time="0.004">
+    </testcase>
+    <testcase classname="Utils - URL Functions isMailOrTelLink identifies mailto and tel links" name="Utils - URL Functions isMailOrTelLink identifies mailto and tel links" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions isMailOrTelLink rejects other link types" name="Utils - URL Functions isMailOrTelLink rejects other link types" time="0">
+    </testcase>
+    <testcase classname="Utils - URL Functions checkStrIsUuid validates UUID format" name="Utils - URL Functions checkStrIsUuid validates UUID format" time="0">
+    </testcase>
+    <testcase classname="Utils - URL Functions checkStrIsUuid rejects invalid UUID" name="Utils - URL Functions checkStrIsUuid rejects invalid UUID" time="0">
+    </testcase>
+    <testcase classname="Utils - URL Functions checkStrIsNotionId validates 32-character alphanumeric Notion ID" name="Utils - URL Functions checkStrIsNotionId validates 32-character alphanumeric Notion ID" time="0">
+    </testcase>
+    <testcase classname="Utils - URL Functions checkStrIsNotionId rejects invalid Notion ID" name="Utils - URL Functions checkStrIsNotionId rejects invalid Notion ID" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions getLastPartOfUrl extracts last segment after slash" name="Utils - URL Functions getLastPartOfUrl extracts last segment after slash" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions getLastPartOfUrl returns full string if no slash" name="Utils - URL Functions getLastPartOfUrl returns full string if no slash" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions getLastPartOfUrl handles empty input" name="Utils - URL Functions getLastPartOfUrl handles empty input" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions getQueryParam extracts query parameter from URL" name="Utils - URL Functions getQueryParam extracts query parameter from URL" time="0.001">
+    </testcase>
+    <testcase classname="Utils - URL Functions getQueryParam returns null for missing parameter" name="Utils - URL Functions getQueryParam returns null for missing parameter" time="0">
+    </testcase>
+    <testcase classname="Utils - URL Functions getQueryParam handles URL with hash" name="Utils - URL Functions getQueryParam handles URL with hash" time="0">
+    </testcase>
+    <testcase classname="Utils - Object Functions isObject identifies plain objects" name="Utils - Object Functions isObject identifies plain objects" time="0.002">
+    </testcase>
+    <testcase classname="Utils - Object Functions isObject rejects non-objects" name="Utils - Object Functions isObject rejects non-objects" time="0.001">
+    </testcase>
+    <testcase classname="Utils - Object Functions isIterable identifies iterable objects" name="Utils - Object Functions isIterable identifies iterable objects" time="0.001">
+    </testcase>
+    <testcase classname="Utils - Object Functions isIterable rejects non-iterable objects" name="Utils - Object Functions isIterable rejects non-iterable objects" time="0">
+    </testcase>
+    <testcase classname="Utils - Object Functions deepClone clones objects deeply" name="Utils - Object Functions deepClone clones objects deeply" time="0.001">
+    </testcase>
+    <testcase classname="Utils - Object Functions deepClone clones arrays deeply" name="Utils - Object Functions deepClone clones arrays deeply" time="0.001">
+    </testcase>
+    <testcase classname="Utils - Object Functions deepClone handles Date objects" name="Utils - Object Functions deepClone handles Date objects" time="0.001">
+    </testcase>
+    <testcase classname="Utils - Object Functions mergeDeep merges objects deeply" name="Utils - Object Functions mergeDeep merges objects deeply" time="0.001">
+    </testcase>
+    <testcase classname="Utils - Object Functions mergeDeep overwrites primitive values" name="Utils - Object Functions mergeDeep overwrites primitive values" time="0">
+    </testcase>
+    <testcase classname="Utils - Object Functions shuffleArray returns array with same elements" name="Utils - Object Functions shuffleArray returns array with same elements" time="0.003">
+    </testcase>
+    <testcase classname="Utils - Object Functions shuffleArray handles empty array" name="Utils - Object Functions shuffleArray handles empty array" time="0.002">
+    </testcase>
+    <testcase classname="Utils - Object Functions shuffleArray handles null input" name="Utils - Object Functions shuffleArray handles null input" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Error Classes" errors="0" failures="0" skipped="0" timestamp="2025-11-03T15:53:26" time="0.158" tests="14">
+    <testcase classname="Error Classes AppError creates error with correct properties" name="Error Classes AppError creates error with correct properties" time="0.003">
+    </testcase>
+    <testcase classname="Error Classes AppError uses default values" name="Error Classes AppError uses default values" time="0.001">
+    </testcase>
+    <testcase classname="Error Classes NetworkError creates network error with correct type" name="Error Classes NetworkError creates network error with correct type" time="0.001">
+    </testcase>
+    <testcase classname="Error Classes NetworkError uses default message" name="Error Classes NetworkError uses default message" time="0.001">
+    </testcase>
+    <testcase classname="Error Classes ApiError creates API error with status code" name="Error Classes ApiError creates API error with status code" time="0.002">
+    </testcase>
+    <testcase classname="Error Classes ValidationError creates validation error" name="Error Classes ValidationError creates validation error" time="0.001">
+    </testcase>
+    <testcase classname="ErrorHandler logError logs error with context" name="ErrorHandler logError logs error with context" time="0.006">
+    </testcase>
+    <testcase classname="ErrorHandler logError logs different info in development vs production" name="ErrorHandler logError logs different info in development vs production" time="0.002">
+    </testcase>
+    <testcase classname="ErrorHandler handleApiError handles error with response" name="ErrorHandler handleApiError handles error with response" time="0.004">
+    </testcase>
+    <testcase classname="ErrorHandler handleApiError handles error without response" name="ErrorHandler handleApiError handles error without response" time="0.001">
+    </testcase>
+    <testcase classname="ErrorHandler handleApiError handles generic error" name="ErrorHandler handleApiError handles generic error" time="0.001">
+    </testcase>
+    <testcase classname="ErrorHandler safeExecute executes function successfully" name="ErrorHandler safeExecute executes function successfully" time="0.001">
+    </testcase>
+    <testcase classname="ErrorHandler safeExecute returns fallback on error" name="ErrorHandler safeExecute returns fallback on error" time="0.002">
+    </testcase>
+    <testcase classname="ErrorHandler safeExecute logs error when function fails" name="ErrorHandler safeExecute logs error when function fails" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="formatDate" errors="0" failures="0" skipped="0" timestamp="2025-11-03T15:53:26" time="0.12" tests="8">
+    <testcase classname="formatDate formats date in English locale" name="formatDate formats date in English locale" time="0.019">
+    </testcase>
+    <testcase classname="formatDate formats date in Chinese locale with dashes" name="formatDate formats date in Chinese locale with dashes" time="0.001">
+    </testcase>
+    <testcase classname="formatDate handles invalid date" name="formatDate handles invalid date" time="0.001">
+    </testcase>
+    <testcase classname="formatDate handles missing locale" name="formatDate handles missing locale" time="0.001">
+    </testcase>
+    <testcase classname="formatDateFmt formats timestamp with custom format" name="formatDateFmt formats timestamp with custom format" time="0.001">
+    </testcase>
+    <testcase classname="formatDateFmt formats time components" name="formatDateFmt formats time components" time="0.001">
+    </testcase>
+    <testcase classname="formatDateFmt formats with mixed patterns" name="formatDateFmt formats with mixed patterns" time="0">
+    </testcase>
+    <testcase classname="formatDateFmt handles quarter format" name="formatDateFmt handles quarter format" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="PageId Utils" errors="0" failures="0" skipped="0" timestamp="2025-11-03T15:53:26" time="0.122" tests="8">
+    <testcase classname="PageId Utils extractLangPrefix extracts language prefix from page ID" name="PageId Utils extractLangPrefix extracts language prefix from page ID" time="0.001">
+    </testcase>
+    <testcase classname="PageId Utils extractLangPrefix returns empty string if no prefix" name="PageId Utils extractLangPrefix returns empty string if no prefix" time="0">
+    </testcase>
+    <testcase classname="PageId Utils extractLangId extracts ID after language prefix" name="PageId Utils extractLangId extracts ID after language prefix" time="0.001">
+    </testcase>
+    <testcase classname="PageId Utils extractLangId returns original string if no prefix" name="PageId Utils extractLangId returns original string if no prefix" time="0.001">
+    </testcase>
+    <testcase classname="PageId Utils extractLangId handles strings with spaces after colon" name="PageId Utils extractLangId handles strings with spaces after colon" time="0">
+    </testcase>
+    <testcase classname="PageId Utils getShortId extracts short ID from UUID" name="PageId Utils getShortId extracts short ID from UUID" time="0.001">
+    </testcase>
+    <testcase classname="PageId Utils getShortId returns original if no dashes" name="PageId Utils getShortId returns original if no dashes" time="0">
+    </testcase>
+    <testcase classname="PageId Utils getShortId handles null or undefined" name="PageId Utils getShortId handles null or undefined" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>
