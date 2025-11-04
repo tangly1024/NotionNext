@@ -52,3 +52,7 @@ package-lock.json
 # yarn.lock
 
 .notion-api-lock
+
+.history
+.cursor
+.trae
