@@ -17,7 +17,6 @@ import { siteConfig } from '@/lib/config'
 //     </div>
 //   )
 // }
-
 export default function PoweredBy(props) {
   return ""
 }
