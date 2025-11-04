@@ -18,6 +18,9 @@ const BLOG = {
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'Stav', // 您的昵称 例如 tangly1024
   BIO: process.env.NEXT_PUBLIC_BIO || '今天也是可爱一天呢', // 作者简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://blog.stavmb.me', // 网站地址
+  
+  LINK_WHITELIST: ['blog.stavmb.me'], // 外链跳转白名单，请根据需要进行修改，凡是链接中包含以下域名的，点击链接时不会进入中转页面
+
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'Notion, 博客, 科技, 可爱', // 网站关键词 英文逗号隔开
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || 'public/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 
