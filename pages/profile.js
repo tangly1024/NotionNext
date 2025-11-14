@@ -6,22 +6,14 @@ import { isBrowser } from '@/lib/utils'
 import { DynamicLayout } from '@/themes/theme'
 import { useEffect } from 'react'
 
-/**
- * Profile 页面（按 ArchiveIndex 的风格实现）
- * - 使用 DynamicLayout 作为主题容器
- * - 支持 URL Hash 锚点平滑滚动
- * - 内容来自本地结构化数据（后续可替换为 Notion 或 CMS）
- */
 const ProfilePage = (props) => {
   useEffect(() => {
     if (isBrowser) {
       const anchor = window.location.hash
       if (anchor) {
         setTimeout(() => {
-          const anchorElement = document.getElementById(anchor.substring(1))
-          if (anchorElement) {
-            anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' })
-          }
+          const el = document.getElementById(anchor.substring(1))
+          if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' })
         }, 300)
       }
     }
@@ -31,7 +23,8 @@ const ProfilePage = (props) => {
   const data = getProfileData()
 
   return (
-    <DynamicLayout theme={theme} layoutName='LayoutAbout' {...props}>
+    // 如果你的主题需要特定 layoutName，再加上：layoutName='LayoutArchive' 或 'LayoutPage'
+    <DynamicLayout theme={theme} {...props}>
       <main className='max-w-4xl mx-auto px-4 md:px-6 lg:px-8 my-8'>
         <header className='my-6'>
           <h1 className='text-3xl font-bold'>
@@ -42,11 +35,11 @@ const ProfilePage = (props) => {
             Assistant Professor · Industrial &amp; Systems Engineering (ISE), Lamar University
           </p>
           <nav className='flex flex-wrap gap-3 mt-4 text-sm'>
-            <a href="#about" className="hover:underline">About</a>
-            <a href="#research" className="hover:underline">Research</a>
-            <a href="#education" className="hover:underline">Education</a>
-            <a href="#work" className="hover:underline">Work</a>
-            <a href="#service" className="hover:underline">Service</a>
+            <a href="#about" className='hover:underline'>About</a>
+            <a href="#research" className='hover:underline'>Research</a>
+            <a href="#education" className='hover:underline'>Education</a>
+            <a href="#work" className='hover:underline'>Work</a>
+            <a href="#service" className='hover:underline'>Service</a>
           </nav>
         </header>
 
@@ -179,7 +172,7 @@ function ServiceBlock ({ title, items }) {
   )
 }
 
-/** 本地结构化数据（可替换为 props.profile） */
+/** 纯前端数据，可替换为 props.profile */
 function getProfileData () {
   return {
     about: [
