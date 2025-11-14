@@ -1,3 +1,4 @@
+// /pages/profile.js
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
@@ -6,12 +7,12 @@ import { DynamicLayout } from '@/themes/theme'
 import { useEffect } from 'react'
 
 /**
- * About 页面（按 ArchiveIndex 的风格实现）
+ * Profile 页面（按 ArchiveIndex 的风格实现）
  * - 使用 DynamicLayout 作为主题容器
  * - 支持 URL Hash 锚点平滑滚动
  * - 内容来自本地结构化数据（后续可替换为 Notion 或 CMS）
  */
-const AboutPage = props => {
+const ProfilePage = (props) => {
   useEffect(() => {
     if (isBrowser) {
       const anchor = window.location.hash
@@ -27,29 +28,25 @@ const AboutPage = props => {
   }, [])
 
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-
-  // 你的结构化数据（由你之前的 Markdown 转换而来）
   const data = getProfileData()
 
   return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutAbout' // 你也可以用 'LayoutArchive' 或主题中已有的布局名称
-      {...props}
-    >
+    <DynamicLayout theme={theme} layoutName='LayoutAbout' {...props}>
       <main className='max-w-4xl mx-auto px-4 md:px-6 lg:px-8 my-8'>
-        {/* 页面标题 + 快捷操作 */}
         <header className='my-6'>
-          <h1 className='text-3xl font-bold'>Dr. Wenhao Yang <span className='ml-2 text-sm px-2 py-1 rounded bg-gray-200 dark:bg-gray-700'>XR² Lab</span></h1>
+          <h1 className='text-3xl font-bold'>
+            Dr. Wenhao Yang
+            <span className='ml-2 text-sm px-2 py-1 rounded bg-gray-200 dark:bg-gray-700'>XR² Lab</span>
+          </h1>
           <p className='text-sm text-gray-600 dark:text-gray-400 mt-1'>
             Assistant Professor · Industrial &amp; Systems Engineering (ISE), Lamar University
           </p>
           <nav className='flex flex-wrap gap-3 mt-4 text-sm'>
-            <a href='#about' className='hover:underline'>About</a>
-            <a href='#research' className='hover:underline'>Research</a>
-            <a href='#education' className='hover:underline'>Education</a>
-            <a href='#work' className='hover:underline'>Work Experience</a>
-            <a href='#service' className='hover:underline'>Professional Service</a>
+            <a href="#about" className="hover:underline">About</a>
+            <a href="#research" className="hover:underline">Research</a>
+            <a href="#education" className="hover:underline">Education</a>
+            <a href="#work" className="hover:underline">Work</a>
+            <a href="#service" className="hover:underline">Service</a>
           </nav>
         </header>
 
@@ -57,9 +54,7 @@ const AboutPage = props => {
         <section id='about' className='my-10'>
           <h2 className='text-2xl font-semibold mb-4'>About Me</h2>
           <div className='prose dark:prose-invert max-w-none'>
-            {data.about.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
+            {data.about.map((p, i) => (<p key={i}>{p}</p>))}
           </div>
         </section>
 
@@ -68,10 +63,8 @@ const AboutPage = props => {
           <h2 className='text-2xl font-semibold mb-4'>Research Interests</h2>
           <div className='flex flex-wrap gap-2'>
             {data.interests.map((tag, i) => (
-              <span
-                key={i}
-                className='text-sm px-3 py-1 rounded-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800'
-              >
+              <span key={i}
+                className='text-sm px-3 py-1 rounded-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800'>
                 {tag}
               </span>
             ))}
@@ -82,9 +75,7 @@ const AboutPage = props => {
         <section id='education' className='my-10'>
           <h2 className='text-2xl font-semibold mb-4'>Education</h2>
           <div className='flex flex-col gap-4'>
-            {data.education.map((e, i) => (
-              <EduCard key={i} item={e} />
-            ))}
+            {data.education.map((e, i) => (<EduCard key={i} item={e} />))}
           </div>
         </section>
 
@@ -92,9 +83,7 @@ const AboutPage = props => {
         <section id='work' className='my-10'>
           <h2 className='text-2xl font-semibold mb-4'>Work Experience</h2>
           <div className='flex flex-col gap-4'>
-            {data.experience.map((x, i) => (
-              <ExpCard key={i} item={x} />
-            ))}
+            {data.experience.map((x, i) => (<ExpCard key={i} item={x} />))}
           </div>
         </section>
 
@@ -120,16 +109,20 @@ function EduCard ({ item }) {
   return (
     <div className='border border-gray-200 dark:border-gray-700 rounded-lg p-4'>
       <div className='flex items-start gap-4'>
-        {/* 如需校徽，替换为你的图片地址 */}
         <div className='w-14 h-14 rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-lg'>
           🎓
         </div>
         <div className='flex-1 min-w-0'>
           <h3 className='font-semibold text-lg'>
-            {item.degree} <span className='ml-2 text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700'>{item.period}</span>
+            {item.degree}{' '}
+            <span className='ml-2 text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700'>
+              {item.period}
+            </span>
           </h3>
           <div className='text-sm text-gray-600 dark:text-gray-400'>
-            <a href={item.schoolUrl} target='_blank' rel='noreferrer' className='hover:underline'>{item.school}</a> · {item.location}
+            <a href={item.schoolUrl} target='_blank' rel='noreferrer' className='hover:underline'>
+              {item.school}
+            </a> · {item.location}
           </div>
           {item.program && <div className='text-sm mt-1'>{item.program}</div>}
           {item.supervisor && (
@@ -169,9 +162,7 @@ function ExpCard ({ item }) {
         {item.org} · {item.location}
       </div>
       <ul className='list-disc pl-5 mt-2 space-y-1'>
-        {item.bullets.map((b, i) => (
-          <li key={i}>{b}</li>
-        ))}
+        {item.bullets.map((b, i) => (<li key={i}>{b}</li>))}
       </ul>
     </div>
   )
@@ -188,10 +179,7 @@ function ServiceBlock ({ title, items }) {
   )
 }
 
-/**
- * 结构化数据（由你之前的 Markdown 填充）
- * 如需从 Notion/CMS 读取，替换为 props 传入的数据即可
- */
+/** 本地结构化数据（可替换为 props.profile） */
 function getProfileData () {
   return {
     about: [
@@ -301,7 +289,7 @@ function getProfileData () {
         period: 'Aug. 2021 – May. 2022',
         bullets: [
           '3D Printing (ISEE-741): hands-on labs with Original Prusa, Markforged, Formlabs.',
-          'Materials Processing (ISEE-140): guided fabrication projects (cutting, molding, casting, forming, milling, powder metallurgy, solid modeling, drawing).'
+          'Materials Processing (ISEE-140): guided fabrication processes (cutting, molding, casting, forming, milling, powder metallurgy, solid modeling, drawing).'
         ]
       },
       {
@@ -336,12 +324,7 @@ function getProfileData () {
 }
 
 export async function getStaticProps ({ locale }) {
-  const props = await getGlobalData({ from: 'about', locale })
-
-  // 这里你也可以把 getProfileData() 的数据塞进 props 里
-  // 比如 props.profile = getProfileData()
-  // 然后在组件中用 props.profile 渲染（便于未来切换到 Notion）
-
+  const props = await getGlobalData({ from: 'profile', locale })
   return {
     props,
     revalidate: process.env.EXPORT
@@ -350,4 +333,4 @@ export async function getStaticProps ({ locale }) {
   }
 }
 
-export default AboutPage
+export default ProfilePage
