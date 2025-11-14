@@ -1,4 +1,5 @@
 // pages/profile.js
+'use client'
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { DynamicLayout } from '@/themes/theme'
