@@ -23,6 +23,7 @@ const LeftFloatButton = () => {
     return () => window.removeEventListener('resize', updateLayout)
   }, [])
 
+  
   // 动态计算内容左边距（关键！）
   const getLeftOffset = () => {
     if (!collapse) {
