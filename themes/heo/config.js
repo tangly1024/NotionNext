@@ -8,7 +8,7 @@ const CONFIG = {
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
   HEO_NOTICE_BAR: [
-    { title: '希望你每一天都开心快乐:smile:', url: ' ' },
+    { title: '希望你每一天都开心快乐:smile', url: ' ' },
     { title: '一起学习 一起成长', url: ' ' }
   ],
 
