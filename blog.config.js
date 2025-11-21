@@ -58,7 +58,9 @@ const BLOG = {
   // 文章列表相关设置
   CAN_COPY: process.env.NEXT_PUBLIC_CAN_COPY || true, // 是否允许复制页面内容 默认允许，如果设置为false、则全栈禁止复制内容。
 
-  // 侧栏布局 是否反转(左变右,右变左) 已支持主题: hexo next medium fukasawa example
+  // 侧栏布局 是否反转(左变右,右变左)
+  // 这个设置建议放到主题的 config 中以避免与主干冲突，
+  // 保留环境变量支持，但默认值改为 false（主题可覆盖）。
   LAYOUT_SIDEBAR_REVERSE:
     process.env.NEXT_PUBLIC_LAYOUT_SIDEBAR_REVERSE || false,
 

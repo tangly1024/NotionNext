@@ -59,7 +59,7 @@ const LayoutBase = props => {
 
         <div
           className={
-            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+            (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE', null, CONFIG))
               ? 'flex-row-reverse'
               : '') + ' flex'
           }>

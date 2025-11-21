@@ -70,7 +70,7 @@ function AsideLeft(props) {
     }
   }, [isCollapsed])
 
-  const isReverse = siteConfig('LAYOUT_SIDEBAR_REVERSE')
+  const isReverse = siteConfig('LAYOUT_SIDEBAR_REVERSE', null, CONFIG)
   const position = useMemo(() => {
     if (isCollapsed) {
       if (isReverse) {
