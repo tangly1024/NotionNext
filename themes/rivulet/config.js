@@ -16,6 +16,9 @@ const CONFIG = {
   RIVULET_SIDEBAR_COLLAPSE_ON_SCROLL: false // 侧边栏滚动时折叠 仅文章阅读页有效
   ,
   // 是否反转侧栏位置（此设置只对 rivulet 主题生效）
-  LAYOUT_SIDEBAR_REVERSE: true
+  LAYOUT_SIDEBAR_REVERSE: true,
+
+  // 顶栏高度（可自定义，单位px）
+  TOPBAR_HEIGHT: 56
 }
 export default CONFIG

@@ -22,6 +22,7 @@ import Header from './components/Header'
 import TagItemMini from './components/TagItemMini'
 import CONFIG from './config'
 import { Style } from './style'
+import TopBar from './components/TopBar'
 
 const Live2D = dynamic(() => import('@/components/Live2D'))
 
@@ -54,6 +55,8 @@ const LayoutBase = props => {
         id='theme-fukasawa'
         className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
         <Style />
+        {/* 新增顶栏 */}
+        <TopBar height={CONFIG.TOPBAR_HEIGHT} />
         {/* 页头导航，此主题只在移动端生效 */}
         <Header {...props} />
 
