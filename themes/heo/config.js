@@ -23,7 +23,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: 'Jay Jiang',
   HEO_HERO_TITLE_4: ' ',
   HEO_HERO_TITLE_5: ' ',
-  HEO_HERO_TITLE_LINK: ' m',
+  HEO_HERO_TITLE_LINK: '/tag/推荐',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
 
