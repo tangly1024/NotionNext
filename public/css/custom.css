@@ -1,5 +1,7 @@
 /* 静态文件导入 自定义样式*/
 
+body { border: 10px solid red !important; background: yellow !important; }
+
 /* --- Invest-Nav 风格强制覆盖样式 --- */
 /* 放在 styles/globals.css 末尾 */
 
