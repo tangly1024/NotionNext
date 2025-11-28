@@ -2,7 +2,7 @@
  * 请将此代码添加到 NotionNext 的自定义 CSS 区域，或者 GitHub 仓库的 public/custom.css 中
  * 针对 Theme: HEO 优化
  */
-
+body { border: 10px solid red !important; background: yellow !important; }
 /* 1. 调整卡片密度，使其更像工具网格 */
 .recent-posts .post-card {
     border: 1px solid #e7e5e4; /* stone-200 */
