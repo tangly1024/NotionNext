@@ -1,0 +1,67 @@
+/* * Invest-Nav 风格复刻样式 
+ * 请将此代码添加到 NotionNext 的自定义 CSS 区域，或者 GitHub 仓库的 public/custom.css 中
+ * 针对 Theme: HEO 优化
+ */
+
+/* 1. 调整卡片密度，使其更像工具网格 */
+.recent-posts .post-card {
+    border: 1px solid #e7e5e4; /* stone-200 */
+    box-shadow: none !important; /* 去掉默认大阴影 */
+    transition: all 0.2s ease;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.recent-posts .post-card:hover {
+    transform: translateY(-2px);
+    border-color: #0ea5e9; /* sky-500 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 2. 缩小标题和简介，增加信息密度 */
+.post-card h2 {
+    font-size: 1.1rem !important; /* 标题改小 */
+    font-weight: 700 !important;
+    color: #1c1917; /* stone-900 */
+    margin-bottom: 0.5rem;
+}
+
+.post-card p {
+    font-size: 0.85rem !important; /* 简介改小 */
+    color: #78716c; /* stone-500 */
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 最多显示2行 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 3. 调整图标/封面区域 */
+/* 如果你用 Notion 的 Cover 做 Logo，这个样式会让它变小变精致 */
+.post-card-cover {
+    height: 48px !important; /* 缩小封面高度 */
+    width: 48px !important;
+    margin: 16px 16px 0 16px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+/* 4. 侧边栏/顶部导航调整 */
+/* 让分类标签看起来像 invest-nav 的胶囊按钮 */
+.category-item {
+    background-color: #f5f5f4;
+    border-radius: 9999px;
+    padding: 4px 12px;
+    font-size: 0.9rem;
+    color: #57534e;
+}
+
+.category-item:hover {
+    background-color: #0ea5e9; /* sky-500 */
+    color: white;
+}
+
+/* 5. 背景色调整 - 暖灰白背景 */
+body {
+    background-color: #f5f5f4 !important; /* stone-100 */
+}
