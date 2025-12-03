@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="24" failures="3" errors="0" time="5.315">
+  <testsuite name="Validator" errors="0" failures="3" skipped="0" timestamp="2025-12-03T22:18:23" time="2.738" tests="24">
+    <testcase classname="Validator isValidEmail validates correct email addresses" name="Validator isValidEmail validates correct email addresses" time="0.005">
+    </testcase>
+    <testcase classname="Validator isValidEmail rejects invalid email addresses" name="Validator isValidEmail rejects invalid email addresses" time="0.004">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+    at toBe (/workspaces/NotionNext/__tests__/lib/utils/validation.test.js:30:47)
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.forEach (/workspaces/NotionNext/__tests__/lib/utils/validation.test.js:29:21)
+    at Promise.then.completed (/workspaces/NotionNext/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspaces/NotionNext/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspaces/NotionNext/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspaces/NotionNext/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspaces/NotionNext/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspaces/NotionNext/node_modules/jest-runner/build/runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="Validator isValidUrl validates correct URLs" name="Validator isValidUrl validates correct URLs" time="0.002">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+    at toBe (/workspaces/NotionNext/__tests__/lib/utils/validation.test.js:45:43)
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.forEach (/workspaces/NotionNext/__tests__/lib/utils/validation.test.js:44:17)
+    at Promise.then.completed (/workspaces/NotionNext/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspaces/NotionNext/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspaces/NotionNext/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspaces/NotionNext/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspaces/NotionNext/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspaces/NotionNext/node_modules/jest-runner/build/runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="Validator isValidUrl rejects invalid URLs" name="Validator isValidUrl rejects invalid URLs" time="0.007">
+    </testcase>
+    <testcase classname="Validator isValidSlug validates correct slugs" name="Validator isValidSlug validates correct slugs" time="0.002">
+    </testcase>
+    <testcase classname="Validator isValidSlug rejects invalid slugs" name="Validator isValidSlug rejects invalid slugs" time="0">
+    </testcase>
+    <testcase classname="Validator isValidNotionId validates correct Notion IDs" name="Validator isValidNotionId validates correct Notion IDs" time="0">
+    </testcase>
+    <testcase classname="Validator isValidNotionId rejects invalid Notion IDs" name="Validator isValidNotionId rejects invalid Notion IDs" time="0">
+    </testcase>
+    <testcase classname="Validator isValidLength validates string length correctly" name="Validator isValidLength validates string length correctly" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidLength rejects strings outside length range" name="Validator isValidLength rejects strings outside length range" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidNumber validates numbers in range" name="Validator isValidNumber validates numbers in range" time="0.001">
+    </testcase>
+    <testcase classname="Validator isValidNumber rejects numbers outside range" name="Validator isValidNumber rejects numbers outside range" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer stripHtml removes HTML tags" name="Sanitizer stripHtml removes HTML tags" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer stripHtml handles empty or null input" name="Sanitizer stripHtml handles empty or null input" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeXss removes XSS patterns" name="Sanitizer sanitizeXss removes XSS patterns" time="0.003">
+      <failure>Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: &quot;&quot;
+Received: &quot;alert(1)&quot;
+    at Object.toBe (/workspaces/NotionNext/__tests__/lib/utils/validation.test.js:172:60)
+    at Promise.then.completed (/workspaces/NotionNext/node_modules/jest-circus/build/utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/workspaces/NotionNext/node_modules/jest-circus/build/utils.js:231:10)
+    at _callCircusTest (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:316:40)
+    at _runTest (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:252:3)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:126:9)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:121:9)
+    at _runTestsForDescribeBlock (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:121:9)
+    at run (/workspaces/NotionNext/node_modules/jest-circus/build/run.js:71:3)
+    at runAndTransformResultsToJestFormat (/workspaces/NotionNext/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+    at jestAdapter (/workspaces/NotionNext/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+    at runTestInternal (/workspaces/NotionNext/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/workspaces/NotionNext/node_modules/jest-runner/build/runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="Sanitizer sanitizeXss preserves safe content" name="Sanitizer sanitizeXss preserves safe content" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeFilename removes illegal characters" name="Sanitizer sanitizeFilename removes illegal characters" time="0.001">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeFilename replaces spaces with underscores" name="Sanitizer sanitizeFilename replaces spaces with underscores" time="0">
+    </testcase>
+    <testcase classname="Sanitizer sanitizeFilename removes leading and trailing dots" name="Sanitizer sanitizeFilename removes leading and trailing dots" time="0">
+    </testcase>
+    <testcase classname="Sanitizer escapeHtml escapes HTML entities" name="Sanitizer escapeHtml escapes HTML entities" time="0.001">
+    </testcase>
+    <testcase classname="RateLimiter allows requests within limit" name="RateLimiter allows requests within limit" time="0.003">
+    </testcase>
+    <testcase classname="RateLimiter blocks requests over limit" name="RateLimiter blocks requests over limit" time="0.001">
+    </testcase>
+    <testcase classname="RateLimiter resets after time window" name="RateLimiter resets after time window" time="0.002">
+    </testcase>
+    <testcase classname="RateLimiter handles different users separately" name="RateLimiter handles different users separately" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
