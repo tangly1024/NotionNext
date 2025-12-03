@@ -1,13 +1,12 @@
 // /pages/lab/index.js
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
 import { isBrowser } from '@/lib/utils'
 import { useEffect } from 'react'
 // import Link from 'next/link' // 如果想用 <Link>，取消注释
 
-export default function LabPage(props) {
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
+export default function LabPage() {
+  const theme = siteConfig('THEME', BLOG.THEME)
 
   // Smooth-scroll to hash anchors, e.g., /lab#equipment
   useEffect(() => {
@@ -168,19 +167,4 @@ export default function LabPage(props) {
       <footer className="text-center text-sm text-gray-500 dark:text-gray-400 mt-12">theme: {String(theme)}</footer>
     </div>
   )
-}
-
-export async function getStaticProps({ locale }) {
-  try {
-    const props = await getGlobalData({ from: 'lab', locale })
-    return {
-      props,
-      revalidate: 60 // short ISR window for quick refresh online
-    }
-  } catch (e) {
-    return {
-      props: { __error: 'lab-build-failed', message: String(e) },
-      revalidate: 60
-    }
-  }
 }
