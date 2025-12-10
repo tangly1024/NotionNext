@@ -32,7 +32,7 @@ const Search = props => {
   props = { ...props, posts: filteredPosts }
 
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} router={router} {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }
 
 /**

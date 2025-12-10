@@ -2,7 +2,6 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import { useRouter } from 'next/router'
 
 /**
  * 注册
@@ -10,9 +9,8 @@ import { useRouter } from 'next/router'
  * @returns
  */
 const SignUp = props => {
-  const router = useRouter()
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} router={router} {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutSignUp' {...props} />
 }
 
 export async function getStaticProps(req) {
@@ -38,7 +36,7 @@ export async function getStaticProps(req) {
  * catch-all route for clerk
  * @returns
  */
-export async function getStaticPaths() {
+export function getStaticPaths() {
   return {
     paths: [
       { params: { index: [] } }, // 使 /sign-up 路径可访问

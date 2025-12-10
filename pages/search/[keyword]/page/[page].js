@@ -3,15 +3,13 @@ import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import { useRouter } from 'next/router'
 
 const Index = props => {
   const { keyword } = props
   props = { ...props, currentSearch: keyword }
 
-  const router = useRouter()
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} router={router} {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }
 
 /**
@@ -52,9 +50,9 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
   }
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
   return {
-    paths: [{ params: { keyword: BLOG.TITLE, page: '1' } }],
+    paths: [{ params: { keyword: 'NotionNext', page: '1' } }],
     fallback: true
   }
 }
@@ -137,7 +135,7 @@ async function filterByMemCache(allPosts, keyword) {
     // console.log('全文搜索缓存', cacheKey, page != null)
     post.results = []
     let hitCount = 0
-    for (const i in indexContent) {
+    for (const i of indexContent) {
       const c = indexContent[i]
       if (!c) {
         continue
