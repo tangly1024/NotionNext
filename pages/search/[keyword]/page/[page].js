@@ -3,6 +3,8 @@ import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import CONFIG_NEXT from '@/themes/next/config'
+import { sortPostsByTopTag } from '@/lib/utils/post'
 
 const Index = props => {
   const { keyword } = props
@@ -27,7 +29,14 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
   const allPosts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
-  props.posts = await filterByMemCache(allPosts, keyword)
+  // NEXT 主题：按置顶标签重排后再做全文索引
+  const currentTheme = siteConfig('THEME', BLOG.THEME, props?.NOTION_CONFIG)
+  const defaultNextTopTag = siteConfig('NEXT_TOP_TAG', '', CONFIG_NEXT)
+  const nextTopTag = siteConfig('NEXT_TOP_TAG', defaultNextTopTag, props?.NOTION_CONFIG)
+  const basePosts = currentTheme === 'next' && nextTopTag
+    ? sortPostsByTopTag(allPosts, nextTopTag)
+    : allPosts
+  props.posts = await filterByMemCache(basePosts, keyword)
   props.postCount = props.posts.length
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
   // 处理分页

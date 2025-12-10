@@ -39,7 +39,10 @@ const CONFIG = {
   NEXT_ARTICLE_RELATE_POSTS: true, // 相关文章推荐
   NEXT_ARTICLE_COPYRIGHT: true, // 文章版权声明
   NEXT_ARTICLE_NOT_BY_AI: false, // 显示非AI写作
-  NEXT_ARTICLE_INFO: true // 显示文章信息
+  NEXT_ARTICLE_INFO: true, // 显示文章信息
+
+  // 置顶配置
+  NEXT_TOP_TAG: 'top' // 指定一个标签名称，拥有该标签的文章将置顶；留空则不启用
 }
 
 export default CONFIG

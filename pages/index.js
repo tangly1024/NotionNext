@@ -7,6 +7,8 @@ import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
+import CONFIG_NEXT from '@/themes/next/config'
+import { sortPostsByTopTag } from '@/lib/utils/post'
 
 /**
  * 首页布局
@@ -34,6 +36,14 @@ export async function getStaticProps(req) {
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+
+  // NEXT 主题：按置顶标签重排（仅当 NEXT_TOP_TAG 设置且当前主题为 next 生效）
+  const currentTheme = siteConfig('THEME', BLOG.THEME, props?.NOTION_CONFIG)
+  const defaultNextTopTag = siteConfig('NEXT_TOP_TAG', '', CONFIG_NEXT)
+  const nextTopTag = siteConfig('NEXT_TOP_TAG', defaultNextTopTag, props?.NOTION_CONFIG)
+  if (currentTheme === 'next' && nextTopTag) {
+    props.posts = sortPostsByTopTag(props.posts, nextTopTag)
+  }
 
   // 处理分页
   if (siteConfig('POST_LIST_STYLE') === 'scroll') {
