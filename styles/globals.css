@@ -298,3 +298,75 @@ img {
   @keyframes l1 {
   0% {background-position: right}
 }
+
+/* ==================== 个人博客最舒服宽屏方案（2025 精调版） ==================== */
+
+/* 1. 主容器：最大 1400px + 居中 + 左右留白 */
+#container-inner,
+#container-wrapper,
+main > section,
+main > div:first-child {
+  max-width: 1920px !important;     /* 给超大屏留足空间 */
+  width: 100% !important;
+  padding-left: 2rem !important;    /* 手机端也留点边距 */
+  padding-right: 2rem !important;
+}
+
+@media (min-width: 1024px) {
+  #container-inner {
+    max-width: 1400px !important;   /* 核心：最舒服阅读宽度 */
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+}
+
+/* 2. 扩大左侧边栏（头像+导航更大气） */
+aside#side-area-left,
+div[class*="SideAreaLeft"] {
+  width: 320px !important;          /* 原 240px → 320px */
+  min-width: 320px !important;
+}
+@media (max-width: 1280px) {
+  aside#side-area-left {
+    width: 280px !important;        /* 小屏幕稍微收一点 */
+  }
+}
+
+/* 3. 扩大右侧边栏（TOC、相关文章更宽松） */
+aside#side-area-right,
+div[class*="SideAreaRight"] {
+  width: 340px !important;          /* 原 240px → 340px */
+  min-width: 340px !important;
+}
+@media (max-width: 1600px) {
+  aside#side-area-right {
+    width: 300px !important;
+  }
+}
+
+/* 4. 内容区在超大屏下自动居中（左右自然留空） */
+@media (min-width: 1700px) {
+  #container-inner {
+    max-width: 1600px !important;   /* 内容区最多 1600px，左右自动留白 */
+  }
+}
+@media (min-width: 2200px) {
+  #container-inner {
+    max-width: 1700px !important;   /* 超宽屏也不超过 1700px，保持呼吸感 */
+  }
+}
+
+/* 5. Notion 内容也跟随放宽 */
+.notion,
+.notion-page-content,
+#notion-article > div > div {
+  max-width: 100% !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+/* 6. 代码块/表格太宽时横向滚动 */
+pre, table, .notion-table-view {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
