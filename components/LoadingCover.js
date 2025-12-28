@@ -36,38 +36,93 @@ export default function LoadingCover() {
       <div className='mx-auto'>
         <style global>
           {`
-          .loader {
-            width: 20px;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: #000;
-            box-shadow: 0 0 0 0 #0004;
-            animation: l2 1.5s infinite linear;
-            position: relative;
+          // *** modified by arale *** 
+
+          // .loader {
+          //   width: 20px;
+          //   aspect-ratio: 1;
+          //   border-radius: 50%;
+          //   background: #000;
+          //   box-shadow: 0 0 0 0 #0004;
+          //   animation: l2 1.5s infinite linear;
+          //   position: relative;
+          // }
+          // .loader:before,
+          // .loader:after {
+          //   content: '';
+          //   position: absolute;
+          //   inset: 0;
+          //   border-radius: inherit;
+          //   box-shadow: 0 0 0 0 #0004;
+          //   animation: inherit;
+          //   animation-delay: -0.5s;
+          // }
+          // .loader:after {
+          //   animation-delay: -1s;
+          // }
+          //   /* 深色模式下的样式 */
+          // .dark .loader {
+          //   background: #fff; /* 白色或灰色 */
+          //   box-shadow: 0 0 0 0 #fff4; /* 使用白色阴影 */
+          // }
+          // @keyframes l2 {
+          //   100% {
+          //     box-shadow: 0 0 0 40px #0000;
+          //   }
+          // }
+          
+            .loader,
+        .loader:before,
+        .loader:after {
+          border-radius: 50%;
+          width: 2.5em;
+          height: 2.5em;
+          animation-fill-mode: both;
+          animation: loadAnimation 1.8s infinite ease-in-out;
+        }
+
+        .loader {
+          color: #e7d1b0;
+          font-size: 10px;
+          margin: 80px auto;
+          position: relative;
+          text-indent: -9999em;
+          transform: translateZ(0);
+          animation-delay: -0.16s;
+          top: 0;
+          transform: translate(-50%, 0);
+        }
+
+        .loader:before,
+        .loader:after {
+          content: "";
+          position: absolute;
+          top: 0;
+        }
+
+        .loader:before {
+          color: #b7d3c5;
+          left: -3.5em;
+          animation-delay: -0.32s;
+        }
+
+        .loader:after {
+          color: #df9283;
+          left: 3.5em;
+        }
+
+        @keyframes loadAnimation {
+          0%,
+          80%,
+          100% {
+            box-shadow: 0 2.5em 0 -1.3em;
           }
-          .loader:before,
-          .loader:after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            box-shadow: 0 0 0 0 #0004;
-            animation: inherit;
-            animation-delay: -0.5s;
+
+          40% {
+            box-shadow: 0 2.5em 0 0;
           }
-          .loader:after {
-            animation-delay: -1s;
-          }
-            /* 深色模式下的样式 */
-          .dark .loader {
-            background: #fff; /* 白色或灰色 */
-            box-shadow: 0 0 0 0 #fff4; /* 使用白色阴影 */
-          }
-          @keyframes l2 {
-            100% {
-              box-shadow: 0 0 0 40px #0000;
-            }
-          }
+        }
+
       `}
         </style>
         <div className='loader'></div>

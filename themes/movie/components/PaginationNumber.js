@@ -72,14 +72,14 @@ const PaginationNumber = ({ page, totalPage }) => {
           {pages}
 
           {/* 跳转页码 */}
-          <div className='bg-white hover:bg-gray-100 dark:hover:bg-yellow-600  dark:bg-[#1e1e1e]  h-10 border flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200'>
+          <div className='bg-white hover:bg-gray-100 dark:hover:bg-indigo-600  dark:bg-[#1e1e1e]  h-10 border flex justify-center items-center rounded-lg group hover:border-indigo-600 transition-all duration-200'>
             <input
               value={value}
               className='w-0 group-hover:w-20 group-hover:px-3 transition-all duration-200 bg-gray-100 border-none outline-none h-full rounded-lg'
               onInput={handleInputChange}></input>
             <div
               onClick={jumpToPage}
-              className='cursor-pointer hover:bg-indigo-600  dark:bg-[#1e1e1e] dark:hover:bg-yellow-600 hover:text-white px-4 py-2 group-hover:px-2 group-hover:mx-1 group-hover:rounded bg-white'>
+              className='cursor-pointer hover:bg-indigo-600  dark:bg-[#1e1e1e] dark:hover:bg-indigo-600 hover:text-white px-4 py-2 group-hover:px-2 group-hover:mx-1 group-hover:rounded bg-white'>
               <ChevronDoubleRight className={'w-4 h-4'} />
             </div>
           </div>
@@ -155,9 +155,9 @@ function getPageElement(page, currentPage, pagePrefix) {
       passHref
       className={
         (selected
-          ? 'bg-indigo-600 dark:bg-yellow-600 text-white '
+          ? 'bg-indigo-600 dark:bg-indigo-600 text-white '
           : 'dark:bg-[#1e1e1e] bg-white') +
-        ' hover:border-indigo-600 dark:hover:bg-yellow-600 dark:border-gray-600 px-4 border py-2 rounded-lg drop-shadow-sm duration-200 transition-colors'
+        ' hover:border-indigo-600 dark:hover:bg-indigo-600 dark:border-gray-600 px-4 border py-2 rounded-lg drop-shadow-sm duration-200 transition-colors'
       }>
       {page}
     </SmartLink>

@@ -14,10 +14,10 @@ export default function TouchMeCard() {
   return (
     <div className={'relative h-28 text-white flex flex-col'}>
       <FlipCard
-        className='cursor-pointer lg:p-6 p-4 border rounded-xl bg-[#4f65f0] dark:bg-yellow-600 dark:border-gray-600'
+        className='cursor-pointer lg:p-6 p-4 rounded-xl bg-[#f9f3eb] text-[#424242] dark:bg-[#424242] dark:text-white'
         frontContent={
           <div className='h-full'>
-            <h2 className='font-[1000] text-3xl'>
+            <h2 className='font-[1000] text-3xl text-indigo-700'>
               {siteConfig('HEO_SOCIAL_CARD_TITLE_1', null, CONFIG)}
             </h2>
             <h3 className='pt-2'>
@@ -33,7 +33,7 @@ export default function TouchMeCard() {
         }
         backContent={
           <SmartLink href={siteConfig('HEO_SOCIAL_CARD_URL', null, CONFIG)}>
-            <div className='font-[1000] text-xl h-full'>
+            <div className='font-[1000] text-xl h-full text-gray-600 dark:text-white'>
               {siteConfig('HEO_SOCIAL_CARD_TITLE_3', null, CONFIG)}
             </div>
           </SmartLink>

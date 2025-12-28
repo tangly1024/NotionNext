@@ -117,14 +117,16 @@ const LayoutBase = props => {
           <div className='lg:px-2'></div>
 
           <div className='hidden xl:block'>
-            {/* 主区快右侧 */}
+            {/* 主区块右侧 */}
             {slotRight}
           </div>
         </div>
       </main>
 
       {/* 页脚 */}
-      <Footer />
+       {/* *** modified by arale *** */}
+       {/* 不需要Footer */}
+      {/* <Footer /> */}
 
       {HEO_LOADING_COVER && <LoadingCover />}
     </div>
@@ -316,10 +318,12 @@ const LayoutSlug = props => {
               </section>
 
               {/* 上一篇\下一篇文章 */}
-              <PostAdjacent {...props} />
+               {/* *** modified by arale *** */}
+              {/* <PostAdjacent {...props} /> */}
 
               {/* 分享 */}
-              <ShareBar post={post} />
+               {/* *** modified by arale *** */}
+              {/* <ShareBar post={post} /> */}
               {post?.type === 'Post' && (
                 <div className='px-5'>
                   {/* 版权 */}

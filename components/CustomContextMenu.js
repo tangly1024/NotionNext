@@ -166,7 +166,7 @@ export default function CustomContextMenu(props) {
       style={{ top: position.y, left: position.x }}
       className={`${show ? '' : 'invisible opacity-0'} select-none transition-opacity duration-200 fixed z-50`}>
       {/* 菜单内容 */}
-      <div className='rounded-xl w-52 dark:hover:border-yellow-600 bg-white dark:bg-[#040404] dark:text-gray-200 dark:border-gray-600 p-3 border drop-shadow-lg flex-col duration-300 transition-colors'>
+      <div className='rounded-xl w-52 dark:hover:border-indigo-600 bg-white dark:bg-[#040404] dark:text-gray-200 dark:border-gray-600 p-3 border drop-shadow-lg flex-col duration-300 transition-colors'>
         {/* 顶部导航按钮 */}
         <div className='flex justify-between'>
           <i

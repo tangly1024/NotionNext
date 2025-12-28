@@ -18,14 +18,14 @@ export const MenuItemDrop = ({ link }) => {
         <SmartLink
           target={link?.target}
           href={link?.href}
-          className=' hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
+          className=' hover:text-white hover:bg-indigo-600 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest'>
           {link?.icon && <i className={link?.icon} />} {link?.name}
         </SmartLink>
       )}
       {/* 含子菜单的按钮 */}
       {hasSubMenu && (
         <>
-          <div className='cursor-pointer hover:bg-black hover:bg-opacity-10 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest relative'>
+          <div className='cursor-pointer hover:text-white hover:bg-indigo-600 rounded-2xl flex justify-center items-center px-3 py-1 no-underline tracking-widest relative'>
             {link?.icon && <i className={link?.icon} />} {link?.name}
             {/* 主菜单下方的安全区域 */}
             {show && (
@@ -43,7 +43,7 @@ export const MenuItemDrop = ({ link }) => {
             return (
               <li
                 key={index}
-                className='cursor-pointer hover:bg-blue-600 dark:hover:bg-yellow-600 hover:text-white text-gray-900 dark:text-gray-100  tracking-widest transition-all duration-200 py-1 pr-6 pl-3'>
+                className='cursor-pointer hover:bg-indigo-400 dark:hover:bg-indigo-600 hover:text-white text-gray-900 dark:text-gray-100  tracking-widest transition-all duration-200 py-1 pr-6 pl-3'>
                 <SmartLink href={sLink.href} target={link?.target}>
                   <span className='text-sm text-nowrap font-extralight'>
                     {link?.icon && <i className={sLink?.icon}> &nbsp; </i>}

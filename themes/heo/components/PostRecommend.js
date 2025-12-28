@@ -56,9 +56,9 @@ export default function PostRecommend({ recommendPosts, siteInfo }) {
                   className='absolute top-0 w-full h-full object-cover object-center group-hover:scale-110 group-hover:brightness-50 transform duration-200'
                 />
                 {/* 卡片的阴影遮罩，为了凸显图片上的文字 */}
-                <div className='h-3/4 w-full absolute left-0 bottom-0'>
+                {/* <div className='h-3/4 w-full absolute left-0 bottom-0'>
                   <div className='h-full w-full absolute opacity-80 group-hover:opacity-100 transition-all duration-1000 bg-gradient-to-b from-transparent to-black'></div>
-                </div>
+                </div> */}
               </div>
             </SmartLink>
           )

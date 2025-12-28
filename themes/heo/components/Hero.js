@@ -83,8 +83,8 @@ function Banner(props) {
       className='hidden xl:flex xl:flex-col group h-full bg-white dark:bg-[#1e1e1e] rounded-xl border dark:border-gray-700 mb-3 relative overflow-hidden'>
       <div
         id='banner-title'
-        className='z-10 flex flex-col absolute top-10 left-10'>
-        <div className='text-4xl font-bold mb-3  dark:text-white'>
+        className='z-10 flex flex-col absolute top-6 left-5'>
+        <div className='text-4xl font-bold mb-3 text-indigo-700'>
           {siteConfig('HEO_HERO_TITLE_1', null, CONFIG)}
           <br />
           {siteConfig('HEO_HERO_TITLE_2', null, CONFIG)}
@@ -102,11 +102,11 @@ function Banner(props) {
         id='banner-cover'
         style={{ backdropFilter: 'blur(15px)' }}
         className={
-          'z-20 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#4259efdd] dark:bg-[#dca846] dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'
+          'z-20 rounded-xl overflow-hidden opacity-0 group-hover:opacity-100 duration-300 transition-all bg-[#df9283db] dark:bg-[#df9283db]  dark:text-white cursor-pointer absolute w-full h-full top-0 flex justify-start items-center'
         }>
         <div className='ml-12 -translate-x-32 group-hover:translate-x-0 duration-300 transition-all ease-in'>
           <div className='text-7xl text-white font-extrabold'>{coverTitle}</div>
-          <div className='-ml-3 text-gray-300'>
+          <div className='-ml-3 text-white'>
             <ArrowSmallRight className={'w-24 h-24 stroke-2'} />
           </div>
         </div>
@@ -139,7 +139,7 @@ function TagsGroupBar() {
                   priority={true}
                   src={g.img_1}
                   title={g.title_1}
-                  className='w-2/3 hidden xl:block'
+                  className='hidden xl:block'
                 />
               </div>
               <div
@@ -151,7 +151,7 @@ function TagsGroupBar() {
                   priority={true}
                   src={g.img_2}
                   title={g.title_2}
-                  className='w-2/3 hidden xl:block'
+                  className='hidden xl:block'
                 />
               </div>
             </div>
@@ -247,11 +247,11 @@ function TopGroup(props) {
                   alt={p?.title}
                   src={p?.pageCoverThumbnail || siteInfo?.pageCover}
                 />
-                <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>
+                <div className='group-hover:text-indigo-600 dark:group-hover:text-indigo-600 line-clamp-2 overflow-hidden m-2 font-semibold'>
                   {p?.title}
                 </div>
                 {/* hover 悬浮的 ‘荐’ 字 */}
-                <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-yellow-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
+                <div className='opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 duration-200 transition-all absolute -top-2 -left-2 bg-indigo-600 dark:bg-indigo-600  text-white rounded-xl overflow-hidden pr-2 pb-2 pl-4 pt-4 text-xs'>
                   {locale.COMMON.RECOMMEND_BADGES}
                 </div>
               </div>
@@ -363,12 +363,12 @@ function TodayCard({ cRef, siteInfo }) {
         className={`${
           isCoverUp
             ? 'opacity-100 cursor-pointer'
-            : 'opacity-0 transform scale-110 pointer-events-none'
-        } shadow transition-all duration-200 today-card h-full bg-black rounded-xl relative overflow-hidden flex items-end`}>
+            : 'opacity-0 transform scale-10 pointer-events-none'
+        } shadow transition-all duration-200 today-card h-full bg-white rounded-xl relative overflow-hidden flex items-end`}>
         {/* 卡片文字信息 */}
         <div
           id='today-card-info'
-          className='flex justify-between w-full relative text-white p-10 items-end'>
+          className='flex justify-between w-full relative text-indigo-700 p-10 items-end'>
           <div className='flex flex-col'>
             <div className='text-xs font-light'>
               {siteConfig('HEO_HERO_TITLE_4', null, CONFIG)}
@@ -380,7 +380,7 @@ function TodayCard({ cRef, siteInfo }) {
           {/* 查看更多的按钮 */}
           <div
             onClick={handleClickShowMore}
-            className={`'${isCoverUp ? '' : 'hidden pointer-events-none'} z-10 group flex items-center px-3 h-10 justify-center  rounded-3xl
+            className={`'${isCoverUp ? '' : 'hidden pointer-events-none'} z-10 group flex items-center px-3 h-10 justify-center bg-indigo-400 text-white rounded-3xl
             glassmorphism transition-colors duration-100 `}>
             <PlusSmall
               className={

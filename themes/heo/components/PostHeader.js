@@ -6,6 +6,7 @@ import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import SmartLink from '@/components/SmartLink'
 import WavesArea from './WavesArea'
+import TagItemMini from './TagItemMini'
 
 /**
  * 文章页头
@@ -32,12 +33,12 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           top: 0;
           left: 0;
           box-shadow: 110px -130px 500px 100px
-            ${isDarkMode ? '#CA8A04' : '#0060e0'} inset;
+            ${isDarkMode ? '#d68272' : '#efc8c1'} inset;
         }
       `}</style>
 
       <div
-        className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}>
+        className={`${isDarkMode ? 'bg-[#d68272]' : 'bg-[#efc8c1]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}>
         {/* 文章背景图 */}
         <div
           id='post-cover-wrapper'
@@ -55,7 +56,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
         {/* 文章文字描述 */}
         <div
           id='post-info'
-          className='absolute top-48 z-10 flex flex-col space-y-4 lg:-mt-12 w-full max-w-[86rem] px-5'>
+          className='absolute top-30 z-10 flex flex-col space-y-4 md:top-40 lg:top-48 lg:-mt-12 w-full max-w-[86rem] px-5'>
           {/* 分类+标签 */}
           <div className='flex justify-center md:justify-start items-center gap-4'>
             {post.category && (
@@ -65,14 +66,15 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   className='mr-4'
                   passHref
                   legacyBehavior>
-                  <div className='cursor-pointer font-sm font-bold px-3 py-1 rounded-lg  hover:bg-white text-white bg-blue-500 dark:bg-yellow-500 hover:text-blue-500 duration-200 '>
+                  <div className='cursor-pointer font-sm font-bold px-3 py-1 rounded-lg  hover:bg-white text-white bg-indigo-600  dark:bg-indigo-500 hover:text-blue-600 duration-200 '>
                     {post.category}
                   </div>
                 </SmartLink>
               </>
             )}
 
-            {post.tagItems && (
+            {/* *** modified by arale *** */}
+            {/* {post.tagItems && (
               <div className='hidden md:flex justify-center flex-nowrap overflow-x-auto'>
                 {post.tagItems.map((tag, index) => (
                   <SmartLink
@@ -89,7 +91,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   </SmartLink>
                 ))}
               </div>
-            )}
+            )} */}
           </div>
 
           {/* 文章Title */}
@@ -101,42 +103,66 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           </div>
 
           {/* 标题底部补充信息 */}
-          <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
-            <div className='flex justify-center '>
-              <div className='mr-2'>
+          <section className='flex-wrap dark:text-white text-black shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
+            <div className='flex flex-col justify-center '>
+              {/* *** modified by arale *** */}
+              {/* <div className='mr-2'>
                 <WordCount
                   wordCount={post.wordCount}
                   readTime={post.readTime}
                 />
-              </div>
-              {post?.type !== 'Page' && (
-                <>
-                  <SmartLink
-                    href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-                    passHref
-                    className='pl-1 mr-2 cursor-pointer hover:underline'>
-                    <i className='fa-regular fa-calendar'></i>{' '}
-                    {post?.publishDay}
-                  </SmartLink>
-                </>
-              )}
+              </div> */}
 
+              {/* *** modified by arale *** */}
               <div className='pl-1 mr-2'>
-                <i className='fa-regular fa-calendar-check'></i>{' '}
-                {post.lastEditedDay}
+                <i className='fa-solid fa-user mr-0.5'></i>{' '}
+                {post.writer}
+              </div>
+
+              <div className='flex-col flex md:flex-row'>
+
+                {post?.type !== 'Page' && (
+                  <>
+                    <SmartLink
+                      href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
+                      passHref
+                      className='pl-1 mr-2 cursor-pointer '>
+                      <i className='fa-regular fa-calendar mr-0.5'></i>{' '}
+                      {post?.publishDay}
+                    </SmartLink>
+                  </>
+                )}
+
+                <div className='pl-1 mr-2'>
+                  <i className='fa-regular fa-calendar-check mr-0.5'></i>{' '}
+                  {post.lastEditedDay}
+                </div>
+
+
+                {/* 阅读统计 */}
+                {ANALYTICS_BUSUANZI_ENABLE && (
+                  <div className='busuanzi_container_page_pv font-light pl-1 mr-2'>
+                    <i className='fa-solid fa-fire-flame-curved mr-0.5'></i>{' '}
+                    <span className='mr-2 busuanzi_value_page_pv' />
+                  </div>
+                )}
               </div>
             </div>
+          </section>
 
-            {/* 阅读统计 */}
-            {ANALYTICS_BUSUANZI_ENABLE && (
-              <div className='busuanzi_container_page_pv font-light mr-2'>
-                <i className='fa-solid fa-fire-flame-curved'></i>{' '}
-                <span className='mr-2 busuanzi_value_page_pv' />
+          {/* *** modified by arale *** */}
+          {/* mini tag*/}
+          <div className='mt-4 mb-1'>
+            {post.tagItems && (
+              <div className='flex  justify-center flex-nowrap overflow-x-auto md:justify-start'>
+                {post.tagItems.map(tag => (
+                  <TagItemMini key={tag.name} tag={tag} />
+                ))}
               </div>
             )}
-          </section>
-        </div>
+          </div>
 
+        </div>
         <WavesArea />
       </div>
     </div>
