@@ -7,7 +7,7 @@ const CONFIG = {
 
   // 英雄区块导航
   PROXIO_HERO_ENABLE: true, // 开启英雄区
-  PROXIO_HERO_TITLE_1: 'Explore the worlds I design.', // 英雄区文字
+  PROXIO_HERO_TITLE_1: 'Explore the Worlds I Design', // 英雄区文字
   PROXIO_HERO_TITLE_2: 'My goal is to dedicate all my life to creating engaging games that millions of people love.', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   PROXIO_HERO_BUTTON_1_TEXT: 'View All My Projects', // 英雄区按钮
