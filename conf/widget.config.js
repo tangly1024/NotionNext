@@ -40,43 +40,43 @@ module.exports = {
       name: 'Touch of the Law',
       artist: '塞壬唱片-MSR / Alec Justice / Echos',
       url: 'http://music.163.com/song/media/outer/url?id=2700386309.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       名称 : 'Halo Universalization',
       artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf',
       url: 'http://music.163.com/song/media/outer/url?id=2700384134.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       name: 'The Pilgrimage',
       artist: '塞壬唱片-MSR / BaoUner',
       url: 'http://music.163.com/song/media/outer/url?id=2700386310.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       name: 'Faith Enlightenment',
       artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf / David Lin',
       url: 'http://music.163.com/song/media/outer/url?id=2700386311.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       name: 'The Birth',
       artist: '塞壬唱片-MSR / BaoUner',
       url: 'http://music.163.com/song/media/outer/url?id=2700384135.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       name: 'Underneath the Sanctuary',
       artist: '塞壬唱片-MSR / Adam Gubman',
       url: 'http://music.163.com/song/media/outer/url?id=2700386312.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       name: 'Somniomancer [null set]',
       artist: '塞壬唱片-MSR / Crywolf',
       url: 'http://music.163.com/song/media/outer/url?id=2700386313.mp3',
-      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+      cover: 'http://p1.music.126.net/ggCZGLbtzSBr2SL2QS1opw==/109951170928386693.jpg'
     },
     {
       name: '夏ノ雪',
