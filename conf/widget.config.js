@@ -28,7 +28,7 @@ module.exports = {
   MUSIC_PLAYER: process.env.NEXT_PUBLIC_MUSIC_PLAYER || true, // 是否使用音乐播放插件
   MUSIC_PLAYER_VISIBLE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_VISIBLE || false, // 是否在左下角显示播放和切换，如果使用播放器，打开自动播放再隐藏，就会以类似背景音乐的方式播放，无法取消和暂停
   MUSIC_PLAYER_AUTO_PLAY:
-    process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || false, // 是否自动播放，不过自动播放时常不生效（移动设备不支持自动播放）
+    process.env.NEXT_PUBLIC_MUSIC_PLAYER_AUTO_PLAY || true, // 是否自动播放，不过自动播放时常不生效（移动设备不支持自动播放）
   MUSIC_PLAYER_LRC_TYPE: process.env.NEXT_PUBLIC_MUSIC_PLAYER_LRC_TYPE || '0', // 歌词显示类型，可选值： 3 | 1 | 0（0：禁用 lrc 歌词，1：lrc 格式的字符串，3：lrc 文件 url）（前提是有配置歌词路径，对 meting 无效）
   MUSIC_PLAYER_CDN_URL:
     process.env.NEXT_PUBLIC_MUSIC_PLAYER_CDN_URL ||
@@ -36,6 +36,48 @@ module.exports = {
   MUSIC_PLAYER_ORDER: process.env.NEXT_PUBLIC_MUSIC_PLAYER_ORDER || 'list', // 默认播放方式，顺序 list，随机 random
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
+    {
+      name: 'Touch of the Law',
+      artist: '塞壬唱片-MSR / Alec Justice / Echos',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386309.mp3',
+      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+    },
+    {
+      名称 : 'Halo Universalization',
+      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf',
+      url: 'http://music.163.com/song/media/outer/url?id=2700384134.mp3',
+      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+    },
+    {
+      name: 'The Pilgrimage',
+      artist: '塞壬唱片-MSR / BaoUner',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386310.mp3',
+      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+    },
+    {
+      name: 'Faith Enlightenment',
+      artist: '塞壬唱片-MSR / Erik Castro / Robert Wolf / David Lin',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386311.mp3',
+      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+    },
+    {
+      name: 'The Birth',
+      artist: '塞壬唱片-MSR / BaoUner',
+      url: 'http://music.163.com/song/media/outer/url?id=2700384135.mp3',
+      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+    },
+    {
+      name: 'Underneath the Sanctuary',
+      artist: '塞壬唱片-MSR / Adam Gubman',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386312.mp3',
+      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+    },
+    {
+      name: 'Somniomancer [null set]',
+      artist: '塞壬唱片-MSR / Crywolf',
+      url: 'http://music.163.com/song/media/outer/url?id=2700386313.mp3',
+      cover: 'http://p2.music.126.net/ZMqz5sL4U1G4Uiec0bqlrA==/109951170928386693.jpg'
+    },
     {
       name: '夏ノ雪',
       artist: 'MONACA / 西村隆文',
