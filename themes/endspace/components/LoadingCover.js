@@ -28,22 +28,6 @@ export const LoadingCover = () => {
   // Custom Loading Image
   const loadingImage = siteConfig('ENDSPACE_LOADING_IMAGE', null, CONFIG)
 
-  // Block external audio playback during loading
-  useEffect(() => {
-    const handleExternalPlay = event => {
-      const target = event?.target
-      if (!target) return
-      if (target.dataset?.endspacePlayer === 'true') return
-      if (typeof target.pause === 'function') {
-        target.pause()
-      }
-    }
-    document.addEventListener('play', handleExternalPlay, true)
-    return () => {
-      document.removeEventListener('play', handleExternalPlay, true)
-    }
-  }, [])
-
   // Resource loading tracking and smooth animation
   useEffect(() => {
     // Prevent body scroll during loading
@@ -153,18 +137,6 @@ export const LoadingCover = () => {
     <div
       className={`loading-cover ${phase}`}
       style={{ '--progress': `${displayProgress}%`, '--progress-num': displayProgress }}
-      onPointerDownCapture={e => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
-      onClickCapture={e => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
-      onTouchStartCapture={e => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
     >
       {/* Left side - Vertical Progress Bar (thicker) */}
       <div className="progress-container">

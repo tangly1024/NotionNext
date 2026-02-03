@@ -28,10 +28,8 @@ export const EndspacePlayer = ({ isExpanded }) => {
 
   // Get configuration from widget.config.js
   const musicPlayerEnabled = siteConfig('MUSIC_PLAYER')
-  const autoPlay = JSON.parse(siteConfig('MUSIC_PLAYER_AUTO_PLAY') || 'false')
   const playOrder = siteConfig('MUSIC_PLAYER_ORDER')
   const audioList = siteConfig('MUSIC_PLAYER_AUDIO_LIST') || []
-  const hasInitializedRef = useRef(false)
 
   // Don't render if disabled or no audio
   if (!musicPlayerEnabled || audioList.length === 0) {
@@ -45,12 +43,6 @@ export const EndspacePlayer = ({ isExpanded }) => {
     if (!audioRef.current) {
       audioRef.current = new Audio()
       audioRef.current.volume = 0.7
-      if (audioRef.current.setAttribute) {
-        audioRef.current.setAttribute('data-endspace-player', 'true')
-      }
-      if (audioRef.current.dataset) {
-        audioRef.current.dataset.endspacePlayer = 'true'
-      }
       
       audioRef.current.addEventListener('ended', handleTrackEnd)
       audioRef.current.addEventListener('loadedmetadata', () => {
@@ -61,19 +53,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
       })
     }
 
-    // Ensure only EndspacePlayer audio can play
-    const handleExternalPlay = event => {
-      const target = event?.target
-      if (!audioRef.current || !target) return
-      if (target.dataset?.endspacePlayer === 'true') return
-      if (target !== audioRef.current && typeof target.pause === 'function') {
-        target.pause()
-      }
-    }
-    document.addEventListener('play', handleExternalPlay, true)
-
     return () => {
-      document.removeEventListener('play', handleExternalPlay, true)
       if (audioRef.current) {
         audioRef.current.pause()
         audioRef.current.removeEventListener('ended', handleTrackEnd)
@@ -99,39 +79,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
     }
   }, [currentTrack, currentAudio.url, isPlaying])
 
-  // Auto-play on initial load based on config
-  useEffect(() => {
-    if (hasInitializedRef.current) return
 
-    if (autoPlay && audioRef.current && currentAudio.url) {
-      hasInitializedRef.current = true
-      const attemptPlay = async () => {
-        try {
-          // Try muted autoplay first to satisfy browser policy
-          audioRef.current.muted = true
-          await audioRef.current?.play()
-          audioRef.current.muted = false
-          setIsPlaying(true)
-        } catch (error) {
-          console.log('Autoplay prevented by browser:', error)
-        }
-      }
-      const timer = setTimeout(attemptPlay, 800)
-      return () => clearTimeout(timer)
-    } else {
-      hasInitializedRef.current = true
-    }
-  }, [currentAudio.url, autoPlay])
-
-  // Strict cleanup when track changes
-  useEffect(() => {
-    return () => {
-       // FORCE PAUSE on unmount/change to kill zombie audio
-       if (audioRef.current) {
-          audioRef.current.pause()
-       }
-    }
-  }, [currentAudio.url])
 
   // Progress update
   useEffect(() => {
