@@ -55,7 +55,18 @@ export const EndspacePlayer = ({ isExpanded }) => {
       })
     }
 
+    // Ensure only EndspacePlayer audio can play
+    const handleExternalPlay = event => {
+      const target = event?.target
+      if (!audioRef.current || !target) return
+      if (target !== audioRef.current && typeof target.pause === 'function') {
+        target.pause()
+      }
+    }
+    document.addEventListener('play', handleExternalPlay, true)
+
     return () => {
+      document.removeEventListener('play', handleExternalPlay, true)
       if (audioRef.current) {
         audioRef.current.pause()
         audioRef.current.removeEventListener('ended', handleTrackEnd)
@@ -89,7 +100,10 @@ export const EndspacePlayer = ({ isExpanded }) => {
       hasInitializedRef.current = true
       const attemptPlay = async () => {
         try {
+          // Try muted autoplay first to satisfy browser policy
+          audioRef.current.muted = true
           await audioRef.current?.play()
+          audioRef.current.muted = false
           setIsPlaying(true)
         } catch (error) {
           console.log('Autoplay prevented by browser:', error)
@@ -158,6 +172,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
     if (isPlaying) {
       audioRef.current.pause()
     } else {
+      audioRef.current.muted = false
       audioRef.current.play().catch(e => console.log('Play prevented:', e))
     }
     setIsPlaying(!isPlaying)
@@ -183,6 +198,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
     setShowPlaylist(false)
     if (!isPlaying) {
       setTimeout(() => {
+        if (audioRef.current) audioRef.current.muted = false
         audioRef.current?.play().catch(e => console.log('Play prevented:', e))
         setIsPlaying(true)
       }, 100)
