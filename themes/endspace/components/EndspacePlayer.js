@@ -45,6 +45,12 @@ export const EndspacePlayer = ({ isExpanded }) => {
     if (!audioRef.current) {
       audioRef.current = new Audio()
       audioRef.current.volume = 0.7
+      if (audioRef.current.setAttribute) {
+        audioRef.current.setAttribute('data-endspace-player', 'true')
+      }
+      if (audioRef.current.dataset) {
+        audioRef.current.dataset.endspacePlayer = 'true'
+      }
       
       audioRef.current.addEventListener('ended', handleTrackEnd)
       audioRef.current.addEventListener('loadedmetadata', () => {
@@ -59,6 +65,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
     const handleExternalPlay = event => {
       const target = event?.target
       if (!audioRef.current || !target) return
+      if (target.dataset?.endspacePlayer === 'true') return
       if (target !== audioRef.current && typeof target.pause === 'function') {
         target.pause()
       }
