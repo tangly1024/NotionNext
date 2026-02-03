@@ -73,7 +73,7 @@ export const EndspacePlayer = ({ isExpanded }) => {
       setCurrentTime(0)
       
       // Only auto-play on track switch if currently playing
-      if (hasInitializedRef.current && isPlaying) {
+      if (isPlaying) {
         audioRef.current.play().catch(e => console.log('Autoplay prevented:', e))
       }
     }
