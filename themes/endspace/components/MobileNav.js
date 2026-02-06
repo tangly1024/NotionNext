@@ -83,7 +83,7 @@ export const MobileNav = (props) => {
     { name: 'Tag', path: '/tag', show: siteConfig('ENDSPACE_MENU_TAG', null, CONFIG) },
     { name: 'Archive', path: '/archive', show: siteConfig('ENDSPACE_MENU_ARCHIVE', null, CONFIG) },
     { name: 'Portfolio', path: '/portfolio' },
-    { name: 'Friends', path: '/friend' },
+    { name: 'Friends', path: '/friends' },
     { name: 'Search', path: '/search', show: siteConfig('ENDSPACE_MENU_SEARCH', null, CONFIG) }
   ].filter(item => item.show !== false)
 
@@ -112,7 +112,7 @@ export const MobileNav = (props) => {
     else if (path.includes('/tag')) setActiveTab('Tag')
     else if (path.includes('/archive')) setActiveTab('Archive')
     else if (path.includes('/search')) setActiveTab('Search')
-    else if (path.includes('/friend')) setActiveTab('Friends')
+    else if (path.includes('/friends')) setActiveTab('Friends')
     else if (path.includes('/portfolio')) setActiveTab('Portfolio')
   }, [router.asPath])
 
