@@ -116,12 +116,15 @@ const NotionPage = ({ post, className }) => {
     return () => clearTimeout(timer)
   }, [post])
 
+  const cleanBlockMap = cleanBlocksWithWarn(post.blockMap);
+
+
   return (
     <div
       id='notion-article'
       className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
-        recordMap={post?.blockMap}
+        recordMap={cleanBlockMap}
         mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
@@ -139,6 +142,44 @@ const NotionPage = ({ post, className }) => {
     </div>
   )
 }
+
+function cleanBlocksWithWarn(blockMap) {
+  const cleanedBlocks = {};
+  const removedBlockIds = [];
+
+  for (const [id, block] of Object.entries(blockMap.block || {})) {
+    if (!block?.value?.id) {
+      removedBlockIds.push(id);
+      continue;
+    }
+
+    const newBlock = { ...block };
+
+    if (Array.isArray(newBlock.value.content)) {
+      // 递归清理 content 中无效的 blockId
+      newBlock.value.content = newBlock.value.content.filter((cid) => {
+        if (!blockMap.block[cid]?.value?.id) {
+          removedBlockIds.push(cid);
+          return false;
+        }
+        return true;
+      });
+    }
+
+    cleanedBlocks[id] = newBlock;
+  }
+
+  if (removedBlockIds.length) {
+    console.warn('Removed invalid blocks:', removedBlockIds);
+  }
+
+  return {
+    ...blockMap,
+    block: cleanedBlocks,
+  };
+}
+
+
 
 /**
  * 页面的数据库链接禁止跳转，只能查看
