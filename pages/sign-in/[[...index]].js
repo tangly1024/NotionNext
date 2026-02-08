@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 // import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 
@@ -18,7 +18,7 @@ export async function getStaticProps(req) {
   const { locale } = req
 
   const from = 'SignIn'
-  const props = await getGlobalData({ from, locale })
+  const props = await fetchGlobalAllData({ from, locale })
 
   delete props.allPages
   return {
