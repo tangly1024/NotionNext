@@ -72,7 +72,7 @@ const LayoutBase = props => {
 
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}
 
-        <div className='flex flex-1 mx-auto overflow-hidden py-8 md:p-0 md:max-w-7xl md:px-24 w-screen'>
+        <div className='flex flex-1 mx-auto overflow-hidden py-8 md:p-0 md:max-w-screen-3xl md:px-24 w-screen'>
           {/* 主体 - 使用 flex 布局 */}
           {/* 文章详情才显示 */}
           {/* {props.post && (
@@ -232,7 +232,7 @@ const LayoutSlug = props => {
 
       {!lock && post && (
         <div
-          className={`px-5 pt-3 ${fullWidth ? '' : 'xl:max-w-6xl 2xl:max-w-screen-2xl'}`}>
+          className={`px-5 pt-3 ${fullWidth ? '' : 'xl:max-w-5xl 2xl:max-w-6xl'}`}>
           {/* 文章信息 */}
           <ArticleInfo post={post} />
 

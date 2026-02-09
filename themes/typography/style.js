@@ -118,14 +118,6 @@ const Style = () => {
         text-shadow: 0 0 3px rgba(0, 255, 0, 0.4);
       }
 
-      #theme-typography .blog-item-title {
-        color: #276077;
-      }
-
-      .dark #theme-typography .blog-item-title {
-        color: #d1d5db;
-      }
-
       .notion {
         margin-top: 0 !important;
         margin-bottom: 0 !important;

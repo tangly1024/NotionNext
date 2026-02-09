@@ -1,6 +1,5 @@
 import SmartLink from '@/components/SmartLink'
 import { useGlobal } from '@/lib/global'
-import CONFIG from '../config'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import NotionIcon from '@/components/NotionIcon'
@@ -17,7 +16,7 @@ export default function ArticleInfo(props) {
 
   return (
     <section className='mt-2 text-gray-600 dark:text-gray-400 leading-8'>
-      <h2 className='blog-item-title mb-5 font-bold text-black text-xl md:text-2xl no-underline'>
+      <h2 className='blog-item-title mb-5 font-bold text-black dark:text-white text-4xl no-underline'>
         {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post?.pageIcon} />}
         {post?.title}
       </h2>
