@@ -1,5 +1,5 @@
 const BLOG = require('./blog.config')
-const { fontFamilies } = require('./lib/font')
+const { fontFamilies } = require('./lib/utils/font')
 
 module.exports = {
   content: [
