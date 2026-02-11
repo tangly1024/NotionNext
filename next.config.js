@@ -90,6 +90,22 @@ const nextConfig = {
       ? 'standalone'
       : undefined,
   staticPageGenerationTimeout: 120,
+
+  // 性能优化配置
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: true,
+
+  // 构建优化
+  swcMinify: true,
+  modularizeImports: {
+    '@heroicons/react/24/outline': {
+      transform: '@heroicons/react/24/outline/{{member}}'
+    },
+    '@heroicons/react/24/solid': {
+      transform: '@heroicons/react/24/solid/{{member}}'
+    }
+  },
   // 多语言， 在export时禁用
   i18n: process.env.EXPORT
     ? undefined
@@ -99,8 +115,11 @@ const nextConfig = {
         locales: locales
       },
   images: {
-    // 图片压缩
+    // 图片压缩和格式优化
     formats: ['image/avif', 'image/webp'],
+    // 图片尺寸优化
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // 允许next/image加载的图片 域名
     domains: [
       'gravatar.com',
@@ -111,7 +130,14 @@ const nextConfig = {
       'p1.qhimg.com',
       'webmention.io',
       'ko-fi.com'
-    ]
+    ],
+    // 图片加载器优化
+    loader: 'default',
+    // 图片缓存优化
+    minimumCacheTTL: 60 * 60 * 24 * 7, // 7天
+    // 危险的允许SVG
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
 
   // 默认将feed重定向至 /public/rss/feed.xml
@@ -181,6 +207,7 @@ const nextConfig = {
           {
             source: '/:path*{/}?',
             headers: [
+              // 为了博客兼容性，不做过多安全限制
               { key: 'Access-Control-Allow-Credentials', value: 'true' },
               { key: 'Access-Control-Allow-Origin', value: '*' },
               {
@@ -192,8 +219,56 @@ const nextConfig = {
                 value:
                   'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
               }
+              // 安全头部 相关配置，谨慎开启
+            //   { key: 'X-Frame-Options', value: 'DENY' },
+            //   { key: 'X-Content-Type-Options', value: 'nosniff' },
+            //   { key: 'X-XSS-Protection', value: '1; mode=block' },
+            //   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+            //   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+            //   {
+            //     key: 'Strict-Transport-Security',
+            //     value: 'max-age=31536000; includeSubDomains; preload'
+            //   },
+            //   {
+            //     key: 'Content-Security-Policy',
+            //     value: [
+            //       "default-src 'self'",
+            //       "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com",
+            //       "style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com",
+            //       "img-src 'self' data: blob: *.notion.so *.unsplash.com *.githubusercontent.com *.gravatar.com",
+            //       "font-src 'self' *.googleapis.com *.gstatic.com",
+            //       "connect-src 'self' *.google-analytics.com *.googletagmanager.com",
+            //       "frame-src 'self' *.youtube.com *.vimeo.com",
+            //       "object-src 'none'",
+            //       "base-uri 'self'",
+            //       "form-action 'self'"
+            //     ].join('; ')
+            //   },
+
+            //   // CORS 配置（更严格）
+            //   { key: 'Access-Control-Allow-Credentials', value: 'false' },
+            //   {
+            //     key: 'Access-Control-Allow-Origin',
+            //     value: process.env.NODE_ENV === 'production'
+            //       ? siteConfig('LINK') || 'https://yourdomain.com'
+            //       : '*'
+            //   },
+            //   { key: 'Access-Control-Max-Age', value: '86400' }
             ]
-          }
+          },
+            //   {
+            //     source: '/api/:path*',
+            //     headers: [
+            //       // API 特定的安全头部
+            //       { key: 'X-Frame-Options', value: 'DENY' },
+            //       { key: 'X-Content-Type-Options', value: 'nosniff' },
+            //       { key: 'Cache-Control', value: 'no-store, max-age=0' },
+            //       {
+            //         key: 'Access-Control-Allow-Methods',
+            //         value: 'GET,POST,PUT,DELETE,OPTIONS'
+            //       }
+            //     ]
+            //   }
         ]
       },
   webpack: (config, { dev, isServer }) => {
@@ -208,14 +283,50 @@ const nextConfig = {
       'themes',
       THEME
     )
-    // Enable source maps in development mode
-    if (process.env.NODE_ENV_API === 'development') {
-      config.devtool = 'source-map'
+
+    // 性能优化配置
+    if (!dev) {
+      // 生产环境优化
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              chunks: 'all',
+            },
+            common: {
+              name: 'common',
+              minChunks: 2,
+              chunks: 'all',
+              enforce: true,
+            },
+          },
+        },
+      }
     }
+
+    // Enable source maps in development mode
+    if (dev || process.env.NODE_ENV_API === 'development') {
+      // config.devtool = 'source-map'
+      config.devtool = 'eval-source-map'
+      // console.log('启动调试 nextjs.config.devtool ', config.devtool)
+    }
+
+    // 优化模块解析
+    config.resolve.modules = [
+      path.resolve(__dirname, 'node_modules'),
+      'node_modules'
+    ]
+
     return config
   },
   experimental: {
-    scrollRestoration: true
+    scrollRestoration: true,
+    // 性能优化实验性功能
+    optimizePackageImports: ['@heroicons/react', 'lodash']
   },
   exportPathMap: function (
     defaultPathMap,

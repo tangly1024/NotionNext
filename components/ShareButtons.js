@@ -1,6 +1,7 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -86,7 +87,14 @@ const ShareButtons = ({ post }) => {
   const closePopover = () => {
     setQrCodeShow(false)
   }
-
+  const openRedirectShare = base => {
+    if (!shareUrl || typeof window === 'undefined') return
+    window.open(
+      `${base}${encodeURIComponent(shareUrl)}`,
+      '_blank',
+      'noopener,noreferrer'
+    )
+  }
   useEffect(() => {
     setShareUrl(window.location.href)
   }, [])
@@ -374,6 +382,47 @@ const ShareButtons = ({ post }) => {
                 className='cursor-pointer bg-yellow-500 text-white rounded-full mx-1'>
                 <div alt={locale.COMMON.URL_COPIED} onClick={copyUrl}>
                   <i className='fas fa-link w-8' />
+                </div>
+              </button>
+            )
+          case 'csdn':
+            return (
+              <button
+                aria-label={singleService}
+                key={singleService}
+                onClick={() => openRedirectShare('https://link.csdn.net/?target=')}
+                className='cursor-pointer rounded-full mx-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500'>
+                <div className='w-8 h-8 rounded-full items-center justify-center'
+                  style={{backgroundColor: '#ff6a00'}}>
+                  <Image
+                    src='/svg/csdn.svg'
+                    alt='CSDN'
+                    width={28}
+                    height={28}
+                    className='w-5 h-5'
+                    loading='lazy'
+                    style={{ transform: 'translateY(3px)' }}
+                  />
+                </div>
+              </button>
+            )
+          case 'juejin':
+            return (
+              <button
+                aria-label={singleService}
+                key={singleService}
+                onClick={() => openRedirectShare('https://link.juejin.cn/?target=')}
+                className='cursor-pointer rounded-full mx-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500'>
+                <div className='w-8 h-8 rounded-full flex items-center justify-center'
+                     style={{ backgroundColor: '#5dade2' }}>
+                  <Image
+                    src='/svg/juejin.svg'
+                    alt='掘金'
+                    width={24}
+                    height={24}
+                    className='w-5 h-5'
+                    loading='lazy'
+                  />
                 </div>
               </button>
             )
