@@ -1,4 +1,4 @@
-import { compressImage } from '@/lib/notion/mapImage'
+import { compressImage } from '@/lib/db/notion/mapImage'
 import { isBrowser } from '../lib/utils'
 
 /**
