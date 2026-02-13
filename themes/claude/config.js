@@ -20,6 +20,6 @@ const CONFIG = {
   CLAUDE_TOC_SCROLL_BEHAVIOR: process.env.NEXT_PUBLIC_CLAUDE_TOC_SCROLL_BEHAVIOR || 'instant', // 滚动行为：'smooth' 或 'instant'
 
   // 副标题配置
-  CLAUDE_SUBTITLE_DARK_ONLY: process.env.NEXT_PUBLIC_CLAUDE_SUBTITLE_DARK_ONLY !== 'false', // 副标题仅在深色模式下显示，默认开启
+  CLAUDE_SUBTITLE_DARK_ONLY: process.env.NEXT_PUBLIC_CLAUDE_SUBTITLE_DARK_ONLY === 'true', // 副标题在浅色和深色模式下都显示，设为 true 则仅深色模式
 }
 export default CONFIG
