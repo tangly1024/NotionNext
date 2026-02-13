@@ -72,11 +72,11 @@ const Style = () => {
       .dark {
         --claude-bg: #1A1915;
         --claude-bg-secondary: #242320;
-        --claude-text-primary: #EAEAE6;
+        --claude-text-primary: #9E9E9E;
         --claude-text-secondary: #A0A09C;
         --claude-text-tertiary: #6E6E6A;
         --claude-border: #333330;
-        --claude-accent: #E08A6E;
+        --claude-accent: #D4A27F;
         --claude-accent-hover: #DA7756;
         --claude-sidebar-bg: #1E1D1A;
         --claude-sidebar-active-bg: rgba(224, 138, 110, 0.1);
@@ -84,6 +84,7 @@ const Style = () => {
         --claude-code-bg: #0B0C0E;
         --claude-code-border: rgba(255, 255, 255, 0.08);
         --claude-link: #E08A6E;
+        --claude-dark-quote: rgb(134, 239, 172);
         --claude-blockquote-border: #333330;
       }
 
@@ -137,12 +138,28 @@ const Style = () => {
       }
       /* Remove Notion's own underline styling for cleaner look if desired */
       #article-wrapper .notion-link {
+        border-bottom: none !important;
+        text-decoration: underline !important;
         text-decoration-color: rgba(218, 119, 86, 0.3);
         text-underline-offset: 3px;
         text-decoration-thickness: 1px;
       }
       #article-wrapper .notion-link:hover {
         text-decoration-color: var(--claude-link);
+      }
+      .dark #article-wrapper .notion-link {
+        color: #fff !important;
+        text-decoration-color: var(--claude-accent) !important;
+        opacity: 1 !important;
+      }
+      .dark #article-wrapper .notion-link:hover {
+        text-decoration-thickness: 2px !important;
+      }
+      .dark #article-wrapper .notion-quote .notion-link,
+      .dark #article-wrapper .notion-quote a {
+        color: var(--claude-dark-quote) !important;
+        text-decoration-color: var(--claude-dark-quote) !important;
+        border-bottom-color: var(--claude-dark-quote) !important;
       }
 
       /* ========================================
@@ -226,9 +243,24 @@ const Style = () => {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
       }
+      .dark .notion {
+        color: #9E9E9E !important;
+      }
       .notion-page {
         padding-left: 0 !important;
         padding-right: 0 !important;
+      }
+
+      /* Dark mode — headings white */
+      .dark .notion-h1,
+      .dark .notion-h2,
+      .dark .notion-h3 {
+        color: #fff !important;
+      }
+      /* Dark mode — bold text white */
+      .dark #article-wrapper b,
+      .dark #article-wrapper strong {
+        color: #fff !important;
       }
 
       /* Blockquotes — Claude Docs callout style */
@@ -244,9 +276,9 @@ const Style = () => {
         line-height: 1.7 !important;
       }
       .dark .notion-quote {
-        border-color: #14532d !important;
-        background: rgba(22, 163, 74, 0.15) !important;
-        color: #86efac !important;
+        border: none !important;
+        background: rgb(22 163 74 / 0.2) !important;
+        color: var(--claude-dark-quote) !important;
       }
       /* Links inside quote */
       .notion-quote a {
@@ -256,7 +288,7 @@ const Style = () => {
         text-underline-offset: 3px !important;
       }
       .dark .notion-quote a {
-        color: #86efac !important;
+        color: var(--claude-dark-quote) !important;
       }
 
       /* Horizontal rule */
@@ -296,6 +328,61 @@ const Style = () => {
       }
       .dark .notion-external-image svg path {
         fill: var(--claude-text-primary) !important;
+      }
+
+      /* ========================================
+       * TABLES — Claude Docs style
+       * No outer border, horizontal separators only
+       * ======================================== */
+      .notion-simple-table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        font-size: 0.9375rem !important;
+        line-height: 1.7 !important;
+        display: table !important;
+        table-layout: auto !important;
+        white-space: normal !important;
+        border: none !important;
+        overflow-x: auto !important;
+      }
+      .notion-simple-table-row {
+        display: table-row !important;
+      }
+      /* All cells — horizontal borders only, no vertical */
+      .notion-simple-table td {
+        display: table-cell !important;
+        border: none !important;
+        border-bottom: 1px solid var(--claude-border) !important;
+        padding: 0.875rem 1.25rem !important;
+        vertical-align: top !important;
+        color: var(--claude-text-primary) !important;
+        word-break: break-word !important;
+      }
+      /* Header row — warm muted color */
+      .notion-simple-table tr:first-child td {
+        color: #8B8680 !important;
+        font-weight: 400 !important;
+        font-size: 0.875rem !important;
+        border-bottom: 1px solid var(--claude-border) !important;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.75rem !important;
+        background: transparent !important;
+      }
+      .dark .notion-simple-table tr:first-child td {
+        color: #fff !important;
+        background: transparent !important;
+      }
+      /* First column — bold */
+      .notion-simple-table td:first-child {
+        font-weight: 600 !important;
+        white-space: nowrap !important;
+      }
+      .dark .notion-simple-table td:first-child {
+        color: #fff !important;
+      }
+      /* Last row — no bottom border */
+      .notion-simple-table tr:last-child td {
+        border-bottom: none !important;
       }
 
       /* ========================================
@@ -394,6 +481,9 @@ const Style = () => {
         font-size: 0.8125em !important;
         font-family: var(--claude-mono-font) !important;
       }
+      .dark .notion-inline-code {
+        color: #fff !important;
+      }
 
       /* Code block scrollbar — thin, minimal */
       .notion-code::-webkit-scrollbar,
@@ -466,6 +556,9 @@ const Style = () => {
       .toc-item.toc-inactive {
         color: var(--claude-text-tertiary);
         font-weight: 400;
+      }
+      .dark .toc-item.toc-inactive {
+        color: #9E9E9E;
       }
       .toc-item.toc-inactive:hover {
         color: var(--claude-text-secondary);
