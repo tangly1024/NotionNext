@@ -88,7 +88,7 @@ const LayoutBase = props => {
           <div className='flex-1 overflow-hidden flex justify-center'>
             <div
               id='container-inner'
-              className='h-full w-full max-w-3xl px-5 md:px-8 overflow-y-auto scroll-hidden'>
+              className='h-full w-full max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl px-5 md:px-8 overflow-y-auto scroll-hidden'>
 
               {/* 移动端导航 */}
               <div className='md:hidden pt-4'>

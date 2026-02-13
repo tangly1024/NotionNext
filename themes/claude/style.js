@@ -337,6 +337,7 @@ const Style = () => {
       .notion-simple-table {
         border-collapse: collapse !important;
         width: 100% !important;
+        min-width: 100% !important;
         font-size: 0.9375rem !important;
         line-height: 1.7 !important;
         display: table !important;
@@ -345,18 +346,27 @@ const Style = () => {
         border: none !important;
         overflow-x: auto !important;
       }
-      .notion-simple-table-row {
+      .notion-simple-table thead,
+      .notion-simple-table tbody {
+        display: table-row-group !important;
+        width: 100% !important;
+      }
+      .notion-simple-table tr,
+      .notion-simple-table .notion-simple-table-row {
         display: table-row !important;
+        width: 100% !important;
+        table-layout: auto !important;
       }
       /* All cells — horizontal borders only, no vertical */
       .notion-simple-table td {
         display: table-cell !important;
+        width: auto !important;
         border: none !important;
         border-bottom: 1px solid var(--claude-border) !important;
         padding: 0.875rem 1.25rem !important;
         vertical-align: top !important;
         color: var(--claude-text-primary) !important;
-        word-break: break-word !important;
+        overflow-wrap: break-word !important;
       }
       /* Header row — warm muted color */
       .notion-simple-table tr:first-child td {
