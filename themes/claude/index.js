@@ -117,7 +117,7 @@ const LayoutBase = props => {
 
           {/* ====== RIGHT SIDEBAR — 目录 (桌面端，仅文章页) ====== */}
           {tocEnable && hasToc && (
-            <div className='hidden lg:flex lg:flex-col lg:flex-shrink-0 lg:w-[220px] h-full overflow-hidden pt-16 pr-8 pl-2'>
+            <div className='hidden lg:flex lg:flex-col lg:flex-shrink-0 lg:w-[240px] h-full overflow-hidden pt-16 pr-8 pl-2'>
               <Catalog post={props.post} />
             </div>
           )}

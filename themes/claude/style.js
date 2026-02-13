@@ -91,14 +91,13 @@ const Style = () => {
        * GLOBAL BASE
        * ======================================== */
       html {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: auto;
+        -moz-osx-font-smoothing: auto;
       }
       body {
         font-family: var(--claude-body-font);
         background-color: var(--claude-bg);
         color: var(--claude-text-primary);
-        transition: background-color 0.2s ease, color 0.2s ease;
         font-size: 0.9375rem;
         line-height: 1.7;
       }
@@ -147,7 +146,7 @@ const Style = () => {
       }
 
       /* ========================================
-       * THEME CONTAINER
+       * THEME CONTAINER — no transition to prevent reflow
        * ======================================== */
       #theme-claude {
         background-color: var(--claude-bg);
@@ -155,24 +154,25 @@ const Style = () => {
       }
 
       /* ========================================
-       * LEFT SIDEBAR
+       * LEFT SIDEBAR — safe to transition (fixed width, no reflow)
        * ======================================== */
       .claude-sidebar {
         background-color: var(--claude-sidebar-bg);
         border-right: 1px solid var(--claude-border);
+        transition: background-color 0.15s ease, border-color 0.15s ease;
       }
 
       /* Site title */
       .claude-site-title {
         font-family: var(--claude-heading-font);
         font-weight: 400;
-        font-size: 1.125rem;
+        font-size: 1.25rem;
         letter-spacing: -0.02em;
         color: var(--claude-text-primary);
       }
       .claude-site-subtitle {
         font-family: var(--claude-body-font);
-        font-size: 0.75rem;
+        font-size: 0.8125rem;
         color: var(--claude-text-tertiary);
         font-weight: 400;
       }
@@ -181,7 +181,7 @@ const Style = () => {
       .claude-nav-link {
         font-family: var(--claude-body-font);
         color: var(--claude-text-secondary);
-        font-size: 0.8125rem;
+        font-size: 0.875rem;
         font-weight: 400;
         padding: 0.3125rem 0.75rem;
         border-radius: 6px;
@@ -210,7 +210,7 @@ const Style = () => {
       }
       .claude-social-row a {
         color: var(--claude-text-tertiary);
-        font-size: 0.875rem;
+        font-size: 0.9375rem;
         transition: color 0.15s ease, transform 0.15s ease;
         display: inline-flex;
       }
@@ -231,17 +231,71 @@ const Style = () => {
         padding-right: 0 !important;
       }
 
-      /* Blockquotes */
+      /* Blockquotes — Claude Docs callout style */
       .notion-quote {
-        border-left: 3px solid var(--claude-blockquote-border) !important;
-        padding-left: 1.5rem !important;
-        color: var(--claude-text-secondary) !important;
+        border-left: none !important;
+        border: 1px solid #bbf7d0 !important;
+        border-radius: 1rem !important;
+        background: #f0fdf4 !important;
+        padding: 1rem 1.25rem !important;
+        color: #166534 !important;
         font-style: normal !important;
+        font-size: 0.9375rem !important;
+        line-height: 1.7 !important;
+      }
+      .dark .notion-quote {
+        border-color: #14532d !important;
+        background: rgba(22, 163, 74, 0.15) !important;
+        color: #86efac !important;
+      }
+      /* Links inside quote */
+      .notion-quote a {
+        color: #166534 !important;
+        font-weight: 600 !important;
+        text-decoration: underline !important;
+        text-underline-offset: 3px !important;
+      }
+      .dark .notion-quote a {
+        color: #86efac !important;
       }
 
       /* Horizontal rule */
       .notion-hr {
         border-color: var(--claude-border) !important;
+      }
+
+      /* Bookmark / GitHub embed — dark mode text fix */
+      .dark .notion-bookmark {
+        border-color: var(--claude-border) !important;
+        background: var(--claude-bg-secondary) !important;
+      }
+      .dark .notion-bookmark .notion-bookmark-title {
+        color: var(--claude-text-primary) !important;
+      }
+      .dark .notion-bookmark .notion-bookmark-description {
+        color: var(--claude-text-secondary) !important;
+      }
+      .dark .notion-bookmark .notion-bookmark-link div {
+        color: var(--claude-text-tertiary) !important;
+      }
+      .dark .notion-bookmark .notion-bookmark-link img {
+        filter: invert(0.8) !important;
+      }
+      /* External embeds (GitHub etc.) — dark mode fix */
+      .dark .notion-external {
+        color: var(--claude-text-primary) !important;
+      }
+      .dark .notion-external-block {
+        border-color: var(--claude-border) !important;
+      }
+      .dark .notion-external-title {
+        color: var(--claude-text-primary) !important;
+      }
+      .dark .notion-external-block-desc {
+        color: var(--claude-text-secondary) !important;
+      }
+      .dark .notion-external-image svg path {
+        fill: var(--claude-text-primary) !important;
       }
 
       /* ========================================
@@ -250,18 +304,18 @@ const Style = () => {
        * ======================================== */
       .notion-code {
         background: var(--claude-code-bg) !important;
-        border: 1px solid var(--claude-code-border) !important;
-        border-radius: 0.75rem !important;
+        border: none !important;
+        border-radius: 1rem !important;
         font-family: var(--claude-mono-font) !important;
-        font-size: 0.8125rem !important;
-        line-height: 1.6 !important;
-        padding: 0.75rem 1rem !important;
+        font-size: 0.875rem !important;
+        line-height: 1.5rem !important;
+        padding: 0.875rem 1rem !important;
         position: relative !important;
         overflow-x: auto !important;
         font-variant-ligatures: none;
       }
 
-      /* Hide Mac-style dots — not needed for Claude look */
+      /* Hide Mac-style dots */
       .pre-mac {
         display: none !important;
       }
@@ -379,7 +433,7 @@ const Style = () => {
       /* TOC title — clickable, scrolls to top */
       .catalog-title {
         font-family: var(--claude-body-font) !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         font-size: 0.8125rem !important;
         color: var(--claude-text-primary) !important;
         text-transform: none !important;
@@ -401,8 +455,8 @@ const Style = () => {
 
       /* TOC item base */
       .toc-item {
-        font-size: 0.8125rem;
-        line-height: 1.5;
+        font-size: 0.875rem;
+        line-height: 1.6;
         padding: 0.125rem 0;
         cursor: pointer;
         text-decoration: none !important;
@@ -503,7 +557,7 @@ const Style = () => {
        * FOOTER
        * ======================================== */
       .claude-footer {
-        font-size: 0.6875rem;
+        font-size: 0.75rem;
         color: var(--claude-text-tertiary);
         padding: 0.75rem;
       }
