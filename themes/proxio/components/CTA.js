@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * CTA，用于创建一个呼吁用户行动的部分（Call To Action，简称 CTA）。
@@ -36,11 +36,11 @@ export const CTA = () => {
                   </p>
                   {siteConfig('PROXIO_CTA_BUTTON') && (
                     <>
-                      <Link
+                      <SmartLink
                         href={siteConfig('PROXIO_CTA_BUTTON_URL', '')}
                         className='inline-flex items-center justify-center rounded-2xl bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2'>
                         {siteConfig('PROXIO_CTA_BUTTON_TEXT')}
-                      </Link>
+                      </SmartLink>
                     </>
                   )}
                 </div>

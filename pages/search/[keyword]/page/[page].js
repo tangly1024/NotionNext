@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 
 const Index = props => {
@@ -18,7 +18,7 @@ const Index = props => {
  * @returns
  */
 export async function getStaticProps({ params: { keyword, page }, locale }) {
-  const props = await getGlobalData({
+  const props = await fetchGlobalAllData({
     from: 'search-props',
     pageType: ['Post'],
     locale

@@ -3,7 +3,7 @@ import NotionPage from '@/components/NotionPage'
 import TwikooCommentCount from '@/components/TwikooCommentCount'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import TagItemMini from './TagItemMini'
 
 /**
@@ -24,7 +24,7 @@ export const BlogPostCardInfo = ({
         <header>
           <h2>
             {/* 标题 */}
-            <Link
+            <SmartLink
               href={post?.href}
               passHref
               className={`line-clamp-2 replace cursor-pointer text-2xl ${
@@ -34,7 +34,7 @@ export const BlogPostCardInfo = ({
                 <NotionIcon icon={post.pageIcon} />
               )}
               <span className='menu-link '>{post.title}</span>
-            </Link>
+            </SmartLink>
           </h2>
 
           {/* 分类 */}
@@ -43,13 +43,13 @@ export const BlogPostCardInfo = ({
               className={`flex mt-2 items-center ${
                 showPreview ? 'justify-center' : 'justify-start'
               } flex-wrap dark:text-gray-500 text-gray-400 `}>
-              <Link
+              <SmartLink
                 href={`/category/${post.category}`}
                 passHref
                 className='cursor-pointer font-light text-sm menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform'>
                 <i className='mr-1 far fa-folder' />
                 {post.category}
-              </Link>
+              </SmartLink>
 
               <TwikooCommentCount
                 className='text-sm hover:text-indigo-700 dark:hover:text-indigo-400'
@@ -87,13 +87,13 @@ export const BlogPostCardInfo = ({
         {/* 日期标签 */}
         <div className='text-gray-400 justify-between flex'>
           {/* 日期 */}
-          <Link
+          <SmartLink
             href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
             passHref
             className='font-light menu-link cursor-pointer text-sm leading-4 mr-3'>
             <i className='far fa-calendar-alt mr-1' />
             {post?.publishDay || post.lastEditedDay}
-          </Link>
+          </SmartLink>
 
           <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
             <div>
