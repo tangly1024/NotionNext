@@ -750,7 +750,12 @@ const Style = () => {
         fill: currentColor;
       }
       .dark .claude-activity-item-badge {
-        color: #9198a1;
+        background-color: rgb(33, 40, 48);
+        border-top-color: rgb(13, 17, 23);
+        border-right-color: rgb(13, 17, 23);
+        border-bottom-color: rgb(13, 17, 23);
+        border-left-color: rgb(13, 17, 23);
+        color: rgb(145, 152, 161);
       }
       .claude-activity-item-body {
         color: var(--claude-text-secondary);
@@ -780,11 +785,17 @@ const Style = () => {
         content: '';
       }
       .claude-activity-summary-toggle:hover {
-        background: rgb(208 215 222 / 0.18);
         color: rgb(68, 147, 248);
       }
+      .claude-activity-summary-toggle:hover .claude-activity-item-summary,
+      .claude-activity-summary-toggle:hover .claude-activity-summary-icons {
+        color: rgb(9, 105, 218);
+      }
       .dark .claude-activity-summary-toggle:hover {
-        background: rgb(48 54 61 / 0.45);
+        color: rgb(68, 147, 248);
+      }
+      .dark .claude-activity-summary-toggle:hover .claude-activity-item-summary,
+      .dark .claude-activity-summary-toggle:hover .claude-activity-summary-icons {
         color: rgb(68, 147, 248);
       }
       .claude-activity-summary-icons {
