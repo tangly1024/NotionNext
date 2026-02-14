@@ -52,3 +52,6 @@ package-lock.json
 # yarn.lock
 
 .notion-api-lock
+
+# claude theme local demo artifacts
+/themes/claude/.demo/
