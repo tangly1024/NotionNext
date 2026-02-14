@@ -397,88 +397,173 @@ const Style = () => {
 
       /* ========================================
        * CODE BLOCKS — Claude Docs style
-       * Clean rounded block, toolbar simplified
+       * Dark mode replication for Notion + Prism structure
        * ======================================== */
-      .notion-code {
-        background: var(--claude-code-bg) !important;
-        border: none !important;
+      #theme-claude .code-toolbar {
+        position: relative !important;
+        margin: 1.25rem 0 2rem !important;
+        padding: 0.125rem !important;
+        box-sizing: border-box !important;
         border-radius: 1rem !important;
+        border: 1px solid rgb(17 24 39 / 0.1) !important;
+        background: rgb(249 250 251) !important;
+        overflow: hidden !important;
+      }
+      .dark #theme-claude .code-toolbar {
+        box-sizing: border-box !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-top-left-radius: 16px !important;
+        border-top-right-radius: 16px !important;
+        border-bottom-left-radius: 16px !important;
+        border-bottom-right-radius: 16px !important;
+        background: rgb(255 255 255 / 0.05) !important;
+      }
+
+      /* Collapse wrapper from PrismMac: remove extra header/borders to avoid double frame */
+      #theme-claude .collapse-wrapper {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #theme-claude .collapse-wrapper > div {
+        box-sizing: border-box !important;
+        background-clip: border-box !important;
+        border-top: 1px solid rgb(212, 212, 212) !important;
+        border-right: 1px solid rgb(212, 212, 212) !important;
+        border-bottom: 1px solid rgb(212, 212, 212) !important;
+        border-left: 1px solid rgb(212, 212, 212) !important;
+        border-top-left-radius: 16px !important;
+        border-top-right-radius: 16px !important;
+        border-bottom-left-radius: 16px !important;
+        border-bottom-right-radius: 16px !important;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+      .dark #theme-claude .collapse-wrapper > div {
+        box-sizing: border-box !important;
+        background-clip: border-box !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-top-left-radius: 16px !important;
+        border-top-right-radius: 16px !important;
+        border-bottom-left-radius: 16px !important;
+        border-bottom-right-radius: 16px !important;
+      }
+      #theme-claude .collapse-wrapper .code-toolbar {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+      }
+      #theme-claude .collapse-wrapper > div > div.cursor-pointer.select-none {
+        display: none !important;
+      }
+      #theme-claude .collapse-wrapper > div > div.transition-transform {
+        visibility: visible !important;
+        height: auto !important;
+        border-top: none !important;
+      }
+
+      #theme-claude .code-toolbar > pre,
+      #theme-claude .notion-code {
+        margin: 0 !important;
+        border: 0 !important;
+        border-radius: 0.875rem !important;
+        background: #fff !important;
         font-family: var(--claude-mono-font) !important;
         font-size: 0.875rem !important;
         line-height: 1.5rem !important;
         padding: 0.875rem 1rem !important;
         position: relative !important;
         overflow-x: auto !important;
-        font-variant-ligatures: none;
+        font-variant-ligatures: none !important;
+      }
+      .dark #theme-claude .code-toolbar > pre,
+      .dark #theme-claude .notion-code {
+        background: #0B0C0E !important;
+        color: #D4D4D4 !important;
+      }
+
+      #theme-claude .code-toolbar > pre > code,
+      #theme-claude .notion-code > code {
+        display: block !important;
+        width: max-content !important;
+        min-width: 100% !important;
       }
 
       /* Hide Mac-style dots */
-      .pre-mac {
+      #theme-claude .pre-mac {
         display: none !important;
       }
 
-      /* PrismJS toolbar — position in top-right corner */
-      .code-toolbar > .toolbar {
+      /* Prism toolbar: keep only copy button and pin it to top-right */
+      #theme-claude .code-toolbar > .toolbar {
         position: absolute !important;
-        top: 0.5rem !important;
+        top: 0.75rem !important;
         right: 0.75rem !important;
         display: flex !important;
         align-items: center !important;
-        gap: 0.25rem !important;
-        opacity: 0 !important;
-        transition: opacity 0.15s ease !important;
-      }
-      .code-toolbar:hover > .toolbar {
+        gap: 0.375rem !important;
         opacity: 1 !important;
+        z-index: 5 !important;
       }
-
-      /* Hide language label — Claude Docs doesn't show it */
-      .code-toolbar > .toolbar > .toolbar-item:first-child {
+      #theme-claude .code-toolbar > .toolbar > .toolbar-item {
+        display: inline-flex !important;
+        align-items: center !important;
+      }
+      #theme-claude .code-toolbar > .toolbar > .toolbar-item > span {
+        display: none !important;
+      }
+      #theme-claude .code-toolbar .copy-to-clipboard-button {
+        height: 26px !important;
+        width: 26px !important;
+        min-height: 26px !important;
+        min-width: 26px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: none !important;
+        border-radius: 0.375rem !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        cursor: pointer !important;
+        font-size: 0 !important;
+        line-height: 0 !important;
+        position: relative !important;
+        color: transparent !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 16px 16px !important;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTgnIGhlaWdodD0nMTgnIHZpZXdCb3g9JzAgMCAxOCAxOCcgZmlsbD0nbm9uZScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTQuMjUgNS4yNUg3LjI1QzYuMTQ1NDMgNS4yNSA1LjI1IDYuMTQ1NDMgNS4yNSA3LjI1VjE0LjI1QzUuMjUgMTUuMzU0NiA2LjE0NTQzIDE2LjI1IDcuMjUgMTYuMjVIMTQuMjVDMTUuMzU0NiAxNi4yNSAxNi4yNSAxNS4zNTQ2IDE2LjI1IDE0LjI1VjcuMjVDMTYuMjUgNi4xNDU0MyAxNS4zNTQ2IDUuMjUgMTQuMjUgNS4yNVonIHN0cm9rZT0nIzlDQTNBRicgc3Ryb2tlLXdpZHRoPScxLjUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwYXRoIGQ9J00yLjgwMTAzIDExLjk5OEwxLjc3MjAzIDUuMDczOTdDMS42MTAwMyAzLjk4MDk3IDIuMzY0MDMgMi45NjM5NyAzLjQ1NjAzIDIuODAxOTdMMTAuMzggMS43NzI5N0MxMS4zMTMgMS42MzM5NyAxMi4xOSAyLjE2Mjk3IDEyLjUyOCAzLjAwMDk3JyBzdHJva2U9JyM5Q0EzQUYnIHN0cm9rZS13aWR0aD0nMS41JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnLz48L3N2Zz4=') !important;
+        transition: background-color 0.15s ease !important;
+      }
+      .dark #theme-claude .code-toolbar .copy-to-clipboard-button {
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTgnIGhlaWdodD0nMTgnIHZpZXdCb3g9JzAgMCAxOCAxOCcgZmlsbD0nbm9uZScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTQuMjUgNS4yNUg3LjI1QzYuMTQ1NDMgNS4yNSA1LjI1IDYuMTQ1NDMgNS4yNSA3LjI1VjE0LjI1QzUuMjUgMTUuMzU0NiA2LjE0NTQzIDE2LjI1IDcuMjUgMTYuMjVIMTQuMjVDMTUuMzU0NiAxNi4yNSAxNi4yNSAxNS4zNTQ2IDE2LjI1IDE0LjI1VjcuMjVDMTYuMjUgNi4xNDU0MyAxNS4zNTQ2IDUuMjUgMTQuMjUgNS4yNVonIHN0cm9rZT0nI0ZGRkZGRjY2JyBzdHJva2Utd2lkdGg9JzEuNScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJy8+PHBhdGggZD0nTTIuODAxMDMgMTEuOTk4TDEuNzcyMDMgNS4wNzM5N0MxLjYxMDAzIDMuOTgwOTcgMi4zNjQwMyAyLjk2Mzk3IDMuNDU2MDMgMi44MDE5N0wxMC4zOCAxLjc3Mjk3QzExLjMxMyAxLjYzMzk3IDEyLjE5IDIuMTYyOTcgMTIuNTI4IDMuMDAwOTcnIHN0cm9rZT0nI0ZGRkZGRjY2JyBzdHJva2Utd2lkdGg9JzEuNScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJy8+PC9zdmc+') !important;
+      }
+      #theme-claude .code-toolbar .copy-to-clipboard-button:hover {
+        background-color: rgb(0 0 0 / 0.04) !important;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTgnIGhlaWdodD0nMTgnIHZpZXdCb3g9JzAgMCAxOCAxOCcgZmlsbD0nbm9uZScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTQuMjUgNS4yNUg3LjI1QzYuMTQ1NDMgNS4yNSA1LjI1IDYuMTQ1NDMgNS4yNSA3LjI1VjE0LjI1QzUuMjUgMTUuMzU0NiA2LjE0NTQzIDE2LjI1IDcuMjUgMTYuMjVIMTQuMjVDMTUuMzU0NiAxNi4yNSAxNi4yNSAxNS4zNTQ2IDE2LjI1IDE0LjI1VjcuMjVDMTYuMjUgNi4xNDU0MyAxNS4zNTQ2IDUuMjUgMTQuMjUgNS4yNVonIHN0cm9rZT0nIzZCNzI4MCcgc3Ryb2tlLXdpZHRoPScxLjUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwYXRoIGQ9J00yLjgwMTAzIDExLjk5OEwxLjc3MjAzIDUuMDczOTdDMS42MTAwMyAzLjk4MDk3IDIuMzY0MDMgMi45NjM5NyAzLjQ1NjAzIDIuODAxOTdMMTAuMzggMS43NzI5N0MxMS4zMTMgMS42MzM5NyAxMi4xOSAyLjE2Mjk3IDEyLjUyOCAzLjAwMDk3JyBzdHJva2U9JyM2QjcyODAnIHN0cm9rZS13aWR0aD0nMS41JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnLz48L3N2Zz4=') !important;
+      }
+      .dark #theme-claude .code-toolbar .copy-to-clipboard-button:hover {
+        background-color: rgb(255 255 255 / 0.06) !important;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTgnIGhlaWdodD0nMTgnIHZpZXdCb3g9JzAgMCAxOCAxOCcgZmlsbD0nbm9uZScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTQuMjUgNS4yNUg3LjI1QzYuMTQ1NDMgNS4yNSA1LjI1IDYuMTQ1NDMgNS4yNSA3LjI1VjE0LjI1QzUuMjUgMTUuMzU0NiA2LjE0NTQzIDE2LjI1IDcuMjUgMTYuMjVIMTQuMjVDMTUuMzU0NiAxNi4yNSAxNi4yNSAxNS4zNTQ2IDE2LjI1IDE0LjI1VjcuMjVDMTYuMjUgNi4xNDU0MyAxNS4zNTQ2IDUuMjUgMTQuMjUgNS4yNVonIHN0cm9rZT0nI0ZGRkZGRjk5JyBzdHJva2Utd2lkdGg9JzEuNScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJy8+PHBhdGggZD0nTTIuODAxMDMgMTEuOTk4TDEuNzcyMDMgNS4wNzM5N0MxLjYxMDAzIDMuOTgwOTcgMi4zNjQwMyAyLjk2Mzk3IDMuNDU2MDMgMi44MDE5N0wxMC4zOCAxLjc3Mjk3QzExLjMxMyAxLjYzMzk3IDEyLjE5IDIuMTYyOTcgMTIuNTI4IDMuMDAwOTcnIHN0cm9rZT0nI0ZGRkZGRjk5JyBzdHJva2Utd2lkdGg9JzEuNScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJy8+PC9zdmc+') !important;
+      }
+      #theme-claude .code-toolbar .copy-to-clipboard-button span {
         display: none !important;
       }
 
-      /* Toolbar buttons (copy) — small, clean icon */
-      .code-toolbar > .toolbar > .toolbar-item > button,
-      .code-toolbar > .toolbar > .toolbar-item > span {
-        background: none !important;
-        border: none !important;
-        box-shadow: none !important;
-        color: var(--claude-text-tertiary) !important;
-        font-size: 0.75rem !important;
-        padding: 0.25rem !important;
-        cursor: pointer !important;
-        opacity: 0.7 !important;
-        transition: opacity 0.15s ease, color 0.15s ease !important;
-      }
-      .code-toolbar > .toolbar > .toolbar-item > button:hover,
-      .code-toolbar > .toolbar > .toolbar-item > span:hover {
-        color: var(--claude-text-primary) !important;
-        opacity: 1 !important;
-      }
-
-      /* Notion's own copy button — also simplify */
-      .notion-code .notion-code-copy-button,
-      .notion-code .notion-code-copy {
-        position: absolute !important;
-        top: 0.5rem !important;
-        right: 0.75rem !important;
-        background: none !important;
-        border: none !important;
-        color: var(--claude-text-tertiary) !important;
-        opacity: 0 !important;
-        transition: opacity 0.15s ease !important;
-        cursor: pointer !important;
-        font-size: 0.75rem !important;
-        z-index: 2 !important;
-      }
-      .notion-code:hover .notion-code-copy-button,
-      .notion-code:hover .notion-code-copy {
-        opacity: 0.7 !important;
-      }
-      .notion-code .notion-code-copy-button:hover,
-      .notion-code .notion-code-copy:hover {
-        opacity: 1 !important;
-        color: var(--claude-text-primary) !important;
+      /* Remove Notion copy button to avoid duplicates */
+      #theme-claude .notion-code .notion-code-copy,
+      #theme-claude .notion-code .notion-code-copy-button {
+        display: none !important;
       }
 
       /* Inline code */
