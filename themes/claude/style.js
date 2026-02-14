@@ -495,30 +495,86 @@ const Style = () => {
         color: #fff !important;
       }
 
-      /* Code block scrollbar — thin, minimal */
-      .notion-code::-webkit-scrollbar,
-      pre::-webkit-scrollbar {
-        height: 4px; width: 4px;
+      /* Code block scrollbar — mirror Claude docs utility behavior */
+      #theme-claude .notion-code,
+      #theme-claude .code-toolbar pre,
+      #theme-claude pre[class*='language-'] {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        --scrollbar-track: transparent;
+        --scrollbar-corner: transparent;
+        --scrollbar-track-radius: 0.25rem;
+        --scrollbar-corner-radius: 0.25rem;
+        --scrollbar-thumb-radius: var(--rounded, 0.25rem);
+        --scrollbar-thumb: rgb(0 0 0 / 0.15);
+        --scrollbar-thumb-hover: rgb(0 0 0 / 0.2);
+        --scrollbar-thumb-active: rgb(0 0 0 / 0.2);
+        /* Use auto so custom WebKit thickness can take effect reliably */
+        scrollbar-width: auto !important;
+        scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track) !important;
       }
-      .notion-code::-webkit-scrollbar-track,
-      pre::-webkit-scrollbar-track {
-        background: transparent;
+      .dark #theme-claude .notion-code,
+      .dark #theme-claude .code-toolbar pre,
+      .dark #theme-claude pre[class*='language-'] {
+        --scrollbar-thumb: rgb(255 255 255 / 0.2) !important;
+        --scrollbar-thumb-hover: rgb(255 255 255 / 0.25) !important;
+        --scrollbar-thumb-active: rgb(255 255 255 / 0.25) !important;
+        scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track) !important;
       }
-      .notion-code::-webkit-scrollbar-thumb,
-      pre::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 2px;
+      #theme-claude .notion-code:hover,
+      #theme-claude .code-toolbar pre:hover,
+      #theme-claude pre[class*='language-']:hover {
+        --scrollbar-thumb: var(--scrollbar-thumb-hover) !important;
       }
-      .dark .notion-code::-webkit-scrollbar-thumb,
-      .dark pre::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.12);
+      #theme-claude .notion-code:active,
+      #theme-claude .code-toolbar pre:active,
+      #theme-claude pre[class*='language-']:active {
+        --scrollbar-thumb: var(--scrollbar-thumb-active) !important;
       }
-      .notion-code, pre {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+      #theme-claude .notion-code::-webkit-scrollbar,
+      #theme-claude .code-toolbar pre::-webkit-scrollbar,
+      #theme-claude pre[class*='language-']::-webkit-scrollbar {
+        display: block !important;
+        width: 8px !important;
+        height: 8px !important;
       }
-      .dark .notion-code, .dark pre {
-        scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+      #theme-claude .notion-code::-webkit-scrollbar:horizontal,
+      #theme-claude .code-toolbar pre::-webkit-scrollbar:horizontal,
+      #theme-claude pre[class*='language-']::-webkit-scrollbar:horizontal {
+        height: 8px !important;
+      }
+      #theme-claude .notion-code::-webkit-scrollbar:vertical,
+      #theme-claude .code-toolbar pre::-webkit-scrollbar:vertical,
+      #theme-claude pre[class*='language-']::-webkit-scrollbar:vertical {
+        width: 8px !important;
+      }
+      #theme-claude .notion-code::-webkit-scrollbar-track,
+      #theme-claude .code-toolbar pre::-webkit-scrollbar-track,
+      #theme-claude pre[class*='language-']::-webkit-scrollbar-track {
+        background-color: var(--scrollbar-track) !important;
+        border-radius: var(--scrollbar-track-radius) !important;
+      }
+      #theme-claude .notion-code::-webkit-scrollbar-corner,
+      #theme-claude .code-toolbar pre::-webkit-scrollbar-corner,
+      #theme-claude pre[class*='language-']::-webkit-scrollbar-corner {
+        background-color: var(--scrollbar-corner) !important;
+        border-radius: var(--scrollbar-corner-radius) !important;
+      }
+      #theme-claude .notion-code::-webkit-scrollbar-thumb,
+      #theme-claude .code-toolbar pre::-webkit-scrollbar-thumb,
+      #theme-claude pre[class*='language-']::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb) !important;
+        border-radius: var(--scrollbar-thumb-radius) !important;
+      }
+
+      /* Force horizontal scrolling instead of wrapping for long code lines */
+      #theme-claude .notion-code,
+      #theme-claude .code-toolbar pre,
+      #theme-claude pre[class*='language-'],
+      #theme-claude pre[class*='language-'] code {
+        white-space: pre !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
       }
 
       /* ========================================
