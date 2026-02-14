@@ -63,8 +63,14 @@ const Style = () => {
         --claude-sidebar-active-text: #DA7756;
         --claude-code-bg: #FFFFFF;
         --claude-code-border: rgba(0, 0, 0, 0.08);
+        --claude-code-shell-bg: rgb(243 243 243);
+        --claude-code-shell-border: rgba(10, 10, 10, 0.1);
+        --claude-code-shell-text: rgb(10 10 10);
         --claude-link: #DA7756;
         --claude-blockquote-border: #E5E5E0;
+        --claude-callout-tip-bg: #f0fdf4;
+        --claude-callout-tip-border: #bbf7d0;
+        --claude-callout-tip-text: #166534;
         --claude-heading-font: 'Anthropic Serif Display', Georgia, 'Times New Roman', serif;
         --claude-body-font: 'Anthropic Sans Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         --claude-mono-font: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
@@ -85,9 +91,15 @@ const Style = () => {
         --claude-sidebar-active-text: #E08A6E;
         --claude-code-bg: #0B0C0E;
         --claude-code-border: rgba(255, 255, 255, 0.08);
+        --claude-code-shell-bg: rgb(255 255 255 / 0.05);
+        --claude-code-shell-border: rgba(255, 255, 255, 0.1);
+        --claude-code-shell-text: #D4D4D4;
         --claude-link: #E08A6E;
         --claude-dark-quote: rgb(134, 239, 172);
         --claude-blockquote-border: #333330;
+        --claude-callout-tip-bg: rgb(22 163 74 / 0.2);
+        --claude-callout-tip-border: rgb(20 83 45);
+        --claude-callout-tip-text: rgb(134 239 172);
       }
 
       /* ========================================
@@ -159,9 +171,9 @@ const Style = () => {
       }
       .dark #article-wrapper .notion-quote .notion-link,
       .dark #article-wrapper .notion-quote a {
-        color: var(--claude-dark-quote) !important;
-        text-decoration-color: var(--claude-dark-quote) !important;
-        border-bottom-color: var(--claude-dark-quote) !important;
+        color: var(--claude-callout-tip-text) !important;
+        text-decoration-color: var(--claude-callout-tip-text) !important;
+        border-bottom-color: var(--claude-callout-tip-text) !important;
       }
 
       /* ========================================
@@ -276,29 +288,85 @@ const Style = () => {
       /* Blockquotes — Claude Docs callout style */
       .notion-quote {
         border-left: none !important;
-        border: 1px solid #bbf7d0 !important;
+        border: 1px solid var(--claude-callout-tip-border) !important;
         border-radius: 1rem !important;
-        background: #f0fdf4 !important;
+        background: var(--claude-callout-tip-bg) !important;
         padding: 1rem 1.25rem !important;
-        color: #166534 !important;
+        color: var(--claude-callout-tip-text) !important;
         font-style: normal !important;
         font-size: 0.9375rem !important;
         line-height: 1.7 !important;
       }
       .dark .notion-quote {
-        border: none !important;
-        background: rgb(22 163 74 / 0.2) !important;
-        color: var(--claude-dark-quote) !important;
+        border: 1px solid var(--claude-callout-tip-border) !important;
+        border-radius: 16px !important;
+        background: var(--claude-callout-tip-bg) !important;
+        color: var(--claude-callout-tip-text) !important;
+        padding: 16px 20px !important;
+        margin: 16px 0 !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        line-height: 1.75rem !important;
+        font-size: 1rem !important;
       }
       /* Links inside quote */
       .notion-quote a {
-        color: #166534 !important;
+        color: var(--claude-callout-tip-text) !important;
         font-weight: 600 !important;
         text-decoration: underline !important;
         text-underline-offset: 3px !important;
       }
       .dark .notion-quote a {
-        color: var(--claude-dark-quote) !important;
+        color: var(--claude-callout-tip-text) !important;
+      }
+
+      /* Notion callout block (icon + content) — align with Claude dark tip style */
+      .dark #theme-claude .notion-callout {
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        margin: 16px 0 !important;
+        padding: 16px 20px !important;
+        border: 1px solid var(--claude-callout-tip-border) !important;
+        border-radius: 16px !important;
+        background: var(--claude-callout-tip-bg) !important;
+        color: var(--claude-callout-tip-text) !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        line-height: 1.75rem !important;
+        font-size: 1rem !important;
+      }
+      .dark #theme-claude .notion-callout .notion-callout-text {
+        margin-left: 0 !important;
+        min-width: 0;
+        flex: 1 1 auto;
+        color: inherit !important;
+      }
+      .dark #theme-claude .notion-callout .notion-callout-text .notion-text {
+        color: inherit !important;
+        line-height: 1.75rem !important;
+      }
+      .dark #theme-claude .notion-callout .notion-page-icon {
+        width: 0.875rem !important;
+        min-width: 0.875rem !important;
+        height: auto !important;
+        margin-top: 1px !important;
+        color: var(--claude-callout-tip-text) !important;
+      }
+      .dark #theme-claude .notion-callout svg.notion-page-icon {
+        display: block !important;
+        width: 0.875rem !important;
+        height: auto !important;
+        color: var(--claude-callout-tip-text) !important;
+        fill: currentColor !important;
+      }
+      .dark #theme-claude .notion-callout a,
+      .dark #theme-claude .notion-callout strong,
+      .dark #theme-claude .notion-callout b {
+        color: inherit !important;
+      }
+      .dark #theme-claude .notion-callout a {
+        border-bottom-color: currentColor !important;
       }
 
       /* Horizontal rule */
@@ -413,56 +481,76 @@ const Style = () => {
         position: relative !important;
         margin: 1.25rem 0 2rem !important;
         padding: 0.125rem !important;
+        display: block !important;
         box-sizing: border-box !important;
-        border-radius: 1rem !important;
-        border: 1px solid rgb(17 24 39 / 0.1) !important;
-        background: rgb(249 250 251) !important;
+        border-radius: 16px !important;
+        border-top: 1px solid rgba(10, 10, 10, 0.1) !important;
+        border-right: 1px solid rgba(10, 10, 10, 0.1) !important;
+        border-bottom: 1px solid rgba(10, 10, 10, 0.1) !important;
+        border-left: 1px solid rgba(10, 10, 10, 0.1) !important;
+        background: var(--claude-code-shell-bg) !important;
+        color: var(--claude-code-shell-text) !important;
+        font-family: var(--claude-body-font) !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        line-height: 1.75rem !important;
         overflow: hidden !important;
+        box-shadow: none !important;
+        transition: none !important;
       }
       .dark #theme-claude .code-toolbar {
         box-sizing: border-box !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-top: 1px solid var(--claude-code-shell-border) !important;
+        border-right: 1px solid var(--claude-code-shell-border) !important;
+        border-bottom: 1px solid var(--claude-code-shell-border) !important;
+        border-left: 1px solid var(--claude-code-shell-border) !important;
         border-top-left-radius: 16px !important;
         border-top-right-radius: 16px !important;
         border-bottom-left-radius: 16px !important;
         border-bottom-right-radius: 16px !important;
-        background: rgb(255 255 255 / 0.05) !important;
+        background: var(--claude-code-shell-bg) !important;
+        color: var(--claude-code-shell-text) !important;
       }
 
       /* Collapse wrapper from PrismMac: remove extra header/borders to avoid double frame */
       #theme-claude .collapse-wrapper {
         width: 100% !important;
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 1.25rem 0 2rem !important;
       }
       #theme-claude .collapse-wrapper > div {
         box-sizing: border-box !important;
         background-clip: border-box !important;
-        border-top: 1px solid rgb(212, 212, 212) !important;
-        border-right: 1px solid rgb(212, 212, 212) !important;
-        border-bottom: 1px solid rgb(212, 212, 212) !important;
-        border-left: 1px solid rgb(212, 212, 212) !important;
+        border-top: 1px solid rgba(10, 10, 10, 0.1) !important;
+        border-right: 1px solid rgba(10, 10, 10, 0.1) !important;
+        border-bottom: 1px solid rgba(10, 10, 10, 0.1) !important;
+        border-left: 1px solid rgba(10, 10, 10, 0.1) !important;
         border-top-left-radius: 16px !important;
         border-top-right-radius: 16px !important;
         border-bottom-left-radius: 16px !important;
         border-bottom-right-radius: 16px !important;
-        background: transparent !important;
-        padding: 0 !important;
+        background: var(--claude-code-shell-bg) !important;
+        color: var(--claude-code-shell-text) !important;
+        font-family: var(--claude-body-font) !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        line-height: 1.75rem !important;
+        padding: 0.125rem !important;
+        box-shadow: none !important;
       }
       .dark #theme-claude .collapse-wrapper > div {
         box-sizing: border-box !important;
         background-clip: border-box !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-top: 1px solid var(--claude-code-shell-border) !important;
+        border-right: 1px solid var(--claude-code-shell-border) !important;
+        border-bottom: 1px solid var(--claude-code-shell-border) !important;
+        border-left: 1px solid var(--claude-code-shell-border) !important;
         border-top-left-radius: 16px !important;
         border-top-right-radius: 16px !important;
         border-bottom-left-radius: 16px !important;
         border-bottom-right-radius: 16px !important;
+        background: var(--claude-code-shell-bg) !important;
+        color: var(--claude-code-shell-text) !important;
       }
       #theme-claude .collapse-wrapper .code-toolbar {
         margin: 0 !important;
@@ -493,6 +581,7 @@ const Style = () => {
         position: relative !important;
         overflow-x: auto !important;
         font-variant-ligatures: none !important;
+        box-shadow: none !important;
       }
       .dark #theme-claude .code-toolbar > pre,
       .dark #theme-claude .notion-code {
@@ -504,6 +593,21 @@ const Style = () => {
         display: block !important;
         width: max-content !important;
         min-width: 100% !important;
+        text-shadow: none !important;
+      }
+
+      /* Remove residual shadow from Prism themes and global notion.css */
+      #theme-claude .code-toolbar,
+      #theme-claude .code-toolbar pre,
+      #theme-claude pre[class*='language-'],
+      #theme-claude .collapse-wrapper > div {
+        box-shadow: none !important;
+      }
+      #theme-claude pre[class*='language-']::before,
+      #theme-claude pre[class*='language-']::after {
+        content: none !important;
+        display: none !important;
+        box-shadow: none !important;
       }
 
       /* Hide Mac-style dots */
