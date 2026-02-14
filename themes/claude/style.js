@@ -52,6 +52,7 @@ const Style = () => {
         --claude-bg: #FAFAF7;
         --claude-bg-secondary: #F3F3EE;
         --claude-text-primary: #1A1A1A;
+        --claude-text-strong: #1A1A1A;
         --claude-text-secondary: #5C5C5C;
         --claude-text-tertiary: #8C8C8C;
         --claude-border: #E5E5E0;
@@ -73,6 +74,7 @@ const Style = () => {
         --claude-bg: #1A1915;
         --claude-bg-secondary: #242320;
         --claude-text-primary: #9E9E9E;
+        --claude-text-strong: #FFFFFF;
         --claude-text-secondary: #A0A09C;
         --claude-text-tertiary: #6E6E6A;
         --claude-border: #333330;
@@ -148,7 +150,7 @@ const Style = () => {
         text-decoration-color: var(--claude-link);
       }
       .dark #article-wrapper .notion-link {
-        color: #fff !important;
+        color: var(--claude-text-strong) !important;
         text-decoration-color: var(--claude-accent) !important;
         opacity: 1 !important;
       }
@@ -250,17 +252,25 @@ const Style = () => {
         padding-left: 0 !important;
         padding-right: 0 !important;
       }
+      /* Prevent first-paint layout shift: NotionPage removes these nodes after mount */
+      #theme-claude #notion-article .notion-collection-page-properties {
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+      }
 
       /* Dark mode — headings white */
       .dark .notion-h1,
       .dark .notion-h2,
       .dark .notion-h3 {
-        color: #fff !important;
+        color: var(--claude-text-strong) !important;
       }
       /* Dark mode — bold text white */
       .dark #article-wrapper b,
       .dark #article-wrapper strong {
-        color: #fff !important;
+        color: var(--claude-text-strong) !important;
       }
 
       /* Blockquotes — Claude Docs callout style */
@@ -379,7 +389,7 @@ const Style = () => {
         background: transparent !important;
       }
       .dark .notion-simple-table tr:first-child td {
-        color: #fff !important;
+        color: var(--claude-text-strong) !important;
         background: transparent !important;
       }
       /* First column — bold */
@@ -388,7 +398,7 @@ const Style = () => {
         white-space: nowrap !important;
       }
       .dark .notion-simple-table td:first-child {
-        color: #fff !important;
+        color: var(--claude-text-strong) !important;
       }
       /* Last row — no bottom border */
       .notion-simple-table tr:last-child td {
@@ -475,7 +485,7 @@ const Style = () => {
         margin: 0 !important;
         border: 0 !important;
         border-radius: 0.875rem !important;
-        background: #fff !important;
+        background: var(--claude-code-bg) !important;
         font-family: var(--claude-mono-font) !important;
         font-size: 0.875rem !important;
         line-height: 1.5rem !important;
@@ -486,7 +496,6 @@ const Style = () => {
       }
       .dark #theme-claude .code-toolbar > pre,
       .dark #theme-claude .notion-code {
-        background: #0B0C0E !important;
         color: #D4D4D4 !important;
       }
 
@@ -577,7 +586,7 @@ const Style = () => {
         font-family: var(--claude-mono-font) !important;
       }
       .dark .notion-inline-code {
-        color: #fff !important;
+        color: var(--claude-text-strong) !important;
       }
 
       /* Code block scrollbar — mirror Claude docs utility behavior */
@@ -760,6 +769,12 @@ const Style = () => {
         font-weight: 400;
         letter-spacing: -0.02em;
         color: var(--claude-text-primary);
+      }
+      .dark .claude-site-title,
+      .dark .claude-site-subtitle,
+      .dark #blog-name,
+      .dark #blog-name-en {
+        color: var(--claude-text-strong) !important;
       }
 
       /* ========================================
