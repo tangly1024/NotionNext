@@ -465,29 +465,57 @@ export default function ProfileHome(props) {
                             </svg>
                           </span>
                           <div className='claude-activity-item-body'>
-                            <div className='claude-activity-item-summary'>
-                              Created {group.commitSummary.commitCount}{' '}
-                              {pluralize(group.commitSummary.commitCount, 'commit')} in{' '}
-                              {group.commitSummary.repositoryCount}{' '}
-                              {pluralize(
-                                group.commitSummary.repositoryCount,
-                                'repository',
-                                'repositories'
-                              )}
-                            </div>
-                            <ul className='claude-activity-sublist'>
-                              {group.commitSummary.repositories.map(repo => (
-                                <li
-                                  key={`${group.groupKey}-update-${repo.id}`}
-                                  className='claude-activity-subitem claude-activity-subitem-commit'>
-                                  <div className='claude-activity-subitem-main'>
-                                    <SmartLink href={repo.href} className='claude-activity-link'>
-                                      {repo.title}
-                                    </SmartLink>
-                                  </div>
-                                </li>
-                              ))}
-                            </ul>
+                            <details className='claude-activity-details' open>
+                              <summary className='claude-activity-summary-toggle'>
+                                <span className='claude-activity-item-summary'>
+                                  Created {group.commitSummary.commitCount}{' '}
+                                  {pluralize(group.commitSummary.commitCount, 'commit')} in{' '}
+                                  {group.commitSummary.repositoryCount}{' '}
+                                  {pluralize(
+                                    group.commitSummary.repositoryCount,
+                                    'repository',
+                                    'repositories'
+                                  )}
+                                </span>
+                                <span className='claude-activity-summary-icons'>
+                                  <span className='Details-content--open'>
+                                    <svg
+                                      aria-label='Collapse'
+                                      className='claude-activity-summary-icon'
+                                      viewBox='0 0 16 16'
+                                      width='16'
+                                      height='16'
+                                      aria-hidden='true'>
+                                      <path d='M10.896 2H8.75V.75a.75.75 0 0 0-1.5 0V2H5.104a.25.25 0 0 0-.177.427l2.896 2.896a.25.25 0 0 0 .354 0l2.896-2.896A.25.25 0 0 0 10.896 2ZM8.75 15.25a.75.75 0 0 1-1.5 0V14H5.104a.25.25 0 0 1-.177-.427l2.896-2.896a.25.25 0 0 1 .354 0l2.896 2.896a.25.25 0 0 1-.177.427H8.75v1.25Zm-6.5-6.5a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM6 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 6 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM12 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 12 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5Z' />
+                                    </svg>
+                                  </span>
+                                  <span className='Details-content--closed'>
+                                    <svg
+                                      aria-label='Expand'
+                                      className='claude-activity-summary-icon'
+                                      viewBox='0 0 16 16'
+                                      width='16'
+                                      height='16'
+                                      aria-hidden='true'>
+                                      <path d='m8.177.677 2.896 2.896a.25.25 0 0 1-.177.427H8.75v1.25a.75.75 0 0 1-1.5 0V4H5.104a.25.25 0 0 1-.177-.427L7.823.677a.25.25 0 0 1 .354 0ZM7.25 10.75a.75.75 0 0 1 1.5 0V12h2.146a.25.25 0 0 1 .177.427l-2.896 2.896a.25.25 0 0 1-.354 0l-2.896-2.896A.25.25 0 0 1 5.104 12H7.25v-1.25Zm-5-2a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM6 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 6 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM12 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 12 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5Z' />
+                                    </svg>
+                                  </span>
+                                </span>
+                              </summary>
+                              <ul className='claude-activity-sublist'>
+                                {group.commitSummary.repositories.map(repo => (
+                                  <li
+                                    key={`${group.groupKey}-update-${repo.id}`}
+                                    className='claude-activity-subitem claude-activity-subitem-commit'>
+                                    <div className='claude-activity-subitem-main'>
+                                      <SmartLink href={repo.href} className='claude-activity-link'>
+                                        {repo.title}
+                                      </SmartLink>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
+                            </details>
                           </div>
                         </li>
                       )}
@@ -506,39 +534,67 @@ export default function ProfileHome(props) {
                             </svg>
                           </span>
                           <div className='claude-activity-item-body'>
-                            <div className='claude-activity-item-summary'>
-                              Created {group.createSummary.repositoryCount}{' '}
-                              {pluralize(
-                                group.createSummary.repositoryCount,
-                                'repository',
-                                'repositories'
-                              )}
-                            </div>
-                            <ul className='claude-activity-sublist'>
-                              {group.createSummary.repositories.map(repo => (
-                                <li
-                                  key={`${group.groupKey}-create-${repo.id}`}
-                                  className='claude-activity-subitem claude-activity-subitem-create'>
-                                  <div className='claude-activity-subitem-main'>
+                            <details className='claude-activity-details' open>
+                              <summary className='claude-activity-summary-toggle'>
+                                <span className='claude-activity-item-summary'>
+                                  Created {group.createSummary.repositoryCount}{' '}
+                                  {pluralize(
+                                    group.createSummary.repositoryCount,
+                                    'repository',
+                                    'repositories'
+                                  )}
+                                </span>
+                                <span className='claude-activity-summary-icons'>
+                                  <span className='Details-content--open'>
                                     <svg
-                                      aria-hidden='true'
-                                      height='16'
+                                      aria-label='Collapse'
+                                      className='claude-activity-summary-icon'
                                       viewBox='0 0 16 16'
-                                      version='1.1'
                                       width='16'
-                                      className='claude-activity-subitem-icon'>
-                                      <path d='M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z' />
+                                      height='16'
+                                      aria-hidden='true'>
+                                      <path d='M10.896 2H8.75V.75a.75.75 0 0 0-1.5 0V2H5.104a.25.25 0 0 0-.177.427l2.896 2.896a.25.25 0 0 0 .354 0l2.896-2.896A.25.25 0 0 0 10.896 2ZM8.75 15.25a.75.75 0 0 1-1.5 0V14H5.104a.25.25 0 0 1-.177-.427l2.896-2.896a.25.25 0 0 1 .354 0l2.896 2.896a.25.25 0 0 1-.177.427H8.75v1.25Zm-6.5-6.5a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM6 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 6 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM12 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 12 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5Z' />
                                     </svg>
-                                    <SmartLink href={repo.href} className='claude-activity-link'>
-                                      {repo.title}
-                                    </SmartLink>
-                                  </div>
-                                  <time className='claude-activity-date'>
-                                    {formatTimelineDate(repo.createdAt)}
-                                  </time>
-                                </li>
-                              ))}
-                            </ul>
+                                  </span>
+                                  <span className='Details-content--closed'>
+                                    <svg
+                                      aria-label='Expand'
+                                      className='claude-activity-summary-icon'
+                                      viewBox='0 0 16 16'
+                                      width='16'
+                                      height='16'
+                                      aria-hidden='true'>
+                                      <path d='m8.177.677 2.896 2.896a.25.25 0 0 1-.177.427H8.75v1.25a.75.75 0 0 1-1.5 0V4H5.104a.25.25 0 0 1-.177-.427L7.823.677a.25.25 0 0 1 .354 0ZM7.25 10.75a.75.75 0 0 1 1.5 0V12h2.146a.25.25 0 0 1 .177.427l-2.896 2.896a.25.25 0 0 1-.354 0l-2.896-2.896A.25.25 0 0 1 5.104 12H7.25v-1.25Zm-5-2a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM6 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 6 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM12 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 12 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5Z' />
+                                    </svg>
+                                  </span>
+                                </span>
+                              </summary>
+                              <ul className='claude-activity-sublist'>
+                                {group.createSummary.repositories.map(repo => (
+                                  <li
+                                    key={`${group.groupKey}-create-${repo.id}`}
+                                    className='claude-activity-subitem claude-activity-subitem-create'>
+                                    <div className='claude-activity-subitem-main'>
+                                      <svg
+                                        aria-hidden='true'
+                                        height='16'
+                                        viewBox='0 0 16 16'
+                                        version='1.1'
+                                        width='16'
+                                        className='claude-activity-subitem-icon'>
+                                        <path d='M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z' />
+                                      </svg>
+                                      <SmartLink href={repo.href} className='claude-activity-link'>
+                                        {repo.title}
+                                      </SmartLink>
+                                    </div>
+                                    <time className='claude-activity-date'>
+                                      {formatTimelineDate(repo.createdAt)}
+                                    </time>
+                                  </li>
+                                ))}
+                              </ul>
+                            </details>
                           </div>
                         </li>
                       )}

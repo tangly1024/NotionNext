@@ -49,7 +49,7 @@ const Style = () => {
        * CSS VARIABLES
        * ======================================== */
       :root {
-        --claude-bg: #FAFAF7;
+        --claude-bg: #fff;
         --claude-bg-secondary: #F3F3EE;
         --claude-text-primary: #1A1A1A;
         --claude-text-strong: #1A1A1A;
@@ -68,7 +68,7 @@ const Style = () => {
         --claude-profile-divider-border: rgb(209 217 224 / 0.7);
         --claude-profile-contact-hover: #24292F;
         --claude-home-card-bg: #F6F8FA;
-        --claude-home-card-border: rgb(209 217 224 / 0.7);
+        --claude-home-card-border: rgb(209, 217, 224);
         --claude-home-link: #0969DA;
         --claude-contrib-l0: #EFF2F5;
         --claude-contrib-l1: #ACEEBB;
@@ -222,7 +222,6 @@ const Style = () => {
         background-color: var(--claude-bg);
         color: var(--claude-text-primary);
       }
-
       /* ========================================
        * LEFT SIDEBAR — safe to transition (fixed width, no reflow)
        * ======================================== */
@@ -636,47 +635,43 @@ const Style = () => {
         margin-top: 1.5rem;
       }
       .claude-activity-group-title {
-        position: relative;
         box-sizing: border-box;
         color: rgb(31 35 40);
         color-scheme: light;
-        display: flex;
-        align-items: center;
+        display: block;
         font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-        font-size: var(--h6-size, 12px);
+        font-size: var(--h6-size, 12px) !important;
         font-weight: 600;
         height: 14px;
-        line-height: 14px;
+        line-height: 1.5;
         overflow-wrap: break-word;
-        padding: 0;
+        padding-top: 4px;
+        padding-right: 8px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid rgb(209, 217, 224);
         text-size-adjust: 100%;
-        margin-bottom: 0.8rem;
-      }
-      .claude-activity-group-title::after {
-        content: '';
-        position: absolute;
-        inset: auto 0 0 0;
-        border-bottom: 1px solid rgb(209 217 224);
+        unicode-bidi: isolate;
+        margin-top: 0;
+        margin-right: 0;
+        margin-bottom: 16px;
+        margin-left: 0;
       }
       .claude-activity-group-title-month {
-        position: relative;
-        z-index: 1;
         display: inline-block;
+        line-height: 1.5;
         padding-left: 0.5rem;
         padding-right: 0.2rem;
         background: var(--claude-bg);
       }
       .claude-activity-group-title-year {
-        position: relative;
-        z-index: 1;
-        color: rgb(89 99 110);
+        color: rgb(89, 99, 110);
         color-scheme: light;
         display: inline-block;
         background: var(--claude-bg);
         font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-        font-size: var(--h6-size, 12px);
+        font-size: var(--h6-size, 12px) !important;
         font-weight: 600;
-        line-height: 14px;
+        line-height: 1.5;
         overflow-wrap: break-word;
         text-size-adjust: 100%;
         margin-left: 0.1rem;
@@ -686,9 +681,7 @@ const Style = () => {
         color: rgb(240 246 252);
         color-scheme: dark;
       }
-      .dark .claude-activity-group-title::after {
-        border-bottom-color: rgb(48 54 61);
-      }
+      .dark .claude-activity-group-title { border-bottom-color: rgb(48 54 61); }
       .dark .claude-activity-group-title-year {
         color: #9198a1;
       }
@@ -705,7 +698,7 @@ const Style = () => {
         position: relative;
       }
       .claude-activity-item::before {
-        background-color: rgb(209 217 224 / 0.7);
+        background-color: rgba(209, 217, 224, 0.7);
         content: '';
         width: 0.125rem;
         display: block;
@@ -718,15 +711,32 @@ const Style = () => {
         background-color: rgb(48 54 61 / 0.7);
       }
       .claude-activity-item-badge {
-        background-color: var(--claude-bg-secondary);
-        border: 2px solid var(--claude-bg);
+        box-sizing: border-box;
+        background-color: rgb(246, 248, 250);
+        border-top: 2px solid rgb(255, 255, 255);
+        border-right: 2px solid rgb(255, 255, 255);
+        border-bottom-color: rgb(255, 255, 255);
+        border-bottom-style: solid;
+        border-bottom-width: 2px;
+        border-left: 2px solid rgb(255, 255, 255);
         color: rgb(89 99 110);
-        height: 2rem;
-        margin-left: calc(2rem / -2 + 1px);
-        margin-right: 0.7rem;
-        width: 2rem;
+        color-scheme: light;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: 14px;
+        font-weight: 400;
+        height: 32px;
+        line-height: 21px;
+        margin-left: -15px;
+        margin-right: 8px;
+        overflow-wrap: break-word;
+        text-size-adjust: 100%;
+        unicode-bidi: isolate;
+        width: 32px;
         z-index: 1;
-        border-radius: 999px;
+        border-top-left-radius: 50%;
+        border-top-right-radius: 50%;
+        border-bottom-left-radius: 50%;
+        border-bottom-right-radius: 50%;
         flex-shrink: 0;
         justify-content: center;
         align-items: center;
@@ -747,6 +757,82 @@ const Style = () => {
         margin-top: 0;
         flex: 1;
         min-width: 0;
+      }
+      .claude-activity-details {
+        width: 100%;
+      }
+      .claude-activity-summary-toggle {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        cursor: pointer;
+        border-radius: 6px;
+        margin: 0;
+        padding: 0.125rem 0.25rem 0.125rem 0;
+        color: rgb(31 35 40);
+      }
+      .claude-activity-summary-toggle::-webkit-details-marker {
+        display: none;
+      }
+      .claude-activity-summary-toggle::marker {
+        content: '';
+      }
+      .claude-activity-summary-toggle:hover {
+        background: rgb(208 215 222 / 0.18);
+        color: rgb(68, 147, 248);
+      }
+      .dark .claude-activity-summary-toggle:hover {
+        background: rgb(48 54 61 / 0.45);
+        color: rgb(68, 147, 248);
+      }
+      .claude-activity-summary-icons {
+        color: rgb(89, 99, 110);
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .claude-activity-summary-icon {
+        width: 16px;
+        height: 16px;
+        display: block;
+        fill: currentColor;
+      }
+      .claude-activity-item-badge,
+      .claude-activity-summary-icons,
+      .claude-activity-subitem-icon {
+        color: rgb(89, 99, 110);
+      }
+      .claude-activity-summary-toggle .Details-content--open,
+      .claude-activity-summary-toggle .Details-content--closed {
+        display: inline-flex;
+        align-items: center;
+      }
+      .claude-activity-summary-toggle .claude-activity-item-summary {
+        display: block;
+        min-height: 0;
+        line-height: 1.5;
+        padding-top: 0;
+      }
+      .claude-activity-item-commit .claude-activity-summary-toggle .claude-activity-item-summary {
+        align-items: initial;
+        padding-top: 0;
+      }
+      .dark .claude-activity-summary-toggle {
+        color: rgb(240 246 252);
+      }
+      .dark .claude-activity-summary-toggle .claude-activity-summary-icons {
+        color: rgb(145, 152, 161);
+      }
+      .claude-activity-details .Details-content--closed {
+        display: none;
+      }
+      .claude-activity-details:not([open]) .Details-content--open {
+        display: none;
+      }
+      .claude-activity-details:not([open]) .Details-content--closed {
+        display: inline-flex;
       }
       .claude-activity-item-summary {
         color: rgb(31 35 40);
