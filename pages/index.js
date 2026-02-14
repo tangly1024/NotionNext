@@ -7,6 +7,26 @@ import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
+import { getPageContentText } from '@/lib/db/notion/getPageContentText'
+
+const getLastSlugPart = value => {
+  if (!value || typeof value !== 'string') return ''
+  return value
+    .replace(/^\/+|\/+$/g, '')
+    .replace(/\.html$/i, '')
+    .split('/')
+    .pop()
+    .toLowerCase()
+}
+
+const isAboutPage = page => {
+  if (!page || page.type !== 'Page' || page.status !== 'Published') {
+    return false
+  }
+  const slugTail = getLastSlugPart(page.slug)
+  const hrefTail = getLastSlugPart(page.href)
+  return slugTail === 'about' || hrefTail === 'about'
+}
 
 /**
  * 首页布局
@@ -54,6 +74,30 @@ export async function getStaticProps(req) {
       }
       post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
     }
+  }
+
+  // 首页 Profile 卡片使用 slug=about 的页面内容
+  const aboutPage = props.allPages?.find(isAboutPage)
+  if (aboutPage) {
+    let excerpt = aboutPage.summary || ''
+    if (!excerpt && !aboutPage.password) {
+      const aboutBlockMap = await getPostBlocks(aboutPage.id, 'slug', 24)
+      excerpt = getPageContentText(aboutPage, aboutBlockMap)
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 220)
+    }
+
+    props.aboutPage = {
+      id: aboutPage.id,
+      title: aboutPage.title,
+      href: aboutPage.href,
+      slug: aboutPage.slug,
+      summary: aboutPage.summary || '',
+      excerpt
+    }
+  } else {
+    props.aboutPage = null
   }
 
   // 生成robotTxt

@@ -67,6 +67,16 @@ const Style = () => {
         --claude-profile-border-strong: #D8DEE4;
         --claude-profile-divider-border: rgb(209 217 224 / 0.7);
         --claude-profile-contact-hover: #24292F;
+        --claude-home-card-bg: #F6F8FA;
+        --claude-home-card-border: rgb(209 217 224 / 0.7);
+        --claude-home-link: #0969DA;
+        --claude-contrib-l0: #EFF2F5;
+        --claude-contrib-l1: #ACEEBB;
+        --claude-contrib-l2: #4AC26B;
+        --claude-contrib-l3: #2DA44E;
+        --claude-contrib-l4: #116329;
+        --claude-contrib-border: #1F23280D;
+        --claude-contrib-label: rgb(31 35 40);
         --claude-code-bg: #FFFFFF;
         --claude-code-border: rgba(0, 0, 0, 0.08);
         --claude-code-shell-bg: rgb(243 243 243);
@@ -101,6 +111,16 @@ const Style = () => {
         --claude-profile-border-strong: #30363D;
         --claude-profile-divider-border: rgb(48 54 61 / 0.7);
         --claude-profile-contact-hover: #F0F6FC;
+        --claude-home-card-bg: rgb(255 255 255 / 0.03);
+        --claude-home-card-border: rgb(48 54 61 / 0.7);
+        --claude-home-link: #58A6FF;
+        --claude-contrib-l0: #151B23;
+        --claude-contrib-l1: #033A16;
+        --claude-contrib-l2: #196C2E;
+        --claude-contrib-l3: #2EA043;
+        --claude-contrib-l4: #56D364;
+        --claude-contrib-border: #30363D;
+        --claude-contrib-label: rgb(240 246 252);
         --claude-code-bg: #0B0C0E;
         --claude-code-border: rgba(255, 255, 255, 0.08);
         --claude-code-shell-bg: rgb(255 255 255 / 0.05);
@@ -418,6 +438,523 @@ const Style = () => {
         color: var(--claude-text-primary);
         transform: scale(1.15);
       }
+
+      /* ========================================
+       * HOME PROFILE LAYOUT
+       * ======================================== */
+      .claude-profile-home {
+        display: block;
+      }
+      .claude-profile-home-main {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .claude-profile-home-timeline {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 116px;
+        gap: 1.5rem;
+        align-items: start;
+      }
+      .claude-profile-home-timeline-main {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .claude-about-card,
+      .claude-contrib-card,
+      .claude-activity-card {
+        background: var(--claude-home-card-bg);
+        border: 1px solid var(--claude-home-card-border);
+        border-radius: 8px;
+      }
+      .claude-contrib-section,
+      .claude-activity-section {
+        display: block;
+      }
+      .claude-about-card {
+        display: block;
+        color: var(--claude-text-primary);
+        text-decoration: none;
+        padding: 1.125rem 1.25rem;
+      }
+      .claude-about-card:hover {
+        color: var(--claude-text-primary);
+        border-color: var(--claude-border);
+      }
+      .claude-about-card-meta {
+        font-size: 0.875rem;
+        color: var(--claude-text-secondary);
+        margin-bottom: 0.75rem;
+      }
+      .claude-about-card-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--claude-text-primary);
+        margin-bottom: 0.5rem;
+      }
+      .claude-about-card-excerpt {
+        margin: 0;
+        color: var(--claude-text-secondary);
+        line-height: 1.7;
+        font-size: 0.95rem;
+      }
+      .claude-contrib-card {
+        padding: 1rem 1rem 0.875rem;
+        --claude-contrib-gap: 3px;
+        --claude-contrib-cell-size: 11px;
+        --claude-weekday-width: 1.6rem;
+        --claude-weekday-gap: 0.5rem;
+      }
+      .claude-contrib-title,
+      .claude-activity-title {
+        box-sizing: border-box;
+        color: rgb(31 35 40);
+        color-scheme: light;
+        display: block;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: var(--h4-size, 16px);
+        font-weight: 400;
+        height: 24px;
+        line-height: 24px;
+        margin-block-start: 0;
+        margin-block-end: 8px;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+        margin-top: 0;
+        margin-bottom: 8px;
+        overflow-wrap: break-word;
+        text-size-adjust: 100%;
+        unicode-bidi: isolate;
+      }
+      .dark .claude-contrib-title,
+      .dark .claude-activity-title {
+        color: rgb(240 246 252);
+        color-scheme: dark;
+      }
+      .claude-contrib-months {
+        position: relative;
+        height: 18px;
+        margin-left: calc(var(--claude-weekday-width) + var(--claude-weekday-gap));
+        margin-bottom: 0.35rem;
+        overflow: visible;
+      }
+      .claude-contrib-months span,
+      .claude-contrib-weekday span {
+        box-sizing: border-box;
+        color: var(--claude-contrib-label);
+        display: block;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: 12px;
+        font-weight: 400;
+        height: 18px;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+        text-align: left;
+        text-indent: 0;
+        text-size-adjust: 100%;
+      }
+      .claude-contrib-months span {
+        position: absolute;
+        left: calc(
+          var(--claude-marker-week, 0)
+            * (var(--claude-contrib-cell-size) + var(--claude-contrib-gap))
+        );
+        top: 0;
+        white-space: nowrap;
+      }
+      .claude-contrib-grid-wrap {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--claude-weekday-gap);
+      }
+      .claude-contrib-weekday {
+        display: grid;
+        grid-template-rows: repeat(7, var(--claude-contrib-cell-size));
+        gap: var(--claude-contrib-gap);
+        width: var(--claude-weekday-width);
+      }
+      .claude-contrib-grid {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: repeat(var(--claude-contrib-week-count, 53), var(--claude-contrib-cell-size));
+        grid-template-rows: repeat(7, var(--claude-contrib-cell-size));
+        gap: var(--claude-contrib-gap);
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        padding-bottom: 0.25rem;
+      }
+      .claude-contrib-cell {
+        width: var(--claude-contrib-cell-size);
+        height: var(--claude-contrib-cell-size);
+        border-radius: 2px;
+        background: var(--claude-contrib-l0);
+      }
+      .claude-contrib-cell.level-0 {
+        background: var(--claude-contrib-l0);
+      }
+      .claude-contrib-cell.level-1 {
+        background: var(--claude-contrib-l1);
+      }
+      .claude-contrib-cell.level-2 {
+        background: var(--claude-contrib-l2);
+      }
+      .claude-contrib-cell.level-3 {
+        background: var(--claude-contrib-l3);
+      }
+      .claude-contrib-cell.level-4 {
+        background: var(--claude-contrib-l4);
+      }
+      .claude-contrib-legend {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        margin-top: 0.55rem;
+        color: var(--claude-text-secondary);
+        font-size: 0.75rem;
+      }
+      .claude-contrib-legend-cells {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .claude-activity-card {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+      }
+      .claude-activity-empty {
+        color: var(--claude-text-secondary);
+        font-size: 0.95rem;
+      }
+      .claude-activity-group + .claude-activity-group {
+        margin-top: 1.5rem;
+      }
+      .claude-activity-group-title {
+        position: relative;
+        box-sizing: border-box;
+        color: rgb(31 35 40);
+        color-scheme: light;
+        display: flex;
+        align-items: center;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: var(--h6-size, 12px);
+        font-weight: 600;
+        height: 14px;
+        line-height: 14px;
+        overflow-wrap: break-word;
+        padding: 0;
+        text-size-adjust: 100%;
+        margin-bottom: 0.8rem;
+      }
+      .claude-activity-group-title::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0 0;
+        border-bottom: 1px solid rgb(209 217 224);
+      }
+      .claude-activity-group-title-month {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        padding-left: 0.5rem;
+        padding-right: 0.2rem;
+        background: var(--claude-bg);
+      }
+      .claude-activity-group-title-year {
+        position: relative;
+        z-index: 1;
+        color: rgb(89 99 110);
+        color-scheme: light;
+        display: inline-block;
+        background: var(--claude-bg);
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: var(--h6-size, 12px);
+        font-weight: 600;
+        line-height: 14px;
+        overflow-wrap: break-word;
+        text-size-adjust: 100%;
+        margin-left: 0.1rem;
+        padding-right: 0.75rem;
+      }
+      .dark .claude-activity-group-title {
+        color: rgb(240 246 252);
+        color-scheme: dark;
+      }
+      .dark .claude-activity-group-title::after {
+        border-bottom-color: rgb(48 54 61);
+      }
+      .dark .claude-activity-group-title-year {
+        color: #9198a1;
+      }
+      .claude-activity-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .claude-activity-item {
+        margin-left: 1rem;
+        padding: 0.7rem 0 1rem;
+        display: flex;
+        align-items: flex-start;
+        position: relative;
+      }
+      .claude-activity-item::before {
+        background-color: rgb(209 217 224 / 0.7);
+        content: '';
+        width: 0.125rem;
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+      .dark .claude-activity-item::before {
+        background-color: rgb(48 54 61 / 0.7);
+      }
+      .claude-activity-item-badge {
+        background-color: var(--claude-bg-secondary);
+        border: 2px solid var(--claude-bg);
+        color: rgb(89 99 110);
+        height: 2rem;
+        margin-left: calc(2rem / -2 + 1px);
+        margin-right: 0.7rem;
+        width: 2rem;
+        z-index: 1;
+        border-radius: 999px;
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        position: relative;
+      }
+      .claude-activity-item-badge-icon {
+        width: 1rem;
+        height: 1rem;
+        display: block;
+        fill: currentColor;
+      }
+      .dark .claude-activity-item-badge {
+        color: #9198a1;
+      }
+      .claude-activity-item-body {
+        color: var(--claude-text-secondary);
+        margin-top: 0;
+        flex: 1;
+        min-width: 0;
+      }
+      .claude-activity-item-summary {
+        color: rgb(31 35 40);
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: var(--h4-size, 16px);
+        font-weight: 400;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 2rem;
+        display: flex;
+        align-items: center;
+      }
+      .claude-activity-item-commit .claude-activity-item-badge {
+        align-items: flex-start;
+        padding-top: 0.4rem;
+      }
+      .claude-activity-item-commit .claude-activity-item-summary {
+        align-items: flex-start;
+        padding-top: 0.4rem;
+      }
+      .dark .claude-activity-item-summary {
+        color: rgb(240 246 252);
+      }
+      .claude-activity-sublist {
+        list-style: none;
+        margin: 0.55rem 0 0;
+        padding: 0;
+      }
+      .claude-activity-subitem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        min-width: 0;
+        padding: 0.2rem 0;
+      }
+      .claude-activity-subitem-main {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-width: 0;
+        flex: 1;
+      }
+      .claude-activity-item-commit .claude-activity-subitem {
+        align-items: center;
+      }
+      .claude-activity-item-commit .claude-activity-subitem-main {
+        gap: 0.75rem;
+      }
+      .claude-activity-subitem-icon {
+        width: 1rem;
+        height: 1rem;
+        display: block;
+        color: rgb(89 99 110);
+        fill: currentColor;
+        flex-shrink: 0;
+      }
+      .claude-activity-subitem-create .claude-activity-subitem-main {
+        display: flex;
+        align-items: center;
+        width: auto;
+        max-width: 100%;
+        gap: 0.25rem;
+        flex: 1 1 auto;
+        height: auto;
+        line-height: 1.25;
+      }
+      .claude-activity-subitem-create .claude-activity-link {
+        display: inline-block;
+        height: auto;
+        line-height: 1.25 !important;
+        min-height: 0;
+        margin-right: 0;
+        position: relative;
+        top: -1px;
+      }
+      .claude-activity-subitem-create .claude-activity-subitem-icon {
+        display: block;
+        align-self: auto;
+        width: 16px;
+        height: 16px;
+        margin-right: 0.25rem;
+      }
+      .dark .claude-activity-subitem-icon {
+        color: #9198a1;
+      }
+      .claude-activity-link {
+        --body-font-size: .875rem;
+        background-color: rgba(0, 0, 0, 0);
+        box-sizing: border-box;
+        color: rgb(9 105 218);
+        color-scheme: light;
+        cursor: pointer;
+        display: inline;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: var(--body-font-size, 14px);
+        font-weight: 400;
+        height: auto;
+        line-height: 1.25 !important;
+        list-style-image: none;
+        list-style-position: outside;
+        list-style-type: none;
+        overflow-wrap: break-word;
+        text-decoration-color: rgb(9 105 218);
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+        text-decoration-thickness: auto;
+        text-size-adjust: 100%;
+        text-underline-offset: 3.2px;
+        width: auto;
+      }
+      .claude-activity-link:hover {
+        color: rgb(9 105 218);
+        text-decoration: underline;
+      }
+      .dark .claude-activity-link {
+        color: rgb(68 147 248);
+        color-scheme: dark;
+        text-decoration-color: rgb(68 147 248);
+      }
+      .dark .claude-activity-link:hover {
+        color: rgb(68 147 248);
+      }
+      .claude-activity-date {
+        box-sizing: border-box;
+        color: rgb(89 99 110);
+        color-scheme: light;
+        display: block;
+        flex-shrink: 0;
+        float: right;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: var(--h6-size, 12px) !important;
+        font-weight: 400;
+        height: 22px;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+        padding-top: 4px;
+        text-size-adjust: 100%;
+        white-space: nowrap;
+      }
+      .dark .claude-activity-date {
+        color: #9198a1;
+        color-scheme: dark;
+      }
+      @media (max-width: 767px) {
+        .claude-activity-item {
+          margin-left: 0.5rem;
+        }
+        .claude-activity-item-badge {
+          width: 1.8rem;
+          height: 1.8rem;
+          margin-left: calc(1.8rem / -2 + 1px);
+          margin-right: 0.55rem;
+        }
+        .claude-activity-item-summary {
+          font-size: 15px;
+        }
+      }
+      .claude-year-switcher {
+        position: sticky;
+        top: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .claude-year-button {
+        border: 1px solid transparent;
+        border-radius: 8px;
+        height: 2.35rem;
+        padding: 0 0.7rem;
+        text-align: left;
+        font-size: 0.95rem;
+        color: var(--claude-text-secondary);
+        background: transparent;
+        transition: background-color 0.15s ease, color 0.15s ease;
+      }
+      .claude-year-button:hover {
+        background: rgba(9, 105, 218, 0.08);
+        color: var(--claude-home-link);
+      }
+      .claude-year-button.active {
+        background: var(--claude-home-link);
+        color: #FFFFFF;
+      }
+      .claude-year-switcher-mobile {
+        display: none;
+      }
+      @media (max-width: 1023px) {
+        .claude-profile-home-timeline {
+          grid-template-columns: 1fr;
+        }
+        .claude-year-switcher {
+          display: none;
+        }
+        .claude-year-switcher-mobile {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0.45rem;
+          margin-bottom: 0.6rem;
+        }
+      }
+      @media (max-width: 767px) {
+        .claude-contrib-card {
+          --claude-contrib-gap: 2px;
+        }
+      }
+
       /* ========================================
        * NOTION CONTENT OVERRIDES
        * ======================================== */

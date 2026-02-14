@@ -12,6 +12,7 @@ import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
 import Catalog from './components/Catalog'
+import ProfileHome from './components/ProfileHome'
 
 const AlgoliaSearchModal = dynamic(
   () => import('@/components/AlgoliaSearchModal'),
@@ -163,7 +164,7 @@ const LayoutBase = props => {
  * 博客首页
  */
 const LayoutIndex = props => {
-  return <LayoutPostList {...props} />
+  return <ProfileHome {...props} />
 }
 
 /**
