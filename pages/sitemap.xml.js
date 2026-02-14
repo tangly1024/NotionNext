@@ -1,7 +1,7 @@
 // pages/sitemap.xml.js
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
 import { getServerSideSitemap } from 'next-sitemap'
 
@@ -14,7 +14,7 @@ export const getServerSideProps = async ctx => {
     const id = extractLangId(siteId)
     const locale = extractLangPrefix(siteId)
     // 第一个id站点默认语言
-    const siteData = await getGlobalData({
+    const siteData = await fetchGlobalAllData({
       pageId: id,
       from: 'sitemap.xml'
     })
@@ -38,6 +38,11 @@ export const getServerSideProps = async ctx => {
 }
 
 function generateLocalesSitemap(link, allPages, locale) {
+  // 确保链接不以斜杠结尾
+  if (link && link.endsWith('/')) {
+    link = link.slice(0, -1)
+  }
+
   if (locale && locale.length > 0 && locale.indexOf('/') !== 0) {
     locale = '/' + locale
   }

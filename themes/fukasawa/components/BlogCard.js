@@ -2,7 +2,7 @@ import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 
@@ -51,7 +51,7 @@ const {siteInfo} =useGlobal()
       <div className='flex flex-col justify-between h-full'>
         {/* 封面图 */}
         {showPageCover && (
-          <Link href={post?.href} passHref legacyBehavior>
+          <SmartLink href={post?.href} passHref legacyBehavior>
             <div className='flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden'>
               <LazyImage
                 src={post?.pageCoverThumbnail}
@@ -59,13 +59,13 @@ const {siteInfo} =useGlobal()
                 className='object-cover w-full h-full hover:scale-125 transform duration-500'
               />
             </div>
-          </Link>
+          </SmartLink>
         )}
 
         {/* 文字部分 */}
         <div className='flex flex-col w-full'>
           <h2>
-            <Link
+            <SmartLink
               passHref
               href={post?.href}
               className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}>
@@ -73,7 +73,7 @@ const {siteInfo} =useGlobal()
                 <NotionIcon icon={post.pageIcon} />
               )}{' '}
               {post.title}
-            </Link>
+            </SmartLink>
           </h2>
 
           {(!showPreview || showSummary) && (
@@ -85,13 +85,13 @@ const {siteInfo} =useGlobal()
           {/* 分类标签 */}
           <div className='mt-auto justify-between flex'>
             {post.category && (
-              <Link
+              <SmartLink
                 href={`/category/${post.category}`}
                 passHref
                 className='cursor-pointer dark:text-gray-300 font-light text-sm hover:underline hover:text-indigo-700 dark:hover:text-indigo-400 transform'>
                 <i className='mr-1 far fa-folder' />
                 {post.category}
-              </Link>
+              </SmartLink>
             )}
             <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
               <div>
