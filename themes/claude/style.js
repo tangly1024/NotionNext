@@ -61,6 +61,12 @@ const Style = () => {
         --claude-sidebar-bg: #F3F3EE;
         --claude-sidebar-active-bg: rgba(218, 119, 86, 0.08);
         --claude-sidebar-active-text: #DA7756;
+        --claude-profile-name: rgb(31 35 40);
+        --claude-profile-muted: #57606A;
+        --claude-profile-border: #D0D7DE;
+        --claude-profile-border-strong: #D8DEE4;
+        --claude-profile-divider-border: rgb(209 217 224 / 0.7);
+        --claude-profile-contact-hover: #24292F;
         --claude-code-bg: #FFFFFF;
         --claude-code-border: rgba(0, 0, 0, 0.08);
         --claude-code-shell-bg: rgb(243 243 243);
@@ -89,6 +95,12 @@ const Style = () => {
         --claude-sidebar-bg: #1E1D1A;
         --claude-sidebar-active-bg: rgba(224, 138, 110, 0.1);
         --claude-sidebar-active-text: #E08A6E;
+        --claude-profile-name: #F0F6FC;
+        --claude-profile-muted: #8B949E;
+        --claude-profile-border: #30363D;
+        --claude-profile-border-strong: #30363D;
+        --claude-profile-divider-border: rgb(48 54 61 / 0.7);
+        --claude-profile-contact-hover: #F0F6FC;
         --claude-code-bg: #0B0C0E;
         --claude-code-border: rgba(255, 255, 255, 0.08);
         --claude-code-shell-bg: rgb(255 255 255 / 0.05);
@@ -115,6 +127,13 @@ const Style = () => {
         color: var(--claude-text-primary);
         font-size: 0.9375rem;
         line-height: 1.7;
+      }
+
+      /* Image protection (Claude theme scope) */
+      #theme-claude img {
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
       }
 
       /* ========================================
@@ -193,6 +212,152 @@ const Style = () => {
         transition: background-color 0.15s ease, border-color 0.15s ease;
       }
 
+      .claude-sidebar-profile {
+        --claude-avatar-size: min(100%, 260px);
+        --claude-avatar-left-offset: max(
+          0px,
+          calc((100% - var(--claude-avatar-size)) / 2)
+        );
+        display: flex;
+        flex-direction: column;
+        gap: 0.875rem;
+      }
+      .claude-profile-avatar-wrap {
+        width: 100%;
+        max-width: 260px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .claude-profile-avatar {
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 9999px;
+        border: 2px solid var(--claude-profile-border-strong);
+      }
+      .claude-profile-heading {
+        margin-top: 0.5rem;
+        padding-left: var(--claude-avatar-left-offset);
+        padding-right: var(--claude-avatar-left-offset);
+      }
+      .claude-profile-name {
+        box-sizing: border-box;
+        color: var(--claude-profile-name);
+        display: block;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: 24px;
+        font-weight: 600;
+        height: 30px;
+        line-height: 30px;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 100%;
+      }
+      .claude-profile-bio {
+        border-top: 0 solid rgb(229 231 235);
+        border-right: 0 solid rgb(229 231 235);
+        border-bottom: 0 solid rgb(229 231 235);
+        border-left: 0 solid rgb(229 231 235);
+        box-sizing: border-box;
+        color: var(--claude-profile-name);
+        display: block;
+        font-family: 'PingFang SC', -apple-system, system-ui, 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Segoe UI', 'Noto Sans SC', HarmonyOS_Regular, 'Helvetica Neue', Helvetica, 'Source Han Sans SC', Arial, sans-serif, 'Apple Color Emoji', 'Noto Sans CJK SC', 'Noto Sans SC';
+        font-feature-settings: normal;
+        font-size: 15px;
+        font-variation-settings: normal;
+        font-weight: 300;
+        height: 24px;
+        line-height: 24px;
+        padding-left: 9.5px;
+        padding-right: 9.5px;
+        tab-size: 4;
+        text-size-adjust: 100%;
+        unicode-bidi: isolate;
+        -webkit-font-smoothing: auto;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        width: 279px;
+        max-width: 100%;
+        overflow-wrap: break-word;
+      }
+      .claude-profile-section {
+        border-top: 1px solid var(--claude-profile-divider-border);
+        padding-top: 16px;
+        margin-top: 16px;
+        box-sizing: border-box;
+        padding-left: var(--claude-avatar-left-offset);
+        padding-right: var(--claude-avatar-left-offset);
+      }
+      .claude-profile-contact-section {
+        box-sizing: border-box;
+        color: rgb(31 35 40);
+        color-scheme: light;
+        column-gap: 4px;
+        display: flex;
+        flex-direction: column;
+        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-size: 14px;
+        font-weight: 400;
+        height: auto;
+        min-height: 25px;
+        line-height: 21px;
+        list-style-image: none;
+        list-style-position: outside;
+        list-style-type: none;
+        margin-block-start: 0;
+        margin-block-end: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        overflow-wrap: break-word;
+        row-gap: 4px;
+        text-size-adjust: 100%;
+        unicode-bidi: isolate;
+        width: 100%;
+        max-width: 100%;
+      }
+      .dark .claude-profile-contact-section {
+        color: var(--claude-profile-name);
+        color-scheme: dark;
+      }
+      .claude-profile-nav-section {
+        margin-top: 0;
+      }
+      .claude-profile-contact-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        font-family: inherit;
+        font-weight: inherit;
+        text-decoration: none;
+        transition: color 0.15s ease;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .claude-profile-contact-row:hover {
+        color: var(--claude-profile-contact-hover);
+      }
+      .claude-profile-contact-icon {
+        width: 16px;
+        min-width: 16px;
+        text-align: left;
+        margin: 0;
+        padding: 0;
+        line-height: 21px;
+        display: inline-block;
+        opacity: 0.9;
+      }
+      .claude-profile-contact-value {
+        overflow-wrap: anywhere;
+      }
+
       /* Site title */
       .claude-site-title {
         font-family: var(--claude-heading-font);
@@ -231,6 +396,10 @@ const Style = () => {
         color: var(--claude-sidebar-active-text);
         font-weight: 500;
       }
+      .claude-profile-nav-section .claude-nav-link {
+        border-radius: 0.375rem;
+        padding: 0.35rem 0;
+      }
 
       /* Social icons */
       .claude-social-row {
@@ -249,7 +418,6 @@ const Style = () => {
         color: var(--claude-text-primary);
         transform: scale(1.15);
       }
-
       /* ========================================
        * NOTION CONTENT OVERRIDES
        * ======================================== */
@@ -923,6 +1091,12 @@ const Style = () => {
         font-size: 0.75rem;
         color: var(--claude-text-tertiary);
         padding: 0.75rem;
+      }
+      .claude-sidebar .claude-footer {
+        width: 100%;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        text-align: center;
       }
 
       /* Hide scrollbar utility */

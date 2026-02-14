@@ -62,6 +62,32 @@ const LayoutBase = props => {
   const hasToc = props.post?.toc && props.post.toc.length > 0
   const tocEnable = siteConfig('CLAUDE_TOC_ENABLE', true, CONFIG)
 
+  useEffect(() => {
+    const shouldBlockImageAction = target => {
+      return target instanceof Element && Boolean(target.closest('#theme-claude img'))
+    }
+
+    const handleImageContextMenu = e => {
+      if (shouldBlockImageAction(e.target)) {
+        e.preventDefault()
+      }
+    }
+
+    const handleImageDragStart = e => {
+      if (shouldBlockImageAction(e.target)) {
+        e.preventDefault()
+      }
+    }
+
+    document.addEventListener('contextmenu', handleImageContextMenu, true)
+    document.addEventListener('dragstart', handleImageDragStart, true)
+
+    return () => {
+      document.removeEventListener('contextmenu', handleImageContextMenu, true)
+      document.removeEventListener('dragstart', handleImageDragStart, true)
+    }
+  }, [])
+
   return (
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div
@@ -73,8 +99,8 @@ const LayoutBase = props => {
 
         <div className='flex flex-1 overflow-hidden'>
           {/* ====== LEFT SIDEBAR — 导航栏 (桌面端) ====== */}
-          <div className='claude-sidebar hidden md:flex md:flex-col md:flex-shrink-0 md:w-[220px] h-full overflow-y-auto overflow-x-hidden'>
-            <div className='flex flex-col justify-between h-full py-6 px-4'>
+          <div className='claude-sidebar hidden md:flex md:flex-col md:flex-shrink-0 md:w-[296px] lg:w-[320px] h-full overflow-y-auto overflow-x-hidden'>
+            <div className='flex flex-col justify-between h-full py-6 px-5'>
               <div>
                 <NavBar {...props} />
               </div>
@@ -169,7 +195,7 @@ const LayoutSearch = props => {
         }
       })
     }
-  }, [])
+  }, [keyword])
 
   return <LayoutPostList {...props} />
 }
@@ -255,9 +281,10 @@ const Layout404 = props => {
   const { post } = props
   const router = useRouter()
   const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+
   useEffect(() => {
     if (!post) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (isBrowser) {
           const article = document.querySelector('#article-wrapper #notion-article')
           if (!article) {
@@ -267,8 +294,12 @@ const Layout404 = props => {
           }
         }
       }, waiting404)
+
+      return () => clearTimeout(timer)
     }
-  }, [post])
+    return undefined
+  }, [post, router, waiting404])
+
   return <>404 Not found.</>
 }
 
