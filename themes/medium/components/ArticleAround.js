@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 上一篇，下一篇文章
@@ -11,22 +11,22 @@ export default function ArticleAround ({ prev, next }) {
   }
   return (
     <section className='text-gray-800 dark:text-gray-400 h-12 flex items-center justify-between space-x-5 my-4'>
-      <Link
+      <SmartLink
         href={`/${prev.slug}`}
         passHref
         className='text-sm cursor-pointer justify-start items-center flex hover:underline duration-300'>
 
         <i className='mr-1 fas fa-angle-double-left' />{prev.title}
 
-      </Link>
-      <Link
+      </SmartLink>
+      <SmartLink
         href={`/${next.slug}`}
         passHref
         className='text-sm cursor-pointer justify-end items-center flex hover:underline duration-300'>
         {next.title}
         <i className='ml-1 my-1 fas fa-angle-double-right' />
 
-      </Link>
+      </SmartLink>
     </section>
   )
 }
