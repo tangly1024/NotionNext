@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="12" failures="0" errors="0" time="0.561">
+  <testsuite name="contributionSnapshotSync" errors="0" failures="0" skipped="0" timestamp="2026-02-15T11:03:30" time="0.16" tests="8">
+    <testcase classname="contributionSnapshotSync shouldSyncPostBySnapshot marks changed when no baseline exists" name="contributionSnapshotSync shouldSyncPostBySnapshot marks changed when no baseline exists" time="0.002">
+    </testcase>
+    <testcase classname="contributionSnapshotSync shouldSyncPostBySnapshot marks changed when latest snapshot is newer than baseline" name="contributionSnapshotSync shouldSyncPostBySnapshot marks changed when latest snapshot is newer than baseline" time="0">
+    </testcase>
+    <testcase classname="contributionSnapshotSync shouldSyncPostBySnapshot marks unchanged when latest snapshot is older or equal to baseline" name="contributionSnapshotSync shouldSyncPostBySnapshot marks unchanged when latest snapshot is older or equal to baseline" time="0.001">
+    </testcase>
+    <testcase classname="contributionSnapshotSync resolveSnapshotErrorStrategy falls back to legacy on auth-like errors" name="contributionSnapshotSync resolveSnapshotErrorStrategy falls back to legacy on auth-like errors" time="0">
+    </testcase>
+    <testcase classname="contributionSnapshotSync resolveSnapshotErrorStrategy treats non-auth errors as changed post only" name="contributionSnapshotSync resolveSnapshotErrorStrategy treats non-auth errors as changed post only" time="0">
+    </testcase>
+    <testcase classname="contributionSnapshotSync runContributionSyncWithFallback snapshot path only fetches changed posts and keeps unchanged skipped" name="contributionSnapshotSync runContributionSyncWithFallback snapshot path only fetches changed posts and keeps unchanged skipped" time="0.002">
+    </testcase>
+    <testcase classname="contributionSnapshotSync runContributionSyncWithFallback falls back to legacy when auth-like history error appears" name="contributionSnapshotSync runContributionSyncWithFallback falls back to legacy when auth-like history error appears" time="0">
+    </testcase>
+    <testcase classname="contributionSnapshotSync builds snapshot observability log with fixed fields" name="contributionSnapshotSync builds snapshot observability log with fixed fields" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="notionHistoryApi" errors="0" failures="0" skipped="0" timestamp="2026-02-15T11:03:30" time="0.067" tests="4">
+    <testcase classname="notionHistoryApi parseLatestSnapshotMeta parses first snapshot timestamp string into timestampMs" name="notionHistoryApi parseLatestSnapshotMeta parses first snapshot timestamp string into timestampMs" time="0.001">
+    </testcase>
+    <testcase classname="notionHistoryApi parseLatestSnapshotMeta returns null for empty snapshots" name="notionHistoryApi parseLatestSnapshotMeta returns null for empty snapshots" time="0">
+    </testcase>
+    <testcase classname="notionHistoryApi isNotionHistoryAuthLikeError detects auth-like errors by status" name="notionHistoryApi isNotionHistoryAuthLikeError detects auth-like errors by status" time="0">
+    </testcase>
+    <testcase classname="notionHistoryApi isNotionHistoryAuthLikeError detects auth-like errors by message" name="notionHistoryApi isNotionHistoryAuthLikeError detects auth-like errors by message" time="0.008">
+    </testcase>
+  </testsuite>
+</testsuites>

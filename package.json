@@ -72,7 +72,8 @@
     "react-hotkeys-hook": "^4.6.2",
     "react-notion-x": "7.7.1",
     "react-share": "^5.2.2",
-    "react-tweet-embed": "~2.0.0"
+    "react-tweet-embed": "~2.0.0",
+    "@supabase/supabase-js": "^2.57.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",

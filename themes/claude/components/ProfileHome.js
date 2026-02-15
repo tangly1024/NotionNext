@@ -13,6 +13,18 @@ const normalizeDate = value => {
   return date
 }
 
+const toTimestampMs = value => {
+  if (value === null || value === undefined || value === '') return 0
+  if (typeof value === 'number') return Number.isFinite(value) ? Math.trunc(value) : 0
+  const parsed = Date.parse(String(value))
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+const normalizeRepositoryId = value => {
+  if (!value) return ''
+  return String(value).replace(/-/g, '').trim().toLowerCase()
+}
+
 const formatDayKey = date => {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -131,7 +143,7 @@ const isReadmeLikePage = page => {
 }
 
 export default function ProfileHome(props) {
-  const { posts = [], readmePage } = props
+  const { posts = [], readmePage, contributionEvents: persistedContributionEvents = [] } = props
   const heatmapGridRef = useRef(null)
   const tooltipTimerRef = useRef(null)
   const [contribCellSize, setContribCellSize] = useState(11)
@@ -169,7 +181,7 @@ export default function ProfileHome(props) {
       .filter(Boolean)
   }, [posts])
 
-  const contributionEvents = useMemo(() => {
+  const fallbackContributionEvents = useMemo(() => {
     const events = []
 
     timelinePosts.forEach(post => {
@@ -196,6 +208,36 @@ export default function ProfileHome(props) {
 
     return events
   }, [timelinePosts])
+
+  const contributionEvents = useMemo(() => {
+    const persisted = Array.isArray(persistedContributionEvents)
+      ? persistedContributionEvents
+          .map(event => {
+            const postId = normalizeRepositoryId(
+              event?.repositoryId || event?.identifier || event?.postId
+            )
+            const timestampMs = toTimestampMs(
+              event?.timestampMs || event?.timestamp || event?.date || event?.time
+            )
+            const date = timestampMs ? new Date(timestampMs) : null
+            if (!postId || !date) return null
+
+            return {
+              type: event?.type === 'create' ? 'create' : 'update',
+              postId,
+              title: event?.title || 'Untitled',
+              href: event?.href || '#',
+              date
+            }
+          })
+          .filter(Boolean)
+      : []
+
+    if (persisted.length) {
+      return persisted
+    }
+    return fallbackContributionEvents
+  }, [persistedContributionEvents, fallbackContributionEvents])
 
   const years = useMemo(() => {
     const yearSet = new Set(contributionEvents.map(event => event.date.getFullYear()))

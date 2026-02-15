@@ -28,6 +28,13 @@ const CONFIG = {
 
   // README 渲染缓存（可由 Notion 配置文档中的同名字段覆盖）
   CLAUDE_README_CACHE_ENABLED:
-    process.env.NEXT_PUBLIC_CLAUDE_README_CACHE_ENABLED !== 'false'
+    process.env.NEXT_PUBLIC_CLAUDE_README_CACHE_ENABLED !== 'false',
+
+  // Contribution 持久化（可由 Notion 配置文档中的同名字段覆盖）
+  // 依赖 COCKROACH_DATABASE_URL（或 DATABASE_URL）
+  CLAUDE_CONTRIBUTION_PERSIST_ENABLED:
+    process.env.NEXT_PUBLIC_CLAUDE_CONTRIBUTION_PERSIST_ENABLED !== 'false',
+  CLAUDE_CONTRIBUTION_EVENT_LIMIT:
+    Number(process.env.NEXT_PUBLIC_CLAUDE_CONTRIBUTION_EVENT_LIMIT || 50000)
 }
 export default CONFIG
