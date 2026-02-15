@@ -284,10 +284,17 @@ export default function ProfileHome(props) {
   const contributionTitle = isYearModeActive
     ? `${heatmapEvents.length} contributions in ${selectedYear}`
     : `${heatmapEvents.length} contributions in the last year`
+  const activeYear = isYearModeActive ? selectedYear : (years[0] || selectedYear)
 
   const handleSelectYear = year => {
     setSelectedYear(year)
     setIsYearModeActive(true)
+  }
+
+  const handleSelectYearFromMobile = event => {
+    const value = Number(event.target.value)
+    if (Number.isNaN(value)) return
+    handleSelectYear(value)
   }
 
   const activityGroups = useMemo(() => {
@@ -443,15 +450,25 @@ export default function ProfileHome(props) {
                 }}>
 
                 <div className='claude-year-switcher-mobile'>
-                  {years.map(year => (
-                    <button
-                      key={`mobile-${year}`}
-                      type='button'
-                      className={`claude-year-button ${isYearModeActive && year === selectedYear ? 'active' : ''}`}
-                      onClick={() => handleSelectYear(year)}>
-                      {year}
-                    </button>
-                  ))}
+                  <span className='claude-year-mobile-label'>Year:</span>
+                  <div className='claude-year-mobile-control'>
+                    <select
+                      value={activeYear}
+                      onChange={handleSelectYearFromMobile}
+                      className='claude-year-mobile-select'
+                      aria-label='Select contribution year'>
+                      {years.map(year => (
+                        <option key={`mobile-${year}`} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
+                    <span className='claude-year-mobile-caret' aria-hidden='true'>
+                      <svg viewBox='0 0 16 16' width='16' height='16'>
+                        <path d='m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z' />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
 
                 <div className='claude-contrib-months'>
@@ -677,16 +694,27 @@ export default function ProfileHome(props) {
             </div>
           </div>
 
-          <aside className='claude-year-switcher'>
-            {years.map(year => (
-              <button
-                key={year}
-                type='button'
-                className={`claude-year-button ${isYearModeActive && year === selectedYear ? 'active' : ''}`}
-                onClick={() => handleSelectYear(year)}>
-                {year}
-              </button>
-            ))}
+          <aside id='year-list-container' className='claude-year-switcher'>
+            <div className='claude-year-switcher-sticky'>
+              <ul className='claude-year-filter-list'>
+                {years.map(year => {
+                  const isActive = year === activeYear
+                  return (
+                    <li key={year}>
+                      <button
+                        id={`year-link-${year}`}
+                        type='button'
+                        aria-current={isActive ? 'true' : undefined}
+                        aria-label={`Contribution activity in ${year}`}
+                        className={`claude-year-filter-item ${isActive ? 'active' : ''}`}
+                        onClick={() => handleSelectYear(year)}>
+                        {year}
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
           </aside>
         </div>
       </div>

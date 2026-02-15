@@ -49,6 +49,8 @@ const Style = () => {
        * CSS VARIABLES
        * ======================================== */
       :root {
+        --claude-gh-blue-bg: rgb(9, 105, 218);
+        --claude-gh-blue-bg-rgb: 9 105 218;
         --claude-bg: #fff;
         --claude-bg-secondary: #F3F3EE;
         --claude-text-primary: #1A1A1A;
@@ -69,7 +71,7 @@ const Style = () => {
         --claude-profile-contact-hover: #24292F;
         --claude-home-card-bg: #F6F8FA;
         --claude-home-card-border: rgb(209, 217, 224);
-        --claude-home-link: #0969DA;
+        --claude-home-link: var(--claude-gh-blue-bg);
         --claude-contrib-l0: #EFF2F5;
         --claude-contrib-l1: #ACEEBB;
         --claude-contrib-l2: #4AC26B;
@@ -90,8 +92,10 @@ const Style = () => {
         --claude-gh-fg-default: rgb(31, 35, 40);
         --claude-gh-fg-muted: rgb(89, 99, 110);
         --claude-gh-border: rgb(209, 217, 224);
-        --claude-gh-link: rgb(9, 105, 218);
-        --claude-gh-link-hover-bg: rgb(9 105 218 / 0.08);
+        --claude-gh-link: var(--claude-gh-blue-bg);
+        --claude-gh-link-hover-bg: rgb(var(--claude-gh-blue-bg-rgb) / 0.08);
+        --claude-year-filter-text: var(--claude-gh-fg-muted);
+        --claude-year-filter-text-active: #fff;
         --claude-gh-font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
         --claude-timeline-line: rgba(209, 217, 224, 0.7);
         --claude-badge-bg: rgb(246, 248, 250);
@@ -102,6 +106,8 @@ const Style = () => {
       }
 
       .dark {
+        --claude-gh-blue-bg: rgb(31, 111, 235);
+        --claude-gh-blue-bg-rgb: 31 111 235;
         --claude-bg: #1A1915;
         --claude-bg-secondary: #242320;
         --claude-text-primary: #9E9E9E;
@@ -122,7 +128,7 @@ const Style = () => {
         --claude-profile-contact-hover: #F0F6FC;
         --claude-home-card-bg: rgb(255 255 255 / 0.03);
         --claude-home-card-border: rgb(61, 68, 77);
-        --claude-home-link: #58A6FF;
+        --claude-home-link: var(--claude-gh-blue-bg);
         --claude-contrib-l0: #151B23;
         --claude-contrib-l1: #033A16;
         --claude-contrib-l2: #196C2E;
@@ -144,8 +150,10 @@ const Style = () => {
         --claude-gh-fg-default: rgb(240, 246, 252);
         --claude-gh-fg-muted: #9198a1;
         --claude-gh-border: rgb(61, 68, 77);
-        --claude-gh-link: rgb(68, 147, 248);
-        --claude-gh-link-hover-bg: rgb(68 147 248 / 0.12);
+        --claude-gh-link: var(--claude-gh-blue-bg);
+        --claude-gh-link-hover-bg: rgb(var(--claude-gh-blue-bg-rgb) / 0.12);
+        --claude-year-filter-text: var(--claude-gh-fg-muted);
+        --claude-year-filter-text-active: #fff;
         --claude-timeline-line: rgba(61, 68, 77, 0.7);
         --claude-badge-bg: rgb(33, 40, 48);
         --claude-badge-border: rgb(13, 17, 23);
@@ -810,6 +818,7 @@ const Style = () => {
         justify-content: flex-end;
         gap: 0.5rem;
         margin-top: 0.55rem;
+        padding-right: 32px;
         color: var(--claude-text-secondary);
         font-size: 0.75rem;
       }
@@ -1159,33 +1168,137 @@ const Style = () => {
         }
       }
       .claude-year-switcher {
+        width: 100%;
+        max-width: 128px;
+      }
+      .claude-year-switcher-sticky {
         position: sticky;
-        top: 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
+        top: 74px;
       }
-      .claude-year-button {
-        border: 1px solid transparent;
-        border-radius: 8px;
-        height: 2.35rem;
-        padding: 0 0.7rem;
+      .claude-year-filter-list {
+        list-style: none;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      .claude-year-filter-list > li {
+        margin: 0;
+      }
+      .claude-year-filter-item {
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        box-sizing: border-box;
+        color-scheme: light;
+        display: block;
+        width: 100%;
+        border: 0;
+        margin-bottom: 8px;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding-top: 8px;
+        padding-right: 16px;
+        padding-bottom: 8px;
+        padding-left: 16px;
+        position: relative;
         text-align: left;
-        font-size: 0.95rem;
-        color: var(--claude-text-secondary);
+        text-decoration: none;
+        text-decoration-line: none;
+        text-decoration-style: solid;
+        text-decoration-thickness: auto;
+        text-overflow: ellipsis;
+        text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+        text-wrap-mode: nowrap;
+        white-space-collapse: collapse;
+        white-space: nowrap;
+        list-style-type: none;
+        font-family: var(--claude-gh-font-family);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--claude-year-filter-text);
         background: transparent;
-        transition: background-color 0.15s ease, color 0.15s ease;
+        cursor: pointer;
+        transition: none;
       }
-      .claude-year-button:hover {
-        background: var(--claude-gh-link-hover-bg);
-        color: var(--claude-home-link);
+      .dark .claude-year-filter-item {
+        color-scheme: dark;
       }
-      .claude-year-button.active {
-        background: var(--claude-home-link);
-        color: #fff;
+      .claude-year-filter-item.active {
+        color: var(--claude-year-filter-text-active);
+        background: var(--claude-gh-link);
+        font-weight: 500;
+      }
+      .claude-year-filter-item:focus-visible {
+        outline: 2px solid var(--claude-gh-link);
+        outline-offset: -2px;
+      }
+      .claude-year-filter-item.active:focus-visible {
+        box-shadow: inset 0 0 0 3px #fff;
       }
       .claude-year-switcher-mobile {
         display: none;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        margin-bottom: 0.6rem;
+      }
+      .claude-year-mobile-label {
+        color: var(--claude-gh-fg-muted);
+        font-family: var(--claude-gh-font-family);
+        font-size: 12px;
+        line-height: 1;
+      }
+      .claude-year-mobile-control {
+        position: relative;
+        min-width: 106px;
+      }
+      .claude-year-mobile-select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 100%;
+        height: 32px;
+        border: 1px solid var(--claude-gh-border);
+        border-radius: 6px;
+        padding: 0 1.9rem 0 0.65rem;
+        color: var(--claude-gh-fg-default);
+        background: var(--claude-bg);
+        box-shadow: inset 0 1px 0 rgb(27 31 36 / 0.04);
+        font-family: var(--claude-gh-font-family);
+        font-size: 12px;
+        line-height: 32px;
+      }
+      .claude-year-mobile-select:focus-visible {
+        outline: 2px solid var(--claude-gh-link);
+        outline-offset: 2px;
+      }
+      .dark .claude-year-mobile-select {
+        background: var(--claude-bg-secondary);
+        color: var(--claude-gh-fg-default);
+        border-color: var(--claude-gh-border);
+        box-shadow: none;
+      }
+      .claude-year-mobile-caret {
+        pointer-events: none;
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        width: 16px;
+        height: 16px;
+        transform: translateY(-50%);
+        color: var(--claude-gh-fg-muted);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .claude-year-mobile-caret svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
       }
       @media (max-width: 1023px) {
         .claude-profile-home-timeline {
@@ -1196,10 +1309,6 @@ const Style = () => {
         }
         .claude-year-switcher-mobile {
           display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 0.45rem;
-          margin-bottom: 0.6rem;
         }
       }
       @media (max-width: 767px) {
