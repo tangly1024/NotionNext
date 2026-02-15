@@ -799,6 +799,11 @@ const Style = () => {
       .claude-contrib-cell.level-4 {
         background: var(--claude-contrib-l4);
       }
+      .claude-contrib-cell.is-placeholder {
+        background: transparent !important;
+        visibility: hidden;
+        pointer-events: none;
+      }
       .claude-contrib-legend {
         display: flex;
         align-items: center;

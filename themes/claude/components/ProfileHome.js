@@ -2,6 +2,7 @@ import SmartLink from '@/components/SmartLink'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
+const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000
 
 const normalizeDate = value => {
   if (!value) return null
@@ -31,15 +32,6 @@ const endOfWeekSaturday = date => {
   const offset = 6 - d.getDay()
   d.setDate(d.getDate() + offset)
   return d
-}
-
-const getHeatmapAnchorDate = selectedYear => {
-  const now = new Date()
-  const currentYear = now.getFullYear()
-  if (selectedYear >= currentYear) {
-    return now
-  }
-  return new Date(selectedYear, 11, 31)
 }
 
 const getHeatmapLevel = (count, maxCount) => {
@@ -174,10 +166,12 @@ export default function ProfileHome(props) {
   }, [contributionEvents])
 
   const [selectedYear, setSelectedYear] = useState(() => years[0] || new Date().getFullYear())
+  const [isYearModeActive, setIsYearModeActive] = useState(false)
 
   useEffect(() => {
     if (!years.includes(selectedYear)) {
       setSelectedYear(years[0] || new Date().getFullYear())
+      setIsYearModeActive(false)
     }
   }, [years, selectedYear])
 
@@ -187,63 +181,114 @@ export default function ProfileHome(props) {
       .sort((a, b) => b.date - a.date)
   }, [contributionEvents, selectedYear])
 
+  const heatmapRange = useMemo(() => {
+    if (isYearModeActive) {
+      return {
+        start: new Date(selectedYear, 0, 1, 0, 0, 0, 0),
+        end: new Date(selectedYear, 11, 31, 23, 59, 59, 999)
+      }
+    }
+
+    const end = new Date()
+    const start = new Date(end)
+    start.setFullYear(start.getFullYear() - 1)
+    start.setDate(start.getDate() + 1)
+    start.setHours(0, 0, 0, 0)
+
+    return { start, end }
+  }, [isYearModeActive, selectedYear])
+
+  const heatmapEvents = useMemo(() => {
+    return contributionEvents.filter(event => {
+      return event.date >= heatmapRange.start && event.date <= heatmapRange.end
+    })
+  }, [contributionEvents, heatmapRange])
+
   const dayCountMap = useMemo(() => {
     const map = new Map()
-    yearEvents.forEach(event => {
+    heatmapEvents.forEach(event => {
       const key = formatDayKey(event.date)
       map.set(key, (map.get(key) || 0) + 1)
     })
     return map
-  }, [yearEvents])
+  }, [heatmapEvents])
 
   const heatmapData = useMemo(() => {
-    const anchor = getHeatmapAnchorDate(selectedYear)
-    const oneYearAgo = new Date(anchor)
-    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1)
-    oneYearAgo.setDate(oneYearAgo.getDate() + 1)
-
-    const start = startOfWeekSunday(oneYearAgo)
-    const end = endOfWeekSaturday(anchor)
+    const start = startOfWeekSunday(heatmapRange.start)
+    const end = endOfWeekSaturday(heatmapRange.end)
+    const rangeStart = new Date(heatmapRange.start)
+    rangeStart.setHours(0, 0, 0, 0)
+    const rangeEnd = new Date(heatmapRange.end)
+    rangeEnd.setHours(0, 0, 0, 0)
     const cells = []
 
     const cursor = new Date(start)
     while (cursor <= end) {
       const currentDate = new Date(cursor)
       const key = formatDayKey(currentDate)
+      const inRange = currentDate >= rangeStart && currentDate <= rangeEnd
       cells.push({
         key,
         date: currentDate,
-        count: dayCountMap.get(key) || 0
+        count: dayCountMap.get(key) || 0,
+        inRange
       })
       cursor.setDate(cursor.getDate() + 1)
     }
 
     const weekCount = Math.ceil(cells.length / 7)
-    // GitHub 风格：月份标签从“该列首日(周一)属于该月”的第一列开始
     const monthMarkers = []
-    let lastMonthKey = ''
+    if (isYearModeActive) {
+      let lastWeekIndex = -1
+      for (let month = 0; month < 12; month++) {
+        const firstDayOfMonth = new Date(selectedYear, month, 1)
+        const monthWeekIndex = Math.floor(
+          (startOfWeekSunday(firstDayOfMonth).getTime() - start.getTime()) / MS_PER_WEEK
+        )
+        if (monthWeekIndex < 0 || monthWeekIndex >= weekCount) continue
+        if (monthWeekIndex === lastWeekIndex) continue
 
-    for (let weekIndex = 0; weekIndex < weekCount; weekIndex++) {
-      const weekStartDate = cells[weekIndex * 7]?.date
-      if (!weekStartDate) continue
+        monthMarkers.push({
+          key: `${selectedYear}-${month}`,
+          weekIndex: monthWeekIndex,
+          label: formatMonthLabel(selectedYear, month)
+        })
+        lastWeekIndex = monthWeekIndex
+      }
+    } else {
+      // GitHub 风格：月份标签从“该列首日(周一)属于该月”的第一列开始
+      let lastMonthKey = ''
+      for (let weekIndex = 0; weekIndex < weekCount; weekIndex++) {
+        const weekStartDate = cells[weekIndex * 7]?.date
+        if (!weekStartDate) continue
 
-      const markerYear = weekStartDate.getFullYear()
-      const markerMonth = weekStartDate.getMonth()
-      const markerKey = `${markerYear}-${markerMonth}`
-      if (markerKey === lastMonthKey) continue
+        const markerYear = weekStartDate.getFullYear()
+        const markerMonth = weekStartDate.getMonth()
+        const markerKey = `${markerYear}-${markerMonth}`
+        if (markerKey === lastMonthKey) continue
 
-      monthMarkers.push({
-        key: markerKey,
-        weekIndex,
-        label: formatMonthLabel(markerYear, markerMonth)
-      })
-      lastMonthKey = markerKey
+        monthMarkers.push({
+          key: markerKey,
+          weekIndex,
+          label: formatMonthLabel(markerYear, markerMonth)
+        })
+        lastMonthKey = markerKey
+      }
     }
 
-    const maxCount = Math.max(0, ...cells.map(item => item.count))
+    const maxCount = Math.max(0, ...cells.filter(item => item.inRange).map(item => item.count))
 
     return { cells, weekCount, monthMarkers, maxCount }
-  }, [dayCountMap, selectedYear])
+  }, [dayCountMap, heatmapRange, isYearModeActive, selectedYear])
+
+  const contributionTitle = isYearModeActive
+    ? `${heatmapEvents.length} contributions in ${selectedYear}`
+    : `${heatmapEvents.length} contributions in the last year`
+
+  const handleSelectYear = year => {
+    setSelectedYear(year)
+    setIsYearModeActive(true)
+  }
 
   const activityGroups = useMemo(() => {
     const monthMap = new Map()
@@ -389,7 +434,7 @@ export default function ProfileHome(props) {
         <div className='claude-profile-home-timeline'>
           <div className='claude-profile-home-timeline-main'>
             <div className='claude-contrib-section'>
-              <h2 className='claude-contrib-title'>{yearEvents.length} contributions in the last year</h2>
+              <h2 className='claude-contrib-title'>{contributionTitle}</h2>
               <section
                 className='claude-contrib-card'
                 style={{
@@ -402,8 +447,8 @@ export default function ProfileHome(props) {
                     <button
                       key={`mobile-${year}`}
                       type='button'
-                      className={`claude-year-button ${year === selectedYear ? 'active' : ''}`}
-                      onClick={() => setSelectedYear(year)}>
+                      className={`claude-year-button ${isYearModeActive && year === selectedYear ? 'active' : ''}`}
+                      onClick={() => handleSelectYear(year)}>
                       {year}
                     </button>
                   ))}
@@ -431,11 +476,17 @@ export default function ProfileHome(props) {
                     {heatmapData.cells.map(cell => (
                       <div
                         key={cell.key}
-                        className={`claude-contrib-cell level-${getHeatmapLevel(
-                          cell.count,
-                          heatmapData.maxCount
-                        )}`}
-                        title={`${cell.key}: ${cell.count} update${cell.count === 1 ? '' : 's'}`}
+                        className={`claude-contrib-cell ${
+                          isYearModeActive && !cell.inRange
+                            ? 'is-placeholder'
+                            : `level-${getHeatmapLevel(cell.count, heatmapData.maxCount)}`
+                        }`}
+                        title={
+                          isYearModeActive && !cell.inRange
+                            ? ''
+                            : `${cell.key}: ${cell.count} update${cell.count === 1 ? '' : 's'}`
+                        }
+                        aria-hidden={isYearModeActive && !cell.inRange}
                       />
                     ))}
                   </div>
@@ -631,8 +682,8 @@ export default function ProfileHome(props) {
               <button
                 key={year}
                 type='button'
-                className={`claude-year-button ${year === selectedYear ? 'active' : ''}`}
-                onClick={() => setSelectedYear(year)}>
+                className={`claude-year-button ${isYearModeActive && year === selectedYear ? 'active' : ''}`}
+                onClick={() => handleSelectYear(year)}>
                 {year}
               </button>
             ))}
