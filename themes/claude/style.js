@@ -121,7 +121,7 @@ const Style = () => {
         --claude-profile-divider-border: rgb(48 54 61 / 0.7);
         --claude-profile-contact-hover: #F0F6FC;
         --claude-home-card-bg: rgb(255 255 255 / 0.03);
-        --claude-home-card-border: rgb(48 54 61 / 0.7);
+        --claude-home-card-border: rgb(61, 68, 77);
         --claude-home-link: #58A6FF;
         --claude-contrib-l0: #151B23;
         --claude-contrib-l1: #033A16;
@@ -143,10 +143,10 @@ const Style = () => {
         --claude-callout-tip-text: rgb(134 239 172);
         --claude-gh-fg-default: rgb(240, 246, 252);
         --claude-gh-fg-muted: #9198a1;
-        --claude-gh-border: rgb(48 54 61);
+        --claude-gh-border: rgb(61, 68, 77);
         --claude-gh-link: rgb(68, 147, 248);
         --claude-gh-link-hover-bg: rgb(68 147 248 / 0.12);
-        --claude-timeline-line: rgb(48 54 61 / 0.7);
+        --claude-timeline-line: rgba(61, 68, 77, 0.7);
         --claude-badge-bg: rgb(33, 40, 48);
         --claude-badge-border: rgb(13, 17, 23);
       }
@@ -178,7 +178,7 @@ const Style = () => {
        * ======================================== */
       h1, h2, h3, h4, h5, h6 {
         font-family: var(--claude-heading-font);
-        color: var(--claude-text-primary);
+        color: var(--claude-text-strong);
         letter-spacing: -0.02em;
         line-height: 1.3;
       }
@@ -499,23 +499,191 @@ const Style = () => {
         text-decoration: none;
         padding: 1.125rem 1.25rem;
       }
-      .claude-readme-card:hover {
-        color: var(--claude-text-primary);
-        border-color: var(--claude-border);
+      .dark .claude-readme-card .markdown-body {
+        color-scheme: dark;
+        --fgColor-accent: #4493f8;
+        --bgColor-attention-muted: #bb800926;
+        --bgColor-default: #0d1117;
+        --bgColor-muted: #151b23;
+        --bgColor-neutral-muted: #656c7633;
+        --borderColor-accent-emphasis: #1f6feb;
+        --borderColor-attention-emphasis: #9e6a03;
+        --borderColor-danger-emphasis: #da3633;
+        --borderColor-default: #3d444d;
+        --borderColor-done-emphasis: #8957e5;
+        --borderColor-success-emphasis: #238636;
+        --color-prettylights-syntax-brackethighlighter-angle: #9198a1;
+        --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+        --color-prettylights-syntax-carriage-return-bg: #b62324;
+        --color-prettylights-syntax-carriage-return-text: #f0f6fc;
+        --color-prettylights-syntax-comment: #9198a1;
+        --color-prettylights-syntax-constant: #79c0ff;
+        --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+        --color-prettylights-syntax-entity: #d2a8ff;
+        --color-prettylights-syntax-entity-tag: #7ee787;
+        --color-prettylights-syntax-keyword: #ff7b72;
+        --color-prettylights-syntax-markup-bold: #f0f6fc;
+        --color-prettylights-syntax-markup-changed-bg: #5a1e02;
+        --color-prettylights-syntax-markup-changed-text: #ffdfb6;
+        --color-prettylights-syntax-markup-deleted-bg: #67060c;
+        --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+        --color-prettylights-syntax-markup-heading: #1f6feb;
+        --color-prettylights-syntax-markup-ignored-bg: #1158c7;
+        --color-prettylights-syntax-markup-ignored-text: #f0f6fc;
+        --color-prettylights-syntax-markup-inserted-bg: #033a16;
+        --color-prettylights-syntax-markup-inserted-text: #aff5b4;
+        --color-prettylights-syntax-markup-italic: #f0f6fc;
+        --color-prettylights-syntax-markup-list: #f2cc60;
+        --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+        --color-prettylights-syntax-storage-modifier-import: #f0f6fc;
+        --color-prettylights-syntax-string: #a5d6ff;
+        --color-prettylights-syntax-string-regexp: #7ee787;
+        --color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
+        --color-prettylights-syntax-variable: #ffa657;
+        --fgColor-attention: #d29922;
+        --fgColor-danger: #f85149;
+        --fgColor-default: #f0f6fc;
+        --fgColor-done: #ab7df8;
+        --fgColor-muted: #9198a1;
+        --fgColor-success: #3fb950;
+        --borderColor-muted: #3d444db3;
+        --color-prettylights-syntax-invalid-illegal-bg: var(--bgColor-danger-muted);
+        --color-prettylights-syntax-invalid-illegal-text: var(--fgColor-danger);
+        --focus-outlineColor: var(--borderColor-accent-emphasis);
+        --borderColor-neutral-muted: var(--borderColor-muted);
+      }
+      .light .claude-readme-card .markdown-body {
+        color-scheme: light;
+        --fgColor-danger: #d1242f;
+        --bgColor-attention-muted: #fff8c5;
+        --bgColor-muted: #f6f8fa;
+        --bgColor-neutral-muted: #818b981f;
+        --borderColor-accent-emphasis: #0969da;
+        --borderColor-attention-emphasis: #9a6700;
+        --borderColor-danger-emphasis: #cf222e;
+        --borderColor-default: #d1d9e0;
+        --borderColor-done-emphasis: #8250df;
+        --borderColor-success-emphasis: #1a7f37;
+        --color-prettylights-syntax-brackethighlighter-angle: #59636e;
+        --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+        --color-prettylights-syntax-carriage-return-bg: #cf222e;
+        --color-prettylights-syntax-carriage-return-text: #f6f8fa;
+        --color-prettylights-syntax-comment: #59636e;
+        --color-prettylights-syntax-constant: #0550ae;
+        --color-prettylights-syntax-constant-other-reference-link: #0a3069;
+        --color-prettylights-syntax-entity: #6639ba;
+        --color-prettylights-syntax-entity-tag: #0550ae;
+        --color-prettylights-syntax-invalid-illegal-text: var(--fgColor-danger);
+        --color-prettylights-syntax-keyword: #cf222e;
+        --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
+        --color-prettylights-syntax-markup-changed-text: #953800;
+        --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+        --color-prettylights-syntax-markup-deleted-text: #82071e;
+        --color-prettylights-syntax-markup-heading: #0550ae;
+        --color-prettylights-syntax-markup-ignored-bg: #0550ae;
+        --color-prettylights-syntax-markup-ignored-text: #d1d9e0;
+        --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+        --color-prettylights-syntax-markup-inserted-text: #116329;
+        --color-prettylights-syntax-markup-list: #3b2300;
+        --color-prettylights-syntax-meta-diff-range: #8250df;
+        --color-prettylights-syntax-string: #0a3069;
+        --color-prettylights-syntax-string-regexp: #116329;
+        --color-prettylights-syntax-sublimelinter-gutter-mark: #818b98;
+        --color-prettylights-syntax-variable: #953800;
+        --fgColor-accent: #0969da;
+        --fgColor-attention: #9a6700;
+        --fgColor-done: #8250df;
+        --fgColor-muted: #59636e;
+        --fgColor-success: #1a7f37;
+        --bgColor-default: #ffffff;
+        --borderColor-muted: #d1d9e0b3;
+        --color-prettylights-syntax-invalid-illegal-bg: var(--bgColor-danger-muted);
+        --color-prettylights-syntax-markup-bold: #1f2328;
+        --color-prettylights-syntax-markup-italic: #1f2328;
+        --color-prettylights-syntax-storage-modifier-import: #1f2328;
+        --fgColor-default: #1f2328;
+        --focus-outlineColor: var(--borderColor-accent-emphasis);
+        --borderColor-neutral-muted: var(--borderColor-muted);
+      }
+      #theme-claude .claude-readme-card .markdown-body h1,
+      #theme-claude .claude-readme-card .markdown-body h2,
+      #theme-claude .claude-readme-card .markdown-body h3,
+      #theme-claude .claude-readme-card .markdown-body h4,
+      #theme-claude .claude-readme-card .markdown-body h5,
+      #theme-claude .claude-readme-card .markdown-body h6 {
+        color: var(--fgColor-default) !important;
+        font-family: var(
+          --fontStack-sansSerif,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          'Noto Sans',
+          Helvetica,
+          Arial,
+          sans-serif,
+          'Apple Color Emoji',
+          'Segoe UI Emoji'
+        ) !important;
+        letter-spacing: normal !important;
+      }
+      #theme-claude .claude-readme-card .markdown-body table th,
+      #theme-claude .claude-readme-card .markdown-body table td {
+        text-align: left !important;
+        vertical-align: top;
+        font-weight: 400;
+      }
+      #theme-claude .claude-readme-card .markdown-body table {
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+        border: 1px solid var(--borderColor-default) !important;
+      }
+      #theme-claude .claude-readme-card .markdown-body table tr {
+        border-top: 0 !important;
+      }
+      #theme-claude .claude-readme-card .markdown-body table th,
+      #theme-claude .claude-readme-card .markdown-body table td {
+        border: 0 !important;
+        border-right: 1px solid var(--borderColor-default) !important;
+        border-bottom: 1px solid var(--borderColor-default) !important;
+      }
+      #theme-claude .claude-readme-card .markdown-body table tr > *:last-child {
+        border-right: 0 !important;
+      }
+      #theme-claude .claude-readme-card .markdown-body table tbody tr:last-child > * {
+        border-bottom: 0 !important;
+      }
+      #theme-claude .claude-readme-card .markdown-body table thead th,
+      #theme-claude .claude-readme-card .markdown-body table th[scope='col'] {
+        font-weight: 600;
+      }
+      #theme-claude .claude-readme-card .markdown-body table tbody th[scope='row'] {
+        font-weight: 600;
+        background-color: var(--bgColor-muted);
       }
       .claude-readme-card-meta {
         box-sizing: border-box;
-        color: rgb(31, 35, 40);
+        color: var(--claude-gh-fg-default);
         color-scheme: light;
         display: block;
         font-family: "Monaspace Neon", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
         font-size: var(--h6-size, 12px) !important;
         font-weight: 400;
         line-height: 1.5;
-        margin-bottom: var(1rem, 16px) !important;
+        margin-bottom: 16px !important;
         overflow-wrap: break-word;
         text-size-adjust: 100%;
         unicode-bidi: isolate;
+      }
+      .claude-readme-card-meta-ext {
+        display: inline;
+        color: var(--claude-gh-fg-muted);
+      }
+      .dark .claude-readme-card-meta {
+        color: rgb(240, 246, 252);
+        color-scheme: dark;
+      }
+      .dark .claude-readme-card-meta-ext {
+        color: var(--claude-gh-fg-muted);
       }
       .claude-readme-card-excerpt {
         margin: 0;

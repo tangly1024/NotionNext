@@ -137,7 +137,7 @@ export async function getStaticProps(req) {
       })
     )
 
-    const readmeCacheKey = `readme_render_snapshot_${normalizeId(readmePage.id)}_${locale || 'default'}`
+    const readmeCacheKey = `readme_render_snapshot_v2_${normalizeId(readmePage.id)}_${locale || 'default'}`
     console.log(`[README] CLAUDE_README_CACHE_ENABLED=${readmeCacheEnabled}`)
     const cachedReadme = readmeCacheEnabled
       ? await getDataFromCache(readmeCacheKey, true)

@@ -373,7 +373,8 @@ export default function ProfileHome(props) {
       <div className='claude-profile-home-main'>
         <div className='claude-readme-card'>
           <div className='claude-readme-card-meta'>
-            README.md
+            README
+            <span className='claude-readme-card-meta-ext'>.md</span>
           </div>
           {readmeHtml ? (
             <div
