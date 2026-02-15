@@ -8,25 +8,24 @@ import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 import { getPageContentText } from '@/lib/db/notion/getPageContentText'
+import { getReadmeMarkdown, renderMarkdownToHtml } from '@/lib/db/notion/notionBlocksToHtml'
 
-const getLastSlugPart = value => {
+const normalizeSlugToken = value => {
   if (!value || typeof value !== 'string') return ''
   return value
+    .toLowerCase()
+    .split('?')[0]
+    .split('#')[0]
     .replace(/^\/+|\/+$/g, '')
     .replace(/\.html$/i, '')
-    .split('/')
-    .pop()
-    .toLowerCase()
 }
 
-const isAboutPage = page => {
-  if (!page || page.type !== 'Page' || page.status !== 'Published') {
-    return false
-  }
-  const slugTail = getLastSlugPart(page.slug)
-  const hrefTail = getLastSlugPart(page.href)
-  return slugTail === 'about' || hrefTail === 'about'
+const isReadmePage = page => {
+  if (!page || !['Published', 'Invisible'].includes(page.status)) return false
+  return normalizeSlugToken(page.slug) === 'readme.md'
 }
+
+const normalizeId = value => (value || '').toString().replace(/-/g, '').toLowerCase()
 
 /**
  * 首页布局
@@ -76,28 +75,49 @@ export async function getStaticProps(req) {
     }
   }
 
-  // 首页 Profile 卡片使用 slug=about 的页面内容
-  const aboutPage = props.allPages?.find(isAboutPage)
-  if (aboutPage) {
-    let excerpt = aboutPage.summary || ''
-    if (!excerpt && !aboutPage.password) {
-      const aboutBlockMap = await getPostBlocks(aboutPage.id, 'slug', 24)
-      excerpt = getPageContentText(aboutPage, aboutBlockMap)
+  // 首页 Profile 卡片使用 readme 页面内容
+  const readmePage = props.allPages?.find(isReadmePage)
+  if (readmePage) {
+    let excerpt = ''
+    let readmeBlockMap = null
+    if (!readmePage.password) {
+      readmeBlockMap = await getPostBlocks(readmePage.id, 'slug', 24)
+      const pageBlocks = Object.values(readmeBlockMap?.block || {})
+      const currentPageBlock = pageBlocks.find(item => {
+        const value = item?.value
+        return value?.type === 'page' && normalizeId(value.id) === normalizeId(readmePage.id)
+      })?.value
+
+      const readmePageForExtract = {
+        ...readmePage,
+        content: currentPageBlock?.content || readmePage.content || []
+      }
+
+      excerpt = getPageContentText(readmePageForExtract, readmeBlockMap)
         .replace(/\s+/g, ' ')
         .trim()
         .slice(0, 220)
     }
 
-    props.aboutPage = {
-      id: aboutPage.id,
-      title: aboutPage.title,
-      href: aboutPage.href,
-      slug: aboutPage.slug,
-      summary: aboutPage.summary || '',
-      excerpt
+    const readmeMarkdown = getReadmeMarkdown(readmePage.id, readmeBlockMap)
+    const { html: readmeHtml, source: readmeHtmlSource } = readmeMarkdown
+      ? await renderMarkdownToHtml(readmeMarkdown)
+      : { html: '', source: 'github' }
+
+    props.readmePage = {
+      id: readmePage.id,
+      title: readmePage.title,
+      href: readmePage.href,
+      slug: readmePage.slug,
+      type: readmePage.type,
+      status: readmePage.status,
+      summary: readmePage.summary || '',
+      excerpt,
+      readmeHtml,
+      readmeHtmlSource // 'github' | 'local'，local 时需加载 highlight.js CSS
     }
   } else {
-    props.aboutPage = null
+    props.readmePage = null
   }
 
   // 生成robotTxt

@@ -1,21 +1,7 @@
 import SmartLink from '@/components/SmartLink'
-import { siteConfig } from '@/lib/config'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
-
-const getGithubHandle = githubUrl => {
-  if (!githubUrl || typeof githubUrl !== 'string') return ''
-
-  try {
-    const { pathname } = new URL(githubUrl)
-    return pathname.replace(/^\/+|\/+$/g, '')
-  } catch (error) {
-    return githubUrl
-      .replace(/^https?:\/\/github\.com\//i, '')
-      .replace(/^\/+|\/+$/g, '')
-  }
-}
 
 const normalizeDate = value => {
   if (!value) return null
@@ -90,17 +76,45 @@ const pluralize = (count, singular, plural = `${singular}s`) => {
   return count === 1 ? singular : plural
 }
 
+const getLastSlugPart = value => {
+  if (!value || typeof value !== 'string') return ''
+  try {
+    const normalized = decodeURIComponent(value).split('?')[0].split('#')[0]
+    return normalized
+      .replace(/^\/+|\/+$/g, '')
+      .replace(/\.html$/i, '')
+      .split('/')
+      .pop()
+      .toLowerCase()
+  } catch (error) {
+    return value
+      .split('?')[0]
+      .split('#')[0]
+      .replace(/^\/+|\/+$/g, '')
+      .replace(/\.html$/i, '')
+      .split('/')
+      .pop()
+      .toLowerCase()
+  }
+}
+
+const isReadmeLikePage = page => {
+  if (!page) return false
+  return getLastSlugPart(page.slug) === 'readme.md'
+}
+
 export default function ProfileHome(props) {
-  const { posts = [], aboutPage } = props
-  const githubUrl = siteConfig('CONTACT_GITHUB')
-  const githubHandle = getGithubHandle(githubUrl)
+  const { posts = [], readmePage } = props
   const heatmapGridRef = useRef(null)
   const [contribCellSize, setContribCellSize] = useState(11)
 
-  const aboutHref = aboutPage?.href || '/about'
-  const aboutTitle = aboutPage?.title || 'About'
-  const aboutExcerpt =
-    aboutPage?.excerpt || aboutPage?.summary || siteConfig('BIO') || ''
+  const readmeSource = useMemo(() => {
+    if (readmePage) return readmePage
+    return posts.find(isReadmeLikePage) || null
+  }, [readmePage, posts])
+
+  const readmeHtml = readmeSource?.readmeHtml || ''
+  const readmeExcerpt = readmeSource?.excerpt || ''
 
   const timelinePosts = useMemo(() => {
     return posts
@@ -357,13 +371,19 @@ export default function ProfileHome(props) {
   return (
     <div className='claude-profile-home'>
       <div className='claude-profile-home-main'>
-        <SmartLink href={aboutHref} className='claude-about-card'>
-          <div className='claude-about-card-meta'>
-            {(githubHandle || siteConfig('AUTHOR')) + '/README.md'}
+        <div className='claude-readme-card'>
+          <div className='claude-readme-card-meta'>
+            README.md
           </div>
-          <div className='claude-about-card-title'>{aboutTitle}</div>
-          <p className='claude-about-card-excerpt'>{aboutExcerpt}</p>
-        </SmartLink>
+          {readmeHtml ? (
+            <div
+              className='markdown-body'
+              dangerouslySetInnerHTML={{ __html: readmeHtml }}
+            />
+          ) : (
+            <p className='claude-readme-card-excerpt'>{readmeExcerpt}</p>
+          )}
+        </div>
 
         <div className='claude-profile-home-timeline'>
           <div className='claude-profile-home-timeline-main'>

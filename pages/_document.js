@@ -28,8 +28,10 @@ const darkModeScript = `
     }
   }
   
-  // 立即设置 html 元素的类
-  document.documentElement.classList.add(shouldBeDark ? 'dark' : 'light')
+  // 立即设置 html 元素的类与 data-theme，供主题样式变量读取
+  const currentTheme = shouldBeDark ? 'dark' : 'light'
+  document.documentElement.classList.add(currentTheme)
+  document.documentElement.setAttribute('data-theme', currentTheme)
 })()
 `
 

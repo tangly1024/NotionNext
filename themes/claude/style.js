@@ -80,13 +80,22 @@ const Style = () => {
         --claude-code-bg: #FFFFFF;
         --claude-code-border: rgba(0, 0, 0, 0.08);
         --claude-code-shell-bg: rgb(243 243 243);
-        --claude-code-shell-border: rgba(10, 10, 10, 0.1);
+        --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: rgb(10 10 10);
         --claude-link: #DA7756;
         --claude-blockquote-border: #E5E5E0;
         --claude-callout-tip-bg: #f0fdf4;
         --claude-callout-tip-border: #bbf7d0;
         --claude-callout-tip-text: #166534;
+        --claude-gh-fg-default: rgb(31, 35, 40);
+        --claude-gh-fg-muted: rgb(89, 99, 110);
+        --claude-gh-border: rgb(209, 217, 224);
+        --claude-gh-link: rgb(9, 105, 218);
+        --claude-gh-link-hover-bg: rgb(9 105 218 / 0.08);
+        --claude-gh-font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        --claude-timeline-line: rgba(209, 217, 224, 0.7);
+        --claude-badge-bg: rgb(246, 248, 250);
+        --claude-badge-border: rgb(255, 255, 255);
         --claude-heading-font: 'Anthropic Serif Display', Georgia, 'Times New Roman', serif;
         --claude-body-font: 'Anthropic Sans Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         --claude-mono-font: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
@@ -132,6 +141,14 @@ const Style = () => {
         --claude-callout-tip-bg: rgb(22 163 74 / 0.2);
         --claude-callout-tip-border: rgb(20 83 45);
         --claude-callout-tip-text: rgb(134 239 172);
+        --claude-gh-fg-default: rgb(240, 246, 252);
+        --claude-gh-fg-muted: #9198a1;
+        --claude-gh-border: rgb(48 54 61);
+        --claude-gh-link: rgb(68, 147, 248);
+        --claude-gh-link-hover-bg: rgb(68 147 248 / 0.12);
+        --claude-timeline-line: rgb(48 54 61 / 0.7);
+        --claude-badge-bg: rgb(33, 40, 48);
+        --claude-badge-border: rgb(13, 17, 23);
       }
 
       /* ========================================
@@ -183,6 +200,9 @@ const Style = () => {
       }
 
       /* Article links — terracotta, no underline (Notion already renders its own) */
+      #article-wrapper .notion-text {
+        font-weight: 400;
+      }
       #article-wrapper a {
         color: var(--claude-link);
       }
@@ -288,7 +308,7 @@ const Style = () => {
         font-feature-settings: normal;
         font-size: 15px;
         font-variation-settings: normal;
-        font-weight: 300;
+        font-weight: 400;
         height: 24px;
         line-height: 24px;
         padding-left: 9.5px;
@@ -462,9 +482,8 @@ const Style = () => {
         flex-direction: column;
         gap: 1.5rem;
       }
-      .claude-about-card,
-      .claude-contrib-card,
-      .claude-activity-card {
+      .claude-readme-card,
+      .claude-contrib-card {
         background: var(--claude-home-card-bg);
         border: 1px solid var(--claude-home-card-border);
         border-radius: 8px;
@@ -473,34 +492,39 @@ const Style = () => {
       .claude-activity-section {
         display: block;
       }
-      .claude-about-card {
+      .claude-readme-card {
+        background: var(--claude-bg);
         display: block;
         color: var(--claude-text-primary);
         text-decoration: none;
         padding: 1.125rem 1.25rem;
       }
-      .claude-about-card:hover {
+      .claude-readme-card:hover {
         color: var(--claude-text-primary);
         border-color: var(--claude-border);
       }
-      .claude-about-card-meta {
-        font-size: 0.875rem;
-        color: var(--claude-text-secondary);
-        margin-bottom: 0.75rem;
+      .claude-readme-card-meta {
+        box-sizing: border-box;
+        color: rgb(31, 35, 40);
+        color-scheme: light;
+        display: block;
+        font-family: "Monaspace Neon", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: var(--h6-size, 12px) !important;
+        font-weight: 400;
+        line-height: 1.5;
+        margin-bottom: var(1rem, 16px) !important;
+        overflow-wrap: break-word;
+        text-size-adjust: 100%;
+        unicode-bidi: isolate;
       }
-      .claude-about-card-title {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: var(--claude-text-primary);
-        margin-bottom: 0.5rem;
-      }
-      .claude-about-card-excerpt {
+      .claude-readme-card-excerpt {
         margin: 0;
         color: var(--claude-text-secondary);
         line-height: 1.7;
         font-size: 0.95rem;
       }
       .claude-contrib-card {
+        background: var(--claude-bg);
         padding: 1rem 1rem 0.875rem;
         --claude-contrib-gap: 3px;
         --claude-contrib-cell-size: 11px;
@@ -510,10 +534,10 @@ const Style = () => {
       .claude-contrib-title,
       .claude-activity-title {
         box-sizing: border-box;
-        color: rgb(31 35 40);
+        color: var(--claude-gh-fg-default);
         color-scheme: light;
         display: block;
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-family: var(--claude-gh-font-family);
         font-size: var(--h4-size, 16px);
         font-weight: 400;
         height: 24px;
@@ -530,7 +554,7 @@ const Style = () => {
       }
       .dark .claude-contrib-title,
       .dark .claude-activity-title {
-        color: rgb(240 246 252);
+        color: var(--claude-gh-fg-default);
         color-scheme: dark;
       }
       .claude-contrib-months {
@@ -545,7 +569,7 @@ const Style = () => {
         box-sizing: border-box;
         color: var(--claude-contrib-label);
         display: block;
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-family: var(--claude-gh-font-family);
         font-size: 12px;
         font-weight: 400;
         height: 18px;
@@ -636,11 +660,11 @@ const Style = () => {
       }
       .claude-activity-group-title {
         box-sizing: border-box;
-        color: rgb(31 35 40);
+        color: var(--claude-gh-fg-default);
         color-scheme: light;
         display: block;
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-        font-size: var(--h6-size, 12px) !important;
+        font-family: var(--claude-gh-font-family);
+        font-size: var(--h6-size, 12px);
         font-weight: 600;
         height: 14px;
         line-height: 1.5;
@@ -648,7 +672,7 @@ const Style = () => {
         padding-top: 4px;
         padding-right: 8px;
         padding-bottom: 4px;
-        border-bottom: 1px solid rgb(209, 217, 224);
+        border-bottom: 1px solid var(--claude-gh-border);
         text-size-adjust: 100%;
         unicode-bidi: isolate;
         margin-top: 0;
@@ -664,12 +688,12 @@ const Style = () => {
         background: var(--claude-bg);
       }
       .claude-activity-group-title-year {
-        color: rgb(89, 99, 110);
+        color: var(--claude-gh-fg-muted);
         color-scheme: light;
         display: inline-block;
         background: var(--claude-bg);
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-        font-size: var(--h6-size, 12px) !important;
+        font-family: var(--claude-gh-font-family);
+        font-size: var(--h6-size, 12px);
         font-weight: 600;
         line-height: 1.5;
         overflow-wrap: break-word;
@@ -678,12 +702,9 @@ const Style = () => {
         padding-right: 0.75rem;
       }
       .dark .claude-activity-group-title {
-        color: rgb(240 246 252);
+        color: var(--claude-gh-fg-default);
         color-scheme: dark;
-      }
-      .dark .claude-activity-group-title { border-bottom-color: rgb(48 54 61); }
-      .dark .claude-activity-group-title-year {
-        color: #9198a1;
+        border-bottom-color: var(--claude-gh-border);
       }
       .claude-activity-list {
         list-style: none;
@@ -698,7 +719,7 @@ const Style = () => {
         position: relative;
       }
       .claude-activity-item::before {
-        background-color: rgba(209, 217, 224, 0.7);
+        background-color: var(--claude-timeline-line);
         content: '';
         width: 0.125rem;
         display: block;
@@ -707,21 +728,18 @@ const Style = () => {
         bottom: 0;
         left: 0;
       }
-      .dark .claude-activity-item::before {
-        background-color: rgb(48 54 61 / 0.7);
-      }
       .claude-activity-item-badge {
         box-sizing: border-box;
-        background-color: rgb(246, 248, 250);
-        border-top: 2px solid rgb(255, 255, 255);
-        border-right: 2px solid rgb(255, 255, 255);
-        border-bottom-color: rgb(255, 255, 255);
+        background-color: var(--claude-badge-bg);
+        border-top: 2px solid var(--claude-badge-border);
+        border-right: 2px solid var(--claude-badge-border);
+        border-bottom-color: var(--claude-badge-border);
         border-bottom-style: solid;
         border-bottom-width: 2px;
-        border-left: 2px solid rgb(255, 255, 255);
-        color: rgb(89 99 110);
+        border-left: 2px solid var(--claude-badge-border);
+        color: var(--claude-gh-fg-muted);
         color-scheme: light;
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-family: var(--claude-gh-font-family);
         font-size: 14px;
         font-weight: 400;
         height: 32px;
@@ -750,12 +768,7 @@ const Style = () => {
         fill: currentColor;
       }
       .dark .claude-activity-item-badge {
-        background-color: rgb(33, 40, 48);
-        border-top-color: rgb(13, 17, 23);
-        border-right-color: rgb(13, 17, 23);
-        border-bottom-color: rgb(13, 17, 23);
-        border-left-color: rgb(13, 17, 23);
-        color: rgb(145, 152, 161);
+        color: var(--claude-gh-fg-muted);
       }
       .claude-activity-item-body {
         color: var(--claude-text-secondary);
@@ -776,7 +789,7 @@ const Style = () => {
         border-radius: 6px;
         margin: 0;
         padding: 0.125rem 0.25rem 0.125rem 0;
-        color: rgb(31 35 40);
+        color: var(--claude-gh-fg-default);
       }
       .claude-activity-summary-toggle::-webkit-details-marker {
         display: none;
@@ -785,21 +798,14 @@ const Style = () => {
         content: '';
       }
       .claude-activity-summary-toggle:hover {
-        color: rgb(68, 147, 248);
+        color: var(--claude-gh-link);
       }
       .claude-activity-summary-toggle:hover .claude-activity-item-summary,
       .claude-activity-summary-toggle:hover .claude-activity-summary-icons {
-        color: rgb(9, 105, 218);
-      }
-      .dark .claude-activity-summary-toggle:hover {
-        color: rgb(68, 147, 248);
-      }
-      .dark .claude-activity-summary-toggle:hover .claude-activity-item-summary,
-      .dark .claude-activity-summary-toggle:hover .claude-activity-summary-icons {
-        color: rgb(68, 147, 248);
+        color: var(--claude-gh-link);
       }
       .claude-activity-summary-icons {
-        color: rgb(89, 99, 110);
+        color: var(--claude-gh-fg-muted);
         display: inline-flex;
         align-items: center;
         flex-shrink: 0;
@@ -811,9 +817,8 @@ const Style = () => {
         fill: currentColor;
       }
       .claude-activity-item-badge,
-      .claude-activity-summary-icons,
       .claude-activity-subitem-icon {
-        color: rgb(89, 99, 110);
+        color: var(--claude-gh-fg-muted);
       }
       .claude-activity-summary-toggle .Details-content--open,
       .claude-activity-summary-toggle .Details-content--closed {
@@ -830,12 +835,6 @@ const Style = () => {
         align-items: initial;
         padding-top: 0;
       }
-      .dark .claude-activity-summary-toggle {
-        color: rgb(240 246 252);
-      }
-      .dark .claude-activity-summary-toggle .claude-activity-summary-icons {
-        color: rgb(145, 152, 161);
-      }
       .claude-activity-details .Details-content--closed {
         display: none;
       }
@@ -846,8 +845,8 @@ const Style = () => {
         display: inline-flex;
       }
       .claude-activity-item-summary {
-        color: rgb(31 35 40);
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        color: var(--claude-gh-fg-default);
+        font-family: var(--claude-gh-font-family);
         font-size: var(--h4-size, 16px);
         font-weight: 400;
         line-height: 1.25;
@@ -863,9 +862,6 @@ const Style = () => {
       .claude-activity-item-commit .claude-activity-item-summary {
         align-items: flex-start;
         padding-top: 0.4rem;
-      }
-      .dark .claude-activity-item-summary {
-        color: rgb(240 246 252);
       }
       .claude-activity-sublist {
         list-style: none;
@@ -897,7 +893,7 @@ const Style = () => {
         width: 1rem;
         height: 1rem;
         display: block;
-        color: rgb(89 99 110);
+        color: var(--claude-gh-fg-muted);
         fill: currentColor;
         flex-shrink: 0;
       }
@@ -914,7 +910,7 @@ const Style = () => {
       .claude-activity-subitem-create .claude-activity-link {
         display: inline-block;
         height: auto;
-        line-height: 1.25 !important;
+        line-height: 1.25;
         min-height: 0;
         margin-right: 0;
         position: relative;
@@ -927,27 +923,24 @@ const Style = () => {
         height: 16px;
         margin-right: 0.25rem;
       }
-      .dark .claude-activity-subitem-icon {
-        color: #9198a1;
-      }
       .claude-activity-link {
         --body-font-size: .875rem;
-        background-color: rgba(0, 0, 0, 0);
+        background-color: transparent;
         box-sizing: border-box;
-        color: rgb(9 105 218);
+        color: var(--claude-gh-link);
         color-scheme: light;
         cursor: pointer;
         display: inline;
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+        font-family: var(--claude-gh-font-family);
         font-size: var(--body-font-size, 14px);
         font-weight: 400;
         height: auto;
-        line-height: 1.25 !important;
+        line-height: 1.25;
         list-style-image: none;
         list-style-position: outside;
         list-style-type: none;
         overflow-wrap: break-word;
-        text-decoration-color: rgb(9 105 218);
+        text-decoration-color: var(--claude-gh-link);
         text-decoration-line: underline;
         text-decoration-style: solid;
         text-decoration-thickness: auto;
@@ -956,26 +949,19 @@ const Style = () => {
         width: auto;
       }
       .claude-activity-link:hover {
-        color: rgb(9 105 218);
+        color: var(--claude-gh-link);
         text-decoration: underline;
       }
-      .dark .claude-activity-link {
-        color: rgb(68 147 248);
-        color-scheme: dark;
-        text-decoration-color: rgb(68 147 248);
-      }
-      .dark .claude-activity-link:hover {
-        color: rgb(68 147 248);
-      }
+      .dark .claude-activity-link { color-scheme: dark; }
       .claude-activity-date {
         box-sizing: border-box;
-        color: rgb(89 99 110);
+        color: var(--claude-gh-fg-muted);
         color-scheme: light;
         display: block;
         flex-shrink: 0;
         float: right;
-        font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-        font-size: var(--h6-size, 12px) !important;
+        font-family: var(--claude-gh-font-family);
+        font-size: var(--h6-size, 12px);
         font-weight: 400;
         height: 22px;
         line-height: 1.5;
@@ -984,10 +970,7 @@ const Style = () => {
         text-size-adjust: 100%;
         white-space: nowrap;
       }
-      .dark .claude-activity-date {
-        color: #9198a1;
-        color-scheme: dark;
-      }
+      .dark .claude-activity-date { color-scheme: dark; }
       @media (max-width: 767px) {
         .claude-activity-item {
           margin-left: 0.5rem;
@@ -1021,12 +1004,12 @@ const Style = () => {
         transition: background-color 0.15s ease, color 0.15s ease;
       }
       .claude-year-button:hover {
-        background: rgba(9, 105, 218, 0.08);
+        background: var(--claude-gh-link-hover-bg);
         color: var(--claude-home-link);
       }
       .claude-year-button.active {
         background: var(--claude-home-link);
-        color: #FFFFFF;
+        color: #fff;
       }
       .claude-year-switcher-mobile {
         display: none;
