@@ -966,8 +966,23 @@ const Style = () => {
         gap: 0.5rem;
         margin-top: 0.55rem;
         padding-right: 32px;
-        color: var(--claude-text-secondary);
-        font-size: 0.75rem;
+      }
+      .claude-contrib-legend > span {
+        box-sizing: border-box;
+        color: var(--claude-gh-fg-muted);
+        color-scheme: light;
+        display: block;
+        font-family: var(--claude-gh-font-family);
+        font-size: var(--h6-size, 12px);
+        font-weight: 400;
+        line-height: 1.5;
+        overflow-wrap: break-word;
+        text-align: center;
+        text-size-adjust: 100%;
+      }
+      .dark .claude-contrib-legend > span {
+        color: var(--claude-gh-fg-muted);
+        color-scheme: dark;
       }
       .claude-contrib-legend-cells {
         display: inline-flex;
@@ -979,6 +994,111 @@ const Style = () => {
         border: 0;
         border-radius: 0;
         padding: 0;
+      }
+      .claude-activity-year-dropdown {
+        display: none;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .claude-activity-year-summary {
+        list-style: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.125rem;
+        min-width: 0;
+        width: auto;
+        height: 32px;
+        padding: 0 0.625rem;
+        border: 1px solid var(--claude-gh-border);
+        border-radius: 8px;
+        background: var(--claude-bg);
+        color: var(--claude-gh-fg-default);
+        font-family: var(--claude-gh-font-family);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        cursor: pointer;
+        user-select: none;
+        box-sizing: border-box;
+      }
+      .claude-activity-year-summary::-webkit-details-marker {
+        display: none;
+      }
+      .claude-activity-year-summary-label {
+        color: var(--claude-gh-fg-muted);
+      }
+      .claude-activity-year-summary-main {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.1rem;
+      }
+      .claude-activity-year-summary-caret {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        color: var(--claude-gh-fg-muted);
+      }
+      .claude-activity-year-summary-caret.Button-trailingAction {
+        margin: 0;
+        padding: 0;
+      }
+      .claude-activity-year-summary-caret svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+      .claude-activity-year-menu {
+        list-style: none;
+        margin: 8px 0 0;
+        padding: 0.35rem 0;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        min-width: 146px;
+        border: 1px solid var(--claude-gh-border);
+        border-radius: 16px;
+        background: var(--claude-bg);
+        box-shadow: 0 12px 32px rgb(31 35 40 / 0.16);
+        z-index: 40;
+      }
+      .claude-activity-year-option {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: var(--claude-gh-fg-default);
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.65rem 0.85rem;
+        text-align: left;
+        font-family: var(--claude-gh-font-family);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .claude-activity-year-option:hover {
+        background: var(--claude-home-card-bg);
+      }
+      .claude-activity-year-option-check {
+        width: 16px;
+        min-width: 16px;
+        height: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--claude-gh-fg-muted);
+      }
+      .claude-activity-year-option-check svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+      .dark .claude-activity-year-menu {
+        box-shadow: 0 16px 36px rgb(0 0 0 / 0.45);
       }
       .claude-activity-empty {
         box-sizing: border-box;
@@ -1321,20 +1441,6 @@ const Style = () => {
         white-space: nowrap;
       }
       .dark .claude-activity-date { color-scheme: dark; }
-      @media (max-width: 767px) {
-        .claude-activity-item {
-          margin-left: 0.5rem;
-        }
-        .claude-activity-item-badge {
-          width: 1.8rem;
-          height: 1.8rem;
-          margin-left: calc(1.8rem / -2 + 1px);
-          margin-right: 0.55rem;
-        }
-        .claude-activity-item-summary {
-          font-size: 15px;
-        }
-      }
       .claude-year-switcher {
         width: 100%;
         max-width: 128px;
@@ -1366,6 +1472,7 @@ const Style = () => {
         overflow-wrap: break-word;
         overflow-x: hidden;
         overflow-y: hidden;
+        text-overflow: ellipsis;
         padding-top: 8px;
         padding-right: 16px;
         padding-bottom: 8px;
@@ -1376,7 +1483,6 @@ const Style = () => {
         text-decoration-line: none;
         text-decoration-style: solid;
         text-decoration-thickness: auto;
-        text-overflow: ellipsis;
         text-size-adjust: 100%;
         -webkit-text-size-adjust: 100%;
         text-wrap-mode: nowrap;
@@ -1407,66 +1513,16 @@ const Style = () => {
       .claude-year-filter-item.active:focus-visible {
         box-shadow: inset 0 0 0 3px #fff;
       }
-      .claude-year-switcher-mobile {
-        display: none;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 0.5rem;
-        margin-bottom: 0.6rem;
-      }
-      .claude-year-mobile-label {
-        color: var(--claude-gh-fg-muted);
-        font-family: var(--claude-gh-font-family);
-        font-size: 12px;
-        line-height: 1;
-      }
-      .claude-year-mobile-control {
-        position: relative;
-        min-width: 106px;
-      }
-      .claude-year-mobile-select {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        width: 100%;
-        height: 32px;
-        border: 1px solid var(--claude-gh-border);
-        border-radius: 6px;
-        padding: 0 1.9rem 0 0.65rem;
-        color: var(--claude-gh-fg-default);
-        background: var(--claude-bg);
-        box-shadow: inset 0 1px 0 rgb(27 31 36 / 0.04);
-        font-family: var(--claude-gh-font-family);
-        font-size: 12px;
-        line-height: 32px;
-      }
-      .claude-year-mobile-select:focus-visible {
-        outline: 2px solid var(--claude-gh-link);
-        outline-offset: 2px;
-      }
-      .dark .claude-year-mobile-select {
-        background: var(--claude-bg-secondary);
-        color: var(--claude-gh-fg-default);
-        border-color: var(--claude-gh-border);
-        box-shadow: none;
-      }
-      .claude-year-mobile-caret {
-        pointer-events: none;
-        position: absolute;
-        right: 0.5rem;
-        top: 50%;
-        width: 16px;
-        height: 16px;
-        transform: translateY(-50%);
-        color: var(--claude-gh-fg-muted);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .claude-year-mobile-caret svg {
-        width: 16px;
-        height: 16px;
-        fill: currentColor;
+      @media (max-width: 767px) {
+        .claude-activity-item {
+          margin-left: 0.5rem;
+        }
+        .claude-activity-item-badge {
+          width: 1.8rem;
+          height: 1.8rem;
+          margin-left: calc(1.8rem / -2 + 1px);
+          margin-right: 0.55rem;
+        }
       }
       @media (max-width: 1023px) {
         .claude-profile-home-timeline {
@@ -1475,13 +1531,129 @@ const Style = () => {
         .claude-year-switcher {
           display: none;
         }
-        .claude-year-switcher-mobile {
+        .claude-activity-header {
           display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.75rem;
+          margin-bottom: 8px;
+        }
+        .claude-activity-header .claude-activity-title {
+          margin: 0;
+          height: auto;
+        }
+        .claude-activity-year-dropdown {
+          display: block;
+        }
+        .claude-activity-year-summary-label,
+        .claude-activity-year-summary-value {
+          box-sizing: border-box;
+          color-scheme: light;
+          cursor: pointer;
+          display: inline;
+          font-family: var(--claude-gh-font-family);
+          font-feature-settings: normal;
+          font-kerning: auto;
+          font-language-override: normal;
+          font-optical-sizing: auto;
+          font-size: 0.875rem;
+          font-size-adjust: none;
+          font-stretch: 100%;
+          font-style: normal;
+          font-variant-alternates: normal;
+          font-variant-caps: normal;
+          font-variant-east-asian: normal;
+          font-variant-emoji: normal;
+          font-variant-ligatures: normal;
+          font-variant-numeric: normal;
+          font-variant-position: normal;
+          font-variation-settings: normal;
+          font-weight: 500;
+          height: auto;
+          letter-spacing: normal;
+          line-height: 1.5;
+          overflow-wrap: break-word;
+          text-align: center;
+          text-indent: 0;
+          text-rendering: auto;
+          text-shadow: none;
+          text-size-adjust: 100%;
+          text-transform: none;
+          text-wrap-mode: nowrap;
+          user-select: none;
+          white-space-collapse: collapse;
+          width: auto;
+          word-spacing: 0;
+        }
+        .claude-activity-year-summary-main {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.1rem;
+        }
+        .claude-activity-year-summary-label {
+          color: var(--claude-gh-fg-muted);
+          fill: var(--claude-gh-fg-muted);
+        }
+        .claude-activity-year-summary-value {
+          color: rgb(37, 41, 46);
+          fill: rgb(37, 41, 46);
+        }
+        .claude-activity-year-summary-caret {
+          color: rgb(37, 41, 46);
+          fill: rgb(37, 41, 46);
+        }
+        .dark .claude-activity-year-summary-label,
+        .dark .claude-activity-year-summary-value {
+          color-scheme: dark;
+        }
+        .dark .claude-activity-year-summary-label {
+          color: var(--claude-gh-fg-muted);
+          fill: var(--claude-gh-fg-muted);
+        }
+        .dark .claude-activity-year-summary-value {
+          color: rgb(240, 246, 252);
+          fill: rgb(240, 246, 252);
+        }
+        .dark .claude-activity-year-summary-caret {
+          color: rgb(240, 246, 252);
+          fill: rgb(240, 246, 252);
         }
       }
       @media (max-width: 767px) {
         .claude-contrib-card {
           --claude-contrib-gap: 2px;
+        }
+        .claude-contrib-scroll {
+          width: 100%;
+          min-width: 0;
+        }
+        .claude-contrib-canvas {
+          width: max-content;
+          min-width: calc(
+            var(--claude-weekday-width) + var(--claude-weekday-gap)
+            + var(--claude-contrib-week-count, 53)
+            * (var(--claude-contrib-cell-size) + var(--claude-contrib-gap))
+            - var(--claude-contrib-gap)
+          );
+        }
+        .claude-contrib-scroll {
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding-bottom: 2px;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .claude-contrib-scroll::-webkit-scrollbar {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+        .claude-contrib-grid {
+          width: max-content;
+          min-width: max-content;
+          overflow: visible;
         }
       }
 

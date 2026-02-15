@@ -46,7 +46,6 @@ const formatTerminalLoginTime = date => {
  */
 export default function NavBar(props) {
   const { siteInfo } = useGlobal()
-  const subtitleDarkOnly = siteConfig('CLAUDE_SUBTITLE_DARK_ONLY', false, CONFIG)
   const avatar =
     siteConfig('CLAUDE_PROFILE_AVATAR', '', CONFIG) ||
     siteConfig('AVATAR') ||
@@ -224,11 +223,6 @@ export default function NavBar(props) {
           <SmartLink href='/'>
             <div className='claude-site-title' id='blog-name'>
               {blogName}
-            </div>
-            <div
-              className={`claude-site-subtitle mt-0.5 ${subtitleDarkOnly ? 'hidden dark:block' : ''}`}
-              id='blog-name-en'>
-              {siteConfig('CLAUDE_BLOG_NAME_EN')}
             </div>
           </SmartLink>
         </header>

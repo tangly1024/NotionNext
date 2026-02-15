@@ -89,7 +89,7 @@ export const MenuList = ({ customNav, customMenu }) => {
       <div id='nav-menu-mobile' className='flex md:hidden justify-center gap-4'>
         {links?.filter(l => l?.show !== false).map((link, index) => (
           <SmartLink key={index} href={link.href}>
-            <div className='claude-nav-link text-sm'>
+            <div className='claude-nav-link'>
               {renderMenuIcon(link.icon)}
               <span className='claude-nav-label'>{link.name}</span>
             </div>

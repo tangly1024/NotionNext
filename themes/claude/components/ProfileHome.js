@@ -374,10 +374,12 @@ export default function ProfileHome(props) {
     setSelectedActivityDayKey('')
   }
 
-  const handleSelectYearFromMobile = event => {
-    const value = Number(event.target.value)
-    if (Number.isNaN(value)) return
-    handleSelectYear(value)
+  const handleSelectYearFromDropdown = (year, event) => {
+    handleSelectYear(year)
+    const details = event?.currentTarget?.closest('details')
+    if (details && details.hasAttribute('open')) {
+      details.removeAttribute('open')
+    }
   }
 
   const handleSelectActivityDay = cell => {
@@ -565,6 +567,11 @@ export default function ProfileHome(props) {
     if (!gridEl || heatmapData.weekCount <= 0) return undefined
 
     const computeCellSize = () => {
+      if (window.innerWidth <= 767) {
+        setContribCellSize(prev => (prev === 11 ? prev : 11))
+        return
+      }
+
       const width = gridEl.clientWidth
       if (!width) return
 
@@ -572,7 +579,6 @@ export default function ProfileHome(props) {
       const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0
       const weekCount = Math.max(1, heatmapData.weekCount)
       const size = (width - gap * (weekCount - 1)) / weekCount
-
       if (size > 0 && Number.isFinite(size)) {
         setContribCellSize(size)
       }
@@ -616,66 +622,47 @@ export default function ProfileHome(props) {
                   '--claude-contrib-week-count': String(heatmapData.weekCount),
                   '--claude-contrib-cell-size': `${contribCellSize}px`
                 }}>
-
-                <div className='claude-year-switcher-mobile'>
-                  <span className='claude-year-mobile-label'>Year:</span>
-                  <div className='claude-year-mobile-control'>
-                    <select
-                      value={activeYear}
-                      onChange={handleSelectYearFromMobile}
-                      className='claude-year-mobile-select'
-                      aria-label='Select contribution year'>
-                      {years.map(year => (
-                        <option key={`mobile-${year}`} value={year}>
-                          {year}
-                        </option>
+                <div className='claude-contrib-scroll'>
+                  <div className='claude-contrib-canvas'>
+                    <div className='claude-contrib-months'>
+                      {heatmapData.monthMarkers.map(marker => (
+                        <span
+                          key={marker.key}
+                          style={{
+                            '--claude-marker-week': String(marker.weekIndex)
+                          }}>
+                          {marker.label}
+                        </span>
                       ))}
-                    </select>
-                    <span className='claude-year-mobile-caret' aria-hidden='true'>
-                      <svg viewBox='0 0 16 16' width='16' height='16'>
-                        <path d='m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z' />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
+                    </div>
 
-                <div className='claude-contrib-months'>
-                  {heatmapData.monthMarkers.map(marker => (
-                    <span
-                      key={marker.key}
-                      style={{
-                        '--claude-marker-week': String(marker.weekIndex)
-                      }}>
-                      {marker.label}
-                    </span>
-                  ))}
-                </div>
-
-                <div className='claude-contrib-grid-wrap'>
-                  <div className='claude-contrib-weekday'>
-                    {DAY_LABELS.map((label, index) => (
-                      <span key={`day-${index}`}>{label}</span>
-                    ))}
-                  </div>
-                  <div ref={heatmapGridRef} className='claude-contrib-grid'>
-                    {heatmapData.cells.map(cell => {
-                      const isPlaceholder = isYearModeActive && !cell.inRange
-                      return (
-                        <div
-                          key={cell.key}
-                          className={`claude-contrib-cell ${
-                            isPlaceholder
-                              ? 'is-placeholder'
-                              : `level-${getHeatmapLevel(cell.count)}`
-                          }`}
-                          onMouseEnter={event => showHeatmapTooltip(event, cell)}
-                          onMouseMove={event => moveHeatmapTooltip(event, cell)}
-                          onMouseLeave={hideHeatmapTooltip}
-                          onClick={() => handleSelectActivityDay(cell)}
-                          aria-hidden={isPlaceholder}
-                        />
-                      )
-                    })}
+                    <div className='claude-contrib-grid-wrap'>
+                      <div className='claude-contrib-weekday'>
+                        {DAY_LABELS.map((label, index) => (
+                          <span key={`day-${index}`}>{label}</span>
+                        ))}
+                      </div>
+                      <div ref={heatmapGridRef} className='claude-contrib-grid'>
+                        {heatmapData.cells.map(cell => {
+                          const isPlaceholder = isYearModeActive && !cell.inRange
+                          return (
+                            <div
+                              key={cell.key}
+                              className={`claude-contrib-cell ${
+                                isPlaceholder
+                                  ? 'is-placeholder'
+                                  : `level-${getHeatmapLevel(cell.count)}`
+                              }`}
+                              onMouseEnter={event => showHeatmapTooltip(event, cell)}
+                              onMouseMove={event => moveHeatmapTooltip(event, cell)}
+                              onMouseLeave={hideHeatmapTooltip}
+                              onClick={() => handleSelectActivityDay(cell)}
+                              aria-hidden={isPlaceholder}
+                            />
+                          )
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -705,7 +692,55 @@ export default function ProfileHome(props) {
             </div>
 
             <div className='claude-activity-section'>
-              <h2 className='claude-activity-title'>Contribution activity</h2>
+              <div className='claude-activity-header'>
+                <h2 className='claude-activity-title'>Contribution activity</h2>
+                <details className='claude-activity-year-dropdown'>
+                  <summary className='claude-activity-year-summary'>
+                    <span className='claude-activity-year-summary-label'>Year:</span>
+                    <span className='claude-activity-year-summary-main'>
+                      <span className='claude-activity-year-summary-value'>{activeYear}</span>
+                      <span
+                        className='Button-visual Button-trailingAction claude-activity-year-summary-caret'
+                        aria-hidden='true'>
+                        <svg
+                          aria-hidden='true'
+                          height='16'
+                          viewBox='0 0 16 16'
+                          version='1.1'
+                          width='16'
+                          data-view-component='true'
+                          className='octicon octicon-triangle-down'>
+                          <path d='m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z' />
+                        </svg>
+                      </span>
+                    </span>
+                  </summary>
+                  <ul className='claude-activity-year-menu'>
+                    {years.map(year => {
+                      const isActive = year === activeYear
+                      return (
+                        <li key={`activity-year-${year}`}>
+                          <button
+                            type='button'
+                            className='claude-activity-year-option'
+                            onClick={event => handleSelectYearFromDropdown(year, event)}>
+                            <span className='claude-activity-year-option-check' aria-hidden='true'>
+                              {isActive ? (
+                                <svg viewBox='0 0 16 16' width='16' height='16'>
+                                  <path d='M13.78 3.97a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0l-3.25-3.25a.75.75 0 1 1 1.06-1.06L6 10.69l6.72-6.72a.75.75 0 0 1 1.06 0Z' />
+                                </svg>
+                              ) : (
+                                <span />
+                              )}
+                            </span>
+                            <span>{year}</span>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </details>
+              </div>
               <section className='claude-activity-card'>
 
                 {activityGroups.length === 0 && (
