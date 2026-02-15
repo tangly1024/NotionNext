@@ -5,6 +5,11 @@ import CONFIG from '../config'
 
 const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000
+const CONTRIBUTION_LEVEL_THRESHOLDS = {
+  level2: 2,
+  level3: 3,
+  level4: 6
+}
 
 const normalizeDate = value => {
   if (!value) return null
@@ -48,14 +53,12 @@ const endOfWeekSaturday = date => {
   return d
 }
 
-const getHeatmapLevel = (count, maxCount) => {
+const getHeatmapLevel = count => {
   if (!count) return 0
-  if (maxCount <= 1) return 4
-  const ratio = count / maxCount
-  if (ratio >= 0.75) return 4
-  if (ratio >= 0.5) return 3
-  if (ratio >= 0.25) return 2
-  return 1
+  if (count >= CONTRIBUTION_LEVEL_THRESHOLDS.level4) return 4
+  if (count >= CONTRIBUTION_LEVEL_THRESHOLDS.level3) return 3
+  if (count >= CONTRIBUTION_LEVEL_THRESHOLDS.level2) return 2
+  return 1 // 1 contribution/day
 }
 
 const getCreatedDate = post => {
@@ -357,9 +360,7 @@ export default function ProfileHome(props) {
       }
     }
 
-    const maxCount = Math.max(0, ...cells.filter(item => item.inRange).map(item => item.count))
-
-    return { cells, weekCount, monthMarkers, maxCount }
+    return { cells, weekCount, monthMarkers }
   }, [dayCountMap, heatmapRange, isYearModeActive, selectedYear])
 
   const contributionTitle = isYearModeActive
@@ -665,7 +666,7 @@ export default function ProfileHome(props) {
                           className={`claude-contrib-cell ${
                             isPlaceholder
                               ? 'is-placeholder'
-                              : `level-${getHeatmapLevel(cell.count, heatmapData.maxCount)}`
+                              : `level-${getHeatmapLevel(cell.count)}`
                           }`}
                           onMouseEnter={event => showHeatmapTooltip(event, cell)}
                           onMouseMove={event => moveHeatmapTooltip(event, cell)}
@@ -751,7 +752,7 @@ export default function ProfileHome(props) {
                             <details className='claude-activity-details' open>
                               <summary className='claude-activity-summary-toggle'>
                                 <span className='claude-activity-item-summary'>
-                                  Created {group.commitSummary.commitCount}{' '}
+                                  Made {group.commitSummary.commitCount}{' '}
                                   {pluralize(group.commitSummary.commitCount, 'commit')} in{' '}
                                   {group.commitSummary.repositoryCount}{' '}
                                   {pluralize(

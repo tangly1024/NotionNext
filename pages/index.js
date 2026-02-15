@@ -229,14 +229,9 @@ export async function getStaticProps(req) {
     if (!localCacheUsed || shouldRefreshDaily) {
       try {
         const contributionSourcePosts = allPublishedPosts?.filter(post => !isReadmePage(post)) || []
-        const snapshots = (
-          await Promise.all(
-            contributionSourcePosts.map(async post => {
-              const blockMap = await getPostBlocks(post.id, 'index-contribution-sync')
-              return buildContributionPostSnapshot(post, blockMap)
-            })
-          )
-        ).filter(Boolean)
+        const snapshots = contributionSourcePosts
+          .map(post => buildContributionPostSnapshot(post))
+          .filter(Boolean)
 
         const syncResult = await syncContributionSnapshots(snapshots)
         const persistedEvents = await listContributionEvents({ limit: contributionEventLimit })
