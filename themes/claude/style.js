@@ -791,6 +791,10 @@ const Style = () => {
         height: var(--claude-contrib-cell-size);
         border-radius: 2px;
         background: var(--claude-contrib-l0);
+        box-sizing: border-box;
+        padding: 0;
+        cursor: default;
+        vertical-align: middle;
       }
       .claude-contrib-cell.level-0 {
         background: var(--claude-contrib-l0);
@@ -811,6 +815,28 @@ const Style = () => {
         background: transparent !important;
         visibility: hidden;
         pointer-events: none;
+      }
+      .claude-contrib-tooltip {
+        position: fixed;
+        z-index: 9999;
+        pointer-events: none;
+        transform: translate(-50%, calc(-100% - 8px));
+        background: var(--claude-gh-fg-default);
+        color: var(--claude-bg);
+        border: 1px solid var(--claude-gh-border);
+        border-radius: 6px;
+        padding: 6px 8px;
+        font-family: var(--claude-gh-font-family);
+        font-size: 12px;
+        line-height: 1.4;
+        white-space: nowrap;
+        box-shadow: 0 6px 16px rgb(31 35 40 / 0.2);
+      }
+      .dark .claude-contrib-tooltip {
+        background: #3d444d;
+        color: #fff;
+        border-color: var(--claude-gh-border);
+        box-shadow: 0 8px 20px rgb(0 0 0 / 0.45);
       }
       .claude-contrib-legend {
         display: flex;

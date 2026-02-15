@@ -64,6 +64,26 @@ const formatTimelineDate = date => {
   return date.toLocaleString('en-US', { month: 'short', day: 'numeric' })
 }
 
+const getOrdinalSuffix = day => {
+  const mod100 = day % 100
+  if (mod100 >= 11 && mod100 <= 13) return 'th'
+  const mod10 = day % 10
+  if (mod10 === 1) return 'st'
+  if (mod10 === 2) return 'nd'
+  if (mod10 === 3) return 'rd'
+  return 'th'
+}
+
+const formatContributionTooltipText = (date, count) => {
+  const month = date.toLocaleString('en-US', { month: 'long' })
+  const day = date.getDate()
+  const dateLabel = `${month} ${day}${getOrdinalSuffix(day)}`
+
+  if (count === 0) return `No contributions on ${dateLabel}.`
+  if (count === 1) return `1 contribution on ${dateLabel}.`
+  return `${count} contributions on ${dateLabel}.`
+}
+
 const pluralize = (count, singular, plural = `${singular}s`) => {
   return count === 1 ? singular : plural
 }
@@ -98,7 +118,9 @@ const isReadmeLikePage = page => {
 export default function ProfileHome(props) {
   const { posts = [], readmePage } = props
   const heatmapGridRef = useRef(null)
+  const tooltipTimerRef = useRef(null)
   const [contribCellSize, setContribCellSize] = useState(11)
+  const [heatmapTooltip, setHeatmapTooltip] = useState(null)
 
   const readmeSource = useMemo(() => {
     if (readmePage) return readmePage
@@ -297,6 +319,56 @@ export default function ProfileHome(props) {
     handleSelectYear(value)
   }
 
+  const clearHeatmapTooltipTimer = () => {
+    if (tooltipTimerRef.current) {
+      clearTimeout(tooltipTimerRef.current)
+      tooltipTimerRef.current = null
+    }
+  }
+
+  const scheduleHeatmapTooltip = (event, cell) => {
+    if (isYearModeActive && !cell.inRange) return
+    clearHeatmapTooltipTimer()
+
+    const text = formatContributionTooltipText(cell.date, cell.count)
+    const x = event.clientX
+    const y = event.clientY
+
+    tooltipTimerRef.current = setTimeout(() => {
+      setHeatmapTooltip({ text, x, y })
+      tooltipTimerRef.current = null
+    }, 180)
+  }
+
+  const showHeatmapTooltip = (event, cell) => {
+    scheduleHeatmapTooltip(event, cell)
+  }
+
+  const moveHeatmapTooltip = (event, cell) => {
+    setHeatmapTooltip(prev => {
+      if (!prev) {
+        scheduleHeatmapTooltip(event, cell)
+        return prev
+      }
+      return {
+        ...prev,
+        x: event.clientX,
+        y: event.clientY
+      }
+    })
+  }
+
+  const hideHeatmapTooltip = () => {
+    clearHeatmapTooltipTimer()
+    setHeatmapTooltip(null)
+  }
+
+  useEffect(() => {
+    return () => {
+      clearHeatmapTooltipTimer()
+    }
+  }, [])
+
   const activityGroups = useMemo(() => {
     const monthMap = new Map()
 
@@ -490,24 +562,36 @@ export default function ProfileHome(props) {
                     ))}
                   </div>
                   <div ref={heatmapGridRef} className='claude-contrib-grid'>
-                    {heatmapData.cells.map(cell => (
-                      <div
-                        key={cell.key}
-                        className={`claude-contrib-cell ${
-                          isYearModeActive && !cell.inRange
-                            ? 'is-placeholder'
-                            : `level-${getHeatmapLevel(cell.count, heatmapData.maxCount)}`
-                        }`}
-                        title={
-                          isYearModeActive && !cell.inRange
-                            ? ''
-                            : `${cell.key}: ${cell.count} update${cell.count === 1 ? '' : 's'}`
-                        }
-                        aria-hidden={isYearModeActive && !cell.inRange}
-                      />
-                    ))}
+                    {heatmapData.cells.map(cell => {
+                      const isPlaceholder = isYearModeActive && !cell.inRange
+                      return (
+                        <div
+                          key={cell.key}
+                          className={`claude-contrib-cell ${
+                            isPlaceholder
+                              ? 'is-placeholder'
+                              : `level-${getHeatmapLevel(cell.count, heatmapData.maxCount)}`
+                          }`}
+                          onMouseEnter={event => showHeatmapTooltip(event, cell)}
+                          onMouseMove={event => moveHeatmapTooltip(event, cell)}
+                          onMouseLeave={hideHeatmapTooltip}
+                          aria-hidden={isPlaceholder}
+                        />
+                      )
+                    })}
                   </div>
                 </div>
+
+                {heatmapTooltip && (
+                  <div
+                    className='claude-contrib-tooltip'
+                    style={{
+                      left: `${heatmapTooltip.x}px`,
+                      top: `${heatmapTooltip.y}px`
+                    }}>
+                    {heatmapTooltip.text}
+                  </div>
+                )}
 
                 <div className='claude-contrib-legend'>
                   <span>Less</span>
