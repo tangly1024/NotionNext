@@ -24,6 +24,10 @@ const CONFIG = {
 
   // GitHub 侧栏资料卡配置
   CLAUDE_PROFILE_AVATAR: process.env.NEXT_PUBLIC_CLAUDE_PROFILE_AVATAR || '', // 头像URL；留空则回退到 AVATAR/siteInfo.icon
-  CLAUDE_FOOTER_COPYRIGHT: process.env.NEXT_PUBLIC_CLAUDE_FOOTER_COPYRIGHT || '' // 例如：© 2023-2026 Yicheng；留空则使用 SINCE + AUTHOR
+  CLAUDE_FOOTER_COPYRIGHT: process.env.NEXT_PUBLIC_CLAUDE_FOOTER_COPYRIGHT || '', // 例如：© 2023-2026 Yicheng；留空则使用 SINCE + AUTHOR
+
+  // README 渲染缓存（可由 Notion 配置文档中的同名字段覆盖）
+  CLAUDE_README_CACHE_ENABLED:
+    process.env.NEXT_PUBLIC_CLAUDE_README_CACHE_ENABLED !== 'false'
 }
 export default CONFIG

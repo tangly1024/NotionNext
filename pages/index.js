@@ -9,6 +9,9 @@ import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 import { getPageContentText } from '@/lib/db/notion/getPageContentText'
 import { getReadmeMarkdown, renderMarkdownToHtml } from '@/lib/db/notion/notionBlocksToHtml'
+import { getDataFromCache, setDataToCache } from '@/lib/cache/cache_manager'
+import CLAUDE_CONFIG from '@/themes/claude/config'
+import md5 from 'js-md5'
 
 const normalizeSlugToken = value => {
   if (!value || typeof value !== 'string') return ''
@@ -26,6 +29,52 @@ const isReadmePage = page => {
 }
 
 const normalizeId = value => (value || '').toString().replace(/-/g, '').toLowerCase()
+const toBoolean = value => {
+  if (typeof value === 'boolean') return value
+  if (typeof value === 'string') return value.toLowerCase() === 'true'
+  return Boolean(value)
+}
+
+/**
+ * 仅基于正文内容区块生成指纹：
+ * - 从 page.content 出发遍历正文树
+ * - 使用正文 block 的 type / last_edited_time / 子结构顺序
+ * - 不使用 page properties，避免“仅改属性也触发重渲染”
+ */
+const getReadmeBodyFingerprint = (pageId, blockMap) => {
+  const blocks = blockMap?.block || {}
+  if (!Object.keys(blocks).length) return ''
+
+  const normalizedPageId = normalizeId(pageId)
+  const pageBlock = Object.values(blocks).find(item => {
+    const value = item?.value
+    return value?.type === 'page' && normalizeId(value.id) === normalizedPageId
+  })?.value
+
+  const rootContent = pageBlock?.content || []
+  if (!rootContent.length) return ''
+
+  const tokens = []
+  const visited = new Set()
+
+  const walk = blockId => {
+    if (!blockId || visited.has(blockId)) return
+    visited.add(blockId)
+
+    const value = blocks[blockId]?.value
+    if (!value) return
+
+    const editedTime = value.last_edited_time || 0
+    const blockType = value.type || 'unknown'
+    const childIds = Array.isArray(value.content) ? value.content : []
+
+    tokens.push(`${blockId}:${blockType}:${editedTime}:${childIds.length}`)
+    childIds.forEach(childId => walk(childId))
+  }
+
+  rootContent.forEach(blockId => walk(blockId))
+  return md5(tokens.join('|'))
+}
 
 /**
  * 首页布局
@@ -79,30 +128,77 @@ export async function getStaticProps(req) {
   const readmePage = props.allPages?.find(isReadmePage)
   if (readmePage) {
     let excerpt = ''
-    let readmeBlockMap = null
+    let readmeHtml = ''
+    let readmeHtmlSource = 'github'
+    const readmeCacheEnabled = toBoolean(
+      siteConfig('CLAUDE_README_CACHE_ENABLED', true, {
+        ...CLAUDE_CONFIG,
+        ...(props?.NOTION_CONFIG || {})
+      })
+    )
+
+    const readmeCacheKey = `readme_render_snapshot_${normalizeId(readmePage.id)}_${locale || 'default'}`
+    console.log(`[README] CLAUDE_README_CACHE_ENABLED=${readmeCacheEnabled}`)
+    const cachedReadme = readmeCacheEnabled
+      ? await getDataFromCache(readmeCacheKey, true)
+      : null
+    console.log(`[README] README 快照缓存: ${cachedReadme?.readmeHtml ? '命中' : '未命中/关闭'}`)
+
     if (!readmePage.password) {
-      readmeBlockMap = await getPostBlocks(readmePage.id, 'slug', 24)
-      const pageBlocks = Object.values(readmeBlockMap?.block || {})
-      const currentPageBlock = pageBlocks.find(item => {
-        const value = item?.value
-        return value?.type === 'page' && normalizeId(value.id) === normalizeId(readmePage.id)
-      })?.value
+      // 跟随 NotionNext 默认页面缓存机制：首次返回旧缓存，后续访问拿到新版本
+      const readmeBlockMap = await getPostBlocks(readmePage.id, 'slug', 24)
+      const bodyFingerprint = getReadmeBodyFingerprint(readmePage.id, readmeBlockMap)
+      console.log(`[README] 正文指纹: ${bodyFingerprint || 'empty'}`)
 
-      const readmePageForExtract = {
-        ...readmePage,
-        content: currentPageBlock?.content || readmePage.content || []
+      const canUseBodyCache =
+        readmeCacheEnabled &&
+        cachedReadme?.readmeHtml &&
+        cachedReadme.bodyFingerprint &&
+        cachedReadme.bodyFingerprint === bodyFingerprint
+
+      if (canUseBodyCache) {
+        console.log('[README] 正文未变化: 使用缓存（bodyFingerprint 命中）')
+        excerpt = cachedReadme.excerpt || ''
+        readmeHtml = cachedReadme.readmeHtml || ''
+        readmeHtmlSource = cachedReadme.readmeHtmlSource || 'github'
+      } else {
+        console.log('[README] 正文有变化: 重新转换 Markdown 并调用渲染 API')
+        const pageBlocks = Object.values(readmeBlockMap?.block || {})
+        const currentPageBlock = pageBlocks.find(item => {
+          const value = item?.value
+          return value?.type === 'page' && normalizeId(value.id) === normalizeId(readmePage.id)
+        })?.value
+
+        const readmePageForExtract = {
+          ...readmePage,
+          content: currentPageBlock?.content || readmePage.content || []
+        }
+
+        excerpt = getPageContentText(readmePageForExtract, readmeBlockMap)
+          .replace(/\s+/g, ' ')
+          .trim()
+          .slice(0, 220)
+
+        const readmeMarkdown = getReadmeMarkdown(readmePage.id, readmeBlockMap)
+        const renderResult = readmeMarkdown
+          ? await renderMarkdownToHtml(readmeMarkdown, {
+              useCache: readmeCacheEnabled
+            })
+          : { html: '', source: 'github' }
+
+        readmeHtml = renderResult.html
+        readmeHtmlSource = renderResult.source
+
+        if (readmeCacheEnabled) {
+          await setDataToCache(readmeCacheKey, {
+            bodyFingerprint,
+            excerpt,
+            readmeHtml,
+            readmeHtmlSource
+          })
+        }
       }
-
-      excerpt = getPageContentText(readmePageForExtract, readmeBlockMap)
-        .replace(/\s+/g, ' ')
-        .trim()
-        .slice(0, 220)
     }
-
-    const readmeMarkdown = getReadmeMarkdown(readmePage.id, readmeBlockMap)
-    const { html: readmeHtml, source: readmeHtmlSource } = readmeMarkdown
-      ? await renderMarkdownToHtml(readmeMarkdown)
-      : { html: '', source: 'github' }
 
     props.readmePage = {
       id: readmePage.id,
