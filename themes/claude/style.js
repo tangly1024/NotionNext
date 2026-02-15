@@ -104,6 +104,14 @@ const Style = () => {
         --claude-heading-font: 'Anthropic Serif Display', Georgia, 'Times New Roman', serif;
         --claude-body-font: 'Anthropic Sans Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         --claude-mono-font: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+        --claude-terminal-bg: #ffffff;
+        --claude-terminal-bar-bg: #f6f8fa;
+        --claude-terminal-border: var(--claude-profile-border);
+        --claude-terminal-text: #24292f;
+        --claude-terminal-prompt: #57606a;
+        --claude-terminal-dot-red: #f85149;
+        --claude-terminal-dot-amber: #d29922;
+        --claude-terminal-dot-green: #3fb950;
       }
 
       .dark {
@@ -155,6 +163,11 @@ const Style = () => {
         --claude-timeline-line: rgba(61, 68, 77, 0.7);
         --claude-badge-bg: rgb(33, 40, 48);
         --claude-badge-border: rgb(13, 17, 23);
+        --claude-terminal-bg: #0d1117;
+        --claude-terminal-bar-bg: #161b22;
+        --claude-terminal-border: #30363d;
+        --claude-terminal-text: #e6edf3;
+        --claude-terminal-prompt: #8b949e;
       }
 
       /* ========================================
@@ -258,10 +271,11 @@ const Style = () => {
       }
 
       .claude-sidebar-profile {
-        --claude-avatar-size: min(100%, 260px);
-        --claude-avatar-left-offset: max(
+        --width-limit:  min(100%, 320px);
+        max-width: --width-limit;
+        margin-left: max(
           0px,
-          calc((100% - var(--claude-avatar-size)) / 2)
+          calc((100% - var(--width-limit))) / 2)
         );
         display: flex;
         flex-direction: column;
@@ -269,7 +283,6 @@ const Style = () => {
       }
       .claude-profile-avatar-wrap {
         width: 100%;
-        max-width: 260px;
         margin: 0 auto;
         position: relative;
       }
@@ -285,8 +298,6 @@ const Style = () => {
       }
       .claude-profile-heading {
         margin-top: 0.5rem;
-        padding-left: var(--claude-avatar-left-offset);
-        padding-right: var(--claude-avatar-left-offset);
       }
       .claude-profile-name {
         box-sizing: border-box;
@@ -317,8 +328,6 @@ const Style = () => {
         font-weight: 400;
         height: 24px;
         line-height: 24px;
-        padding-left: 9.5px;
-        padding-right: 9.5px;
         tab-size: 4;
         text-size-adjust: 100%;
         unicode-bidi: isolate;
@@ -333,8 +342,6 @@ const Style = () => {
         padding-top: 16px;
         margin-top: 16px;
         box-sizing: border-box;
-        padding-left: var(--claude-avatar-left-offset);
-        padding-right: var(--claude-avatar-left-offset);
       }
       .claude-profile-contact-section {
         box-sizing: border-box;
@@ -370,6 +377,99 @@ const Style = () => {
       .claude-profile-nav-section {
         margin-top: 0;
       }
+      .claude-profile-terminal-section {
+        margin-top: 12px;
+      }
+      .claude-terminal {
+        width: 100%;
+        border: 1px solid var(--claude-terminal-border);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--claude-terminal-bg);
+      }
+      .claude-terminal-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        height: 28px;
+        padding: 0 8px;
+        border-bottom: 1px solid var(--claude-terminal-border);
+        background: var(--claude-terminal-bar-bg);
+      }
+      .claude-terminal-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .claude-terminal-dot-red {
+        background: var(--claude-terminal-dot-red);
+      }
+      .claude-terminal-dot-amber {
+        background: var(--claude-terminal-dot-amber);
+      }
+      .claude-terminal-dot-green {
+        background: var(--claude-terminal-dot-green);
+      }
+      .claude-terminal-body {
+        padding: 8px 8px;
+      }
+      .claude-terminal-line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--claude-mono-font);
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--claude-terminal-text);
+      }
+      .claude-terminal-meta {
+        font-size: var(--claude-terminal-meta-font-size, 12px);
+        line-height: 1.4;
+        color: var(--claude-terminal-prompt);
+        margin-bottom: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+      }
+      .claude-terminal-shell {
+        gap: 0;
+        flex-wrap: nowrap;
+        white-space: pre;
+        font-size: var(--claude-terminal-shell-font-size, 13px);
+      }
+      .claude-terminal-shell-text {
+        color: var(--claude-terminal-text);
+      }
+      .claude-terminal-command {
+        color: var(--claude-terminal-text);
+        text-decoration: none;
+        transition: color 0.15s ease;
+      }
+      .claude-terminal-command:hover {
+        color: var(--claude-sidebar-active-text);
+        text-decoration: none;
+      }
+      .claude-terminal-cursor {
+        width: 0.62em;
+        min-width: 8px;
+        height: 1.1em;
+        border-radius: 1px;
+        margin-left: 1px;
+        background: currentColor;
+        opacity: 0.8;
+        animation: claudeTerminalCursorBlink 1s steps(1) infinite;
+      }
+      @keyframes claudeTerminalCursorBlink {
+        0%,
+        49% {
+          opacity: 0.9;
+        }
+        50%,
+        100% {
+          opacity: 0;
+        }
+      }
       .claude-profile-contact-row {
         display: flex;
         align-items: center;
@@ -387,7 +487,7 @@ const Style = () => {
         box-sizing: border-box;
       }
       .claude-profile-contact-row:hover {
-        color: var(--claude-profile-contact-hover);
+        color: var(--claude-sidebar-active-text);
       }
       .claude-profile-contact-icon {
         width: 16px;
@@ -421,20 +521,22 @@ const Style = () => {
       /* Nav links */
       .claude-nav-link {
         font-family: var(--claude-body-font);
-        color: var(--claude-text-secondary);
+        color: var(--claude-profile-name);
         font-size: 0.875rem;
         font-weight: 400;
         padding: 0.3125rem 0.75rem;
         border-radius: 6px;
         transition: all 0.15s ease;
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 4px;
       }
       .claude-nav-link:hover {
-        color: var(--claude-text-primary);
-        background-color: rgba(0, 0, 0, 0.04);
+        color: var(--claude-sidebar-active-text);
+        background-color: transparent;
       }
       .dark .claude-nav-link:hover {
-        background-color: rgba(255, 255, 255, 0.04);
+        background-color: transparent;
       }
       .claude-nav-link.active {
         background-color: var(--claude-sidebar-active-bg);
@@ -444,6 +546,26 @@ const Style = () => {
       .claude-profile-nav-section .claude-nav-link {
         border-radius: 0.375rem;
         padding: 0.35rem 0;
+      }
+      .claude-nav-icon,
+      .claude-nav-icon-emoji {
+        width: 16px;
+        min-width: 16px;
+        flex: 0 0 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        line-height: 1;
+        opacity: 0.9;
+        color: inherit;
+      }
+      .claude-nav-icon {
+        font-size: inherit;
+      }
+      .claude-nav-label {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        color: inherit;
       }
 
       /* Social icons */

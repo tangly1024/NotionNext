@@ -5,6 +5,7 @@ import LazyImage from '@/components/LazyImage'
 import { MenuList } from './MenuList'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
+import { useEffect, useMemo, useRef } from 'react'
 
 const getGithubUsername = githubUrl => {
   if (!githubUrl || typeof githubUrl !== 'string') {
@@ -29,6 +30,16 @@ const resolveEmail = raw => {
   return decryptEmail(raw)
 }
 
+const formatTerminalLoginTime = date => {
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const day = String(date.getDate()).padStart(2, '0')
+  const hour = String(date.getHours()).padStart(2, '0')
+  const minute = String(date.getMinutes()).padStart(2, '0')
+  const second = String(date.getSeconds()).padStart(2, '0')
+  return `${weekdays[date.getDay()]} ${months[date.getMonth()]} ${day} ${hour}:${minute}:${second}`
+}
+
 /**
  * 侧边栏导航 — Claude Docs 风格
  * 上方: 站名 → 下方: 导航链接 + 社交图标
@@ -41,12 +52,100 @@ export default function NavBar(props) {
     siteConfig('AVATAR') ||
     siteInfo?.icon ||
     '/avatar.svg'
-  const author = siteConfig('AUTHOR') || siteConfig('CLAUDE_BLOG_NAME')
+  const blogName = siteConfig('CLAUDE_BLOG_NAME')
+  const author = siteConfig('AUTHOR') || blogName
   const bio = siteConfig('BIO')
   const githubUrl = siteConfig('CONTACT_GITHUB')
   const githubLabel = getGithubUsername(githubUrl) || githubUrl?.replace(/^https?:\/\//, '')
   const profileEmail = resolveEmail(siteConfig('CONTACT_EMAIL'))
   const hasContact = Boolean(githubUrl || profileEmail)
+  const terminalMetaRef = useRef(null)
+  const terminalShellRef = useRef(null)
+  const terminalShellTextRef = useRef(null)
+  const terminalCommandRef = useRef(null)
+  const terminalCursorRef = useRef(null)
+  const terminalBodyRef = useRef(null)
+  const terminalSession = useMemo(() => {
+    const ttySuffix = Math.floor(Math.random() * 10)
+    return {
+      loginTime: formatTerminalLoginTime(new Date()),
+      tty: `ttys00${ttySuffix}`
+    }
+  }, [])
+
+  useEffect(() => {
+    const shell = terminalShellRef.current
+    const body = terminalBodyRef.current
+    if (!shell || !body) {
+      return
+    }
+
+    const maxFontSize = 13
+    const minFontSize = 8
+    const step = 0.5
+
+    const fitLine = ({ ref, cssVar, max, min }) => {
+      if (!ref?.current) {
+        return
+      }
+      const line = ref.current
+      let size = max
+      line.style.setProperty(cssVar, `${size}px`)
+      while (size > min && line.scrollWidth > line.clientWidth) {
+        size = Math.max(min, size - step)
+        line.style.setProperty(cssVar, `${size}px`)
+      }
+    }
+
+    const fitShellLine = () => {
+      if (
+        !terminalShellRef.current ||
+        !terminalShellTextRef.current ||
+        !terminalCommandRef.current ||
+        !terminalCursorRef.current
+      ) {
+        return
+      }
+
+      const shellLine = terminalShellRef.current
+      let size = maxFontSize
+      shellLine.style.setProperty('--claude-terminal-shell-font-size', `${size}px`)
+
+      const isOverflow = () => {
+        const shellWidth = shellLine.clientWidth
+        const textWidth = terminalShellTextRef.current.getBoundingClientRect().width
+        const commandWidth = terminalCommandRef.current.getBoundingClientRect().width
+        const cursorWidth = terminalCursorRef.current.getBoundingClientRect().width
+        return textWidth + commandWidth + cursorWidth > shellWidth
+      }
+
+      while (size > minFontSize && isOverflow()) {
+        size = Math.max(minFontSize, size - step)
+        shellLine.style.setProperty('--claude-terminal-shell-font-size', `${size}px`)
+      }
+    }
+
+    const fitTerminalLines = () => {
+      fitLine({
+        ref: terminalMetaRef,
+        cssVar: '--claude-terminal-meta-font-size',
+        max: 10,
+        min: 6
+      })
+      fitShellLine()
+    }
+
+    fitTerminalLines()
+
+    const observer = new ResizeObserver(() => {
+      fitTerminalLines()
+    })
+    observer.observe(body)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [author, blogName])
 
   return (
     <>
@@ -90,6 +189,32 @@ export default function NavBar(props) {
           <section className='claude-profile-section claude-profile-nav-section'>
             <MenuList {...props} />
           </section>
+
+          <section className='claude-profile-section claude-profile-terminal-section'>
+            <div className='claude-terminal'>
+              <div className='claude-terminal-bar' aria-hidden='true'>
+                <span className='claude-terminal-dot claude-terminal-dot-red' />
+                <span className='claude-terminal-dot claude-terminal-dot-amber' />
+                <span className='claude-terminal-dot claude-terminal-dot-green' />
+              </div>
+              <div className='claude-terminal-body' ref={terminalBodyRef}>
+                <div className='claude-terminal-line claude-terminal-meta' ref={terminalMetaRef}>
+                  Last login: {terminalSession.loginTime} on {terminalSession.tty}
+                </div>
+                <div className='claude-terminal-line claude-terminal-shell' ref={terminalShellRef}>
+                  <span className='claude-terminal-shell-text' ref={terminalShellTextRef}>
+                    {`${author}@Macintosh ~ % `}
+                  </span>
+                  <span ref={terminalCommandRef}>
+                    <SmartLink href='/' className='claude-terminal-command'>
+                      {blogName}
+                    </SmartLink>
+                  </span>
+                  <span className='claude-terminal-cursor' ref={terminalCursorRef} aria-hidden='true' />
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
 
@@ -98,7 +223,7 @@ export default function NavBar(props) {
         <header className='px-1'>
           <SmartLink href='/'>
             <div className='claude-site-title' id='blog-name'>
-              {siteConfig('CLAUDE_BLOG_NAME')}
+              {blogName}
             </div>
             <div
               className={`claude-site-subtitle mt-0.5 ${subtitleDarkOnly ? 'hidden dark:block' : ''}`}

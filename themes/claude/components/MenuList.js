@@ -2,7 +2,6 @@ import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import CONFIG from '../config'
-import { MenuItemDrop } from './MenuItemDrop'
 import SmartLink from '@/components/SmartLink'
 
 /**
@@ -12,6 +11,28 @@ import SmartLink from '@/components/SmartLink'
 export const MenuList = ({ customNav, customMenu }) => {
   const { locale } = useGlobal()
   const router = useRouter()
+
+  const renderMenuIcon = icon => {
+    if (!icon || typeof icon !== 'string') {
+      return null
+    }
+    const normalizedIcon = icon.trim()
+    if (!normalizedIcon) {
+      return null
+    }
+
+    // Notion icon 字段可直接写 Font Awesome 类名，例如 "fas fa-clock-rotate-left"
+    const isFontAwesomeIcon = /(^|\s)fa[srldb]?\s/.test(normalizedIcon) || /(^|\s)fa-[\w-]+/.test(normalizedIcon)
+    if (isFontAwesomeIcon) {
+      return <i className={`${normalizedIcon} claude-nav-icon`} aria-hidden='true' />
+    }
+
+    return (
+      <span className='claude-nav-icon-emoji' aria-hidden='true'>
+        {normalizedIcon}
+      </span>
+    )
+  }
 
   let links = [
     {
@@ -56,7 +77,8 @@ export const MenuList = ({ customNav, customMenu }) => {
           return (
             <SmartLink key={index} href={link.href}>
               <div className={`claude-nav-link ${isActive ? 'active' : ''}`}>
-                {link.name}
+                {renderMenuIcon(link.icon)}
+                <span className='claude-nav-label'>{link.name}</span>
               </div>
             </SmartLink>
           )
@@ -68,7 +90,8 @@ export const MenuList = ({ customNav, customMenu }) => {
         {links?.filter(l => l?.show !== false).map((link, index) => (
           <SmartLink key={index} href={link.href}>
             <div className='claude-nav-link text-sm'>
-              {link.name}
+              {renderMenuIcon(link.icon)}
+              <span className='claude-nav-label'>{link.name}</span>
             </div>
           </SmartLink>
         ))}
