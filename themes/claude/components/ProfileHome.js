@@ -1,5 +1,7 @@
 import SmartLink from '@/components/SmartLink'
+import { siteConfig } from '@/lib/config'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import CONFIG from '../config'
 
 const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000
@@ -84,6 +86,19 @@ const formatContributionTooltipText = (date, count) => {
   return `${count} contributions on ${dateLabel}.`
 }
 
+const formatActivityDayTitle = date => {
+  if (!date) return ''
+  const month = date.toLocaleString('en-US', { month: 'long' })
+  return `${month} ${date.getDate()},`
+}
+
+const parseDayKey = dayKey => {
+  if (!dayKey) return null
+  const parts = String(dayKey).split('-').map(Number)
+  if (parts.length !== 3 || parts.some(Number.isNaN)) return null
+  return new Date(parts[0], parts[1] - 1, parts[2], 0, 0, 0, 0)
+}
+
 const pluralize = (count, singular, plural = `${singular}s`) => {
   return count === 1 ? singular : plural
 }
@@ -121,6 +136,7 @@ export default function ProfileHome(props) {
   const tooltipTimerRef = useRef(null)
   const [contribCellSize, setContribCellSize] = useState(11)
   const [heatmapTooltip, setHeatmapTooltip] = useState(null)
+  const authorName = siteConfig('AUTHOR') || siteConfig('CLAUDE_BLOG_NAME', '', CONFIG) || 'Author'
 
   const readmeSource = useMemo(() => {
     if (readmePage) return readmePage
@@ -189,6 +205,7 @@ export default function ProfileHome(props) {
 
   const [selectedYear, setSelectedYear] = useState(() => years[0] || new Date().getFullYear())
   const [isYearModeActive, setIsYearModeActive] = useState(false)
+  const [selectedActivityDayKey, setSelectedActivityDayKey] = useState('')
 
   useEffect(() => {
     if (!years.includes(selectedYear)) {
@@ -311,12 +328,19 @@ export default function ProfileHome(props) {
   const handleSelectYear = year => {
     setSelectedYear(year)
     setIsYearModeActive(true)
+    setSelectedActivityDayKey('')
   }
 
   const handleSelectYearFromMobile = event => {
     const value = Number(event.target.value)
     if (Number.isNaN(value)) return
     handleSelectYear(value)
+  }
+
+  const handleSelectActivityDay = cell => {
+    if (isYearModeActive && !cell.inRange) return
+    const dayKey = formatDayKey(cell.date)
+    setSelectedActivityDayKey(prev => (prev === dayKey ? '' : dayKey))
   }
 
   const clearHeatmapTooltipTimer = () => {
@@ -326,16 +350,25 @@ export default function ProfileHome(props) {
     }
   }
 
+  const getTooltipAnchorFromCell = target => {
+    if (!target || typeof target.getBoundingClientRect !== 'function') return null
+    const rect = target.getBoundingClientRect()
+    return {
+      x: rect.left + rect.width / 2,
+      y: rect.top - 8
+    }
+  }
+
   const scheduleHeatmapTooltip = (event, cell) => {
     if (isYearModeActive && !cell.inRange) return
     clearHeatmapTooltipTimer()
 
     const text = formatContributionTooltipText(cell.date, cell.count)
-    const x = event.clientX
-    const y = event.clientY
+    const anchor = getTooltipAnchorFromCell(event.currentTarget)
+    if (!anchor) return
 
     tooltipTimerRef.current = setTimeout(() => {
-      setHeatmapTooltip({ text, x, y })
+      setHeatmapTooltip({ text, x: anchor.x, y: anchor.y })
       tooltipTimerRef.current = null
     }, 180)
   }
@@ -350,10 +383,12 @@ export default function ProfileHome(props) {
         scheduleHeatmapTooltip(event, cell)
         return prev
       }
+      const anchor = getTooltipAnchorFromCell(event.currentTarget)
+      if (!anchor) return prev
       return {
         ...prev,
-        x: event.clientX,
-        y: event.clientY
+        x: anchor.x,
+        y: anchor.y
       }
     })
   }
@@ -369,26 +404,44 @@ export default function ProfileHome(props) {
     }
   }, [])
 
-  const activityGroups = useMemo(() => {
-    const monthMap = new Map()
+  const selectedActivityDayDate = useMemo(
+    () => parseDayKey(selectedActivityDayKey),
+    [selectedActivityDayKey]
+  )
 
-    yearEvents.forEach(event => {
+  const activitySourceEvents = useMemo(() => {
+    if (!selectedActivityDayKey) return yearEvents
+    return heatmapEvents.filter(event => formatDayKey(event.date) === selectedActivityDayKey)
+  }, [selectedActivityDayKey, yearEvents, heatmapEvents])
+
+  const activityGroups = useMemo(() => {
+    const groupMap = new Map()
+    const isDailyMode = Boolean(selectedActivityDayKey)
+
+    activitySourceEvents.forEach(event => {
       const eventYear = event.date.getFullYear()
       const eventMonth = event.date.getMonth()
-      const groupKey = `${eventYear}-${String(eventMonth + 1).padStart(2, '0')}`
+      const eventDay = event.date.getDate()
+      const groupKey = isDailyMode
+        ? formatDayKey(event.date)
+        : `${eventYear}-${String(eventMonth + 1).padStart(2, '0')}`
 
-      if (!monthMap.has(groupKey)) {
-        monthMap.set(groupKey, {
+      if (!groupMap.has(groupKey)) {
+        groupMap.set(groupKey, {
           groupKey,
-          monthLabel: event.date.toLocaleString('en-US', { month: 'long' }),
+          monthLabel: isDailyMode
+            ? formatActivityDayTitle(event.date)
+            : event.date.toLocaleString('en-US', { month: 'long' }),
           yearLabel: String(eventYear),
-          sortKey: eventYear * 12 + eventMonth,
+          sortKey: isDailyMode
+            ? new Date(eventYear, eventMonth, eventDay).getTime()
+            : eventYear * 12 + eventMonth,
           updateEvents: [],
           createEvents: []
         })
       }
 
-      const group = monthMap.get(groupKey)
+      const group = groupMap.get(groupKey)
       if (event.type === 'update') {
         group.updateEvents.push(event)
       } else {
@@ -396,7 +449,7 @@ export default function ProfileHome(props) {
       }
     })
 
-    return Array.from(monthMap.values())
+    return Array.from(groupMap.values())
       .sort((a, b) => b.sortKey - a.sortKey)
       .map(group => {
         const updateRepoMap = new Map()
@@ -462,7 +515,7 @@ export default function ProfileHome(props) {
         }
       })
       .filter(group => group.commitSummary || group.createSummary)
-  }, [yearEvents])
+  }, [activitySourceEvents, selectedActivityDayKey])
 
   useEffect(() => {
     const gridEl = heatmapGridRef.current
@@ -575,6 +628,7 @@ export default function ProfileHome(props) {
                           onMouseEnter={event => showHeatmapTooltip(event, cell)}
                           onMouseMove={event => moveHeatmapTooltip(event, cell)}
                           onMouseLeave={hideHeatmapTooltip}
+                          onClick={() => handleSelectActivityDay(cell)}
                           aria-hidden={isPlaceholder}
                         />
                       )
@@ -612,8 +666,22 @@ export default function ProfileHome(props) {
               <section className='claude-activity-card'>
 
                 {activityGroups.length === 0 && (
-                  <div className='claude-activity-empty'>
-                    No article activity in {selectedYear}.
+                  <div>
+                    {selectedActivityDayDate && (
+                      <div className='claude-activity-group-title'>
+                        <span className='claude-activity-group-title-month'>
+                          {formatActivityDayTitle(selectedActivityDayDate)}
+                        </span>
+                        <span className='claude-activity-group-title-year'>
+                          {selectedActivityDayDate.getFullYear()}
+                        </span>
+                      </div>
+                    )}
+                    <div className='claude-activity-empty-wrap'>
+                      <div className='claude-activity-empty'>
+                        {`${authorName} had no activity during this period.`}
+                      </div>
+                    </div>
                   </div>
                 )}
 

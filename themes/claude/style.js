@@ -54,23 +54,23 @@ const Style = () => {
         --claude-bg: #fff;
         --claude-bg-secondary: #F3F3EE;
         --claude-text-primary: #1A1A1A;
-        --claude-text-strong: #1A1A1A;
+        --claude-text-strong: var(--claude-text-primary);
         --claude-text-secondary: #5C5C5C;
         --claude-text-tertiary: #8C8C8C;
         --claude-border: #E5E5E0;
         --claude-accent: #DA7756;
         --claude-accent-hover: #C06042;
-        --claude-sidebar-bg: #F3F3EE;
+        --claude-sidebar-bg: var(--claude-bg-secondary);
         --claude-sidebar-active-bg: rgba(218, 119, 86, 0.08);
-        --claude-sidebar-active-text: #DA7756;
-        --claude-profile-name: rgb(31 35 40);
+        --claude-sidebar-active-text: var(--claude-accent);
+        --claude-profile-name: var(--claude-gh-fg-default);
         --claude-profile-muted: #57606A;
         --claude-profile-border: #D0D7DE;
         --claude-profile-border-strong: #D8DEE4;
         --claude-profile-divider-border: rgb(209 217 224 / 0.7);
         --claude-profile-contact-hover: #24292F;
         --claude-home-card-bg: #F6F8FA;
-        --claude-home-card-border: rgb(209, 217, 224);
+        --claude-home-card-border: var(--claude-gh-border);
         --claude-home-link: var(--claude-gh-blue-bg);
         --claude-contrib-l0: #EFF2F5;
         --claude-contrib-l1: #ACEEBB;
@@ -78,14 +78,14 @@ const Style = () => {
         --claude-contrib-l3: #2DA44E;
         --claude-contrib-l4: #116329;
         --claude-contrib-border: #1F23280D;
-        --claude-contrib-label: rgb(31 35 40);
+        --claude-contrib-label: var(--claude-gh-fg-default);
         --claude-code-bg: #FFFFFF;
         --claude-code-border: rgba(0, 0, 0, 0.08);
         --claude-code-shell-bg: rgb(243 243 243);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: rgb(10 10 10);
-        --claude-link: #DA7756;
-        --claude-blockquote-border: #E5E5E0;
+        --claude-link: var(--claude-accent);
+        --claude-blockquote-border: var(--claude-border);
         --claude-callout-tip-bg: #f0fdf4;
         --claude-callout-tip-border: #bbf7d0;
         --claude-callout-tip-text: #166534;
@@ -96,6 +96,7 @@ const Style = () => {
         --claude-gh-link-hover-bg: rgb(var(--claude-gh-blue-bg-rgb) / 0.08);
         --claude-year-filter-text: var(--claude-gh-fg-muted);
         --claude-year-filter-text-active: #fff;
+        --claude-activity-empty-color: var(--claude-gh-fg-muted);
         --claude-gh-font-family: -apple-system, system-ui, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
         --claude-timeline-line: rgba(209, 217, 224, 0.7);
         --claude-badge-bg: rgb(246, 248, 250);
@@ -120,40 +121,37 @@ const Style = () => {
         --claude-sidebar-bg: #1E1D1A;
         --claude-sidebar-active-bg: rgba(224, 138, 110, 0.1);
         --claude-sidebar-active-text: #E08A6E;
-        --claude-profile-name: #F0F6FC;
+        --claude-profile-name: var(--claude-gh-fg-default);
         --claude-profile-muted: #8B949E;
         --claude-profile-border: #30363D;
-        --claude-profile-border-strong: #30363D;
+        --claude-profile-border-strong: var(--claude-profile-border);
         --claude-profile-divider-border: rgb(48 54 61 / 0.7);
-        --claude-profile-contact-hover: #F0F6FC;
+        --claude-profile-contact-hover: var(--claude-gh-fg-default);
         --claude-home-card-bg: rgb(255 255 255 / 0.03);
         --claude-home-card-border: rgb(61, 68, 77);
-        --claude-home-link: var(--claude-gh-blue-bg);
         --claude-contrib-l0: #151B23;
         --claude-contrib-l1: #033A16;
         --claude-contrib-l2: #196C2E;
         --claude-contrib-l3: #2EA043;
         --claude-contrib-l4: #56D364;
-        --claude-contrib-border: #30363D;
-        --claude-contrib-label: rgb(240 246 252);
+        --claude-contrib-border: var(--claude-profile-border);
+        --claude-contrib-label: var(--claude-gh-fg-default);
         --claude-code-bg: #0B0C0E;
         --claude-code-border: rgba(255, 255, 255, 0.08);
         --claude-code-shell-bg: rgb(255 255 255 / 0.05);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: #D4D4D4;
-        --claude-link: #E08A6E;
+        --claude-link: var(--claude-sidebar-active-text);
         --claude-dark-quote: rgb(134, 239, 172);
-        --claude-blockquote-border: #333330;
+        --claude-blockquote-border: var(--claude-border);
         --claude-callout-tip-bg: rgb(22 163 74 / 0.2);
         --claude-callout-tip-border: rgb(20 83 45);
         --claude-callout-tip-text: rgb(134 239 172);
         --claude-gh-fg-default: rgb(240, 246, 252);
         --claude-gh-fg-muted: #9198a1;
         --claude-gh-border: rgb(61, 68, 77);
-        --claude-gh-link: var(--claude-gh-blue-bg);
         --claude-gh-link-hover-bg: rgb(var(--claude-gh-blue-bg-rgb) / 0.12);
-        --claude-year-filter-text: var(--claude-gh-fg-muted);
-        --claude-year-filter-text-active: #fff;
+        --claude-activity-empty-color: var(--claude-gh-fg-muted);
         --claude-timeline-line: rgba(61, 68, 77, 0.7);
         --claude-badge-bg: rgb(33, 40, 48);
         --claude-badge-border: rgb(13, 17, 23);
@@ -704,6 +702,7 @@ const Style = () => {
         padding: 1rem 1rem 0.875rem;
         --claude-contrib-gap: 3px;
         --claude-contrib-cell-size: 11px;
+        --claude-contrib-cell-radius: calc(var(--claude-contrib-cell-size) / 5);
         --claude-weekday-width: 1.6rem;
         --claude-weekday-gap: 0.5rem;
       }
@@ -789,7 +788,7 @@ const Style = () => {
       .claude-contrib-cell {
         width: var(--claude-contrib-cell-size);
         height: var(--claude-contrib-cell-size);
-        border-radius: 2px;
+        border-radius: var(--claude-contrib-cell-radius);
         background: var(--claude-contrib-l0);
         box-sizing: border-box;
         padding: 0;
@@ -820,7 +819,7 @@ const Style = () => {
         position: fixed;
         z-index: 9999;
         pointer-events: none;
-        transform: translate(-50%, calc(-100% - 8px));
+        transform: translate(-50%, -100%);
         background: var(--claude-gh-fg-default);
         color: var(--claude-bg);
         border: 1px solid var(--claude-gh-border);
@@ -860,8 +859,29 @@ const Style = () => {
         padding: 0;
       }
       .claude-activity-empty {
-        color: var(--claude-text-secondary);
-        font-size: 0.95rem;
+        box-sizing: border-box;
+        color: var(--claude-activity-empty-color);
+        color-scheme: light;
+        display: inline;
+        font-family: var(--claude-gh-font-family);
+        font-size: var(--h5-size, 14px);
+        font-weight: 400;
+        height: auto;
+        line-height: 1.5;
+        margin-top: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+        overflow-wrap: break-word;
+        text-align: center;
+        text-size-adjust: 100%;
+      }
+      .claude-activity-empty-wrap {
+        text-align: center;
+      }
+      .dark .claude-activity-empty {
+        color: var(--claude-activity-empty-color);
+        color-scheme: dark;
       }
       .claude-activity-group + .claude-activity-group {
         margin-top: 1.5rem;
