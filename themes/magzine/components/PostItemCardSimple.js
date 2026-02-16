@@ -1,6 +1,6 @@
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CategoryItem from './CategoryItem'
 
 /**
@@ -8,7 +8,7 @@ import CategoryItem from './CategoryItem'
  * @param {*} param0
  * @returns
  */
-const PostItemCardSimple = ({ post, showSummary }) => {
+const PostItemCardSimple = ({ post }) => {
   return (
     <div
       key={post.id}
@@ -20,7 +20,7 @@ const PostItemCardSimple = ({ post, showSummary }) => {
       </div>
 
       {/* 文章标题 */}
-      <Link
+      <SmartLink
         href={post?.href}
         passHref
         className={
@@ -30,7 +30,7 @@ const PostItemCardSimple = ({ post, showSummary }) => {
           {siteConfig('POST_TITLE_ICON') && <NotionIcon icon={post.pageIcon} />}
           {post.title}
         </h2>
-      </Link>
+      </SmartLink>
 
       <div className='text-sm text-gray-700'>{post.date?.start_date}</div>
     </div>

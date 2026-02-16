@@ -152,6 +152,7 @@ const LayoutPostList = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 用js 实现将页面中的多个视频聚合为一个分集的视频
     function combineVideo() {
@@ -299,7 +300,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
     return () => {

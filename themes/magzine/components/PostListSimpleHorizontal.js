@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import PostItemCardSimple from './PostItemCardSimple'
 import PostListEmpty from './PostListEmpty'
 
@@ -19,25 +19,25 @@ const PostSimpleListHorizontal = ({ title, href, posts }) => {
         <div className='flex justify-between items-center py-6'>
           <h3 className='text-2xl'>{title}</h3>
           {href && (
-            <Link
+            <SmartLink
               className='hidden font-bold lg:block text-lg underline'
               href={href}>
               <span>查看全部</span>
               <i className='ml-2 fas fa-arrow-right' />
-            </Link>
+            </SmartLink>
           )}
         </div>
         {/* 列表 */}
-        <ul className='grid grid-cols-1 lg:grid-cols-4'>
+        <div className='grid grid-cols-1 lg:grid-cols-4'>
           {posts?.map(p => {
             return <PostItemCardSimple key={p.id} post={p} />
           })}
-        </ul>
+        </div>
         {href && (
-          <Link className='lg:hidden block text-lg underline' href={href}>
+          <SmartLink className='lg:hidden block text-lg underline' href={href}>
             <span>查看全部</span>
             <i className='ml-2 fas fa-arrow-right' />
-          </Link>
+          </SmartLink>
         )}
       </div>
     </div>

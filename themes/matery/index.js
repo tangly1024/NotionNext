@@ -10,7 +10,7 @@ import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useRef } from 'react'
 import Announcement from './components/Announcement'
@@ -225,6 +225,7 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const { fullWidth } = useGlobal()
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
@@ -239,7 +240,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
@@ -358,7 +359,7 @@ const LayoutCategoryIndex = props => {
         <div className='flex justify-center flex-wrap'>
           {categoryOptions?.map(e => {
             return (
-              <Link
+              <SmartLink
                 key={e.name}
                 href={`/category/${e.name}`}
                 passHref
@@ -366,7 +367,7 @@ const LayoutCategoryIndex = props => {
                 <div className='duration-300 text-md whitespace-nowrap dark:hover:text-white px-5 cursor-pointer py-2 hover:text-indigo-400'>
                   <i className={'mr-4 fas fa-folder'} /> {e.name}({e.count})
                 </div>
-              </Link>
+              </SmartLink>
             )
           })}
         </div>

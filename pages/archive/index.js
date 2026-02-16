@@ -1,10 +1,9 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 /**
@@ -27,13 +26,12 @@ const ArchiveIndex = props => {
     }
   }, [])
 
-  const router = useRouter()
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} router={router} {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutArchive' {...props} />
 }
 
 export async function getStaticProps({ locale }) {
-  const props = await getGlobalData({ from: 'archive-index', locale })
+  const props = await fetchGlobalAllData({ from: 'archive-index', locale })
   // 处理分页
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'

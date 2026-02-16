@@ -1,7 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 /**
@@ -35,7 +35,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
             : siteInfo?.pageCover
 
           return (
-            <Link
+            <SmartLink
               key={post.id}
               title={post.title}
               href={post?.href}
@@ -57,7 +57,7 @@ export default function ArticleRecommend({ recommendPosts, siteInfo }) {
                   </div>
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>

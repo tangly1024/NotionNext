@@ -1,4 +1,5 @@
 import { siteConfig } from '@/lib/config'
+import CONFIG from '../config'
 import PostItemCard from './PostItemCard'
 import PostListEmpty from './PostListEmpty'
 import Swiper from './Swiper'
@@ -13,10 +14,11 @@ import Swiper from './Swiper'
 const PostListRecommend = ({ latestPosts, allNavPages }) => {
   // 获取推荐文章
   const recommendPosts = getTopPosts({ latestPosts, allNavPages })
+  const title = siteConfig('MAGZINE_RECOMMEND_POST_TITLE', '', CONFIG)
+
   if (!recommendPosts || recommendPosts.length === 0) {
     return <PostListEmpty />
   }
-  const title = siteConfig('MAGZINE_RECOMMEND_POST_TITLE')
 
   return (
     <div className={`w-full py-10 px-2 bg-[#F6F6F1] dark:bg-black`}>
@@ -26,11 +28,11 @@ const PostListRecommend = ({ latestPosts, allNavPages }) => {
           <h3 className='text-4xl font-bold'>{title}</h3>
         </div>
         {/* 列表 */}
-        <ul className='hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-4'>
+        <div className='hidden lg:grid grid-cols-1 lg:grid-cols-4 gap-4'>
           {recommendPosts?.map((p, index) => {
             return <PostItemCard key={index} post={p} />
           })}
-        </ul>
+        </div>
         <div className='block lg:hidden px-2'>
           <Swiper posts={recommendPosts} />
         </div>

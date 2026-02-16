@@ -7,7 +7,8 @@ import LazyImage from '@/components/LazyImage'
 import PoweredBy from '@/components/PoweredBy'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
+import CONFIG from '../config'
 import SocialButton from './SocialButton'
 
 /**
@@ -15,7 +16,7 @@ import SocialButton from './SocialButton'
  */
 const Footer = ({ title }) => {
   const { siteInfo } = useGlobal()
-  const MAGZINE_FOOTER_LINKS = siteConfig('MAGZINE_FOOTER_LINKS', [])
+  const MAGZINE_FOOTER_LINKS = siteConfig('MAGZINE_FOOTER_LINKS', [], CONFIG)
 
   return (
     <footer
@@ -55,9 +56,9 @@ const Footer = ({ title }) => {
                     {group?.menus?.map((menu, index) => {
                       return (
                         <div key={index}>
-                          <Link href={menu.href} className='hover:underline'>
+                          <SmartLink href={menu.href} className='hover:underline'>
                             {menu.title}
-                          </Link>
+                          </SmartLink>
                         </div>
                       )
                     })}
