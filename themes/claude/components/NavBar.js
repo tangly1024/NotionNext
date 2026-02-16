@@ -5,7 +5,7 @@ import LazyImage from '@/components/LazyImage'
 import { MenuList } from './MenuList'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const getGithubUsername = githubUrl => {
   if (!githubUrl || typeof githubUrl !== 'string') {
@@ -41,6 +41,23 @@ const formatTerminalLoginTime = date => {
 }
 
 /**
+ * 模块级终端会话缓存 — 在整个浏览器会话期间只创建一次。
+ * 只有用户刷新页面（JS 模块重新加载）时才会重置。
+ * 客户端路由切换导致的组件 remount 不会影响这个值。
+ */
+let _cachedTerminalSession = null
+function getOrCreateTerminalSession() {
+  if (!_cachedTerminalSession) {
+    const ttySuffix = Math.floor(Math.random() * 10)
+    _cachedTerminalSession = {
+      loginTime: formatTerminalLoginTime(new Date()),
+      tty: `ttys00${ttySuffix}`
+    }
+  }
+  return _cachedTerminalSession
+}
+
+/**
  * 侧边栏导航 — Claude Docs 风格
  * 上方: 站名 → 下方: 导航链接 + 社交图标
  */
@@ -64,13 +81,7 @@ export default function NavBar(props) {
   const terminalCommandRef = useRef(null)
   const terminalCursorRef = useRef(null)
   const terminalBodyRef = useRef(null)
-  const terminalSession = useMemo(() => {
-    const ttySuffix = Math.floor(Math.random() * 10)
-    return {
-      loginTime: formatTerminalLoginTime(new Date()),
-      tty: `ttys00${ttySuffix}`
-    }
-  }, [])
+  const terminalSession = getOrCreateTerminalSession()
 
   useEffect(() => {
     const shell = terminalShellRef.current

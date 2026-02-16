@@ -7,7 +7,7 @@ import { isBrowser } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useRef } from 'react'
+import { createContext, useContext, useEffect, useRef, memo } from 'react'
 import BlogPostBar from './components/BlogPostBar'
 import CONFIG from './config'
 import { Style } from './style'
@@ -51,6 +51,24 @@ const RecommendPosts = dynamic(() => import('./components/RecommendPosts'), {
 // 主题全局状态
 const ThemeGlobalSimple = createContext()
 export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
+
+/**
+ * 左侧栏内容 — 使用 React.memo 阻止父组件 props 变化引起的重新渲染。
+ * 仅在浏览器刷新（组件重新挂载）时重新加载；客户端路由切换不会触发重渲染。
+ * 内部的 MenuList 通过 useRouter() 订阅路由上下文，仍可正常更新菜单激活状态。
+ */
+const SidebarContent = memo(function SidebarContent(props) {
+  return (
+    <div className='flex flex-col justify-between h-full py-6 px-5'>
+      <div>
+        <NavBar {...props} />
+      </div>
+      <div className='mt-auto'>
+        <Footer />
+      </div>
+    </div>
+  )
+}, () => true)
 
 /**
  * 基础布局 — 三栏: 左侧导航 | 中间内容 | 右侧目录
@@ -102,15 +120,9 @@ const LayoutBase = props => {
 
         <div className='flex flex-1 overflow-hidden'>
           {/* ====== LEFT SIDEBAR — 导航栏 (桌面端) ====== */}
+          {/* 使用 SidebarContent (React.memo) 避免客户端导航时重新加载侧边栏 */}
           <div className='claude-sidebar hidden md:flex md:flex-col md:flex-shrink-0 md:w-[296px] lg:w-[320px] h-full overflow-y-auto overflow-x-hidden'>
-            <div className='flex flex-col justify-between h-full py-6 px-5'>
-              <div>
-                <NavBar {...props} />
-              </div>
-              <div className='mt-auto'>
-                <Footer {...props} />
-              </div>
-            </div>
+            <SidebarContent customNav={props.customNav} customMenu={props.customMenu} />
           </div>
 
           {/* ====== CENTER — 主内容区 ====== */}

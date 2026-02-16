@@ -220,7 +220,97 @@ The theme employs a multi-level caching strategy for stability.
 
 ---
 
-## 8. Development
+## 8. Sidebar Persistence Architecture
+
+### Problem
+
+In Next.js Pages Router, every client-side navigation (clicking a link) can re-render or even **remount** `LayoutBase`. This causes the left sidebar (avatar, terminal widget, navigation) to reload on every page transition — a poor user experience.
+
+### Three-Layer Solution
+
+The theme employs three layers to ensure the sidebar **only refreshes on browser refresh**, not on link-based navigation:
+
+#### Layer 1: `pages/_app.js` — Stabilize the Layout Component Reference
+
+> **⚠️ MERGE WARNING: This modification is in the global `pages/_app.js`, NOT inside the claude theme directory. Pay special attention to this file during merges.**
+
+The original code had two problems:
+1.  `theme`'s `useMemo` depended on the entire `route` object (`[route]`). Since `useRouter()` returns a new object reference on every route change, `theme` was recalculated unnecessarily.
+2.  `GLayout` was a wrapper component defined inside `MyApp` via `useCallback`, calling `getBaseLayoutByTheme(theme)` on every render.
+
+The fix:
+
+```javascript
+// Depend on specific values, not the entire route object
+const theme = useMemo(() => {
+  return (
+    getQueryParam(route.asPath, 'theme') ||
+    pageProps?.NOTION_CONFIG?.THEME ||
+    BLOG.THEME
+  )
+}, [route.asPath, pageProps?.NOTION_CONFIG?.THEME])
+
+// Memoize Layout component — stable reference as long as theme doesn't change
+const Layout = useMemo(() => getBaseLayoutByTheme(theme), [theme])
+
+// Use Layout directly, no GLayout wrapper
+<Layout {...pageProps}>
+  <SEO {...pageProps} />
+  <Component {...pageProps} />
+</Layout>
+```
+
+This ensures React always sees the same component type at the same tree position, so it **reuses** the `LayoutBase` instance (re-render) instead of destroying and recreating it (remount).
+
+#### Layer 2: `themes/claude/index.js` — Memoized SidebarContent
+
+The desktop sidebar is wrapped in `React.memo(() => true)`:
+
+```javascript
+const SidebarContent = memo(function SidebarContent(props) {
+  return (
+    <div className='flex flex-col justify-between h-full py-6 px-5'>
+      <div><NavBar {...props} /></div>
+      <div className='mt-auto'><Footer /></div>
+    </div>
+  )
+}, () => true)  // Always returns true → blocks all prop-change re-renders
+```
+
+-   `React.memo`'s comparator `() => true` tells React "props are always equal", preventing any parent re-render from propagating.
+-   `MenuList` inside `NavBar` uses `useRouter()` (React Context), so active menu state still updates correctly — Context changes bypass `React.memo`.
+
+#### Layer 3: `themes/claude/components/NavBar.js` — Module-Level Terminal Session Cache
+
+The terminal login time and tty number are stored in a **JavaScript module-level variable**, outside of React's component lifecycle:
+
+```javascript
+let _cachedTerminalSession = null
+function getOrCreateTerminalSession() {
+  if (!_cachedTerminalSession) {
+    _cachedTerminalSession = {
+      loginTime: formatTerminalLoginTime(new Date()),
+      tty: `ttys00${Math.floor(Math.random() * 10)}`
+    }
+  }
+  return _cachedTerminalSession
+}
+```
+
+-   Module-level variables persist across component mount/unmount cycles.
+-   Only a full browser refresh (which reloads the JS module) resets this value.
+
+### Files Affected
+
+| File | Scope | Change |
+|---|---|---|
+| `pages/_app.js` | **Global** (not inside theme dir) | Removed `GLayout`; memoized `Layout` reference |
+| `themes/claude/index.js` | Theme | Added `SidebarContent` memo wrapper |
+| `themes/claude/components/NavBar.js` | Theme | Terminal session → module-level cache |
+
+---
+
+## 9. Development
 
 ### Project Structure
 *   `themes/claude/components/`: UI components (NavBar, Catalog, etc.).
@@ -231,3 +321,10 @@ The theme employs a multi-level caching strategy for stability.
 ### Commands
 *   `yarn dev`: Run locally.
 *   `yarn build`: Production build (triggers contribution sync).
+
+### ⚠️ Merge / Upgrade Notes
+*   The `Layout` caching logic in `pages/_app.js` (Section 8, Layer 1) is a **global modification**.
+*   If upstream updates `_app.js` (e.g., modifies `GLayout` or how `getBaseLayoutByTheme` is called), ensure during merge:
+    1.  `Layout` is still cached via `useMemo(() => getBaseLayoutByTheme(theme), [theme])`.
+    2.  `theme`'s `useMemo` depends on `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`, **NOT** `[route]`.
+    3.  No `useCallback` wrapper component is used to indirectly call `getBaseLayoutByTheme`.

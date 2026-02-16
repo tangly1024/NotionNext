@@ -1,6 +1,6 @@
 # Claude Theme README
 
-> 适用目录：`themes/claude`
+> 适用目录：`themes/claude`（部分修改涉及全局 `pages/_app.js`）
 >
 > 本文档描述当前 `claude` 主题的实际实现，重点覆盖：
 > 1. 主题特性与视觉设计目标
@@ -11,6 +11,7 @@
 > 6. 缓存设计
 > 7. 配置项与环境变量说明
 > 8. 如何启用并使用该主题
+> 9. **侧边栏持久化架构**（含全局 `_app.js` 修改，合并时需注意）
 
 ---
 
@@ -576,16 +577,108 @@ curl "http://localhost:3000/api/claude/contribution-refresh?token=<token>&revali
 
 ---
 
-## 16. 设计约束与已知行为
+## 16. 侧边栏持久化架构
 
-- `claude` 主题只影响自身主题目录，不改动其他主题行为。
+### 16.1 问题背景
+
+在 Next.js Pages Router 中，每次客户端导航（点击链接跳转）都会重新渲染甚至重新挂载（remount）`LayoutBase`。这导致左侧栏（头像、终端模拟块、导航菜单）每次跳转都重新加载，用户体验不佳。
+
+### 16.2 三层防护方案
+
+本主题通过三层机制确保左侧栏**仅在浏览器刷新时**才重新加载：
+
+#### 第一层：`pages/_app.js` — 从根源消除 Layout 组件 remount
+
+> **⚠️ 合并注意：此修改位于全局 `pages/_app.js`，非 claude 主题目录内。合并时请特别关注此文件。**
+
+原始代码存在两个问题：
+
+1. `theme` 的 `useMemo` 依赖整个 `route` 对象（`[route]`）。`useRouter()` 每次路由变化都返回新的对象引用，导致 `theme` 每次都重新计算。
+2. `GLayout` 是在组件内部通过 `useCallback` 定义的包装组件，每次渲染都在内部调用 `getBaseLayoutByTheme(theme)`。
+
+修复后：
+
+```javascript
+// 依赖改为具体值，而非整个 route 对象
+const theme = useMemo(() => {
+  return (
+    getQueryParam(route.asPath, 'theme') ||
+    pageProps?.NOTION_CONFIG?.THEME ||
+    BLOG.THEME
+  )
+}, [route.asPath, pageProps?.NOTION_CONFIG?.THEME])
+
+// 用 useMemo 缓存 Layout 组件引用，相同 theme 下始终返回同一个组件
+const Layout = useMemo(() => getBaseLayoutByTheme(theme), [theme])
+
+// 直接使用 Layout，不再通过 GLayout 包装
+<Layout {...pageProps}>
+  <SEO {...pageProps} />
+  <Component {...pageProps} />
+</Layout>
+```
+
+关键效果：`Layout`（即 `LayoutBase`）在同一主题下始终是同一个组件引用，React 不会因组件类型变化而 remount 整棵子树。
+
+#### 第二层：`themes/claude/index.js` — SidebarContent 记忆化
+
+桌面端侧边栏用 `React.memo(() => true)` 包裹：
+
+```javascript
+const SidebarContent = memo(function SidebarContent(props) {
+  return (
+    <div className='flex flex-col justify-between h-full py-6 px-5'>
+      <div><NavBar {...props} /></div>
+      <div className='mt-auto'><Footer /></div>
+    </div>
+  )
+}, () => true)  // 始终返回 true → 阻止所有来自父组件的 prop 变化触发重渲染
+```
+
+- `React.memo` 的第二个参数 `() => true` 表示"props 始终相等"，阻止父组件 re-render 传播。
+- `MenuList` 内部的 `useRouter()` 基于 React Context，路由变化仍会绕过 memo 正常更新菜单激活状态。
+
+#### 第三层：`themes/claude/components/NavBar.js` — 模块级终端会话缓存
+
+终端区域的登录时间和 tty 编号存储在 **JS 模块级变量**（非 React 状态）中：
+
+```javascript
+let _cachedTerminalSession = null
+function getOrCreateTerminalSession() {
+  if (!_cachedTerminalSession) {
+    _cachedTerminalSession = {
+      loginTime: formatTerminalLoginTime(new Date()),
+      tty: `ttys00${Math.floor(Math.random() * 10)}`
+    }
+  }
+  return _cachedTerminalSession
+}
+```
+
+- 模块级变量在 JS 模块作用域中，不属于任何 React 组件实例。
+- 即使极端情况下组件被 remount，缓存值不会丢失。
+- 只有浏览器刷新（JS 模块重新加载）时才重置。
+
+### 16.3 涉及文件清单
+
+| 文件 | 所属 | 修改内容 |
+|---|---|---|
+| `pages/_app.js` | **全局**（非主题目录） | 移除 `GLayout`，用 `useMemo` 缓存 Layout 引用 |
+| `themes/claude/index.js` | 主题 | 新增 `SidebarContent` memo 组件 |
+| `themes/claude/components/NavBar.js` | 主题 | 终端会话改为模块级缓存 |
+
+---
+
+## 17. 设计约束与已知行为
+
+- `claude` 主题只影响自身主题目录，**但侧边栏持久化修改涉及全局 `pages/_app.js`**（见第 16 节）。
 - Contribution 事件是幂等写入，不应重复产生同一 `create` 事件。
 - README 渲染采用“服务端转换 + 前端静态 HTML 注入”，目标是稳定优先。
 - 移动端优先保持桌面视觉语言一致，不随屏宽自动降级字体粗细/大小。
 
 ---
 
-## 17. 维护建议
+## 18. 维护建议
 
 - 如果你修改了热力图规则，请同步更新：
   - `themes/claude/components/ProfileHome.js`
@@ -597,3 +690,9 @@ curl "http://localhost:3000/api/claude/contribution-refresh?token=<token>&revali
   - `lib/cache/*`
   - `pages/index.js`
   - `lib/db/notion/notionBlocksToHtml.js`
+- **⚠️ 合并 / 升级注意**：
+  - `pages/_app.js` 中的 `Layout` 缓存逻辑（第 16.2 节第一层）是全局修改。
+  - 如果上游更新了 `_app.js`（例如修改了 `GLayout` 或 `getBaseLayoutByTheme` 调用方式），合并时需确保：
+    1. `Layout` 仍通过 `useMemo(() => getBaseLayoutByTheme(theme), [theme])` 缓存引用。
+    2. `theme` 的 `useMemo` 依赖是 `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`，**而非** `[route]`。
+    3. 不使用 `useCallback` 定义包装组件来间接调用 `getBaseLayoutByTheme`。
