@@ -59,9 +59,11 @@ export const useSimpleGlobal = () => useContext(ThemeGlobalSimple)
 const LayoutBase = props => {
   const { children } = props
   const { onLoading } = useGlobal()
+  const router = useRouter()
   const searchModal = useRef(null)
   const hasToc = props.post?.toc && props.post.toc.length > 0
   const tocEnable = siteConfig('CLAUDE_TOC_ENABLE', true, CONFIG)
+  const isHomePage = router?.pathname === '/'
 
   useEffect(() => {
     const shouldBlockImageAction = target => {
@@ -93,7 +95,7 @@ const LayoutBase = props => {
     <ThemeGlobalSimple.Provider value={{ searchModal }}>
       <div
         id='theme-claude'
-        className={`${siteConfig('FONT_STYLE')} h-screen flex flex-col overflow-hidden`}>
+        className={`${siteConfig('FONT_STYLE')} ${isHomePage ? 'claude-page-home' : 'claude-page-subpage'} h-screen flex flex-col overflow-hidden`}>
         <Style />
 
         {siteConfig('SIMPLE_TOP_BAR', null, CONFIG) && <TopBar {...props} />}

@@ -644,7 +644,10 @@ export default function ProfileHome(props) {
                       </div>
                       <div ref={heatmapGridRef} className='claude-contrib-grid'>
                         {heatmapData.cells.map(cell => {
-                          const isPlaceholder = isYearModeActive && !cell.inRange
+                          const isFutureCellInLastYearMode =
+                            !isYearModeActive && !cell.inRange && cell.date > heatmapRange.end
+                          const isPlaceholder =
+                            (isYearModeActive && !cell.inRange) || isFutureCellInLastYearMode
                           return (
                             <div
                               key={cell.key}

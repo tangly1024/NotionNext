@@ -79,16 +79,16 @@ const Style = () => {
         --claude-contrib-l4: #116329;
         --claude-contrib-border: #1F23280D;
         --claude-contrib-label: var(--claude-gh-fg-default);
-        --claude-code-bg: #FFFFFF;
-        --claude-code-border: rgba(0, 0, 0, 0.08);
+        --claude-code-bg: var(--claude-bg);
+        --claude-code-border: rgb(222 222 222);
         --claude-code-shell-bg: rgb(243 243 243);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: rgb(10 10 10);
         --claude-link: var(--claude-accent);
         --claude-blockquote-border: var(--claude-border);
-        --claude-callout-tip-bg: #f0fdf4;
-        --claude-callout-tip-border: #bbf7d0;
-        --claude-callout-tip-text: #166534;
+        --claude-callout-tip-bg: rgb(240 253 244);
+        --claude-callout-tip-border: rgb(187 247 208);
+        --claude-callout-tip-text: rgb(22, 101, 52);
         --claude-gh-fg-default: rgb(31, 35, 40);
         --claude-gh-fg-muted: rgb(89, 99, 110);
         --claude-gh-border: rgb(209, 217, 224);
@@ -101,6 +101,7 @@ const Style = () => {
         --claude-timeline-line: rgba(209, 217, 224, 0.7);
         --claude-badge-bg: rgb(246, 248, 250);
         --claude-badge-border: rgb(255, 255, 255);
+        --claude-subpage-bg-light: rgb(253 253 247);
         --claude-heading-font: 'Anthropic Serif Display', Georgia, 'Times New Roman', serif;
         --claude-body-font: 'Anthropic Sans Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         --claude-mono-font: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
@@ -144,17 +145,17 @@ const Style = () => {
         --claude-contrib-l4: #56D364;
         --claude-contrib-border: var(--claude-profile-border);
         --claude-contrib-label: var(--claude-gh-fg-default);
-        --claude-code-bg: #0B0C0E;
-        --claude-code-border: rgba(255, 255, 255, 0.08);
+        --claude-code-bg: var(--claude-bg);
+        --claude-code-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-bg: rgb(255 255 255 / 0.05);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: #D4D4D4;
         --claude-link: var(--claude-sidebar-active-text);
         --claude-dark-quote: rgb(134, 239, 172);
         --claude-blockquote-border: var(--claude-border);
-        --claude-callout-tip-bg: rgb(22 163 74 / 0.2);
-        --claude-callout-tip-border: rgb(20 83 45);
-        --claude-callout-tip-text: rgb(134 239 172);
+        --claude-callout-tip-bg: rgba(22, 163, 74, 0.2);
+        --claude-callout-tip-border: rgb(20, 83, 45);
+        --claude-callout-tip-text: rgb(134, 239, 172);
         --claude-gh-fg-default: rgb(240, 246, 252);
         --claude-gh-fg-muted: #9198a1;
         --claude-gh-border: rgb(61, 68, 77);
@@ -260,6 +261,9 @@ const Style = () => {
       #theme-claude {
         background-color: var(--claude-bg);
         color: var(--claude-text-primary);
+      }
+      .light #theme-claude.claude-page-subpage {
+        background-color: var(--claude-subpage-bg-light);
       }
       /* ========================================
        * LEFT SIDEBAR — safe to transition (fixed width, no reflow)
@@ -631,7 +635,7 @@ const Style = () => {
         color-scheme: dark;
         --fgColor-accent: #4493f8;
         --bgColor-attention-muted: #bb800926;
-        --bgColor-default: #0d1117;
+        --bgColor-default: var(--claude-bg);
         --bgColor-muted: #151b23;
         --bgColor-neutral-muted: #656c7633;
         --borderColor-accent-emphasis: #1f6feb;
@@ -723,7 +727,7 @@ const Style = () => {
         --fgColor-done: #8250df;
         --fgColor-muted: #59636e;
         --fgColor-success: #1a7f37;
-        --bgColor-default: #ffffff;
+        --bgColor-default: var(--claude-bg);
         --borderColor-muted: #d1d9e0b3;
         --color-prettylights-syntax-invalid-illegal-bg: var(--bgColor-danger-muted);
         --color-prettylights-syntax-markup-bold: #1f2328;
@@ -732,6 +736,15 @@ const Style = () => {
         --fgColor-default: #1f2328;
         --focus-outlineColor: var(--borderColor-accent-emphasis);
         --borderColor-neutral-muted: var(--borderColor-muted);
+      }
+      #theme-claude .claude-readme-card .markdown-body {
+        background-color: transparent !important;
+      }
+      #theme-claude .claude-readme-card .markdown-body pre,
+      #theme-claude .claude-readme-card .markdown-body .highlight pre,
+      #theme-claude .claude-readme-card .markdown-body code,
+      #theme-claude .claude-readme-card .markdown-body tt {
+        background-color: transparent !important;
       }
       #theme-claude .claude-readme-card .markdown-body h1,
       #theme-claude .claude-readme-card .markdown-body h2,
@@ -951,13 +964,13 @@ const Style = () => {
         font-size: 12px;
         line-height: 1.4;
         white-space: nowrap;
-        box-shadow: 0 6px 16px rgb(31 35 40 / 0.2);
+        box-shadow: none;
       }
       .dark .claude-contrib-tooltip {
         background: #3d444d;
         color: #fff;
         border-color: var(--claude-gh-border);
-        box-shadow: 0 8px 20px rgb(0 0 0 / 0.45);
+        box-shadow: none;
       }
       .claude-contrib-legend {
         display: flex;
@@ -1699,10 +1712,9 @@ const Style = () => {
         border-radius: 1rem !important;
         background: var(--claude-callout-tip-bg) !important;
         padding: 1rem 1.25rem !important;
+        margin: 0 0 1rem !important;
         color: var(--claude-callout-tip-text) !important;
         font-style: normal !important;
-        font-size: 0.9375rem !important;
-        line-height: 1.7 !important;
       }
       .dark .notion-quote {
         border: 1px solid var(--claude-callout-tip-border) !important;
@@ -1710,11 +1722,31 @@ const Style = () => {
         background: var(--claude-callout-tip-bg) !important;
         color: var(--claude-callout-tip-text) !important;
         padding: 16px 20px !important;
-        margin: 16px 0 !important;
+        margin: 0 0 1rem !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
-        line-height: 1.75rem !important;
-        font-size: 1rem !important;
+      }
+      #theme-claude .notion-quote,
+      #theme-claude .notion-quote .notion-text,
+      #theme-claude .notion-quote .notion-text p,
+      #theme-claude .notion-quote .notion-semantic-string {
+        font-size: 0.875rem !important;
+        line-height: 1.25rem !important;
+        font-weight: 400 !important;
+        tab-size: 4;
+        text-size-adjust: 100%;
+        transition-behavior: normal;
+        transition-delay: 0s;
+        transition-duration: 0s;
+        transition-property: none;
+        transition-timing-function: ease;
+        -webkit-font-smoothing: antialiased;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
+      #theme-claude .notion-quote .notion-text,
+      #theme-claude .notion-quote .notion-text p {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
       }
       /* Links inside quote */
       .notion-quote a {
@@ -1732,7 +1764,7 @@ const Style = () => {
         display: flex !important;
         align-items: flex-start !important;
         gap: 12px !important;
-        margin: 16px 0 !important;
+        margin: 0 0 1rem !important;
         padding: 16px 20px !important;
         border: 1px solid var(--claude-callout-tip-border) !important;
         border-radius: 16px !important;
@@ -1887,15 +1919,12 @@ const Style = () => {
       #theme-claude .code-toolbar {
         position: relative !important;
         margin: 1.25rem 0 2rem !important;
-        padding: 0.125rem !important;
+        padding: 0 !important;
         display: block !important;
         box-sizing: border-box !important;
-        border-radius: 16px !important;
-        border-top: 1px solid rgba(10, 10, 10, 0.1) !important;
-        border-right: 1px solid rgba(10, 10, 10, 0.1) !important;
-        border-bottom: 1px solid rgba(10, 10, 10, 0.1) !important;
-        border-left: 1px solid rgba(10, 10, 10, 0.1) !important;
-        background: var(--claude-code-shell-bg) !important;
+        border-radius: 0 !important;
+        border: none !important;
+        background: transparent !important;
         color: var(--claude-code-shell-text) !important;
         font-family: var(--claude-body-font) !important;
         font-size: 1rem !important;
@@ -1907,15 +1936,9 @@ const Style = () => {
       }
       .dark #theme-claude .code-toolbar {
         box-sizing: border-box !important;
-        border-top: 1px solid var(--claude-code-shell-border) !important;
-        border-right: 1px solid var(--claude-code-shell-border) !important;
-        border-bottom: 1px solid var(--claude-code-shell-border) !important;
-        border-left: 1px solid var(--claude-code-shell-border) !important;
-        border-top-left-radius: 16px !important;
-        border-top-right-radius: 16px !important;
-        border-bottom-left-radius: 16px !important;
-        border-bottom-right-radius: 16px !important;
-        background: var(--claude-code-shell-bg) !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
         color: var(--claude-code-shell-text) !important;
       }
 
@@ -1928,35 +1951,23 @@ const Style = () => {
       #theme-claude .collapse-wrapper > div {
         box-sizing: border-box !important;
         background-clip: border-box !important;
-        border-top: 1px solid rgba(10, 10, 10, 0.1) !important;
-        border-right: 1px solid rgba(10, 10, 10, 0.1) !important;
-        border-bottom: 1px solid rgba(10, 10, 10, 0.1) !important;
-        border-left: 1px solid rgba(10, 10, 10, 0.1) !important;
-        border-top-left-radius: 16px !important;
-        border-top-right-radius: 16px !important;
-        border-bottom-left-radius: 16px !important;
-        border-bottom-right-radius: 16px !important;
-        background: var(--claude-code-shell-bg) !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
         color: var(--claude-code-shell-text) !important;
         font-family: var(--claude-body-font) !important;
         font-size: 1rem !important;
         font-weight: 400 !important;
         line-height: 1.75rem !important;
-        padding: 0.125rem !important;
+        padding: 0 !important;
         box-shadow: none !important;
       }
       .dark #theme-claude .collapse-wrapper > div {
         box-sizing: border-box !important;
         background-clip: border-box !important;
-        border-top: 1px solid var(--claude-code-shell-border) !important;
-        border-right: 1px solid var(--claude-code-shell-border) !important;
-        border-bottom: 1px solid var(--claude-code-shell-border) !important;
-        border-left: 1px solid var(--claude-code-shell-border) !important;
-        border-top-left-radius: 16px !important;
-        border-top-right-radius: 16px !important;
-        border-bottom-left-radius: 16px !important;
-        border-bottom-right-radius: 16px !important;
-        background: var(--claude-code-shell-bg) !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
         color: var(--claude-code-shell-text) !important;
       }
       #theme-claude .collapse-wrapper .code-toolbar {
@@ -1978,7 +1989,7 @@ const Style = () => {
       #theme-claude .code-toolbar > pre,
       #theme-claude .notion-code {
         margin: 0 !important;
-        border: 0 !important;
+        border: 1px solid var(--claude-code-border) !important;
         border-radius: 0.875rem !important;
         background: var(--claude-code-bg) !important;
         font-family: var(--claude-mono-font) !important;
