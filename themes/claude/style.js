@@ -2246,6 +2246,13 @@ const Style = () => {
       .dark .notion-inline-code {
         color: var(--claude-text-strong) !important;
       }
+      /* Inline code inside quote should keep code chip style while inheriting quote typography */
+      #theme-claude .notion-quote .notion-inline-code {
+        color: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        font-weight: inherit !important;
+      }
 
       /* Code block scrollbar — mirror Claude docs utility behavior */
       #theme-claude .notion-code,
