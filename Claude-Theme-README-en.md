@@ -1,6 +1,6 @@
 # Claude 3.5 Theme
 
-> Applies to: `themes/claude`
+> Applies to: `themes/claude` (with some global changes in `pages/_app.js`, `pages/index.js`, and `components/SEO.js`)
 
 This theme combines the clean reading experience of **Claude Docs** with the rich personal profile structure of **GitHub**, creating a professional yet personal blog for developers.
 
@@ -322,9 +322,35 @@ function getOrCreateTerminalSession() {
 *   `yarn dev`: Run locally.
 *   `yarn build`: Production build (triggers contribution sync).
 
-### ⚠️ Merge / Upgrade Notes
-*   The `Layout` caching logic in `pages/_app.js` (Section 8, Layer 1) is a **global modification**.
-*   If upstream updates `_app.js` (e.g., modifies `GLayout` or how `getBaseLayoutByTheme` is called), ensure during merge:
-    1.  `Layout` is still cached via `useMemo(() => getBaseLayoutByTheme(theme), [theme])`.
-    2.  `theme`'s `useMemo` depends on `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`, **NOT** `[route]`.
-    3.  No `useCallback` wrapper component is used to indirectly call `getBaseLayoutByTheme`.
+---
+
+## 10. Additional Global Changes (RSS + Homepage Title)
+
+These changes are outside the `themes/claude` directory but directly affect runtime behavior.
+
+### 10.1 Stop RSS content fetching when RSS is disabled
+
+*   File: `pages/index.js`
+*   Change: `generateRss(props)` is no longer unconditional; it now runs only when `ENABLE_RSS=true`.
+*   Result:
+    *   When RSS is disabled, `getPostBlocks(..., 'rss-content')` is not called.
+    *   Server logs such as `from:rss-content` disappear.
+
+### 10.2 Remove subtitle from homepage `<title>`
+
+*   File: `components/SEO.js`
+*   Route: `/` (homepage)
+*   Change: homepage title changed from `site title | site description` to `site title` only.
+*   Result:
+    *   No fallback subtitle like `这是一个由NotionNext生成的站点` in browser tabs.
+    *   No separator `|` on homepage title.
+
+### 10.3 ⚠️ Merge / Upgrade Notes (Consolidated)
+
+When pulling upstream updates, verify all of the following remain intact:
+
+1.  In `pages/_app.js`, `Layout` is still cached with `useMemo(() => getBaseLayoutByTheme(theme), [theme])` (see Section 8, Layer 1).
+2.  In `pages/_app.js`, `theme`'s `useMemo` dependencies are still `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`, **NOT** `[route]`.
+3.  In `pages/_app.js`, no `useCallback` wrapper component is used to indirectly call `getBaseLayoutByTheme`.
+4.  RSS generation in `pages/index.js` is still gated by `ENABLE_RSS`.
+5.  Homepage title in `components/SEO.js` still uses site title only (no appended description).

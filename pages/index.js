@@ -354,8 +354,13 @@ export async function getStaticProps(req) {
 
   // 生成robotTxt
   generateRobotsTxt(props)
-  // 生成Feed订阅
-  generateRss(props)
+  // 生成Feed订阅（仅在开启 RSS 时执行）
+  const enableRss = toBoolean(
+    getServerConfigValue('ENABLE_RSS', true, props?.NOTION_CONFIG || {})
+  )
+  if (enableRss) {
+    generateRss(props)
+  }
   // 生成
   generateSitemapXml(props)
   // 检查数据是否需要从algolia删除

@@ -1,6 +1,6 @@
 # Claude Theme README
 
-> 适用目录：`themes/claude`（部分修改涉及全局 `pages/_app.js`）
+> 适用目录：`themes/claude`（部分修改涉及全局 `pages/_app.js`、`pages/index.js`、`components/SEO.js`）
 >
 > 本文档描述当前 `claude` 主题的实际实现，重点覆盖：
 > 1. 主题特性与视觉设计目标
@@ -690,9 +690,36 @@ function getOrCreateTerminalSession() {
   - `lib/cache/*`
   - `pages/index.js`
   - `lib/db/notion/notionBlocksToHtml.js`
-- **⚠️ 合并 / 升级注意**：
-  - `pages/_app.js` 中的 `Layout` 缓存逻辑（第 16.2 节第一层）是全局修改。
-  - 如果上游更新了 `_app.js`（例如修改了 `GLayout` 或 `getBaseLayoutByTheme` 调用方式），合并时需确保：
-    1. `Layout` 仍通过 `useMemo(() => getBaseLayoutByTheme(theme), [theme])` 缓存引用。
-    2. `theme` 的 `useMemo` 依赖是 `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`，**而非** `[route]`。
-    3. 不使用 `useCallback` 定义包装组件来间接调用 `getBaseLayoutByTheme`。
+
+---
+
+## 19. 全局改动补充（RSS 与首页标题）
+
+以下变更位于主题目录之外，但会直接影响 `claude` 主题实际运行行为：
+
+### 19.1 RSS 关闭时不再触发 RSS 内容抓取
+
+- 文件：`pages/index.js`
+- 变更：`generateRss(props)` 从“无条件执行”改为“仅在 `ENABLE_RSS=true` 时执行”。
+- 结果：
+  - 当你禁用 RSS 后，不再调用 `getPostBlocks(..., 'rss-content')`。
+  - 服务端日志中的 `from:rss-content` 不会再出现。
+
+### 19.2 首页标签页标题不再拼接副标题
+
+- 文件：`components/SEO.js`
+- 路由：`/`（首页）
+- 变更：首页 title 从 `site title | site description` 改为仅显示 `site title`。
+- 结果：
+  - 未配置副标题时，不会再出现默认文案“这是一个由NotionNext生成的站点”。
+  - 分隔符 `|` 也不会显示。
+
+### 19.3 ⚠️ 合并 / 升级注意（汇总）
+
+若后续合并上游更新，请统一检查以下项是否仍保留：
+
+1. `pages/_app.js` 中 `Layout` 仍通过 `useMemo(() => getBaseLayoutByTheme(theme), [theme])` 缓存引用（见第 16.2 节第一层）。
+2. `pages/_app.js` 中 `theme` 的 `useMemo` 依赖仍为 `[route.asPath, pageProps?.NOTION_CONFIG?.THEME]`，**而非** `[route]`。
+3. `pages/_app.js` 中仍不使用 `useCallback` 包装组件来间接调用 `getBaseLayoutByTheme`。
+4. `pages/index.js` 里 RSS 生成仍受 `ENABLE_RSS` 开关控制。
+5. `components/SEO.js` 里首页 title 仍仅使用主标题，不拼接 description。

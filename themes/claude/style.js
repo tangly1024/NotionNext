@@ -55,6 +55,7 @@ const Style = () => {
         --claude-bg-secondary: #F3F3EE;
         --claude-text-primary: #1A1A1A;
         --claude-text-strong: var(--claude-text-primary);
+        --tw-prose-code: #111827;
         --claude-text-secondary: #5C5C5C;
         --claude-text-tertiary: #8C8C8C;
         --claude-border: #E5E5E0;
@@ -122,7 +123,8 @@ const Style = () => {
         --claude-subpage-bg-light: rgb(253 253 247);
         --claude-heading-font: 'Anthropic Serif Display', Georgia, 'Times New Roman', serif;
         --claude-body-font: 'Anthropic Sans Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-        --claude-mono-font: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+        --font-jetbrains-mono: "JetBrains Mono", "JetBrains Mono Fallback", SF Mono, SFMono-Regular, Menlo, Monaco, Cascadia Mono, Segoe UI Mono, Roboto Mono, Oxygen Mono, Ubuntu Monospace, Source Code Pro, Fira Mono, Droid Sans Mono, Consolas, Courier New, monospace;
+        --claude-mono-font: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         --claude-terminal-bg: #ffffff;
         --claude-terminal-bar-bg: #f6f8fa;
         --claude-terminal-border: var(--claude-profile-border);
@@ -141,6 +143,7 @@ const Style = () => {
         --claude-bg-secondary: #242320;
         --claude-text-primary: #9E9E9E;
         --claude-text-strong: #FFFFFF;
+        --tw-prose-code: #fff;
         --claude-text-secondary: #A0A09C;
         --claude-text-tertiary: #6E6E6A;
         --claude-border: #333330;
@@ -1731,6 +1734,10 @@ const Style = () => {
         padding-left: 0 !important;
         padding-right: 0 !important;
       }
+      #theme-claude code,
+      #theme-claude pre code {
+        font-family: var(--claude-mono-font) !important;
+      }
       /* Prevent first-paint layout shift: NotionPage removes these nodes after mount */
       #theme-claude #notion-article .notion-collection-page-properties {
         display: none !important;
@@ -1795,15 +1802,31 @@ const Style = () => {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
       }
+      /* Quote: descendants inherit quote color + font size (light + dark) */
+      #theme-claude .notion-quote .notion-text,
+      #theme-claude .notion-quote .notion-text p,
+      #theme-claude .notion-quote .notion-semantic-string,
+      #theme-claude .notion-quote .notion-link,
+      #theme-claude .notion-quote a,
+      #theme-claude .notion-quote b,
+      #theme-claude .notion-quote strong,
+      #theme-claude .notion-quote em,
+      #theme-claude .notion-quote i,
+      #theme-claude .notion-quote u,
+      #theme-claude .notion-quote s,
+      #theme-claude .notion-quote del,
+      #theme-claude .notion-quote span,
+      #theme-claude .notion-quote :not(pre) > code,
+      #theme-claude .notion-quote .notion-inline-code {
+        color: inherit !important;
+        font-size: inherit !important;
+      }
       /* Links inside quote */
       .notion-quote a {
-        color: var(--claude-callout-tip-text) !important;
+        color: inherit !important;
         font-weight: 600 !important;
         text-decoration: underline !important;
         text-underline-offset: 3px !important;
-      }
-      .dark .notion-quote a {
-        color: var(--claude-callout-tip-text) !important;
       }
 
       /* Notion callout block (icon + content) — align with Claude dark tip style */
@@ -2233,25 +2256,39 @@ const Style = () => {
         display: none !important;
       }
 
-      /* Inline code */
-      .notion-inline-code {
-        background: var(--claude-bg-secondary) !important;
-        color: var(--claude-text-primary) !important;
-        border: none !important;
+      /* Inline code (non-pre): chip style */
+      #theme-claude :not(pre) > code,
+      #theme-claude .notion-inline-code,
+      #theme-claude .prose :where(code):not(:where([class~=not-prose], [class~=not-prose] *)) {
+        color: var(--tw-prose-code) !important;
+        font-weight: 500 !important;
+        font-size: 0.875em !important;
+        font-variant-ligatures: none !important;
+        /* 让浅色模式行内代码块的背景不显示 */
+        background-color: transparent !important;
         border-radius: 0.25rem !important;
         padding: 0.125rem 0.375rem !important;
-        font-size: 0.8125em !important;
         font-family: var(--claude-mono-font) !important;
       }
-      .dark .notion-inline-code {
+      /* light mode: only apply text-current behavior */
+      #theme-claude .\\[\\&_code\\]\\:\\!text-current code {
+        color: currentColor !important;
+      }
+      .dark #theme-claude :not(pre) > code,
+      .dark #theme-claude .notion-inline-code {
+        background-color: transparent !important;
         color: var(--claude-text-strong) !important;
       }
-      /* Inline code inside quote should keep code chip style while inheriting quote typography */
+      /* Quote inline code: keep code font */
+      #theme-claude .notion-quote :not(pre) > code,
       #theme-claude .notion-quote .notion-inline-code {
+        font-family: var(--claude-mono-font) !important;
+      }
+      .dark #theme-claude .notion-quote :not(pre) > code,
+      .dark #theme-claude .notion-quote .notion-inline-code {
+        background-color: rgb(255 255 255 / 0.08) !important;
         color: inherit !important;
         font-size: inherit !important;
-        line-height: inherit !important;
-        font-weight: inherit !important;
       }
 
       /* Code block scrollbar — mirror Claude docs utility behavior */
