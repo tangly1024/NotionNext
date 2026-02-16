@@ -1,5 +1,5 @@
-import DarkModeButton from '@/components/DarkModeButton'
 import { siteConfig } from '@/lib/config'
+import DarkModeButton from './DarkModeButton'
 import CONFIG from '../config'
 
 /**

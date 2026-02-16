@@ -84,6 +84,23 @@ const Style = () => {
         --claude-code-shell-bg: rgb(243 243 243);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: rgb(10 10 10);
+        --claude-code-token-comment: #93a1a1;
+        --claude-code-token-punctuation: #586e75;
+        --claude-code-token-keyword: #859900;
+        --claude-code-token-string: #2aa198;
+        --claude-code-token-number: #268bd2;
+        --claude-code-token-function: #b58900;
+        --claude-code-token-operator: #657b83;
+        --claude-code-token-class-name: #b58900;
+        --claude-code-token-attr-name: #2aa198;
+        --claude-code-token-tag: #268bd2;
+        --claude-code-token-property: #268bd2;
+        --claude-code-token-atrule: #859900;
+        --claude-code-token-url: #2aa198;
+        --claude-code-token-variable: #cb4b16;
+        --claude-code-token-important: #cb4b16;
+        --claude-code-token-entity: #657b83;
+        --claude-code-token-css-string: #2aa198;
         --claude-link: var(--claude-accent);
         --claude-blockquote-border: var(--claude-border);
         --claude-callout-tip-bg: rgb(240 253 244);
@@ -115,7 +132,8 @@ const Style = () => {
         --claude-terminal-dot-green: #3fb950;
       }
 
-      .dark {
+      .dark,
+      html[data-theme='dark'] {
         --claude-gh-blue-bg: rgb(31, 111, 235);
         --claude-gh-blue-bg-rgb: 31 111 235;
         --claude-bg: #1A1915;
@@ -150,6 +168,23 @@ const Style = () => {
         --claude-code-shell-bg: rgb(255 255 255 / 0.05);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: #D4D4D4;
+        --claude-code-token-comment: #8292a2;
+        --claude-code-token-punctuation: #f8f8f2;
+        --claude-code-token-keyword: #66d9ef;
+        --claude-code-token-string: #a6e22e;
+        --claude-code-token-number: #ae81ff;
+        --claude-code-token-function: #e6db74;
+        --claude-code-token-operator: #f8f8f2;
+        --claude-code-token-class-name: #e6db74;
+        --claude-code-token-attr-name: #a6e22e;
+        --claude-code-token-tag: #f92672;
+        --claude-code-token-property: #f92672;
+        --claude-code-token-atrule: #e6db74;
+        --claude-code-token-url: #f8f8f2;
+        --claude-code-token-variable: #f8f8f2;
+        --claude-code-token-important: #fd971f;
+        --claude-code-token-entity: #f8f8f2;
+        --claude-code-token-css-string: #f8f8f2;
         --claude-link: var(--claude-sidebar-active-text);
         --claude-dark-quote: rgb(134, 239, 172);
         --claude-blockquote-border: var(--claude-border);
@@ -177,6 +212,14 @@ const Style = () => {
       html {
         -webkit-font-smoothing: auto;
         -moz-osx-font-smoothing: auto;
+      }
+      html.light,
+      html[data-theme='light'] {
+        color-scheme: light;
+      }
+      html.dark,
+      html[data-theme='dark'] {
+        color-scheme: dark;
       }
       body {
         font-family: var(--claude-body-font);
@@ -631,7 +674,8 @@ const Style = () => {
         text-decoration: none;
         padding: 1.125rem 1.25rem;
       }
-      .dark .claude-readme-card .markdown-body {
+      .dark .claude-readme-card .markdown-body,
+      html[data-theme='dark'] .claude-readme-card .markdown-body {
         color-scheme: dark;
         --fgColor-accent: #4493f8;
         --bgColor-attention-muted: #bb800926;
@@ -684,7 +728,8 @@ const Style = () => {
         --focus-outlineColor: var(--borderColor-accent-emphasis);
         --borderColor-neutral-muted: var(--borderColor-muted);
       }
-      .light .claude-readme-card .markdown-body {
+      .light .claude-readme-card .markdown-body,
+      html[data-theme='light'] .claude-readme-card .markdown-body {
         color-scheme: light;
         --fgColor-danger: #d1242f;
         --bgColor-attention-muted: #fff8c5;
@@ -2012,6 +2057,94 @@ const Style = () => {
         width: max-content !important;
         min-width: 100% !important;
         text-shadow: none !important;
+      }
+      #theme-claude pre[class*='language-'] .token.comment,
+      #theme-claude .notion-code .token.comment,
+      #theme-claude pre[class*='language-'] .token.prolog,
+      #theme-claude .notion-code .token.prolog,
+      #theme-claude pre[class*='language-'] .token.doctype,
+      #theme-claude .notion-code .token.doctype,
+      #theme-claude pre[class*='language-'] .token.cdata,
+      #theme-claude .notion-code .token.cdata {
+        color: var(--claude-code-token-comment) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.punctuation,
+      #theme-claude .notion-code .token.punctuation {
+        color: var(--claude-code-token-punctuation) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.keyword,
+      #theme-claude .notion-code .token.keyword {
+        color: var(--claude-code-token-keyword) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.atrule,
+      #theme-claude .notion-code .token.atrule,
+      #theme-claude pre[class*='language-'] .token.attr-value,
+      #theme-claude .notion-code .token.attr-value {
+        color: var(--claude-code-token-atrule) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.function,
+      #theme-claude .notion-code .token.function,
+      #theme-claude pre[class*='language-'] .token.class-name,
+      #theme-claude .notion-code .token.class-name {
+        color: var(--claude-code-token-function) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.string,
+      #theme-claude .notion-code .token.string,
+      #theme-claude pre[class*='language-'] .token.char,
+      #theme-claude .notion-code .token.char,
+      #theme-claude pre[class*='language-'] .token.selector,
+      #theme-claude .notion-code .token.selector,
+      #theme-claude pre[class*='language-'] .token.attr-name,
+      #theme-claude .notion-code .token.attr-name,
+      #theme-claude pre[class*='language-'] .token.builtin,
+      #theme-claude .notion-code .token.builtin,
+      #theme-claude pre[class*='language-'] .token.inserted,
+      #theme-claude .notion-code .token.inserted {
+        color: var(--claude-code-token-string) !important;
+      }
+      #theme-claude .language-css .token.string,
+      #theme-claude .style .token.string {
+        color: var(--claude-code-token-css-string) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.number,
+      #theme-claude .notion-code .token.number,
+      #theme-claude pre[class*='language-'] .token.boolean,
+      #theme-claude .notion-code .token.boolean {
+        color: var(--claude-code-token-number) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.property,
+      #theme-claude .notion-code .token.property,
+      #theme-claude pre[class*='language-'] .token.tag,
+      #theme-claude .notion-code .token.tag,
+      #theme-claude pre[class*='language-'] .token.constant,
+      #theme-claude .notion-code .token.constant,
+      #theme-claude pre[class*='language-'] .token.symbol,
+      #theme-claude .notion-code .token.symbol,
+      #theme-claude pre[class*='language-'] .token.deleted,
+      #theme-claude .notion-code .token.deleted {
+        color: var(--claude-code-token-property) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.operator,
+      #theme-claude .notion-code .token.operator {
+        color: var(--claude-code-token-operator) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.entity,
+      #theme-claude .notion-code .token.entity {
+        color: var(--claude-code-token-entity) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.url,
+      #theme-claude .notion-code .token.url {
+        color: var(--claude-code-token-url) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.variable,
+      #theme-claude .notion-code .token.variable {
+        color: var(--claude-code-token-variable) !important;
+      }
+      #theme-claude pre[class*='language-'] .token.regex,
+      #theme-claude .notion-code .token.regex,
+      #theme-claude pre[class*='language-'] .token.important,
+      #theme-claude .notion-code .token.important {
+        color: var(--claude-code-token-important) !important;
       }
 
       /* Remove residual shadow from Prism themes and global notion.css */
