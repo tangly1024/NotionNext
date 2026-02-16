@@ -2207,7 +2207,6 @@ const Style = () => {
         background-position: center !important;
         background-size: 16px 16px !important;
         background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTgnIGhlaWdodD0nMTgnIHZpZXdCb3g9JzAgMCAxOCAxOCcgZmlsbD0nbm9uZScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTQuMjUgNS4yNUg3LjI1QzYuMTQ1NDMgNS4yNSA1LjI1IDYuMTQ1NDMgNS4yNSA3LjI1VjE0LjI1QzUuMjUgMTUuMzU0NiA2LjE0NTQzIDE2LjI1IDcuMjUgMTYuMjVIMTQuMjVDMTUuMzU0NiAxNi4yNSAxNi4yNSAxNS4zNTQ2IDE2LjI1IDE0LjI1VjcuMjVDMTYuMjUgNi4xNDU0MyAxNS4zNTQ2IDUuMjUgMTQuMjUgNS4yNVonIHN0cm9rZT0nIzlDQTNBRicgc3Ryb2tlLXdpZHRoPScxLjUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwYXRoIGQ9J00yLjgwMTAzIDExLjk5OEwxLjc3MjAzIDUuMDczOTdDMS42MTAwMyAzLjk4MDk3IDIuMzY0MDMgMi45NjM5NyAzLjQ1NjAzIDIuODAxOTdMMTAuMzggMS43NzI5N0MxMS4zMTMgMS42MzM5NyAxMi4xOSAyLjE2Mjk3IDEyLjUyOCAzLjAwMDk3JyBzdHJva2U9JyM5Q0EzQUYnIHN0cm9rZS13aWR0aD0nMS41JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnLz48L3N2Zz4=') !important;
-        transition: background-color 0.15s ease !important;
       }
       .dark #theme-claude .code-toolbar .copy-to-clipboard-button {
         background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTgnIGhlaWdodD0nMTgnIHZpZXdCb3g9JzAgMCAxOCAxOCcgZmlsbD0nbm9uZScgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMTQuMjUgNS4yNUg3LjI1QzYuMTQ1NDMgNS4yNSA1LjI1IDYuMTQ1NDMgNS4yNSA3LjI1VjE0LjI1QzUuMjUgMTUuMzU0NiA2LjE0NTQzIDE2LjI1IDcuMjUgMTYuMjVIMTQuMjVDMTUuMzU0NiAxNi4yNSAxNi4yNSAxNS4zNTQ2IDE2LjI1IDE0LjI1VjcuMjVDMTYuMjUgNi4xNDU0MyAxNS4zNTQ2IDUuMjUgMTQuMjUgNS4yNVonIHN0cm9rZT0nI0ZGRkZGRjY2JyBzdHJva2Utd2lkdGg9JzEuNScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJy8+PHBhdGggZD0nTTIuODAxMDMgMTEuOTk4TDEuNzcyMDMgNS4wNzM5N0MxLjYxMDAzIDMuOTgwOTcgMi4zNjQwMyAyLjk2Mzk3IDMuNDU2MDMgMi44MDE5N0wxMC4zOCAxLjc3Mjk3QzExLjMxMyAxLjYzMzk3IDEyLjE5IDIuMTYyOTcgMTIuNTI4IDMuMDAwOTcnIHN0cm9rZT0nI0ZGRkZGRjY2JyBzdHJva2Utd2lkdGg9JzEuNScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJy8+PC9zdmc+') !important;
@@ -2345,7 +2344,6 @@ const Style = () => {
         letter-spacing: normal !important;
         margin-bottom: 0.75rem;
         padding: 0;
-        transition: color 0.15s ease;
       }
       .catalog-title:hover {
         color: var(--claude-accent) !important;
@@ -2397,15 +2395,6 @@ const Style = () => {
       .dark .toc-item.toc-active {
         color: var(--claude-accent);
         font-weight: 600;
-      }
-
-      /* L3 expand animation */
-      .toc-item {
-        animation: tocFadeIn 0.2s ease-out;
-      }
-      @keyframes tocFadeIn {
-        from { opacity: 0; transform: translateY(-4px); }
-        to { opacity: 1; transform: translateY(0); }
       }
 
       /* TOC scrollbar — hidden */
@@ -2480,6 +2469,17 @@ const Style = () => {
         padding-left: 0.75rem;
         padding-right: 0.75rem;
         text-align: center;
+      }
+
+      /* Disable transitions only during color-mode switching */
+      html.claude-theme-switching #theme-claude,
+      html.claude-theme-switching #theme-claude *,
+      html.claude-theme-switching #theme-claude *::before,
+      html.claude-theme-switching #theme-claude *::after {
+        transition-property: none;
+        transition-duration: 0s;
+        transition-delay: 0s;
+        animation: none;
       }
 
       /* Hide scrollbar utility */

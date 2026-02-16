@@ -35,6 +35,23 @@ const applyTheme = isDark => {
   } catch {}
 }
 
+const withInstantThemeSwitch = callback => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    callback()
+    return
+  }
+
+  const root = document.documentElement
+  root.classList.add('claude-theme-switching')
+  callback()
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      root.classList.remove('claude-theme-switching')
+    })
+  })
+}
+
 export default function DarkModeButton({ className = '' }) {
   const [isDarkMode, setIsDarkMode] = useState(false)
 
@@ -45,7 +62,7 @@ export default function DarkModeButton({ className = '' }) {
     const initial =
       fromStorage !== null ? fromStorage : readDomDarkMode() || window.matchMedia('(prefers-color-scheme: dark)').matches
 
-    applyTheme(initial)
+    withInstantThemeSwitch(() => applyTheme(initial))
     setIsDarkMode(initial)
 
     const root = document.documentElement
@@ -62,7 +79,7 @@ export default function DarkModeButton({ className = '' }) {
 
   const handleToggle = () => {
     const next = !readDomDarkMode()
-    applyTheme(next)
+    withInstantThemeSwitch(() => applyTheme(next))
     setIsDarkMode(next)
   }
 

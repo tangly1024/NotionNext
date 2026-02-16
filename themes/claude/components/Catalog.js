@@ -245,7 +245,7 @@ const Catalog = ({ post }) => {
                     clickLockRef.current = false
                   }, delay)
                 }}
-                className={`toc-item block transition-all duration-200 ease-out
+                className={`toc-item block
                   ${isActive ? 'toc-active' : ''}
                   ${isHighlighted && !isActive ? 'toc-highlighted' : ''}
                   ${!isHighlighted ? 'toc-inactive' : ''}
