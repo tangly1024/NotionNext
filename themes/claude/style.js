@@ -84,6 +84,7 @@ const Style = () => {
         --claude-code-shell-bg: rgb(243 243 243);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: rgb(10 10 10);
+        --claude-code-text: #657b83;
         --claude-code-token-comment: #93a1a1;
         --claude-code-token-punctuation: #586e75;
         --claude-code-token-keyword: #859900;
@@ -168,6 +169,7 @@ const Style = () => {
         --claude-code-shell-bg: rgb(255 255 255 / 0.05);
         --claude-code-shell-border: rgba(255, 255, 255, 0.1);
         --claude-code-shell-text: #D4D4D4;
+        --claude-code-text: #f8f8f2;
         --claude-code-token-comment: #8292a2;
         --claude-code-token-punctuation: #f8f8f2;
         --claude-code-token-keyword: #66d9ef;
@@ -2037,6 +2039,7 @@ const Style = () => {
         border: 1px solid var(--claude-code-border) !important;
         border-radius: 0.875rem !important;
         background: var(--claude-code-bg) !important;
+        color: var(--claude-code-text) !important;
         font-family: var(--claude-mono-font) !important;
         font-size: 0.875rem !important;
         line-height: 1.5rem !important;
@@ -2046,17 +2049,18 @@ const Style = () => {
         font-variant-ligatures: none !important;
         box-shadow: none !important;
       }
-      .dark #theme-claude .code-toolbar > pre,
-      .dark #theme-claude .notion-code {
-        color: #D4D4D4 !important;
-      }
 
       #theme-claude .code-toolbar > pre > code,
       #theme-claude .notion-code > code {
         display: block !important;
         width: max-content !important;
         min-width: 100% !important;
+        color: var(--claude-code-text) !important;
         text-shadow: none !important;
+      }
+      #theme-claude code[class*='language-'],
+      #theme-claude pre[class*='language-'] {
+        color: var(--claude-code-text) !important;
       }
       #theme-claude pre[class*='language-'] .token.comment,
       #theme-claude .notion-code .token.comment,
