@@ -34,6 +34,33 @@
 
 ---
 
+## 快速开始 (Quick Start)
+
+只需要简单三步即可体验：
+
+1.  **配置环境变量**：
+    在 `.env` 或 `.env.local` 中添加（完整配置见下文）：
+    ```bash
+    # 启用主题
+    NEXT_PUBLIC_THEME=claude  # 或者在notion配置页面中配置
+    NOTION_PAGE_ID=<your-notion-page-id>
+
+    # [可选] 启用贡献热力图持久化 (推荐)
+    SUPABASE_URL=<your-supabase-url>
+    SUPABASE_SECRET_KEY=<your-supabase-key>
+    CLAUDE_CONTRIBUTION_TRIGGER_TOKEN=<secure-token-for-api>
+    ```
+
+2.  **创建个人资料页**：
+    在 Notion 中新建一个页面，并将其 **slug** 设置为 `readme.md`。该内容将显示在首页。
+
+3.  **启动**：
+    ```bash
+    yarn dev
+    ```
+
+---
+
 ## 2. 目录结构与关键文件
 
 主题核心文件：
