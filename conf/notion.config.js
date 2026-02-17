@@ -5,7 +5,7 @@
  */
 module.exports = {
   // Notion数据库索引，取notion的第几个视图作为站点数据和排序依据
-  NOTION_INDEX: process.env.NEXT_PUBLIC_NOTION_INDEX || 0,  // 默认取Notion数据库中的第1个视图
+  NOTION_INDEX: process.env.NEXT_PUBLIC_NOTION_INDEX || 0, // 默认取Notion数据库中的第1个视图
   // 由于计算机是从0开始计数、而非从1开始。因此如果要取第二个视图，可以传1，取第三个视图传2，以此类推,取数据库的最后一个视图可以传-1。
 
   // 自定义配置notion数据库字段名
@@ -13,6 +13,7 @@ module.exports = {
     password: process.env.NEXT_PUBLIC_NOTION_PROPERTY_PASSWORD || 'password',
     type: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE || 'type', // 文章类型，
     type_post: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_POST || 'Post', // 当type文章类型与此值相同时，为博文。
+    type_essay: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_ESSAY || 'Essay', // 当type文章类型与此值相同时，为随笔。
     type_page: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_PAGE || 'Page', // 当type文章类型与此值相同时，为单页。
     type_notice:
       process.env.NEXT_PUBLIC_NOTION_PROPERTY_TYPE_NOTICE || 'Notice', // 当type文章类型与此值相同时，为公告。

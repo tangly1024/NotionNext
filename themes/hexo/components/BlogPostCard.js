@@ -5,8 +5,10 @@ import CONFIG from '../config'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
+  const isEssay = post?.type === 'Essay'
   const showPreview =
-    siteConfig('HEXO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
+    isEssay ||
+    (siteConfig('HEXO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap)
   if (
     post &&
     !post.pageCoverThumbnail &&
@@ -15,6 +17,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
   const showPageCover =
+    !isEssay &&
     siteConfig('HEXO_POST_LIST_COVER', null, CONFIG) &&
     post?.pageCoverThumbnail &&
     !showPreview
@@ -22,7 +25,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
   return (
     <div
-      className={`${siteConfig('HEXO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`}>
+      className={`${siteConfig('HEXO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`}
+    >
       <div
         key={post.id}
         data-aos='fade-up'
@@ -32,7 +36,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         data-aos-anchor-placement='top-bottom'
         id='blog-post-card'
         className={`group md:h-56 w-full flex justify-between md:flex-row flex-col-reverse ${siteConfig('HEXO_POST_LIST_IMG_CROSSOVER', null, CONFIG) && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
-                    overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
+                    overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}
+      >
         {/* 文字内容 */}
         <BlogPostCardInfo
           index={index}

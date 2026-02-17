@@ -32,7 +32,9 @@ export async function getStaticProps(req) {
     props?.NOTION_CONFIG
   )
   props.posts = props.allPages?.filter(
-    page => page.type === 'Post' && page.status === 'Published'
+    page =>
+      (page.type === 'Post' || page.type === 'Essay') &&
+      page.status === 'Published'
   )
 
   // 处理分页
@@ -52,7 +54,9 @@ export async function getStaticProps(req) {
       if (post.password && post.password !== '') {
         continue
       }
-      post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+      // 对于Essay类型，获取更多内容块以展示全文
+      const previewLines = post.type === 'Essay' ? 9999 : POST_PREVIEW_LINES
+      post.blockMap = await getPostBlocks(post.id, 'slug', previewLines)
     }
   }
 

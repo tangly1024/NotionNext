@@ -19,34 +19,47 @@ export const BlogPostCardInfo = ({
 }) => {
   return (
     <article
-      className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-60' : 'w-full'}`}>
+      className={`flex flex-col justify-between lg:p-6 p-4  ${showPageCover && !showPreview ? 'md:w-7/12 w-full md:max-h-60' : 'w-full'}`}
+    >
       <div>
         <header>
-          <h2>
-            {/* 标题 */}
-            <SmartLink
-              href={post?.href}
-              passHref
-              className={`line-clamp-2 replace cursor-pointer text-2xl ${
-                showPreview ? 'text-center' : ''
-              } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}>
-              {siteConfig('POST_TITLE_ICON') && (
-                <NotionIcon icon={post.pageIcon} />
-              )}
-              <span className='menu-link '>{post.title}</span>
-            </SmartLink>
-          </h2>
+          {post.type !== 'Essay' && (
+            <h2>
+              {/* 标题 */}
+              <SmartLink
+                href={post?.href}
+                passHref
+                className={`line-clamp-2 replace cursor-pointer text-2xl ${
+                  showPreview ? 'text-center' : ''
+                } leading-tight font-normal text-gray-600 dark:text-gray-100 hover:text-indigo-700 dark:hover:text-indigo-400`}
+              >
+                {siteConfig('POST_TITLE_ICON') && (
+                  <NotionIcon icon={post.pageIcon} />
+                )}
+                <span className='menu-link '>{post.title}</span>
+              </SmartLink>
+            </h2>
+          )}
+
+          {/* 随笔特殊标识 */}
+          {post.type === 'Essay' && (
+            <div className='text-4xl text-gray-300 dark:text-gray-600 font-serif leading-none mb-2'>
+              “
+            </div>
+          )}
 
           {/* 分类 */}
           {post?.category && (
             <div
               className={`flex mt-2 items-center ${
                 showPreview ? 'justify-center' : 'justify-start'
-              } flex-wrap dark:text-gray-500 text-gray-400 `}>
+              } flex-wrap dark:text-gray-500 text-gray-400 `}
+            >
               <SmartLink
                 href={`/category/${post.category}`}
                 passHref
-                className='cursor-pointer font-light text-sm menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform'>
+                className='cursor-pointer font-light text-sm menu-link hover:text-indigo-700 dark:hover:text-indigo-400 transform'
+              >
                 <i className='mr-1 far fa-folder' />
                 {post.category}
               </SmartLink>
@@ -77,7 +90,7 @@ export const BlogPostCardInfo = ({
 
         {/* 预览 */}
         {showPreview && (
-          <div className='overflow-ellipsis truncate'>
+          <div className='overflow-ellipsis'>
             <NotionPage post={post} />
           </div>
         )}
@@ -90,7 +103,8 @@ export const BlogPostCardInfo = ({
           <SmartLink
             href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
             passHref
-            className='font-light menu-link cursor-pointer text-sm leading-4 mr-3'>
+            className='font-light menu-link cursor-pointer text-sm leading-4 mr-3'
+          >
             <i className='far fa-calendar-alt mr-1' />
             {post?.publishDay || post.lastEditedDay}
           </SmartLink>
