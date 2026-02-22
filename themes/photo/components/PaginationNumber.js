@@ -1,6 +1,6 @@
 import { ChevronDoubleRight } from '@/components/HeroIcons'
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -49,7 +49,7 @@ const PaginationNumber = ({ page, totalPage }) => {
       {/* pc端分页按钮 */}
       <div className='hidden lg:flex justify-between items-end mt-10 mb-5 font-medium text-black duration-500 dark:text-gray-300 py-3 space-x-2 overflow-x-auto'>
         {/* 上一页 */}
-        <Link
+        <SmartLink
           href={{
             pathname:
               currentPage === 2
@@ -65,7 +65,7 @@ const PaginationNumber = ({ page, totalPage }) => {
               {locale.PAGINATION.PREV}
             </div>
           </div>
-        </Link>
+        </SmartLink>
 
         {/* 分页 */}
         <div className='flex items-center space-x-2'>
@@ -86,7 +86,7 @@ const PaginationNumber = ({ page, totalPage }) => {
         </div>
 
         {/* 下一页 */}
-        <Link
+        <SmartLink
           href={{
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
             query: router.query.s ? { s: router.query.s } : {}
@@ -99,14 +99,14 @@ const PaginationNumber = ({ page, totalPage }) => {
               {locale.PAGINATION.NEXT}
             </div>
           </div>
-        </Link>
+        </SmartLink>
       </div>
 
       {/* 移动端分页 */}
 
       <div className='lg:hidden w-full flex flex-row'>
         {/* 上一页 */}
-        <Link
+        <SmartLink
           href={{
             pathname:
               currentPage === 2
@@ -117,12 +117,12 @@ const PaginationNumber = ({ page, totalPage }) => {
           rel='prev'
           className={`${showPrev ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
           {locale.PAGINATION.PREV}
-        </Link>
+        </SmartLink>
 
         {showPrev && showNext && <div className='w-12'></div>}
 
         {/* 下一页 */}
-        <Link
+        <SmartLink
           href={{
             pathname: `${pagePrefix}/page/${currentPage + 1}`,
             query: router.query.s ? { s: router.query.s } : {}
@@ -130,7 +130,7 @@ const PaginationNumber = ({ page, totalPage }) => {
           rel='next'
           className={`${+showNext ? 'block' : 'hidden'} dark:text-white relative w-full flex-1 h-14 flex items-center transition-all duration-200 justify-center py-2 px-2 bg-white dark:bg-[#1e1e1e] border rounded-xl cursor-pointer`}>
           {locale.PAGINATION.NEXT}
-        </Link>
+        </SmartLink>
       </div>
     </>
   )
@@ -149,7 +149,7 @@ function getPageElement(page, currentPage, pagePrefix) {
     return <></>
   }
   return (
-    <Link
+    <SmartLink
       href={page === 1 ? `${pagePrefix}/` : `${pagePrefix}/page/${page}`}
       key={page}
       passHref
@@ -160,7 +160,7 @@ function getPageElement(page, currentPage, pagePrefix) {
         ' hover:border-indigo-600 dark:hover:bg-yellow-600 dark:border-gray-600 px-4 border py-2 rounded-lg drop-shadow-sm duration-200 transition-colors'
       }>
       {page}
-    </Link>
+    </SmartLink>
   )
 }
 

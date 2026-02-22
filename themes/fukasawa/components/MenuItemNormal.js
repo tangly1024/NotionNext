@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 export const MenuItemNormal = props => {
@@ -9,7 +9,7 @@ export const MenuItemNormal = props => {
     return null
   }
   return (
-    <Link
+    <SmartLink
       key={`${link.href}`}
       title={link.href}
       href={link.href}
@@ -21,6 +21,6 @@ export const MenuItemNormal = props => {
         <div className={'hover:text-black'}>{link.name}</div>
       </div>
       {link.slot}
-    </Link>
+    </SmartLink>
   )
 }

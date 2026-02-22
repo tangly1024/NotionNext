@@ -1,7 +1,7 @@
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from './NotionIcon'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
 
@@ -38,7 +38,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         }>
         {/* 图片封面 */}
         {showPageCover && (
-          <Link href={post?.href} passHref legacyBehavior>
+          <SmartLink href={post?.href} passHref legacyBehavior>
             <div
               className={
                 (POST_TWO_COLS ? ' 2xl:w-full' : '') +
@@ -51,7 +51,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out' //宽高都调整为自适应,保证封面居中
               />
             </div>
-          </Link>
+          </SmartLink>
         )}
 
         {/* 文字区块 */}
@@ -65,17 +65,17 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             {post?.category && (
               <div
                 className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
-                <Link
+                <SmartLink
                   passHref
                   href={`/category/${post.category}`}
                   className='cursor-pointer text-xs font-normal menu-link '>
                   {post.category}
-                </Link>
+                </SmartLink>
               </div>
             )}
 
             {/* 标题和图标 */}
-            <Link
+            <SmartLink
               href={post?.href}
               passHref
               className={
@@ -88,7 +88,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               />
               )}
               <span className='menu-link '>{post.title}</span>
-            </Link>
+            </SmartLink>
           </header>
 
           {/* 摘要 */}

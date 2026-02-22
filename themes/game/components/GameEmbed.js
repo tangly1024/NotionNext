@@ -2,7 +2,7 @@
 import { Draggable } from '@/components/Draggable'
 import { siteConfig } from '@/lib/config'
 import { deepClone } from '@/lib/utils'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useEffect, useState } from 'react'
 import DownloadButton from './DownloadButton'
 import FullScreenButton from './FullScreenButton'
@@ -100,12 +100,12 @@ export default function GameEmbed({ post, siteInfo }) {
         <div
           style={{ left: '0px', top: '1rem' }}
           className='text-white fixed xl:hidden group space-x-1 flex items-center z-20 pr-3 pl-1 bg-[#202030] rounded-r-2xl  shadow-lg '>
-          <Link
+          <SmartLink
             href='/'
             className='px-1 py-3 hover:scale-125 duration-200 transition-all'
             passHref>
             <i className='fas fa-chevron-left' />
-          </Link>{' '}
+          </SmartLink>{' '}
           <span
             className='font-serif px-1'
             onClick={() => {

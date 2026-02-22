@@ -1,4 +1,6 @@
 import { siteConfig } from '@/lib/config'
+import { useRef } from 'react'
+import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
 
 /**
  * 社交联系方式按钮组
@@ -16,6 +18,9 @@ const SocialButton = () => {
   const ENABLE_RSS = siteConfig('ENABLE_RSS')
   const CONTACT_BILIBILI = siteConfig('CONTACT_BILIBILI')
   const CONTACT_YOUTUBE = siteConfig('CONTACT_YOUTUBE')
+
+  const emailIcon = useRef(null)
+
   return (
     <div className='w-full justify-center flex-wrap flex'>
       <div className='space-x-12 text-3xl text-gray-600 dark:text-gray-300 '>
@@ -75,14 +80,14 @@ const SocialButton = () => {
         )}
         {CONTACT_EMAIL && (
           <a
-            target='_blank'
-            rel='noreferrer'
-            title={'email'}
-            href={`mailto:${CONTACT_EMAIL}`}>
+            onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)}
+            title='email'
+            className='cursor-pointer'
+            ref={emailIcon}>
             <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-indigo-400 hover:text-indigo-600' />
           </a>
         )}
-        {JSON.parse(ENABLE_RSS) && (
+        {ENABLE_RSS && (
           <a
             target='_blank'
             rel='noreferrer'

@@ -8,7 +8,7 @@ import { useGlobal } from '@/lib/global'
  */
 export const HomeBackgroundImage = props => {
   const { siteInfo } = useGlobal()
-  const background = siteConfig('MOVIE_HOME_BACKGROUND')
+  const background = siteConfig('PHOTO_HOME_BACKGROUND')
   if (!background) {
     return null
   }
