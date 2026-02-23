@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -16,7 +16,7 @@ const NoFound = props => {
 export async function getStaticProps(req) {
   const { locale } = req
 
-  const props = (await getGlobalData({ from: '404', locale })) || {}
+  const props = (await fetchGlobalAllData({ from: '404', locale })) || {}
   return { props }
 }
 

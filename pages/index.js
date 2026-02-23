@@ -1,11 +1,11 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
-import { generateRobotsTxt } from '@/lib/robots.txt'
-import { generateRss } from '@/lib/rss'
-import { generateSitemapXml } from '@/lib/sitemap.xml'
+import { fetchGlobalAllData, getPostBlocks } from '@/lib/db/SiteDataApi'
+import { generateRobotsTxt } from '@/lib/utils/robots.txt'
+import { generateRss } from '@/lib/utils/rss'
+import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-import { generateRedirectJson } from '@/lib/redirect'
+import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 
 /**
@@ -25,7 +25,7 @@ const Index = props => {
 export async function getStaticProps(req) {
   const { locale } = req
   const from = 'index'
-  const props = await getGlobalData({ from, locale })
+  const props = await fetchGlobalAllData({ from, locale })
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',
     12,
