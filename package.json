@@ -62,6 +62,7 @@
     "critters": "^0.0.23",
     "feed": "^4.2.2",
     "firebase": "^12.9.0",
+    "framer-motion": "^12.34.3",
     "hanzi-writer": "^3.7.3",
     "howler": "^2.2.4",
     "ioredis": "^5.6.1",
