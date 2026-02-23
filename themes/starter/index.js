@@ -1,175 +1,166 @@
-import React, { useState, useRef, useEffect, createContext, useContext } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Mic2, Music4, Layers, BookText, Lightbulb,
   Globe, Library, Star, Volume2, ChevronRight,
-  Menu, X, MessageCircle, Globe2, Users, Compass, BookOpen, Sparkles
+  Menu, X, MessageCircle, Globe2, Users, Compass, BookOpen
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
-// 动态导入组件
+// 动态组件
 const BookLibrary = dynamic(() => import('@/components/BookLibrary'), { ssr: false })
 
-// --- 配置数据 ---
+// --- 配置数据 (浅色调) ---
 const PINYIN_NAV = [
-  { zh: '声母', mm: 'ဗျည်း', icon: Mic2, href: '/pinyin/initials', color: 'text-blue-500', bg: 'bg-blue-500/20' },
-  { zh: '韵母', mm: 'သရ', icon: Music4, href: '/pinyin/finals', color: 'text-emerald-500', bg: 'bg-emerald-500/20' },
-  { zh: '整体', mm: 'အသံတွဲ', icon: Layers, href: '/pinyin/syllables', color: 'text-purple-500', bg: 'bg-purple-500/20' },
-  { zh: '声调', mm: 'အသံ', icon: BookText, color: 'text-amber-500', bg: 'bg-amber-500/20', href: '/pinyin/tones' }
+  { zh: '声母', mm: 'ဗျည်း', icon: Mic2, href: '/pinyin/initials', color: 'text-blue-600', bg: 'bg-blue-100/80' },
+  { zh: '韵母', mm: 'သရ', icon: Music4, href: '/pinyin/finals', color: 'text-emerald-600', bg: 'bg-emerald-100/80' },
+  { zh: '整体', mm: 'အသံတွဲ', icon: Layers, href: '/pinyin/syllables', color: 'text-purple-600', bg: 'bg-purple-100/80' },
+  { zh: '声调', mm: 'အသံ', icon: BookText, color: 'text-amber-600', bg: 'bg-amber-100/80', href: '/pinyin/tones' }
 ]
 
 const CORE_TOOLS = [
-  { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, href: '/ai-translate', bg: 'bg-indigo-500/20', iconColor: 'text-indigo-400' },
-  { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'open-library', bg: 'bg-cyan-500/20', iconColor: 'text-cyan-400' },
-  { zh: '单词收藏', mm: 'မှတ်ထားသော စာလုံး', icon: Star, href: '/words', bg: 'bg-white/10', iconColor: 'text-yellow-400' },
-  { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/spoken?filter=favorites', bg: 'bg-white/10', iconColor: 'text-rose-400' }
+  { zh: 'AI 翻译', mm: 'AI ဘာသာပြန်', icon: Globe, href: '/ai-translate', bg: 'bg-indigo-50', iconColor: 'text-indigo-600' },
+  { zh: '免费书籍', mm: 'စာကြည့်တိုက်', icon: Library, action: 'open-library', bg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
+  { zh: '单词收藏', mm: 'မှတ်ထားသော စာလုံး', icon: Star, href: '/words', bg: 'bg-slate-50', iconColor: 'text-slate-600' },
+  { zh: '口语收藏', mm: 'မှတ်ထားသော စကားပြော', icon: Volume2, href: '/oral', bg: 'bg-slate-50', iconColor: 'text-slate-600' }
 ]
-
-// --- 样式常量 ---
-const GLASS_STYLE = "backdrop-blur-xl bg-white/10 border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]"
-const GLASS_HOVER = "hover:bg-white/20 transition-all duration-300"
 
 export default function LayoutLearningHome() {
   const router = useRouter()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [isLibraryOpen, setIsLibraryOpen] = useState(false)
   
-  // 手势处理
-  const touchStartRef = useRef({ x: 0, y: 0 })
-  const [isEdgeSwiping, setIsEdgeSwiping] = useState(false)
+  // --- 手势控制系统 ---
+  const touchStartPos = useRef({ x: 0, y: 0 })
+  const isEdgeSwipe = useRef(false)
 
-  // --- 手势返回逻辑 ---
-  const handleTouchStart = (e) => {
-    const touch = e.touches[0]
-    touchStartRef.current = { x: touch.clientX, y: touch.clientY }
-    // 如果从屏幕最左侧(15px内)开始滑动，激活侧滑返回预判
-    if (touch.clientX < 16) {
-      setIsEdgeSwiping(true)
-    }
+  const onTouchStart = (e) => {
+    const x = e.touches[0].clientX
+    const y = e.touches[0].clientY
+    touchStartPos.current = { x, y }
+    // 判定是否从屏幕左侧边缘开始滑动 (25px 阈值)
+    isEdgeSwipe.current = x < 25 
   }
 
-  const handleTouchEnd = (e) => {
-    if (!isEdgeSwiping) return
-    const touch = e.changedTouches[0]
-    const deltaX = touch.clientX - touchStartRef.current.x
-    const deltaY = Math.abs(touch.clientY - touchStartRef.current.y)
+  const onTouchEnd = (e) => {
+    if (!isEdgeSwipe.current) return
+    const deltaX = e.changedTouches[0].clientX - touchStartPos.current.x
+    const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartPos.current.y)
 
-    // 如果水平滑动距离超过 80px 且垂直偏移不大，执行返回
-    if (deltaX > 80 && deltaY < 60) {
-      if (isLibraryOpen) setIsLibraryOpen(false)
-      else if (isDrawerOpen) setIsDrawerOpen(false)
-      else router.back()
+    // 如果滑动距离超过 85px 且非剧烈上下滑动
+    if (deltaX > 85 && deltaY < 50) {
+      if (isLibraryOpen) {
+        setIsLibraryOpen(false) // 1. 优先关闭弹窗
+      } else if (isDrawerOpen) {
+        setIsDrawerOpen(false)  // 2. 其次关闭侧栏
+      } else {
+        router.back()           // 3. 最后返回上一页
+      }
     }
-    setIsEdgeSwiping(false)
+    isEdgeSwipe.current = false
   }
 
   return (
     <main 
-      className="relative min-h-screen w-full text-white overflow-x-hidden"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      className="relative min-h-screen w-full overflow-x-hidden text-slate-900"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
-      {/* 1. 全局背景图：固定不动 */}
+      {/* 1. 全局背景：透明磨砂感 */}
       <div 
-        className="fixed inset-0 -z-30 bg-cover bg-center bg-no-repeat scale-105"
-        style={{ backgroundImage: "url('/images/home-bg.jpg')" }} // 请确保路径正确
+        className="fixed inset-0 -z-30 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/home-bg.jpg')" }}
       />
-      {/* 2. 深色叠加层：确保文字清晰 */}
-      <div className="fixed inset-0 -z-20 bg-slate-950/40 backdrop-blur-[2px]" />
-      
-      {/* 侧边抽屉菜单 */}
+      <div className="fixed inset-0 -z-20 bg-white/40 backdrop-blur-md" />
+
+      {/* 2. 侧边栏 (Drawer) - 深色文字以便看清 */}
       <AnimatePresence>
         {isDrawerOpen && (
           <>
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setIsDrawerOpen(false)}
-              className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm"
+              className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm"
             />
             <motion.aside 
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={`fixed inset-y-0 left-0 z-[70] w-72 ${GLASS_STYLE} border-r border-white/30`}
+              transition={{ type: 'spring', damping: 25, stiffness: 240 }}
+              className="fixed inset-y-0 left-0 z-[70] w-72 bg-white/95 shadow-2xl flex flex-col"
             >
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-xl font-black">菜单 (Menu)</h2>
-                  <X onClick={() => setIsDrawerOpen(false)} className="cursor-pointer" />
+              <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900">学习中心</h2>
+                  <p className="text-xs text-slate-500">Learning Center</p>
                 </div>
-                <nav className="space-y-4">
-                  {['首页', 'HSK 课程', '设置'].map((item) => (
-                    <div key={item} className="p-3 rounded-xl hover:bg-white/10 cursor-pointer font-medium">
-                      {item}
-                    </div>
-                  ))}
-                </nav>
+                <button onClick={() => setIsDrawerOpen(false)} className="p-2 bg-slate-100 rounded-full">
+                  <X size={20} className="text-slate-600" />
+                </button>
               </div>
+              <nav className="p-4 space-y-2">
+                {['首页', 'HSK 课程', 'AI 翻译', '系统设置'].map((item) => (
+                  <button key={item} className="w-full text-left p-4 rounded-xl hover:bg-slate-100 text-slate-800 font-bold transition-colors">
+                    {item}
+                  </button>
+                ))}
+              </nav>
             </motion.aside>
           </>
         )}
       </AnimatePresence>
 
-      {/* 主内容区 */}
-      <div className="relative z-10 mx-auto max-w-md px-4 pt-6 pb-32">
+      {/* 3. 主页面内容 */}
+      <div className="relative z-10 mx-auto max-w-md px-4 pt-6 pb-36">
         
-        {/* Header */}
-        <header className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setIsDrawerOpen(true)}
-              className={`p-2 rounded-full ${GLASS_STYLE} active:scale-90 transition-transform`}
-            >
-              <Menu size={24} />
-            </button>
-            <div>
-              <h1 className="text-xl font-black tracking-tight leading-none">中缅文学习中心</h1>
-              <div className="flex items-center gap-1.5 mt-1 text-white/70">
-                <Sparkles size={12} className="text-yellow-400" />
-                <span className="text-[10px] font-bold uppercase tracking-widest">Premium Learning</span>
-              </div>
-            </div>
+        {/* Header - 保持简约 */}
+        <header className="flex items-center gap-4 mb-8">
+          <button 
+            onClick={() => setIsDrawerOpen(true)}
+            className="p-2.5 bg-white/80 rounded-2xl shadow-sm border border-white"
+          >
+            <Menu size={24} className="text-slate-800" />
+          </button>
+          <div>
+            <h1 className="text-xl font-black text-slate-900">中缅文学习</h1>
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Chinese - Myanmar Hub</p>
           </div>
-          <a href="https://m.me/your-id" className={`p-2 rounded-full ${GLASS_STYLE}`}>
-            <MessageCircle size={22} className="text-blue-400 fill-blue-400/20" />
-          </a>
         </header>
 
-        {/* 拼音导航 - 玻璃网格 */}
+        {/* 拼音网格 - 浅色系 */}
         <section className="grid grid-cols-4 gap-3 mb-6">
           {PINYIN_NAV.map((item, idx) => (
             <Link href={item.href} key={idx}>
               <motion.div 
                 whileTap={{ scale: 0.95 }}
-                className={`${GLASS_STYLE} ${GLASS_HOVER} flex flex-col items-center py-4 rounded-2xl`}
+                className="bg-white/70 backdrop-blur-sm border border-white p-3 rounded-2xl flex flex-col items-center shadow-sm"
               >
-                <div className={`p-2 rounded-full ${item.bg} mb-2`}>
+                <div className={`${item.bg} p-2 rounded-full mb-2`}>
                   <item.icon size={18} className={item.color} />
                 </div>
-                <span className="text-xs font-bold">{item.zh}</span>
-                <span className="text-[9px] opacity-60 mt-0.5">{item.mm}</span>
+                <span className="text-xs font-black text-slate-800">{item.zh}</span>
+                <span className="text-[9px] text-slate-400 font-medium mt-0.5">{item.mm}</span>
               </motion.div>
             </Link>
           ))}
         </section>
 
-        {/* 发音技巧提示条 */}
+        {/* 发音技巧 - 长卡片 */}
         <Link href="/pinyin/tips">
           <motion.div 
             whileTap={{ scale: 0.98 }}
-            className={`${GLASS_STYLE} ${GLASS_HOVER} flex items-center justify-between p-4 rounded-2xl mb-6`}
+            className="bg-white/70 backdrop-blur-sm border border-white p-4 rounded-2xl mb-6 flex items-center justify-between shadow-sm"
           >
             <div className="flex items-center gap-4">
-              <div className="bg-orange-500/20 p-2 rounded-xl">
-                <Lightbulb size={20} className="text-orange-400" />
+              <div className="bg-orange-100 p-2 rounded-xl text-orange-600">
+                <Lightbulb size={20} />
               </div>
               <div>
-                <p className="text-sm font-bold text-white">发音技巧 (Pronunciation Tips)</p>
-                <p className="text-[10px] text-white/50">အသံထွက်နည်းလမ်းများ</p>
+                <p className="text-sm font-black text-slate-800">发音技巧 (Tips)</p>
+                <p className="text-[10px] text-slate-400">အသံထွက်နည်းလမ်းများ</p>
               </div>
             </div>
-            <ChevronRight size={18} className="text-white/30" />
+            <ChevronRight size={18} className="text-slate-300" />
           </motion.div>
         </Link>
 
@@ -178,72 +169,69 @@ export default function LayoutLearningHome() {
           {CORE_TOOLS.map((tool, idx) => {
             const content = (
               <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-xl ${tool.bg}`}>
-                  <tool.icon size={20} className={tool.iconColor} />
+                <div className={`p-2 rounded-xl ${tool.bg} ${tool.iconColor}`}>
+                  <tool.icon size={20} />
                 </div>
-                <div className="text-left">
-                  <p className="text-[13px] font-black">{tool.zh}</p>
-                  <p className="text-[9px] text-white/50">{tool.mm}</p>
+                <div className="text-left overflow-hidden">
+                  <p className="text-[13px] font-black text-slate-800 truncate">{tool.zh}</p>
+                  <p className="text-[9px] text-slate-400 truncate">{tool.mm}</p>
                 </div>
               </div>
             )
 
-            const className = `${GLASS_STYLE} ${GLASS_HOVER} p-3.5 rounded-2xl w-full`
+            const cardStyle = "bg-white/70 backdrop-blur-sm border border-white p-3.5 rounded-2xl w-full shadow-sm"
 
             if (tool.action === 'open-library') {
               return (
-                <button key={idx} onClick={() => setIsLibraryOpen(true)} className={className}>
+                <button key={idx} onClick={() => setIsLibraryOpen(true)} className={cardStyle}>
                   {content}
                 </button>
               )
             }
             return (
               <Link href={tool.href} key={idx}>
-                <a className={className}>{content}</a>
+                <a className={cardStyle}>{content}</a>
               </Link>
             )
           })}
         </section>
 
-        {/* 系统课程 - 大图卡片 */}
+        {/* 课程列表 */}
         <section className="space-y-4">
           <div className="flex items-center gap-2 px-1">
-            <BookOpen size={16} className="text-white/60" />
-            <h2 className="text-xs font-black uppercase tracking-[0.2em] text-white/60">System Courses</h2>
+            <BookOpen size={14} className="text-slate-400" />
+            <h2 className="text-[11px] font-black uppercase tracking-widest text-slate-400">System Courses</h2>
           </div>
 
           {[
             { 
-              title: 'HSK 1 入门课程', 
-              mm: 'အခြေခံ တရုတ်စာ', 
+              title: 'HSK 1 入门', 
+              sub: 'အခြေခံ တရုတ်စာ', 
               img: 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800',
-              tag: 'Beginner',
-              href: '/course/hsk1'
+              href: '/course/hsk1',
+              color: 'from-blue-600/90'
             },
             { 
-              title: '地道口语特训', 
-              mm: 'စကားပြော လေ့ကျင့်ခန်း', 
+              title: '日常口语练习', 
+              sub: 'စကားပြော လေ့ကျင့်ခန်း', 
               img: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?w=800',
-              tag: 'Speaking',
-              href: '/course/oral'
+              href: '/course/oral',
+              color: 'from-emerald-600/90'
             }
           ].map((course, idx) => (
             <Link href={course.href} key={idx}>
               <motion.div 
                 whileTap={{ scale: 0.97 }}
-                className="relative h-44 w-full rounded-[2rem] overflow-hidden border border-white/20 shadow-xl group"
+                className="relative h-36 w-full rounded-3xl overflow-hidden shadow-md group"
               >
-                <img src={course.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                <div className="absolute bottom-5 left-6">
-                  <span className="px-2 py-0.5 bg-white/20 backdrop-blur-md rounded-md text-[9px] font-black mb-2 inline-block">
-                    {course.tag}
-                  </span>
+                <img src={course.img} className="absolute inset-0 w-full h-full object-cover" />
+                <div className={`absolute inset-0 bg-gradient-to-r ${course.color} to-transparent`} />
+                <div className="absolute inset-y-0 left-0 flex flex-col justify-center px-6">
                   <h3 className="text-xl font-black text-white">{course.title}</h3>
-                  <p className="text-xs text-white/70 font-medium">{course.mm}</p>
-                </div>
-                <div className="absolute top-1/2 right-6 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-                  <ChevronRight />
+                  <p className="text-white/80 text-xs font-medium">{course.sub}</p>
+                  <div className="mt-3 flex items-center gap-1 text-[10px] font-bold text-white bg-white/20 w-fit px-2 py-0.5 rounded-md backdrop-blur-sm">
+                    立即学习 <ChevronRight size={10} />
+                  </div>
                 </div>
               </motion.div>
             </Link>
@@ -251,8 +239,8 @@ export default function LayoutLearningHome() {
         </section>
       </div>
 
-      {/* 底部导航栏 - 固定 */}
-      <nav className={`fixed bottom-0 left-0 right-0 z-50 ${GLASS_STYLE} border-t border-white/10 px-6 py-3 rounded-t-[2.5rem] flex items-center justify-between pb-[calc(1.5rem+env(safe-area-inset-bottom))]`}>
+      {/* 4. 底部导航栏 (实色白，增强文字显示) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-[50] bg-white border-t border-slate-100 flex items-center justify-around px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+10px)] shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
         <FooterItem icon={MessageCircle} label="消息" />
         <FooterItem icon={Globe2} label="社区" />
         <FooterItem icon={Users} label="语伴" />
@@ -260,7 +248,7 @@ export default function LayoutLearningHome() {
         <FooterItem icon={BookOpen} label="学习" active />
       </nav>
 
-      {/* 弹窗组件 */}
+      {/* 弹窗 */}
       <BookLibrary isOpen={isLibraryOpen} onClose={() => setIsLibraryOpen(false)} />
     </main>
   )
@@ -268,9 +256,9 @@ export default function LayoutLearningHome() {
 
 function FooterItem({ icon: Icon, label, active = false }) {
   return (
-    <div className={`flex flex-col items-center gap-1 transition-all ${active ? 'text-blue-400 scale-110' : 'text-white/50'}`}>
-      <div className={active ? 'bg-blue-400/20 p-2 rounded-xl' : ''}>
-        <Icon size={20} fill={active ? "currentColor" : "none"} />
+    <div className={`flex flex-col items-center gap-1 ${active ? 'text-indigo-600' : 'text-slate-400'}`}>
+      <div className={active ? 'bg-indigo-50 p-1.5 rounded-xl' : ''}>
+        <Icon size={22} strokeWidth={active ? 2.5 : 2} />
       </div>
       <span className="text-[10px] font-bold">{label}</span>
     </div>
